@@ -1,6 +1,6 @@
 # Description
 
-This Pull Request is for release **DPS Version Vx.x.x**
+This Pull Request is for release **JAG FILE SUBMISSION Version Vx.x.x**
 
 ## link to the JIRA Request item
 
