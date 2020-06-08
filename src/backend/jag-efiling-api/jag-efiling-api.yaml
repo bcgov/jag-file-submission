@@ -1,31 +1,63 @@
 openapi: 3.0.0
 info:
   version: 0.3.0
-  title: jag-efiling-hello-api
+  title: jag-efiling-api
   description: Efiling api
 servers:
-  - url: 'http://localhost/8080'
+- url: 'http://localhost/8080'
 tags:
-  - name: hello
-    description: Hello API
+- name: document
+  description: Document Api
 paths:
-  /hello:
-    get:
-      summary: Get app to say hello
-      operationId: GetHello
+  '/document/generateUrl':
+    post:
+      summary: Generates a secure URL for e-filing document
+      operationId: GenerateUrl
       tags:
-        - hello
+      - document
+      requestBody:
+        description: requested parameters to generate a url
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerateUrlRequest'
       responses:
         '200':
           description: File successfully received
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Hello'
+                $ref: '#/components/schemas/GenerateUrlResponse'
 components:
   schemas:
-    Hello:
-      description: It's HELLO
+    GenerateUrlRequest:
+      description: details about the required transaction
+      required:
+      - navigation
       properties:
-        message:
+        navigation:
+          $ref: '#/components/schemas/Navigation'
+    GenerateUrlResponse:
+      description: A temporary url for uploading documents
+      properties:
+        eFilingUrl:
+          type: string
+    Navigation:
+      required:
+      - success
+      - error
+      - cancel
+      properties:
+        success:
+          $ref: '#/components/schemas/Redirect'
+        error:
+          $ref: '#/components/schemas/Redirect'
+        cancel:
+          $ref: '#/components/schemas/Redirect'
+    Redirect:
+      required:
+      - url
+      properties:
+        url:
           type: string
