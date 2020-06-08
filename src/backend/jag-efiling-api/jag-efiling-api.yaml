@@ -1,0 +1,31 @@
+openapi: 3.0.0
+info:
+  version: 0.3.0
+  title: jag-efiling-hello-api
+  description: Efiling api
+servers:
+  - url: 'http://localhost/8080'
+tags:
+  - name: hello
+    description: Hello API
+paths:
+  /hello:
+    get:
+      summary: Get app to say hello
+      operationId: GetHello
+      tags:
+        - hello
+      responses:
+        '200':
+          description: File successfully received
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hello'
+components:
+  schemas:
+    Hello:
+      description: It's HELLO
+      properties:
+        message:
+          type: string
