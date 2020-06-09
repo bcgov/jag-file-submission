@@ -4,10 +4,9 @@ import ca.bc.gov.open.api.DocumentApi;
 import ca.bc.gov.open.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.api.model.GenerateUrlResponse;
 import ca.bc.gov.open.jagefilingapi.cache.RedisStorageService;
-import org.apache.commons.lang3.SerializationUtils;
+import ca.bc.gov.open.jagefilingapi.config.NavigationProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ca.bc.gov.open.jagefilingapi.config.NavigationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,7 +35,7 @@ public class DocumentApiImpl implements DocumentApi {
         //TODO: We should a service
         GenerateUrlResponse response = new GenerateUrlResponse();
 
-        response.setStorageId(redisStorageService.put(SerializationUtils.serialize(generateUrlRequest.toString())));
+        response.setStorageId(redisStorageService.put(generateUrlRequest));
         response.expiryDate(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(10));
         response.setEFilingUrl(navigationProperties.getBaseUrl());
 

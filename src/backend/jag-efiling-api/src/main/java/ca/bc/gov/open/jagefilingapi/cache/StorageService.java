@@ -1,10 +1,10 @@
 package ca.bc.gov.open.jagefilingapi.cache;
 
-public interface StorageService {
+public interface StorageService<T> {
 
-    String put(byte[] content);
+    String put(T content);
 
-    byte[] get(String key);
+    T getByKey(String key);
 
-    void delete(String key);
+    void deleteByKey(String key);
 }

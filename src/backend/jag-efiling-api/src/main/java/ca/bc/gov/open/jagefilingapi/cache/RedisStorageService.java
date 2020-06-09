@@ -1,5 +1,8 @@
 package ca.bc.gov.open.jagefilingapi.cache;
 
+import ca.bc.gov.open.api.model.GenerateUrlRequest;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.data.redis.RedisConnectionFailureException;
@@ -8,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
-public class RedisStorageService implements StorageService {
+public class RedisStorageService implements StorageService<GenerateUrlRequest> {
 
     private final CacheManager cacheManager;
     private static final String serviceUnavailableMessage = "redis service unavailable";
@@ -22,30 +25,29 @@ public class RedisStorageService implements StorageService {
         this.cacheManager = cacheManager;
     }
 
-    /**
-     * Store the content in redis cache using a new guid as key
-     */
     @Override
-    public String put(byte[] content) {
+    public String put(GenerateUrlRequest content) {
 
         UUID id = UUID.randomUUID();
 
+        ObjectMapper objectMapper = new ObjectMapper();
+
         try {
-            this.cacheManager.getCache(Keys.FLA_CACHE_NAME).put(id.toString(), content);
+            this.cacheManager.getCache(Keys.FLA_CACHE_NAME).put(id.toString(), objectMapper.writeValueAsString(content));
         } catch (RedisConnectionFailureException e) {
             throw new FlaRedisException(serviceUnavailableMessage, e.getCause());
+        } catch (JsonProcessingException e) {
+            throw new FlaRedisException("error while deserializing object", e.getCause());
         }
 
         return id.toString();
 
     }
 
-    /**
-     * Gets a document from redis key value store.
-     * @param key    object key to retrieve from storage
-     */
     @Override
-    public byte[] get(String key) {
+    public GenerateUrlRequest getByKey(String key) {
+
+        ObjectMapper objectMapper = new ObjectMapper();
 
         try {
 
@@ -54,20 +56,18 @@ public class RedisStorageService implements StorageService {
             if(valueWrapper == null)
                 return null;
 
-            return (byte[]) valueWrapper.get();
+            return objectMapper.readValue(valueWrapper.get().toString(), GenerateUrlRequest.class);
 
         } catch (RedisConnectionFailureException e) {
+            throw new FlaRedisException(serviceUnavailableMessage, e.getCause());
+        } catch (JsonProcessingException e) {
             throw new FlaRedisException(serviceUnavailableMessage, e.getCause());
         }
 
     }
 
-    /**
-     * Removes a document from redis key value store.
-     * @param key    object key to evict from storage
-     */
     @Override
-    public void delete(String key) {
+    public void deleteByKey(String key) {
 
         if (key == null || key.isEmpty()) return;
         try {
@@ -75,7 +75,6 @@ public class RedisStorageService implements StorageService {
         } catch (RedisConnectionFailureException e) {
             throw new FlaRedisException(serviceUnavailableMessage, e.getCause());
         }
-
     }
 
 }
