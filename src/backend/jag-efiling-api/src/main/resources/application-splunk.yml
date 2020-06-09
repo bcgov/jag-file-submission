@@ -1,0 +1,4 @@
+logging:
+  config:
+    "classpath:logback-splunk.xml"
+  
