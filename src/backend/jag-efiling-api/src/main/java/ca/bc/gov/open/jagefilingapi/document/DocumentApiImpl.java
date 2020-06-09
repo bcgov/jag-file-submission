@@ -7,14 +7,12 @@ import ca.bc.gov.open.jagefilingapi.cache.RedisStorageService;
 import org.apache.commons.lang3.SerializationUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import ca.bc.gov.open.jagefilingapi.config.NavigationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -23,12 +21,12 @@ public class DocumentApiImpl implements DocumentApi {
 
     Logger logger = LoggerFactory.getLogger(DocumentApiImpl.class);
 
-    @Autowired
-    RedisStorageService redisStorageService;
+    private final RedisStorageService redisStorageService;
   
     private final NavigationProperties navigationProperties;
 
-    public DocumentApiImpl(NavigationProperties navigationProperties) {
+    public DocumentApiImpl(RedisStorageService redisStorageService, NavigationProperties navigationProperties) {
+        this.redisStorageService = redisStorageService;
         this.navigationProperties = navigationProperties;
     }
 

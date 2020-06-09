@@ -30,6 +30,8 @@ public class DocumentApiImplTest {
     @InjectMocks
     private DocumentApiImpl sut;
 
+    @Mock
+    NavigationProperties navigationProperties;
 
     @Mock
     RedisStorageService redisStorageService;
@@ -37,12 +39,7 @@ public class DocumentApiImplTest {
     @BeforeAll
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-
-        NavigationProperties navigationProperties = new NavigationProperties();
-
-        navigationProperties.setBaseUrl("https://httpbin.org/");
-
-        sut = new DocumentApiImpl(navigationProperties);
+        when(navigationProperties.getBaseUrl()).thenReturn("https://httpbin.org/");
     }
 
 

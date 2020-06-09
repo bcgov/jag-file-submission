@@ -9,4 +9,4 @@ spring:
 jag:
     efiling:
         navigation:
-            baseUrl: {NAVIGATION_BASE_URL}
+            baseUrl: {NAVIGATION_BASE_URL:https://httpbin.org/}
