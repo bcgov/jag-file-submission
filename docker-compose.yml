@@ -1,0 +1,14 @@
+version: '3.7'
+services:
+
+#############################################################################################
+###                           JAG File Submission service                                 ###
+#############################################################################################
+    jag-file-submission:
+        build:
+            context: .src/backend/jag-efiling-api
+            args:
+            - SERVICE_NAME=jag-efiling-api
+            - MVN_PROFILES=openshift
+        ports:
+            - "8080:8080"
