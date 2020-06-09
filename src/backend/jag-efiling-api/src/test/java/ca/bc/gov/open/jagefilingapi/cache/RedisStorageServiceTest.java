@@ -43,8 +43,8 @@ public class RedisStorageServiceTest {
         Mockito.when(cacheManager.getCache(Keys.FLA_CACHE_NAME)).thenReturn(this.cache);
         Mockito.when(cache.get(KEY)).thenReturn(valueWrapper);
         Mockito.when(cache.get(MISSING_DOCUMENT)).thenReturn(null);
-
-
+        Mockito.doThrow(RedisConnectionFailureException.class).when(this.cache).put(Mockito.anyString(), Mockito.eq(EXCEPTION_INPUT));
+        Mockito.doThrow(RedisConnectionFailureException.class).when(this.cache).get(Mockito.eq(REDIS_CONNECTION_FAILURE_EXCEPTION));
         Mockito.doThrow(RedisConnectionFailureException.class).when(this.cache).evict(Mockito.eq(REDIS_CONNECTION_FAILURE_EXCEPTION));
         Mockito.doNothing().when(this.cache).evict(KEY);
         this.sut = new RedisStorageService(cacheManager);
