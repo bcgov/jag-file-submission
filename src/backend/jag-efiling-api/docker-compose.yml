@@ -8,7 +8,7 @@ services:
         build:
             context: .
             args:
-            - SERVICE_NAME=jag-file-submission
+            - SERVICE_NAME=jag-efiling-api
             - MVN_PROFILES=openshift
         ports:
             - "8080:8080"
