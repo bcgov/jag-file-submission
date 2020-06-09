@@ -3,6 +3,7 @@ package ca.bc.gov.open.jagefilingapi.cache;
 import ca.bc.gov.open.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.api.model.Navigation;
 import ca.bc.gov.open.api.model.Redirect;
+import ca.bc.gov.open.jagefilingapi.Keys;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
@@ -40,7 +41,7 @@ public class RedisStorageServiceTest {
 
         MockitoAnnotations.initMocks(this);
         Mockito.when(valueWrapper.get()).thenReturn(toJson(getGenerateUrlRequest()));
-        Mockito.when(cacheManager.getCache(Keys.FLA_CACHE_NAME)).thenReturn(this.cache);
+        Mockito.when(cacheManager.getCache(Keys.SECURE_URL_CACHE_NAME)).thenReturn(this.cache);
         Mockito.when(cache.get(KEY)).thenReturn(valueWrapper);
         Mockito.when(cache.get(MISSING_DOCUMENT)).thenReturn(null);
         Mockito.doThrow(RedisConnectionFailureException.class).when(this.cache).put(Mockito.anyString(), Mockito.eq(EXCEPTION_INPUT));
@@ -62,11 +63,11 @@ public class RedisStorageServiceTest {
         Assertions.assertDoesNotThrow(() -> sut.put(request) );
     }
 
-    @DisplayName("CASE2: put with redis connection failure exception should throw FlaRedisException")
+    @DisplayName("CASE2: put with redis connection failure exception should throw EFilingRedisException")
     @Test
     public void putWithRedisConnectionFailureExceptionShouldThrowFlaRedisException() throws Exception {
         Mockito.doThrow(RedisConnectionFailureException.class).when(this.cache).put(Mockito.anyString(), Mockito.anyString());
-        Assertions.assertThrows(FlaRedisException.class, () -> sut.put(getGenerateUrlRequest()));
+        Assertions.assertThrows(EFilingRedisException.class, () -> sut.put(getGenerateUrlRequest()));
     }
 
     @DisplayName("CASE3: get with existing key should get Bytes")
@@ -81,16 +82,16 @@ public class RedisStorageServiceTest {
         Assertions.assertNull(sut.getByKey(MISSING_DOCUMENT));
     }
 
-    @DisplayName("CASE5: get with Redis connection failure exception should throw FlaRedisException")
+    @DisplayName("CASE5: get with Redis connection failure exception should throw EFilingRedisException")
     @Test
     public void getWithRedisConnectionFailureExceptionShouldThrowFlaRedisException() throws Exception {
-        Assertions.assertThrows(FlaRedisException.class, () -> sut.getByKey(REDIS_CONNECTION_FAILURE_EXCEPTION));
+        Assertions.assertThrows(EFilingRedisException.class, () -> sut.getByKey(REDIS_CONNECTION_FAILURE_EXCEPTION));
     }
 
-    @DisplayName("CASE6: delete with Redis connection failure exception should throw FlaRedisException")
+    @DisplayName("CASE6: delete with Redis connection failure exception should throw EFilingRedisException")
     @Test
     public void deleteWithRedisConnectionFailureExceptionShouldThrowFlaRedisException() throws Exception {
-        Assertions.assertThrows(FlaRedisException.class, () -> sut.getByKey(REDIS_CONNECTION_FAILURE_EXCEPTION));
+        Assertions.assertThrows(EFilingRedisException.class, () -> sut.getByKey(REDIS_CONNECTION_FAILURE_EXCEPTION));
     }
 
     @DisplayName("CASE7: delete with any key should not throw")

@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jagefilingapi.cache;
 
 import ca.bc.gov.open.api.model.GenerateUrlRequest;
+import ca.bc.gov.open.jagefilingapi.Keys;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.cache.Cache;
@@ -33,11 +34,11 @@ public class RedisStorageService implements StorageService<GenerateUrlRequest> {
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
-            this.cacheManager.getCache(Keys.FLA_CACHE_NAME).put(id.toString(), objectMapper.writeValueAsString(content));
+            this.cacheManager.getCache(Keys.SECURE_URL_CACHE_NAME).put(id.toString(), objectMapper.writeValueAsString(content));
         } catch (RedisConnectionFailureException e) {
-            throw new FlaRedisException(serviceUnavailableMessage, e.getCause());
+            throw new EFilingRedisException(serviceUnavailableMessage, e.getCause());
         } catch (JsonProcessingException e) {
-            throw new FlaRedisException("error while deserializing object", e.getCause());
+            throw new EFilingRedisException("error while deserializing object", e.getCause());
         }
 
         return id.toString();
@@ -51,7 +52,7 @@ public class RedisStorageService implements StorageService<GenerateUrlRequest> {
 
         try {
 
-            Cache.ValueWrapper valueWrapper = this.cacheManager.getCache(Keys.FLA_CACHE_NAME).get(key);
+            Cache.ValueWrapper valueWrapper = this.cacheManager.getCache(Keys.SECURE_URL_CACHE_NAME).get(key);
 
             if(valueWrapper == null)
                 return null;
@@ -59,9 +60,9 @@ public class RedisStorageService implements StorageService<GenerateUrlRequest> {
             return objectMapper.readValue(valueWrapper.get().toString(), GenerateUrlRequest.class);
 
         } catch (RedisConnectionFailureException e) {
-            throw new FlaRedisException(serviceUnavailableMessage, e.getCause());
+            throw new EFilingRedisException(serviceUnavailableMessage, e.getCause());
         } catch (JsonProcessingException e) {
-            throw new FlaRedisException(serviceUnavailableMessage, e.getCause());
+            throw new EFilingRedisException(serviceUnavailableMessage, e.getCause());
         }
 
     }
@@ -71,9 +72,9 @@ public class RedisStorageService implements StorageService<GenerateUrlRequest> {
 
         if (key == null || key.isEmpty()) return;
         try {
-            this.cacheManager.getCache(Keys.FLA_CACHE_NAME).evict(key);
+            this.cacheManager.getCache(Keys.SECURE_URL_CACHE_NAME).evict(key);
         } catch (RedisConnectionFailureException e) {
-            throw new FlaRedisException(serviceUnavailableMessage, e.getCause());
+            throw new EFilingRedisException(serviceUnavailableMessage, e.getCause());
         }
     }
 

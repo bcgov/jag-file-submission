@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.text.MessageFormat;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -35,9 +36,8 @@ public class DocumentApiImpl implements DocumentApi {
         //TODO: We should a service
         GenerateUrlResponse response = new GenerateUrlResponse();
 
-        response.setStorageId(redisStorageService.put(generateUrlRequest));
         response.expiryDate(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(10));
-        response.setEFilingUrl(navigationProperties.getBaseUrl());
+        response.setEFilingUrl(MessageFormat.format("{0}/{1}", navigationProperties.getBaseUrl(), redisStorageService.put(generateUrlRequest)));
 
         logger.debug("{}", response.toString());
 
