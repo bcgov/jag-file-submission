@@ -19,6 +19,7 @@
 		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -101,7 +102,7 @@
 				<repository>
 					<id>splunk-artifactory</id>
 					<name>Splunk Releases</name>
-					<url>http://splunk.jfrog.io/splunk/ext-releases-local</url>
+					<url>https://splunk.jfrog.io/artifactory/ext-releases-local/</url>
 				</repository>
 			</repositories>
 

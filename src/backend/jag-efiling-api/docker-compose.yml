@@ -1,0 +1,14 @@
+version: '3.7'
+services:
+
+#############################################################################################
+###                           JAG File Submission service                                 ###
+#############################################################################################
+    jag-file-submission:
+        build:
+            context: .
+            args:
+            - SERVICE_NAME=jag-file-submission
+            - MVN_PROFILES=openshift
+        ports:
+            - "8080:8080"
