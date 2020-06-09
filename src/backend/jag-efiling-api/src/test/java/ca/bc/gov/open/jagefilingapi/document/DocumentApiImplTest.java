@@ -4,6 +4,7 @@ import ca.bc.gov.open.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.api.model.GenerateUrlResponse;
 import ca.bc.gov.open.api.model.Navigation;
 import ca.bc.gov.open.api.model.Redirect;
+import ca.bc.gov.open.jagefilingapi.config.NavigationProperties;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,10 +20,15 @@ public class DocumentApiImplTest {
 
     private DocumentApiImpl sut;
 
-
     @BeforeAll
     public void setUp() {
-        sut = new DocumentApiImpl();
+
+        NavigationProperties navigationProperties = new NavigationProperties();
+
+        navigationProperties.setBaseUrl("https://httpbin.org/");
+
+        sut = new DocumentApiImpl(navigationProperties);
+
     }
 
 
