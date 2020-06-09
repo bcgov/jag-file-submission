@@ -1,13 +1,13 @@
 package ca.bc.gov.open.jagefilingapi.cache;
 
-public class FlaRedisException extends RuntimeException {
+public class EFilingRedisException extends RuntimeException {
 
-    public FlaRedisException(String message) {
+    public EFilingRedisException(String message) {
         super(message);
     }
 
 
-    public FlaRedisException(String message, Throwable cause) {
+    public EFilingRedisException(String message, Throwable cause) {
         super(message, cause);
     }
 }
