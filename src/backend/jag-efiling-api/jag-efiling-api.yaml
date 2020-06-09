@@ -43,6 +43,8 @@ components:
       properties:
         storageId:
           type: string
+        expiryDate:
+          type: long
         eFilingUrl:
           type: string
     Navigation:

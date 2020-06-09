@@ -15,7 +15,10 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.concurrent.TimeUnit;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -31,7 +34,6 @@ public class DocumentApiImplTest {
     @BeforeAll
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-       // sut = new DocumentApiImpl();
     }
 
 
@@ -57,7 +59,8 @@ public class DocumentApiImplTest {
 
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertEquals("https://httpbin.org/", actual.getBody().getEFilingUrl());
-
+        assertEquals("TEST", actual.getBody().getStorageId());
+        assertNotNull(actual.getBody().getExpiryDate());
     }
 
 

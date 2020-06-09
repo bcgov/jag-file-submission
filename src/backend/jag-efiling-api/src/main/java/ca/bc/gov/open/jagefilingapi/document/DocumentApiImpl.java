@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.io.Serializable;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 public class DocumentApiImpl implements DocumentApi {
@@ -24,12 +25,14 @@ public class DocumentApiImpl implements DocumentApi {
 
     @Override
     public ResponseEntity<GenerateUrlResponse> generateUrl(@Valid GenerateUrlRequest generateUrlRequest) {
-
+        logger.info("Generate Url Request Recieved");
+        //TODO: We should a service
         GenerateUrlResponse response = new GenerateUrlResponse();
         response.setStorageId(redisStorageService.put(SerializationUtils.serialize(generateUrlRequest.toString())));
+        response.expiryDate(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(10));
         response.setEFilingUrl("https://httpbin.org/");
 
-        logger.info("{}", response.toString());
+        logger.debug("{}", response.toString());
 
         return ResponseEntity.ok(response);
 
