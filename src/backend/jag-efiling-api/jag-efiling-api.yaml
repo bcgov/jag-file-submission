@@ -41,6 +41,10 @@ components:
     GenerateUrlResponse:
       description: A temporary url for uploading documents
       properties:
+        storageId:
+          type: string
+        expiryDate:
+          type: long
         eFilingUrl:
           type: string
     Navigation:
