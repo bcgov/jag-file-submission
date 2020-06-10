@@ -1,7 +1,6 @@
 package ca.bc.gov.open.jagefilingapi.cache;
 
 import ca.bc.gov.open.jagefilingapi.config.NavigationProperties;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;

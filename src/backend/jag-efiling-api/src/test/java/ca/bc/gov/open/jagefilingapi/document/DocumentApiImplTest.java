@@ -25,6 +25,10 @@ import static org.mockito.Mockito.when;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("DocumentApiImpl Test Suite")
 public class DocumentApiImplTest {
+    private static final String CASE_1 = "CASE1";
+    private static final String CANCEL = "cancel";
+    private static final String ERROR = "error";
+    private static final String TEST = "TEST";
     @InjectMocks
     private DocumentApiImpl sut;
 
@@ -46,15 +50,15 @@ public class DocumentApiImplTest {
     @DisplayName("CASE1: when payload is valid")
     public void withValidPayloadShouldReturnOk() {
 
-        when(redisStorageService.put(any())).thenReturn("TEST");
+        when(redisStorageService.put(any())).thenReturn(TEST);
 
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
         Navigation navigation = new Navigation();
         Redirect successRedirect = new Redirect();
-        successRedirect.setUrl("CASE1");
+        successRedirect.setUrl(CASE_1);
         navigation.setSuccess(successRedirect);
         Redirect cancelRedirect = new Redirect();
-        cancelRedirect.setUrl("cancel");
+        cancelRedirect.setUrl(CANCEL);
         navigation.setCancel(cancelRedirect);
         Redirect errorRedirect = new Redirect();
         navigation.setError(errorRedirect);
@@ -74,23 +78,23 @@ public class DocumentApiImplTest {
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
         Navigation navigation = new Navigation();
         Redirect successRedirect = new Redirect();
-        successRedirect.setUrl("CASE1");
+        successRedirect.setUrl(CASE_1);
         navigation.setSuccess(successRedirect);
         Redirect cancelRedirect = new Redirect();
-        cancelRedirect.setUrl("cancel");
+        cancelRedirect.setUrl(CANCEL);
         navigation.setCancel(cancelRedirect);
         Redirect errorRedirect = new Redirect();
-        errorRedirect.setUrl("error");
+        errorRedirect.setUrl(ERROR);
         navigation.setError(errorRedirect);
         generateUrlRequest.setNavigation(navigation);
-        when(redisStorageService.getByKey("TEST")).thenReturn(generateUrlRequest);
+        when(redisStorageService.getByKey(TEST)).thenReturn(generateUrlRequest);
 
-        ResponseEntity<GenerateUrlRequest> actual = sut.getConfigurationById("TEST");
+        ResponseEntity<GenerateUrlRequest> actual = sut.getConfigurationById(TEST);
 
         assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertEquals(actual.getBody().getNavigation().getSuccess().getUrl(),"CASE1");
-        assertEquals(actual.getBody().getNavigation().getCancel().getUrl(), "cancel");
-        assertEquals(actual.getBody().getNavigation().getError().getUrl(), "error");
+        assertEquals(actual.getBody().getNavigation().getSuccess().getUrl(),CASE_1);
+        assertEquals(actual.getBody().getNavigation().getCancel().getUrl(), CANCEL);
+        assertEquals(actual.getBody().getNavigation().getError().getUrl(), ERROR);
     }
     @Test
     @DisplayName("CASE2: with null redis storage response return NotFound")
@@ -98,7 +102,7 @@ public class DocumentApiImplTest {
 
         when(redisStorageService.getByKey(any())).thenReturn(null);
 
-        ResponseEntity<GenerateUrlRequest> actual = sut.getConfigurationById("TEST");
+        ResponseEntity<GenerateUrlRequest> actual = sut.getConfigurationById(TEST);
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
     }
 
