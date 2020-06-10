@@ -45,7 +45,7 @@ public class DocumentApiImpl implements DocumentApi {
 
         logger.debug("Attempting to get fee structure for document");
         Fee fee = feeService.getFee(new FeeRequest("type", "subtype"));
-        logger.info("Successfully retrived fee [{}]", fee.getAmount().toString());
+        logger.info("Successfully retrived fee [{}]", fee.getAmount());
 
         GenerateUrlResponse response = new GenerateUrlResponse();
 
