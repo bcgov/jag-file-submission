@@ -7,7 +7,7 @@ import java.math.BigDecimal;
  */
 public class Fee {
 
-    public BigDecimal amount;
+    private BigDecimal amount;
 
     public Fee(BigDecimal amount) {
         this.amount = amount;
