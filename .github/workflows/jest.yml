@@ -21,5 +21,5 @@ jobs:
         working-directory: src/efiling-frontend
       - run: yarn build
         working-directory: src/efiling-frontend
-      - run: yarn test -u
+      - run: yarn test
         working-directory: src/efiling-frontend
