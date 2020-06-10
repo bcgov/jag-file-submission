@@ -8,7 +8,8 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
     ├── openshift                           # openshift templates and pipeline
     ├── src/                                # application source files
     │   └── backend                         # backend applications
-    │       └── jag-efiling-api             # efiling api 
+    │       └── jag-efiling-api             # efiling api
+    │   └── efiling-frontend                # efiling frontend
     ├── COMPLIANCE.yaml                     # 
     ├── CONTRIBUTING.md                     # 
     ├── LICENSE                             # Apache License
@@ -20,6 +21,7 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
 | Name | description | doc |
 | --- | --- | --- |
 | jag-efiling-api | the main api for interating with the service | [README](src/backend/jag-efiling-api/README.md) |
+| efiling-frontend | the frontend for uploading documents | [README](src/efiling-frontend/README.md) |
 
 
 ## Frontend Folder Structure
