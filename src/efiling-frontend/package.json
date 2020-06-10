@@ -20,7 +20,8 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "regenerator-runtime": "^0.13.5",
-    "webpack": "4.42.0"
+    "webpack": "4.42.0",
+    "history": "^4.10.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -97,7 +98,7 @@
     },
     "verbose": true,
     "testResultsProcessor": "jest-sonar-reporter",
-    "collectCoverage": true,
+    "collectCoverage": false,
     "coverageReporters": [
       "text",
       "lcov"
