@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Home Default 1`] = `
+<div>
+  <p>
+    Hello
+  </p>
+</div>
+`;
+
+exports[`Storyshots Home Mobile 1`] = `
+<div>
+  <p>
+    Hello
+  </p>
+</div>
+`;
