@@ -4,7 +4,7 @@ info:
   title: jag-efiling-api
   description: Efiling api
 servers:
-- url: 'http://localhost/8080'
+- url: 'http://localhost:8080'
 tags:
 - name: document
   description: Document Api
