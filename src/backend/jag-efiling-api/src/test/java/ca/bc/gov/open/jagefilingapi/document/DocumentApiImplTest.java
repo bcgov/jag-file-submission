@@ -67,6 +67,39 @@ public class DocumentApiImplTest {
         assertNotNull(actual.getBody().getExpiryDate());
     }
 
+    @Test
+    @DisplayName("CASE1: with validId return payload")
+    public void withValidIdReturnPayload() {
 
+        GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
+        Navigation navigation = new Navigation();
+        Redirect successRedirect = new Redirect();
+        successRedirect.setUrl("CASE1");
+        navigation.setSuccess(successRedirect);
+        Redirect cancelRedirect = new Redirect();
+        cancelRedirect.setUrl("cancel");
+        navigation.setCancel(cancelRedirect);
+        Redirect errorRedirect = new Redirect();
+        errorRedirect.setUrl("error");
+        navigation.setError(errorRedirect);
+        generateUrlRequest.setNavigation(navigation);
+        when(redisStorageService.getByKey("TEST")).thenReturn(generateUrlRequest);
+
+        ResponseEntity<GenerateUrlRequest> actual = sut.getConfigurationById("TEST");
+
+        assertEquals(HttpStatus.OK, actual.getStatusCode());
+        assertEquals(actual.getBody().getNavigation().getSuccess().getUrl(),"CASE1");
+        assertEquals(actual.getBody().getNavigation().getCancel().getUrl(), "cancel");
+        assertEquals(actual.getBody().getNavigation().getError().getUrl(), "error");
+    }
+    @Test
+    @DisplayName("CASE2: with null redis storage response return NotFound")
+    public void withNullRedisStorageResponseReturnNotFound() {
+
+        when(redisStorageService.getByKey(any())).thenReturn(null);
+
+        ResponseEntity<GenerateUrlRequest> actual = sut.getConfigurationById("TEST");
+        assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
+    }
 
 }

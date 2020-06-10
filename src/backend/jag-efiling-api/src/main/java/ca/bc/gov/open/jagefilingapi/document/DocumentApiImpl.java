@@ -8,6 +8,7 @@ import ca.bc.gov.open.jagefilingapi.config.NavigationProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -43,5 +44,15 @@ public class DocumentApiImpl implements DocumentApi {
 
         return ResponseEntity.ok(response);
 
+    }
+
+    @Override
+    public ResponseEntity<GenerateUrlRequest> getConfigurationById(String id) {
+        GenerateUrlRequest generateUrlRequest =  redisStorageService.getByKey(id);
+        if (generateUrlRequest != null) {
+            return ResponseEntity.ok(generateUrlRequest);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
