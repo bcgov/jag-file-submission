@@ -72,7 +72,8 @@
     "jest-sonar-reporter": "^2.0.0",
     "prettier": "1.19.1",
     "pretty-quick": "^2.0.1",
-    "react-test-renderer": "^16.12.0"
+    "react-test-renderer": "^16.12.0",
+    "history": "^4.10.1"
   },
   "jest": {
     "watchPathIgnorePatterns": [
