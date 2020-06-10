@@ -1,10 +1,24 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## eFiling Frontend
 
-## Available Scripts
+Welcome to the eFiling frontend!
 
-In the project directory, you can run:
+## Running the Frontend
 
-### `yarn start`
+In the project directory (`efiling-frontend`), you can run:
+
+### `docker-compose up -d --build`
+
+Builds the image and fires up the container. Just running this single command will install all required dependencies and start up the application on port 3000.
+
+### `docker-compose stop`
+
+Stops the container and the frontend application from being run/served.
+
+### `npm install`
+
+Installs all the required dependencies to get the application up and running.
+
+### `npm start`
 
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -12,12 +26,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
+### `npm run build`
 
 Builds the app for production to the `build` folder.<br />
 It correctly bundles React in production mode and optimizes the build for the best performance.
@@ -25,44 +34,42 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.<br />
 Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
+### `npm run eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
 If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+## ESLint and Prettier
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This project uses ESLint and Prettier to ensure that the code being written follows standard guidelines and standards, and that the code styling is kept consistent throughout the application.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### `npx eslint .`
 
-### Code Splitting
+Runs the linter on the entire frontend codebase and reports any errors or warnings that may be present.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+### `prettier [opts] [filename ...]`
 
-### Analyzing the Bundle Size
+Runs prettier and formats your file. This has been setup by Husky to run on every commit, so prettier will check all the files within the directory and format them on every commit.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+## Storybook
 
-### Making a Progressive Web App
+This project uses component-driven development and storybook in order to create stories for frontend components. In order to run the storybook locally, you can run:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+### `npm run storybook`
 
-### Advanced Configuration
+Storybook should start, on a random open port in dev-mode. Now you can develop your components and write stories and see the changes in Storybook immediately since it uses Webpack’s hot module reloading.<br />
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+Open [http://localhost:9009](http://localhost:9009) to view it in the browser.
 
-### Deployment
+## Jest
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+This project uses Jest for snapshot component testing. Snapshot tests are a very useful tool whenever you want to make sure your UI does not change unexpectedly. A typical snapshot test case renders a UI component, takes a snapshot, then compares it to a reference snapshot file stored alongside the test. The test will fail if the two snapshots do not match: either the change is unexpected, or the reference snapshot needs to be updated to the new version of the UI component.
 
-### `yarn build` fails to minify
+### `npm run test`
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Launches the test runner in the interactive watch mode.
