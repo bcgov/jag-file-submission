@@ -37,7 +37,7 @@ public class RedisStorageServiceTest {
     @Mock
     private Cache.ValueWrapper valueWrapper;
 
-    private RedisStorageService sut;
+    private RedisStorageService<GenerateUrlRequest> sut;
 
     @BeforeAll
     public void init() {
@@ -51,7 +51,7 @@ public class RedisStorageServiceTest {
         Mockito.doThrow(RedisConnectionFailureException.class).when(this.cache).get(eq(REDIS_CONNECTION_FAILURE_EXCEPTION));
         Mockito.doThrow(RedisConnectionFailureException.class).when(this.cache).evict(eq(REDIS_CONNECTION_FAILURE_EXCEPTION));
         Mockito.doNothing().when(this.cache).evict(KEY);
-        this.sut = new RedisStorageService(cacheManager);
+        this.sut = new RedisStorageService<GenerateUrlRequest>(cacheManager);
 
     }
 
@@ -76,25 +76,25 @@ public class RedisStorageServiceTest {
     @DisplayName("CASE3: get with existing key should get Bytes")
     @Test
     public void getWithExistingKeyShouldGetBytes() {
-        GenerateUrlRequest actual = sut.getByKey(KEY);
+        GenerateUrlRequest actual = sut.getByKey(KEY, GenerateUrlRequest.class);
         Assertions.assertEquals("http://error", actual.getNavigation().getError().getUrl());
     }
     @DisplayName("CASE4: get with existing key should return Null")
     @Test
     public void getWithNonExistingKeyShouldReturnNull() {
-        Assertions.assertNull(sut.getByKey(MISSING_DOCUMENT));
+        Assertions.assertNull(sut.getByKey(MISSING_DOCUMENT, GenerateUrlRequest.class));
     }
 
     @DisplayName("CASE5: get with Redis connection failure exception should throw EFilingRedisException")
     @Test
     public void getWithRedisConnectionFailureExceptionShouldThrowFlaRedisException() {
-        Assertions.assertThrows(EFilingRedisException.class, () -> sut.getByKey(REDIS_CONNECTION_FAILURE_EXCEPTION));
+        Assertions.assertThrows(EFilingRedisException.class, () -> sut.getByKey(REDIS_CONNECTION_FAILURE_EXCEPTION, GenerateUrlRequest.class));
     }
 
     @DisplayName("CASE6: delete with Redis connection failure exception should throw EFilingRedisException")
     @Test
     public void deleteWithRedisConnectionFailureExceptionShouldThrowFlaRedisException() {
-        Assertions.assertThrows(EFilingRedisException.class, () -> sut.getByKey(REDIS_CONNECTION_FAILURE_EXCEPTION));
+        Assertions.assertThrows(EFilingRedisException.class, () -> sut.getByKey(REDIS_CONNECTION_FAILURE_EXCEPTION, GenerateUrlRequest.class));
     }
 
     @DisplayName("CASE7: delete with any key should not throw")

@@ -1,6 +1,5 @@
 package ca.bc.gov.open.jagefilingapi.cache;
 
-import ca.bc.gov.open.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.jagefilingapi.Keys;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
-public class RedisStorageService implements StorageService<GenerateUrlRequest> {
+public class RedisStorageService<T> implements StorageService<T> {
 
     private final CacheManager cacheManager;
     private static final String SERVICE_UNAVAILABLE_MESSAGE = "redis service unavailable";
@@ -27,7 +26,7 @@ public class RedisStorageService implements StorageService<GenerateUrlRequest> {
     }
 
     @Override
-    public String put(GenerateUrlRequest content) {
+    public String put(T content) {
 
         UUID id = UUID.randomUUID();
 
@@ -46,7 +45,7 @@ public class RedisStorageService implements StorageService<GenerateUrlRequest> {
     }
 
     @Override
-    public GenerateUrlRequest getByKey(String key) {
+    public T getByKey(String key, Class<T> clazz) {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -57,7 +56,7 @@ public class RedisStorageService implements StorageService<GenerateUrlRequest> {
             if(valueWrapper == null)
                 return null;
 
-            return objectMapper.readValue(valueWrapper.get().toString(), GenerateUrlRequest.class);
+            return objectMapper.readValue(valueWrapper.get().toString(), clazz);
 
         } catch (RedisConnectionFailureException | JsonProcessingException e) {
             throw new EFilingRedisException(SERVICE_UNAVAILABLE_MESSAGE, e.getCause());

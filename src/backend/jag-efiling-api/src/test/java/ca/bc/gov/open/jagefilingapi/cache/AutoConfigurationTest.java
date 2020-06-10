@@ -10,7 +10,7 @@ import org.springframework.cache.CacheManager;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@DisplayName("AutoConfiguration Test Suite")
+@DisplayName("CacheConfiguration Test Suite")
 public class AutoConfigurationTest {
     private static final String PASSWORD = "password";
     @Mock
@@ -19,13 +19,13 @@ public class AutoConfigurationTest {
     @Mock
     private RedisProperties redisProperties;
 
-    AutoConfiguration autoConfiguration;
+    CacheConfiguration autoConfiguration;
 
     @BeforeAll
     public void init() {
         MockitoAnnotations.initMocks(this);
         navigationProperties.setExpiryTime(10);
-        autoConfiguration = new AutoConfiguration(navigationProperties);
+        autoConfiguration = new CacheConfiguration(navigationProperties);
         redisProperties = Mockito.mock(RedisProperties.class);
     }
     @DisplayName("CASE1: stand alone input should generate jedisConnectionFactory")

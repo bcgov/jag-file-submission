@@ -43,7 +43,7 @@ public class DocumentApiImplTest {
     NavigationProperties navigationProperties;
 
     @Mock
-    RedisStorageService redisStorageService;
+    StorageService<GenerateUrlRequest> redisStorageService;
 
     @Mock
     FeeService feeService;
@@ -120,7 +120,7 @@ public class DocumentApiImplTest {
         errorRedirect.setUrl(ERROR);
         navigation.setError(errorRedirect);
         generateUrlRequest.setNavigation(navigation);
-        when(redisStorageService.getByKey(TEST)).thenReturn(generateUrlRequest);
+        when(redisStorageService.getByKey(TEST, GenerateUrlRequest.class)).thenReturn(generateUrlRequest);
 
         ResponseEntity<GenerateUrlRequest> actual = sut.getConfigurationById(TEST);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
@@ -131,14 +131,17 @@ public class DocumentApiImplTest {
         assertEquals(CANCEL, actual.getBody().getNavigation().getCancel().getUrl());
         assertEquals(ERROR, actual.getBody().getNavigation().getError().getUrl());
     }
+
     @Test
     @DisplayName("CASE2: with null redis storage response return NotFound")
     public void withNullRedisStorageResponseReturnNotFound() {
 
-        when(redisStorageService.getByKey(any())).thenReturn(null);
+        when(redisStorageService.getByKey(any(), Mockito.any()))
+                .thenReturn(null);
 
         ResponseEntity<GenerateUrlRequest> actual = sut.getConfigurationById(TEST);
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
+
     }
 
 }
