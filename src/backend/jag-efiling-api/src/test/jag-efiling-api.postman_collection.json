@@ -32,6 +32,26 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "getConfig",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/document/getConfiguration/3c83f3bd-0e4b-488d-b07b-fb8dfd3c67d9",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"document",
+						"getConfiguration",
+						"3c83f3bd-0e4b-488d-b07b-fb8dfd3c67d9"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}
