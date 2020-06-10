@@ -4,17 +4,17 @@ info:
   title: jag-efiling-api
   description: Efiling api
 servers:
-  - url: 'http://localhost/8080'
+- url: 'http://localhost/8080'
 tags:
-  - name: document
-    description: Document Api
+- name: document
+  description: Document Api
 paths:
   '/document/generateUrl':
     post:
       summary: Generates a secure URL for e-filing document
       operationId: GenerateUrl
       tags:
-        - document
+      - document
       requestBody:
         description: requested parameters to generate a url
         required: true
@@ -29,19 +29,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenerateUrlResponse'
-  /document/getConfiguration/{id}:
+  '/document/getConfiguration/{id}':
     get:
       summary: Get configuration from redis by id
       operationId: GetConfigurationById
       tags:
-        - configuration
+      - configuration
       parameters:
-        - name: id
-          in: path
-          description: Redis key
-          required: true
-          schema:
-            type: string
+      - name: id
+        in: path
+        description: Redis key
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: Config found
@@ -56,10 +56,12 @@ components:
     GenerateUrlRequest:
       description: details about the required transaction
       required:
-        - navigation
+      - navigation
       properties:
         navigation:
           $ref: '#/components/schemas/Navigation'
+        documentAccess:
+          $ref: '#/components/schemas/EndpointAccess'
     GenerateUrlResponse:
       description: A temporary url for uploading documents
       properties:
@@ -68,11 +70,23 @@ components:
           format: int64
         eFilingUrl:
           type: string
+    EndpointAccess:
+      type: object
+      properties:
+        url:
+          type: string
+        verb:
+          type: string
+          enum: [GET, POST]
+        headers:
+          type: object
+          additionalProperties:
+            type: string
     Navigation:
       required:
-        - success
-        - error
-        - cancel
+      - success
+      - error
+      - cancel
       properties:
         success:
           $ref: '#/components/schemas/Redirect'
@@ -82,7 +96,7 @@ components:
           $ref: '#/components/schemas/Redirect'
     Redirect:
       required:
-        - url
+      - url
       properties:
         url:
           type: string
