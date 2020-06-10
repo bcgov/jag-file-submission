@@ -143,6 +143,7 @@
 	</profiles>
 	<build>
 		<plugins>
+
 			<plugin>
 				<groupId>org.openapitools</groupId>
 				<artifactId>openapi-generator-maven-plugin</artifactId>
@@ -174,6 +175,28 @@
 					<mainClass>ca.bc.gov.open.jagefilingapi.JagEfilingApiApplication</mainClass>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<version>0.14.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<schemaLanguage>WSDL</schemaLanguage>
+					<generatePackage>ca.bc.gov.ag.csows.filing</generatePackage>
+					<schemaDirectory>src/main/resources/wsdl</schemaDirectory>
+					<schemaIncludes>
+						<schemaInclude>*.wsdl</schemaInclude>
+					</schemaIncludes>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 
