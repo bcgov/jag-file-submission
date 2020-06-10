@@ -12,24 +12,24 @@ services:
             - MVN_PROFILES=openshift
         ports:
             - "8080:8080"
+        environment:
+            - REDIS_HOST=redis
+            - REDIS_PORT=6379
+            - REDIS_PASSWORD=admin
+            - NAVIGATION_BASE_URL=https://httpbin.org/
+            - NAVIGATION_EXPIRYTIME=10
         networks:
             - fisu-net
 
-  #############################################################################################
-  ###                                 REDIS SERVER                                          ###
-  #############################################################################################
+#############################################################################################
+###                                 REDIS SERVER                                          ###
+#############################################################################################
     fisu-redis:
         container_name: redis
         image: redis
         command: redis-server --requirepass admin
         ports:
         - "6379:6379"
-        environment:
-            - REDIS_HOST=rediscontainer
-            - REDIS_PORT=6379
-            - REDIS_PASSWORD=admin
-            - NAVIGATION_BASE_URL=https://httpbin.org/
-            - NAVIGATION_EXPIRYTIME=10
         volumes:
         - data-redis:/data
         restart: always
