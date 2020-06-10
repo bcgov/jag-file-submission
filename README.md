@@ -23,15 +23,19 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
 | jag-efiling-api  | the main api for interating with the service | [README](src/backend/jag-efiling-api/README.md) |
 | efiling-frontend | the frontend for uploading documents         | [README](src/efiling-frontend/README.md)        |
 
+
 ## Running the App
 
-In order to run the application, run:
+From the jag-file-submission directory, run:
 
 ### `docker-compose up -d --build`
 
-Builds the image and fires up the container. Just running this single command will install all required dependencies and start up the app.
+Currently the docker image created will create a Redis container that the backend Spring Boot API interacts with.
 
-The frontend application will run and be available on port 3000.
+To confirm that your docker container is working you can perform a GET request to ```http://localhost:8080/actuator``` to see all available endpoints, or
+a GET request to ```http://localhost:8080/actuator/health``` to see the application status.
+
+It will also build the image and fires up the frontend container. The frontend application will run and be available on port 3000.
 
 ### `docker-compose stop`
 
