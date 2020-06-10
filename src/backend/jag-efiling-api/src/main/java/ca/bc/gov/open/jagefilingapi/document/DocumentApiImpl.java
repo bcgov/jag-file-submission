@@ -32,10 +32,10 @@ public class DocumentApiImpl implements DocumentApi {
     private final FeeService feeService;
 
     public DocumentApiImpl(
-            StorageService<GenerateUrlRequest> configDistributedCase,
+            StorageService<GenerateUrlRequest> configDistributedCache,
             NavigationProperties navigationProperties,
             FeeService feeService) {
-        this.configDistributedCache = configDistributedCase;
+        this.configDistributedCache = configDistributedCache;
         this.navigationProperties = navigationProperties;
         this.feeService = feeService;
     }
