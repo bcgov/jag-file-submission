@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Footer Default 1`] = `null`;
+
+exports[`Storyshots Footer Mobile 1`] = `null`;
+
+exports[`Storyshots Home Default 1`] = `null`;
+
+exports[`Storyshots Home Mobile 1`] = `null`;
