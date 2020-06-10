@@ -24,10 +24,11 @@ import java.util.List;
 @ComponentScan
 @EnableConfigurationProperties(NavigationProperties.class)
 public class AutoConfiguration {
-    @Autowired
-    NavigationProperties navigationProperties;
+    private final NavigationProperties navigationProperties;
 
-
+    public AutoConfiguration(NavigationProperties navigationProperties) {
+        this.navigationProperties = navigationProperties;
+    }
     /**
      * Configure the JedisConnectionFactory
      * @param properties The redis properties

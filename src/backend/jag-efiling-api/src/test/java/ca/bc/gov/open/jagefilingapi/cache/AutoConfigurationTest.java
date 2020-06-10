@@ -13,21 +13,20 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("AutoConfiguration Test Suite")
 public class AutoConfigurationTest {
-
     @Mock
     NavigationProperties navigationProperties;
 
     @Mock
     private RedisProperties redisProperties;
 
-    @InjectMocks
     AutoConfiguration autoConfiguration;
 
     @BeforeAll
     public void init() throws Exception {
         MockitoAnnotations.initMocks(this);
+        navigationProperties.setExpiryTime(10);
+        autoConfiguration = new AutoConfiguration(navigationProperties);
         redisProperties = Mockito.mock(RedisProperties.class);
-        Mockito.when(navigationProperties.getExpiryTime()).thenReturn(10);
     }
     @DisplayName("CASE1: stand alone input should generate jedisConnectionFactory")
     @Test
