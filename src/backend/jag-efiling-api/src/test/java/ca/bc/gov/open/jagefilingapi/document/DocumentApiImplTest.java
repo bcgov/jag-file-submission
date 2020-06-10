@@ -31,8 +31,8 @@ import static org.mockito.Mockito.*;
 @DisplayName("DocumentApiImpl Test Suite")
 public class DocumentApiImplTest {
     private static final String CASE_1 = "CASE1";
-    private static final String CANCEL = "cancel";
-    private static final String ERROR = "error";
+    private static final String CANCEL = "CANCEL";
+    private static final String ERROR = "ERROR";
     private static final String TEST = "TEST";
     private static final String TYPE = "TYPE";
     private static final String SUBTYPE = "SUBTYPE";
