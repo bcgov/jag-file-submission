@@ -5,7 +5,9 @@ spring:
         host: ${REDIS_HOST:localhost}
         port: ${REDIS_PORT:6379}
         password: ${REDIS_PASSWORD:admin}
+
 jag:
     efiling:
         navigation:
             baseUrl: ${NAVIGATION_BASE_URL:https://httpbin.org/}
+            expirytime: ${NAVIGATION_EXPIRYTIME:10}

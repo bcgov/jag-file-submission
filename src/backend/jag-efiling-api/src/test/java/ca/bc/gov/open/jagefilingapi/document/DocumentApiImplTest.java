@@ -38,6 +38,7 @@ public class DocumentApiImplTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         when(navigationProperties.getBaseUrl()).thenReturn("https://httpbin.org/");
+        when(navigationProperties.getExpiryTime()).thenReturn(10);
     }
 
 

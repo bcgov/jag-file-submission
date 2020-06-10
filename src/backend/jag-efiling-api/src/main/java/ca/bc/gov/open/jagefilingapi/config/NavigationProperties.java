@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class NavigationProperties {
 
     private String baseUrl;
-
+    private int expiryTime;
     /**
      * Returns the base url to create a secure upload url
      * @return
@@ -21,4 +21,8 @@ public class NavigationProperties {
     public void setBaseUrl(String baseUrl) {
         this.baseUrl = baseUrl;
     }
+
+    public int getExpiryTime() { return expiryTime; }
+
+    public void setExpiryTime(int expiryTime) { this.expiryTime = expiryTime; }
 }
