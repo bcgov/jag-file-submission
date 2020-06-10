@@ -1,9 +1,197 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Footer Default 1`] = `null`;
+exports[`Storyshots Footer Default 1`] = `
+<footer
+  className="footer"
+>
+  <nav
+    className="navbar navbar-expand-sm navbar-dark justify-content-end"
+  >
+    <button
+      className="navbar-toggler"
+      data-target="#footerBar"
+      data-toggle="collapse"
+      type="button"
+    >
+      <span
+        className="navbar-toggler-icon"
+      />
+    </button>
+    <div
+      className="collapse navbar-collapse flex-grow-0"
+      id="footerBar"
+    >
+      <ul
+        className="navbar-nav text-right"
+      >
+        <li
+          className="nav-item m-1"
+        >
+          <a
+            className="nav-link"
+            href="https://www2.gov.bc.ca"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            BC Government
+          </a>
+        </li>
+        <li
+          className="nav-item m-1"
+        >
+          <a
+            className="nav-link"
+            href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Disclaimer
+          </a>
+        </li>
+        <li
+          className="nav-item m-1"
+        >
+          <a
+            className="nav-link"
+            href="https://www2.gov.bc.ca/gov/content/home/privacy"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Privacy
+          </a>
+        </li>
+        <li
+          className="nav-item m-1"
+        >
+          <a
+            className="nav-link"
+            href="https://www2.gov.bc.ca/gov/content/home/accessibility"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Accessibility
+          </a>
+        </li>
+        <li
+          className="nav-item m-1"
+        >
+          <a
+            className="nav-link"
+            href="https://www2.gov.bc.ca/gov/content/home/copyright"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Copyright
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</footer>
+`;
 
-exports[`Storyshots Footer Mobile 1`] = `null`;
+exports[`Storyshots Footer Mobile 1`] = `
+<footer
+  className="footer"
+>
+  <nav
+    className="navbar navbar-expand-sm navbar-dark justify-content-end"
+  >
+    <button
+      className="navbar-toggler"
+      data-target="#footerBar"
+      data-toggle="collapse"
+      type="button"
+    >
+      <span
+        className="navbar-toggler-icon"
+      />
+    </button>
+    <div
+      className="collapse navbar-collapse flex-grow-0"
+      id="footerBar"
+    >
+      <ul
+        className="navbar-nav text-right"
+      >
+        <li
+          className="nav-item m-1"
+        >
+          <a
+            className="nav-link"
+            href="https://www2.gov.bc.ca"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            BC Government
+          </a>
+        </li>
+        <li
+          className="nav-item m-1"
+        >
+          <a
+            className="nav-link"
+            href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Disclaimer
+          </a>
+        </li>
+        <li
+          className="nav-item m-1"
+        >
+          <a
+            className="nav-link"
+            href="https://www2.gov.bc.ca/gov/content/home/privacy"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Privacy
+          </a>
+        </li>
+        <li
+          className="nav-item m-1"
+        >
+          <a
+            className="nav-link"
+            href="https://www2.gov.bc.ca/gov/content/home/accessibility"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Accessibility
+          </a>
+        </li>
+        <li
+          className="nav-item m-1"
+        >
+          <a
+            className="nav-link"
+            href="https://www2.gov.bc.ca/gov/content/home/copyright"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Copyright
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</footer>
+`;
 
-exports[`Storyshots Home Default 1`] = `null`;
+exports[`Storyshots Home Default 1`] = `
+<div>
+  <p>
+    Hello
+  </p>
+</div>
+`;
 
-exports[`Storyshots Home Mobile 1`] = `null`;
+exports[`Storyshots Home Mobile 1`] = `
+<div>
+  <p>
+    Hello
+  </p>
+</div>
+`;
