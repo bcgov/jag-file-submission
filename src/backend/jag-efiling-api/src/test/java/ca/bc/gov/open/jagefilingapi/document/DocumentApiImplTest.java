@@ -6,7 +6,6 @@ import ca.bc.gov.open.api.model.Navigation;
 import ca.bc.gov.open.api.model.Redirect;
 import ca.bc.gov.open.jagefilingapi.cache.RedisStorageService;
 import ca.bc.gov.open.jagefilingapi.config.NavigationProperties;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,10 +16,9 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.concurrent.TimeUnit;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -64,8 +62,7 @@ public class DocumentApiImplTest {
         ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(generateUrlRequest);
 
         assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertEquals("https://httpbin.org/", actual.getBody().getEFilingUrl());
-        assertEquals("TEST", actual.getBody().getStorageId());
+        assertTrue(actual.getBody().getEFilingUrl().startsWith("https://httpbin.org/"));
         assertNotNull(actual.getBody().getExpiryDate());
     }
 
