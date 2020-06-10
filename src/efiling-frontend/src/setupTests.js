@@ -11,4 +11,3 @@ configure({ adapter: new Adapter() });
 
 // to address Error: Not implemented: HTMLCanvasElement.prototype.getContext
 window.HTMLCanvasElement.prototype.getContext = () => {};
-
