@@ -2,13 +2,43 @@ version: '3.7'
 services:
 
 #############################################################################################
-###                           JAG File Submission service                                 ###
+###                           JAG File Submission Service                                 ###
 #############################################################################################
     jag-file-submission:
         build:
-            context: .src/backend/jag-efiling-api
+            context: ./src/backend/jag-efiling-api
             args:
             - SERVICE_NAME=jag-efiling-api
             - MVN_PROFILES=openshift
         ports:
             - "8080:8080"
+        environment:
+            - REDIS_HOST=redis
+            - REDIS_PORT=6379
+            - REDIS_PASSWORD=admin
+            - NAVIGATION_BASE_URL=https://httpbin.org/
+            - NAVIGATION_EXPIRYTIME=10
+        networks:
+            - fisu-net
+
+#############################################################################################
+###                                 REDIS SERVER                                          ###
+#############################################################################################
+    fisu-redis:
+        container_name: redis
+        image: redis
+        command: redis-server --requirepass admin
+        ports:
+        - "6379:6379"
+        volumes:
+        - data-redis:/data
+        restart: always
+        networks:
+            - fisu-net
+
+volumes:
+    data-redis:
+
+networks: 
+    fisu-net:
+        driver: "bridge"
