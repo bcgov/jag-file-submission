@@ -24,6 +24,12 @@ services:
         command: redis-server --requirepass admin
         ports:
         - "6379:6379"
+        environment:
+            - REDIS_HOST=rediscontainer
+            - REDIS_PORT=6379
+            - REDIS_PASSWORD=admin
+            - NAVIGATION_BASE_URL=https://httpbin.org/
+            - NAVIGATION_EXPIRYTIME=10
         volumes:
         - data-redis:/data
         restart: always
