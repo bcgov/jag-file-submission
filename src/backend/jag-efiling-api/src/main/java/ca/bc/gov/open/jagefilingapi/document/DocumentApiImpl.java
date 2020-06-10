@@ -36,7 +36,7 @@ public class DocumentApiImpl implements DocumentApi {
         //TODO: We should a service
         GenerateUrlResponse response = new GenerateUrlResponse();
 
-        response.expiryDate(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(10));
+        response.expiryDate(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(navigationProperties.getExpiryTime()));
         response.setEFilingUrl(MessageFormat.format("{0}/{1}", navigationProperties.getBaseUrl(), redisStorageService.put(generateUrlRequest)));
 
         logger.debug("{}", response.toString());

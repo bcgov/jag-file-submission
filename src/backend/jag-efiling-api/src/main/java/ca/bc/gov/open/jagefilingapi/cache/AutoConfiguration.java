@@ -1,6 +1,9 @@
 package ca.bc.gov.open.jagefilingapi.cache;
 
+import ca.bc.gov.open.jagefilingapi.config.NavigationProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -19,7 +22,11 @@ import java.util.List;
 
 @Configuration
 @ComponentScan
+@EnableConfigurationProperties(NavigationProperties.class)
 public class AutoConfiguration {
+    @Autowired
+    NavigationProperties navigationProperties;
+
 
     /**
      * Configure the JedisConnectionFactory
@@ -81,7 +88,7 @@ public class AutoConfiguration {
 
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
                 .disableCachingNullValues()
-                .entryTtl(Duration.ofMinutes(10));
+                .entryTtl(Duration.ofMinutes(navigationProperties.getExpiryTime()));
         redisCacheConfiguration.usePrefix();
 
         return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(jedisConnectionFactory)

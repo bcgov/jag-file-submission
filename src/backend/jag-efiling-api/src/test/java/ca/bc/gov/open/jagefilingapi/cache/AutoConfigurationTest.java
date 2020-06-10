@@ -1,6 +1,8 @@
 package ca.bc.gov.open.jagefilingapi.cache;
 
+import ca.bc.gov.open.jagefilingapi.config.NavigationProperties;
 import org.junit.jupiter.api.*;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -13,15 +15,19 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 public class AutoConfigurationTest {
 
     @Mock
+    NavigationProperties navigationProperties;
+
+    @Mock
     private RedisProperties redisProperties;
 
-    private AutoConfiguration autoConfiguration;
+    @InjectMocks
+    AutoConfiguration autoConfiguration;
 
     @BeforeAll
     public void init() throws Exception {
         MockitoAnnotations.initMocks(this);
-        autoConfiguration = new AutoConfiguration();
         redisProperties = Mockito.mock(RedisProperties.class);
+        Mockito.when(navigationProperties.getExpiryTime()).thenReturn(10);
     }
     @DisplayName("CASE1: stand alone input should generate jedisConnectionFactory")
     @Test
