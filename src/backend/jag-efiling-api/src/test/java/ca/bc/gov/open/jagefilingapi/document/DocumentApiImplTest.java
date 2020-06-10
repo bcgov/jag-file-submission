@@ -6,15 +6,21 @@ import ca.bc.gov.open.api.model.Navigation;
 import ca.bc.gov.open.api.model.Redirect;
 import ca.bc.gov.open.jagefilingapi.cache.RedisStorageService;
 import ca.bc.gov.open.jagefilingapi.config.NavigationProperties;
+import ca.bc.gov.open.jagefilingapi.fee.FeeService;
+import ca.bc.gov.open.jagefilingapi.fee.models.Fee;
+import ca.bc.gov.open.jagefilingapi.fee.models.FeeRequest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -29,6 +35,7 @@ public class DocumentApiImplTest {
     private static final String CANCEL = "cancel";
     private static final String ERROR = "error";
     private static final String TEST = "TEST";
+
     @InjectMocks
     private DocumentApiImpl sut;
 
@@ -38,11 +45,16 @@ public class DocumentApiImplTest {
     @Mock
     RedisStorageService redisStorageService;
 
+    @Mock
+    FeeService feeService;
+
+
     @BeforeAll
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         when(navigationProperties.getBaseUrl()).thenReturn("https://httpbin.org/");
         when(navigationProperties.getExpiryTime()).thenReturn(10);
+        when(feeService.getFee(Mockito.any(FeeRequest.class))).thenReturn(new Fee(BigDecimal.TEN));
     }
 
 
@@ -69,6 +81,9 @@ public class DocumentApiImplTest {
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertTrue(actual.getBody().getEFilingUrl().startsWith("https://httpbin.org/"));
         assertNotNull(actual.getBody().getExpiryDate());
+
+        Mockito.verify(feeService, Mockito.times(1)).getFee(Mockito.any(FeeRequest.class));
+
     }
 
     @Test
