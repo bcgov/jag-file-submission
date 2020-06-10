@@ -40,7 +40,7 @@ public class DocumentApiImpl implements DocumentApi {
         response.expiryDate(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(navigationProperties.getExpiryTime()));
         response.setEFilingUrl(MessageFormat.format("{0}/{1}", navigationProperties.getBaseUrl(), redisStorageService.put(generateUrlRequest)));
 
-        logger.debug("{}", response.toString());
+        logger.debug("{}", response);
 
         return ResponseEntity.ok(response);
 

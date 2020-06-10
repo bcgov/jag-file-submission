@@ -15,7 +15,7 @@ import java.util.UUID;
 public class RedisStorageService implements StorageService<GenerateUrlRequest> {
 
     private final CacheManager cacheManager;
-    private static final String serviceUnavailableMessage = "redis service unavailable";
+    private static final String SERVICE_UNAVAILABLE_MESSAGE = "redis service unavailable";
 
     /**
      * Default constructor
@@ -36,7 +36,7 @@ public class RedisStorageService implements StorageService<GenerateUrlRequest> {
         try {
             this.cacheManager.getCache(Keys.SECURE_URL_CACHE_NAME).put(id.toString(), objectMapper.writeValueAsString(content));
         } catch (RedisConnectionFailureException e) {
-            throw new EFilingRedisException(serviceUnavailableMessage, e.getCause());
+            throw new EFilingRedisException(SERVICE_UNAVAILABLE_MESSAGE, e.getCause());
         } catch (JsonProcessingException e) {
             throw new EFilingRedisException("error while deserializing object", e.getCause());
         }
@@ -59,10 +59,8 @@ public class RedisStorageService implements StorageService<GenerateUrlRequest> {
 
             return objectMapper.readValue(valueWrapper.get().toString(), GenerateUrlRequest.class);
 
-        } catch (RedisConnectionFailureException e) {
-            throw new EFilingRedisException(serviceUnavailableMessage, e.getCause());
-        } catch (JsonProcessingException e) {
-            throw new EFilingRedisException(serviceUnavailableMessage, e.getCause());
+        } catch (RedisConnectionFailureException | JsonProcessingException e) {
+            throw new EFilingRedisException(SERVICE_UNAVAILABLE_MESSAGE, e.getCause());
         }
 
     }
@@ -74,7 +72,7 @@ public class RedisStorageService implements StorageService<GenerateUrlRequest> {
         try {
             this.cacheManager.getCache(Keys.SECURE_URL_CACHE_NAME).evict(key);
         } catch (RedisConnectionFailureException e) {
-            throw new EFilingRedisException(serviceUnavailableMessage, e.getCause());
+            throw new EFilingRedisException(SERVICE_UNAVAILABLE_MESSAGE, e.getCause());
         }
     }
 
