@@ -50,11 +50,11 @@ This is pretty much what `create react app` provides out of the box, except slig
 
 In the project directory (`efiling-frontend`), you can run:
 
-### `npm install`
+### `yarn install`
 
 Installs all the required dependencies to get the application up and running.
 
-### `npm start`
+### `yarn start`
 
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -62,7 +62,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
-### `npm run build`
+### `yarn run build`
 
 Builds the app for production to the `build` folder.<br />
 It correctly bundles React in production mode and optimizes the build for the best performance.
@@ -70,7 +70,7 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.<br />
 Your app is ready to be deployed!
 
-### `npm run eject`
+### `yarn run eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
@@ -96,7 +96,7 @@ Runs prettier and formats your file. This has been setup by Husky to run on ever
 
 This project uses component-driven development and storybook in order to create stories for frontend components. In order to run the storybook locally, you can run:
 
-### `npm run storybook`
+### `yarn run storybook`
 
 Storybook should start, on a random open port in dev-mode. Now you can develop your components and write stories and see the changes in Storybook immediately since it uses Webpack’s hot module reloading.<br />
 
@@ -106,6 +106,6 @@ Open [http://localhost:9009](http://localhost:9009) to view it in the browser.
 
 This project uses Jest for snapshot component testing. Snapshot tests are a very useful tool whenever you want to make sure your UI does not change unexpectedly. A typical snapshot test case renders a UI component, takes a snapshot, then compares it to a reference snapshot file stored alongside the test. The test will fail if the two snapshots do not match: either the change is unexpected, or the reference snapshot needs to be updated to the new version of the UI component.
 
-### `npm run test`
+### `yarn run test`
 
 Launches the test runner in the interactive watch mode.
