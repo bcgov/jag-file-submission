@@ -19,7 +19,9 @@ jobs:
         working-directory: src/efiling-frontend
       - run: yarn install
         working-directory: src/efiling-frontend
+      - run: yarn ci
+        working-directory: src/efiling-frontend
       - run: yarn build
         working-directory: src/efiling-frontend
-      - run: yarn test -u
+      - run: CI=true yarn test
         working-directory: src/efiling-frontend
