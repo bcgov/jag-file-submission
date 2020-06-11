@@ -28,9 +28,9 @@
                     <schemaLanguage>WSDL</schemaLanguage>
                     <schemaDirectory>${project.basedir}</schemaDirectory>
                     <generatePackage>ca.bc.gov.open.jag.ag.csows.filing</generatePackage>
-                    <schemas>
-                        <schemaFiles>*.wsdl</schemaFiles>
-                    </schemas>
+                    <schemaIncludes>
+                        <schemaIncludes>*.wsdl</schemaIncludes>
+                    </schemaIncludes>
                 </configuration>
             </plugin>
         </plugins>
