@@ -8,7 +8,7 @@
 	<artifactId>jag-efiling-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<description>Demo project for Spring Boot</description>
+	<description>FLA Document Uploads</description>
 
 	<name>jag-efiling-backend</name>
 	<packaging>pom</packaging>
@@ -24,6 +24,7 @@
 			<id>all</id>
 			<modules>
 				<module>jag-efiling-api</module>
+				<module>libs/jag-efiling-cso</module>
 			</modules>
 		</profile>
 	</profiles>

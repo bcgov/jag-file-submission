@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jagefilingapi.fee.mockService;
+package ca.bc.gov.open.jagefilingapi.fee.mockservice;
 
 import ca.bc.gov.open.jagefilingapi.fee.MockFeeService;
 import ca.bc.gov.open.jagefilingapi.fee.models.Fee;
