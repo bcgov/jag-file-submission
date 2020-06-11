@@ -9,6 +9,19 @@ Generate a secure url by calling the generateUrl endpoint
 curl --location --request POST 'http://localhost:8080/document/generateUrl' \
 --header 'Content-Type: application/json' \
 --data-raw '{
+  "documentMetadata": {
+    "type": "string",
+    "subType": "string",
+    "documentAccess": {
+      "url": "string",
+      "verb": "GET",
+      "headers": {
+        "additionalProp1": "string",
+        "additionalProp2": "string",
+        "additionalProp3": "string"
+      }
+    }
+  },
   "navigation": {
     "success": {
       "url": "string"
@@ -26,7 +39,7 @@ curl --location --request POST 'http://localhost:8080/document/generateUrl' \
 
 ## Api Documentation
 
-E-filing-api is documented using [openapi](http://editor.swagger.io/?url=https://raw.githubusercontent.com/bcgov/jag-file-submission/master/src/backend/jag-efiling-api/jag-efiling-api.yaml)
+E-filing-api is documented using [openapi](http://editor.swagger.io/?url=https://raw.githubusercontent.com/bcgov/jag-file-submission/master/src/backend/jag-efiling-api/jag-efiling-api.yaml) and we have a [postman collection](https://raw.githubusercontent.com/bcgov/jag-file-submission/master/src/backend/jag-efiling-api/src/test/jag-efiling-api.postman_collection.json) that you can use to test the e-filing-api
 
 ## Diagram flow
 

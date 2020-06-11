@@ -58,14 +58,10 @@ components:
       required:
         - navigation
       properties:
-        type:
-          type: string
-        subtype:
-          type: string
+        documentMetadata:
+          $ref: '#/components/schemas/DocumentMetadata'
         navigation:
           $ref: '#/components/schemas/Navigation'
-        documentAccess:
-          $ref: '#/components/schemas/EndpointAccess'
     GenerateUrlResponse:
       description: A temporary url for uploading documents
       properties:
@@ -74,8 +70,26 @@ components:
           format: int64
         eFilingUrl:
           type: string
+    DocumentMetadata:
+      type: object
+      description: Document Metadata used to describe the document that will be e-filled
+      required:
+        - type
+        - subType
+        - documentAccess
+      properties:
+        type:
+          type: string
+          description: the document type
+        subType:
+          type: string
+          description: the document sub type
+        documentAccess:
+          $ref: '#/components/schemas/EndpointAccess'
+          description: the endpoint to access document(s)
     EndpointAccess:
       type: object
+      description: Represent an http endpoint
       properties:
         url:
           type: string

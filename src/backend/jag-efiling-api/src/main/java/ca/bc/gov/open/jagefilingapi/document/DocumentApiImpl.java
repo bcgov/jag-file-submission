@@ -41,18 +41,16 @@ public class DocumentApiImpl implements DocumentApi {
     @Override
     public ResponseEntity<GenerateUrlResponse> generateUrl(@Valid GenerateUrlRequest generateUrlRequest) {
         logger.info("Generate Url Request Recieved");
-        //TODO: We should a service
 
         logger.debug("Attempting to get fee structure for document");
-        Fee fee = feeService.getFee(new FeeRequest("type", "subtype"));
-        logger.info("Successfully retrived fee [{}]", fee.getAmount());
+        Fee fee = feeService.getFee(new FeeRequest(generateUrlRequest.getDocumentMetadata().getType(), generateUrlRequest.getDocumentMetadata().getSubType()));
+        logger.info("Successfully retrieved fee [{}]", fee.getAmount());
 
+        //TODO: Replace with a service
         GenerateUrlResponse response = new GenerateUrlResponse();
 
         response.expiryDate(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(navigationProperties.getExpiryTime()));
         response.setEFilingUrl(MessageFormat.format("{0}/{1}", navigationProperties.getBaseUrl(), redisStorageService.put(generateUrlRequest)));
-
-
 
         logger.debug("{}", response);
 
