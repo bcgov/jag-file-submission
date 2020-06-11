@@ -39,6 +39,7 @@ services:
   ###                                 EFILING FRONTEND                                      ###
   #############################################################################################
   efiling-frontend:
+    stdin_open: true
     container_name: efiling-frontend
     build:
       context: ./src/efiling-frontend
@@ -50,8 +51,6 @@ services:
       - 3000:3000
     environment:
       - CHOKIDAR_USEPOLLING=true
-    networks:
-      - fisu-net
 
 volumes:
   data-redis:
