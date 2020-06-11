@@ -19,9 +19,7 @@ import org.springframework.http.ResponseEntity;
 import java.math.BigDecimal;
 import java.util.Collections;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -66,6 +64,15 @@ public class DocumentApiImplTest {
         when(redisStorageService.put(any())).thenReturn(TEST);
 
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
+        DocumentMetadata documentMetadata = new DocumentMetadata();
+        documentMetadata.setType("type");
+        documentMetadata.setSubType("subType");
+        EndpointAccess endpoint = new EndpointAccess();
+        endpoint.setVerb(EndpointAccess.VerbEnum.POST);
+        endpoint.setUrl("http://doc");
+        endpoint.setHeaders(Collections.singletonMap("header", "header"));
+        documentMetadata.setDocumentAccess(endpoint);
+        generateUrlRequest.setDocumentMetadata(documentMetadata);
         Navigation navigation = new Navigation();
         Redirect successRedirect = new Redirect();
         successRedirect.setUrl(CASE_1);
