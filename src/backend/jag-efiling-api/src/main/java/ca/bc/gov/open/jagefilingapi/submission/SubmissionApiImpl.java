@@ -36,8 +36,6 @@ public class SubmissionApiImpl implements SubmissionApi {
 
     private final FeeService feeService;
 
-
-
     public SubmissionApiImpl(
             SubmissionService submissionService,
             NavigationProperties navigationProperties,

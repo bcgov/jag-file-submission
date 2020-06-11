@@ -12,7 +12,7 @@ import org.springframework.cache.CacheManager;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ConfigTest {
 
-    private Config sut;
+    private SubmissionConfig sut;
 
     @Mock
     CacheManager cacheManagerMock;
@@ -25,7 +25,7 @@ public class ConfigTest {
 
         MockitoAnnotations.initMocks(this);
 
-        sut = new Config();
+        sut = new SubmissionConfig();
     }
 
     @Test
