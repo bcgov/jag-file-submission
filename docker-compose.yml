@@ -41,7 +41,7 @@ services:
   efiling-frontend:
     container_name: efiling-frontend
     build:
-      context: .
+      context: ./src/efiling-frontend
       dockerfile: Dockerfile
     volumes:
       - ".:/efiling-frontend"

@@ -19,12 +19,12 @@ RUN apk add --update \
 
 # install dependencies
 COPY package.json ./
-COPY package-lock.json ./
-RUN npm install
-RUN npm install react-scripts@3.4.1 -g
+COPY yarn.lock ./
+RUN yarn install
+RUN yarn global add react-scripts@3.4.1
 
 # add app
 COPY . ./
 
 # start app
-CMD ["npm", "start"]
+CMD ["yarn", "start"]
