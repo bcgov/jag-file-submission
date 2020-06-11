@@ -34,6 +34,7 @@ public class DocumentApiImplTest {
     private static final String TYPE = "TYPE";
     private static final String SUBTYPE = "SUBTYPE";
     private static final String URL = "http://doc.com";
+    private static final String HEADER = "HEADER";
 
     @InjectMocks
     private DocumentApiImpl sut;
@@ -70,7 +71,7 @@ public class DocumentApiImplTest {
         EndpointAccess endpoint = new EndpointAccess();
         endpoint.setVerb(EndpointAccess.VerbEnum.POST);
         endpoint.setUrl("http://doc");
-        endpoint.setHeaders(Collections.singletonMap("header", "header"));
+        endpoint.setHeaders(Collections.singletonMap(HEADER, HEADER));
         documentMetadata.setDocumentAccess(endpoint);
         generateUrlRequest.setDocumentMetadata(documentMetadata);
         Navigation navigation = new Navigation();
@@ -101,7 +102,7 @@ public class DocumentApiImplTest {
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
         DocumentMetadata documentMetaData = new DocumentMetadata();
         EndpointAccess documentAccess = new EndpointAccess();
-        documentAccess.setHeaders(Collections.singletonMap("header", "header"));
+        documentAccess.setHeaders(Collections.singletonMap(HEADER, HEADER));
         documentAccess.setUrl(URL);
         documentAccess.setVerb(EndpointAccess.VerbEnum.POST);
         documentMetaData.setDocumentAccess(documentAccess);
