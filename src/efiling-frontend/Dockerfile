@@ -9,14 +9,11 @@ ENV PATH ./node_modules/.bin:$PATH
 
 # install dependencies
 COPY . .
-RUN ls
 RUN yarn install
 RUN yarn global add react-scripts@3.4.1
 
 # add app
 COPY . .
-
-RUN ls
 
 # start app
 CMD ["yarn", "start"]
