@@ -26,11 +26,11 @@
                 </executions>
                 <configuration>
                     <schemaLanguage>WSDL</schemaLanguage>
-                    <generatePackage>ca.bc.gov.ag.csows.filing</generatePackage>
                     <schemaDirectory>${project.basedir}</schemaDirectory>
-                    <schemaIncludes>
-                        <schemaInclude>*.wsdl</schemaInclude>
-                    </schemaIncludes>
+                    <generatePackage>ca.bc.gov.open.jag.ag.csows.filing</generatePackage>
+                    <schemas>
+                        <schemaFiles>*.wsdl</schemaFiles>
+                    </schemas>
                 </configuration>
             </plugin>
         </plugins>
