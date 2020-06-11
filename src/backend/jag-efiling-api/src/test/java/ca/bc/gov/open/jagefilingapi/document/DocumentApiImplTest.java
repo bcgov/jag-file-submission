@@ -1,9 +1,6 @@
 package ca.bc.gov.open.jagefilingapi.document;
 
-import ca.bc.gov.open.api.model.GenerateUrlRequest;
-import ca.bc.gov.open.api.model.GenerateUrlResponse;
-import ca.bc.gov.open.api.model.Navigation;
-import ca.bc.gov.open.api.model.Redirect;
+import ca.bc.gov.open.api.model.*;
 import ca.bc.gov.open.jagefilingapi.cache.RedisStorageService;
 import ca.bc.gov.open.jagefilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jagefilingapi.fee.FeeService;
@@ -20,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -30,12 +28,14 @@ import static org.mockito.Mockito.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("DocumentApiImpl Test Suite")
 public class DocumentApiImplTest {
+
     private static final String CASE_1 = "CASE1";
     private static final String CANCEL = "CANCEL";
     private static final String ERROR = "ERROR";
     private static final String TEST = "TEST";
     private static final String TYPE = "TYPE";
     private static final String SUBTYPE = "SUBTYPE";
+    private static final String URL = "http://doc.com";
 
     @InjectMocks
     private DocumentApiImpl sut;
@@ -92,8 +92,15 @@ public class DocumentApiImplTest {
     public void withValidIdReturnPayload() {
 
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
-        generateUrlRequest.setType(TYPE);
-        generateUrlRequest.setSubtype(SUBTYPE);
+        DocumentMetadata documentMetaData = new DocumentMetadata();
+        EndpointAccess documentAccess = new EndpointAccess();
+        documentAccess.setHeaders(Collections.singletonMap("header", "header"));
+        documentAccess.setUrl(URL);
+        documentAccess.setVerb(EndpointAccess.VerbEnum.POST);
+        documentMetaData.setDocumentAccess(documentAccess);
+        documentMetaData.setSubType(SUBTYPE);
+        documentMetaData.setType(TYPE);
+        generateUrlRequest.setDocumentMetadata(documentMetaData);
         Navigation navigation = new Navigation();
         Redirect successRedirect = new Redirect();
         successRedirect.setUrl(CASE_1);
@@ -109,11 +116,12 @@ public class DocumentApiImplTest {
 
         ResponseEntity<GenerateUrlRequest> actual = sut.getConfigurationById(TEST);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertEquals(actual.getBody().getType(), TYPE);
-        assertEquals(actual.getBody().getSubtype(), SUBTYPE);
-        assertEquals(actual.getBody().getNavigation().getSuccess().getUrl(),CASE_1);
-        assertEquals(actual.getBody().getNavigation().getCancel().getUrl(), CANCEL);
-        assertEquals(actual.getBody().getNavigation().getError().getUrl(), ERROR);
+        assertEquals(TYPE, actual.getBody().getDocumentMetadata().getType());
+        assertEquals(SUBTYPE, actual.getBody().getDocumentMetadata().getSubType());
+        assertEquals(URL, actual.getBody().getDocumentMetadata().getDocumentAccess().getUrl());
+        assertEquals(CASE_1, actual.getBody().getNavigation().getSuccess().getUrl());
+        assertEquals(CANCEL, actual.getBody().getNavigation().getCancel().getUrl());
+        assertEquals(ERROR, actual.getBody().getNavigation().getError().getUrl());
     }
     @Test
     @DisplayName("CASE2: with null redis storage response return NotFound")
