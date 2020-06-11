@@ -6,6 +6,7 @@ import ca.bc.gov.open.jagefilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jagefilingapi.fee.FeeService;
 import ca.bc.gov.open.jagefilingapi.fee.models.Fee;
 import ca.bc.gov.open.jagefilingapi.fee.models.FeeRequest;
+import ca.bc.gov.open.jagefilingapi.submission.SubmissionApiImpl;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,7 +27,7 @@ import static org.mockito.Mockito.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("DocumentApiImpl Test Suite")
-public class DocumentApiImplTest {
+public class SubmissionApiImplTest {
 
     private static final String CASE_1 = "CASE1";
     private static final String CANCEL = "CANCEL";
@@ -38,7 +39,7 @@ public class DocumentApiImplTest {
     private static final String HEADER = "HEADER";
 
     @InjectMocks
-    private DocumentApiImpl sut;
+    private SubmissionApiImpl sut;
 
     @Mock
     NavigationProperties navigationProperties;
@@ -66,15 +67,15 @@ public class DocumentApiImplTest {
         when(redisStorageService.put(any())).thenReturn(TEST);
 
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
-        DocumentMetadata documentMetadata = new DocumentMetadata();
-        documentMetadata.setType("type");
-        documentMetadata.setSubType("subType");
+        SubmissionMetadata submissionMetadata = new SubmissionMetadata();
+        submissionMetadata.setType("type");
+        submissionMetadata.setSubType("subType");
         EndpointAccess endpoint = new EndpointAccess();
         endpoint.setVerb(EndpointAccess.VerbEnum.POST);
         endpoint.setUrl("http://doc");
         endpoint.setHeaders(Collections.singletonMap(HEADER, HEADER));
-        documentMetadata.setDocumentAccess(endpoint);
-        generateUrlRequest.setDocumentMetadata(documentMetadata);
+        submissionMetadata.setSubmissionAccess(endpoint);
+        generateUrlRequest.setSubmissionMetadata(submissionMetadata);
         Navigation navigation = new Navigation();
         Redirect successRedirect = new Redirect();
         successRedirect.setUrl(CASE_1);
@@ -101,15 +102,15 @@ public class DocumentApiImplTest {
     public void withValidIdReturnPayload() {
 
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
-        DocumentMetadata documentMetaData = new DocumentMetadata();
+        SubmissionMetadata submissionMetaData = new SubmissionMetadata();
         EndpointAccess documentAccess = new EndpointAccess();
         documentAccess.setHeaders(Collections.singletonMap(HEADER, HEADER));
         documentAccess.setUrl(URL);
         documentAccess.setVerb(EndpointAccess.VerbEnum.POST);
-        documentMetaData.setDocumentAccess(documentAccess);
-        documentMetaData.setSubType(SUBTYPE);
-        documentMetaData.setType(TYPE);
-        generateUrlRequest.setDocumentMetadata(documentMetaData);
+        submissionMetaData.setSubmissionAccess(documentAccess);
+        submissionMetaData.setSubType(SUBTYPE);
+        submissionMetaData.setType(TYPE);
+        generateUrlRequest.setSubmissionMetadata(submissionMetaData);
         Navigation navigation = new Navigation();
         Redirect successRedirect = new Redirect();
         successRedirect.setUrl(CASE_1);
@@ -125,9 +126,9 @@ public class DocumentApiImplTest {
 
         ResponseEntity<GenerateUrlRequest> actual = sut.getConfigurationById(TEST);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertEquals(TYPE, actual.getBody().getDocumentMetadata().getType());
-        assertEquals(SUBTYPE, actual.getBody().getDocumentMetadata().getSubType());
-        assertEquals(URL, actual.getBody().getDocumentMetadata().getDocumentAccess().getUrl());
+        assertEquals(TYPE, actual.getBody().getSubmissionMetadata().getType());
+        assertEquals(SUBTYPE, actual.getBody().getSubmissionMetadata().getSubType());
+        assertEquals(URL, actual.getBody().getSubmissionMetadata().getSubmissionAccess().getUrl());
         assertEquals(CASE_1, actual.getBody().getNavigation().getSuccess().getUrl());
         assertEquals(CANCEL, actual.getBody().getNavigation().getCancel().getUrl());
         assertEquals(ERROR, actual.getBody().getNavigation().getError().getUrl());

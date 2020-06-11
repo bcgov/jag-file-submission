@@ -6,15 +6,15 @@ info:
 servers:
   - url: 'http://localhost:8080'
 tags:
-  - name: document
-    description: Document Api
+  - name: submission
+    description: Submission Api
 paths:
-  '/document/generateUrl':
+  '/submission/generateUrl':
     post:
-      summary: Generates a secure URL for e-filing document
+      summary: Generates a secure URL for e-filing submission
       operationId: GenerateUrl
       tags:
-        - document
+        - submission
       requestBody:
         description: requested parameters to generate a url
         required: true
@@ -29,7 +29,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenerateUrlResponse'
-  '/document/getConfiguration/{id}':
+  '/submission/getConfiguration/{id}':
     get:
       summary: Get configuration from redis by id
       operationId: GetConfigurationById
@@ -58,21 +58,21 @@ components:
       required:
         - navigation
       properties:
-        documentMetadata:
-          $ref: '#/components/schemas/DocumentMetadata'
+        submissionMetadata:
+          $ref: '#/components/schemas/SubmissionMetadata'
         navigation:
           $ref: '#/components/schemas/Navigation'
     GenerateUrlResponse:
-      description: A temporary url for uploading documents
+      description: A temporary url for uploading submission
       properties:
         expiryDate:
           type: integer
           format: int64
         eFilingUrl:
           type: string
-    DocumentMetadata:
+    SubmissionMetadata:
       type: object
-      description: Document Metadata used to describe the document that will be e-filled
+      description: Submission Metadata used to describe the submission that will be e-filled
       required:
         - type
         - subType
@@ -80,13 +80,13 @@ components:
       properties:
         type:
           type: string
-          description: the document type
+          description: the submission type
         subType:
           type: string
-          description: the document sub type
-        documentAccess:
+          description: the submission sub type
+        submissionAccess:
           $ref: '#/components/schemas/EndpointAccess'
-          description: the endpoint to access document(s)
+          description: the endpoint to access submission(s)
     EndpointAccess:
       type: object
       description: Represent an http endpoint
