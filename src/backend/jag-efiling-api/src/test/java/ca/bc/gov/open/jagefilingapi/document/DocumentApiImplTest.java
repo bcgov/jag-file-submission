@@ -1,7 +1,7 @@
 package ca.bc.gov.open.jagefilingapi.document;
 
 import ca.bc.gov.open.api.model.*;
-import ca.bc.gov.open.jagefilingapi.cache.RedisStorageService;
+import ca.bc.gov.open.jagefilingapi.cache.StorageService;
 import ca.bc.gov.open.jagefilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jagefilingapi.fee.FeeService;
 import ca.bc.gov.open.jagefilingapi.fee.models.Fee;
