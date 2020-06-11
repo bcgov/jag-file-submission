@@ -3,7 +3,7 @@ package ca.bc.gov.open.jagefilingapi.document;
 import ca.bc.gov.open.api.DocumentApi;
 import ca.bc.gov.open.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.api.model.GenerateUrlResponse;
-import ca.bc.gov.open.jagefilingapi.cache.RedisStorageService;
+import ca.bc.gov.open.jagefilingapi.cache.StorageService;
 import ca.bc.gov.open.jagefilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jagefilingapi.fee.FeeService;
 import ca.bc.gov.open.jagefilingapi.fee.models.Fee;
@@ -25,15 +25,17 @@ public class DocumentApiImpl implements DocumentApi {
 
     Logger logger = LoggerFactory.getLogger(DocumentApiImpl.class);
 
-    private final RedisStorageService redisStorageService;
+    private final StorageService<GenerateUrlRequest> configDistributedCache;
   
     private final NavigationProperties navigationProperties;
 
     private final FeeService feeService;
 
-    public DocumentApiImpl(RedisStorageService redisStorageService, NavigationProperties navigationProperties,
-                           FeeService feeService) {
-        this.redisStorageService = redisStorageService;
+    public DocumentApiImpl(
+            StorageService<GenerateUrlRequest> configDistributedCache,
+            NavigationProperties navigationProperties,
+            FeeService feeService) {
+        this.configDistributedCache = configDistributedCache;
         this.navigationProperties = navigationProperties;
         this.feeService = feeService;
     }
@@ -50,7 +52,7 @@ public class DocumentApiImpl implements DocumentApi {
         GenerateUrlResponse response = new GenerateUrlResponse();
 
         response.expiryDate(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(navigationProperties.getExpiryTime()));
-        response.setEFilingUrl(MessageFormat.format("{0}/{1}", navigationProperties.getBaseUrl(), redisStorageService.put(generateUrlRequest)));
+        response.setEFilingUrl(MessageFormat.format("{0}/{1}", navigationProperties.getBaseUrl(), configDistributedCache.put(generateUrlRequest)));
 
         logger.debug("{}", response);
 
@@ -60,7 +62,7 @@ public class DocumentApiImpl implements DocumentApi {
 
     @Override
     public ResponseEntity<GenerateUrlRequest> getConfigurationById(String id) {
-        GenerateUrlRequest generateUrlRequest =  redisStorageService.getByKey(id);
+        GenerateUrlRequest generateUrlRequest =  configDistributedCache.getByKey(id, GenerateUrlRequest.class);
         if (generateUrlRequest != null) {
             return ResponseEntity.ok(generateUrlRequest);
         } else {

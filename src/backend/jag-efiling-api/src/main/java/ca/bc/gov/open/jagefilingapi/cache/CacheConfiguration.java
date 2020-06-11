@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jagefilingapi.cache;
 
+import ca.bc.gov.open.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.jagefilingapi.config.NavigationProperties;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -22,10 +23,10 @@ import java.util.List;
 @Configuration
 @ComponentScan
 @EnableConfigurationProperties(NavigationProperties.class)
-public class AutoConfiguration {
+public class CacheConfiguration {
     private final NavigationProperties navigationProperties;
 
-    public AutoConfiguration(NavigationProperties navigationProperties) {
+    public CacheConfiguration(NavigationProperties navigationProperties) {
         this.navigationProperties = navigationProperties;
     }
     /**
@@ -94,5 +95,10 @@ public class AutoConfiguration {
         return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(jedisConnectionFactory)
                 .cacheDefaults(redisCacheConfiguration).build();
     }
+
+    public StorageService<GenerateUrlRequest> configDistributedCache(CacheManager cacheManager) {
+        return new RedisStorageService<GenerateUrlRequest>(cacheManager);
+    }
+
 
 }

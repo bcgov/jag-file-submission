@@ -20,4 +20,5 @@ public class FeeRequest {
     public String getDocumentSubType() {
         return documentSubType;
     }
+
 }
