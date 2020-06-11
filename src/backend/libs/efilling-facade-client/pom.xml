@@ -26,11 +26,10 @@
                 </executions>
                 <configuration>
                     <schemaLanguage>WSDL</schemaLanguage>
-                    <generatePackage>ca.bc.gov.ag.csows.filing</generatePackage>
-                    <schemaDirectory>src/main/resources/wsdl</schemaDirectory>
-                    <schemaIncludes>
-                        <schemaInclude>*.wsdl</schemaInclude>
-                    </schemaIncludes>
+                    <generatePackage>ca.bc.gov.open.jag.ag.csows.filing</generatePackage>
+                    <schemas>
+                        <schemaFiles>FilingFacade.wsdl</schemaFiles>
+                    </schemas>
                 </configuration>
             </plugin>
         </plugins>
