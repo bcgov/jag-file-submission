@@ -27,7 +27,7 @@
                 <configuration>
                     <schemaLanguage>WSDL</schemaLanguage>
                     <generatePackage>ca.bc.gov.ag.csows.filing</generatePackage>
-                    <schemaDirectory>src/main/resources/wsdl</schemaDirectory>
+                    <schemaDirectory>${project.basedir}</schemaDirectory>
                     <schemaIncludes>
                         <schemaInclude>*.wsdl</schemaInclude>
                     </schemaIncludes>

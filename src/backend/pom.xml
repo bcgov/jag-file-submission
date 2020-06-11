@@ -8,7 +8,7 @@
 	<artifactId>jag-efiling-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<description>Demo project for Spring Boot</description>
+	<description>FLA Document Upload</description>
 
 	<name>jag-efiling-backend</name>
 	<packaging>pom</packaging>

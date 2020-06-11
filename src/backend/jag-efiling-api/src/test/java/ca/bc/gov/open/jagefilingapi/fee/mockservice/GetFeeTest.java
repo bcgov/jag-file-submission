@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jagefilingapi.fee.mockService;
+package ca.bc.gov.open.jagefilingapi.fee.mockservice;
 
 import ca.bc.gov.open.jagefilingapi.fee.MockFeeService;
 import ca.bc.gov.open.jagefilingapi.fee.models.Fee;
@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class GetFeeTest {
 
-    public MockFeeService sut;
+    private MockFeeService sut;
 
     @BeforeAll
     public void setUp() {
