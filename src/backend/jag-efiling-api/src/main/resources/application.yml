@@ -17,3 +17,10 @@ info:
         name: @project.name@
         description: @project.description@
         version: @project.version@
+
+opentracing:
+    jaeger:
+        service-name: efilingApi
+        enabled: TRUE
+        udp-sender:
+            host: localhost
