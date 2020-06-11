@@ -44,7 +44,7 @@ services:
       context: ./src/efiling-frontend
       dockerfile: Dockerfile
     volumes:
-      - ".:/efiling-frontend"
+      - ".:/src/efiling-frontend"
       - "/node_modules"
     ports:
       - 3000:3000

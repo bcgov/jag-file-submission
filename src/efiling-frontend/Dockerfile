@@ -8,13 +8,15 @@ WORKDIR /efiling-frontend
 ENV PATH ./node_modules/.bin:$PATH
 
 # install dependencies
-COPY package.json ./
-COPY yarn.lock ./
+COPY . .
+RUN ls
 RUN yarn install
 RUN yarn global add react-scripts@3.4.1
 
 # add app
-COPY . ./
+COPY . .
+
+RUN ls
 
 # start app
 CMD ["yarn", "start"]
