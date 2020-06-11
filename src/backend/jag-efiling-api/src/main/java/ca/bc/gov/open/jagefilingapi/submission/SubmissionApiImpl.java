@@ -1,6 +1,6 @@
-package ca.bc.gov.open.jagefilingapi.document;
+package ca.bc.gov.open.jagefilingapi.submission;
 
-import ca.bc.gov.open.api.DocumentApi;
+import ca.bc.gov.open.api.SubmissionApi;
 import ca.bc.gov.open.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.api.model.GenerateUrlResponse;
 import ca.bc.gov.open.jagefilingapi.cache.StorageService;
@@ -21,9 +21,9 @@ import java.util.concurrent.TimeUnit;
 
 @RestController
 @EnableConfigurationProperties(NavigationProperties.class)
-public class DocumentApiImpl implements DocumentApi {
+public class SubmissionApiImpl implements SubmissionApi {
 
-    Logger logger = LoggerFactory.getLogger(DocumentApiImpl.class);
+    Logger logger = LoggerFactory.getLogger(SubmissionApiImpl.class);
 
     private final StorageService<GenerateUrlRequest> configDistributedCache;
   
@@ -31,7 +31,7 @@ public class DocumentApiImpl implements DocumentApi {
 
     private final FeeService feeService;
 
-    public DocumentApiImpl(
+    public SubmissionApiImpl(
             StorageService<GenerateUrlRequest> configDistributedCache,
             NavigationProperties navigationProperties,
             FeeService feeService) {
@@ -45,7 +45,7 @@ public class DocumentApiImpl implements DocumentApi {
         logger.info("Generate Url Request Recieved");
 
         logger.debug("Attempting to get fee structure for document");
-        Fee fee = feeService.getFee(new FeeRequest(generateUrlRequest.getDocumentMetadata().getType(), generateUrlRequest.getDocumentMetadata().getSubType()));
+        Fee fee = feeService.getFee(new FeeRequest(generateUrlRequest.getSubmissionMetadata().getType(), generateUrlRequest.getSubmissionMetadata().getSubType()));
         logger.info("Successfully retrieved fee [{}]", fee.getAmount());
 
         //TODO: Replace with a service
