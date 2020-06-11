@@ -44,13 +44,13 @@ paths:
             type: string
       responses:
         '200':
-          description: Config found
+          description: SubmissionConfig found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenerateUrlRequest'
         '404':
-          description: Config not found
+          description: SubmissionConfig not found
 components:
   schemas:
     GenerateUrlRequest:

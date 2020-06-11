@@ -1,12 +1,14 @@
 package ca.bc.gov.open.jagefilingapi.document;
 
 import ca.bc.gov.open.api.model.*;
-import ca.bc.gov.open.jagefilingapi.cache.StorageService;
 import ca.bc.gov.open.jagefilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jagefilingapi.fee.FeeService;
 import ca.bc.gov.open.jagefilingapi.fee.models.Fee;
 import ca.bc.gov.open.jagefilingapi.fee.models.FeeRequest;
 import ca.bc.gov.open.jagefilingapi.submission.SubmissionApiImpl;
+import ca.bc.gov.open.jagefilingapi.submission.mappers.SubmissionMapper;
+import ca.bc.gov.open.jagefilingapi.submission.models.Submission;
+import ca.bc.gov.open.jagefilingapi.submission.service.SubmissionService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
 import java.util.Collections;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -44,10 +47,13 @@ public class SubmissionApiImplTest {
     NavigationProperties navigationProperties;
 
     @Mock
-    StorageService<GenerateUrlRequest> redisStorageService;
+    FeeService feeService;
 
     @Mock
-    FeeService feeService;
+    SubmissionService submissionServiceMock;
+
+    @Mock
+    SubmissionMapper submissionMapperMock;
 
 
     @BeforeAll
@@ -63,7 +69,7 @@ public class SubmissionApiImplTest {
     @DisplayName("CASE1: when payload is valid")
     public void withValidPayloadShouldReturnOk() {
 
-        when(redisStorageService.put(any())).thenReturn(TEST);
+        when(submissionServiceMock.put(any())).thenReturn(TEST);
 
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
         SubmissionMetadata submissionMetadata = new SubmissionMetadata();
@@ -100,7 +106,7 @@ public class SubmissionApiImplTest {
     @DisplayName("CASE1: with validId return payload")
     public void withValidIdReturnPayload() {
 
-        GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
+
         SubmissionMetadata submissionMetaData = new SubmissionMetadata();
         EndpointAccess documentAccess = new EndpointAccess();
         documentAccess.setHeaders(Collections.singletonMap(HEADER, HEADER));
@@ -109,7 +115,7 @@ public class SubmissionApiImplTest {
         submissionMetaData.setSubmissionAccess(documentAccess);
         submissionMetaData.setSubType(SUBTYPE);
         submissionMetaData.setType(TYPE);
-        generateUrlRequest.setSubmissionMetadata(submissionMetaData);
+
         Navigation navigation = new Navigation();
         Redirect successRedirect = new Redirect();
         successRedirect.setUrl(CASE_1);
@@ -120,8 +126,12 @@ public class SubmissionApiImplTest {
         Redirect errorRedirect = new Redirect();
         errorRedirect.setUrl(ERROR);
         navigation.setError(errorRedirect);
-        generateUrlRequest.setNavigation(navigation);
-        when(redisStorageService.getByKey(TEST, GenerateUrlRequest.class)).thenReturn(generateUrlRequest);
+
+        Fee fee = new Fee(BigDecimal.TEN);
+
+        Submission submission = Submission.builder().submissionMetadata(submissionMetaData).fee(fee).navigation(navigation).create();
+
+        when(submissionServiceMock.getByKey(TEST)).thenReturn(Optional.of(submission));
 
         ResponseEntity<GenerateUrlRequest> actual = sut.getConfigurationById(TEST);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
@@ -137,8 +147,8 @@ public class SubmissionApiImplTest {
     @DisplayName("CASE2: with null redis storage response return NotFound")
     public void withNullRedisStorageResponseReturnNotFound() {
 
-        when(redisStorageService.getByKey(any(), any()))
-                .thenReturn(null);
+        when(submissionServiceMock.getByKey(any()))
+                .thenReturn(Optional.empty());
 
         ResponseEntity<GenerateUrlRequest> actual = sut.getConfigurationById(TEST);
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
