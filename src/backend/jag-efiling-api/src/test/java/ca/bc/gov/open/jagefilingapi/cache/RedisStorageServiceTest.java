@@ -16,6 +16,7 @@ import org.springframework.data.redis.RedisConnectionFailureException;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("RedisStorageService Test Suite")
@@ -43,15 +44,15 @@ public class RedisStorageServiceTest {
     public void init() {
 
         MockitoAnnotations.initMocks(this);
-        Mockito.when(valueWrapper.get()).thenReturn(toJson(getGenerateUrlRequest()));
-        Mockito.when(cacheManager.getCache(Keys.SECURE_URL_CACHE_NAME)).thenReturn(this.cache);
-        Mockito.when(cache.get(KEY)).thenReturn(valueWrapper);
-        Mockito.when(cache.get(MISSING_DOCUMENT)).thenReturn(null);
-        Mockito.doThrow(RedisConnectionFailureException.class).when(this.cache).put(anyString(), eq(EXCEPTION_INPUT));
-        Mockito.doThrow(RedisConnectionFailureException.class).when(this.cache).get(eq(REDIS_CONNECTION_FAILURE_EXCEPTION));
-        Mockito.doThrow(RedisConnectionFailureException.class).when(this.cache).evict(eq(REDIS_CONNECTION_FAILURE_EXCEPTION));
-        Mockito.doNothing().when(this.cache).evict(KEY);
-        this.sut = new RedisStorageService<GenerateUrlRequest>(cacheManager);
+        when(valueWrapper.get()).thenReturn(toJson(getGenerateUrlRequest()));
+        when(cacheManager.getCache(Keys.SECURE_URL_CACHE_NAME)).thenReturn(this.cache);
+        when(cache.get(KEY)).thenReturn(valueWrapper);
+        when(cache.get(MISSING_DOCUMENT)).thenReturn(null);
+        doThrow(RedisConnectionFailureException.class).when(this.cache).put(anyString(), eq(EXCEPTION_INPUT));
+        doThrow(RedisConnectionFailureException.class).when(this.cache).get(eq(REDIS_CONNECTION_FAILURE_EXCEPTION));
+        doThrow(RedisConnectionFailureException.class).when(this.cache).evict(eq(REDIS_CONNECTION_FAILURE_EXCEPTION));
+        doNothing().when(this.cache).evict(KEY);
+        this.sut = new RedisStorageService<>(cacheManager);
 
     }
 
@@ -59,7 +60,7 @@ public class RedisStorageServiceTest {
     @Test
     public void putWithValidContentShouldNotThrowException() {
 
-        Mockito.doNothing().when(this.cache).put(anyString(), anyString());
+        doNothing().when(this.cache).put(anyString(), anyString());
 
         GenerateUrlRequest request = getGenerateUrlRequest();
 
@@ -69,7 +70,7 @@ public class RedisStorageServiceTest {
     @DisplayName("CASE2: put with redis connection failure exception should throw EFilingRedisException")
     @Test
     public void putWithRedisConnectionFailureExceptionShouldThrowFlaRedisException() {
-        Mockito.doThrow(RedisConnectionFailureException.class).when(this.cache).put(anyString(), anyString());
+        doThrow(RedisConnectionFailureException.class).when(this.cache).put(anyString(), anyString());
         Assertions.assertThrows(EFilingRedisException.class, () -> sut.put(getGenerateUrlRequest()));
     }
 

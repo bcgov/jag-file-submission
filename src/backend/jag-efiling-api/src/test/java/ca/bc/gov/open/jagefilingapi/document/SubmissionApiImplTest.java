@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -138,7 +137,7 @@ public class SubmissionApiImplTest {
     @DisplayName("CASE2: with null redis storage response return NotFound")
     public void withNullRedisStorageResponseReturnNotFound() {
 
-        when(redisStorageService.getByKey(any(), Mockito.any()))
+        when(redisStorageService.getByKey(any(), any()))
                 .thenReturn(null);
 
         ResponseEntity<GenerateUrlRequest> actual = sut.getConfigurationById(TEST);

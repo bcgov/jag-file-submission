@@ -97,7 +97,7 @@ public class CacheConfiguration {
     }
 
     public StorageService<GenerateUrlRequest> configDistributedCache(CacheManager cacheManager) {
-        return new RedisStorageService<GenerateUrlRequest>(cacheManager);
+        return new RedisStorageService<>(cacheManager);
     }
 
 
