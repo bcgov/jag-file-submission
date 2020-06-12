@@ -11,6 +11,8 @@ jag:
         navigation:
             baseUrl: ${NAVIGATION_BASE_URL:https://httpbin.org/}
             expirytime: ${NAVIGATION_EXPIRYTIME:10}
+        client:
+            filingFacadeSoapUri: ${CSO_FILINGFACADE_URI:http://localhost:8080}
 
 info:
     app:
