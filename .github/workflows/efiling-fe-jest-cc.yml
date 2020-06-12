@@ -1,4 +1,4 @@
-name: build
+name: Yarn - Efiling-frontend Jest Tests and Coverage
 
 on: [push]
 
