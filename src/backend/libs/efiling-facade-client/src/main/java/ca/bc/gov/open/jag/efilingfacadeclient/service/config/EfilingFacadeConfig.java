@@ -1,6 +1,6 @@
 package ca.bc.gov.open.jag.efilingfacadeclient.service.config;
 
-import ca.bc.gov.open.jag.efilingfacadeclient.EfilingFacadeClient;
+import ca.bc.gov.open.jag.efilingfacadeclient.service.EfilingFacadeService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
@@ -16,11 +16,11 @@ public class EfilingFacadeConfig {
     }
 
     @Bean
-    public EfilingFacadeClient eFilingFacadeClient(Jaxb2Marshaller jaxb2Marshaller) {
-        EfilingFacadeClient eFilingFacadeClient = new EfilingFacadeClient();
-        eFilingFacadeClient.setDefaultUri("http://wsgw.dev.jag.gov.bc.ca:8080/csowsJBOSS/FilingFacade");
-        eFilingFacadeClient.setMarshaller(jaxb2Marshaller);
-        eFilingFacadeClient.setUnmarshaller(jaxb2Marshaller);
-        return eFilingFacadeClient;
+    public EfilingFacadeService eFilingFacadeClient(Jaxb2Marshaller jaxb2Marshaller) {
+        EfilingFacadeService eFilingFacadeService = new EfilingFacadeService();
+        eFilingFacadeService.setDefaultUri("http://wsgw.dev.jag.gov.bc.ca:8080/csowsJBOSS/FilingFacade");
+        eFilingFacadeService.setMarshaller(jaxb2Marshaller);
+        eFilingFacadeService.setUnmarshaller(jaxb2Marshaller);
+        return eFilingFacadeService;
     }
 }
