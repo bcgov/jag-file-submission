@@ -43,10 +43,10 @@ services:
     stdin_open: true
     container_name: efiling-frontend
     build:
-      context: ./src/efiling-frontend
+      context: ./src/frontend/efiling-frontend
       dockerfile: Dockerfile
     volumes:
-      - ".:/src/efiling-frontend"
+      - ".:/src/frontend/efiling-frontend"
       - "/node_modules"
     ports:
       - 3000:3000
