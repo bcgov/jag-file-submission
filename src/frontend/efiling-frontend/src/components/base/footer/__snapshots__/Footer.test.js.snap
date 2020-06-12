@@ -1,5 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Footer Component Link element renders the link and matches the snapshot 1`] = `
+<li
+  className="nav-item m-1"
+>
+  <a
+    className="nav-link"
+    href="example.com"
+    rel="noopener noreferrer"
+    target="_blank"
+  >
+    Example
+  </a>
+</li>
+`;
+
 exports[`Footer Component Matches the snapshot 1`] = `
 <footer
   className="footer"

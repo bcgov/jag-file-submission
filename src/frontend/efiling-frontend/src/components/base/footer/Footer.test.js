@@ -1,11 +1,16 @@
 import React from "react";
-import { create } from "react-test-renderer";
+import testBasicSnapshot from "../../../TestHelper";
 
-import Footer from "./Footer";
+import Footer, { LinkElement } from "./Footer";
 
 describe("Footer Component", () => {
   test("Matches the snapshot", () => {
-    const footer = create(<Footer />);
-    expect(footer.toJSON()).toMatchSnapshot();
+    testBasicSnapshot(<Footer />);
+  });
+
+  test("Link element renders the link and matches the snapshot", () => {
+    const linkElement = LinkElement("example.com", "Example");
+
+    testBasicSnapshot(linkElement);
   });
 });
