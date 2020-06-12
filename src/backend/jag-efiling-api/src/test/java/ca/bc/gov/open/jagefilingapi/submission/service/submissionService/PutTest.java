@@ -1,6 +1,6 @@
 package ca.bc.gov.open.jagefilingapi.submission.service.submissionService;
 
-import ca.bc.gov.open.api.model.SubmissionMetadata;
+import ca.bc.gov.open.api.model.DocumentProperties;
 import ca.bc.gov.open.jagefilingapi.cache.StorageService;
 import ca.bc.gov.open.jagefilingapi.submission.models.Submission;
 import ca.bc.gov.open.jagefilingapi.submission.service.SubmissionServiceImpl;
@@ -35,8 +35,8 @@ public class PutTest {
     @DisplayName("CASE 1: with valid submission should store submission")
     public void withValidObjectShouldPut() {
 
-        SubmissionMetadata documentMetadata = new SubmissionMetadata();
-        Submission submission = new Submission.Builder().submissionMetadata(documentMetadata).create();
+        DocumentProperties documentMetadata = new DocumentProperties();
+        Submission submission = new Submission.Builder().documentProperties(documentMetadata).create();
         String actual = sut.put(submission);
         Assertions.assertEquals(ID, actual);
 

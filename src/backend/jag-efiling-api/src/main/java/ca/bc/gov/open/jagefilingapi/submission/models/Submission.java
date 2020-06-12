@@ -1,7 +1,7 @@
 package ca.bc.gov.open.jagefilingapi.submission.models;
 
+import ca.bc.gov.open.api.model.DocumentProperties;
 import ca.bc.gov.open.api.model.Navigation;
-import ca.bc.gov.open.api.model.SubmissionMetadata;
 import ca.bc.gov.open.jagefilingapi.fee.models.Fee;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,14 +11,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class Submission {
 
-    private SubmissionMetadata submissionMetadata;
+    private DocumentProperties documentProperties;
 
     private Navigation navigation;
 
     private Fee fee;
 
     protected Submission(Submission.Builder builder) {
-        this.submissionMetadata = builder.submissionMetadata;
+        this.documentProperties = builder.documentProperties;
         this.navigation = builder.navigation;
         this.fee = builder.fee;
     }
@@ -29,16 +29,16 @@ public class Submission {
 
     @JsonCreator
     public Submission(
-            @JsonProperty("submissionMetadata") SubmissionMetadata submissionMetadata,
+            @JsonProperty("submissionMetadata") DocumentProperties documentProperties,
             @JsonProperty("navigation") Navigation navigation,
             @JsonProperty("fee") Fee fee) {
-        this.submissionMetadata = submissionMetadata;
+        this.documentProperties = documentProperties;
         this.navigation = navigation;
         this.fee = fee;
     }
 
-    public SubmissionMetadata getSubmissionMetadata() {
-        return submissionMetadata;
+    public DocumentProperties getDocumentProperties() {
+        return documentProperties;
     }
 
     public Navigation getNavigation() {
@@ -51,12 +51,12 @@ public class Submission {
 
     public static class Builder {
 
-        private SubmissionMetadata submissionMetadata;
+        private DocumentProperties documentProperties;
         private Navigation navigation;
         private Fee fee;
 
-        public Builder submissionMetadata(SubmissionMetadata submissionMetadata) {
-            this.submissionMetadata =  submissionMetadata;
+        public Builder documentProperties(DocumentProperties documentProperties) {
+            this.documentProperties =  documentProperties;
             return this;
         }
 

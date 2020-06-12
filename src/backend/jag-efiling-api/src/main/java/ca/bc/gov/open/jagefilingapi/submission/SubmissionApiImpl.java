@@ -51,7 +51,7 @@ public class SubmissionApiImpl implements SubmissionApi {
         logger.info("Generate Url Request Recieved");
 
         logger.debug("Attempting to get fee structure for document");
-        Fee fee = feeService.getFee(new FeeRequest(generateUrlRequest.getSubmissionMetadata().getType(), generateUrlRequest.getSubmissionMetadata().getSubType()));
+        Fee fee = feeService.getFee(new FeeRequest(generateUrlRequest.getDocumentProperties().getType(), generateUrlRequest.getDocumentProperties().getSubType()));
         logger.info("Successfully retrieved fee [{}]", fee.getAmount());
 
         //TODO: Replace with a service
@@ -76,7 +76,7 @@ public class SubmissionApiImpl implements SubmissionApi {
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         generateUrlRequest.setNavigation(submission.get().getNavigation());
-        generateUrlRequest.setSubmissionMetadata(submission.get().getSubmissionMetadata());
+        generateUrlRequest.setDocumentProperties(submission.get().getDocumentProperties());
 
         return ResponseEntity.ok(generateUrlRequest);
 

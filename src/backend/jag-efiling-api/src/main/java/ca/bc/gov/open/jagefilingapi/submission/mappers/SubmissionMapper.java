@@ -11,7 +11,7 @@ import org.mapstruct.Mapping;
 public interface SubmissionMapper {
 
 
-    @Mapping(source = "generateUrlRequest.submissionMetadata", target = "submissionMetadata")
+    @Mapping(source = "generateUrlRequest.documentProperties", target = "documentProperties")
     @Mapping(source = "generateUrlRequest.navigation", target = "navigation")
     @Mapping(source = "fee", target = "fee")
     Submission toSubmission(GenerateUrlRequest generateUrlRequest, Fee fee);
