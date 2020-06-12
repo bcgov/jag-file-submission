@@ -2,6 +2,7 @@ package ca.bc.gov.open.jagefilingapi.cache;
 
 import ca.bc.gov.open.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.jagefilingapi.config.NavigationProperties;
+import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;
@@ -22,12 +23,13 @@ import java.util.List;
 
 @Configuration
 @ComponentScan
-@EnableConfigurationProperties(NavigationProperties.class)
+@EnableConfigurationProperties(CacheProperties.class)
 public class CacheConfiguration {
-    private final NavigationProperties navigationProperties;
 
-    public CacheConfiguration(NavigationProperties navigationProperties) {
-        this.navigationProperties = navigationProperties;
+    private final CacheProperties cacheProperties;
+
+    public CacheConfiguration(CacheProperties cacheProperties) {
+        this.cacheProperties = cacheProperties;
     }
     /**
      * Configure the JedisConnectionFactory
@@ -89,7 +91,7 @@ public class CacheConfiguration {
 
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
                 .disableCachingNullValues()
-                .entryTtl(Duration.ofMinutes(navigationProperties.getExpiryTime()));
+                .entryTtl(cacheProperties.getRedis().getTimeToLive());
         redisCacheConfiguration.usePrefix();
 
         return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(jedisConnectionFactory)
@@ -99,6 +101,5 @@ public class CacheConfiguration {
     public StorageService<GenerateUrlRequest> configDistributedCache(CacheManager cacheManager) {
         return new RedisStorageService<>(cacheManager);
     }
-
 
 }

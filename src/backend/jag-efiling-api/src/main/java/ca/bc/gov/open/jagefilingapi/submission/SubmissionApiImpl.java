@@ -12,6 +12,7 @@ import ca.bc.gov.open.jagefilingapi.submission.models.Submission;
 import ca.bc.gov.open.jagefilingapi.submission.service.SubmissionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,8 @@ public class SubmissionApiImpl implements SubmissionApi {
   
     private final NavigationProperties navigationProperties;
 
+    private final CacheProperties cacheProperties;
+
     private final SubmissionMapper submissionMapper;
 
     private final FeeService feeService;
@@ -39,9 +42,10 @@ public class SubmissionApiImpl implements SubmissionApi {
     public SubmissionApiImpl(
             SubmissionService submissionService,
             NavigationProperties navigationProperties,
-            SubmissionMapper submissionMapper, FeeService feeService) {
+            CacheProperties cacheProperties, SubmissionMapper submissionMapper, FeeService feeService) {
         this.submissionService = submissionService;
         this.navigationProperties = navigationProperties;
+        this.cacheProperties = cacheProperties;
         this.submissionMapper = submissionMapper;
         this.feeService = feeService;
     }
@@ -57,7 +61,7 @@ public class SubmissionApiImpl implements SubmissionApi {
         //TODO: Replace with a service
         GenerateUrlResponse response = new GenerateUrlResponse();
 
-        response.expiryDate(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(navigationProperties.getExpiryTime()));
+        response.expiryDate(System.currentTimeMillis() + cacheProperties.getRedis().getTimeToLive().toMillis());
         response.setEFilingUrl(MessageFormat.format("{0}/{1}", navigationProperties.getBaseUrl(), submissionService.put(submissionMapper.toSubmission(generateUrlRequest, fee))));
 
         logger.debug("{}", response);
