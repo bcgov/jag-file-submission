@@ -1,3 +1,4 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/4078a74ee2bb4d400fd9/maintainability)](https://codeclimate.com/github/bcgov/jag-file-submission/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/4078a74ee2bb4d400fd9/test_coverage)](https://codeclimate.com/github/bcgov/jag-file-submission/test_coverage)
 # jag-file-submission
 
 Generic File Submission API (to be used by the Family Law Act Application at first)
@@ -25,6 +26,7 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
 | ----------------        | -------------------------------------------- | ----------------------------------------------- |
 | backend                 | all server side services                     | [README](src/backend/README.md) |
 | jag-efiling-api         | the main api for interating with the service | [README](src/backend/jag-efiling-api/README.md) |
+| efiling-demo-backend    | a demo backend that emulates a client        | [README](src/backend/efiling-backend-demo/README.md) |
 | file-submission-worker  | the main api for interating with the service | [README](src/backend/file-submission-worker/README.md) |
 | efiling-frontend        | the frontend for uploading documents         | [README](src/efiling-frontend/README.md)        |
 
