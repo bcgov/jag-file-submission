@@ -1,7 +1,7 @@
 import React from "react";
 import testBasicSnapshot from "../../../TestHelper";
 
-import Footer, { LinkElement } from "./Footer";
+import { Footer, LinkElement } from "./Footer";
 
 describe("Footer Component", () => {
   test("Matches the snapshot", () => {
