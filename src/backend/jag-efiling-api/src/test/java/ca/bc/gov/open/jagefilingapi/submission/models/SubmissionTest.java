@@ -1,9 +1,9 @@
 package ca.bc.gov.open.jagefilingapi.submission.models;
 
+import ca.bc.gov.open.api.model.DocumentProperties;
 import ca.bc.gov.open.api.model.EndpointAccess;
 import ca.bc.gov.open.api.model.Navigation;
 import ca.bc.gov.open.api.model.Redirect;
-import ca.bc.gov.open.api.model.SubmissionMetadata;
 import ca.bc.gov.open.jagefilingapi.fee.models.Fee;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -31,7 +31,7 @@ public class SubmissionTest {
     public void testingConstructor() {
 
 
-        SubmissionMetadata documentMetaData = new SubmissionMetadata();
+        DocumentProperties documentMetaData = new DocumentProperties();
         EndpointAccess documentAccess = new EndpointAccess();
         documentAccess.setHeaders(Collections.singletonMap(HEADER, HEADER));
         documentAccess.setUrl(URL);
@@ -55,10 +55,10 @@ public class SubmissionTest {
 
         Submission actual = new Submission(documentMetaData, navigation, fee);
 
-        Assertions.assertEquals(TYPE, actual.getSubmissionMetadata().getType());
-        Assertions.assertEquals(SUBTYPE, actual.getSubmissionMetadata().getSubType());
-        Assertions.assertEquals(URL, actual.getSubmissionMetadata().getSubmissionAccess().getUrl());
-        Assertions.assertEquals(EndpointAccess.VerbEnum.POST, actual.getSubmissionMetadata().getSubmissionAccess().getVerb());
+        Assertions.assertEquals(TYPE, actual.getDocumentProperties().getType());
+        Assertions.assertEquals(SUBTYPE, actual.getDocumentProperties().getSubType());
+        Assertions.assertEquals(URL, actual.getDocumentProperties().getSubmissionAccess().getUrl());
+        Assertions.assertEquals(EndpointAccess.VerbEnum.POST, actual.getDocumentProperties().getSubmissionAccess().getVerb());
         Assertions.assertEquals(ERROR, actual.getNavigation().getError().getUrl());
         Assertions.assertEquals(CANCEL, actual.getNavigation().getCancel().getUrl());
         Assertions.assertEquals(CASE_1, actual.getNavigation().getSuccess().getUrl());

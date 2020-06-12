@@ -1,7 +1,7 @@
 package ca.bc.gov.open.jagefilingapi.submission.service.submissionService;
 
 
-import ca.bc.gov.open.api.model.SubmissionMetadata;
+import ca.bc.gov.open.api.model.DocumentProperties;
 import ca.bc.gov.open.jagefilingapi.cache.StorageService;
 import ca.bc.gov.open.jagefilingapi.submission.models.Submission;
 import ca.bc.gov.open.jagefilingapi.submission.service.SubmissionServiceImpl;
@@ -31,9 +31,9 @@ public class GetByKeyTest {
 
         MockitoAnnotations.initMocks(this);
 
-        SubmissionMetadata documentMetadata = new SubmissionMetadata();
+        DocumentProperties documentMetadata = new DocumentProperties();
         documentMetadata.setType(TYPE);
-        Mockito.when(storageServiceMock.getByKey(Mockito.eq(ID), Mockito.any())).thenReturn(Submission.builder().submissionMetadata(documentMetadata).create());
+        Mockito.when(storageServiceMock.getByKey(Mockito.eq(ID), Mockito.any())).thenReturn(Submission.builder().documentProperties(documentMetadata).create());
 
     }
 
@@ -43,7 +43,7 @@ public class GetByKeyTest {
 
         Optional<Submission> actual = sut.getByKey(ID);
 
-        Assertions.assertEquals(TYPE, actual.get().getSubmissionMetadata().getType());
+        Assertions.assertEquals(TYPE, actual.get().getDocumentProperties().getType());
 
     }
 

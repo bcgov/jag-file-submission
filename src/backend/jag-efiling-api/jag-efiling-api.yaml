@@ -44,13 +44,13 @@ paths:
             type: string
       responses:
         '200':
-          description: SubmissionConfig found
+          description: Config found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenerateUrlRequest'
         '404':
-          description: SubmissionConfig not found
+          description: Config not found
 components:
   schemas:
     GenerateUrlRequest:
@@ -58,8 +58,8 @@ components:
       required:
         - navigation
       properties:
-        submissionMetadata:
-          $ref: '#/components/schemas/SubmissionMetadata'
+        documentProperties:
+          $ref: '#/components/schemas/DocumentProperties'
         navigation:
           $ref: '#/components/schemas/Navigation'
     GenerateUrlResponse:
@@ -70,7 +70,7 @@ components:
           format: int64
         eFilingUrl:
           type: string
-    SubmissionMetadata:
+    DocumentProperties:
       type: object
       description: Submission Metadata used to describe the submission that will be e-filled
       required:

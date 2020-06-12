@@ -72,15 +72,15 @@ public class SubmissionApiImplTest {
         when(submissionServiceMock.put(any())).thenReturn(TEST);
 
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
-        SubmissionMetadata submissionMetadata = new SubmissionMetadata();
-        submissionMetadata.setType("type");
-        submissionMetadata.setSubType("subType");
+        DocumentProperties documentProperties = new DocumentProperties();
+        documentProperties.setType("type");
+        documentProperties.setSubType("subType");
         EndpointAccess endpoint = new EndpointAccess();
         endpoint.setVerb(EndpointAccess.VerbEnum.POST);
         endpoint.setUrl("http://doc");
         endpoint.setHeaders(Collections.singletonMap(HEADER, HEADER));
-        submissionMetadata.setSubmissionAccess(endpoint);
-        generateUrlRequest.setSubmissionMetadata(submissionMetadata);
+        documentProperties.setSubmissionAccess(endpoint);
+        generateUrlRequest.setDocumentProperties(documentProperties);
         Navigation navigation = new Navigation();
         Redirect successRedirect = new Redirect();
         successRedirect.setUrl(CASE_1);
@@ -107,14 +107,14 @@ public class SubmissionApiImplTest {
     public void withValidIdReturnPayload() {
 
 
-        SubmissionMetadata submissionMetaData = new SubmissionMetadata();
+        DocumentProperties documentProperties = new DocumentProperties();
         EndpointAccess documentAccess = new EndpointAccess();
         documentAccess.setHeaders(Collections.singletonMap(HEADER, HEADER));
         documentAccess.setUrl(URL);
         documentAccess.setVerb(EndpointAccess.VerbEnum.POST);
-        submissionMetaData.setSubmissionAccess(documentAccess);
-        submissionMetaData.setSubType(SUBTYPE);
-        submissionMetaData.setType(TYPE);
+        documentProperties.setSubmissionAccess(documentAccess);
+        documentProperties.setSubType(SUBTYPE);
+        documentProperties.setType(TYPE);
 
         Navigation navigation = new Navigation();
         Redirect successRedirect = new Redirect();
@@ -129,15 +129,15 @@ public class SubmissionApiImplTest {
 
         Fee fee = new Fee(BigDecimal.TEN);
 
-        Submission submission = Submission.builder().submissionMetadata(submissionMetaData).fee(fee).navigation(navigation).create();
+        Submission submission = Submission.builder().documentProperties(documentProperties).fee(fee).navigation(navigation).create();
 
         when(submissionServiceMock.getByKey(TEST)).thenReturn(Optional.of(submission));
 
         ResponseEntity<GenerateUrlRequest> actual = sut.getConfigurationById(TEST);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertEquals(TYPE, actual.getBody().getSubmissionMetadata().getType());
-        assertEquals(SUBTYPE, actual.getBody().getSubmissionMetadata().getSubType());
-        assertEquals(URL, actual.getBody().getSubmissionMetadata().getSubmissionAccess().getUrl());
+        assertEquals(TYPE, actual.getBody().getDocumentProperties().getType());
+        assertEquals(SUBTYPE, actual.getBody().getDocumentProperties().getSubType());
+        assertEquals(URL, actual.getBody().getDocumentProperties().getSubmissionAccess().getUrl());
         assertEquals(CASE_1, actual.getBody().getNavigation().getSuccess().getUrl());
         assertEquals(CANCEL, actual.getBody().getNavigation().getCancel().getUrl());
         assertEquals(ERROR, actual.getBody().getNavigation().getError().getUrl());

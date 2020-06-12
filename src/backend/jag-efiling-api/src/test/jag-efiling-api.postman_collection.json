@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"navigation\": {\n\t\t\"success\": {\n\t\t\t\"url\": \"string\"\n\t\t},\n\t\t\"error\": {\n\t\t\t\"url\": \"string\"\n\t\t},\n\t\t\"cancel\": {\n\t\t\t\"url\": \"string\"\n\t\t}\n\t}\n}",
+					"raw": "{\r\n  \"documentProperties\": {\r\n    \"type\": \"string\",\r\n    \"subType\": \"string\",\r\n    \"submissionAccess\": {\r\n      \"url\": \"string\",\r\n      \"verb\": \"GET\",\r\n      \"headers\": {\r\n        \"additionalProp1\": \"string\",\r\n        \"additionalProp2\": \"string\",\r\n        \"additionalProp3\": \"string\"\r\n      }\r\n    }\r\n  },\r\n  \"navigation\": {\r\n    \"success\": {\r\n      \"url\": \"string\"\r\n    },\r\n    \"error\": {\r\n      \"url\": \"string\"\r\n    },\r\n    \"cancel\": {\r\n      \"url\": \"string\"\r\n    }\r\n  }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -20,13 +20,13 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/document/generateUrl",
+					"raw": "localhost:8080/submission/generateUrl",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"document",
+						"submission",
 						"generateUrl"
 					]
 				}
@@ -39,15 +39,15 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/document/getConfiguration/3c83f3bd-0e4b-488d-b07b-fb8dfd3c67d9",
+					"raw": "localhost:8080/submission/getConfiguration/c635c2ae-127a-4b45-b3e8-80c33306a18e",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"document",
+						"submission",
 						"getConfiguration",
-						"3c83f3bd-0e4b-488d-b07b-fb8dfd3c67d9"
+						"c635c2ae-127a-4b45-b3e8-80c33306a18e"
 					]
 				}
 			},
@@ -59,7 +59,16 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": ""
+					"raw": "http://localhost:8080/actuator/info",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"actuator",
+						"info"
+					]
 				}
 			},
 			"response": []
