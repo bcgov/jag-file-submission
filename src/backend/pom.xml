@@ -33,14 +33,8 @@
 		<profile>
 			<id>libs</id>
 			<modules>
-				<module>libs/efiling-facade-client</module>
-			</modules>
-		</profile>
-		<profile>
-			<id>worker</id>
-			<modules>
-				<module>libs/efilling-facade-client</module>
 				<module>efiling-worker</module>
+				<module>libs/efiling-facade-client</module>
 			</modules>
 		</profile>
 	</profiles>
