@@ -10,7 +10,7 @@
 
 	<description>FLA Document Upload</description>
 
-	<name>jag-efiling-backend</name>
+    <name>jag-efiling-backend</name>
 	<packaging>pom</packaging>
 	<url>https://github.com/bcgov/jag-file-submission</url>
 
@@ -25,6 +25,7 @@
 			<modules>
 				<module>libs/efilling-facade-client</module>
 				<module>jag-efiling-api</module>
+				<module>coverage-report</module>
 			</modules>
 		</profile>
 		<profile>
