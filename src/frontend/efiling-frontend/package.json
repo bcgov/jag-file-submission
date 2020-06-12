@@ -21,7 +21,8 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "regenerator-runtime": "^0.13.5",
-    "webpack": "4.42.0"
+    "webpack": "4.42.0",
+    "react-test-renderer": "^16.12.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -73,8 +74,7 @@
     "husky": "^4.2.5",
     "jest-sonar-reporter": "^2.0.0",
     "prettier": "1.19.1",
-    "pretty-quick": "^2.0.1",
-    "react-test-renderer": "^16.12.0"
+    "pretty-quick": "^2.0.1"
   },
   "jest": {
     "watchPathIgnorePatterns": [
