@@ -28,4 +28,4 @@ jobs:
       with:
         # The report file must be there, otherwise Code Climate won't find it
         coverageCommand: mvn -B verify --file src/backend/pom.xml -P all
-        coverageLocations: ${{github.workspace}}src/backend/coverage-report/target/site/jacoco-aggregate/jacoco.xml
+        coverageLocations: ${{github.workspace}}src/backend/coverage-report/target/site/jacoco-aggregate/jacoco.xml:jacoco
