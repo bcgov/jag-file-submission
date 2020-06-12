@@ -15,7 +15,8 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
     │   │   ├── file-submission-worker      # file submission worker
     │   │   ├── libs                        # backend libraries
     │   │   └── efilling-facade-client      # efiling soap client
-    │   └── efiling-frontend                # efiling frontend
+    │   ├── frontend                        # frontend applications
+    │   │   ├── efiling-frontend            # efiling frontend
     ├── COMPLIANCE.yaml                     #
     ├── CONTRIBUTING.md                     #
     ├── LICENSE                             # Apache License
