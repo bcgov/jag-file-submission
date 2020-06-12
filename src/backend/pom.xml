@@ -39,8 +39,8 @@
 		<profile>
 			<id>worker</id>
 			<modules>
-				<module>efiling-worker</module>
 				<module>libs/efilling-facade-client</module>
+				<module>efiling-worker</module>
 			</modules>
 		</profile>
 	</profiles>
