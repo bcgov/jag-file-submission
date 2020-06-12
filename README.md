@@ -10,6 +10,7 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
     ├── src/                                # application source files
     │   ├── backend                         # backend applications
     │   │   ├── jag-efiling-api             # efiling api
+    │   │   ├── file-submission-worker      # file submission worker	
     │   │   ├── libs                        # backend libraries
     │   │   └── efilling-facade-client      # efiling soap client	
     │   └── efiling-frontend                # efiling frontend
@@ -20,11 +21,12 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
 
 ## Apps
 
-| Name             | description                                  | doc                                             |
-| ---------------- | -------------------------------------------- | ----------------------------------------------- |
-| backend          | all server side services                     | [README](src/backend/README.md) |
-| jag-efiling-api  | the main api for interating with the service | [README](src/backend/jag-efiling-api/README.md) |
-| efiling-frontend | the frontend for uploading documents         | [README](src/efiling-frontend/README.md)        |
+| Name                    | description                                  | doc                                             |
+| ----------------        | -------------------------------------------- | ----------------------------------------------- |
+| backend                 | all server side services                     | [README](src/backend/README.md) |
+| jag-efiling-api         | the main api for interating with the service | [README](src/backend/jag-efiling-api/README.md) |
+| file-submission-worker  | the main api for interating with the service | [README](src/backend/file-submission-worker/README.md) |
+| efiling-frontend        | the frontend for uploading documents         | [README](src/efiling-frontend/README.md)        |
 
 ## Running the App
 
