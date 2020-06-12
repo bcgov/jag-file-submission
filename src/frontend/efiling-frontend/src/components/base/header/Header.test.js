@@ -1,23 +1,44 @@
 import React from "react";
-import { create } from "react-test-renderer";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
+import testBasicSnapshot from "../../../TestHelper";
 
-import Header from "./Header";
+import Header, { HeadingTitle, HeaderImage } from "./Header";
 
 describe("Header Component", () => {
   const header = {
     name: "File Submission"
   };
 
-  test("Matches the snapshot", () => {
+  test("Header matches the snapshot", () => {
     const history = createMemoryHistory();
 
-    const headerComponent = create(
+    const headerComponent = (
       <Router history={history}>
         <Header header={header} />
       </Router>
     );
-    expect(headerComponent.toJSON()).toMatchSnapshot();
+
+    testBasicSnapshot(headerComponent);
+  });
+
+  test("HeadingTitle matches the snapshot", () => {
+    const history = createMemoryHistory();
+
+    const headingTitle = HeadingTitle(history, "navbar-brand pointer");
+
+    testBasicSnapshot(headingTitle);
+  });
+
+  test("HeaderImage matches the snapshot", () => {
+    const history = createMemoryHistory();
+
+    const headingImage = HeaderImage(
+      "img-fluid d-none d-md-block",
+      181,
+      "bcid-logo-rev-en.svg"
+    );
+
+    testBasicSnapshot(headingImage);
   });
 });
