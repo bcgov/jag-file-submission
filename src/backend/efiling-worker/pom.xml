@@ -44,7 +44,7 @@
 		<!-- libs -->
 		<dependency>
 			<groupId>ca.bc.gov.open.jag</groupId>
-			<artifactId>efilling-facade-client</artifactId>
+			<artifactId>efiling-facade-client</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
@@ -59,6 +59,12 @@
 					<artifactId>junit-vintage-engine</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>ca.bc.gov.open.jag</groupId>
+			<artifactId>efiling-facade-client</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<profiles>
