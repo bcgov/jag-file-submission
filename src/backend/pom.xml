@@ -23,7 +23,7 @@
 		<profile>
 			<id>all</id>
 			<modules>
-				<module>libs/efilling-facade-client</module>
+				<module>libs/efiling-facade-client</module>
 				<module>jag-efiling-api</module>
 				<module>efiling-worker</module>
 				<module>efiling-backend-demo</module>
@@ -33,14 +33,8 @@
 		<profile>
 			<id>libs</id>
 			<modules>
-				<module>libs/efilling-facade-client</module>
-			</modules>
-		</profile>
-		<profile>
-			<id>worker</id>
-			<modules>
-				<module>libs/efilling-facade-client</module>
 				<module>efiling-worker</module>
+				<module>libs/efiling-facade-client</module>
 			</modules>
 		</profile>
 	</profiles>
