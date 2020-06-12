@@ -15,6 +15,14 @@
 
     <dependencies>
 
+        <!--libs-->
+        <dependency>
+            <groupId>ca.bc.gov.open.jag</groupId>
+            <artifactId>efilling-facade-client</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <!--apps-->
         <dependency>
             <groupId>ca.bc.gov.open</groupId>
             <artifactId>jag-efiling-api</artifactId>
@@ -23,7 +31,7 @@
 
         <dependency>
             <groupId>ca.bc.gov.open.jag</groupId>
-            <artifactId>efilling-facade-client</artifactId>
+            <artifactId>efiling-backend-demo</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
