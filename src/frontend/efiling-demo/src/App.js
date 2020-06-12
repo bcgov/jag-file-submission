@@ -6,8 +6,8 @@ export default function App() {
   return (
     <div>
       <Switch>
-        <Redirect exact from="/" to="/efiling" />
-        <Route exact path="/efiling">
+        <Redirect exact from="/" to="/efiling-demo" />
+        <Route exact path="/efiling-demo">
           <Home />
         </Route>
       </Switch>
