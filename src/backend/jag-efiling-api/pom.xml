@@ -162,6 +162,28 @@
 	<build>
 		<plugins>
 
+			<!--spring boot build-->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>ca.bc.gov.open.jagefilingapi.JagEfilingApiApplication</mainClass>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.22.0</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.22.0</version>
+			</plugin>
+
+			<!--openapi server autogen-->
 			<plugin>
 				<groupId>org.openapitools</groupId>
 				<artifactId>openapi-generator-maven-plugin</artifactId>
@@ -186,6 +208,8 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<!--mapstruct mapper autogen-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -201,12 +225,36 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
+
+			<!--jacoco code coverage-->
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.4</version>
+
 				<configuration>
-					<mainClass>ca.bc.gov.open.jagefilingapi.JagEfilingApiApplication</mainClass>
+					<excludes>
+						<exclude>**/*/mappers/*Impl.java</exclude>
+						<exclude>**/*/open/api/*</exclude>
+					</excludes>
 				</configuration>
+
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+
+					<!-- attached to Maven test phase -->
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 
 		</plugins>
