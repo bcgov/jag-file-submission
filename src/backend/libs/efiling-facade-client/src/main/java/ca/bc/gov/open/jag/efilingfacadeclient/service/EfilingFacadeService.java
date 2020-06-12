@@ -18,11 +18,10 @@ public class EfilingFacadeService extends WebServiceGatewaySupport {
 
     public BigDecimal SubmitFiling(String strFileInfo) {
 
-
         SubmitFiling request = new SubmitFiling();
         FilingPackage filingPackage = new FilingPackage();
 
-        // Need to map the fields into the filingPackage
+        // TODO - Need to map the fields into the filingPackage
         filingPackage.setApplicationReferenceGuid(UUID.randomUUID().toString());
         filingPackage.setApplicationCd(strFileInfo);
 

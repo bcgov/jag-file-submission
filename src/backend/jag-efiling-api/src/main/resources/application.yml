@@ -12,6 +12,9 @@ jag:
     efiling:
         navigation:
             baseUrl: ${NAVIGATION_BASE_URL:https://httpbin.org/}
+        client:
+            filingFacadeSoapUri: ${CSO_FILINGFACADE_URI:http://localhost:8080}
+
 info:
     app:
         name: @project.name@
