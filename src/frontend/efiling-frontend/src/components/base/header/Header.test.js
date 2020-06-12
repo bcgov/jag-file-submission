@@ -31,8 +31,6 @@ describe("Header Component", () => {
   });
 
   test("HeaderImage matches the snapshot", () => {
-    const history = createMemoryHistory();
-
     const headingImage = HeaderImage(
       "img-fluid d-none d-md-block",
       181,
