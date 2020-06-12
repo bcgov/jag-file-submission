@@ -1,5 +1,4 @@
 import React from "react";
-import { create } from "react-test-renderer";
 import testBasicSnapshot from "../../../TestHelper";
 
 import Footer, { LinkElement } from "./Footer";
