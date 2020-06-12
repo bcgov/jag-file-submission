@@ -1,13 +1,13 @@
-package ca.bc.gov.open.filesubmissionworker;
+package ca.bc.gov.open.jag.efilingworker;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FileSubmissionWorkerApplication {
+public class EfilingWorkerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FileSubmissionWorkerApplication.class, args);
+		SpringApplication.run(EfilingWorkerApplication.class, args);
 	}
 
 }

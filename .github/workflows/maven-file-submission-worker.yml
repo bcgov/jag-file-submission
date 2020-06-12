@@ -21,4 +21,4 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Maven
-      run: mvn -B test --file src/backend/file-submission-worker/pom.xml
+      run: mvn -B test --file src/backend/pom.xml -P worker
