@@ -14,7 +14,7 @@ public class SubmissionConfig {
 
     @Bean
     public StorageService<Submission> submissionStorageService(CacheManager cacheManager) {
-        return new RedisStorageService<Submission>(cacheManager);
+        return new RedisStorageService<>(cacheManager);
     }
 
     @Bean
