@@ -31,7 +31,7 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
 | jag-efiling-api      | the main api for interating with the service | [README](src/backend/jag-efiling-api/README.md)      |
 | efiling-demo-backend | a demo backend that emulates a client        | [README](src/backend/efiling-backend-demo/README.md) |
 | efiling-worker       | process submitted documents                  | [README](src/backend/efiling-worker/README.md)       |
-| frontend             | all client side services                     | [README](src/frontend/README.md)                     |
+| frontend             | all client side applications                 | [README](src/frontend/README.md)                     |
 | efiling-frontend     | the frontend for uploading documents         | [README](src/frontend/efiling-frontend/README.md)    |
 | efiling-demo         | the frontend for demo application            | [README](src/frontend/efiling-demo/README.md)        |
 
