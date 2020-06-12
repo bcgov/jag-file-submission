@@ -1,8 +1,6 @@
-package ca.bc.gov.open.jag.efilingfacadeclient.service.config;
+package ca.bc.gov.open.jag.efilingfacadeclient.config;
 
-import ca.bc.gov.open.jag.efilingfacadeclient.service.EfilingFacadeService;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import ca.bc.gov.open.jag.efilingfacadeclient.CSOEfilingServiceImpl;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -29,12 +27,12 @@ public class EfilingFacadeConfig {
     }
 
     @Bean
-    public EfilingFacadeService eFilingFacadeClient(Jaxb2Marshaller jaxb2Marshaller) {
+    public CSOEfilingServiceImpl eFilingFacadeClient(Jaxb2Marshaller jaxb2Marshaller) {
 
-        EfilingFacadeService eFilingFacadeService = new EfilingFacadeService();
-        eFilingFacadeService.setDefaultUri(efilingFacadeProperties.getFilingFacadeSoapUri());
-        eFilingFacadeService.setMarshaller(jaxb2Marshaller);
-        eFilingFacadeService.setUnmarshaller(jaxb2Marshaller);
-        return eFilingFacadeService;
+        CSOEfilingServiceImpl eFilingFacadeServiceImpl = new CSOEfilingServiceImpl();
+        eFilingFacadeServiceImpl.setDefaultUri(efilingFacadeProperties.getFilingFacadeSoapUri());
+        eFilingFacadeServiceImpl.setMarshaller(jaxb2Marshaller);
+        eFilingFacadeServiceImpl.setUnmarshaller(jaxb2Marshaller);
+        return eFilingFacadeServiceImpl;
     }
 }

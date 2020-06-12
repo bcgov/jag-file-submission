@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingworker.service;
 
 import ca.bc.gov.open.jag.ag.csows.filing.FilingPackage;
 import ca.bc.gov.open.jag.ag.csows.filing.SubmitFilingResponse;
+import ca.bc.gov.open.jag.efilingfacadeclient.MockCSOEfilingServiceImpl;
 import org.junit.jupiter.api.*;
 
 import java.math.BigDecimal;
@@ -9,11 +10,11 @@ import java.math.BigDecimal;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class MockCSOServiceTest {
 
-    private MockCSOService sut;
+    private MockCSOEfilingServiceImpl sut;
 
     @BeforeAll
     public void setUp() {
-        sut = new MockCSOService();
+        sut = new MockCSOEfilingServiceImpl();
     }
 
     @Test
