@@ -8,10 +8,10 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
     ├── .github                             # Contains GitHub Related sources
     ├── openshift                           # openshift templates and pipeline
     ├── src/                                # application source files
-    │   └── backend                         # backend applications
-    │       └── jag-efiling-api             # efiling api
-    │       └── libs                        # backend libraries
-│       	    └── efilling-facade-client  # efiling soap client	
+    │   ├── backend                         # backend applications
+    │   │   ├── jag-efiling-api             # efiling api
+    │   │   ├── libs                        # backend libraries
+    │   │   └── efilling-facade-client      # efiling soap client	
     │   └── efiling-frontend                # efiling frontend
     ├── COMPLIANCE.yaml                     #
     ├── CONTRIBUTING.md                     #
