@@ -16,10 +16,12 @@ import org.junit.jupiter.api.TestInstance;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -55,12 +57,19 @@ public class SubmissionApiImplTest {
     @Mock
     SubmissionMapper submissionMapperMock;
 
+    @Mock
+    CacheProperties cachePropertiesMock;
+
+    @Mock
+    CacheProperties.Redis cachePropertiesredisMock;
+
 
     @BeforeAll
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+        when(cachePropertiesredisMock.getTimeToLive()).thenReturn(Duration.ofMillis(600000));
+        when(cachePropertiesMock.getRedis()).thenReturn(cachePropertiesredisMock);
         when(navigationProperties.getBaseUrl()).thenReturn("https://httpbin.org/");
-        when(navigationProperties.getExpiryTime()).thenReturn(10);
         when(feeService.getFee(any(FeeRequest.class))).thenReturn(new Fee(BigDecimal.TEN));
     }
 

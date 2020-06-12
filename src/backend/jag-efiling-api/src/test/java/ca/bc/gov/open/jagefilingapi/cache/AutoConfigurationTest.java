@@ -5,9 +5,12 @@ import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+
+import java.time.Duration;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("CacheConfiguration Test Suite")
@@ -21,12 +24,22 @@ public class AutoConfigurationTest {
 
     CacheConfiguration autoConfiguration;
 
+    @Mock
+    CacheProperties cachePropertiesMock;
+
+    @Mock
+    CacheProperties.Redis redisPropertiesMock;
+
     @BeforeAll
     public void init() {
         MockitoAnnotations.initMocks(this);
-        navigationProperties.setExpiryTime(10);
-        autoConfiguration = new CacheConfiguration(navigationProperties);
+
+        Mockito.when(redisPropertiesMock.getTimeToLive()).thenReturn(Duration.ofMillis(600000));
+        Mockito.when(cachePropertiesMock.getRedis()).thenReturn(redisPropertiesMock);
+
+        autoConfiguration = new CacheConfiguration(cachePropertiesMock);
         redisProperties = Mockito.mock(RedisProperties.class);
+
     }
     @DisplayName("CASE1: stand alone input should generate jedisConnectionFactory")
     @Test
