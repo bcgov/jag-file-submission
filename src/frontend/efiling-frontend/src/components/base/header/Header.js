@@ -12,6 +12,7 @@ export const HeadingTitle = (history, classNames) => {
       role="button"
       onKeyDown={() => history.push("/")}
       tabIndex={0}
+      aria-labelledby="title"
     />
   );
 };
@@ -38,7 +39,9 @@ export default function Header({ header: { name } }) {
           alt="B.C. Government Logo"
         />
         {HeadingTitle(history, "pointer navbar-brand nav-item nav-link")}
-        <div className="navbar-brand">{name}</div>
+        <div id="title" className="navbar-brand">
+          {name}
+        </div>
       </nav>
     </header>
   );
