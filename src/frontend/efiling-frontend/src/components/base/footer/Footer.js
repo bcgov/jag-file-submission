@@ -1,5 +1,18 @@
 import React from "react";
 
+export const LinkElement = (url, label) => (
+  <li className="nav-item m-1">
+    <a
+      className="nav-link"
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {label}
+    </a>
+  </li>
+);
+
 export default function Footer() {
   return (
     <footer className="footer">
@@ -14,56 +27,23 @@ export default function Footer() {
         </button>
         <div className="collapse navbar-collapse flex-grow-0" id="footerBar">
           <ul className="navbar-nav text-right">
-            <li className="nav-item m-1">
-              <a
-                className="nav-link"
-                href="https://www2.gov.bc.ca"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                BC Government
-              </a>
-            </li>
-            <li className="nav-item m-1">
-              <a
-                className="nav-link"
-                href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Disclaimer
-              </a>
-            </li>
-            <li className="nav-item m-1">
-              <a
-                className="nav-link"
-                href="https://www2.gov.bc.ca/gov/content/home/privacy"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Privacy
-              </a>
-            </li>
-            <li className="nav-item m-1">
-              <a
-                className="nav-link"
-                href="https://www2.gov.bc.ca/gov/content/home/accessibility"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Accessibility
-              </a>
-            </li>
-            <li className="nav-item m-1">
-              <a
-                className="nav-link"
-                href="https://www2.gov.bc.ca/gov/content/home/copyright"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Copyright
-              </a>
-            </li>
+            {LinkElement("https://www2.gov.bc.ca", "BC Government")}
+            {LinkElement(
+              "https://www2.gov.bc.ca/gov/content/home/disclaimer",
+              "Disclaimer"
+            )}
+            {LinkElement(
+              "https://www2.gov.bc.ca/gov/content/home/privacy",
+              "Privacy"
+            )}
+            {LinkElement(
+              "https://www2.gov.bc.ca/gov/content/home/accessibility",
+              "Accessibility"
+            )}
+            {LinkElement(
+              "https://www2.gov.bc.ca/gov/content/home/copyright",
+              "Copyright"
+            )}
           </ul>
         </div>
       </nav>
