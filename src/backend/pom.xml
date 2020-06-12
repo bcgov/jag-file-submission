@@ -36,6 +36,13 @@
 				<module>libs/efilling-facade-client</module>
 			</modules>
 		</profile>
+		<profile>
+			<id>worker</id>
+			<modules>
+				<module>efiling-worker</module>
+				<module>libs/efilling-facade-client</module>
+			</modules>
+		</profile>
 	</profiles>
 
 </project>
