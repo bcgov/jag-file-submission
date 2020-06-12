@@ -15,17 +15,15 @@ const header = {
 
 const history = createMemoryHistory();
 
-export const Default = () => (
+const component = (
   <Router history={history}>
     <Header header={header} />
   </Router>
 );
 
-export const Mobile = () => (
-  <Router history={history}>
-    <Header header={header} />
-  </Router>
-);
+export const Default = () => component;
+
+export const Mobile = () => component;
 
 Mobile.story = {
   parameters: {
