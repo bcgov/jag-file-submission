@@ -34,3 +34,24 @@ jobs:
         # The report file must be there, otherwise Code Climate won't find it
         coverageCommand: mvn -B verify --file src/backend/pom.xml -P all
         coverageLocations: ${{github.workspace}}/src/backend/coverage-report/target/site/jacoco-aggregate/jacoco.xml:jacoco
+        
+  build-frontend-code-coverage:
+    strategy:
+      matrix:
+        platform: [ubuntu-latest]
+        node: ["12"]
+    name: tests
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@master
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm install -g yarn
+        working-directory: src/frontend/efiling-frontend
+      - run: yarn install
+        working-directory: src/frontend/efiling-frontend
+      - run: yarn build
+        working-directory: src/frontend/efiling-frontend
+      - run: CI=true yarn test
+        working-directory: src/frontend/efiling-frontend
