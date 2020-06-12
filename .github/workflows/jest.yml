@@ -16,10 +16,10 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: npm install -g yarn
-        working-directory: src/efiling-frontend
+        working-directory: src/frontend/efiling-frontend
       - run: yarn install
-        working-directory: src/efiling-frontend
+        working-directory: src/frontend/efiling-frontend
       - run: yarn build
-        working-directory: src/efiling-frontend
+        working-directory: src/frontend/efiling-frontend
       - run: CI=true yarn test
-        working-directory: src/efiling-frontend
+        working-directory: src/frontend/efiling-frontend
