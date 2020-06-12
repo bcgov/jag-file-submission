@@ -25,7 +25,7 @@
 			<modules>
 				<module>libs/efilling-facade-client</module>
 				<module>jag-efiling-api</module>
-				<module>file-submission-worker</module>
+				<module>efiling-worker</module>
 				<module>efiling-backend-demo</module>
 				<module>coverage-report</module>
 			</modules>

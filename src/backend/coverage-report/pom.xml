@@ -36,8 +36,8 @@
         </dependency>
 
         <dependency>
-            <groupId>ca.bc.gov.open</groupId>
-            <artifactId>file-submission-worker</artifactId>
+            <groupId>ca.bc.gov.open.jag</groupId>
+            <artifactId>efiling-worker</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
