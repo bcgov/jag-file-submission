@@ -53,6 +53,24 @@ services:
     environment:
       - CHOKIDAR_USEPOLLING=true
 
+  #############################################################################################
+  ###                                 EFILING DEMO                                          ###
+  #############################################################################################
+  efiling-demo:
+    # need stdin_open:true because there is an issue with container being auto exited after startup with react-scripts 3.4.1
+    stdin_open: true
+    container_name: efiling-demo
+    build:
+      context: ./src/frontend/efiling-demo
+      dockerfile: Dockerfile
+    volumes:
+      - ".:/src/frontend/efiling-demo"
+      - "/node_modules"
+    ports:
+      - 3001:3001
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+
 volumes:
   data-redis:
 
