@@ -45,7 +45,7 @@ Currently the docker image created will create a Redis container that the backen
 
 To confirm that your docker container is working you can perform a GET request to `http://localhost:8080/actuator` to see all available endpoints, or a GET request to `http://localhost:8080/actuator/health` to see the application status.
 
-It will also build the image and fires up the frontend container. The efiling-frontend application will run and be available on port 3000.
+It will also build the image and fires up the frontend container. The efiling-frontend application will run and be available on port 3000. The efiling-demo application will run and be available on port 3001.
 
 ### `docker-compose stop`
 
