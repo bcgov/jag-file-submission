@@ -13,6 +13,7 @@
     "bootstrap": "^4.4.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
+    "history": "^4.10.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-app-polyfill": "^1.0.6",
@@ -20,8 +21,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "regenerator-runtime": "^0.13.5",
-    "webpack": "4.42.0",
-    "history": "^4.10.1"
+    "webpack": "4.42.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -31,7 +31,8 @@
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
     "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint:fix": "eslint --fix .",
+    "coverage": "jest --coverage"
   },
   "eslintConfig": {
     "extends": "react-app"

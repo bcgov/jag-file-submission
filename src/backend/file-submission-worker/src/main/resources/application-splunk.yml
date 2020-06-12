@@ -1,3 +1,2 @@
 logging:
-  config:
-    "classpath:logback-splunk.xml"
+  config: "classpath:logback-splunk.xml"
