@@ -40,9 +40,8 @@ jobs:
         run: chmod +x ./cc-test-reporter
       - name: Format Coverage report
         env:	
-          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
-          JACOCO_SOURCE_PATH:  "${{github.workspace}}/src/main/java"
-        run: ./cc-test-reporter format-coverage ${{github.workspace}}/src/backend/coverage-report/target/site/jacoco-aggregate/jacoco.xml --input-type jacoco --output coverage/codeclimate.java1-8.json
+          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}  
+        run: JACOCO_SOURCE_PATH=${{github.workspace}}/src/main/java ./cc-test-reporter format-coverage ${{github.workspace}}/src/backend/coverage-report/target/site/jacoco-aggregate/jacoco.xml --input-type jacoco --output coverage/codeclimate.java1-8.json
       - name: Upload java artifact result
         uses: actions/upload-artifact@v1
         with:
