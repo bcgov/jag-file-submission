@@ -6,10 +6,14 @@ import ca.bc.gov.open.jagefilingapi.fee.models.Fee;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.UUID;
+
 /**
  * Represents the submission details for a transaction
  */
 public class Submission {
+
+    private UUID id;
 
     private DocumentProperties documentProperties;
 
@@ -18,6 +22,7 @@ public class Submission {
     private Fee fee;
 
     protected Submission(Submission.Builder builder) {
+        this.id = UUID.randomUUID();
         this.documentProperties = builder.documentProperties;
         this.navigation = builder.navigation;
         this.fee = builder.fee;
@@ -29,13 +34,17 @@ public class Submission {
 
     @JsonCreator
     public Submission(
+            @JsonProperty("id") UUID id,
             @JsonProperty("submissionMetadata") DocumentProperties documentProperties,
             @JsonProperty("navigation") Navigation navigation,
             @JsonProperty("fee") Fee fee) {
+        this.id = id;
         this.documentProperties = documentProperties;
         this.navigation = navigation;
         this.fee = fee;
     }
+
+    public UUID getId() { return id; }
 
     public DocumentProperties getDocumentProperties() {
         return documentProperties;

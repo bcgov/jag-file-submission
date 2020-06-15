@@ -2,29 +2,26 @@ package ca.bc.gov.open.jagefilingapi.submission.service.submissionService;
 
 
 import ca.bc.gov.open.api.model.DocumentProperties;
-import ca.bc.gov.open.jagefilingapi.cache.StorageService;
 import ca.bc.gov.open.jagefilingapi.submission.models.Submission;
 import ca.bc.gov.open.jagefilingapi.submission.service.SubmissionServiceImpl;
 import org.junit.jupiter.api.*;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class GetByKeyTest {
 
-    private static final String ID = "id";
+    private static final UUID ID = UUID.randomUUID();
     private static final String TYPE = "type";
-    public static final String CASE_2 = "CASE 2";
+    public static final UUID CASE_2 = UUID.randomUUID();
 
     @InjectMocks
     private SubmissionServiceImpl sut;
 
-    @Mock
-    public StorageService<Submission> storageServiceMock;
+//    @Mock
+//    public StorageService<Submission> storageServiceMock;
 
     @BeforeAll
     public void setUp() {
@@ -33,7 +30,7 @@ public class GetByKeyTest {
 
         DocumentProperties documentMetadata = new DocumentProperties();
         documentMetadata.setType(TYPE);
-        Mockito.when(storageServiceMock.getByKey(Mockito.eq(ID), Mockito.any())).thenReturn(Submission.builder().documentProperties(documentMetadata).create());
+     //   Mockito.when(storageServiceMock.getByKey(ArgumentMatchers.eq(ID))).thenReturn(Submission.builder().documentProperties(documentMetadata).create());
 
     }
 

@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jagefilingapi.cache;
 
 import ca.bc.gov.open.jagefilingapi.config.NavigationProperties;
+import ca.bc.gov.open.jagefilingapi.submission.models.Submission;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -9,6 +10,7 @@ import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 
 import java.time.Duration;
 
@@ -69,11 +71,12 @@ public class AutoConfigurationTest {
         JedisConnectionFactory jedisConnectionFactory = autoConfiguration.jedisConnectionFactory(redisProperties);
         Assertions.assertNotNull(jedisConnectionFactory);
     }
+
     @DisplayName("CASE4: correct input should return cacheManager")
     @Test
     public void correctInputShouldReturnCacheManager() {
         JedisConnectionFactory jedisConnectionFactory = Mockito.mock(JedisConnectionFactory.class);
-        CacheManager cacheManager = autoConfiguration.cacheManager(jedisConnectionFactory);
+        CacheManager cacheManager = autoConfiguration.cacheManager(jedisConnectionFactory, new Jackson2JsonRedisSerializer(Submission.class));
         Assertions.assertNotNull(cacheManager);
     }
 

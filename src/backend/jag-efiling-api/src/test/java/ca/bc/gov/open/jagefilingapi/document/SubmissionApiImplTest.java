@@ -24,6 +24,7 @@ import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -36,7 +37,7 @@ public class SubmissionApiImplTest {
     private static final String CASE_1 = "CASE1";
     private static final String CANCEL = "CANCEL";
     private static final String ERROR = "ERROR";
-    private static final String TEST = "TEST";
+    private static final UUID TEST = UUID.randomUUID();
     private static final String TYPE = "TYPE";
     private static final String SUBTYPE = "SUBTYPE";
     private static final String URL = "http://doc.com";
@@ -78,7 +79,7 @@ public class SubmissionApiImplTest {
     @DisplayName("CASE1: when payload is valid")
     public void withValidPayloadShouldReturnOk() {
 
-        when(submissionServiceMock.put(any())).thenReturn(TEST);
+        when(submissionServiceMock.put(any(), any())).thenReturn(Optional.of(Submission.builder().create()));
 
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
         DocumentProperties documentProperties = new DocumentProperties();
@@ -142,7 +143,7 @@ public class SubmissionApiImplTest {
 
         when(submissionServiceMock.getByKey(TEST)).thenReturn(Optional.of(submission));
 
-        ResponseEntity<GenerateUrlRequest> actual = sut.getConfigurationById(TEST);
+        ResponseEntity<GenerateUrlRequest> actual = sut.getConfigurationById(TEST.toString());
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertEquals(TYPE, actual.getBody().getDocumentProperties().getType());
         assertEquals(SUBTYPE, actual.getBody().getDocumentProperties().getSubType());
@@ -159,7 +160,7 @@ public class SubmissionApiImplTest {
         when(submissionServiceMock.getByKey(any()))
                 .thenReturn(Optional.empty());
 
-        ResponseEntity<GenerateUrlRequest> actual = sut.getConfigurationById(TEST);
+        ResponseEntity<GenerateUrlRequest> actual = sut.getConfigurationById(TEST.toString());
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
 
     }
