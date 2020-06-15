@@ -1,11 +1,12 @@
 package ca.bc.gov.open.jagefilingapi.submission.service.submissionService;
 
 
-import ca.bc.gov.open.api.model.DocumentProperties;
+import ca.bc.gov.open.jagefilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jagefilingapi.submission.models.Submission;
 import ca.bc.gov.open.jagefilingapi.submission.service.SubmissionServiceImpl;
 import org.junit.jupiter.api.*;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
 import java.util.UUID;
