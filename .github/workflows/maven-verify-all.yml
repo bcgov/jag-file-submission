@@ -10,9 +10,9 @@ on:
     branches: [ master ]
 
 jobs:
-  verify-all-profiles:
+  job_1:
+    name: Create and upload coverage artifact
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 1.8
@@ -21,3 +21,8 @@ jobs:
         java-version: 1.8
     - name: Build with Maven
       run: mvn -B verify -P all --file src/backend/pom.xml
+    - name: Upload java artifact result
+      uses: actions/upload-artifact@v1
+      with:
+        name: coverage_report
+        path: src/backend/coverage-report/target/site/jacoco-aggregate/jacoco.xml
