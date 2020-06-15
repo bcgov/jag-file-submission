@@ -1,12 +1,15 @@
 package ca.bc.gov.open.jagefilingapi.document;
 
-import ca.bc.gov.open.api.model.*;
-import ca.bc.gov.open.jagefilingapi.cache.StorageService;
+
+import ca.bc.gov.open.jagefilingapi.api.model.*;
 import ca.bc.gov.open.jagefilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jagefilingapi.fee.FeeService;
 import ca.bc.gov.open.jagefilingapi.fee.models.Fee;
 import ca.bc.gov.open.jagefilingapi.fee.models.FeeRequest;
 import ca.bc.gov.open.jagefilingapi.submission.SubmissionApiImpl;
+import ca.bc.gov.open.jagefilingapi.submission.mappers.SubmissionMapper;
+import ca.bc.gov.open.jagefilingapi.submission.models.Submission;
+import ca.bc.gov.open.jagefilingapi.submission.service.SubmissionService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,13 +17,19 @@ import org.junit.jupiter.api.TestInstance;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.util.Collections;
+import java.util.Optional;
+import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -31,7 +40,7 @@ public class SubmissionApiImplTest {
     private static final String CASE_1 = "CASE1";
     private static final String CANCEL = "CANCEL";
     private static final String ERROR = "ERROR";
-    private static final String TEST = "TEST";
+    private static final UUID TEST = UUID.randomUUID();
     private static final String TYPE = "TYPE";
     private static final String SUBTYPE = "SUBTYPE";
     private static final String URL = "http://doc.com";
@@ -44,17 +53,27 @@ public class SubmissionApiImplTest {
     NavigationProperties navigationProperties;
 
     @Mock
-    StorageService<GenerateUrlRequest> redisStorageService;
+    FeeService feeService;
 
     @Mock
-    FeeService feeService;
+    SubmissionService submissionServiceMock;
+
+    @Mock
+    SubmissionMapper submissionMapperMock;
+
+    @Mock
+    CacheProperties cachePropertiesMock;
+
+    @Mock
+    CacheProperties.Redis cachePropertiesredisMock;
 
 
     @BeforeAll
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+        when(cachePropertiesredisMock.getTimeToLive()).thenReturn(Duration.ofMillis(600000));
+        when(cachePropertiesMock.getRedis()).thenReturn(cachePropertiesredisMock);
         when(navigationProperties.getBaseUrl()).thenReturn("https://httpbin.org/");
-        when(navigationProperties.getExpiryTime()).thenReturn(10);
         when(feeService.getFee(any(FeeRequest.class))).thenReturn(new Fee(BigDecimal.TEN));
     }
 
@@ -63,28 +82,12 @@ public class SubmissionApiImplTest {
     @DisplayName("CASE1: when payload is valid")
     public void withValidPayloadShouldReturnOk() {
 
-        when(redisStorageService.put(any())).thenReturn(TEST);
+        when(submissionServiceMock.put(any())).thenReturn(Optional.of(Submission.builder().create()));
 
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
-        SubmissionMetadata submissionMetadata = new SubmissionMetadata();
-        submissionMetadata.setType("type");
-        submissionMetadata.setSubType("subType");
-        EndpointAccess endpoint = new EndpointAccess();
-        endpoint.setVerb(EndpointAccess.VerbEnum.POST);
-        endpoint.setUrl("http://doc");
-        endpoint.setHeaders(Collections.singletonMap(HEADER, HEADER));
-        submissionMetadata.setSubmissionAccess(endpoint);
-        generateUrlRequest.setSubmissionMetadata(submissionMetadata);
-        Navigation navigation = new Navigation();
-        Redirect successRedirect = new Redirect();
-        successRedirect.setUrl(CASE_1);
-        navigation.setSuccess(successRedirect);
-        Redirect cancelRedirect = new Redirect();
-        cancelRedirect.setUrl(CANCEL);
-        navigation.setCancel(cancelRedirect);
-        Redirect errorRedirect = new Redirect();
-        navigation.setError(errorRedirect);
-        generateUrlRequest.setNavigation(navigation);
+
+        generateUrlRequest.setDocumentProperties(createDocumentProperties());
+        generateUrlRequest.setNavigation(createNavigation());
 
         ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(generateUrlRequest);
 
@@ -99,17 +102,47 @@ public class SubmissionApiImplTest {
     @Test
     @DisplayName("CASE1: with validId return payload")
     public void withValidIdReturnPayload() {
+        Fee fee = new Fee(BigDecimal.TEN);
 
-        GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
-        SubmissionMetadata submissionMetaData = new SubmissionMetadata();
+        Submission submission = Submission.builder().documentProperties(createDocumentProperties()).fee(fee).navigation(createNavigation()).create();
+
+        when(submissionServiceMock.getByKey(TEST)).thenReturn(Optional.of(submission));
+
+        ResponseEntity<GenerateUrlRequest> actual = sut.getConfigurationById(TEST.toString());
+        assertEquals(HttpStatus.OK, actual.getStatusCode());
+        assertEquals(TYPE, actual.getBody().getDocumentProperties().getType());
+        assertEquals(SUBTYPE, actual.getBody().getDocumentProperties().getSubType());
+        assertEquals(URL, actual.getBody().getDocumentProperties().getSubmissionAccess().getUrl());
+        assertEquals(CASE_1, actual.getBody().getNavigation().getSuccess().getUrl());
+        assertEquals(CANCEL, actual.getBody().getNavigation().getCancel().getUrl());
+        assertEquals(ERROR, actual.getBody().getNavigation().getError().getUrl());
+    }
+
+    @Test
+    @DisplayName("CASE2: with null redis storage response return NotFound")
+    public void withNullRedisStorageResponseReturnNotFound() {
+
+        when(submissionServiceMock.getByKey(any()))
+                .thenReturn(Optional.empty());
+
+        ResponseEntity<GenerateUrlRequest> actual = sut.getConfigurationById(TEST.toString());
+        assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
+
+    }
+
+    private DocumentProperties createDocumentProperties() {
+        DocumentProperties documentProperties = new DocumentProperties();
         EndpointAccess documentAccess = new EndpointAccess();
         documentAccess.setHeaders(Collections.singletonMap(HEADER, HEADER));
         documentAccess.setUrl(URL);
         documentAccess.setVerb(EndpointAccess.VerbEnum.POST);
-        submissionMetaData.setSubmissionAccess(documentAccess);
-        submissionMetaData.setSubType(SUBTYPE);
-        submissionMetaData.setType(TYPE);
-        generateUrlRequest.setSubmissionMetadata(submissionMetaData);
+        documentProperties.setSubmissionAccess(documentAccess);
+        documentProperties.setSubType(SUBTYPE);
+        documentProperties.setType(TYPE);
+        return documentProperties;
+    }
+
+    private Navigation createNavigation() {
         Navigation navigation = new Navigation();
         Redirect successRedirect = new Redirect();
         successRedirect.setUrl(CASE_1);
@@ -120,29 +153,6 @@ public class SubmissionApiImplTest {
         Redirect errorRedirect = new Redirect();
         errorRedirect.setUrl(ERROR);
         navigation.setError(errorRedirect);
-        generateUrlRequest.setNavigation(navigation);
-        when(redisStorageService.getByKey(TEST, GenerateUrlRequest.class)).thenReturn(generateUrlRequest);
-
-        ResponseEntity<GenerateUrlRequest> actual = sut.getConfigurationById(TEST);
-        assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertEquals(TYPE, actual.getBody().getSubmissionMetadata().getType());
-        assertEquals(SUBTYPE, actual.getBody().getSubmissionMetadata().getSubType());
-        assertEquals(URL, actual.getBody().getSubmissionMetadata().getSubmissionAccess().getUrl());
-        assertEquals(CASE_1, actual.getBody().getNavigation().getSuccess().getUrl());
-        assertEquals(CANCEL, actual.getBody().getNavigation().getCancel().getUrl());
-        assertEquals(ERROR, actual.getBody().getNavigation().getError().getUrl());
+        return navigation;
     }
-
-    @Test
-    @DisplayName("CASE2: with null redis storage response return NotFound")
-    public void withNullRedisStorageResponseReturnNotFound() {
-
-        when(redisStorageService.getByKey(any(), any()))
-                .thenReturn(null);
-
-        ResponseEntity<GenerateUrlRequest> actual = sut.getConfigurationById(TEST);
-        assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
-
-    }
-
 }
