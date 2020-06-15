@@ -17,6 +17,7 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
     │   │   └── efilling-facade-client      # efiling soap client
     │   ├── frontend                        # frontend applications
     │   │   ├── efiling-frontend            # efiling frontend
+    │   │   ├── efiling-demo                # efiling demo app frontend
     ├── COMPLIANCE.yaml                     #
     ├── CONTRIBUTING.md                     #
     ├── LICENSE                             # Apache License
@@ -24,13 +25,15 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
 
 ## Apps
 
-| Name                   | description                                  | doc                                                    |
-| ---------------------- | -------------------------------------------- | ------------------------------------------------------ |
-| backend                | all server side services                     | [README](src/backend/README.md)                        |
-| jag-efiling-api        | the main api for interating with the service | [README](src/backend/jag-efiling-api/README.md)        |
-| efiling-demo-backend   | a demo backend that emulates a client        | [README](src/backend/efiling-backend-demo/README.md)   |
-| efiling-worker         | process submitted documents                  | [README](src/backend/efiling-worker/README.md)         |
-| efiling-frontend       | the frontend for uploading documents         | [README](src/frontend/efiling-frontend/README.md)      |
+| Name                 | description                                  | doc                                                  |
+| -------------------- | -------------------------------------------- | ---------------------------------------------------- |
+| backend              | all server side services                     | [README](src/backend/README.md)                      |
+| jag-efiling-api      | the main api for interating with the service | [README](src/backend/jag-efiling-api/README.md)      |
+| efiling-demo-backend | a demo backend that emulates a client        | [README](src/backend/efiling-backend-demo/README.md) |
+| efiling-worker       | process submitted documents                  | [README](src/backend/efiling-worker/README.md)       |
+| frontend             | all client side applications                 | [README](src/frontend/README.md)                     |
+| efiling-frontend     | the frontend for uploading documents         | [README](src/frontend/efiling-frontend/README.md)    |
+| efiling-demo         | the frontend for demo application            | [README](src/frontend/efiling-demo/README.md)        |
 
 ## Running the App
 
@@ -42,7 +45,7 @@ Currently the docker image created will create a Redis container that the backen
 
 To confirm that your docker container is working you can perform a GET request to `http://localhost:8080/actuator` to see all available endpoints, or a GET request to `http://localhost:8080/actuator/health` to see the application status.
 
-It will also build the image and fires up the frontend container. The efiling-frontend application will run and be available on port 3000.
+It will also build the image and fires up the frontend container. The efiling-frontend application will run and be available on port 3000. The efiling-demo application will run and be available on port 3001.
 
 ### `docker-compose stop`
 
