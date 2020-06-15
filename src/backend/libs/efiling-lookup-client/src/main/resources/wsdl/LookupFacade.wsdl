@@ -1,0 +1,1017 @@
+<definitions name="lookups.LookupFacade" targetNamespace="http://ag.gov.bc.ca/csows" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="http://ag.gov.bc.ca/csows" xmlns:tns0="http://lookups.csows.ag.gov.bc.ca/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <types>
+        <schema elementFormDefault="qualified" targetNamespace="http://lookups.csows.ag.gov.bc.ca/" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:soap11-enc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://lookups.csows.ag.gov.bc.ca/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <complexType name="ApplicationPreference">
+                <sequence>
+                    <element name="applicationPreferfenceNm" nillable="true" type="string"/>
+                    <element name="updDtm" nillable="true" type="dateTime"/>
+                    <element name="preferenceDescriptionTxt" nillable="true" type="string"/>
+                    <element name="entUserId" nillable="true" type="string"/>
+                    <element name="updUserId" nillable="true" type="string"/>
+                    <element name="preferenceValueTxt" nillable="true" type="string"/>
+                    <element name="entDtm" nillable="true" type="dateTime"/>
+                    <element name="activeYn" nillable="true" type="boolean"/>
+                </sequence>
+            </complexType>
+            <element name="createApplicationPreferenceElement">
+                <complexType>
+                    <sequence>
+                        <element name="ApplicationPreference_1" nillable="true" type="tns:ApplicationPreference"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="createApplicationPreferenceResponseElement">
+                <complexType>
+                    <sequence>
+                        <element name="result" nillable="true" type="tns:ApplicationPreference"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="findApplicationPreferenceByCriteriaElement">
+                <complexType>
+                    <sequence>
+                        <element name="String_1" nillable="true" type="string"/>
+                        <element name="String_2" nillable="true" type="string"/>
+                        <element name="String_3" nillable="true" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="findApplicationPreferenceByCriteriaResponseElement">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="unbounded" minOccurs="0" name="result" nillable="true" type="tns:ApplicationPreference"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="findApplicationPreferenceByNameElement">
+                <complexType>
+                    <sequence>
+                        <element name="String_1" nillable="true" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="findApplicationPreferenceByNameResponseElement">
+                <complexType>
+                    <sequence>
+                        <element name="result" nillable="true" type="tns:ApplicationPreference"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="findApplicationPreferencesByPartialNameElement">
+                <complexType>
+                    <sequence>
+                        <element name="String_1" nillable="true" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="findApplicationPreferencesByPartialNameResponseElement">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="unbounded" minOccurs="0" name="result" nillable="true" type="tns:ApplicationPreference"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="getAccessEntitlementsElement">
+                <complexType>
+                    <sequence/>
+                </complexType>
+            </element>
+            <element name="getAccessEntitlementsResponseElement">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="unbounded" minOccurs="0" name="result" nillable="true" type="tns:CodeValue"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <complexType name="CodeValue">
+                <sequence>
+                    <element name="code" nillable="true" type="string"/>
+                    <element name="active" type="boolean"/>
+                    <element name="codeType" nillable="true" type="string"/>
+                    <element name="parentCode" nillable="true" type="string"/>
+                    <element name="shortDescription" nillable="true" type="string"/>
+                    <element name="description" nillable="true" type="string"/>
+                </sequence>
+            </complexType>
+            <element name="getAccessStatusTypesElement">
+                <complexType>
+                    <sequence/>
+                </complexType>
+            </element>
+            <element name="getAccessStatusTypesResponseElement">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="unbounded" minOccurs="0" name="result" nillable="true" type="tns:CodeValue"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="getActiveActsElement">
+                <complexType>
+                    <sequence/>
+                </complexType>
+            </element>
+            <element name="getActiveActsResponseElement">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="unbounded" minOccurs="0" name="result" nillable="true" type="tns:CodeValue"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="getActiveDocumentSchemasElement">
+                <complexType>
+                    <sequence/>
+                </complexType>
+            </element>
+            <element name="getActiveDocumentSchemasResponseElement">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="unbounded" minOccurs="0" name="result" nillable="true" type="tns:DocumentSchema"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <complexType name="DocumentSchema">
+                <sequence>
+                    <element name="documentTypeCd" nillable="true" type="string"/>
+                    <element name="schema" nillable="true" type="string"/>
+                    <element name="version" nillable="true" type="string"/>
+                </sequence>
+            </complexType>
+            <element name="getCitiesElement">
+                <complexType>
+                    <sequence/>
+                </complexType>
+            </element>
+            <element name="getCitiesResponseElement">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="unbounded" minOccurs="0" name="result" nillable="true" type="tns:CityCodeValue"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <complexType name="CityCodeValue">
+                <sequence>
+                    <element name="code" nillable="true" type="string"/>
+                    <element name="active" type="boolean"/>
+                    <element name="codeType" nillable="true" type="string"/>
+                    <element name="parentCode" nillable="true" type="string"/>
+                    <element name="shortDescription" nillable="true" type="string"/>
+                    <element name="description" nillable="true" type="string"/>
+                    <element name="provSeqNo" nillable="true" type="string"/>
+                </sequence>
+            </complexType>
+            <element name="getCivilDataElementsElement">
+                <complexType>
+                    <sequence/>
+                </complexType>
+            </element>
+            <element name="getCivilDataElementsResponseElement">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="unbounded" minOccurs="0" name="result" nillable="true" type="tns:CodeValue"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="getCivilDocumentJurisdictionsElement">
+                <complexType>
+                    <sequence/>
+                </complexType>
+            </element>
+            <element name="getCivilDocumentJurisdictionsResponseElement">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="unbounded" minOccurs="0" name="result" nillable="true" type="tns:DocumentJurisdiction"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <complexType name="DocumentJurisdiction">
+                <sequence>
+                    <element name="documentTypeCd" nillable="true" type="string"/>
+                    <element name="courtClassCd" nillable="true" type="string"/>
+                    <element name="agreementDocumentYn" nillable="true" type="boolean"/>
+                    <element name="documentJurisdictionRuleId" nillable="true" type="decimal"/>
+                    <element name="courtLevelLongDsc" nillable="true" type="string"/>
+                    <element name="courtClassLongDsc" nillable="true" type="string"/>
+                    <element name="orderDocumentYn" nillable="true" type="boolean"/>
+                    <element name="courtLevelCd" nillable="true" type="string"/>
+                    <element name="documentTypeLongDsc" nillable="true" type="string"/>
+                </sequence>
+            </complexType>
+            <element name="getCivilLevelClassGroupingsElement">
+                <complexType>
+                    <sequence/>
+                </complexType>
+            </element>
+            <element name="getCivilLevelClassGroupingsResponseElement">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="unbounded" minOccurs="0" name="result" nillable="true" type="tns:CivilLevelClassCombination"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <complexType name="CivilLevelClassCombination">
+                <sequence>
+                    <element name="courtClassCd" nillable="true" type="string"/>
+                    <element name="courtLevelDsc" nillable="true" type="string"/>
+                    <element name="courtLevelCd" nillable="true" type="string"/>
+                    <element name="courtClassDsc" nillable="true" type="string"/>
+                </sequence>
+            </complexType>
+            <element name="getCountriesElement">
+                <complexType>
+                    <sequence/>
+                </complexType>
+            </element>
+            <element name="getCountriesResponseElement">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="unbounded" minOccurs="0" name="result" nillable="true" type="tns:CodeValue"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="getCountryCodesElement">
+                <complexType>
+                    <sequence/>
+                </complexType>
+            </element>
+            <element name="getCountryCodesResponseElement">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="unbounded" minOccurs="0" name="result" nillable="true" type="tns:CodeValue"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="getDocumentElementsElement">
+                <complexType>
+                    <sequence/>
+                </complexType>
+            </element>
+            <element name="getDocumentElementsResponseElement">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="unbounded" minOccurs="0" name="result" nillable="true" type="tns:DocumentElement"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <complexType name="DocumentElement">
+                <sequence>
+                    <element name="singleSelection" nillable="true" type="boolean"/>
+                    <element name="documentTypeCd" nillable="true" type="string"/>
+                    <element name="courtClassCd" nillable="true" type="string"/>
+                    <element name="docJurisdictionRuleId" nillable="true" type="decimal"/>
+                    <element name="documentElementNameCd" nillable="true" type="string"/>
+                    <element name="courtLevelCd" nillable="true" type="string"/>
+                    <element name="elementDataValueCd" nillable="true" type="string"/>
+                    <element name="mandatorySelection" nillable="true" type="boolean"/>
+                </sequence>
+            </complexType>
+            <element name="getDocumentRequestStatusesElement">
+                <complexType>
+                    <sequence/>
+                </complexType>
+            </element>
+            <element name="getDocumentRequestStatusesResponseElement">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="unbounded" minOccurs="0" name="result" nillable="true" type="tns:CodeValue"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="getEfilingPartyRolesElement">
+                <complexType>
+                    <sequence>
+                        <element name="String_1" nillable="true" type="string"/>
+                        <element name="String_2" nillable="true" type="string"/>
+                        <element name="String_3" nillable="true" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="getEfilingPartyRolesResponseElement">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="unbounded" minOccurs="0" name="result" nillable="true" type="tns:CodeValue"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="getIndustryTypesElement">
+                <complexType>
+                    <sequence/>
+                </complexType>
+            </element>
+            <element name="getIndustryTypesResponseElement">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="unbounded" minOccurs="0" name="result" nillable="true" type="tns:CodeValue"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="getLegalRepTypesElement">
+                <complexType>
+                    <sequence/>
+                </complexType>
+            </element>
+            <element name="getLegalRepTypesResponseElement">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="unbounded" minOccurs="0" name="result" nillable="true" type="tns:CodeValue"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="getProvincesElement">
+                <complexType>
+                    <sequence/>
+                </complexType>
+            </element>
+            <element name="getProvincesResponseElement">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="unbounded" minOccurs="0" name="result" nillable="true" type="tns:CodeValue"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="getRefundChangeReasonsElement">
+                <complexType>
+                    <sequence/>
+                </complexType>
+            </element>
+            <element name="getRefundChangeReasonsResponseElement">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="unbounded" minOccurs="0" name="result" nillable="true" type="tns:CodeValue"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="getRefundReasonsElement">
+                <complexType>
+                    <sequence/>
+                </complexType>
+            </element>
+            <element name="getRefundReasonsResponseElement">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="unbounded" minOccurs="0" name="result" nillable="true" type="tns:CodeValue"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="getRefundRejectReasonsElement">
+                <complexType>
+                    <sequence/>
+                </complexType>
+            </element>
+            <element name="getRefundRejectReasonsResponseElement">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="unbounded" minOccurs="0" name="result" nillable="true" type="tns:CodeValue"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="getRefundStatusesElement">
+                <complexType>
+                    <sequence/>
+                </complexType>
+            </element>
+            <element name="getRefundStatusesResponseElement">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="unbounded" minOccurs="0" name="result" nillable="true" type="tns:CodeValue"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="getRequestItemStatusesElement">
+                <complexType>
+                    <sequence/>
+                </complexType>
+            </element>
+            <element name="getRequestItemStatusesResponseElement">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="unbounded" minOccurs="0" name="result" nillable="true" type="tns:CodeValue"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="getServiceFeeElement">
+                <complexType>
+                    <sequence>
+                        <element name="String_1" nillable="true" type="string"/>
+                        <element name="Date_2" nillable="true" type="dateTime"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="getServiceFeeResponseElement">
+                <complexType>
+                    <sequence>
+                        <element name="result" nillable="true" type="tns:ServiceFee"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <complexType name="ServiceFee">
+                <sequence>
+                    <element name="updDtm" nillable="true" type="dateTime"/>
+                    <element name="feeAmt" nillable="true" type="decimal"/>
+                    <element name="entUserId" nillable="true" type="string"/>
+                    <element name="serviceTypeCd" nillable="true" type="string"/>
+                    <element name="effectiveDt" nillable="true" type="dateTime"/>
+                    <element name="updUserId" nillable="true" type="string"/>
+                    <element name="entDtm" nillable="true" type="dateTime"/>
+                    <element name="expiryDt" nillable="true" type="dateTime"/>
+                </sequence>
+            </complexType>
+            <element name="getTransactionStatesElement">
+                <complexType>
+                    <sequence/>
+                </complexType>
+            </element>
+            <element name="getTransactionStatesResponseElement">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="unbounded" minOccurs="0" name="result" nillable="true" type="tns:CodeValue"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="removeApplicationPreferenceElement">
+                <complexType>
+                    <sequence>
+                        <element name="ApplicationPreference_1" nillable="true" type="tns:ApplicationPreference"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="removeApplicationPreferenceResponseElement">
+                <complexType>
+                    <sequence/>
+                </complexType>
+            </element>
+            <element name="updateApplicationPreferenceElement">
+                <complexType>
+                    <sequence>
+                        <element name="ApplicationPreference_1" nillable="true" type="tns:ApplicationPreference"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="updateApplicationPreferenceResponseElement">
+                <complexType>
+                    <sequence/>
+                </complexType>
+            </element>
+        </schema>
+    </types>
+    <message name="__LookupFacadeItf_createApplicationPreference">
+        <part element="tns0:createApplicationPreferenceElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_createApplicationPreferenceResponse">
+        <part element="tns0:createApplicationPreferenceResponseElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_findApplicationPreferenceByCriteria">
+        <part element="tns0:findApplicationPreferenceByCriteriaElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_findApplicationPreferenceByCriteriaResponse">
+        <part element="tns0:findApplicationPreferenceByCriteriaResponseElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_findApplicationPreferenceByName">
+        <part element="tns0:findApplicationPreferenceByNameElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_findApplicationPreferenceByNameResponse">
+        <part element="tns0:findApplicationPreferenceByNameResponseElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_findApplicationPreferencesByPartialName">
+        <part element="tns0:findApplicationPreferencesByPartialNameElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_findApplicationPreferencesByPartialNameResponse">
+        <part element="tns0:findApplicationPreferencesByPartialNameResponseElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getAccessEntitlements">
+        <part element="tns0:getAccessEntitlementsElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getAccessEntitlementsResponse">
+        <part element="tns0:getAccessEntitlementsResponseElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getAccessStatusTypes">
+        <part element="tns0:getAccessStatusTypesElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getAccessStatusTypesResponse">
+        <part element="tns0:getAccessStatusTypesResponseElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getActiveActs">
+        <part element="tns0:getActiveActsElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getActiveActsResponse">
+        <part element="tns0:getActiveActsResponseElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getActiveDocumentSchemas">
+        <part element="tns0:getActiveDocumentSchemasElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getActiveDocumentSchemasResponse">
+        <part element="tns0:getActiveDocumentSchemasResponseElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getCities">
+        <part element="tns0:getCitiesElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getCitiesResponse">
+        <part element="tns0:getCitiesResponseElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getCivilDataElements">
+        <part element="tns0:getCivilDataElementsElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getCivilDataElementsResponse">
+        <part element="tns0:getCivilDataElementsResponseElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getCivilDocumentJurisdictions">
+        <part element="tns0:getCivilDocumentJurisdictionsElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getCivilDocumentJurisdictionsResponse">
+        <part element="tns0:getCivilDocumentJurisdictionsResponseElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getCivilLevelClassGroupings">
+        <part element="tns0:getCivilLevelClassGroupingsElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getCivilLevelClassGroupingsResponse">
+        <part element="tns0:getCivilLevelClassGroupingsResponseElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getCountries">
+        <part element="tns0:getCountriesElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getCountriesResponse">
+        <part element="tns0:getCountriesResponseElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getCountryCodes">
+        <part element="tns0:getCountryCodesElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getCountryCodesResponse">
+        <part element="tns0:getCountryCodesResponseElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getDocumentElements">
+        <part element="tns0:getDocumentElementsElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getDocumentElementsResponse">
+        <part element="tns0:getDocumentElementsResponseElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getDocumentRequestStatuses">
+        <part element="tns0:getDocumentRequestStatusesElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getDocumentRequestStatusesResponse">
+        <part element="tns0:getDocumentRequestStatusesResponseElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getEfilingPartyRoles">
+        <part element="tns0:getEfilingPartyRolesElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getEfilingPartyRolesResponse">
+        <part element="tns0:getEfilingPartyRolesResponseElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getIndustryTypes">
+        <part element="tns0:getIndustryTypesElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getIndustryTypesResponse">
+        <part element="tns0:getIndustryTypesResponseElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getLegalRepTypes">
+        <part element="tns0:getLegalRepTypesElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getLegalRepTypesResponse">
+        <part element="tns0:getLegalRepTypesResponseElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getProvinces">
+        <part element="tns0:getProvincesElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getProvincesResponse">
+        <part element="tns0:getProvincesResponseElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getRefundChangeReasons">
+        <part element="tns0:getRefundChangeReasonsElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getRefundChangeReasonsResponse">
+        <part element="tns0:getRefundChangeReasonsResponseElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getRefundReasons">
+        <part element="tns0:getRefundReasonsElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getRefundReasonsResponse">
+        <part element="tns0:getRefundReasonsResponseElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getRefundRejectReasons">
+        <part element="tns0:getRefundRejectReasonsElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getRefundRejectReasonsResponse">
+        <part element="tns0:getRefundRejectReasonsResponseElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getRefundStatuses">
+        <part element="tns0:getRefundStatusesElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getRefundStatusesResponse">
+        <part element="tns0:getRefundStatusesResponseElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getRequestItemStatuses">
+        <part element="tns0:getRequestItemStatusesElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getRequestItemStatusesResponse">
+        <part element="tns0:getRequestItemStatusesResponseElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getServiceFee">
+        <part element="tns0:getServiceFeeElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getServiceFeeResponse">
+        <part element="tns0:getServiceFeeResponseElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getTransactionStates">
+        <part element="tns0:getTransactionStatesElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_getTransactionStatesResponse">
+        <part element="tns0:getTransactionStatesResponseElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_removeApplicationPreference">
+        <part element="tns0:removeApplicationPreferenceElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_removeApplicationPreferenceResponse">
+        <part element="tns0:removeApplicationPreferenceResponseElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_updateApplicationPreference">
+        <part element="tns0:updateApplicationPreferenceElement" name="parameters"/>
+    </message>
+    <message name="__LookupFacadeItf_updateApplicationPreferenceResponse">
+        <part element="tns0:updateApplicationPreferenceResponseElement" name="parameters"/>
+    </message>
+    <portType name="__LookupFacadeItf">
+        <operation name="createApplicationPreference">
+            <input message="tns:__LookupFacadeItf_createApplicationPreference"/>
+            <output message="tns:__LookupFacadeItf_createApplicationPreferenceResponse"/>
+        </operation>
+        <operation name="findApplicationPreferenceByCriteria">
+            <input message="tns:__LookupFacadeItf_findApplicationPreferenceByCriteria"/>
+            <output message="tns:__LookupFacadeItf_findApplicationPreferenceByCriteriaResponse"/>
+        </operation>
+        <operation name="findApplicationPreferenceByName">
+            <input message="tns:__LookupFacadeItf_findApplicationPreferenceByName"/>
+            <output message="tns:__LookupFacadeItf_findApplicationPreferenceByNameResponse"/>
+        </operation>
+        <operation name="findApplicationPreferencesByPartialName">
+            <input message="tns:__LookupFacadeItf_findApplicationPreferencesByPartialName"/>
+            <output message="tns:__LookupFacadeItf_findApplicationPreferencesByPartialNameResponse"/>
+        </operation>
+        <operation name="getAccessEntitlements">
+            <input message="tns:__LookupFacadeItf_getAccessEntitlements"/>
+            <output message="tns:__LookupFacadeItf_getAccessEntitlementsResponse"/>
+        </operation>
+        <operation name="getAccessStatusTypes">
+            <input message="tns:__LookupFacadeItf_getAccessStatusTypes"/>
+            <output message="tns:__LookupFacadeItf_getAccessStatusTypesResponse"/>
+        </operation>
+        <operation name="getActiveActs">
+            <input message="tns:__LookupFacadeItf_getActiveActs"/>
+            <output message="tns:__LookupFacadeItf_getActiveActsResponse"/>
+        </operation>
+        <operation name="getActiveDocumentSchemas">
+            <input message="tns:__LookupFacadeItf_getActiveDocumentSchemas"/>
+            <output message="tns:__LookupFacadeItf_getActiveDocumentSchemasResponse"/>
+        </operation>
+        <operation name="getCities">
+            <input message="tns:__LookupFacadeItf_getCities"/>
+            <output message="tns:__LookupFacadeItf_getCitiesResponse"/>
+        </operation>
+        <operation name="getCivilDataElements">
+            <input message="tns:__LookupFacadeItf_getCivilDataElements"/>
+            <output message="tns:__LookupFacadeItf_getCivilDataElementsResponse"/>
+        </operation>
+        <operation name="getCivilDocumentJurisdictions">
+            <input message="tns:__LookupFacadeItf_getCivilDocumentJurisdictions"/>
+            <output message="tns:__LookupFacadeItf_getCivilDocumentJurisdictionsResponse"/>
+        </operation>
+        <operation name="getCivilLevelClassGroupings">
+            <input message="tns:__LookupFacadeItf_getCivilLevelClassGroupings"/>
+            <output message="tns:__LookupFacadeItf_getCivilLevelClassGroupingsResponse"/>
+        </operation>
+        <operation name="getCountries">
+            <input message="tns:__LookupFacadeItf_getCountries"/>
+            <output message="tns:__LookupFacadeItf_getCountriesResponse"/>
+        </operation>
+        <operation name="getCountryCodes">
+            <input message="tns:__LookupFacadeItf_getCountryCodes"/>
+            <output message="tns:__LookupFacadeItf_getCountryCodesResponse"/>
+        </operation>
+        <operation name="getDocumentElements">
+            <input message="tns:__LookupFacadeItf_getDocumentElements"/>
+            <output message="tns:__LookupFacadeItf_getDocumentElementsResponse"/>
+        </operation>
+        <operation name="getDocumentRequestStatuses">
+            <input message="tns:__LookupFacadeItf_getDocumentRequestStatuses"/>
+            <output message="tns:__LookupFacadeItf_getDocumentRequestStatusesResponse"/>
+        </operation>
+        <operation name="getEfilingPartyRoles">
+            <input message="tns:__LookupFacadeItf_getEfilingPartyRoles"/>
+            <output message="tns:__LookupFacadeItf_getEfilingPartyRolesResponse"/>
+        </operation>
+        <operation name="getIndustryTypes">
+            <input message="tns:__LookupFacadeItf_getIndustryTypes"/>
+            <output message="tns:__LookupFacadeItf_getIndustryTypesResponse"/>
+        </operation>
+        <operation name="getLegalRepTypes">
+            <input message="tns:__LookupFacadeItf_getLegalRepTypes"/>
+            <output message="tns:__LookupFacadeItf_getLegalRepTypesResponse"/>
+        </operation>
+        <operation name="getProvinces">
+            <input message="tns:__LookupFacadeItf_getProvinces"/>
+            <output message="tns:__LookupFacadeItf_getProvincesResponse"/>
+        </operation>
+        <operation name="getRefundChangeReasons">
+            <input message="tns:__LookupFacadeItf_getRefundChangeReasons"/>
+            <output message="tns:__LookupFacadeItf_getRefundChangeReasonsResponse"/>
+        </operation>
+        <operation name="getRefundReasons">
+            <input message="tns:__LookupFacadeItf_getRefundReasons"/>
+            <output message="tns:__LookupFacadeItf_getRefundReasonsResponse"/>
+        </operation>
+        <operation name="getRefundRejectReasons">
+            <input message="tns:__LookupFacadeItf_getRefundRejectReasons"/>
+            <output message="tns:__LookupFacadeItf_getRefundRejectReasonsResponse"/>
+        </operation>
+        <operation name="getRefundStatuses">
+            <input message="tns:__LookupFacadeItf_getRefundStatuses"/>
+            <output message="tns:__LookupFacadeItf_getRefundStatusesResponse"/>
+        </operation>
+        <operation name="getRequestItemStatuses">
+            <input message="tns:__LookupFacadeItf_getRequestItemStatuses"/>
+            <output message="tns:__LookupFacadeItf_getRequestItemStatusesResponse"/>
+        </operation>
+        <operation name="getServiceFee">
+            <input message="tns:__LookupFacadeItf_getServiceFee"/>
+            <output message="tns:__LookupFacadeItf_getServiceFeeResponse"/>
+        </operation>
+        <operation name="getTransactionStates">
+            <input message="tns:__LookupFacadeItf_getTransactionStates"/>
+            <output message="tns:__LookupFacadeItf_getTransactionStatesResponse"/>
+        </operation>
+        <operation name="removeApplicationPreference">
+            <input message="tns:__LookupFacadeItf_removeApplicationPreference"/>
+            <output message="tns:__LookupFacadeItf_removeApplicationPreferenceResponse"/>
+        </operation>
+        <operation name="updateApplicationPreference">
+            <input message="tns:__LookupFacadeItf_updateApplicationPreference"/>
+            <output message="tns:__LookupFacadeItf_updateApplicationPreferenceResponse"/>
+        </operation>
+    </portType>
+    <binding name="LookupFacadeBinding" type="tns:__LookupFacadeItf">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="createApplicationPreference">
+            <soap:operation soapAction="http://ag.gov.bc.ca/csows/createApplicationPreference"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="findApplicationPreferenceByCriteria">
+            <soap:operation soapAction="http://ag.gov.bc.ca/csows/findApplicationPreferenceByCriteria"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="findApplicationPreferenceByName">
+            <soap:operation soapAction="http://ag.gov.bc.ca/csows/findApplicationPreferenceByName"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="findApplicationPreferencesByPartialName">
+            <soap:operation soapAction="http://ag.gov.bc.ca/csows/findApplicationPreferencesByPartialName"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getAccessEntitlements">
+            <soap:operation soapAction="http://ag.gov.bc.ca/csows/getAccessEntitlements"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getAccessStatusTypes">
+            <soap:operation soapAction="http://ag.gov.bc.ca/csows/getAccessStatusTypes"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getActiveActs">
+            <soap:operation soapAction="http://ag.gov.bc.ca/csows/getActiveActs"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getActiveDocumentSchemas">
+            <soap:operation soapAction="http://ag.gov.bc.ca/csows/getActiveDocumentSchemas"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getCities">
+            <soap:operation soapAction="http://ag.gov.bc.ca/csows/getCities"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getCivilDataElements">
+            <soap:operation soapAction="http://ag.gov.bc.ca/csows/getCivilDataElements"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getCivilDocumentJurisdictions">
+            <soap:operation soapAction="http://ag.gov.bc.ca/csows/getCivilDocumentJurisdictions"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getCivilLevelClassGroupings">
+            <soap:operation soapAction="http://ag.gov.bc.ca/csows/getCivilLevelClassGroupings"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getCountries">
+            <soap:operation soapAction="http://ag.gov.bc.ca/csows/getCountries"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getCountryCodes">
+            <soap:operation soapAction="http://ag.gov.bc.ca/csows/getCountryCodes"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getDocumentElements">
+            <soap:operation soapAction="http://ag.gov.bc.ca/csows/getDocumentElements"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getDocumentRequestStatuses">
+            <soap:operation soapAction="http://ag.gov.bc.ca/csows/getDocumentRequestStatuses"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getEfilingPartyRoles">
+            <soap:operation soapAction="http://ag.gov.bc.ca/csows/getEfilingPartyRoles"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getIndustryTypes">
+            <soap:operation soapAction="http://ag.gov.bc.ca/csows/getIndustryTypes"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getLegalRepTypes">
+            <soap:operation soapAction="http://ag.gov.bc.ca/csows/getLegalRepTypes"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getProvinces">
+            <soap:operation soapAction="http://ag.gov.bc.ca/csows/getProvinces"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getRefundChangeReasons">
+            <soap:operation soapAction="http://ag.gov.bc.ca/csows/getRefundChangeReasons"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getRefundReasons">
+            <soap:operation soapAction="http://ag.gov.bc.ca/csows/getRefundReasons"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getRefundRejectReasons">
+            <soap:operation soapAction="http://ag.gov.bc.ca/csows/getRefundRejectReasons"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getRefundStatuses">
+            <soap:operation soapAction="http://ag.gov.bc.ca/csows/getRefundStatuses"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getRequestItemStatuses">
+            <soap:operation soapAction="http://ag.gov.bc.ca/csows/getRequestItemStatuses"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getServiceFee">
+            <soap:operation soapAction="http://ag.gov.bc.ca/csows/getServiceFee"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getTransactionStates">
+            <soap:operation soapAction="http://ag.gov.bc.ca/csows/getTransactionStates"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="removeApplicationPreference">
+            <soap:operation soapAction="http://ag.gov.bc.ca/csows/removeApplicationPreference"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="updateApplicationPreference">
+            <soap:operation soapAction="http://ag.gov.bc.ca/csows/updateApplicationPreference"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="lookups.LookupFacade">
+        <port binding="tns:LookupFacadeBinding" name="LookupFacade">
+            <soap:address location="http://brisket.bcgov:8080/csows/LookupFacade"/>
+        </port>
+    </service>
+</definitions>
