@@ -12,6 +12,7 @@ import org.junit.jupiter.api.TestInstance;
 
 import java.math.BigDecimal;
 import java.util.Collections;
+import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("Submission Model test suite")
@@ -53,7 +54,7 @@ public class SubmissionTest {
 
         Fee fee = new Fee(BigDecimal.TEN);
 
-        Submission actual = new Submission(documentMetaData, navigation, fee);
+        Submission actual = new Submission(UUID.randomUUID(), documentMetaData, navigation, fee);
 
         Assertions.assertEquals(TYPE, actual.getDocumentProperties().getType());
         Assertions.assertEquals(SUBTYPE, actual.getDocumentProperties().getSubType());
