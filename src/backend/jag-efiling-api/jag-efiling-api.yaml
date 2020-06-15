@@ -57,6 +57,7 @@ components:
       description: details about the required transaction
       required:
         - navigation
+        - documentProperties
       properties:
         documentProperties:
           $ref: '#/components/schemas/DocumentProperties'
