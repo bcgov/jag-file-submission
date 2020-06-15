@@ -10,3 +10,8 @@ plugins:
       sonar.java.source: "8"
       tests_patterns:
         - src/test/**
+
+checks:
+  similar-code:
+    config:
+      threshold: 25
