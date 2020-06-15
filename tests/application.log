@@ -1,0 +1,5 @@
+2020-06-15 16:05:24,751  INFO [main] DriverClass:23 - Browser is initialized
+2020-06-15 16:05:25,088  INFO [main] DriverClass:27 - Page is launched
+2020-06-15 16:05:25,116  INFO [main] DriverClass:20 - Waiting for the page to load...
+2020-06-15 16:05:25,127  INFO [main] DriverClass:44 - Correct page title is verified.
+2020-06-15 16:05:25,775  INFO [main] DriverClass:33 - Browser closed

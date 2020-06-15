@@ -7,14 +7,16 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class DriverClass {
 
-        public static WebDriver driver;
+        public WebDriver driver;
         public static Logger log = Logger.getLogger(DriverClass.class);
 
-        public void initializeDriver() {
+        public void initializeDriver() throws IOException {
             ReadConfig readConfig = new ReadConfig();
 
             String  browser = readConfig.getBrowser();
@@ -35,6 +37,9 @@ public class DriverClass {
                 case "edge":
                     WebDriverManager.edgedriver().setup();
                     driver = new EdgeDriver();
+                    break;
+                default:
+                    log.info("URL value is not available in the properties file.");
                     break;
             }
             driver.manage().timeouts().implicitlyWait(90, TimeUnit.SECONDS);

@@ -8,13 +8,15 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+
 public class LandingPageTest extends DriverClass {
 
     ReadConfig readConfig;
     LandingPage landingPage;
 
     @Before
-    public void initialization()   {
+    public void initialization() throws IOException {
         readConfig = new ReadConfig();
 
         initializeDriver();
