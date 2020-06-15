@@ -10,7 +10,7 @@ on:
     branches: [ master ]
 
 jobs:
-    job_1:
+    java:
       name: Create and upload Java coverage artifact
       runs-on: ubuntu-latest
       steps:
@@ -26,4 +26,34 @@ jobs:
         with:
           name: java_coverage_report
           path: src/backend/coverage-report/target/site/jacoco-aggregate/jacoco.xml
+          
+    javascript:
+        name: Create and upload Javascript coverage artifact
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@master
+          - uses: actions/setup-node@master
+            with:
+              node-version: "12"
+          - name: Run NPM install
+            run: npm install -g yarn
+          - name: Run Yarn Install
+            run: yarn install
+            working-directory: src/frontend/efiling-frontend
+          - name: Run Yarn build
+            run: yarn build
+            working-directory: src/frontend/efiling-frontend
+          - name : Run Yarn Test
+            run: yarn test
+            working-directory: src/frontend/efiling-frontend
+          - name: Run Yarn coverage
+            run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/efiling-frontend coverage
+            working-directory: src/frontend/efiling-frontend
+          - name: Upload java artifact result
+            uses: actions/upload-artifact@v1
+            with:
+              name: javascript_coverage_report
+              path: src/frontend/efiling-frontend/coverage/lcov.info
+          
+      
   
