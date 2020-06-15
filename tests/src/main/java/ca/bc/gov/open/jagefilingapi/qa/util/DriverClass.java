@@ -18,9 +18,7 @@ public class DriverClass {
 
         public void initializeDriver() throws IOException {
             ReadConfig readConfig = new ReadConfig();
-
             String  browser = readConfig.getBrowser();
-
             switch (browser) {
                 case "chrome":
                     WebDriverManager.chromedriver().setup();
