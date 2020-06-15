@@ -1,9 +1,9 @@
 package ca.bc.gov.open.jagefilingapi.submission.models;
 
-import ca.bc.gov.open.api.model.DocumentProperties;
-import ca.bc.gov.open.api.model.EndpointAccess;
-import ca.bc.gov.open.api.model.Navigation;
-import ca.bc.gov.open.api.model.Redirect;
+import ca.bc.gov.open.jagefilingapi.api.model.DocumentProperties;
+import ca.bc.gov.open.jagefilingapi.api.model.EndpointAccess;
+import ca.bc.gov.open.jagefilingapi.api.model.Navigation;
+import ca.bc.gov.open.jagefilingapi.api.model.Redirect;
 import ca.bc.gov.open.jagefilingapi.fee.models.Fee;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
