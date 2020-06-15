@@ -34,6 +34,7 @@ jobs:
         working-directory: src/frontend/efiling-frontend
       - run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/efiling-frontend coverage
       - run: npm test
+        working-directory: src/frontend/efiling-frontend
       - name: Test & publish code coverage
         uses: paambaati/codeclimate-action@v2.6.0
         env:
