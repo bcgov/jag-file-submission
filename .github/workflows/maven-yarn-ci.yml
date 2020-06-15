@@ -39,7 +39,7 @@ jobs:
       - name: Format Coverage report
         env:	
           CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
-        run: ./cc-test-reporter format-coverage --output coverage/codeclimate.java1-8.json
+        run: ./cc-test-reporter format-coverage -t jacoco --output coverage/codeclimate.java1-8.json
       - name: Upload java artifact result
         uses: actions/upload-artifact@v1
         with:
