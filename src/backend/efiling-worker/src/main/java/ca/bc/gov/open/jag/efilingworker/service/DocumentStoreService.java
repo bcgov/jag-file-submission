@@ -5,5 +5,5 @@ import org.springframework.http.ResponseEntity;
 import java.io.File;
 
 public interface DocumentStoreService {
-    ResponseEntity<Object> updloadFile(File file);
+    String uploadFile(File file);
 }
