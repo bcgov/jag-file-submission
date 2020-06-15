@@ -50,7 +50,7 @@ public class GetByKeyTest {
                 .documentProperties(documentProperties)
                 .create();
         Optional<Submission> actual = sut.put(submission);
-
+        Assertions.assertTrue(actual.isPresent());
         Assertions.assertEquals("subtype", actual.get().getDocumentProperties().getSubType());
 
     }
