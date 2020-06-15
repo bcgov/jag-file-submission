@@ -28,10 +28,6 @@ public class DriverClass {
                     WebDriverManager.firefoxdriver().setup();
                     driver = new FirefoxDriver();
                     break;
-                case "ie":
-                    WebDriverManager.iedriver().setup();
-                    driver = new InternetExplorerDriver();
-                    break;
                 case "edge":
                     WebDriverManager.edgedriver().setup();
                     driver = new EdgeDriver();
