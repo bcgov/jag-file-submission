@@ -29,9 +29,10 @@ public class PutTest {
     public void withValidObjectShouldPut() {
 
         DocumentProperties documentMetadata = new DocumentProperties();
+        documentMetadata.setType("type");
         Submission submission = new Submission.Builder().documentProperties(documentMetadata).create();
-        Optional<Submission> actual = sut.put(submission.getId(), submission);
-        Assertions.assertEquals(ID, actual.get().getId());
+        Optional<Submission> actual = sut.put(submission);
+        Assertions.assertEquals("type", actual.get().getDocumentProperties().getType());
 
     }
 

@@ -64,9 +64,7 @@ public class SubmissionApiImpl implements SubmissionApi {
 
         response.expiryDate(System.currentTimeMillis() + cacheProperties.getRedis().getTimeToLive().toMillis());
 
-        Submission submission = submissionMapper.toSubmission(generateUrlRequest, fee);
-
-        Optional<Submission> cachedSubmission = submissionService.put(submission.getId(), submission);
+        Optional<Submission> cachedSubmission = submissionService.put(submissionMapper.toSubmission(generateUrlRequest, fee));
 
         if(!cachedSubmission.isPresent())
             return ResponseEntity.badRequest().body(null);

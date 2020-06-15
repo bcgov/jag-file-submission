@@ -76,7 +76,7 @@ public class AutoConfigurationTest {
     @Test
     public void correctInputShouldReturnCacheManager() {
         JedisConnectionFactory jedisConnectionFactory = Mockito.mock(JedisConnectionFactory.class);
-        CacheManager cacheManager = autoConfiguration.cacheManager(jedisConnectionFactory, new Jackson2JsonRedisSerializer(Submission.class));
+        CacheManager cacheManager = autoConfiguration.submissionCacheManager(jedisConnectionFactory, new Jackson2JsonRedisSerializer(Submission.class));
         Assertions.assertNotNull(cacheManager);
     }
 

@@ -14,13 +14,13 @@ public class SubmissionServiceImpl implements SubmissionService {
 
 
     @Override
-    @CachePut(cacheNames = "submission", key = "#key")
-    public Optional<Submission> put(UUID key, Submission submission) {
+    @CachePut(cacheNames = "submission", key = "#submission.id", cacheManager = "submissionCacheManager")
+    public Optional<Submission> put(Submission submission) {
         return Optional.of(submission);
     }
 
     @Override
-    @Cacheable(cacheNames = "submission", key = "#key")
+    @Cacheable(cacheNames = "submission", key = "#key", cacheManager = "submissionCacheManager")
     public Optional<Submission> getByKey(UUID key) {
         return Optional.empty();
     }

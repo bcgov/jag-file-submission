@@ -88,8 +88,8 @@ public class CacheConfiguration {
      * @param jedisConnectionFactory A jedisConnectionFactory
      * @return
      */
-    @Bean
-    public CacheManager cacheManager(JedisConnectionFactory jedisConnectionFactory, Jackson2JsonRedisSerializer jackson2JsonRedisSerializer) {
+    @Bean(name = "submissionCacheManager")
+    public CacheManager submissionCacheManager(JedisConnectionFactory jedisConnectionFactory, Jackson2JsonRedisSerializer jackson2JsonRedisSerializer) {
 
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
                 .disableCachingNullValues()

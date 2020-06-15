@@ -79,7 +79,7 @@ public class SubmissionApiImplTest {
     @DisplayName("CASE1: when payload is valid")
     public void withValidPayloadShouldReturnOk() {
 
-        when(submissionServiceMock.put(any(), any())).thenReturn(Optional.of(Submission.builder().create()));
+        when(submissionServiceMock.put(any())).thenReturn(Optional.of(Submission.builder().create()));
 
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
         DocumentProperties documentProperties = new DocumentProperties();

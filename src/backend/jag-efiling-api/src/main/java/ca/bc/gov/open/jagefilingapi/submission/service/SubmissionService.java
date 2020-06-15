@@ -10,7 +10,7 @@ import java.util.UUID;
  */
 public interface SubmissionService {
 
-    Optional<Submission> put(UUID key, Submission submission);
+    Optional<Submission> put(Submission submission);
 
     Optional<Submission> getByKey(UUID key);
 
