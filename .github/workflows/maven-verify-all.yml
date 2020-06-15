@@ -37,6 +37,7 @@ jobs:
               node-version: "12"
           - name: Run NPM install
             run: npm install -g yarn
+            working-directory: src/frontend/efiling-frontend
           - name: Run Yarn Install
             run: yarn install
             working-directory: src/frontend/efiling-frontend
