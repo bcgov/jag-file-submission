@@ -14,6 +14,9 @@ jag:
             baseUrl: ${NAVIGATION_BASE_URL:https://httpbin.org/}
         client:
             filingFacadeSoapUri: ${CSO_FILINGFACADE_URI:http://localhost:8080}
+    lookup:
+        client:
+            filingLookupSoapUri: ${CSO_LOOKUPFACADE_URI:http://localhost:9090}
 
 info:
     app:
