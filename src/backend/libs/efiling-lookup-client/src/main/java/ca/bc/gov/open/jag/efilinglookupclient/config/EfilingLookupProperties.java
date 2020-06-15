@@ -2,7 +2,7 @@ package ca.bc.gov.open.jag.efilinglookupclient.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(prefix = "jag.efiling.lookup")
+@ConfigurationProperties(prefix = "jag.efiling.lookup.client")
 public class EfilingLookupProperties {
 
     private String filingLookupSoapUri;
