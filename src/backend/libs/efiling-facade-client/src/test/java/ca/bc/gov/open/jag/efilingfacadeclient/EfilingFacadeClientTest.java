@@ -19,10 +19,6 @@ public class EfilingFacadeClientTest {
     @Test
     public void callSubmitFilingTest() {
 
-        EfilingFacadeClient client = new EfilingFacadeClient();
-        BigDecimal ret = client.SubmitFiling("File");
-
-        assertEquals(BigDecimal.ZERO, ret);
     }
 
 }

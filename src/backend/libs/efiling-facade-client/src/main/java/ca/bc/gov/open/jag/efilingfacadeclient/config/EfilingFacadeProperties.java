@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingfacadeclient.service.config;
+package ca.bc.gov.open.jag.efilingfacadeclient.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
