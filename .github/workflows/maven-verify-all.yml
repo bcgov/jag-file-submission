@@ -25,5 +25,5 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: java_coverage_report
-          path: src/backend/coverage-report/target/site/jacoco-aggregate/jacoco.xml:jacoco
+          path: src/backend/coverage-report/target/site/jacoco-aggregate/jacoco.xml
   
