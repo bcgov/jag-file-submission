@@ -21,11 +21,15 @@ jobs:
           java-version: 1.8
       - name: Build with Maven
         run: mvn -B verify -P all --file src/backend/pom.xml
+      - name: Format Coverage report
+        uses: paambaati/codeclimate-action@v2.6.0
+        with: 
+          format-coverage: --input-type jacoco src/backend/coverage-report/target/site/jacoco-aggregate/jacoco.xml -o src/backend/coverage-report/target/site/jacoco-aggregate/codeclimate.json
       - name: Upload java artifact result
         uses: actions/upload-artifact@v1
         with:
           name: java_coverage_report
-          path: src/backend/coverage-report/target/site/jacoco-aggregate/jacoco.xml
+          path: src/backend/coverage-report/target/site/jacoco-aggregate/codeclimate.json
           
     javascript:
         name: Create and upload Javascript coverage artifact
@@ -55,6 +59,6 @@ jobs:
             with:
               name: javascript_coverage_report
               path: src/frontend/efiling-frontend/coverage/lcov.info
-          
+
       
   
