@@ -30,6 +30,8 @@ public class PutTest {
         documentMetadata.setType("type");
         Submission submission = new Submission.Builder().documentProperties(documentMetadata).create();
         Optional<Submission> actual = sut.put(submission);
+
+        Assertions.assertTrue(actual.isPresent());
         Assertions.assertEquals("type", actual.get().getDocumentProperties().getType());
 
     }
