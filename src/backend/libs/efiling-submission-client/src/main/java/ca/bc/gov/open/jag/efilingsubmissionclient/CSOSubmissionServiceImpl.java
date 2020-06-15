@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingfacadeclient;
+package ca.bc.gov.open.jag.efilingsubmissionclient;
 
 import ca.bc.gov.open.jag.ag.csows.filing.FilingPackage;
 import ca.bc.gov.open.jag.ag.csows.filing.SubmitFiling;
@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 
 @Service
-public class CSOEfilingServiceImpl extends WebServiceGatewaySupport implements EfilingFacadeService {
+public class CSOSubmissionServiceImpl extends WebServiceGatewaySupport implements EfilingSubmissionService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CSOEfilingServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CSOSubmissionServiceImpl.class);
 
     @Override
     public SubmitFilingResponse submitFiling(FilingPackage filingPackage) {

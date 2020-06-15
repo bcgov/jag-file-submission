@@ -1,11 +1,10 @@
-package ca.bc.gov.open.jag.efilingfacadeclient;
+package ca.bc.gov.open.jag.efilingsubmissionclient;
 
 import ca.bc.gov.open.jag.ag.csows.filing.FilingPackage;
 import ca.bc.gov.open.jag.ag.csows.filing.SubmitFilingResponse;
 
-import java.math.BigDecimal;
 
-public interface EfilingFacadeService {
+public interface EfilingSubmissionService {
 
     public SubmitFilingResponse submitFiling(FilingPackage filingPackage);
 }
