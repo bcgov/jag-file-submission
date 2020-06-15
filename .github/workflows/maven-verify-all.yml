@@ -26,28 +26,4 @@ jobs:
         with:
           name: java_coverage_report
           path: src/backend/coverage-report/target/site/jacoco-aggregate/jacoco.xml:jacoco
-    
-    job_2:
-        name: Create and upload Javascript coverage artifact
-        runs-on: ubuntu-latest
-        steps:
-          - uses: actions/checkout@master	
-          - uses: actions/setup-node@master
-            with: 
-              node-version: "12"
-          - name: NPM Install
-            run: npm install -g yarn
-            working-directory: src/frontend/efiling-frontend
-          - name:	Yarn Install
-            run: yarn install	
-            working-directory: src/frontend/efiling-frontend
-          - name: Yarn Build	
-            run: yarn build	
-            working-directory: src/frontend/efiling-frontend
-          - name: Yarn create Javascript coverage report
-            
-          - name: Upload javascript artifact result
-            uses: actions/upload-artifact@v1
-            with:
-              name: javascript_coverage_report
-              path: src/frontend/efiling-frontend/coverage/lcov.info:lcov
+  
