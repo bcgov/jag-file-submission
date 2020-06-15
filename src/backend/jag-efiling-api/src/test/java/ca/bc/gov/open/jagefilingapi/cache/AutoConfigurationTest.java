@@ -16,7 +16,7 @@ import java.time.Duration;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("CacheConfiguration Test Suite")
 public class AutoConfigurationTest {
-    private static final String TEST_PASSWORD = "notapassword";
+    private static final String TEST_CRED = "notapassword";
 
     @Mock
     private RedisProperties redisProperties;
@@ -45,7 +45,7 @@ public class AutoConfigurationTest {
     public void standaloneInputShouldGenerateJedisConnectionFactory() {
         Mockito.when(redisProperties.getHost()).thenReturn("127.0.0.1");
         Mockito.when(redisProperties.getPort()).thenReturn(6379);
-        Mockito.when(redisProperties.getPassword()).thenReturn(TEST_PASSWORD);
+        Mockito.when(redisProperties.getPassword()).thenReturn(TEST_CRED);
         JedisConnectionFactory jedisConnectionFactory = autoConfiguration.jedisConnectionFactory(redisProperties);
         Assertions.assertNotNull(jedisConnectionFactory);
     }
@@ -54,7 +54,7 @@ public class AutoConfigurationTest {
     public void clusterInputshouldGenerateJedisConnectionFactory() {
         RedisProperties.Cluster cluster = Mockito.mock(RedisProperties.Cluster.class);
         Mockito.when(redisProperties.getCluster()).thenReturn(cluster);
-        Mockito.when(redisProperties.getPassword()).thenReturn(TEST_PASSWORD);
+        Mockito.when(redisProperties.getPassword()).thenReturn(TEST_CRED);
         JedisConnectionFactory jedisConnectionFactory = autoConfiguration.jedisConnectionFactory(redisProperties);
         Assertions.assertNotNull(jedisConnectionFactory);
     }
@@ -64,7 +64,7 @@ public class AutoConfigurationTest {
         RedisProperties.Sentinel sentinel = Mockito.mock(RedisProperties.Sentinel.class);
         Mockito.when(sentinel.getMaster()).thenReturn("master");
         Mockito.when(redisProperties.getSentinel()).thenReturn(sentinel);
-        Mockito.when(redisProperties.getPassword()).thenReturn(TEST_PASSWORD);
+        Mockito.when(redisProperties.getPassword()).thenReturn(TEST_CRED);
         JedisConnectionFactory jedisConnectionFactory = autoConfiguration.jedisConnectionFactory(redisProperties);
         Assertions.assertNotNull(jedisConnectionFactory);
     }
