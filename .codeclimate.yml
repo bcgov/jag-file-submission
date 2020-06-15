@@ -2,3 +2,11 @@ exclude_patterns:
   - "src/frontend/*/src/*.js"
   - "src/frontend/*/public/"
   - "src/frontend/*/.storybook/"
+
+plugins:
+  sonar-java:
+    enabled: true
+    config:
+      sonar.java.source: "8"
+      tests_patterns:
+        - src/test/**
