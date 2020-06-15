@@ -1,11 +1,11 @@
-package ca.bc.gov.open.jag.efilingfacadeclient;
+package ca.bc.gov.open.jag.efilingsubmissionclient;
 
 import ca.bc.gov.open.jag.ag.csows.filing.FilingPackage;
 import ca.bc.gov.open.jag.ag.csows.filing.SubmitFilingResponse;
 
 import java.math.BigDecimal;
 
-public class MockCSOEfilingServiceImpl implements EfilingFacadeService {
+public class MockCSOSubmissionServiceImpl implements EfilingSubmissionService {
 
     @Override
     public SubmitFilingResponse submitFiling(FilingPackage filingPackage) {

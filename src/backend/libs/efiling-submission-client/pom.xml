@@ -12,9 +12,9 @@
     </parent>
 
     <groupId>ca.bc.gov.open.jag</groupId>
-    <artifactId>efiling-facade-client</artifactId>
+    <artifactId>efiling-submission-client</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>efiling-facade-client</name>
+    <name>efiling-submission-client</name>
     <description>Client for handling submission of filings to CSO</description>
 
     <dependencies>
