@@ -23,7 +23,8 @@ jobs:
         run: mvn -B verify -P all --file src/backend/pom.xml
       - name: Download Code Climate Binary
         run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-            chmod +x ./cc-test-reporter
+      - name: Apply executable perms to Code Climate Binary
+        run: chmod +x ./cc-test-reporter
       - name: Format Coverage report
         uses: paambaati/codeclimate-action@v2.6.0
         with: 
