@@ -28,7 +28,7 @@ jobs:
       - name: Format Coverage report
         env:	
           CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
-        run: ./cc-test-reporter format-coverage /home/runner/work/jag-file-submission/jag-file-submission/src/backend/coverage-report/target/site/jacoco-aggregate/jacoco.xml --input-type jacoco -o src/backend/coverage-report/target/site/jacoco-aggregate/codeclimate.json
+        run: ./cc-test-reporter format-coverage -t jacoco /home/runner/work/jag-file-submission/jag-file-submission/src/backend/coverage-report/target/site/jacoco-aggregate/jacoco.xml
       - name: Upload java artifact result
         uses: actions/upload-artifact@v1
         with:
