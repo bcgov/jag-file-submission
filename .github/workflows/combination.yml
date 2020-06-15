@@ -1,6 +1,8 @@
 name: Fuse Jacoco and Lcov Coverage
 
-on: [push]
+on: 
+  pull_request:
+    branches: [master]
 
 jobs:
   build:
@@ -19,22 +21,6 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
-      - name: Run javascript tests
-        uses: actions/checkout@master
-      - uses: actions/setup-node@master
-        with:
-          node-version: "12"
-      - run: npm install -g yarn
-        working-directory: src/frontend/efiling-frontend
-      - run: yarn install
-        working-directory: src/frontend/efiling-frontend
-      - run: yarn build
-        working-directory: src/frontend/efiling-frontend
-      - run: yarn test
-        working-directory: src/frontend/efiling-frontend
-      - run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/efiling-frontend coverage
-      - run: npm test
-        working-directory: src/frontend/efiling-frontend
       - name: Test & publish code coverage
         uses: paambaati/codeclimate-action@v2.6.0
         env:
@@ -46,4 +32,3 @@ jobs:
           coverageCommand: mvn -B verify -P all --file src/backend/pom.xml
           coverageLocations: |
             ${{github.workspace}}src/backend/coverage-report/target/site/jacoco-aggregate/jacoco.xml:jacoco
-            ${{github.workspace}}src/frontend/efiling-frontend/coverage/lcov.info:lcov
