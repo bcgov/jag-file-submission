@@ -85,25 +85,9 @@ public class SubmissionApiImplTest {
         when(submissionServiceMock.put(any())).thenReturn(Optional.of(Submission.builder().create()));
 
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
-        DocumentProperties documentProperties = new DocumentProperties();
-        documentProperties.setType("type");
-        documentProperties.setSubType("subType");
-        EndpointAccess endpoint = new EndpointAccess();
-        endpoint.setVerb(EndpointAccess.VerbEnum.POST);
-        endpoint.setUrl("http://doc");
-        endpoint.setHeaders(Collections.singletonMap(HEADER, HEADER));
-        documentProperties.setSubmissionAccess(endpoint);
-        generateUrlRequest.setDocumentProperties(documentProperties);
-        Navigation navigation = new Navigation();
-        Redirect successRedirect = new Redirect();
-        successRedirect.setUrl(CASE_1);
-        navigation.setSuccess(successRedirect);
-        Redirect cancelRedirect = new Redirect();
-        cancelRedirect.setUrl(CANCEL);
-        navigation.setCancel(cancelRedirect);
-        Redirect errorRedirect = new Redirect();
-        navigation.setError(errorRedirect);
-        generateUrlRequest.setNavigation(navigation);
+
+        generateUrlRequest.setDocumentProperties(createDocumentProperties());
+        generateUrlRequest.setNavigation(createNavigation());
 
         ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(generateUrlRequest);
 
@@ -118,31 +102,9 @@ public class SubmissionApiImplTest {
     @Test
     @DisplayName("CASE1: with validId return payload")
     public void withValidIdReturnPayload() {
-
-
-        DocumentProperties documentProperties = new DocumentProperties();
-        EndpointAccess documentAccess = new EndpointAccess();
-        documentAccess.setHeaders(Collections.singletonMap(HEADER, HEADER));
-        documentAccess.setUrl(URL);
-        documentAccess.setVerb(EndpointAccess.VerbEnum.POST);
-        documentProperties.setSubmissionAccess(documentAccess);
-        documentProperties.setSubType(SUBTYPE);
-        documentProperties.setType(TYPE);
-
-        Navigation navigation = new Navigation();
-        Redirect successRedirect = new Redirect();
-        successRedirect.setUrl(CASE_1);
-        navigation.setSuccess(successRedirect);
-        Redirect cancelRedirect = new Redirect();
-        cancelRedirect.setUrl(CANCEL);
-        navigation.setCancel(cancelRedirect);
-        Redirect errorRedirect = new Redirect();
-        errorRedirect.setUrl(ERROR);
-        navigation.setError(errorRedirect);
-
         Fee fee = new Fee(BigDecimal.TEN);
 
-        Submission submission = Submission.builder().documentProperties(documentProperties).fee(fee).navigation(navigation).create();
+        Submission submission = Submission.builder().documentProperties(createDocumentProperties()).fee(fee).navigation(createNavigation()).create();
 
         when(submissionServiceMock.getByKey(TEST)).thenReturn(Optional.of(submission));
 
@@ -168,4 +130,29 @@ public class SubmissionApiImplTest {
 
     }
 
+    private DocumentProperties createDocumentProperties() {
+        DocumentProperties documentProperties = new DocumentProperties();
+        EndpointAccess documentAccess = new EndpointAccess();
+        documentAccess.setHeaders(Collections.singletonMap(HEADER, HEADER));
+        documentAccess.setUrl(URL);
+        documentAccess.setVerb(EndpointAccess.VerbEnum.POST);
+        documentProperties.setSubmissionAccess(documentAccess);
+        documentProperties.setSubType(SUBTYPE);
+        documentProperties.setType(TYPE);
+        return documentProperties;
+    }
+
+    private Navigation createNavigation() {
+        Navigation navigation = new Navigation();
+        Redirect successRedirect = new Redirect();
+        successRedirect.setUrl(CASE_1);
+        navigation.setSuccess(successRedirect);
+        Redirect cancelRedirect = new Redirect();
+        cancelRedirect.setUrl(CANCEL);
+        navigation.setCancel(cancelRedirect);
+        Redirect errorRedirect = new Redirect();
+        errorRedirect.setUrl(ERROR);
+        navigation.setError(errorRedirect);
+        return navigation;
+    }
 }
