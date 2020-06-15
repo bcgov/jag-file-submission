@@ -1,7 +1,5 @@
 package ca.bc.gov.open.jagefilingapi.submission;
 
-import ca.bc.gov.open.jagefilingapi.cache.RedisStorageService;
-import ca.bc.gov.open.jagefilingapi.cache.StorageService;
 import ca.bc.gov.open.jagefilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jagefilingapi.submission.service.SubmissionServiceImpl;
 import org.junit.jupiter.api.*;
@@ -17,9 +15,6 @@ public class ConfigTest {
     @Mock
     CacheManager cacheManagerMock;
 
-    @Mock
-    StorageService storageService;
-
     @BeforeAll
     public void setUp() {
 
@@ -29,19 +24,10 @@ public class ConfigTest {
     }
 
     @Test
-    @DisplayName("CASE 1: returns the SubmissionStorageService")
-    public void testGetSubmissionStorageService()  {
-
-        StorageService actual = sut.submissionStorageService(cacheManagerMock);
-        Assertions.assertEquals(RedisStorageService.class, actual.getClass());
-
-    }
-
-    @Test
     @DisplayName("CASE 2: returns the SubmissionService")
     public void testGetSubmissionService()  {
 
-        SubmissionService actual = sut.submissionService(storageService);
+        SubmissionService actual = sut.submissionService();
         Assertions.assertEquals(SubmissionServiceImpl.class, actual.getClass());
 
     }
