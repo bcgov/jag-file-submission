@@ -12,7 +12,7 @@ jobs:
       matrix:	
         platform: [ubuntu-latest]	
         node: ["12"]	
-    name: tests	
+    name: yarn-install-build-test-job	
     runs-on: ${{ matrix.platform }}	
     steps:	
       - uses: actions/checkout@master	
