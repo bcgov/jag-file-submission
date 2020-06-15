@@ -1,5 +1,8 @@
 package ca.bc.gov.open.jagefilingapi.fee.models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 
 /**
@@ -9,11 +12,13 @@ public class Fee {
 
     private BigDecimal amount;
 
-    public Fee(BigDecimal amount) {
+    @JsonCreator
+    public Fee(@JsonProperty("amount") BigDecimal amount) {
         this.amount = amount;
     }
 
     public BigDecimal getAmount() {
         return amount;
     }
+
 }

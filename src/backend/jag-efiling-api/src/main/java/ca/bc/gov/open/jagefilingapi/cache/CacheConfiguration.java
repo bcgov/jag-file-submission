@@ -1,10 +1,12 @@
 package ca.bc.gov.open.jagefilingapi.cache;
 
-import ca.bc.gov.open.api.model.GenerateUrlRequest;
-import ca.bc.gov.open.jagefilingapi.config.NavigationProperties;
+
+import ca.bc.gov.open.jagefilingapi.submission.models.Submission;
+import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -15,19 +17,22 @@ import org.springframework.data.redis.connection.RedisNode;
 import org.springframework.data.redis.connection.RedisSentinelConfiguration;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializationContext;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
 @ComponentScan
-@EnableConfigurationProperties(NavigationProperties.class)
+@EnableConfigurationProperties(CacheProperties.class)
+@EnableCaching
 public class CacheConfiguration {
-    private final NavigationProperties navigationProperties;
 
-    public CacheConfiguration(NavigationProperties navigationProperties) {
-        this.navigationProperties = navigationProperties;
+    private final CacheProperties cacheProperties;
+
+    public CacheConfiguration(CacheProperties cacheProperties) {
+        this.cacheProperties = cacheProperties;
     }
     /**
      * Configure the JedisConnectionFactory
@@ -76,7 +81,6 @@ public class CacheConfiguration {
             }
         }
         return nodes;
-
     }
 
     /**
@@ -84,20 +88,24 @@ public class CacheConfiguration {
      * @param jedisConnectionFactory A jedisConnectionFactory
      * @return
      */
-    @Bean
-    public CacheManager cacheManager(JedisConnectionFactory jedisConnectionFactory) {
+    @Bean(name = "submissionCacheManager")
+    public CacheManager submissionCacheManager(JedisConnectionFactory jedisConnectionFactory, Jackson2JsonRedisSerializer jackson2JsonRedisSerializer) {
 
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
                 .disableCachingNullValues()
-                .entryTtl(Duration.ofMinutes(navigationProperties.getExpiryTime()));
+                .entryTtl(cacheProperties.getRedis().getTimeToLive())
+                .serializeValuesWith(RedisSerializationContext
+                        .SerializationPair.fromSerializer(jackson2JsonRedisSerializer));
+
         redisCacheConfiguration.usePrefix();
 
         return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(jedisConnectionFactory)
                 .cacheDefaults(redisCacheConfiguration).build();
     }
 
-    public StorageService<GenerateUrlRequest> configDistributedCache(CacheManager cacheManager) {
-        return new RedisStorageService<>(cacheManager);
+    @Bean
+    public Jackson2JsonRedisSerializer jackson2JsonRedisSerializer() {
+        return new Jackson2JsonRedisSerializer(Submission.class);
     }
 
 

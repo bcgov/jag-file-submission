@@ -57,9 +57,10 @@ components:
       description: details about the required transaction
       required:
         - navigation
+        - documentProperties
       properties:
-        submissionMetadata:
-          $ref: '#/components/schemas/SubmissionMetadata'
+        documentProperties:
+          $ref: '#/components/schemas/DocumentProperties'
         navigation:
           $ref: '#/components/schemas/Navigation'
     GenerateUrlResponse:
@@ -70,7 +71,7 @@ components:
           format: int64
         eFilingUrl:
           type: string
-    SubmissionMetadata:
+    DocumentProperties:
       type: object
       description: Submission Metadata used to describe the submission that will be e-filled
       required:
