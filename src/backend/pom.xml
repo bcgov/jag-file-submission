@@ -24,6 +24,7 @@
 			<id>all</id>
 			<modules>
 				<module>libs/efiling-facade-client</module>
+				<module>libs/efiling-lookup-client</module>
 				<module>jag-efiling-api</module>
 				<module>efiling-worker</module>
 				<module>efiling-backend-demo</module>
@@ -35,6 +36,7 @@
 			<modules>
 				<module>efiling-worker</module>
 				<module>libs/efiling-facade-client</module>
+				<module>libs/efiling-lookup-client</module>
 			</modules>
 		</profile>
 	</profiles>
