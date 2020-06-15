@@ -25,13 +25,13 @@ jobs:
         with:
           node-version: "12"
       - run: npm install -g yarn
-        working-directory: src/frontend
+        working-directory: src/frontend/efiling-frontend
       - run: yarn install
-        working-directory: src/frontend
+        working-directory: src/frontend/efiling-frontend
       - run: yarn build
-        working-directory: src/frontend
+        working-directory: src/frontend/efiling-frontend
       - run: yarn test
-        working-directory: src/frontend
+        working-directory: src/frontend/efiling-frontend
       - run: yarn --cwd /home/runner/work/secure-file-storage/secure-file-storage/src/frontend coverage
       - run: npm test
       - name: Test & publish code coverage
