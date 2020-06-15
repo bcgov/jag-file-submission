@@ -32,6 +32,8 @@ jobs:
           java-version: 1.8
       - name: Build with Maven
         run: mvn -B verify -P all --file src/backend/pom.xml
+      - name: WHERE AM I?
+        run: ls /home/runner/work/jag-file-submission/jag-file-submission/src/backend/coverage-report/target/site/jacoco-aggregate
       - name: Download Code Climate Binary
         run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
       - name: Apply executable perms to Code Climate Binary
