@@ -26,9 +26,7 @@ jobs:
       - name: Apply executable perms to Code Climate Binary
         run: chmod +x ./cc-test-reporter
       - name: Format Coverage report
-        uses: paambaati/codeclimate-action@v2.6.0
-        with: 
-          format-coverage: --input-type jacoco src/backend/coverage-report/target/site/jacoco-aggregate/jacoco.xml -o src/backend/coverage-report/target/site/jacoco-aggregate/codeclimate.json
+        run: ./cc-test-reporter format-coverage --input-type jacoco src/backend/coverage-report/target/site/jacoco-aggregate/jacoco.xml -o src/backend/coverage-report/target/site/jacoco-aggregate/codeclimate.json
       - name: Upload java artifact result
         uses: actions/upload-artifact@v1
         with:
