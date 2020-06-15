@@ -1,4 +1,4 @@
 ### IntelliJ IDEA ###
 tests\target
-.idea
+*.idea
 *.iml
