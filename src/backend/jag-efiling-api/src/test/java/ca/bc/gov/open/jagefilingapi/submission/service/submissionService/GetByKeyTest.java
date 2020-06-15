@@ -2,29 +2,22 @@ package ca.bc.gov.open.jagefilingapi.submission.service.submissionService;
 
 
 import ca.bc.gov.open.api.model.DocumentProperties;
-import ca.bc.gov.open.jagefilingapi.cache.StorageService;
 import ca.bc.gov.open.jagefilingapi.submission.models.Submission;
 import ca.bc.gov.open.jagefilingapi.submission.service.SubmissionServiceImpl;
 import org.junit.jupiter.api.*;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class GetByKeyTest {
 
-    private static final String ID = "id";
+    private static final UUID ID = UUID.randomUUID();
     private static final String TYPE = "type";
-    public static final String CASE_2 = "CASE 2";
 
     @InjectMocks
     private SubmissionServiceImpl sut;
-
-    @Mock
-    public StorageService<Submission> storageServiceMock;
 
     @BeforeAll
     public void setUp() {
@@ -33,31 +26,33 @@ public class GetByKeyTest {
 
         DocumentProperties documentMetadata = new DocumentProperties();
         documentMetadata.setType(TYPE);
-        Mockito.when(storageServiceMock.getByKey(Mockito.eq(ID), Mockito.any())).thenReturn(Submission.builder().documentProperties(documentMetadata).create());
-
     }
 
     @Test
-    @DisplayName("CASE 1: with valid id should return submission")
+    @DisplayName("CASE 1: without cache always return empty")
     public void withExistingIdShouldReturnSubmission() {
 
         Optional<Submission> actual = sut.getByKey(ID);
-
-        Assertions.assertEquals(TYPE, actual.get().getDocumentProperties().getType());
+        Assertions.assertEquals(Optional.empty(), actual);
 
     }
 
     @Test
-    @DisplayName("CASE 2: with not found object should return null")
-    public void withMissingObjectShouldReturnNull() {
+    @DisplayName("CASE 2: with put in cache should put return submission")
+    public void withSubmissionShouldReturnOptional() {
 
-        Optional<Submission> actual = sut.getByKey(CASE_2);
+        DocumentProperties documentProperties = new DocumentProperties();
+        documentProperties.setSubType("subtype");
 
-        Assertions.assertFalse(actual.isPresent());
+        Submission submission = Submission
+                .builder()
+                .documentProperties(documentProperties)
+                .create();
+        Optional<Submission> actual = sut.put(submission);
+
+        Assertions.assertEquals("subtype", actual.get().getDocumentProperties().getSubType());
 
     }
-
-
 
 
 }
