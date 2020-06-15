@@ -1,6 +1,6 @@
 package ca.bc.gov.open.jagefilingapi.submission.service.submissionService;
 
-import ca.bc.gov.open.api.model.DocumentProperties;
+import ca.bc.gov.open.jagefilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jagefilingapi.submission.models.Submission;
 import ca.bc.gov.open.jagefilingapi.submission.service.SubmissionServiceImpl;
 import org.junit.jupiter.api.*;
@@ -12,8 +12,6 @@ import java.util.Optional;
 @DisplayName("Submission Service: Put test suite")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class PutTest {
-
-    private static final String ID = "id";
 
     @InjectMocks
     private SubmissionServiceImpl sut;

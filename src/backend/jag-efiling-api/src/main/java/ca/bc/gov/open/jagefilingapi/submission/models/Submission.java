@@ -1,7 +1,7 @@
 package ca.bc.gov.open.jagefilingapi.submission.models;
 
-import ca.bc.gov.open.api.model.DocumentProperties;
-import ca.bc.gov.open.api.model.Navigation;
+import ca.bc.gov.open.jagefilingapi.api.model.DocumentProperties;
+import ca.bc.gov.open.jagefilingapi.api.model.Navigation;
 import ca.bc.gov.open.jagefilingapi.fee.models.Fee;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
