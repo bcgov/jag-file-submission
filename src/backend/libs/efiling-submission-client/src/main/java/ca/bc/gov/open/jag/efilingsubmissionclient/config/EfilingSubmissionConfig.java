@@ -27,7 +27,7 @@ public class EfilingSubmissionConfig {
     }
 
     @Bean
-    public CSOSubmissionServiceImpl eFilingFacadeClient(Jaxb2Marshaller jaxb2Marshaller) {
+    public CSOSubmissionServiceImpl eFilingSubmissionClient(Jaxb2Marshaller jaxb2Marshaller) {
 
         CSOSubmissionServiceImpl eFilingSubmissionServiceImpl = new CSOSubmissionServiceImpl();
         eFilingSubmissionServiceImpl.setDefaultUri(efilingSubmissionProperties.getFilingSubmissionSoapUri());
