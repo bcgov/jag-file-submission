@@ -1,8 +1,8 @@
 package ca.bc.gov.open.jagefilingapi.submission;
 
-import ca.bc.gov.open.api.SubmissionApi;
-import ca.bc.gov.open.api.model.GenerateUrlRequest;
-import ca.bc.gov.open.api.model.GenerateUrlResponse;
+import ca.bc.gov.open.jagefilingapi.api.SubmissionApiDelegate;
+import ca.bc.gov.open.jagefilingapi.api.model.GenerateUrlRequest;
+import ca.bc.gov.open.jagefilingapi.api.model.GenerateUrlResponse;
 import ca.bc.gov.open.jagefilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jagefilingapi.fee.FeeService;
 import ca.bc.gov.open.jagefilingapi.fee.models.Fee;
@@ -16,16 +16,16 @@ import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
 import java.text.MessageFormat;
 import java.util.Optional;
 import java.util.UUID;
 
-@RestController
+@Service
 @EnableConfigurationProperties(NavigationProperties.class)
-public class SubmissionApiImpl implements SubmissionApi {
+public class SubmissionApiImpl implements SubmissionApiDelegate {
 
     Logger logger = LoggerFactory.getLogger(SubmissionApiImpl.class);
 
@@ -53,7 +53,7 @@ public class SubmissionApiImpl implements SubmissionApi {
     @Override
     public ResponseEntity<GenerateUrlResponse> generateUrl(@Valid GenerateUrlRequest generateUrlRequest) {
 
-        logger.info("Generate Url Request Recieved");
+        logger.info("Generate Url Request Received");
 
         logger.debug("Attempting to get fee structure for document");
         Fee fee = feeService.getFee(new FeeRequest(generateUrlRequest.getDocumentProperties().getType(), generateUrlRequest.getDocumentProperties().getSubType()));

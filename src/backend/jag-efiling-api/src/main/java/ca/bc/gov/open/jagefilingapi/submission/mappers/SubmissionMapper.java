@@ -1,6 +1,6 @@
 package ca.bc.gov.open.jagefilingapi.submission.mappers;
 
-import ca.bc.gov.open.api.model.GenerateUrlRequest;
+import ca.bc.gov.open.jagefilingapi.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.jagefilingapi.fee.models.Fee;
 import ca.bc.gov.open.jagefilingapi.submission.models.Submission;
 import org.mapstruct.InjectionStrategy;
