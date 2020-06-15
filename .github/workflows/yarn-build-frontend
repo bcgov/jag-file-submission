@@ -1,0 +1,29 @@
+name: Yarn - Efiling-frontend Jest Tests and Coverage	
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:	
+  yarn-install-build-test:	
+    strategy:	
+      matrix:	
+        platform: [ubuntu-latest]	
+        node: ["12"]	
+    name: tests	
+    runs-on: ${{ matrix.platform }}	
+    steps:	
+      - uses: actions/checkout@master	
+      - uses: actions/setup-node@master	
+        with:	
+          node-version: ${{ matrix.node }}	
+      - run: npm install -g yarn	
+        working-directory: src/frontend/efiling-frontend	
+      - run: yarn install	
+        working-directory: src/frontend/efiling-frontend	
+      - run: yarn build	
+        working-directory: src/frontend/efiling-frontend	
+      - run: CI=true yarn test	
+        working-directory: src/frontend/efiling-frontend	
