@@ -13,5 +13,4 @@ plugins:
 
 checks:
   similar-code:
-    config:
-      threshold: 80
+    enabled: false
