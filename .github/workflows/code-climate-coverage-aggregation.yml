@@ -48,6 +48,15 @@ jobs:
       - name: Build with Maven
         run: mvn -B verify -P all --file src/backend/pom.xml
       
+      # Loop through all BACKEND services to show that jacoco reports have been generated
+      - name: WHERE AM I - BACKEND?
+        run: |
+          for s in efiling-backend-demo jag-efiling-api
+          do
+            echo "I am in $s!"
+            ls ${{ github.workspace }}/src/backend/$s/target/site/jacoco;
+          done
+      
       # Run Yarn Install
       - name: Run Yarn Install
         run: yarn --cwd src/frontend/efiling-frontend install
@@ -56,14 +65,9 @@ jobs:
       - name: Run Yarn Coverage
         run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/efiling-frontend coverage
       
-      # Loop through all BACKEND services to show that jacoco reports have been generated
-      - name: WHERE AM I?
-        run: |
-          for s in efiling-backend-demo jag-efiling-api
-          do
-            echo "I am in $s!"
-            ls ${{ github.workspace }}/src/backend/$s/target/site/jacoco;
-          done
+      # List frontend coverage reports
+      - name: WHERE AM I - FRONTEND?
+        run: ls ${{github.workspace}}src/frontend/efiling-frontend/coverage/
       
       # Formatting the BACKEND coverage reports generated
       - name: Format BACKEND coverage reports
