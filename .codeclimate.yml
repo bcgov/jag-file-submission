@@ -1,7 +1,4 @@
-exclude_patterns:
-  - "src/frontend/**/src/*.js"
-  - "src/frontend/**/public/"
-  - "src/frontend/**/.storybook/"
+version: "2"
 
 plugins:
   sonar-java:
@@ -14,3 +11,11 @@ plugins:
 checks:
   similar-code:
     enabled: false
+
+exclude_patterns:
+  - "src/frontend/efiling-demo/src/*.js"
+  - "src/frontend/efiling-frontend/src/*.js"
+  - "src/frontend/efiling-demo/public/"
+  - "src/frontend/efiling-frontend/public/"
+  - "src/frontend/efiling-demo/.storybook/"
+  - "src/frontend/efiling-frontend/.storybook/"
