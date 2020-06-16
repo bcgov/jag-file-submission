@@ -48,6 +48,10 @@ jobs:
       - name: Build with Maven
         run: mvn -B verify -P all --file src/backend/pom.xml
       
+      # Run Yarn Install
+      - name: Run Yarn Install
+        run: yarn --cwd src/frontend/efiling-frontend install
+      
       # Run Yarn Coverage to generate javascript coverage report
       - name: Run Yarn Coverage
         run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/efiling-frontend coverage
