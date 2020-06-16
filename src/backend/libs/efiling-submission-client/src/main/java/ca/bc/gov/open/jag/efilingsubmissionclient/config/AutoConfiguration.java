@@ -1,24 +1,25 @@
 package ca.bc.gov.open.jag.efilingsubmissionclient.config;
 
 import ca.bc.gov.open.jag.efilingsubmissionclient.CSOSubmissionServiceImpl;
+import ca.bc.gov.open.jag.efilingsubmissionclient.EfilingSubmissionService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 @Configuration
-@ComponentScan
-@EnableConfigurationProperties(EfilingSubmissionProperties.class)
-public class EfilingSubmissionConfig {
+@EnableConfigurationProperties(CSOSubmissionProperties.class)
+public class AutoConfiguration {
 
-    private final EfilingSubmissionProperties efilingSubmissionProperties;
+    private final CSOSubmissionProperties CSOSubmissionProperties;
 
-    public EfilingSubmissionConfig(EfilingSubmissionProperties efilingSubmissionProperties) {
-        this.efilingSubmissionProperties = efilingSubmissionProperties;
+    public AutoConfiguration(CSOSubmissionProperties CSOSubmissionProperties) {
+        this.CSOSubmissionProperties = CSOSubmissionProperties;
     }
 
-    @Bean
+    @Bean(name = "CSOSubmissionMarshaller")
     public Jaxb2Marshaller marshaller() {
 
         Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
@@ -27,10 +28,11 @@ public class EfilingSubmissionConfig {
     }
 
     @Bean
-    public CSOSubmissionServiceImpl eFilingSubmissionClient(Jaxb2Marshaller jaxb2Marshaller) {
+    @ConditionalOnMissingBean(value = {EfilingSubmissionService.class})
+    public EfilingSubmissionService eFilingSubmissionClient(@Qualifier("CSOSubmissionMarshaller") Jaxb2Marshaller jaxb2Marshaller) {
 
         CSOSubmissionServiceImpl eFilingSubmissionServiceImpl = new CSOSubmissionServiceImpl();
-        eFilingSubmissionServiceImpl.setDefaultUri(efilingSubmissionProperties.getFilingSubmissionSoapUri());
+        eFilingSubmissionServiceImpl.setDefaultUri(CSOSubmissionProperties.getFilingSubmissionSoapUri());
         eFilingSubmissionServiceImpl.setMarshaller(jaxb2Marshaller);
         eFilingSubmissionServiceImpl.setUnmarshaller(jaxb2Marshaller);
         return eFilingSubmissionServiceImpl;
