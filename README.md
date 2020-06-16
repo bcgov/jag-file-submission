@@ -14,9 +14,9 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
     │   │   ├── jag-efiling-api                 # efiling api
     │   │   ├── efiling-worker                  # file submission worker
     │   │   ├── libs                            # backend libraries
-    │   │   |   └── efilling-submission-client  # efiling soap client that submits packages to CSO
-    │   │   |   └── efilling-lookup-client      # efiling soap client that looksup required info for submission
-    │   │   |   └── efilling-status-client      # efiling soap client for checking status of a submitted package    
+    │   │   |   └── efiling-submission-client   # efiling soap client that submits packages to CSO
+    │   │   |   └── efiling-lookup-client       # efiling soap client that looksup required info for submission
+    │   │   |   └── efiling-status-client       # efiling soap client for checking status of a submitted package    
     │   ├── frontend                            # frontend applications
     │   │   ├── efiling-frontend                # efiling frontend
     │   │   ├── efiling-demo                    # efiling demo app frontend
