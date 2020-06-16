@@ -40,7 +40,7 @@ jobs:
         run: |
           for s in efiling-backend-demo jag-efiling-api
           do
-            echo "I am in $s!\n"
+            echo "I am in $s!"
             ls ${{ github.workspace }}/src/backend/$s/target/site/jacoco;
           done
       
@@ -50,13 +50,21 @@ jobs:
       - name: Apply executable perms to Code Climate Binary
         run: chmod +x ./cc-test-reporter
       
+      # Formatting the coverage reports generated
       - name: Format Coverage report
         env:	
           CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}  
-        run: JACOCO_SOURCE_PATH=${{ github.workspace }}/src/backend/jag-efiling-api/src/main/java ./cc-test-reporter format-coverage ${{github.workspace}}/src/backend/jag-efiling-api/target/site/jacoco/jacoco.xml --input-type jacoco --output coverage/codeclimate.java1-8.json
-      
+        run: |
+          for s in efiling-backend-demo jag-efiling-api
+          do 
+            echo "I am in $s!"
+            JACOCO_SOURCE_PATH=${{ github.workspace }}/src/backend/$s/src/main/java ./cc-test-reporter format-coverage ${{github.workspace}}/src/backend/$s/target/site/jacoco/jacoco.xml --input-type jacoco --output coverage/$s-codeclimate.json;
+          done
+          
       - name: WHERE AM I DEUX?
         run: ls ${{ github.workspace }}/coverage
+      
+      # Sum the coverage reports
       
       - name: Upload java artifact result
         uses: actions/upload-artifact@v1
