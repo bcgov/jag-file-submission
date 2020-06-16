@@ -1,7 +1,7 @@
 exclude_patterns:
-  - "src/frontend/*/src/*.js"
-  - "src/frontend/*/public/"
-  - "src/frontend/*/.storybook/"
+  - "src/frontend/**/src/*.js"
+  - "src/frontend/**/public/"
+  - "src/frontend/**/.storybook/"
 
 plugins:
   sonar-java:
