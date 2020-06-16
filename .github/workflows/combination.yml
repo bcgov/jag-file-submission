@@ -65,10 +65,15 @@ jobs:
         run: ls ${{ github.workspace }}/coverage
       
       # Sum the coverage reports
+      - name: Summing the coverage reports generated
+        run: ./cc-test-reporter sum-coverage coverage/*-codeclimate.json -p 2 -o coverage/total-codeclimate.json
+      
+      - name: WHERE AM I TROIS?
+        run: ls ${{ github.workspace }}/coverage
       
       - name: Upload java artifact result
         uses: actions/upload-artifact@v1
         with:
           name: java_coverage_report
-          path: coverage/codeclimate.java1-8.json
+          path: coverage/total-codeclimate.json
           
