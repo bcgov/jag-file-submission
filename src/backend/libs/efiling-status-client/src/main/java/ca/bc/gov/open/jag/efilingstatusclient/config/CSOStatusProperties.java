@@ -3,7 +3,7 @@ package ca.bc.gov.open.jag.efilingstatusclient.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "jag.efiling.status.client")
-public class EfilingStatusProperties {
+public class CSOStatusProperties {
 
     private String filingStatusSoapUri;
 
