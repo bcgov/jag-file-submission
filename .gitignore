@@ -1,5 +1,5 @@
 ### IntelliJ IDEA ###
-teststarget
+tests/target
 tests/.idea
 *.iml
 *.log
