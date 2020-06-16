@@ -11,8 +11,6 @@ plugins:
     enabled: true
     config:
       config: src/frontend/efiling-frontend/.eslintrc.js
-  checkstyle:
-    enabled: true
   pmd:
     enabled: true
 
