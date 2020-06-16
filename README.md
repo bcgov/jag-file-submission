@@ -7,21 +7,23 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
 ## Project Structure
 
     .
-    ├── .github                             # Contains GitHub Related sources
-    ├── openshift                           # openshift templates and pipeline
-    ├── src/                                # application source files
-    │   ├── backend                         # backend applications
-    │   │   ├── jag-efiling-api             # efiling api
-    │   │   ├── efiling-worker              # file submission worker
-    │   │   ├── libs                        # backend libraries
-    │   │   └── efilling-facade-client      # efiling soap client
-    │   ├── frontend                        # frontend applications
-    │   │   ├── efiling-frontend            # efiling frontend
-    │   │   ├── efiling-demo                # efiling demo app frontend
-    ├── COMPLIANCE.yaml                     #
-    ├── CONTRIBUTING.md                     #
-    ├── LICENSE                             # Apache License
-    └── README.md                           # This file.
+    ├── .github                                 # Contains GitHub Related sources
+    ├── openshift                               # openshift templates and pipeline
+    ├── src/                                    # application source files
+    │   ├── backend                             # backend applications
+    │   │   ├── jag-efiling-api                 # efiling api
+    │   │   ├── efiling-worker                  # file submission worker
+    │   │   ├── libs                            # backend libraries
+    │   │   |   └── efilling-submission-client  # efiling soap client that submits packages to CSO
+    │   │   |   └── efilling-lookup-client      # efiling soap client that looksup required info for submission
+    │   │   |   └── efilling-status-client      # efiling soap client for checking status of a submitted package    
+    │   ├── frontend                            # frontend applications
+    │   │   ├── efiling-frontend                # efiling frontend
+    │   │   ├── efiling-demo                    # efiling demo app frontend
+    ├── COMPLIANCE.yaml                         #
+    ├── CONTRIBUTING.md                         #
+    ├── LICENSE                                 # Apache License
+    └── README.md                               # This file.
 
 ## Apps
 
