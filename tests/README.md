@@ -1,6 +1,6 @@
 ## Frontend Tests 
 
-##Folder Structure
+## Folder Structure
 
 The folder structure for the frontend automation will be as follows:
 
