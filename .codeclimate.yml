@@ -6,7 +6,15 @@ plugins:
     config:
       sonar.java.source: "8"
       tests_patterns:
-        - src/test/**
+        - src/backend/**/test/**
+  eslint:
+    enabled: true
+    config:
+      config: src/frontend/efiling-frontend/.eslintrc.js
+  checkstyle:
+    enabled: true
+  pmd:
+    enabled: true
 
 checks:
   similar-code:
@@ -19,4 +27,5 @@ exclude_patterns:
 - "src/frontend/efiling-frontend/public/"
 - "src/frontend/efiling-demo/.storybook/"
 - "src/frontend/efiling-frontend/.storybook/"
+- "src/backend/jag-efiling-api/src/main/java/ca/bc/gov/open/jagefilingapi/cache/CacheConfiguration.java"
 
