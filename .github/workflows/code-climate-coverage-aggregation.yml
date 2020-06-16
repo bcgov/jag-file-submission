@@ -69,6 +69,18 @@ jobs:
       - name: WHERE AM I - FRONTEND?
         run: ls ${{github.workspace}}/src/frontend/efiling-frontend/coverage
       
+      # Run Yarn Install
+      - name: Run Yarn Install - DEMO
+        run: yarn --cwd src/frontend/efiling-demo install
+      
+      # Run Yarn Coverage to generate javascript coverage report
+      - name: Run Yarn Coverage - DEMO
+        run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/efiling-demo coverage
+      
+      # List frontend coverage reports
+      - name: WHERE AM I - FRONTEND DEMO?
+        run: ls ${{github.workspace}}/src/frontend/efiling-demo/coverage
+      
       # Formatting the BACKEND coverage reports generated
       - name: Format BACKEND coverage reports
         env:	
@@ -85,6 +97,12 @@ jobs:
         env:	
           CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}  
         run: ./cc-test-reporter format-coverage -t lcov -o coverage/frontend-codeclimate.json ${{github.workspace}}/src/frontend/efiling-frontend/coverage/lcov.info
+        
+      # Formatting the FRONTEND coverage report
+      - name: Format the FRONTEND DEMO coverage report
+        env:	
+          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}  
+        run: ./cc-test-reporter format-coverage -t lcov -o coverage/frontend-codeclimate.json ${{github.workspace}}/src/frontend/efiling-demo/coverage/lcov.info          
         
       # List all formatted files in coverage directory    
       - name: WHERE AM I DEUX?
