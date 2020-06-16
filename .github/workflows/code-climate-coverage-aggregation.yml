@@ -54,7 +54,7 @@ jobs:
           
       # Determine Maven profiles
       - name: Determine maven profiles
-        run: mvn help:active-profiles --file ${{github.workspace}}/src/backend/pom.xml
+        run: mvn help:all-profiles --file ${{github.workspace}}/src/backend/pom.xml
       
       # Run Maven Verify to generate all jacoco reports
       - name: Build with Maven
