@@ -44,7 +44,7 @@ jobs:
         run: |
           echo "::set-env name=GIT_BRANCH::master"
           echo "BRANCH: $GIT_BRANCH"
-        if: env.GIT_BRANCH == 'ref/head/master'
+        if: env.GIT_BRANCH == 'refs/heads/master'
         
       # Setup Java Environment  
       - name: Set up JDK 1.8
