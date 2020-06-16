@@ -38,8 +38,9 @@ jobs:
         
       - name: WHERE AM I?
         run: |
-          for s in efiling-backend-demo efiling-worker jag-efiling-api
+          for s in efiling-backend-demo jag-efiling-api
           do
+            echo "I am in $s!\n"
             ls ${{ github.workspace }}/src/backend/$s/target/site/jacoco;
           done
       
