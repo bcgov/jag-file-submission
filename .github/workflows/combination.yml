@@ -38,7 +38,11 @@ jobs:
         run: mvn -B verify -P all --file src/backend/pom.xml
         
       - name: WHERE AM I?
-        run: for s in efiling-backend-demo efiling-worker jag-efiling-api; do ls ${{ github.workspace }}/src/backend/$s/target/site/jacoco; done
+        run: |
+          for s in efiling-backend-demo efiling-worker jag-efiling-api
+          do
+            ls ${{ github.workspace }}/src/backend/$s/target/site/jacoco;
+          done
       
       - name: Download Code Climate Binary
         run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
