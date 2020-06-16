@@ -110,7 +110,7 @@ jobs:
       
       # Sum the coverage reports
       - name: Summing the coverage reports generated
-        run: ./cc-test-reporter sum-coverage coverage/*-codeclimate.json -p 3 -o coverage/total-codeclimate.json
+        run: ./cc-test-reporter sum-coverage coverage/*-codeclimate.json -p 4 -o coverage/total-codeclimate.json
         
       # Upload total coverage report to Code Climate
       - name: Upload coverage report to Code Climate
