@@ -67,7 +67,7 @@ jobs:
       
       # List frontend coverage reports
       - name: WHERE AM I - FRONTEND?
-        run: ls ${{github.workspace}}src/frontend/efiling-frontend/coverage/
+        run: ls ${{github.workspace}}src/frontend/efiling-frontend/coverage
       
       # Formatting the BACKEND coverage reports generated
       - name: Format BACKEND coverage reports
