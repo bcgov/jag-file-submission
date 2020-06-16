@@ -67,13 +67,12 @@ jobs:
       # Sum the coverage reports
       - name: Summing the coverage reports generated
         run: ./cc-test-reporter sum-coverage coverage/*-codeclimate.json -p 2 -o coverage/total-codeclimate.json
+        
+      # Upload total coverage report to Code Climate
+      - name: Upload coverage report to Code Climate
+        env:	
+          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}  
+        run: ./cc-test-reporter upload-coverage -i coverage/total-codeclimate.json -r $CC_TEST_REPORTER_ID
       
       - name: WHERE AM I TROIS?
         run: ls ${{ github.workspace }}/coverage
-      
-      - name: Upload java artifact result
-        uses: actions/upload-artifact@v1
-        with:
-          name: java_coverage_report
-          path: coverage/total-codeclimate.json
-          
