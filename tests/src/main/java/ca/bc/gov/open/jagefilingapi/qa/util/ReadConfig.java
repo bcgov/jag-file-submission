@@ -1,7 +1,5 @@
 package ca.bc.gov.open.jagefilingapi.qa.util;
 
-import org.apache.log4j.Logger;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -12,7 +10,7 @@ public class ReadConfig {
     Properties prop;
 
     public ReadConfig() throws IOException {
-            File src = new File("src\\main\\java\\ca\\bc\\gov\\open\\jagefilingapi\\qa\\config\\config.properties");
+            File src = new File("src/main/java/ca/bc/gov/open/jagefilingapi/qa/config/config.properties");
 
                 FileInputStream fis = new FileInputStream(src);
                 prop = new Properties();
@@ -24,7 +22,7 @@ public class ReadConfig {
         }
 
         public String getBrowser() {
-        return prop.getProperty("browser");
+            return prop.getProperty("browser");
     }
 }
 

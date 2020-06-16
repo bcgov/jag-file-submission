@@ -37,10 +37,10 @@ public class LandingPageTest extends DriverClass {
     public void verifyLandingPageTitleTest() {
         landingPage = new LandingPage(driver);
 
-    String actualTitle = landingPage.verifyLandingPageTitle();
-    String expTitle = "eFiling Frontend";
+        String actualTitle = landingPage.verifyLandingPageTitle();
+        String expTitle = "eFiling Frontend";
 
-    Assert.assertEquals(expTitle, actualTitle);
-    log.info("Correct page title is verified.");
+        Assert.assertEquals(expTitle, actualTitle);
+        log.info("Correct page title is verified.");
     }
 }

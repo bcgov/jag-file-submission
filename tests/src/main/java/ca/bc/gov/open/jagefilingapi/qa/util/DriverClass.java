@@ -32,9 +32,12 @@ public class DriverClass {
                     WebDriverManager.edgedriver().setup();
                     driver = new EdgeDriver();
                     break;
+                case "ie":
+                    WebDriverManager.iedriver().setup();
+                    driver = new InternetExplorerDriver();
+                    break;
                 default:
                     log.info("URL value is not available in the properties file.");
-                    break;
             }
             driver.manage().timeouts().implicitlyWait(90, TimeUnit.SECONDS);
             driver.manage().deleteAllCookies();
