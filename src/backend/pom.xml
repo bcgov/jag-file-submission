@@ -18,6 +18,23 @@
 		<java.version>1.8</java.version>
 	</properties>
 
+	<plugins>
+            	<!-- display active profile in compile phase -->
+            	<plugin>
+                	<groupId>org.apache.maven.plugins</groupId>
+                	<artifactId>maven-help-plugin</artifactId>
+			<version>3.1.0</version>
+                	<executions>
+				<execution>
+					<id>show-profiles</id>
+					<phase>compile</phase>
+					<goals>
+						<goal>active-profiles</goal>
+					</goals>
+				</execution>
+			</executions>
+		</plugin>
+        </plugins>
 
 	<profiles>
 		<profile>
