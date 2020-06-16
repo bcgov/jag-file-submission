@@ -25,5 +25,3 @@ exclude_patterns:
 - "src/frontend/efiling-frontend/public/"
 - "src/frontend/efiling-demo/.storybook/"
 - "src/frontend/efiling-frontend/.storybook/"
-- "src/backend/jag-efiling-api/src/main/java/ca/bc/gov/open/jagefilingapi/cache/CacheConfiguration.java"
-
