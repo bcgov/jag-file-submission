@@ -1,34 +1,78 @@
-name: Fuse Jacoco and Lcov Coverage
+# This workflow will build a Java project with Maven
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
-on: 
+name: Stack CI with Maven and Yarn - Coverage report to Code Climate
+
+on:
+  push:
+    branches: [ master ]
   pull_request:
-    branches: [master]
+    branches: [ master ]
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v1
+    java:
+      name: Create and upload Java coverage artifact
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v2
+      - name: Set ENV for codeclimate (pull_request)
+        run: |
+          git fetch --no-tags --prune --depth=1 origin +refs/heads/$GITHUB_HEAD_REF:refs/remotes/origin/$GITHUB_HEAD_REF
+          echo "::set-env name=GIT_BRANCH::$GITHUB_HEAD_REF"
+          echo "::set-env name=GIT_COMMIT_SHA::$(git rev-parse origin/$GITHUB_HEAD_REF)"
+        if: github.event_name == 'pull_request'
+        
+      - name: Set ENV for codeclimate (push)
+        run: |
+          echo "::set-env name=GIT_BRANCH::$GITHUB_REF"
+          echo "::set-env name=GIT_COMMIT_SHA::$GITHUB_SHA"
+        if: github.event_name == 'push'
+        
       - name: Set up JDK 1.8
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      - uses: actions/cache@v1
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-      - name: Test & publish code coverage
-        uses: paambaati/codeclimate-action@v2.6.0
-        env:
-          # Set CC_TEST_REPORTER_ID as secret of your repo
-          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
-          JACOCO_SOURCE_PATH: "${{github.workspace}}/src/main/java"
-        with:
-          # The report file must be there, otherwise Code Climate won't find it
-          coverageCommand: mvn -B verify -P all --file src/backend/pom.xml
-          coverageLocations: |
-            ${{github.workspace}}src/backend/coverage-report/target/site/jacoco-aggregate/jacoco.xml:jacoco
+        
+      - name: Build with Maven
+        run: mvn -B verify -P all --file src/backend/pom.xml
+        
+      - name: WHERE AM I?
+        run: |
+          for s in efiling-backend-demo jag-efiling-api
+          do
+            echo "I am in $s!"
+            ls ${{ github.workspace }}/src/backend/$s/target/site/jacoco;
+          done
+      
+      - name: Download Code Climate Binary
+        run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+      
+      - name: Apply executable perms to Code Climate Binary
+        run: chmod +x ./cc-test-reporter
+      
+      # Formatting the coverage reports generated
+      - name: Format Coverage report
+        env:	
+          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}  
+        run: |
+          for s in efiling-backend-demo jag-efiling-api
+          do 
+            echo "I am in $s!"
+            JACOCO_SOURCE_PATH=${{ github.workspace }}/src/backend/$s/src/main/java ./cc-test-reporter format-coverage ${{github.workspace}}/src/backend/$s/target/site/jacoco/jacoco.xml --input-type jacoco --output coverage/$s-codeclimate.json;
+          done
+          
+      - name: WHERE AM I DEUX?
+        run: ls ${{ github.workspace }}/coverage
+      
+      # Sum the coverage reports
+      - name: Summing the coverage reports generated
+        run: ./cc-test-reporter sum-coverage coverage/*-codeclimate.json -p 2 -o coverage/total-codeclimate.json
+        
+      # Upload total coverage report to Code Climate
+      - name: Upload coverage report to Code Climate
+        env:	
+          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}  
+        run: ./cc-test-reporter upload-coverage -i coverage/total-codeclimate.json -r $CC_TEST_REPORTER_ID
+      
+      - name: WHERE AM I TROIS?
+        run: ls ${{ github.workspace }}/coverage
