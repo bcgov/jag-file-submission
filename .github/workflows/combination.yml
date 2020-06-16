@@ -48,7 +48,7 @@ jobs:
       - name: Format Coverage report
         env:	
           CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}  
-        run: JACOCO_SOURCE_PATH=${{ github.workspace }}/src/main/java ./cc-test-reporter format-coverage ${{github.workspace}}/src/backend/jag-efiling-api/target/site/jacoco/jacoco.xml --input-type jacoco --output coverage/codeclimate.java1-8.json
+        run: JACOCO_SOURCE_PATH=${{ github.workspace }}/src/backend/jag-efiling-api/src/main/java ./cc-test-reporter format-coverage ${{github.workspace}}/src/backend/jag-efiling-api/target/site/jacoco/jacoco.xml --input-type jacoco --output coverage/codeclimate.java1-8.json
       
       - name: WHERE AM I?
         run: ls /coverage
