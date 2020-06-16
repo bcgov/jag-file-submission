@@ -2,4 +2,4 @@
 tests/target
 tests/.idea/*
 *.iml
-*.log
+*.log.idea/*
