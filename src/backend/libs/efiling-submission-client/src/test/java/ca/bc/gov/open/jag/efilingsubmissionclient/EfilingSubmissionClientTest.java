@@ -27,7 +27,7 @@ public class EfilingSubmissionClientTest {
     CSOSubmissionServiceImpl cSOSubmissionService;
 
     @Mock
-    WebServiceGatewaySupport webServiceOperations;
+    WebServiceOperations webServiceOperations;
 
     @BeforeAll
     public void setUp() {
@@ -40,7 +40,7 @@ public class EfilingSubmissionClientTest {
 
         SubmitFilingResponse submitFilingResponse = new SubmitFilingResponse();
         submitFilingResponse.setReturn(new BigDecimal(1));
-        when(webServiceOperations.getWebServiceTemplate().marshalSendAndReceive(any())).thenReturn(submitFilingResponse);
+        when(webServiceOperations.marshalSendAndReceive(any())).thenReturn(submitFilingResponse);
         SubmitFilingResponse result = cSOSubmissionService.submitFiling(new FilingPackage());
        // Assertions.assertEquals(BigDecimal.valueOf(1), result.getReturn());
     }
