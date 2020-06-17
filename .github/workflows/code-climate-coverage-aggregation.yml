@@ -12,7 +12,7 @@ on:
 jobs:
     java:
       env:
-        DEBUG: false
+        DEBUG: true
         
       name: Create and upload Java coverage artifact
       runs-on: ubuntu-latest
