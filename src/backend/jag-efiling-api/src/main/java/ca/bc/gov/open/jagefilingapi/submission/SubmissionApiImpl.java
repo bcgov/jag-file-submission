@@ -3,6 +3,7 @@ package ca.bc.gov.open.jagefilingapi.submission;
 import ca.bc.gov.open.jagefilingapi.api.SubmissionApiDelegate;
 import ca.bc.gov.open.jagefilingapi.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.jagefilingapi.api.model.GenerateUrlResponse;
+import ca.bc.gov.open.jagefilingapi.api.model.UserDetail;
 import ca.bc.gov.open.jagefilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jagefilingapi.fee.FeeService;
 import ca.bc.gov.open.jagefilingapi.fee.models.Fee;
@@ -10,18 +11,17 @@ import ca.bc.gov.open.jagefilingapi.fee.models.FeeRequest;
 import ca.bc.gov.open.jagefilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jagefilingapi.submission.models.Submission;
 import ca.bc.gov.open.jagefilingapi.submission.service.SubmissionService;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
 import java.text.MessageFormat;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @EnableConfigurationProperties(NavigationProperties.class)
@@ -69,11 +69,14 @@ public class SubmissionApiImpl implements SubmissionApiDelegate {
         if(!cachedSubmission.isPresent())
             return ResponseEntity.badRequest().body(null);
 
+
+        logger.warn("Id is modified for testing purpose 0 or 1 is appended to it.");
+
         response.setEFilingUrl(
                 MessageFormat.format(
-                               "{0}/{1}",
+                               "{0}/{1}{2}",
                                 navigationProperties.getBaseUrl(),
-                                cachedSubmission.get().getId()));
+                                cachedSubmission.get().getId(), Math.round(Math.random())));
 
         logger.debug("{}", response);
 
@@ -81,18 +84,13 @@ public class SubmissionApiImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    public ResponseEntity<GenerateUrlRequest> getConfigurationById(String id) {
+    public ResponseEntity<UserDetail> getSubmissionUserDetail(String id) {
 
-        Optional<Submission> submission = submissionService.getByKey(UUID.fromString(id));
+        logger.warn("Response is mocked and returns true or false depending on the end of the string");
 
-        if (!submission.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-        GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
-
-        generateUrlRequest.setNavigation(submission.get().getNavigation());
-        generateUrlRequest.setDocumentProperties(submission.get().getDocumentProperties());
-
-        return ResponseEntity.ok(generateUrlRequest);
+        UserDetail response = new UserDetail();
+        response.setCsoAccountExists(StringUtils.endsWith(id, "0"));
+        return ResponseEntity.ok(response);
 
     }
 
