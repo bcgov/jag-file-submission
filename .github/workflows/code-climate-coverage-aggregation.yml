@@ -141,4 +141,4 @@ jobs:
       - name: Upload coverage report to Code Climate
         env:	
           CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}  
-        run: ./cc-test-reporter upload-coverage -i coverage/total-codeclimate.json -r $CC_TEST_REPORTER_ID
+        run: ./cc-test-reporter sum-coverage coverage/*-codeclimate.json -p 7 -o coverage/total-codeclimate.json
