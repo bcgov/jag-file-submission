@@ -5,7 +5,7 @@ services:
   #############################################################################################
   jag-file-submission:
     build:
-      context: ./src/backend/jag-efiling-api
+      context: ./src/backend
       args:
         - SERVICE_NAME=jag-efiling-api
         - MVN_PROFILES=openshift
