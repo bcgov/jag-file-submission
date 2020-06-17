@@ -13,7 +13,6 @@ jobs:
     java:
       env:
         DEBUG: true
-        COUNT: 0
         
       name: Create and upload Java coverage artifact
       runs-on: ubuntu-latest
@@ -99,15 +98,12 @@ jobs:
           CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}} 
         run: |
           projectRelRegex="^\.\/src\/backend\/(.*)\/target\/site\/jacoco\/jacoco\.xml$"
-          COUNT=0
           for file in $(find . -name "jacoco.xml")
           do
               echo $file
               echo $projectRelRegex
               if [[ $file =~ $projectRelRegex ]]
               then
-                  let COUNT=COUNT+1
-                  echo $COUNT
                   projectRel="${BASH_REMATCH[1]}"
                   echo "analyzing project: " $projectRel
                   projectName="${projectRel//\//-}"
@@ -117,16 +113,13 @@ jobs:
                   echo $file does not match
               fi
           done
-          echo $COUNT
-          env.COUNT=COUNT
       
       # Formatting the FRONTEND coverage report
       - name: Format the FRONTEND coverage report
         env:	
           CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}  
         run: |
-          ./cc-test-reporter format-coverage -t lcov -o coverage/frontend-codeclimate.json ${{github.workspace}}/src/frontend/efiling-frontend/coverage/lcov.info
-          let env.COUNT=env.COUNT+=1  
+          ./cc-test-reporter format-coverage -t lcov -o coverage/frontend-codeclimate.json ${{github.workspace}}/src/frontend/efiling-frontend/coverage/lcov.info 
         
       # Formatting the FRONTEND DEMO coverage report
       - name: Format the FRONTEND DEMO coverage report
@@ -134,7 +127,6 @@ jobs:
           CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}  
         run: |
           ./cc-test-reporter format-coverage -t lcov -o coverage/frontend-demo-codeclimate.json ${{github.workspace}}/src/frontend/efiling-demo/coverage/lcov.info
-          let env.COUNT=env.COUNT+=1  
         
       # List all formatted files in coverage directory    
       - name: WHERE AM I - FORMATTED?
@@ -143,7 +135,7 @@ jobs:
       
       # Sum the coverage reports
       - name: Summing the coverage reports generated
-        run: ./cc-test-reporter sum-coverage coverage/*-codeclimate.json -p env.COUNT -o coverage/total-codeclimate.json
+        run: ./cc-test-reporter sum-coverage coverage/*-codeclimate.json -p 7 -o coverage/total-codeclimate.json
         
       # Upload total coverage report to Code Climate
       - name: Upload coverage report to Code Climate
