@@ -8,11 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("Efiling Facade Client Test Suite")
 public class EfilingSubmissionClientTest {
-
-    @Autowired
-    CSOSubmissionServiceImpl cSOSubmissionService;
-
-
     @Test
     @DisplayName("CASE1: Test  Submission")
     public void testSubmission() {
