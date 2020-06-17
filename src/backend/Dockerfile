@@ -13,10 +13,13 @@ ARG SERVICE_NAME
 ENV SERVICE_NAME=${SERVICE_NAME}
 ENV MVN_PROFILES=${MVN_PROFILES}
 
-COPY pom.xml .
-RUN mvn dependency:go-offline
-
 COPY . .
+
+RUN mvn -B clean package \
+        -DproxySet=${PROXY_SET} \
+        -DproxyHost=${PROXY_HOST} \
+        -DproxyPort=${PROXY_PORT} \
+        -P libs
 
 RUN mvn -B clean package \
         -DproxySet=${PROXY_SET} \
@@ -34,7 +37,7 @@ FROM openjdk:8-jdk-slim
 # ARG MVN_PROFILES
 ARG SERVICE_NAME
 
-COPY --from=build ./target/${SERVICE_NAME}-*.jar /app/service.jar
+COPY --from=build ./${SERVICE_NAME}/target/${SERVICE_NAME}-*.jar /app/service.jar
 
 CMD ["java", "-jar", "/app/service.jar"]
 #############################################################################################
