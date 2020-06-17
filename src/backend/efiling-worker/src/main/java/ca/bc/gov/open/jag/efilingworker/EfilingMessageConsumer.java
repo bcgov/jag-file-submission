@@ -5,7 +5,6 @@ import ca.bc.gov.open.jag.efilingsubmissionclient.EfilingSubmissionService;
 import ca.bc.gov.open.jag.efilingworker.service.DocumentStoreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 
