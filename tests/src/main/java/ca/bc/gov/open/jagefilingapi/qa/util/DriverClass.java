@@ -1,7 +1,8 @@
 package ca.bc.gov.open.jagefilingapi.qa.util;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -14,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 public class DriverClass {
 
         public WebDriver driver;
-        public static Logger log = Logger.getLogger(DriverClass.class);
+        public static Logger log = LogManager.getLogger(DriverClass.class);
 
         public void initializeDriver() throws IOException {
             ReadConfig readConfig = new ReadConfig();

@@ -11,6 +11,9 @@ on:
 
 jobs:
     java:
+      env:
+        DEBUG: false
+        
       name: Create and upload Java coverage artifact
       runs-on: ubuntu-latest
       steps:
@@ -37,6 +40,11 @@ jobs:
           echo "::set-env name=GIT_BRANCH::$GITHUB_REF"
           echo "::set-env name=GIT_COMMIT_SHA::$GITHUB_SHA"
         if: github.event_name == 'push'
+      
+      - name: Set ref/head/master to master
+        run: |
+          echo "::set-env name=GIT_BRANCH::master"
+        if: env.GIT_BRANCH == 'refs/heads/master'
         
       # Setup Java Environment  
       - name: Set up JDK 1.8
@@ -53,9 +61,9 @@ jobs:
         run: |
           for s in efiling-backend-demo jag-efiling-api
           do
-            echo "I am in $s!"
             ls ${{ github.workspace }}/src/backend/$s/target/site/jacoco;
           done
+        if: env.DEBUG == true
       
       # Run Yarn Install
       - name: Run Yarn Install
@@ -68,6 +76,7 @@ jobs:
       # List frontend coverage reports
       - name: WHERE AM I - FRONTEND?
         run: ls ${{github.workspace}}/src/frontend/efiling-frontend/coverage
+        if: env.DEBUG == true
       
       # Run Yarn Install
       - name: Run Yarn Install - DEMO
@@ -88,7 +97,6 @@ jobs:
         run: |
           for s in efiling-backend-demo jag-efiling-api
           do 
-            echo "I am in $s!"
             JACOCO_SOURCE_PATH=${{ github.workspace }}/src/backend/$s/src/main/java ./cc-test-reporter format-coverage ${{github.workspace}}/src/backend/$s/target/site/jacoco/jacoco.xml --input-type jacoco --output coverage/$s-codeclimate.json;
           done
       
@@ -105,8 +113,9 @@ jobs:
         run: ./cc-test-reporter format-coverage -t lcov -o coverage/frontend-demo-codeclimate.json ${{github.workspace}}/src/frontend/efiling-demo/coverage/lcov.info          
         
       # List all formatted files in coverage directory    
-      - name: WHERE AM I DEUX?
+      - name: WHERE AM I - FORMATTED?
         run: ls ${{ github.workspace }}/coverage
+        if: env.DEBUG == true
       
       # Sum the coverage reports
       - name: Summing the coverage reports generated
@@ -117,6 +126,3 @@ jobs:
         env:	
           CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}  
         run: ./cc-test-reporter upload-coverage -i coverage/total-codeclimate.json -r $CC_TEST_REPORTER_ID
-      
-      - name: WHERE AM I TROIS?
-        run: ls ${{ github.workspace }}/coverage
