@@ -69,7 +69,7 @@ public class SubmissionApiImpl implements SubmissionApiDelegate {
         if(!cachedSubmission.isPresent())
             return ResponseEntity.badRequest().body(null);
 
-        response.setEFilingUrl(
+        response.setEfilingUrl(
                 MessageFormat.format(
                                "{0}/{1}",
                                 navigationProperties.getBaseUrl(),
