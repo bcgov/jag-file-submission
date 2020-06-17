@@ -3,7 +3,6 @@ package ca.bc.gov.open.jag.efilingsubmissionclient;
 import ca.bc.gov.open.jag.ag.csows.filing.FilingPackage;
 import ca.bc.gov.open.jag.ag.csows.filing.SubmitFilingResponse;
 import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("Efiling Facade Client Test Suite")
