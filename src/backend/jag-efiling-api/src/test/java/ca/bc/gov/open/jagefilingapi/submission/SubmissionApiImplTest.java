@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jagefilingapi.document;
+package ca.bc.gov.open.jagefilingapi.submission;
 
 
 import ca.bc.gov.open.jagefilingapi.api.model.*;
@@ -6,14 +6,10 @@ import ca.bc.gov.open.jagefilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jagefilingapi.fee.FeeService;
 import ca.bc.gov.open.jagefilingapi.fee.models.Fee;
 import ca.bc.gov.open.jagefilingapi.fee.models.FeeRequest;
-import ca.bc.gov.open.jagefilingapi.submission.SubmissionApiImpl;
 import ca.bc.gov.open.jagefilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jagefilingapi.submission.models.Submission;
 import ca.bc.gov.open.jagefilingapi.submission.service.SubmissionService;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -27,9 +23,7 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -80,6 +74,7 @@ public class SubmissionApiImplTest {
 
     @Test
     @DisplayName("CASE1: when payload is valid")
+    @Order(1)
     public void withValidPayloadShouldReturnOk() {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.of(Submission.builder().create()));
@@ -94,13 +89,29 @@ public class SubmissionApiImplTest {
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertTrue(actual.getBody().getEFilingUrl().startsWith("https://httpbin.org/"));
         assertNotNull(actual.getBody().getExpiryDate());
-
-        verify(feeService, times(1)).getFee(any(FeeRequest.class));
-
     }
 
     @Test
-    @DisplayName("CASE1: with validId return payload")
+    @DisplayName("CASE2: when payload is valid but redis return nothing")
+    @Order(2)
+    public void withValidPayloadButRedisReturnNothingReturnBadRequest() {
+
+        when(submissionServiceMock.put(any())).thenReturn(Optional.empty());
+
+        GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
+
+        generateUrlRequest.setDocumentProperties(createDocumentProperties());
+        generateUrlRequest.setNavigation(createNavigation());
+
+        ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(generateUrlRequest);
+
+        assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
+        assertNull(actual.getBody());
+    }
+
+    @Test
+    @DisplayName("CASE3: with validId return payload")
+    @Order(3)
     public void withValidIdReturnPayload() {
         Fee fee = new Fee(BigDecimal.TEN);
 
@@ -119,7 +130,8 @@ public class SubmissionApiImplTest {
     }
 
     @Test
-    @DisplayName("CASE2: with null redis storage response return NotFound")
+    @DisplayName("CASE4: with null redis storage response return NotFound")
+    @Order(4)
     public void withNullRedisStorageResponseReturnNotFound() {
 
         when(submissionServiceMock.getByKey(any()))
@@ -128,6 +140,11 @@ public class SubmissionApiImplTest {
         ResponseEntity<GenerateUrlRequest> actual = sut.getConfigurationById(TEST.toString());
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
 
+    }
+
+    @AfterAll
+    public void verifyGetFeeCalls() {
+        verify(feeService, times(2)).getFee(any(FeeRequest.class));
     }
 
     private DocumentProperties createDocumentProperties() {
