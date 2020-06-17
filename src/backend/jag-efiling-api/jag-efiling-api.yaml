@@ -4,17 +4,17 @@ info:
   title: jag-efiling-api
   description: Efiling api
 servers:
-  - url: 'http://localhost:8080'
+- url: 'http://localhost:8080'
 tags:
-  - name: submission
-    description: Submission Api
+- name: submission
+  description: Submission Api
 paths:
   '/submission/generateUrl':
     post:
       summary: Generates a secure URL for e-filing submission
       operationId: GenerateUrl
       tags:
-        - submission
+      - submission
       requestBody:
         description: requested parameters to generate a url
         required: true
@@ -29,26 +29,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenerateUrlResponse'
-  '/submission/getConfiguration/{id}':
+  '/submission/{id}/userDetail':
     get:
-      summary: Get configuration from redis by id
-      operationId: GetConfigurationById
+      summary: Get user detail for a given submission
+      operationId: GetSubmissionUserDetail
       tags:
-        - configuration
+      - submission
       parameters:
-        - name: id
-          in: path
-          description: Redis key
-          required: true
-          schema:
-            type: string
+      - name: id
+        in: path
+        description: A submission id
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: Config found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenerateUrlRequest'
+                $ref: '#/components/schemas/UserDetail'
         '404':
           description: Config not found
 components:
@@ -56,8 +56,8 @@ components:
     GenerateUrlRequest:
       description: details about the required transaction
       required:
-        - navigation
-        - documentProperties
+      - navigation
+      - documentProperties
       properties:
         documentProperties:
           $ref: '#/components/schemas/DocumentProperties'
@@ -71,13 +71,20 @@ components:
           format: int64
         eFilingUrl:
           type: string
+    UserDetail:
+      type: object
+      required:
+      - csoAccountExists
+      properties:
+        csoAccountExists:
+          type: boolean
     DocumentProperties:
       type: object
       description: Submission Metadata used to describe the submission that will be e-filled
       required:
-        - type
-        - subType
-        - documentAccess
+      - type
+      - subType
+      - documentAccess
       properties:
         type:
           type: string
@@ -103,9 +110,9 @@ components:
             type: string
     Navigation:
       required:
-        - success
-        - error
-        - cancel
+      - success
+      - error
+      - cancel
       properties:
         success:
           $ref: '#/components/schemas/Redirect'
@@ -115,7 +122,7 @@ components:
           $ref: '#/components/schemas/Redirect'
     Redirect:
       required:
-        - url
+      - url
       properties:
         url:
           type: string

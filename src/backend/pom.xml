@@ -35,7 +35,6 @@
 		<profile>
 			<id>libs</id>
 			<modules>
-				<module>efiling-worker</module>
 				<module>libs/efiling-submission-client</module>
 				<module>libs/efiling-lookup-client</module>
 				<module>libs/efiling-status-client</module>
