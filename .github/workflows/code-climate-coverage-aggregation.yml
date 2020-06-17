@@ -99,14 +99,15 @@ jobs:
           CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}} 
         run: |
           projectRelRegex="^\.\/src\/backend\/(.*)\/target\/site\/jacoco\/jacoco\.xml$"
+          COUNT=0
           for file in $(find . -name "jacoco.xml")
           do
               echo $file
               echo $projectRelRegex
-              COUNT=0
               if [[ $file =~ $projectRelRegex ]]
               then
                   let COUNT=COUNT+1
+                  echo $COUNT
                   projectRel="${BASH_REMATCH[1]}"
                   echo "analyzing project: " $projectRel
                   projectName="${projectRel//\//-}"
@@ -115,8 +116,9 @@ jobs:
               else
                   echo $file does not match
               fi
-              env.COUNT=COUNT
           done
+          echo $COUNT
+          env.COUNT=COUNT
       
       # Formatting the FRONTEND coverage report
       - name: Format the FRONTEND coverage report
