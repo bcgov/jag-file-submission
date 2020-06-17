@@ -86,7 +86,7 @@ public class SubmissionApiImpl implements SubmissionApiDelegate {
     @Override
     public ResponseEntity<UserDetail> getSubmissionUserDetail(String id) {
 
-        logger.warn("Response is mocked and return true of false depending on the end of the string");
+        logger.warn("Response is mocked and returns true or false depending on the end of the string");
 
         UserDetail response = new UserDetail();
         response.setCsoAccountExists(StringUtils.endsWith(id, "0"));
