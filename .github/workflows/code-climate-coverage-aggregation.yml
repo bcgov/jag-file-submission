@@ -35,10 +35,6 @@ jobs:
           
           echo "::set-env name=GIT_BRANCH::${{ github.event.pull_request.head.ref }}"
           echo "::set-env name=GIT_COMMIT_SHA::${{ github.event.pull_request.head.sha }}"
-          if env.DEBUG == true
-            echo "GIT_BRANCH: env.GIT_BRANCH"
-            echo "GIT_COMMIT_SHA: env.GIT_COMMIT_SHA"
-          fi
         if: github.event_name == 'pull_request'
         
       - name: Set ENV for codeclimate (push)
