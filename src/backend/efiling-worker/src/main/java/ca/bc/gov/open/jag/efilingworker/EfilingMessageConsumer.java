@@ -1,9 +1,11 @@
 package ca.bc.gov.open.jag.efilingworker;
 
-import ca.bc.gov.open.jag.efilinglookupclient.EfilingLookupService;
+import ca.bc.gov.open.jag.ag.csows.filing.FilingPackage;
+import ca.bc.gov.open.jag.efilingsubmissionclient.EfilingSubmissionService;
 import ca.bc.gov.open.jag.efilingworker.service.DocumentStoreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 
@@ -13,11 +15,14 @@ import java.io.File;
 @Component
 public class EfilingMessageConsumer {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     private final DocumentStoreService documentStoreService;
-    private final EfilingLookupService efilingLookupService;
-    public EfilingMessageConsumer(DocumentStoreService documentStoreService, EfilingLookupService efilingLookupService) {
+
+    private final EfilingSubmissionService efilingSubmissionService;
+
+    public EfilingMessageConsumer(DocumentStoreService documentStoreService, EfilingSubmissionService efilingSubmissionService) {
         this.documentStoreService = documentStoreService;
-        this.efilingLookupService = efilingLookupService;
+        this.efilingSubmissionService = efilingSubmissionService;
     }
 
     @RabbitListener(queues = Keys.QUEUE_NAME)
@@ -29,6 +34,6 @@ public class EfilingMessageConsumer {
         logger.info("Uploading file");
         documentStoreService.uploadFile(new File(""));
         logger.info("Submiting");
-        //TODO: implement filling submit
+        efilingSubmissionService.submitFiling(new FilingPackage());
     }
 }

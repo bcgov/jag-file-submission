@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingworker;
 
-import ca.bc.gov.open.jag.efilinglookupclient.MockCSOLookupServiceImpl;
+import ca.bc.gov.open.jag.ag.csows.filing.SubmitFilingResponse;
+import ca.bc.gov.open.jag.efilingsubmissionclient.MockCSOSubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingworker.service.MockDocumentStoreServiceImpl;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -26,12 +27,13 @@ public class EfilingMessageConsumerTest {
     MockDocumentStoreServiceImpl mockDocumentStoreService;
 
     @Mock
-    MockCSOLookupServiceImpl mockCSOLookupService;
+    MockCSOSubmissionServiceImpl mockCSOSubmissionService;
 
     @BeforeAll
     public void init() {
         MockitoAnnotations.initMocks(this);
         Mockito.when(mockDocumentStoreService.uploadFile(any())).thenReturn(TEST);
+        Mockito.when(mockCSOSubmissionService.submitFiling(any())).thenReturn(new SubmitFilingResponse());
     }
 
     @DisplayName("CASE1: Test acceptMessage execution")
@@ -39,5 +41,6 @@ public class EfilingMessageConsumerTest {
     public void test() {
         sut.acceptMessage("TEST");
         verify(mockDocumentStoreService, times(1)).uploadFile(any());
+        verify(mockCSOSubmissionService, times(1)).submitFiling(any());
     }
 }
