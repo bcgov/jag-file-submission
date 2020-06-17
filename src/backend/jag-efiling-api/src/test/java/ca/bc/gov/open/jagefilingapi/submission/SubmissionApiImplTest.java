@@ -87,7 +87,7 @@ public class SubmissionApiImplTest {
         ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(generateUrlRequest);
 
         assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertTrue(actual.getBody().getEFilingUrl().startsWith("https://httpbin.org/"));
+        assertTrue(actual.getBody().getEfilingUrl().startsWith("https://httpbin.org/"));
         assertNotNull(actual.getBody().getExpiryDate());
     }
 
@@ -119,14 +119,10 @@ public class SubmissionApiImplTest {
 
         when(submissionServiceMock.getByKey(TEST)).thenReturn(Optional.of(submission));
 
-        ResponseEntity<GenerateUrlRequest> actual = sut.getConfigurationById(TEST.toString());
+        ResponseEntity<UserDetail> actual = sut.getSubmissionUserDetail("0");
         assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertEquals(TYPE, actual.getBody().getDocumentProperties().getType());
-        assertEquals(SUBTYPE, actual.getBody().getDocumentProperties().getSubType());
-        assertEquals(URL, actual.getBody().getDocumentProperties().getSubmissionAccess().getUrl());
-        assertEquals(CASE_1, actual.getBody().getNavigation().getSuccess().getUrl());
-        assertEquals(CANCEL, actual.getBody().getNavigation().getCancel().getUrl());
-        assertEquals(ERROR, actual.getBody().getNavigation().getError().getUrl());
+        assertTrue(actual.getBody().getCsoAccountExists());
+
     }
 
     @Test
@@ -137,14 +133,9 @@ public class SubmissionApiImplTest {
         when(submissionServiceMock.getByKey(any()))
                 .thenReturn(Optional.empty());
 
-        ResponseEntity<GenerateUrlRequest> actual = sut.getConfigurationById(TEST.toString());
-        assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
+        ResponseEntity<UserDetail> actual = sut.getSubmissionUserDetail("1");
+        assertFalse(actual.getBody().getCsoAccountExists());
 
-    }
-
-    @AfterAll
-    public void verifyGetFeeCalls() {
-        verify(feeService, times(2)).getFee(any(FeeRequest.class));
     }
 
     private DocumentProperties createDocumentProperties() {
