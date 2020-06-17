@@ -69,7 +69,7 @@ components:
         expiryDate:
           type: integer
           format: int64
-        eFilingUrl:
+        efilingUrl:
           type: string
     UserDetail:
       type: object

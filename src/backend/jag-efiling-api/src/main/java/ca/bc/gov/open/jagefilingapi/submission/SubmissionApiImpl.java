@@ -69,10 +69,8 @@ public class SubmissionApiImpl implements SubmissionApiDelegate {
         if(!cachedSubmission.isPresent())
             return ResponseEntity.badRequest().body(null);
 
-
         logger.warn("Id is modified for testing purpose 0 or 1 is appended to it.");
-
-        response.setEFilingUrl(
+        response.setEfilingUrl(
                 MessageFormat.format(
                                "{0}/{1}{2}",
                                 navigationProperties.getBaseUrl(),
