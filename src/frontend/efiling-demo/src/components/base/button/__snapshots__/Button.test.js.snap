@@ -1,19 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Button Component Button matches the snapshot 1`] = `
-<div
-  className="outline"
->
-  <div
-    className="center-align"
+<div>
+  <button
+    className="efile-btn btn"
+    onClick={[MockFunction]}
+    type="button"
   >
-    <button
-      className="efile-btn btn"
-      onClick={[MockFunction]}
-      type="button"
-    >
-      button label
-    </button>
-  </div>
+    button label
+  </button>
 </div>
 `;

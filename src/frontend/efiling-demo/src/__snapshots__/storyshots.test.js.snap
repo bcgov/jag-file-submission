@@ -1,38 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Button Default 1`] = `
-<div
-  className="outline"
->
-  <div
-    className="center-align"
+<div>
+  <button
+    className="efile-btn btn"
+    onClick={[Function]}
+    type="button"
   >
-    <button
-      className="efile-btn btn"
-      onClick={[Function]}
-      type="button"
-    >
-      button label
-    </button>
-  </div>
+    button label
+  </button>
 </div>
 `;
 
 exports[`Storyshots Button Mobile 1`] = `
-<div
-  className="outline"
->
-  <div
-    className="center-align"
+<div>
+  <button
+    className="efile-btn btn"
+    onClick={[Function]}
+    type="button"
   >
-    <button
-      className="efile-btn btn"
-      onClick={[Function]}
-      type="button"
-    >
-      button label
-    </button>
-  </div>
+    button label
+  </button>
 </div>
 `;
 
@@ -41,36 +29,24 @@ exports[`Storyshots Home Default 1`] = `
   <p>
     eFiling Demo Client
   </p>
-  <div
-    className="outline"
-  >
-    <div
-      className="center-align"
+  <div>
+    <button
+      className="efile-btn btn"
+      onClick={[Function]}
+      type="button"
     >
-      <button
-        className="efile-btn btn"
-        onClick={[Function]}
-        type="button"
-      >
-        With CSO Account
-      </button>
-    </div>
+      With CSO Account
+    </button>
   </div>
   <br />
-  <div
-    className="outline"
-  >
-    <div
-      className="center-align"
+  <div>
+    <button
+      className="efile-btn btn"
+      onClick={[Function]}
+      type="button"
     >
-      <button
-        className="efile-btn btn"
-        onClick={[Function]}
-        type="button"
-      >
-        Without CSO Account
-      </button>
-    </div>
+      Without CSO Account
+    </button>
   </div>
 </div>
 `;
@@ -80,36 +56,24 @@ exports[`Storyshots Home Mobile 1`] = `
   <p>
     eFiling Demo Client
   </p>
-  <div
-    className="outline"
-  >
-    <div
-      className="center-align"
+  <div>
+    <button
+      className="efile-btn btn"
+      onClick={[Function]}
+      type="button"
     >
-      <button
-        className="efile-btn btn"
-        onClick={[Function]}
-        type="button"
-      >
-        With CSO Account
-      </button>
-    </div>
+      With CSO Account
+    </button>
   </div>
   <br />
-  <div
-    className="outline"
-  >
-    <div
-      className="center-align"
+  <div>
+    <button
+      className="efile-btn btn"
+      onClick={[Function]}
+      type="button"
     >
-      <button
-        className="efile-btn btn"
-        onClick={[Function]}
-        type="button"
-      >
-        Without CSO Account
-      </button>
-    </div>
+      Without CSO Account
+    </button>
   </div>
 </div>
 `;
