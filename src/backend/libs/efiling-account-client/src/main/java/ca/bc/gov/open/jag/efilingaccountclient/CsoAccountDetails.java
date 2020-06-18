@@ -8,14 +8,23 @@ import java.util.List;
 
 public class CsoAccountDetails {
 
+
+    @JsonCreator
+    public CsoAccountDetails(
+            @JsonProperty("accountId") String accountId,
+            @JsonProperty("clientId") String clientId) {
+
+        this.accountId = accountId;
+        this.clientId = clientId;
+    }
+
     @JsonCreator
     public CsoAccountDetails(
             @JsonProperty("accountId") String accountId,
             @JsonProperty("clientId") String clientId,
             @JsonProperty("roles") List<String> roles) {
 
-        this.accountId = accountId;
-        this.clientId = clientId;
+        this(accountId, clientId);
 
         for (String role: roles) {
             String toAdd = role.toLowerCase();
@@ -36,6 +45,10 @@ public class CsoAccountDetails {
     }
 
     public List<String> getRoles() { return roles; }
+
+    public void addRole(String role) {
+        this.roles.add(role.toLowerCase());
+    }
 
     public boolean HasRole(String role) {
         String toFind = role.toLowerCase();
