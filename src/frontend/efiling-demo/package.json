@@ -22,7 +22,6 @@
     "react-scripts": "3.4.1",
     "react-test-renderer": "^16.12.0",
     "regenerator-runtime": "^0.13.5",
-    "shared-react-component-example": "git+ssh://git@github.com:powderham/shared-react-component-example.git",
     "webpack": "4.42.0",
     "shared-components": "file:./../shared-components"
   },
