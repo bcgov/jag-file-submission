@@ -19,6 +19,7 @@ jobs:
       runs-on: ubuntu-latest
       steps:
       - uses: actions/checkout@v2
+      - uses: actions/cache@v1
       
       # Get Code Climate binary  
       - name: Download Code Climate Binary
@@ -28,7 +29,7 @@ jobs:
       - name: Apply executable perms to Code Climate Binary
         run: chmod +x ./cc-test-reporter
       
-      # Set required Git env vars for either pull request or push to branch
+      # Set required Git env vars for either pull request
       - name: Set ENV for codeclimate (pull_request)
         run: |
           # git fetch --no-tags --prune --depth=1 origin +refs/heads/$GITHUB_HEAD_REF:refs/remotes/origin/$GITHUB_HEAD_REF
@@ -38,12 +39,14 @@ jobs:
           echo "::set-env name=GIT_COMMIT_SHA::${{ github.event.pull_request.head.sha }}"
         if: github.event_name == 'pull_request'
         
+      # Set required Git env vars for a push to master
       - name: Set ENV for codeclimate (push)
         run: |
           echo "::set-env name=GIT_BRANCH::$GITHUB_REF"
           echo "::set-env name=GIT_COMMIT_SHA::$GITHUB_SHA"
         if: github.event_name == 'push'
       
+      # Trimming the ref to master in order to publish correct report (paambaati)
       - name: Set ref/head/master to master
         run: |
           echo "::set-env name=GIT_BRANCH::master"
@@ -93,7 +96,7 @@ jobs:
       - name: WHERE AM I - FRONTEND DEMO?
         run: ls ${{github.workspace}}/src/frontend/efiling-demo/coverage
       
-      # Formatting the BACKEND coverage reports generated
+      # Formatting the BACKEND coverage reports generated (dynamically)
       - name: Format BACKEND coverage reports
         run: |
           projectRelRegex="^\.\/src\/backend\/(.*)\/target\/site\/jacoco\/jacoco\.xml$"
