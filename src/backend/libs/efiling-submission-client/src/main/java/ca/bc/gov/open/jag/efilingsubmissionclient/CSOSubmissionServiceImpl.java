@@ -11,7 +11,7 @@ import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 @Service
 public class CSOSubmissionServiceImpl extends WebServiceGatewaySupport implements EfilingSubmissionService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CSOSubmissionServiceImpl.class);
+    private static final Logger _logger = LoggerFactory.getLogger(CSOSubmissionServiceImpl.class);
 
     @Override
     public SubmitFilingResponse submitFiling(FilingPackage filingPackage) {
@@ -25,11 +25,11 @@ public class CSOSubmissionServiceImpl extends WebServiceGatewaySupport implement
 
         try {
 
-            LOGGER.info("Calling SubmitFiling with package id: " + filingPackage.getApplicationReferenceGuid());
+            _logger.info("Calling SubmitFiling with package id: {}", filingPackage.getApplicationReferenceGuid());
             submitFilingResponse =  (SubmitFilingResponse)getWebServiceTemplate().marshalSendAndReceive(request);
         } catch (Exception e) {
 
-            LOGGER.error("Error calling SubmitFiling: " + e.toString());
+            _logger.error("Error calling SubmitFiling: ", e);
         }
 
         return submitFilingResponse;
