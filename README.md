@@ -40,9 +40,11 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
 
 ## Running the App
 
-From the jag-file-submission directory, run:
+run
 
-### `docker-compose up -d --build`
+```bash
+docker-compose up -d --build`
+```
 
 Currently the docker image created will create a Redis container that the backend Spring Boot API interacts with.
 
@@ -50,6 +52,8 @@ To confirm that your docker container is working you can perform a GET request t
 
 It will also build the image and fires up the frontend container. The efiling-frontend application will run and be available on port 3000. The efiling-demo application will run and be available on port 3001.
 
-### `docker-compose stop`
+```bash
+docker-compose stop
+```
 
 Stops the container and the frontend application from being run/served.
