@@ -13,10 +13,10 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 @EnableConfigurationProperties(CSOLookupProperties.class)
 public class AutoConfiguration {
 
-    private final CSOLookupProperties CSOLookupProperties;
+    private final CSOLookupProperties csoLookupProperties;
 
-    public AutoConfiguration(CSOLookupProperties CSOLookupProperties) {
-        this.CSOLookupProperties = CSOLookupProperties;
+    public AutoConfiguration(CSOLookupProperties csoLookupProperties) {
+        this.csoLookupProperties = csoLookupProperties;
     }
 
     @Bean(name = "CSOLookupMarshaller")
@@ -32,7 +32,7 @@ public class AutoConfiguration {
     public EfilingLookupService eFilingLookupService(@Qualifier("CSOLookupMarshaller") Jaxb2Marshaller jaxb2Marshaller) {
 
         CSOLookupServiceImpl eFilingLookupService = new CSOLookupServiceImpl();
-        eFilingLookupService.setDefaultUri(CSOLookupProperties.getFilingLookupSoapUri());
+        eFilingLookupService.setDefaultUri(csoLookupProperties.getFilingLookupSoapUri());
         eFilingLookupService.setMarshaller(jaxb2Marshaller);
         eFilingLookupService.setUnmarshaller(jaxb2Marshaller);
         return eFilingLookupService;
