@@ -5,4 +5,5 @@ tests/logs
 *.iml
 *.log
 .idea
-
+tests/test-output
+*.png
