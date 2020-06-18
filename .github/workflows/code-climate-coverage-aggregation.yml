@@ -12,7 +12,7 @@ on:
 jobs:
     java:
       env:
-        DEBUG: true
+        ACTION_DEBUG: true
         CC_TEST_REPORTER_ID: 9ada3133fe9babf91a222009998b3545b7eae897a05900930bfa8a27fd82f385
         
       name: Create and upload Java coverage artifact
@@ -74,7 +74,7 @@ jobs:
           do
             ls ${{ github.workspace }}/src/backend/$s/target/site/jacoco;
           done
-        if: env.DEBUG == true
+        if: env.ACTION_DEBUG == true
       
       # Run Yarn Install
       - name: Run Yarn Install
@@ -87,7 +87,7 @@ jobs:
       # List frontend coverage reports
       - name: WHERE AM I - FRONTEND?
         run: ls ${{github.workspace}}/src/frontend/efiling-frontend/coverage
-        if: env.DEBUG == true
+        if: env.ACTION_DEBUG == true
       
       # Run Yarn Install
       - name: Run Yarn Install - DEMO
@@ -134,7 +134,7 @@ jobs:
       # List all formatted files in coverage directory    
       - name: WHERE AM I - FORMATTED?
         run: ls ${{ github.workspace }}/coverage
-        if: env.DEBUG == true
+        if: env.ACTION_DEBUG == true
       
       # Sum the coverage reports
       - name: Summing the coverage reports generated
