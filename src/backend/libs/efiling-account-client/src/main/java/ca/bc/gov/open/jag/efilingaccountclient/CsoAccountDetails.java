@@ -19,7 +19,7 @@ public class CsoAccountDetails {
 
     private String accountId;
     private String clientId;
-    private List<String> roles;
+private List<String> roles = new ArrayList<>();
 
     public String getAccountId() {
         return accountId;
