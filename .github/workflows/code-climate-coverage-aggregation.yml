@@ -12,7 +12,8 @@ on:
 jobs:
     java:
       env:
-        DEBUG: false
+        DEBUG: true
+        CC_TEST_REPORTER_ID: 9ada3133fe9babf91a222009998b3545b7eae897a05900930bfa8a27fd82f385
         
       name: Create and upload Java coverage artifact
       runs-on: ubuntu-latest
@@ -30,9 +31,11 @@ jobs:
       # Set required Git env vars for either pull request or push to branch
       - name: Set ENV for codeclimate (pull_request)
         run: |
-          git fetch --no-tags --prune --depth=1 origin +refs/heads/$GITHUB_HEAD_REF:refs/remotes/origin/$GITHUB_HEAD_REF
-          echo "::set-env name=GIT_BRANCH::$GITHUB_HEAD_REF"
-          echo "::set-env name=GIT_COMMIT_SHA::$(git rev-parse origin/$GITHUB_HEAD_REF)"
+          # git fetch --no-tags --prune --depth=1 origin +refs/heads/$GITHUB_HEAD_REF:refs/remotes/origin/$GITHUB_HEAD_REF
+          # echo "::set-env name=GIT_BRANCH::$GITHUB_HEAD_REF"
+          
+          echo "::set-env name=GIT_BRANCH::${{ github.event.pull_request.head.ref }}"
+          echo "::set-env name=GIT_COMMIT_SHA::${{ github.event.pull_request.head.sha }}"
         if: github.event_name == 'pull_request'
         
       - name: Set ENV for codeclimate (push)
@@ -92,25 +95,33 @@ jobs:
       
       # Formatting the BACKEND coverage reports generated
       - name: Format BACKEND coverage reports
-        env:	
-          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}  
         run: |
-          for s in efiling-backend-demo jag-efiling-api
-          do 
-            JACOCO_SOURCE_PATH=${{ github.workspace }}/src/backend/$s/src/main/java ./cc-test-reporter format-coverage ${{github.workspace}}/src/backend/$s/target/site/jacoco/jacoco.xml --input-type jacoco --output coverage/$s-codeclimate.json;
+          projectRelRegex="^\.\/src\/backend\/(.*)\/target\/site\/jacoco\/jacoco\.xml$"
+          for file in $(find . -name "jacoco.xml")
+          do
+              echo $file
+              echo $projectRelRegex
+              if [[ $file =~ $projectRelRegex ]]
+              then
+                  projectRel="${BASH_REMATCH[1]}"
+                  echo "analyzing project: " $projectRel
+                  projectName="${projectRel//\//-}"
+                  JACOCO_SOURCE_PATH=${{ github.workspace }}/src/backend/$projectRel/src/main/java ./cc-test-reporter format-coverage ${{github.workspace}}/src/backend/$projectRel/target/site/jacoco/jacoco.xml --input-type jacoco --output coverage/$projectName-codeclimate.json;
+                  echo "coverage generated: coverage/$projectName-codeclimate.json;"
+              else
+                  echo $file does not match
+              fi
           done
       
       # Formatting the FRONTEND coverage report
       - name: Format the FRONTEND coverage report
-        env:	
-          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}  
-        run: ./cc-test-reporter format-coverage -t lcov -o coverage/frontend-codeclimate.json ${{github.workspace}}/src/frontend/efiling-frontend/coverage/lcov.info
+        run: |
+          ./cc-test-reporter format-coverage -t lcov -o coverage/frontend-codeclimate.json ${{github.workspace}}/src/frontend/efiling-frontend/coverage/lcov.info 
         
       # Formatting the FRONTEND DEMO coverage report
       - name: Format the FRONTEND DEMO coverage report
-        env:	
-          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}  
-        run: ./cc-test-reporter format-coverage -t lcov -o coverage/frontend-demo-codeclimate.json ${{github.workspace}}/src/frontend/efiling-demo/coverage/lcov.info          
+        run: |
+          ./cc-test-reporter format-coverage -t lcov -o coverage/frontend-demo-codeclimate.json ${{github.workspace}}/src/frontend/efiling-demo/coverage/lcov.info
         
       # List all formatted files in coverage directory    
       - name: WHERE AM I - FORMATTED?
@@ -119,10 +130,8 @@ jobs:
       
       # Sum the coverage reports
       - name: Summing the coverage reports generated
-        run: ./cc-test-reporter sum-coverage coverage/*-codeclimate.json -p 4 -o coverage/total-codeclimate.json
+        run: ./cc-test-reporter sum-coverage coverage/*-codeclimate.json -p 7 -o coverage/total-codeclimate.json
         
       # Upload total coverage report to Code Climate
       - name: Upload coverage report to Code Climate
-        env:	
-          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}  
-        run: ./cc-test-reporter upload-coverage -i coverage/total-codeclimate.json -r $CC_TEST_REPORTER_ID
+        run: ./cc-test-reporter upload-coverage -i coverage/total-codeclimate.json
