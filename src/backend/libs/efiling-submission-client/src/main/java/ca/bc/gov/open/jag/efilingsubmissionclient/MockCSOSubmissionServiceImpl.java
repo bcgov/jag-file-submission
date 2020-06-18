@@ -12,7 +12,7 @@ public class MockCSOSubmissionServiceImpl implements EfilingSubmissionService {
     public SubmitFilingResponse submitFiling(FilingPackage filingPackage) {
 
         SubmitFilingResponse submitFilingResponse = new SubmitFilingResponse();
-        submitFilingResponse.setReturn(new BigDecimal(1));
+        submitFilingResponse.setReturn(BigDecimal.valueOf(1));
         return submitFilingResponse;
     }
 }

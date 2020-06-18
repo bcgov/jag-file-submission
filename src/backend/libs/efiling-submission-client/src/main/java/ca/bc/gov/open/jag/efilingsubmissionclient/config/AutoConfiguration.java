@@ -13,10 +13,10 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 @EnableConfigurationProperties(CSOSubmissionProperties.class)
 public class AutoConfiguration {
 
-    private final CSOSubmissionProperties CSOSubmissionProperties;
+    private final CSOSubmissionProperties csoSubmissionProperties;
 
-    public AutoConfiguration(CSOSubmissionProperties CSOSubmissionProperties) {
-        this.CSOSubmissionProperties = CSOSubmissionProperties;
+    public AutoConfiguration(CSOSubmissionProperties csoSubmissionProperties) {
+        this.csoSubmissionProperties = csoSubmissionProperties;
     }
 
     @Bean(name = "CSOSubmissionMarshaller")
@@ -32,7 +32,7 @@ public class AutoConfiguration {
     public EfilingSubmissionService eFilingSubmissionClient(@Qualifier("CSOSubmissionMarshaller") Jaxb2Marshaller jaxb2Marshaller) {
 
         CSOSubmissionServiceImpl eFilingSubmissionServiceImpl = new CSOSubmissionServiceImpl();
-        eFilingSubmissionServiceImpl.setDefaultUri(CSOSubmissionProperties.getFilingSubmissionSoapUri());
+        eFilingSubmissionServiceImpl.setDefaultUri(csoSubmissionProperties.getFilingSubmissionSoapUri());
         eFilingSubmissionServiceImpl.setMarshaller(jaxb2Marshaller);
         eFilingSubmissionServiceImpl.setUnmarshaller(jaxb2Marshaller);
         return eFilingSubmissionServiceImpl;

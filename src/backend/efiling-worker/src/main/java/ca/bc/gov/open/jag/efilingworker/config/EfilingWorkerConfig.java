@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingworker.configuration;
+package ca.bc.gov.open.jag.efilingworker.config;
 
 import ca.bc.gov.open.jag.efilingsubmissionclient.EfilingSubmissionService;
 import ca.bc.gov.open.jag.efilingsubmissionclient.MockCSOSubmissionServiceImpl;
