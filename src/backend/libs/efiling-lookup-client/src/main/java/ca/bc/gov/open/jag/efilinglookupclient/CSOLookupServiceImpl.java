@@ -8,6 +8,6 @@ import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 @Service
 public class CSOLookupServiceImpl extends WebServiceGatewaySupport implements EfilingLookupService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CSOLookupServiceImpl.class);
+    private static final Logger _logger = LoggerFactory.getLogger(CSOLookupServiceImpl.class);
 
 }

@@ -18,6 +18,7 @@ import java.util.Arrays;
 @DisplayName("CacheConfiguration Test Suite")
 public class AutoConfigurationTest {
     private static final String TEST_CRED = "notapassword";
+    private static final String HOST = "127.0.0.1";
 
     @Mock
     private RedisProperties redisProperties;
@@ -46,7 +47,7 @@ public class AutoConfigurationTest {
     public void standaloneInputShouldGenerateJedisConnectionFactory() {
         Mockito.when(redisProperties.getCluster()).thenReturn(null);
         Mockito.when(redisProperties.getSentinel()).thenReturn(null);
-        Mockito.when(redisProperties.getHost()).thenReturn("127.0.0.1");
+        Mockito.when(redisProperties.getHost()).thenReturn(HOST);
         Mockito.when(redisProperties.getPort()).thenReturn(6379);
         Mockito.when(redisProperties.getPassword()).thenReturn(TEST_CRED);
         JedisConnectionFactory jedisConnectionFactory = autoConfiguration.jedisConnectionFactory(redisProperties);
