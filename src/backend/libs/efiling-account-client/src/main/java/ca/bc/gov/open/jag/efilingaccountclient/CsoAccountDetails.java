@@ -31,6 +31,6 @@ public class CsoAccountDetails {
 
     public boolean HasRole(String role) {
         String toFind = role.toLowerCase();
-        return roles.indexOf(toFind) > 0;
+        return roles.stream().anyMatch(r -> r.equals(toFind));
     }
 }
