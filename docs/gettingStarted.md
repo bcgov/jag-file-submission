@@ -1,5 +1,11 @@
 # Getting started
 
+## Introduction
+
+Ready for integrating your application with bcgov efiling service and allow your users to efile document ?
+
+This guide will provide you with all information you need to get started.
+
 ## Quick start
 
 Generate a secure url by calling the generateUrl endpoint
