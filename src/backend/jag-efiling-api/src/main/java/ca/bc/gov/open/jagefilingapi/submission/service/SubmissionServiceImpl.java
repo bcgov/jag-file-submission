@@ -20,7 +20,7 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     @Override
-    @Cacheable(cacheNames = "submission", key = "#key", cacheManager = "submissionCacheManager")
+    @Cacheable(cacheNames = "submission", key = "#key", cacheManager = "submissionCacheManager", unless="#result == null")
     public Optional<Submission> getByKey(UUID key) {
         return Optional.empty();
     }

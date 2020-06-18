@@ -13,10 +13,10 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 @EnableConfigurationProperties(CSOStatusProperties.class)
 public class AutoConfiguration {
 
-    private final CSOStatusProperties CSOStatusProperties;
+    private final CSOStatusProperties csoStatusProperties;
 
-    public AutoConfiguration(CSOStatusProperties CSOStatusProperties) {
-        this.CSOStatusProperties = CSOStatusProperties;
+    public AutoConfiguration(CSOStatusProperties csoStatusProperties) {
+        this.csoStatusProperties = csoStatusProperties;
     }
 
     @Bean(name = "CSOStatusMarshaller")
@@ -32,7 +32,7 @@ public class AutoConfiguration {
     public EfilingStatusService eFilingLookupClient(@Qualifier("CSOStatusMarshaller") Jaxb2Marshaller jaxb2Marshaller) {
 
         CSOStatusServiceImpl eFilingStatusServiceImpl = new CSOStatusServiceImpl();
-        eFilingStatusServiceImpl.setDefaultUri(CSOStatusProperties.getFilingStatusSoapUri());
+        eFilingStatusServiceImpl.setDefaultUri(csoStatusProperties.getFilingStatusSoapUri());
         eFilingStatusServiceImpl.setMarshaller(jaxb2Marshaller);
         eFilingStatusServiceImpl.setUnmarshaller(jaxb2Marshaller);
         return eFilingStatusServiceImpl;
