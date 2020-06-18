@@ -8,8 +8,7 @@ import java.util.List;
 
 public class CsoAccountDetails {
 
-
-    @JsonCreator
+    
     public CsoAccountDetails(
             @JsonProperty("accountId") String accountId,
             @JsonProperty("clientId") String clientId) {
