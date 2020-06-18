@@ -1,6 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types";
 import axios from "axios";
 import { Button } from "../../base/button/Button";
+import Header from "../../base/header/Header";
+import { Footer } from "../../base/footer/Footer";
+
+import "../page.css";
 
 const generateUrlBody = {
   documentProperties: {
@@ -42,13 +47,26 @@ export const generateUrl = () => {
     });
 };
 
-export default function App() {
+export default function Home({ page: { header } }) {
   return (
-    <div>
-      <p>eFiling Demo Client</p>
-      <Button onClick={generateUrl} label="With CSO Account" />
-      <br />
-      <Button onClick={generateUrl} label="Without CSO Account" />
-    </div>
+    <main>
+      <Header header={header} />
+      <div className="page">
+        <div className="content col-md-10">
+          <Button onClick={generateUrl} label="With CSO Account" />
+          <br />
+          <Button onClick={generateUrl} label="Without CSO Account" />
+        </div>
+      </div>
+      <Footer />
+    </main>
   );
 }
+
+Home.propTypes = {
+  page: PropTypes.shape({
+    header: PropTypes.shape({
+      name: PropTypes.string.isRequired
+    }).isRequired
+  }).isRequired
+};

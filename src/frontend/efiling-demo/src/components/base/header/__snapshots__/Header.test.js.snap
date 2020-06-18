@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header Component Header matches the snapshot 1`] = `
+<header>
+  <nav
+    className="container-fluid navbar navbar-expand-lg navbar-dark"
+  >
+    <div
+      aria-labelledby="title"
+      className="navbar-brand pointer"
+      onClick={[Function]}
+      onKeyDown={[Function]}
+      role="button"
+      tabIndex={0}
+    />
+    <img
+      alt="B.C. Government Logo"
+      className="img-fluid d-none d-md-block"
+      height="44"
+      src="undefined/images/bcid-logo-rev-en.svg"
+      width={181}
+    />
+    <img
+      alt="B.C. Government Logo"
+      className="img-fluid d-md-none"
+      height="44"
+      src="undefined/images/bcid-symbol-rev.svg"
+      width={64}
+    />
+    <div
+      aria-labelledby="title"
+      className="pointer navbar-brand nav-item nav-link"
+      onClick={[Function]}
+      onKeyDown={[Function]}
+      role="button"
+      tabIndex={0}
+    />
+    <div
+      className="navbar-brand"
+      id="title"
+    >
+      File Submission
+    </div>
+  </nav>
+</header>
+`;
+
+exports[`Header Component HeaderImage matches the snapshot 1`] = `
+<img
+  alt="B.C. Government Logo"
+  className="img-fluid d-none d-md-block"
+  height="44"
+  src="undefined/images/bcid-logo-rev-en.svg"
+  width={181}
+/>
+`;
+
+exports[`Header Component HeadingTitle matches the snapshot 1`] = `
+<div
+  aria-labelledby="title"
+  className="navbar-brand pointer"
+  onClick={[Function]}
+  onKeyDown={[Function]}
+  role="button"
+  tabIndex={0}
+/>
+`;
