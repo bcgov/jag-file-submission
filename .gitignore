@@ -1,6 +1,8 @@
 ### IntelliJ IDEA ###
 tests/target
 tests/.idea
+tests/logs
 *.iml
 *.log
 .idea
+
