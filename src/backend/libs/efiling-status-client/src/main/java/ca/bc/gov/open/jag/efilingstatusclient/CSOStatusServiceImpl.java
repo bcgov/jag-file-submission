@@ -8,6 +8,4 @@ import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 @Service
 public class CSOStatusServiceImpl extends WebServiceGatewaySupport implements EfilingStatusService {
 
-    private static final Logger _logger = LoggerFactory.getLogger(CSOStatusServiceImpl.class);
-
 }

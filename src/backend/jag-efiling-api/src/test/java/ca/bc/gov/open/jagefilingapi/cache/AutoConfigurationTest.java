@@ -18,7 +18,7 @@ import java.util.Arrays;
 @DisplayName("CacheConfiguration Test Suite")
 public class AutoConfigurationTest {
     private static final String TEST_CRED = "notapassword";
-    private static final String HOST = "127.0.0.1";
+    private static final String HOST = "notanip";
 
     @Mock
     private RedisProperties redisProperties;
