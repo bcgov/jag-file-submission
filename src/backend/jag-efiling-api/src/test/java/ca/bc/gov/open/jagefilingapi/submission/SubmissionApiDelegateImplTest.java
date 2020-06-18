@@ -2,7 +2,9 @@ package ca.bc.gov.open.jagefilingapi.submission;
 
 
 import ca.bc.gov.open.jagefilingapi.TestHelpers;
-import ca.bc.gov.open.jagefilingapi.api.model.*;
+import ca.bc.gov.open.jagefilingapi.api.model.GenerateUrlRequest;
+import ca.bc.gov.open.jagefilingapi.api.model.GenerateUrlResponse;
+import ca.bc.gov.open.jagefilingapi.api.model.UserDetail;
 import ca.bc.gov.open.jagefilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jagefilingapi.fee.FeeService;
 import ca.bc.gov.open.jagefilingapi.fee.models.Fee;
@@ -11,7 +13,6 @@ import ca.bc.gov.open.jagefilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jagefilingapi.submission.models.Submission;
 import ca.bc.gov.open.jagefilingapi.submission.service.SubmissionService;
 import org.junit.jupiter.api.*;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
@@ -25,7 +26,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("DocumentApiImpl Test Suite")
@@ -40,26 +41,26 @@ public class SubmissionApiDelegateImplTest {
     private static final String URL = "http://doc.com";
     private static final String HEADER = "HEADER";
 
-    @InjectMocks
+
     private SubmissionApiDelegateImpl sut;
 
     @Mock
-    NavigationProperties navigationProperties;
+    private NavigationProperties navigationProperties;
 
     @Mock
-    FeeService feeService;
+    private FeeService feeServiceMock;
 
     @Mock
-    SubmissionService submissionServiceMock;
+    private SubmissionService submissionServiceMock;
 
     @Mock
-    SubmissionMapper submissionMapperMock;
+    private SubmissionMapper submissionMapperMock;
 
     @Mock
-    CacheProperties cachePropertiesMock;
+    private CacheProperties cachePropertiesMock;
 
     @Mock
-    CacheProperties.Redis cachePropertiesredisMock;
+    private CacheProperties.Redis cachePropertiesredisMock;
 
 
     @BeforeAll
@@ -68,13 +69,15 @@ public class SubmissionApiDelegateImplTest {
         when(cachePropertiesredisMock.getTimeToLive()).thenReturn(Duration.ofMillis(600000));
         when(cachePropertiesMock.getRedis()).thenReturn(cachePropertiesredisMock);
         when(navigationProperties.getBaseUrl()).thenReturn("https://httpbin.org/");
-        when(feeService.getFee(any(FeeRequest.class))).thenReturn(new Fee(BigDecimal.TEN));
+        when(feeServiceMock.getFee(any(FeeRequest.class))).thenReturn(new Fee(BigDecimal.TEN));
+
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, navigationProperties, cachePropertiesMock, submissionMapperMock, feeServiceMock);
+
     }
 
 
     @Test
     @DisplayName("CASE1: when payload is valid")
-    @Order(1)
     public void withValidPayloadShouldReturnOk() {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.of(Submission.builder().create()));
@@ -93,7 +96,6 @@ public class SubmissionApiDelegateImplTest {
 
     @Test
     @DisplayName("CASE2: when payload is valid but redis return nothing")
-    @Order(2)
     public void withValidPayloadButRedisReturnNothingReturnBadRequest() {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.empty());
@@ -111,7 +113,6 @@ public class SubmissionApiDelegateImplTest {
 
     @Test
     @DisplayName("CASE3: with validId return payload")
-    @Order(3)
     public void withValidIdReturnPayload() {
         Fee fee = new Fee(BigDecimal.TEN);
 
@@ -127,7 +128,6 @@ public class SubmissionApiDelegateImplTest {
 
     @Test
     @DisplayName("CASE4: with null redis storage response return NotFound")
-    @Order(4)
     public void withNullRedisStorageResponseReturnNotFound() {
 
         when(submissionServiceMock.getByKey(any()))
@@ -137,4 +137,5 @@ public class SubmissionApiDelegateImplTest {
         assertFalse(actual.getBody().getCsoAccountExists());
 
     }
+
 }
