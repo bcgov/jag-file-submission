@@ -56,9 +56,13 @@ components:
     GenerateUrlRequest:
       description: details about the required transaction
       required:
+      - userId
       - navigation
       - documentProperties
       properties:
+        userId:
+          type: string
+          description: a unique identifier for the user
         documentProperties:
           $ref: '#/components/schemas/DocumentProperties'
         navigation:
