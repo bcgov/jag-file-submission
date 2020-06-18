@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -30,7 +32,8 @@ public class SubmissionTest {
     public void testingConstructor() {
         Fee fee = new Fee(BigDecimal.TEN);
 
-        String[] roles = {"test"};
+        List<String> roles = new ArrayList<>();
+        roles.add("test");
         CsoAccountDetails csoAccountDetails = new CsoAccountDetails("acountId", "clientId", roles);
 
         Submission actual = new Submission(

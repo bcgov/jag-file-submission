@@ -29,6 +29,7 @@ public class Submission {
         this.documentProperties = builder.documentProperties;
         this.navigation = builder.navigation;
         this.fee = builder.fee;
+        this.csoAccountDetails = builder.csoAccountDetails;
     }
 
     public static Submission.Builder builder() {

@@ -25,6 +25,8 @@ import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -87,7 +89,8 @@ public class SubmissionApiDelegateImplTest {
         DocumentProperties documentProperties = new DocumentProperties();
         Navigation navigation = new Navigation();
         Fee fee = new Fee(BigDecimal.TEN);
-        String[] efilingRole = { "efiling" };
+        List<String> efilingRole = new ArrayList<>();
+        efilingRole.add("efiling");
         CsoAccountDetails csoAccountDetails = new CsoAccountDetails("accountId", "clientId", efilingRole);
         Submission submissionWithCsoAccount = new Submission(CASE_5, documentProperties, navigation, fee, csoAccountDetails);
 
@@ -98,7 +101,8 @@ public class SubmissionApiDelegateImplTest {
         when(submissionServiceMock.getByKey(Mockito.eq(CASE_5)))
                 .thenReturn(Optional.of(submissionWithCsoAccount));
 
-        String[] otherRole = { "other" };
+        List<String> otherRole = new ArrayList<>();
+        efilingRole.add("other");
         CsoAccountDetails csoAccountDetailsNoEfilingRole = new CsoAccountDetails("accountId", "clientId", otherRole);
         Submission submissionWithCsoAccountNoEfilingRole = new Submission(CASE_6, documentProperties, navigation, fee, csoAccountDetailsNoEfilingRole);
         when(submissionServiceMock.getByKey(Mockito.eq(CASE_6)))
