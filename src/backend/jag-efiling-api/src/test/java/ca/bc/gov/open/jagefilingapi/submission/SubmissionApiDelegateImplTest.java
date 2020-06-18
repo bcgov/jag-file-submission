@@ -20,7 +20,6 @@ import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
 import java.time.Duration;
-import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -30,7 +29,7 @@ import static org.mockito.Mockito.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("DocumentApiImpl Test Suite")
-public class SubmissionApiImplTest {
+public class SubmissionApiDelegateImplTest {
 
     private static final String CASE_1 = "CASE1";
     private static final String CANCEL = "CANCEL";
@@ -42,7 +41,7 @@ public class SubmissionApiImplTest {
     private static final String HEADER = "HEADER";
 
     @InjectMocks
-    private SubmissionApiImpl sut;
+    private SubmissionApiDelegateImpl sut;
 
     @Mock
     NavigationProperties navigationProperties;

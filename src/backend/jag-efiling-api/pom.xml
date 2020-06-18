@@ -260,7 +260,8 @@
 				<configuration>
 					<excludes>
 						<exclude>**/*/mappers/*Impl.java</exclude>
-						<exclude>**/*/open/api/*</exclude>
+						<exclude>**/*/jagefilingapi/api/**/*</exclude>
+						<exclude>org/openapitools/configuration/**/*</exclude>
 					</excludes>
 				</configuration>
 

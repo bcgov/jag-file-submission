@@ -12,10 +12,10 @@ on:
 jobs:
     java:
       env:
-        DEBUG: true
+        ACTION_DEBUG: true
         CC_TEST_REPORTER_ID: 9ada3133fe9babf91a222009998b3545b7eae897a05900930bfa8a27fd82f385
         
-      name: Create and upload Java coverage artifact
+      name: Create, format and upload Java and Javascript coverage artifact
       runs-on: ubuntu-latest
       steps:
       - uses: actions/checkout@v2
@@ -28,7 +28,7 @@ jobs:
       - name: Apply executable perms to Code Climate Binary
         run: chmod +x ./cc-test-reporter
       
-      # Set required Git env vars for either pull request or push to branch
+      # Set required Git env vars for either pull request
       - name: Set ENV for codeclimate (pull_request)
         run: |
           # git fetch --no-tags --prune --depth=1 origin +refs/heads/$GITHUB_HEAD_REF:refs/remotes/origin/$GITHUB_HEAD_REF
@@ -38,12 +38,14 @@ jobs:
           echo "::set-env name=GIT_COMMIT_SHA::${{ github.event.pull_request.head.sha }}"
         if: github.event_name == 'pull_request'
         
+      # Set required Git env vars for a push to master
       - name: Set ENV for codeclimate (push)
         run: |
           echo "::set-env name=GIT_BRANCH::$GITHUB_REF"
           echo "::set-env name=GIT_COMMIT_SHA::$GITHUB_SHA"
         if: github.event_name == 'push'
       
+      # Trimming the ref to master in order to publish correct report (paambaati)
       - name: Set ref/head/master to master
         run: |
           echo "::set-env name=GIT_BRANCH::master"
@@ -54,6 +56,12 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
+      - uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
       
       # Run Maven Verify to generate all jacoco reports
       - name: Build with Maven
@@ -66,7 +74,7 @@ jobs:
           do
             ls ${{ github.workspace }}/src/backend/$s/target/site/jacoco;
           done
-        if: env.DEBUG == true
+        if: env.ACTION_DEBUG == true
       
       # Run Yarn Install
       - name: Run Yarn Install
@@ -79,7 +87,7 @@ jobs:
       # List frontend coverage reports
       - name: WHERE AM I - FRONTEND?
         run: ls ${{github.workspace}}/src/frontend/efiling-frontend/coverage
-        if: env.DEBUG == true
+        if: env.ACTION_DEBUG == true
       
       # Run Yarn Install
       - name: Run Yarn Install - DEMO
@@ -93,7 +101,7 @@ jobs:
       - name: WHERE AM I - FRONTEND DEMO?
         run: ls ${{github.workspace}}/src/frontend/efiling-demo/coverage
       
-      # Formatting the BACKEND coverage reports generated
+      # Formatting the BACKEND coverage reports generated (dynamically)
       - name: Format BACKEND coverage reports
         run: |
           projectRelRegex="^\.\/src\/backend\/(.*)\/target\/site\/jacoco\/jacoco\.xml$"
@@ -126,7 +134,7 @@ jobs:
       # List all formatted files in coverage directory    
       - name: WHERE AM I - FORMATTED?
         run: ls ${{ github.workspace }}/coverage
-        if: env.DEBUG == true
+        if: env.ACTION_DEBUG == true
       
       # Sum the coverage reports
       - name: Summing the coverage reports generated
