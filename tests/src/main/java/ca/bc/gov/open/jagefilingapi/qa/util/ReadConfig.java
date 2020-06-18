@@ -21,6 +21,14 @@ public class ReadConfig {
             return prop.getProperty("baseUrl");
         }
 
+        public String getBaseUri() {
+        return prop.getProperty("baseUri");
+    }
+
+        public String getResource() {
+        return prop.getProperty("resource");
+    }
+
         public String getBrowser() {
             return prop.getProperty("browser");
     }
