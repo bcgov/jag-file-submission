@@ -15,7 +15,7 @@ jobs:
         ACTION_DEBUG: true
         CC_TEST_REPORTER_ID: 9ada3133fe9babf91a222009998b3545b7eae897a05900930bfa8a27fd82f385
         
-      name: Create and upload Java coverage artifact
+      name: Create, format and upload Java and Javascript coverage artifact
       runs-on: ubuntu-latest
       steps:
       - uses: actions/checkout@v2
