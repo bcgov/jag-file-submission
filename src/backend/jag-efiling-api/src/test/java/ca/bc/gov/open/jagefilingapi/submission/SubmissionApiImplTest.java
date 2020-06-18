@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jagefilingapi.submission;
 
 
+import ca.bc.gov.open.jagefilingapi.TestHelpers;
 import ca.bc.gov.open.jagefilingapi.api.model.*;
 import ca.bc.gov.open.jagefilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jagefilingapi.fee.FeeService;
@@ -81,8 +82,8 @@ public class SubmissionApiImplTest {
 
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
-        generateUrlRequest.setDocumentProperties(createDocumentProperties());
-        generateUrlRequest.setNavigation(createNavigation());
+        generateUrlRequest.setDocumentProperties(TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE));
+        generateUrlRequest.setNavigation(TestHelpers.createNavigation(CASE_1, CANCEL, ERROR));
 
         ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(generateUrlRequest);
 
@@ -100,8 +101,8 @@ public class SubmissionApiImplTest {
 
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
-        generateUrlRequest.setDocumentProperties(createDocumentProperties());
-        generateUrlRequest.setNavigation(createNavigation());
+        generateUrlRequest.setDocumentProperties(TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE));
+        generateUrlRequest.setNavigation(TestHelpers.createNavigation(CASE_1, CANCEL, ERROR));
 
         ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(generateUrlRequest);
 
@@ -115,7 +116,7 @@ public class SubmissionApiImplTest {
     public void withValidIdReturnPayload() {
         Fee fee = new Fee(BigDecimal.TEN);
 
-        Submission submission = Submission.builder().documentProperties(createDocumentProperties()).fee(fee).navigation(createNavigation()).create();
+        Submission submission = Submission.builder().documentProperties(TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE)).fee(fee).navigation(TestHelpers.createNavigation(CASE_1, CANCEL, ERROR)).create();
 
         when(submissionServiceMock.getByKey(TEST)).thenReturn(Optional.of(submission));
 
@@ -136,31 +137,5 @@ public class SubmissionApiImplTest {
         ResponseEntity<UserDetail> actual = sut.getSubmissionUserDetail("1");
         assertFalse(actual.getBody().getCsoAccountExists());
 
-    }
-
-    private DocumentProperties createDocumentProperties() {
-        DocumentProperties documentProperties = new DocumentProperties();
-        EndpointAccess documentAccess = new EndpointAccess();
-        documentAccess.setHeaders(Collections.singletonMap(HEADER, HEADER));
-        documentAccess.setUrl(URL);
-        documentAccess.setVerb(EndpointAccess.VerbEnum.POST);
-        documentProperties.setSubmissionAccess(documentAccess);
-        documentProperties.setSubType(SUBTYPE);
-        documentProperties.setType(TYPE);
-        return documentProperties;
-    }
-
-    private Navigation createNavigation() {
-        Navigation navigation = new Navigation();
-        Redirect successRedirect = new Redirect();
-        successRedirect.setUrl(CASE_1);
-        navigation.setSuccess(successRedirect);
-        Redirect cancelRedirect = new Redirect();
-        cancelRedirect.setUrl(CANCEL);
-        navigation.setCancel(cancelRedirect);
-        Redirect errorRedirect = new Redirect();
-        errorRedirect.setUrl(ERROR);
-        navigation.setError(errorRedirect);
-        return navigation;
     }
 }
