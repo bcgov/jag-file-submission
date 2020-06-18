@@ -13,6 +13,7 @@ jobs:
     java:
       env:
         DEBUG: true
+        CC_TEST_REPORTER_ID: 9ada3133fe9babf91a222009998b3545b7eae897a05900930bfa8a27fd82f385
         
       name: Create and upload Java coverage artifact
       runs-on: ubuntu-latest
@@ -94,8 +95,6 @@ jobs:
       
       # Formatting the BACKEND coverage reports generated
       - name: Format BACKEND coverage reports
-        env:	
-          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}} 
         run: |
           projectRelRegex="^\.\/src\/backend\/(.*)\/target\/site\/jacoco\/jacoco\.xml$"
           for file in $(find . -name "jacoco.xml")
@@ -116,15 +115,11 @@ jobs:
       
       # Formatting the FRONTEND coverage report
       - name: Format the FRONTEND coverage report
-        env:	
-          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}  
         run: |
           ./cc-test-reporter format-coverage -t lcov -o coverage/frontend-codeclimate.json ${{github.workspace}}/src/frontend/efiling-frontend/coverage/lcov.info 
         
       # Formatting the FRONTEND DEMO coverage report
       - name: Format the FRONTEND DEMO coverage report
-        env:	
-          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}  
         run: |
           ./cc-test-reporter format-coverage -t lcov -o coverage/frontend-demo-codeclimate.json ${{github.workspace}}/src/frontend/efiling-demo/coverage/lcov.info
         
@@ -139,6 +134,4 @@ jobs:
         
       # Upload total coverage report to Code Climate
       - name: Upload coverage report to Code Climate
-        env:	
-          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}  
-        run: ./cc-test-reporter upload-coverage -i coverage/total-codeclimate.json -r $CC_TEST_REPORTER_ID
+        run: ./cc-test-reporter upload-coverage -i coverage/total-codeclimate.json -r env.CC_TEST_REPORTER_ID
