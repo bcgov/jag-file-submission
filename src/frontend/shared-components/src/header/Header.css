@@ -1,0 +1,8 @@
+.navbar > .container-fluid {
+  width: 95%;
+  justify-content: inherit;
+}
+
+.pointer {
+  cursor: pointer;
+}

@@ -11153,7 +11153,7 @@ react-textarea-autosize@^7.1.0:
     "@babel/runtime" "^7.1.2"
     prop-types "^15.6.0"
 
-react@^16.13.1, react@^16.8.3:
+react@^16.13.1, react@^16.2.0, react@^16.8.3:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react/-/react-16.13.1.tgz#2e818822f1a9743122c063d6410d85c1e3afe48e"
   integrity sha512-YMZQQq32xHLX0bz5Mnibv1/LHb3Sqzngu7xstSM+vrkE5Kzr9xE0yMByK5kMoTK30YVJE61WfbxIFFvfeDKT1w==
@@ -11931,6 +11931,17 @@ shallowequal@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-1.1.0.tgz#188d521de95b9087404fd4dcb68b13df0ae4e7f8"
   integrity sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==
+
+"shared-components@file:./../shared-components":
+  version "1.0.0"
+  dependencies:
+    react "^16.13.1"
+
+"shared-react-component-example@git+ssh://git@github.com:powderham/shared-react-component-example.git":
+  version "0.1.0"
+  resolved "git+ssh://git@github.com:powderham/shared-react-component-example.git#e8cd9386ae03f30f3c14aa6b77e00d83ba5821fe"
+  dependencies:
+    react "^16.2.0"
 
 shebang-command@^1.2.0:
   version "1.2.0"

@@ -20,9 +20,11 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
+    "react-test-renderer": "^16.12.0",
     "regenerator-runtime": "^0.13.5",
+    "shared-react-component-example": "git+ssh://git@github.com:powderham/shared-react-component-example.git",
     "webpack": "4.42.0",
-    "react-test-renderer": "^16.12.0"
+    "shared-components": "file:./../shared-components"
   },
   "scripts": {
     "start": "SET PORT=3001 && react-scripts start",
