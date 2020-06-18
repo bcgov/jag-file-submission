@@ -25,9 +25,9 @@ import java.util.Optional;
 
 @Service
 @EnableConfigurationProperties(NavigationProperties.class)
-public class SubmissionDelegateImpl implements SubmissionApiDelegate {
+public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
-    Logger logger = LoggerFactory.getLogger(SubmissionDelegateImpl.class);
+    Logger logger = LoggerFactory.getLogger(SubmissionApiDelegateImpl.class);
 
     private final SubmissionService submissionService;
 
@@ -39,7 +39,7 @@ public class SubmissionDelegateImpl implements SubmissionApiDelegate {
 
     private final FeeService feeService;
 
-    public SubmissionDelegateImpl(
+    public SubmissionApiDelegateImpl(
             SubmissionService submissionService,
             NavigationProperties navigationProperties,
             CacheProperties cacheProperties, SubmissionMapper submissionMapper, FeeService feeService) {

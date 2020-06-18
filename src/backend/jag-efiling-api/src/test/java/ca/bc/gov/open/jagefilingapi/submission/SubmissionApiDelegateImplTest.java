@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("DocumentApiImpl Test Suite")
-public class SubmissionDelegateImplTest {
+public class SubmissionApiDelegateImplTest {
 
     private static final String CASE_1 = "CASE1";
     private static final String CANCEL = "CANCEL";
@@ -41,7 +41,7 @@ public class SubmissionDelegateImplTest {
     private static final String HEADER = "HEADER";
 
     @InjectMocks
-    private SubmissionDelegateImpl sut;
+    private SubmissionApiDelegateImpl sut;
 
     @Mock
     NavigationProperties navigationProperties;
