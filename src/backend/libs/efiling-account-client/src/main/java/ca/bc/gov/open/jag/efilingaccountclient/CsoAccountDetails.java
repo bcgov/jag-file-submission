@@ -1,12 +1,11 @@
 package ca.bc.gov.open.jag.efilingaccountclient;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CsoAccountDetails {
 
-    CsoAccountDetails(String accountId, String clientId, String[] roles) {
+    public CsoAccountDetails(String accountId, String clientId, String[] roles) {
 
         this.accountId = accountId;
         this.clientId = clientId;
@@ -19,7 +18,7 @@ public class CsoAccountDetails {
 
     private String accountId;
     private String clientId;
-private List<String> roles = new ArrayList<>();
+    private List<String> roles = new ArrayList<>();
 
     public String getAccountId() {
         return accountId;
