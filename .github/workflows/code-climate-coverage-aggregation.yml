@@ -146,6 +146,7 @@ jobs:
         with:
           name: summed-coverage-report
           path: coverage/total-codeclimate.json
+        if: env.ACTION_DEBUG == true
         
       # Upload total coverage report to Code Climate
       - name: Upload coverage report to Code Climate
