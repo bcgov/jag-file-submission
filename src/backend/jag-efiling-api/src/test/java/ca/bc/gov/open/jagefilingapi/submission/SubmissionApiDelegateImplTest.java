@@ -87,13 +87,10 @@ public class SubmissionApiDelegateImplTest {
         when(feeServiceMock.getFee(any(FeeRequest.class))).thenReturn(new Fee(BigDecimal.TEN));
 
         DocumentProperties documentProperties = new DocumentProperties();
-        Navigation navigation = new Navigation();
-        Fee fee = new Fee(BigDecimal.TEN);
         List<String> efilingRole = new ArrayList<>();
         efilingRole.add("efiling");
         CsoAccountDetails csoAccountDetails = new CsoAccountDetails("accountId", "clientId", efilingRole);
-        Submission submissionWithCsoAccount = new Submission(CASE_5, documentProperties, navigation, fee, csoAccountDetails);
-
+        Submission submissionWithCsoAccount = new Submission(CASE_5, documentProperties, new Navigation(), new Fee(BigDecimal.TEN), csoAccountDetails);
 
         when(submissionServiceMock.getByKey(Mockito.eq(CASE_4)))
                 .thenReturn(Optional.empty());
@@ -104,12 +101,12 @@ public class SubmissionApiDelegateImplTest {
         List<String> otherRole = new ArrayList<>();
         efilingRole.add("other");
         CsoAccountDetails csoAccountDetailsNoEfilingRole = new CsoAccountDetails("accountId", "clientId", otherRole);
-        Submission submissionWithCsoAccountNoEfilingRole = new Submission(CASE_6, documentProperties, navigation, fee, csoAccountDetailsNoEfilingRole);
+        Submission submissionWithCsoAccountNoEfilingRole = new Submission(CASE_6, documentProperties, new Navigation(), new Fee(BigDecimal.TEN), csoAccountDetailsNoEfilingRole);
         when(submissionServiceMock.getByKey(Mockito.eq(CASE_6)))
                 .thenReturn(Optional.of(submissionWithCsoAccountNoEfilingRole));
 
 
-        Submission submissionNoCsoAccount  = new Submission(CASE_7, documentProperties, navigation, fee, null);
+        Submission submissionNoCsoAccount  = new Submission(CASE_7, documentProperties, new Navigation(), new Fee(BigDecimal.TEN), null);
         when(submissionServiceMock.getByKey(Mockito.eq(CASE_7)))
                 .thenReturn(Optional.of(submissionNoCsoAccount));
 
