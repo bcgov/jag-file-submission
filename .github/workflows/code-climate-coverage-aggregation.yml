@@ -22,4 +22,13 @@ jobs:
       # Get Code Climate binary  
       - name: Download Code Climate Binary
         run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  
+      
+      # Permissions applied to the Code Climate Executable
+      - name: Apply executable perms to Code Climate Binary
+        run: chmod +x ./cc-test-reporter
+      
+      # Set required Git env vars for either pull request or push to branch
+      - name: Set ENV for codeclimate (pull_request)
+        run: |
+          echo "${{secrets.CC_TEST_REPORTER_ID}}"
+
