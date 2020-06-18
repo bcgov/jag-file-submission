@@ -14,7 +14,7 @@ mvn clean install -P all
 
 ### Profile libs
 
-this profile will build only librart modules
+this profile will build only library modules
 
 ```bash
 mvn clean install -P libs

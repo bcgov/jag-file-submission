@@ -1,17 +1,79 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Storyshots Button Default 1`] = `
+<div>
+  <button
+    className="efile-btn btn"
+    onClick={[Function]}
+    type="button"
+  >
+    button label
+  </button>
+</div>
+`;
+
+exports[`Storyshots Button Mobile 1`] = `
+<div>
+  <button
+    className="efile-btn btn"
+    onClick={[Function]}
+    type="button"
+  >
+    button label
+  </button>
+</div>
+`;
+
 exports[`Storyshots Home Default 1`] = `
 <div>
   <p>
-    Hello Demo
+    eFiling Demo Client
   </p>
+  <div>
+    <button
+      className="efile-btn btn"
+      onClick={[Function]}
+      type="button"
+    >
+      With CSO Account
+    </button>
+  </div>
+  <br />
+  <div>
+    <button
+      className="efile-btn btn"
+      onClick={[Function]}
+      type="button"
+    >
+      Without CSO Account
+    </button>
+  </div>
 </div>
 `;
 
 exports[`Storyshots Home Mobile 1`] = `
 <div>
   <p>
-    Hello Demo
+    eFiling Demo Client
   </p>
+  <div>
+    <button
+      className="efile-btn btn"
+      onClick={[Function]}
+      type="button"
+    >
+      With CSO Account
+    </button>
+  </div>
+  <br />
+  <div>
+    <button
+      className="efile-btn btn"
+      onClick={[Function]}
+      type="button"
+    >
+      Without CSO Account
+    </button>
+  </div>
 </div>
 `;

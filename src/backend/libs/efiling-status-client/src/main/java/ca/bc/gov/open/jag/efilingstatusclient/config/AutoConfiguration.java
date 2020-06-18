@@ -1,24 +1,25 @@
 package ca.bc.gov.open.jag.efilingstatusclient.config;
 
 import ca.bc.gov.open.jag.efilingstatusclient.CSOStatusServiceImpl;
+import ca.bc.gov.open.jag.efilingstatusclient.EfilingStatusService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 @Configuration
-@ComponentScan
-@EnableConfigurationProperties(EfilingStatusProperties.class)
-public class EfilingStatusConfig {
+@EnableConfigurationProperties(CSOStatusProperties.class)
+public class AutoConfiguration {
 
-    private final EfilingStatusProperties efilingStatusProperties;
+    private final CSOStatusProperties CSOStatusProperties;
 
-    public EfilingStatusConfig(EfilingStatusProperties efilingStatusProperties) {
-        this.efilingStatusProperties = efilingStatusProperties;
+    public AutoConfiguration(CSOStatusProperties CSOStatusProperties) {
+        this.CSOStatusProperties = CSOStatusProperties;
     }
 
-    @Bean
+    @Bean(name = "CSOStatusMarshaller")
     public Jaxb2Marshaller marshaller() {
 
         Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
@@ -27,10 +28,11 @@ public class EfilingStatusConfig {
     }
 
     @Bean
-    public CSOStatusServiceImpl eFilingLookupClient(Jaxb2Marshaller jaxb2Marshaller) {
+    @ConditionalOnMissingBean(value = {EfilingStatusService.class})
+    public EfilingStatusService eFilingLookupClient(@Qualifier("CSOStatusMarshaller") Jaxb2Marshaller jaxb2Marshaller) {
 
         CSOStatusServiceImpl eFilingStatusServiceImpl = new CSOStatusServiceImpl();
-        eFilingStatusServiceImpl.setDefaultUri(efilingStatusProperties.getFilingStatusSoapUri());
+        eFilingStatusServiceImpl.setDefaultUri(CSOStatusProperties.getFilingStatusSoapUri());
         eFilingStatusServiceImpl.setMarshaller(jaxb2Marshaller);
         eFilingStatusServiceImpl.setUnmarshaller(jaxb2Marshaller);
         return eFilingStatusServiceImpl;
