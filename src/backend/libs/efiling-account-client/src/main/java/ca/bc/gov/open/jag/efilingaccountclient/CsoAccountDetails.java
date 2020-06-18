@@ -1,12 +1,18 @@
 package ca.bc.gov.open.jag.efilingaccountclient;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CsoAccountDetails {
 
-    CsoAccountDetails(String accountId, String clientId, String[] roles) {
+    @JsonCreator
+    public CsoAccountDetails(
+            @JsonProperty("accountId") String accountId,
+            @JsonProperty("clientId") String clientId,
+            @JsonProperty("roles") List<String> roles) {
 
         this.accountId = accountId;
         this.clientId = clientId;
@@ -19,7 +25,7 @@ public class CsoAccountDetails {
 
     private String accountId;
     private String clientId;
-private List<String> roles = new ArrayList<>();
+    private List<String> roles = new ArrayList<>();
 
     public String getAccountId() {
         return accountId;
@@ -29,8 +35,11 @@ private List<String> roles = new ArrayList<>();
         return clientId;
     }
 
+    public List<String> getRoles() { return roles; }
+
     public boolean HasRole(String role) {
         String toFind = role.toLowerCase();
         return roles.stream().anyMatch(r -> r.equals(toFind));
     }
+
 }

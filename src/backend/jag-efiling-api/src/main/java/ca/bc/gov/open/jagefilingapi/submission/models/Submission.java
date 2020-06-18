@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jagefilingapi.submission.models;
 
+import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountDetails;
 import ca.bc.gov.open.jagefilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jagefilingapi.api.model.Navigation;
 import ca.bc.gov.open.jagefilingapi.fee.models.Fee;
@@ -21,11 +22,14 @@ public class Submission {
 
     private Fee fee;
 
+    private CsoAccountDetails csoAccountDetails;
+
     protected Submission(Submission.Builder builder) {
         this.id = UUID.randomUUID();
         this.documentProperties = builder.documentProperties;
         this.navigation = builder.navigation;
         this.fee = builder.fee;
+        this.csoAccountDetails = builder.csoAccountDetails;
     }
 
     public static Submission.Builder builder() {
@@ -37,11 +41,13 @@ public class Submission {
             @JsonProperty("id") UUID id,
             @JsonProperty("submissionMetadata") DocumentProperties documentProperties,
             @JsonProperty("navigation") Navigation navigation,
-            @JsonProperty("fee") Fee fee) {
+            @JsonProperty("fee") Fee fee,
+            @JsonProperty("csoAccountDetails") CsoAccountDetails csoAccountDetails) {
         this.id = id;
         this.documentProperties = documentProperties;
         this.navigation = navigation;
         this.fee = fee;
+        this.csoAccountDetails = csoAccountDetails;
     }
 
     public UUID getId() { return id; }
@@ -58,11 +64,16 @@ public class Submission {
         return fee;
     }
 
+    public CsoAccountDetails getCsoAccountDetails() {
+        return csoAccountDetails;
+    }
+
     public static class Builder {
 
         private DocumentProperties documentProperties;
         private Navigation navigation;
         private Fee fee;
+        private CsoAccountDetails csoAccountDetails;
 
         public Builder documentProperties(DocumentProperties documentProperties) {
             this.documentProperties =  documentProperties;
@@ -76,6 +87,11 @@ public class Submission {
 
         public Builder fee(Fee fee) {
             this.fee = fee;
+            return this;
+        }
+
+        public Builder csoAccountDetails(CsoAccountDetails csoAccountDetails) {
+            this.csoAccountDetails = csoAccountDetails;
             return this;
         }
 
