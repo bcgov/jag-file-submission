@@ -1,4 +1,8 @@
-## Shared React Components
+# Shared React Components
+
+Shared reusable react BCGov themed components.
+
+## Running Locally
 
 In order to use these shared react components locally, run:
 
@@ -10,7 +14,9 @@ yarn prepare
 npm install -g linklocal
 ```
 
-from the `shared-components` directory. Then, to include the component dependency and include it in your react app:
+from the `shared-components` directory.
+
+Then, to include the component dependency and include it in your react app:
 
 1. Add this to your `package.json` file:
 
@@ -18,7 +24,7 @@ from the `shared-components` directory. Then, to include the component dependenc
 "shared-components": "file:./../shared-components"
 ```
 
-2. Then, from the root of your react app, run:
+2. From the root of your react app, run:
 
 ```bash
 linklocal
