@@ -43,7 +43,7 @@ public class DemoAcountServiceImplTest {
     }
 
     @Test
-    @DisplayName("CASE 1: with no account should return null")
+    @DisplayName("CASE 3: with no account should return null")
     public void withNoAccountShouldBeNull() {
 
         Assertions.assertNull(sut.getAccountDetails(ACCOUNT_DOES_NOT_EXISTS.toString()));
