@@ -156,7 +156,7 @@ public class SubmissionApiDelegateImplTest {
 
         assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
         assertEquals("INVROLE", ((EfilingError)actual.getBody()).getError());
-        assertEquals("User does not hava a valid role for this request.", ((EfilingError)actual.getBody()).getMessage());
+        assertEquals("User does not have a valid role for this request.", ((EfilingError)actual.getBody()).getMessage());
         
     }
 
