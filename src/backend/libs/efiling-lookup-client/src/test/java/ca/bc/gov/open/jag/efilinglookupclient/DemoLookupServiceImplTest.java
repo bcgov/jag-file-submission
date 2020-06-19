@@ -7,16 +7,14 @@ import java.math.BigDecimal;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("Efiling Lookup Client Test Suite")
-public class EfilingLookupClientTest {
+public class DemoLookupServiceImplTest {
 
     private DemoLookupServiceImpl sut;
 
     @BeforeAll
-    public void setUp() {
-        sut = new DemoLookupServiceImpl();
-    }
+    public void setUp() { sut = new DemoLookupServiceImpl(); }
 
-    @DisplayName("CASE 1: Testing Service Fees Constructor")
+    @DisplayName("CASE 1: Testing Demo getServiceFee")
     @Test
     public void testDemoLookupServiceTest() {
 
