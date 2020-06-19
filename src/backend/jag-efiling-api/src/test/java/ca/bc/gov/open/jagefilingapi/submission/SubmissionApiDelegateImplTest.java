@@ -162,7 +162,7 @@ public class SubmissionApiDelegateImplTest {
 
     @Test
     @DisplayName("CASE3: when payload is valid but redis return nothing")
-    public void withValidPayloadButRedisReturnNothingReturnBadRequest() {
+    public void withValidPayloadButRedisReturnNothingShouldReturnBadRequest() {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.empty());
         List<String> efilingRole = new ArrayList<>();
