@@ -1,9 +1,8 @@
 package ca.bc.gov.open.jagefilingapi.submission.models;
 
-import ca.bc.gov.open.jagefilingapi.api.model.DocumentProperties;
+import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountDetails;
+import ca.bc.gov.open.jagefilingapi.TestHelpers;
 import ca.bc.gov.open.jagefilingapi.api.model.EndpointAccess;
-import ca.bc.gov.open.jagefilingapi.api.model.Navigation;
-import ca.bc.gov.open.jagefilingapi.api.model.Redirect;
 import ca.bc.gov.open.jagefilingapi.fee.models.Fee;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -11,7 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import java.math.BigDecimal;
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -30,31 +30,18 @@ public class SubmissionTest {
     @Test
     @DisplayName("CASE 1: testing constructor")
     public void testingConstructor() {
-
-
-        DocumentProperties documentMetaData = new DocumentProperties();
-        EndpointAccess documentAccess = new EndpointAccess();
-        documentAccess.setHeaders(Collections.singletonMap(HEADER, HEADER));
-        documentAccess.setUrl(URL);
-        documentAccess.setVerb(EndpointAccess.VerbEnum.POST);
-        documentMetaData.setSubmissionAccess(documentAccess);
-        documentMetaData.setSubType(SUBTYPE);
-        documentMetaData.setType(TYPE);
-
-        Navigation navigation = new Navigation();
-        Redirect successRedirect = new Redirect();
-        successRedirect.setUrl(CASE_1);
-        navigation.setSuccess(successRedirect);
-        Redirect cancelRedirect = new Redirect();
-        cancelRedirect.setUrl(CANCEL);
-        navigation.setCancel(cancelRedirect);
-        Redirect errorRedirect = new Redirect();
-        errorRedirect.setUrl(ERROR);
-        navigation.setError(errorRedirect);
-
         Fee fee = new Fee(BigDecimal.TEN);
 
-        Submission actual = new Submission(UUID.randomUUID(), documentMetaData, navigation, fee);
+        List<String> roles = new ArrayList<>();
+        roles.add("test");
+        CsoAccountDetails csoAccountDetails = new CsoAccountDetails("acountId", "clientId", roles);
+
+        Submission actual = new Submission(
+                UUID.randomUUID(),
+                TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE),
+                TestHelpers.createNavigation(CASE_1, CANCEL, ERROR),
+                fee,
+                csoAccountDetails);
 
         Assertions.assertEquals(TYPE, actual.getDocumentProperties().getType());
         Assertions.assertEquals(SUBTYPE, actual.getDocumentProperties().getSubType());
@@ -64,7 +51,6 @@ public class SubmissionTest {
         Assertions.assertEquals(CANCEL, actual.getNavigation().getCancel().getUrl());
         Assertions.assertEquals(CASE_1, actual.getNavigation().getSuccess().getUrl());
         Assertions.assertEquals(BigDecimal.TEN, actual.getFee().getAmount());
-
 
     }
 

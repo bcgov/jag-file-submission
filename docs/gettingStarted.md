@@ -1,5 +1,21 @@
 # Getting started
 
+## Introduction
+
+Ready for integrating your application with bcgov efiling service and allow your users to efile document ?
+
+This guide will provide you with all information you need to get started.
+
+## Test accounts
+
+Use the following accounts to test the application
+
+| Account Guid | Description |
+| --- | --- |
+| 77da92db-0791-491e-8c58-1a969e67d2fa | An account with a linked CSO account and an efiling role |
+| 77da92db-0791-491e-8c58-1a969e67d2fb | An account with a linked CSO account and no efiling role |
+
+
 ## Quick start
 
 Generate a secure url by calling the generateUrl endpoint

@@ -1,0 +1,8 @@
+version: 1
+update_configs:
+  - package_manager: "java:maven"
+    directory: "/src/backend"
+    update_schedule: "daily"
+  - package_manager: "javascript"
+    directory: "/src/frontend"
+    update_schedule: "daily"
