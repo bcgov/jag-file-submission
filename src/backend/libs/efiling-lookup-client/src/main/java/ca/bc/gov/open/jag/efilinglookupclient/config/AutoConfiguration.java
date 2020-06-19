@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilinglookupclient.config;
 
 import ca.bc.gov.open.jag.efilinglookupclient.CSOLookupServiceImpl;
+import ca.bc.gov.open.jag.efilinglookupclient.DemoLookupServiceImpl;
 import ca.bc.gov.open.jag.efilinglookupclient.EfilingLookupService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -31,10 +32,10 @@ public class AutoConfiguration {
     @ConditionalOnMissingBean(value = {EfilingLookupService.class})
     public EfilingLookupService eFilingLookupService(@Qualifier("CSOLookupMarshaller") Jaxb2Marshaller jaxb2Marshaller) {
 
-        CSOLookupServiceImpl eFilingLookupService = new CSOLookupServiceImpl();
-        eFilingLookupService.setDefaultUri(csoLookupProperties.getFilingLookupSoapUri());
-        eFilingLookupService.setMarshaller(jaxb2Marshaller);
-        eFilingLookupService.setUnmarshaller(jaxb2Marshaller);
+        EfilingLookupService eFilingLookupService = new DemoLookupServiceImpl();
+//        eFilingLookupService.setDefaultUri(csoLookupProperties.getFilingLookupSoapUri());
+//        eFilingLookupService.setMarshaller(jaxb2Marshaller);
+//        eFilingLookupService.setUnmarshaller(jaxb2Marshaller);
         return eFilingLookupService;
     }
 }
