@@ -7,9 +7,15 @@ export default {
   component: Home
 };
 
-export const Default = () => <Home />;
+const header = {
+  name: "eFiling Demo Client"
+};
 
-export const Mobile = () => <Home />;
+const page = { header };
+
+export const Default = () => <Home page={page} />;
+
+export const Mobile = () => <Home page={page} />;
 
 Mobile.story = {
   parameters: {

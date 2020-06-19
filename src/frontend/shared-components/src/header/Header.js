@@ -25,7 +25,7 @@ export const HeaderImage = (classNames, width, src) => (
   />
 );
 
-export default function Header({ header: { name } }) {
+export const Header = ({ header: { name } }) => {
   const history = useHistory();
 
   return (
@@ -45,7 +45,7 @@ export default function Header({ header: { name } }) {
       </nav>
     </header>
   );
-}
+};
 
 Header.propTypes = {
   header: PropTypes.shape({

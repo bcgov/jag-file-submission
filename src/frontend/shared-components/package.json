@@ -1,0 +1,19 @@
+{
+  "name": "shared-components",
+  "version": "1.0.0",
+  "main": "build/index.js",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^16.13.1"
+  },
+  "scripts": {
+    "build": "babel src -d build --copy-files",
+    "prepare": "yarn run build"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1"
+  }
+}
