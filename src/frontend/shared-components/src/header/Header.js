@@ -44,6 +44,7 @@ export default function Header({ header: { name, history } }) {
 
 Header.propTypes = {
   header: PropTypes.shape({
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    history: PropTypes.any.isRequired
   }).isRequired
 };

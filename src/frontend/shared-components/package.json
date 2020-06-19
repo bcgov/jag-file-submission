@@ -11,7 +11,8 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2",
     "react-test-renderer": "^16.12.0",
-    "regenerator-runtime": "^0.13.5"
+    "regenerator-runtime": "^0.13.5",
+    "prop-types": "^15.7.2"
   },
   "scripts": {
     "build": "babel src -d build --copy-files",
