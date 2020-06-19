@@ -30,7 +30,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GenerateUrlResponse'
         '403':
-          description: Request does not meet criterias
+          description: Request does not meet the required criteria
           content:
             application/json:
               schema:
