@@ -7,6 +7,7 @@ import org.joda.time.*;
 
 public class ServiceFees {
 
+    @SuppressWarnings("squid:S00107")
     @JsonCreator
     public ServiceFees(
             @JsonProperty("udpDtm") DateTime udpDtm,
