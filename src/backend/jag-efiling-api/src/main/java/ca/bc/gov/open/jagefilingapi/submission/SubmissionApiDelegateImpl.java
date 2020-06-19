@@ -3,10 +3,12 @@ package ca.bc.gov.open.jagefilingapi.submission;
 import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountDetails;
 import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
 import ca.bc.gov.open.jagefilingapi.api.SubmissionApiDelegate;
+import ca.bc.gov.open.jagefilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jagefilingapi.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.jagefilingapi.api.model.GenerateUrlResponse;
 import ca.bc.gov.open.jagefilingapi.api.model.UserDetail;
 import ca.bc.gov.open.jagefilingapi.config.NavigationProperties;
+import ca.bc.gov.open.jagefilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jagefilingapi.fee.FeeService;
 import ca.bc.gov.open.jagefilingapi.fee.models.Fee;
 import ca.bc.gov.open.jagefilingapi.fee.models.FeeRequest;
@@ -17,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -70,6 +73,17 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         logger.debug("Attempting to get user cso account information");
         CsoAccountDetails csoAccountDetails = efilingAccountService.getAccountDetails(generateUrlRequest.getUserId());
+        logger.info("Successfully got cso account information");
+
+        if (csoAccountDetails != null && !csoAccountDetails.HasRole(EFILING_ROLE)) {
+
+            logger.info("User does not have efiling role, therefore request is rejected.");
+
+            EfilingError efilingError = new EfilingError();
+            efilingError.setError(ErrorResponse.INVALIDROLE.getErrorCode());
+            efilingError.setMessage(ErrorResponse.INVALIDROLE.getErrorMessage());
+            return new ResponseEntity(efilingError, HttpStatus.FORBIDDEN);
+        }
 
         //TODO: Replace with a service
         GenerateUrlResponse response = new GenerateUrlResponse();
@@ -81,14 +95,11 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         if(!cachedSubmission.isPresent())
             return ResponseEntity.badRequest().body(null);
 
-        logger.warn("Id is modified for testing purpose 0 or 1 is appended to it.");
         response.setEfilingUrl(
                 MessageFormat.format(
                                "{0}/{1}",
                                 navigationProperties.getBaseUrl(),
                                 cachedSubmission.get().getId()));
-
-        logger.debug("{}", response);
 
         return ResponseEntity.ok(response);
 
@@ -97,7 +108,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @Override
     public ResponseEntity<UserDetail> getSubmissionUserDetail(String id) {
 
-        logger.warn("Response is mocked and returns true or false depending on the end of the string");
 
         if(!isUUID(id)) {
             // TODO: add error reponse
@@ -114,6 +124,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         response.setHasEfilingRole(
                 fromCacheSubmission.get().getCsoAccountDetails() != null &&
                 fromCacheSubmission.get().getCsoAccountDetails().HasRole(EFILING_ROLE));
+
         return ResponseEntity.ok(response);
 
     }
