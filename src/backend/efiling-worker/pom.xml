@@ -39,7 +39,6 @@
 		<dependency>
 			<groupId>net.rakugakibox.spring.boot</groupId>
 			<artifactId>logback-access-spring-boot-starter</artifactId>
-			<version>2.7.1</version>
 		</dependency>
 		<!-- libs -->
 		<dependency>
@@ -66,6 +65,20 @@
 			</exclusions>
 		</dependency>
 	</dependencies>
+
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>ca.bc.gov.open.jag</groupId>
+				<artifactId>efiling-bom</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<profiles>
 		<profile>
 
@@ -83,7 +96,6 @@
 				<dependency>
 					<groupId>com.splunk.logging</groupId>
 					<artifactId>splunk-library-javalogging</artifactId>
-					<version>1.7.1</version>
 				</dependency>
 			</dependencies>
 
