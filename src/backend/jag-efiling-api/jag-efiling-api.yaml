@@ -29,8 +29,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenerateUrlResponse'
-        '400':
-          description: Account does not have role
+        '403':
+          description: Request does not meet criterias
           content:
             application/json:
               schema:

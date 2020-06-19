@@ -73,11 +73,16 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         logger.debug("Attempting to get user cso account information");
         CsoAccountDetails csoAccountDetails = efilingAccountService.getAccountDetails(generateUrlRequest.getUserId());
+        logger.info("Successfully get cso account information");
+
         if (csoAccountDetails != null && !csoAccountDetails.HasRole(EFILING_ROLE)) {
+
+            logger.info("User does not have efiling role, therefore request is rejected.");
+
             EfilingError efilingError = new EfilingError();
             efilingError.setError(ErrorResponse.INVALIDROLE.getErrorCode());
             efilingError.setMessage(ErrorResponse.INVALIDROLE.getErrorMessage());
-            return ResponseEntity.badRequest().build();
+            return new ResponseEntity(efilingError, HttpStatus.FORBIDDEN);
         }
 
         //TODO: Replace with a service
@@ -90,14 +95,11 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         if(!cachedSubmission.isPresent())
             return ResponseEntity.badRequest().body(null);
 
-        logger.warn("Id is modified for testing purpose 0 or 1 is appended to it.");
         response.setEfilingUrl(
                 MessageFormat.format(
                                "{0}/{1}",
                                 navigationProperties.getBaseUrl(),
                                 cachedSubmission.get().getId()));
-
-        logger.debug("{}", response);
 
         return ResponseEntity.ok(response);
 
@@ -106,7 +108,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @Override
     public ResponseEntity<UserDetail> getSubmissionUserDetail(String id) {
 
-        logger.warn("Response is mocked and returns true or false depending on the end of the string");
 
         if(!isUUID(id)) {
             // TODO: add error reponse
@@ -123,6 +124,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         response.setHasEfilingRole(
                 fromCacheSubmission.get().getCsoAccountDetails() != null &&
                 fromCacheSubmission.get().getCsoAccountDetails().HasRole(EFILING_ROLE));
+
         return ResponseEntity.ok(response);
 
     }
