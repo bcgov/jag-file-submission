@@ -102,7 +102,7 @@ jobs:
         run: yarn --cwd src/frontend/efiling-demo install
 
       # Run Yarn Coverage to generate javascript coverage report
-      - name: Run Yarn Coverage - DEMO
+      - name: Run Yarn Coverage - eFiling Demo
         run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/efiling-demo coverage
 
       # List frontend coverage reports
