@@ -10,6 +10,8 @@ Electronic filing is the process of submitting documents over the Internet using
 
 ### File
 
+See [computer file](https://en.wikipedia.org/wiki/Computer%20file)
+
 ### Package
 
 ### Submission
