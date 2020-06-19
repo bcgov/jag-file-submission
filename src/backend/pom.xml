@@ -9,8 +9,11 @@
 	<version>0.0.1-SNAPSHOT</version>
 
 	<description>FLA Document Upload</description>
+	<modules>
+		<module>libs/efiling-bom</module>
+	</modules>
 
-    <name>jag-efiling-backend</name>
+	<name>jag-efiling-backend</name>
 	<packaging>pom</packaging>
 	<url>https://github.com/bcgov/jag-file-submission</url>
 
