@@ -1,10 +1,10 @@
-package ca.bc.gov.open.jagefilingapi.qa.generateurlrestfile;
+package ca.bc.gov.open.jagefilingapi.qa.backend.generateurlpayload;
 
 public class Headers {
 
-    String additionalProp1;
-    String additionalProp2;
-    String additionalProp3;
+    private String additionalProp1;
+    private String additionalProp2;
+    private String additionalProp3;
 
     public Headers(String additionalProp1, String additionalProp2, String additionalProp3) {
         this.additionalProp1 = additionalProp1;

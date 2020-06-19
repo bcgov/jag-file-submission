@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jagefilingapi.qa.util;
+package ca.bc.gov.open.jagefilingapi.qa.config;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,5 +33,3 @@ public class ReadConfig {
             return prop.getProperty("browser");
     }
 }
-
-

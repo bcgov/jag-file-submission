@@ -1,5 +1,6 @@
-package ca.bc.gov.open.jagefilingapi.qa.util;
+package ca.bc.gov.open.jagefilingapi.qa.frontendutils;
 
+import ca.bc.gov.open.jagefilingapi.qa.config.ReadConfig;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

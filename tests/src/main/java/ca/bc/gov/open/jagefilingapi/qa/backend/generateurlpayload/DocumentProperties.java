@@ -1,10 +1,10 @@
-package ca.bc.gov.open.jagefilingapi.qa.generateurlrestfile;
+package ca.bc.gov.open.jagefilingapi.qa.backend.generateurlpayload;
 
 public class DocumentProperties {
 
-    String type;
-    String subType;
-    SubmissionAccess submissionAccess;
+    private String type;
+    private String subType;
+    private SubmissionAccess submissionAccess;
 
     public DocumentProperties(String type, String subType, SubmissionAccess submissionAccess) {
         this.type = type;

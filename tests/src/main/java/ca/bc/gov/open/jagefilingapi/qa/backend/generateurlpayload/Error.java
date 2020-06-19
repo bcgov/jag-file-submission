@@ -1,10 +1,10 @@
-package ca.bc.gov.open.jagefilingapi.qa.generateurlrestfile;
+package ca.bc.gov.open.jagefilingapi.qa.backend.generateurlpayload;
 
-public class Success {
+public class Error {
 
-    String url;
+    private String url;
 
-    public Success(String url) {
+    public Error(String url) {
         this.url = url;
     }
 
