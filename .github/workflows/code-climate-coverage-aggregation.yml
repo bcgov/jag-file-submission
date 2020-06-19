@@ -139,6 +139,14 @@ jobs:
       # Sum the coverage reports
       - name: Summing the coverage reports generated
         run: ./cc-test-reporter sum-coverage coverage/*-codeclimate.json -p 7 -o coverage/total-codeclimate.json
+    
+      # Upload JSON for debugging purposes
+      - name: Upload JSON for debugging purposes
+        uses: actions/upload-artifact@v2
+        with:
+          name: summed-coverage-report
+          path: coverage/total-codeclimate.json
+        if: env.ACTION_DEBUG == true
         
       # Upload total coverage report to Code Climate
       - name: Upload coverage report to Code Climate
