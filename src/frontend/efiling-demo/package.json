@@ -9,10 +9,10 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "axios": "^0.19.2",
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "bootstrap": "^4.4.1",
     "enzyme": "^3.11.0",
-    "axios": "^0.19.2",
     "enzyme-adapter-react-16": "^1.15.2",
     "history": "^4.10.1",
     "prop-types": "^15.7.2",
@@ -77,36 +77,6 @@
     "jest-sonar-reporter": "^2.0.0",
     "prettier": "1.19.1",
     "pretty-quick": "^2.0.1"
-  },
-  "jest": {
-    "watchPathIgnorePatterns": [
-      "<rootDir>/node_modules/"
-    ],
-    "collectCoverageFrom": [
-      "src/**/*.js",
-      "!src/index.js",
-      "!**/node_modules/**",
-      "!**/vendor/**"
-    ],
-    "transform": {
-      "^.+\\.[t|j]sx?$": "babel-jest"
-    },
-    "setupFilesAfterEnv": [
-      "<rootDir>/src/setupTests.js",
-      "./src/setupTests.js"
-    ],
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|PNG|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga|pdf)$": "<rootDir>/src/AssetsTransformer.js",
-      "\\.(css|less)$": "<rootDir>/src/AssetsTransformer.js"
-    },
-    "verbose": true,
-    "testResultsProcessor": "jest-sonar-reporter",
-    "collectCoverage": false,
-    "coverageReporters": [
-      "text",
-      "lcov"
-    ],
-    "coverageDirectory": "coverage"
   },
   "jestSonar": {
     "reportPath": "coverage",
