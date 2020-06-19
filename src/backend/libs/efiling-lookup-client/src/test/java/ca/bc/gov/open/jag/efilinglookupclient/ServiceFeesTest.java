@@ -1,13 +1,12 @@
 package ca.bc.gov.open.jag.efilinglookupclient;
 
 import org.joda.time.DateTime;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.math.BigDecimal;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@DisplayName("Efiling ServiceFees Test")
 public class ServiceFeesTest {
 
     private ServiceFees sut;
