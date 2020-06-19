@@ -138,8 +138,8 @@ public class SubmissionApiDelegateImplTest {
     }
 
     @Test
-    @DisplayName("CASE2: when payload is valid but not efiling role bad request")
-    public void withValidPayloadShouldButNoRoleReturnNotFound() {
+    @DisplayName("CASE2: when payload is valid but no efiling role return forbidden")
+    public void withValidPayloadButNoRoleShouldReturnForbidden() {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.of(Submission.builder().create()));
         List<String> efilingRole = new ArrayList<>();
@@ -156,13 +156,13 @@ public class SubmissionApiDelegateImplTest {
 
         assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
         assertEquals("INVROLE", ((EfilingError)actual.getBody()).getError());
-        assertEquals("User does not hava a valid role for this request.", ((EfilingError)actual.getBody()).getMessage());
+        assertEquals("User does not have a valid role for this request.", ((EfilingError)actual.getBody()).getMessage());
         
     }
 
     @Test
     @DisplayName("CASE3: when payload is valid but redis return nothing")
-    public void withValidPayloadButRedisReturnNothingReturnBadRequest() {
+    public void withValidPayloadButRedisReturnNothingShouldReturnBadRequest() {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.empty());
         List<String> efilingRole = new ArrayList<>();
