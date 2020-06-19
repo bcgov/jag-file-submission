@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 
 public class ServiceFees {
 
+    // Allowing 8 params to constructor as it is a map to SOAP reply
     @SuppressWarnings("squid:S00107")
     @JsonCreator
     public ServiceFees(
