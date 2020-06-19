@@ -1,7 +1,5 @@
 import React from "react";
 
-console.log("jhsgdjgshdjg");
-
 export const LinkElement = (url, label) => (
   <li className="nav-item m-1">
     <a
