@@ -7,6 +7,7 @@ import org.joda.time.*;
 
 public class ServiceFees {
 
+    @JsonCreator
     public ServiceFees(
             @JsonProperty("udpDtm") DateTime udpDtm,
             @JsonProperty("feeAmt") float feeAmt,
