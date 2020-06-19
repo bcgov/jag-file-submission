@@ -1,10 +1,10 @@
-package ca.bc.gov.open.jagefilingapi.qa.generateurlrestfile;
+package ca.bc.gov.open.jagefilingapi.qa.backend.generateurlpayload;
 
 public class Navigation {
 
-    Success success;
-    Error error;
-    Cancel cancel;
+    private Success success;
+    private Error error;
+    private Cancel cancel;
 
     public Navigation(Success success, Error error, Cancel cancel) {
         this.success = success;
