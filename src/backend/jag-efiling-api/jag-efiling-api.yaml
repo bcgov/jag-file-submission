@@ -82,6 +82,10 @@ components:
       properties:
         csoAccountExists:
           type: boolean
+          description: True if the user has a linked cso account
+        hasEfilingRole:
+          type: boolean
+          description: True if the user has the efiling role
     DocumentProperties:
       type: object
       description: Submission Metadata used to describe the submission that will be e-filled

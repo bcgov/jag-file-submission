@@ -25,6 +25,3 @@ mvn clean install -P libs
 ```
 mvn clean verify -P all
 ```
-
-to check code coverage open the following [jacoco coverage report page](coverage-report/target/site/jacoco-aggregate/index/html)
-
