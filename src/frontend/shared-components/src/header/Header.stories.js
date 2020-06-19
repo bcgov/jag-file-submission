@@ -2,7 +2,7 @@ import React from "react";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 
-import { Header } from "./Header";
+import Header from "./Header";
 
 export default {
   title: "Header",
