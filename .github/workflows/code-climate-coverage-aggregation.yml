@@ -76,16 +76,20 @@ jobs:
           done
         if: env.ACTION_DEBUG == true
 
+      # Run Yarn Install
+      - name: Run Yarn Install - Shared components
+        run: yarn --cwd src/frontend/shared-components install
+
       # Run Yarn Prepare
-      - name: Run Yarn Prepare
+      - name: Run Yarn Prepare - Shared components
         run: yarn --cwd src/frontend/shared-components prepare
 
       # Run Yarn Install
-      - name: Run Yarn Install
+      - name: Run Yarn Install - eFiling Frontend
         run: yarn --cwd src/frontend/efiling-frontend install
 
       # Run Yarn Coverage to generate javascript coverage report
-      - name: Run Yarn Coverage
+      - name: Run Yarn Coverage - eFiling Frontend
         run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/efiling-frontend coverage
 
       # List frontend coverage reports
