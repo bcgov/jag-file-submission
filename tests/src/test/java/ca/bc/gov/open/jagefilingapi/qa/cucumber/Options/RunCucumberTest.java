@@ -8,7 +8,6 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
          features = {"src/test/java/features"},
          glue ={"stepDefinitions"},
-        // tags = "@backend",
          monochrome = true,
          plugin = {
                  "pretty",
@@ -17,7 +16,7 @@ import org.junit.runner.RunWith;
                  "rerun:target/cucumber-reports/rerun.txt",
                  "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"
                 }
-                )
+        )
 
 public class RunCucumberTest {
 

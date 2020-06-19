@@ -44,10 +44,9 @@ This runs the tests that are tagged with the specific tag name.
 Without the 'tags' option all tests gets executed.
 
 Alternatively, both frontend and backend tests can be run from 
+RunCucumberTest.java class
 
-### `RunCucumberTest.java` class
-
- ## Reports
+## Reports
  
 Html reports will be saved in the test-output folder to view the test results in the browser
  
