@@ -138,7 +138,7 @@ public class SubmissionApiDelegateImplTest {
     }
 
     @Test
-    @DisplayName("CASE2: when payload is valid but not efiling role not found")
+    @DisplayName("CASE2: when payload is valid but not efiling role bad request")
     public void withValidPayloadShouldButNoRoleReturnNotFound() {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.of(Submission.builder().create()));

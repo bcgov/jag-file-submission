@@ -3,10 +3,12 @@ package ca.bc.gov.open.jagefilingapi.submission;
 import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountDetails;
 import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
 import ca.bc.gov.open.jagefilingapi.api.SubmissionApiDelegate;
+import ca.bc.gov.open.jagefilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jagefilingapi.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.jagefilingapi.api.model.GenerateUrlResponse;
 import ca.bc.gov.open.jagefilingapi.api.model.UserDetail;
 import ca.bc.gov.open.jagefilingapi.config.NavigationProperties;
+import ca.bc.gov.open.jagefilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jagefilingapi.fee.FeeService;
 import ca.bc.gov.open.jagefilingapi.fee.models.Fee;
 import ca.bc.gov.open.jagefilingapi.fee.models.FeeRequest;
@@ -72,7 +74,10 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         logger.debug("Attempting to get user cso account information");
         CsoAccountDetails csoAccountDetails = efilingAccountService.getAccountDetails(generateUrlRequest.getUserId());
         if (csoAccountDetails != null && !csoAccountDetails.HasRole(EFILING_ROLE)) {
-            return ResponseEntity.badRequest().body(null);
+            EfilingError efilingError = new EfilingError();
+            efilingError.setError(ErrorResponse.INVALIDROLE.getErrorCode());
+            efilingError.setMessage(ErrorResponse.INVALIDROLE.getErrorMessage());
+            return ResponseEntity.badRequest().build();
         }
 
         //TODO: Replace with a service
