@@ -73,7 +73,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         logger.debug("Attempting to get user cso account information");
         CsoAccountDetails csoAccountDetails = efilingAccountService.getAccountDetails(generateUrlRequest.getUserId());
-        logger.info("Successfully get cso account information");
+        logger.info("Successfully got cso account information");
 
         if (csoAccountDetails != null && !csoAccountDetails.HasRole(EFILING_ROLE)) {
 
