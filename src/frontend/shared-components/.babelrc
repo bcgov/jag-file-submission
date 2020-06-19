@@ -1,13 +1,13 @@
-//.babelrc
 {
-    "presets": [
-      [
-        "env",
-      {
-        "modules": false
-      }
-   ],
-      "react",
-      "stage-0"
-    ]
+    // "presets": [
+    //   [
+    //     "env",
+    //     {
+    //       "modules": false
+    //     }
+    //   ],
+    //   "react",
+    //   "stage-0"
+    // ]
+    "presets": ["@babel/preset-env", "@babel/preset-react"]
 }
