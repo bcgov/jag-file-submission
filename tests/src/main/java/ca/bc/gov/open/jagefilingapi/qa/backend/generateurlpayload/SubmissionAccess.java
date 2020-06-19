@@ -1,9 +1,9 @@
-package ca.bc.gov.open.jagefilingapi.qa.generateurlrestfile;
+package ca.bc.gov.open.jagefilingapi.qa.backend.generateurlpayload;
 
 public class SubmissionAccess {
 
-    String url;
-    String verb;
+    private String url;
+    private String verb;
     Headers headers;
 
     public SubmissionAccess(String url, String verb, Headers headers) {

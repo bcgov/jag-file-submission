@@ -1,7 +1,8 @@
-package ca.bc.gov.open.jagefilingapi.qa.generateurlrestfile;
+package ca.bc.gov.open.jagefilingapi.qa.backend.generateurlpayload;
 
 public class Cancel {
-    String url;
+
+    private String url;
 
     public Cancel(String url) {
         this.url = url;
