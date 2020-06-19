@@ -86,7 +86,7 @@ jobs:
 
       # Run Yarn Coverage to generate javascript coverage report
       - name: Run Yarn Coverage - Shared components
-        run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/shared-components coverage
+        run: yarn --cwd ${{ github.workspace }}/src/frontend/shared-components coverage
 
       # Run Yarn Install
       - name: Run Yarn Install - eFiling Frontend
