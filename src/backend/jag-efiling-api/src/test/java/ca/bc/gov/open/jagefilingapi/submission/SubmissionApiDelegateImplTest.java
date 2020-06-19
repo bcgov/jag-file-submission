@@ -46,10 +46,10 @@ public class SubmissionApiDelegateImplTest {
     private static final String SUBTYPE = "SUBTYPE";
     private static final String URL = "http://doc.com";
     private static final String HEADER = "HEADER";
-    public static final UUID CASE_4 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fe");
-    public static final UUID CASE_5 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fa");
-    public static final UUID CASE_6 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fb");
-    public static final UUID CASE_7 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fc");
+    public static final UUID CASE_5 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fe");
+    public static final UUID CASE_6 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fa");
+    public static final UUID CASE_7 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fb");
+    public static final UUID CASE_8 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fc");
 
 
 
@@ -90,24 +90,24 @@ public class SubmissionApiDelegateImplTest {
         List<String> efilingRole = new ArrayList<>();
         efilingRole.add("efiling");
         CsoAccountDetails csoAccountDetails = new CsoAccountDetails("accountId", "clientId", efilingRole);
-        Submission submissionWithCsoAccount = new Submission(CASE_5, documentProperties, new Navigation(), new Fee(BigDecimal.TEN), csoAccountDetails);
-
-        when(submissionServiceMock.getByKey(Mockito.eq(CASE_4)))
-                .thenReturn(Optional.empty());
+        Submission submissionWithCsoAccount = new Submission(CASE_6, documentProperties, new Navigation(), new Fee(BigDecimal.TEN), csoAccountDetails);
 
         when(submissionServiceMock.getByKey(Mockito.eq(CASE_5)))
+                .thenReturn(Optional.empty());
+
+        when(submissionServiceMock.getByKey(Mockito.eq(CASE_6)))
                 .thenReturn(Optional.of(submissionWithCsoAccount));
 
         List<String> otherRole = new ArrayList<>();
         efilingRole.add("other");
         CsoAccountDetails csoAccountDetailsNoEfilingRole = new CsoAccountDetails("accountId", "clientId", otherRole);
-        Submission submissionWithCsoAccountNoEfilingRole = new Submission(CASE_6, documentProperties, new Navigation(), new Fee(BigDecimal.TEN), csoAccountDetailsNoEfilingRole);
-        when(submissionServiceMock.getByKey(Mockito.eq(CASE_6)))
+        Submission submissionWithCsoAccountNoEfilingRole = new Submission(CASE_7, documentProperties, new Navigation(), new Fee(BigDecimal.TEN), csoAccountDetailsNoEfilingRole);
+        when(submissionServiceMock.getByKey(Mockito.eq(CASE_7)))
                 .thenReturn(Optional.of(submissionWithCsoAccountNoEfilingRole));
 
 
-        Submission submissionNoCsoAccount  = new Submission(CASE_7, documentProperties, new Navigation(), new Fee(BigDecimal.TEN), null);
-        when(submissionServiceMock.getByKey(Mockito.eq(CASE_7)))
+        Submission submissionNoCsoAccount  = new Submission(CASE_8, documentProperties, new Navigation(), new Fee(BigDecimal.TEN), null);
+        when(submissionServiceMock.getByKey(Mockito.eq(CASE_8)))
                 .thenReturn(Optional.of(submissionNoCsoAccount));
 
         sut = new SubmissionApiDelegateImpl(submissionServiceMock, navigationProperties, cachePropertiesMock, submissionMapperMock, feeServiceMock, efilingAccountServiceMock);
@@ -120,7 +120,11 @@ public class SubmissionApiDelegateImplTest {
     public void withValidPayloadShouldReturnOk() {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.of(Submission.builder().create()));
+        List<String> efilingRole = new ArrayList<>();
+        efilingRole.add("efiling");
+        CsoAccountDetails csoAccountDetails = new CsoAccountDetails("accountId", "clientId", efilingRole);
 
+        when(efilingAccountServiceMock.getAccountDetails(any())).thenReturn(csoAccountDetails);
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         generateUrlRequest.setDocumentProperties(TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE));
@@ -134,11 +138,38 @@ public class SubmissionApiDelegateImplTest {
     }
 
     @Test
-    @DisplayName("CASE2: when payload is valid but redis return nothing")
-    public void withValidPayloadButRedisReturnNothingReturnBadRequest() {
+    @DisplayName("CASE2: when payload is valid but no efiling role return forbidden")
+    public void withValidPayloadButNoRoleShouldReturnForbidden() {
+
+        when(submissionServiceMock.put(any())).thenReturn(Optional.of(Submission.builder().create()));
+        List<String> efilingRole = new ArrayList<>();
+        efilingRole.add("NOTefiling");
+        CsoAccountDetails csoAccountDetails = new CsoAccountDetails("accountId", "clientId", efilingRole);
+
+        when(efilingAccountServiceMock.getAccountDetails(any())).thenReturn(csoAccountDetails);
+        GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
+
+        generateUrlRequest.setDocumentProperties(TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE));
+        generateUrlRequest.setNavigation(TestHelpers.createNavigation(CASE_1, CANCEL, ERROR));
+
+        ResponseEntity actual = sut.generateUrl(generateUrlRequest);
+
+        assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
+        assertEquals("INVROLE", ((EfilingError)actual.getBody()).getError());
+        assertEquals("User does not have a valid role for this request.", ((EfilingError)actual.getBody()).getMessage());
+        
+    }
+
+    @Test
+    @DisplayName("CASE3: when payload is valid but redis return nothing")
+    public void withValidPayloadButRedisReturnNothingShouldReturnBadRequest() {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.empty());
+        List<String> efilingRole = new ArrayList<>();
+        efilingRole.add("efiling");
+        CsoAccountDetails csoAccountDetails = new CsoAccountDetails("accountId", "clientId", efilingRole);
 
+        when(efilingAccountServiceMock.getAccountDetails(any())).thenReturn(csoAccountDetails);
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         generateUrlRequest.setDocumentProperties(TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE));
@@ -151,7 +182,7 @@ public class SubmissionApiDelegateImplTest {
     }
 
     @Test
-    @DisplayName("CASE3: with invalid guid should return badrequest")
+    @DisplayName("CASE4: with invalid guid should return badrequest")
     public void withValidIdReturnPayload() {
         Fee fee = new Fee(BigDecimal.TEN);
 
@@ -164,19 +195,19 @@ public class SubmissionApiDelegateImplTest {
     }
 
     @Test
-    @DisplayName("CASE4: with null redis storage response return NotFound")
+    @DisplayName("CASE5: with null redis storage response return NotFound")
     public void withNullRedisStorageResponseReturnNotFound() {
 
-        ResponseEntity<UserDetail> actual = sut.getSubmissionUserDetail(CASE_4.toString());
+        ResponseEntity<UserDetail> actual = sut.getSubmissionUserDetail(CASE_5.toString());
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
 
     }
 
     @Test
-    @DisplayName("CASE5: with user having cso account and efiling role")
+    @DisplayName("CASE6: with user having cso account and efiling role")
     public void withValidSubmissionIdShouldReturnAccountExistsAndHasEfilingRole() {
 
-        ResponseEntity<UserDetail> actual = sut.getSubmissionUserDetail(CASE_5.toString());
+        ResponseEntity<UserDetail> actual = sut.getSubmissionUserDetail(CASE_6.toString());
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertTrue(actual.getBody().getCsoAccountExists());
         assertTrue(actual.getBody().getHasEfilingRole());
@@ -184,10 +215,10 @@ public class SubmissionApiDelegateImplTest {
     }
 
     @Test
-    @DisplayName("CASE6: with user having cso account and no efiling role")
+    @DisplayName("CASE7: with user having cso account and no efiling role")
     public void withValidSubmissionIdShouldReturnAccountExistsAndNoEfilingRole() {
 
-        ResponseEntity<UserDetail> actual = sut.getSubmissionUserDetail(CASE_6.toString());
+        ResponseEntity<UserDetail> actual = sut.getSubmissionUserDetail(CASE_7.toString());
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertTrue(actual.getBody().getCsoAccountExists());
         assertFalse(actual.getBody().getHasEfilingRole());
@@ -195,10 +226,10 @@ public class SubmissionApiDelegateImplTest {
     }
 
     @Test
-    @DisplayName("CASE6: with user having cso account and no efiling role")
+    @DisplayName("CASE8: with user having cso account and no efiling role")
     public void withValidSubmissionButNoAccountShouldReturnFalse() {
 
-        ResponseEntity<UserDetail> actual = sut.getSubmissionUserDetail(CASE_7.toString());
+        ResponseEntity<UserDetail> actual = sut.getSubmissionUserDetail(CASE_8.toString());
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertFalse(actual.getBody().getCsoAccountExists());
         assertFalse(actual.getBody().getHasEfilingRole());
