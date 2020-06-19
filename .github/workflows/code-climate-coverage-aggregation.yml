@@ -98,7 +98,7 @@ jobs:
         if: env.ACTION_DEBUG == true
 
       # Run Yarn Install
-      - name: Run Yarn Install - DEMO
+      - name: Run Yarn Install - eFiling Demo
         run: yarn --cwd src/frontend/efiling-demo install
 
       # Run Yarn Coverage to generate javascript coverage report
