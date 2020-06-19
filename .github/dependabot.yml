@@ -1,8 +1,14 @@
 version: 2
-update_configs:
-  - package_manager: "java:maven"
+updates:
+  # Mvn dependencies
+  - package-ecosystem: "maven"
     directory: "/src/backend"
-    update_schedule: "daily"
-  - package_manager: "javascript"
+    schedule:
+      interval: "daily"
+      time: "18:00"
+  # npm dependencies
+  - package-ecosystem: "npm"
     directory: "/src/frontend"
-    update_schedule: "daily"
+    schedule:
+      interval: "daily"
+      time: "18:00"
