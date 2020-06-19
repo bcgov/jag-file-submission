@@ -30,7 +30,6 @@
 				<module>jag-efiling-api</module>
 				<module>efiling-worker</module>
 				<module>efiling-backend-demo</module>
-				<module>coverage-report</module>
 			</modules>
 		</profile>
 		<profile>
