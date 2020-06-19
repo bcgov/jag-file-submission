@@ -78,7 +78,7 @@ jobs:
 
       # Run Yarn Prepare
       - name: Run Yarn Prepare
-        run: yarn prepare --cwd src/frontend/shared-components prepare
+        run: yarn --cwd src/frontend/shared-components prepare
 
       # Run Yarn Install
       - name: Run Yarn Install
