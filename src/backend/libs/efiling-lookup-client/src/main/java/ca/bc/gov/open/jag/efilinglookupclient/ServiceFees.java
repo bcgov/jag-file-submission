@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.joda.time.*;
 
+import java.math.BigDecimal;
+
 
 public class ServiceFees {
 
@@ -11,7 +13,7 @@ public class ServiceFees {
     @JsonCreator
     public ServiceFees(
             @JsonProperty("udpDtm") DateTime udpDtm,
-            @JsonProperty("feeAmt") float feeAmt,
+            @JsonProperty("feeAmt") BigDecimal feeAmt,
             @JsonProperty("entUserId") String entUserId,
             @JsonProperty("serviceTypeCd") String serviceTypeCd,
             @JsonProperty("effectiveDt") DateTime effectiveDt,
@@ -37,11 +39,11 @@ public class ServiceFees {
         this.udpDtm = udpDtm;
     }
 
-    public float getFeeAmt() {
+    public BigDecimal getFeeAmt() {
         return feeAmt;
     }
 
-    public void setFeeAmt(float feeAmt) {
+    public void setFeeAmt(BigDecimal feeAmt) {
         this.feeAmt = feeAmt;
     }
 
@@ -94,7 +96,7 @@ public class ServiceFees {
     }
 
     DateTime udpDtm;
-    float feeAmt;
+    BigDecimal feeAmt;
     String entUserId;
     String serviceTypeCd;
     DateTime effectiveDt;

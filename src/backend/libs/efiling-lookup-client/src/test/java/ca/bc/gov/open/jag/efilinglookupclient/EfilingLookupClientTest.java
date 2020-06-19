@@ -1,7 +1,8 @@
 package ca.bc.gov.open.jag.efilinglookupclient;
 
 import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import java.math.BigDecimal;
 
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -23,7 +24,7 @@ public class EfilingLookupClientTest {
         ServiceFees actual = sut.getServiceFee(serviceId);
 
         Assertions.assertEquals(serviceId, actual.getServiceTypeCd());
-        Assertions.assertEquals(0.0f, actual.getFeeAmt());
+        Assertions.assertEquals(BigDecimal.ZERO, actual.getFeeAmt());
     }
 
 }

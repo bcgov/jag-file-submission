@@ -1,9 +1,8 @@
 package ca.bc.gov.open.jag.efilinglookupclient;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.joda.time.DateTime;
 
-import java.util.Date;
+import java.math.BigDecimal;
 
 public class DemoLookupServiceImpl implements EfilingLookupService {
 
@@ -12,7 +11,7 @@ public class DemoLookupServiceImpl implements EfilingLookupService {
 
         ServiceFees serviceFees = new ServiceFees(
             DateTime.now(),
-            0.0f,
+            BigDecimal.ZERO,
             "entUserId",
             serviceId,
             DateTime.now(),
