@@ -155,7 +155,8 @@ public class SubmissionApiDelegateImplTest {
         ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(generateUrlRequest);
 
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
-        assertNull(actual.getBody());
+        assertTrue(actual.getBody().getEfilingUrl().startsWith("https://httpbin.org/"));
+        assertNotNull(actual.getBody().getExpiryDate());
     }
 
     @Test

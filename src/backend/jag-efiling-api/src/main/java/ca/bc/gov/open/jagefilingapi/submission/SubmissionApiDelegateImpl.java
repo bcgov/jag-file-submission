@@ -71,9 +71,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         logger.debug("Attempting to get user cso account information");
         CsoAccountDetails csoAccountDetails = efilingAccountService.getAccountDetails(generateUrlRequest.getUserId());
-        if (csoAccountDetails == null || !csoAccountDetails.HasRole(EFILING_ROLE)) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+
         //TODO: Replace with a service
         GenerateUrlResponse response = new GenerateUrlResponse();
 
@@ -92,7 +90,9 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
                                 cachedSubmission.get().getId()));
 
         logger.debug("{}", response);
-
+        if (csoAccountDetails == null || !csoAccountDetails.HasRole(EFILING_ROLE)) {
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
         return ResponseEntity.ok(response);
 
     }
