@@ -152,9 +152,12 @@ public class SubmissionApiDelegateImplTest {
         generateUrlRequest.setDocumentProperties(TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE));
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(CASE_1, CANCEL, ERROR));
 
-        ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(generateUrlRequest);
+        ResponseEntity actual = sut.generateUrl(generateUrlRequest);
 
-        assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
+        assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
+        assertEquals("INVROLE", ((EfilingError)actual.getBody()).getError());
+        assertEquals("User does not hava a valid role for this request.", ((EfilingError)actual.getBody()).getMessage());
+        
     }
 
     @Test
