@@ -1,5 +1,7 @@
 package ca.bc.gov.open.jagefilingapi.submission;
 
+import ca.bc.gov.open.jag.efilingaccountclient.DemoAccountServiceImpl;
+import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
 import ca.bc.gov.open.jagefilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jagefilingapi.submission.service.SubmissionServiceImpl;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +13,12 @@ public class SubmissionConfig {
     @Bean
     public SubmissionService submissionService() {
         return new SubmissionServiceImpl();
+    }
+
+
+    @Bean
+    public EfilingAccountService efilingAccountService() {
+        return new DemoAccountServiceImpl();
     }
 
 }

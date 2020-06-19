@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -70,7 +71,9 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         logger.debug("Attempting to get user cso account information");
         CsoAccountDetails csoAccountDetails = efilingAccountService.getAccountDetails(generateUrlRequest.getUserId());
-
+        if (csoAccountDetails == null || !csoAccountDetails.HasRole(EFILING_ROLE)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         //TODO: Replace with a service
         GenerateUrlResponse response = new GenerateUrlResponse();
 
