@@ -1,6 +1,6 @@
-package ca.bc.gov.open.jagefilingapi.qa.pages;
+package ca.bc.gov.open.jagefilingapi.qa.frontend.pages;
 
-import ca.bc.gov.open.jagefilingapi.qa.util.DriverClass;
+import ca.bc.gov.open.jagefilingapi.qa.frontendutils.DriverClass;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;

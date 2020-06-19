@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jagefilingapi.qa.generateurlrestfile;
+package ca.bc.gov.open.jagefilingapi.qa.backend.generateurlpayload;
 
 public class Payload {
 
