@@ -139,7 +139,7 @@ public class SubmissionApiDelegateImplTest {
 
     @Test
     @DisplayName("CASE2: when payload is valid but no efiling role return forbidden")
-    public void withValidPayloadShouldButNoRoleReturnNotFound() {
+    public void withValidPayloadButNoRoleShouldReturnForbidden() {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.of(Submission.builder().create()));
         List<String> efilingRole = new ArrayList<>();
