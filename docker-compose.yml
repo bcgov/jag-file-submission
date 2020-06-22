@@ -1,55 +1,5 @@
 version: "3.7"
 services:
-  #############################################################################################
-  ###                           JAG File Submission Service                                 ###
-  #############################################################################################
-  jag-file-submission:
-    build:
-      context: ./src/backend
-      args:
-        - SERVICE_NAME=jag-efiling-api
-        - MVN_PROFILES=openshift
-    ports:
-      - "8080:8080"
-    environment:
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - REDIS_PASSWORD=admin
-      - NAVIGATION_BASE_URL=https://httpbin.org/
-      - NAVIGATION_EXPIRYTIME=10
-    networks:
-      - fisu-net
-
-  #############################################################################################
-  ###                                 REDIS SERVER                                          ###
-  #############################################################################################
-  fisu-redis:
-    container_name: redis
-    image: redis
-    command: redis-server --requirepass admin
-    ports:
-      - "6379:6379"
-    volumes:
-      - data-redis:/data
-    restart: always
-    networks:
-      - fisu-net
-      
-  #############################################################################################
-  ###                             RABBIT MQ SERVER                                          ###
-  #############################################################################################
-  efiling-rabbitmq:
-    image: rabbitmq:3.7.15-management
-    container_name: rabbitmq
-    hostname: rabbitmq
-    ports:
-      - 5672:5672
-      - 15672:15672
-    volumes:
-        - data-rabbit:/var/lib/rabbitmq/mnesia/rabbit@app-rabbitmq:cached
-    restart: always
-    networks:
-      - fisu-net
 
   #############################################################################################
   ###                                 EFILING FRONTEND                                      ###
@@ -70,9 +20,60 @@ services:
       - CHOKIDAR_USEPOLLING=true
 
   #############################################################################################
+  ###                           JAG File Submission Service                                 ###
+  #############################################################################################
+  efiling-api:
+    build:
+      context: ./src/backend
+      args:
+        - SERVICE_NAME=jag-efiling-api
+        - MVN_PROFILES=openshift
+    ports:
+      - "8080:8080"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=admin
+      - NAVIGATION_BASE_URL=https://httpbin.org/
+      - NAVIGATION_EXPIRYTIME=10
+    networks:
+      - fisu-net
+
+  #############################################################################################
+  ###                                 REDIS SERVER                                          ###
+  #############################################################################################
+  redis:
+    container_name: redis
+    image: redis
+    command: redis-server --requirepass admin
+    ports:
+      - "6379:6379"
+    volumes:
+      - data-redis:/data
+    restart: always
+    networks:
+      - fisu-net
+      
+  #############################################################################################
+  ###                             RABBIT MQ SERVER                                          ###
+  #############################################################################################
+  rabbitmq:
+    image: rabbitmq:3.7.15-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+        - data-rabbit:/var/lib/rabbitmq/mnesia/rabbit@app-rabbitmq:cached
+    restart: always
+    networks:
+      - fisu-net
+
+  #############################################################################################
   ###                                 EFILING DEMO                                          ###
   #############################################################################################
-  efiling-demo:
+  demo-efiling-frontend:
     # need stdin_open:true because there is an issue with container being auto exited after startup with react-scripts 3.4.1
     stdin_open: true
     container_name: efiling-demo
