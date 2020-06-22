@@ -9,7 +9,6 @@ import ca.bc.gov.ag.csows.lookups.ServiceFee;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -17,7 +16,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-@Service
 public class CSOLookupServiceImpl implements EfilingLookupService {
 
     private LookupsLookupFacade lookupsLookupFacade;
