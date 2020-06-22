@@ -8,9 +8,7 @@ import CSOStatus from "../../composite/csostatus/CSOStatus";
 
 import "../page.css";
 
-/*
-make call to submission/{37102811-af30-48bb-bb48-f85359d9f6ab}/userDetails
-*/
+// make call to submission/{id}/userDetail to get the user details
 export const checkCSOAccountStatus = (
   submissionId,
   setCsoAccountExists,
