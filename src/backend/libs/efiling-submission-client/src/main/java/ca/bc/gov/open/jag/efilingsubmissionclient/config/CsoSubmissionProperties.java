@@ -3,7 +3,7 @@ package ca.bc.gov.open.jag.efilingsubmissionclient.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "jag.efiling.submission.client")
-public class CSOSubmissionProperties {
+public class CsoSubmissionProperties {
 
     private String filingSubmissionSoapUri;
 
