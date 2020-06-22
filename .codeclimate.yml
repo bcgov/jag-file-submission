@@ -17,7 +17,7 @@ checks:
     enabled: false
 
 exclude_patterns:
-    "src/frontend/"
+    - "src/frontend/"
   #- "src/frontend/efiling-demo/src/*.js"
   #- "src/frontend/efiling-frontend/src/*.js"
   #- "src/frontend/efiling-demo/public/"
