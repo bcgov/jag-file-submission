@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import Header, { Footer } from "shared-components";
@@ -39,34 +39,37 @@ const urlBodyWithoutCSO = {
   userId: "77da92db-0791-491e-8c58-1a969e67d2f4"
 };
 
-export const generateUrl = urlBody => {
+const generateUrl = (urlBody, setErrorExists) => {
   axios
     .post(`/submission/generateUrl`, urlBody)
     .then(({ data: { efilingUrl } }) => {
       window.open(efilingUrl, "_self");
     })
     .catch(() => {
-      throw new Error(
-        "An error occurred with generating the url. Please try again."
-      );
+      setErrorExists(true);
     });
 };
 
 export default function Home({ page: { header } }) {
+  const [errorExists, setErrorExists] = useState(false);
+
   return (
     <main>
       <Header header={header} />
       <div className="page">
         <div className="content col-md-10">
           <Button
-            onClick={() => generateUrl(urlBodyWithCSO)}
+            onClick={() => generateUrl(urlBodyWithCSO, setErrorExists)}
             label="With CSO Account"
           />
           <br />
           <Button
-            onClick={() => generateUrl(urlBodyWithoutCSO)}
+            onClick={() => generateUrl(urlBodyWithoutCSO, setErrorExists)}
             label="Without CSO Account"
           />
+          {errorExists && (
+            <p>An error occurred while generating the URL. Please try again.</p>
+          )}
         </div>
       </div>
       <Footer />
