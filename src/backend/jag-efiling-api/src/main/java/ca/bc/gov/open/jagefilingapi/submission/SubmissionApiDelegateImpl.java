@@ -97,7 +97,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         response.setEfilingUrl(
                 MessageFormat.format(
-                               "{0}/{1}",
+                               "{0}?submissionId={1}",
                                 navigationProperties.getBaseUrl(),
                                 cachedSubmission.get().getId()));
 

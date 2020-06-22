@@ -18,7 +18,7 @@
     "build": "babel src -d build --copy-files",
     "prepare": "yarn run build",
     "storybook": "start-storybook",
-    "test": "jest --testPathPattern=src/",
+    "test": "jest",
     "coverage": "jest --coverage",
     "lint": "eslint .",
     "lint:fix": "eslint --fix ."

@@ -6,7 +6,8 @@ import { Button } from "../../base/button/Button";
 
 import "../page.css";
 
-const generateUrlBody = {
+const urlBodyWithCSO = {
+  userId: "77da92db-0791-491e-8c58-1a969e67d2fa",
   documentProperties: {
     type: "string",
     subType: "string",
@@ -33,11 +34,16 @@ const generateUrlBody = {
   }
 };
 
-export const generateUrl = () => {
+const urlBodyWithoutCSO = {
+  ...urlBodyWithCSO,
+  userId: "77da92db-0791-491e-8c58-1a969e67d2f4"
+};
+
+export const generateUrl = urlBody => {
   axios
-    .post(`/submission/generateUrl`, generateUrlBody)
-    .then(response => {
-      console.log(response);
+    .post(`/submission/generateUrl`, urlBody)
+    .then(({ data: { efilingUrl } }) => {
+      window.open(efilingUrl, "_self");
     })
     .catch(() => {
       throw new Error(
@@ -52,9 +58,15 @@ export default function Home({ page: { header } }) {
       <Header header={header} />
       <div className="page">
         <div className="content col-md-10">
-          <Button onClick={generateUrl} label="With CSO Account" />
+          <Button
+            onClick={() => generateUrl(urlBodyWithCSO)}
+            label="With CSO Account"
+          />
           <br />
-          <Button onClick={generateUrl} label="Without CSO Account" />
+          <Button
+            onClick={() => generateUrl(urlBodyWithoutCSO)}
+            label="Without CSO Account"
+          />
         </div>
       </div>
       <Footer />

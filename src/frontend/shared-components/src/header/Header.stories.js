@@ -10,16 +10,11 @@ export default {
 };
 
 const header = {
-  name: "File Submission"
+  name: "File Submission",
+  history: createMemoryHistory()
 };
 
-const history = createMemoryHistory();
-
-const component = (
-  <Router history={history}>
-    <Header header={header} />
-  </Router>
-);
+const component = <Header header={header} />;
 
 export const Default = () => component;
 

@@ -285,3 +285,47 @@ exports[`Storyshots Header Mobile 1`] = `
   </nav>
 </header>
 `;
+
+exports[`Storyshots Loader Default 1`] = `
+<div
+  style={
+    Object {
+      "background": "grey",
+    }
+  }
+>
+  <div
+    className="loader-align"
+  >
+    <div
+      className="btn-loader"
+    />
+    <br />
+    Loading... Please Wait
+  </div>
+</div>
+`;
+
+exports[`Storyshots Loader Mobile 1`] = `
+<div
+  className="loader-align"
+>
+  <div
+    className="page-loader"
+  />
+  <br />
+  Loading... Please Wait
+</div>
+`;
+
+exports[`Storyshots Loader Page 1`] = `
+<div
+  className="loader-align"
+>
+  <div
+    className="page-loader"
+  />
+  <br />
+  Loading... Please Wait
+</div>
+`;
