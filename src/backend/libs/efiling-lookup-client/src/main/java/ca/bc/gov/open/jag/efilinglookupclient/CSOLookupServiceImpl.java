@@ -30,7 +30,7 @@ public class CSOLookupServiceImpl implements EfilingLookupService {
 
         ServiceFees serviceFees = null;
 
-        if (serviceId.isEmpty()) return serviceFees;
+        if (StringUtils.isEmpty(serviceId)) return serviceFees;
 
         try {
 
