@@ -20,14 +20,13 @@ services:
       - CHOKIDAR_USEPOLLING=true
 
   #############################################################################################
-  ###                           JAG File Submission Service                                 ###
+  ###                           Efiling api backend app                                     ###
   #############################################################################################
   efiling-api:
     build:
       context: ./src/backend
       args:
         - SERVICE_NAME=jag-efiling-api
-        - MVN_PROFILES=openshift
     ports:
       - "8080:8080"
     environment:
