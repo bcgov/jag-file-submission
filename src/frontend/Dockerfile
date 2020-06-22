@@ -5,8 +5,12 @@ ARG SERVICE_NAME
 
 COPY . .
 
+WORKDIR /shared-components
+
+RUN yarn install
+
 # set working directory
-WORKDIR /efiling-frontend
+WORKDIR /${SERVICE_NAME}
 
 # add `/node_modules/.bin` to $PATH
 ENV PATH ./node_modules/.bin:$PATH

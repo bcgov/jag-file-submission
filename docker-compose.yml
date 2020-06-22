@@ -9,12 +9,8 @@ services:
     container_name: efiling-frontend
     build:
       context: ./src/frontend
-      dockerfile: Dockerfile.frontend
       args:
         - SERVICE_NAME=efiling-frontend
-    # volumes:
-    #   - ".:/src/frontend/efiling-frontend"
-    #   - "/node_modules"
     ports:
       - 3000:3000
     environment:
@@ -23,13 +19,14 @@ services:
   #############################################################################################
   ###                                 EFILING DEMO                                          ###
   #############################################################################################
-  demo-efiling-frontend:
+  efiling-demo:
     # need stdin_open:true because there is an issue with container being auto exited after startup with react-scripts 3.4.1
     stdin_open: true
     container_name: efiling-demo
     build:
-      context: ./src/frontend/efiling-demo
-      dockerfile: Dockerfile
+      context: ./src/frontend
+      args:
+        - SERVICE_NAME=efiling-demo
     volumes:
       - ".:/src/frontend/efiling-demo"
       - "/node_modules"
