@@ -7,9 +7,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class GlobalCorsConfiguration {
-/**
-* Configures CORS for enabling javascript applications to connect.
-*/
+
+    /**
+    * Configures CORS for enabling javascript applications to connect.
+    */
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
@@ -19,4 +20,7 @@ public class GlobalCorsConfiguration {
             }
         };
     }
+
+
+
 }

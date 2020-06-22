@@ -1,7 +1,7 @@
 package ca.bc.gov.open.jag.efilingaccountclient.config;
 
-import ca.bc.gov.open.jag.efilingaccountclient.DemoAccountServiceImpl;
 import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
+import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountServiceImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +13,6 @@ public class AutoConfiguration {
     @ConditionalOnMissingBean(value = {EfilingAccountService.class})
     public EfilingAccountService eFilingAccountService() {
 
-        EfilingAccountService eFilingAccountService = new DemoAccountServiceImpl();
-        return eFilingAccountService;
+        return new EfilingAccountServiceImpl();
     }
 }
