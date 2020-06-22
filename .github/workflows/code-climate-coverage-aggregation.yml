@@ -13,7 +13,7 @@ jobs:
   java:
     env:
       CC_TEST_REPORTER_ID: 9ada3133fe9babf91a222009998b3545b7eae897a05900930bfa8a27fd82f385
-      FILE_COUNT: 0
+      FILE_COUNTER: 0
       
     name: Create, format and upload Java and Javascript coverage artifact
     runs-on: ubuntu-latest
@@ -152,10 +152,11 @@ jobs:
         run: |
           FILE_COUNT=$(ls -1q ./coverage | wc -l )
           echo $FILE_COUNT
+          echo "::set-env name=FILE_COUNTER::$FILE_COUNT
 
       # Sum the coverage reports
       - name: Summing the coverage reports generated
-        run: ./cc-test-reporter sum-coverage coverage/*-codeclimate.json -p env.FILE_COUNT -o coverage/total-codeclimate.json
+        run: ./cc-test-reporter sum-coverage coverage/*-codeclimate.json -p env.FILE_COUNTER -o coverage/total-codeclimate.json
 
       # Upload JSON for debugging purposes
       - name: Upload JSON for debugging purposes
