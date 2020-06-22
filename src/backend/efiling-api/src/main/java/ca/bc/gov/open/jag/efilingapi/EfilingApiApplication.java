@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class JagEfilingApiApplication {
+public class EfilingApiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(JagEfilingApiApplication.class, args);
+		SpringApplication.run(EfilingApiApplication.class, args);
 	}
 
 }

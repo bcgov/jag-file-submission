@@ -207,7 +207,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>ca.bc.gov.open.jag.efilingapi.JagEfilingApiApplication</mainClass>
+					<mainClass>ca.bc.gov.open.jag.efilingapi.EfilingApiApplication</mainClass>
 				</configuration>
 			</plugin>
 
