@@ -1,7 +1,7 @@
-package ca.bc.gov.open.jagefilingapi.fee.models;
+package ca.bc.gov.open.jag.efilingapi.fee.models;
 
-import ca.bc.gov.open.jagefilingapi.fee.FeeService;
-import ca.bc.gov.open.jagefilingapi.fee.MockFeeService;
+import ca.bc.gov.open.jag.efilingapi.fee.FeeService;
+import ca.bc.gov.open.jag.efilingapi.fee.MockFeeService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

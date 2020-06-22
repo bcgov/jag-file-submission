@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jagefilingapi.fee.models;
+package ca.bc.gov.open.jag.efilingapi.fee.models;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,8 +1,8 @@
-package ca.bc.gov.open.jagefilingapi.fee.mockservice;
+package ca.bc.gov.open.jag.efilingapi.fee.mockservice;
 
-import ca.bc.gov.open.jagefilingapi.fee.MockFeeService;
-import ca.bc.gov.open.jagefilingapi.fee.models.Fee;
-import ca.bc.gov.open.jagefilingapi.fee.models.FeeRequest;
+import ca.bc.gov.open.jag.efilingapi.fee.MockFeeService;
+import ca.bc.gov.open.jag.efilingapi.fee.models.Fee;
+import ca.bc.gov.open.jag.efilingapi.fee.models.FeeRequest;
 import org.junit.jupiter.api.*;
 
 import java.math.BigDecimal;

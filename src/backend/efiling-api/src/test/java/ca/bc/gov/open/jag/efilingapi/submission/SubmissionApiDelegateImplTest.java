@@ -1,17 +1,17 @@
-package ca.bc.gov.open.jagefilingapi.submission;
+package ca.bc.gov.open.jag.efilingapi.submission;
 
 
 import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountDetails;
 import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
-import ca.bc.gov.open.jagefilingapi.TestHelpers;
-import ca.bc.gov.open.jagefilingapi.api.model.*;
-import ca.bc.gov.open.jagefilingapi.config.NavigationProperties;
-import ca.bc.gov.open.jagefilingapi.fee.FeeService;
-import ca.bc.gov.open.jagefilingapi.fee.models.Fee;
-import ca.bc.gov.open.jagefilingapi.fee.models.FeeRequest;
-import ca.bc.gov.open.jagefilingapi.submission.mappers.SubmissionMapper;
-import ca.bc.gov.open.jagefilingapi.submission.models.Submission;
-import ca.bc.gov.open.jagefilingapi.submission.service.SubmissionService;
+import ca.bc.gov.open.jag.efilingapi.api.model.*;
+import ca.bc.gov.open.jag.efilingapi.fee.models.Fee;
+import ca.bc.gov.open.jag.efilingapi.fee.models.FeeRequest;
+import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
+import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
+import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
+import ca.bc.gov.open.jag.efilingapi.TestHelpers;
+import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
+import ca.bc.gov.open.jag.efilingapi.fee.FeeService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

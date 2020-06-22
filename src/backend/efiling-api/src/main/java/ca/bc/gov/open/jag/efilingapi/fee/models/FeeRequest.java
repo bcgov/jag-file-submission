@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jagefilingapi.fee.models;
+package ca.bc.gov.open.jag.efilingapi.fee.models;
 
 /**
  * Represent a request to get a fee

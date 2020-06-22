@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jagefilingapi.config;
+package ca.bc.gov.open.jag.efilingapi.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
