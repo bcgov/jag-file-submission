@@ -150,6 +150,7 @@ jobs:
       # Count of all total coverage files available
       - name: Count files present
         run: |
+          ls -1q ./coverage
           ls -1q ./coverage | wc -l >> $FILE_COUNT
           echo $FILE_COUNT
 
