@@ -27,7 +27,7 @@
     "webpack": "4.42.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "SET PORT=3001 && react-scripts start",
     "build": "react-scripts build",
     "test": "jest",
     "eject": "react-scripts eject",
