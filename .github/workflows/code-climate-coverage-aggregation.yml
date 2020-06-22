@@ -27,6 +27,10 @@ jobs:
       # Permissions applied to the Code Climate Executable
       - name: Apply executable perms to Code Climate Binary
         run: chmod +x ./cc-test-reporter
+      
+      # Before build 
+      - name: Before build
+        run: ./cc-test-reporter before-build
 
       # Set required Git env vars for either pull request
       - name: Set ENV for codeclimate (pull_request)
