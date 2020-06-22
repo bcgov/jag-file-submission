@@ -1,6 +1,6 @@
 # efiling-api
 
-### Configuration
+## Configuration
 
 You should use environment variables to configure the jag efiling api
 
