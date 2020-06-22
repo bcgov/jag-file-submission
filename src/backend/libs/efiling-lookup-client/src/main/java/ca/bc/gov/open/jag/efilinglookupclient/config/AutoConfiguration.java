@@ -1,8 +1,10 @@
 package ca.bc.gov.open.jag.efilinglookupclient.config;
 
 import ca.bc.gov.ag.csows.LookupsLookupFacade;
+import ca.bc.gov.open.jag.efilinglookupclient.EfilingLookupService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +26,7 @@ public class AutoConfiguration {
     }
 
     @Bean
+    @ConditionalOnMissingBean(value = {EfilingLookupService.class})
     public LookupsLookupFacade eFilingLookupService() {
 
         LookupsLookupFacade lookupsLookupFacade = null;
