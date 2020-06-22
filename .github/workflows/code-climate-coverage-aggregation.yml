@@ -69,7 +69,7 @@ jobs:
       # Loop through all BACKEND services to show that jacoco reports have been generated
       - name: WHERE AM I - BACKEND?
         run: |
-          for s in efiling-backend-demo jag-efiling-api
+          for s in efiling-backend-demo efiling-api
           do
             ls ${{ github.workspace }}/src/backend/$s/target/site/jacoco;
           done
