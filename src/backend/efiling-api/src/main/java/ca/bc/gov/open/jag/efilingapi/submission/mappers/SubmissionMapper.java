@@ -1,9 +1,9 @@
-package ca.bc.gov.open.jagefilingapi.submission.mappers;
+package ca.bc.gov.open.jag.efilingapi.submission.mappers;
 
 import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountDetails;
-import ca.bc.gov.open.jagefilingapi.api.model.GenerateUrlRequest;
-import ca.bc.gov.open.jagefilingapi.fee.models.Fee;
-import ca.bc.gov.open.jagefilingapi.submission.models.Submission;
+import ca.bc.gov.open.jag.efilingapi.fee.models.Fee;
+import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
+import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

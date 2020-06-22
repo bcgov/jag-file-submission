@@ -1,7 +1,7 @@
-package ca.bc.gov.open.jagefilingapi.cache;
+package ca.bc.gov.open.jag.efilingapi.cache;
 
 
-import ca.bc.gov.open.jagefilingapi.submission.models.Submission;
+import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

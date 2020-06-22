@@ -1,6 +1,6 @@
-package ca.bc.gov.open.jagefilingapi.cache;
+package ca.bc.gov.open.jag.efilingapi.cache;
 
-import ca.bc.gov.open.jagefilingapi.submission.models.Submission;
+import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;

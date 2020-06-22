@@ -1,7 +1,7 @@
-package ca.bc.gov.open.jagefilingapi.fee;
+package ca.bc.gov.open.jag.efilingapi.fee;
 
-import ca.bc.gov.open.jagefilingapi.fee.models.Fee;
-import ca.bc.gov.open.jagefilingapi.fee.models.FeeRequest;
+import ca.bc.gov.open.jag.efilingapi.fee.models.Fee;
+import ca.bc.gov.open.jag.efilingapi.fee.models.FeeRequest;
 
 /**
  * A FeeService interface that provides services

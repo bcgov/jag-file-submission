@@ -1,9 +1,9 @@
-package ca.bc.gov.open.jagefilingapi.submission.models;
+package ca.bc.gov.open.jag.efilingapi.submission.models;
 
 import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountDetails;
-import ca.bc.gov.open.jagefilingapi.api.model.DocumentProperties;
-import ca.bc.gov.open.jagefilingapi.api.model.Navigation;
-import ca.bc.gov.open.jagefilingapi.fee.models.Fee;
+import ca.bc.gov.open.jag.efilingapi.fee.models.Fee;
+import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
+import ca.bc.gov.open.jag.efilingapi.api.model.Navigation;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

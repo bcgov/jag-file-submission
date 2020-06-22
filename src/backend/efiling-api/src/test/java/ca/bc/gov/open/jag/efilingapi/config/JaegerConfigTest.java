@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jagefilingapi.config;
+package ca.bc.gov.open.jag.efilingapi.config;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

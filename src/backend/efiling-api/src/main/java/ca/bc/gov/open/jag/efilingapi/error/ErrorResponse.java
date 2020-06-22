@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jagefilingapi.error;
+package ca.bc.gov.open.jag.efilingapi.error;
 
 public enum ErrorResponse {
     INVALIDROLE("INVROLE", "User does not have a valid role for this request.");

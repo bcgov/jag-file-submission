@@ -11,7 +11,7 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
     ├── openshift                               # openshift templates and pipeline
     ├── src/                                    # application source files
     │   ├── backend                             # backend applications
-    │   │   ├── jag-efiling-api                 # efiling api
+    │   │   ├── efiling-api                     # efiling api
     │   │   ├── efiling-worker                  # file submission worker
     │   │   ├── libs                            # backend libraries
     │   │   |   └── efiling-submission-client   # efiling soap client that submits packages to CSO
@@ -30,7 +30,7 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
 | Name                 | description                                  | doc                                                  |
 | -------------------- | -------------------------------------------- | ---------------------------------------------------- |
 | backend              | all server side services                     | [README](src/backend/README.md)                      |
-| jag-efiling-api      | the main api for interating with the service | [README](src/backend/jag-efiling-api/README.md)      |
+| efiling-api          | the main api for interating with the service | [README](src/backend/efiling-api/README.md)          |
 | efiling-demo-backend | a demo backend that emulates a client        | [README](src/backend/efiling-backend-demo/README.md) |
 | efiling-worker       | process submitted documents                  | [README](src/backend/efiling-worker/README.md)       |
 | frontend             | all client side applications                 | [README](src/frontend/README.md)                     |

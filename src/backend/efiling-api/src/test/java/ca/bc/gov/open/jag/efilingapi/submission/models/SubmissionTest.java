@@ -1,9 +1,9 @@
-package ca.bc.gov.open.jagefilingapi.submission.models;
+package ca.bc.gov.open.jag.efilingapi.submission.models;
 
 import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountDetails;
-import ca.bc.gov.open.jagefilingapi.TestHelpers;
-import ca.bc.gov.open.jagefilingapi.api.model.EndpointAccess;
-import ca.bc.gov.open.jagefilingapi.fee.models.Fee;
+import ca.bc.gov.open.jag.efilingapi.TestHelpers;
+import ca.bc.gov.open.jag.efilingapi.api.model.EndpointAccess;
+import ca.bc.gov.open.jag.efilingapi.fee.models.Fee;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

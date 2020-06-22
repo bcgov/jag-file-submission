@@ -1,8 +1,8 @@
-package ca.bc.gov.open.jagefilingapi.submission.service.submissionService;
+package ca.bc.gov.open.jag.efilingapi.submission.service.submissionService;
 
-import ca.bc.gov.open.jagefilingapi.api.model.DocumentProperties;
-import ca.bc.gov.open.jagefilingapi.submission.models.Submission;
-import ca.bc.gov.open.jagefilingapi.submission.service.SubmissionServiceImpl;
+import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
+import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
+import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionServiceImpl;
 import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
