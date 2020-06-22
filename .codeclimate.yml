@@ -1,5 +1,13 @@
 version: "2"
 
+exclude_patterns:
+  - "src/frontend/efiling-demo/src/*.js"
+  - "src/frontend/efiling-frontend/src/*.js"
+  - "src/frontend/efiling-demo/public/"
+  - "src/frontend/efiling-frontend/public/"
+  - "src/frontend/efiling-demo/.storybook/"
+  - "src/frontend/efiling-frontend/.storybook/"
+
 plugins:
   sonar-java:
     enabled: true
@@ -16,10 +24,3 @@ checks:
   similar-code:
     enabled: false
 
-exclude_patterns:
-  - "src/frontend/efiling-demo/src/*.js"
-  - "src/frontend/efiling-frontend/src/*.js"
-  - "src/frontend/efiling-demo/public/"
-  - "src/frontend/efiling-frontend/public/"
-  - "src/frontend/efiling-demo/.storybook/"
-  - "src/frontend/efiling-frontend/.storybook/"
