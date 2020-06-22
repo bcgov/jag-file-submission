@@ -19,7 +19,6 @@ export const checkCSOAccountStatus = (
   axios
     .get(`/submission/${submissionId}/userDetail`)
     .then(({ data: { csoAccountExists } }) => {
-      console.log(csoAccountExists);
       if (csoAccountExists) setCsoAccountExists(true);
       setShowLoader(false);
     })
