@@ -150,8 +150,7 @@ jobs:
       # Count of all total coverage files available
       - name: Count files present
         run: |
-          echo "::set-env name=FILE_COUNT::ls -1q ./coverage | wc -l"
-          ls -1q ./coverage | wc -l
+          ls -1q ./coverage | wc -l > $FILE_COUNT
           echo $FILE_COUNT
 
       # Sum the coverage reports
