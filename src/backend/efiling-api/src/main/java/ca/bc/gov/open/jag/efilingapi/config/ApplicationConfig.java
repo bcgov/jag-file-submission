@@ -8,6 +8,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ApplicationConfig {
 
+    /**
+     * Register the DemoLookupServiceImpl by default
+     * @return
+     */
     @Bean
     public EfilingLookupService efilingLookupService() {
         return new DemoLookupServiceImpl();
