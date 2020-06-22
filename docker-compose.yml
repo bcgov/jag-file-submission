@@ -12,9 +12,9 @@ services:
       dockerfile: Dockerfile.frontend
       args:
         - SERVICE_NAME=efiling-frontend
-    volumes:
-      - ".:/src/frontend/efiling-frontend"
-      - "/node_modules"
+    # volumes:
+    #   - ".:/src/frontend/efiling-frontend"
+    #   - "/node_modules"
     ports:
       - 3000:3000
     environment:
