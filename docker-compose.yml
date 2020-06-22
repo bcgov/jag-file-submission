@@ -42,7 +42,7 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - REDIS_PASSWORD=admin
-      - NAVIGATION_BASE_URL=https://httpbin.org/
+      - NAVIGATION_BASE_URL=http://localhost:3000/efiling
       - NAVIGATION_EXPIRYTIME=10
     networks:
       - fisu-net

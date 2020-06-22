@@ -1,4 +1,5 @@
 import React from "react";
+import { createMemoryHistory } from "history";
 
 import Home from "./Home";
 
@@ -8,7 +9,8 @@ export default {
 };
 
 const header = {
-  name: "eFiling Demo Client"
+  name: "eFiling Demo Client",
+  history: createMemoryHistory()
 };
 
 const page = { header };
