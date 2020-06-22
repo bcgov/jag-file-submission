@@ -1,5 +1,7 @@
 version: "2"
-
+checks:
+  similar-code:
+    enabled: false
 plugins:
   sonar-java:
     enabled: true
@@ -11,11 +13,6 @@ plugins:
     enabled: true
   markdownlint:
     enabled: true
-
-checks:
-  similar-code:
-    enabled: false
-
 exclude_patterns:
   - "src/frontend/efiling-demo/src/*.js"
   - "src/frontend/efiling-frontend/src/*.js"
