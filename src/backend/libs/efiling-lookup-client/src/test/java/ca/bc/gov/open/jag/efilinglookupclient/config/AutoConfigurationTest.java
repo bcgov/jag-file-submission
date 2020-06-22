@@ -17,7 +17,6 @@ public class AutoConfigurationTest {
     @DisplayName("CASE1: Test that beans are created")
     public void testBeansAreGenerated() {
         context.run(it -> {
-            assertThat(it).hasBean("CSOLookupMarshaller");
             Object bean = assertThat(it).getBean(EfilingLookupService.class);
             Assertions.assertNotNull(bean);
         });
