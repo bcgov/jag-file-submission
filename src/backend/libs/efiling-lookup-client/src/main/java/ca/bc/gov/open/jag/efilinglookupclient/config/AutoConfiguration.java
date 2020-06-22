@@ -27,7 +27,7 @@ public class AutoConfiguration {
     }
 
 
-    public LookupsLookupFacade eFilingLookupService() {
+    public LookupsLookupFacade lookupsLookupFacade() {
 
         LookupsLookupFacade lookupsLookupFacade = null;
 
@@ -50,7 +50,7 @@ public class AutoConfiguration {
     @Bean
     @ConditionalOnMissingBean({EfilingLookupService.class})
     public EfilingLookupService efilingLookupService() {
-        return new CSOLookupServiceImpl(eFilingLookupService());
+        return new CSOLookupServiceImpl(lookupsLookupFacade());
     }
 
 }
