@@ -127,7 +127,9 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>EfilingApiApplication</mainClass>
+					<mainClass>
+						ca.bc.gov.open.jag.ca.bc.gov.open.jag.efilingapi.EfilingApiApplication.EfilingBackendDemoApplication
+					</mainClass>
 				</configuration>
 			</plugin>
 
