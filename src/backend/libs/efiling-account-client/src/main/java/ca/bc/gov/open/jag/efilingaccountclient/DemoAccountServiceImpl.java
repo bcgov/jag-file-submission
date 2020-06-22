@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingaccountclient;
 
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @Service
@@ -15,10 +16,10 @@ public class DemoAccountServiceImpl implements EfilingAccountService {
 
     public DemoAccountServiceImpl() {
 
-        CsoAccountDetails accountWithEfilingRole = new CsoAccountDetails("account1", "client1");
+        CsoAccountDetails accountWithEfilingRole = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN);
         accountWithEfilingRole.addRole("efiling");
 
-        CsoAccountDetails accountWithDifferentRole = new CsoAccountDetails("account2", "client2");
+        CsoAccountDetails accountWithDifferentRole = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN);
         accountWithDifferentRole.addRole("admin");
 
         csoAccounts.put(ACCOUNT_WITH_EFILING_ROLE.toString(), accountWithEfilingRole);

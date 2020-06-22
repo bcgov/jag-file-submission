@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingaccountclient;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,8 +11,8 @@ public class CsoAccountDetails {
 
 
     public CsoAccountDetails(
-            @JsonProperty("accountId") String accountId,
-            @JsonProperty("clientId") String clientId) {
+            @JsonProperty("accountId") BigDecimal accountId,
+            @JsonProperty("clientId") BigDecimal clientId) {
 
         this.accountId = accountId;
         this.clientId = clientId;
@@ -19,8 +20,8 @@ public class CsoAccountDetails {
 
     @JsonCreator
     public CsoAccountDetails(
-            @JsonProperty("accountId") String accountId,
-            @JsonProperty("clientId") String clientId,
+            @JsonProperty("accountId") BigDecimal accountId,
+            @JsonProperty("clientId") BigDecimal clientId,
             @JsonProperty("roles") List<String> roles) {
 
         this(accountId, clientId);
@@ -31,15 +32,15 @@ public class CsoAccountDetails {
         }
     }
 
-    private String accountId;
-    private String clientId;
+    private BigDecimal accountId;
+    private BigDecimal clientId;
     private List<String> roles = new ArrayList<>();
 
-    public String getAccountId() {
+    public BigDecimal getAccountId() {
         return accountId;
     }
 
-    public String getClientId() {
+    public BigDecimal getClientId() {
         return clientId;
     }
 

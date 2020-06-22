@@ -7,11 +7,11 @@ public class CsoAccountProperties {
 
     private String filingAccountSoapUri;
 
-    public String getFilingLookupSoapUri() {
+    public String getFilingAccountSoapUri() {
         return filingAccountSoapUri;
     }
 
-    public void setFilingLookupSoapUri(String filingLookupSoapUri) {
-        this.filingAccountSoapUri = filingLookupSoapUri;
+    public void setFilingAccountSoapUri(String filingAccountSoapUri) {
+        this.filingAccountSoapUri = filingAccountSoapUri;
     }
 }
