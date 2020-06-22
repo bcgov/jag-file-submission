@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CSOStatus Component Matches the snapshot when account does not exist 1`] = `
+<div>
+  <p>
+    Account does not exist, form will be here
+  </p>
+</div>
+`;
+
+exports[`CSOStatus Component Matches the snapshot when account exists 1`] = `
+<div>
+  <p>
+    Account exists! Proceed
+  </p>
+</div>
+`;
