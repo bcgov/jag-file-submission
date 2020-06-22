@@ -178,13 +178,6 @@
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.5</version>
 
-				<configuration>
-					<excludes>
-						<exclude>**/*/mappers/*Impl.java</exclude>
-						<exclude>**/*/open/api/*</exclude>
-					</excludes>
-				</configuration>
-
 				<executions>
 					<execution>
 						<goals>

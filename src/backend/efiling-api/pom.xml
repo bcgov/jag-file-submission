@@ -273,14 +273,6 @@
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.4</version>
 
-				<configuration>
-					<excludes>
-						<exclude>**/*/mappers/*Impl.java</exclude>
-						<exclude>**/*/efilingapi/api/**/*</exclude>
-						<exclude>org/openapitools/configuration/**/*</exclude>
-					</excludes>
-				</configuration>
-
 				<executions>
 					<execution>
 						<goals>

@@ -84,12 +84,6 @@
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.5</version>
 
-				<configuration>
-					<excludes>
-						<exclude>**/*/filing/*.java</exclude>
-					</excludes>
-				</configuration>
-
 				<executions>
 					<execution>
 						<goals>
