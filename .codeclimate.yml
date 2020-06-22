@@ -14,6 +14,7 @@ plugins:
   markdownlint:
     enabled: true
 exclude_patterns:
+  - "src/backend/efiling-api/src/main/java/ca/bc/gov/open/jag/efilingapi/fee/FeeService.java"
   - "src/frontend/efiling-demo/src/*.js"
   - "src/frontend/efiling-frontend/src/*.js"
   - "src/frontend/efiling-demo/public/"
