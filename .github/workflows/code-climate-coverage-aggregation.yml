@@ -151,7 +151,7 @@ jobs:
       - name: Count files present
         run: |
           FILE_COUNT=$(ls -1q ./coverage | wc -l )
-          echo FILE_COUNT
+          echo $FILE_COUNT
 
       # Sum the coverage reports
       - name: Summing the coverage reports generated
