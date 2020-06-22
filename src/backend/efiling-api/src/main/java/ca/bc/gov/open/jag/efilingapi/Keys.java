@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jagefilingapi;
+package ca.bc.gov.open.jag.efilingapi;
 
 public class Keys {
 
