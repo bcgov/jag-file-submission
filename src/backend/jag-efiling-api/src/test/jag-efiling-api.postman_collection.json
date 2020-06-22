@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e1bd9dc8-70fc-46c6-939b-11f29f9dde61",
+		"_postman_id": "a9a9926c-3731-4316-a657-ea4da5b0e530",
 		"name": "jag-efiling-api",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"documentProperties\": {\r\n    \"type\": \"string\",\r\n    \"subType\": \"string\",\r\n    \"submissionAccess\": {\r\n      \"url\": \"string\",\r\n      \"verb\": \"GET\",\r\n      \"headers\": {\r\n        \"additionalProp1\": \"string\",\r\n        \"additionalProp2\": \"string\",\r\n        \"additionalProp3\": \"string\"\r\n      }\r\n    }\r\n  },\r\n  \"navigation\": {\r\n    \"success\": {\r\n      \"url\": \"string\"\r\n    },\r\n    \"error\": {\r\n      \"url\": \"string\"\r\n    },\r\n    \"cancel\": {\r\n      \"url\": \"string\"\r\n    }\r\n  }\r\n}",
+					"raw": "{\r\n  \"userId\": \"77da92db-0791-491e-8c58-1a969e67d2fa\",\r\n  \"documentProperties\": {\r\n    \"type\": \"string\",\r\n    \"subType\": \"string\",\r\n    \"submissionAccess\": {\r\n      \"url\": \"string\",\r\n      \"verb\": \"GET\",\r\n      \"headers\": {\r\n        \"additionalProp1\": \"string\",\r\n        \"additionalProp2\": \"string\",\r\n        \"additionalProp3\": \"string\"\r\n      }\r\n    }\r\n  },\r\n  \"navigation\": {\r\n    \"success\": {\r\n      \"url\": \"string\"\r\n    },\r\n    \"error\": {\r\n      \"url\": \"string\"\r\n    },\r\n    \"cancel\": {\r\n      \"url\": \"string\"\r\n    }\r\n  }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

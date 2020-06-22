@@ -42,14 +42,22 @@ exports[`Storyshots Home Default 1`] = `
         alt="B.C. Government Logo"
         className="img-fluid d-none d-md-block"
         height="44"
-        src="undefined/images/bcid-logo-rev-en.svg"
+        src={
+          Object {
+            "process": [Function],
+          }
+        }
         width={181}
       />
       <img
         alt="B.C. Government Logo"
         className="img-fluid d-md-none"
         height="44"
-        src="undefined/images/bcid-symbol-rev.svg"
+        src={
+          Object {
+            "process": [Function],
+          }
+        }
         width={64}
       />
       <div
@@ -203,14 +211,22 @@ exports[`Storyshots Home Mobile 1`] = `
         alt="B.C. Government Logo"
         className="img-fluid d-none d-md-block"
         height="44"
-        src="undefined/images/bcid-logo-rev-en.svg"
+        src={
+          Object {
+            "process": [Function],
+          }
+        }
         width={181}
       />
       <img
         alt="B.C. Government Logo"
         className="img-fluid d-md-none"
         height="44"
-        src="undefined/images/bcid-symbol-rev.svg"
+        src={
+          Object {
+            "process": [Function],
+          }
+        }
         width={64}
       />
       <div

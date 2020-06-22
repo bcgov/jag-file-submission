@@ -158,6 +158,11 @@
 			<artifactId>mapstruct</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.openapitools</groupId>
+			<artifactId>jackson-databind-nullable</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<dependencyManagement>
@@ -222,7 +227,7 @@
 			<plugin>
 				<groupId>org.openapitools</groupId>
 				<artifactId>openapi-generator-maven-plugin</artifactId>
-				<version>3.3.4</version>
+				<version>4.3.1</version>
 				<executions>
 					<execution>
 						<id>spring-boot-api</id>
@@ -266,7 +271,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.4</version>
+				<version>0.8.5</version>
 
 				<configuration>
 					<excludes>
