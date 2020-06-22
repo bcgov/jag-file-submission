@@ -9,11 +9,6 @@ import java.math.BigDecimal;
 @DisplayName("Demo Efiling Lookup Client Test Suite")
 public class DemoLookupServiceImplTest {
 
-//    private DemoLookupServiceImpl sut;
-//
-//    @BeforeAll
-//    public void setUp() { sut = new DemoLookupServiceImpl(); }
-
     @DisplayName("CASE 1: Testing Demo getServiceFee")
     @Test
     public void testDemoLookupServiceTest() {
