@@ -1,9 +1,9 @@
-package ca.bc.gov.open.jagefilingapi;
+package ca.bc.gov.open.jag.efilingapi;
 
-import ca.bc.gov.open.jagefilingapi.api.model.DocumentProperties;
-import ca.bc.gov.open.jagefilingapi.api.model.EndpointAccess;
-import ca.bc.gov.open.jagefilingapi.api.model.Navigation;
-import ca.bc.gov.open.jagefilingapi.api.model.Redirect;
+import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
+import ca.bc.gov.open.jag.efilingapi.api.model.Redirect;
+import ca.bc.gov.open.jag.efilingapi.api.model.EndpointAccess;
+import ca.bc.gov.open.jag.efilingapi.api.model.Navigation;
 
 import java.util.Collections;
 
