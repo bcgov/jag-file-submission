@@ -1,0 +1,287 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Footer Default 1`] = `
+<footer
+  className="footer"
+>
+  <nav
+    className="navbar navbar-expand-sm navbar-dark justify-content-end"
+  >
+    <button
+      className="navbar-toggler"
+      data-target="#footerBar"
+      data-toggle="collapse"
+      type="button"
+    >
+      <span
+        className="navbar-toggler-icon"
+      />
+    </button>
+    <div
+      className="collapse navbar-collapse flex-grow-0"
+      id="footerBar"
+    >
+      <ul
+        className="navbar-nav text-right"
+      >
+        <li
+          className="nav-item m-1"
+        >
+          <a
+            className="nav-link"
+            href="https://www2.gov.bc.ca"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            BC Government
+          </a>
+        </li>
+        <li
+          className="nav-item m-1"
+        >
+          <a
+            className="nav-link"
+            href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Disclaimer
+          </a>
+        </li>
+        <li
+          className="nav-item m-1"
+        >
+          <a
+            className="nav-link"
+            href="https://www2.gov.bc.ca/gov/content/home/privacy"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Privacy
+          </a>
+        </li>
+        <li
+          className="nav-item m-1"
+        >
+          <a
+            className="nav-link"
+            href="https://www2.gov.bc.ca/gov/content/home/accessibility"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Accessibility
+          </a>
+        </li>
+        <li
+          className="nav-item m-1"
+        >
+          <a
+            className="nav-link"
+            href="https://www2.gov.bc.ca/gov/content/home/copyright"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Copyright
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</footer>
+`;
+
+exports[`Storyshots Footer Mobile 1`] = `
+<footer
+  className="footer"
+>
+  <nav
+    className="navbar navbar-expand-sm navbar-dark justify-content-end"
+  >
+    <button
+      className="navbar-toggler"
+      data-target="#footerBar"
+      data-toggle="collapse"
+      type="button"
+    >
+      <span
+        className="navbar-toggler-icon"
+      />
+    </button>
+    <div
+      className="collapse navbar-collapse flex-grow-0"
+      id="footerBar"
+    >
+      <ul
+        className="navbar-nav text-right"
+      >
+        <li
+          className="nav-item m-1"
+        >
+          <a
+            className="nav-link"
+            href="https://www2.gov.bc.ca"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            BC Government
+          </a>
+        </li>
+        <li
+          className="nav-item m-1"
+        >
+          <a
+            className="nav-link"
+            href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Disclaimer
+          </a>
+        </li>
+        <li
+          className="nav-item m-1"
+        >
+          <a
+            className="nav-link"
+            href="https://www2.gov.bc.ca/gov/content/home/privacy"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Privacy
+          </a>
+        </li>
+        <li
+          className="nav-item m-1"
+        >
+          <a
+            className="nav-link"
+            href="https://www2.gov.bc.ca/gov/content/home/accessibility"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Accessibility
+          </a>
+        </li>
+        <li
+          className="nav-item m-1"
+        >
+          <a
+            className="nav-link"
+            href="https://www2.gov.bc.ca/gov/content/home/copyright"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Copyright
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</footer>
+`;
+
+exports[`Storyshots Header Default 1`] = `
+<header>
+  <nav
+    className="container-fluid navbar navbar-expand-lg navbar-dark"
+  >
+    <div
+      aria-labelledby="title"
+      className="navbar-brand pointer"
+      onClick={[Function]}
+      onKeyDown={[Function]}
+      role="button"
+      tabIndex={0}
+    />
+    <img
+      alt="B.C. Government Logo"
+      className="img-fluid d-none d-md-block"
+      height="44"
+      src={
+        Object {
+          "process": [Function],
+        }
+      }
+      width={181}
+    />
+    <img
+      alt="B.C. Government Logo"
+      className="img-fluid d-md-none"
+      height="44"
+      src={
+        Object {
+          "process": [Function],
+        }
+      }
+      width={64}
+    />
+    <div
+      aria-labelledby="title"
+      className="pointer navbar-brand nav-item nav-link"
+      onClick={[Function]}
+      onKeyDown={[Function]}
+      role="button"
+      tabIndex={0}
+    />
+    <div
+      className="navbar-brand"
+      id="title"
+    >
+      File Submission
+    </div>
+  </nav>
+</header>
+`;
+
+exports[`Storyshots Header Mobile 1`] = `
+<header>
+  <nav
+    className="container-fluid navbar navbar-expand-lg navbar-dark"
+  >
+    <div
+      aria-labelledby="title"
+      className="navbar-brand pointer"
+      onClick={[Function]}
+      onKeyDown={[Function]}
+      role="button"
+      tabIndex={0}
+    />
+    <img
+      alt="B.C. Government Logo"
+      className="img-fluid d-none d-md-block"
+      height="44"
+      src={
+        Object {
+          "process": [Function],
+        }
+      }
+      width={181}
+    />
+    <img
+      alt="B.C. Government Logo"
+      className="img-fluid d-md-none"
+      height="44"
+      src={
+        Object {
+          "process": [Function],
+        }
+      }
+      width={64}
+    />
+    <div
+      aria-labelledby="title"
+      className="pointer navbar-brand nav-item nav-link"
+      onClick={[Function]}
+      onKeyDown={[Function]}
+      role="button"
+      tabIndex={0}
+    />
+    <div
+      className="navbar-brand"
+      id="title"
+    >
+      File Submission
+    </div>
+  </nav>
+</header>
+`;

@@ -12,7 +12,6 @@ on:
 jobs:
   java:
     env:
-      ACTION_DEBUG: true
       CC_TEST_REPORTER_ID: 9ada3133fe9babf91a222009998b3545b7eae897a05900930bfa8a27fd82f385
 
     name: Create, format and upload Java and Javascript coverage artifact
@@ -70,11 +69,11 @@ jobs:
       # Loop through all BACKEND services to show that jacoco reports have been generated
       - name: WHERE AM I - BACKEND?
         run: |
-          for s in efiling-backend-demo jag-efiling-api
+          for s in efiling-backend-demo efiling-api
           do
             ls ${{ github.workspace }}/src/backend/$s/target/site/jacoco;
           done
-        if: env.ACTION_DEBUG == true
+        
 
       # Run Yarn Install
       - name: Run Yarn Install - Shared components
@@ -83,6 +82,10 @@ jobs:
       # Run Yarn Prepare
       - name: Run Yarn Prepare - Shared components
         run: yarn --cwd src/frontend/shared-components prepare
+
+      # Run Yarn Coverage to generate javascript coverage report
+      - name: Run Yarn Coverage - Shared components
+        run: yarn --cwd ${{ github.workspace }}/src/frontend/shared-components coverage
 
       # Run Yarn Install
       - name: Run Yarn Install - eFiling Frontend
@@ -95,7 +98,7 @@ jobs:
       # List frontend coverage reports
       - name: WHERE AM I - FRONTEND?
         run: ls ${{github.workspace}}/src/frontend/efiling-frontend/coverage
-        if: env.ACTION_DEBUG == true
+        
 
       # Run Yarn Install
       - name: Run Yarn Install - eFiling Demo
@@ -142,7 +145,7 @@ jobs:
       # List all formatted files in coverage directory
       - name: WHERE AM I - FORMATTED?
         run: ls ${{ github.workspace }}/coverage
-        if: env.ACTION_DEBUG == true
+        
 
       # Sum the coverage reports
       - name: Summing the coverage reports generated
@@ -154,7 +157,7 @@ jobs:
         with:
           name: summed-coverage-report
           path: coverage/total-codeclimate.json
-        if: env.ACTION_DEBUG == true
+        
 
       # Upload total coverage report to Code Climate
       - name: Upload coverage report to Code Climate
