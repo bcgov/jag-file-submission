@@ -91,6 +91,10 @@ jobs:
       # Run Yarn Coverage to generate javascript coverage report
       - name: Run Yarn Coverage - Shared components
         run: yarn --cwd ${{ github.workspace }}/src/frontend/shared-components coverage
+        
+        # List shared-components coverage reports
+      - name: WHERE AM I - FRONTEND?
+        run: ls ${{github.workspace}}/src/frontend/shared-components/coverage
 
       # Run Yarn Install
       - name: Run Yarn Install - eFiling Frontend
