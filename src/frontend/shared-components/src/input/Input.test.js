@@ -10,7 +10,7 @@ describe("Input", () => {
 
   const onChange = jest.fn();
 
-  test("Input field when mandatory and with label matches the snapshot", () => {
+  test("field when mandatory and with label matches the snapshot", () => {
     const inputElement = (
       <Input
         input={{
@@ -26,7 +26,7 @@ describe("Input", () => {
     testBasicSnapshot(inputElement);
   });
 
-  test("Input field when not mandatory and with label matches the snapshot", () => {
+  test("field when not mandatory and with label matches the snapshot", () => {
     const inputElement = (
       <Input
         input={{
@@ -42,7 +42,7 @@ describe("Input", () => {
     testBasicSnapshot(inputElement);
   });
 
-  test("Input field when mandatory and no label matches the snapshot", () => {
+  test("field when mandatory and no label matches the snapshot", () => {
     const inputElement = (
       <Input
         input={{
@@ -57,7 +57,7 @@ describe("Input", () => {
     testBasicSnapshot(inputElement);
   });
 
-  test("Input field when not mandatory and no label matches the snapshot", () => {
+  test("field when not mandatory and no label matches the snapshot", () => {
     const inputElement = (
       <Input
         input={{
