@@ -153,7 +153,7 @@ jobs:
       # Formatting the SHARED COMPONENTS coverage report
       - name: Format the SHARED COMPONENTS coverage report
         run: |
-          ./cc-test-reporter format-coverage -t lcov -o coverage/shared-components-codeclimate.json --prefix ${{github.workspace}} ${{github.workspace}}/src/frontend/shared-components/coverage/lcov.info -d
+          ./cc-test-reporter format-coverage -t lcov -o coverage/shared-components-codeclimate.json ${{github.workspace}}/src/frontend/shared-components/coverage/lcov.info -d
 
       # List all formatted files in coverage directory
       - name: WHERE AM I - FORMATTED?
