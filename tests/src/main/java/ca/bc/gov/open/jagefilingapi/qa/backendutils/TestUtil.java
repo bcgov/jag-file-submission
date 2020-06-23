@@ -20,25 +20,19 @@ import static io.restassured.RestAssured.baseURI;
 
 public class TestUtil {
 
-    ReadConfig readConfig;
-    RequestSpecification requestSpec;
-    ResponseSpecification responseSpec;
-
-    public RequestSpecification requestSpecification() throws IOException {
-        readConfig = new ReadConfig();
+    public static RequestSpecification requestSpecification() throws IOException {
+        ReadConfig readConfig = new ReadConfig();
 
         PrintStream log = new PrintStream(new FileOutputStream("logs/backendLogging.txt"));
         baseURI= readConfig.getBaseUri();
-        requestSpec = new RequestSpecBuilder().setBaseUri(baseURI).addFilter(RequestLoggingFilter.logRequestTo(log)).addFilter(ResponseLoggingFilter.logResponseTo(log)).setContentType(ContentType.JSON).build();
-        return requestSpec;
+        return new RequestSpecBuilder().setBaseUri(baseURI).addFilter(RequestLoggingFilter.logRequestTo(log)).addFilter(ResponseLoggingFilter.logResponseTo(log)).setContentType(ContentType.JSON).build();
     }
 
-    public ResponseSpecification responseSpecification() {
-        responseSpec =  new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON).build();
-        return responseSpec;
+    public static ResponseSpecification responseSpecification() {
+        return new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON).build();
     }
 
-    public String getJsonPath(Response response, String key) {
+    public static String getJsonPath(Response response, String key) {
         String resp = response.asString();
         JsonPath jsonPath = new JsonPath(resp);
         return jsonPath.get(key);

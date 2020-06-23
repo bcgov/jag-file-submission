@@ -2,9 +2,9 @@ package ca.bc.gov.open.jagefilingapi.qa.backendutils;
 
 public enum APIResources {
 
-    generateUrlAPI("/submission/generateUrl"),
-    getConfiguration("/submission/getConfiguration"),
-    eFilingUrl("https://httpbin.org");
+    GENERATEURLAPI("/submission/generateUrl"),
+    GETCONFIGURATION("/submission/getConfiguration"),
+    EFILINGURL("https://httpbin.org");
 
     private final String resource;
 
