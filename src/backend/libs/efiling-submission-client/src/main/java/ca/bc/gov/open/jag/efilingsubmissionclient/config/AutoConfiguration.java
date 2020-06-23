@@ -27,18 +27,11 @@ public class AutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(value = {EfilingSubmissionService.class})
-    public FilingFacade eFilingSubmissionService() {
+    public FilingFacade eFilingSubmissionService() throws MalformedURLException {
 
-        FilingFacade filingFacade = null;
-        try {
+        QName serviceName = new QName("http://filing.csows.ag.gov.bc.ca/", "FilingFacade");
+        URL url = new URL(csoSubmissionProperties.getFilingSubmissionSoapUri());
+        return new FilingFacade(url, serviceName);
 
-            QName serviceName = new QName("http://filing.csows.ag.gov.bc.ca/", "FilingFacade");
-            URL url = new URL(csoSubmissionProperties.getFilingSubmissionSoapUri());
-            filingFacade = new FilingFacade(url, serviceName);
-        } catch(MalformedURLException e) {
-
-            LOGGER.error("Malformed URL exception :" + e.getMessage());
-        }
-        return filingFacade;
     }
 }

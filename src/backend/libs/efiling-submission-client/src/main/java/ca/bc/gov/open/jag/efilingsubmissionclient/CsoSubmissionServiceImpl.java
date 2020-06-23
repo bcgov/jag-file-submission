@@ -24,19 +24,15 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     @Override
     public BigDecimal submitFiling(FilingPackage filingPackage) {
 
-        BigDecimal response = BigDecimal.ZERO;
-
         // TODO - validate incoming package?
 
+        FilingFacadeBean port = filingFacade.getFilingFacadeBeanPort();
+
         try {
-
-            FilingFacadeBean port = filingFacade.getFilingFacadeBeanPort();
-            response = port.submitFiling(filingPackage);
+            return port.submitFiling(filingPackage);
         } catch (NestedEjbException_Exception e) {
-
             LOGGER.error("Expected exception: NestedEjbException has occurred :" + e.toString());
+            return BigDecimal.valueOf(-1);
         }
-
-        return response;
     }
 }
