@@ -33,12 +33,4 @@ public class ConfigTest {
         Assertions.assertEquals(SubmissionServiceImpl.class, actual.getClass());
 
     }
-    @Test
-    @DisplayName("CASE 2: returns the EfilingAccountService")
-    public void testGetEfilingAccountService()  {
-
-        EfilingAccountService actual = sut.efilingAccountService();
-        Assertions.assertEquals(DemoAccountServiceImpl.class, actual.getClass());
-
-    }
 }

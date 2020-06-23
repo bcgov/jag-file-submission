@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingaccountclient.config;
 
 
 
+import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,9 +30,7 @@ public class AutoConfigurationTest {
         properties.setFilingAccountSoapUri("test");
         sut = new AutoConfiguration(properties);
 
-        Assertions.assertThrows(MalformedURLException.class, () -> {
-            sut.efilingAccountService();
-        });
-
+        Assertions.assertNotNull(sut.accountFacadeBean());
+        Assertions.assertNotNull(sut.efilingAccountService(null));
     }
 }
