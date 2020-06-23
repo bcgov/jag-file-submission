@@ -25,6 +25,10 @@ public class GenerateEfilingUrl {
     private static GenerateUrlPayload payloadData;
     private static String firstParamPath;
 
+    private GenerateEfilingUrl() {
+        throw new IllegalStateException("Utility class");
+    }
+
     @Given("user calls {string} with POST http request")
     public static void user_calls_with_POST_http_request(String resource) throws IOException {
         payloadData = new GenerateUrlPayload();
