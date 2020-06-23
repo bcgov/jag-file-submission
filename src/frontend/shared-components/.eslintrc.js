@@ -25,6 +25,7 @@ module.exports = {
     "import/prefer-default-export": "off",
     "react/jsx-props-no-spreading": "off",
     "import/no-extraneous-dependencies": "off",
+    "react/jsx-one-expression-per-line": "off",
     "prettier/prettier": ["error"]
   }
 };
