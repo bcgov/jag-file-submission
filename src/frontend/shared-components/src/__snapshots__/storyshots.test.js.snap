@@ -1,5 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Storyshots Button Default 1`] = `
+<div>
+  <button
+    className="normal-blue btn"
+    onClick={[Function]}
+    type="button"
+  >
+    Button label
+  </button>
+</div>
+`;
+
+exports[`Storyshots Button Mobile 1`] = `
+<div>
+  <button
+    className="normal-blue btn"
+    onClick={[Function]}
+    type="button"
+  >
+    Button label
+  </button>
+</div>
+`;
+
 exports[`Storyshots Footer Default 1`] = `
 <footer
   className="footer"

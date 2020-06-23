@@ -83,7 +83,7 @@ exports[`Home Component matches the snapshot 1`] = `
         <br />
         <div>
           <button
-            class="efile-btn btn"
+            class="normal-blue btn"
             type="button"
           >
             Generate URL

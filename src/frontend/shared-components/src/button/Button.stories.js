@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Button } from "./Button";
+import "./Button.css";
 
 export default {
   title: "Button",
@@ -8,9 +9,10 @@ export default {
 };
 
 const onClick = () => {};
-const label = "button label";
+const label = "Button label";
+const styling = "normal-blue btn";
 
-const component = <Button onClick={onClick} label={label} />;
+const component = <Button onClick={onClick} label={label} styling={styling} />;
 
 export const Default = () => component;
 

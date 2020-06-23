@@ -1,29 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Button Default 1`] = `
-<div>
-  <button
-    className="efile-btn btn"
-    onClick={[Function]}
-    type="button"
-  >
-    button label
-  </button>
-</div>
-`;
-
-exports[`Storyshots Button Mobile 1`] = `
-<div>
-  <button
-    className="efile-btn btn"
-    onClick={[Function]}
-    type="button"
-  >
-    button label
-  </button>
-</div>
-`;
-
 exports[`Storyshots Home Default 1`] = `
 <main>
   <header>
@@ -118,7 +94,7 @@ exports[`Storyshots Home Default 1`] = `
       <br />
       <div>
         <button
-          className="efile-btn btn"
+          className="normal-blue btn"
           onClick={[Function]}
           type="button"
         >
@@ -312,7 +288,7 @@ exports[`Storyshots Home Mobile 1`] = `
       <br />
       <div>
         <button
-          className="efile-btn btn"
+          className="normal-blue btn"
           onClick={[Function]}
           type="button"
         >

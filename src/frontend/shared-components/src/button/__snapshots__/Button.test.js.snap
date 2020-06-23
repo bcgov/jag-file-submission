@@ -3,11 +3,11 @@
 exports[`Button Component Button matches the snapshot 1`] = `
 <div>
   <button
-    className="efile-btn btn"
+    className="normal-blue btn"
     onClick={[MockFunction]}
     type="button"
   >
-    button label
+    Button label
   </button>
 </div>
 `;
