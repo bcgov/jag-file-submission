@@ -79,7 +79,7 @@ jobs:
             ls ${{ github.workspace }}/src/backend/$s/target/site/jacoco;
           done
       
-      # Figure our where yarn is caching things
+      # Figure out where yarn is caching things
       - name: Yarn Cache
         run: yarn cache dir
       
