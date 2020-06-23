@@ -1,6 +1,8 @@
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
 import { createMemoryHistory } from "history";
+import axios from "axios";
+import MockAdapter from "axios-mock-adapter";
 
 import Home from "./Home";
 
@@ -15,23 +17,37 @@ const header = {
 };
 
 const page = { header };
+const submissionId = "abc123";
 
-export const Loader = () => (
-  <MemoryRouter initialEntries={["/?submissionId=123"]}>
-    <Home page={page} />
-  </MemoryRouter>
+const LoaderStateData = props => {
+  const mock = new MockAdapter(axios);
+  const apiRequest = `/submission/${submissionId}/userDetail`;
+
+  mock.onGet(apiRequest).reply(400);
+
+  return props.children({ page });
+};
+
+const loaderComponent = (
+  <LoaderStateData>
+    {data => (
+      <MemoryRouter initialEntries={[`/?submissionId=${submissionId}`]}>
+        <Home page={data.page} />
+      </MemoryRouter>
+    )}
+  </LoaderStateData>
 );
 
-export const Mobile = () => (
-  <MemoryRouter initialEntries={["/?submissionId=123"]}>
-    <Home page={page} />
-  </MemoryRouter>
-);
+export const Loader = () => loaderComponent;
 
-Mobile.story = {
+export const LoaderMobile = () => loaderComponent;
+
+const mobileViewport = {
   parameters: {
     viewport: {
       defaultViewport: "mobile2"
     }
   }
 };
+
+LoaderMobile.story = mobileViewport;

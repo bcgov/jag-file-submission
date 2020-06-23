@@ -191,7 +191,7 @@ exports[`Storyshots Home Loader 1`] = `
 </main>
 `;
 
-exports[`Storyshots Home Mobile 1`] = `
+exports[`Storyshots Home Loader Mobile 1`] = `
 <main>
   <header>
     <nav
