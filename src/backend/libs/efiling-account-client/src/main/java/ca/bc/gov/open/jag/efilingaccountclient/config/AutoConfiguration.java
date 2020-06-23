@@ -3,8 +3,6 @@ package ca.bc.gov.open.jag.efilingaccountclient.config;
 import ca.bc.gov.ag.csows.accounts.AccountFacade;
 import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountServiceImpl;
 import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -18,14 +16,12 @@ import java.net.URL;
 @EnableConfigurationProperties(CsoAccountProperties.class)
 public class AutoConfiguration {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AutoConfiguration.class);
     private final CsoAccountProperties csoAccountProperties;
 
     public AutoConfiguration(CsoAccountProperties csoAccountProperties) {
 
         this.csoAccountProperties = csoAccountProperties;
     }
-
 
     public AccountFacade accountFacade() throws MalformedURLException {
         QName serviceName = new QName("http://accounts.csows.ag.gov.bc.ca/", "AccountFacade");
