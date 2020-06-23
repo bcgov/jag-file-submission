@@ -5,6 +5,15 @@ exports[`CSOStatus Component Matches the snapshot when account does not exist 1`
   <p>
     Account does not exist, form will be here
   </p>
+  <div>
+    <button
+      className="normal-white btn"
+      onClick={[Function]}
+      type="button"
+    >
+      Cancel and return to client
+    </button>
+  </div>
 </div>
 `;
 
@@ -13,5 +22,14 @@ exports[`CSOStatus Component Matches the snapshot when account exists 1`] = `
   <p>
     Account exists! Proceed
   </p>
+  <div>
+    <button
+      className="normal-white btn"
+      onClick={[Function]}
+      type="button"
+    >
+      Cancel and return to client
+    </button>
+  </div>
 </div>
 `;

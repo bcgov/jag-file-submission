@@ -5,6 +5,15 @@ exports[`Storyshots CSOStatus Account Exists 1`] = `
   <p>
     Account exists! Proceed
   </p>
+  <div>
+    <button
+      className="normal-white btn"
+      onClick={[Function]}
+      type="button"
+    >
+      Cancel and return to client
+    </button>
+  </div>
 </div>
 `;
 
@@ -13,6 +22,15 @@ exports[`Storyshots CSOStatus Account Exists Mobile 1`] = `
   <p>
     Account exists! Proceed
   </p>
+  <div>
+    <button
+      className="normal-white btn"
+      onClick={[Function]}
+      type="button"
+    >
+      Cancel and return to client
+    </button>
+  </div>
 </div>
 `;
 
@@ -21,6 +39,15 @@ exports[`Storyshots CSOStatus No Account Exists 1`] = `
   <p>
     Account does not exist, form will be here
   </p>
+  <div>
+    <button
+      className="normal-white btn"
+      onClick={[Function]}
+      type="button"
+    >
+      Cancel and return to client
+    </button>
+  </div>
 </div>
 `;
 
@@ -29,5 +56,14 @@ exports[`Storyshots CSOStatus No Account Exists Mobile 1`] = `
   <p>
     Account does not exist, form will be here
   </p>
+  <div>
+    <button
+      className="normal-white btn"
+      onClick={[Function]}
+      type="button"
+    >
+      Cancel and return to client
+    </button>
+  </div>
 </div>
 `;
