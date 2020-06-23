@@ -45,3 +45,17 @@ export const Input = ({
     </div>
   );
 };
+
+Input.propTypes = {
+  input: PropTypes.shape({
+    label: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    value: PropTypes.string,
+    placeholder: PropTypes.string,
+    isRequired: PropTypes.bool.isRequired,
+    errorMsg: PropTypes.string,
+    styling: PropTypes.string.isRequired,
+    note: PropTypes.string
+  }).isRequired,
+  onChange: PropTypes.func.isRequired
+};
