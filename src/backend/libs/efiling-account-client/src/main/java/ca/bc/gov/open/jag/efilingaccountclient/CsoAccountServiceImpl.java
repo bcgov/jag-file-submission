@@ -30,34 +30,33 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
     public CsoAccountDetails getAccountDetails(String userGuid) {
 
         CsoAccountDetails csoAccountDetails = null;
-        if (StringUtils.isEmpty(userGuid)) return csoAccountDetails;
+        if (!StringUtils.isEmpty(userGuid) && HasFileRole(userGuid)) {
 
-        // We can first check if the current user has the filing role on their profile.
-        // If they don't have that role, there is no point in continuing on with this
-        UserRoles userRoles = roleRegistryPortType.getRolesForIdentifier("Courts", "CSO", userGuid, "CAP");
-        List<RegisteredRole> roles = userRoles.getRoles();
-        boolean hasFileRole = roles != null && roles.stream().anyMatch(r -> r.getCode() == "FILE");
+            try {
 
-        if (!hasFileRole) return csoAccountDetails;
+                List<ClientProfile> profiles = accountFacadeBean.findProfiles(userGuid);
+                //An account must only one profile associated to proceed
+                if (profiles.size() == 1) {
+                    ClientProfile profile = profiles.get(0);
+                    csoAccountDetails = new CsoAccountDetails(profile.getAccountId(), profile.getClientId());
+                    csoAccountDetails.addRole("efiling");
+                } else if (profiles.size() > 1) {
+                    throw new CSOHasMultipleAccountException(profiles.get(0).getClientId().toString());
+                }
 
-        try {
+            } catch (NestedEjbException_Exception e) {
 
-            List<ClientProfile> profiles = accountFacadeBean.findProfiles(userGuid);
-            //An account must only one profile associated to proceed
-            if (profiles.size() == 1) {
-                ClientProfile profile = profiles.get(0);
-                csoAccountDetails = new CsoAccountDetails(profile.getAccountId(), profile.getClientId());
-                csoAccountDetails.addRole("efiling");
-            } else if (profiles.size() > 1) {
-                throw new CSOHasMultipleAccountException(profiles.get(0).getClientId().toString());
+                LOGGER.error("Error calling findProfiles: ", e);
             }
-
-        }
-        catch(NestedEjbException_Exception e) {
-
-            LOGGER.error("Error calling findProfiles: ", e);
         }
 
         return csoAccountDetails;
+     }
+
+     public boolean HasFileRole(String userGuid) {
+
+         UserRoles userRoles = roleRegistryPortType.getRolesForIdentifier("Courts", "CSO", userGuid, "CAP");
+         List<RegisteredRole> roles = userRoles.getRoles();
+         return roles != null && roles.stream().anyMatch(r -> r.getCode() == "FILE");
      }
 }
