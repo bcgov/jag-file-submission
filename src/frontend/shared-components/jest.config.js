@@ -1,5 +1,4 @@
 module.exports = {
-  rootDir: ".",
   watchPathIgnorePatterns: ["<rootDir>/node_modules/"],
   collectCoverageFrom: [
     "src/**/*.js",
