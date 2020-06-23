@@ -1,35 +1,38 @@
 server:
-    port: ${SERVER_PORT:8080}
+  port: ${SERVER_PORT:8080}
 spring:
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:admin}
+  cache:
     redis:
-        host: ${REDIS_HOST:localhost}
-        port: ${REDIS_PORT:6379}
-        password: ${REDIS_PASSWORD:admin}
-    cache:
-        redis:
-            time-to-live: ${CACHE_TTL:600000}
+      time-to-live: ${CACHE_TTL:600000}
 jag:
-    efiling:
-        navigation:
-            baseUrl: ${NAVIGATION_BASE_URL:https://httpbin.org/}
-        status:
-            client:
-                filingStatusSoapUri: ${CSO_STATUSFACADE_URI:http://localhost:8090}
-        submission:
-            client:
-                filingFacadeSoapUri: ${CSO_FILINGFACADE_URI:http://localhost:8080}
-        lookup:
-            client:
-                filingLookupSoapUri: ${CSO_LOOKUPFACADE_URI:http://localhost:9090}
+  efiling:
+    navigation:
+      baseUrl: ${NAVIGATION_BASE_URL:https://httpbin.org/}
+    account:
+      client:
+        filingAccountSoapUri: ${CSO_ACCOUNTFACADE_URI:http://localhost:8091}
+    status:
+      client:
+        filingStatusSoapUri: ${CSO_STATUSFACADE_URI:http://localhost:8090}
+    submission:
+      client:
+        filingFacadeSoapUri: ${CSO_FILINGFACADE_URI:http://localhost:8080}
+    lookup:
+      client:
+        filingLookupSoapUri: ${CSO_LOOKUPFACADE_URI:http://localhost:9090}
 
 info:
-    app:
-        name: @project.name@
-        description: @project.description@
-        version: @project.version@
+  app:
+    name: @project.name@
+    description: @project.description@
+    version: @project.version@
 opentracing:
-    jaeger:
-        service-name: efilingApi
-        enabled: TRUE
-        udp-sender:
-            host: localhost
+  jaeger:
+    service-name: efilingApi
+    enabled: TRUE
+    udp-sender:
+      host: localhost

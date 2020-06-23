@@ -34,7 +34,7 @@ public class SubmissionTest {
 
         List<String> roles = new ArrayList<>();
         roles.add("test");
-        CsoAccountDetails csoAccountDetails = new CsoAccountDetails("acountId", "clientId", roles);
+        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, roles);
 
         Submission actual = new Submission(
                 UUID.randomUUID(),

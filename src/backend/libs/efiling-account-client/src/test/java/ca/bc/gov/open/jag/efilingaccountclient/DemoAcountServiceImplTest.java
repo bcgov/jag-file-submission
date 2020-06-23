@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingaccountclient;
 
 import org.junit.jupiter.api.*;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -24,8 +25,8 @@ public class DemoAcountServiceImplTest {
 
         CsoAccountDetails actual = sut.getAccountDetails(ACCOUNT_WITH_EFILING_ROLE.toString());
 
-        Assertions.assertEquals("account1", actual.getAccountId());
-        Assertions.assertEquals("client1", actual.getClientId());
+        Assertions.assertEquals(BigDecimal.TEN, actual.getAccountId());
+        Assertions.assertEquals(BigDecimal.TEN, actual.getClientId());
         Assertions.assertTrue(actual.HasRole("efiling"));
 
     }
@@ -36,8 +37,8 @@ public class DemoAcountServiceImplTest {
 
         CsoAccountDetails actual = sut.getAccountDetails(ACCOUNT_WITH_ADMIN_ROLE.toString());
 
-        Assertions.assertEquals("account2", actual.getAccountId());
-        Assertions.assertEquals("client2", actual.getClientId());
+        Assertions.assertEquals(BigDecimal.TEN, actual.getAccountId());
+        Assertions.assertEquals(BigDecimal.TEN, actual.getClientId());
         Assertions.assertFalse(actual.HasRole("efiling"));
 
     }

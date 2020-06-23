@@ -89,7 +89,7 @@ public class SubmissionApiDelegateImplTest {
         DocumentProperties documentProperties = new DocumentProperties();
         List<String> efilingRole = new ArrayList<>();
         efilingRole.add("efiling");
-        CsoAccountDetails csoAccountDetails = new CsoAccountDetails("accountId", "clientId", efilingRole);
+        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, efilingRole);
         Submission submissionWithCsoAccount = new Submission(CASE_6, documentProperties, new Navigation(), new Fee(BigDecimal.TEN), csoAccountDetails);
 
         when(submissionServiceMock.getByKey(Mockito.eq(CASE_5)))
@@ -100,7 +100,7 @@ public class SubmissionApiDelegateImplTest {
 
         List<String> otherRole = new ArrayList<>();
         efilingRole.add("other");
-        CsoAccountDetails csoAccountDetailsNoEfilingRole = new CsoAccountDetails("accountId", "clientId", otherRole);
+        CsoAccountDetails csoAccountDetailsNoEfilingRole = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, otherRole);
         Submission submissionWithCsoAccountNoEfilingRole = new Submission(CASE_7, documentProperties, new Navigation(), new Fee(BigDecimal.TEN), csoAccountDetailsNoEfilingRole);
         when(submissionServiceMock.getByKey(Mockito.eq(CASE_7)))
                 .thenReturn(Optional.of(submissionWithCsoAccountNoEfilingRole));
@@ -122,7 +122,7 @@ public class SubmissionApiDelegateImplTest {
         when(submissionServiceMock.put(any())).thenReturn(Optional.of(Submission.builder().create()));
         List<String> efilingRole = new ArrayList<>();
         efilingRole.add("efiling");
-        CsoAccountDetails csoAccountDetails = new CsoAccountDetails("accountId", "clientId", efilingRole);
+        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, efilingRole);
 
         when(efilingAccountServiceMock.getAccountDetails(any())).thenReturn(csoAccountDetails);
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
@@ -144,7 +144,7 @@ public class SubmissionApiDelegateImplTest {
         when(submissionServiceMock.put(any())).thenReturn(Optional.of(Submission.builder().create()));
         List<String> efilingRole = new ArrayList<>();
         efilingRole.add("NOTefiling");
-        CsoAccountDetails csoAccountDetails = new CsoAccountDetails("accountId", "clientId", efilingRole);
+        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, efilingRole);
 
         when(efilingAccountServiceMock.getAccountDetails(any())).thenReturn(csoAccountDetails);
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
@@ -167,7 +167,7 @@ public class SubmissionApiDelegateImplTest {
         when(submissionServiceMock.put(any())).thenReturn(Optional.empty());
         List<String> efilingRole = new ArrayList<>();
         efilingRole.add("efiling");
-        CsoAccountDetails csoAccountDetails = new CsoAccountDetails("accountId", "clientId", efilingRole);
+        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, efilingRole);
 
         when(efilingAccountServiceMock.getAccountDetails(any())).thenReturn(csoAccountDetails);
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
