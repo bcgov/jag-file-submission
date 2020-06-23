@@ -2,8 +2,6 @@ package ca.bc.gov.open.jag.efilingsubmissionclient.config;
 
 import ca.bc.gov.ag.csows.filing.FilingFacade;
 import ca.bc.gov.open.jag.efilingsubmissionclient.EfilingSubmissionService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +15,6 @@ import java.net.URL;
 @EnableConfigurationProperties(CsoSubmissionProperties.class)
 public class AutoConfiguration {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AutoConfiguration.class);
     private final CsoSubmissionProperties csoSubmissionProperties;
 
     public AutoConfiguration(CsoSubmissionProperties csoSubmissionProperties) {
