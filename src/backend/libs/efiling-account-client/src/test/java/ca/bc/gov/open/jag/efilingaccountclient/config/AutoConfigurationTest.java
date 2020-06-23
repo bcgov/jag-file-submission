@@ -1,22 +1,37 @@
 package ca.bc.gov.open.jag.efilingaccountclient.config;
 
-import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
+
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import java.net.MalformedURLException;
 
 @DisplayName("AutoConfiguration Test")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AutoConfigurationTest {
     ApplicationContextRunner context = new ApplicationContextRunner()
             .withUserConfiguration(AutoConfiguration.class);
 
+
+    private AutoConfiguration sut;
+
+
     @Test
     @DisplayName("CASE1: Test that beans are created")
     public void testBeansAreGenerated() {
-        context.run(it -> {
-            assertThat(it).hasSingleBean(EfilingAccountService.class);
+
+
+        CsoAccountProperties properties = new CsoAccountProperties();
+        properties.setFilingAccountSoapUri("test");
+        sut = new AutoConfiguration(properties);
+
+        Assertions.assertThrows(MalformedURLException.class, () -> {
+            sut.efilingAccountService();
         });
+
     }
 }

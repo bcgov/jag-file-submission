@@ -27,25 +27,15 @@ public class AutoConfiguration {
     }
 
 
-    public AccountFacade accountFacade() {
-
-        AccountFacade accountFacade = null;
-        try {
-
-            QName serviceName = new QName("http://accounts.csows.ag.gov.bc.ca/", "AccountFacade");
-            URL url = new URL(csoAccountProperties.getFilingAccountSoapUri());
-            accountFacade = new AccountFacade(url, serviceName);
-        } catch(MalformedURLException e) {
-
-            LOGGER.error("Malformed URL exception :" + e.getMessage());
-        }
-        return accountFacade;
+    public AccountFacade accountFacade() throws MalformedURLException {
+        QName serviceName = new QName("http://accounts.csows.ag.gov.bc.ca/", "AccountFacade");
+        URL url = new URL(csoAccountProperties.getFilingAccountSoapUri());
+        return new AccountFacade(url, serviceName);
     }
 
     @Bean
     @ConditionalOnMissingBean({EfilingAccountService.class})
-    public EfilingAccountService efilingAccountService() {
-
+    public EfilingAccountService efilingAccountService() throws MalformedURLException {
         return new CsoAccountServiceImpl(accountFacade());
     }
 }

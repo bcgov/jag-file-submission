@@ -6,6 +6,7 @@ import ca.bc.gov.ag.csows.LookupsLookupFacade;
 import ca.bc.gov.ag.csows.lookups.GetServiceFeeElement;
 import ca.bc.gov.ag.csows.lookups.GetServiceFeeResponseElement;
 import ca.bc.gov.ag.csows.lookups.ServiceFee;
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +42,7 @@ public class CSOLookupServiceImpl implements EfilingLookupService {
 
             GetServiceFeeResponseElement response = lookupFacadeItf.getServiceFee(getServiceFeeElement);
             serviceFees = SetServiceFees(response.getResult());
+
         }
         catch(DatatypeConfigurationException e) {
 

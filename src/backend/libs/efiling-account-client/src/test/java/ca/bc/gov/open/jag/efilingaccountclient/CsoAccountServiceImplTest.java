@@ -20,6 +20,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CsoAccountServiceImplTest {
 
     private static final String USERGUID = "User GUID";
@@ -33,7 +34,7 @@ public class CsoAccountServiceImplTest {
     @Mock
     AccountFacadeBean mockAccountFacadeBean;
 
-    @BeforeAll
+    @BeforeEach
     public void init() throws NestedEjbException_Exception {
 
         MockitoAnnotations.initMocks(this);
