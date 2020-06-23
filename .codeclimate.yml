@@ -14,7 +14,19 @@ plugins:
   markdownlint:
     enabled: true
 exclude_patterns:
+  # Backend File Specific Excludes
   - "src/backend/efiling-api/src/main/java/ca/bc/gov/open/jag/efilingapi/fee/FeeService.java"
+  - "src/backend/efiling-api/src/main/java/ca/bc/gov/open/jag/efilingapi/EfilingApiApplication.java"
+  - "src/backend/efiling-api/src/main/java/ca/bc/gov/open/jag/efilingapi/submission/mappers/SubmissionMapper.java"
+  - "src/backend/efiling-api/src/main/java/ca/bc/gov/open/jag/efilingapi/submission/service/SubmissionService.java"
+  - "src/backend/efiling-backend-demo/src/main/java/ca/bc/gov/open/jag/efilingbackenddemo/EfilingBackendDemoApplication.java"
+  - "src/backend/efiling-worker/src/main/java/ca/bc/gov/open/jag/efilingworker/EfilingWorkerApplication.java"
+  - "src/backend/efiling-worker/src/main/java/ca/bc/gov/open/jag/efilingworker/service/DocumentStoreService.java"
+  - "src/backend/libs/efiling-lookup-client/src/main/java/ca/bc/gov/open/jag/efilinglookupclient/EfilingLookupService.java"
+  - "src/backend/libs/efiling-status-client/src/main/java/ca/bc/gov/open/jag/efilingstatusclient/EfilingStatusService.java"
+  - "src/backend/libs/efiling-submission-client/src/main/java/ca/bc/gov/open/jag/efilingsubmissionclient/EfilingSubmissionService.java"
+  
+  # Frontend Pattern Excludes
   - "src/frontend/efiling-demo/src/*.js"
   - "src/frontend/efiling-frontend/src/*.js"
   - "src/frontend/efiling-demo/public/"
