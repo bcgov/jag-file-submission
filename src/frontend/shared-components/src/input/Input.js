@@ -48,7 +48,7 @@ export const Input = ({
 
 Input.propTypes = {
   input: PropTypes.shape({
-    label: PropTypes.string.isRequired,
+    label: PropTypes.string,
     id: PropTypes.string.isRequired,
     value: PropTypes.string,
     placeholder: PropTypes.string,

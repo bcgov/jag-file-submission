@@ -4,19 +4,68 @@ import testBasicSnapshot from "../TestHelper";
 
 describe("Input", () => {
   const input = {
-    label: "Submission ID",
     id: "textInputId"
   };
 
   const onChange = jest.fn();
 
-  test("Editable white input field matches the snapshot", () => {
+  test("Editable white input field when mandatory and with label matches the snapshot", () => {
     const inputElement = (
       <Input
         input={{
           ...input,
           styling: "editable_white",
           isRequired: true,
+          placeholder: "Enter id",
+          label: "Submission ID"
+        }}
+        onChange={onChange}
+      />
+    );
+
+    testBasicSnapshot(inputElement);
+  });
+
+  test("Editable white input field when not mandatory and with label matches the snapshot", () => {
+    const inputElement = (
+      <Input
+        input={{
+          ...input,
+          styling: "editable_white",
+          isRequired: false,
+          placeholder: "Enter id",
+          label: "Submission ID"
+        }}
+        onChange={onChange}
+      />
+    );
+
+    testBasicSnapshot(inputElement);
+  });
+
+  test("Editable white input field when mandatory and no label matches the snapshot", () => {
+    const inputElement = (
+      <Input
+        input={{
+          ...input,
+          styling: "editable_white",
+          isRequired: true,
+          placeholder: "Enter id"
+        }}
+        onChange={onChange}
+      />
+    );
+
+    testBasicSnapshot(inputElement);
+  });
+
+  test("Editable white input field when not mandatory and no label matches the snapshot", () => {
+    const inputElement = (
+      <Input
+        input={{
+          ...input,
+          styling: "editable_white",
+          isRequired: false,
           placeholder: "Enter id"
         }}
         onChange={onChange}
