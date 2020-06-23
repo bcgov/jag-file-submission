@@ -286,6 +286,78 @@ exports[`Storyshots Header Mobile 1`] = `
 </header>
 `;
 
+exports[`Storyshots Input Editable White 1`] = `
+<div>
+  <label
+    className="label"
+    htmlFor="textInputId"
+  >
+    <div
+      className="textinput_label"
+    >
+      Submission ID
+    </div>
+    <span
+      className="mandatory"
+      id="asterisk"
+    >
+      *
+    </span>
+     
+    <span
+      className="note"
+    />
+  </label>
+  <input
+    className="editable_white"
+    id="textInputId"
+    onChange={[Function]}
+    placeholder="Enter id"
+    type="text"
+  />
+  <br />
+  <span
+    className="error"
+  />
+</div>
+`;
+
+exports[`Storyshots Input Editable White Mobile 1`] = `
+<div>
+  <label
+    className="label"
+    htmlFor="textInputId"
+  >
+    <div
+      className="textinput_label"
+    >
+      Submission ID
+    </div>
+    <span
+      className="mandatory"
+      id="asterisk"
+    >
+      *
+    </span>
+     
+    <span
+      className="note"
+    />
+  </label>
+  <input
+    className="editable_white"
+    id="textInputId"
+    onChange={[Function]}
+    placeholder="Enter id"
+    type="text"
+  />
+  <br />
+  <span
+    className="error"
+  />
+</div>
+`;
+
 exports[`Storyshots Loader Default 1`] = `
 <div
   style={

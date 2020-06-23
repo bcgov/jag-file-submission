@@ -1,8 +1,14 @@
 import React from "react";
 import { createMemoryHistory } from "history";
 import axios from "axios";
+import {
+  render,
+  getByText,
+  wait,
+  fireEvent,
+  getByRole
+} from "@testing-library/react";
 import Home from "./Home";
-import { render, getByText, wait, fireEvent } from "@testing-library/react";
 
 const MockAdapter = require("axios-mock-adapter");
 
@@ -35,7 +41,11 @@ describe("Home", () => {
 
     const { container } = render(<Home page={page} />);
 
-    fireEvent.click(getByText(container, "With CSO Account"));
+    fireEvent.change(getByRole(container, "textbox"), {
+      target: { value: "abc123" }
+    });
+
+    fireEvent.click(getByText(container, "Generate URL"));
 
     await wait(() => {
       expect(window.open).toHaveBeenCalledTimes(1);
@@ -48,7 +58,11 @@ describe("Home", () => {
 
     const { container } = render(<Home page={page} />);
 
-    fireEvent.click(getByText(container, "With CSO Account"));
+    fireEvent.change(getByRole(container, "textbox"), {
+      target: { value: "" }
+    });
+
+    fireEvent.click(getByText(container, "Generate URL"));
 
     await wait(() => {
       expect(

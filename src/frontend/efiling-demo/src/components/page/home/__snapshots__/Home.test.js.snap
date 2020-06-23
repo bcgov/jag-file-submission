@@ -48,12 +48,37 @@ exports[`Home Component matches the snapshot 1`] = `
         class="content col-md-10"
       >
         <div>
-          <button
-            class="efile-btn btn"
-            type="button"
+          <label
+            class="label"
+            for="textInputId"
           >
-            With CSO Account
-          </button>
+            <div
+              class="textinput_label"
+            >
+              Account GUID
+            </div>
+            <span
+              class="mandatory"
+              id="asterisk"
+            >
+              *
+            </span>
+             
+            <span
+              class="note"
+            />
+          </label>
+          <input
+            class="editable_white"
+            id="textInputId"
+            placeholder="77da92db-0791-491e-8c58-1a969e67d2fa"
+            type="text"
+            value=""
+          />
+          <br />
+          <span
+            class="error"
+          />
         </div>
         <br />
         <div>
@@ -61,9 +86,10 @@ exports[`Home Component matches the snapshot 1`] = `
             class="efile-btn btn"
             type="button"
           >
-            Without CSO Account
+            Generate URL
           </button>
         </div>
+        <br />
       </div>
     </div>
     <footer

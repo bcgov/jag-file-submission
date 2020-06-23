@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
-import Header, { Footer } from "shared-components";
+import Header, { Footer, Input } from "shared-components";
 import { Button } from "../../base/button/Button";
 
 import "../page.css";
 
-const urlBodyWithCSO = {
-  userId: "77da92db-0791-491e-8c58-1a969e67d2fa",
+const urlBody = {
   documentProperties: {
     type: "string",
     subType: "string",
@@ -34,14 +33,19 @@ const urlBodyWithCSO = {
   }
 };
 
-const urlBodyWithoutCSO = {
-  ...urlBodyWithCSO,
-  userId: "77da92db-0791-491e-8c58-1a969e67d2f4"
+const input = {
+  label: "Account GUID",
+  id: "textInputId",
+  styling: "editable_white",
+  isRequired: true,
+  placeholder: "77da92db-0791-491e-8c58-1a969e67d2fa"
 };
 
-const generateUrl = (urlBody, setErrorExists) => {
+const generateUrl = (accountGuid, setErrorExists) => {
+  const updatedUrlBody = { ...urlBody, userId: accountGuid };
+
   axios
-    .post(`/submission/generateUrl`, urlBody)
+    .post(`/submission/generateUrl`, updatedUrlBody)
     .then(({ data: { efilingUrl } }) => {
       window.open(efilingUrl, "_self");
     })
@@ -52,23 +56,24 @@ const generateUrl = (urlBody, setErrorExists) => {
 
 export default function Home({ page: { header } }) {
   const [errorExists, setErrorExists] = useState(false);
+  const [accountGuid, setAccountGuid] = useState(null);
 
   return (
     <main>
       <Header header={header} />
       <div className="page">
         <div className="content col-md-10">
-          <Button
-            onClick={() => generateUrl(urlBodyWithCSO, setErrorExists)}
-            label="With CSO Account"
-          />
+          <Input input={input} onChange={setAccountGuid} />
           <br />
           <Button
-            onClick={() => generateUrl(urlBodyWithoutCSO, setErrorExists)}
-            label="Without CSO Account"
+            onClick={() => generateUrl(accountGuid, setErrorExists)}
+            label="Generate URL"
           />
+          <br />
           {errorExists && (
-            <p>An error occurred while generating the URL. Please try again.</p>
+            <p className="error">
+              An error occurred while generating the URL. Please try again.
+            </p>
           )}
         </div>
       </div>
