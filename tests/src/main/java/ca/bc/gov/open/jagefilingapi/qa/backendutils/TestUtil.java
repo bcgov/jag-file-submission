@@ -20,6 +20,10 @@ import static io.restassured.RestAssured.baseURI;
 
 public class TestUtil {
 
+    public TestUtil() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static RequestSpecification requestSpecification() throws IOException {
         ReadConfig readConfig = new ReadConfig();
 
