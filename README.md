@@ -45,7 +45,7 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
 run
 
 ```bash
-docker-compose up -d --build`
+docker-compose up -d --build
 ```
 
 Currently the docker image created will create a Redis container that the backend Spring Boot API interacts with.
