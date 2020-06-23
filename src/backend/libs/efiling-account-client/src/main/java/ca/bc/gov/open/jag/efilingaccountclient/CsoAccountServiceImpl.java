@@ -39,7 +39,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         }
         catch(NestedEjbException_Exception e) {
 
-            LOGGER.error("Error calling findProfiles: " + e.getMessage());
+            LOGGER.error("Error calling findProfiles: ", e);
         }
 
         return csoAccountDetails;
