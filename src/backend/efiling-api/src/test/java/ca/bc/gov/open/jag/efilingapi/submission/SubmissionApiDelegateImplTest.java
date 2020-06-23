@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingapi.submission;
 
 import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountDetails;
 import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
+import ca.bc.gov.open.jag.efilingaccountclient.exception.CSOHasMultipleAccountException;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.fee.models.Fee;
 import ca.bc.gov.open.jag.efilingapi.fee.models.FeeRequest;
@@ -50,7 +51,8 @@ public class SubmissionApiDelegateImplTest {
     public static final UUID CASE_6 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fa");
     public static final UUID CASE_7 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fb");
     public static final UUID CASE_8 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fc");
-
+    public static final UUID CASE_9 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2f1");
+    public static final String SUCCESS = "SUCCESS";
 
 
     private SubmissionApiDelegateImpl sut;
@@ -158,6 +160,31 @@ public class SubmissionApiDelegateImplTest {
         assertEquals("INVROLE", ((EfilingError)actual.getBody()).getError());
         assertEquals("User does not have a valid role for this request.", ((EfilingError)actual.getBody()).getMessage());
         
+    }
+
+
+    @Test
+    @DisplayName("With clientid having multiple account should return error")
+    public void withClientIdHavingMultipleAccount() {
+
+        when(submissionServiceMock.put(any())).thenReturn(Optional.empty());
+        List<String> efilingRole = new ArrayList<>();
+        efilingRole.add("efiling");
+        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, efilingRole);
+
+        when(efilingAccountServiceMock.getAccountDetails(Mockito.eq(CASE_9.toString()))).thenThrow(new CSOHasMultipleAccountException(CASE_9.toString()));
+        GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
+
+        generateUrlRequest.setUserId(CASE_9.toString());
+        generateUrlRequest.setDocumentProperties(TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE));
+        generateUrlRequest.setNavigation(TestHelpers.createNavigation(SUCCESS, CANCEL, ERROR));
+
+        ResponseEntity actual = sut.generateUrl(generateUrlRequest);
+
+        assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
+        assertEquals("MLTACCNT", ((EfilingError)actual.getBody()).getError());
+        assertEquals("Client has multiple CSO profiles", ((EfilingError)actual.getBody()).getMessage());
+
     }
 
     @Test

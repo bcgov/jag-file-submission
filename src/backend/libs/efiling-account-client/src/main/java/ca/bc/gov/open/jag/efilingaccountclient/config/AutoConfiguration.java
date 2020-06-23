@@ -1,16 +1,15 @@
 package ca.bc.gov.open.jag.efilingaccountclient.config;
 
-import ca.bc.gov.ag.csows.accounts.AccountFacade;
+import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
 import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountServiceImpl;
 import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
+import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.xml.namespace.QName;
-import java.net.MalformedURLException;
-import java.net.URL;
+
 
 @Configuration
 @EnableConfigurationProperties(CsoAccountProperties.class)
@@ -23,15 +22,22 @@ public class AutoConfiguration {
         this.csoAccountProperties = csoAccountProperties;
     }
 
-    public AccountFacade accountFacade() throws MalformedURLException {
-        QName serviceName = new QName("http://accounts.csows.ag.gov.bc.ca/", "AccountFacade");
-        URL url = new URL(csoAccountProperties.getFilingAccountSoapUri());
-        return new AccountFacade(url, serviceName);
+    @Bean
+    public AccountFacadeBean accountFacadeBean() {
+        JaxWsProxyFactoryBean jaxWsProxyFactoryBean =
+                new JaxWsProxyFactoryBean();
+        jaxWsProxyFactoryBean.setServiceClass(AccountFacadeBean.class);
+        jaxWsProxyFactoryBean.setAddress(csoAccountProperties.getFilingAccountSoapUri());
+        jaxWsProxyFactoryBean.setUsername(csoAccountProperties.getUserName());
+        jaxWsProxyFactoryBean.setPassword(csoAccountProperties.getPassword());
+        return (AccountFacadeBean) jaxWsProxyFactoryBean.create();
     }
 
     @Bean
     @ConditionalOnMissingBean({EfilingAccountService.class})
-    public EfilingAccountService efilingAccountService() throws MalformedURLException {
-        return new CsoAccountServiceImpl(accountFacade());
+    public EfilingAccountService efilingAccountService(AccountFacadeBean accountFacadeBean) {
+        return new CsoAccountServiceImpl(accountFacadeBean);
     }
+
+
 }

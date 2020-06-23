@@ -4,8 +4,26 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "jag.efiling.account.client")
 public class CsoAccountProperties {
-
+    private String userName;
+    private String password;
     private String filingAccountSoapUri;
+
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getFilingAccountSoapUri() {
         return filingAccountSoapUri;

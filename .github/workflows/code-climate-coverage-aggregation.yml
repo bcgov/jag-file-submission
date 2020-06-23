@@ -78,7 +78,24 @@ jobs:
           do
             ls ${{ github.workspace }}/src/backend/$s/target/site/jacoco;
           done
-        
+      
+      # Figure out where yarn is caching things
+      - name: Yarn Cache
+        run: yarn cache dir
+      
+      # Implement Caching Action for Yarn Project
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          # YARN cache files are stored in `/home/runner/.cache/yarn/v6` on git actions
+          path: /home/runner/.cache/yarn/v6
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
 
       # Run Yarn Install
       - name: Run Yarn Install - Shared components
@@ -90,7 +107,11 @@ jobs:
 
       # Run Yarn Coverage to generate javascript coverage report
       - name: Run Yarn Coverage - Shared components
-        run: yarn --cwd ${{ github.workspace }}/src/frontend/shared-components coverage
+        run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/shared-components coverage
+        
+        # List shared-components coverage reports
+      - name: WHERE AM I - FRONTEND?
+        run: ls ${{github.workspace}}/src/frontend/shared-components/coverage
 
       # Run Yarn Install
       - name: Run Yarn Install - eFiling Frontend
@@ -145,6 +166,11 @@ jobs:
       - name: Format the FRONTEND DEMO coverage report
         run: |
           ./cc-test-reporter format-coverage -t lcov -o coverage/frontend-demo-codeclimate.json ${{github.workspace}}/src/frontend/efiling-demo/coverage/lcov.info
+
+      # Formatting the SHARED COMPONENTS coverage report
+      - name: Format the SHARED COMPONENTS coverage report
+        run: |
+          ./cc-test-reporter format-coverage -t lcov -o coverage/shared-components-codeclimate.json ${{github.workspace}}/src/frontend/shared-components/coverage/lcov.info
 
       # List all formatted files in coverage directory
       - name: WHERE AM I - FORMATTED?
