@@ -7,7 +7,7 @@ public class CsoAccountProperties {
     private String userName;
     private String password;
     private String filingAccountSoapUri;
-
+    private String filingRoleSoapUri;
 
     public String getUserName() {
         return userName;
@@ -31,5 +31,13 @@ public class CsoAccountProperties {
 
     public void setFilingAccountSoapUri(String filingAccountSoapUri) {
         this.filingAccountSoapUri = filingAccountSoapUri;
+    }
+
+    public String getFilingRoleSoapUri() {
+        return filingRoleSoapUri;
+    }
+
+    public void setFilingRoleSoapUri(String filingRoleSoapUri) {
+        this.filingRoleSoapUri = filingRoleSoapUri;
     }
 }

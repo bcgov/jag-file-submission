@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingaccountclient.config;
 
+import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RoleRegistryPortType;
 import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
 import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountServiceImpl;
 import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
@@ -34,9 +35,19 @@ public class AutoConfiguration {
     }
 
     @Bean
+    public RoleRegistryPortType roleRegistryPortType() {
+        JaxWsProxyFactoryBean jaxWsProxyFactoryBean = new JaxWsProxyFactoryBean();
+        jaxWsProxyFactoryBean.setServiceClass(RoleRegistryPortType.class);
+        jaxWsProxyFactoryBean.setAddress(csoAccountProperties.getFilingRoleSoapUri());
+        jaxWsProxyFactoryBean.setUsername(csoAccountProperties.getUserName());
+        jaxWsProxyFactoryBean.setPassword(csoAccountProperties.getPassword());
+        return (RoleRegistryPortType) jaxWsProxyFactoryBean.create();
+    }
+
+    @Bean
     @ConditionalOnMissingBean({EfilingAccountService.class})
-    public EfilingAccountService efilingAccountService(AccountFacadeBean accountFacadeBean) {
-        return new CsoAccountServiceImpl(accountFacadeBean);
+    public EfilingAccountService efilingAccountService(AccountFacadeBean accountFacadeBean, RoleRegistryPortType roleRegistryPortType) {
+        return new CsoAccountServiceImpl(accountFacadeBean, roleRegistryPortType);
     }
 
 
