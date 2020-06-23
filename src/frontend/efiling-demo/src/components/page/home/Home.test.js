@@ -1,7 +1,6 @@
 import React from "react";
 import { createMemoryHistory } from "history";
 import axios from "axios";
-import Home from "./Home";
 import {
   render,
   getByText,
@@ -9,6 +8,7 @@ import {
   fireEvent,
   getByRole
 } from "@testing-library/react";
+import Home from "./Home";
 
 const MockAdapter = require("axios-mock-adapter");
 
