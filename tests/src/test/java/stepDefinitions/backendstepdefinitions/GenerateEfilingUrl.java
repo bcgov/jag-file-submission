@@ -18,7 +18,7 @@ import static io.restassured.RestAssured.given;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class GenerateEfilingUrl extends TestUtil {
+public class GenerateEfilingUrl {
 
     private static Response response;
     private static RequestSpecification request;
@@ -31,9 +31,9 @@ public class GenerateEfilingUrl extends TestUtil {
 
         APIResources resourceAPI = APIResources.valueOf(resource);
 
-        request = given().spec(requestSpecification()).body(payloadData.generateUrlFinalPayload());
-        responseSpecification();
-        response = request.when().post(resourceAPI.getResource()).then().spec(responseSpecification()).extract().response();
+        request = given().spec(TestUtil.requestSpecification()).body(payloadData.generateUrlFinalPayload());
+        TestUtil.responseSpecification();
+        response = request.when().post(resourceAPI.getResource()).then().spec(TestUtil.responseSpecification()).extract().response();
     }
 
     @When("status code is {int} and content type is verified")
@@ -47,8 +47,8 @@ public class GenerateEfilingUrl extends TestUtil {
         APIResources resourceUrl = APIResources.valueOf(resource);
         JsonPath jsPath = new JsonPath(response.asString());
 
-        String respUrl1 = getJsonPath(response, "efilingUrl");
-        String respUrl2 = getJsonPath(response, "eFilingUrl");
+        String respUrl1 = TestUtil.getJsonPath(response, "efilingUrl");
+        String respUrl2 = TestUtil.getJsonPath(response, "eFilingUrl");
         Long respExpDate = jsPath.get("expiryDate");
 
         firstParamPath = null;
@@ -75,8 +75,8 @@ public class GenerateEfilingUrl extends TestUtil {
 
         firstParamPath = firstParamPath.replace("//", "/");
 
-        request = given().spec(requestSpecification());
-        response = request.when().get(resourceGet.getResource() + firstParamPath).then().spec(responseSpecification()).extract().response();
+        request = given().spec(TestUtil.requestSpecification());
+        response = request.when().get(resourceGet.getResource() + firstParamPath).then().spec(TestUtil.responseSpecification()).extract().response();
     }
 
     @Then("verify response body matches the POST request")
@@ -94,7 +94,7 @@ public class GenerateEfilingUrl extends TestUtil {
         payloadData = new GenerateUrlPayload();
         APIResources resourceInvalid = APIResources.valueOf(resource);
 
-        request = given().spec(requestSpecification()).body(payloadData.generateUrlFinalPayload());
+        request = given().spec(TestUtil.requestSpecification()).body(payloadData.generateUrlFinalPayload());
         response = request.when().post(resourceInvalid.getResource() + "s").then().extract().response();
     }
 
@@ -106,8 +106,8 @@ public class GenerateEfilingUrl extends TestUtil {
 
     @Then("verify response payload objects are correct")
     public static void verify_response_payload_objects_are_correct() {
-        String error = getJsonPath(response, "error");
-        String message = getJsonPath(response, "message");
+        String error = TestUtil.getJsonPath(response, "error");
+        String message = TestUtil.getJsonPath(response, "message");
 
         assertEquals("Not Found", error);
         assertEquals("", message);

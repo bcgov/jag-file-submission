@@ -20,7 +20,7 @@ import static io.restassured.RestAssured.baseURI;
 
 public class TestUtil {
 
-    public TestUtil() {
+    private TestUtil() {
         throw new IllegalStateException("Utility class");
     }
 
