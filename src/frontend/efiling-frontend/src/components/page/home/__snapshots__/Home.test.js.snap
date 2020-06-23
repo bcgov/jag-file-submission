@@ -200,6 +200,14 @@ exports[`Home Component matches the snapshot when user cso account does not exis
           <p>
             Account does not exist, form will be here
           </p>
+          <div>
+            <button
+              class="normal-white btn"
+              type="button"
+            >
+              Cancel and return to client
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -345,6 +353,14 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
           <p>
             Account exists! Proceed
           </p>
+          <div>
+            <button
+              class="normal-white btn"
+              type="button"
+            >
+              Cancel and return to client
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -1,11 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Button } from "shared-components";
 
 export default function CSOStatus({ accountExists }) {
   return (
     <div>
       {accountExists && <p>Account exists! Proceed</p>}
       {!accountExists && <p>Account does not exist, form will be here</p>}
+      <Button
+        onClick={() => {}}
+        label="Cancel and return to client"
+        styling="normal-white btn"
+      />
     </div>
   );
 }
