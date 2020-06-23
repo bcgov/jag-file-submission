@@ -9,7 +9,7 @@ import CSOStatus from "../../composite/csostatus/CSOStatus";
 import "../page.css";
 
 // make call to submission/{id}/userDetail to get the user details
-export const checkCSOAccountStatus = (
+const checkCSOAccountStatus = (
   submissionId,
   setCsoAccountExists,
   setShowLoader
@@ -20,11 +20,7 @@ export const checkCSOAccountStatus = (
       if (csoAccountExists) setCsoAccountExists(true);
       setShowLoader(false);
     })
-    .catch(() => {
-      throw new Error(
-        "An error occurred with getting user details. Please try again."
-      );
-    });
+    .catch(() => {});
 };
 
 export default function Home({ page: { header } }) {
