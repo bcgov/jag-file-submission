@@ -75,21 +75,13 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         try {
             csoAccountDetails = efilingAccountService.getAccountDetails(generateUrlRequest.getUserId());
         } catch (CSOHasMultipleAccountException e)   {
-            EfilingError efilingError = new EfilingError();
-            efilingError.setError(ErrorResponse.ACCOUNTEXCEPTION.getErrorCode());
-            efilingError.setMessage(ErrorResponse.ACCOUNTEXCEPTION.getErrorMessage());
-            return new ResponseEntity(efilingError, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(buildEfilingError(ErrorResponse.ACCOUNTEXCEPTION), HttpStatus.BAD_REQUEST);
         }
         logger.info("Successfully got cso account information");
 
         if (csoAccountDetails != null && !csoAccountDetails.HasRole(EFILING_ROLE)) {
-
             logger.info("User does not have efiling role, therefore request is rejected.");
-
-            EfilingError efilingError = new EfilingError();
-            efilingError.setError(ErrorResponse.INVALIDROLE.getErrorCode());
-            efilingError.setMessage(ErrorResponse.INVALIDROLE.getErrorMessage());
-            return new ResponseEntity(efilingError, HttpStatus.FORBIDDEN);
+            return new ResponseEntity(buildEfilingError(ErrorResponse.INVALIDROLE), HttpStatus.FORBIDDEN);
         }
 
         //TODO: Replace with a service
@@ -143,6 +135,14 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         } catch (Exception ex) {
             return false;
         }
+    }
+
+
+    public EfilingError buildEfilingError(ErrorResponse errorResponse) {
+        EfilingError response = new EfilingError();
+        response.setError(errorResponse.getErrorCode());
+        response.setMessage(errorResponse.getErrorMessage());
+        return response;
     }
 
 }
