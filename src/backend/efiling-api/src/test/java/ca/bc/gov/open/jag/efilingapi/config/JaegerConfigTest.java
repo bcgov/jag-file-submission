@@ -11,4 +11,11 @@ public class JaegerConfigTest {
     ApplicationContextRunner context = new ApplicationContextRunner()
             .withUserConfiguration(JaegerConfig.class);
 
+    @Test
+    @DisplayName("CASE1: Test that beans are created")
+    public void testBeansAreGenerated() {
+        context.run(it -> {
+            assertThat(it).hasSingleBean(JaegerConfig.class);
+        });
+    }
 }
