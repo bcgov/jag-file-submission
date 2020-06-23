@@ -3,6 +3,8 @@ FROM node:13.12.0-alpine
 
 ARG SERVICE_NAME
 
+RUN npm install -g linklocal
+
 COPY . .
 
 WORKDIR /shared-components
@@ -11,6 +13,8 @@ RUN yarn install
 
 # set working directory
 WORKDIR /${SERVICE_NAME}
+
+RUN linklocal
 
 # add `/node_modules/.bin` to $PATH
 ENV PATH ./node_modules/.bin:$PATH
