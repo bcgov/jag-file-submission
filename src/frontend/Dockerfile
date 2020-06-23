@@ -15,6 +15,8 @@ WORKDIR /${SERVICE_NAME}
 # add `/node_modules/.bin` to $PATH
 ENV PATH ./node_modules/.bin:$PATH
 
+ENV REACT_APP_API_BASE_URL=http://localhost:8080
+
 # install dependencies
 RUN yarn install
 RUN yarn global add react-scripts@3.4.1
