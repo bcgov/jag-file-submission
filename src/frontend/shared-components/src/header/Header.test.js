@@ -1,8 +1,7 @@
 import React from "react";
 import { createMemoryHistory } from "history";
-import testBasicSnapshot from "../TestHelper";
 import { render, fireEvent, getAllByRole } from "@testing-library/react";
-
+import testBasicSnapshot from "../TestHelper";
 import Header, { HeadingTitle, HeaderImage } from "./Header";
 
 describe("Header Component", () => {

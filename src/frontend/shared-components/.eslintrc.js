@@ -22,6 +22,9 @@ module.exports = {
     "import/no-unresolved": "off",
     "react/jsx-filename-extension": "off",
     "react/jsx-curly-brace-presence": "off",
+    "import/prefer-default-export": "off",
+    "react/jsx-props-no-spreading": "off",
+    "import/no-extraneous-dependencies": "off",
     "prettier/prettier": ["error"]
   }
 };
