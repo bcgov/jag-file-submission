@@ -23,6 +23,7 @@
         <org.springdoc.version>1.4.1</org.springdoc.version>
         <com.splunk.logging.version>1.8.0</com.splunk.logging.version>
         <org.openapitools.version>0.2.1</org.openapitools.version>
+        <org.apache.cxf.version>3.2.1</org.apache.cxf.version>
     </properties>
 
     <repositories>
@@ -110,6 +111,23 @@
                 <groupId>io.github.openfeign.opentracing</groupId>
                 <artifactId>feign-opentracing</artifactId>
                 <version>${io.github.openfeign.opentracing.version}</version>
+            </dependency>
+
+            <!-- jaxws -->
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-frontend-jaxws</artifactId>
+                <version>${org.apache.cxf.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-transports-http</artifactId>
+                <version>${org.apache.cxf.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-transports-http-jetty</artifactId>
+                <version>${org.apache.cxf.version}</version>
             </dependency>
 
 
