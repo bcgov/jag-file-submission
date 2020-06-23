@@ -30,8 +30,6 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
 
 | Name | description | doc |
 | ---- | ----------- | --- |
-
-
 | backend | all server side services | [README](src/backend/README.md) |
 | efiling-api | the main api for interating with the service | [README](src/backend/efiling-api/README.md) |
 | efiling-demo-backend | a demo backend that emulates a client | [README](src/backend/efiling-backend-demo/README.md) |
