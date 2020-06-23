@@ -16,7 +16,7 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
     │   │   ├── libs                            # backend libraries
     │   │   |   ├── efiling-submission-client   # efiling soap client that submits packages to CSO
     │   │   |   ├── efiling-lookup-client       # efiling soap client that looksup required info for submission
-    │   │   |   └── efiling-status-client       # efiling soap client for checking status of a submitted package    
+    │   │   |   └── efiling-status-client       # efiling soap client for checking status of a submitted package
     │   └── frontend                            # frontend applications
     │       ├── efiling-frontend                # efiling frontend
     │       └── efiling-demo                    # efiling demo app frontend
@@ -29,7 +29,9 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
 ## Apps
 
 | Name | description | doc |
-| -------------------- | -------------------------------------------- | ---------------------------------------------------- |
+| ---- | ----------- | --- |
+
+
 | backend | all server side services | [README](src/backend/README.md) |
 | efiling-api | the main api for interating with the service | [README](src/backend/efiling-api/README.md) |
 | efiling-demo-backend | a demo backend that emulates a client | [README](src/backend/efiling-backend-demo/README.md) |
@@ -38,7 +40,7 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
 | efiling-frontend | the frontend for uploading documents | [README](src/frontend/efiling-frontend/README.md) |
 | efiling-demo | the frontend for demo application | [README](src/frontend/efiling-demo/README.md) |
 | shared-components | shared bcgov themed component library | [README](src/frontend/shared-components/README.md) |
-| frontend-tests | automated tests for the frontend | [README](tests/README.md) |
+| cucumber-tests | automated tests for frontend and backend | [README](tests/README.md) |
 
 ## Running the App
 
