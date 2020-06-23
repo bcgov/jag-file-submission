@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Input Editable white input field when mandatory and no label matches the snapshot 1`] = `
+exports[`Input Input field when mandatory and no label matches the snapshot 1`] = `
 <div>
   <input
     className="editable_white"
@@ -16,7 +16,7 @@ exports[`Input Editable white input field when mandatory and no label matches th
 </div>
 `;
 
-exports[`Input Editable white input field when mandatory and with label matches the snapshot 1`] = `
+exports[`Input Input field when mandatory and with label matches the snapshot 1`] = `
 <div>
   <label
     className="label"
@@ -52,7 +52,7 @@ exports[`Input Editable white input field when mandatory and with label matches 
 </div>
 `;
 
-exports[`Input Editable white input field when not mandatory and no label matches the snapshot 1`] = `
+exports[`Input Input field when not mandatory and no label matches the snapshot 1`] = `
 <div>
   <input
     className="editable_white"
@@ -68,7 +68,7 @@ exports[`Input Editable white input field when not mandatory and no label matche
 </div>
 `;
 
-exports[`Input Editable white input field when not mandatory and with label matches the snapshot 1`] = `
+exports[`Input Input field when not mandatory and with label matches the snapshot 1`] = `
 <div>
   <label
     className="label"
