@@ -77,8 +77,11 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         try {
             csoAccountDetails = efilingAccountService.getAccountDetails(generateUrlRequest.getUserId());
         } catch (CSOHasMultipleAccountException e)   {
-            return new ResponseEntity("Client has multiple accounts.", HttpStatus.BAD_REQUEST);
+            EfilingError efilingError = new EfilingError();
+            efilingError.setError(ErrorResponse.ACCOUNTEXCEPTION.getErrorCode());
+            efilingError.setMessage(e.getMessage());
 
+            return new ResponseEntity(efilingError, HttpStatus.BAD_REQUEST);
         }
         logger.info("Successfully got cso account information");
 
