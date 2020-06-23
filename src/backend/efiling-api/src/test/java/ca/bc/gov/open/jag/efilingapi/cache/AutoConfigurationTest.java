@@ -96,4 +96,10 @@ public class AutoConfigurationTest {
         Assertions.assertNotNull(cacheManager);
     }
 
+    @DisplayName("CASE5: Return correct class")
+    @Test
+    public void correctReturnJackson2JsonRedisSerializer() {
+        Jackson2JsonRedisSerializer result = autoConfiguration.jackson2JsonRedisSerializer();
+        Assertions.assertNotNull(result);
+    }
 }
