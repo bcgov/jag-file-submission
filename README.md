@@ -36,7 +36,7 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
 | frontend             | all client side applications                 | [README](src/frontend/README.md)                     |
 | efiling-frontend     | the frontend for uploading documents         | [README](src/frontend/efiling-frontend/README.md)    |
 | efiling-demo         | the frontend for demo application            | [README](src/frontend/efiling-demo/README.md)        |
-| frontend-tests       | automated tests for the frontend             | [README](tests/README.md)                            |
+| cucumber-tests       | automated tests for frontend and backend     | [README](tests/README.md)                            |
 
 ## Running the App
 

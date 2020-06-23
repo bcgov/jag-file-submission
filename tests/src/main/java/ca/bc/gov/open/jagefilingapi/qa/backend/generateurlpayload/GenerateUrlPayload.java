@@ -18,6 +18,6 @@ public class GenerateUrlPayload {
         Payload payload = new Payload(documentProperties, navigation);
 
         ObjectMapper objMap = new ObjectMapper();
-        return objMap.writerWithDefaultPrettyPrinter().writeValueAsString(payload);
+        return objMap.writeValueAsString(payload);
     }
 }
