@@ -1,8 +1,11 @@
 package ca.bc.gov.open.jag.efilingaccountclient.config;
 
 import ca.bc.gov.ag.csows.accounts.AccountFacade;
+import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountServiceImpl;
+import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,8 +26,8 @@ public class AutoConfiguration {
         this.csoAccountProperties = csoAccountProperties;
     }
 
-    @Bean
-    public AccountFacade eFilingLookupService() {
+
+    public AccountFacade accountFacade() {
 
         AccountFacade accountFacade = null;
         try {
@@ -39,11 +42,10 @@ public class AutoConfiguration {
         return accountFacade;
     }
 
-//    @Bean
-//    @ConditionalOnMissingBean(value = {EfilingAccountService.class})
-//    public EfilingAccountService eFilingAccountService() {
-//
-//        EfilingAccountService eFilingAccountService = new DemoAccountServiceImpl();
-//        return eFilingAccountService;
-//    }
+    @Bean
+    @ConditionalOnMissingBean({EfilingAccountService.class})
+    public EfilingAccountService efilingAccountService() {
+
+        return new CsoAccountServiceImpl(accountFacade());
+    }
 }
