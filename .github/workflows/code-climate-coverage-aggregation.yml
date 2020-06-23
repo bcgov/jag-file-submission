@@ -82,13 +82,15 @@ jobs:
       # Figure our where yarn is caching things
       - name: Yarn Cache
         run: yarn cache dir
+      
+      # Implement Caching Action for Yarn Project
       - name: Cache node modules
         uses: actions/cache@v2
         env:
           cache-name: cache-node-modules
         with:
-          # YARN cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
+          # YARN cache files are stored in `/home/runner/.cache/yarn/v6` on git actions
+          path: /home/runner/.cache/yarn/v6
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
