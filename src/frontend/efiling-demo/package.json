@@ -27,7 +27,7 @@
     "webpack": "4.42.0"
   },
   "scripts": {
-    "start": "SET PORT=3001 && react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest",
     "eject": "react-scripts eject",
@@ -76,7 +76,8 @@
     "husky": "^4.2.5",
     "jest-sonar-reporter": "^2.0.0",
     "prettier": "1.19.1",
-    "pretty-quick": "^2.0.1"
+    "pretty-quick": "^2.0.1",
+    "axios-mock-adapter": "^1.18.1"
   },
   "jestSonar": {
     "reportPath": "coverage",

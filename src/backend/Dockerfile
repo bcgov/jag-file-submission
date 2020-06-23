@@ -11,7 +11,6 @@ ARG MVN_PROFILES
 ARG SERVICE_NAME
 
 ENV SERVICE_NAME=${SERVICE_NAME}
-ENV MVN_PROFILES=${MVN_PROFILES}
 
 COPY . .
 
@@ -19,13 +18,7 @@ RUN mvn -B clean package \
         -DproxySet=${PROXY_SET} \
         -DproxyHost=${PROXY_HOST} \
         -DproxyPort=${PROXY_PORT} \
-        -P libs
-
-RUN mvn -B clean package \
-        -DproxySet=${PROXY_SET} \
-        -DproxyHost=${PROXY_HOST} \
-        -DproxyPort=${PROXY_PORT} \
-        -P ${MVN_PROFILES} 
+        -P all
 
 #############################################################################################
 
