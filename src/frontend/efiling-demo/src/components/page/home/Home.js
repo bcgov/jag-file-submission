@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
-import Header, { Footer } from "shared-components";
-import { Button } from "../../base/button/Button";
+import Header, { Footer, Input, Button } from "shared-components";
 
 import "../page.css";
 
-const generateUrlBody = {
+const urlBody = {
   documentProperties: {
     type: "string",
     subType: "string",
@@ -33,28 +32,49 @@ const generateUrlBody = {
   }
 };
 
-export const generateUrl = () => {
+const input = {
+  label: "Account GUID",
+  id: "textInputId",
+  styling: "editable_white",
+  isRequired: true,
+  placeholder: "77da92db-0791-491e-8c58-1a969e67d2fa"
+};
+
+const generateUrl = (accountGuid, setErrorExists) => {
+  const updatedUrlBody = { ...urlBody, userId: accountGuid };
+
   axios
-    .post(`/submission/generateUrl`, generateUrlBody)
-    .then(response => {
-      console.log(response);
+    .post(`/submission/generateUrl`, updatedUrlBody)
+    .then(({ data: { efilingUrl } }) => {
+      window.open(efilingUrl, "_self");
     })
     .catch(() => {
-      throw new Error(
-        "An error occurred with generating the url. Please try again."
-      );
+      setErrorExists(true);
     });
 };
 
 export default function Home({ page: { header } }) {
+  const [errorExists, setErrorExists] = useState(false);
+  const [accountGuid, setAccountGuid] = useState(null);
+
   return (
     <main>
       <Header header={header} />
       <div className="page">
         <div className="content col-md-10">
-          <Button onClick={generateUrl} label="With CSO Account" />
+          <Input input={input} onChange={setAccountGuid} />
           <br />
-          <Button onClick={generateUrl} label="Without CSO Account" />
+          <Button
+            onClick={() => generateUrl(accountGuid, setErrorExists)}
+            label="Generate URL"
+            styling="normal-blue btn"
+          />
+          <br />
+          {errorExists && (
+            <p className="error">
+              An error occurred while generating the URL. Please try again.
+            </p>
+          )}
         </div>
       </div>
       <Footer />

@@ -1,0 +1,46 @@
+.label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+.textinput_label {
+  font-weight: 700;
+  font-style: normal;
+  font-size: 16px;
+  color: #333333;
+  text-align: left;
+  line-height: 16px;
+}
+
+.editable_white {
+  padding: 1px 0px 1px 0px;
+  box-sizing: border-box;
+  top: 30px;
+  width: 100%;
+  height: 40px;
+  background-color: white;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  text-decoration: none;
+  color: #494949;
+  text-align: left;
+  border-style: inset;
+}
+
+.note {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.error {
+  color: red;
+}
+
+.mandatory {
+  padding: 0px 0px 0px 3px;
+  color: red;
+  font-weight: 500;
+  font-size: 16px;
+}

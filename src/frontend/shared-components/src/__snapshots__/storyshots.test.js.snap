@@ -1,5 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Storyshots Button Default 1`] = `
+<div>
+  <button
+    className="normal-blue btn"
+    onClick={[Function]}
+    type="button"
+  >
+    Button label
+  </button>
+</div>
+`;
+
+exports[`Storyshots Button Mobile 1`] = `
+<div>
+  <button
+    className="normal-blue btn"
+    onClick={[Function]}
+    type="button"
+  >
+    Button label
+  </button>
+</div>
+`;
+
 exports[`Storyshots Footer Default 1`] = `
 <footer
   className="footer"
@@ -284,4 +308,120 @@ exports[`Storyshots Header Mobile 1`] = `
     </div>
   </nav>
 </header>
+`;
+
+exports[`Storyshots Input Editable White 1`] = `
+<div>
+  <label
+    className="label"
+    htmlFor="textInputId"
+  >
+    <div
+      className="textinput_label"
+    >
+      Submission ID
+    </div>
+    <span
+      className="mandatory"
+      id="asterisk"
+    >
+      *
+    </span>
+     
+    <span
+      className="note"
+    />
+  </label>
+  <input
+    className="editable_white"
+    id="textInputId"
+    onChange={[Function]}
+    placeholder="Enter id"
+    type="text"
+  />
+  <br />
+  <span
+    className="error"
+  />
+</div>
+`;
+
+exports[`Storyshots Input Editable White Mobile 1`] = `
+<div>
+  <label
+    className="label"
+    htmlFor="textInputId"
+  >
+    <div
+      className="textinput_label"
+    >
+      Submission ID
+    </div>
+    <span
+      className="mandatory"
+      id="asterisk"
+    >
+      *
+    </span>
+     
+    <span
+      className="note"
+    />
+  </label>
+  <input
+    className="editable_white"
+    id="textInputId"
+    onChange={[Function]}
+    placeholder="Enter id"
+    type="text"
+  />
+  <br />
+  <span
+    className="error"
+  />
+</div>
+`;
+
+exports[`Storyshots Loader Default 1`] = `
+<div
+  style={
+    Object {
+      "background": "grey",
+    }
+  }
+>
+  <div
+    className="loader-align"
+  >
+    <div
+      className="btn-loader"
+    />
+    <br />
+    Loading... Please Wait
+  </div>
+</div>
+`;
+
+exports[`Storyshots Loader Mobile 1`] = `
+<div
+  className="loader-align"
+>
+  <div
+    className="page-loader"
+  />
+  <br />
+  Loading... Please Wait
+</div>
+`;
+
+exports[`Storyshots Loader Page 1`] = `
+<div
+  className="loader-align"
+>
+  <div
+    className="page-loader"
+  />
+  <br />
+  Loading... Please Wait
+</div>
 `;

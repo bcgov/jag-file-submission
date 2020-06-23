@@ -1,7 +1,6 @@
 package ca.bc.gov.open.jag.efilingworker;
 
-import ca.bc.gov.open.jag.ag.csows.filing.SubmitFilingResponse;
-import ca.bc.gov.open.jag.efilingsubmissionclient.MockCSOSubmissionServiceImpl;
+import ca.bc.gov.open.jag.efilingsubmissionclient.DemoSubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingworker.service.MockDocumentStoreServiceImpl;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -11,6 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+
+import java.math.BigDecimal;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -27,13 +28,13 @@ public class EfilingMessageConsumerTest {
     MockDocumentStoreServiceImpl mockDocumentStoreService;
 
     @Mock
-    MockCSOSubmissionServiceImpl mockCSOSubmissionService;
+    DemoSubmissionServiceImpl mockCSOSubmissionService;
 
     @BeforeAll
     public void init() {
         MockitoAnnotations.initMocks(this);
         Mockito.when(mockDocumentStoreService.uploadFile(any())).thenReturn(TEST);
-        Mockito.when(mockCSOSubmissionService.submitFiling(any())).thenReturn(new SubmitFilingResponse());
+        Mockito.when(mockCSOSubmissionService.submitFiling(any())).thenReturn(BigDecimal.ONE);
     }
 
     @DisplayName("CASE1: Test acceptMessage execution")

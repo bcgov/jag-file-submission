@@ -1,29 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Button Default 1`] = `
-<div>
-  <button
-    className="efile-btn btn"
-    onClick={[Function]}
-    type="button"
-  >
-    button label
-  </button>
-</div>
-`;
-
-exports[`Storyshots Button Mobile 1`] = `
-<div>
-  <button
-    className="efile-btn btn"
-    onClick={[Function]}
-    type="button"
-  >
-    button label
-  </button>
-</div>
-`;
-
 exports[`Storyshots Home Default 1`] = `
 <main>
   <header>
@@ -83,24 +59,49 @@ exports[`Storyshots Home Default 1`] = `
       className="content col-md-10"
     >
       <div>
-        <button
-          className="efile-btn btn"
-          onClick={[Function]}
-          type="button"
+        <label
+          className="label"
+          htmlFor="textInputId"
         >
-          With CSO Account
-        </button>
+          <div
+            className="textinput_label"
+          >
+            Account GUID
+          </div>
+          <span
+            className="mandatory"
+            id="asterisk"
+          >
+            *
+          </span>
+           
+          <span
+            className="note"
+          />
+        </label>
+        <input
+          className="editable_white"
+          id="textInputId"
+          onChange={[Function]}
+          placeholder="77da92db-0791-491e-8c58-1a969e67d2fa"
+          type="text"
+        />
+        <br />
+        <span
+          className="error"
+        />
       </div>
       <br />
       <div>
         <button
-          className="efile-btn btn"
+          className="normal-blue btn"
           onClick={[Function]}
           type="button"
         >
-          Without CSO Account
+          Generate URL
         </button>
       </div>
+      <br />
     </div>
   </div>
   <footer
@@ -252,24 +253,49 @@ exports[`Storyshots Home Mobile 1`] = `
       className="content col-md-10"
     >
       <div>
-        <button
-          className="efile-btn btn"
-          onClick={[Function]}
-          type="button"
+        <label
+          className="label"
+          htmlFor="textInputId"
         >
-          With CSO Account
-        </button>
+          <div
+            className="textinput_label"
+          >
+            Account GUID
+          </div>
+          <span
+            className="mandatory"
+            id="asterisk"
+          >
+            *
+          </span>
+           
+          <span
+            className="note"
+          />
+        </label>
+        <input
+          className="editable_white"
+          id="textInputId"
+          onChange={[Function]}
+          placeholder="77da92db-0791-491e-8c58-1a969e67d2fa"
+          type="text"
+        />
+        <br />
+        <span
+          className="error"
+        />
       </div>
       <br />
       <div>
         <button
-          className="efile-btn btn"
+          className="normal-blue btn"
           onClick={[Function]}
           type="button"
         >
-          Without CSO Account
+          Generate URL
         </button>
       </div>
+      <br />
     </div>
   </div>
   <footer

@@ -1,12 +1,12 @@
 package ca.bc.gov.open.jag.efilingworker;
 
-import ca.bc.gov.open.jag.ag.csows.filing.FilingPackage;
+import ca.bc.gov.ag.csows.filing.FilingPackage;
 import ca.bc.gov.open.jag.efilingsubmissionclient.EfilingSubmissionService;
 import ca.bc.gov.open.jag.efilingworker.service.DocumentStoreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 
