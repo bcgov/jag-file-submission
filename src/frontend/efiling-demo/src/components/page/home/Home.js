@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
-import Header, { Footer, Input } from "shared-components";
-import { Button } from "../../base/button/Button";
+import Header, { Footer, Input, Button } from "shared-components";
 
 import "../page.css";
 
@@ -68,6 +67,7 @@ export default function Home({ page: { header } }) {
           <Button
             onClick={() => generateUrl(accountGuid, setErrorExists)}
             label="Generate URL"
+            styling="normal-blue btn"
           />
           <br />
           {errorExists && (
