@@ -77,8 +77,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         } catch (CSOHasMultipleAccountException e)   {
             EfilingError efilingError = new EfilingError();
             efilingError.setError(ErrorResponse.ACCOUNTEXCEPTION.getErrorCode());
-            efilingError.setMessage(e.getMessage());
-
+            efilingError.setMessage(ErrorResponse.ACCOUNTEXCEPTION.getErrorMessage());
             return new ResponseEntity(efilingError, HttpStatus.BAD_REQUEST);
         }
         logger.info("Successfully got cso account information");

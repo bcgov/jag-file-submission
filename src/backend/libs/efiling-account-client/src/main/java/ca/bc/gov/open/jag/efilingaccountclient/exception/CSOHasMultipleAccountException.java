@@ -6,6 +6,6 @@ public class CSOHasMultipleAccountException extends RuntimeException {
 
     public CSOHasMultipleAccountException(String clientId) {
 
-        super(MessageFormat.format("Client {0} has multiple profiles", clientId));
+        super(MessageFormat.format("Client {0} has multiple CSO profiles", clientId));
     }
 }
