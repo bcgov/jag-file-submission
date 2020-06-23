@@ -82,6 +82,18 @@ jobs:
       # Figure our where yarn is caching things
       - name: Yarn Cache
         run: yarn cache dir
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          # YARN cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
 
       # Run Yarn Install
       - name: Run Yarn Install - Shared components
