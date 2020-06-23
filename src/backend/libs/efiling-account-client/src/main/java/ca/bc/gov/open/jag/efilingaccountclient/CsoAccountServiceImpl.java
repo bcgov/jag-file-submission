@@ -16,6 +16,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CsoAccountServiceImpl.class);
 
     public CsoAccountServiceImpl(AccountFacade accountFacade) {
+
         this.accountFacade = accountFacade;
     }
 
