@@ -2,13 +2,7 @@ import React from "react";
 import { createMemoryHistory } from "history";
 import { MemoryRouter } from "react-router-dom";
 import axios from "axios";
-import {
-  render,
-  getByText,
-  wait,
-  fireEvent,
-  getByRole
-} from "@testing-library/react";
+import { render, wait } from "@testing-library/react";
 import Home from "./Home";
 
 const MockAdapter = require("axios-mock-adapter");
