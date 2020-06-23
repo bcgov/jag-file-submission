@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingapi.submission;
 
 import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountDetails;
 import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
+import ca.bc.gov.open.jag.efilingaccountclient.exception.CSOHasMultipleAccountException;
 import ca.bc.gov.open.jag.efilingapi.fee.models.Fee;
 import ca.bc.gov.open.jag.efilingapi.fee.models.FeeRequest;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
@@ -72,7 +73,13 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         logger.info("Successfully retrieved fee [{}]", fee.getAmount());
 
         logger.debug("Attempting to get user cso account information");
-        CsoAccountDetails csoAccountDetails = efilingAccountService.getAccountDetails(generateUrlRequest.getUserId());
+        CsoAccountDetails csoAccountDetails;
+        try {
+            csoAccountDetails = efilingAccountService.getAccountDetails(generateUrlRequest.getUserId());
+        } catch (CSOHasMultipleAccountException e)   {
+            return new ResponseEntity("Client has multiple accounts.", HttpStatus.BAD_REQUEST);
+
+        }
         logger.info("Successfully got cso account information");
 
         if (csoAccountDetails != null && !csoAccountDetails.HasRole(EFILING_ROLE)) {
