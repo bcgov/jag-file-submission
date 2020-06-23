@@ -6,8 +6,6 @@ import MockAdapter from "axios-mock-adapter";
 
 import Home from "./Home";
 
-console.error = () => {}; // for async storyshot errors, due to lack of support
-
 export default {
   title: "Home",
   component: Home
