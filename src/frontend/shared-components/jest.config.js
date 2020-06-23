@@ -1,5 +1,5 @@
 module.exports = {
-  rootDir: "./src/frontend/shared-components",
+  rootDir: ".",
   watchPathIgnorePatterns: ["<rootDir>/node_modules/"],
   collectCoverageFrom: [
     "src/**/*.js",
