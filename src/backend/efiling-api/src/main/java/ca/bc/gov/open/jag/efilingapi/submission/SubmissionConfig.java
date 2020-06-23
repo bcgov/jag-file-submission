@@ -15,10 +15,4 @@ public class SubmissionConfig {
         return new SubmissionServiceImpl();
     }
 
-
-    @Bean
-    public EfilingAccountService efilingAccountService() {
-        return new DemoAccountServiceImpl();
-    }
-
 }

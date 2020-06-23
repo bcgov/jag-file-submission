@@ -14,6 +14,8 @@ jag:
       baseUrl: ${NAVIGATION_BASE_URL:https://httpbin.org/}
     account:
       client:
+        userName: ${CSO_ACCOUNTFACADE_USERNAME}
+        password: ${CSO_ACCOUNTFACADE_PASSWORD}
         filingAccountSoapUri: ${CSO_ACCOUNTFACADE_URI:http://localhost:8091}
     status:
       client:

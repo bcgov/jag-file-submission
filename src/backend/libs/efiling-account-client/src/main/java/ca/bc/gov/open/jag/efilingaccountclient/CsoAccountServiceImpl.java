@@ -1,9 +1,9 @@
 package ca.bc.gov.open.jag.efilingaccountclient;
 
-import ca.bc.gov.ag.csows.accounts.AccountFacade;
 import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
 import ca.bc.gov.ag.csows.accounts.ClientProfile;
 import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
+import ca.bc.gov.open.jag.efilingaccountclient.config.CsoAccountProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
@@ -12,12 +12,14 @@ import java.util.List;
 
 public class CsoAccountServiceImpl implements EfilingAccountService {
 
-    private AccountFacade accountFacade;
+    private AccountFacadeBean accountFacadeBean;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(CsoAccountServiceImpl.class);
 
-    public CsoAccountServiceImpl(AccountFacade accountFacade) {
+    public CsoAccountServiceImpl(AccountFacadeBean accountFacadeBean) {
 
-        this.accountFacade = accountFacade;
+        this.accountFacadeBean = accountFacadeBean;
+
     }
 
     @Override
@@ -28,8 +30,9 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
 
         try {
 
-            AccountFacadeBean accountFacadeBeanPort = accountFacade.getAccountFacadeBeanPort();
-            List<ClientProfile> profiles = accountFacadeBeanPort.findProfiles(userGuid);
+
+
+            List<ClientProfile> profiles = accountFacadeBean.findProfiles(userGuid);
 
             if (profiles.size() == 1) {
                 ClientProfile profile = profiles.get(0);
