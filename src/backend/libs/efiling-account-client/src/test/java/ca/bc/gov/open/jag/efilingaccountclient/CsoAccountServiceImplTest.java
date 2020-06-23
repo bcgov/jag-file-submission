@@ -60,14 +60,12 @@ public class CsoAccountServiceImplTest {
     }
 
     @DisplayName("CASE 2: getAccountDetails called with any non-empty userGuid")
-   // @Test
-    public void testWithPopulatedUserGuid() throws NestedEjbException_Exception {
+    @Test
+    public void testWithPopulatedUserGuid() {
 
         CsoAccountDetails details = sut.getAccountDetails(USERGUID);
         Assertions.assertNotEquals(null, details);
         Assertions.assertEquals(BigDecimal.TEN, details.getAccountId());
         Assertions.assertEquals(BigDecimal.TEN, details.getClientId());
-     //   verify(mockAccountFacade, times(1)).getAccountFacadeBeanPort();
-      //  verify(mockAccountFacadeBean, times(1)).findProfiles(any());
     }
 }

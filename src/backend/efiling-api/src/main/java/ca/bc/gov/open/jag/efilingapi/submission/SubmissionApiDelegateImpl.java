@@ -65,9 +65,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     @Override
     public ResponseEntity<GenerateUrlResponse> generateUrl(@Valid GenerateUrlRequest generateUrlRequest) {
-
         logger.info("Generate Url Request Received");
-
         logger.debug("Attempting to get fee structure for document");
         Fee fee = feeService.getFee(new FeeRequest(generateUrlRequest.getDocumentProperties().getType(), generateUrlRequest.getDocumentProperties().getSubType()));
         logger.info("Successfully retrieved fee [{}]", fee.getAmount());
