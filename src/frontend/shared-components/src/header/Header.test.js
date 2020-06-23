@@ -41,4 +41,14 @@ describe("Header Component", () => {
 
     expect(header.history.location.pathname).toEqual("/");
   });
+
+  test("Keydown on HeadingTitle takes you back to home", () => {
+    header.history.location.pathname = "/somepageroute";
+
+    const { container } = render(<Header header={header} />);
+
+    fireEvent.keyDown(getAllByRole(container, "button")[0]);
+
+    expect(header.history.location.pathname).toEqual("/");
+  });
 });
