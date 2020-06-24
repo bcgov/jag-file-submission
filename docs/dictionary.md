@@ -6,7 +6,7 @@
 
 ### Document
 
-document has an extended meaning and includes a photograph, film, recording of sound, any record of a permanent or semi-permanent character and any information recorded or stored by means of any device;
+A document has an extended meaning and includes a photograph, film, recording of sound, any record of a permanent or semi-permanent character and any information recorded or stored by means of any device.
 
 ### Efiling
 
