@@ -29,7 +29,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
     @Override
     public CsoAccountDetails getAccountDetails(String userGuid) {
 
-        if (StringUtils.isEmpty(userGuid) || !HasFileRole(userGuid)) return null;
+        if (StringUtils.isEmpty(userGuid)) return null;
 
         CsoAccountDetails csoAccountDetails = null;
         try {

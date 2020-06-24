@@ -87,12 +87,5 @@ public class CsoAccountServiceImplTest {
         Assertions.assertEquals(BigDecimal.TEN, details.getAccountId());
         Assertions.assertEquals(BigDecimal.TEN, details.getClientId());
     }
-
-    @DisplayName("getAccountDetails called with a userGuid that does not have file role should return null")
-    @Test
-    public void testWithFileRoleDisabled() {
-
-        CsoAccountDetails details = sut.getAccountDetails(USERGUIDNOROLE);
-        Assertions.assertEquals(null, details);
-    }
+    
 }
