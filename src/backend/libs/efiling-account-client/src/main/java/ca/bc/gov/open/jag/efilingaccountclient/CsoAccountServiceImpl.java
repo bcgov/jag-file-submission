@@ -29,25 +29,25 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
     @Override
     public CsoAccountDetails getAccountDetails(String userGuid) {
 
+        if (StringUtils.isEmpty(userGuid) || !HasFileRole(userGuid)) return null;
+
         CsoAccountDetails csoAccountDetails = null;
-        if (!StringUtils.isEmpty(userGuid) && HasFileRole(userGuid)) {
+        try {
 
-            try {
-
-                List<ClientProfile> profiles = accountFacadeBean.findProfiles(userGuid);
-                //An account must only one profile associated to proceed
-                if (profiles.size() == 1) {
-                    ClientProfile profile = profiles.get(0);
-                    csoAccountDetails = new CsoAccountDetails(profile.getAccountId(), profile.getClientId());
-                    csoAccountDetails.addRole("efiling");
-                } else if (profiles.size() > 1) {
-                    throw new CSOHasMultipleAccountException(profiles.get(0).getClientId().toString());
-                }
-
-            } catch (NestedEjbException_Exception e) {
-
-                LOGGER.error("Error calling findProfiles: ", e);
+            List<ClientProfile> profiles = accountFacadeBean.findProfiles(userGuid);
+            //An account must only one profile associated to proceed
+            if (profiles.size() == 1) {
+                ClientProfile profile = profiles.get(0);
+                csoAccountDetails = new CsoAccountDetails(profile.getAccountId(), profile.getClientId());
+                csoAccountDetails.addRole("efiling");
             }
+            else if (profiles.size() > 1) {
+                throw new CSOHasMultipleAccountException(profiles.get(0).getClientId().toString());
+            }
+
+        } catch (NestedEjbException_Exception e) {
+
+            LOGGER.error("Error calling findProfiles: ", e);
         }
 
         return csoAccountDetails;
