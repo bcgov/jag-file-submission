@@ -22,7 +22,7 @@ A package can contain one or multiple documents that have or are being submitted
 
 ### Submission
 
-A submission is a set of documents, fees, comments that are beeing transmitted electronically for review and filing.
+A submission is a set of documents, fees, or comments that are being transmitted electronically for review and filing.
 
 ## Development lifecycle
 
