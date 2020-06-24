@@ -16,14 +16,12 @@ import java.util.List;
 public class CsoAccountServiceImpl implements EfilingAccountService {
 
     private AccountFacadeBean accountFacadeBean;
-    private RoleRegistryPortType roleRegistryPortType;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CsoAccountServiceImpl.class);
 
-    public CsoAccountServiceImpl(AccountFacadeBean accountFacadeBean, RoleRegistryPortType roleRegistryPortType) {
+    public CsoAccountServiceImpl(AccountFacadeBean accountFacadeBean) {
 
         this.accountFacadeBean = accountFacadeBean;
-        this.roleRegistryPortType = roleRegistryPortType;
     }
 
     @Override

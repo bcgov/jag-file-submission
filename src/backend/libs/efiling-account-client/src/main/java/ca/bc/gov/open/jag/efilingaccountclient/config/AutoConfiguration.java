@@ -46,8 +46,8 @@ public class AutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean({EfilingAccountService.class})
-    public EfilingAccountService efilingAccountService(AccountFacadeBean accountFacadeBean, RoleRegistryPortType roleRegistryPortType) {
-        return new CsoAccountServiceImpl(accountFacadeBean, roleRegistryPortType);
+    public EfilingAccountService efilingAccountService(AccountFacadeBean accountFacadeBean) {
+        return new CsoAccountServiceImpl(accountFacadeBean);
     }
 
 
