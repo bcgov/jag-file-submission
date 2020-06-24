@@ -23,7 +23,7 @@
         <org.springdoc.version>1.4.1</org.springdoc.version>
         <com.splunk.logging.version>1.8.0</com.splunk.logging.version>
         <org.openapitools.version>0.2.1</org.openapitools.version>
-        <org.apache.cxf.version>3.2.1</org.apache.cxf.version>
+        <org.apache.cxf.version>3.3.6</org.apache.cxf.version>
     </properties>
 
     <repositories>
