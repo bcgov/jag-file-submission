@@ -10,7 +10,7 @@ A document has an extended meaning and includes a photograph, film, recording of
 
 ### Efiling
 
-Electronic filing is the process of submitting a package to a Court Registry over the Internet using jag efiling software that has been approved by Court Services Branch and the Judicary.
+Electronic filing is the process of submitting a package to a Court Registry over the Internet using the jag-efiling software that has been approved by the Court Services Branch and the Judicary.
 
 ### File
 
