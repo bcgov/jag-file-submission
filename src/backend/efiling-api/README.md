@@ -7,7 +7,7 @@ You should use environment variables to configure the jag efiling api
 | Environment Variable | Type | Description | Notes |
 | --- | --- | --- | --- |
 | SERVER_PORT | Integer | web application server port | defaulted to `8080` |
-| DEMO_MODE | Boolean | A flag to turn on off demo mode | defaulted to `false` |
+| DEMO_MODE | Boolean | A flag to turn on/off demo mode | defaulted to `false` |
 | REDIS_HOST | String | Redis storage host | defaulted to `localhost` |
 | REDIS_PORT | Integer | Redis storage port | defaulted to `6379` |
 | REDIS_PASSWORD | String | Redis storage password | Defaulted to `admin` |
