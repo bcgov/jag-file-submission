@@ -28,7 +28,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
 
     @Override
     public CsoAccountDetails getAccountDetails(String userGuid) {
-
+        //TODO re-add check hasRole
         if (StringUtils.isEmpty(userGuid)) return null;
 
         CsoAccountDetails csoAccountDetails = null;
@@ -40,8 +40,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
                 ClientProfile profile = profiles.get(0);
                 csoAccountDetails = new CsoAccountDetails(profile.getAccountId(), profile.getClientId());
                 csoAccountDetails.addRole("efiling");
-            }
-            else if (profiles.size() > 1) {
+            } else if (profiles.size() > 1) {
                 throw new CSOHasMultipleAccountException(profiles.get(0).getClientId().toString());
             }
 
@@ -51,12 +50,6 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         }
 
         return csoAccountDetails;
-     }
+    }
 
-     public boolean HasFileRole(String userGuid) {
-
-         UserRoles userRoles = roleRegistryPortType.getRolesForIdentifier("Courts", "CSO", userGuid, "CAP");
-         List<RegisteredRole> roles = userRoles.getRoles();
-         return roles != null && roles.stream().anyMatch(r -> r.getCode() == "FILE");
-     }
 }

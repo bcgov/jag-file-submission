@@ -87,5 +87,5 @@ public class CsoAccountServiceImplTest {
         Assertions.assertEquals(BigDecimal.TEN, details.getAccountId());
         Assertions.assertEquals(BigDecimal.TEN, details.getClientId());
     }
-    
+    //TODO Reimplement test when check is re-added
 }
