@@ -3,7 +3,7 @@ import { createMemoryHistory } from "history";
 import { MemoryRouter } from "react-router-dom";
 import axios from "axios";
 import { render, wait } from "@testing-library/react";
-import Home from "./Home";
+import Home, { saveNavigationToSession } from "./Home";
 
 const MockAdapter = require("axios-mock-adapter");
 
@@ -16,16 +16,27 @@ const page = { header };
 
 describe("Home", () => {
   const submissionId = "abc123";
+  const apiRequest = `/submission/${submissionId}`;
+  const navigation = {
+    cancel: {
+      url: "cancelurl.com"
+    },
+    success: {
+      url: "successurl.com"
+    },
+    error: {
+      url: ""
+    }
+  };
   let mock;
 
   beforeEach(() => {
     mock = new MockAdapter(axios);
+    sessionStorage.clear();
   });
 
   test("Component matches the snapshot when user cso account exists", async () => {
-    mock
-      .onGet(`/submission/${submissionId}/userDetail`)
-      .reply(200, { csoAccountExists: true });
+    mock.onGet(apiRequest).reply(200, { csoAccountExists: true, navigation });
 
     const { asFragment } = render(
       <MemoryRouter initialEntries={[`?submissionId=${submissionId}`]}>
@@ -35,13 +46,12 @@ describe("Home", () => {
 
     await wait(() => {
       expect(asFragment()).toMatchSnapshot();
+      expect(sessionStorage.getItem("cancelUrl")).toEqual("cancelurl.com");
     });
   });
 
   test("Component matches the snapshot when user cso account does not exist", async () => {
-    mock
-      .onGet(`/submission/${submissionId}/userDetail`)
-      .reply(200, { csoAccountExists: false });
+    mock.onGet(apiRequest).reply(200, { csoAccountExists: false, navigation });
 
     const { asFragment } = render(
       <MemoryRouter initialEntries={[`?submissionId=${submissionId}`]}>
@@ -51,11 +61,12 @@ describe("Home", () => {
 
     await wait(() => {
       expect(asFragment()).toMatchSnapshot();
+      expect(sessionStorage.getItem("cancelUrl")).toEqual("cancelurl.com");
     });
   });
 
   test("Component matches the snapshot when still loading", async () => {
-    mock.onGet(`/submission/${submissionId}/userDetail`).reply(400);
+    mock.onGet(apiRequest).reply(400);
 
     const { asFragment } = render(
       <MemoryRouter initialEntries={[`?submissionId=${submissionId}`]}>
@@ -65,6 +76,19 @@ describe("Home", () => {
 
     await wait(() => {
       expect(asFragment()).toMatchSnapshot();
+      expect(sessionStorage.getItem("cancelUrl")).toBeFalsy();
     });
+  });
+
+  test("saveNavigationToSession saves urls to session storage when url values are truthy", () => {
+    expect(sessionStorage.getItem("cancelUrl")).toBeFalsy();
+    expect(sessionStorage.getItem("successUrl")).toBeFalsy();
+    expect(sessionStorage.getItem("errorUrl")).toBeFalsy();
+
+    saveNavigationToSession(navigation);
+
+    expect(sessionStorage.getItem("cancelUrl")).toEqual("cancelurl.com");
+    expect(sessionStorage.getItem("successUrl")).toEqual("successurl.com");
+    expect(sessionStorage.getItem("errorUrl")).toBeFalsy();
   });
 });

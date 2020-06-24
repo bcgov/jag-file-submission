@@ -8,15 +8,22 @@ import CSOStatus from "../../composite/csostatus/CSOStatus";
 
 import "../page.css";
 
-// make call to submission/{id}/userDetail to get the user details
+export const saveNavigationToSession = ({ cancel, success, error }) => {
+  if (cancel.url) sessionStorage.setItem("cancelUrl", cancel.url);
+  if (success.url) sessionStorage.setItem("successUrl", success.url);
+  if (error.url) sessionStorage.setItem("errorUrl", error.url);
+};
+
+// make call to submission/{id} to get the user details
 const checkCSOAccountStatus = (
   submissionId,
   setCsoAccountExists,
   setShowLoader
 ) => {
   axios
-    .get(`/submission/${submissionId}/userDetail`)
-    .then(({ data: { csoAccountExists } }) => {
+    .get(`/submission/${submissionId}`)
+    .then(({ data: { csoAccountExists, navigation } }) => {
+      saveNavigationToSession(navigation);
       if (csoAccountExists) setCsoAccountExists(true);
       setShowLoader(false);
     })
