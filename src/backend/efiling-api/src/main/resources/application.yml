@@ -17,6 +17,7 @@ jag:
         userName: ${CSO_ACCOUNTFACADE_USERNAME}
         password: ${CSO_ACCOUNTFACADE_PASSWORD}
         filingAccountSoapUri: ${CSO_ACCOUNTFACADE_URI:http://localhost:8091}
+        filingRoleSoapUri: ${CSO_ROLEREGISTRY_URI:http://localhost:8092}
 
 info:
   app:
