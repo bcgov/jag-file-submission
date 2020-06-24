@@ -10,6 +10,8 @@ spring:
       time-to-live: ${CACHE_TTL:600000}
 jag:
   efiling:
+    global:
+      demo: ${DEMO_MODE:false}
     navigation:
       baseUrl: ${NAVIGATION_BASE_URL:https://httpbin.org/}
     account:
@@ -18,7 +20,6 @@ jag:
         password: ${CSO_ACCOUNTFACADE_PASSWORD}
         filingAccountSoapUri: ${CSO_ACCOUNTFACADE_URI:http://localhost:8091}
         filingRoleSoapUri: ${CSO_ROLEREGISTRY_URI:http://localhost:8092}
-
 info:
   app:
     name: @project.name@

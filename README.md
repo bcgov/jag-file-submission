@@ -42,7 +42,8 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
 
 ## Running the App
 
-create a local `.env` at the root the the repository, you can start from `.env.template`.
+By default a demo mode is enabled. 
+if you want to integrate with the CSO application create a local `.env` at the root the the repository based of `.env.template`.
 
 set the following environement variables:
 
