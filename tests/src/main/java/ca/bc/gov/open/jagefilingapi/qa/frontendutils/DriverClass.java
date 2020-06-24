@@ -41,7 +41,7 @@ public class DriverClass {
                 default:
                     log.info("URL value is not available in the properties file.");
             }
-            driver.manage().timeouts().implicitlyWait(90, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
             driver.manage().deleteAllCookies();
             driver.manage().window().maximize();
         }

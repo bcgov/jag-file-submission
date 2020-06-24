@@ -3,8 +3,8 @@ package ca.bc.gov.open.jagefilingapi.qa.backendutils;
 public enum APIResources {
 
     GENERATEURLAPI("/submission/generateUrl"),
-    GETCONFIGURATION("/submission/getConfiguration"),
-    EFILINGURL("https://httpbin.org");
+    USERDETAIL("/submission/"),
+    EFILINGURL("http://localhost:3000/efiling?");
 
     private final String resource;
 
@@ -16,5 +16,3 @@ public enum APIResources {
         return resource;
     }
 }
-
-
