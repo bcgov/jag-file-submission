@@ -18,7 +18,7 @@ See [computer file](https://en.wikipedia.org/wiki/Computer%20file)
 
 ### Package
 
-A package can contain one or multiple documents that have or beeing submitted electronically for a single court file number.
+A package can contain one or multiple documents that have or are being submitted electronically for a single court file number.
 
 ### Submission
 
