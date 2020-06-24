@@ -42,6 +42,17 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
 
 ## Running the App
 
+create a local `.env` at the root the the repository, you can start from `.env.template`.
+
+set the following environement variables:
+
+```
+CSO_ACCOUNTFACADE_URI=
+CSO_ACCOUNTFACADE_USERNAME=
+CSO_ACCOUNTFACADE_PASSWORD=
+CSO_ROLEREGISTRY_URI=
+```
+
 run
 
 ```bash

@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingaccountclient.config;
 
+import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RoleRegistryPortType;
 import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
 import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountServiceImpl;
 import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
@@ -31,6 +32,16 @@ public class AutoConfiguration {
         jaxWsProxyFactoryBean.setUsername(csoAccountProperties.getUserName());
         jaxWsProxyFactoryBean.setPassword(csoAccountProperties.getPassword());
         return (AccountFacadeBean) jaxWsProxyFactoryBean.create();
+    }
+
+    @Bean
+    public RoleRegistryPortType roleRegistryPortType() {
+        JaxWsProxyFactoryBean jaxWsProxyFactoryBeanTest = new JaxWsProxyFactoryBean();
+        jaxWsProxyFactoryBeanTest.setServiceClass(RoleRegistryPortType.class);
+        jaxWsProxyFactoryBeanTest.setAddress(csoAccountProperties.getFilingRoleSoapUri());
+        jaxWsProxyFactoryBeanTest.setUsername(csoAccountProperties.getUserName());
+        jaxWsProxyFactoryBeanTest.setPassword(csoAccountProperties.getPassword());
+        return (RoleRegistryPortType) jaxWsProxyFactoryBeanTest.create();
     }
 
     @Bean

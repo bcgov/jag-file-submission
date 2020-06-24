@@ -8,7 +8,9 @@ export default function CSOStatus({ accountExists }) {
       {accountExists && <p>Account exists! Proceed</p>}
       {!accountExists && <p>Account does not exist, form will be here</p>}
       <Button
-        onClick={() => {}}
+        onClick={() => {
+          window.open(sessionStorage.getItem("cancelUrl"), "_self");
+        }}
         label="Cancel and return to client"
         styling="normal-white btn"
       />

@@ -1,5 +1,8 @@
 package ca.bc.gov.open.jag.efilingaccountclient;
 
+import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RegisteredRole;
+import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RoleRegistryPortType;
+import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.UserRoles;
 import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
 import ca.bc.gov.ag.csows.accounts.ClientProfile;
 import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
@@ -19,18 +22,15 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
     public CsoAccountServiceImpl(AccountFacadeBean accountFacadeBean) {
 
         this.accountFacadeBean = accountFacadeBean;
-
     }
 
     @Override
     public CsoAccountDetails getAccountDetails(String userGuid) {
+        //TODO re-add check hasRole
+        if (StringUtils.isEmpty(userGuid)) return null;
 
         CsoAccountDetails csoAccountDetails = null;
-        if (StringUtils.isEmpty(userGuid)) return csoAccountDetails;
-
         try {
-
-
 
             List<ClientProfile> profiles = accountFacadeBean.findProfiles(userGuid);
             //An account must only one profile associated to proceed
@@ -42,12 +42,12 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
                 throw new CSOHasMultipleAccountException(profiles.get(0).getClientId().toString());
             }
 
-        }
-        catch(NestedEjbException_Exception e) {
+        } catch (NestedEjbException_Exception e) {
 
             LOGGER.error("Error calling findProfiles: ", e);
         }
 
         return csoAccountDetails;
-     }
+    }
+
 }

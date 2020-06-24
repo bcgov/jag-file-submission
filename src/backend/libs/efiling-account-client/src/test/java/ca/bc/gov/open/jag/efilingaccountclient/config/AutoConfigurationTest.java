@@ -2,14 +2,11 @@ package ca.bc.gov.open.jag.efilingaccountclient.config;
 
 
 
-import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
-
-import java.net.MalformedURLException;
 
 @DisplayName("AutoConfiguration Test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -31,6 +28,7 @@ public class AutoConfigurationTest {
         sut = new AutoConfiguration(properties);
 
         Assertions.assertNotNull(sut.accountFacadeBean());
+        Assertions.assertNotNull(sut.roleRegistryPortType());
         Assertions.assertNotNull(sut.efilingAccountService(null));
     }
 }

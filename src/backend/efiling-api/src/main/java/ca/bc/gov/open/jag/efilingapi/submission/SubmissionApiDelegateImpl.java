@@ -4,10 +4,7 @@ import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountDetails;
 import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingaccountclient.exception.CSOHasMultipleAccountException;
 import ca.bc.gov.open.jag.efilingapi.api.SubmissionApiDelegate;
-import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
-import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
-import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlResponse;
-import ca.bc.gov.open.jag.efilingapi.api.model.UserDetail;
+import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jag.efilingapi.fee.FeeService;
@@ -122,9 +119,8 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         UserDetail response = new UserDetail();
         response.setCsoAccountExists(fromCacheSubmission.get().getCsoAccountDetails() != null);
-        response.setHasEfilingRole(
-                fromCacheSubmission.get().getCsoAccountDetails() != null &&
-                fromCacheSubmission.get().getCsoAccountDetails().HasRole(EFILING_ROLE));
+
+        response.setNavigation(fromCacheSubmission.get().getNavigation());
 
         return ResponseEntity.ok(response);
 

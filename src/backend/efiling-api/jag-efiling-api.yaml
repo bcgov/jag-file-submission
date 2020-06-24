@@ -35,7 +35,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EfilingError'
-  '/submission/{id}/userDetail':
+  '/submission/{id}':
     get:
       summary: Get user detail for a given submission
       operationId: GetSubmissionUserDetail
@@ -89,9 +89,8 @@ components:
         csoAccountExists:
           type: boolean
           description: True if the user has a linked cso account
-        hasEfilingRole:
-          type: boolean
-          description: True if the user has the efiling role
+        navigation:
+          $ref: '#/components/schemas/Navigation'
     DocumentProperties:
       type: object
       description: Submission Metadata used to describe the submission that will be e-filled

@@ -19,7 +19,18 @@ const page = { header };
 
 const submissionId = "abc123";
 const mock = new MockAdapter(axios);
-const apiRequest = `/submission/${submissionId}/userDetail`;
+const apiRequest = `/submission/${submissionId}`;
+const navigation = {
+  cancel: {
+    url: "cancelurl.com"
+  },
+  success: {
+    url: "successurl.com"
+  },
+  error: {
+    url: ""
+  }
+};
 
 const LoaderStateData = props => {
   mock.onGet(apiRequest).reply(400);
@@ -27,12 +38,12 @@ const LoaderStateData = props => {
 };
 
 const AccountExistsStateData = props => {
-  mock.onGet(apiRequest).reply(200, { csoAccountExists: true });
+  mock.onGet(apiRequest).reply(200, { csoAccountExists: true, navigation });
   return props.children({ page });
 };
 
 const NoAccountExistsStateData = props => {
-  mock.onGet(apiRequest).reply(200, { csoAccountExists: false });
+  mock.onGet(apiRequest).reply(200, { csoAccountExists: false, navigation });
   return props.children({ page });
 };
 
