@@ -14,7 +14,7 @@ export const saveNavigationToSession = ({ cancel, success, error }) => {
   if (error.url) sessionStorage.setItem("errorUrl", error.url);
 };
 
-// make call to submission/{id} to get the user details
+// make call to submission/{id} to get the user and navigation details
 const checkCSOAccountStatus = (
   submissionId,
   setCsoAccountExists,
