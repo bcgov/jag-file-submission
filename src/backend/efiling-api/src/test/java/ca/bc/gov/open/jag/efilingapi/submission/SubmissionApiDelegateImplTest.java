@@ -53,6 +53,9 @@ public class SubmissionApiDelegateImplTest {
     public static final UUID CASE_8 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fc");
     public static final UUID CASE_9 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2f1");
     public static final String SUCCESS = "SUCCESS";
+    private static final String CANCELURL = "CANCELURL";
+    private static final String ERRORURL = "ERRORURL";
+    private static final String SUCCESSURL = "SUCCESSURL";
 
 
     private SubmissionApiDelegateImpl sut;
@@ -91,8 +94,9 @@ public class SubmissionApiDelegateImplTest {
         DocumentProperties documentProperties = new DocumentProperties();
         List<String> efilingRole = new ArrayList<>();
         efilingRole.add("efiling");
+
         CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, efilingRole);
-        Submission submissionWithCsoAccount = new Submission(CASE_6, documentProperties, new Navigation(), new Fee(BigDecimal.TEN), csoAccountDetails);
+        Submission submissionWithCsoAccount = new Submission(CASE_6, documentProperties, TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL), new Fee(BigDecimal.TEN), csoAccountDetails);
 
         when(submissionServiceMock.getByKey(Mockito.eq(CASE_5)))
                 .thenReturn(Optional.empty());
@@ -103,12 +107,12 @@ public class SubmissionApiDelegateImplTest {
         List<String> otherRole = new ArrayList<>();
         efilingRole.add("other");
         CsoAccountDetails csoAccountDetailsNoEfilingRole = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, otherRole);
-        Submission submissionWithCsoAccountNoEfilingRole = new Submission(CASE_7, documentProperties, new Navigation(), new Fee(BigDecimal.TEN), csoAccountDetailsNoEfilingRole);
+        Submission submissionWithCsoAccountNoEfilingRole = new Submission(CASE_7, documentProperties, TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL), new Fee(BigDecimal.TEN), csoAccountDetailsNoEfilingRole);
         when(submissionServiceMock.getByKey(Mockito.eq(CASE_7)))
                 .thenReturn(Optional.of(submissionWithCsoAccountNoEfilingRole));
 
 
-        Submission submissionNoCsoAccount  = new Submission(CASE_8, documentProperties, new Navigation(), new Fee(BigDecimal.TEN), null);
+        Submission submissionNoCsoAccount  = new Submission(CASE_8, documentProperties, TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL), new Fee(BigDecimal.TEN), null);
         when(submissionServiceMock.getByKey(Mockito.eq(CASE_8)))
                 .thenReturn(Optional.of(submissionNoCsoAccount));
 
@@ -237,8 +241,9 @@ public class SubmissionApiDelegateImplTest {
         ResponseEntity<UserDetail> actual = sut.getSubmissionUserDetail(CASE_6.toString());
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertTrue(actual.getBody().getCsoAccountExists());
-        assertTrue(actual.getBody().getHasEfilingRole());
-
+        assertEquals(SUCCESSURL, actual.getBody().getNavigation().getSuccess().getUrl());
+        assertEquals(CANCELURL, actual.getBody().getNavigation().getCancel().getUrl());
+        assertEquals(ERRORURL, actual.getBody().getNavigation().getError().getUrl());
     }
 
     @Test
@@ -248,7 +253,9 @@ public class SubmissionApiDelegateImplTest {
         ResponseEntity<UserDetail> actual = sut.getSubmissionUserDetail(CASE_7.toString());
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertTrue(actual.getBody().getCsoAccountExists());
-        assertFalse(actual.getBody().getHasEfilingRole());
+        assertEquals(SUCCESSURL, actual.getBody().getNavigation().getSuccess().getUrl());
+        assertEquals(CANCELURL, actual.getBody().getNavigation().getCancel().getUrl());
+        assertEquals(ERRORURL, actual.getBody().getNavigation().getError().getUrl());
 
     }
 
@@ -259,7 +266,9 @@ public class SubmissionApiDelegateImplTest {
         ResponseEntity<UserDetail> actual = sut.getSubmissionUserDetail(CASE_8.toString());
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertFalse(actual.getBody().getCsoAccountExists());
-        assertFalse(actual.getBody().getHasEfilingRole());
+        assertEquals(SUCCESSURL, actual.getBody().getNavigation().getSuccess().getUrl());
+        assertEquals(CANCELURL, actual.getBody().getNavigation().getCancel().getUrl());
+        assertEquals(ERRORURL, actual.getBody().getNavigation().getError().getUrl());
 
     }
 
