@@ -15,6 +15,7 @@ You should use environment variables to configure the jag efiling api
 | CSO_ACCOUNTFACADE_USERNAME | String | CSO account facade username | not set by default |
 | CSO_ACCOUNTFACADE_PASSWORD | String | CSO account facade password | not set by default |
 | CSO_ACCOUNTFACADE_URI | String | CSO account facade URI | not set by default |
+| CSO_ROLEREGISTRY_URI | String | CSO role registry URI | not set by default |
 
 ## Backend Folder Structure
 
