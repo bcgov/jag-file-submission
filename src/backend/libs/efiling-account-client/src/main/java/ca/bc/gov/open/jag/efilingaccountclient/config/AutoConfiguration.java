@@ -36,18 +36,18 @@ public class AutoConfiguration {
 
     @Bean
     public RoleRegistryPortType roleRegistryPortType() {
-        JaxWsProxyFactoryBean jaxWsProxyFactoryBean = new JaxWsProxyFactoryBean();
-        jaxWsProxyFactoryBean.setServiceClass(RoleRegistryPortType.class);
-        jaxWsProxyFactoryBean.setAddress(csoAccountProperties.getFilingRoleSoapUri());
-        jaxWsProxyFactoryBean.setUsername(csoAccountProperties.getUserName());
-        jaxWsProxyFactoryBean.setPassword(csoAccountProperties.getPassword());
-        return (RoleRegistryPortType) jaxWsProxyFactoryBean.create();
+        JaxWsProxyFactoryBean jaxWsProxyFactoryBeanTest = new JaxWsProxyFactoryBean();
+        jaxWsProxyFactoryBeanTest.setServiceClass(RoleRegistryPortType.class);
+        jaxWsProxyFactoryBeanTest.setAddress(csoAccountProperties.getFilingRoleSoapUri());
+        jaxWsProxyFactoryBeanTest.setUsername(csoAccountProperties.getUserName());
+        jaxWsProxyFactoryBeanTest.setPassword(csoAccountProperties.getPassword());
+        return (RoleRegistryPortType) jaxWsProxyFactoryBeanTest.create();
     }
 
     @Bean
     @ConditionalOnMissingBean({EfilingAccountService.class})
-    public EfilingAccountService efilingAccountService(AccountFacadeBean accountFacadeBean, RoleRegistryPortType roleRegistryPortType) {
-        return new CsoAccountServiceImpl(accountFacadeBean, roleRegistryPortType);
+    public EfilingAccountService efilingAccountService(AccountFacadeBean accountFacadeBean) {
+        return new CsoAccountServiceImpl(accountFacadeBean);
     }
 
 

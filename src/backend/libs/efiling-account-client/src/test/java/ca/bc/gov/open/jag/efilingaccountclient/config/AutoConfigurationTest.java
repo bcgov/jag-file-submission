@@ -29,6 +29,6 @@ public class AutoConfigurationTest {
 
         Assertions.assertNotNull(sut.accountFacadeBean());
         Assertions.assertNotNull(sut.roleRegistryPortType());
-        Assertions.assertNotNull(sut.efilingAccountService(null, null));
+        Assertions.assertNotNull(sut.efilingAccountService(null));
     }
 }
