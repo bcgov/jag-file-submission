@@ -14,7 +14,7 @@ public class DemoConfigurationTest {
             .withUserConfiguration(ApplicationConfiguration.class);
 
     @Test
-    @DisplayName("Test that the demo implementation of the account service is register")
+    @DisplayName("Test that the demo implementation of the account service is registered")
     public void testBeansAreGenerated() {
         context.withPropertyValues("jag.efiling.global.demo=true").run(it -> {
             assertThat(it).hasSingleBean(EfilingAccountService.class);
