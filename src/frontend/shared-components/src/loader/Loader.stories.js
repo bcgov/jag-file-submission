@@ -7,12 +7,6 @@ export default {
   component: Loader
 };
 
-export const Default = () => (
-  <div style={{ background: "grey" }}>
-    <Loader />
-  </div>
-);
-
 export const Page = () => <Loader page />;
 
 export const Mobile = () => <Loader page />;

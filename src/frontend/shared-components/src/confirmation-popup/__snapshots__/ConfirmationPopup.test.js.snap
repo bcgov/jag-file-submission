@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConfirmationPopup Component Matches the snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <button
+      class="normal-blue btn"
+      type="button"
+    >
+      main label
+    </button>
+  </div>
+</DocumentFragment>
+`;
