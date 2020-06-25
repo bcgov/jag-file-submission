@@ -334,7 +334,7 @@ jobs:
               uses: actions/upload-artifact@v2
               with:
                 name: summed-total-coverage-report
-                path: coverage/total-codeclimate.json
+                path: coverage-reports/total-codeclimate.json
 
             # Upload total coverage report to Code Climate
             - name: Upload coverage report to Code Climate
