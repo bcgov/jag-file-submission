@@ -109,8 +109,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    public ResponseEntity<UserDetail> getSubmissionUserDetail(String id) {
-
+    public ResponseEntity<GetSubmissionResponse> getSubmissionUserDetail(String id) {
 
         if(!isUUID(id)) {
             // TODO: add error reponse
@@ -122,12 +121,32 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         if(!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
 
-        UserDetail response = new UserDetail();
-        response.setCsoAccountExists(fromCacheSubmission.get().getCsoAccountDetails() != null);
+        GetSubmissionResponse response = new GetSubmissionResponse();
+
+        response.setUserDetails(buildUserDetails(fromCacheSubmission.get()));
 
         response.setNavigation(fromCacheSubmission.get().getNavigation());
 
         return ResponseEntity.ok(response);
+
+    }
+
+    private UserDetails buildUserDetails(Submission submission) {
+
+        UserDetails userDetails = new UserDetails();
+
+        if(submission.getCsoAccountDetails() != null) {
+            Account account = new Account();
+            account.setType(Account.TypeEnum.CSO);
+            account.setIdentifier(submission.getCsoAccountDetails().getAccountId().toString());
+            userDetails.addAccountsItem(account);
+        }
+
+        userDetails.setFirstName("tbd");
+        userDetails.setLastName("tbd");
+        userDetails.setEmail("tbd");
+        userDetails.setMiddleName("tbd");
+        return userDetails;
 
     }
 
@@ -139,7 +158,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             return false;
         }
     }
-
 
     public EfilingError buildEfilingError(ErrorResponse errorResponse) {
         EfilingError response = new EfilingError();

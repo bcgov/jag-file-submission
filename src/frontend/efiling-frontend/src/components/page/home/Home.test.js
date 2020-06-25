@@ -28,6 +28,13 @@ describe("Home", () => {
       url: ""
     }
   };
+  const userDetails = {
+    accounts: [
+      {
+        type: "CSO"
+      }
+    ]
+  };
   let mock;
 
   beforeEach(() => {
@@ -35,14 +42,16 @@ describe("Home", () => {
     sessionStorage.clear();
   });
 
-  test("Component matches the snapshot when user cso account exists", async () => {
-    mock.onGet(apiRequest).reply(200, { csoAccountExists: true, navigation });
+  const component = (
+    <MemoryRouter initialEntries={[`?submissionId=${submissionId}`]}>
+      <Home page={page} />
+    </MemoryRouter>
+  );
 
-    const { asFragment } = render(
-      <MemoryRouter initialEntries={[`?submissionId=${submissionId}`]}>
-        <Home page={page} />
-      </MemoryRouter>
-    );
+  test("Component matches the snapshot when user cso account exists", async () => {
+    mock.onGet(apiRequest).reply(200, { userDetails, navigation });
+
+    const { asFragment } = render(component);
 
     await wait(() => {
       expect(asFragment()).toMatchSnapshot();
@@ -51,13 +60,12 @@ describe("Home", () => {
   });
 
   test("Component matches the snapshot when user cso account does not exist", async () => {
-    mock.onGet(apiRequest).reply(200, { csoAccountExists: false, navigation });
+    mock.onGet(apiRequest).reply(200, {
+      userDetails: { ...userDetails, accounts: null },
+      navigation
+    });
 
-    const { asFragment } = render(
-      <MemoryRouter initialEntries={[`?submissionId=${submissionId}`]}>
-        <Home page={page} />
-      </MemoryRouter>
-    );
+    const { asFragment } = render(component);
 
     await wait(() => {
       expect(asFragment()).toMatchSnapshot();
@@ -68,11 +76,7 @@ describe("Home", () => {
   test("Component matches the snapshot when still loading", async () => {
     mock.onGet(apiRequest).reply(400);
 
-    const { asFragment } = render(
-      <MemoryRouter initialEntries={[`?submissionId=${submissionId}`]}>
-        <Home page={page} />
-      </MemoryRouter>
-    );
+    const { asFragment } = render(component);
 
     await wait(() => {
       expect(asFragment()).toMatchSnapshot();

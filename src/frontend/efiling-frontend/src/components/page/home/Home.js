@@ -22,9 +22,15 @@ const checkCSOAccountStatus = (
 ) => {
   axios
     .get(`/submission/${submissionId}`)
-    .then(({ data: { csoAccountExists, navigation } }) => {
+    .then(({ data: { userDetails, navigation } }) => {
       saveNavigationToSession(navigation);
-      if (csoAccountExists) setCsoAccountExists(true);
+
+      if (userDetails.accounts) {
+        const csoAccountExists = userDetails.accounts.some(
+          element => element.type === "CSO"
+        );
+        if (csoAccountExists) setCsoAccountExists(true);
+      }
       setShowLoader(false);
     })
     .catch(() => {});
