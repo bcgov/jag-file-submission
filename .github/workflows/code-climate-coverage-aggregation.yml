@@ -22,35 +22,35 @@ jobs:
 
             # Get Code Climate binary
             - name: Download Code Climate Binary
-                run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+              run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
 
             # Permissions applied to the Code Climate Executable
             - name: Apply executable perms to Code Climate Binary
-                run: chmod +x ./cc-test-reporter
+              run: chmod +x ./cc-test-reporter
             
             # Before build 
             - name: Before build
-                run: ./cc-test-reporter before-build
+              run: ./cc-test-reporter before-build
 
             # Set required Git env vars for either pull request
             - name: Set ENV for codeclimate (pull_request)
-                run: |
-                    echo "::set-env name=GIT_BRANCH::${{ github.event.pull_request.head.ref }}"
-                    echo "::set-env name=GIT_COMMIT_SHA::${{ github.event.pull_request.head.sha }}"
-                if: github.event_name == 'pull_request'
+              run: |
+                  echo "::set-env name=GIT_BRANCH::${{ github.event.pull_request.head.ref }}"
+                  echo "::set-env name=GIT_COMMIT_SHA::${{ github.event.pull_request.head.sha }}"
+              if: github.event_name == 'pull_request'
 
             # Set required Git env vars for a push to master
             - name: Set ENV for codeclimate (push)
-                run: |
-                    echo "::set-env name=GIT_BRANCH::$GITHUB_REF"
-                    echo "::set-env name=GIT_COMMIT_SHA::$GITHUB_SHA"
-                if: github.event_name == 'push'
+              run: |
+                  echo "::set-env name=GIT_BRANCH::$GITHUB_REF"
+                  echo "::set-env name=GIT_COMMIT_SHA::$GITHUB_SHA"
+              if: github.event_name == 'push'
 
             # Trimming the ref to master in order to publish correct report (paambaati)
             - name: Set ref/head/master to master
-                run: |
-                    echo "::set-env name=GIT_BRANCH::master"
-                if: env.GIT_BRANCH == 'refs/heads/master'
+              run: |
+                  echo "::set-env name=GIT_BRANCH::master"
+              if: env.GIT_BRANCH == 'refs/heads/master'
                 
             # Figure out where yarn is caching things
             - name: Yarn Cache
@@ -72,61 +72,61 @@ jobs:
 
             # Run Yarn Install - Shared Components
             - name: Run Yarn Install - Shared components
-                run: yarn --cwd src/frontend/shared-components install
+              run: yarn --cwd src/frontend/shared-components install
 
             # Run Yarn Prepare - Shared Components
             - name: Run Yarn Prepare - Shared components
-                run: yarn --cwd src/frontend/shared-components prepare
+              run: yarn --cwd src/frontend/shared-components prepare
 
             # Yarn Coverage - Shared Components
             - name: Run Yarn Coverage - Shared components
-                run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/shared-components coverage
+              run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/shared-components coverage
 
             # Run Yarn Install - eFiling Frontend
             - name: Run Yarn Install - eFiling Frontend
-                run: yarn --cwd src/frontend/efiling-frontend install
+              run: yarn --cwd src/frontend/efiling-frontend install
 
             # Yarn Coverage - eFiling Frontend
             - name: Run Yarn Coverage - eFiling Frontend
-                run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/efiling-frontend coverage
+              run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/efiling-frontend coverage
 
             # Run Yarn Install - eFiling Demo
             - name: Run Yarn Install - eFiling Demo
-                run: yarn --cwd src/frontend/efiling-demo install
+              run: yarn --cwd src/frontend/efiling-demo install
 
             # Yarn Coverage - eFiling Demo
             - name: Run Yarn Coverage - eFiling Demo
-                run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/efiling-demo coverage
+              run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/efiling-demo coverage
 
             # Formatting the FRONTEND coverage report
             - name: Format the FRONTEND coverage report
-                run: |
-                    ./cc-test-reporter format-coverage -t lcov -o coverage/frontend-codeclimate.json ${{github.workspace}}/src/frontend/efiling-frontend/coverage/lcov.info
+              run: |
+                ./cc-test-reporter format-coverage -t lcov -o coverage/frontend-codeclimate.json ${{github.workspace}}/src/frontend/efiling-frontend/coverage/lcov.info
 
             # Formatting the FRONTEND DEMO coverage report
             - name: Format the FRONTEND DEMO coverage report
-                run: |
-                    ./cc-test-reporter format-coverage -t lcov -o coverage/frontend-demo-codeclimate.json ${{github.workspace}}/src/frontend/efiling-demo/coverage/lcov.info
+              run: |
+                ./cc-test-reporter format-coverage -t lcov -o coverage/frontend-demo-codeclimate.json ${{github.workspace}}/src/frontend/efiling-demo/coverage/lcov.info
 
             # Formatting the SHARED COMPONENTS coverage report
             - name: Format the SHARED COMPONENTS coverage report
-                run: |
-                    ./cc-test-reporter format-coverage -t lcov -o coverage/shared-components-codeclimate.json ${{github.workspace}}/src/frontend/shared-components/coverage/lcov.info
+              run: |
+                ./cc-test-reporter format-coverage -t lcov -o coverage/shared-components-codeclimate.json ${{github.workspace}}/src/frontend/shared-components/coverage/lcov.info
 
             # List all formatted files in coverage directory
             - name: WHERE AM I - FORMATTED?
-                run: |
-                    ls ${{ github.workspace }}/coverage
-                if: ${{ env.ACTION_DEBUG }}
+              run: |
+                  ls ${{ github.workspace }}/coverage
+              if: ${{ env.ACTION_DEBUG }}
 
             # Count of all total coverage files available
             - name: Count files present
-                run: |
-                    echo "::set-env name=FILE_COUNTER::$(ls -1q ./coverage | wc -l )"
+              run: |
+                  echo "::set-env name=FILE_COUNTER::$(ls -1q ./coverage | wc -l )"
 
             # Sum the coverage reports
             - name: Summing the coverage reports generated
-                run: ./cc-test-reporter sum-coverage coverage/*-codeclimate.json -p ${{ env.FILE_COUNTER }} -o coverage/total-codeclimate.json
+              run: ./cc-test-reporter sum-coverage coverage/*-codeclimate.json -p ${{ env.FILE_COUNTER }} -o coverage/total-codeclimate.json
 
             # Upload JSON for debugging purposes
             - name: Upload JSON for debugging purposes
@@ -148,35 +148,35 @@ jobs:
 
             # Get Code Climate binary
             - name: Download Code Climate Binary
-                run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+              run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
 
             # Permissions applied to the Code Climate Executable
             - name: Apply executable perms to Code Climate Binary
-                run: chmod +x ./cc-test-reporter
+              run: chmod +x ./cc-test-reporter
             
             # Before build 
             - name: Before build
-                run: ./cc-test-reporter before-build
+              run: ./cc-test-reporter before-build
 
             # Set required Git env vars for either pull request
             - name: Set ENV for codeclimate (pull_request)
-                run: |
-                    echo "::set-env name=GIT_BRANCH::${{ github.event.pull_request.head.ref }}"
-                    echo "::set-env name=GIT_COMMIT_SHA::${{ github.event.pull_request.head.sha }}"
-                if: github.event_name == 'pull_request'
+              run: |
+                  echo "::set-env name=GIT_BRANCH::${{ github.event.pull_request.head.ref }}"
+                  echo "::set-env name=GIT_COMMIT_SHA::${{ github.event.pull_request.head.sha }}"
+              if: github.event_name == 'pull_request'
 
             # Set required Git env vars for a push to master
             - name: Set ENV for codeclimate (push)
-                run: |
-                    echo "::set-env name=GIT_BRANCH::$GITHUB_REF"
-                    echo "::set-env name=GIT_COMMIT_SHA::$GITHUB_SHA"
-                if: github.event_name == 'push'
+              run: |
+                  echo "::set-env name=GIT_BRANCH::$GITHUB_REF"
+                  echo "::set-env name=GIT_COMMIT_SHA::$GITHUB_SHA"
+              if: github.event_name == 'push'
 
             # Trimming the ref to master in order to publish correct report (paambaati)
             - name: Set ref/head/master to master
-                run: |
-                    echo "::set-env name=GIT_BRANCH::master"
-                if: env.GIT_BRANCH == 'refs/heads/master'
+              run: |
+                  echo "::set-env name=GIT_BRANCH::master"
+              if: env.GIT_BRANCH == 'refs/heads/master'
                 
             # Setup Java Environment
             - name: Set up JDK 1.8
@@ -192,51 +192,51 @@ jobs:
 
             # Run Maven Verify to generate all jacoco reports
             - name: Build with Maven
-                run: mvn -B verify -P all --file src/backend/pom.xml
+              run: mvn -B verify -P all --file src/backend/pom.xml
 
             # Loop through all BACKEND services to show that jacoco reports have been generated
             - name: WHERE AM I - BACKEND?
-                run: |
-                    for s in efiling-backend-demo efiling-api
-                    do
-                        ls ${{ github.workspace }}/src/backend/$s/target/site/jacoco;
-                    done
-                if: ${{ env.ACTION_DEBUG }}
+              run: |
+                  for s in efiling-backend-demo efiling-api
+                  do
+                      ls ${{ github.workspace }}/src/backend/$s/target/site/jacoco;
+                  done
+              if: ${{ env.ACTION_DEBUG }}
             
             # Formatting the BACKEND coverage reports generated (dynamically)
             - name: Format BACKEND coverage reports
-                run: |
-                    projectRelRegex="^\.\/src\/backend\/(.*)\/target\/site\/jacoco\/jacoco\.xml$"
-                    for file in $(find . -name "jacoco.xml")
-                    do
-                        echo $file
-                        echo $projectRelRegex
-                        if [[ $file =~ $projectRelRegex ]]
-                        then
-                            projectRel="${BASH_REMATCH[1]}"
-                            echo "analyzing project: " $projectRel
-                            projectName="${projectRel//\//-}"
-                            JACOCO_SOURCE_PATH=${{ github.workspace }}/src/backend/$projectRel/src/main/java ./cc-test-reporter format-coverage ${{github.workspace}}/src/backend/$projectRel/target/site/jacoco/jacoco.xml --input-type jacoco --output coverage/$projectName-codeclimate.json;
-                            echo "coverage generated: coverage/$projectName-codeclimate.json;"
-                        else
-                            echo $file does not match
-                        fi
-                    done
+              run: |
+                  projectRelRegex="^\.\/src\/backend\/(.*)\/target\/site\/jacoco\/jacoco\.xml$"
+                  for file in $(find . -name "jacoco.xml")
+                  do
+                      echo $file
+                      echo $projectRelRegex
+                      if [[ $file =~ $projectRelRegex ]]
+                      then
+                          projectRel="${BASH_REMATCH[1]}"
+                          echo "analyzing project: " $projectRel
+                          projectName="${projectRel//\//-}"
+                          JACOCO_SOURCE_PATH=${{ github.workspace }}/src/backend/$projectRel/src/main/java ./cc-test-reporter format-coverage ${{github.workspace}}/src/backend/$projectRel/target/site/jacoco/jacoco.xml --input-type jacoco --output coverage/$projectName-codeclimate.json;
+                          echo "coverage generated: coverage/$projectName-codeclimate.json;"
+                      else
+                          echo $file does not match
+                      fi
+                  done
 
             # List all formatted files in coverage directory
             - name: WHERE AM I - FORMATTED?
-                run: |
-                    ls ${{ github.workspace }}/coverage
-                if: ${{ env.ACTION_DEBUG }}
+              run: |
+                  ls ${{ github.workspace }}/coverage
+              if: ${{ env.ACTION_DEBUG }}
             
             # Count of all total coverage files available
             - name: Count files present
-                run: |
-                    echo "::set-env name=FILE_COUNTER::$(ls -1q ./coverage | wc -l )"
+              run: |
+                  echo "::set-env name=FILE_COUNTER::$(ls -1q ./coverage | wc -l )"
                 
             # Sum the coverage reports
             - name: Summing the coverage reports generated
-                run: ./cc-test-reporter sum-coverage coverage/*-codeclimate.json -p ${{ env.FILE_COUNTER }} -o coverage/total-codeclimate.json
+              run: ./cc-test-reporter sum-coverage coverage/*-codeclimate.json -p ${{ env.FILE_COUNTER }} -o coverage/total-codeclimate.json
 
             # Upload JSON for debugging purposes
             - name: Upload JSON for debugging purposes
