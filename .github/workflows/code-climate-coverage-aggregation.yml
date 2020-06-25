@@ -249,6 +249,8 @@ jobs:
 
         name: Aggregate Spring Boot and Javascript reports
         needs: [yarn, spring-boot]
+        env:
+          CC_TEST_REPORTER_ID: 9ada3133fe9babf91a222009998b3545b7eae897a05900930bfa8a27fd82f385
         runs-on: ubuntu-latest
         steps:
 
