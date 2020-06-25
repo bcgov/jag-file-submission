@@ -12,17 +12,16 @@ jag:
   efiling:
     navigation:
       baseUrl: ${NAVIGATION_BASE_URL:https://httpbin.org/}
-    account:
-      client:
-        userName: ${CSO_ACCOUNTFACADE_USERNAME}
-        password: ${CSO_ACCOUNTFACADE_PASSWORD}
-        uri: ${CSO_ACCOUNTFACADE_URI:http://localhost:8091}
-
-    role:
-      client:
-        userName: ${CSO_ACCOUNTFACADE_USERNAME}
-        password: ${CSO_ACCOUNTFACADE_PASSWORD}
-        uri: ${CSO_ROLEREGISTRY_URI:http://localhost:8091}
+    soap:
+      clients:
+        - client: ACCOUNT
+          userName: ${CSO_ACCOUNTFACADE_USERNAME}
+          password: ${CSO_ACCOUNTFACADE_PASSWORD}
+          uri: ${CSO_ACCOUNTFACADE_URI:http://localhost:8091}
+        - client: ROLE
+          userName: ${CSO_ACCOUNTFACADE_USERNAME}
+          password: ${CSO_ACCOUNTFACADE_PASSWORD}
+          uri: ${CSO_ROLEREGISTRY_URI:http://localhost:8091}
 
 info:
   app:
