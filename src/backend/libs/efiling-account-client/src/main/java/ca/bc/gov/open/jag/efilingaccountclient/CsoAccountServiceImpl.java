@@ -7,8 +7,6 @@ import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
 import ca.bc.gov.ag.csows.accounts.ClientProfile;
 import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingaccountclient.exception.CSOHasMultipleAccountException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -17,7 +15,6 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
 
     private AccountFacadeBean accountFacadeBean;
     private RoleRegistryPortType roleRegistryPortType;
-    private static final Logger LOGGER = LoggerFactory.getLogger(CsoAccountServiceImpl.class);
 
     public CsoAccountServiceImpl(AccountFacadeBean accountFacadeBean, RoleRegistryPortType roleRegistryPortType) {
 
