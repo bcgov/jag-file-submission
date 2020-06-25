@@ -1,5 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`ConfirmationPopup Component First child matches the snapshot 1`] = `
+<div>
+  <button
+    class="normal-blue btn"
+    type="button"
+  >
+    main label
+  </button>
+</div>
+`;
+
 exports[`ConfirmationPopup Component Matches the snapshot 1`] = `
 <DocumentFragment>
   <div>
@@ -12,3 +23,16 @@ exports[`ConfirmationPopup Component Matches the snapshot 1`] = `
   </div>
 </DocumentFragment>
 `;
+
+exports[`ConfirmationPopup Component Matches the snapshot 2`] = `
+<div>
+  <button
+    class="normal-blue btn"
+    type="button"
+  >
+    main label
+  </button>
+</div>
+`;
+
+exports[`ConfirmationPopup Component Second child matches the snapshot 1`] = `undefined`;

@@ -1,5 +1,6 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { mount } from "enzyme";
+import EnzymeToJson from "enzyme-to-json";
 
 import { ConfirmationPopup } from "./ConfirmationPopup";
 
@@ -25,18 +26,17 @@ describe("ConfirmationPopup Component", () => {
     cancelStyling: "normal-white btn consistent-width"
   };
 
+  const component = (
+    <ConfirmationPopup
+      modal={modal}
+      mainButton={mainButton}
+      confirmButton={confirmButton}
+      cancelButton={cancelButton}
+    />
+  );
+
   test("Matches the snapshot", () => {
-    const component = (
-      <ConfirmationPopup
-        modal={modal}
-        mainButton={mainButton}
-        confirmButton={confirmButton}
-        cancelButton={cancelButton}
-      />
-    );
-
-    const { asFragment } = render(component);
-
-    expect(asFragment()).toMatchSnapshot();
+    const subject = mount(component);
+    expect(EnzymeToJson(subject)).toMatchSnapshot();
   });
 });
