@@ -1543,6 +1543,7 @@ exports[`Storyshots Header Default 1`] = `
         className="img-fluid d-none d-md-block pointer"
         height="44"
         onClick={[Function]}
+        onKeyDown={[Function]}
         src={
           Object {
             "process": [Function],
@@ -1555,6 +1556,7 @@ exports[`Storyshots Header Default 1`] = `
         className="img-fluid d-md-none pointer"
         height="44"
         onClick={[Function]}
+        onKeyDown={[Function]}
         src={
           Object {
             "process": [Function],
@@ -1598,6 +1600,7 @@ exports[`Storyshots Header Mobile 1`] = `
         className="img-fluid d-none d-md-block pointer"
         height="44"
         onClick={[Function]}
+        onKeyDown={[Function]}
         src={
           Object {
             "process": [Function],
@@ -1610,6 +1613,7 @@ exports[`Storyshots Header Mobile 1`] = `
         className="img-fluid d-md-none pointer"
         height="44"
         onClick={[Function]}
+        onKeyDown={[Function]}
         src={
           Object {
             "process": [Function],

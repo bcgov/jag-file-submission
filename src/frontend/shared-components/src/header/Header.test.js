@@ -41,4 +41,14 @@ describe("Header Component", () => {
 
     expect(header.history.location.pathname).toEqual("/");
   });
+
+  test("Keydown on HeadingImage takes you back to home", () => {
+    header.history.location.pathname = "/somepageroute";
+
+    const { container } = render(<Header header={header} />);
+
+    fireEvent.keyDown(getAllByAltText(container, "B.C. Government Logo")[0]);
+
+    expect(header.history.location.pathname).toEqual("/");
+  });
 });
