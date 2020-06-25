@@ -6,6 +6,7 @@ import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountServiceImpl;
 import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
+import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.junit.platform.commons.util.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -42,9 +43,7 @@ public class AutoConfiguration {
         return new CsoAccountServiceImpl(accountFacadeBean);
     }
 
-
     public <T> T getPort(Clients clients, Class<T> type) {
-
         JaxWsProxyFactoryBean jaxWsProxyFactoryBean = new JaxWsProxyFactoryBean();
         jaxWsProxyFactoryBean.setServiceClass(type);
         EfilingSoapClientProperties efilingSoapClientProperties = soapProperties.findByEnum(clients);
@@ -54,7 +53,6 @@ public class AutoConfiguration {
         if(StringUtils.isNotBlank(efilingSoapClientProperties.getPassword()))
             jaxWsProxyFactoryBean.setPassword(efilingSoapClientProperties.getPassword());
         return type.cast(jaxWsProxyFactoryBean.create());
-
     }
 
 }

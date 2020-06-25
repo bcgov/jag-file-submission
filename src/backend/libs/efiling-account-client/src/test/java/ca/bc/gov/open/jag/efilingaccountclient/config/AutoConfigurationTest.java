@@ -4,6 +4,7 @@ package ca.bc.gov.open.jag.efilingaccountclient.config;
 
 import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
+import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

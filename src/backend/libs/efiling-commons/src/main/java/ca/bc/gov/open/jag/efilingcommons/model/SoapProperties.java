@@ -1,7 +1,5 @@
-package ca.bc.gov.open.jag.efilingaccountclient.config;
+package ca.bc.gov.open.jag.efilingcommons.model;
 
-import ca.bc.gov.open.jag.efilingcommons.model.Clients;
-import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.List;
