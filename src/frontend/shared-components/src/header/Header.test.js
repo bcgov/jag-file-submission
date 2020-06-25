@@ -32,7 +32,7 @@ describe("Header Component", () => {
     testBasicSnapshot(headingImage);
   });
 
-  test("Clicking HeadingTitle takes you back to home", () => {
+  test("Clicking HeadingImage takes you back to home", () => {
     header.history.location.pathname = "/somepageroute";
 
     const { container } = render(<Header header={header} />);
@@ -42,7 +42,7 @@ describe("Header Component", () => {
     expect(header.history.location.pathname).toEqual("/");
   });
 
-  test("Keydown on HeadingTitle takes you back to home", () => {
+  test("Keydown on HeadingImage takes you back to home", () => {
     header.history.location.pathname = "/somepageroute";
 
     const { container } = render(<Header header={header} />);

@@ -8,40 +8,40 @@ exports[`Header Component Header matches the snapshot 1`] = `
     <div
       aria-labelledby="title"
       className="navbar-brand pointer"
-      onClick={[Function]}
-      onKeyDown={[Function]}
-      role="button"
-      tabIndex={0}
     />
     <img
       alt="B.C. Government Logo"
-      className="img-fluid d-none d-md-block"
+      className="img-fluid d-none d-md-block pointer"
       height="44"
+      onClick={[Function]}
+      onKeyDown={[Function]}
+      role="button"
       src={
         Object {
           "process": [Function],
         }
       }
+      tabIndex={0}
       width={181}
     />
     <img
       alt="B.C. Government Logo"
-      className="img-fluid d-md-none"
+      className="img-fluid d-md-none pointer"
       height="44"
+      onClick={[Function]}
+      onKeyDown={[Function]}
+      role="button"
       src={
         Object {
           "process": [Function],
         }
       }
+      tabIndex={0}
       width={64}
     />
     <div
       aria-labelledby="title"
       className="pointer navbar-brand nav-item nav-link"
-      onClick={[Function]}
-      onKeyDown={[Function]}
-      role="button"
-      tabIndex={0}
     />
     <div
       className="navbar-brand"
@@ -56,20 +56,50 @@ exports[`Header Component Header matches the snapshot 1`] = `
 exports[`Header Component HeaderImage matches the snapshot 1`] = `
 <img
   alt="B.C. Government Logo"
-  className="img-fluid d-none d-md-block"
+  className={181}
   height="44"
-  src="bcid-logo-rev-en.svg"
-  width={181}
+  onClick={[Function]}
+  onKeyDown={[Function]}
+  role="button"
+  tabIndex={0}
+  width="bcid-logo-rev-en.svg"
 />
 `;
 
 exports[`Header Component HeadingTitle matches the snapshot 1`] = `
 <div
   aria-labelledby="title"
-  className="navbar-brand pointer"
-  onClick={[Function]}
-  onKeyDown={[Function]}
-  role="button"
-  tabIndex={0}
+  className={
+    Object {
+      "action": "POP",
+      "block": [Function],
+      "canGo": [Function],
+      "createHref": [Function],
+      "entries": Array [
+        Object {
+          "hash": "",
+          "key": "qjo4t4",
+          "pathname": "/",
+          "search": "",
+          "state": undefined,
+        },
+      ],
+      "go": [Function],
+      "goBack": [Function],
+      "goForward": [Function],
+      "index": 0,
+      "length": 1,
+      "listen": [Function],
+      "location": Object {
+        "hash": "",
+        "key": "qjo4t4",
+        "pathname": "/",
+        "search": "",
+        "state": undefined,
+      },
+      "push": [Function],
+      "replace": [Function],
+    }
+  }
 />
 `;

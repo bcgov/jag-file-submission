@@ -1537,40 +1537,40 @@ exports[`Storyshots Header Default 1`] = `
       <div
         aria-labelledby="title"
         className="navbar-brand pointer"
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        role="button"
-        tabIndex={0}
       />
       <img
         alt="B.C. Government Logo"
-        className="img-fluid d-none d-md-block"
+        className="img-fluid d-none d-md-block pointer"
         height="44"
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        role="button"
         src={
           Object {
             "process": [Function],
           }
         }
+        tabIndex={0}
         width={181}
       />
       <img
         alt="B.C. Government Logo"
-        className="img-fluid d-md-none"
+        className="img-fluid d-md-none pointer"
         height="44"
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        role="button"
         src={
           Object {
             "process": [Function],
           }
         }
+        tabIndex={0}
         width={64}
       />
       <div
         aria-labelledby="title"
         className="pointer navbar-brand nav-item nav-link"
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        role="button"
-        tabIndex={0}
       />
       <div
         className="navbar-brand"
@@ -1598,40 +1598,40 @@ exports[`Storyshots Header Mobile 1`] = `
       <div
         aria-labelledby="title"
         className="navbar-brand pointer"
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        role="button"
-        tabIndex={0}
       />
       <img
         alt="B.C. Government Logo"
-        className="img-fluid d-none d-md-block"
+        className="img-fluid d-none d-md-block pointer"
         height="44"
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        role="button"
         src={
           Object {
             "process": [Function],
           }
         }
+        tabIndex={0}
         width={181}
       />
       <img
         alt="B.C. Government Logo"
-        className="img-fluid d-md-none"
+        className="img-fluid d-md-none pointer"
         height="44"
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        role="button"
         src={
           Object {
             "process": [Function],
           }
         }
+        tabIndex={0}
         width={64}
       />
       <div
         aria-labelledby="title"
         className="pointer navbar-brand nav-item nav-link"
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        role="button"
-        tabIndex={0}
       />
       <div
         className="navbar-brand"
