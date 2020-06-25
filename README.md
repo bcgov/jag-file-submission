@@ -48,9 +48,12 @@ if you want to integrate with the CSO application create a local `.env` at the r
 set the following environement variables:
 
 ```
+DEMO_MODE=true
 CSO_ACCOUNTFACADE_URI=
 CSO_ACCOUNTFACADE_USERNAME=
 CSO_ACCOUNTFACADE_PASSWORD=
+CSO_ROLEREGISTRY_USERNAME=
+CSO_ROLEREGISTRY_PASSWORD=
 CSO_ROLEREGISTRY_URI=
 ```
 
