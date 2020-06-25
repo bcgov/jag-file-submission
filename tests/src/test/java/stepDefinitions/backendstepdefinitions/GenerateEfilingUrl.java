@@ -28,6 +28,7 @@ public class GenerateEfilingUrl {
     private static String submissionId;
     private static String submissionIdQuery;
     private static JsonPath jsonPath;
+    private static final String CONTENT_TYPE = "application/json";
 
     private GenerateEfilingUrl() {
         throw new IllegalStateException("Step definition class");
@@ -47,7 +48,7 @@ public class GenerateEfilingUrl {
     @When("status code is {int} and content type is verified")
     public static void status_code_is_and_content_type_is_verified(Integer statusCode) {
         assertEquals(response.getStatusCode(), 200);
-        assertEquals(response.getContentType(), "application/json");
+        assertEquals(response.getContentType(), CONTENT_TYPE);
     }
 
     @Then("verify response returns {string} and expiry date")
@@ -108,10 +109,10 @@ public class GenerateEfilingUrl {
     public static void status_is_and_content_type_is_verified(Integer int1) {
         if(int1 == 404) {
             assertEquals(response.getStatusCode(), 404);
-            assertEquals(response.getContentType(), "application/json");
+            assertEquals(response.getContentType(), CONTENT_TYPE);
         } else if(int1 == 405) {
             assertEquals(response.getStatusCode(), 405);
-            assertEquals(response.getContentType(), "application/json");
+            assertEquals(response.getContentType(), CONTENT_TYPE);
         }
     }
 
