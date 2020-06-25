@@ -2,11 +2,15 @@
 
 ## Business
 
+[court definition](http://www.bclaws.ca/civix/document/id/complete/statreg/168_2009_01#subrule_d2e71)
+
 ### Document
+
+A document has an extended meaning and includes a photograph, film, recording of sound, any record of a permanent or semi-permanent character and any information recorded or stored by means of any device.
 
 ### Efiling
 
-Electronic filing is the process of submitting documents over the Internet using jag efiling software that has been approved by `placholder`, such as a Restriction Order.
+Electronic filing is the process of submitting a package to a Court Registry over the Internet using the jag-efiling software that has been approved by the Court Services Branch and the Judicary.
 
 ### File
 
@@ -14,7 +18,11 @@ See [computer file](https://en.wikipedia.org/wiki/Computer%20file)
 
 ### Package
 
+A package can contain one or multiple documents that have or are being submitted electronically for a single court file number.
+
 ### Submission
+
+A submission is a set of documents, fees, or comments that are being transmitted electronically for review and filing.
 
 ## Development lifecycle
 
