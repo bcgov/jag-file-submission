@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import PropTypes, { element } from "prop-types";
+import PropTypes from "prop-types";
 import queryString from "query-string";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
