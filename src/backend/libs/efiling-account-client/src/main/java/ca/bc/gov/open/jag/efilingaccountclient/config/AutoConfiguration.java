@@ -13,14 +13,17 @@ import org.springframework.context.annotation.Configuration;
 
 
 @Configuration
-@EnableConfigurationProperties(CsoAccountProperties.class)
+@EnableConfigurationProperties({CsoAccountProperties.class,CsoRoleProperties.class})
 public class AutoConfiguration {
 
     private final CsoAccountProperties csoAccountProperties;
 
-    public AutoConfiguration(CsoAccountProperties csoAccountProperties) {
+    private final CsoRoleProperties csoRoleProperties;
+
+    public AutoConfiguration(CsoAccountProperties csoAccountProperties, CsoRoleProperties csoRoleProperties) {
 
         this.csoAccountProperties = csoAccountProperties;
+        this.csoRoleProperties = csoRoleProperties;
     }
 
     @Bean
@@ -28,7 +31,7 @@ public class AutoConfiguration {
         JaxWsProxyFactoryBean jaxWsProxyFactoryBean =
                 new JaxWsProxyFactoryBean();
         jaxWsProxyFactoryBean.setServiceClass(AccountFacadeBean.class);
-        jaxWsProxyFactoryBean.setAddress(csoAccountProperties.getFilingAccountSoapUri());
+        jaxWsProxyFactoryBean.setAddress(csoAccountProperties.getUri());
         jaxWsProxyFactoryBean.setUsername(csoAccountProperties.getUserName());
         jaxWsProxyFactoryBean.setPassword(csoAccountProperties.getPassword());
         return (AccountFacadeBean) jaxWsProxyFactoryBean.create();
@@ -36,12 +39,12 @@ public class AutoConfiguration {
 
     @Bean
     public RoleRegistryPortType roleRegistryPortType() {
-        JaxWsProxyFactoryBean jaxWsProxyFactoryBeanTest = new JaxWsProxyFactoryBean();
-        jaxWsProxyFactoryBeanTest.setServiceClass(RoleRegistryPortType.class);
-        jaxWsProxyFactoryBeanTest.setAddress(csoAccountProperties.getFilingRoleSoapUri());
-        jaxWsProxyFactoryBeanTest.setUsername(csoAccountProperties.getUserName());
-        jaxWsProxyFactoryBeanTest.setPassword(csoAccountProperties.getPassword());
-        return (RoleRegistryPortType) jaxWsProxyFactoryBeanTest.create();
+        JaxWsProxyFactoryBean jaxWsProxyFactoryBean = new JaxWsProxyFactoryBean();
+        jaxWsProxyFactoryBean.setServiceClass(RoleRegistryPortType.class);
+        jaxWsProxyFactoryBean.setAddress(csoRoleProperties.getUri());
+        jaxWsProxyFactoryBean.setUsername(csoRoleProperties.getUserName());
+        jaxWsProxyFactoryBean.setPassword(csoRoleProperties.getPassword());
+        return (RoleRegistryPortType) jaxWsProxyFactoryBean.create();
     }
 
     @Bean
