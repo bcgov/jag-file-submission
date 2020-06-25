@@ -323,4 +323,4 @@ jobs:
             # See what is inside coverage
             - name: List items inside java coverage report object
               run: |
-                ls /coverage
+                ls coverage-reports
