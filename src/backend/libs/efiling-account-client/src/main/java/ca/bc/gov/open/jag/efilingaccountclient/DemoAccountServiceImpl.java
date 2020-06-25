@@ -10,20 +10,17 @@ import java.util.*;
 public class DemoAccountServiceImpl implements EfilingAccountService {
 
     public static final UUID ACCOUNT_WITH_EFILING_ROLE = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fa");
-    public static final UUID ACCOUNT_WITH_ADMIN_ROLE = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fb");
+    public static final UUID ACCOUNT_WITHOUT_EFILING_ROLE = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fb");
 
     private Map<String, CsoAccountDetails> csoAccounts = new HashMap<>();
 
     public DemoAccountServiceImpl() {
 
-        CsoAccountDetails accountWithEfilingRole = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN);
-        accountWithEfilingRole.addRole("efiling");
-
-        CsoAccountDetails accountWithDifferentRole = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN);
-        accountWithDifferentRole.addRole("admin");
+        CsoAccountDetails accountWithEfilingRole = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, true);
+        CsoAccountDetails accountWithOutEfilingRole = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, false);
 
         csoAccounts.put(ACCOUNT_WITH_EFILING_ROLE.toString(), accountWithEfilingRole);
-        csoAccounts.put(ACCOUNT_WITH_ADMIN_ROLE.toString(), accountWithDifferentRole);
+        csoAccounts.put(ACCOUNT_WITHOUT_EFILING_ROLE.toString(), accountWithOutEfilingRole);
 
     }
 

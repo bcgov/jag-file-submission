@@ -9,7 +9,7 @@ import java.util.UUID;
 public class DemoAcountServiceImplTest {
 
     public static final UUID ACCOUNT_WITH_EFILING_ROLE = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fa");
-    public static final UUID ACCOUNT_WITH_ADMIN_ROLE = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fb");
+    public static final UUID ACCOUNT_WITHOUT_EFILING_ROLE = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fb");
     public static final UUID ACCOUNT_DOES_NOT_EXISTS = UUID.randomUUID();
 
     DemoAccountServiceImpl sut;
@@ -27,20 +27,18 @@ public class DemoAcountServiceImplTest {
 
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountId());
         Assertions.assertEquals(BigDecimal.TEN, actual.getClientId());
-        Assertions.assertTrue(actual.HasRole("efiling"));
-
+        Assertions.assertEquals(true, actual.getHasEfileRole());
     }
 
     @Test
     @DisplayName("CASE 2: with account not having efiling role")
     public void withAccountHavingAdminRole() {
 
-        CsoAccountDetails actual = sut.getAccountDetails(ACCOUNT_WITH_ADMIN_ROLE.toString());
+        CsoAccountDetails actual = sut.getAccountDetails(ACCOUNT_WITHOUT_EFILING_ROLE.toString());
 
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountId());
         Assertions.assertEquals(BigDecimal.TEN, actual.getClientId());
-        Assertions.assertFalse(actual.HasRole("efiling"));
-
+        Assertions.assertEquals(false, actual.getHasEfileRole());
     }
 
     @Test
@@ -48,7 +46,6 @@ public class DemoAcountServiceImplTest {
     public void withNoAccountShouldBeNull() {
 
         Assertions.assertNull(sut.getAccountDetails(ACCOUNT_DOES_NOT_EXISTS.toString()));
-
     }
 
 }
