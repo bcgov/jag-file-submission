@@ -46,7 +46,6 @@ public class CsoAccountServiceImplTest {
 
         MockitoAnnotations.initMocks(this);
 
-        CsoAccountDetails details = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN);
         ClientProfile profile =  new ClientProfile();
         profile.setAccountId(BigDecimal.TEN);
         profile.setClientId(BigDecimal.TEN);
@@ -70,7 +69,7 @@ public class CsoAccountServiceImplTest {
         Mockito.when(mockRoleRegistryPortType.getRolesForIdentifier("Courts", "CSO", USERGUIDNOROLE, "CAP")).thenReturn(userRolesWithoutFileRole);
     }
 
-    @DisplayName("getAccountDetails called with empty userGuid should return null")
+    @DisplayName("getAccountDetails called with empty userGuid")
     @Test
     public void testWithEmptyUserGuid() throws NestedEjbException_Exception {
 
@@ -78,14 +77,25 @@ public class CsoAccountServiceImplTest {
         Assertions.assertEquals(null, details);
     }
 
-    @DisplayName("getAccountDetails called with userGuid with file role should return account details")
+    @DisplayName("getAccountDetails called with userGuid with file role")
     @Test
-    public void testWithFileRoleEnabled() {
+    public void testWithFileRoleEnabled() throws NestedEjbException_Exception {
 
         CsoAccountDetails details = sut.getAccountDetails(USERGUIDWITHFILEROLE);
         Assertions.assertNotEquals(null, details);
         Assertions.assertEquals(BigDecimal.TEN, details.getAccountId());
         Assertions.assertEquals(BigDecimal.TEN, details.getClientId());
+        Assertions.assertEquals(true, details.getHasEfileRole());
     }
-    //TODO Reimplement test when check is re-added
+
+    @DisplayName("getAccountDetails called with a userGuid that does not have file role")
+    @Test
+    public void testWithFileRoleDisabled() throws NestedEjbException_Exception {
+
+        CsoAccountDetails details = sut.getAccountDetails(USERGUIDNOROLE);
+        Assertions.assertNotEquals(null, details);
+        Assertions.assertEquals(BigDecimal.TEN, details.getAccountId());
+        Assertions.assertEquals(BigDecimal.TEN, details.getClientId());
+        Assertions.assertEquals(false, details.getHasEfileRole());
+    }
 }

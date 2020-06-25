@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission;
 
+import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountDetails;
 import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingaccountclient.exception.CSOHasMultipleAccountException;
@@ -69,14 +70,18 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         try {
             csoAccountDetails = efilingAccountService.getAccountDetails(generateUrlRequest.getUserId());
-        } catch (CSOHasMultipleAccountException e)   {
+        }
+        catch (CSOHasMultipleAccountException e)   {
             return new ResponseEntity(buildEfilingError(ErrorResponse.ACCOUNTEXCEPTION), HttpStatus.BAD_REQUEST);
+        }
+        catch (NestedEjbException_Exception e) {
+            return new ResponseEntity(buildEfilingError(ErrorResponse.GETPROFILESEXCEPTION), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         logger.info("Successfully got cso account information");
 
-        if (csoAccountDetails != null && !csoAccountDetails.HasRole(EFILING_ROLE)) {
-            logger.info("User does not have efiling role, therefore request is rejected.");
+        if (csoAccountDetails != null && !csoAccountDetails.getHasEfileRole()) {
+            logger.warn("User does not have efiling role, therefore request is rejected.");
             return new ResponseEntity(buildEfilingError(ErrorResponse.INVALIDROLE), HttpStatus.FORBIDDEN);
         }
 
