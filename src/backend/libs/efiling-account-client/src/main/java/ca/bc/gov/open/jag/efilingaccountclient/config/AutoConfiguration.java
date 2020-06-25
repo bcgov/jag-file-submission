@@ -7,6 +7,7 @@ import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
+import org.junit.platform.commons.util.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -32,8 +33,10 @@ public class AutoConfiguration {
         EfilingSoapClientProperties csoAccountProperties = soapProperties.findByEnum(Clients.ACCOUNT);
         jaxWsProxyFactoryBean.setServiceClass(AccountFacadeBean.class);
         jaxWsProxyFactoryBean.setAddress(csoAccountProperties.getUri());
-        jaxWsProxyFactoryBean.setUsername(csoAccountProperties.getUserName());
-        jaxWsProxyFactoryBean.setPassword(csoAccountProperties.getPassword());
+        if(StringUtils.isNotBlank(csoAccountProperties.getUserName()))
+            jaxWsProxyFactoryBean.setUsername(csoAccountProperties.getUserName());
+        if(StringUtils.isNotBlank(csoAccountProperties.getPassword()))
+            jaxWsProxyFactoryBean.setPassword(csoAccountProperties.getPassword());
         return (AccountFacadeBean) jaxWsProxyFactoryBean.create();
     }
 
@@ -43,9 +46,11 @@ public class AutoConfiguration {
         jaxWsProxyFactoryBean.setServiceClass(RoleRegistryPortType.class);
         EfilingSoapClientProperties csoRoleProperties = soapProperties.findByEnum(Clients.ROLE);
         jaxWsProxyFactoryBean.setAddress(csoRoleProperties.getUri());
-       if(StringUtils.isNotBlank(csoRoleProperties.getUserName()))  jaxWsProxyFactoryBean.setUsername(csoRoleProperties.getUserName());
-        if(StringUtils.isNotBlank(csoRoleProperties.getPassword())) jaxWsProxyFactoryBean.setPassword(csoRoleProperties.getPassword());
-        return (RoleRegistryPortType) jaxWsProxyFactoryBean.create();
+       if(StringUtils.isNotBlank(csoRoleProperties.getUserName()))
+           jaxWsProxyFactoryBean.setUsername(csoRoleProperties.getUserName());
+       if(StringUtils.isNotBlank(csoRoleProperties.getPassword()))
+           jaxWsProxyFactoryBean.setPassword(csoRoleProperties.getPassword());
+       return (RoleRegistryPortType) jaxWsProxyFactoryBean.create();
     }
 
     @Bean
