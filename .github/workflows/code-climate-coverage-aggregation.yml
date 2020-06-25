@@ -125,7 +125,7 @@ jobs:
 
             # Sum the coverage reports
             - name: Summing the coverage reports generated
-              run: ./cc-test-reporter sum-coverage coverage/*-codeclimate.json -p ${{ env.FILE_COUNTER }} -o coverage/total-yarn-codeclimate.json
+              run: ./cc-test-reporter sum-coverage coverage/*-codeclimate.json -p ${{ env.FILE_COUNTER }} -o coverage/total-codeclimate.json
 
             # Upload JSON for debugging purposes
             - name: Upload JSON for debugging purposes
@@ -236,7 +236,7 @@ jobs:
                 
             # Sum the coverage reports
             - name: Summing the coverage reports generated
-              run: ./cc-test-reporter sum-coverage coverage/*-codeclimate.json -p ${{ env.FILE_COUNTER }} -o coverage/total-java-codeclimate.json
+              run: ./cc-test-reporter sum-coverage coverage/*-codeclimate.json -p ${{ env.FILE_COUNTER }} -o coverage/total-codeclimate.json
 
             # Upload JSON for debugging purposes
             - name: Upload JSON for debugging purposes
