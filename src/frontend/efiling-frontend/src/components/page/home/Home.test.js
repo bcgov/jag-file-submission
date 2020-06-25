@@ -42,14 +42,16 @@ describe("Home", () => {
     sessionStorage.clear();
   });
 
+  const component = (
+    <MemoryRouter initialEntries={[`?submissionId=${submissionId}`]}>
+      <Home page={page} />
+    </MemoryRouter>
+  );
+
   test("Component matches the snapshot when user cso account exists", async () => {
     mock.onGet(apiRequest).reply(200, { userDetails, navigation });
 
-    const { asFragment } = render(
-      <MemoryRouter initialEntries={[`?submissionId=${submissionId}`]}>
-        <Home page={page} />
-      </MemoryRouter>
-    );
+    const { asFragment } = render(component);
 
     await wait(() => {
       expect(asFragment()).toMatchSnapshot();
@@ -63,11 +65,7 @@ describe("Home", () => {
       navigation
     });
 
-    const { asFragment } = render(
-      <MemoryRouter initialEntries={[`?submissionId=${submissionId}`]}>
-        <Home page={page} />
-      </MemoryRouter>
-    );
+    const { asFragment } = render(component);
 
     await wait(() => {
       expect(asFragment()).toMatchSnapshot();
@@ -78,11 +76,7 @@ describe("Home", () => {
   test("Component matches the snapshot when still loading", async () => {
     mock.onGet(apiRequest).reply(400);
 
-    const { asFragment } = render(
-      <MemoryRouter initialEntries={[`?submissionId=${submissionId}`]}>
-        <Home page={page} />
-      </MemoryRouter>
-    );
+    const { asFragment } = render(component);
 
     await wait(() => {
       expect(asFragment()).toMatchSnapshot();
