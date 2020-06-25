@@ -25,7 +25,6 @@ const checkCSOAccountStatus = (
     .then(({ data: { userDetails, navigation } }) => {
       saveNavigationToSession(navigation);
 
-      console.log(userDetails);
       if (userDetails.accounts) {
         const csoAccountExists = userDetails.accounts.some(
           element => element.type === "CSO"
