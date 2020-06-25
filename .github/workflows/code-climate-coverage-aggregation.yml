@@ -324,3 +324,18 @@ jobs:
             - name: List items inside java coverage report object
               run: |
                 ls coverage-reports
+                
+            # Sum the coverage reports
+            - name: Summing the coverage reports generated
+              run: ./cc-test-reporter sum-coverage coverage-reports/*-codeclimate.json -p 2 -o coverage/total-codeclimate.json
+
+            # Upload JSON for debugging purposes
+            - name: Upload JSON for debugging purposes
+              uses: actions/upload-artifact@v2
+              with:
+                name: summed-total-coverage-report
+                path: coverage/total-codeclimate.json
+
+            # Upload total coverage report to Code Climate
+            - name: Upload coverage report to Code Climate
+              run: ./cc-test-reporter upload-coverage -i coverage-reports/total-codeclimate.json
