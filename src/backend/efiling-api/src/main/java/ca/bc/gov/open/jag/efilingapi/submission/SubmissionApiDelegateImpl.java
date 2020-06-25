@@ -75,7 +75,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             return new ResponseEntity(buildEfilingError(ErrorResponse.ACCOUNTEXCEPTION), HttpStatus.BAD_REQUEST);
         }
         catch (NestedEjbException_Exception e) {
-            return new ResponseEntity(buildEfilingError(ErrorResponse.GETPROFILESEXCEPTION), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(buildEfilingError(ErrorResponse.GETPROFILESEXCEPTION), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         logger.info("Successfully got cso account information");
