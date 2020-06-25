@@ -1,6 +1,6 @@
 import React from "react";
 import { createMemoryHistory } from "history";
-import { render, fireEvent, getAllByRole } from "@testing-library/react";
+import { render, fireEvent, getAllByAltText } from "@testing-library/react";
 import testBasicSnapshot from "../TestHelper";
 import Header, { HeadingTitle, HeaderImage } from "./Header";
 
@@ -17,13 +17,14 @@ describe("Header Component", () => {
   });
 
   test("HeadingTitle matches the snapshot", () => {
-    const headingTitle = HeadingTitle(header.history, "navbar-brand pointer");
+    const headingTitle = HeadingTitle("navbar-brand pointer");
 
     testBasicSnapshot(headingTitle);
   });
 
   test("HeaderImage matches the snapshot", () => {
     const headingImage = HeaderImage(
+      header.history,
       "img-fluid d-none d-md-block",
       181,
       "bcid-logo-rev-en.svg"
@@ -32,22 +33,22 @@ describe("Header Component", () => {
     testBasicSnapshot(headingImage);
   });
 
-  test("Clicking HeadingTitle takes you back to home", () => {
+  test("Clicking HeadingImage takes you back to home", () => {
     header.history.location.pathname = "/somepageroute";
 
     const { container } = render(<Header header={header} />);
 
-    fireEvent.click(getAllByRole(container, "button")[0]);
+    fireEvent.click(getAllByAltText(container, "B.C. Government Logo")[0]);
 
     expect(header.history.location.pathname).toEqual("/");
   });
 
-  test("Keydown on HeadingTitle takes you back to home", () => {
+  test("Keydown on HeadingImage takes you back to home", () => {
     header.history.location.pathname = "/somepageroute";
 
     const { container } = render(<Header header={header} />);
 
-    fireEvent.keyDown(getAllByRole(container, "button")[0]);
+    fireEvent.keyDown(getAllByAltText(container, "B.C. Government Logo")[0]);
 
     expect(header.history.location.pathname).toEqual("/");
   });

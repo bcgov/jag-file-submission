@@ -10,19 +10,17 @@ exports[`Home Component matches the snapshot 1`] = `
         <div
           aria-labelledby="title"
           class="navbar-brand pointer"
-          role="button"
-          tabindex="0"
         />
         <img
           alt="B.C. Government Logo"
-          class="img-fluid d-none d-md-block"
+          class="img-fluid d-none d-md-block pointer"
           height="44"
           src="[object Object]"
           width="181"
         />
         <img
           alt="B.C. Government Logo"
-          class="img-fluid d-md-none"
+          class="img-fluid d-md-none pointer"
           height="44"
           src="[object Object]"
           width="64"
@@ -30,8 +28,6 @@ exports[`Home Component matches the snapshot 1`] = `
         <div
           aria-labelledby="title"
           class="pointer navbar-brand nav-item nav-link"
-          role="button"
-          tabindex="0"
         />
         <div
           class="navbar-brand"

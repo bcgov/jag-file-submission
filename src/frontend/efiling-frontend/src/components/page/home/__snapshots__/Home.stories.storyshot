@@ -9,15 +9,13 @@ exports[`Storyshots Home Account Exists 1`] = `
       <div
         aria-labelledby="title"
         className="navbar-brand pointer"
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        role="button"
-        tabIndex={0}
       />
       <img
         alt="B.C. Government Logo"
-        className="img-fluid d-none d-md-block"
+        className="img-fluid d-none d-md-block pointer"
         height="44"
+        onClick={[Function]}
+        onKeyDown={[Function]}
         src={
           Object {
             "process": [Function],
@@ -27,8 +25,10 @@ exports[`Storyshots Home Account Exists 1`] = `
       />
       <img
         alt="B.C. Government Logo"
-        className="img-fluid d-md-none"
+        className="img-fluid d-md-none pointer"
         height="44"
+        onClick={[Function]}
+        onKeyDown={[Function]}
         src={
           Object {
             "process": [Function],
@@ -39,10 +39,6 @@ exports[`Storyshots Home Account Exists 1`] = `
       <div
         aria-labelledby="title"
         className="pointer navbar-brand nav-item nav-link"
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        role="button"
-        tabIndex={0}
       />
       <div
         className="navbar-brand"
@@ -173,15 +169,13 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
       <div
         aria-labelledby="title"
         className="navbar-brand pointer"
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        role="button"
-        tabIndex={0}
       />
       <img
         alt="B.C. Government Logo"
-        className="img-fluid d-none d-md-block"
+        className="img-fluid d-none d-md-block pointer"
         height="44"
+        onClick={[Function]}
+        onKeyDown={[Function]}
         src={
           Object {
             "process": [Function],
@@ -191,8 +185,10 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
       />
       <img
         alt="B.C. Government Logo"
-        className="img-fluid d-md-none"
+        className="img-fluid d-md-none pointer"
         height="44"
+        onClick={[Function]}
+        onKeyDown={[Function]}
         src={
           Object {
             "process": [Function],
@@ -203,10 +199,6 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
       <div
         aria-labelledby="title"
         className="pointer navbar-brand nav-item nav-link"
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        role="button"
-        tabIndex={0}
       />
       <div
         className="navbar-brand"
@@ -337,15 +329,13 @@ exports[`Storyshots Home Loader 1`] = `
       <div
         aria-labelledby="title"
         className="navbar-brand pointer"
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        role="button"
-        tabIndex={0}
       />
       <img
         alt="B.C. Government Logo"
-        className="img-fluid d-none d-md-block"
+        className="img-fluid d-none d-md-block pointer"
         height="44"
+        onClick={[Function]}
+        onKeyDown={[Function]}
         src={
           Object {
             "process": [Function],
@@ -355,8 +345,10 @@ exports[`Storyshots Home Loader 1`] = `
       />
       <img
         alt="B.C. Government Logo"
-        className="img-fluid d-md-none"
+        className="img-fluid d-md-none pointer"
         height="44"
+        onClick={[Function]}
+        onKeyDown={[Function]}
         src={
           Object {
             "process": [Function],
@@ -367,10 +359,6 @@ exports[`Storyshots Home Loader 1`] = `
       <div
         aria-labelledby="title"
         className="pointer navbar-brand nav-item nav-link"
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        role="button"
-        tabIndex={0}
       />
       <div
         className="navbar-brand"
@@ -496,15 +484,13 @@ exports[`Storyshots Home Loader Mobile 1`] = `
       <div
         aria-labelledby="title"
         className="navbar-brand pointer"
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        role="button"
-        tabIndex={0}
       />
       <img
         alt="B.C. Government Logo"
-        className="img-fluid d-none d-md-block"
+        className="img-fluid d-none d-md-block pointer"
         height="44"
+        onClick={[Function]}
+        onKeyDown={[Function]}
         src={
           Object {
             "process": [Function],
@@ -514,8 +500,10 @@ exports[`Storyshots Home Loader Mobile 1`] = `
       />
       <img
         alt="B.C. Government Logo"
-        className="img-fluid d-md-none"
+        className="img-fluid d-md-none pointer"
         height="44"
+        onClick={[Function]}
+        onKeyDown={[Function]}
         src={
           Object {
             "process": [Function],
@@ -526,10 +514,6 @@ exports[`Storyshots Home Loader Mobile 1`] = `
       <div
         aria-labelledby="title"
         className="pointer navbar-brand nav-item nav-link"
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        role="button"
-        tabIndex={0}
       />
       <div
         className="navbar-brand"
@@ -655,15 +639,13 @@ exports[`Storyshots Home No Account Exists 1`] = `
       <div
         aria-labelledby="title"
         className="navbar-brand pointer"
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        role="button"
-        tabIndex={0}
       />
       <img
         alt="B.C. Government Logo"
-        className="img-fluid d-none d-md-block"
+        className="img-fluid d-none d-md-block pointer"
         height="44"
+        onClick={[Function]}
+        onKeyDown={[Function]}
         src={
           Object {
             "process": [Function],
@@ -673,8 +655,10 @@ exports[`Storyshots Home No Account Exists 1`] = `
       />
       <img
         alt="B.C. Government Logo"
-        className="img-fluid d-md-none"
+        className="img-fluid d-md-none pointer"
         height="44"
+        onClick={[Function]}
+        onKeyDown={[Function]}
         src={
           Object {
             "process": [Function],
@@ -685,10 +669,6 @@ exports[`Storyshots Home No Account Exists 1`] = `
       <div
         aria-labelledby="title"
         className="pointer navbar-brand nav-item nav-link"
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        role="button"
-        tabIndex={0}
       />
       <div
         className="navbar-brand"
@@ -819,15 +799,13 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
       <div
         aria-labelledby="title"
         className="navbar-brand pointer"
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        role="button"
-        tabIndex={0}
       />
       <img
         alt="B.C. Government Logo"
-        className="img-fluid d-none d-md-block"
+        className="img-fluid d-none d-md-block pointer"
         height="44"
+        onClick={[Function]}
+        onKeyDown={[Function]}
         src={
           Object {
             "process": [Function],
@@ -837,8 +815,10 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
       />
       <img
         alt="B.C. Government Logo"
-        className="img-fluid d-md-none"
+        className="img-fluid d-md-none pointer"
         height="44"
+        onClick={[Function]}
+        onKeyDown={[Function]}
         src={
           Object {
             "process": [Function],
@@ -849,10 +829,6 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
       <div
         aria-labelledby="title"
         className="pointer navbar-brand nav-item nav-link"
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        role="button"
-        tabIndex={0}
       />
       <div
         className="navbar-brand"

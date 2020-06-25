@@ -8,15 +8,13 @@ exports[`Header Component Header matches the snapshot 1`] = `
     <div
       aria-labelledby="title"
       className="navbar-brand pointer"
-      onClick={[Function]}
-      onKeyDown={[Function]}
-      role="button"
-      tabIndex={0}
     />
     <img
       alt="B.C. Government Logo"
-      className="img-fluid d-none d-md-block"
+      className="img-fluid d-none d-md-block pointer"
       height="44"
+      onClick={[Function]}
+      onKeyDown={[Function]}
       src={
         Object {
           "process": [Function],
@@ -26,8 +24,10 @@ exports[`Header Component Header matches the snapshot 1`] = `
     />
     <img
       alt="B.C. Government Logo"
-      className="img-fluid d-md-none"
+      className="img-fluid d-md-none pointer"
       height="44"
+      onClick={[Function]}
+      onKeyDown={[Function]}
       src={
         Object {
           "process": [Function],
@@ -38,10 +38,6 @@ exports[`Header Component Header matches the snapshot 1`] = `
     <div
       aria-labelledby="title"
       className="pointer navbar-brand nav-item nav-link"
-      onClick={[Function]}
-      onKeyDown={[Function]}
-      role="button"
-      tabIndex={0}
     />
     <div
       className="navbar-brand"
@@ -58,6 +54,8 @@ exports[`Header Component HeaderImage matches the snapshot 1`] = `
   alt="B.C. Government Logo"
   className="img-fluid d-none d-md-block"
   height="44"
+  onClick={[Function]}
+  onKeyDown={[Function]}
   src="bcid-logo-rev-en.svg"
   width={181}
 />
@@ -67,9 +65,5 @@ exports[`Header Component HeadingTitle matches the snapshot 1`] = `
 <div
   aria-labelledby="title"
   className="navbar-brand pointer"
-  onClick={[Function]}
-  onKeyDown={[Function]}
-  role="button"
-  tabIndex={0}
 />
 `;

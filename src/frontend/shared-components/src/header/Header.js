@@ -5,24 +5,19 @@ import "./Header.css";
 import bcidSymbol from "../../public/images/bcid-symbol-rev.svg";
 import bcidLogoRev from "../../public/images/bcid-logo-rev-en.svg";
 
-export const HeadingTitle = (history, classNames) => (
-  <div
-    className={classNames}
-    onClick={() => history.push("/")}
-    role="button"
-    onKeyDown={() => history.push("/")}
-    tabIndex={0}
-    aria-labelledby="title"
-  />
+export const HeadingTitle = classNames => (
+  <div className={classNames} aria-labelledby="title" />
 );
 
-export const HeaderImage = (classNames, width, src) => (
+export const HeaderImage = (history, classNames, width, src) => (
   <img
     className={classNames}
     src={src}
     width={width}
     height="44"
     alt="B.C. Government Logo"
+    onClick={() => history.push("/")}
+    onKeyDown={() => history.push("/")}
   />
 );
 
@@ -30,10 +25,15 @@ export default function Header({ header: { name, history } }) {
   return (
     <header>
       <nav className="container-fluid navbar navbar-expand-lg navbar-dark">
-        {HeadingTitle(history, "navbar-brand pointer")}
-        {HeaderImage("img-fluid d-none d-md-block", 181, bcidLogoRev)}
-        {HeaderImage("img-fluid d-md-none", 64, bcidSymbol)}
-        {HeadingTitle(history, "pointer navbar-brand nav-item nav-link")}
+        {HeadingTitle("navbar-brand pointer")}
+        {HeaderImage(
+          history,
+          "img-fluid d-none d-md-block pointer",
+          181,
+          bcidLogoRev
+        )}
+        {HeaderImage(history, "img-fluid d-md-none pointer", 64, bcidSymbol)}
+        {HeadingTitle("pointer navbar-brand nav-item nav-link")}
         <div id="title" className="navbar-brand">
           {name}
         </div>
