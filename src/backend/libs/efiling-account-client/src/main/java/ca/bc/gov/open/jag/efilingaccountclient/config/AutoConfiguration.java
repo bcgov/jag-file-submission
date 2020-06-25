@@ -43,7 +43,7 @@ public class AutoConfiguration {
         jaxWsProxyFactoryBean.setServiceClass(RoleRegistryPortType.class);
         EfilingSoapClientProperties csoRoleProperties = soapProperties.findByEnum(Clients.ROLE);
         jaxWsProxyFactoryBean.setAddress(csoRoleProperties.getUri());
-        jaxWsProxyFactoryBean.setUsername(csoRoleProperties.getUserName());
+       if(StringUtils.isNotBlank(csoRoleProperties.getUserName()))  jaxWsProxyFactoryBean.setUsername(csoRoleProperties.getUserName());
         jaxWsProxyFactoryBean.setPassword(csoRoleProperties.getPassword());
         return (RoleRegistryPortType) jaxWsProxyFactoryBean.create();
     }
