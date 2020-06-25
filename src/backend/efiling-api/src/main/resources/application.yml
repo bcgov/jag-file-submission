@@ -19,8 +19,8 @@ jag:
           password: ${CSO_ACCOUNTFACADE_PASSWORD}
           uri: ${CSO_ACCOUNTFACADE_URI:http://localhost:8091}
         - client: ROLE
-          userName: ${CSO_ACCOUNTFACADE_USERNAME}
-          password: ${CSO_ACCOUNTFACADE_PASSWORD}
+          userName: ${CSO_ROLEREGISTRY_USERNAME}
+          password: ${CSO_ROLEREGISTRY_PASSWORD}
           uri: ${CSO_ROLEREGISTRY_URI:http://localhost:8091}
 
 info:
