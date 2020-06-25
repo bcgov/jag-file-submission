@@ -244,3 +244,64 @@ jobs:
               with:
                   name: summed-java-coverage-report
                   path: coverage/total-codeclimate.json
+
+    aggregation: 
+
+        name: Aggregate Spring Boot and Javascript reports
+        needs: yarn
+        runs-on: ubuntu-latest
+        steps:
+
+            # Get Code Climate binary
+            - name: Download Code Climate Binary
+              run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+
+            # Permissions applied to the Code Climate Executable
+            - name: Apply executable perms to Code Climate Binary
+              run: chmod +x ./cc-test-reporter
+            
+            # Before build 
+            - name: Before build
+              run: ./cc-test-reporter before-build
+
+            # Set required Git env vars for either pull request
+            - name: Set ENV for codeclimate (pull_request)
+              run: |
+                  echo "::set-env name=GIT_BRANCH::${{ github.event.pull_request.head.ref }}"
+                  echo "::set-env name=GIT_COMMIT_SHA::${{ github.event.pull_request.head.sha }}"
+              if: github.event_name == 'pull_request'
+
+            # Set required Git env vars for a push to master
+            - name: Set ENV for codeclimate (push)
+              run: |
+                  echo "::set-env name=GIT_BRANCH::$GITHUB_REF"
+                  echo "::set-env name=GIT_COMMIT_SHA::$GITHUB_SHA"
+              if: github.event_name == 'push'
+
+            # Trimming the ref to master in order to publish correct report (paambaati)
+            - name: Set ref/head/master to master
+              run: |
+                  echo "::set-env name=GIT_BRANCH::master"
+              if: env.GIT_BRANCH == 'refs/heads/master'
+
+            # Download Spring-boot coverage report
+            - name: Download spring-boot coverage report
+              uses: actions/download-artifact@v1
+              with:
+                  name: summed-java-coverage-report
+
+            # See what is inside
+            - name: List items inside java coverage report object
+              run: |
+                ls summed-java-coverage-report
+            
+            # Download Yarn coverage report
+            - name: Download javascript coverage report
+              uses: actions/download-artifact@v1
+              with:
+                  name: summed-yarn-coverage-report
+
+            # See what is inside
+            - name: List items inside java coverage report object
+              run: |
+                ls summed-yarn-coverage-report
