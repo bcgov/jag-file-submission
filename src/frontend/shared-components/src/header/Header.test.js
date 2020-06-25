@@ -17,13 +17,14 @@ describe("Header Component", () => {
   });
 
   test("HeadingTitle matches the snapshot", () => {
-    const headingTitle = HeadingTitle(header.history, "navbar-brand pointer");
+    const headingTitle = HeadingTitle("navbar-brand pointer");
 
     testBasicSnapshot(headingTitle);
   });
 
   test("HeaderImage matches the snapshot", () => {
     const headingImage = HeaderImage(
+      header.history,
       "img-fluid d-none d-md-block",
       181,
       "bcid-logo-rev-en.svg"
