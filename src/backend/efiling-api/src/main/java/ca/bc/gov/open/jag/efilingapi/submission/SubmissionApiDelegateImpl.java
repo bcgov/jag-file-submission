@@ -81,7 +81,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         logger.info("Successfully got cso account information");
 
         if (csoAccountDetails != null && !csoAccountDetails.getHasEfileRole()) {
-            logger.info("User does not have efiling role, therefore request is rejected.");
+            logger.warn("User does not have efiling role, therefore request is rejected.");
             return new ResponseEntity(buildEfilingError(ErrorResponse.INVALIDROLE), HttpStatus.FORBIDDEN);
         }
 

@@ -48,6 +48,6 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
 
         UserRoles userRoles = roleRegistryPortType.getRolesForIdentifier("Courts", "CSO", userGuid, "CAP");
         List<RegisteredRole> roles = userRoles.getRoles();
-        return roles != null && roles.stream().anyMatch(r -> r.getCode() == "FILE");
+        return roles != null && roles.stream().anyMatch(r -> r.getCode().equals("FILE"));
     }
 }
