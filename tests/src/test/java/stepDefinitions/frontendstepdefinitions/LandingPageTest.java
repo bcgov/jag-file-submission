@@ -31,7 +31,7 @@ public class LandingPageTest extends DriverClass {
     }
 
     @Given("user is on the landing page")
-    public void user_is_on_the_landing_page() throws IOException {
+    public void userIsOnTheLandingPage() throws IOException {
         landingPage = new LandingPage(driver);
 
         landingPage.getUrl();
@@ -45,13 +45,13 @@ public class LandingPageTest extends DriverClass {
     }
 
     @When("user enters a valid account guid {string}")
-    public void user_enters_a_valid_account_guid(String accountGuid) {
+    public void userEntersAValidAccountGuid(String accountGuid) {
         landingPage = new LandingPage(driver);
         landingPage.enterAccountGuid(accountGuid);
     }
 
     @Then("eFiling frontend page is displayed and cancel button exists")
-    public void eFiling_frontend_page_is_displayed_and_cancel_button_exists() {
+    public void eFilingFrontendPageIsDisplayedAndCancelButtonExists() {
         landingPage = new LandingPage(driver);
         eFilingPage = new EfilingPage(driver);
 
@@ -71,7 +71,7 @@ public class LandingPageTest extends DriverClass {
     }
 
     @Then("error message is displayed")
-    public void error_message_is_displayed() {
+    public void errorMessageIsDisplayed() {
         landingPage = new LandingPage(driver);
 
         landingPage.clickGenerateUrlButton();
@@ -85,13 +85,13 @@ public class LandingPageTest extends DriverClass {
     }
 
     @When("user enters non existing account guid {string}")
-    public void user_enters_non_existing_account_guid(String accountGuid) {
+    public void userEntersNonExistingAccountGuid(String accountGuid) {
 
         landingPage.enterAccountGuid(accountGuid);
     }
 
     @When("user enters invalid account guid {string}")
-    public void user_enters_invalid_account_guid(String accountGuid) {
+    public void userEntersInvalidAccountGuid(String accountGuid) {
         landingPage = new LandingPage(driver);
 
         landingPage.enterAccountGuid(accountGuid);

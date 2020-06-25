@@ -1,7 +1,6 @@
 package stepDefinitions.backendstepdefinitions;
 
-import ca.bc.gov.open.jagefilingapi.qa.backend.generateurlpayload.*;
-import ca.bc.gov.open.jagefilingapi.qa.backend.generateurlpayload.Error;
+import ca.bc.gov.open.jagefilingapi.qa.backend.generateurlpayload.GenerateUrlPayload;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.APIResources;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -15,6 +14,7 @@ import io.restassured.specification.RequestSpecification;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
@@ -35,7 +35,7 @@ public class GenerateEfilingUrl {
     }
 
     @Given("user calls {string} with POST http request")
-    public static void user_calls_with_POST_http_request(String resource) throws IOException {
+    public static void userCallsWithPOSTHttpRequest(String resource) throws IOException {
         payloadData = new GenerateUrlPayload();
 
         APIResources resourceAPI = APIResources.valueOf(resource);
@@ -46,13 +46,13 @@ public class GenerateEfilingUrl {
     }
 
     @When("status code is {int} and content type is verified")
-    public static void status_code_is_and_content_type_is_verified(Integer statusCode) {
-        assertEquals(response.getStatusCode(), 200);
-        assertEquals(response.getContentType(), CONTENT_TYPE);
+    public static void statusCodeIsAndContentTypeIsVerified(Integer statusCode) {
+        assertEquals(200, response.getStatusCode());
+        assertEquals(CONTENT_TYPE, response.getContentType());
     }
 
     @Then("verify response returns {string} and expiry date")
-    public static void the_response_returns_and_expiry_date(String resource) {
+    public static void theResponseReturnsAndExpiryDate(String resource) {
         APIResources resourceUrl = APIResources.valueOf(resource);
         jsonPath = new JsonPath(response.asString());
 
@@ -73,7 +73,7 @@ public class GenerateEfilingUrl {
     }
 
     @Given("user calls {string} with GET http request")
-    public static void user_calls_with_GET_http_request(String resource) throws IOException {
+    public static void userCallsWithGETHttpRequest(String resource) throws IOException {
         APIResources resourceGet = APIResources.valueOf(resource);
 
         request = given().spec(TestUtil.requestSpecification());
@@ -81,7 +81,7 @@ public class GenerateEfilingUrl {
     }
 
     @Then("verify response body has account and redirect Urls")
-    public static void verify_response_body_has_account_and_redirect_Urls() throws JsonProcessingException {
+    public static void verifyResponseBodyHasAccountAndRedirectUrls() throws JsonProcessingException {
         payloadData = new GenerateUrlPayload();
         jsonPath = new JsonPath(response.asString());
 
@@ -92,12 +92,12 @@ public class GenerateEfilingUrl {
 
         boolean csoAccountExists = jsonPath.get("csoAccountExists");
 
-        assertEquals(actualResponse, expectedResponse);
+        assertEquals(expectedResponse,actualResponse);
         assertFalse(csoAccountExists);
     }
 
     @Given("user calls incorrect {string} with POST http request")
-    public static void user_calls_incorrect_with_POST_http_request(String resource) throws IOException {
+    public static void userCallsIncorrectWithPOSTHttpRequest(String resource) throws IOException {
         payloadData = new GenerateUrlPayload();
         APIResources resourceInvalid = APIResources.valueOf(resource);
 
@@ -106,18 +106,18 @@ public class GenerateEfilingUrl {
     }
 
     @When("status is {int} and content type is verified")
-    public static void status_is_and_content_type_is_verified(Integer int1) {
+    public static void statusIsAndContentTypeIsVerified(Integer int1) {
         if(int1 == 404) {
-            assertEquals(response.getStatusCode(), 404);
-            assertEquals(response.getContentType(), CONTENT_TYPE);
+            assertEquals(404, response.getStatusCode());
+            assertEquals(CONTENT_TYPE, response.getContentType());
         } else if(int1 == 405) {
-            assertEquals(response.getStatusCode(), 405);
-            assertEquals(response.getContentType(), CONTENT_TYPE);
+            assertEquals(405, response.getStatusCode());
+            assertEquals(CONTENT_TYPE, response.getContentType());
         }
     }
 
     @Then("verify error message is present and message has no value")
-    public static void verify_error_message_is_present_and_message_has_no_value() {
+    public static void verifyErrorMessageIsPresentAndMessageHasNoValue() {
         jsonPath = new JsonPath(response.asString());
 
         String error = TestUtil.getJsonPath(response, "error");
@@ -134,7 +134,7 @@ public class GenerateEfilingUrl {
     }
 
     @Given("user calls invalid {string} with POST http request")
-    public static void user_calls_invalid_with_POST_http_request(String resource) throws IOException {
+    public static void userCallsInvalidWithPOSTHttpRequest(String resource) throws IOException {
         payloadData = new GenerateUrlPayload();
         APIResources resourceInvalid = APIResources.valueOf(resource);
 
