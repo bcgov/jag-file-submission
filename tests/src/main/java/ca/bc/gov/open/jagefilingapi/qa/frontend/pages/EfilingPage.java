@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class EfilingPage extends DriverClass {
+
         private final WebDriver driver;
         private final By cancelButton = By.xpath("//*[@id='root']/div/main/div/div/div/div/button");
 
@@ -27,4 +28,3 @@ public class EfilingPage extends DriverClass {
             return driver.findElement(cancelButton).isDisplayed();
         }
     }
-

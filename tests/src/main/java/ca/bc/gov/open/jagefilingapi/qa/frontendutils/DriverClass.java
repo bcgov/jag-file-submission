@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jagefilingapi.qa.frontendutils;
 
 import ca.bc.gov.open.jagefilingapi.qa.config.ReadConfig;
+import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.LandingPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -46,3 +47,4 @@ public class DriverClass {
             driver.manage().window().maximize();
         }
 }
+

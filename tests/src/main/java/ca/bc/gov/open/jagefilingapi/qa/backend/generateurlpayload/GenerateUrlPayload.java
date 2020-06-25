@@ -20,4 +20,15 @@ public class GenerateUrlPayload {
         ObjectMapper objMap = new ObjectMapper();
         return objMap.writeValueAsString(payload);
     }
+
+    public String getNavigationData() throws JsonProcessingException {
+        Success success = new Success(STRING);
+        Error error = new Error(STRING);
+        Cancel cancel = new Cancel(STRING);
+        Navigation navigation = new Navigation(success,error,cancel);
+
+        ObjectMapper objMap = new ObjectMapper();
+        return objMap.writeValueAsString(navigation);
+    }
 }
+

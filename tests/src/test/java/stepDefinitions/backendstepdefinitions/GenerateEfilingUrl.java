@@ -1,8 +1,11 @@
 package stepDefinitions.backendstepdefinitions;
 
-import ca.bc.gov.open.jagefilingapi.qa.backend.generateurlpayload.GenerateUrlPayload;
+import ca.bc.gov.open.jagefilingapi.qa.backend.generateurlpayload.*;
+import ca.bc.gov.open.jagefilingapi.qa.backend.generateurlpayload.Error;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.APIResources;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -12,6 +15,7 @@ import io.restassured.specification.RequestSpecification;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.Assert.*;
@@ -63,7 +67,7 @@ public class GenerateEfilingUrl {
             e.printStackTrace();
         }
 
-        assertEquals(respUrl, resourceUrl.getResource() + submissionIdQuery);
+        assertEquals(respUrl, resourceUrl.getResource().concat("?") + submissionIdQuery);
         assertNotNull(respExpDate);
     }
 
@@ -72,18 +76,23 @@ public class GenerateEfilingUrl {
         APIResources resourceGet = APIResources.valueOf(resource);
 
         request = given().spec(TestUtil.requestSpecification());
-        response = request.when().get(resourceGet.getResource() + submissionId + "/userDetail").then().spec(TestUtil.responseSpecification()).extract().response();
+        response = request.when().get(resourceGet.getResource() + submissionId).then().spec(TestUtil.responseSpecification()).extract().response();
     }
 
-    @Then("verify response body has account and role information")
-    public static void verify_response_body_has_account_and_role_information() {
+    @Then("verify response body has account and redirect Urls")
+    public static void verify_response_body_has_account_and_redirect_Urls() throws JsonProcessingException {
+        payloadData = new GenerateUrlPayload();
         jsonPath = new JsonPath(response.asString());
 
-        boolean csoAccountExists = jsonPath.get("csoAccountExists");
-        boolean hasEfilingRole = jsonPath.get("hasEfilingRole");
+        Map<String, String> respNavigation = jsonPath.getMap("navigation");
+        ObjectMapper objMap = new ObjectMapper();
+        String actualResponse = objMap.writeValueAsString(respNavigation);
+        String expectedResponse = payloadData.getNavigationData();
 
+        boolean csoAccountExists = jsonPath.get("csoAccountExists");
+
+        assertEquals(actualResponse, expectedResponse);
         assertFalse(csoAccountExists);
-        assertFalse(hasEfilingRole);
     }
 
     @Given("user calls incorrect {string} with POST http request")
@@ -92,23 +101,43 @@ public class GenerateEfilingUrl {
         APIResources resourceInvalid = APIResources.valueOf(resource);
 
         request = given().spec(TestUtil.requestSpecification()).body(payloadData.generateUrlFinalPayload());
-        response = request.when().post(resourceInvalid.getResource() + "s").then().extract().response();
+        response = request.when().post(resourceInvalid.getResource()).then().extract().response();
     }
 
     @When("status is {int} and content type is verified")
     public static void status_is_and_content_type_is_verified(Integer int1) {
-        assertEquals(response.getStatusCode(), 404);
-        assertEquals(response.getContentType(), "application/json");
+        if(int1 == 404) {
+            assertEquals(response.getStatusCode(), 404);
+            assertEquals(response.getContentType(), "application/json");
+        } else if(int1 == 405) {
+            assertEquals(response.getStatusCode(), 405);
+            assertEquals(response.getContentType(), "application/json");
+        }
     }
 
-    @Then("verify error message is present with empty message")
-    public static void verify_fferror_message_is_present_with_empty_message() {
+    @Then("verify error message is present and message has no value")
+    public static void verify_error_message_is_present_and_message_has_no_value() {
+        jsonPath = new JsonPath(response.asString());
+
         String error = TestUtil.getJsonPath(response, "error");
         String message = TestUtil.getJsonPath(response, "message");
+        int status = jsonPath.get("status");
 
-        assertEquals("Not Found", error);
-        assertEquals("", message);
+        if(status == 404) {
+            assertEquals("Not Found", error);
+            assertEquals("", message);
+        } else if(status == 405) {
+            assertEquals("Method Not Allowed", error);
+            assertEquals("", message);
+        }
+    }
+
+    @Given("user calls invalid {string} with POST http request")
+    public static void user_calls_invalid_with_POST_http_request(String resource) throws IOException {
+        payloadData = new GenerateUrlPayload();
+        APIResources resourceInvalid = APIResources.valueOf(resource);
+
+        request = given().spec(TestUtil.requestSpecification()).body(payloadData.generateUrlFinalPayload());
+        response = request.when().post(resourceInvalid.getResource() + "s").then().extract().response();
     }
 }
-
-
