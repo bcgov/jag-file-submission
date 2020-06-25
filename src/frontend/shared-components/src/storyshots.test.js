@@ -4,6 +4,7 @@ import { createSerializer } from "enzyme-to-json";
 
 initStoryshots({
   /* configuration options */
-  renderer: mount,
-  snapshotSerializers: [createSerializer()]
+  // renderer: mount,
+  // snapshotSerializers: [createSerializer()]
+  storyKindRegex: /^((?!.*?ConfirmationPopup).)*$/
 });
