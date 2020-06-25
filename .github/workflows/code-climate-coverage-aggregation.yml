@@ -134,7 +134,7 @@ jobs:
                   name: summed-yarn-coverage-report
                   path: coverage/total-codeclimate.json
 
-    sprint-boot:
+    spring-boot:
     
         name: Create, format and upload Java coverage artifact
         runs-on: ubuntu-latest
@@ -248,7 +248,7 @@ jobs:
     aggregation: 
 
         name: Aggregate Spring Boot and Javascript reports
-        needs: yarn
+        needs: [yarn, spring-boot]
         runs-on: ubuntu-latest
         steps:
 
