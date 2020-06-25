@@ -10,8 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -31,10 +29,7 @@ public class SubmissionTest {
     @DisplayName("CASE 1: testing constructor")
     public void testingConstructor() {
         Fee fee = new Fee(BigDecimal.TEN);
-
-        List<String> roles = new ArrayList<>();
-        roles.add("test");
-        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, roles);
+        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, false);
 
         Submission actual = new Submission(
                 UUID.randomUUID(),
