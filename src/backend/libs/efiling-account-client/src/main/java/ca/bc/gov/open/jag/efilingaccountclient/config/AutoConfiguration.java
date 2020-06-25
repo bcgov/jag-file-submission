@@ -28,29 +28,12 @@ public class AutoConfiguration {
 
     @Bean
     public AccountFacadeBean accountFacadeBean() {
-        JaxWsProxyFactoryBean jaxWsProxyFactoryBean =
-                new JaxWsProxyFactoryBean();
-        EfilingSoapClientProperties csoAccountProperties = soapProperties.findByEnum(Clients.ACCOUNT);
-        jaxWsProxyFactoryBean.setServiceClass(AccountFacadeBean.class);
-        jaxWsProxyFactoryBean.setAddress(csoAccountProperties.getUri());
-        if(StringUtils.isNotBlank(csoAccountProperties.getUserName()))
-            jaxWsProxyFactoryBean.setUsername(csoAccountProperties.getUserName());
-        if(StringUtils.isNotBlank(csoAccountProperties.getPassword()))
-            jaxWsProxyFactoryBean.setPassword(csoAccountProperties.getPassword());
-        return (AccountFacadeBean) jaxWsProxyFactoryBean.create();
+        return getPort(Clients.ACCOUNT, AccountFacadeBean.class);
     }
 
     @Bean
     public RoleRegistryPortType roleRegistryPortType() {
-        JaxWsProxyFactoryBean jaxWsProxyFactoryBean = new JaxWsProxyFactoryBean();
-        jaxWsProxyFactoryBean.setServiceClass(RoleRegistryPortType.class);
-        EfilingSoapClientProperties csoRoleProperties = soapProperties.findByEnum(Clients.ROLE);
-        jaxWsProxyFactoryBean.setAddress(csoRoleProperties.getUri());
-       if(StringUtils.isNotBlank(csoRoleProperties.getUserName()))
-           jaxWsProxyFactoryBean.setUsername(csoRoleProperties.getUserName());
-       if(StringUtils.isNotBlank(csoRoleProperties.getPassword()))
-           jaxWsProxyFactoryBean.setPassword(csoRoleProperties.getPassword());
-       return (RoleRegistryPortType) jaxWsProxyFactoryBean.create();
+       return getPort(Clients.ROLE, RoleRegistryPortType.class);
     }
 
     @Bean
@@ -59,5 +42,19 @@ public class AutoConfiguration {
         return new CsoAccountServiceImpl(accountFacadeBean);
     }
 
+
+    public <T> T getPort(Clients clients, Class<T> type) {
+
+        JaxWsProxyFactoryBean jaxWsProxyFactoryBean = new JaxWsProxyFactoryBean();
+        jaxWsProxyFactoryBean.setServiceClass(type);
+        EfilingSoapClientProperties efilingSoapClientProperties = soapProperties.findByEnum(clients);
+        jaxWsProxyFactoryBean.setAddress(efilingSoapClientProperties.getUri());
+        if(StringUtils.isNotBlank(efilingSoapClientProperties.getUserName()))
+            jaxWsProxyFactoryBean.setUsername(efilingSoapClientProperties.getUserName());
+        if(StringUtils.isNotBlank(efilingSoapClientProperties.getPassword()))
+            jaxWsProxyFactoryBean.setPassword(efilingSoapClientProperties.getPassword());
+        return type.cast(jaxWsProxyFactoryBean.create());
+
+    }
 
 }
