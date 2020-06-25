@@ -4,15 +4,15 @@ package ca.bc.gov.open.jag.efilingapi.submission;
 import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountDetails;
 import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingaccountclient.exception.CSOHasMultipleAccountException;
+import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
+import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
+import ca.bc.gov.open.jag.efilingapi.fee.FeeService;
 import ca.bc.gov.open.jag.efilingapi.fee.models.Fee;
 import ca.bc.gov.open.jag.efilingapi.fee.models.FeeRequest;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
-import ca.bc.gov.open.jag.efilingapi.TestHelpers;
-import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
-import ca.bc.gov.open.jag.efilingapi.fee.FeeService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,8 +26,6 @@ import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -92,10 +90,8 @@ public class SubmissionApiDelegateImplTest {
         when(feeServiceMock.getFee(any(FeeRequest.class))).thenReturn(new Fee(BigDecimal.TEN));
 
         DocumentProperties documentProperties = new DocumentProperties();
-        List<String> efilingRole = new ArrayList<>();
-        efilingRole.add("efiling");
 
-        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, efilingRole);
+        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, true);
         Submission submissionWithCsoAccount = new Submission(CASE_6, documentProperties, TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL), new Fee(BigDecimal.TEN), csoAccountDetails);
 
         when(submissionServiceMock.getByKey(Mockito.eq(CASE_5)))
@@ -104,9 +100,7 @@ public class SubmissionApiDelegateImplTest {
         when(submissionServiceMock.getByKey(Mockito.eq(CASE_6)))
                 .thenReturn(Optional.of(submissionWithCsoAccount));
 
-        List<String> otherRole = new ArrayList<>();
-        efilingRole.add("other");
-        CsoAccountDetails csoAccountDetailsNoEfilingRole = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, otherRole);
+        CsoAccountDetails csoAccountDetailsNoEfilingRole = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, false);
         Submission submissionWithCsoAccountNoEfilingRole = new Submission(CASE_7, documentProperties, TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL), new Fee(BigDecimal.TEN), csoAccountDetailsNoEfilingRole);
         when(submissionServiceMock.getByKey(Mockito.eq(CASE_7)))
                 .thenReturn(Optional.of(submissionWithCsoAccountNoEfilingRole));
@@ -126,9 +120,7 @@ public class SubmissionApiDelegateImplTest {
     public void withValidPayloadShouldReturnOk() {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.of(Submission.builder().create()));
-        List<String> efilingRole = new ArrayList<>();
-        efilingRole.add("efiling");
-        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, efilingRole);
+        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, true);
 
         when(efilingAccountServiceMock.getAccountDetails(any())).thenReturn(csoAccountDetails);
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
@@ -148,9 +140,7 @@ public class SubmissionApiDelegateImplTest {
     public void withValidPayloadButNoRoleShouldReturnForbidden() {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.of(Submission.builder().create()));
-        List<String> efilingRole = new ArrayList<>();
-        efilingRole.add("NOTefiling");
-        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, efilingRole);
+        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, false);
 
         when(efilingAccountServiceMock.getAccountDetails(any())).thenReturn(csoAccountDetails);
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
@@ -172,9 +162,7 @@ public class SubmissionApiDelegateImplTest {
     public void withClientIdHavingMultipleAccount() {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.empty());
-        List<String> efilingRole = new ArrayList<>();
-        efilingRole.add("efiling");
-        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, efilingRole);
+        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, true);
 
         when(efilingAccountServiceMock.getAccountDetails(Mockito.eq(CASE_9.toString()))).thenThrow(new CSOHasMultipleAccountException(CASE_9.toString()));
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
@@ -196,9 +184,7 @@ public class SubmissionApiDelegateImplTest {
     public void withValidPayloadButRedisReturnNothingShouldReturnBadRequest() {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.empty());
-        List<String> efilingRole = new ArrayList<>();
-        efilingRole.add("efiling");
-        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, efilingRole);
+        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, true);
 
         when(efilingAccountServiceMock.getAccountDetails(any())).thenReturn(csoAccountDetails);
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
