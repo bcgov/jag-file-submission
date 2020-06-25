@@ -284,6 +284,10 @@ jobs:
                   echo "::set-env name=GIT_BRANCH::master"
               if: env.GIT_BRANCH == 'refs/heads/master'
 
+            # Make Directory for downloaded files
+            - name: Make directory 
+              run: mkdir coverage-reports
+
             # Download Spring-boot coverage report
             - name: Download spring-boot coverage report
               uses: actions/download-artifact@v1
@@ -298,7 +302,7 @@ jobs:
             # Copy total java to outside directory
             - name: Copy Java Coverage to directory
               run: |
-                cp summed-java-coverage-report/total-codeclimate.json coverage/total-codeclimate.json
+                cp summed-java-coverage-report/total-codeclimate.json coverage-reports/-java-codeclimate.json
                 
             # Download Yarn coverage report
             - name: Download javascript coverage report
@@ -314,7 +318,7 @@ jobs:
             # Copy total Yarn to outside directory
             - name: Copy Yarn Coverage to directory
               run: |
-                cp summed-yarn-coverage-report/total-codeclimate.json coverage/yarn-coverage.json
+                cp summed-yarn-coverage-report/total-codeclimate.json coverage-reports/total-yarn-coverage.json
             
             # See what is inside coverage
             - name: List items inside java coverage report object
