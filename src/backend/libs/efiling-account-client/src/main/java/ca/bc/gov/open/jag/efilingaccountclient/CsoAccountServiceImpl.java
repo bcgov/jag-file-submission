@@ -16,29 +16,32 @@ import java.util.List;
 public class CsoAccountServiceImpl implements EfilingAccountService {
 
     private AccountFacadeBean accountFacadeBean;
-
+    private RoleRegistryPortType roleRegistryPortType;
     private static final Logger LOGGER = LoggerFactory.getLogger(CsoAccountServiceImpl.class);
 
-    public CsoAccountServiceImpl(AccountFacadeBean accountFacadeBean) {
+    public CsoAccountServiceImpl(AccountFacadeBean accountFacadeBean, RoleRegistryPortType roleRegistryPortType) {
 
         this.accountFacadeBean = accountFacadeBean;
+        this.roleRegistryPortType = roleRegistryPortType;
     }
 
     @Override
     public CsoAccountDetails getAccountDetails(String userGuid) {
-        //TODO re-add check hasRole
+
         if (StringUtils.isEmpty(userGuid)) return null;
 
         CsoAccountDetails csoAccountDetails = null;
+        boolean hasEfileRole = HasFileRole(userGuid);
+
         try {
 
             List<ClientProfile> profiles = accountFacadeBean.findProfiles(userGuid);
             //An account must only one profile associated to proceed
             if (profiles.size() == 1) {
                 ClientProfile profile = profiles.get(0);
-                csoAccountDetails = new CsoAccountDetails(profile.getAccountId(), profile.getClientId());
-                csoAccountDetails.addRole("efiling");
-            } else if (profiles.size() > 1) {
+                csoAccountDetails = new CsoAccountDetails(profile.getAccountId(), profile.getClientId(), hasEfileRole);
+            }
+            else if (profiles.size() > 1) {
                 throw new CSOHasMultipleAccountException(profiles.get(0).getClientId().toString());
             }
 
@@ -50,4 +53,10 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         return csoAccountDetails;
     }
 
+    public boolean HasFileRole(String userGuid) {
+
+        UserRoles userRoles = roleRegistryPortType.getRolesForIdentifier("Courts", "CSO", userGuid, "CAP");
+        List<RegisteredRole> roles = userRoles.getRoles();
+        return roles != null && roles.stream().anyMatch(r -> r.getCode() == "FILE");
+    }
 }
