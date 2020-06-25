@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission;
 
+import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountDetails;
 import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingaccountclient.exception.CSOHasMultipleAccountException;
@@ -69,8 +70,12 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         try {
             csoAccountDetails = efilingAccountService.getAccountDetails(generateUrlRequest.getUserId());
-        } catch (CSOHasMultipleAccountException e)   {
+        }
+        catch (CSOHasMultipleAccountException e)   {
             return new ResponseEntity(buildEfilingError(ErrorResponse.ACCOUNTEXCEPTION), HttpStatus.BAD_REQUEST);
+        }
+        catch (NestedEjbException_Exception e) {
+            return new ResponseEntity(buildEfilingError(ErrorResponse.GETPROFILESEXCEPTION), HttpStatus.BAD_REQUEST);
         }
 
         logger.info("Successfully got cso account information");

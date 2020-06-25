@@ -79,7 +79,7 @@ public class CsoAccountServiceImplTest {
 
     @DisplayName("getAccountDetails called with userGuid with file role")
     @Test
-    public void testWithFileRoleEnabled() {
+    public void testWithFileRoleEnabled() throws NestedEjbException_Exception {
 
         CsoAccountDetails details = sut.getAccountDetails(USERGUIDWITHFILEROLE);
         Assertions.assertNotEquals(null, details);
@@ -90,7 +90,7 @@ public class CsoAccountServiceImplTest {
 
     @DisplayName("getAccountDetails called with a userGuid that does not have file role")
     @Test
-    public void testWithFileRoleDisabled() {
+    public void testWithFileRoleDisabled() throws NestedEjbException_Exception {
 
         CsoAccountDetails details = sut.getAccountDetails(USERGUIDNOROLE);
         Assertions.assertNotEquals(null, details);
