@@ -45,7 +45,10 @@ ConfirmationPopup.propTypes = {
   modal: PropTypes.shape({
     show: PropTypes.bool.isRequired,
     handleShow: PropTypes.func.isRequired,
-    handleClose: PropTypes.func.isRequired
+    handleClose: PropTypes.func.isRequired,
+    title: PropTypes.string.isRequired,
+    body1: PropTypes.string.isRequired,
+    body2: PropTypes.string
   }).isRequired,
   mainButton: PropTypes.shape({
     mainLabel: PropTypes.string.isRequired,
