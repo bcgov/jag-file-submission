@@ -31,6 +31,13 @@ const navigation = {
     url: ""
   }
 };
+const userDetails = {
+  accounts: [
+    {
+      type: "CSO"
+    }
+  ]
+};
 
 const LoaderStateData = props => {
   mock.onGet(apiRequest).reply(400);
@@ -38,12 +45,17 @@ const LoaderStateData = props => {
 };
 
 const AccountExistsStateData = props => {
-  mock.onGet(apiRequest).reply(200, { csoAccountExists: true, navigation });
+  mock.onGet(apiRequest).reply(200, { userDetails, navigation });
   return props.children({ page });
 };
 
 const NoAccountExistsStateData = props => {
-  mock.onGet(apiRequest).reply(200, { csoAccountExists: false, navigation });
+  mock
+    .onGet(apiRequest)
+    .reply(200, {
+      userDetails: { ...userDetails, accounts: null },
+      navigation
+    });
   return props.children({ page });
 };
 

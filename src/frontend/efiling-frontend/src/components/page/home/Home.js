@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
+import PropTypes, { element } from "prop-types";
 import queryString from "query-string";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
@@ -22,9 +22,16 @@ const checkCSOAccountStatus = (
 ) => {
   axios
     .get(`/submission/${submissionId}`)
-    .then(({ data: { csoAccountExists, navigation } }) => {
+    .then(({ data: { userDetails, navigation } }) => {
       saveNavigationToSession(navigation);
-      if (csoAccountExists) setCsoAccountExists(true);
+
+      console.log(userDetails);
+      if (userDetails.accounts) {
+        const csoAccountExists = userDetails.accounts.some(
+          element => element.type === "CSO"
+        );
+        if (csoAccountExists) setCsoAccountExists(true);
+      }
       setShowLoader(false);
     })
     .catch(() => {});

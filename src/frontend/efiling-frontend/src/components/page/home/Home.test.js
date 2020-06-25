@@ -28,6 +28,13 @@ describe("Home", () => {
       url: ""
     }
   };
+  const userDetails = {
+    accounts: [
+      {
+        type: "CSO"
+      }
+    ]
+  };
   let mock;
 
   beforeEach(() => {
@@ -36,7 +43,7 @@ describe("Home", () => {
   });
 
   test("Component matches the snapshot when user cso account exists", async () => {
-    mock.onGet(apiRequest).reply(200, { csoAccountExists: true, navigation });
+    mock.onGet(apiRequest).reply(200, { userDetails, navigation });
 
     const { asFragment } = render(
       <MemoryRouter initialEntries={[`?submissionId=${submissionId}`]}>
@@ -51,7 +58,12 @@ describe("Home", () => {
   });
 
   test("Component matches the snapshot when user cso account does not exist", async () => {
-    mock.onGet(apiRequest).reply(200, { csoAccountExists: false, navigation });
+    mock
+      .onGet(apiRequest)
+      .reply(200, {
+        userDetails: { ...userDetails, accounts: null },
+        navigation
+      });
 
     const { asFragment } = render(
       <MemoryRouter initialEntries={[`?submissionId=${submissionId}`]}>
