@@ -13,7 +13,7 @@ The Git Action that utilizes Code Climate is run twice seperately: Once when the
 ### JAG File Submission Code Climate Report
 <https://codeclimate.com/github/bcgov/jag-file-submission>.
 
-### Badges 
+### Badges
 [![Maintainability](https://api.codeclimate.com/v1/badges/4078a74ee2bb4d400fd9/maintainability)](https://codeclimate.com/github/bcgov/jag-file-submission/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/4078a74ee2bb4d400fd9/test_coverage)](https://codeclimate.com/github/bcgov/jag-file-submission/test_coverage)
 
 Badges can be found at the top of this projects README.md, which link directly to the code climate report linked above.
