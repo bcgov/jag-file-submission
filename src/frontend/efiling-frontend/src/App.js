@@ -4,7 +4,7 @@ import Home from "./components/page/home/Home";
 
 export default function App() {
   const header = {
-    name: "eFiling Demo Client",
+    name: "eFiling Frontend",
     history: useHistory()
   };
 
