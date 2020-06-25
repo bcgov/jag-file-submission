@@ -1,28 +1,23 @@
 import React from "react";
 import { createMemoryHistory } from "history";
-import { Router } from "react-router-dom";
 import { render, fireEvent, getAllByRole } from "@testing-library/react";
 import testBasicSnapshot from "../TestHelper";
 import Header, { HeadingTitle, HeaderImage } from "./Header";
 
 describe("Header Component", () => {
   const header = {
-    name: "File Submission"
+    name: "File Submission",
+    history: createMemoryHistory()
   };
-  const history = createMemoryHistory();
-
-  const headerComponent = (
-    <Router history={history}>
-      <Header header={header} />
-    </Router>
-  );
 
   test("Header matches the snapshot", () => {
+    const headerComponent = <Header header={header} />;
+
     testBasicSnapshot(headerComponent);
   });
 
   test("HeadingTitle matches the snapshot", () => {
-    const headingTitle = HeadingTitle(history, "navbar-brand pointer");
+    const headingTitle = HeadingTitle(header.history, "navbar-brand pointer");
 
     testBasicSnapshot(headingTitle);
   });
@@ -38,22 +33,22 @@ describe("Header Component", () => {
   });
 
   test("Clicking HeadingTitle takes you back to home", () => {
-    history.location.pathname = "/somepageroute";
+    header.history.location.pathname = "/somepageroute";
 
-    const { container } = render(headerComponent);
+    const { container } = render(<Header header={header} />);
 
     fireEvent.click(getAllByRole(container, "button")[0]);
 
-    expect(history.location.pathname).toEqual("/");
+    expect(header.history.location.pathname).toEqual("/");
   });
 
   test("Keydown on HeadingTitle takes you back to home", () => {
-    history.location.pathname = "/somepageroute";
+    header.history.location.pathname = "/somepageroute";
 
-    const { container } = render(headerComponent);
+    const { container } = render(<Header header={header} />);
 
     fireEvent.keyDown(getAllByRole(container, "button")[0]);
 
-    expect(history.location.pathname).toEqual("/");
+    expect(header.history.location.pathname).toEqual("/");
   });
 });
