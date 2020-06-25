@@ -125,7 +125,7 @@ jobs:
 
             # Sum the coverage reports
             - name: Summing the coverage reports generated
-              run: ./cc-test-reporter sum-coverage coverage/*-codeclimate.json -p ${{ env.FILE_COUNTER }} -o coverage/total-codeclimate.json
+              run: ./cc-test-reporter sum-coverage coverage/*-codeclimate.json -p ${{ env.FILE_COUNTER }} -o coverage/total-yarn-codeclimate.json
 
             # Upload JSON for debugging purposes
             - name: Upload JSON for debugging purposes
@@ -236,7 +236,7 @@ jobs:
                 
             # Sum the coverage reports
             - name: Summing the coverage reports generated
-              run: ./cc-test-reporter sum-coverage coverage/*-codeclimate.json -p ${{ env.FILE_COUNTER }} -o coverage/total-codeclimate.json
+              run: ./cc-test-reporter sum-coverage coverage/*-codeclimate.json -p ${{ env.FILE_COUNTER }} -o coverage/total-java-codeclimate.json
 
             # Upload JSON for debugging purposes
             - name: Upload JSON for debugging purposes
@@ -294,7 +294,12 @@ jobs:
             - name: List items inside java coverage report object
               run: |
                 ls summed-java-coverage-report
-            
+                
+            # Copy total java to outside directory
+            - name: Copy Java Coverage to directory
+              run: |
+                cp summed-java-coverage-report/total-java-codeclimate.json /coverage
+                
             # Download Yarn coverage report
             - name: Download javascript coverage report
               uses: actions/download-artifact@v1
@@ -305,3 +310,13 @@ jobs:
             - name: List items inside java coverage report object
               run: |
                 ls summed-yarn-coverage-report
+                
+            # Copy total Yarn to outside directory
+            - name: Copy Yarn Coverage to directory
+              run: |
+                cp summed-yarn-coverage-report/total-yarn-codeclimate.json /coverage
+            
+            # See what is inside coverage
+            - name: List items inside java coverage report object
+              run: |
+                ls /coverage
