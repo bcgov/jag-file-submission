@@ -1,5 +1,4 @@
 import React from "react";
-import { createMemoryHistory } from "history";
 
 import Header from "./Header";
 
@@ -8,9 +7,11 @@ export default {
   component: Header
 };
 
+// not passing in history as not required in snapshot, silence warning of unused prop
+console.error = () => {};
+
 const header = {
-  name: "File Submission",
-  history: createMemoryHistory()
+  name: "File Submission"
 };
 
 const component = <Header header={header} />;

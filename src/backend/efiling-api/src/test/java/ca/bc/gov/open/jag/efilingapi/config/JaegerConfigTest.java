@@ -9,13 +9,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayName("JaegerConfig Test Suite")
 public class JaegerConfigTest {
     ApplicationContextRunner context = new ApplicationContextRunner()
-            .withUserConfiguration(JaegerConfig.class);
+            .withUserConfiguration(ApplicationConfiguration.class);
 
     @Test
     @DisplayName("CASE1: Test that beans are created")
     public void testBeansAreGenerated() {
         context.run(it -> {
-            assertThat(it).hasSingleBean(JaegerConfig.class);
+            assertThat(it).hasSingleBean(ApplicationConfiguration.class);
         });
     }
 }

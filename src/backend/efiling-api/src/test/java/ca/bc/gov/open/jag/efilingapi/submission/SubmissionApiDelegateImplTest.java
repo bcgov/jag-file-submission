@@ -1,18 +1,19 @@
 package ca.bc.gov.open.jag.efilingapi.submission;
 
 
+import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountDetails;
 import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingaccountclient.exception.CSOHasMultipleAccountException;
+import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
+import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
+import ca.bc.gov.open.jag.efilingapi.fee.FeeService;
 import ca.bc.gov.open.jag.efilingapi.fee.models.Fee;
 import ca.bc.gov.open.jag.efilingapi.fee.models.FeeRequest;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
-import ca.bc.gov.open.jag.efilingapi.TestHelpers;
-import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
-import ca.bc.gov.open.jag.efilingapi.fee.FeeService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,8 +27,6 @@ import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -92,10 +91,8 @@ public class SubmissionApiDelegateImplTest {
         when(feeServiceMock.getFee(any(FeeRequest.class))).thenReturn(new Fee(BigDecimal.TEN));
 
         DocumentProperties documentProperties = new DocumentProperties();
-        List<String> efilingRole = new ArrayList<>();
-        efilingRole.add("efiling");
 
-        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, efilingRole);
+        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, true);
         Submission submissionWithCsoAccount = new Submission(CASE_6, documentProperties, TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL), new Fee(BigDecimal.TEN), csoAccountDetails);
 
         when(submissionServiceMock.getByKey(Mockito.eq(CASE_5)))
@@ -104,9 +101,7 @@ public class SubmissionApiDelegateImplTest {
         when(submissionServiceMock.getByKey(Mockito.eq(CASE_6)))
                 .thenReturn(Optional.of(submissionWithCsoAccount));
 
-        List<String> otherRole = new ArrayList<>();
-        efilingRole.add("other");
-        CsoAccountDetails csoAccountDetailsNoEfilingRole = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, otherRole);
+        CsoAccountDetails csoAccountDetailsNoEfilingRole = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, false);
         Submission submissionWithCsoAccountNoEfilingRole = new Submission(CASE_7, documentProperties, TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL), new Fee(BigDecimal.TEN), csoAccountDetailsNoEfilingRole);
         when(submissionServiceMock.getByKey(Mockito.eq(CASE_7)))
                 .thenReturn(Optional.of(submissionWithCsoAccountNoEfilingRole));
@@ -123,12 +118,10 @@ public class SubmissionApiDelegateImplTest {
 
     @Test
     @DisplayName("CASE1: when payload is valid")
-    public void withValidPayloadShouldReturnOk() {
+    public void withValidPayloadShouldReturnOk() throws NestedEjbException_Exception {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.of(Submission.builder().create()));
-        List<String> efilingRole = new ArrayList<>();
-        efilingRole.add("efiling");
-        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, efilingRole);
+        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, true);
 
         when(efilingAccountServiceMock.getAccountDetails(any())).thenReturn(csoAccountDetails);
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
@@ -145,12 +138,10 @@ public class SubmissionApiDelegateImplTest {
 
     @Test
     @DisplayName("CASE2: when payload is valid but no efiling role return forbidden")
-    public void withValidPayloadButNoRoleShouldReturnForbidden() {
+    public void withValidPayloadButNoRoleShouldReturnForbidden() throws NestedEjbException_Exception {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.of(Submission.builder().create()));
-        List<String> efilingRole = new ArrayList<>();
-        efilingRole.add("NOTefiling");
-        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, efilingRole);
+        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, false);
 
         when(efilingAccountServiceMock.getAccountDetails(any())).thenReturn(csoAccountDetails);
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
@@ -169,12 +160,10 @@ public class SubmissionApiDelegateImplTest {
 
     @Test
     @DisplayName("With clientid having multiple account should return error")
-    public void withClientIdHavingMultipleAccount() {
+    public void withClientIdHavingMultipleAccount() throws NestedEjbException_Exception {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.empty());
-        List<String> efilingRole = new ArrayList<>();
-        efilingRole.add("efiling");
-        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, efilingRole);
+        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, true);
 
         when(efilingAccountServiceMock.getAccountDetails(Mockito.eq(CASE_9.toString()))).thenThrow(new CSOHasMultipleAccountException(CASE_9.toString()));
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
@@ -193,12 +182,10 @@ public class SubmissionApiDelegateImplTest {
 
     @Test
     @DisplayName("CASE3: when payload is valid but redis return nothing")
-    public void withValidPayloadButRedisReturnNothingShouldReturnBadRequest() {
+    public void withValidPayloadButRedisReturnNothingShouldReturnBadRequest() throws NestedEjbException_Exception {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.empty());
-        List<String> efilingRole = new ArrayList<>();
-        efilingRole.add("efiling");
-        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, efilingRole);
+        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, true);
 
         when(efilingAccountServiceMock.getAccountDetails(any())).thenReturn(csoAccountDetails);
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
@@ -221,7 +208,7 @@ public class SubmissionApiDelegateImplTest {
 
         when(submissionServiceMock.getByKey(TEST)).thenReturn(Optional.of(submission));
 
-        ResponseEntity<UserDetail> actual = sut.getSubmissionUserDetail("0");
+        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmissionUserDetail("0");
         assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
     }
 
@@ -229,47 +216,44 @@ public class SubmissionApiDelegateImplTest {
     @DisplayName("CASE5: with null redis storage response return NotFound")
     public void withNullRedisStorageResponseReturnNotFound() {
 
-        ResponseEntity<UserDetail> actual = sut.getSubmissionUserDetail(CASE_5.toString());
+        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmissionUserDetail(CASE_5.toString());
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
 
     }
 
     @Test
-    @DisplayName("CASE6: with user having cso account and efiling role")
-    public void withValidSubmissionIdShouldReturnAccountExistsAndHasEfilingRole() {
+    @DisplayName("With user having cso account and efiling role")
+    public void withUserHavingCsoAccountShouldReturnUserDetailsAndAccount() {
 
-        ResponseEntity<UserDetail> actual = sut.getSubmissionUserDetail(CASE_6.toString());
+        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmissionUserDetail(CASE_6.toString());
         assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertTrue(actual.getBody().getCsoAccountExists());
+        assertEquals("tbd", actual.getBody().getUserDetails().getEmail());
+        assertEquals("tbd", actual.getBody().getUserDetails().getFirstName());
+        assertEquals("tbd", actual.getBody().getUserDetails().getLastName());
+        assertEquals("tbd", actual.getBody().getUserDetails().getMiddleName());
+        assertEquals(1, actual.getBody().getUserDetails().getAccounts().size());
+        assertEquals(Account.TypeEnum.CSO, actual.getBody().getUserDetails().getAccounts().stream().findFirst().get().getType());
+        assertEquals("10", actual.getBody().getUserDetails().getAccounts().stream().findFirst().get().getIdentifier());
         assertEquals(SUCCESSURL, actual.getBody().getNavigation().getSuccess().getUrl());
         assertEquals(CANCELURL, actual.getBody().getNavigation().getCancel().getUrl());
         assertEquals(ERRORURL, actual.getBody().getNavigation().getError().getUrl());
     }
 
     @Test
-    @DisplayName("CASE7: with user having cso account and no efiling role")
-    public void withValidSubmissionIdShouldReturnAccountExistsAndNoEfilingRole() {
+    @DisplayName("With user not having cso account")
+    public void withUserHavingNoCsoAccountShouldReturnUserDetailsButNoAccount() {
 
-        ResponseEntity<UserDetail> actual = sut.getSubmissionUserDetail(CASE_7.toString());
+        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmissionUserDetail(CASE_8.toString());
         assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertTrue(actual.getBody().getCsoAccountExists());
+        assertEquals("tbd", actual.getBody().getUserDetails().getEmail());
+        assertEquals("tbd", actual.getBody().getUserDetails().getFirstName());
+        assertEquals("tbd", actual.getBody().getUserDetails().getLastName());
+        assertEquals("tbd", actual.getBody().getUserDetails().getMiddleName());
+        assertNull(actual.getBody().getUserDetails().getAccounts());
         assertEquals(SUCCESSURL, actual.getBody().getNavigation().getSuccess().getUrl());
         assertEquals(CANCELURL, actual.getBody().getNavigation().getCancel().getUrl());
         assertEquals(ERRORURL, actual.getBody().getNavigation().getError().getUrl());
-
     }
 
-    @Test
-    @DisplayName("CASE8: with user having cso account and no efiling role")
-    public void withValidSubmissionButNoAccountShouldReturnFalse() {
-
-        ResponseEntity<UserDetail> actual = sut.getSubmissionUserDetail(CASE_8.toString());
-        assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertFalse(actual.getBody().getCsoAccountExists());
-        assertEquals(SUCCESSURL, actual.getBody().getNavigation().getSuccess().getUrl());
-        assertEquals(CANCELURL, actual.getBody().getNavigation().getCancel().getUrl());
-        assertEquals(ERRORURL, actual.getBody().getNavigation().getError().getUrl());
-
-    }
 
 }
