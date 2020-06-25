@@ -14,14 +14,11 @@ exports[`Header Component Header matches the snapshot 1`] = `
       className="img-fluid d-none d-md-block pointer"
       height="44"
       onClick={[Function]}
-      onKeyDown={[Function]}
-      role="button"
       src={
         Object {
           "process": [Function],
         }
       }
-      tabIndex={0}
       width={181}
     />
     <img
@@ -29,14 +26,11 @@ exports[`Header Component Header matches the snapshot 1`] = `
       className="img-fluid d-md-none pointer"
       height="44"
       onClick={[Function]}
-      onKeyDown={[Function]}
-      role="button"
       src={
         Object {
           "process": [Function],
         }
       }
-      tabIndex={0}
       width={64}
     />
     <div
@@ -59,9 +53,6 @@ exports[`Header Component HeaderImage matches the snapshot 1`] = `
   className={181}
   height="44"
   onClick={[Function]}
-  onKeyDown={[Function]}
-  role="button"
-  tabIndex={0}
   width="bcid-logo-rev-en.svg"
 />
 `;
@@ -78,7 +69,7 @@ exports[`Header Component HeadingTitle matches the snapshot 1`] = `
       "entries": Array [
         Object {
           "hash": "",
-          "key": "qjo4t4",
+          "key": "ml5b7a",
           "pathname": "/",
           "search": "",
           "state": undefined,
@@ -92,7 +83,7 @@ exports[`Header Component HeadingTitle matches the snapshot 1`] = `
       "listen": [Function],
       "location": Object {
         "hash": "",
-        "key": "qjo4t4",
+        "key": "ml5b7a",
         "pathname": "/",
         "search": "",
         "state": undefined,

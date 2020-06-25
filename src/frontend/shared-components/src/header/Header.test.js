@@ -1,6 +1,6 @@
 import React from "react";
 import { createMemoryHistory } from "history";
-import { render, fireEvent, getAllByRole } from "@testing-library/react";
+import { render, fireEvent, getAllByAltText } from "@testing-library/react";
 import testBasicSnapshot from "../TestHelper";
 import Header, { HeadingTitle, HeaderImage } from "./Header";
 
@@ -37,17 +37,7 @@ describe("Header Component", () => {
 
     const { container } = render(<Header header={header} />);
 
-    fireEvent.click(getAllByRole(container, "button")[0]);
-
-    expect(header.history.location.pathname).toEqual("/");
-  });
-
-  test("Keydown on HeadingImage takes you back to home", () => {
-    header.history.location.pathname = "/somepageroute";
-
-    const { container } = render(<Header header={header} />);
-
-    fireEvent.keyDown(getAllByRole(container, "button")[0]);
+    fireEvent.click(getAllByAltText(container, "B.C. Government Logo")[0]);
 
     expect(header.history.location.pathname).toEqual("/");
   });
