@@ -1534,7 +1534,7 @@ exports[`Storyshots Header Default 1`] = `
         "entries": Array [
           Object {
             "hash": "",
-            "key": "eqerzr",
+            "key": "sjhpw9",
             "pathname": "/",
             "search": "",
             "state": undefined,
@@ -1548,7 +1548,7 @@ exports[`Storyshots Header Default 1`] = `
         "listen": [Function],
         "location": Object {
           "hash": "",
-          "key": "eqerzr",
+          "key": "sjhpw9",
           "pathname": "/",
           "search": "",
           "state": undefined,
@@ -1625,7 +1625,7 @@ exports[`Storyshots Header Mobile 1`] = `
         "entries": Array [
           Object {
             "hash": "",
-            "key": "eqerzr",
+            "key": "sjhpw9",
             "pathname": "/",
             "search": "",
             "state": undefined,
@@ -1639,7 +1639,7 @@ exports[`Storyshots Header Mobile 1`] = `
         "listen": [Function],
         "location": Object {
           "hash": "",
-          "key": "eqerzr",
+          "key": "sjhpw9",
           "pathname": "/",
           "search": "",
           "state": undefined,
