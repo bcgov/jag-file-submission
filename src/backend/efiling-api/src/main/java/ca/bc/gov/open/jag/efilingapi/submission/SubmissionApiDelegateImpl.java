@@ -118,9 +118,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         GetSubmissionResponse response = new GetSubmissionResponse();
 
-        if(fromCacheSubmission.get().getCsoAccountDetails() != null) {
-            response.setUserDetails(buildUserDetails(fromCacheSubmission.get()));
-        }
+        response.setUserDetails(buildUserDetails(fromCacheSubmission.get()));
 
         response.setNavigation(fromCacheSubmission.get().getNavigation());
 
@@ -129,14 +127,16 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     private UserDetails buildUserDetails(Submission submission) {
+
         UserDetails userDetails = new UserDetails();
 
-        Account account = new Account();
+        if(submission.getCsoAccountDetails() != null) {
+            Account account = new Account();
+            account.setType(Account.TypeEnum.CSO);
+            account.setIdentifier(submission.getCsoAccountDetails().getAccountId().toString());
+            userDetails.addAccountsItem(account);
+        }
 
-        account.setType(Account.TypeEnum.CSO);
-        account.setIdentifier(submission.getCsoAccountDetails().getAccountId().toString());
-
-        userDetails.addAccountsItem(account);
         userDetails.setFirstName("tbd");
         userDetails.setLastName("tbd");
         userDetails.setEmail("tbd");

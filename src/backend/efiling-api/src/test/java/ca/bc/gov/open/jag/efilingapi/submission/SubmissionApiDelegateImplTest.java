@@ -235,8 +235,8 @@ public class SubmissionApiDelegateImplTest {
     }
 
     @Test
-    @DisplayName("CASE6: with user having cso account and efiling role")
-    public void withValidSubmissionIdShouldReturnAccountExistsAndHasEfilingRole() {
+    @DisplayName("With user having cso account and efiling role")
+    public void withUserHavingCsoAccountShouldReturnUserDetailsAndAccount() {
 
         ResponseEntity<GetSubmissionResponse> actual = sut.getSubmissionUserDetail(CASE_6.toString());
         assertEquals(HttpStatus.OK, actual.getStatusCode());
@@ -247,6 +247,22 @@ public class SubmissionApiDelegateImplTest {
         assertEquals(1, actual.getBody().getUserDetails().getAccounts().size());
         assertEquals(Account.TypeEnum.CSO, actual.getBody().getUserDetails().getAccounts().stream().findFirst().get().getType());
         assertEquals("10", actual.getBody().getUserDetails().getAccounts().stream().findFirst().get().getIdentifier());
+        assertEquals(SUCCESSURL, actual.getBody().getNavigation().getSuccess().getUrl());
+        assertEquals(CANCELURL, actual.getBody().getNavigation().getCancel().getUrl());
+        assertEquals(ERRORURL, actual.getBody().getNavigation().getError().getUrl());
+    }
+
+    @Test
+    @DisplayName("With user not having cso account")
+    public void withUserHavingNoCsoAccountShouldReturnUserDetailsButNoAccount() {
+
+        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmissionUserDetail(CASE_8.toString());
+        assertEquals(HttpStatus.OK, actual.getStatusCode());
+        assertEquals("tbd", actual.getBody().getUserDetails().getEmail());
+        assertEquals("tbd", actual.getBody().getUserDetails().getFirstName());
+        assertEquals("tbd", actual.getBody().getUserDetails().getLastName());
+        assertEquals("tbd", actual.getBody().getUserDetails().getMiddleName());
+        assertNull(actual.getBody().getUserDetails().getAccounts());
         assertEquals(SUCCESSURL, actual.getBody().getNavigation().getSuccess().getUrl());
         assertEquals(CANCELURL, actual.getBody().getNavigation().getCancel().getUrl());
         assertEquals(ERRORURL, actual.getBody().getNavigation().getError().getUrl());
