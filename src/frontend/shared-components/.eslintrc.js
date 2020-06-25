@@ -26,6 +26,7 @@ module.exports = {
     "react/jsx-props-no-spreading": "off",
     "import/no-extraneous-dependencies": "off",
     "react/jsx-one-expression-per-line": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
     "prettier/prettier": ["error"]
   }
 };
