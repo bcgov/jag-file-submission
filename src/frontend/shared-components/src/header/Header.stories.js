@@ -1,6 +1,4 @@
 import React from "react";
-import { Router } from "react-router-dom";
-import { createMemoryHistory } from "history";
 
 import Header from "./Header";
 
@@ -13,19 +11,9 @@ const header = {
   name: "File Submission"
 };
 
-const history = createMemoryHistory();
+export const Default = () => <Header header={header} />;
 
-export const Default = () => (
-  // <Router history={history}>
-  <Header header={header} />
-  // </Router>
-);
-
-export const Mobile = () => (
-  // <Router history={history}>
-  <Header header={header} />
-  // </Router>
-);
+export const Mobile = () => <Header header={header} />;
 
 Mobile.story = {
   parameters: {
