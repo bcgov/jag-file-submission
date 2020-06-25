@@ -83,6 +83,7 @@
             <plugin>
                 <groupId>org.apache.cxf</groupId>
                 <artifactId>cxf-codegen-plugin</artifactId>
+                <version>3.3.6</version>
                 <executions>
                     <execution>
                         <id>generate-sources</id>
