@@ -221,7 +221,7 @@ public class SubmissionApiDelegateImplTest {
 
         when(submissionServiceMock.getByKey(TEST)).thenReturn(Optional.of(submission));
 
-        ResponseEntity<UserDetail> actual = sut.getSubmissionUserDetail("0");
+        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmissionUserDetail("0");
         assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
     }
 
@@ -229,7 +229,7 @@ public class SubmissionApiDelegateImplTest {
     @DisplayName("CASE5: with null redis storage response return NotFound")
     public void withNullRedisStorageResponseReturnNotFound() {
 
-        ResponseEntity<UserDetail> actual = sut.getSubmissionUserDetail(CASE_5.toString());
+        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmissionUserDetail(CASE_5.toString());
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
 
     }
@@ -238,38 +238,19 @@ public class SubmissionApiDelegateImplTest {
     @DisplayName("CASE6: with user having cso account and efiling role")
     public void withValidSubmissionIdShouldReturnAccountExistsAndHasEfilingRole() {
 
-        ResponseEntity<UserDetail> actual = sut.getSubmissionUserDetail(CASE_6.toString());
+        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmissionUserDetail(CASE_6.toString());
         assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertTrue(actual.getBody().getCsoAccountExists());
+        assertEquals("tbd", actual.getBody().getUserDetails().getEmail());
+        assertEquals("tbd", actual.getBody().getUserDetails().getFirstName());
+        assertEquals("tbd", actual.getBody().getUserDetails().getLastName());
+        assertEquals("tbd", actual.getBody().getUserDetails().getMiddleName());
+        assertEquals(1, actual.getBody().getUserDetails().getAccounts().size());
+        assertEquals(Account.TypeEnum.CSO, actual.getBody().getUserDetails().getAccounts().stream().findFirst().get().getType());
+        assertEquals("10", actual.getBody().getUserDetails().getAccounts().stream().findFirst().get().getIdentifier());
         assertEquals(SUCCESSURL, actual.getBody().getNavigation().getSuccess().getUrl());
         assertEquals(CANCELURL, actual.getBody().getNavigation().getCancel().getUrl());
         assertEquals(ERRORURL, actual.getBody().getNavigation().getError().getUrl());
     }
 
-    @Test
-    @DisplayName("CASE7: with user having cso account and no efiling role")
-    public void withValidSubmissionIdShouldReturnAccountExistsAndNoEfilingRole() {
-
-        ResponseEntity<UserDetail> actual = sut.getSubmissionUserDetail(CASE_7.toString());
-        assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertTrue(actual.getBody().getCsoAccountExists());
-        assertEquals(SUCCESSURL, actual.getBody().getNavigation().getSuccess().getUrl());
-        assertEquals(CANCELURL, actual.getBody().getNavigation().getCancel().getUrl());
-        assertEquals(ERRORURL, actual.getBody().getNavigation().getError().getUrl());
-
-    }
-
-    @Test
-    @DisplayName("CASE8: with user having cso account and no efiling role")
-    public void withValidSubmissionButNoAccountShouldReturnFalse() {
-
-        ResponseEntity<UserDetail> actual = sut.getSubmissionUserDetail(CASE_8.toString());
-        assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertFalse(actual.getBody().getCsoAccountExists());
-        assertEquals(SUCCESSURL, actual.getBody().getNavigation().getSuccess().getUrl());
-        assertEquals(CANCELURL, actual.getBody().getNavigation().getCancel().getUrl());
-        assertEquals(ERRORURL, actual.getBody().getNavigation().getError().getUrl());
-
-    }
 
 }
