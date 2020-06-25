@@ -58,12 +58,10 @@ describe("Home", () => {
   });
 
   test("Component matches the snapshot when user cso account does not exist", async () => {
-    mock
-      .onGet(apiRequest)
-      .reply(200, {
-        userDetails: { ...userDetails, accounts: null },
-        navigation
-      });
+    mock.onGet(apiRequest).reply(200, {
+      userDetails: { ...userDetails, accounts: null },
+      navigation
+    });
 
     const { asFragment } = render(
       <MemoryRouter initialEntries={[`?submissionId=${submissionId}`]}>

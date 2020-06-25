@@ -50,12 +50,10 @@ const AccountExistsStateData = props => {
 };
 
 const NoAccountExistsStateData = props => {
-  mock
-    .onGet(apiRequest)
-    .reply(200, {
-      userDetails: { ...userDetails, accounts: null },
-      navigation
-    });
+  mock.onGet(apiRequest).reply(200, {
+    userDetails: { ...userDetails, accounts: null },
+    navigation
+  });
   return props.children({ page });
 };
 
