@@ -9,6 +9,7 @@
     "history": "^4.10.1",
     "jest": "^25.5.4",
     "prop-types": "^15.7.2",
+    "rc-util": "^5.0.4",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",
@@ -44,6 +45,9 @@
     "@testing-library/user-event": "^7.1.2",
     "babel-loader": "^8.1.0",
     "babel-preset-stage-0": "^6.24.1",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "enzyme-to-json": "^3.5.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.11.0",
@@ -56,10 +60,7 @@
     "jest-sonar-reporter": "^2.0.0",
     "prettier": "1.19.1",
     "pretty-quick": "^2.0.1",
-    "webpack": "4.42.0",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.2",
-    "enzyme-to-json": "^3.5.0"
+    "webpack": "4.42.0"
   },
   "jestSonar": {
     "reportPath": "coverage",

@@ -1,5 +1,6 @@
 /* eslint-disable no-alert */
 import React from "react";
+import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./Header.css";
 import bcidSymbol from "../../public/images/bcid-symbol-rev.svg";
@@ -26,7 +27,9 @@ export const HeaderImage = (classNames, width, src) => (
   />
 );
 
-export default function Header({ header: { name, history } }) {
+export default function Header({ header: { name } }) {
+  const history = useHistory();
+
   return (
     <header>
       <nav className="container-fluid navbar navbar-expand-lg navbar-dark">
@@ -44,7 +47,6 @@ export default function Header({ header: { name, history } }) {
 
 Header.propTypes = {
   header: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    history: PropTypes.any.isRequired
+    name: PropTypes.string.isRequired
   }).isRequired
 };

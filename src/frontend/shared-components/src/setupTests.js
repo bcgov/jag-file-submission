@@ -8,5 +8,7 @@ import Adapter from "enzyme-adapter-react-16";
 
 configure({ adapter: new Adapter() });
 
+jest.mock("rc-util/lib/Portal");
+
 // to address Error: Not implemented: HTMLCanvasElement.prototype.getContext
 window.HTMLCanvasElement.prototype.getContext = () => {};
