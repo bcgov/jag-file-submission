@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jagefilingapi.qa.frontendutils;
 
 import ca.bc.gov.open.jagefilingapi.qa.config.ReadConfig;
+import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.LandingPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -41,8 +42,9 @@ public class DriverClass {
                 default:
                     log.info("URL value is not available in the properties file.");
             }
-            driver.manage().timeouts().implicitlyWait(90, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
             driver.manage().deleteAllCookies();
             driver.manage().window().maximize();
         }
 }
+
