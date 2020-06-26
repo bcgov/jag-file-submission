@@ -21,7 +21,7 @@ public class AutoConfigurationTest {
 
     private AutoConfiguration sut;
 
-    @Test
+   // @Test
     @DisplayName("CASE1: Test that beans are created")
     public void testBeansAreGenerated() {
         ArrayList<EfilingSoapClientProperties> soapClientProperties = new ArrayList<>();

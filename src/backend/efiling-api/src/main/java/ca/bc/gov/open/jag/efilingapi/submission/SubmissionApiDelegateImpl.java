@@ -172,7 +172,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     private BigDecimal getFee(String type) {
         try {
             return efilingLookupService.getServiceFee(type).getFeeAmt();
-        } catch (DatatypeConfigurationException e) {
+        } catch (DatatypeConfigurationException  e) {
             logger.error("Fee not found ", e);
             return BigDecimal.valueOf(0);
         }

@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilinglookupclient.config;
 
-import ca.bc.gov.ag.csows.LookupFacadeItf;
+import ca.bc.gov.ag.csows.lookups.LookupFacade;
+import ca.bc.gov.ag.csows.lookups.LookupFacadeBean;
 import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
@@ -22,13 +23,13 @@ public class AutoConfiguration {
     public AutoConfiguration(SoapProperties soapProperties) { this.soapProperties = soapProperties; }
 
     @Bean
-    public LookupFacadeItf lookupFacadeItf() {
-        return getPort(Clients.LOOKUP, LookupFacadeItf.class);
+    public LookupFacadeBean lookupFacadeItf() {
+        return getPort(Clients.LOOKUP, LookupFacadeBean.class);
     }
 
     @Bean
     @ConditionalOnMissingBean({EfilingLookupService.class})
-    public EfilingLookupService efilingLookupService(LookupFacadeItf lookupFacadeItf) {
+    public EfilingLookupService efilingLookupService(LookupFacadeBean lookupFacadeItf) {
 
         return new CSOLookupServiceImpl(lookupFacadeItf);
     }

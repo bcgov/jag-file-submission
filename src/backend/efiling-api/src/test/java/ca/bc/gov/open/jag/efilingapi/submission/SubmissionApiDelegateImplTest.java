@@ -117,7 +117,7 @@ public class SubmissionApiDelegateImplTest {
         when(submissionServiceMock.getByKey(Mockito.eq(CASE_8)))
                 .thenReturn(Optional.of(submissionNoCsoAccount));
 
-        ServiceFees serviceFee = new ServiceFees(null, null, null, null, null, null, null, null);
+        ServiceFee serviceFee = new ServiceFee();
         serviceFee.setFeeAmt(BigDecimal.valueOf(2));
         when(efilingLookupServiceMock.getServiceFee(any())).thenReturn(serviceFee);
         sut = new SubmissionApiDelegateImpl(submissionServiceMock, navigationProperties, cachePropertiesMock, submissionMapperMock, efilingAccountServiceMock, efilingLookupServiceMock);

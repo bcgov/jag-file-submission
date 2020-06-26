@@ -1,10 +1,8 @@
 package ca.bc.gov.open.jag.efilinglookupclient;
 
 
-import ca.bc.gov.ag.csows.LookupFacadeItf;
-import ca.bc.gov.ag.csows.lookups.GetServiceFeeElement;
-import ca.bc.gov.ag.csows.lookups.GetServiceFeeResponseElement;
-import ca.bc.gov.ag.csows.lookups.ServiceFee;
+import ca.bc.gov.ag.csows.lookups.*;
+
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -18,36 +16,33 @@ import java.util.GregorianCalendar;
 
 public class CSOLookupServiceImpl implements EfilingLookupService {
 
-    private LookupFacadeItf lookupFacadeItf;
+    private LookupFacadeBean lookupFacadeItf;
     private static final Logger LOGGER = LoggerFactory.getLogger(CSOLookupServiceImpl.class);
 
-    public CSOLookupServiceImpl(LookupFacadeItf lookupFacadeItf) {
+    public CSOLookupServiceImpl(LookupFacadeBean lookupFacadeItf) {
         this.lookupFacadeItf = lookupFacadeItf;
     }
 
     @Override
-    public ServiceFees getServiceFee(String serviceId)  {
+    public ServiceFee getServiceFee(String serviceId)  {
 
         // NOTE- "DCFL" is the only string that will work here until we get our service types setup
         if (StringUtils.isEmpty(serviceId)) return null;
 
-        ServiceFees serviceFees = null;
+        ServiceFee response = null;
         try {
 
-            GetServiceFeeElement getServiceFeeElement = new GetServiceFeeElement();
-            getServiceFeeElement.setString1(serviceId);
-            getServiceFeeElement.setDate2(Date2XMLGregorian(new Date()));
-
-            GetServiceFeeResponseElement response = lookupFacadeItf.getServiceFee(getServiceFeeElement);
-            serviceFees = SetServiceFees(response.getResult());
-
+            GetServiceFee getServiceFeeElement = new GetServiceFee();
+            getServiceFeeElement.setArg0(serviceId);
+            getServiceFeeElement.setArg1(Date2XMLGregorian(new Date()));
+            response = lookupFacadeItf.getServiceFee(serviceId,Date2XMLGregorian(new Date()));
         }
-        catch(DatatypeConfigurationException e) {
+        catch(DatatypeConfigurationException | NestedEjbException_Exception e) {
 
             LOGGER.error("Error calling getServiceFee: ", e);
         }
 
-        return serviceFees;
+        return response;
     }
 
     /**
