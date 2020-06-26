@@ -1,6 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.models;
 
-import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.EndpointAccess;
 import ca.bc.gov.open.jag.efilingapi.fee.models.Fee;
@@ -29,14 +29,14 @@ public class SubmissionTest {
     @DisplayName("CASE 1: testing constructor")
     public void testingConstructor() {
         Fee fee = new Fee(BigDecimal.TEN);
-        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, false);
+        AccountDetails accountDetails = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, true, "firstName", "lastName", "email");
 
         Submission actual = new Submission(
                 UUID.randomUUID(),
                 TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE),
                 TestHelpers.createNavigation(CASE_1, CANCEL, ERROR),
                 fee,
-                csoAccountDetails);
+                accountDetails);
 
         Assertions.assertEquals(TYPE, actual.getDocumentProperties().getType());
         Assertions.assertEquals(SUBTYPE, actual.getDocumentProperties().getSubType());

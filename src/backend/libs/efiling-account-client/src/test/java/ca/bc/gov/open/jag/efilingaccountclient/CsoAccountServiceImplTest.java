@@ -8,8 +8,9 @@ import ca.bc.gov.ag.csows.accounts.AccountFacade;
 import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
 import ca.bc.gov.ag.csows.accounts.ClientProfile;
 import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
+import ca.bc.gov.open.jag.efilingaccountclient.mappers.AccountDetailsMapper;
+import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import org.junit.jupiter.api.*;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -26,20 +27,22 @@ public class CsoAccountServiceImplTest {
     private static final String USERGUIDNOROLE = "USERGUIDNOROLE";
     private static final String USERGUIDWITHFILEROLE = "USERGUIDWITHFILEROLE";
 
-    @InjectMocks
     CsoAccountServiceImpl sut;
 
     @Mock
-    AccountFacade mockAccountFacade;
+    AccountFacade accountFacadeMock;
 
     @Mock
-    AccountFacadeBean mockAccountFacadeBean;
+    AccountFacadeBean accountFacadeBeanMock;
 
     @Mock
-    RoleRegistry mockRoleRegistry;
+    RoleRegistry roleRegistryMock;
 
     @Mock
-    RoleRegistryPortType mockRoleRegistryPortType;
+    RoleRegistryPortType roleRegistryPortTypeMock;
+
+    @Mock
+    AccountDetailsMapper accountDetailsMapperMock;
 
     @BeforeEach
     public void init() throws NestedEjbException_Exception {
@@ -62,18 +65,28 @@ public class CsoAccountServiceImplTest {
         UserRoles userRolesWithoutFileRole = new UserRoles();
         userRolesWithoutFileRole.getRoles().add(notFileRole);
 
-        Mockito.when(mockAccountFacade.getAccountFacadeBeanPort()).thenReturn(mockAccountFacadeBean);
-        Mockito.when(mockAccountFacadeBean.findProfiles(any())).thenReturn(profiles);
-        Mockito.when(mockRoleRegistry.getRoleRegistrySourceRoleRegistryWsProviderRoleRegistryPort()).thenReturn(mockRoleRegistryPortType);
-        Mockito.when(mockRoleRegistryPortType.getRolesForIdentifier("Courts", "CSO", USERGUIDWITHFILEROLE, "CAP")).thenReturn(userRolesWithFileRole);
-        Mockito.when(mockRoleRegistryPortType.getRolesForIdentifier("Courts", "CSO", USERGUIDNOROLE, "CAP")).thenReturn(userRolesWithoutFileRole);
+        Mockito.when(accountFacadeMock.getAccountFacadeBeanPort()).thenReturn(accountFacadeBeanMock);
+        Mockito.when(accountFacadeBeanMock.findProfiles(any())).thenReturn(profiles);
+        Mockito.when(roleRegistryMock.getRoleRegistrySourceRoleRegistryWsProviderRoleRegistryPort()).thenReturn(roleRegistryPortTypeMock);
+        Mockito.when(roleRegistryPortTypeMock.getRolesForIdentifier("Courts", "CSO", USERGUIDWITHFILEROLE, "CAP")).thenReturn(userRolesWithFileRole);
+        Mockito.when(roleRegistryPortTypeMock.getRolesForIdentifier("Courts", "CSO", USERGUIDNOROLE, "CAP")).thenReturn(userRolesWithoutFileRole);
+
+        AccountDetails csoUserDetailsWithRole = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, true, "firstName", "lastName", "email");
+        Mockito.when(accountDetailsMapperMock.toCsoAccountDetails(Mockito.any(), Mockito.eq(true))).thenReturn(csoUserDetailsWithRole);
+
+        AccountDetails csoUserDetailsWithoutRole = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, false, "firstName", "lastName", "email");
+        Mockito.when(accountDetailsMapperMock.toCsoAccountDetails(Mockito.any(), Mockito.eq(false))).thenReturn(csoUserDetailsWithoutRole);
+
+
+        sut = new CsoAccountServiceImpl(accountFacadeBeanMock, roleRegistryPortTypeMock, accountDetailsMapperMock);
+
     }
 
     @DisplayName("getAccountDetails called with empty userGuid")
     @Test
     public void testWithEmptyUserGuid() throws NestedEjbException_Exception {
 
-        CsoAccountDetails details = sut.getAccountDetails("");
+        AccountDetails details = sut.getAccountDetails("");
         Assertions.assertEquals(null, details);
     }
 
@@ -81,21 +94,29 @@ public class CsoAccountServiceImplTest {
     @Test
     public void testWithFileRoleEnabled() throws NestedEjbException_Exception {
 
-        CsoAccountDetails details = sut.getAccountDetails(USERGUIDWITHFILEROLE);
+        AccountDetails details = sut.getAccountDetails(USERGUIDWITHFILEROLE);
         Assertions.assertNotEquals(null, details);
         Assertions.assertEquals(BigDecimal.TEN, details.getAccountId());
         Assertions.assertEquals(BigDecimal.TEN, details.getClientId());
-        Assertions.assertEquals(true, details.getHasEfileRole());
+        Assertions.assertEquals(true, details.hasEfileRole());
+        Assertions.assertEquals("firstName", details.getFirstName());
+        Assertions.assertEquals("lastName", details.getLastName());
+        Assertions.assertEquals("email", details.getEmail());
+
     }
 
     @DisplayName("getAccountDetails called with a userGuid that does not have file role")
     @Test
     public void testWithFileRoleDisabled() throws NestedEjbException_Exception {
 
-        CsoAccountDetails details = sut.getAccountDetails(USERGUIDNOROLE);
+        AccountDetails details = sut.getAccountDetails(USERGUIDNOROLE);
         Assertions.assertNotEquals(null, details);
         Assertions.assertEquals(BigDecimal.TEN, details.getAccountId());
         Assertions.assertEquals(BigDecimal.TEN, details.getClientId());
-        Assertions.assertEquals(false, details.getHasEfileRole());
+        Assertions.assertEquals(false, details.hasEfileRole());
+        Assertions.assertEquals("firstName", details.getFirstName());
+        Assertions.assertEquals("lastName", details.getLastName());
+        Assertions.assertEquals("email", details.getEmail());
+
     }
 }

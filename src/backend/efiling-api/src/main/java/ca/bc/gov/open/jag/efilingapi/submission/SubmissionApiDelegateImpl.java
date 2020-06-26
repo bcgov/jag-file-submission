@@ -1,7 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission;
 
 import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
-import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingaccountclient.exception.CSOHasMultipleAccountException;
 import ca.bc.gov.open.jag.efilingapi.api.SubmissionApiDelegate;
@@ -70,10 +70,10 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         logger.info("Generate Url Request Received");
 
         logger.debug("Attempting to get user cso account information");
-        CsoAccountDetails csoAccountDetails;
+        AccountDetails accountDetails;
 
         try {
-            csoAccountDetails = efilingAccountService.getAccountDetails(generateUrlRequest.getUserId());
+            accountDetails = efilingAccountService.getAccountDetails(generateUrlRequest.getUserId());
         }
         catch (CSOHasMultipleAccountException e)   {
             return new ResponseEntity(buildEfilingError(ErrorResponse.ACCOUNTEXCEPTION), HttpStatus.BAD_REQUEST);
@@ -84,7 +84,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         logger.info("Successfully got cso account information");
 
-        if (csoAccountDetails != null && !csoAccountDetails.getHasEfileRole()) {
+        if (accountDetails != null && !accountDetails.hasEfileRole()) {
             logger.warn("User does not have efiling role, therefore request is rejected.");
             return new ResponseEntity(buildEfilingError(ErrorResponse.INVALIDROLE), HttpStatus.FORBIDDEN);
         }
@@ -96,7 +96,8 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         Optional<Submission> cachedSubmission = submissionService.put(
                         submissionMapper.toSubmission(generateUrlRequest,
-                        new Fee(getFee(generateUrlRequest.getDocumentProperties().getType())), csoAccountDetails));
+                        feeService.getFee(new FeeRequest(generateUrlRequest.getDocumentProperties().getType(),
+                                generateUrlRequest.getDocumentProperties().getSubType())), accountDetails));
 
         if(!cachedSubmission.isPresent())
             return ResponseEntity.badRequest().body(null);
@@ -138,10 +139,10 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         UserDetails userDetails = new UserDetails();
 
-        if(submission.getCsoAccountDetails() != null) {
+        if(submission.getAccountDetails() != null) {
             Account account = new Account();
             account.setType(Account.TypeEnum.CSO);
-            account.setIdentifier(submission.getCsoAccountDetails().getAccountId().toString());
+            account.setIdentifier(submission.getAccountDetails().getAccountId().toString());
             userDetails.addAccountsItem(account);
         }
 

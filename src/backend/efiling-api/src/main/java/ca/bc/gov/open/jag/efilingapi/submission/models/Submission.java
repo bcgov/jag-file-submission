@@ -1,6 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.models;
 
-import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingapi.fee.models.Fee;
 import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingapi.api.model.Navigation;
@@ -22,14 +22,14 @@ public class Submission {
 
     private Fee fee;
 
-    private CsoAccountDetails csoAccountDetails;
+    private AccountDetails accountDetails;
 
     protected Submission(Submission.Builder builder) {
         this.id = UUID.randomUUID();
         this.documentProperties = builder.documentProperties;
         this.navigation = builder.navigation;
         this.fee = builder.fee;
-        this.csoAccountDetails = builder.csoAccountDetails;
+        this.accountDetails = builder.accountDetails;
     }
 
     public static Submission.Builder builder() {
@@ -42,12 +42,12 @@ public class Submission {
             @JsonProperty("submissionMetadata") DocumentProperties documentProperties,
             @JsonProperty("navigation") Navigation navigation,
             @JsonProperty("fee") Fee fee,
-            @JsonProperty("csoAccountDetails") CsoAccountDetails csoAccountDetails) {
+            @JsonProperty("accountDetails") AccountDetails accountDetails) {
         this.id = id;
         this.documentProperties = documentProperties;
         this.navigation = navigation;
         this.fee = fee;
-        this.csoAccountDetails = csoAccountDetails;
+        this.accountDetails = accountDetails;
     }
 
     public UUID getId() { return id; }
@@ -64,8 +64,8 @@ public class Submission {
         return fee;
     }
 
-    public CsoAccountDetails getCsoAccountDetails() {
-        return csoAccountDetails;
+    public AccountDetails getAccountDetails() {
+        return accountDetails;
     }
 
     public static class Builder {
@@ -73,7 +73,7 @@ public class Submission {
         private DocumentProperties documentProperties;
         private Navigation navigation;
         private Fee fee;
-        private CsoAccountDetails csoAccountDetails;
+        private AccountDetails accountDetails;
 
         public Builder documentProperties(DocumentProperties documentProperties) {
             this.documentProperties =  documentProperties;
@@ -90,8 +90,8 @@ public class Submission {
             return this;
         }
 
-        public Builder csoAccountDetails(CsoAccountDetails csoAccountDetails) {
-            this.csoAccountDetails = csoAccountDetails;
+        public Builder accountDetails(AccountDetails accountDetails) {
+            this.accountDetails = accountDetails;
             return this;
         }
 
