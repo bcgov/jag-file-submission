@@ -6,7 +6,7 @@ import { Button } from "../button/Button";
 import "./ConfirmationPopup.css";
 
 export default function ConfirmationPopup({
-  modal: { show, handleShow, handleClose, handleConfirm, title, body1, body2 },
+  modal: { show, handleShow, handleClose, handleConfirm, title, body },
   mainButton: { mainLabel, mainStyling },
   confirmButton: { confirmLabel, confirmStyling },
   cancelButton: { cancelLabel, cancelStyling }
@@ -19,10 +19,7 @@ export default function ConfirmationPopup({
         <Modal.Header className="hide-border padding-left" closeButton>
           <Modal.Title className="mt-3 larger-font">{title}</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="padding-left">
-          <p>{body1}</p>
-          <p>{body2}</p>
-        </Modal.Body>
+        <Modal.Body className="padding-left">{body()}</Modal.Body>
         <div className="mx-auto mb-5">
           <Button
             styling={confirmStyling}
