@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilinglookupclient;
 
+import ca.bc.gov.ag.csows.lookups.ServiceFee;
 import org.junit.jupiter.api.*;
 
 import java.math.BigDecimal;
@@ -16,9 +17,8 @@ public class DemoLookupServiceImplTest {
         DemoLookupServiceImpl service = new DemoLookupServiceImpl();
 
         String serviceId = "TestServiceId";
-        ServiceFees actual = service.getServiceFee(serviceId);
+        ServiceFee actual = service.getServiceFee(serviceId);
 
-        Assertions.assertEquals(serviceId, actual.getServiceTypeCd());
         Assertions.assertEquals(BigDecimal.ZERO, actual.getFeeAmt());
     }
 

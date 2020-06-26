@@ -1,14 +1,15 @@
 package ca.bc.gov.open.jag.efilinglookupclient;
 
-import ca.bc.gov.ag.csows.LookupFacadeItf;
-import ca.bc.gov.ag.csows.LookupsLookupFacade;
-import ca.bc.gov.ag.csows.lookups.GetServiceFeeResponseElement;
+import ca.bc.gov.ag.csows.lookups.LookupFacadeBean;
+import ca.bc.gov.ag.csows.lookups.NestedEjbException_Exception;
 import ca.bc.gov.ag.csows.lookups.ServiceFee;
 import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+
+import java.math.BigDecimal;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -24,37 +25,32 @@ public class CSOLookupServiceImplTest {
     CSOLookupServiceImpl sut;
 
     @Mock
-    LookupsLookupFacade mockLookupsLookupFacade;
+    LookupFacadeBean mocklookupFacadeItf;
 
     @Mock
-    LookupFacadeItf mocklookupFacadeItf;
-
-    @Mock
-    GetServiceFeeResponseElement mockResponseElement;
+    ServiceFee serviceFeeMock;
 
     @BeforeEach
-    public void init() {
+    public void init() throws NestedEjbException_Exception {
 
         MockitoAnnotations.initMocks(this);
-        Mockito.when(mockLookupsLookupFacade.getLookupFacade()).thenReturn(mocklookupFacadeItf);
-        Mockito.when(mocklookupFacadeItf.getServiceFee(any())).thenReturn(mockResponseElement);
-        Mockito.when(mockResponseElement.getResult()).thenReturn(new ServiceFee());
+        Mockito.when(serviceFeeMock.getFeeAmt()).thenReturn(BigDecimal.valueOf(0));
+        Mockito.when(mocklookupFacadeItf.getServiceFee(any(), any())).thenReturn(serviceFeeMock);
     }
 
     @DisplayName("CASE 1: getServiceFee called with empty serviceId")
     @Test
     public void testWithEmptyServiceId() {
 
-        ServiceFees fees = sut.getServiceFee("");
+        ServiceFee fees = sut.getServiceFee("");
         Assertions.assertEquals(null, fees);
-        verify(mockLookupsLookupFacade, times(0)).getLookupFacade();
     }
 
     @DisplayName("CASE 2: getServiceFee called with any non-empty serviceId")
     @Test
     public void testWithPopulatedServiceId() {
 
-        ServiceFees fees = sut.getServiceFee(SERVICEID);
+        ServiceFee fees = sut.getServiceFee(SERVICEID);
         Assertions.assertNotEquals(null, fees);
     }
 }
