@@ -145,6 +145,12 @@
 			<groupId>org.openapitools</groupId>
 			<artifactId>jackson-databind-nullable</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>ca.bc.gov.open.jag</groupId>
+			<artifactId>efiling-lookup-client</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
 
 	</dependencies>
 

@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingapi.submission;
 
 
 import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
+import ca.bc.gov.ag.csows.lookups.ServiceFee;
 import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountDetails;
 import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingaccountclient.exception.CSOHasMultipleAccountException;
@@ -14,6 +15,8 @@ import ca.bc.gov.open.jag.efilingapi.fee.models.FeeRequest;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
+import ca.bc.gov.open.jag.efilinglookupclient.EfilingLookupService;
+import ca.bc.gov.open.jag.efilinglookupclient.ServiceFees;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,6 +28,7 @@ import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.Optional;
@@ -80,9 +84,11 @@ public class SubmissionApiDelegateImplTest {
     @Mock
     private EfilingAccountService efilingAccountServiceMock;
 
+    @Mock
+    private EfilingLookupService efilingLookupServiceMock;
 
     @BeforeAll
-    public void setUp() {
+    public void setUp() throws DatatypeConfigurationException {
         MockitoAnnotations.initMocks(this);
 
         when(cachePropertiesredisMock.getTimeToLive()).thenReturn(Duration.ofMillis(600000));
@@ -111,7 +117,10 @@ public class SubmissionApiDelegateImplTest {
         when(submissionServiceMock.getByKey(Mockito.eq(CASE_8)))
                 .thenReturn(Optional.of(submissionNoCsoAccount));
 
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, navigationProperties, cachePropertiesMock, submissionMapperMock, feeServiceMock, efilingAccountServiceMock);
+        ServiceFees serviceFee = new ServiceFees(null, null, null, null, null, null, null, null);
+        serviceFee.setFeeAmt(BigDecimal.valueOf(2));
+        when(efilingLookupServiceMock.getServiceFee(any())).thenReturn(serviceFee);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, navigationProperties, cachePropertiesMock, submissionMapperMock, feeServiceMock, efilingAccountServiceMock, efilingLookupServiceMock);
 
     }
 
