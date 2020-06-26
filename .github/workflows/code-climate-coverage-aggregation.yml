@@ -76,6 +76,10 @@ jobs:
       - name: Run Yarn Coverage - Shared components
         run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/shared-components coverage
 
+      # Run Yarn Install - eFiling Frontend
+      - name: Run Yarn Install - eFiling Frontend
+        run: yarn --cwd src/frontend/efiling-frontend install
+
       # Link react - eFiling Frontend
       - name: Run Yarn link - eFiling Frontend
         run: yarn --cwd src/frontend/efiling-frontend/node_modules/react link
@@ -83,10 +87,6 @@ jobs:
       # Link react - Shared Components
       - name: Run Yarn link - Shared Components
         run: yarn --cwd src/frontend/shared-components link efiling-frontend
-
-      # Run Yarn Install - eFiling Frontend
-      - name: Run Yarn Install - eFiling Frontend
-        run: yarn --cwd src/frontend/efiling-frontend install
 
       # Yarn Coverage - eFiling Frontend
       - name: Run Yarn Coverage - eFiling Frontend
