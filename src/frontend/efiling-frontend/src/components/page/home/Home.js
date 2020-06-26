@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import queryString from "query-string";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import Header, { Footer, Loader } from "shared-components";
+import { Header, Footer, Loader } from "shared-components";
 import CSOStatus from "../../composite/csostatus/CSOStatus";
 
 import "../page.css";

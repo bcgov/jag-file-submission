@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
-import Header, { Footer, Input, Button } from "shared-components";
+import ConfirmationPopup, {
+  Header,
+  Footer,
+  Input,
+  Button
+} from "shared-components";
 
 import "../page.css";
 
@@ -54,6 +59,37 @@ const generateUrl = (accountGuid, setErrorExists) => {
 };
 
 export default function Home({ page: { header } }) {
+  //TESTING
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const modal = {
+    show,
+    handleShow,
+    handleClose,
+    handleConfirm: () => {
+      console.log("confirmed");
+    },
+    title: "Cancel process?",
+    body1: "Your process will end.",
+    body2: "You will be redirected back to the original application."
+  };
+  const mainButton = {
+    mainLabel: "main label",
+    mainStyling: "normal-blue btn"
+  };
+  const confirmButton = {
+    confirmLabel: "Yes, cancel my process please",
+    confirmStyling: "normal-blue btn consistent-width"
+  };
+  const cancelButton = {
+    cancelLabel: "No, resume my process please",
+    cancelStyling: "normal-white btn consistent-width"
+  };
+  // END TESTING
+
   const [errorExists, setErrorExists] = useState(false);
   const [accountGuid, setAccountGuid] = useState(null);
 
@@ -76,6 +112,13 @@ export default function Home({ page: { header } }) {
             </p>
           )}
         </div>
+
+        <ConfirmationPopup
+          modal={modal}
+          mainButton={mainButton}
+          confirmButton={confirmButton}
+          cancelButton={cancelButton}
+        />
       </div>
       <Footer />
     </main>
