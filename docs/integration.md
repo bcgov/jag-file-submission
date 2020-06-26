@@ -12,7 +12,7 @@ The Git Action that utilizes Code Climate is run twice seperately: Once when the
 
 ### JAG File Submission Code Climate Report
 
-<https://codeclimate.com/github/bcgov/jag-file-submission>.
+[code climate overview](https://codeclimate.com/github/bcgov/jag-file-submission)
 
 ### Badges
 
