@@ -22,8 +22,7 @@ exports[`ConfirmationPopup Component Matches the snapshot 1`] = `
   }
   modal={
     Object {
-      "body1": "Your process will end.",
-      "body2": "You will be redirected back to the original application.",
+      "body": [Function],
       "handleClose": [MockFunction],
       "handleConfirm": [MockFunction],
       "handleShow": [MockFunction],
@@ -130,10 +129,15 @@ exports[`ConfirmationPopup Component Matches the snapshot 1`] = `
                         class="padding-left modal-body"
                       >
                         <p>
-                          Your process will end.
+                          Your files will not be submitted.
                         </p>
                         <p>
-                          You will be redirected back to the original application.
+                          You will be returned to:
+                          <br />
+                          <b>
+                            Original
+                          </b>
+                           website
                         </p>
                       </div>
                       <div
@@ -215,10 +219,15 @@ exports[`ConfirmationPopup Component Matches the snapshot 1`] = `
                             class="padding-left modal-body"
                           >
                             <p>
-                              Your process will end.
+                              Your files will not be submitted.
                             </p>
                             <p>
-                              You will be redirected back to the original application.
+                              You will be returned to:
+                              <br />
+                              <b>
+                                Original
+                              </b>
+                               website
                             </p>
                           </div>
                           <div
@@ -308,10 +317,15 @@ exports[`ConfirmationPopup Component Matches the snapshot 1`] = `
                         class="padding-left modal-body"
                       >
                         <p>
-                          Your process will end.
+                          Your files will not be submitted.
                         </p>
                         <p>
-                          You will be redirected back to the original application.
+                          You will be returned to:
+                          <br />
+                          <b>
+                            Original
+                          </b>
+                           website
                         </p>
                       </div>
                       <div
@@ -416,10 +430,15 @@ exports[`ConfirmationPopup Component Matches the snapshot 1`] = `
                       class="padding-left modal-body"
                     >
                       <p>
-                        Your process will end.
+                        Your files will not be submitted.
                       </p>
                       <p>
-                        You will be redirected back to the original application.
+                        You will be returned to:
+                        <br />
+                        <b>
+                          Original
+                        </b>
+                         website
                       </p>
                     </div>
                     <div
@@ -594,10 +613,15 @@ exports[`ConfirmationPopup Component Matches the snapshot 1`] = `
                             className="padding-left modal-body"
                           >
                             <p>
-                              Your process will end.
+                              Your files will not be submitted.
                             </p>
                             <p>
-                              You will be redirected back to the original application.
+                              You will be returned to:
+                              <br />
+                              <b>
+                                Original
+                              </b>
+                               website
                             </p>
                           </div>
                         </ModalBody>
