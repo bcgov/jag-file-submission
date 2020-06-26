@@ -16,11 +16,7 @@ exports[`Storyshots Home Default 1`] = `
         height="44"
         onClick={[Function]}
         onKeyDown={[Function]}
-        src={
-          Object {
-            "process": [Function],
-          }
-        }
+        src="undefined/images/bcid-logo-rev-en.svg"
         width={181}
       />
       <img
@@ -29,11 +25,7 @@ exports[`Storyshots Home Default 1`] = `
         height="44"
         onClick={[Function]}
         onKeyDown={[Function]}
-        src={
-          Object {
-            "process": [Function],
-          }
-        }
+        src="undefined/images/bcid-symbol-rev.svg"
         width={64}
       />
       <div
@@ -206,11 +198,7 @@ exports[`Storyshots Home Mobile 1`] = `
         height="44"
         onClick={[Function]}
         onKeyDown={[Function]}
-        src={
-          Object {
-            "process": [Function],
-          }
-        }
+        src="undefined/images/bcid-logo-rev-en.svg"
         width={181}
       />
       <img
@@ -219,11 +207,7 @@ exports[`Storyshots Home Mobile 1`] = `
         height="44"
         onClick={[Function]}
         onKeyDown={[Function]}
-        src={
-          Object {
-            "process": [Function],
-          }
-        }
+        src="undefined/images/bcid-symbol-rev.svg"
         width={64}
       />
       <div
