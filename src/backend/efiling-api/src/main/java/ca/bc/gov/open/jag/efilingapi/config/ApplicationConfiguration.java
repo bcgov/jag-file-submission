@@ -2,6 +2,8 @@ package ca.bc.gov.open.jag.efilingapi.config;
 
 import ca.bc.gov.open.jag.efilingaccountclient.DemoAccountServiceImpl;
 import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
+import ca.bc.gov.open.jag.efilinglookupclient.DemoLookupServiceImpl;
+import ca.bc.gov.open.jag.efilinglookupclient.EfilingLookupService;
 import io.opentracing.Tracer;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -25,6 +27,15 @@ public class ApplicationConfiguration {
     @ConditionalOnProperty(name = "jag.efiling.global.demo", havingValue = "true")
     public EfilingAccountService efilingAccountService() {
         return new DemoAccountServiceImpl();
+    }
+
+    /**
+     * If the application demo mode is turned on, use the DemoLookupServiceImpl
+     */
+    @Bean
+    @ConditionalOnProperty(name = "jag.efiling.global.demo", havingValue = "true")
+    public EfilingLookupService efilingLookupService() {
+        return new DemoLookupServiceImpl();
     }
 
     /**
