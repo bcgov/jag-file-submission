@@ -74,7 +74,7 @@ jobs:
 
       # Link react - Shared Components
       - name: Run Yarn link - Shared components
-        run: yarn --cwd src/frontend/shared-components link src/frontend/efiling-frontend/node_modules/react
+        run: yarn --cwd src/frontend/shared-components link /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/efiling-frontend/node_modules/react
 
       # Yarn Coverage - Shared Components
       - name: Run Yarn Coverage - Shared components
