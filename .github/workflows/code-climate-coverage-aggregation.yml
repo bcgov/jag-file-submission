@@ -72,13 +72,9 @@ jobs:
       - name: Run Yarn Install - Shared components
         run: yarn --cwd src/frontend/shared-components install
 
-      # Run Yarn Prepare - Shared Components
-      - name: Run Yarn Prepare - Shared components
-        run: yarn --cwd src/frontend/shared-components prepare
-
       # Link react - Shared Components
-      - name: Run npm link - Shared components
-        run: npm --cwd src/frontend/shared-components link src/frontend/efiling-frontend/node_modules/react
+      - name: Run Yarn link - Shared components
+        run: yarn --cwd src/frontend/shared-components link src/frontend/efiling-frontend/node_modules/react
 
       # Yarn Coverage - Shared Components
       - name: Run Yarn Coverage - Shared components
