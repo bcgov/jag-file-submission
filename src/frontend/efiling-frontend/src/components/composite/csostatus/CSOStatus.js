@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ConfirmationPopup, { Button } from "shared-components";
+import ConfirmationPopup from "shared-components";
 
 export default function CSOStatus({ accountExists, confirmationPopup }) {
   return (

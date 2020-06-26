@@ -76,7 +76,8 @@
     "jest-sonar-reporter": "^2.0.0",
     "prettier": "1.19.1",
     "pretty-quick": "^2.0.1",
-    "axios-mock-adapter": "^1.18.1"
+    "axios-mock-adapter": "^1.18.1",
+    "enzyme-to-json": "^3.5.0"
   },
   "jest": {
     "watchPathIgnorePatterns": [

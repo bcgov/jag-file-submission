@@ -4,6 +4,7 @@ import { MemoryRouter } from "react-router-dom";
 import axios from "axios";
 import { render, wait } from "@testing-library/react";
 import Home, { saveNavigationToSession } from "./Home";
+import { getTestData } from "../../../modules/confirmationPopupTestData";
 
 const MockAdapter = require("axios-mock-adapter");
 
@@ -12,7 +13,8 @@ const header = {
   history: createMemoryHistory()
 };
 
-const page = { header };
+const confirmationPopup = getTestData();
+const page = { header, confirmationPopup };
 
 describe("Home", () => {
   const submissionId = "abc123";

@@ -1,4 +1,5 @@
 import React from "react";
+import { getTestData } from "../../../modules/confirmationPopupTestData";
 
 import CSOStatus from "./CSOStatus";
 
@@ -7,13 +8,23 @@ export default {
   component: CSOStatus
 };
 
-export const AccountExists = () => <CSOStatus accountExists />;
+const confirmationPopup = getTestData();
 
-export const NoAccountExists = () => <CSOStatus accountExists={false} />;
+export const AccountExists = () => (
+  <CSOStatus accountExists confirmationPopup={confirmationPopup} />
+);
 
-export const AccountExistsMobile = () => <CSOStatus accountExists />;
+export const NoAccountExists = () => (
+  <CSOStatus accountExists={false} confirmationPopup={confirmationPopup} />
+);
 
-export const NoAccountExistsMobile = () => <CSOStatus accountExists={false} />;
+export const AccountExistsMobile = () => (
+  <CSOStatus accountExists confirmationPopup={confirmationPopup} />
+);
+
+export const NoAccountExistsMobile = () => (
+  <CSOStatus accountExists={false} confirmationPopup={confirmationPopup} />
+);
 
 const mobileViewport = {
   parameters: {

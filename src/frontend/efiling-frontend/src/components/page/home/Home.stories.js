@@ -1,8 +1,8 @@
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
-import { createMemoryHistory } from "history";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
+import { getTestData } from "../../../modules/confirmationPopupTestData";
 
 import Home from "./Home";
 
@@ -12,10 +12,10 @@ export default {
 };
 
 const header = {
-  name: "eFiling Demo Client",
-  history: createMemoryHistory()
+  name: "eFiling Demo Client"
 };
-const page = { header };
+const confirmationPopup = getTestData();
+const page = { header, confirmationPopup };
 
 const submissionId = "abc123";
 const mock = new MockAdapter(axios);
@@ -58,7 +58,11 @@ const NoAccountExistsStateData = props => {
 };
 
 const homeComponent = data => (
-  <MemoryRouter initialEntries={[`?submissionId=${submissionId}`]}>
+  <MemoryRouter
+    initialEntries={[
+      { search: `?submissionId=${submissionId}`, key: "testKey" }
+    ]}
+  >
     <Home page={data.page} />
   </MemoryRouter>
 );
