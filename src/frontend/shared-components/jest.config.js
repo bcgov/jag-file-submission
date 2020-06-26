@@ -19,6 +19,6 @@ module.exports = {
   verbose: true,
   testResultsProcessor: "jest-sonar-reporter",
   collectCoverage: false,
-  coverageReporters: ["text", ["lcov", { projectRoot: "../../../" }]],
+  coverageReporters: ["text", "lcov"],
   coverageDirectory: "coverage"
 };

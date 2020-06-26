@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ConfirmationPopup } from "./ConfirmationPopup";
+import ConfirmationPopup from "./ConfirmationPopup";
 
 export default {
   title: "ConfirmationPopup",
@@ -11,6 +11,7 @@ const modal = {
   show: true,
   handleShow: () => {},
   handleClose: () => {},
+  handleConfirm: () => {},
   title: "Cancel process?",
   body1: "Your process will end.",
   body2: "You will be redirected back to the original application."

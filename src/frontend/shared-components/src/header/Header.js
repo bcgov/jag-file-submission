@@ -2,8 +2,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./Header.css";
-import bcidSymbol from "../../public/images/bcid-symbol-rev.svg";
-import bcidLogoRev from "../../public/images/bcid-logo-rev-en.svg";
+
+const bcidSymbol = `${process.env.PUBLIC_URL}/images/bcid-symbol-rev.svg`;
+const bcidLogoRev = `${process.env.PUBLIC_URL}/images/bcid-logo-rev-en.svg`;
 
 export const HeadingTitle = classNames => (
   <div className={classNames} aria-labelledby="title" />

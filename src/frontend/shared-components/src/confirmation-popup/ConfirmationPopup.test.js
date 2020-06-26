@@ -2,13 +2,14 @@ import React from "react";
 import { mount } from "enzyme";
 import EnzymeToJson from "enzyme-to-json";
 
-import { ConfirmationPopup } from "./ConfirmationPopup";
+import ConfirmationPopup from "./ConfirmationPopup";
 
 describe("ConfirmationPopup Component", () => {
   const modal = {
     show: true,
     handleShow: jest.fn(),
     handleClose: jest.fn(),
+    handleConfirm: jest.fn(),
     title: "Cancel process?",
     body1: "Your process will end.",
     body2: "You will be redirected back to the original application."

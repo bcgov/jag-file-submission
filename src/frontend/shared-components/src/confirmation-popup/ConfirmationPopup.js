@@ -5,12 +5,12 @@ import { Button } from "../button/Button";
 
 import "./ConfirmationPopup.css";
 
-export const ConfirmationPopup = ({
-  modal: { show, handleShow, handleClose, title, body1, body2 },
+export default function ConfirmationPopup({
+  modal: { show, handleShow, handleClose, handleConfirm, title, body1, body2 },
   mainButton: { mainLabel, mainStyling },
   confirmButton: { confirmLabel, confirmStyling },
   cancelButton: { cancelLabel, cancelStyling }
-}) => {
+}) {
   return (
     <>
       <Button onClick={handleShow} label={mainLabel} styling={mainStyling} />
@@ -26,7 +26,7 @@ export const ConfirmationPopup = ({
         <div className="mx-auto mb-5">
           <Button
             styling={confirmStyling}
-            onClick={handleClose}
+            onClick={handleConfirm}
             label={confirmLabel}
           />
           <br />
@@ -39,13 +39,14 @@ export const ConfirmationPopup = ({
       </Modal>
     </>
   );
-};
+}
 
 ConfirmationPopup.propTypes = {
   modal: PropTypes.shape({
     show: PropTypes.bool.isRequired,
     handleShow: PropTypes.func.isRequired,
     handleClose: PropTypes.func.isRequired,
+    handleConfirm: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
     body1: PropTypes.string.isRequired,
     body2: PropTypes.string

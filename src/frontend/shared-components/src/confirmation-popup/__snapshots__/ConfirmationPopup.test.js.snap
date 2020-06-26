@@ -25,6 +25,7 @@ exports[`ConfirmationPopup Component Matches the snapshot 1`] = `
       "body1": "Your process will end.",
       "body2": "You will be redirected back to the original application.",
       "handleClose": [MockFunction],
+      "handleConfirm": [MockFunction],
       "handleShow": [MockFunction],
       "show": true,
       "title": "Cancel process?",
