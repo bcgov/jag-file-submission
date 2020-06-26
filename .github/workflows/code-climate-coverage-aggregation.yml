@@ -82,7 +82,7 @@ jobs:
 
       # Link react - Shared Components
       - name: Run Yarn link - Shared Components
-        run: yarn --cwd src/frontend/shared-components link efiling-frontend/node_modules/react
+        run: yarn --cwd src/frontend/shared-components link efiling-frontend
 
       # Run Yarn Install - eFiling Frontend
       - name: Run Yarn Install - eFiling Frontend
