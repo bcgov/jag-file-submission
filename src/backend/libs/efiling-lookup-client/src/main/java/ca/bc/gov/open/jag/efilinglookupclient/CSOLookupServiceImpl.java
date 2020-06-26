@@ -31,10 +31,6 @@ public class CSOLookupServiceImpl implements EfilingLookupService {
 
         ServiceFee response = null;
         try {
-
-            GetServiceFee getServiceFeeElement = new GetServiceFee();
-            getServiceFeeElement.setArg0(serviceId);
-            getServiceFeeElement.setArg1(Date2XMLGregorian(new Date()));
             response = lookupFacadeItf.getServiceFee(serviceId,Date2XMLGregorian(new Date()));
         }
         catch(DatatypeConfigurationException | NestedEjbException_Exception e) {
