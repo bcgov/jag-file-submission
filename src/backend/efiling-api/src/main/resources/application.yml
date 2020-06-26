@@ -24,6 +24,10 @@ jag:
           userName: ${CSO_ROLEREGISTRY_USERNAME}
           password: ${CSO_ROLEREGISTRY_PASSWORD}
           uri: ${CSO_ROLEREGISTRY_URI:http://localhost:8091}
+        - client: LOOKUP
+          userName: ${CSO_LOOKUPFACADE_USERNAME}
+          password: ${CSO_LOOKUPFACADE_PASSWORD}
+          uri: ${CSO_LOOKUPFACADE_URI:http://localhost:8091}
 
 info:
   app:

@@ -1,56 +1,49 @@
 package ca.bc.gov.open.jag.efilinglookupclient.config;
 
-import ca.bc.gov.ag.csows.LookupsLookupFacade;
+import ca.bc.gov.ag.csows.LookupFacadeItf;
+import ca.bc.gov.open.jag.efilingcommons.model.Clients;
+import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
+import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
 import ca.bc.gov.open.jag.efilinglookupclient.CSOLookupServiceImpl;
 import ca.bc.gov.open.jag.efilinglookupclient.EfilingLookupService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.xml.namespace.QName;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 @Configuration
-@EnableConfigurationProperties(CSOLookupProperties.class)
+@EnableConfigurationProperties(SoapProperties.class)
 public class AutoConfiguration {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AutoConfiguration.class);
-    private final CSOLookupProperties csoLookupProperties;
+    private final SoapProperties soapProperties;
 
-    public AutoConfiguration(CSOLookupProperties csoLookupProperties) {
+    public AutoConfiguration(SoapProperties soapProperties) { this.soapProperties = soapProperties; }
 
-        this.csoLookupProperties = csoLookupProperties;
-    }
-
-
-    public LookupsLookupFacade lookupsLookupFacade() {
-
-        LookupsLookupFacade lookupsLookupFacade = null;
-
-        try {
-
-            QName serviceName = new QName("http://ag.gov.bc.ca/csows", "lookups.LookupFacade");
-            URL url = new URL(csoLookupProperties.getFilingLookupSoapUri());
-            lookupsLookupFacade = new LookupsLookupFacade(url, serviceName);
-
-        } catch(MalformedURLException e) {
-
-            LOGGER.error("Malformed URL exception :" + e.getMessage());
-
-        }
-
-        return lookupsLookupFacade;
-
+    @Bean
+    public LookupFacadeItf lookupFacadeItf() {
+        return getPort(Clients.LOOKUP, LookupFacadeItf.class);
     }
 
     @Bean
     @ConditionalOnMissingBean({EfilingLookupService.class})
-    public EfilingLookupService efilingLookupService() {
-        return new CSOLookupServiceImpl(lookupsLookupFacade());
+    public EfilingLookupService efilingLookupService(LookupFacadeItf lookupFacadeItf) {
+
+        return new CSOLookupServiceImpl(lookupFacadeItf);
+    }
+
+    public <T> T getPort(Clients clients, Class<T> type) {
+
+        JaxWsProxyFactoryBean jaxWsProxyFactoryBean = new JaxWsProxyFactoryBean();
+        jaxWsProxyFactoryBean.setServiceClass(type);
+        EfilingSoapClientProperties efilingSoapClientProperties = soapProperties.findByEnum(clients);
+        jaxWsProxyFactoryBean.setAddress(efilingSoapClientProperties.getUri());
+        if(StringUtils.isNotBlank(efilingSoapClientProperties.getUserName()))
+            jaxWsProxyFactoryBean.setUsername(efilingSoapClientProperties.getUserName());
+        if(StringUtils.isNotBlank(efilingSoapClientProperties.getPassword()))
+            jaxWsProxyFactoryBean.setPassword(efilingSoapClientProperties.getPassword());
+        return type.cast(jaxWsProxyFactoryBean.create());
     }
 
 }

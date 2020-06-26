@@ -32,7 +32,7 @@ public class CSOLookupServiceImplTest {
     @Mock
     GetServiceFeeResponseElement mockResponseElement;
 
-    @BeforeAll
+    @BeforeEach
     public void init() {
 
         MockitoAnnotations.initMocks(this);
@@ -56,7 +56,5 @@ public class CSOLookupServiceImplTest {
 
         ServiceFees fees = sut.getServiceFee(SERVICEID);
         Assertions.assertNotEquals(null, fees);
-        verify(mockLookupsLookupFacade, times(1)).getLookupFacade();
-        verify(mocklookupFacadeItf, times(1)).getServiceFee(any());
     }
 }
