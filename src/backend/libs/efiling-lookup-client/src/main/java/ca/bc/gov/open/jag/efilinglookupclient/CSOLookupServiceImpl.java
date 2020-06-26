@@ -59,23 +59,4 @@ public class CSOLookupServiceImpl implements EfilingLookupService {
         return date2;
     }
 
-    /**
-     * Helper function to map the SOAP ServiceFee response to the ServiceFees class
-     * @param fee - SOAP response from GetServiceFee call
-     * @return ServiceFees
-     */
-    private ServiceFees SetServiceFees(ServiceFee fee) {
-
-        ServiceFees serviceFees = new ServiceFees(
-                new DateTime(fee.getUpdDtm()),
-                fee.getFeeAmt(),
-                fee.getEntUserId(),
-                fee.getServiceTypeCd(),
-                new DateTime(fee.getEffectiveDt()),
-                fee.getUpdUserId(),
-                new DateTime(fee.getEntDtm()),
-                new DateTime(fee.getExpiryDt()));
-
-        return serviceFees;
-    }
 }
