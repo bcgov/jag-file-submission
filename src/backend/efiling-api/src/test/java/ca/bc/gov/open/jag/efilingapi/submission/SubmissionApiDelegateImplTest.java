@@ -120,14 +120,14 @@ public class SubmissionApiDelegateImplTest {
         ServiceFees serviceFee = new ServiceFees(null, null, null, null, null, null, null, null);
         serviceFee.setFeeAmt(BigDecimal.valueOf(2));
         when(efilingLookupServiceMock.getServiceFee(any())).thenReturn(serviceFee);
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, navigationProperties, cachePropertiesMock, submissionMapperMock, feeServiceMock, efilingAccountServiceMock, efilingLookupServiceMock);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, navigationProperties, cachePropertiesMock, submissionMapperMock, efilingAccountServiceMock, efilingLookupServiceMock);
 
     }
 
 
     @Test
     @DisplayName("CASE1: when payload is valid")
-    public void withValidPayloadShouldReturnOk() throws NestedEjbException_Exception {
+    public void withValidPayloadShouldReturnOk() throws NestedEjbException_Exception, DatatypeConfigurationException {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.of(Submission.builder().create()));
         CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, true);
@@ -147,7 +147,7 @@ public class SubmissionApiDelegateImplTest {
 
     @Test
     @DisplayName("CASE2: when payload is valid but no efiling role return forbidden")
-    public void withValidPayloadButNoRoleShouldReturnForbidden() throws NestedEjbException_Exception {
+    public void withValidPayloadButNoRoleShouldReturnForbidden() throws NestedEjbException_Exception, DatatypeConfigurationException {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.of(Submission.builder().create()));
         CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, false);
@@ -169,7 +169,7 @@ public class SubmissionApiDelegateImplTest {
 
     @Test
     @DisplayName("With clientid having multiple account should return error")
-    public void withClientIdHavingMultipleAccount() throws NestedEjbException_Exception {
+    public void withClientIdHavingMultipleAccount() throws NestedEjbException_Exception, DatatypeConfigurationException {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.empty());
         CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, true);
@@ -191,7 +191,7 @@ public class SubmissionApiDelegateImplTest {
 
     @Test
     @DisplayName("CASE3: when payload is valid but redis return nothing")
-    public void withValidPayloadButRedisReturnNothingShouldReturnBadRequest() throws NestedEjbException_Exception {
+    public void withValidPayloadButRedisReturnNothingShouldReturnBadRequest() throws NestedEjbException_Exception, DatatypeConfigurationException {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.empty());
         CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, true);

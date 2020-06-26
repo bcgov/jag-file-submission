@@ -9,6 +9,7 @@ import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jag.efilingapi.fee.FeeService;
+import ca.bc.gov.open.jag.efilingapi.fee.models.Fee;
 import ca.bc.gov.open.jag.efilingapi.fee.models.FeeRequest;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
@@ -46,8 +47,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     private final SubmissionMapper submissionMapper;
 
-    private final FeeService feeService;
-
     private final EfilingAccountService efilingAccountService;
 
     private final EfilingLookupService efilingLookupService;
@@ -55,13 +54,12 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     public SubmissionApiDelegateImpl(
             SubmissionService submissionService,
             NavigationProperties navigationProperties,
-            CacheProperties cacheProperties, SubmissionMapper submissionMapper, FeeService feeService,
+            CacheProperties cacheProperties, SubmissionMapper submissionMapper,
             EfilingAccountService efilingAccountService, EfilingLookupService efilingLookupService) {
         this.submissionService = submissionService;
         this.navigationProperties = navigationProperties;
         this.cacheProperties = cacheProperties;
         this.submissionMapper = submissionMapper;
-        this.feeService = feeService;
         this.efilingAccountService = efilingAccountService;
         this.efilingLookupService = efilingLookupService;
     }
@@ -96,17 +94,9 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         response.expiryDate(System.currentTimeMillis() + cacheProperties.getRedis().getTimeToLive().toMillis());
 
-        try {
-            ServiceFees serviceFees = efilingLookupService.getServiceFee("DCFL");
-            BigDecimal showMEMoneys = serviceFees.getFeeAmt();
-            logger.info("We gots moneys {}", showMEMoneys);
-        } catch (DatatypeConfigurationException e) {
-            logger.error("Wat!", e);
-        }
         Optional<Submission> cachedSubmission = submissionService.put(
                         submissionMapper.toSubmission(generateUrlRequest,
-                        feeService.getFee(new FeeRequest(generateUrlRequest.getDocumentProperties().getType(),
-                                generateUrlRequest.getDocumentProperties().getSubType())), csoAccountDetails));
+                        new Fee(getFee(generateUrlRequest.getDocumentProperties().getType())), csoAccountDetails));
 
         if(!cachedSubmission.isPresent())
             return ResponseEntity.badRequest().body(null);
@@ -177,6 +167,15 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         response.setError(errorResponse.getErrorCode());
         response.setMessage(errorResponse.getErrorMessage());
         return response;
+    }
+
+    private BigDecimal getFee(String type) {
+        try {
+            return efilingLookupService.getServiceFee(type).getFeeAmt();
+        } catch (DatatypeConfigurationException e) {
+            logger.error("Fee not found ", e);
+            return BigDecimal.valueOf(0);
+        }
     }
 
 }
