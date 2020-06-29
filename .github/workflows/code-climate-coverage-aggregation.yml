@@ -80,11 +80,21 @@ jobs:
       - name: Run Yarn Install - eFiling Frontend
         run: yarn --cwd src/frontend/efiling-frontend install
       
+      # install link local globally
+      - name: run link local
+        run: npm install -g linklocal
+        
       # Link trial
       - name: Run yarn link
         run: |
-          npm --prefix ${{ github.workspace }}/src/frontend/efiling-frontend link ${{ github.workspace }}/src/frontend/shared-components/node_modules/react
+          npm --prefix ${{ github.workspace }}/src/frontend/shared-components link ${{ github.workspace }}/src/frontend/efiling-frontend/node_modules/react
   
+      # run link local
+      - name: run link local
+        run: |
+          cd ${{ github.workspace }}/src/frontend/efiling-frontend
+          linklocal
+          
       # Yarn Coverage - eFiling Frontend
       - name: Run Yarn Coverage - eFiling Frontend
         run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/efiling-frontend coverage
