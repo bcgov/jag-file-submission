@@ -85,7 +85,8 @@ export default function Home({ page: { header } }) {
 Home.propTypes = {
   page: PropTypes.shape({
     header: PropTypes.shape({
-      name: PropTypes.string.isRequired
+      name: PropTypes.string.isRequired,
+      history: PropTypes.object.isRequired
     }).isRequired
   }).isRequired
 };

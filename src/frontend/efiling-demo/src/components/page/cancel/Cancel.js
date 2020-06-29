@@ -27,7 +27,8 @@ export default function Cancel({ page: { header } }) {
 Cancel.propTypes = {
   page: PropTypes.shape({
     header: PropTypes.shape({
-      name: PropTypes.string.isRequired
+      name: PropTypes.string.isRequired,
+      history: PropTypes.object.isRequired
     }).isRequired
   }).isRequired
 };
