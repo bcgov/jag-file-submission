@@ -16,6 +16,7 @@ exports[`Storyshots Home Default 1`] = `
         height="44"
         onClick={[Function]}
         onKeyDown={[Function]}
+        role="presentation"
         src="undefined/images/bcid-logo-rev-en.svg"
         width={181}
       />
@@ -25,6 +26,7 @@ exports[`Storyshots Home Default 1`] = `
         height="44"
         onClick={[Function]}
         onKeyDown={[Function]}
+        role="presentation"
         src="undefined/images/bcid-symbol-rev.svg"
         width={64}
       />
@@ -198,6 +200,7 @@ exports[`Storyshots Home Mobile 1`] = `
         height="44"
         onClick={[Function]}
         onKeyDown={[Function]}
+        role="presentation"
         src="undefined/images/bcid-logo-rev-en.svg"
         width={181}
       />
@@ -207,6 +210,7 @@ exports[`Storyshots Home Mobile 1`] = `
         height="44"
         onClick={[Function]}
         onKeyDown={[Function]}
+        role="presentation"
         src="undefined/images/bcid-symbol-rev.svg"
         width={64}
       />
