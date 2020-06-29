@@ -4,7 +4,6 @@
   "main": "build/index.js",
   "private": true,
   "dependencies": {
-    "@babel/preset-react": "^7.8.3",
     "@bcgov/bootstrap-theme": "github:bcgov/bootstrap-theme",
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "bootstrap": "^4.4.1",
@@ -20,7 +19,7 @@
   "scripts": {
     "build": "babel src -d build --copy-files",
     "prepare": "yarn run build",
-    "storybook": "start-storybook",
+    "storybook": "start-storybook -p 9009 -s public",
     "test": "jest",
     "coverage": "jest --coverage",
     "lint": "eslint .",

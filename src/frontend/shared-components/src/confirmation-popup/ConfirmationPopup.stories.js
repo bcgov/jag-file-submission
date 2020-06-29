@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React from "react";
 
 import ConfirmationPopup from "./ConfirmationPopup";
@@ -26,7 +27,10 @@ const modal = {
   title: "Cancel process?",
   body
 };
-const mainButton = { mainLabel: "main label", mainStyling: "normal-blue btn" };
+const mainButton = {
+  mainLabel: "main label",
+  mainStyling: "normal-blue btn"
+};
 const confirmButton = {
   confirmLabel: "Yes, cancel my process please",
   confirmStyling: "normal-blue btn consistent-width"

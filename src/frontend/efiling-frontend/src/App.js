@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState } from "react";
 import { Switch, Route, Redirect, useHistory } from "react-router-dom";
 import Home from "./components/page/home/Home";

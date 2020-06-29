@@ -12442,25 +12442,19 @@ shallowequal@^1.1.0:
   resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-1.1.0.tgz#188d521de95b9087404fd4dcb68b13df0ae4e7f8"
   integrity sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==
 
-"shared-components@file:../shared-components":
+"shared-components@file:./../shared-components":
   version "0.1.0"
   dependencies:
-    "@babel/preset-react" "^7.8.3"
     "@bcgov/bootstrap-theme" "github:bcgov/bootstrap-theme"
-    axios "^0.19.2"
     babel-plugin-transform-export-extensions "^6.22.0"
     bootstrap "^4.4.1"
-    enzyme "^3.11.0"
-    enzyme-adapter-react-16 "^1.15.2"
     history "^4.10.1"
     prop-types "^15.7.2"
-    react-app-polyfill "^1.0.6"
     react-bootstrap "^1.0.1"
     react-router-dom "^5.1.2"
     react-scripts "3.4.1"
     react-test-renderer "^16.12.0"
     regenerator-runtime "^0.13.5"
-    shared-components "file:../../../../../Library/Caches/Yarn/v6/npm-shared-components-0.1.0-6e2f7172-01b8-4905-8082-de795af8fbad-1593204680944/node_modules/shared-components"
     webpack "4.42.0"
 
 shebang-command@^1.2.0:

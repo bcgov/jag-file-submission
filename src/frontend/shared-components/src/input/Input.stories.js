@@ -7,10 +7,6 @@ const input = {
   id: "textInputId"
 };
 
-const actionData = {
-  onChange: action("onChange")
-};
-
 export default {
   title: "Input",
   component: Input
@@ -24,7 +20,7 @@ export const EditableWhite = () => (
       isRequired: true,
       placeholder: "Enter id"
     }}
-    {...actionData}
+    onChange={action("onChange")}
   />
 );
 
@@ -36,7 +32,7 @@ export const EditableWhiteMobile = () => (
       placeholder: "Enter id",
       isRequired: true
     }}
-    {...actionData}
+    onChange={action("onChange")}
   />
 );
 
