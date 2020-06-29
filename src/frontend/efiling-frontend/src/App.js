@@ -43,7 +43,11 @@ export default function App() {
     handleShow,
     handleClose,
     handleConfirm: () => {
-      console.log("confirmed");
+      const cancelUrl = sessionStorage.getItem("cancelUrl");
+
+      if (cancelUrl) {
+        window.open(cancelUrl, "_self");
+      }
     },
     title: "Cancel E-File Submission?",
     body
