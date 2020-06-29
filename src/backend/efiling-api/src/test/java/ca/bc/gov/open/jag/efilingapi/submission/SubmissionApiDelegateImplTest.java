@@ -3,7 +3,6 @@ package ca.bc.gov.open.jag.efilingapi.submission;
 
 import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
 import ca.bc.gov.ag.csows.lookups.ServiceFee;
-import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountDetails;
 import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingaccountclient.exception.CSOHasMultipleAccountException;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
@@ -15,8 +14,8 @@ import ca.bc.gov.open.jag.efilingapi.fee.models.FeeRequest;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
+import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilinglookupclient.EfilingLookupService;
-import ca.bc.gov.open.jag.efilinglookupclient.ServiceFees;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -55,6 +54,7 @@ public class SubmissionApiDelegateImplTest {
     public static final UUID CASE_7 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fb");
     public static final UUID CASE_8 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fc");
     public static final UUID CASE_9 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2f1");
+    public static final UUID CASE_10 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2f2");
     public static final String SUCCESS = "SUCCESS";
     private static final String CANCELURL = "CANCELURL";
     private static final String ERRORURL = "ERRORURL";
@@ -98,8 +98,8 @@ public class SubmissionApiDelegateImplTest {
 
         DocumentProperties documentProperties = new DocumentProperties();
 
-        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, true);
-        Submission submissionWithCsoAccount = new Submission(CASE_6, documentProperties, TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL), new Fee(BigDecimal.TEN), csoAccountDetails);
+        AccountDetails accountDetails = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, true, "firstNameCase6", "lastNameCase6", "middleNameCase6",  "emailCase6");
+        Submission submissionWithCsoAccount = new Submission(CASE_6, documentProperties, TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL), new Fee(BigDecimal.TEN), accountDetails);
 
         when(submissionServiceMock.getByKey(Mockito.eq(CASE_5)))
                 .thenReturn(Optional.empty());
@@ -107,8 +107,8 @@ public class SubmissionApiDelegateImplTest {
         when(submissionServiceMock.getByKey(Mockito.eq(CASE_6)))
                 .thenReturn(Optional.of(submissionWithCsoAccount));
 
-        CsoAccountDetails csoAccountDetailsNoEfilingRole = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, false);
-        Submission submissionWithCsoAccountNoEfilingRole = new Submission(CASE_7, documentProperties, TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL), new Fee(BigDecimal.TEN), csoAccountDetailsNoEfilingRole);
+        AccountDetails accountDetailsNoEfilingRole = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, false, "firstName", "lastName", "middleName",  "email");
+        Submission submissionWithCsoAccountNoEfilingRole = new Submission(CASE_7, documentProperties, TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL), new Fee(BigDecimal.TEN), accountDetailsNoEfilingRole);
         when(submissionServiceMock.getByKey(Mockito.eq(CASE_7)))
                 .thenReturn(Optional.of(submissionWithCsoAccountNoEfilingRole));
 
@@ -120,19 +120,19 @@ public class SubmissionApiDelegateImplTest {
         ServiceFee serviceFee = new ServiceFee();
         serviceFee.setFeeAmt(BigDecimal.valueOf(2));
         when(efilingLookupServiceMock.getServiceFee(any())).thenReturn(serviceFee);
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, navigationProperties, cachePropertiesMock, submissionMapperMock, efilingAccountServiceMock, efilingLookupServiceMock);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, navigationProperties, cachePropertiesMock, submissionMapperMock, efilingAccountServiceMock, efilingLookupServiceMock, feeServiceMock);
 
     }
 
 
     @Test
     @DisplayName("CASE1: when payload is valid")
-    public void withValidPayloadShouldReturnOk() throws NestedEjbException_Exception, DatatypeConfigurationException {
+    public void withValidPayloadShouldReturnOk() throws NestedEjbException_Exception {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.of(Submission.builder().create()));
-        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, true);
+        AccountDetails accountDetails = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, true, "firstName", "lastName", "middleName",  "email");
 
-        when(efilingAccountServiceMock.getAccountDetails(any())).thenReturn(csoAccountDetails);
+        when(efilingAccountServiceMock.getAccountDetails(any())).thenReturn(accountDetails);
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         generateUrlRequest.setDocumentProperties(TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE));
@@ -147,12 +147,12 @@ public class SubmissionApiDelegateImplTest {
 
     @Test
     @DisplayName("CASE2: when payload is valid but no efiling role return forbidden")
-    public void withValidPayloadButNoRoleShouldReturnForbidden() throws NestedEjbException_Exception, DatatypeConfigurationException {
+    public void withValidPayloadButNoRoleShouldReturnForbidden() throws NestedEjbException_Exception {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.of(Submission.builder().create()));
-        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, false);
+        AccountDetails accountDetails = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, false, "firstName", "lastName", "middleName",  "email");
 
-        when(efilingAccountServiceMock.getAccountDetails(any())).thenReturn(csoAccountDetails);
+        when(efilingAccountServiceMock.getAccountDetails(any())).thenReturn(accountDetails);
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         generateUrlRequest.setDocumentProperties(TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE));
@@ -169,10 +169,10 @@ public class SubmissionApiDelegateImplTest {
 
     @Test
     @DisplayName("With clientid having multiple account should return error")
-    public void withClientIdHavingMultipleAccount() throws NestedEjbException_Exception, DatatypeConfigurationException {
+    public void withClientIdHavingMultipleAccount() throws NestedEjbException_Exception {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.empty());
-        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, true);
+        AccountDetails accountDetails = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, true, "firstName", "lastName", "middleName", "email");
 
         when(efilingAccountServiceMock.getAccountDetails(Mockito.eq(CASE_9.toString()))).thenThrow(new CSOHasMultipleAccountException(CASE_9.toString()));
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
@@ -189,14 +189,15 @@ public class SubmissionApiDelegateImplTest {
 
     }
 
+
     @Test
     @DisplayName("CASE3: when payload is valid but redis return nothing")
     public void withValidPayloadButRedisReturnNothingShouldReturnBadRequest() throws NestedEjbException_Exception, DatatypeConfigurationException {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.empty());
-        CsoAccountDetails csoAccountDetails = new CsoAccountDetails(BigDecimal.TEN, BigDecimal.TEN, true);
+        AccountDetails accountDetails = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, true, "firstName", "lastName", "middleName",  "email");
 
-        when(efilingAccountServiceMock.getAccountDetails(any())).thenReturn(csoAccountDetails);
+        when(efilingAccountServiceMock.getAccountDetails(any())).thenReturn(accountDetails);
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         generateUrlRequest.setDocumentProperties(TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE));
@@ -236,10 +237,10 @@ public class SubmissionApiDelegateImplTest {
 
         ResponseEntity<GetSubmissionResponse> actual = sut.getSubmissionUserDetail(CASE_6.toString());
         assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertEquals("tbd", actual.getBody().getUserDetails().getEmail());
-        assertEquals("tbd", actual.getBody().getUserDetails().getFirstName());
-        assertEquals("tbd", actual.getBody().getUserDetails().getLastName());
-        assertEquals("tbd", actual.getBody().getUserDetails().getMiddleName());
+        assertEquals("emailCase6", actual.getBody().getUserDetails().getEmail());
+        assertEquals("firstNameCase6", actual.getBody().getUserDetails().getFirstName());
+        assertEquals("lastNameCase6", actual.getBody().getUserDetails().getLastName());
+        assertEquals("middleNameCase6", actual.getBody().getUserDetails().getMiddleName());
         assertEquals(1, actual.getBody().getUserDetails().getAccounts().size());
         assertEquals(Account.TypeEnum.CSO, actual.getBody().getUserDetails().getAccounts().stream().findFirst().get().getType());
         assertEquals("10", actual.getBody().getUserDetails().getAccounts().stream().findFirst().get().getIdentifier());
@@ -254,15 +255,16 @@ public class SubmissionApiDelegateImplTest {
 
         ResponseEntity<GetSubmissionResponse> actual = sut.getSubmissionUserDetail(CASE_8.toString());
         assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertEquals("tbd", actual.getBody().getUserDetails().getEmail());
-        assertEquals("tbd", actual.getBody().getUserDetails().getFirstName());
-        assertEquals("tbd", actual.getBody().getUserDetails().getLastName());
-        assertEquals("tbd", actual.getBody().getUserDetails().getMiddleName());
+        assertEquals("email", actual.getBody().getUserDetails().getEmail());
+        assertEquals("firstName", actual.getBody().getUserDetails().getFirstName());
+        assertEquals("lastName", actual.getBody().getUserDetails().getLastName());
+        assertEquals("middleName", actual.getBody().getUserDetails().getMiddleName());
         assertNull(actual.getBody().getUserDetails().getAccounts());
         assertEquals(SUCCESSURL, actual.getBody().getNavigation().getSuccess().getUrl());
         assertEquals(CANCELURL, actual.getBody().getNavigation().getCancel().getUrl());
         assertEquals(ERRORURL, actual.getBody().getNavigation().getError().getUrl());
     }
+
 
 
 }

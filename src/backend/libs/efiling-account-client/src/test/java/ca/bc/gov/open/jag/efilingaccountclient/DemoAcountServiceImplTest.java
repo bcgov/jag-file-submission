@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingaccountclient;
 
+import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import org.junit.jupiter.api.*;
 
 import java.math.BigDecimal;
@@ -23,22 +24,22 @@ public class DemoAcountServiceImplTest {
     @DisplayName("CASE 1: with account having efiling role")
     public void withAccountHavingEfilingRole() {
 
-        CsoAccountDetails actual = sut.getAccountDetails(ACCOUNT_WITH_EFILING_ROLE.toString());
+        AccountDetails actual = sut.getAccountDetails(ACCOUNT_WITH_EFILING_ROLE.toString());
 
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountId());
         Assertions.assertEquals(BigDecimal.TEN, actual.getClientId());
-        Assertions.assertEquals(true, actual.getHasEfileRole());
+        Assertions.assertEquals(true, actual.isFileRolePresent());
     }
 
     @Test
     @DisplayName("CASE 2: with account not having efiling role")
     public void withAccountHavingAdminRole() {
 
-        CsoAccountDetails actual = sut.getAccountDetails(ACCOUNT_WITHOUT_EFILING_ROLE.toString());
+        AccountDetails actual = sut.getAccountDetails(ACCOUNT_WITHOUT_EFILING_ROLE.toString());
 
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountId());
         Assertions.assertEquals(BigDecimal.TEN, actual.getClientId());
-        Assertions.assertEquals(false, actual.getHasEfileRole());
+        Assertions.assertEquals(false, actual.isFileRolePresent());
     }
 
     @Test

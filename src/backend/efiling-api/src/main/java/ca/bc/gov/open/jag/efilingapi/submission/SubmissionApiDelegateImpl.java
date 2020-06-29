@@ -1,7 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission;
 
 import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
-import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingaccountclient.exception.CSOHasMultipleAccountException;
 import ca.bc.gov.open.jag.efilingapi.api.SubmissionApiDelegate;
@@ -9,13 +9,11 @@ import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jag.efilingapi.fee.FeeService;
-import ca.bc.gov.open.jag.efilingapi.fee.models.Fee;
 import ca.bc.gov.open.jag.efilingapi.fee.models.FeeRequest;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilinglookupclient.EfilingLookupService;
-import ca.bc.gov.open.jag.efilinglookupclient.ServiceFees;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
@@ -51,17 +49,21 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     private final EfilingLookupService efilingLookupService;
 
+    private final FeeService feeService;
+
     public SubmissionApiDelegateImpl(
             SubmissionService submissionService,
             NavigationProperties navigationProperties,
             CacheProperties cacheProperties, SubmissionMapper submissionMapper,
-            EfilingAccountService efilingAccountService, EfilingLookupService efilingLookupService) {
+            EfilingAccountService efilingAccountService, EfilingLookupService efilingLookupService,
+            FeeService feeService) {
         this.submissionService = submissionService;
         this.navigationProperties = navigationProperties;
         this.cacheProperties = cacheProperties;
         this.submissionMapper = submissionMapper;
         this.efilingAccountService = efilingAccountService;
         this.efilingLookupService = efilingLookupService;
+        this.feeService = feeService;
     }
 
     @Override
@@ -70,10 +72,10 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         logger.info("Generate Url Request Received");
 
         logger.debug("Attempting to get user cso account information");
-        CsoAccountDetails csoAccountDetails;
+        AccountDetails accountDetails;
 
         try {
-            csoAccountDetails = efilingAccountService.getAccountDetails(generateUrlRequest.getUserId());
+            accountDetails = efilingAccountService.getAccountDetails(generateUrlRequest.getUserId());
         }
         catch (CSOHasMultipleAccountException e)   {
             return new ResponseEntity(buildEfilingError(ErrorResponse.ACCOUNTEXCEPTION), HttpStatus.BAD_REQUEST);
@@ -84,7 +86,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         logger.info("Successfully got cso account information");
 
-        if (csoAccountDetails != null && !csoAccountDetails.getHasEfileRole()) {
+        if (accountDetails != null && !accountDetails.isFileRolePresent()) {
             logger.warn("User does not have efiling role, therefore request is rejected.");
             return new ResponseEntity(buildEfilingError(ErrorResponse.INVALIDROLE), HttpStatus.FORBIDDEN);
         }
@@ -96,7 +98,8 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         Optional<Submission> cachedSubmission = submissionService.put(
                         submissionMapper.toSubmission(generateUrlRequest,
-                        new Fee(getFee(generateUrlRequest.getDocumentProperties().getType())), csoAccountDetails));
+                        feeService.getFee(new FeeRequest(generateUrlRequest.getDocumentProperties().getType(),
+                                generateUrlRequest.getDocumentProperties().getSubType())), accountDetails));
 
         if(!cachedSubmission.isPresent())
             return ResponseEntity.badRequest().body(null);
@@ -138,17 +141,22 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         UserDetails userDetails = new UserDetails();
 
-        if(submission.getCsoAccountDetails() != null) {
+        if(submission.getAccountDetails() != null) {
             Account account = new Account();
             account.setType(Account.TypeEnum.CSO);
-            account.setIdentifier(submission.getCsoAccountDetails().getAccountId().toString());
+            account.setIdentifier(submission.getAccountDetails().getAccountId().toString());
             userDetails.addAccountsItem(account);
+            userDetails.setFirstName(submission.getAccountDetails().getFirstName());
+            userDetails.setLastName(submission.getAccountDetails().getLastName());
+            userDetails.setMiddleName(submission.getAccountDetails().getMiddleName());
+            userDetails.setEmail(submission.getAccountDetails().getEmail());
+        } else {
+            userDetails.setFirstName("firstName");
+            userDetails.setLastName("lastName");
+            userDetails.setMiddleName("middleName");
+            userDetails.setEmail("email");
         }
 
-        userDetails.setFirstName("tbd");
-        userDetails.setLastName("tbd");
-        userDetails.setEmail("tbd");
-        userDetails.setMiddleName("tbd");
         return userDetails;
 
     }

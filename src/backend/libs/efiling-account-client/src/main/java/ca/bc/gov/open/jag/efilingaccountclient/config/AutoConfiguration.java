@@ -4,11 +4,13 @@ import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RoleRegi
 import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
 import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountServiceImpl;
 import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
+import ca.bc.gov.open.jag.efilingaccountclient.mappers.AccountDetailsMapper;
+import ca.bc.gov.open.jag.efilingaccountclient.mappers.AccountDetailsMapperImpl;
 import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
-import org.junit.platform.commons.util.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -38,9 +40,14 @@ public class AutoConfiguration {
     }
 
     @Bean
+    public AccountDetailsMapper accountDetailsMapper() {
+        return new AccountDetailsMapperImpl();
+    }
+
+    @Bean
     @ConditionalOnMissingBean({EfilingAccountService.class})
-    public EfilingAccountService efilingAccountService(AccountFacadeBean accountFacadeBean, RoleRegistryPortType roleRegistryPortType) {
-        return new CsoAccountServiceImpl(accountFacadeBean, roleRegistryPortType);
+    public EfilingAccountService efilingAccountService(AccountFacadeBean accountFacadeBean, RoleRegistryPortType roleRegistryPortType, AccountDetailsMapper accountDetailsMapper) {
+        return new CsoAccountServiceImpl(accountFacadeBean, roleRegistryPortType, accountDetailsMapper);
     }
 
     public <T> T getPort(Clients clients, Class<T> type) {
