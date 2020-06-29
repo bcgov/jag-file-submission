@@ -19,7 +19,7 @@
   "scripts": {
     "build": "babel src -d build --copy-files",
     "prepare": "yarn run build",
-    "storybook": "start-storybook",
+    "storybook": "start-storybook -p 9009 -s public",
     "test": "jest",
     "coverage": "jest --coverage",
     "lint": "eslint .",
