@@ -75,6 +75,11 @@ jobs:
       # Yarn Coverage - Shared Components
       - name: Run Yarn Coverage - Shared components
         run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/shared-components coverage
+      
+      # List all formatted files in coverage directory
+      - name: WHERE AM I - SHARED COMPONENTS?
+        run: |
+          ls ${{ github.workspace }}/src/frontend/shared-components/coverage
 
       # Run Yarn Install - eFiling Frontend
       - name: Run Yarn Install - eFiling Frontend
