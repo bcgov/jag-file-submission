@@ -18,10 +18,10 @@ public class DemoAccountServiceImpl implements EfilingAccountService {
     public DemoAccountServiceImpl() {
 
         AccountDetails accountWithEfilingRole = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, true, "", "", "", "");
-        AccountDetails accountWithOutEfilingRole = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, false, "", "", "", "");
+        AccountDetails accountWithoutEfilingRole  = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, false, "", "", "", "");
 
         csoAccounts.put(ACCOUNT_WITH_EFILING_ROLE.toString(), accountWithEfilingRole);
-        csoAccounts.put(ACCOUNT_WITHOUT_EFILING_ROLE.toString(), accountWithOutEfilingRole);
+        csoAccounts.put(ACCOUNT_WITHOUT_EFILING_ROLE.toString(), accountWithoutEfilingRole );
 
     }
 
