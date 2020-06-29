@@ -21,5 +21,5 @@ export default function CSOStatus({ accountExists, confirmationPopup }) {
 
 CSOStatus.propTypes = {
   accountExists: PropTypes.bool.isRequired,
-  confirmationPopup: propTypes.confirmationPopup
+  confirmationPopup: propTypes.confirmationPopup.isRequired
 };
