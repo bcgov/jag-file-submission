@@ -2,11 +2,10 @@ package ca.bc.gov.open.jag.efilingaccountclient.mappers;
 
 import ca.bc.gov.ag.csows.accounts.ClientProfile;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
-import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
+@Mapper
 public interface AccountDetailsMapper {
 
     @Mapping(target = "accountId", source = "clientProfile.accountId")

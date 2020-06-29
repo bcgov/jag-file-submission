@@ -5,6 +5,7 @@ import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
 import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountServiceImpl;
 import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingaccountclient.mappers.AccountDetailsMapper;
+import ca.bc.gov.open.jag.efilingaccountclient.mappers.AccountDetailsMapperImpl;
 import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
@@ -36,6 +37,11 @@ public class AutoConfiguration {
     @Bean
     public RoleRegistryPortType roleRegistryPortType() {
        return getPort(Clients.ROLE, RoleRegistryPortType.class);
+    }
+
+    @Bean
+    public AccountDetailsMapper accountDetailsMapper() {
+        return new AccountDetailsMapperImpl();
     }
 
     @Bean
