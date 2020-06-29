@@ -51,22 +51,22 @@ jobs:
         if: env.GIT_BRANCH == 'refs/heads/master'
 
       # Figure out where yarn is caching things
-      #- name: Yarn Cache
-      #  run: yarn cache dir
+      - name: Yarn Cache
+        run: yarn cache dir
 
       # Implement Caching Action for Yarn Project
-      #- name: Cache node modules
-      #  uses: actions/cache@v2
-      #  env:
-      #    cache-name: cache-node-modules
-      #  with:
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
           # YARN cache files are stored in `/home/runner/.cache/yarn/v6` on git actions
-      #    path: /home/runner/.cache/yarn/v6
-      #    key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-      #    restore-keys: |
-      #      ${{ runner.os }}-build-${{ env.cache-name }}-
-      #      ${{ runner.os }}-build-
-      #      ${{ runner.os }}-
+          path: /home/runner/.cache/yarn/v6
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
 
       # Run Yarn Install - Shared Components
       - name: Run Yarn Install - Shared components
@@ -83,7 +83,7 @@ jobs:
       # Link trial
       - name: Run yarn link
         run: |
-          npm --prefix ${{ github.workspace }}/src/frontend/shared-components link ${{ github.workspace }}/src/frontend/efiling-frontend/node_modules/react
+          npm --prefix ${{ github.workspace }}/src/frontend/efiling-frontend link ${{ github.workspace }}/src/frontend/shared-components/node_modules/react
   
       # Yarn Coverage - eFiling Frontend
       - name: Run Yarn Coverage - eFiling Frontend
