@@ -82,7 +82,7 @@ jobs:
       
       # install link local globally
       - name: run link local
-        run: npm install linklocal
+        run: sudo npm install -g --unsafe-perm linklocal
         
       # Link trial
       - name: Run yarn link
