@@ -87,7 +87,8 @@
       "src/**/*.js",
       "!src/index.js",
       "!**/node_modules/**",
-      "!**/vendor/**"
+      "!**/vendor/**",
+      "!src/modules/confirmationPopupTestData.js"
     ],
     "transform": {
       "^.+\\.[t|j]sx?$": "babel-jest"
