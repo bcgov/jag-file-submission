@@ -9,13 +9,11 @@ import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jag.efilingapi.fee.FeeService;
-import ca.bc.gov.open.jag.efilingapi.fee.models.Fee;
 import ca.bc.gov.open.jag.efilingapi.fee.models.FeeRequest;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilinglookupclient.EfilingLookupService;
-import ca.bc.gov.open.jag.efilinglookupclient.ServiceFees;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
@@ -51,17 +49,21 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     private final EfilingLookupService efilingLookupService;
 
+    private final FeeService feeService;
+
     public SubmissionApiDelegateImpl(
             SubmissionService submissionService,
             NavigationProperties navigationProperties,
             CacheProperties cacheProperties, SubmissionMapper submissionMapper,
-            EfilingAccountService efilingAccountService, EfilingLookupService efilingLookupService) {
+            EfilingAccountService efilingAccountService, EfilingLookupService efilingLookupService,
+            FeeService feeService) {
         this.submissionService = submissionService;
         this.navigationProperties = navigationProperties;
         this.cacheProperties = cacheProperties;
         this.submissionMapper = submissionMapper;
         this.efilingAccountService = efilingAccountService;
         this.efilingLookupService = efilingLookupService;
+        this.feeService = feeService;
     }
 
     @Override
@@ -84,7 +86,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         logger.info("Successfully got cso account information");
 
-        if (accountDetails != null && !accountDetails.hasEfileRole()) {
+        if (accountDetails != null && !accountDetails.isEfileRole()) {
             logger.warn("User does not have efiling role, therefore request is rejected.");
             return new ResponseEntity(buildEfilingError(ErrorResponse.INVALIDROLE), HttpStatus.FORBIDDEN);
         }
@@ -151,14 +153,10 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         } else {
             userDetails.setFirstName("firstName");
             userDetails.setLastName("lastName");
+            userDetails.setMiddleName("middleName");
             userDetails.setEmail("email");
-            userDetails.setMiddleName("not implemented");
         }
 
-        userDetails.setFirstName("tbd");
-        userDetails.setLastName("tbd");
-        userDetails.setEmail("tbd");
-        userDetails.setMiddleName("tbd");
         return userDetails;
 
     }

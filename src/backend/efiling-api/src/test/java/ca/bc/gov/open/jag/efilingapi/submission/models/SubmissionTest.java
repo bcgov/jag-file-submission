@@ -29,7 +29,7 @@ public class SubmissionTest {
     @DisplayName("CASE 1: testing constructor")
     public void testingConstructor() {
         Fee fee = new Fee(BigDecimal.TEN);
-        AccountDetails accountDetails = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, true, "firstName", "lastName", "email");
+        AccountDetails accountDetails = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, true, "firstName", "lastName", "middleName", "email");
 
         Submission actual = new Submission(
                 UUID.randomUUID(),

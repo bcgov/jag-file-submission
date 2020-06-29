@@ -2,7 +2,7 @@ package ca.bc.gov.open.jag.efilingapi.submission;
 
 
 import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
-import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
+import ca.bc.gov.ag.csows.lookups.ServiceFee;
 import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingaccountclient.exception.CSOHasMultipleAccountException;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
@@ -14,8 +14,8 @@ import ca.bc.gov.open.jag.efilingapi.fee.models.FeeRequest;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
+import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilinglookupclient.EfilingLookupService;
-import ca.bc.gov.open.jag.efilinglookupclient.ServiceFees;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -120,7 +120,7 @@ public class SubmissionApiDelegateImplTest {
         ServiceFee serviceFee = new ServiceFee();
         serviceFee.setFeeAmt(BigDecimal.valueOf(2));
         when(efilingLookupServiceMock.getServiceFee(any())).thenReturn(serviceFee);
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, navigationProperties, cachePropertiesMock, submissionMapperMock, efilingAccountServiceMock, efilingLookupServiceMock);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, navigationProperties, cachePropertiesMock, submissionMapperMock, efilingAccountServiceMock, efilingLookupServiceMock, feeServiceMock);
 
     }
 
@@ -258,7 +258,7 @@ public class SubmissionApiDelegateImplTest {
         assertEquals("email", actual.getBody().getUserDetails().getEmail());
         assertEquals("firstName", actual.getBody().getUserDetails().getFirstName());
         assertEquals("lastName", actual.getBody().getUserDetails().getLastName());
-        assertEquals("not implemented", actual.getBody().getUserDetails().getMiddleName());
+        assertEquals("middleName", actual.getBody().getUserDetails().getMiddleName());
         assertNull(actual.getBody().getUserDetails().getAccounts());
         assertEquals(SUCCESSURL, actual.getBody().getNavigation().getSuccess().getUrl());
         assertEquals(CANCELURL, actual.getBody().getNavigation().getCancel().getUrl());
