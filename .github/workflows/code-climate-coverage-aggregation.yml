@@ -79,15 +79,12 @@ jobs:
       # Run Yarn Install - eFiling Frontend
       - name: Run Yarn Install - eFiling Frontend
         run: yarn --cwd src/frontend/efiling-frontend install
-
-      # Link react - eFiling Frontend
-      - name: Run Yarn link - eFiling Frontend
-        run: yarn --cwd src/frontend/efiling-frontend/node_modules/react link
-
-      # Link react - Shared Components
-      - name: Run Yarn link - Shared Components
-        run: yarn --cwd src/frontend/shared-components link react
-
+      
+      # Link trial
+      - name: Run yarn link
+        run: |
+          yarn --cwd ${{ github.workspace }}/src/frontend/shared-components link ${{ github.workspace }}/src/frontend/efiling-frontend/node_modules/react
+  
       # Yarn Coverage - eFiling Frontend
       - name: Run Yarn Coverage - eFiling Frontend
         run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/efiling-frontend coverage
