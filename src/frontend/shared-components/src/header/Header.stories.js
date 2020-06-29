@@ -1,4 +1,5 @@
 import React from "react";
+import { createMemoryHistory } from "history";
 
 import { Header } from "./Header";
 
@@ -7,11 +8,12 @@ export default {
   component: Header
 };
 
-// not passing in history as not required in snapshot, silence warning of unused prop
-console.error = () => {};
+const history = createMemoryHistory();
+history.entries[0].key = "testkey"; // set mock test key so storyshot is deterministic
 
 const header = {
-  name: "File Submission"
+  name: "File Submission",
+  history
 };
 
 const component = <Header header={header} />;
