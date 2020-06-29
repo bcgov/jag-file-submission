@@ -82,7 +82,7 @@ jobs:
       
       # install link local globally
       - name: run link local
-        run: npm install -g linklocal
+        run: npm install linklocal
         
       # Link trial
       - name: Run yarn link
