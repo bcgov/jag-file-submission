@@ -27,8 +27,9 @@ exclude_patterns:
   - "src/backend/libs/efiling-lookup-client/src/main/java/ca/bc/gov/open/jag/efilinglookupclient/EfilingLookupService.java"
   - "src/backend/libs/efiling-status-client/src/main/java/ca/bc/gov/open/jag/efilingstatusclient/EfilingStatusService.java"
   - "src/backend/libs/efiling-submission-client/src/main/java/ca/bc/gov/open/jag/efilingsubmissionclient/EfilingSubmissionService.java"
-  
+
   # Frontend Pattern Excludes
   - "src/frontend/*/src/*.js"
+  - "src/frontend/efiling-frontend/src/modules/confirmationPopupTestData.js"
   - "src/frontend/*/public/"
   - "src/frontend/*/.storybook/"
