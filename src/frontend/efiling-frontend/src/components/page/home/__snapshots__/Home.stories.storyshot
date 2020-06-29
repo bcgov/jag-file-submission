@@ -15,6 +15,7 @@ exports[`Storyshots Home Account Exists 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-none d-md-block pointer"
           height="44"
+          role="presentation"
           src="undefined/images/bcid-logo-rev-en.svg"
           width="181"
         />
@@ -22,6 +23,7 @@ exports[`Storyshots Home Account Exists 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-md-none pointer"
           height="44"
+          role="presentation"
           src="undefined/images/bcid-symbol-rev.svg"
           width="64"
         />
@@ -166,6 +168,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-none d-md-block pointer"
           height="44"
+          role="presentation"
           src="undefined/images/bcid-logo-rev-en.svg"
           width="181"
         />
@@ -173,6 +176,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-md-none pointer"
           height="44"
+          role="presentation"
           src="undefined/images/bcid-symbol-rev.svg"
           width="64"
         />
@@ -317,6 +321,7 @@ exports[`Storyshots Home Loader 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-none d-md-block pointer"
           height="44"
+          role="presentation"
           src="undefined/images/bcid-logo-rev-en.svg"
           width="181"
         />
@@ -324,6 +329,7 @@ exports[`Storyshots Home Loader 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-md-none pointer"
           height="44"
+          role="presentation"
           src="undefined/images/bcid-symbol-rev.svg"
           width="64"
         />
@@ -462,6 +468,7 @@ exports[`Storyshots Home Loader Mobile 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-none d-md-block pointer"
           height="44"
+          role="presentation"
           src="undefined/images/bcid-logo-rev-en.svg"
           width="181"
         />
@@ -469,6 +476,7 @@ exports[`Storyshots Home Loader Mobile 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-md-none pointer"
           height="44"
+          role="presentation"
           src="undefined/images/bcid-symbol-rev.svg"
           width="64"
         />
@@ -607,6 +615,7 @@ exports[`Storyshots Home No Account Exists 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-none d-md-block pointer"
           height="44"
+          role="presentation"
           src="undefined/images/bcid-logo-rev-en.svg"
           width="181"
         />
@@ -614,6 +623,7 @@ exports[`Storyshots Home No Account Exists 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-md-none pointer"
           height="44"
+          role="presentation"
           src="undefined/images/bcid-symbol-rev.svg"
           width="64"
         />
@@ -758,6 +768,7 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-none d-md-block pointer"
           height="44"
+          role="presentation"
           src="undefined/images/bcid-logo-rev-en.svg"
           width="181"
         />
@@ -765,6 +776,7 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-md-none pointer"
           height="44"
+          role="presentation"
           src="undefined/images/bcid-symbol-rev.svg"
           width="64"
         />
