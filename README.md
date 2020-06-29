@@ -74,3 +74,15 @@ docker-compose stop
 ```
 
 Stops the container and the frontend application from being run/served.
+
+### Redis
+
+WIP
+
+### Rabbit MQ
+
+WIP
+
+### Keycloak
+
+The docker-compose file creates a docker pod from Keycloak. It maps port 8080 to 8081, and the HTTP management interface can be found at `http://localhost:8081/auth`
