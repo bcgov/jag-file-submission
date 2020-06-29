@@ -15,6 +15,7 @@ exports[`Header Component Header matches the snapshot 1`] = `
       height="44"
       onClick={[Function]}
       onKeyDown={[Function]}
+      role="presentation"
       src="undefined/images/bcid-logo-rev-en.svg"
       width={181}
     />
@@ -24,6 +25,7 @@ exports[`Header Component Header matches the snapshot 1`] = `
       height="44"
       onClick={[Function]}
       onKeyDown={[Function]}
+      role="presentation"
       src="undefined/images/bcid-symbol-rev.svg"
       width={64}
     />
@@ -48,6 +50,7 @@ exports[`Header Component HeaderImage matches the snapshot 1`] = `
   height="44"
   onClick={[Function]}
   onKeyDown={[Function]}
+  role="presentation"
   src="bcid-logo-rev-en.svg"
   width={181}
 />
