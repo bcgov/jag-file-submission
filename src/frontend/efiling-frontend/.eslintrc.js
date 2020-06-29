@@ -23,6 +23,7 @@ module.exports = {
     "react/jsx-filename-extension": "off",
     "react/jsx-curly-brace-presence": "off",
     "import/no-extraneous-dependencies": "off",
+    "import/prefer-default-export": "off",
     "prettier/prettier": ["error"]
   }
 };

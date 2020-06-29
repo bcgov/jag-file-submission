@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { Header, Footer, Input, Button } from "shared-components";
+import { propTypes } from "../../../types/propTypes";
 
 import "../page.css";
 
@@ -27,7 +28,7 @@ const urlBody = {
       url: "string"
     },
     cancel: {
-      url: "http://localhost:3001/efiling-demo"
+      url: "http://localhost:3001/efiling-demo/cancel"
     }
   }
 };
@@ -84,8 +85,6 @@ export default function Home({ page: { header } }) {
 
 Home.propTypes = {
   page: PropTypes.shape({
-    header: PropTypes.shape({
-      name: PropTypes.string.isRequired
-    }).isRequired
+    header: propTypes.header
   }).isRequired
 };
