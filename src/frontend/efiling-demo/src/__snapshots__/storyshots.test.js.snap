@@ -16,6 +16,7 @@ exports[`Storyshots Cancel Default 1`] = `
         height="44"
         onClick={[Function]}
         onKeyDown={[Function]}
+        role="presentation"
         src="undefined/images/bcid-logo-rev-en.svg"
         width={181}
       />
@@ -25,6 +26,7 @@ exports[`Storyshots Cancel Default 1`] = `
         height="44"
         onClick={[Function]}
         onKeyDown={[Function]}
+        role="presentation"
         src="undefined/images/bcid-symbol-rev.svg"
         width={64}
       />
@@ -166,6 +168,7 @@ exports[`Storyshots Cancel Mobile 1`] = `
         height="44"
         onClick={[Function]}
         onKeyDown={[Function]}
+        role="presentation"
         src="undefined/images/bcid-logo-rev-en.svg"
         width={181}
       />
@@ -175,6 +178,7 @@ exports[`Storyshots Cancel Mobile 1`] = `
         height="44"
         onClick={[Function]}
         onKeyDown={[Function]}
+        role="presentation"
         src="undefined/images/bcid-symbol-rev.svg"
         width={64}
       />
