@@ -1,5 +1,6 @@
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
+import { createMemoryHistory } from "history";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
@@ -12,7 +13,8 @@ export default {
 };
 
 const header = {
-  name: "eFiling Demo Client"
+  name: "eFiling Demo Client",
+  history: createMemoryHistory()
 };
 const confirmationPopup = getTestData();
 const page = { header, confirmationPopup };

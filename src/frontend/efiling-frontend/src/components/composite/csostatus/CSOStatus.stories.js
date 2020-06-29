@@ -11,19 +11,19 @@ export default {
 const confirmationPopup = getTestData();
 
 export const AccountExists = () => (
-  <CSOStatus accountExists confirmationPopup={confirmationPopup} />
+  <CSOStatus csoStatus={{ accountExists: true, confirmationPopup }} />
 );
 
 export const NoAccountExists = () => (
-  <CSOStatus accountExists={false} confirmationPopup={confirmationPopup} />
+  <CSOStatus csoStatus={{ accountExists: false, confirmationPopup }} />
 );
 
 export const AccountExistsMobile = () => (
-  <CSOStatus accountExists confirmationPopup={confirmationPopup} />
+  <CSOStatus csoStatus={{ accountExists: true, confirmationPopup }} />
 );
 
 export const NoAccountExistsMobile = () => (
-  <CSOStatus accountExists={false} confirmationPopup={confirmationPopup} />
+  <CSOStatus csoStatus={{ accountExists: false, confirmationPopup }} />
 );
 
 const mobileViewport = {

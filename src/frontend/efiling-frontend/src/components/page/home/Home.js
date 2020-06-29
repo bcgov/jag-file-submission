@@ -49,18 +49,18 @@ export default function Home({ page: { header, confirmationPopup } }) {
     setShowLoader
   );
 
+  const csoStatus = {
+    accountExists: csoAccountExists,
+    confirmationPopup
+  };
+
   return (
     <main>
       <Header header={header} />
       <div className="page">
         <div className="content col-md-10">
           {showLoader && <Loader page />}
-          {!showLoader && (
-            <CSOStatus
-              accountExists={csoAccountExists}
-              confirmationPopup={confirmationPopup}
-            />
-          )}
+          {!showLoader && <CSOStatus csoStatus={csoStatus} />}
         </div>
       </div>
       <Footer />

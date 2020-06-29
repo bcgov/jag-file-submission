@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 import ConfirmationPopup from "shared-components";
 import { propTypes } from "../../../types/propTypes";
 
-export default function CSOStatus({ accountExists, confirmationPopup }) {
+export default function CSOStatus({
+  csoStatus: { accountExists, confirmationPopup }
+}) {
   return (
     <div>
       {accountExists && <p>Account exists! Proceed</p>}
@@ -20,6 +22,8 @@ export default function CSOStatus({ accountExists, confirmationPopup }) {
 }
 
 CSOStatus.propTypes = {
-  accountExists: PropTypes.bool.isRequired,
-  confirmationPopup: propTypes.confirmationPopup.isRequired
+  csoStatus: PropTypes.shape({
+    accountExists: PropTypes.bool.isRequired,
+    confirmationPopup: propTypes.confirmationPopup
+  }).isRequired
 };

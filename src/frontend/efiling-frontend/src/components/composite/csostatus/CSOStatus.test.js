@@ -9,7 +9,7 @@ describe("CSOStatus Component", () => {
 
   test("Matches the snapshot when account exists", () => {
     const { asFragment } = render(
-      <CSOStatus accountExists confirmationPopup={confirmationPopup} />
+      <CSOStatus csoStatus={{ accountExists: true, confirmationPopup }} />
     );
 
     expect(asFragment()).toMatchSnapshot();
@@ -17,7 +17,7 @@ describe("CSOStatus Component", () => {
 
   test("Matches the snapshot when account does not exist", () => {
     const { asFragment } = render(
-      <CSOStatus accountExists={false} confirmationPopup={confirmationPopup} />
+      <CSOStatus csoStatus={{ accountExists: false, confirmationPopup }} />
     );
 
     expect(asFragment()).toMatchSnapshot();
