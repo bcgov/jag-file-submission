@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { Header, Footer, Loader } from "shared-components";
 import CSOStatus from "../../composite/csostatus/CSOStatus";
+import { propTypes } from "../../../types/propTypes";
 
 import "../page.css";
 
@@ -69,8 +70,7 @@ export default function Home({ page: { header, confirmationPopup } }) {
 
 Home.propTypes = {
   page: PropTypes.shape({
-    header: PropTypes.shape({
-      name: PropTypes.string.isRequired
-    }).isRequired
+    header: propTypes.header,
+    confirmationPopup: propTypes.confirmationPopup
   }).isRequired
 };

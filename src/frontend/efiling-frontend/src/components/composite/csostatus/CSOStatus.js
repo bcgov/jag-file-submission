@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ConfirmationPopup from "shared-components";
+import { propTypes } from "../../../types/propTypes";
 
 export default function CSOStatus({ accountExists, confirmationPopup }) {
   return (
@@ -19,5 +20,6 @@ export default function CSOStatus({ accountExists, confirmationPopup }) {
 }
 
 CSOStatus.propTypes = {
-  accountExists: PropTypes.bool.isRequired
+  accountExists: PropTypes.bool.isRequired,
+  confirmationPopup: propTypes.confirmationPopup
 };
