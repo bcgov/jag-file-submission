@@ -144,6 +144,15 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             account.setType(Account.TypeEnum.CSO);
             account.setIdentifier(submission.getAccountDetails().getAccountId().toString());
             userDetails.addAccountsItem(account);
+            userDetails.setFirstName(submission.getAccountDetails().getFirstName());
+            userDetails.setLastName(submission.getAccountDetails().getLastName());
+            userDetails.setMiddleName(submission.getAccountDetails().getMiddleName());
+            userDetails.setEmail(submission.getAccountDetails().getEmail());
+        } else {
+            userDetails.setFirstName("firstName");
+            userDetails.setLastName("lastName");
+            userDetails.setEmail("email");
+            userDetails.setMiddleName("not implemented");
         }
 
         userDetails.setFirstName("tbd");

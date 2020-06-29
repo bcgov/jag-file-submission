@@ -98,7 +98,7 @@ public class SubmissionApiDelegateImplTest {
 
         DocumentProperties documentProperties = new DocumentProperties();
 
-        AccountDetails accountDetails = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, true, "firstNameCase6", "lastNameCase6", "emailCase6");
+        AccountDetails accountDetails = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, true, "firstNameCase6", "lastNameCase6", "middleNameCase6",  "emailCase6");
         Submission submissionWithCsoAccount = new Submission(CASE_6, documentProperties, TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL), new Fee(BigDecimal.TEN), accountDetails);
 
         when(submissionServiceMock.getByKey(Mockito.eq(CASE_5)))
@@ -107,7 +107,7 @@ public class SubmissionApiDelegateImplTest {
         when(submissionServiceMock.getByKey(Mockito.eq(CASE_6)))
                 .thenReturn(Optional.of(submissionWithCsoAccount));
 
-        AccountDetails accountDetailsNoEfilingRole = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, false, "firstName", "lastName", "email");
+        AccountDetails accountDetailsNoEfilingRole = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, false, "firstName", "lastName", "middleName",  "email");
         Submission submissionWithCsoAccountNoEfilingRole = new Submission(CASE_7, documentProperties, TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL), new Fee(BigDecimal.TEN), accountDetailsNoEfilingRole);
         when(submissionServiceMock.getByKey(Mockito.eq(CASE_7)))
                 .thenReturn(Optional.of(submissionWithCsoAccountNoEfilingRole));
@@ -130,7 +130,7 @@ public class SubmissionApiDelegateImplTest {
     public void withValidPayloadShouldReturnOk() throws NestedEjbException_Exception {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.of(Submission.builder().create()));
-        AccountDetails accountDetails = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, true, "firstName", "lastName", "email");
+        AccountDetails accountDetails = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, true, "firstName", "lastName", "middleName",  "email");
 
         when(efilingAccountServiceMock.getAccountDetails(any())).thenReturn(accountDetails);
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
@@ -150,7 +150,7 @@ public class SubmissionApiDelegateImplTest {
     public void withValidPayloadButNoRoleShouldReturnForbidden() throws NestedEjbException_Exception {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.of(Submission.builder().create()));
-        AccountDetails accountDetails = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, false, "firstName", "lastName", "email");
+        AccountDetails accountDetails = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, false, "firstName", "lastName", "middleName",  "email");
 
         when(efilingAccountServiceMock.getAccountDetails(any())).thenReturn(accountDetails);
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
@@ -172,7 +172,7 @@ public class SubmissionApiDelegateImplTest {
     public void withClientIdHavingMultipleAccount() throws NestedEjbException_Exception {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.empty());
-        AccountDetails accountDetails = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, true, "firstName", "lastName", "email");
+        AccountDetails accountDetails = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, true, "firstName", "lastName", "middleName", "email");
 
         when(efilingAccountServiceMock.getAccountDetails(Mockito.eq(CASE_9.toString()))).thenThrow(new CSOHasMultipleAccountException(CASE_9.toString()));
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
@@ -195,7 +195,7 @@ public class SubmissionApiDelegateImplTest {
     public void withValidPayloadButRedisReturnNothingShouldReturnBadRequest() throws NestedEjbException_Exception, DatatypeConfigurationException {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.empty());
-        AccountDetails accountDetails = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, true, "firstName", "lastName", "email");
+        AccountDetails accountDetails = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, true, "firstName", "lastName", "middleName",  "email");
 
         when(efilingAccountServiceMock.getAccountDetails(any())).thenReturn(accountDetails);
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
@@ -240,7 +240,7 @@ public class SubmissionApiDelegateImplTest {
         assertEquals("emailCase6", actual.getBody().getUserDetails().getEmail());
         assertEquals("firstNameCase6", actual.getBody().getUserDetails().getFirstName());
         assertEquals("lastNameCase6", actual.getBody().getUserDetails().getLastName());
-        assertEquals("not implemented", actual.getBody().getUserDetails().getMiddleName());
+        assertEquals("middleNameCase6", actual.getBody().getUserDetails().getMiddleName());
         assertEquals(1, actual.getBody().getUserDetails().getAccounts().size());
         assertEquals(Account.TypeEnum.CSO, actual.getBody().getUserDetails().getAccounts().stream().findFirst().get().getType());
         assertEquals("10", actual.getBody().getUserDetails().getAccounts().stream().findFirst().get().getIdentifier());

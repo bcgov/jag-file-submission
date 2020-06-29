@@ -71,10 +71,10 @@ public class CsoAccountServiceImplTest {
         Mockito.when(roleRegistryPortTypeMock.getRolesForIdentifier("Courts", "CSO", USERGUIDWITHFILEROLE, "CAP")).thenReturn(userRolesWithFileRole);
         Mockito.when(roleRegistryPortTypeMock.getRolesForIdentifier("Courts", "CSO", USERGUIDNOROLE, "CAP")).thenReturn(userRolesWithoutFileRole);
 
-        AccountDetails csoUserDetailsWithRole = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, true, "firstName", "lastName", "email");
+        AccountDetails csoUserDetailsWithRole = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, true, "firstName", "lastName", "middleName", "email");
         Mockito.when(accountDetailsMapperMock.toCsoAccountDetails(Mockito.any(), Mockito.eq(true))).thenReturn(csoUserDetailsWithRole);
 
-        AccountDetails csoUserDetailsWithoutRole = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, false, "firstName", "lastName", "email");
+        AccountDetails csoUserDetailsWithoutRole = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, false, "firstName", "lastName", "middleName","email");
         Mockito.when(accountDetailsMapperMock.toCsoAccountDetails(Mockito.any(), Mockito.eq(false))).thenReturn(csoUserDetailsWithoutRole);
 
 
@@ -98,7 +98,7 @@ public class CsoAccountServiceImplTest {
         Assertions.assertNotEquals(null, details);
         Assertions.assertEquals(BigDecimal.TEN, details.getAccountId());
         Assertions.assertEquals(BigDecimal.TEN, details.getClientId());
-        Assertions.assertEquals(true, details.hasEfileRole());
+        Assertions.assertEquals(true, details.isEfileRole());
         Assertions.assertEquals("firstName", details.getFirstName());
         Assertions.assertEquals("lastName", details.getLastName());
         Assertions.assertEquals("email", details.getEmail());
@@ -113,7 +113,7 @@ public class CsoAccountServiceImplTest {
         Assertions.assertNotEquals(null, details);
         Assertions.assertEquals(BigDecimal.TEN, details.getAccountId());
         Assertions.assertEquals(BigDecimal.TEN, details.getClientId());
-        Assertions.assertEquals(false, details.hasEfileRole());
+        Assertions.assertEquals(false, details.isEfileRole());
         Assertions.assertEquals("firstName", details.getFirstName());
         Assertions.assertEquals("lastName", details.getLastName());
         Assertions.assertEquals("email", details.getEmail());

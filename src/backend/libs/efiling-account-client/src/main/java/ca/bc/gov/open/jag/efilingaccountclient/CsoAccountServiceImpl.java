@@ -36,7 +36,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         List<ClientProfile> profiles = accountFacadeBean.findProfiles(userGuid);
         //An account must only one profile associated to proceed
         if (profiles.size() == 1) {
-            accountDetails =accountDetailsMapper.toCsoAccountDetails(profiles.get(0), hasFileRole(userGuid));
+            accountDetails = accountDetailsMapper.toCsoAccountDetails(profiles.get(0), hasFileRole(userGuid));
         }
         else if (profiles.size() > 1) {
             throw new CSOHasMultipleAccountException(profiles.get(0).getClientId().toString());
@@ -51,5 +51,6 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         UserRoles userRoles = roleRegistryPortType.getRolesForIdentifier("Courts", "CSO", userGuid, "CAP");
         List<RegisteredRole> roles = userRoles.getRoles();
         return roles != null && roles.stream().anyMatch(r -> r.getCode().equals("FILE"));
+
     }
 }
