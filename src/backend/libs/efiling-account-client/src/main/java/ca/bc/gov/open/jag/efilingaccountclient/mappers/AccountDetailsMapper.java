@@ -14,7 +14,7 @@ public interface AccountDetailsMapper {
     @Mapping(target = "lastName", source = "clientProfile.account.accountManager.surnameNm")
     @Mapping(target = "middleName", source = "clientProfile.account.accountManager.middleNm")
     @Mapping(target = "email", source = "clientProfile.account.accountManager.emailTxt")
-    @Mapping(target = "efileRole", source = "efileRole")
-    AccountDetails toCsoAccountDetails(ClientProfile clientProfile, Boolean efileRole);
+    @Mapping(target = "fileRolePresent", source = "fileRolePresent")
+    AccountDetails toCsoAccountDetails(ClientProfile clientProfile, Boolean fileRolePresent);
 
 }

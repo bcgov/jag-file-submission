@@ -98,7 +98,7 @@ public class CsoAccountServiceImplTest {
         Assertions.assertNotEquals(null, details);
         Assertions.assertEquals(BigDecimal.TEN, details.getAccountId());
         Assertions.assertEquals(BigDecimal.TEN, details.getClientId());
-        Assertions.assertEquals(true, details.isEfileRolePresent());
+        Assertions.assertEquals(true, details.isFileRolePresent());
         Assertions.assertEquals("firstName", details.getFirstName());
         Assertions.assertEquals("lastName", details.getLastName());
         Assertions.assertEquals("email", details.getEmail());
@@ -113,7 +113,7 @@ public class CsoAccountServiceImplTest {
         Assertions.assertNotEquals(null, details);
         Assertions.assertEquals(BigDecimal.TEN, details.getAccountId());
         Assertions.assertEquals(BigDecimal.TEN, details.getClientId());
-        Assertions.assertEquals(false, details.isEfileRolePresent());
+        Assertions.assertEquals(false, details.isFileRolePresent());
         Assertions.assertEquals("firstName", details.getFirstName());
         Assertions.assertEquals("lastName", details.getLastName());
         Assertions.assertEquals("email", details.getEmail());

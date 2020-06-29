@@ -13,7 +13,7 @@ public class AccountDetails {
     private String lastName;
     private String email;
     private String middleName;
-    private boolean efileRolePresent;
+    private boolean fileRolePresent;
 
     protected AccountDetails(AccountDetails.Builder builder) {
 
@@ -24,7 +24,7 @@ public class AccountDetails {
         this.lastName = builder.lastName;
         this.email = builder.email;
         this.middleName = builder.middleName;
-        this.efileRolePresent = builder.efileRolePresent;
+        this.fileRolePresent = builder.fileRolePresent;
 
     }
 
@@ -36,7 +36,7 @@ public class AccountDetails {
     @JsonCreator
     public AccountDetails(@JsonProperty("accountId") BigDecimal accountId,
                                         @JsonProperty("clientId") BigDecimal clientId,
-                                        @JsonProperty("efileRole") boolean efileRole,
+                                        @JsonProperty("fileRolePresent") boolean fileRolePresent,
                                         @JsonProperty("firstName") String firstName,
                                         @JsonProperty("lastName") String lastName,
                                         @JsonProperty("middleName") String middleName,
@@ -47,7 +47,7 @@ public class AccountDetails {
         this.lastName = lastName;
         this.email = email;
         this.middleName = middleName;
-        this.efileRolePresent = efileRolePresent;
+        this.fileRolePresent = fileRolePresent;
     }
 
     public BigDecimal getAccountId() {
@@ -74,8 +74,8 @@ public class AccountDetails {
         return middleName;
     }
 
-    public boolean isEfileRolePresent() {
-        return efileRolePresent;
+    public boolean isFileRolePresent() {
+        return fileRolePresent;
     }
 
     public static class Builder {
@@ -86,7 +86,7 @@ public class AccountDetails {
         private String lastName;
         private String email;
         private String middleName;
-        private boolean efileRolePresent;
+        private boolean fileRolePresent;
 
         public Builder accountId(BigDecimal accountId) {
             this.accountId = accountId;
@@ -118,8 +118,8 @@ public class AccountDetails {
             return this;
         }
 
-        public Builder efileRolePresent(boolean efileRolePresent) {
-            this.efileRolePresent = efileRolePresent;
+        public Builder fileRolePresent(boolean fileRolePresent) {
+            this.fileRolePresent = fileRolePresent;
             return this;
         }
 
