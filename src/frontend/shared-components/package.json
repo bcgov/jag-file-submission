@@ -6,15 +6,11 @@
   "dependencies": {
     "@babel/preset-react": "^7.8.3",
     "@bcgov/bootstrap-theme": "github:bcgov/bootstrap-theme",
-    "axios": "^0.19.2",
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "bootstrap": "^4.4.1",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.2",
     "history": "^4.10.1",
     "prop-types": "^15.7.2",
     "react-bootstrap": "^1.0.1",
-    "react-app-polyfill": "^1.0.6",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "react-test-renderer": "^16.12.0",
@@ -78,8 +74,7 @@
     "husky": "^4.2.5",
     "jest-sonar-reporter": "^2.0.0",
     "prettier": "1.19.1",
-    "pretty-quick": "^2.0.1",
-    "webpack": "4.42.0"
+    "pretty-quick": "^2.0.1"
   },
   "jest": {
     "watchPathIgnorePatterns": [
