@@ -83,7 +83,7 @@ jobs:
       # Link trial
       - name: Run yarn link
         run: |
-          yarn --cwd ${{ github.workspace }}/src/frontend/shared-components link ${{ github.workspace }}/src/frontend/efiling-frontend/node_modules/react
+          npm --prefix ${{ github.workspace }}/src/frontend/shared-components link ${{ github.workspace }}/src/frontend/efiling-frontend/node_modules/react
   
       # Yarn Coverage - eFiling Frontend
       - name: Run Yarn Coverage - eFiling Frontend
