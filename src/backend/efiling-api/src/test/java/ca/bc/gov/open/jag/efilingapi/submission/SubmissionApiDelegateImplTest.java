@@ -54,6 +54,7 @@ public class SubmissionApiDelegateImplTest {
     public static final UUID CASE_7 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fb");
     public static final UUID CASE_8 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fc");
     public static final UUID CASE_9 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2f1");
+    public static final UUID CASE_10 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2f2");
     public static final String SUCCESS = "SUCCESS";
     private static final String CANCELURL = "CANCELURL";
     private static final String ERRORURL = "ERRORURL";
@@ -97,7 +98,7 @@ public class SubmissionApiDelegateImplTest {
 
         DocumentProperties documentProperties = new DocumentProperties();
 
-        AccountDetails accountDetails = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, true, "firstName", "lastName", "email");
+        AccountDetails accountDetails = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, true, "firstNameCase6", "lastNameCase6", "emailCase6");
         Submission submissionWithCsoAccount = new Submission(CASE_6, documentProperties, TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL), new Fee(BigDecimal.TEN), accountDetails);
 
         when(submissionServiceMock.getByKey(Mockito.eq(CASE_5)))
@@ -126,7 +127,7 @@ public class SubmissionApiDelegateImplTest {
 
     @Test
     @DisplayName("CASE1: when payload is valid")
-    public void withValidPayloadShouldReturnOk() throws NestedEjbException_Exception, DatatypeConfigurationException {
+    public void withValidPayloadShouldReturnOk() throws NestedEjbException_Exception {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.of(Submission.builder().create()));
         AccountDetails accountDetails = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, true, "firstName", "lastName", "email");
@@ -146,7 +147,7 @@ public class SubmissionApiDelegateImplTest {
 
     @Test
     @DisplayName("CASE2: when payload is valid but no efiling role return forbidden")
-    public void withValidPayloadButNoRoleShouldReturnForbidden() throws NestedEjbException_Exception, DatatypeConfigurationException {
+    public void withValidPayloadButNoRoleShouldReturnForbidden() throws NestedEjbException_Exception {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.of(Submission.builder().create()));
         AccountDetails accountDetails = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, false, "firstName", "lastName", "email");
@@ -168,7 +169,7 @@ public class SubmissionApiDelegateImplTest {
 
     @Test
     @DisplayName("With clientid having multiple account should return error")
-    public void withClientIdHavingMultipleAccount() throws NestedEjbException_Exception, DatatypeConfigurationException {
+    public void withClientIdHavingMultipleAccount() throws NestedEjbException_Exception {
 
         when(submissionServiceMock.put(any())).thenReturn(Optional.empty());
         AccountDetails accountDetails = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, true, "firstName", "lastName", "email");
@@ -187,6 +188,7 @@ public class SubmissionApiDelegateImplTest {
         assertEquals("Client has multiple CSO profiles", ((EfilingError)actual.getBody()).getMessage());
 
     }
+
 
     @Test
     @DisplayName("CASE3: when payload is valid but redis return nothing")
@@ -235,10 +237,10 @@ public class SubmissionApiDelegateImplTest {
 
         ResponseEntity<GetSubmissionResponse> actual = sut.getSubmissionUserDetail(CASE_6.toString());
         assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertEquals("tbd", actual.getBody().getUserDetails().getEmail());
-        assertEquals("tbd", actual.getBody().getUserDetails().getFirstName());
-        assertEquals("tbd", actual.getBody().getUserDetails().getLastName());
-        assertEquals("tbd", actual.getBody().getUserDetails().getMiddleName());
+        assertEquals("emailCase6", actual.getBody().getUserDetails().getEmail());
+        assertEquals("firstNameCase6", actual.getBody().getUserDetails().getFirstName());
+        assertEquals("lastNameCase6", actual.getBody().getUserDetails().getLastName());
+        assertEquals("not implemented", actual.getBody().getUserDetails().getMiddleName());
         assertEquals(1, actual.getBody().getUserDetails().getAccounts().size());
         assertEquals(Account.TypeEnum.CSO, actual.getBody().getUserDetails().getAccounts().stream().findFirst().get().getType());
         assertEquals("10", actual.getBody().getUserDetails().getAccounts().stream().findFirst().get().getIdentifier());
@@ -253,15 +255,16 @@ public class SubmissionApiDelegateImplTest {
 
         ResponseEntity<GetSubmissionResponse> actual = sut.getSubmissionUserDetail(CASE_8.toString());
         assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertEquals("tbd", actual.getBody().getUserDetails().getEmail());
-        assertEquals("tbd", actual.getBody().getUserDetails().getFirstName());
-        assertEquals("tbd", actual.getBody().getUserDetails().getLastName());
-        assertEquals("tbd", actual.getBody().getUserDetails().getMiddleName());
+        assertEquals("email", actual.getBody().getUserDetails().getEmail());
+        assertEquals("firstName", actual.getBody().getUserDetails().getFirstName());
+        assertEquals("lastName", actual.getBody().getUserDetails().getLastName());
+        assertEquals("not implemented", actual.getBody().getUserDetails().getMiddleName());
         assertNull(actual.getBody().getUserDetails().getAccounts());
         assertEquals(SUCCESSURL, actual.getBody().getNavigation().getSuccess().getUrl());
         assertEquals(CANCELURL, actual.getBody().getNavigation().getCancel().getUrl());
         assertEquals(ERRORURL, actual.getBody().getNavigation().getError().getUrl());
     }
+
 
 
 }
