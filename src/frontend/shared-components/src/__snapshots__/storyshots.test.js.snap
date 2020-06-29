@@ -58,9 +58,9 @@ exports[`Storyshots ConfirmationPopup Default 1`] = `
   }
   modal={
     Object {
-      "body1": "Your process will end.",
-      "body2": "You will be redirected back to the original application.",
+      "body": [Function],
       "handleClose": [Function],
+      "handleConfirm": [Function],
       "handleShow": [Function],
       "show": true,
       "title": "Cancel process?",
@@ -165,10 +165,15 @@ exports[`Storyshots ConfirmationPopup Default 1`] = `
                         class="padding-left modal-body"
                       >
                         <p>
-                          Your process will end.
+                          Your files will not be submitted.
                         </p>
                         <p>
-                          You will be redirected back to the original application.
+                          You will be returned to:
+                          <br />
+                          <b>
+                            Original
+                          </b>
+                           website
                         </p>
                       </div>
                       <div
@@ -250,10 +255,15 @@ exports[`Storyshots ConfirmationPopup Default 1`] = `
                             class="padding-left modal-body"
                           >
                             <p>
-                              Your process will end.
+                              Your files will not be submitted.
                             </p>
                             <p>
-                              You will be redirected back to the original application.
+                              You will be returned to:
+                              <br />
+                              <b>
+                                Original
+                              </b>
+                               website
                             </p>
                           </div>
                           <div
@@ -343,10 +353,15 @@ exports[`Storyshots ConfirmationPopup Default 1`] = `
                         class="padding-left modal-body"
                       >
                         <p>
-                          Your process will end.
+                          Your files will not be submitted.
                         </p>
                         <p>
-                          You will be redirected back to the original application.
+                          You will be returned to:
+                          <br />
+                          <b>
+                            Original
+                          </b>
+                           website
                         </p>
                       </div>
                       <div
@@ -451,10 +466,15 @@ exports[`Storyshots ConfirmationPopup Default 1`] = `
                       class="padding-left modal-body"
                     >
                       <p>
-                        Your process will end.
+                        Your files will not be submitted.
                       </p>
                       <p>
-                        You will be redirected back to the original application.
+                        You will be returned to:
+                        <br />
+                        <b>
+                          Original
+                        </b>
+                         website
                       </p>
                     </div>
                     <div
@@ -629,10 +649,15 @@ exports[`Storyshots ConfirmationPopup Default 1`] = `
                             className="padding-left modal-body"
                           >
                             <p>
-                              Your process will end.
+                              Your files will not be submitted.
                             </p>
                             <p>
-                              You will be redirected back to the original application.
+                              You will be returned to:
+                              <br />
+                              <b>
+                                Original
+                              </b>
+                               website
                             </p>
                           </div>
                         </ModalBody>
@@ -707,9 +732,9 @@ exports[`Storyshots ConfirmationPopup Mobile 1`] = `
   }
   modal={
     Object {
-      "body1": "Your process will end.",
-      "body2": "You will be redirected back to the original application.",
+      "body": [Function],
       "handleClose": [Function],
+      "handleConfirm": [Function],
       "handleShow": [Function],
       "show": true,
       "title": "Cancel process?",
@@ -814,10 +839,15 @@ exports[`Storyshots ConfirmationPopup Mobile 1`] = `
                         class="padding-left modal-body"
                       >
                         <p>
-                          Your process will end.
+                          Your files will not be submitted.
                         </p>
                         <p>
-                          You will be redirected back to the original application.
+                          You will be returned to:
+                          <br />
+                          <b>
+                            Original
+                          </b>
+                           website
                         </p>
                       </div>
                       <div
@@ -899,10 +929,15 @@ exports[`Storyshots ConfirmationPopup Mobile 1`] = `
                             class="padding-left modal-body"
                           >
                             <p>
-                              Your process will end.
+                              Your files will not be submitted.
                             </p>
                             <p>
-                              You will be redirected back to the original application.
+                              You will be returned to:
+                              <br />
+                              <b>
+                                Original
+                              </b>
+                               website
                             </p>
                           </div>
                           <div
@@ -992,10 +1027,15 @@ exports[`Storyshots ConfirmationPopup Mobile 1`] = `
                         class="padding-left modal-body"
                       >
                         <p>
-                          Your process will end.
+                          Your files will not be submitted.
                         </p>
                         <p>
-                          You will be redirected back to the original application.
+                          You will be returned to:
+                          <br />
+                          <b>
+                            Original
+                          </b>
+                           website
                         </p>
                       </div>
                       <div
@@ -1100,10 +1140,15 @@ exports[`Storyshots ConfirmationPopup Mobile 1`] = `
                       class="padding-left modal-body"
                     >
                       <p>
-                        Your process will end.
+                        Your files will not be submitted.
                       </p>
                       <p>
-                        You will be redirected back to the original application.
+                        You will be returned to:
+                        <br />
+                        <b>
+                          Original
+                        </b>
+                         website
                       </p>
                     </div>
                     <div
@@ -1278,10 +1323,15 @@ exports[`Storyshots ConfirmationPopup Mobile 1`] = `
                             className="padding-left modal-body"
                           >
                             <p>
-                              Your process will end.
+                              Your files will not be submitted.
                             </p>
                             <p>
-                              You will be redirected back to the original application.
+                              You will be returned to:
+                              <br />
+                              <b>
+                                Original
+                              </b>
+                               website
                             </p>
                           </div>
                         </ModalBody>
@@ -1544,11 +1594,7 @@ exports[`Storyshots Header Default 1`] = `
         height="44"
         onClick={[Function]}
         onKeyDown={[Function]}
-        src={
-          Object {
-            "process": [Function],
-          }
-        }
+        src="undefined/images/bcid-logo-rev-en.svg"
         width={181}
       />
       <img
@@ -1557,11 +1603,7 @@ exports[`Storyshots Header Default 1`] = `
         height="44"
         onClick={[Function]}
         onKeyDown={[Function]}
-        src={
-          Object {
-            "process": [Function],
-          }
-        }
+        src="undefined/images/bcid-symbol-rev.svg"
         width={64}
       />
       <div
@@ -1601,11 +1643,7 @@ exports[`Storyshots Header Mobile 1`] = `
         height="44"
         onClick={[Function]}
         onKeyDown={[Function]}
-        src={
-          Object {
-            "process": [Function],
-          }
-        }
+        src="undefined/images/bcid-logo-rev-en.svg"
         width={181}
       />
       <img
@@ -1614,11 +1652,7 @@ exports[`Storyshots Header Mobile 1`] = `
         height="44"
         onClick={[Function]}
         onKeyDown={[Function]}
-        src={
-          Object {
-            "process": [Function],
-          }
-        }
+        src="undefined/images/bcid-symbol-rev.svg"
         width={64}
       />
       <div

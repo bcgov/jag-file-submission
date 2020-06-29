@@ -1,951 +1,895 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Home Account Exists 1`] = `
-<main>
-  <header>
-    <nav
-      className="container-fluid navbar navbar-expand-lg navbar-dark"
-    >
-      <div
-        aria-labelledby="title"
-        className="navbar-brand pointer"
-      />
-      <img
-        alt="B.C. Government Logo"
-        className="img-fluid d-none d-md-block pointer"
-        height="44"
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        src={
-          Object {
-            "process": [Function],
-          }
-        }
-        width={181}
-      />
-      <img
-        alt="B.C. Government Logo"
-        className="img-fluid d-md-none pointer"
-        height="44"
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        src={
-          Object {
-            "process": [Function],
-          }
-        }
-        width={64}
-      />
-      <div
-        aria-labelledby="title"
-        className="pointer navbar-brand nav-item nav-link"
-      />
-      <div
-        className="navbar-brand"
-        id="title"
+<DocumentFragment>
+  <main>
+    <header>
+      <nav
+        class="container-fluid navbar navbar-expand-lg navbar-dark"
       >
-        eFiling Demo Client
-      </div>
-    </nav>
-  </header>
-  <div
-    className="page"
-  >
+        <div
+          aria-labelledby="title"
+          class="navbar-brand pointer"
+        />
+        <img
+          alt="B.C. Government Logo"
+          class="img-fluid d-none d-md-block pointer"
+          height="44"
+          src="undefined/images/bcid-logo-rev-en.svg"
+          width="181"
+        />
+        <img
+          alt="B.C. Government Logo"
+          class="img-fluid d-md-none pointer"
+          height="44"
+          src="undefined/images/bcid-symbol-rev.svg"
+          width="64"
+        />
+        <div
+          aria-labelledby="title"
+          class="pointer navbar-brand nav-item nav-link"
+        />
+        <div
+          class="navbar-brand"
+          id="title"
+        >
+          eFiling Demo Client
+        </div>
+      </nav>
+    </header>
     <div
-      className="content col-md-10"
+      class="page"
     >
-      <div>
-        <p>
-          Account exists! Proceed
-        </p>
+      <div
+        class="content col-md-10"
+      >
         <div>
-          <button
-            className="normal-white btn"
-            onClick={[Function]}
-            type="button"
-          >
-            Cancel and return to client
-          </button>
+          <p>
+            Account exists! Proceed
+          </p>
+          <div>
+            <button
+              class="normal-white btn"
+              type="button"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <footer
-    className="footer"
-  >
-    <nav
-      className="navbar navbar-expand-sm navbar-dark justify-content-end"
+    <footer
+      class="footer"
     >
-      <button
-        className="navbar-toggler"
-        data-target="#footerBar"
-        data-toggle="collapse"
-        type="button"
+      <nav
+        class="navbar navbar-expand-sm navbar-dark justify-content-end"
       >
-        <span
-          className="navbar-toggler-icon"
-        />
-      </button>
-      <div
-        className="collapse navbar-collapse flex-grow-0"
-        id="footerBar"
-      >
-        <ul
-          className="navbar-nav text-right"
+        <button
+          class="navbar-toggler"
+          data-marging-right="undefined"
+          data-target="#footerBar"
+          data-toggle="collapse"
+          style=""
+          type="button"
         >
-          <li
-            className="nav-item m-1"
+          <span
+            class="navbar-toggler-icon"
+          />
+        </button>
+        <div
+          class="collapse navbar-collapse flex-grow-0"
+          id="footerBar"
+        >
+          <ul
+            class="navbar-nav text-right"
           >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca"
-              rel="noopener noreferrer"
-              target="_blank"
+            <li
+              class="nav-item m-1"
             >
-              BC Government
-            </a>
-          </li>
-          <li
-            className="nav-item m-1"
-          >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
-              rel="noopener noreferrer"
-              target="_blank"
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                BC Government
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
             >
-              Disclaimer
-            </a>
-          </li>
-          <li
-            className="nav-item m-1"
-          >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca/gov/content/home/privacy"
-              rel="noopener noreferrer"
-              target="_blank"
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Disclaimer
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
             >
-              Privacy
-            </a>
-          </li>
-          <li
-            className="nav-item m-1"
-          >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca/gov/content/home/accessibility"
-              rel="noopener noreferrer"
-              target="_blank"
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/privacy"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Privacy
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
             >
-              Accessibility
-            </a>
-          </li>
-          <li
-            className="nav-item m-1"
-          >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca/gov/content/home/copyright"
-              rel="noopener noreferrer"
-              target="_blank"
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/accessibility"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Accessibility
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
             >
-              Copyright
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </footer>
-</main>
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/copyright"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Copyright
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </footer>
+  </main>
+</DocumentFragment>
 `;
 
 exports[`Storyshots Home Account Exists Mobile 1`] = `
-<main>
-  <header>
-    <nav
-      className="container-fluid navbar navbar-expand-lg navbar-dark"
-    >
-      <div
-        aria-labelledby="title"
-        className="navbar-brand pointer"
-      />
-      <img
-        alt="B.C. Government Logo"
-        className="img-fluid d-none d-md-block pointer"
-        height="44"
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        src={
-          Object {
-            "process": [Function],
-          }
-        }
-        width={181}
-      />
-      <img
-        alt="B.C. Government Logo"
-        className="img-fluid d-md-none pointer"
-        height="44"
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        src={
-          Object {
-            "process": [Function],
-          }
-        }
-        width={64}
-      />
-      <div
-        aria-labelledby="title"
-        className="pointer navbar-brand nav-item nav-link"
-      />
-      <div
-        className="navbar-brand"
-        id="title"
+<DocumentFragment>
+  <main>
+    <header>
+      <nav
+        class="container-fluid navbar navbar-expand-lg navbar-dark"
       >
-        eFiling Demo Client
-      </div>
-    </nav>
-  </header>
-  <div
-    className="page"
-  >
+        <div
+          aria-labelledby="title"
+          class="navbar-brand pointer"
+        />
+        <img
+          alt="B.C. Government Logo"
+          class="img-fluid d-none d-md-block pointer"
+          height="44"
+          src="undefined/images/bcid-logo-rev-en.svg"
+          width="181"
+        />
+        <img
+          alt="B.C. Government Logo"
+          class="img-fluid d-md-none pointer"
+          height="44"
+          src="undefined/images/bcid-symbol-rev.svg"
+          width="64"
+        />
+        <div
+          aria-labelledby="title"
+          class="pointer navbar-brand nav-item nav-link"
+        />
+        <div
+          class="navbar-brand"
+          id="title"
+        >
+          eFiling Demo Client
+        </div>
+      </nav>
+    </header>
     <div
-      className="content col-md-10"
+      class="page"
     >
-      <div>
-        <p>
-          Account exists! Proceed
-        </p>
+      <div
+        class="content col-md-10"
+      >
         <div>
-          <button
-            className="normal-white btn"
-            onClick={[Function]}
-            type="button"
-          >
-            Cancel and return to client
-          </button>
+          <p>
+            Account exists! Proceed
+          </p>
+          <div>
+            <button
+              class="normal-white btn"
+              type="button"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <footer
-    className="footer"
-  >
-    <nav
-      className="navbar navbar-expand-sm navbar-dark justify-content-end"
+    <footer
+      class="footer"
     >
-      <button
-        className="navbar-toggler"
-        data-target="#footerBar"
-        data-toggle="collapse"
-        type="button"
+      <nav
+        class="navbar navbar-expand-sm navbar-dark justify-content-end"
       >
-        <span
-          className="navbar-toggler-icon"
-        />
-      </button>
-      <div
-        className="collapse navbar-collapse flex-grow-0"
-        id="footerBar"
-      >
-        <ul
-          className="navbar-nav text-right"
+        <button
+          class="navbar-toggler"
+          data-marging-right="undefined"
+          data-target="#footerBar"
+          data-toggle="collapse"
+          style=""
+          type="button"
         >
-          <li
-            className="nav-item m-1"
+          <span
+            class="navbar-toggler-icon"
+          />
+        </button>
+        <div
+          class="collapse navbar-collapse flex-grow-0"
+          id="footerBar"
+        >
+          <ul
+            class="navbar-nav text-right"
           >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca"
-              rel="noopener noreferrer"
-              target="_blank"
+            <li
+              class="nav-item m-1"
             >
-              BC Government
-            </a>
-          </li>
-          <li
-            className="nav-item m-1"
-          >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
-              rel="noopener noreferrer"
-              target="_blank"
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                BC Government
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
             >
-              Disclaimer
-            </a>
-          </li>
-          <li
-            className="nav-item m-1"
-          >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca/gov/content/home/privacy"
-              rel="noopener noreferrer"
-              target="_blank"
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Disclaimer
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
             >
-              Privacy
-            </a>
-          </li>
-          <li
-            className="nav-item m-1"
-          >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca/gov/content/home/accessibility"
-              rel="noopener noreferrer"
-              target="_blank"
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/privacy"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Privacy
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
             >
-              Accessibility
-            </a>
-          </li>
-          <li
-            className="nav-item m-1"
-          >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca/gov/content/home/copyright"
-              rel="noopener noreferrer"
-              target="_blank"
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/accessibility"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Accessibility
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
             >
-              Copyright
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </footer>
-</main>
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/copyright"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Copyright
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </footer>
+  </main>
+</DocumentFragment>
 `;
 
 exports[`Storyshots Home Loader 1`] = `
-<main>
-  <header>
-    <nav
-      className="container-fluid navbar navbar-expand-lg navbar-dark"
-    >
-      <div
-        aria-labelledby="title"
-        className="navbar-brand pointer"
-      />
-      <img
-        alt="B.C. Government Logo"
-        className="img-fluid d-none d-md-block pointer"
-        height="44"
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        src={
-          Object {
-            "process": [Function],
-          }
-        }
-        width={181}
-      />
-      <img
-        alt="B.C. Government Logo"
-        className="img-fluid d-md-none pointer"
-        height="44"
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        src={
-          Object {
-            "process": [Function],
-          }
-        }
-        width={64}
-      />
-      <div
-        aria-labelledby="title"
-        className="pointer navbar-brand nav-item nav-link"
-      />
-      <div
-        className="navbar-brand"
-        id="title"
-      >
-        eFiling Demo Client
-      </div>
-    </nav>
-  </header>
-  <div
-    className="page"
-  >
-    <div
-      className="content col-md-10"
-    >
-      <div
-        className="loader-align"
+<DocumentFragment>
+  <main>
+    <header>
+      <nav
+        class="container-fluid navbar navbar-expand-lg navbar-dark"
       >
         <div
-          className="page-loader"
+          aria-labelledby="title"
+          class="navbar-brand pointer"
         />
-        <br />
-        Loading... Please Wait
+        <img
+          alt="B.C. Government Logo"
+          class="img-fluid d-none d-md-block pointer"
+          height="44"
+          src="undefined/images/bcid-logo-rev-en.svg"
+          width="181"
+        />
+        <img
+          alt="B.C. Government Logo"
+          class="img-fluid d-md-none pointer"
+          height="44"
+          src="undefined/images/bcid-symbol-rev.svg"
+          width="64"
+        />
+        <div
+          aria-labelledby="title"
+          class="pointer navbar-brand nav-item nav-link"
+        />
+        <div
+          class="navbar-brand"
+          id="title"
+        >
+          eFiling Demo Client
+        </div>
+      </nav>
+    </header>
+    <div
+      class="page"
+    >
+      <div
+        class="content col-md-10"
+      >
+        <div
+          class="loader-align"
+        >
+          <div
+            class="page-loader"
+          />
+          <br />
+          Loading... Please Wait
+        </div>
       </div>
     </div>
-  </div>
-  <footer
-    className="footer"
-  >
-    <nav
-      className="navbar navbar-expand-sm navbar-dark justify-content-end"
+    <footer
+      class="footer"
     >
-      <button
-        className="navbar-toggler"
-        data-target="#footerBar"
-        data-toggle="collapse"
-        type="button"
+      <nav
+        class="navbar navbar-expand-sm navbar-dark justify-content-end"
       >
-        <span
-          className="navbar-toggler-icon"
-        />
-      </button>
-      <div
-        className="collapse navbar-collapse flex-grow-0"
-        id="footerBar"
-      >
-        <ul
-          className="navbar-nav text-right"
+        <button
+          class="navbar-toggler"
+          data-target="#footerBar"
+          data-toggle="collapse"
+          type="button"
         >
-          <li
-            className="nav-item m-1"
+          <span
+            class="navbar-toggler-icon"
+          />
+        </button>
+        <div
+          class="collapse navbar-collapse flex-grow-0"
+          id="footerBar"
+        >
+          <ul
+            class="navbar-nav text-right"
           >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca"
-              rel="noopener noreferrer"
-              target="_blank"
+            <li
+              class="nav-item m-1"
             >
-              BC Government
-            </a>
-          </li>
-          <li
-            className="nav-item m-1"
-          >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
-              rel="noopener noreferrer"
-              target="_blank"
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                BC Government
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
             >
-              Disclaimer
-            </a>
-          </li>
-          <li
-            className="nav-item m-1"
-          >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca/gov/content/home/privacy"
-              rel="noopener noreferrer"
-              target="_blank"
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Disclaimer
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
             >
-              Privacy
-            </a>
-          </li>
-          <li
-            className="nav-item m-1"
-          >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca/gov/content/home/accessibility"
-              rel="noopener noreferrer"
-              target="_blank"
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/privacy"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Privacy
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
             >
-              Accessibility
-            </a>
-          </li>
-          <li
-            className="nav-item m-1"
-          >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca/gov/content/home/copyright"
-              rel="noopener noreferrer"
-              target="_blank"
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/accessibility"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Accessibility
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
             >
-              Copyright
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </footer>
-</main>
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/copyright"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Copyright
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </footer>
+  </main>
+</DocumentFragment>
 `;
 
 exports[`Storyshots Home Loader Mobile 1`] = `
-<main>
-  <header>
-    <nav
-      className="container-fluid navbar navbar-expand-lg navbar-dark"
-    >
-      <div
-        aria-labelledby="title"
-        className="navbar-brand pointer"
-      />
-      <img
-        alt="B.C. Government Logo"
-        className="img-fluid d-none d-md-block pointer"
-        height="44"
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        src={
-          Object {
-            "process": [Function],
-          }
-        }
-        width={181}
-      />
-      <img
-        alt="B.C. Government Logo"
-        className="img-fluid d-md-none pointer"
-        height="44"
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        src={
-          Object {
-            "process": [Function],
-          }
-        }
-        width={64}
-      />
-      <div
-        aria-labelledby="title"
-        className="pointer navbar-brand nav-item nav-link"
-      />
-      <div
-        className="navbar-brand"
-        id="title"
-      >
-        eFiling Demo Client
-      </div>
-    </nav>
-  </header>
-  <div
-    className="page"
-  >
-    <div
-      className="content col-md-10"
-    >
-      <div
-        className="loader-align"
+<DocumentFragment>
+  <main>
+    <header>
+      <nav
+        class="container-fluid navbar navbar-expand-lg navbar-dark"
       >
         <div
-          className="page-loader"
+          aria-labelledby="title"
+          class="navbar-brand pointer"
         />
-        <br />
-        Loading... Please Wait
+        <img
+          alt="B.C. Government Logo"
+          class="img-fluid d-none d-md-block pointer"
+          height="44"
+          src="undefined/images/bcid-logo-rev-en.svg"
+          width="181"
+        />
+        <img
+          alt="B.C. Government Logo"
+          class="img-fluid d-md-none pointer"
+          height="44"
+          src="undefined/images/bcid-symbol-rev.svg"
+          width="64"
+        />
+        <div
+          aria-labelledby="title"
+          class="pointer navbar-brand nav-item nav-link"
+        />
+        <div
+          class="navbar-brand"
+          id="title"
+        >
+          eFiling Demo Client
+        </div>
+      </nav>
+    </header>
+    <div
+      class="page"
+    >
+      <div
+        class="content col-md-10"
+      >
+        <div
+          class="loader-align"
+        >
+          <div
+            class="page-loader"
+          />
+          <br />
+          Loading... Please Wait
+        </div>
       </div>
     </div>
-  </div>
-  <footer
-    className="footer"
-  >
-    <nav
-      className="navbar navbar-expand-sm navbar-dark justify-content-end"
+    <footer
+      class="footer"
     >
-      <button
-        className="navbar-toggler"
-        data-target="#footerBar"
-        data-toggle="collapse"
-        type="button"
+      <nav
+        class="navbar navbar-expand-sm navbar-dark justify-content-end"
       >
-        <span
-          className="navbar-toggler-icon"
-        />
-      </button>
-      <div
-        className="collapse navbar-collapse flex-grow-0"
-        id="footerBar"
-      >
-        <ul
-          className="navbar-nav text-right"
+        <button
+          class="navbar-toggler"
+          data-target="#footerBar"
+          data-toggle="collapse"
+          type="button"
         >
-          <li
-            className="nav-item m-1"
+          <span
+            class="navbar-toggler-icon"
+          />
+        </button>
+        <div
+          class="collapse navbar-collapse flex-grow-0"
+          id="footerBar"
+        >
+          <ul
+            class="navbar-nav text-right"
           >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca"
-              rel="noopener noreferrer"
-              target="_blank"
+            <li
+              class="nav-item m-1"
             >
-              BC Government
-            </a>
-          </li>
-          <li
-            className="nav-item m-1"
-          >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
-              rel="noopener noreferrer"
-              target="_blank"
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                BC Government
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
             >
-              Disclaimer
-            </a>
-          </li>
-          <li
-            className="nav-item m-1"
-          >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca/gov/content/home/privacy"
-              rel="noopener noreferrer"
-              target="_blank"
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Disclaimer
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
             >
-              Privacy
-            </a>
-          </li>
-          <li
-            className="nav-item m-1"
-          >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca/gov/content/home/accessibility"
-              rel="noopener noreferrer"
-              target="_blank"
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/privacy"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Privacy
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
             >
-              Accessibility
-            </a>
-          </li>
-          <li
-            className="nav-item m-1"
-          >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca/gov/content/home/copyright"
-              rel="noopener noreferrer"
-              target="_blank"
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/accessibility"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Accessibility
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
             >
-              Copyright
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </footer>
-</main>
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/copyright"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Copyright
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </footer>
+  </main>
+</DocumentFragment>
 `;
 
 exports[`Storyshots Home No Account Exists 1`] = `
-<main>
-  <header>
-    <nav
-      className="container-fluid navbar navbar-expand-lg navbar-dark"
-    >
-      <div
-        aria-labelledby="title"
-        className="navbar-brand pointer"
-      />
-      <img
-        alt="B.C. Government Logo"
-        className="img-fluid d-none d-md-block pointer"
-        height="44"
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        src={
-          Object {
-            "process": [Function],
-          }
-        }
-        width={181}
-      />
-      <img
-        alt="B.C. Government Logo"
-        className="img-fluid d-md-none pointer"
-        height="44"
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        src={
-          Object {
-            "process": [Function],
-          }
-        }
-        width={64}
-      />
-      <div
-        aria-labelledby="title"
-        className="pointer navbar-brand nav-item nav-link"
-      />
-      <div
-        className="navbar-brand"
-        id="title"
+<DocumentFragment>
+  <main>
+    <header>
+      <nav
+        class="container-fluid navbar navbar-expand-lg navbar-dark"
       >
-        eFiling Demo Client
-      </div>
-    </nav>
-  </header>
-  <div
-    className="page"
-  >
+        <div
+          aria-labelledby="title"
+          class="navbar-brand pointer"
+        />
+        <img
+          alt="B.C. Government Logo"
+          class="img-fluid d-none d-md-block pointer"
+          height="44"
+          src="undefined/images/bcid-logo-rev-en.svg"
+          width="181"
+        />
+        <img
+          alt="B.C. Government Logo"
+          class="img-fluid d-md-none pointer"
+          height="44"
+          src="undefined/images/bcid-symbol-rev.svg"
+          width="64"
+        />
+        <div
+          aria-labelledby="title"
+          class="pointer navbar-brand nav-item nav-link"
+        />
+        <div
+          class="navbar-brand"
+          id="title"
+        >
+          eFiling Demo Client
+        </div>
+      </nav>
+    </header>
     <div
-      className="content col-md-10"
+      class="page"
     >
-      <div>
-        <p>
-          Account does not exist, form will be here
-        </p>
+      <div
+        class="content col-md-10"
+      >
         <div>
-          <button
-            className="normal-white btn"
-            onClick={[Function]}
-            type="button"
-          >
-            Cancel and return to client
-          </button>
+          <p>
+            Account does not exist, form will be here
+          </p>
+          <div>
+            <button
+              class="normal-white btn"
+              type="button"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <footer
-    className="footer"
-  >
-    <nav
-      className="navbar navbar-expand-sm navbar-dark justify-content-end"
+    <footer
+      class="footer"
     >
-      <button
-        className="navbar-toggler"
-        data-target="#footerBar"
-        data-toggle="collapse"
-        type="button"
+      <nav
+        class="navbar navbar-expand-sm navbar-dark justify-content-end"
       >
-        <span
-          className="navbar-toggler-icon"
-        />
-      </button>
-      <div
-        className="collapse navbar-collapse flex-grow-0"
-        id="footerBar"
-      >
-        <ul
-          className="navbar-nav text-right"
+        <button
+          class="navbar-toggler"
+          data-marging-right="undefined"
+          data-target="#footerBar"
+          data-toggle="collapse"
+          style=""
+          type="button"
         >
-          <li
-            className="nav-item m-1"
+          <span
+            class="navbar-toggler-icon"
+          />
+        </button>
+        <div
+          class="collapse navbar-collapse flex-grow-0"
+          id="footerBar"
+        >
+          <ul
+            class="navbar-nav text-right"
           >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca"
-              rel="noopener noreferrer"
-              target="_blank"
+            <li
+              class="nav-item m-1"
             >
-              BC Government
-            </a>
-          </li>
-          <li
-            className="nav-item m-1"
-          >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
-              rel="noopener noreferrer"
-              target="_blank"
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                BC Government
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
             >
-              Disclaimer
-            </a>
-          </li>
-          <li
-            className="nav-item m-1"
-          >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca/gov/content/home/privacy"
-              rel="noopener noreferrer"
-              target="_blank"
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Disclaimer
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
             >
-              Privacy
-            </a>
-          </li>
-          <li
-            className="nav-item m-1"
-          >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca/gov/content/home/accessibility"
-              rel="noopener noreferrer"
-              target="_blank"
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/privacy"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Privacy
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
             >
-              Accessibility
-            </a>
-          </li>
-          <li
-            className="nav-item m-1"
-          >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca/gov/content/home/copyright"
-              rel="noopener noreferrer"
-              target="_blank"
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/accessibility"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Accessibility
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
             >
-              Copyright
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </footer>
-</main>
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/copyright"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Copyright
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </footer>
+  </main>
+</DocumentFragment>
 `;
 
 exports[`Storyshots Home No Account Exists Mobile 1`] = `
-<main>
-  <header>
-    <nav
-      className="container-fluid navbar navbar-expand-lg navbar-dark"
-    >
-      <div
-        aria-labelledby="title"
-        className="navbar-brand pointer"
-      />
-      <img
-        alt="B.C. Government Logo"
-        className="img-fluid d-none d-md-block pointer"
-        height="44"
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        src={
-          Object {
-            "process": [Function],
-          }
-        }
-        width={181}
-      />
-      <img
-        alt="B.C. Government Logo"
-        className="img-fluid d-md-none pointer"
-        height="44"
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        src={
-          Object {
-            "process": [Function],
-          }
-        }
-        width={64}
-      />
-      <div
-        aria-labelledby="title"
-        className="pointer navbar-brand nav-item nav-link"
-      />
-      <div
-        className="navbar-brand"
-        id="title"
+<DocumentFragment>
+  <main>
+    <header>
+      <nav
+        class="container-fluid navbar navbar-expand-lg navbar-dark"
       >
-        eFiling Demo Client
-      </div>
-    </nav>
-  </header>
-  <div
-    className="page"
-  >
+        <div
+          aria-labelledby="title"
+          class="navbar-brand pointer"
+        />
+        <img
+          alt="B.C. Government Logo"
+          class="img-fluid d-none d-md-block pointer"
+          height="44"
+          src="undefined/images/bcid-logo-rev-en.svg"
+          width="181"
+        />
+        <img
+          alt="B.C. Government Logo"
+          class="img-fluid d-md-none pointer"
+          height="44"
+          src="undefined/images/bcid-symbol-rev.svg"
+          width="64"
+        />
+        <div
+          aria-labelledby="title"
+          class="pointer navbar-brand nav-item nav-link"
+        />
+        <div
+          class="navbar-brand"
+          id="title"
+        >
+          eFiling Demo Client
+        </div>
+      </nav>
+    </header>
     <div
-      className="content col-md-10"
+      class="page"
     >
-      <div>
-        <p>
-          Account does not exist, form will be here
-        </p>
+      <div
+        class="content col-md-10"
+      >
         <div>
-          <button
-            className="normal-white btn"
-            onClick={[Function]}
-            type="button"
-          >
-            Cancel and return to client
-          </button>
+          <p>
+            Account does not exist, form will be here
+          </p>
+          <div>
+            <button
+              class="normal-white btn"
+              type="button"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <footer
-    className="footer"
-  >
-    <nav
-      className="navbar navbar-expand-sm navbar-dark justify-content-end"
+    <footer
+      class="footer"
     >
-      <button
-        className="navbar-toggler"
-        data-target="#footerBar"
-        data-toggle="collapse"
-        type="button"
+      <nav
+        class="navbar navbar-expand-sm navbar-dark justify-content-end"
       >
-        <span
-          className="navbar-toggler-icon"
-        />
-      </button>
-      <div
-        className="collapse navbar-collapse flex-grow-0"
-        id="footerBar"
-      >
-        <ul
-          className="navbar-nav text-right"
+        <button
+          class="navbar-toggler"
+          data-marging-right="undefined"
+          data-target="#footerBar"
+          data-toggle="collapse"
+          style=""
+          type="button"
         >
-          <li
-            className="nav-item m-1"
+          <span
+            class="navbar-toggler-icon"
+          />
+        </button>
+        <div
+          class="collapse navbar-collapse flex-grow-0"
+          id="footerBar"
+        >
+          <ul
+            class="navbar-nav text-right"
           >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca"
-              rel="noopener noreferrer"
-              target="_blank"
+            <li
+              class="nav-item m-1"
             >
-              BC Government
-            </a>
-          </li>
-          <li
-            className="nav-item m-1"
-          >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
-              rel="noopener noreferrer"
-              target="_blank"
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                BC Government
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
             >
-              Disclaimer
-            </a>
-          </li>
-          <li
-            className="nav-item m-1"
-          >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca/gov/content/home/privacy"
-              rel="noopener noreferrer"
-              target="_blank"
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Disclaimer
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
             >
-              Privacy
-            </a>
-          </li>
-          <li
-            className="nav-item m-1"
-          >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca/gov/content/home/accessibility"
-              rel="noopener noreferrer"
-              target="_blank"
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/privacy"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Privacy
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
             >
-              Accessibility
-            </a>
-          </li>
-          <li
-            className="nav-item m-1"
-          >
-            <a
-              className="nav-link"
-              href="https://www2.gov.bc.ca/gov/content/home/copyright"
-              rel="noopener noreferrer"
-              target="_blank"
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/accessibility"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Accessibility
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
             >
-              Copyright
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </footer>
-</main>
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/copyright"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Copyright
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </footer>
+  </main>
+</DocumentFragment>
 `;

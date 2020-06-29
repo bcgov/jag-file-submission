@@ -15,11 +15,7 @@ exports[`Header Component Header matches the snapshot 1`] = `
       height="44"
       onClick={[Function]}
       onKeyDown={[Function]}
-      src={
-        Object {
-          "process": [Function],
-        }
-      }
+      src="undefined/images/bcid-logo-rev-en.svg"
       width={181}
     />
     <img
@@ -28,11 +24,7 @@ exports[`Header Component Header matches the snapshot 1`] = `
       height="44"
       onClick={[Function]}
       onKeyDown={[Function]}
-      src={
-        Object {
-          "process": [Function],
-        }
-      }
+      src="undefined/images/bcid-symbol-rev.svg"
       width={64}
     />
     <div

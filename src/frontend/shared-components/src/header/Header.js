@@ -2,8 +2,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./Header.css";
-import bcidSymbol from "../../public/images/bcid-symbol-rev.svg";
-import bcidLogoRev from "../../public/images/bcid-logo-rev-en.svg";
+
+const bcidSymbol = `${process.env.PUBLIC_URL}/images/bcid-symbol-rev.svg`;
+const bcidLogoRev = `${process.env.PUBLIC_URL}/images/bcid-logo-rev-en.svg`;
 
 export const HeadingTitle = classNames => (
   <div className={classNames} aria-labelledby="title" />
@@ -21,7 +22,7 @@ export const HeaderImage = (history, classNames, width, src) => (
   />
 );
 
-export default function Header({ header: { name, history } }) {
+export const Header = ({ header: { name, history } }) => {
   return (
     <header>
       <nav className="container-fluid navbar navbar-expand-lg navbar-dark">
@@ -40,7 +41,7 @@ export default function Header({ header: { name, history } }) {
       </nav>
     </header>
   );
-}
+};
 
 Header.propTypes = {
   header: PropTypes.shape({

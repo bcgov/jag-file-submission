@@ -1,19 +1,30 @@
 import React from "react";
 
-import { ConfirmationPopup } from "./ConfirmationPopup";
+import ConfirmationPopup from "./ConfirmationPopup";
 
 export default {
   title: "ConfirmationPopup",
   component: ConfirmationPopup
 };
 
+const body = () => (
+  <>
+    <p>Your files will not be submitted.</p>
+    <p>
+      You will be returned to:
+      <br />
+      <b>Original</b> website
+    </p>
+  </>
+);
+
 const modal = {
   show: true,
   handleShow: () => {},
   handleClose: () => {},
+  handleConfirm: () => {},
   title: "Cancel process?",
-  body1: "Your process will end.",
-  body2: "You will be redirected back to the original application."
+  body
 };
 const mainButton = { mainLabel: "main label", mainStyling: "normal-blue btn" };
 const confirmButton = {

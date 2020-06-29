@@ -1,14 +1,25 @@
 import React from "react";
-import testBasicSnapshot from "../../../TestHelper";
+import { render } from "@testing-library/react";
+import { getTestData } from "../../../modules/confirmationPopupTestData";
 
 import CSOStatus from "./CSOStatus";
 
 describe("CSOStatus Component", () => {
+  const confirmationPopup = getTestData();
+
   test("Matches the snapshot when account exists", () => {
-    testBasicSnapshot(<CSOStatus accountExists />);
+    const { asFragment } = render(
+      <CSOStatus accountExists confirmationPopup={confirmationPopup} />
+    );
+
+    expect(asFragment()).toMatchSnapshot();
   });
 
   test("Matches the snapshot when account does not exist", () => {
-    testBasicSnapshot(<CSOStatus accountExists={false} />);
+    const { asFragment } = render(
+      <CSOStatus accountExists={false} confirmationPopup={confirmationPopup} />
+    );
+
+    expect(asFragment()).toMatchSnapshot();
   });
 });

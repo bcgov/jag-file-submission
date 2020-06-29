@@ -1,18 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button } from "shared-components";
+import ConfirmationPopup from "shared-components";
 
-export default function CSOStatus({ accountExists }) {
+export default function CSOStatus({ accountExists, confirmationPopup }) {
   return (
     <div>
       {accountExists && <p>Account exists! Proceed</p>}
       {!accountExists && <p>Account does not exist, form will be here</p>}
-      <Button
-        onClick={() => {
-          window.open(sessionStorage.getItem("cancelUrl"), "_self");
-        }}
-        label="Cancel and return to client"
-        styling="normal-white btn"
+
+      <ConfirmationPopup
+        modal={confirmationPopup.modal}
+        mainButton={confirmationPopup.mainButton}
+        confirmButton={confirmationPopup.confirmButton}
+        cancelButton={confirmationPopup.cancelButton}
       />
     </div>
   );

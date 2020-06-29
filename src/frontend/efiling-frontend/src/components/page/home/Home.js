@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import queryString from "query-string";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import Header, { Footer, Loader } from "shared-components";
+import { Header, Footer, Loader } from "shared-components";
 import CSOStatus from "../../composite/csostatus/CSOStatus";
 
 import "../page.css";
@@ -36,7 +36,7 @@ const checkCSOAccountStatus = (
     .catch(() => {});
 };
 
-export default function Home({ page: { header } }) {
+export default function Home({ page: { header, confirmationPopup } }) {
   const [showLoader, setShowLoader] = useState(true);
   const [csoAccountExists, setCsoAccountExists] = useState(false);
   const location = useLocation();
@@ -54,7 +54,12 @@ export default function Home({ page: { header } }) {
       <div className="page">
         <div className="content col-md-10">
           {showLoader && <Loader page />}
-          {!showLoader && <CSOStatus accountExists={csoAccountExists} />}
+          {!showLoader && (
+            <CSOStatus
+              accountExists={csoAccountExists}
+              confirmationPopup={confirmationPopup}
+            />
+          )}
         </div>
       </div>
       <Footer />

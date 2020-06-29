@@ -1,15 +1,8 @@
 import initStoryshots, {
   Stories2SnapsConverter
 } from "@storybook/addon-storyshots";
-import { act, create } from "react-test-renderer";
-
-const wait = () =>
-  act(
-    () =>
-      new Promise(resolve => {
-        setTimeout(resolve, 10);
-      })
-  );
+import { render, wait } from "@testing-library/react";
+import { createSerializer } from "enzyme-to-json";
 
 const converter = new Stories2SnapsConverter();
 
@@ -21,19 +14,17 @@ const runTest = async (story, context) => {
   }
 
   const storyElement = story.render();
-  let tree;
-  act(() => {
-    tree = create(storyElement);
+
+  const { asFragment } = render(storyElement);
+
+  await wait(() => {
+    expect(asFragment()).toMatchSpecificSnapshot(filename);
   });
-
-  await wait();
-  expect(tree.toJSON()).toMatchSpecificSnapshot(filename);
-
-  tree.unmount();
 };
 
 initStoryshots({
   asyncJest: true,
+  snapshotSerializers: [createSerializer()],
   test: ({ story, context, done }) => {
     runTest(story, context).then(done);
   }

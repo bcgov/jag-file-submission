@@ -15,14 +15,14 @@ exports[`Home Component matches the snapshot when still loading 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-none d-md-block pointer"
           height="44"
-          src="[object Object]"
+          src="undefined/images/bcid-logo-rev-en.svg"
           width="181"
         />
         <img
           alt="B.C. Government Logo"
           class="img-fluid d-md-none pointer"
           height="44"
-          src="[object Object]"
+          src="undefined/images/bcid-symbol-rev.svg"
           width="64"
         />
         <div
@@ -160,14 +160,14 @@ exports[`Home Component matches the snapshot when user cso account does not exis
           alt="B.C. Government Logo"
           class="img-fluid d-none d-md-block pointer"
           height="44"
-          src="[object Object]"
+          src="undefined/images/bcid-logo-rev-en.svg"
           width="181"
         />
         <img
           alt="B.C. Government Logo"
           class="img-fluid d-md-none pointer"
           height="44"
-          src="[object Object]"
+          src="undefined/images/bcid-symbol-rev.svg"
           width="64"
         />
         <div
@@ -197,7 +197,7 @@ exports[`Home Component matches the snapshot when user cso account does not exis
               class="normal-white btn"
               type="button"
             >
-              Cancel and return to client
+              Cancel
             </button>
           </div>
         </div>
@@ -211,8 +211,10 @@ exports[`Home Component matches the snapshot when user cso account does not exis
       >
         <button
           class="navbar-toggler"
+          data-marging-right="undefined"
           data-target="#footerBar"
           data-toggle="collapse"
+          style=""
           type="button"
         >
           <span
@@ -309,14 +311,14 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
           alt="B.C. Government Logo"
           class="img-fluid d-none d-md-block pointer"
           height="44"
-          src="[object Object]"
+          src="undefined/images/bcid-logo-rev-en.svg"
           width="181"
         />
         <img
           alt="B.C. Government Logo"
           class="img-fluid d-md-none pointer"
           height="44"
-          src="[object Object]"
+          src="undefined/images/bcid-symbol-rev.svg"
           width="64"
         />
         <div
@@ -346,7 +348,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
               class="normal-white btn"
               type="button"
             >
-              Cancel and return to client
+              Cancel
             </button>
           </div>
         </div>
@@ -360,8 +362,10 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
       >
         <button
           class="navbar-toggler"
+          data-marging-right="undefined"
           data-target="#footerBar"
           data-toggle="collapse"
+          style=""
           type="button"
         >
           <span

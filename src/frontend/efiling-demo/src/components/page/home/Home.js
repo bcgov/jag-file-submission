@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
-import Header, { Footer, Input, Button } from "shared-components";
+import { Header, Footer, Input, Button } from "shared-components";
 
 import "../page.css";
 

@@ -15,14 +15,14 @@ exports[`Home Component matches the snapshot 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-none d-md-block pointer"
           height="44"
-          src="[object Object]"
+          src="undefined/images/bcid-logo-rev-en.svg"
           width="181"
         />
         <img
           alt="B.C. Government Logo"
           class="img-fluid d-md-none pointer"
           height="44"
-          src="[object Object]"
+          src="undefined/images/bcid-symbol-rev.svg"
           width="64"
         />
         <div
