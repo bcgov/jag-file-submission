@@ -28,7 +28,7 @@ public class DemoAcountServiceImplTest {
 
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountId());
         Assertions.assertEquals(BigDecimal.TEN, actual.getClientId());
-        Assertions.assertEquals(true, actual.isEfileRole());
+        Assertions.assertEquals(true, actual.isEfileRolePresent());
     }
 
     @Test
@@ -39,7 +39,7 @@ public class DemoAcountServiceImplTest {
 
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountId());
         Assertions.assertEquals(BigDecimal.TEN, actual.getClientId());
-        Assertions.assertEquals(false, actual.isEfileRole());
+        Assertions.assertEquals(false, actual.isEfileRolePresent());
     }
 
     @Test

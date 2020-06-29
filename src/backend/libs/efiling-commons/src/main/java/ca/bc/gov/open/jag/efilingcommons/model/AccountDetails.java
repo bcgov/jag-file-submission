@@ -13,7 +13,7 @@ public class AccountDetails {
     private String lastName;
     private String email;
     private String middleName;
-    private boolean efileRole;
+    private boolean efileRolePresent;
 
     protected AccountDetails(AccountDetails.Builder builder) {
 
@@ -24,7 +24,7 @@ public class AccountDetails {
         this.lastName = builder.lastName;
         this.email = builder.email;
         this.middleName = builder.middleName;
-        this.efileRole = builder.efileRole;
+        this.efileRolePresent = builder.efileRolePresent;
 
     }
 
@@ -47,7 +47,7 @@ public class AccountDetails {
         this.lastName = lastName;
         this.email = email;
         this.middleName = middleName;
-        this.efileRole = efileRole;
+        this.efileRolePresent = efileRolePresent;
     }
 
     public BigDecimal getAccountId() {
@@ -74,8 +74,8 @@ public class AccountDetails {
         return middleName;
     }
 
-    public boolean isEfileRole() {
-        return efileRole;
+    public boolean isEfileRolePresent() {
+        return efileRolePresent;
     }
 
     public static class Builder {
@@ -86,7 +86,7 @@ public class AccountDetails {
         private String lastName;
         private String email;
         private String middleName;
-        private boolean efileRole;
+        private boolean efileRolePresent;
 
         public Builder accountId(BigDecimal accountId) {
             this.accountId = accountId;
@@ -118,8 +118,8 @@ public class AccountDetails {
             return this;
         }
 
-        public Builder efileRole(boolean efileRole) {
-            this.efileRole = efileRole;
+        public Builder efileRolePresent(boolean efileRolePresent) {
+            this.efileRolePresent = efileRolePresent;
             return this;
         }
 
