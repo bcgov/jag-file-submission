@@ -12845,29 +12845,6 @@ shallowequal@^1.1.0:
   resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-1.1.0.tgz#188d521de95b9087404fd4dcb68b13df0ae4e7f8"
   integrity sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==
 
-"shared-components@file:.":
-  version "0.1.0"
-  dependencies:
-    "@babel/preset-react" "^7.8.3"
-    "@bcgov/bootstrap-theme" "github:bcgov/bootstrap-theme"
-    axios "^0.19.2"
-    babel-plugin-transform-export-extensions "^6.22.0"
-    bootstrap "^4.4.1"
-    enzyme "^3.11.0"
-    enzyme-adapter-react-16 "^1.15.2"
-    history "^4.10.1"
-    prop-types "^15.7.2"
-    react "^16.13.1"
-    react-app-polyfill "^1.0.6"
-    react-bootstrap "^1.0.1"
-    react-dom "^16.13.1"
-    react-router-dom "^5.1.2"
-    react-scripts "3.4.1"
-    react-test-renderer "^16.12.0"
-    regenerator-runtime "^0.13.5"
-    shared-components "file:./../../../../../AppData/Local/Yarn/Cache/v6/npm-shared-components-0.1.0-ef0c7bc0-4cc4-48ce-9c12-890e7b89b12e-1593148759714/node_modules/shared-components"
-    webpack "4.42.0"
-
 shebang-command@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/shebang-command/-/shebang-command-1.2.0.tgz#44aac65b695b03398968c39f363fee5deafdf1ea"
