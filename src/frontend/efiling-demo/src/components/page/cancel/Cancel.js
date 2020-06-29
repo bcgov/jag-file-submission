@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Header, Footer, Button } from "shared-components";
+import { propTypes } from "../../../types/propTypes";
 
 export default function Cancel({ page: { header } }) {
   return (
@@ -26,9 +27,6 @@ export default function Cancel({ page: { header } }) {
 
 Cancel.propTypes = {
   page: PropTypes.shape({
-    header: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      history: PropTypes.object.isRequired
-    }).isRequired
+    header: propTypes.header
   }).isRequired
 };

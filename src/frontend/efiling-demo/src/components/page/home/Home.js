@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { Header, Footer, Input, Button } from "shared-components";
+import { propTypes } from "../../../types/propTypes";
 
 import "../page.css";
 
@@ -84,9 +85,6 @@ export default function Home({ page: { header } }) {
 
 Home.propTypes = {
   page: PropTypes.shape({
-    header: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      history: PropTypes.object.isRequired
-    }).isRequired
+    header: propTypes.header
   }).isRequired
 };
