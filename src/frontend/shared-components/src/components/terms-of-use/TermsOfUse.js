@@ -43,7 +43,7 @@ export default function TermsOfUse({
 TermsOfUse.propTypes = {
   onScroll: PropTypes.func.isRequired,
   acceptTerms: PropTypes.func.isRequired,
-  content: PropTypes.any.isRequired,
+  content: PropTypes.element.isRequired,
   heading: PropTypes.string.isRequired,
   confirmText: PropTypes.string.isRequired
 };
