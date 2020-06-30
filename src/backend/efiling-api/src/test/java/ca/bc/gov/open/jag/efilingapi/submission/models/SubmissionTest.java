@@ -36,7 +36,8 @@ public class SubmissionTest {
                 TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE),
                 TestHelpers.createNavigation(CASE_1, CANCEL, ERROR),
                 fee,
-                accountDetails);
+                accountDetails,
+                1);
 
         Assertions.assertEquals(TYPE, actual.getDocumentProperties().getType());
         Assertions.assertEquals(SUBTYPE, actual.getDocumentProperties().getSubType());

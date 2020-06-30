@@ -1,4 +1,5 @@
 import React from "react";
+import "bootstrap/dist/js/bootstrap.bundle.min";
 
 export const LinkElement = (url, label) => (
   <li className="nav-item m-1">
