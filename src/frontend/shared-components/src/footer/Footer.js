@@ -1,4 +1,5 @@
 import React from "react";
+import "bootstrap/dist/js/bootstrap.bundle.min";
 
 export const LinkElement = (url, label) => (
   <li className="nav-item m-1">
@@ -27,7 +28,15 @@ export const FooterToggler = () => (
 export const Footer = () => (
   <footer className="footer">
     <nav className="navbar navbar-expand-sm navbar-dark justify-content-end">
-      <FooterToggler />
+      {/* <FooterToggler /> */}
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#footerBar"
+      >
+        <span className="navbar-toggler-icon" />
+      </button>
       <div className="collapse navbar-collapse flex-grow-0" id="footerBar">
         <ul className="navbar-nav text-right">
           {LinkElement("https://www2.gov.bc.ca", "BC Government")}
