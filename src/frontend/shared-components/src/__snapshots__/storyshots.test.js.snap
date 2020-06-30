@@ -1866,6 +1866,578 @@ exports[`Storyshots Loader Page 1`] = `
 </Loader>
 `;
 
+exports[`Storyshots Table With Blue Stripe Style 1`] = `
+<Table
+  table={
+    Object {
+      "elements": Array [
+        Object {
+          "name": "BCeID",
+          "value": "bobross42",
+        },
+        Object {
+          "name": "Last Name",
+          "value": "Ross",
+        },
+        Object {
+          "name": "First Name",
+          "value": "Bob",
+        },
+        Object {
+          "name": "Email Address",
+          "value": "bob.ross@example.com",
+        },
+      ],
+      "heading": "BCeID Info",
+      "style": "blue-stripe",
+    }
+  }
+>
+  <table
+    className="blue-stripe"
+  >
+    <thead>
+      <tr>
+        <th
+          colSpan="2"
+        >
+          BCeID Info
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <TableElement
+        element={
+          Object {
+            "name": "BCeID",
+            "value": "bobross42",
+          }
+        }
+        key="BCeID"
+      >
+        <tr>
+          <td>
+            BCeID
+          </td>
+          <td>
+            bobross42
+          </td>
+        </tr>
+      </TableElement>
+      <TableElement
+        element={
+          Object {
+            "name": "Last Name",
+            "value": "Ross",
+          }
+        }
+        key="Last Name"
+      >
+        <tr>
+          <td>
+            Last Name
+          </td>
+          <td>
+            Ross
+          </td>
+        </tr>
+      </TableElement>
+      <TableElement
+        element={
+          Object {
+            "name": "First Name",
+            "value": "Bob",
+          }
+        }
+        key="First Name"
+      >
+        <tr>
+          <td>
+            First Name
+          </td>
+          <td>
+            Bob
+          </td>
+        </tr>
+      </TableElement>
+      <TableElement
+        element={
+          Object {
+            "name": "Email Address",
+            "value": "bob.ross@example.com",
+          }
+        }
+        key="Email Address"
+      >
+        <tr>
+          <td>
+            Email Address
+          </td>
+          <td>
+            bob.ross@example.com
+          </td>
+        </tr>
+      </TableElement>
+    </tbody>
+  </table>
+</Table>
+`;
+
+exports[`Storyshots Table With Header 1`] = `
+<Table
+  table={
+    Object {
+      "elements": Array [
+        Object {
+          "name": "BCeID",
+          "value": "bobross42",
+        },
+        Object {
+          "name": "Last Name",
+          "value": "Ross",
+        },
+        Object {
+          "name": "First Name",
+          "value": "Bob",
+        },
+        Object {
+          "name": "Email Address",
+          "value": "bob.ross@example.com",
+        },
+      ],
+      "heading": "BCeID Info",
+    }
+  }
+>
+  <table>
+    <thead>
+      <tr>
+        <th
+          colSpan="2"
+        >
+          BCeID Info
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <TableElement
+        element={
+          Object {
+            "name": "BCeID",
+            "value": "bobross42",
+          }
+        }
+        key="BCeID"
+      >
+        <tr>
+          <td>
+            BCeID
+          </td>
+          <td>
+            bobross42
+          </td>
+        </tr>
+      </TableElement>
+      <TableElement
+        element={
+          Object {
+            "name": "Last Name",
+            "value": "Ross",
+          }
+        }
+        key="Last Name"
+      >
+        <tr>
+          <td>
+            Last Name
+          </td>
+          <td>
+            Ross
+          </td>
+        </tr>
+      </TableElement>
+      <TableElement
+        element={
+          Object {
+            "name": "First Name",
+            "value": "Bob",
+          }
+        }
+        key="First Name"
+      >
+        <tr>
+          <td>
+            First Name
+          </td>
+          <td>
+            Bob
+          </td>
+        </tr>
+      </TableElement>
+      <TableElement
+        element={
+          Object {
+            "name": "Email Address",
+            "value": "bob.ross@example.com",
+          }
+        }
+        key="Email Address"
+      >
+        <tr>
+          <td>
+            Email Address
+          </td>
+          <td>
+            bob.ross@example.com
+          </td>
+        </tr>
+      </TableElement>
+    </tbody>
+  </table>
+</Table>
+`;
+
+exports[`Storyshots Table With Header Mobile 1`] = `
+<Table
+  table={
+    Object {
+      "elements": Array [
+        Object {
+          "name": "BCeID",
+          "value": "bobross42",
+        },
+        Object {
+          "name": "Last Name",
+          "value": "Ross",
+        },
+        Object {
+          "name": "First Name",
+          "value": "Bob",
+        },
+        Object {
+          "name": "Email Address",
+          "value": "bob.ross@example.com",
+        },
+      ],
+      "heading": "BCeID Info",
+    }
+  }
+>
+  <table>
+    <thead>
+      <tr>
+        <th
+          colSpan="2"
+        >
+          BCeID Info
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <TableElement
+        element={
+          Object {
+            "name": "BCeID",
+            "value": "bobross42",
+          }
+        }
+        key="BCeID"
+      >
+        <tr>
+          <td>
+            BCeID
+          </td>
+          <td>
+            bobross42
+          </td>
+        </tr>
+      </TableElement>
+      <TableElement
+        element={
+          Object {
+            "name": "Last Name",
+            "value": "Ross",
+          }
+        }
+        key="Last Name"
+      >
+        <tr>
+          <td>
+            Last Name
+          </td>
+          <td>
+            Ross
+          </td>
+        </tr>
+      </TableElement>
+      <TableElement
+        element={
+          Object {
+            "name": "First Name",
+            "value": "Bob",
+          }
+        }
+        key="First Name"
+      >
+        <tr>
+          <td>
+            First Name
+          </td>
+          <td>
+            Bob
+          </td>
+        </tr>
+      </TableElement>
+      <TableElement
+        element={
+          Object {
+            "name": "Email Address",
+            "value": "bob.ross@example.com",
+          }
+        }
+        key="Email Address"
+      >
+        <tr>
+          <td>
+            Email Address
+          </td>
+          <td>
+            bob.ross@example.com
+          </td>
+        </tr>
+      </TableElement>
+    </tbody>
+  </table>
+</Table>
+`;
+
+exports[`Storyshots Table Without Header 1`] = `
+<Table
+  table={
+    Object {
+      "elements": Array [
+        Object {
+          "name": "BCeID",
+          "value": "bobross42",
+        },
+        Object {
+          "name": "Last Name",
+          "value": "Ross",
+        },
+        Object {
+          "name": "First Name",
+          "value": "Bob",
+        },
+        Object {
+          "name": "Email Address",
+          "value": "bob.ross@example.com",
+        },
+      ],
+      "heading": "",
+    }
+  }
+>
+  <table>
+    <thead>
+      <tr>
+        <th
+          colSpan="2"
+        />
+      </tr>
+    </thead>
+    <tbody>
+      <TableElement
+        element={
+          Object {
+            "name": "BCeID",
+            "value": "bobross42",
+          }
+        }
+        key="BCeID"
+      >
+        <tr>
+          <td>
+            BCeID
+          </td>
+          <td>
+            bobross42
+          </td>
+        </tr>
+      </TableElement>
+      <TableElement
+        element={
+          Object {
+            "name": "Last Name",
+            "value": "Ross",
+          }
+        }
+        key="Last Name"
+      >
+        <tr>
+          <td>
+            Last Name
+          </td>
+          <td>
+            Ross
+          </td>
+        </tr>
+      </TableElement>
+      <TableElement
+        element={
+          Object {
+            "name": "First Name",
+            "value": "Bob",
+          }
+        }
+        key="First Name"
+      >
+        <tr>
+          <td>
+            First Name
+          </td>
+          <td>
+            Bob
+          </td>
+        </tr>
+      </TableElement>
+      <TableElement
+        element={
+          Object {
+            "name": "Email Address",
+            "value": "bob.ross@example.com",
+          }
+        }
+        key="Email Address"
+      >
+        <tr>
+          <td>
+            Email Address
+          </td>
+          <td>
+            bob.ross@example.com
+          </td>
+        </tr>
+      </TableElement>
+    </tbody>
+  </table>
+</Table>
+`;
+
+exports[`Storyshots Table Without Header Mobile 1`] = `
+<Table
+  table={
+    Object {
+      "elements": Array [
+        Object {
+          "name": "BCeID",
+          "value": "bobross42",
+        },
+        Object {
+          "name": "Last Name",
+          "value": "Ross",
+        },
+        Object {
+          "name": "First Name",
+          "value": "Bob",
+        },
+        Object {
+          "name": "Email Address",
+          "value": "bob.ross@example.com",
+        },
+      ],
+      "heading": "",
+      "style": "blue-stripe",
+    }
+  }
+>
+  <table
+    className="blue-stripe"
+  >
+    <thead>
+      <tr>
+        <th
+          colSpan="2"
+        />
+      </tr>
+    </thead>
+    <tbody>
+      <TableElement
+        element={
+          Object {
+            "name": "BCeID",
+            "value": "bobross42",
+          }
+        }
+        key="BCeID"
+      >
+        <tr>
+          <td>
+            BCeID
+          </td>
+          <td>
+            bobross42
+          </td>
+        </tr>
+      </TableElement>
+      <TableElement
+        element={
+          Object {
+            "name": "Last Name",
+            "value": "Ross",
+          }
+        }
+        key="Last Name"
+      >
+        <tr>
+          <td>
+            Last Name
+          </td>
+          <td>
+            Ross
+          </td>
+        </tr>
+      </TableElement>
+      <TableElement
+        element={
+          Object {
+            "name": "First Name",
+            "value": "Bob",
+          }
+        }
+        key="First Name"
+      >
+        <tr>
+          <td>
+            First Name
+          </td>
+          <td>
+            Bob
+          </td>
+        </tr>
+      </TableElement>
+      <TableElement
+        element={
+          Object {
+            "name": "Email Address",
+            "value": "bob.ross@example.com",
+          }
+        }
+        key="Email Address"
+      >
+        <tr>
+          <td>
+            Email Address
+          </td>
+          <td>
+            bob.ross@example.com
+          </td>
+        </tr>
+      </TableElement>
+    </tbody>
+  </table>
+</Table>
+`;
+
 exports[`Storyshots Terms of Use Default 1`] = `
 <TermsOfUse
   acceptTerms={[Function]}
