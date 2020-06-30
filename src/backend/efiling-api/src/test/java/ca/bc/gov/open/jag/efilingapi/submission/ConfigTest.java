@@ -24,7 +24,7 @@ public class ConfigTest {
 
         MockitoAnnotations.initMocks(this);
 
-        sut = new SubmissionConfig();
+        sut = new SubmissionConfig(null);
     }
 
     @Test
@@ -40,7 +40,7 @@ public class ConfigTest {
     @DisplayName("get SubmissionServiceImpl test")
     public void testGetSubmissionService() {
 
-        SubmissionService actual = sut.submissionService(null, null, null, null, null);
+        SubmissionService actual = sut.submissionService(null, null, null, null);
         Assertions.assertEquals(SubmissionServiceImpl.class, actual.getClass());
 
     }
