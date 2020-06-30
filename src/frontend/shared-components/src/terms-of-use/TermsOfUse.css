@@ -1,0 +1,26 @@
+.scroll-box {
+  overflow: auto;
+  width: 100%;
+  height: 500px;
+  border: 1px solid;
+  padding: 15px;
+  margin-bottom: 30px;
+}
+
+.btn {
+  margin-right: 40px;
+}
+
+.print-page {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #1a5a96;
+  float: right;
+  margin-top: 10px;
+  margin-right: 15px;
+}
+
+.buttons {
+  display: flex;
+  float: right;
+}
