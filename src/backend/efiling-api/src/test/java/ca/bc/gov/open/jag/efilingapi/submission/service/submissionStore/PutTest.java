@@ -1,8 +1,8 @@
-package ca.bc.gov.open.jag.efilingapi.submission.service.submissionService;
+package ca.bc.gov.open.jag.efilingapi.submission.service.submissionStore;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
-import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionServiceImpl;
+import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStoreImpl;
 import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
@@ -14,7 +14,7 @@ import java.util.Optional;
 public class PutTest {
 
     @InjectMocks
-    private SubmissionServiceImpl sut;
+    private SubmissionStoreImpl sut;
 
     @BeforeAll
     public void setUp() {
