@@ -25,7 +25,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import javax.validation.Valid;
-import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("SubmissionApiDelegateImpl test suite")
@@ -38,12 +37,6 @@ public class GenerateUrlTest {
     private static final String SUCCESSURL = "http://success";
     private static final String CANCELURL = "http://cancel";
     private static final String ERRORURL = "http://error";
-
-    private static final UUID CASE_1 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fe");
-    private static final UUID CASE_2 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fa");
-    private static final UUID CASE_3 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fb");
-    private static final UUID CASE_4 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fc");
-    private static final UUID CASE_5 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fd");
 
 
     private SubmissionApiDelegateImpl sut;
@@ -67,24 +60,24 @@ public class GenerateUrlTest {
         Submission submission = Submission.builder().expiryDate(10).create();
 
         Mockito.when(submissionServiceMock.generateFromRequest(
-                ArgumentMatchers.argThat(x -> x.getUserId() == CASE_1)))
+                ArgumentMatchers.argThat(x -> x.getUserId() == TestHelpers.CASE_1)))
                 .thenReturn(submission);
 
         Mockito.doThrow(new CSOHasMultipleAccountException("CSOHasMultipleAccountException message"))
                 .when(submissionServiceMock).generateFromRequest(
-                ArgumentMatchers.argThat(x -> x.getUserId() == CASE_2));
+                ArgumentMatchers.argThat(x -> x.getUserId() == TestHelpers.CASE_2));
 
         Mockito.doThrow(new InvalidAccountStateException("InvalidAccountStateException message"))
                 .when(submissionServiceMock).generateFromRequest(
-                ArgumentMatchers.argThat(x -> x.getUserId() == CASE_3));
+                ArgumentMatchers.argThat(x -> x.getUserId() == TestHelpers.CASE_3));
 
         Mockito.doThrow(new StoreException("StoreException message"))
                 .when(submissionServiceMock).generateFromRequest(
-                ArgumentMatchers.argThat(x -> x.getUserId() == CASE_4));
+                ArgumentMatchers.argThat(x -> x.getUserId() == TestHelpers.CASE_4));
 
         Mockito.doThrow(new NestedEjbException_Exception("NestedEjbException_Exception message"))
                 .when(submissionServiceMock).generateFromRequest(
-                ArgumentMatchers.argThat(x -> x.getUserId() == CASE_5));
+                ArgumentMatchers.argThat(x -> x.getUserId() == TestHelpers.CASE_5));
 
         // Testing the mapper part of this test
         generateUrlResponseMapperMock = new GenerateUrlResponseMapperImpl();
@@ -101,7 +94,7 @@ public class GenerateUrlTest {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         generateUrlRequest.setDocumentProperties(TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE));
-        generateUrlRequest.setUserId(CASE_1);
+        generateUrlRequest.setUserId(TestHelpers.CASE_1);
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL));
 
         ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(generateUrlRequest);
@@ -119,7 +112,7 @@ public class GenerateUrlTest {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         generateUrlRequest.setDocumentProperties(TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE));
-        generateUrlRequest.setUserId(CASE_2);
+        generateUrlRequest.setUserId(TestHelpers.CASE_2);
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL));
 
         ResponseEntity actual = sut.generateUrl(generateUrlRequest);
@@ -137,7 +130,7 @@ public class GenerateUrlTest {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         generateUrlRequest.setDocumentProperties(TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE));
-        generateUrlRequest.setUserId(CASE_3);
+        generateUrlRequest.setUserId(TestHelpers.CASE_3);
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL));
 
         ResponseEntity actual = sut.generateUrl(generateUrlRequest);
@@ -155,7 +148,7 @@ public class GenerateUrlTest {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         generateUrlRequest.setDocumentProperties(TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE));
-        generateUrlRequest.setUserId(CASE_4);
+        generateUrlRequest.setUserId(TestHelpers.CASE_4);
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL));
 
         ResponseEntity actual = sut.generateUrl(generateUrlRequest);
@@ -173,7 +166,7 @@ public class GenerateUrlTest {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         generateUrlRequest.setDocumentProperties(TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE));
-        generateUrlRequest.setUserId(CASE_5);
+        generateUrlRequest.setUserId(TestHelpers.CASE_5);
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL));
 
         ResponseEntity actual = sut.generateUrl(generateUrlRequest);
