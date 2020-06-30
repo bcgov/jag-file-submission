@@ -1,4 +1,5 @@
 /* eslint-disable react/jsx-one-expression-per-line */
+// disabled due to conflict between eslint and prettier regarding code styling
 import React from "react";
 
 const content = (
