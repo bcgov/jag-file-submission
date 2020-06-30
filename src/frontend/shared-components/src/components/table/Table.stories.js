@@ -26,6 +26,10 @@ export const WithHeader = () => <Table table={table} />;
 
 export const WithoutHeader = () => <Table table={{ ...table, header: "" }} />;
 
+export const WithBlueStripeStyle = () => (
+  <Table table={{ ...table, tableStyle: "blueStripe" }} />
+);
+
 export const WithHeaderMobile = () => <Table table={table} />;
 
 const mobileViewport = {

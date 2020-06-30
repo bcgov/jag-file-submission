@@ -11,3 +11,11 @@ td {
   padding: 3px;
   white-space: pre-wrap;
 }
+
+.blueStripe tbody tr:nth-child(even) {
+  background: rgba(241, 244, 250, 1);
+}
+
+.blueStripe tbody tr:nth-child(odd) {
+  background: rgba(225, 232, 242, 1);
+}

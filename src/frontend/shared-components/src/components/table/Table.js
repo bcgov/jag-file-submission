@@ -31,6 +31,13 @@ export default function Table({
   );
 }
 
+TableElement.propTypes = {
+  element: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired
+  }).isRequired
+};
+
 Table.propTypes = {
   table: PropTypes.shape({
     id: PropTypes.string,
