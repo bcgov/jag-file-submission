@@ -26,8 +26,6 @@ exports[`ConfirmationPopup Component Matches the snapshot 1`] = `
   modal={
     Object {
       "body": [Function],
-      "handleClose": [MockFunction],
-      "handleConfirm": [MockFunction],
       "handleShow": [MockFunction],
       "show": true,
       "title": "Cancel process?",

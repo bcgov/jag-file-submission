@@ -62,8 +62,6 @@ exports[`Storyshots ConfirmationPopup Default 1`] = `
   modal={
     Object {
       "body": [Function],
-      "handleClose": [Function],
-      "handleConfirm": [Function],
       "handleShow": [Function],
       "show": true,
       "title": "Cancel process?",
@@ -739,8 +737,6 @@ exports[`Storyshots ConfirmationPopup Mobile 1`] = `
   modal={
     Object {
       "body": [Function],
-      "handleClose": [Function],
-      "handleConfirm": [Function],
       "handleShow": [Function],
       "show": true,
       "title": "Cancel process?",
