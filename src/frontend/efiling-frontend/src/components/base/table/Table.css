@@ -1,0 +1,13 @@
+table {
+  width: 100%;
+}
+
+th {
+  padding: 3px;
+}
+
+td {
+  vertical-align: top;
+  padding: 3px;
+  white-space: pre-wrap;
+}

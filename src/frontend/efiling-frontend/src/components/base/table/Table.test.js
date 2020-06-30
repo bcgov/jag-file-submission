@@ -1,25 +1,26 @@
 import React from "react";
-import { create } from "react-test-renderer";
+import { render } from "@testing-library/react";
 
 import Table from "./Table";
 
 describe("Table Component", () => {
   test("Matches the snapshot", () => {
     const tableElements = [
-      { name: "Org name", value: "Test Org Name" },
+      { name: "BCeID", value: "bobross42" },
       {
-        name: "Org Address",
-        value: `123 Somewhere Lane\nNo where\nBritish Columbia\nV9V 9V9\nCanada`
+        name: "Last Name",
+        value: "Ross"
       },
-      { name: "Applicant Relationship", value: "Employee" }
+      { name: "First Name", value: "Bob" },
+      { name: "Email Address", value: "bob.ross@pbs.com" }
     ];
 
     const table = {
-      header: "Org Info",
+      header: "BCeID Info",
       tableElements
     };
 
-    const simpleTable = create(<Table table={table} />);
-    expect(simpleTable.toJSON()).toMatchSnapshot();
+    const { asFragment } = render(<Table table={table} />);
+    expect(asFragment).toMatchSnapshot();
   });
 });

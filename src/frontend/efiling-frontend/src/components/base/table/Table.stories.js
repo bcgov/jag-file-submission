@@ -8,17 +8,32 @@ export default {
 };
 
 const tableElements = [
-  { name: "Org name", value: "Test Org Name" },
+  { name: "BCeID", value: "bobross42" },
   {
-    name: "Org Address",
-    value: `123 Somewhere Lane\nNo where\nBritish Columbia\nV9V 9V9\nCanada`
+    name: "Last Name",
+    value: "Ross"
   },
-  { name: "Applicant Relationship", value: "Employee" }
+  { name: "First Name", value: "Bob" },
+  { name: "Email Address", value: "bob.ross@pbs.com" }
 ];
 
 const table = {
-  header: "Org Info",
+  header: "BCeID Info",
   tableElements
 };
 
-export const Default = () => <Table table={table} />;
+export const WithHeader = () => <Table table={table} />;
+
+export const WithoutHeader = () => <Table table={{ ...table, header: "" }} />;
+
+export const WithHeaderMobile = () => <Table table={table} />;
+
+const mobileViewport = {
+  parameters: {
+    viewport: {
+      defaultViewport: "mobile2"
+    }
+  }
+};
+
+WithHeaderMobile.story = mobileViewport;

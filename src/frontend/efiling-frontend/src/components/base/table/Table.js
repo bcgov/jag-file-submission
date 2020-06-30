@@ -2,12 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import "./Table.css";
-import TableElement from "../../base/tableElement/TableElement";
 
-TableElement = ({ element: { img, name, value } }) => {
+const TableElement = ({ element: { name, value } }) => {
   return (
     <tr>
-      <td>{img}</td>
       <td>{name}</td>
       <td>{value}</td>
     </tr>
