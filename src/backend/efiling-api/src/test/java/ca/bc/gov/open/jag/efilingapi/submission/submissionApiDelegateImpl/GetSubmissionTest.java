@@ -89,14 +89,14 @@ public class GetSubmissionTest {
     }
 
     @Test
-    @DisplayName("With null redis storage response return NotFound")
+    @DisplayName("404: With null redis storage response return NotFound")
     public void withNullRedisStorageResponseReturnNotFound() {
         ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission(CASE_1);
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
     }
 
     @Test
-    @DisplayName("With user having cso account and efiling role return submission details")
+    @DisplayName("200: With user having cso account and efiling role return submission details")
     public void withUserHavingCsoAccountShouldReturnUserDetailsAndAccount() {
 
         ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission(CASE_2);
@@ -114,7 +114,7 @@ public class GetSubmissionTest {
     }
 
     @Test
-    @DisplayName("With user not having cso account")
+    @DisplayName("200: With user not having cso account")
     public void withUserHavingNoCsoAccountShouldReturnUserDetailsButNoAccount() {
 
         ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission(CASE_3);
