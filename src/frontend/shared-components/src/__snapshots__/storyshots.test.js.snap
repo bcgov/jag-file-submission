@@ -1870,8 +1870,7 @@ exports[`Storyshots Table With Blue Stripe Style 1`] = `
 <Table
   table={
     Object {
-      "header": "BCeID Info",
-      "tableElements": Array [
+      "elements": Array [
         Object {
           "name": "BCeID",
           "value": "bobross42",
@@ -1886,15 +1885,16 @@ exports[`Storyshots Table With Blue Stripe Style 1`] = `
         },
         Object {
           "name": "Email Address",
-          "value": "bob.ross@pbs.com",
+          "value": "bob.ross@example.com",
         },
       ],
-      "tableStyle": "blueStripe",
+      "heading": "BCeID Info",
+      "style": "blue-stripe",
     }
   }
 >
   <table
-    className="blueStripe"
+    className="blue-stripe"
   >
     <thead>
       <tr>
@@ -1964,7 +1964,7 @@ exports[`Storyshots Table With Blue Stripe Style 1`] = `
         element={
           Object {
             "name": "Email Address",
-            "value": "bob.ross@pbs.com",
+            "value": "bob.ross@example.com",
           }
         }
         key="Email Address"
@@ -1974,7 +1974,7 @@ exports[`Storyshots Table With Blue Stripe Style 1`] = `
             Email Address
           </td>
           <td>
-            bob.ross@pbs.com
+            bob.ross@example.com
           </td>
         </tr>
       </TableElement>
@@ -1987,8 +1987,7 @@ exports[`Storyshots Table With Header 1`] = `
 <Table
   table={
     Object {
-      "header": "BCeID Info",
-      "tableElements": Array [
+      "elements": Array [
         Object {
           "name": "BCeID",
           "value": "bobross42",
@@ -2003,9 +2002,10 @@ exports[`Storyshots Table With Header 1`] = `
         },
         Object {
           "name": "Email Address",
-          "value": "bob.ross@pbs.com",
+          "value": "bob.ross@example.com",
         },
       ],
+      "heading": "BCeID Info",
     }
   }
 >
@@ -2078,7 +2078,7 @@ exports[`Storyshots Table With Header 1`] = `
         element={
           Object {
             "name": "Email Address",
-            "value": "bob.ross@pbs.com",
+            "value": "bob.ross@example.com",
           }
         }
         key="Email Address"
@@ -2088,7 +2088,7 @@ exports[`Storyshots Table With Header 1`] = `
             Email Address
           </td>
           <td>
-            bob.ross@pbs.com
+            bob.ross@example.com
           </td>
         </tr>
       </TableElement>
@@ -2101,8 +2101,7 @@ exports[`Storyshots Table With Header Mobile 1`] = `
 <Table
   table={
     Object {
-      "header": "BCeID Info",
-      "tableElements": Array [
+      "elements": Array [
         Object {
           "name": "BCeID",
           "value": "bobross42",
@@ -2117,9 +2116,10 @@ exports[`Storyshots Table With Header Mobile 1`] = `
         },
         Object {
           "name": "Email Address",
-          "value": "bob.ross@pbs.com",
+          "value": "bob.ross@example.com",
         },
       ],
+      "heading": "BCeID Info",
     }
   }
 >
@@ -2192,7 +2192,7 @@ exports[`Storyshots Table With Header Mobile 1`] = `
         element={
           Object {
             "name": "Email Address",
-            "value": "bob.ross@pbs.com",
+            "value": "bob.ross@example.com",
           }
         }
         key="Email Address"
@@ -2202,7 +2202,7 @@ exports[`Storyshots Table With Header Mobile 1`] = `
             Email Address
           </td>
           <td>
-            bob.ross@pbs.com
+            bob.ross@example.com
           </td>
         </tr>
       </TableElement>
@@ -2215,8 +2215,7 @@ exports[`Storyshots Table Without Header 1`] = `
 <Table
   table={
     Object {
-      "header": "",
-      "tableElements": Array [
+      "elements": Array [
         Object {
           "name": "BCeID",
           "value": "bobross42",
@@ -2231,9 +2230,10 @@ exports[`Storyshots Table Without Header 1`] = `
         },
         Object {
           "name": "Email Address",
-          "value": "bob.ross@pbs.com",
+          "value": "bob.ross@example.com",
         },
       ],
+      "heading": "",
     }
   }
 >
@@ -2304,7 +2304,7 @@ exports[`Storyshots Table Without Header 1`] = `
         element={
           Object {
             "name": "Email Address",
-            "value": "bob.ross@pbs.com",
+            "value": "bob.ross@example.com",
           }
         }
         key="Email Address"
@@ -2314,7 +2314,7 @@ exports[`Storyshots Table Without Header 1`] = `
             Email Address
           </td>
           <td>
-            bob.ross@pbs.com
+            bob.ross@example.com
           </td>
         </tr>
       </TableElement>

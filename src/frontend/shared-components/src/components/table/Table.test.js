@@ -2,31 +2,19 @@ import React from "react";
 import { render } from "@testing-library/react";
 
 import Table from "./Table";
+import { getTableTestData } from "../../modules/tableTestData";
 
-const tableElements = [
-  { name: "BCeID", value: "bobross42" },
-  {
-    name: "Last Name",
-    value: "Ross"
-  },
-  { name: "First Name", value: "Bob" },
-  { name: "Email Address", value: "bob.ross@pbs.com" }
-];
-
-const table = {
-  header: "BCeID Info",
-  tableElements
-};
+const tableData = getTableTestData();
 
 describe("Table Component", () => {
   test("Matches the default snapshot", () => {
-    const { asFragment } = render(<Table table={table} />);
+    const { asFragment } = render(<Table table={tableData} />);
     expect(asFragment).toMatchSnapshot();
   });
 
   test("Matches the blue striped snapshot", () => {
     const { asFragment } = render(
-      <Table table={{ ...table, tableStyle: "blueStripe" }} />
+      <Table table={{ ...tableData, style: "blue-stripe" }} />
     );
     expect(asFragment).toMatchSnapshot();
   });

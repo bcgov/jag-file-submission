@@ -12,18 +12,16 @@ const TableElement = ({ element: { name, value } }) => {
   );
 };
 
-export default function Table({
-  table: { id, header, tableElements, tableStyle }
-}) {
-  const tableComponents = tableElements.map(element => {
+export default function Table({ table: { id, heading, elements, style } }) {
+  const tableComponents = elements.map(element => {
     return <TableElement key={element.key || element.name} element={element} />;
   });
 
   return (
-    <table id={id} className={tableStyle}>
+    <table id={id} className={style}>
       <thead>
         <tr>
-          <th colSpan="2">{header}</th>
+          <th colSpan="2">{heading}</th>
         </tr>
       </thead>
       <tbody>{tableComponents}</tbody>
@@ -41,22 +39,22 @@ TableElement.propTypes = {
 Table.propTypes = {
   table: PropTypes.shape({
     id: PropTypes.string,
-    header: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    tableElements: PropTypes.arrayOf(
+    heading: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    elements: PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string.isRequired,
         value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
           .isRequired
       }).isRequired
     ),
-    tableStyle: PropTypes.string
+    style: PropTypes.string
   })
 };
 
 Table.defaultProps = {
   table: {
     id: "",
-    tableStyle: "",
-    header: ""
+    style: "",
+    heading: ""
   }
 };
