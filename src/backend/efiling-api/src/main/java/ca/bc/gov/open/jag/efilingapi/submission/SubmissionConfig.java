@@ -26,6 +26,8 @@ public class SubmissionConfig {
     }
 
     @Bean
+    // Supressing Method submissionService has 5 arguments (exceeds 4 allowed). This is required for this service, further refactoring is needed to fix this.
+    @SuppressWarnings("squid:S00107")
     public SubmissionService submissionService(SubmissionStore submissionStore,
                                                CacheProperties cacheProperties,
                                                SubmissionMapper submissionMapper,
