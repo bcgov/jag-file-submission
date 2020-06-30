@@ -1,6 +1,8 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from "react";
 
+const onButtonClick = () => {};
+
 const mainButton = {
   label: "Cancel",
   styling: "normal-white btn"
@@ -8,16 +10,15 @@ const mainButton = {
 
 const confirmButton = {
   label: "Yes, cancel",
-  styling: "normal-blue btn consistent-width"
+  styling: "normal-blue btn consistent-width",
+  onClick: onButtonClick
 };
 
 const cancelButton = {
   label: "No, dont cancel",
-  styling: "normal-white btn consistent-width"
+  styling: "normal-white btn consistent-width",
+  onClick: onButtonClick
 };
-
-const handleClose = () => {};
-const handleShow = () => {};
 
 const body = () => (
   <>
@@ -33,9 +34,7 @@ const body = () => (
 export function getTestData() {
   const modal = {
     show: true,
-    handleShow,
-    handleClose,
-    handleConfirm: () => {},
+    handleShow: onButtonClick,
     title: "title",
     body
   };

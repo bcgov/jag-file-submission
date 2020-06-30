@@ -3,15 +3,16 @@ import React, { useState } from "react";
 import { Switch, Route, Redirect, useHistory } from "react-router-dom";
 import Home from "./components/page/home/Home";
 
-// For cancel button and confirmation popup
 const mainButton = {
   label: "Cancel",
   styling: "normal-white btn"
 };
+
 const confirmButton = {
   label: "Yes, cancel E-File Submission",
   styling: "normal-blue btn consistent-width"
 };
+
 const cancelButton = {
   label: "No, resume E-File Submission",
   styling: "normal-white btn consistent-width"
@@ -39,22 +40,27 @@ export default function App() {
     </>
   );
 
+  const handleConfirm = () => {
+    const cancelUrl = sessionStorage.getItem("cancelUrl");
+
+    if (cancelUrl) {
+      window.open(cancelUrl, "_self");
+    }
+  };
+
   const modal = {
     show,
     handleShow,
-    handleClose,
-    handleConfirm: () => {
-      const cancelUrl = sessionStorage.getItem("cancelUrl");
-
-      if (cancelUrl) {
-        window.open(cancelUrl, "_self");
-      }
-    },
     title: "Cancel E-File Submission?",
     body
   };
 
-  const confirmationPopup = { modal, mainButton, confirmButton, cancelButton };
+  const confirmationPopup = {
+    modal,
+    mainButton,
+    confirmButton: { ...confirmButton, onClick: handleConfirm },
+    cancelButton: { ...cancelButton, onClick: handleClose }
+  };
 
   return (
     <div>

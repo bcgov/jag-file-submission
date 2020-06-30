@@ -7,7 +7,7 @@ import { propTypes } from "../../types/propTypes";
 import "./ConfirmationPopup.css";
 
 export default function ConfirmationPopup({
-  modal: { show, handleShow, handleClose, handleConfirm, title, body },
+  modal: { show, handleShow, title, body },
   mainButton,
   confirmButton,
   cancelButton
@@ -20,7 +20,7 @@ export default function ConfirmationPopup({
         styling={mainButton.styling}
       />
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={cancelButton.onClick}>
         <Modal.Header className="hide-border padding-left" closeButton>
           <Modal.Title className="mt-3 larger-font">{title}</Modal.Title>
         </Modal.Header>
@@ -28,13 +28,13 @@ export default function ConfirmationPopup({
         <div className="mx-auto mb-5">
           <Button
             styling={confirmButton.styling}
-            onClick={handleConfirm}
+            onClick={confirmButton.onClick}
             label={confirmButton.label}
           />
           <br />
           <Button
             styling={cancelButton.styling}
-            onClick={handleClose}
+            onClick={cancelButton.onClick}
             label={cancelButton.label}
           />
         </div>
@@ -47,8 +47,6 @@ ConfirmationPopup.propTypes = {
   modal: PropTypes.shape({
     show: PropTypes.bool.isRequired,
     handleShow: PropTypes.func.isRequired,
-    handleClose: PropTypes.func.isRequired,
-    handleConfirm: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
     body: PropTypes.func.isRequired
   }).isRequired,

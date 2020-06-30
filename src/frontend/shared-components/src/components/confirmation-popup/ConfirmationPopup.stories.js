@@ -22,8 +22,6 @@ const body = () => (
 const modal = {
   show: true,
   handleShow: () => {},
-  handleClose: () => {},
-  handleConfirm: () => {},
   title: "Cancel process?",
   body
 };

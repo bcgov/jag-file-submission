@@ -20,8 +20,6 @@ describe("ConfirmationPopup Component", () => {
   const modal = {
     show: true,
     handleShow: jest.fn(),
-    handleClose: jest.fn(),
-    handleConfirm: jest.fn(),
     title: "Cancel process?",
     body
   };
