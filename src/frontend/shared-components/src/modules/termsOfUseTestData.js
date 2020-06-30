@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-one-expression-per-line */
+// disabled due to conflict between eslint and prettier regarding code styling
 import React from "react";
 
 const content = (
@@ -34,7 +36,7 @@ const content = (
         <b>
           Reasonable efforts have been made to provide accurate, complete and
           timely information regarding the Services and the Site in general.
-          However, you are encouraged to refer to the{" "}
+          However, you are encouraged to refer to the&nbsp;
           <i>Criminal Records Review Act</i>, any related Regulations, policy
           and other official information materials before submitting an online
           request for a CRC.
@@ -76,7 +78,7 @@ const content = (
         When you visit the Site or use the Services, certain types of
         information are automatically collected from you, through the use of
         audit logs or cookies. This information is collected, used and disclosed
-        in accordance with the Province’s{" "}
+        in accordance with the Province’s&nbsp;
         <a
           href="https://www2.gov.bc.ca/gov/content/home/privacy"
           target="_blank"
@@ -111,19 +113,20 @@ const content = (
     <h2>Authentication:</h2>
     <ol start="9">
       <li>
-        You are required to have a{" "}
+        You are required to have a&nbsp;
         <a
           href="https://www2.gov.bc.ca/gov/content/governments/government-id/bc-services-card/login-with-card"
           target="_blank"
           rel="noopener noreferrer"
         >
           BC Services Card
-        </a>{" "}
-        to login and submit an online request for a criminal record check.
+        </a>
+        &nbsp; to login and submit an online request for a criminal record
+        check.
       </li>
       <li>
         Each time you access the Site, you must be authenticated by following an
-        external link to the{" "}
+        external link to the&nbsp;
         <a
           href="https://www2.gov.bc.ca/gov/content/governments/government-id/bc-services-card"
           target="_blank"
@@ -255,7 +258,7 @@ const content = (
     <h2>Limitation of Liability:</h2>
     <ol start="20">
       <li>
-        In addition to the Province’s general{" "}
+        In addition to the Province’s general&nbsp;
         <a
           href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
           target="_blank"
