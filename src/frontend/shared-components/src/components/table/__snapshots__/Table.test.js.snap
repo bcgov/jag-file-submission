@@ -1,5 +1,99 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Table Component Matches the blue striped snapshot 1`] = `[Function]`;
+exports[`Table Component Matches the blue striped snapshot 1`] = `
+<table
+  className="blue-stripe"
+>
+  <thead>
+    <tr>
+      <th
+        colSpan="2"
+      >
+        BCeID Info
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        BCeID
+      </td>
+      <td>
+        bobross42
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Last Name
+      </td>
+      <td>
+        Ross
+      </td>
+    </tr>
+    <tr>
+      <td>
+        First Name
+      </td>
+      <td>
+        Bob
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Email Address
+      </td>
+      <td>
+        bob.ross@example.com
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
 
-exports[`Table Component Matches the default snapshot 1`] = `[Function]`;
+exports[`Table Component Matches the default snapshot 1`] = `
+<table>
+  <thead>
+    <tr>
+      <th
+        colSpan="2"
+      >
+        BCeID Info
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        BCeID
+      </td>
+      <td>
+        bobross42
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Last Name
+      </td>
+      <td>
+        Ross
+      </td>
+    </tr>
+    <tr>
+      <td>
+        First Name
+      </td>
+      <td>
+        Bob
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Email Address
+      </td>
+      <td>
+        bob.ross@example.com
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
