@@ -21,6 +21,9 @@ export const WithBlueStripeStyle = () => (
 );
 
 export const WithHeaderMobile = () => <Table table={tableData} />;
+export const WithoutHeaderMobile = () => (
+  <Table table={{ ...tableData, style: "blue-stripe" }} />
+);
 
 const mobileViewport = {
   parameters: {
@@ -31,3 +34,4 @@ const mobileViewport = {
 };
 
 WithHeaderMobile.story = mobileViewport;
+WithoutHeaderMobile.story = mobileViewport;
