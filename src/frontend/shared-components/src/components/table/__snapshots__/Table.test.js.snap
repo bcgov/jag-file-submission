@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Table Component Matches the blue striped snapshot 1`] = `[Function]`;
+
+exports[`Table Component Matches the default snapshot 1`] = `[Function]`;
