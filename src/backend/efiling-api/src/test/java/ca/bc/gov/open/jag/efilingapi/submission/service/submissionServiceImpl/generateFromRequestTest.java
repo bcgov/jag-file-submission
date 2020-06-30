@@ -145,16 +145,7 @@ public class generateFromRequestTest {
     }
 
     private void configureCase1(Fee fee) throws NestedEjbException_Exception {
-        AccountDetails accountDetailsCase1 = AccountDetails
-                .builder()
-                .fileRolePresent(true)
-                .middleName(CASE_1_MIDDLE_NAME)
-                .lastName(CASE_1_LAST_NAME)
-                .firstName(CASE_1_FIRST_NAME)
-                .email(CASE_1_EMAIL)
-                .accountId(BigDecimal.TEN)
-                .clientId(BigDecimal.ONE)
-                .create();
+        AccountDetails accountDetailsCase1 = getAccountDetails(true, CASE_1_MIDDLE_NAME, CASE_1_LAST_NAME, CASE_1_FIRST_NAME, CASE_1_EMAIL);
 
         Mockito
                 .when(efilingAccountServiceMock.getAccountDetails(
@@ -177,16 +168,7 @@ public class generateFromRequestTest {
     }
 
     private void configureCase2() throws NestedEjbException_Exception {
-        AccountDetails accountDetailsCase2 = AccountDetails
-                .builder()
-                .fileRolePresent(true)
-                .middleName(CASE_2_MIDDLE_NAME)
-                .lastName(CASE_2_LAST_NAME)
-                .firstName(CASE_2_FIRST_NAME)
-                .email(CASE_2_EMAIL)
-                .accountId(BigDecimal.TEN)
-                .clientId(BigDecimal.ONE)
-                .create();
+        AccountDetails accountDetailsCase2 = getAccountDetails(true, CASE_2_MIDDLE_NAME, CASE_2_LAST_NAME, CASE_2_FIRST_NAME, CASE_2_EMAIL);
 
         Mockito
                 .when(efilingAccountServiceMock.getAccountDetails(
@@ -200,22 +182,27 @@ public class generateFromRequestTest {
     }
 
     private void configureCase3() throws NestedEjbException_Exception {
-        AccountDetails accountDetails = AccountDetails
-                .builder()
-                .fileRolePresent(false)
-                .middleName(CASE_3_MIDDLE_NAME)
-                .lastName(CASE_3_LAST_NAME)
-                .firstName(CASE_3_FIRST_NAME)
-                .email(CASE_3_EMAIL)
-                .accountId(BigDecimal.TEN)
-                .clientId(BigDecimal.ONE)
-                .create();
+
+        AccountDetails accountDetails = getAccountDetails(false, CASE_3_MIDDLE_NAME, CASE_3_LAST_NAME, CASE_3_FIRST_NAME, CASE_3_EMAIL);
 
         Mockito
                 .when(efilingAccountServiceMock.getAccountDetails(
                         Mockito.eq(TestHelpers.CASE_3.toString().replace("-", "").toUpperCase())))
                 .thenReturn(accountDetails);
 
+    }
+
+    private AccountDetails getAccountDetails(boolean fileRolePresent, String case1MiddleName, String case1LastName, String case1FirstName, String case1Email) {
+        return AccountDetails
+                .builder()
+                .fileRolePresent(fileRolePresent)
+                .middleName(case1MiddleName)
+                .lastName(case1LastName)
+                .firstName(case1FirstName)
+                .email(case1Email)
+                .accountId(BigDecimal.TEN)
+                .clientId(BigDecimal.ONE)
+                .create();
     }
 
 
