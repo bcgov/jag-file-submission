@@ -1,17 +1,11 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service;
 
+import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
+import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 
-import java.util.Optional;
-import java.util.UUID;
-
-/**
- * A service to manage persistence of submissions objects
- */
 public interface SubmissionService {
 
-    Optional<Submission> put(Submission submission);
-
-    Optional<Submission> getByKey(UUID key);
+    Submission generateFromRequest(GenerateUrlRequest generateUrlRequest) throws NestedEjbException_Exception;
 
 }

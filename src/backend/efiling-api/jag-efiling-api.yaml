@@ -38,7 +38,7 @@ paths:
   '/submission/{id}':
     get:
       summary: Get user detail for a given submission
-      operationId: GetSubmissionUserDetail
+      operationId: GetSubmission
       tags:
       - submission
       parameters:
@@ -48,6 +48,7 @@ paths:
         required: true
         schema:
           type: string
+          format: uuid
       responses:
         '200':
           description: Config found
@@ -117,6 +118,7 @@ components:
       properties:
         userId:
           type: string
+          format: uuid
           description: a unique identifier for the user
         documentProperties:
           $ref: '#/components/schemas/DocumentProperties'
