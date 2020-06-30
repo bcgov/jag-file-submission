@@ -61,17 +61,22 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
                     generateUrlResponseMapper.toGenerateUrlResponse(
                             submissionService.generateFromRequest(generateUrlRequest),
                             navigationProperties.getBaseUrl()));
+            logger.info("successfully generated return url.");
         }
         catch (CSOHasMultipleAccountException e)   {
+            logger.warn(e.getMessage(), e);
             response =  new ResponseEntity(buildEfilingError(ErrorResponse.ACCOUNTEXCEPTION), HttpStatus.BAD_REQUEST);
         }
         catch (InvalidAccountStateException e) {
+            logger.warn(e.getMessage(), e);
             response =  new ResponseEntity(buildEfilingError(ErrorResponse.INVALIDROLE), HttpStatus.FORBIDDEN);
         }
         catch (StoreException e) {
+            logger.warn(e.getMessage(), e);
             response =  new ResponseEntity(buildEfilingError(ErrorResponse.CACHE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         catch (NestedEjbException_Exception e) {
+            logger.warn(e.getMessage(), e);
             response =  new ResponseEntity(buildEfilingError(ErrorResponse.GETPROFILESEXCEPTION), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
