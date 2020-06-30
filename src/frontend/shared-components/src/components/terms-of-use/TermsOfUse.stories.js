@@ -1,6 +1,6 @@
 import React from "react";
 import { action } from "@storybook/addon-actions";
-import { getTestData } from "../modules/termsOfUseTestData";
+import { getTestData } from "../../modules/termsOfUseTestData";
 
 import TermsOfUse from "./TermsOfUse";
 
@@ -23,6 +23,10 @@ const cancelButton = {
 
 const content = getTestData();
 
+const heading = "Terms of Use";
+
+const confirmText = "I accept these terms and conditions";
+
 export const Default = () => (
   <TermsOfUse
     onScroll={action("terms of use scroll")}
@@ -30,6 +34,8 @@ export const Default = () => (
     continueButton={continueButton}
     cancelButton={cancelButton}
     content={content}
+    heading={heading}
+    confirmText={confirmText}
   />
 );
 
@@ -40,6 +46,8 @@ export const Mobile = () => (
     continueButton={continueButton}
     cancelButton={cancelButton}
     content={content}
+    heading={heading}
+    confirmText={confirmText}
   />
 );
 

@@ -1,6 +1,6 @@
 import React from "react";
-import testBasicSnapshot from "../TestHelper";
-import { getTestData } from "../modules/termsOfUseTestData";
+import testBasicSnapshot from "../../TestHelper";
+import { getTestData } from "../../modules/termsOfUseTestData";
 
 import TermsOfUse from "./TermsOfUse";
 
@@ -23,6 +23,10 @@ describe("TermsOfUse", () => {
 
   const content = getTestData();
 
+  const heading = "Terms of Use";
+
+  const confirmText = "I accept these terms and conditions";
+
   test("Matches the snapshot", () => {
     const termsOfUse = (
       <TermsOfUse
@@ -31,6 +35,8 @@ describe("TermsOfUse", () => {
         continueButton={continueButton}
         cancelButton={cancelButton}
         content={content}
+        heading={heading}
+        confirmText={confirmText}
       />
     );
 

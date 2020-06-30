@@ -2,18 +2,23 @@ import React from "react";
 import PropTypes from "prop-types";
 import Modal from "react-bootstrap/Modal";
 import { Button } from "../button/Button";
+import { propTypes } from "../../types/propTypes";
 
 import "./ConfirmationPopup.css";
 
 export default function ConfirmationPopup({
   modal: { show, handleShow, handleClose, handleConfirm, title, body },
-  mainButton: { mainLabel, mainStyling },
-  confirmButton: { confirmLabel, confirmStyling },
-  cancelButton: { cancelLabel, cancelStyling }
+  mainButton,
+  confirmButton,
+  cancelButton
 }) {
   return (
     <>
-      <Button onClick={handleShow} label={mainLabel} styling={mainStyling} />
+      <Button
+        onClick={handleShow}
+        label={mainButton.label}
+        styling={mainButton.styling}
+      />
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header className="hide-border padding-left" closeButton>
@@ -22,15 +27,15 @@ export default function ConfirmationPopup({
         <Modal.Body className="padding-left">{body()}</Modal.Body>
         <div className="mx-auto mb-5">
           <Button
-            styling={confirmStyling}
+            styling={confirmButton.styling}
             onClick={handleConfirm}
-            label={confirmLabel}
+            label={confirmButton.label}
           />
           <br />
           <Button
-            styling={cancelStyling}
+            styling={cancelButton.styling}
             onClick={handleClose}
-            label={cancelLabel}
+            label={cancelButton.label}
           />
         </div>
       </Modal>
@@ -47,16 +52,7 @@ ConfirmationPopup.propTypes = {
     title: PropTypes.string.isRequired,
     body: PropTypes.func.isRequired
   }).isRequired,
-  mainButton: PropTypes.shape({
-    mainLabel: PropTypes.string.isRequired,
-    mainStyling: PropTypes.string.isRequired
-  }).isRequired,
-  confirmButton: PropTypes.shape({
-    confirmLabel: PropTypes.string.isRequired,
-    confirmStyling: PropTypes.string.isRequired
-  }).isRequired,
-  cancelButton: PropTypes.shape({
-    cancelLabel: PropTypes.string.isRequired,
-    cancelStyling: PropTypes.string.isRequired
-  }).isRequired
+  mainButton: propTypes.button,
+  confirmButton: propTypes.button,
+  cancelButton: propTypes.button
 };

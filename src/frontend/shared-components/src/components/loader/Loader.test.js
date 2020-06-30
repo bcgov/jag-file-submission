@@ -1,5 +1,5 @@
 import React from "react";
-import testBasicSnapshot from "../TestHelper";
+import testBasicSnapshot from "../../TestHelper";
 
 import { Loader } from "./Loader";
 

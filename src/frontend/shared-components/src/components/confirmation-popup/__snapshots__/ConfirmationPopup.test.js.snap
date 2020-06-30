@@ -4,20 +4,23 @@ exports[`ConfirmationPopup Component Matches the snapshot 1`] = `
 <ConfirmationPopup
   cancelButton={
     Object {
-      "cancelLabel": "No, resume my process please",
-      "cancelStyling": "normal-white btn consistent-width",
+      "label": "No, resume my process please",
+      "onClick": [MockFunction],
+      "styling": "normal-white btn consistent-width",
     }
   }
   confirmButton={
     Object {
-      "confirmLabel": "Yes, cancel my process please",
-      "confirmStyling": "normal-blue btn consistent-width",
+      "label": "Yes, cancel my process please",
+      "onClick": [MockFunction],
+      "styling": "normal-blue btn consistent-width",
     }
   }
   mainButton={
     Object {
-      "mainLabel": "main label",
-      "mainStyling": "normal-blue btn",
+      "label": "main label",
+      "onClick": [MockFunction],
+      "styling": "normal-blue btn",
     }
   }
   modal={

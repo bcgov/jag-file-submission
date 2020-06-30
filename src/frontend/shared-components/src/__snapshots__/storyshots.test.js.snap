@@ -40,20 +40,23 @@ exports[`Storyshots ConfirmationPopup Default 1`] = `
 <ConfirmationPopup
   cancelButton={
     Object {
-      "cancelLabel": "No, resume my process please",
-      "cancelStyling": "normal-white btn consistent-width",
+      "label": "No, resume my process please",
+      "onClick": [Function],
+      "styling": "normal-white btn consistent-width",
     }
   }
   confirmButton={
     Object {
-      "confirmLabel": "Yes, cancel my process please",
-      "confirmStyling": "normal-blue btn consistent-width",
+      "label": "Yes, cancel my process please",
+      "onClick": [Function],
+      "styling": "normal-blue btn consistent-width",
     }
   }
   mainButton={
     Object {
-      "mainLabel": "main label",
-      "mainStyling": "normal-blue btn",
+      "label": "main label",
+      "onClick": [Function],
+      "styling": "normal-blue btn",
     }
   }
   modal={
@@ -714,20 +717,23 @@ exports[`Storyshots ConfirmationPopup Mobile 1`] = `
 <ConfirmationPopup
   cancelButton={
     Object {
-      "cancelLabel": "No, resume my process please",
-      "cancelStyling": "normal-white btn consistent-width",
+      "label": "No, resume my process please",
+      "onClick": [Function],
+      "styling": "normal-white btn consistent-width",
     }
   }
   confirmButton={
     Object {
-      "confirmLabel": "Yes, cancel my process please",
-      "confirmStyling": "normal-blue btn consistent-width",
+      "label": "Yes, cancel my process please",
+      "onClick": [Function],
+      "styling": "normal-blue btn consistent-width",
     }
   }
   mainButton={
     Object {
-      "mainLabel": "main label",
-      "mainStyling": "normal-blue btn",
+      "label": "main label",
+      "onClick": [Function],
+      "styling": "normal-blue btn",
     }
   }
   modal={
@@ -1874,6 +1880,7 @@ exports[`Storyshots Terms of Use Default 1`] = `
       "styling": "normal-white btn",
     }
   }
+  confirmText="I accept these terms and conditions"
   content={
     <React.Fragment>
       <p>
@@ -2137,6 +2144,7 @@ exports[`Storyshots Terms of Use Default 1`] = `
       "styling": "normal-blue btn",
     }
   }
+  heading="Terms of Use"
   onScroll={[Function]}
 >
   <div>
@@ -2469,7 +2477,7 @@ exports[`Storyshots Terms of Use Default 1`] = `
         />
          
         <b>
-          I have read and accept the above terms of use
+          I accept these terms and conditions
         </b>
         <span
           className="mandatory"
@@ -2527,6 +2535,7 @@ exports[`Storyshots Terms of Use Mobile 1`] = `
       "styling": "normal-white btn",
     }
   }
+  confirmText="I accept these terms and conditions"
   content={
     <React.Fragment>
       <p>
@@ -2790,6 +2799,7 @@ exports[`Storyshots Terms of Use Mobile 1`] = `
       "styling": "normal-blue btn",
     }
   }
+  heading="Terms of Use"
   onScroll={[Function]}
 >
   <div>
@@ -3122,7 +3132,7 @@ exports[`Storyshots Terms of Use Mobile 1`] = `
         />
          
         <b>
-          I have read and accept the above terms of use
+          I accept these terms and conditions
         </b>
         <span
           className="mandatory"

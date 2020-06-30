@@ -309,7 +309,7 @@ exports[`TermsOfUse Matches the snapshot 1`] = `
       />
        
       <b>
-        I have read and accept the above terms of use
+        I accept these terms and conditions
       </b>
       <span
         className="mandatory"
