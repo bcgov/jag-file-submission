@@ -1,6 +1,6 @@
 import React from "react";
 import { Input } from "./Input";
-import testBasicSnapshot from "../TestHelper";
+import testBasicSnapshot from "../../TestHelper";
 
 describe("Input", () => {
   const input = {

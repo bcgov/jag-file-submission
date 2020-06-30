@@ -1,23 +1,25 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from "react";
 
+const onButtonClick = () => {};
+
 const mainButton = {
-  mainLabel: "Cancel",
-  mainStyling: "normal-white btn"
+  label: "Cancel",
+  styling: "normal-white btn",
+  onClick: onButtonClick
 };
 
 const confirmButton = {
-  confirmLabel: "Yes, cancel",
-  confirmStyling: "normal-blue btn consistent-width"
+  label: "Yes, cancel",
+  styling: "normal-blue btn consistent-width",
+  onClick: onButtonClick
 };
 
 const cancelButton = {
-  cancelLabel: "No, dont cancel",
-  cancelStyling: "normal-white btn consistent-width"
+  label: "No, dont cancel",
+  styling: "normal-white btn consistent-width",
+  onClick: onButtonClick
 };
-
-const handleClose = () => {};
-const handleShow = () => {};
 
 const body = () => (
   <>
@@ -33,9 +35,7 @@ const body = () => (
 export function getTestData() {
   const modal = {
     show: true,
-    handleShow,
-    handleClose,
-    handleConfirm: () => {},
+    handleShow: onButtonClick,
     title: "title",
     body
   };

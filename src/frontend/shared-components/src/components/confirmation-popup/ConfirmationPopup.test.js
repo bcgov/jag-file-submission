@@ -20,22 +20,28 @@ describe("ConfirmationPopup Component", () => {
   const modal = {
     show: true,
     handleShow: jest.fn(),
-    handleClose: jest.fn(),
-    handleConfirm: jest.fn(),
     title: "Cancel process?",
     body
   };
+
+  const onButtonClick = jest.fn();
+
   const mainButton = {
-    mainLabel: "main label",
-    mainStyling: "normal-blue btn"
+    label: "main label",
+    styling: "normal-blue btn",
+    onClick: onButtonClick
   };
+
   const confirmButton = {
-    confirmLabel: "Yes, cancel my process please",
-    confirmStyling: "normal-blue btn consistent-width"
+    label: "Yes, cancel my process please",
+    styling: "normal-blue btn consistent-width",
+    onClick: onButtonClick
   };
+
   const cancelButton = {
-    cancelLabel: "No, resume my process please",
-    cancelStyling: "normal-white btn consistent-width"
+    label: "No, resume my process please",
+    styling: "normal-white btn consistent-width",
+    onClick: onButtonClick
   };
 
   const component = (
