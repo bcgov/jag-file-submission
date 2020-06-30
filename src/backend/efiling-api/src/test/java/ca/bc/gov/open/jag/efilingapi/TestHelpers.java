@@ -47,22 +47,8 @@ public class TestHelpers {
     }
 
     public static Navigation createDefaultNavigation() {
-        Navigation navigation = new Navigation();
-        Redirect successRedirect = new Redirect();
-        successRedirect.setUrl(SUCCESS_URL);
-        navigation.setSuccess(successRedirect);
-        Redirect cancelRedirect = new Redirect();
-        cancelRedirect.setUrl(CANCEL_URL);
-        navigation.setCancel(cancelRedirect);
-        Redirect errorRedirect = new Redirect();
-        errorRedirect.setUrl(ERROR_URL);
-        navigation.setError(errorRedirect);
-        return navigation;
+        return createNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL);
     }
-
-
-
-
 
 
 }
