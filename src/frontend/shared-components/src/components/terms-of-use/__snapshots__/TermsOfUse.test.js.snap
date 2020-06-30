@@ -35,13 +35,12 @@ exports[`TermsOfUse Matches the snapshot 1`] = `
         />
       </svg>
     </span>
-    <h1>
+    <h3>
       Terms of Use
-    </h1>
+    </h3>
   </div>
   <section
     className="scroll-box"
-    onScroll={[MockFunction]}
   >
     <p>
       In these Terms of Use, "you" or "your" includes the individual using or accessing the Electronic Criminal Record Check Portal (the "Site") on their own behalf to submit an online request for a criminal record check.

@@ -35,7 +35,6 @@ const body = () => (
 export function getTestData() {
   const modal = {
     show: true,
-    handleShow: onButtonClick,
     title: "title",
     body
   };
