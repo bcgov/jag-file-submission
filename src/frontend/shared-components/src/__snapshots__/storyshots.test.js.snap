@@ -1869,13 +1869,6 @@ exports[`Storyshots Loader Page 1`] = `
 exports[`Storyshots Terms of Use Default 1`] = `
 <TermsOfUse
   acceptTerms={[Function]}
-  cancelButton={
-    Object {
-      "label": "Cancel",
-      "onClick": [Function],
-      "styling": "normal-white btn",
-    }
-  }
   confirmText="I accept these terms and conditions"
   content={
     <React.Fragment>
@@ -2132,13 +2125,6 @@ exports[`Storyshots Terms of Use Default 1`] = `
         </li>
       </ol>
     </React.Fragment>
-  }
-  continueButton={
-    Object {
-      "label": "Continue",
-      "onClick": [Function],
-      "styling": "normal-blue btn",
-    }
   }
   heading="Terms of Use"
   onScroll={[Function]}
@@ -2482,40 +2468,6 @@ exports[`Storyshots Terms of Use Default 1`] = `
           *
         </span>
       </label>
-    </section>
-    <section
-      className="buttons pt-4"
-    >
-      <Button
-        label="Cancel"
-        onClick={[Function]}
-        styling="normal-white btn"
-      >
-        <div>
-          <button
-            className="normal-white btn"
-            onClick={[Function]}
-            type="button"
-          >
-            Cancel
-          </button>
-        </div>
-      </Button>
-      <Button
-        label="Continue"
-        onClick={[Function]}
-        styling="normal-blue btn"
-      >
-        <div>
-          <button
-            className="normal-blue btn"
-            onClick={[Function]}
-            type="button"
-          >
-            Continue
-          </button>
-        </div>
-      </Button>
     </section>
   </div>
 </TermsOfUse>
@@ -2524,13 +2476,6 @@ exports[`Storyshots Terms of Use Default 1`] = `
 exports[`Storyshots Terms of Use Mobile 1`] = `
 <TermsOfUse
   acceptTerms={[Function]}
-  cancelButton={
-    Object {
-      "label": "Cancel",
-      "onClick": [Function],
-      "styling": "normal-white btn",
-    }
-  }
   confirmText="I accept these terms and conditions"
   content={
     <React.Fragment>
@@ -2787,13 +2732,6 @@ exports[`Storyshots Terms of Use Mobile 1`] = `
         </li>
       </ol>
     </React.Fragment>
-  }
-  continueButton={
-    Object {
-      "label": "Continue",
-      "onClick": [Function],
-      "styling": "normal-blue btn",
-    }
   }
   heading="Terms of Use"
   onScroll={[Function]}
@@ -3137,40 +3075,6 @@ exports[`Storyshots Terms of Use Mobile 1`] = `
           *
         </span>
       </label>
-    </section>
-    <section
-      className="buttons pt-4"
-    >
-      <Button
-        label="Cancel"
-        onClick={[Function]}
-        styling="normal-white btn"
-      >
-        <div>
-          <button
-            className="normal-white btn"
-            onClick={[Function]}
-            type="button"
-          >
-            Cancel
-          </button>
-        </div>
-      </Button>
-      <Button
-        label="Continue"
-        onClick={[Function]}
-        styling="normal-blue btn"
-      >
-        <div>
-          <button
-            className="normal-blue btn"
-            onClick={[Function]}
-            type="button"
-          >
-            Continue
-          </button>
-        </div>
-      </Button>
     </section>
   </div>
 </TermsOfUse>

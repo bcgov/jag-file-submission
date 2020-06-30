@@ -319,27 +319,5 @@ exports[`TermsOfUse Matches the snapshot 1`] = `
       </span>
     </label>
   </section>
-  <section
-    className="buttons pt-4"
-  >
-    <div>
-      <button
-        className="normal-white btn"
-        onClick={[MockFunction]}
-        type="button"
-      >
-        Cancel
-      </button>
-    </div>
-    <div>
-      <button
-        className="normal-blue btn"
-        onClick={[MockFunction]}
-        type="button"
-      >
-        Continue
-      </button>
-    </div>
-  </section>
 </div>
 `;
