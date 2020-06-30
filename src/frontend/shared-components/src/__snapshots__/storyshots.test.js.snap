@@ -2345,7 +2345,7 @@ exports[`Storyshots Table Without Header Mobile 1`] = `
           "value": "bob.ross@example.com",
         },
       ],
-      "heading": "BCeID Info",
+      "heading": "",
       "style": "blue-stripe",
     }
   }
@@ -2357,9 +2357,7 @@ exports[`Storyshots Table Without Header Mobile 1`] = `
       <tr>
         <th
           colSpan="2"
-        >
-          BCeID Info
-        </th>
+        />
       </tr>
     </thead>
     <tbody>

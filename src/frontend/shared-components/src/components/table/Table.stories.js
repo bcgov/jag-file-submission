@@ -22,7 +22,7 @@ export const WithBlueStripeStyle = () => (
 
 export const WithHeaderMobile = () => <Table table={tableData} />;
 export const WithoutHeaderMobile = () => (
-  <Table table={{ ...tableData, style: "blue-stripe" }} />
+  <Table table={{ ...tableData, heading: "", style: "blue-stripe" }} />
 );
 
 const mobileViewport = {
