@@ -50,7 +50,6 @@ export default function App() {
 
   const modal = {
     show,
-    handleShow,
     title: "Cancel E-File Submission?",
     body
   };
