@@ -4,13 +4,13 @@ import { FaPrint } from "react-icons/fa";
 
 import "./TermsOfUse.css";
 
-export default function TermsOfUse({
+export const TermsOfUse = ({
   onScroll,
   acceptTerms,
   content,
   heading,
   confirmText
-}) {
+}) => {
   return (
     <div>
       <div style={{ width: "100%" }}>
@@ -38,7 +38,7 @@ export default function TermsOfUse({
       </section>
     </div>
   );
-}
+};
 
 TermsOfUse.propTypes = {
   onScroll: PropTypes.func.isRequired,

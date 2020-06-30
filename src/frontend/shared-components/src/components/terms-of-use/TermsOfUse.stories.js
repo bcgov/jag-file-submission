@@ -2,7 +2,7 @@ import React from "react";
 import { action } from "@storybook/addon-actions";
 import { getTestData } from "../../modules/termsOfUseTestData";
 
-import TermsOfUse from "./TermsOfUse";
+import { TermsOfUse } from "./TermsOfUse";
 
 export default {
   title: "Terms of Use",

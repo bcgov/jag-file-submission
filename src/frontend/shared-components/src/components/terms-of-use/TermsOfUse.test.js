@@ -2,7 +2,7 @@ import React from "react";
 import testBasicSnapshot from "../../TestHelper";
 import { getTestData } from "../../modules/termsOfUseTestData";
 
-import TermsOfUse from "./TermsOfUse";
+import { TermsOfUse } from "./TermsOfUse";
 
 describe("TermsOfUse", () => {
   const onScroll = jest.fn();
