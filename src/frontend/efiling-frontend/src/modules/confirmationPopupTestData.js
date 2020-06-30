@@ -2,18 +2,18 @@
 import React from "react";
 
 const mainButton = {
-  mainLabel: "Cancel",
-  mainStyling: "normal-white btn"
+  label: "Cancel",
+  styling: "normal-white btn"
 };
 
 const confirmButton = {
-  confirmLabel: "Yes, cancel",
-  confirmStyling: "normal-blue btn consistent-width"
+  label: "Yes, cancel",
+  styling: "normal-blue btn consistent-width"
 };
 
 const cancelButton = {
-  cancelLabel: "No, dont cancel",
-  cancelStyling: "normal-white btn consistent-width"
+  label: "No, dont cancel",
+  styling: "normal-white btn consistent-width"
 };
 
 const handleClose = () => {};
