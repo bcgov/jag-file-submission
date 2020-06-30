@@ -28,15 +28,7 @@ export const FooterToggler = () => (
 export const Footer = () => (
   <footer className="footer">
     <nav className="navbar navbar-expand-sm navbar-dark justify-content-end">
-      {/* <FooterToggler /> */}
-      <button
-        className="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#footerBar"
-      >
-        <span className="navbar-toggler-icon" />
-      </button>
+      <FooterToggler />
       <div className="collapse navbar-collapse flex-grow-0" id="footerBar">
         <ul className="navbar-nav text-right">
           {LinkElement("https://www2.gov.bc.ca", "BC Government")}
