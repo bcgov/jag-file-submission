@@ -5,7 +5,8 @@ const onButtonClick = () => {};
 
 const mainButton = {
   label: "Cancel",
-  styling: "normal-white btn"
+  styling: "normal-white btn",
+  onClick: onButtonClick
 };
 
 const confirmButton = {
