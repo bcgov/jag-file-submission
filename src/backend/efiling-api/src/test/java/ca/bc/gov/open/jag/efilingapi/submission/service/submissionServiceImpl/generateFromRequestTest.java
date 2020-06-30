@@ -32,21 +32,11 @@ import static ca.bc.gov.open.jag.efilingapi.api.model.EndpointAccess.VerbEnum.PO
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class generateFromRequestTest {
 
-    private static final String CASE_1_MIDDLE_NAME = "case1_middleName";
-    private static final String CASE_1_LAST_NAME = "case1_lastName";
-    private static final String CASE_1_FIRST_NAME = "case1_firstName";
-    private static final String CASE_1_EMAIL = "case1_email";
+    private static final String MIDDLE_NAME = "case1_middleName";
+    private static final String LAST_NAME = "case1_lastName";
+    private static final String FIRST_NAME = "case1_firstName";
+    private static final String EMAIL = "case1_email";
     private static final DocumentProperties CASE1_DOCUMENT_PROPERTIES = TestHelpers.createDocumentProperties("header", "http://doc", "subtype", "case1_type");
-
-    private static final String CASE_2_MIDDLE_NAME = "case2_middleName";
-    private static final String CASE_2_LAST_NAME = "case2_lastName";
-    private static final String CASE_2_FIRST_NAME = "case2_firstName";
-    private static final String CASE_2_EMAIL = "case2_email";
-
-    private static final String CASE_3_MIDDLE_NAME = "case2_middleName";
-    private static final String CASE_3_LAST_NAME = "case2_lastName";
-    private static final String CASE_3_FIRST_NAME = "case2_firstName";
-    private static final String CASE_3_EMAIL = "case2_email";
 
 
     private SubmissionServiceImpl sut;
@@ -98,10 +88,10 @@ public class generateFromRequestTest {
 
         Submission actual = sut.generateFromRequest(request);
 
-        Assertions.assertEquals(CASE_1_EMAIL, actual.getAccountDetails().getEmail());
-        Assertions.assertEquals(CASE_1_FIRST_NAME, actual.getAccountDetails().getFirstName());
-        Assertions.assertEquals(CASE_1_LAST_NAME, actual.getAccountDetails().getLastName());
-        Assertions.assertEquals(CASE_1_MIDDLE_NAME, actual.getAccountDetails().getMiddleName());
+        Assertions.assertEquals(TestHelpers.CASE_1.toString() + EMAIL, actual.getAccountDetails().getEmail());
+        Assertions.assertEquals(TestHelpers.CASE_1.toString() + FIRST_NAME, actual.getAccountDetails().getFirstName());
+        Assertions.assertEquals(TestHelpers.CASE_1.toString() + LAST_NAME, actual.getAccountDetails().getLastName());
+        Assertions.assertEquals(TestHelpers.CASE_1.toString() + MIDDLE_NAME, actual.getAccountDetails().getMiddleName());
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountDetails().getAccountId());
         Assertions.assertEquals(BigDecimal.ONE, actual.getAccountDetails().getClientId());
         Assertions.assertEquals(TestHelpers.ERROR_URL, actual.getNavigation().getError().getUrl());
@@ -145,16 +135,18 @@ public class generateFromRequestTest {
     }
 
     private void configureCase1(Fee fee) throws NestedEjbException_Exception {
-        AccountDetails accountDetailsCase1 = getAccountDetails(true, CASE_1_MIDDLE_NAME, CASE_1_LAST_NAME, CASE_1_FIRST_NAME, CASE_1_EMAIL);
+
+
+        AccountDetails accountDetails = getAccountDetails(true, TestHelpers.CASE_1.toString());
 
         Mockito
                 .when(efilingAccountServiceMock.getAccountDetails(
                         Mockito.eq(TestHelpers.CASE_1.toString().replace("-", "").toUpperCase())))
-                .thenReturn(accountDetailsCase1);
+                .thenReturn(accountDetails);
 
         Submission submissionCase1 = Submission
                 .builder()
-                .accountDetails(accountDetailsCase1)
+                .accountDetails(accountDetails)
                 .navigation(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
                 .documentProperties(CASE1_DOCUMENT_PROPERTIES)
@@ -164,26 +156,28 @@ public class generateFromRequestTest {
         Mockito
                 .doReturn(Optional.of(submissionCase1))
                 .when(submissionStoreMock).put(
-                ArgumentMatchers.argThat(x -> StringUtils.equals(CASE_1_FIRST_NAME, x.getAccountDetails().getFirstName())));
+                ArgumentMatchers.argThat(x -> StringUtils.equals(TestHelpers.CASE_1.toString() + FIRST_NAME, x.getAccountDetails().getFirstName())));
     }
 
     private void configureCase2() throws NestedEjbException_Exception {
-        AccountDetails accountDetailsCase2 = getAccountDetails(true, CASE_2_MIDDLE_NAME, CASE_2_LAST_NAME, CASE_2_FIRST_NAME, CASE_2_EMAIL);
+
+
+        AccountDetails accountDetails = getAccountDetails(true, TestHelpers.CASE_2.toString());
 
         Mockito
                 .when(efilingAccountServiceMock.getAccountDetails(
                         Mockito.eq(TestHelpers.CASE_2.toString().replace("-", "").toUpperCase())))
-                .thenReturn(accountDetailsCase2);
+                .thenReturn(accountDetails);
 
         Mockito
                 .doReturn(Optional.empty())
                 .when(submissionStoreMock).put(
-                ArgumentMatchers.argThat(x -> StringUtils.equals(CASE_2_FIRST_NAME, x.getAccountDetails().getFirstName())));
+                ArgumentMatchers.argThat(x -> StringUtils.equals(TestHelpers.CASE_2.toString() + FIRST_NAME, x.getAccountDetails().getFirstName())));
     }
 
     private void configureCase3() throws NestedEjbException_Exception {
 
-        AccountDetails accountDetails = getAccountDetails(false, CASE_3_MIDDLE_NAME, CASE_3_LAST_NAME, CASE_3_FIRST_NAME, CASE_3_EMAIL);
+        AccountDetails accountDetails = getAccountDetails(false, TestHelpers.CASE_3.toString());
 
         Mockito
                 .when(efilingAccountServiceMock.getAccountDetails(
@@ -192,14 +186,14 @@ public class generateFromRequestTest {
 
     }
 
-    private AccountDetails getAccountDetails(boolean fileRolePresent, String case1MiddleName, String case1LastName, String case1FirstName, String case1Email) {
+    private AccountDetails getAccountDetails(boolean fileRolePresent, String _case) {
         return AccountDetails
                 .builder()
                 .fileRolePresent(fileRolePresent)
-                .middleName(case1MiddleName)
-                .lastName(case1LastName)
-                .firstName(case1FirstName)
-                .email(case1Email)
+                .middleName(_case + MIDDLE_NAME)
+                .lastName(_case + LAST_NAME)
+                .firstName(_case + FIRST_NAME)
+                .email(_case + EMAIL)
                 .accountId(BigDecimal.TEN)
                 .clientId(BigDecimal.ONE)
                 .create();
