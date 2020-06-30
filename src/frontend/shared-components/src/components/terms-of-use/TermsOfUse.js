@@ -28,7 +28,8 @@ export default function TermsOfUse({
 
       <section className="pt-2">
         <label htmlFor="acceptTerms">
-          <input id="acceptTerms" type="checkbox" onClick={acceptTerms} />{" "}
+          <input id="acceptTerms" type="checkbox" onClick={acceptTerms} />
+          &nbsp;
           <b>{confirmText}</b>
           <span id="asterisk" className="mandatory">
             *
@@ -42,7 +43,7 @@ export default function TermsOfUse({
 TermsOfUse.propTypes = {
   onScroll: PropTypes.func.isRequired,
   acceptTerms: PropTypes.func.isRequired,
-  content: PropTypes.object.isRequired,
+  content: PropTypes.any.isRequired,
   heading: PropTypes.string.isRequired,
   confirmText: PropTypes.string.isRequired
 };
