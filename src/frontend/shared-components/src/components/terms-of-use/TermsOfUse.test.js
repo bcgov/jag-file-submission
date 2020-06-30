@@ -9,18 +9,6 @@ describe("TermsOfUse", () => {
 
   const acceptTerms = jest.fn();
 
-  const continueButton = {
-    label: "Continue",
-    styling: "normal-blue btn",
-    onClick: jest.fn()
-  };
-
-  const cancelButton = {
-    label: "Cancel",
-    styling: "normal-white btn",
-    onClick: jest.fn()
-  };
-
   const content = getTestData();
 
   const heading = "Terms of Use";
@@ -32,8 +20,6 @@ describe("TermsOfUse", () => {
       <TermsOfUse
         onScroll={onScroll}
         acceptTerms={acceptTerms}
-        continueButton={continueButton}
-        cancelButton={cancelButton}
         content={content}
         heading={heading}
         confirmText={confirmText}

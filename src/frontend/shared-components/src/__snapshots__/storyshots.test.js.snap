@@ -1869,13 +1869,6 @@ exports[`Storyshots Loader Page 1`] = `
 exports[`Storyshots Terms of Use Default 1`] = `
 <TermsOfUse
   acceptTerms={[Function]}
-  cancelButton={
-    Object {
-      "label": "Cancel",
-      "onClick": [Function],
-      "styling": "normal-white btn",
-    }
-  }
   confirmText="I accept these terms and conditions"
   content={
     <React.Fragment>
@@ -1897,8 +1890,7 @@ exports[`Storyshots Terms of Use Default 1`] = `
       <ol>
         <li>
           <b>
-            Reasonable efforts have been made to provide accurate, complete and timely information regarding the Services and the Site in general. However, you are encouraged to refer to the
-             
+            Reasonable efforts have been made to provide accurate, complete and timely information regarding the Services and the Site in general. However, you are encouraged to refer to the 
             <i>
               Criminal Records Review Act
             </i>
@@ -1936,8 +1928,7 @@ exports[`Storyshots Terms of Use Default 1`] = `
         start="5"
       >
         <li>
-          When you visit the Site or use the Services, certain types of information are automatically collected from you, through the use of audit logs or cookies. This information is collected, used and disclosed in accordance with the Province’s
-           
+          When you visit the Site or use the Services, certain types of information are automatically collected from you, through the use of audit logs or cookies. This information is collected, used and disclosed in accordance with the Province’s 
           <a
             href="https://www2.gov.bc.ca/gov/content/home/privacy"
             rel="noopener noreferrer"
@@ -1964,8 +1955,7 @@ exports[`Storyshots Terms of Use Default 1`] = `
         start="9"
       >
         <li>
-          You are required to have a
-           
+          You are required to have a 
           <a
             href="https://www2.gov.bc.ca/gov/content/governments/government-id/bc-services-card/login-with-card"
             rel="noopener noreferrer"
@@ -1973,12 +1963,10 @@ exports[`Storyshots Terms of Use Default 1`] = `
           >
             BC Services Card
           </a>
-           
-          to login and submit an online request for a criminal record check.
+            to login and submit an online request for a criminal record check.
         </li>
         <li>
-          Each time you access the Site, you must be authenticated by following an external link to the
-           
+          Each time you access the Site, you must be authenticated by following an external link to the 
           <a
             href="https://www2.gov.bc.ca/gov/content/governments/government-id/bc-services-card"
             rel="noopener noreferrer"
@@ -2103,8 +2091,7 @@ exports[`Storyshots Terms of Use Default 1`] = `
         start="20"
       >
         <li>
-          In addition to the Province’s general
-           
+          In addition to the Province’s general 
           <a
             href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
             rel="noopener noreferrer"
@@ -2132,13 +2119,6 @@ exports[`Storyshots Terms of Use Default 1`] = `
         </li>
       </ol>
     </React.Fragment>
-  }
-  continueButton={
-    Object {
-      "label": "Continue",
-      "onClick": [Function],
-      "styling": "normal-blue btn",
-    }
   }
   heading="Terms of Use"
   onScroll={[Function]}
@@ -2225,8 +2205,7 @@ exports[`Storyshots Terms of Use Default 1`] = `
       <ol>
         <li>
           <b>
-            Reasonable efforts have been made to provide accurate, complete and timely information regarding the Services and the Site in general. However, you are encouraged to refer to the
-             
+            Reasonable efforts have been made to provide accurate, complete and timely information regarding the Services and the Site in general. However, you are encouraged to refer to the 
             <i>
               Criminal Records Review Act
             </i>
@@ -2264,8 +2243,7 @@ exports[`Storyshots Terms of Use Default 1`] = `
         start="5"
       >
         <li>
-          When you visit the Site or use the Services, certain types of information are automatically collected from you, through the use of audit logs or cookies. This information is collected, used and disclosed in accordance with the Province’s
-           
+          When you visit the Site or use the Services, certain types of information are automatically collected from you, through the use of audit logs or cookies. This information is collected, used and disclosed in accordance with the Province’s 
           <a
             href="https://www2.gov.bc.ca/gov/content/home/privacy"
             rel="noopener noreferrer"
@@ -2292,8 +2270,7 @@ exports[`Storyshots Terms of Use Default 1`] = `
         start="9"
       >
         <li>
-          You are required to have a
-           
+          You are required to have a 
           <a
             href="https://www2.gov.bc.ca/gov/content/governments/government-id/bc-services-card/login-with-card"
             rel="noopener noreferrer"
@@ -2301,12 +2278,10 @@ exports[`Storyshots Terms of Use Default 1`] = `
           >
             BC Services Card
           </a>
-           
-          to login and submit an online request for a criminal record check.
+            to login and submit an online request for a criminal record check.
         </li>
         <li>
-          Each time you access the Site, you must be authenticated by following an external link to the
-           
+          Each time you access the Site, you must be authenticated by following an external link to the 
           <a
             href="https://www2.gov.bc.ca/gov/content/governments/government-id/bc-services-card"
             rel="noopener noreferrer"
@@ -2431,8 +2406,7 @@ exports[`Storyshots Terms of Use Default 1`] = `
         start="20"
       >
         <li>
-          In addition to the Province’s general
-           
+          In addition to the Province’s general 
           <a
             href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
             rel="noopener noreferrer"
@@ -2471,7 +2445,7 @@ exports[`Storyshots Terms of Use Default 1`] = `
           onClick={[Function]}
           type="checkbox"
         />
-         
+         
         <b>
           I accept these terms and conditions
         </b>
@@ -2482,40 +2456,6 @@ exports[`Storyshots Terms of Use Default 1`] = `
           *
         </span>
       </label>
-    </section>
-    <section
-      className="buttons pt-4"
-    >
-      <Button
-        label="Cancel"
-        onClick={[Function]}
-        styling="normal-white btn"
-      >
-        <div>
-          <button
-            className="normal-white btn"
-            onClick={[Function]}
-            type="button"
-          >
-            Cancel
-          </button>
-        </div>
-      </Button>
-      <Button
-        label="Continue"
-        onClick={[Function]}
-        styling="normal-blue btn"
-      >
-        <div>
-          <button
-            className="normal-blue btn"
-            onClick={[Function]}
-            type="button"
-          >
-            Continue
-          </button>
-        </div>
-      </Button>
     </section>
   </div>
 </TermsOfUse>
@@ -2524,13 +2464,6 @@ exports[`Storyshots Terms of Use Default 1`] = `
 exports[`Storyshots Terms of Use Mobile 1`] = `
 <TermsOfUse
   acceptTerms={[Function]}
-  cancelButton={
-    Object {
-      "label": "Cancel",
-      "onClick": [Function],
-      "styling": "normal-white btn",
-    }
-  }
   confirmText="I accept these terms and conditions"
   content={
     <React.Fragment>
@@ -2552,8 +2485,7 @@ exports[`Storyshots Terms of Use Mobile 1`] = `
       <ol>
         <li>
           <b>
-            Reasonable efforts have been made to provide accurate, complete and timely information regarding the Services and the Site in general. However, you are encouraged to refer to the
-             
+            Reasonable efforts have been made to provide accurate, complete and timely information regarding the Services and the Site in general. However, you are encouraged to refer to the 
             <i>
               Criminal Records Review Act
             </i>
@@ -2591,8 +2523,7 @@ exports[`Storyshots Terms of Use Mobile 1`] = `
         start="5"
       >
         <li>
-          When you visit the Site or use the Services, certain types of information are automatically collected from you, through the use of audit logs or cookies. This information is collected, used and disclosed in accordance with the Province’s
-           
+          When you visit the Site or use the Services, certain types of information are automatically collected from you, through the use of audit logs or cookies. This information is collected, used and disclosed in accordance with the Province’s 
           <a
             href="https://www2.gov.bc.ca/gov/content/home/privacy"
             rel="noopener noreferrer"
@@ -2619,8 +2550,7 @@ exports[`Storyshots Terms of Use Mobile 1`] = `
         start="9"
       >
         <li>
-          You are required to have a
-           
+          You are required to have a 
           <a
             href="https://www2.gov.bc.ca/gov/content/governments/government-id/bc-services-card/login-with-card"
             rel="noopener noreferrer"
@@ -2628,12 +2558,10 @@ exports[`Storyshots Terms of Use Mobile 1`] = `
           >
             BC Services Card
           </a>
-           
-          to login and submit an online request for a criminal record check.
+            to login and submit an online request for a criminal record check.
         </li>
         <li>
-          Each time you access the Site, you must be authenticated by following an external link to the
-           
+          Each time you access the Site, you must be authenticated by following an external link to the 
           <a
             href="https://www2.gov.bc.ca/gov/content/governments/government-id/bc-services-card"
             rel="noopener noreferrer"
@@ -2758,8 +2686,7 @@ exports[`Storyshots Terms of Use Mobile 1`] = `
         start="20"
       >
         <li>
-          In addition to the Province’s general
-           
+          In addition to the Province’s general 
           <a
             href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
             rel="noopener noreferrer"
@@ -2787,13 +2714,6 @@ exports[`Storyshots Terms of Use Mobile 1`] = `
         </li>
       </ol>
     </React.Fragment>
-  }
-  continueButton={
-    Object {
-      "label": "Continue",
-      "onClick": [Function],
-      "styling": "normal-blue btn",
-    }
   }
   heading="Terms of Use"
   onScroll={[Function]}
@@ -2880,8 +2800,7 @@ exports[`Storyshots Terms of Use Mobile 1`] = `
       <ol>
         <li>
           <b>
-            Reasonable efforts have been made to provide accurate, complete and timely information regarding the Services and the Site in general. However, you are encouraged to refer to the
-             
+            Reasonable efforts have been made to provide accurate, complete and timely information regarding the Services and the Site in general. However, you are encouraged to refer to the 
             <i>
               Criminal Records Review Act
             </i>
@@ -2919,8 +2838,7 @@ exports[`Storyshots Terms of Use Mobile 1`] = `
         start="5"
       >
         <li>
-          When you visit the Site or use the Services, certain types of information are automatically collected from you, through the use of audit logs or cookies. This information is collected, used and disclosed in accordance with the Province’s
-           
+          When you visit the Site or use the Services, certain types of information are automatically collected from you, through the use of audit logs or cookies. This information is collected, used and disclosed in accordance with the Province’s 
           <a
             href="https://www2.gov.bc.ca/gov/content/home/privacy"
             rel="noopener noreferrer"
@@ -2947,8 +2865,7 @@ exports[`Storyshots Terms of Use Mobile 1`] = `
         start="9"
       >
         <li>
-          You are required to have a
-           
+          You are required to have a 
           <a
             href="https://www2.gov.bc.ca/gov/content/governments/government-id/bc-services-card/login-with-card"
             rel="noopener noreferrer"
@@ -2956,12 +2873,10 @@ exports[`Storyshots Terms of Use Mobile 1`] = `
           >
             BC Services Card
           </a>
-           
-          to login and submit an online request for a criminal record check.
+            to login and submit an online request for a criminal record check.
         </li>
         <li>
-          Each time you access the Site, you must be authenticated by following an external link to the
-           
+          Each time you access the Site, you must be authenticated by following an external link to the 
           <a
             href="https://www2.gov.bc.ca/gov/content/governments/government-id/bc-services-card"
             rel="noopener noreferrer"
@@ -3086,8 +3001,7 @@ exports[`Storyshots Terms of Use Mobile 1`] = `
         start="20"
       >
         <li>
-          In addition to the Province’s general
-           
+          In addition to the Province’s general 
           <a
             href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
             rel="noopener noreferrer"
@@ -3126,7 +3040,7 @@ exports[`Storyshots Terms of Use Mobile 1`] = `
           onClick={[Function]}
           type="checkbox"
         />
-         
+         
         <b>
           I accept these terms and conditions
         </b>
@@ -3137,40 +3051,6 @@ exports[`Storyshots Terms of Use Mobile 1`] = `
           *
         </span>
       </label>
-    </section>
-    <section
-      className="buttons pt-4"
-    >
-      <Button
-        label="Cancel"
-        onClick={[Function]}
-        styling="normal-white btn"
-      >
-        <div>
-          <button
-            className="normal-white btn"
-            onClick={[Function]}
-            type="button"
-          >
-            Cancel
-          </button>
-        </div>
-      </Button>
-      <Button
-        label="Continue"
-        onClick={[Function]}
-        styling="normal-blue btn"
-      >
-        <div>
-          <button
-            className="normal-blue btn"
-            onClick={[Function]}
-            type="button"
-          >
-            Continue
-          </button>
-        </div>
-      </Button>
     </section>
   </div>
 </TermsOfUse>

@@ -1,16 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { FaPrint } from "react-icons/fa";
-import { Button } from "../button/Button";
-import { propTypes } from "../../types/propTypes";
 
 import "./TermsOfUse.css";
 
 export default function TermsOfUse({
   onScroll,
   acceptTerms,
-  continueButton,
-  cancelButton,
   content,
   heading,
   confirmText
@@ -32,25 +28,13 @@ export default function TermsOfUse({
 
       <section className="pt-2">
         <label htmlFor="acceptTerms">
-          <input id="acceptTerms" type="checkbox" onClick={acceptTerms} />{" "}
+          <input id="acceptTerms" type="checkbox" onClick={acceptTerms} />
+          &nbsp;
           <b>{confirmText}</b>
           <span id="asterisk" className="mandatory">
             *
           </span>
         </label>
-      </section>
-
-      <section className="buttons pt-4">
-        <Button
-          label={cancelButton.label}
-          onClick={cancelButton.onClick}
-          styling={cancelButton.styling}
-        />
-        <Button
-          label={continueButton.label}
-          onClick={continueButton.onClick}
-          styling={continueButton.styling}
-        />
       </section>
     </div>
   );
@@ -59,9 +43,7 @@ export default function TermsOfUse({
 TermsOfUse.propTypes = {
   onScroll: PropTypes.func.isRequired,
   acceptTerms: PropTypes.func.isRequired,
-  continueButton: propTypes.button,
-  cancelButton: propTypes.button,
-  content: PropTypes.object.isRequired,
+  content: PropTypes.element.isRequired,
   heading: PropTypes.string.isRequired,
   confirmText: PropTypes.string.isRequired
 };
