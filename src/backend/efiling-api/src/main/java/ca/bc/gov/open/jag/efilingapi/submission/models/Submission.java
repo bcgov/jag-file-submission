@@ -16,6 +16,8 @@ public class Submission {
 
     private UUID id;
 
+    private long expiryDate;
+
     private DocumentProperties documentProperties;
 
     private Navigation navigation;
@@ -30,6 +32,7 @@ public class Submission {
         this.navigation = builder.navigation;
         this.fee = builder.fee;
         this.accountDetails = builder.accountDetails;
+        this.expiryDate = builder.expiryDate;
     }
 
     public static Submission.Builder builder() {
@@ -42,12 +45,14 @@ public class Submission {
             @JsonProperty("submissionMetadata") DocumentProperties documentProperties,
             @JsonProperty("navigation") Navigation navigation,
             @JsonProperty("fee") Fee fee,
-            @JsonProperty("accountDetails") AccountDetails accountDetails) {
+            @JsonProperty("accountDetails") AccountDetails accountDetails,
+            @JsonProperty("expiryDate") long expiryDate) {
         this.id = id;
         this.documentProperties = documentProperties;
         this.navigation = navigation;
         this.fee = fee;
         this.accountDetails = accountDetails;
+        this.expiryDate = expiryDate;
     }
 
     public UUID getId() { return id; }
@@ -68,12 +73,17 @@ public class Submission {
         return accountDetails;
     }
 
+    public long getExpiryDate() {
+        return expiryDate;
+    }
+
     public static class Builder {
 
         private DocumentProperties documentProperties;
         private Navigation navigation;
         private Fee fee;
         private AccountDetails accountDetails;
+        private long expiryDate;
 
         public Builder documentProperties(DocumentProperties documentProperties) {
             this.documentProperties =  documentProperties;
@@ -92,6 +102,11 @@ public class Submission {
 
         public Builder accountDetails(AccountDetails accountDetails) {
             this.accountDetails = accountDetails;
+            return this;
+        }
+
+        public Builder expiryDate(long expiryDate) {
+            this.expiryDate = expiryDate;
             return this;
         }
 

@@ -1,9 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission;
 
-import ca.bc.gov.open.jag.efilingaccountclient.DemoAccountServiceImpl;
-import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
-import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
-import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionServiceImpl;
+import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
+import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStoreImpl;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -26,11 +24,11 @@ public class ConfigTest {
     }
 
     @Test
-    @DisplayName("CASE 1: returns the SubmissionService")
+    @DisplayName("CASE 1: returns the SubmissionStore")
     public void testGetSubmissionService()  {
 
-        SubmissionService actual = sut.submissionService();
-        Assertions.assertEquals(SubmissionServiceImpl.class, actual.getClass());
+        SubmissionStore actual = sut.submissionStore();
+        Assertions.assertEquals(SubmissionStoreImpl.class, actual.getClass());
 
     }
 }

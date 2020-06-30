@@ -1,20 +1,20 @@
 package ca.bc.gov.open.jag.efilingapi.error;
 
 public enum ErrorResponse {
-    INVALIDROLE("INVROLE", "User does not have a valid role for this request."),
-    ACCOUNTEXCEPTION("MLTACCNT", "Client has multiple CSO profiles"),
-    GETPROFILESEXCEPTION("CSOERROR", "Calling CSO accountFacade.getProfiles caused an exception.");
+    INVALIDROLE( "User does not have a valid role for this request."),
+    ACCOUNTEXCEPTION("Client has multiple CSO profiles"),
+    GETPROFILESEXCEPTION( "Calling CSO accountFacade.getProfiles caused an exception."),
+    CACHE_ERROR("Cache related error");
 
-    private final String errorCode;
     private final String errorMessage;
 
-    ErrorResponse(String errorCode, String errorMessage) {
-        this.errorCode = errorCode;
+    ErrorResponse(String errorMessage) {
         this.errorMessage = errorMessage;
     }
 
     public String getErrorCode() {
-        return errorCode;
+        return this.toString();
     }
+
     public String getErrorMessage() { return errorMessage; }
 }
