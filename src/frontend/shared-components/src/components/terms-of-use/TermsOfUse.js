@@ -12,10 +12,7 @@ export const TermsOfUse = ({ acceptTerms, content, heading, confirmText }) => {
           role="button"
           className="print-page print"
           tabIndex={0}
-          onClick={() => {
-            console.log("print button was clicked");
-            window.print();
-          }}
+          onClick={() => window.print()}
         >
           Print
           <FaPrint style={{ marginLeft: "10px" }} />
