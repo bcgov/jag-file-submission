@@ -5,7 +5,7 @@
 ### Openshift
 
 Current image build in openshift runs with `openshift` profile by default.
-This profiles mostly enables splunk logging.
+This profile mostly enables splunk logging.
 
 ```bash
 mvn install -P openshift
@@ -13,7 +13,7 @@ mvn install -P openshift
 
 ### Demo
 
-This profiles self isolate the application from any third party dependencies
+This profile self isolate the application from any third party dependencies
 
 ```bash
 mvn install -P demo
