@@ -1,0 +1,21 @@
+.display-box {
+  display: flex;
+  flex-direction: row;
+  padding: 15px;
+}
+
+.display-icon {
+  padding-right: 15px;
+}
+
+.display-element {
+  width: 100%;
+}
+
+.grey-background {
+  background-color: lightgrey;
+}
+
+.react-icons {
+  vertical-align: middle;
+}
