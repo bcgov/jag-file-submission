@@ -32,7 +32,6 @@ exports[`DisplayBox Component Matches the 'with icon' snapshot 1`] = `
   >
     <table
       className=""
-      id=""
     >
       <thead>
         <tr>
@@ -94,7 +93,6 @@ exports[`DisplayBox Component Matches the 'without icon' snapshot 1`] = `
   >
     <table
       className=""
-      id=""
     >
       <thead>
         <tr>
@@ -176,7 +174,6 @@ exports[`DisplayBox Component Matches the blue-background snapshot 1`] = `
   >
     <table
       className=""
-      id=""
     >
       <thead>
         <tr>

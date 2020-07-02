@@ -1425,7 +1425,6 @@ exports[`Storyshots DisplayBox With Blue Background 1`] = `
         ]
       }
       heading=""
-      id=""
       styling=""
     />
   }
@@ -1501,12 +1500,10 @@ exports[`Storyshots DisplayBox With Blue Background 1`] = `
           ]
         }
         heading=""
-        id=""
         styling=""
       >
         <table
           className=""
-          id=""
         >
           <thead>
             <tr>
@@ -1621,7 +1618,6 @@ exports[`Storyshots DisplayBox With Blue Background Mobile 1`] = `
         ]
       }
       heading=""
-      id=""
       styling=""
     />
   }
@@ -1697,12 +1693,10 @@ exports[`Storyshots DisplayBox With Blue Background Mobile 1`] = `
           ]
         }
         heading=""
-        id=""
         styling=""
       >
         <table
           className=""
-          id=""
         >
           <thead>
             <tr>
@@ -1817,7 +1811,6 @@ exports[`Storyshots DisplayBox With Icon 1`] = `
         ]
       }
       heading=""
-      id=""
       styling=""
     />
   }
@@ -1893,12 +1886,10 @@ exports[`Storyshots DisplayBox With Icon 1`] = `
           ]
         }
         heading=""
-        id=""
         styling=""
       >
         <table
           className=""
-          id=""
         >
           <thead>
             <tr>
@@ -2013,7 +2004,6 @@ exports[`Storyshots DisplayBox With Icon Mobile 1`] = `
         ]
       }
       heading=""
-      id=""
       styling=""
     />
   }
@@ -2089,12 +2079,10 @@ exports[`Storyshots DisplayBox With Icon Mobile 1`] = `
           ]
         }
         heading=""
-        id=""
         styling=""
       >
         <table
           className=""
-          id=""
         >
           <thead>
             <tr>
@@ -2209,7 +2197,6 @@ exports[`Storyshots DisplayBox Without Icon 1`] = `
         ]
       }
       heading=""
-      id=""
       styling=""
     />
   }
@@ -2247,12 +2234,10 @@ exports[`Storyshots DisplayBox Without Icon 1`] = `
           ]
         }
         heading=""
-        id=""
         styling=""
       >
         <table
           className=""
-          id=""
         >
           <thead>
             <tr>
@@ -2367,7 +2352,6 @@ exports[`Storyshots DisplayBox Without Icon Mobile 1`] = `
         ]
       }
       heading=""
-      id=""
       styling=""
     />
   }
@@ -2405,12 +2389,10 @@ exports[`Storyshots DisplayBox Without Icon Mobile 1`] = `
           ]
         }
         heading=""
-        id=""
         styling=""
       >
         <table
           className=""
-          id=""
         >
           <thead>
             <tr>
@@ -3003,12 +2985,10 @@ exports[`Storyshots Table With Blue Stripe Style 1`] = `
     ]
   }
   heading=""
-  id=""
   styling="blue-stripe"
 >
   <table
     className="blue-stripe"
-    id=""
   >
     <thead>
       <tr>
@@ -3118,12 +3098,10 @@ exports[`Storyshots Table With Header 1`] = `
     ]
   }
   heading="BCeID Info"
-  id=""
   styling=""
 >
   <table
     className=""
-    id=""
   >
     <thead>
       <tr>
@@ -3235,12 +3213,10 @@ exports[`Storyshots Table With Header Mobile 1`] = `
     ]
   }
   heading="BCeID Info"
-  id=""
   styling=""
 >
   <table
     className=""
-    id=""
   >
     <thead>
       <tr>
@@ -3352,12 +3328,10 @@ exports[`Storyshots Table Without Header 1`] = `
     ]
   }
   heading=""
-  id=""
   styling=""
 >
   <table
     className=""
-    id=""
   >
     <thead>
       <tr>
@@ -3467,12 +3441,10 @@ exports[`Storyshots Table Without Header Mobile 1`] = `
     ]
   }
   heading=""
-  id=""
   styling="blue-stripe"
 >
   <table
     className="blue-stripe"
-    id=""
   >
     <thead>
       <tr>

@@ -3,7 +3,6 @@
 exports[`Table Component Matches the blue striped snapshot 1`] = `
 <table
   className="blue-stripe"
-  id=""
 >
   <thead>
     <tr>
@@ -54,7 +53,6 @@ exports[`Table Component Matches the blue striped snapshot 1`] = `
 exports[`Table Component Matches the default snapshot 1`] = `
 <table
   className=""
-  id=""
 >
   <thead>
     <tr>

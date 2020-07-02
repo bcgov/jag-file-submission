@@ -12,13 +12,13 @@ const TableElement = ({ element: { name, value } }) => {
   );
 };
 
-export default function Table({ id, heading, elements, styling }) {
+export default function Table({ heading, elements, styling }) {
   const tableComponents = elements.map(element => {
     return <TableElement key={element.key || element.name} element={element} />;
   });
 
   return (
-    <table id={id} className={styling}>
+    <table className={styling}>
       <thead>
         <tr>
           <th colSpan="2">{heading}</th>
@@ -37,7 +37,6 @@ TableElement.propTypes = {
 };
 
 Table.propTypes = {
-  id: PropTypes.string,
   heading: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   elements: PropTypes.arrayOf(
     PropTypes.shape({
@@ -50,7 +49,6 @@ Table.propTypes = {
 };
 
 Table.defaultProps = {
-  id: "",
   styling: "",
   heading: "",
   elements: []
