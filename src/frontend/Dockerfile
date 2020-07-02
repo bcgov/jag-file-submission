@@ -10,6 +10,7 @@ COPY . .
 WORKDIR /shared-components
 
 RUN yarn install
+RUN npm link ../efiling-frontend/node_modules/react
 
 # set working directory
 WORKDIR /${SERVICE_NAME}
