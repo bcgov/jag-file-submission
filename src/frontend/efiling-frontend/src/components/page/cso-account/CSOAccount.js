@@ -1,28 +1,14 @@
 import React, { useState, useEffect } from "react";
 import ConfirmationPopup, { TermsOfUse, Button } from "shared-components";
-
-const content = (
-  <>
-    <p>The parties to this agreement are:</p>
-    <p>
-      <b>
-        Her Majesty the Queen in right of the Province of British Columbia, as
-        represented by the Minister responsible for Justice, Court Services
-        Branch
-      </b>
-    </p>
-    <p>and</p>
-    <p>
-      <b>the Subscriber,&nbsp;</b>as defined below.
-    </p>
-  </>
-);
+import { getContent } from "../../../modules/csoAccountAgreementContent";
 
 const continueButton = {
   label: "Create CSO Account",
   styling: "normal-blue btn",
   onClick: () => {}
 };
+
+const content = getContent();
 
 export default function CSOAccount({ confirmationPopup }) {
   const [termsAccepted, acceptTerms] = useState(false);
