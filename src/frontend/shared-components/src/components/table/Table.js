@@ -52,5 +52,6 @@ Table.propTypes = {
 Table.defaultProps = {
   id: "",
   styling: "",
-  heading: ""
+  heading: "",
+  elements: []
 };

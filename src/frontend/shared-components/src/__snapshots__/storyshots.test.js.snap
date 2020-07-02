@@ -1882,41 +1882,39 @@ exports[`Storyshots Loader Page 1`] = `
 
 exports[`Storyshots Table With Blue Stripe Style 1`] = `
 <Table
-  table={
-    Object {
-      "elements": Array [
-        Object {
-          "name": "BCeID",
-          "value": "bobross42",
-        },
-        Object {
-          "name": "Last Name",
-          "value": "Ross",
-        },
-        Object {
-          "name": "First Name",
-          "value": "Bob",
-        },
-        Object {
-          "name": "Email Address",
-          "value": "bob.ross@example.com",
-        },
-      ],
-      "heading": "BCeID Info",
-      "style": "blue-stripe",
-    }
+  elements={
+    Array [
+      Object {
+        "name": "BCeID",
+        "value": "bobross42",
+      },
+      Object {
+        "name": "Last Name",
+        "value": "Ross",
+      },
+      Object {
+        "name": "First Name",
+        "value": "Bob",
+      },
+      Object {
+        "name": "Email Address",
+        "value": "bob.ross@example.com",
+      },
+    ]
   }
+  heading=""
+  id=""
+  styling="blue-stripe"
 >
   <table
     className="blue-stripe"
+    id=""
   >
     <thead>
       <tr>
         <th
           colSpan="2"
-        >
-          BCeID Info
-        </th>
+        />
       </tr>
     </thead>
     <tbody>
@@ -1999,31 +1997,34 @@ exports[`Storyshots Table With Blue Stripe Style 1`] = `
 
 exports[`Storyshots Table With Header 1`] = `
 <Table
-  table={
-    Object {
-      "elements": Array [
-        Object {
-          "name": "BCeID",
-          "value": "bobross42",
-        },
-        Object {
-          "name": "Last Name",
-          "value": "Ross",
-        },
-        Object {
-          "name": "First Name",
-          "value": "Bob",
-        },
-        Object {
-          "name": "Email Address",
-          "value": "bob.ross@example.com",
-        },
-      ],
-      "heading": "BCeID Info",
-    }
+  elements={
+    Array [
+      Object {
+        "name": "BCeID",
+        "value": "bobross42",
+      },
+      Object {
+        "name": "Last Name",
+        "value": "Ross",
+      },
+      Object {
+        "name": "First Name",
+        "value": "Bob",
+      },
+      Object {
+        "name": "Email Address",
+        "value": "bob.ross@example.com",
+      },
+    ]
   }
+  heading="BCeID Info"
+  id=""
+  styling=""
 >
-  <table>
+  <table
+    className=""
+    id=""
+  >
     <thead>
       <tr>
         <th
@@ -2113,31 +2114,34 @@ exports[`Storyshots Table With Header 1`] = `
 
 exports[`Storyshots Table With Header Mobile 1`] = `
 <Table
-  table={
-    Object {
-      "elements": Array [
-        Object {
-          "name": "BCeID",
-          "value": "bobross42",
-        },
-        Object {
-          "name": "Last Name",
-          "value": "Ross",
-        },
-        Object {
-          "name": "First Name",
-          "value": "Bob",
-        },
-        Object {
-          "name": "Email Address",
-          "value": "bob.ross@example.com",
-        },
-      ],
-      "heading": "BCeID Info",
-    }
+  elements={
+    Array [
+      Object {
+        "name": "BCeID",
+        "value": "bobross42",
+      },
+      Object {
+        "name": "Last Name",
+        "value": "Ross",
+      },
+      Object {
+        "name": "First Name",
+        "value": "Bob",
+      },
+      Object {
+        "name": "Email Address",
+        "value": "bob.ross@example.com",
+      },
+    ]
   }
+  heading="BCeID Info"
+  id=""
+  styling=""
 >
-  <table>
+  <table
+    className=""
+    id=""
+  >
     <thead>
       <tr>
         <th
@@ -2227,31 +2231,34 @@ exports[`Storyshots Table With Header Mobile 1`] = `
 
 exports[`Storyshots Table Without Header 1`] = `
 <Table
-  table={
-    Object {
-      "elements": Array [
-        Object {
-          "name": "BCeID",
-          "value": "bobross42",
-        },
-        Object {
-          "name": "Last Name",
-          "value": "Ross",
-        },
-        Object {
-          "name": "First Name",
-          "value": "Bob",
-        },
-        Object {
-          "name": "Email Address",
-          "value": "bob.ross@example.com",
-        },
-      ],
-      "heading": "",
-    }
+  elements={
+    Array [
+      Object {
+        "name": "BCeID",
+        "value": "bobross42",
+      },
+      Object {
+        "name": "Last Name",
+        "value": "Ross",
+      },
+      Object {
+        "name": "First Name",
+        "value": "Bob",
+      },
+      Object {
+        "name": "Email Address",
+        "value": "bob.ross@example.com",
+      },
+    ]
   }
+  heading=""
+  id=""
+  styling=""
 >
-  <table>
+  <table
+    className=""
+    id=""
+  >
     <thead>
       <tr>
         <th
@@ -2339,33 +2346,33 @@ exports[`Storyshots Table Without Header 1`] = `
 
 exports[`Storyshots Table Without Header Mobile 1`] = `
 <Table
-  table={
-    Object {
-      "elements": Array [
-        Object {
-          "name": "BCeID",
-          "value": "bobross42",
-        },
-        Object {
-          "name": "Last Name",
-          "value": "Ross",
-        },
-        Object {
-          "name": "First Name",
-          "value": "Bob",
-        },
-        Object {
-          "name": "Email Address",
-          "value": "bob.ross@example.com",
-        },
-      ],
-      "heading": "",
-      "style": "blue-stripe",
-    }
+  elements={
+    Array [
+      Object {
+        "name": "BCeID",
+        "value": "bobross42",
+      },
+      Object {
+        "name": "Last Name",
+        "value": "Ross",
+      },
+      Object {
+        "name": "First Name",
+        "value": "Bob",
+      },
+      Object {
+        "name": "Email Address",
+        "value": "bob.ross@example.com",
+      },
+    ]
   }
+  heading=""
+  id=""
+  styling="blue-stripe"
 >
   <table
     className="blue-stripe"
+    id=""
   >
     <thead>
       <tr>
