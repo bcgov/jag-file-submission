@@ -15,18 +15,18 @@ const icon = <MdPerson size={32} />;
 
 export const WithoutIcon = () => <DisplayBox element={table} />;
 
-export const WithIcon = () => <DisplayBox icon element={table} />;
+export const WithIcon = () => <DisplayBox icon={icon} element={table} />;
 
 export const WithBlueBackground = () => (
-  <DisplayBox styling={"blue-background"} icon element={table} />
+  <DisplayBox styling={"blue-background"} icon={icon} element={table} />
 );
 
 export const WithoutIconMobile = () => <DisplayBox element={table} />;
 
-export const WithIconMobile = () => <DisplayBox icon element={table} />;
+export const WithIconMobile = () => <DisplayBox icon={icon} element={table} />;
 
 export const WithBlueBackgroundMobile = () => (
-  <DisplayBox styling={"blue-background"} icon element={table} />
+  <DisplayBox styling={"blue-background"} icon={icon} element={table} />
 );
 
 const mobileViewport = {

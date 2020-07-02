@@ -14,12 +14,12 @@ describe("Table Component", () => {
   });
 
   test("Matches the with icon snapshot", () => {
-    testBasicSnapshot(<DisplayBox icon element={tableData} />);
+    testBasicSnapshot(<DisplayBox icon={icon} element={tableData} />);
   });
 
   test("Matches the blue-background snapshot", () => {
     testBasicSnapshot(
-      <DisplayBox styling={"blue-background"} icon element={tableData} />
+      <DisplayBox styling={"blue-background"} icon={icon} element={tableData} />
     );
   });
 });
