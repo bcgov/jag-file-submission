@@ -134,10 +134,11 @@ const content = (
           </li>
           <li>
             if the Subscriber is not an individual, the individual who executes
-            this agreement on the Subscriber's behalf is authorized to do so by
-            the Subscriber and, if the Subscriber is a corporation, that the
-            individual is authorized to do so by the Subscriber without affixing
-            a traditional signature or the Subscriber&apos;s corporate seal; and
+            this agreement on the Subscriber&apos;s behalf is authorized to do
+            so by the Subscriber and, if the Subscriber is a corporation, that
+            the individual is authorized to do so by the Subscriber without
+            affixing a traditional signature or the Subscriber&apos;s corporate
+            seal; and
           </li>
           <li>
             this agreement is legally binding upon and enforceable against the
