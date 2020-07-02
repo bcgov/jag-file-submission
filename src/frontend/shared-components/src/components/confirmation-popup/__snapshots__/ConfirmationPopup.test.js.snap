@@ -26,13 +26,13 @@ exports[`ConfirmationPopup Component Matches the snapshot 1`] = `
   modal={
     Object {
       "body": [Function],
-      "handleShow": [MockFunction],
       "show": true,
       "title": "Cancel process?",
     }
   }
 >
   <Button
+    disabled={false}
     label="main label"
     onClick={[MockFunction]}
     styling="normal-blue btn"
@@ -40,6 +40,7 @@ exports[`ConfirmationPopup Component Matches the snapshot 1`] = `
     <div>
       <button
         className="normal-blue btn"
+        disabled={false}
         onClick={[MockFunction]}
         type="button"
       >
@@ -630,6 +631,7 @@ exports[`ConfirmationPopup Component Matches the snapshot 1`] = `
                           className="mx-auto mb-5"
                         >
                           <Button
+                            disabled={false}
                             label="Yes, cancel my process please"
                             onClick={[MockFunction]}
                             styling="normal-blue btn consistent-width"
@@ -637,6 +639,7 @@ exports[`ConfirmationPopup Component Matches the snapshot 1`] = `
                             <div>
                               <button
                                 className="normal-blue btn consistent-width"
+                                disabled={false}
                                 onClick={[MockFunction]}
                                 type="button"
                               >
@@ -646,6 +649,7 @@ exports[`ConfirmationPopup Component Matches the snapshot 1`] = `
                           </Button>
                           <br />
                           <Button
+                            disabled={false}
                             label="No, resume my process please"
                             onClick={[MockFunction]}
                             styling="normal-white btn consistent-width"
@@ -653,6 +657,7 @@ exports[`ConfirmationPopup Component Matches the snapshot 1`] = `
                             <div>
                               <button
                                 className="normal-white btn consistent-width"
+                                disabled={false}
                                 onClick={[MockFunction]}
                                 type="button"
                               >

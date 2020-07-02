@@ -4,6 +4,7 @@ exports[`Button Component Button matches the snapshot 1`] = `
 <div>
   <button
     className="normal-blue btn"
+    disabled={false}
     onClick={[MockFunction]}
     type="button"
   >

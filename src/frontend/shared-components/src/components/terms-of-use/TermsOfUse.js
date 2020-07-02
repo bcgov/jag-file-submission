@@ -4,13 +4,7 @@ import { FaPrint } from "react-icons/fa";
 
 import "./TermsOfUse.css";
 
-export default function TermsOfUse({
-  onScroll,
-  acceptTerms,
-  content,
-  heading,
-  confirmText
-}) {
+export const TermsOfUse = ({ acceptTerms, content, heading, confirmText }) => {
   return (
     <div>
       <div style={{ width: "100%" }}>
@@ -19,12 +13,10 @@ export default function TermsOfUse({
           <FaPrint style={{ marginLeft: "10px" }} />
         </span>
 
-        <h1>{heading}</h1>
+        <h3>{heading}</h3>
       </div>
 
-      <section className="scroll-box" onScroll={onScroll}>
-        {content}
-      </section>
+      <section className="scroll-box">{content}</section>
 
       <section className="pt-2">
         <label htmlFor="acceptTerms">
@@ -38,10 +30,9 @@ export default function TermsOfUse({
       </section>
     </div>
   );
-}
+};
 
 TermsOfUse.propTypes = {
-  onScroll: PropTypes.func.isRequired,
   acceptTerms: PropTypes.func.isRequired,
   content: PropTypes.element.isRequired,
   heading: PropTypes.string.isRequired,

@@ -20,7 +20,7 @@ const cancelButton = {
 
 export default function App() {
   const header = {
-    name: "eFiling Frontend",
+    name: "E-File Submission",
     history: useHistory()
   };
 
@@ -50,14 +50,13 @@ export default function App() {
 
   const modal = {
     show,
-    handleShow,
     title: "Cancel E-File Submission?",
     body
   };
 
   const confirmationPopup = {
     modal,
-    mainButton,
+    mainButton: { ...mainButton, onClick: handleShow },
     confirmButton: { ...confirmButton, onClick: handleConfirm },
     cancelButton: { ...cancelButton, onClick: handleClose }
   };

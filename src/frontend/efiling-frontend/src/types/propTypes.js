@@ -8,7 +8,6 @@ export const propTypes = {
   confirmationPopup: PropTypes.shape({
     modal: PropTypes.shape({
       show: PropTypes.bool.isRequired,
-      handleShow: PropTypes.func.isRequired,
       title: PropTypes.string.isRequired,
       body: PropTypes.func.isRequired
     }).isRequired,

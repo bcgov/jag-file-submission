@@ -2,11 +2,9 @@ import React from "react";
 import testBasicSnapshot from "../../TestHelper";
 import { getTestData } from "../../modules/termsOfUseTestData";
 
-import TermsOfUse from "./TermsOfUse";
+import { TermsOfUse } from "./TermsOfUse";
 
 describe("TermsOfUse", () => {
-  const onScroll = jest.fn();
-
   const acceptTerms = jest.fn();
 
   const content = getTestData();
@@ -18,7 +16,6 @@ describe("TermsOfUse", () => {
   test("Matches the snapshot", () => {
     const termsOfUse = (
       <TermsOfUse
-        onScroll={onScroll}
         acceptTerms={acceptTerms}
         content={content}
         heading={heading}

@@ -4,7 +4,8 @@ import queryString from "query-string";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { Header, Footer, Loader } from "shared-components";
-import CSOStatus from "../../composite/csostatus/CSOStatus";
+import CSOStatus from "../../composite/cso-status/CSOStatus";
+import CSOAccount from "../cso-account/CSOAccount";
 import { propTypes } from "../../../types/propTypes";
 
 import "../page.css";
@@ -58,9 +59,14 @@ export default function Home({ page: { header, confirmationPopup } }) {
     <main>
       <Header header={header} />
       <div className="page">
-        <div className="content col-md-10">
+        <div className="content col-md-12">
           {showLoader && <Loader page />}
-          {!showLoader && <CSOStatus csoStatus={csoStatus} />}
+          {!showLoader && !csoAccountExists && (
+            <CSOAccount confirmationPopup={confirmationPopup} />
+          )}
+          {!showLoader && csoAccountExists && (
+            <CSOStatus csoStatus={csoStatus} />
+          )}
         </div>
       </div>
       <Footer />
