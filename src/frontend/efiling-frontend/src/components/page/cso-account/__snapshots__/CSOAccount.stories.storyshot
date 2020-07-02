@@ -26,7 +26,7 @@ exports[`Storyshots CSOAccount Default 1`] = `
   <br />
   <div>
     <div
-      style="width: 100%;"
+      class="full-width"
     >
       <span
         class="print-page print"
@@ -54,7 +54,7 @@ exports[`Storyshots CSOAccount Default 1`] = `
       </h3>
     </div>
     <section
-      class="scroll-box"
+      class="scroll-box printable"
     >
       <p>
         The parties to this agreement are:
@@ -773,7 +773,7 @@ exports[`Storyshots CSOAccount Mobile 1`] = `
   <br />
   <div>
     <div
-      style="width: 100%;"
+      class="full-width"
     >
       <span
         class="print-page print"
@@ -801,7 +801,7 @@ exports[`Storyshots CSOAccount Mobile 1`] = `
       </h3>
     </div>
     <section
-      class="scroll-box"
+      class="scroll-box printable"
     >
       <p>
         The parties to this agreement are:

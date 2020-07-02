@@ -11,6 +11,10 @@
   margin-right: 30px;
 }
 
+.full-width {
+  width: 100%;
+}
+
 .print-page {
   cursor: pointer;
   text-decoration: underline;
@@ -23,4 +27,11 @@
 .buttons {
   display: flex;
   float: right;
+}
+
+@media print {
+  .printable {
+    overflow: visible;
+    height: auto;
+  }
 }

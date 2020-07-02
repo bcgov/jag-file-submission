@@ -216,7 +216,7 @@ exports[`Home Component matches the snapshot when user cso account does not exis
         <br />
         <div>
           <div
-            style="width: 100%;"
+            class="full-width"
           >
             <span
               class="print-page print"
@@ -244,7 +244,7 @@ exports[`Home Component matches the snapshot when user cso account does not exis
             </h3>
           </div>
           <section
-            class="scroll-box"
+            class="scroll-box printable"
           >
             <p>
               The parties to this agreement are:

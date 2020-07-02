@@ -3,14 +3,11 @@
 exports[`TermsOfUse Matches the snapshot 1`] = `
 <div>
   <div
-    style={
-      Object {
-        "width": "100%",
-      }
-    }
+    className="full-width"
   >
     <span
       className="print-page print"
+      onClick={[Function]}
       role="button"
       tabIndex={0}
     >
@@ -40,7 +37,7 @@ exports[`TermsOfUse Matches the snapshot 1`] = `
     </h3>
   </div>
   <section
-    className="scroll-box"
+    className="scroll-box printable"
   >
     <p>
       In these Terms of Use, "you" or "your" includes the individual using or accessing the Electronic Criminal Record Check Portal (the "Site") on their own behalf to submit an online request for a criminal record check.
