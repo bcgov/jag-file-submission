@@ -12,6 +12,8 @@ describe("Table Component", () => {
   });
 
   test("Matches the blue striped snapshot", () => {
-    testBasicSnapshot(<Table table={{ ...tableData, style: "blue-stripe" }} />);
+    testBasicSnapshot(
+      <Table table={{ ...tableData, styling: "blue-stripe" }} />
+    );
   });
 });

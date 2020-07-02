@@ -8,11 +8,6 @@ const elements = [
   { name: "Email Address", value: "bob.ross@example.com" }
 ];
 
-const table = {
-  heading: "BCeID Info",
-  elements
-};
-
-export function getTableTestData() {
-  return table;
+export function getTableElementsTestData() {
+  return elements;
 }
