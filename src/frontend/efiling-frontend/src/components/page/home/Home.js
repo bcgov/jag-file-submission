@@ -39,7 +39,7 @@ const checkCSOAccountStatus = (
 };
 
 export default function Home({ page: { header, confirmationPopup } }) {
-  const [showLoader, setShowLoader] = useState(false);
+  const [showLoader, setShowLoader] = useState(true);
   const [csoAccountExists, setCsoAccountExists] = useState(false);
   const location = useLocation();
   const queryParams = queryString.parse(location.search);
