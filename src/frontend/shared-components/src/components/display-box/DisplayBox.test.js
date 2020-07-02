@@ -8,7 +8,7 @@ import { getTestTable } from "../../modules/displayBoxTestData";
 const tableData = getTestTable();
 const icon = <MdPerson size={32} />;
 
-describe("Table Component", () => {
+describe("DisplayBox Component", () => {
   test("Matches the without icon snapshot", () => {
     testBasicSnapshot(<DisplayBox element={tableData} />);
   });

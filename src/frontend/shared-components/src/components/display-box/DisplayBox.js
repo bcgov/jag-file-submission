@@ -6,8 +6,8 @@ import "./DisplayBox.css";
 export default function DisplayBox({ styling, icon, element }) {
   return (
     <div className={`display-box ${styling}`}>
-      <div className={"display-icon"}>{icon}</div>
-      <div className={"display-element"}>{element}</div>
+      <div className="display-icon">{icon}</div>
+      <div className="display-element">{element}</div>
     </div>
   );
 }
