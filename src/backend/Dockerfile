@@ -3,11 +3,7 @@
 #############################################################################################
 FROM maven:3.6.3-jdk-8 as build
 
-ARG PROXY_SET=false
-ARG PROXY_HOST=
-ARG PROXY_PORT=
-
-ARG MVN_PROFILES
+ARG MVN_PROFILE
 ARG SERVICE_NAME
 
 ENV SERVICE_NAME=${SERVICE_NAME}
@@ -15,10 +11,12 @@ ENV SERVICE_NAME=${SERVICE_NAME}
 COPY . .
 
 RUN mvn -B clean package \
-        -DproxySet=${PROXY_SET} \
-        -DproxyHost=${PROXY_HOST} \
-        -DproxyPort=${PROXY_PORT} \
-        -P all
+        -P libs
+
+WORKDIR ${SERVICE_NAME}
+
+RUN mvn -B clean package \
+        -P ${MVN_PROFILE}
 
 #############################################################################################
 

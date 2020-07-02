@@ -43,12 +43,12 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
 ## Running the App
 
 By default a demo mode is enabled.
-if you want to integrate with the CSO application create a local `.env` at the root of the repository based off `.env.template`.
+if you want to integrate with the CSO application create a local `.env` at the root of the repository based off `.env.template`. and change the `MVN_PROFILE` to `default`
 
 set the following environement variables:
 
 ```
-DEMO_MODE=true
+MVN_PROFILE=default
 CSO_ACCOUNTFACADE_URI=
 CSO_ACCOUNTFACADE_USERNAME=
 CSO_ACCOUNTFACADE_PASSWORD=
