@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
 import ConfirmationPopup, { TermsOfUse, Button } from "shared-components";
 import { getContent } from "../../../modules/csoAccountAgreementContent";
 
