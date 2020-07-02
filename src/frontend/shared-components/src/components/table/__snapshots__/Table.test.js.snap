@@ -9,7 +9,7 @@ exports[`Table Component Matches the blue striped snapshot 1`] = `
       <th
         colSpan="2"
       >
-        BCeID Info
+        
       </th>
     </tr>
   </thead>
@@ -51,7 +51,9 @@ exports[`Table Component Matches the blue striped snapshot 1`] = `
 `;
 
 exports[`Table Component Matches the default snapshot 1`] = `
-<table>
+<table
+  className=""
+>
   <thead>
     <tr>
       <th
