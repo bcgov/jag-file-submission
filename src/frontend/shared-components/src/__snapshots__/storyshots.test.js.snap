@@ -1404,29 +1404,29 @@ exports[`Storyshots DisplayBox With Blue Background 1`] = `
 <DisplayBox
   element={
     <Table
-      table={
-        Object {
-          "elements": Array [
-            Object {
-              "name": "BCeID",
-              "value": "bobross42",
-            },
-            Object {
-              "name": "Last Name",
-              "value": "Ross",
-            },
-            Object {
-              "name": "First Name",
-              "value": "Bob",
-            },
-            Object {
-              "name": "Email Address",
-              "value": "bob.ross@example.com",
-            },
-          ],
-          "heading": "",
-        }
+      elements={
+        Array [
+          Object {
+            "name": "BCeID",
+            "value": "bobross42",
+          },
+          Object {
+            "name": "Last Name",
+            "value": "Ross",
+          },
+          Object {
+            "name": "First Name",
+            "value": "Bob",
+          },
+          Object {
+            "name": "Email Address",
+            "value": "bob.ross@example.com",
+          },
+        ]
       }
+      heading=""
+      id=""
+      styling=""
     />
   }
   icon={
@@ -1480,31 +1480,34 @@ exports[`Storyshots DisplayBox With Blue Background 1`] = `
       className="display-element"
     >
       <Table
-        table={
-          Object {
-            "elements": Array [
-              Object {
-                "name": "BCeID",
-                "value": "bobross42",
-              },
-              Object {
-                "name": "Last Name",
-                "value": "Ross",
-              },
-              Object {
-                "name": "First Name",
-                "value": "Bob",
-              },
-              Object {
-                "name": "Email Address",
-                "value": "bob.ross@example.com",
-              },
-            ],
-            "heading": "",
-          }
+        elements={
+          Array [
+            Object {
+              "name": "BCeID",
+              "value": "bobross42",
+            },
+            Object {
+              "name": "Last Name",
+              "value": "Ross",
+            },
+            Object {
+              "name": "First Name",
+              "value": "Bob",
+            },
+            Object {
+              "name": "Email Address",
+              "value": "bob.ross@example.com",
+            },
+          ]
         }
+        heading=""
+        id=""
+        styling=""
       >
-        <table>
+        <table
+          className=""
+          id=""
+        >
           <thead>
             <tr>
               <th
@@ -1597,29 +1600,29 @@ exports[`Storyshots DisplayBox With Blue Background Mobile 1`] = `
 <DisplayBox
   element={
     <Table
-      table={
-        Object {
-          "elements": Array [
-            Object {
-              "name": "BCeID",
-              "value": "bobross42",
-            },
-            Object {
-              "name": "Last Name",
-              "value": "Ross",
-            },
-            Object {
-              "name": "First Name",
-              "value": "Bob",
-            },
-            Object {
-              "name": "Email Address",
-              "value": "bob.ross@example.com",
-            },
-          ],
-          "heading": "",
-        }
+      elements={
+        Array [
+          Object {
+            "name": "BCeID",
+            "value": "bobross42",
+          },
+          Object {
+            "name": "Last Name",
+            "value": "Ross",
+          },
+          Object {
+            "name": "First Name",
+            "value": "Bob",
+          },
+          Object {
+            "name": "Email Address",
+            "value": "bob.ross@example.com",
+          },
+        ]
       }
+      heading=""
+      id=""
+      styling=""
     />
   }
   icon={
@@ -1673,31 +1676,34 @@ exports[`Storyshots DisplayBox With Blue Background Mobile 1`] = `
       className="display-element"
     >
       <Table
-        table={
-          Object {
-            "elements": Array [
-              Object {
-                "name": "BCeID",
-                "value": "bobross42",
-              },
-              Object {
-                "name": "Last Name",
-                "value": "Ross",
-              },
-              Object {
-                "name": "First Name",
-                "value": "Bob",
-              },
-              Object {
-                "name": "Email Address",
-                "value": "bob.ross@example.com",
-              },
-            ],
-            "heading": "",
-          }
+        elements={
+          Array [
+            Object {
+              "name": "BCeID",
+              "value": "bobross42",
+            },
+            Object {
+              "name": "Last Name",
+              "value": "Ross",
+            },
+            Object {
+              "name": "First Name",
+              "value": "Bob",
+            },
+            Object {
+              "name": "Email Address",
+              "value": "bob.ross@example.com",
+            },
+          ]
         }
+        heading=""
+        id=""
+        styling=""
       >
-        <table>
+        <table
+          className=""
+          id=""
+        >
           <thead>
             <tr>
               <th
@@ -1790,29 +1796,29 @@ exports[`Storyshots DisplayBox With Icon 1`] = `
 <DisplayBox
   element={
     <Table
-      table={
-        Object {
-          "elements": Array [
-            Object {
-              "name": "BCeID",
-              "value": "bobross42",
-            },
-            Object {
-              "name": "Last Name",
-              "value": "Ross",
-            },
-            Object {
-              "name": "First Name",
-              "value": "Bob",
-            },
-            Object {
-              "name": "Email Address",
-              "value": "bob.ross@example.com",
-            },
-          ],
-          "heading": "",
-        }
+      elements={
+        Array [
+          Object {
+            "name": "BCeID",
+            "value": "bobross42",
+          },
+          Object {
+            "name": "Last Name",
+            "value": "Ross",
+          },
+          Object {
+            "name": "First Name",
+            "value": "Bob",
+          },
+          Object {
+            "name": "Email Address",
+            "value": "bob.ross@example.com",
+          },
+        ]
       }
+      heading=""
+      id=""
+      styling=""
     />
   }
   icon={
@@ -1866,31 +1872,34 @@ exports[`Storyshots DisplayBox With Icon 1`] = `
       className="display-element"
     >
       <Table
-        table={
-          Object {
-            "elements": Array [
-              Object {
-                "name": "BCeID",
-                "value": "bobross42",
-              },
-              Object {
-                "name": "Last Name",
-                "value": "Ross",
-              },
-              Object {
-                "name": "First Name",
-                "value": "Bob",
-              },
-              Object {
-                "name": "Email Address",
-                "value": "bob.ross@example.com",
-              },
-            ],
-            "heading": "",
-          }
+        elements={
+          Array [
+            Object {
+              "name": "BCeID",
+              "value": "bobross42",
+            },
+            Object {
+              "name": "Last Name",
+              "value": "Ross",
+            },
+            Object {
+              "name": "First Name",
+              "value": "Bob",
+            },
+            Object {
+              "name": "Email Address",
+              "value": "bob.ross@example.com",
+            },
+          ]
         }
+        heading=""
+        id=""
+        styling=""
       >
-        <table>
+        <table
+          className=""
+          id=""
+        >
           <thead>
             <tr>
               <th
@@ -1983,29 +1992,29 @@ exports[`Storyshots DisplayBox With Icon Mobile 1`] = `
 <DisplayBox
   element={
     <Table
-      table={
-        Object {
-          "elements": Array [
-            Object {
-              "name": "BCeID",
-              "value": "bobross42",
-            },
-            Object {
-              "name": "Last Name",
-              "value": "Ross",
-            },
-            Object {
-              "name": "First Name",
-              "value": "Bob",
-            },
-            Object {
-              "name": "Email Address",
-              "value": "bob.ross@example.com",
-            },
-          ],
-          "heading": "",
-        }
+      elements={
+        Array [
+          Object {
+            "name": "BCeID",
+            "value": "bobross42",
+          },
+          Object {
+            "name": "Last Name",
+            "value": "Ross",
+          },
+          Object {
+            "name": "First Name",
+            "value": "Bob",
+          },
+          Object {
+            "name": "Email Address",
+            "value": "bob.ross@example.com",
+          },
+        ]
       }
+      heading=""
+      id=""
+      styling=""
     />
   }
   icon={
@@ -2059,31 +2068,34 @@ exports[`Storyshots DisplayBox With Icon Mobile 1`] = `
       className="display-element"
     >
       <Table
-        table={
-          Object {
-            "elements": Array [
-              Object {
-                "name": "BCeID",
-                "value": "bobross42",
-              },
-              Object {
-                "name": "Last Name",
-                "value": "Ross",
-              },
-              Object {
-                "name": "First Name",
-                "value": "Bob",
-              },
-              Object {
-                "name": "Email Address",
-                "value": "bob.ross@example.com",
-              },
-            ],
-            "heading": "",
-          }
+        elements={
+          Array [
+            Object {
+              "name": "BCeID",
+              "value": "bobross42",
+            },
+            Object {
+              "name": "Last Name",
+              "value": "Ross",
+            },
+            Object {
+              "name": "First Name",
+              "value": "Bob",
+            },
+            Object {
+              "name": "Email Address",
+              "value": "bob.ross@example.com",
+            },
+          ]
         }
+        heading=""
+        id=""
+        styling=""
       >
-        <table>
+        <table
+          className=""
+          id=""
+        >
           <thead>
             <tr>
               <th
@@ -2176,9 +2188,46 @@ exports[`Storyshots DisplayBox Without Icon 1`] = `
 <DisplayBox
   element={
     <Table
-      table={
-        Object {
-          "elements": Array [
+      elements={
+        Array [
+          Object {
+            "name": "BCeID",
+            "value": "bobross42",
+          },
+          Object {
+            "name": "Last Name",
+            "value": "Ross",
+          },
+          Object {
+            "name": "First Name",
+            "value": "Bob",
+          },
+          Object {
+            "name": "Email Address",
+            "value": "bob.ross@example.com",
+          },
+        ]
+      }
+      heading=""
+      id=""
+      styling=""
+    />
+  }
+  icon={null}
+  styling="grey-background"
+>
+  <div
+    className="display-box grey-background"
+  >
+    <div
+      className="display-icon"
+    />
+    <div
+      className="display-element"
+    >
+      <Table
+        elements={
+          Array [
             Object {
               "name": "BCeID",
               "value": "bobross42",
@@ -2195,50 +2244,16 @@ exports[`Storyshots DisplayBox Without Icon 1`] = `
               "name": "Email Address",
               "value": "bob.ross@example.com",
             },
-          ],
-          "heading": "",
+          ]
         }
-      }
-    />
-  }
-  icon={null}
-  styling="grey-background"
->
-  <div
-    className="display-box grey-background"
-  >
-    <div
-      className="display-icon"
-    />
-    <div
-      className="display-element"
-    >
-      <Table
-        table={
-          Object {
-            "elements": Array [
-              Object {
-                "name": "BCeID",
-                "value": "bobross42",
-              },
-              Object {
-                "name": "Last Name",
-                "value": "Ross",
-              },
-              Object {
-                "name": "First Name",
-                "value": "Bob",
-              },
-              Object {
-                "name": "Email Address",
-                "value": "bob.ross@example.com",
-              },
-            ],
-            "heading": "",
-          }
-        }
+        heading=""
+        id=""
+        styling=""
       >
-        <table>
+        <table
+          className=""
+          id=""
+        >
           <thead>
             <tr>
               <th
@@ -2331,9 +2346,46 @@ exports[`Storyshots DisplayBox Without Icon Mobile 1`] = `
 <DisplayBox
   element={
     <Table
-      table={
-        Object {
-          "elements": Array [
+      elements={
+        Array [
+          Object {
+            "name": "BCeID",
+            "value": "bobross42",
+          },
+          Object {
+            "name": "Last Name",
+            "value": "Ross",
+          },
+          Object {
+            "name": "First Name",
+            "value": "Bob",
+          },
+          Object {
+            "name": "Email Address",
+            "value": "bob.ross@example.com",
+          },
+        ]
+      }
+      heading=""
+      id=""
+      styling=""
+    />
+  }
+  icon={null}
+  styling="grey-background"
+>
+  <div
+    className="display-box grey-background"
+  >
+    <div
+      className="display-icon"
+    />
+    <div
+      className="display-element"
+    >
+      <Table
+        elements={
+          Array [
             Object {
               "name": "BCeID",
               "value": "bobross42",
@@ -2350,50 +2402,16 @@ exports[`Storyshots DisplayBox Without Icon Mobile 1`] = `
               "name": "Email Address",
               "value": "bob.ross@example.com",
             },
-          ],
-          "heading": "",
+          ]
         }
-      }
-    />
-  }
-  icon={null}
-  styling="grey-background"
->
-  <div
-    className="display-box grey-background"
-  >
-    <div
-      className="display-icon"
-    />
-    <div
-      className="display-element"
-    >
-      <Table
-        table={
-          Object {
-            "elements": Array [
-              Object {
-                "name": "BCeID",
-                "value": "bobross42",
-              },
-              Object {
-                "name": "Last Name",
-                "value": "Ross",
-              },
-              Object {
-                "name": "First Name",
-                "value": "Bob",
-              },
-              Object {
-                "name": "Email Address",
-                "value": "bob.ross@example.com",
-              },
-            ],
-            "heading": "",
-          }
-        }
+        heading=""
+        id=""
+        styling=""
       >
-        <table>
+        <table
+          className=""
+          id=""
+        >
           <thead>
             <tr>
               <th
