@@ -6,6 +6,7 @@ import {
   useHistory,
   useLocation
 } from "react-router-dom";
+import queryString from "query-string";
 import Home from "./components/page/home/Home";
 import Cancel from "./components/page/cancel/Cancel";
 import Error from "./components/page/error/Error";
@@ -14,7 +15,7 @@ export default function App() {
   const location = useLocation();
   const queryParams = queryString.parse(location.search);
 
-  const error = queryParams.error;
+  const { error } = queryParams;
 
   const header = {
     name: "eFiling Demo Client",
