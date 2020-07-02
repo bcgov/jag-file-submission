@@ -16,6 +16,10 @@
   background-color: lightgrey;
 }
 
+.blue-background {
+  background-color: rgba(225, 232, 242, 1);
+}
+
 .react-icons {
   vertical-align: middle;
 }

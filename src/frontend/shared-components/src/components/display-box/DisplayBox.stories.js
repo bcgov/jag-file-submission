@@ -9,19 +9,25 @@ export default {
   component: DisplayBox
 };
 
-const elemt = <h1>A title</h1>;
-
 const table = getTestTable();
 
 const icon = <MdPerson size={32} />;
 
-export const Simple = () => <DisplayBox element={elemt} />;
+export const WithoutIcon = () => <DisplayBox element={table} />;
 
-export const Complex = () => (
-  <DisplayBox style={"grey-background"} icon={icon} element={table} />
+export const WithIcon = () => <DisplayBox icon={icon} element={table} />;
+
+export const WithBlueBackground = () => (
+  <DisplayBox style={"blue-background"} icon={icon} element={table} />
 );
 
-export const Mobile = () => <DisplayBox />;
+export const WithoutIconMobile = () => <DisplayBox element={table} />;
+
+export const WithIconMobile = () => <DisplayBox icon={icon} element={table} />;
+
+export const WithBlueBackgroundMobile = () => (
+  <DisplayBox style={"blue-background"} icon={icon} element={table} />
+);
 
 const mobileViewport = {
   parameters: {
@@ -31,4 +37,6 @@ const mobileViewport = {
   }
 };
 
-Mobile.story = mobileViewport;
+WithoutIconMobile.story = mobileViewport;
+WithIconMobile.story = mobileViewport;
+WithBlueBackgroundMobile.story = mobileViewport;

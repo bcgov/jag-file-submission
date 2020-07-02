@@ -14,10 +14,11 @@ export default function DisplayBox({ style, icon, element }) {
 
 DisplayBox.propTypes = {
   style: PropTypes.string,
-  icon: PropTypes.object,
-  element: PropTypes.object.isRequired
+  icon: PropTypes.element,
+  element: PropTypes.element.isRequired
 };
 
 DisplayBox.defaultProps = {
-  style: ""
+  style: "grey-background",
+  icon: ""
 };
