@@ -2201,7 +2201,7 @@ exports[`Storyshots DisplayBox Without Icon 1`] = `
       }
     />
   }
-  icon=""
+  icon={null}
   styling="grey-background"
 >
   <div
@@ -2356,7 +2356,7 @@ exports[`Storyshots DisplayBox Without Icon Mobile 1`] = `
       }
     />
   }
-  icon=""
+  icon={null}
   styling="grey-background"
 >
   <div

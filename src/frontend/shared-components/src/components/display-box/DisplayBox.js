@@ -20,5 +20,5 @@ DisplayBox.propTypes = {
 
 DisplayBox.defaultProps = {
   styling: "grey-background",
-  icon: ""
+  icon: null
 };

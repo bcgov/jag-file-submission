@@ -9,11 +9,11 @@ const tableData = getTestTable();
 const icon = <MdPerson size={32} />;
 
 describe("DisplayBox Component", () => {
-  test("Matches the without icon snapshot", () => {
+  test("Matches the 'without icon' snapshot", () => {
     testBasicSnapshot(<DisplayBox element={tableData} />);
   });
 
-  test("Matches the with icon snapshot", () => {
+  test("Matches the 'with icon' snapshot", () => {
     testBasicSnapshot(<DisplayBox icon={icon} element={tableData} />);
   });
 
