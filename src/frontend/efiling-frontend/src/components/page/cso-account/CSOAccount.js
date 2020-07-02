@@ -1,6 +1,8 @@
+/* eslint-disable react/require-default-props */
 import React, { useState, useEffect } from "react";
 import ConfirmationPopup, { TermsOfUse, Button } from "shared-components";
 import { getContent } from "../../../modules/csoAccountAgreementContent";
+import { propTypes } from "../../../types/propTypes";
 
 const continueButton = {
   label: "Create CSO Account",

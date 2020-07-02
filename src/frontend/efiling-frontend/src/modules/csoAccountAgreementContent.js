@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React from "react";
 
 const content = (
@@ -53,69 +54,71 @@ const content = (
       <li>In this agreement:</li>
     </ol>
     <p>
-      <b>"Account Manager"</b> means the individual or individuals authorized by
-      the Subscriber to be the Subscriber's contact person for the purpose of
-      managing the Subscription Account.
+      <b>&quot;Account Manager&quot;</b> means the individual or individuals
+      authorized by the Subscriber to be the Subscriber's contact person for the
+      purpose of managing the Subscription Account.
     </p>
     <p>
-      <b>"BC OnLine"</b> means the Province's system that enables information or
-      service transactions by electronic means and that is known as "BC OnLine".
+      <b>&quot;BC OnLine&quot;</b> means the Province's system that enables
+      information or service transactions by electronic means and that is known
+      as "BC OnLine".
     </p>
     <p>
-      <b>"CSO"</b> means Court Services Online, the electronic court service
-      system maintained and managed by the Court Services Branch.
+      <b>&quot;CSO&quot;</b> means Court Services Online, the electronic court
+      service system maintained and managed by the Court Services Branch.
     </p>
     <p>
-      <b>"Commencement Date"</b> means the date upon which a Subscriber is
-      deemed to have accepted the terms and conditions of this agreement
-      pursuant to paragraph 3.
+      <b>&quot;Commencement Date&quot;</b> means the date upon which a
+      Subscriber is deemed to have accepted the terms and conditions of this
+      agreement pursuant to paragraph 3.
     </p>
     <p>
-      <b>"Electronic access"</b> means non-exclusive electronic access to any
-      database or service made available through CSO.
+      <b>&quot;Electronic access&quot;</b> means non-exclusive electronic access
+      to any database or service made available through CSO.
     </p>
     <p>
-      <b>"Password"</b> means each and every code word associated with a
-      Subscription Account to permit the use of the services available through
+      <b>&quot;Password&quot;</b> means each and every code word associated with
+      a Subscription Account to permit the use of the services available through
       CSO or each and every code word provided by BC Online which permits the
       use of the services available through CSO.
     </p>
     <p>
-      <b>"Province"</b> means Her Majesty the Queen in right of the Province of
-      British Columbia, as represented by the Minister responsible for the Court
-      Services Branch.
+      <b>&quot;Province&quot;</b> means Her Majesty the Queen in right of the
+      Province of British Columbia, as represented by the Minister responsible
+      for the Court Services Branch.
     </p>
     <p>
-      <b>"Secure Electronic Signature(s)"</b> has the meaning set out in section
-      41.3 of the Evidence Act, R.S.B.C. 1996, c. 124, as amended from time to
-      time.
+      <b>&quot;Secure Electronic Signature(s)&quot;</b> has the meaning set out
+      in section 41.3 of the Evidence Act, R.S.B.C. 1996, c. 124, as amended
+      from time to time.
     </p>
     <p>
-      <b>"Service Fees"</b> means the fees set out in the rules of court or
-      otherwise for electronic access to services available through CSO.
+      <b>&quot;Service Fees&quot;</b> means the fees set out in the rules of
+      court or otherwise for electronic access to services available through
+      CSO.
     </p>
     <p>
-      <b>"Subscriber"</b> means the contracting party who has executed this
-      agreement and includes any employees, associates, agents or nominees of
-      the Subscriber (defined as "registered user" in Supreme Court Rule 69).
+      <b>&quot;Subscriber&quot;</b> means the contracting party who has executed
+      this agreement and includes any employees, associates, agents or nominees
+      of the Subscriber (defined as "registered user" in Supreme Court Rule 69).
     </p>
     <p>
-      <b>"Subscription Account"</b> means an account provided to a Subscriber
-      pursuant to paragraph 4 allowing the Subscriber access to the services
-      offered through CSO.
+      <b>&quot;Subscription Account&quot;</b> means an account provided to a
+      Subscriber pursuant to paragraph 4 allowing the Subscriber access to the
+      services offered through CSO.
     </p>
     <p>
-      <b>"Transaction"</b> includes any inquiry made by computer to the computer
-      system operating CSO to display or print information available through
-      CSO, to utilize services available through CSO or to transmit court
-      documents to the registry through CSO.
+      <b>&quot;Transaction&quot;</b> includes any inquiry made by computer to
+      the computer system operating CSO to display or print information
+      available through CSO, to utilize services available through CSO or to
+      transmit court documents to the registry through CSO.
     </p>
     <p>
-      <b>"UserID"</b> means each and every identification code associated with
-      the Subscriber's Subscription Account to permit the use of the services
-      available through CSO or each and every identification code assigned by BC
-      Online and associated with the user's account in BC Online which permit
-      the use of the services available through CSO.
+      <b>&quot;UserID&quot;</b> means each and every identification code
+      associated with the Subscriber's Subscription Account to permit the use of
+      the services available through CSO or each and every identification code
+      assigned by BC Online and associated with the user's account in BC Online
+      which permit the use of the services available through CSO.
     </p>
     <p>
       <b>WARRANTY</b>
