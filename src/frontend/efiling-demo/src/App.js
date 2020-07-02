@@ -10,6 +10,7 @@ import queryString from "query-string";
 import Home from "./components/page/home/Home";
 import Cancel from "./components/page/cancel/Cancel";
 import Error from "./components/page/error/Error";
+import Success from "./components/page/success/Success";
 
 export default function App() {
   const location = useLocation();
@@ -34,6 +35,9 @@ export default function App() {
         </Route>
         <Route exact path="/efiling-demo/error">
           <Error page={{ header, error }} />
+        </Route>
+        <Route exact path="/efiling-demo/success">
+          <Success page={{ header }} />
         </Route>
       </Switch>
     </div>
