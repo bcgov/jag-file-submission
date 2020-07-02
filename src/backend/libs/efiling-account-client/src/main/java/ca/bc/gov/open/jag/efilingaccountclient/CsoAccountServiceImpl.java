@@ -66,7 +66,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         AccountDetails accountDetails = null;
 
         List<ClientProfile> profiles = accountFacadeBean.findProfiles(userGuid);
-        // An account must only one profile associated to proceed
+        // An account must have only one profile associated to proceed
         if (profiles.size() == 1) {
             accountDetails = accountDetailsMapper.toAccountDetails(profiles.get(0), hasFileRole(userGuid));
         }
@@ -83,7 +83,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         BCeIDAccountTypeCode accountTypeCode = getBCeIDAccountType(accountType);
 
         if (accountTypeCode != BCeIDAccountTypeCode.VOID) {
-            
+
             AccountDetailRequest request = new AccountDetailRequest();
             request.setOnlineServiceId("62B2-5550-4376-4DA7");
             request.setRequesterUserGuid(userGuid);
