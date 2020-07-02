@@ -5,10 +5,7 @@ package ca.bc.gov.open.jag.efilingaccountclient.config;
 import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 
 import java.util.ArrayList;
@@ -25,10 +22,8 @@ public class AutoConfigurationTest {
 
     private AutoConfiguration sut;
 
+    private SoapProperties initSoapProperties() {
 
-    @Test
-    @DisplayName("CASE1: Test that beans are created")
-    public void testBeansAreGenerated() {
         ArrayList<EfilingSoapClientProperties> soapClientProperties = new ArrayList<>();
 
         EfilingSoapClientProperties accountProperties = new EfilingSoapClientProperties();
@@ -56,7 +51,14 @@ public class AutoConfigurationTest {
         SoapProperties soapProperties = new SoapProperties();
         soapProperties.setClients(soapClientProperties);
 
-        sut = new AutoConfiguration(soapProperties);
+        return soapProperties;
+    }
+
+    @Test
+    @DisplayName("Test that beans are created")
+    public void testBeansAreGenerated() {
+
+        sut = new AutoConfiguration(initSoapProperties());
 
         Assertions.assertNotNull(sut.accountFacadeBean());
         Assertions.assertNotNull(sut.roleRegistryPortType());
