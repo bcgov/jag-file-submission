@@ -29,9 +29,9 @@ jag:
           password: ${CSO_LOOKUPFACADE_PASSWORD}
           uri: ${CSO_LOOKUPFACADE_URI:http://localhost:8091}
         - client: BCEID
-          userName: ${CSO_BCEIDLOOKUP_USERNAME}
-          password: ${CSO_BCEIDLOOKUP_PASSWORD}
-          uri: ${CSO_BCEIDLOOKUP_URI:http://localhost:8091}
+          userName: ${BCEID_LOOKUP_USERNAME}
+          password: ${BCEID_LOOKUP_PASSWORD}
+          uri: ${BCEID_LOOKUP_URI:http://localhost:8091}
 
 info:
   app:
