@@ -3,16 +3,20 @@ import PropTypes from "prop-types";
 import { Header, Footer, Button } from "shared-components";
 import { propTypes } from "../../../types/propTypes";
 
-export default function Cancel({ page: { header } }) {
+export default function Error({ page: { header, error } }) {
   return (
     <main>
       <Header header={header} />
       <div className="page">
         <div className="content col-md-12">
           <p>
-            You have cancelled your submission. Please click the button below to
-            go back home.
+            The following error occurred with your submission. Please click the
+            button below to go back home.
           </p>
+          <p>
+            <b>{error}</b>
+          </p>
+          <br />
           <Button
             onClick={() => header.history.push("/")}
             label="Return home"
@@ -25,8 +29,9 @@ export default function Cancel({ page: { header } }) {
   );
 }
 
-Cancel.propTypes = {
+Error.propTypes = {
   page: PropTypes.shape({
-    header: propTypes.header
+    header: propTypes.header,
+    error: PropTypes.string.isRequired
   }).isRequired
 };

@@ -62,7 +62,7 @@ export default function Home({ page: { header } }) {
     <main>
       <Header header={header} />
       <div className="page">
-        <div className="content col-md-10">
+        <div className="content col-md-12">
           <Input input={input} onChange={setAccountGuid} />
           <br />
           <Button

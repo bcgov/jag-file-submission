@@ -43,7 +43,7 @@ exports[`Home Component matches the snapshot 1`] = `
       class="page"
     >
       <div
-        class="content col-md-10"
+        class="content col-md-12"
       >
         <div>
           <label

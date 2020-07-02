@@ -1,9 +1,22 @@
 import React from "react";
-import { Switch, Route, Redirect, useHistory } from "react-router-dom";
+import {
+  Switch,
+  Route,
+  Redirect,
+  useHistory,
+  useLocation
+} from "react-router-dom";
+import queryString from "query-string";
 import Home from "./components/page/home/Home";
 import Cancel from "./components/page/cancel/Cancel";
+import Error from "./components/page/error/Error";
 
 export default function App() {
+  const location = useLocation();
+  const queryParams = queryString.parse(location.search);
+
+  const { error } = queryParams;
+
   const header = {
     name: "eFiling Demo Client",
     history: useHistory()
@@ -18,6 +31,9 @@ export default function App() {
         </Route>
         <Route exact path="/efiling-demo/cancel">
           <Cancel page={{ header }} />
+        </Route>
+        <Route exact path="/efiling-demo/error">
+          <Error page={{ header, error }} />
         </Route>
       </Switch>
     </div>
