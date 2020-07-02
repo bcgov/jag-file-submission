@@ -15,8 +15,6 @@ RUN mvn -B clean install \
 
 WORKDIR ${SERVICE_NAME}
 
-RUN ls
-
 RUN mvn -B clean package \
         -P ${MVN_PROFILE}
 
