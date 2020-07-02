@@ -2,6 +2,7 @@
 
 exports[`Storyshots Button Default 1`] = `
 <Button
+  disabled={false}
   label="Button label"
   onClick={[Function]}
   styling="normal-blue btn"
@@ -9,6 +10,7 @@ exports[`Storyshots Button Default 1`] = `
   <div>
     <button
       className="normal-blue btn"
+      disabled={false}
       onClick={[Function]}
       type="button"
     >
@@ -20,6 +22,7 @@ exports[`Storyshots Button Default 1`] = `
 
 exports[`Storyshots Button Mobile 1`] = `
 <Button
+  disabled={false}
   label="Button label"
   onClick={[Function]}
   styling="normal-blue btn"
@@ -27,6 +30,7 @@ exports[`Storyshots Button Mobile 1`] = `
   <div>
     <button
       className="normal-blue btn"
+      disabled={false}
       onClick={[Function]}
       type="button"
     >
@@ -62,13 +66,13 @@ exports[`Storyshots ConfirmationPopup Default 1`] = `
   modal={
     Object {
       "body": [Function],
-      "handleShow": [Function],
       "show": true,
       "title": "Cancel process?",
     }
   }
 >
   <Button
+    disabled={false}
     label="main label"
     onClick={[Function]}
     styling="normal-blue btn"
@@ -76,6 +80,7 @@ exports[`Storyshots ConfirmationPopup Default 1`] = `
     <div>
       <button
         className="normal-blue btn"
+        disabled={false}
         onClick={[Function]}
         type="button"
       >
@@ -666,6 +671,7 @@ exports[`Storyshots ConfirmationPopup Default 1`] = `
                           className="mx-auto mb-5"
                         >
                           <Button
+                            disabled={false}
                             label="Yes, cancel my process please"
                             onClick={[Function]}
                             styling="normal-blue btn consistent-width"
@@ -673,6 +679,7 @@ exports[`Storyshots ConfirmationPopup Default 1`] = `
                             <div>
                               <button
                                 className="normal-blue btn consistent-width"
+                                disabled={false}
                                 onClick={[Function]}
                                 type="button"
                               >
@@ -682,6 +689,7 @@ exports[`Storyshots ConfirmationPopup Default 1`] = `
                           </Button>
                           <br />
                           <Button
+                            disabled={false}
                             label="No, resume my process please"
                             onClick={[Function]}
                             styling="normal-white btn consistent-width"
@@ -689,6 +697,7 @@ exports[`Storyshots ConfirmationPopup Default 1`] = `
                             <div>
                               <button
                                 className="normal-white btn consistent-width"
+                                disabled={false}
                                 onClick={[Function]}
                                 type="button"
                               >
@@ -737,13 +746,13 @@ exports[`Storyshots ConfirmationPopup Mobile 1`] = `
   modal={
     Object {
       "body": [Function],
-      "handleShow": [Function],
       "show": true,
       "title": "Cancel process?",
     }
   }
 >
   <Button
+    disabled={false}
     label="main label"
     onClick={[Function]}
     styling="normal-blue btn"
@@ -751,6 +760,7 @@ exports[`Storyshots ConfirmationPopup Mobile 1`] = `
     <div>
       <button
         className="normal-blue btn"
+        disabled={false}
         onClick={[Function]}
         type="button"
       >
@@ -1341,6 +1351,7 @@ exports[`Storyshots ConfirmationPopup Mobile 1`] = `
                           className="mx-auto mb-5"
                         >
                           <Button
+                            disabled={false}
                             label="Yes, cancel my process please"
                             onClick={[Function]}
                             styling="normal-blue btn consistent-width"
@@ -1348,6 +1359,7 @@ exports[`Storyshots ConfirmationPopup Mobile 1`] = `
                             <div>
                               <button
                                 className="normal-blue btn consistent-width"
+                                disabled={false}
                                 onClick={[Function]}
                                 type="button"
                               >
@@ -1357,6 +1369,7 @@ exports[`Storyshots ConfirmationPopup Mobile 1`] = `
                           </Button>
                           <br />
                           <Button
+                            disabled={false}
                             label="No, resume my process please"
                             onClick={[Function]}
                             styling="normal-white btn consistent-width"
@@ -1364,6 +1377,7 @@ exports[`Storyshots ConfirmationPopup Mobile 1`] = `
                             <div>
                               <button
                                 className="normal-white btn consistent-width"
+                                disabled={false}
                                 onClick={[Function]}
                                 type="button"
                               >
@@ -3775,18 +3789,15 @@ exports[`Storyshots Terms of Use Default 1`] = `
     </React.Fragment>
   }
   heading="Terms of Use"
-  onScroll={[Function]}
 >
   <div>
     <div
-      style={
-        Object {
-          "width": "100%",
-        }
-      }
+      className="non-printable full-width"
     >
       <span
         className="print-page print"
+        onClick={[Function]}
+        onKeyDown={[Function]}
         role="button"
         tabIndex={0}
       >
@@ -3833,13 +3844,12 @@ exports[`Storyshots Terms of Use Default 1`] = `
           </IconBase>
         </FaPrint>
       </span>
-      <h1>
+      <h3>
         Terms of Use
-      </h1>
+      </h3>
     </div>
     <section
-      className="scroll-box"
-      onScroll={[Function]}
+      className="scroll-box printable"
     >
       <p>
         In these Terms of Use, "you" or "your" includes the individual using or accessing the Electronic Criminal Record Check Portal (the "Site") on their own behalf to submit an online request for a criminal record check.
@@ -4089,7 +4099,7 @@ exports[`Storyshots Terms of Use Default 1`] = `
       </ol>
     </section>
     <section
-      className="pt-2"
+      className="non-printable pt-2"
     >
       <label
         htmlFor="acceptTerms"
@@ -4370,18 +4380,15 @@ exports[`Storyshots Terms of Use Mobile 1`] = `
     </React.Fragment>
   }
   heading="Terms of Use"
-  onScroll={[Function]}
 >
   <div>
     <div
-      style={
-        Object {
-          "width": "100%",
-        }
-      }
+      className="non-printable full-width"
     >
       <span
         className="print-page print"
+        onClick={[Function]}
+        onKeyDown={[Function]}
         role="button"
         tabIndex={0}
       >
@@ -4428,13 +4435,12 @@ exports[`Storyshots Terms of Use Mobile 1`] = `
           </IconBase>
         </FaPrint>
       </span>
-      <h1>
+      <h3>
         Terms of Use
-      </h1>
+      </h3>
     </div>
     <section
-      className="scroll-box"
-      onScroll={[Function]}
+      className="scroll-box printable"
     >
       <p>
         In these Terms of Use, "you" or "your" includes the individual using or accessing the Electronic Criminal Record Check Portal (the "Site") on their own behalf to submit an online request for a criminal record check.
@@ -4684,7 +4690,7 @@ exports[`Storyshots Terms of Use Mobile 1`] = `
       </ol>
     </section>
     <section
-      className="pt-2"
+      className="non-printable pt-2"
     >
       <label
         htmlFor="acceptTerms"

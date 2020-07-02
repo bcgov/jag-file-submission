@@ -4,29 +4,27 @@ import { FaPrint } from "react-icons/fa";
 
 import "./TermsOfUse.css";
 
-export default function TermsOfUse({
-  onScroll,
-  acceptTerms,
-  content,
-  heading,
-  confirmText
-}) {
+export const TermsOfUse = ({ acceptTerms, content, heading, confirmText }) => {
   return (
     <div>
-      <div style={{ width: "100%" }}>
-        <span role="button" className="print-page print" tabIndex={0}>
+      <div className="non-printable full-width">
+        <span
+          role="button"
+          className="print-page print"
+          tabIndex={0}
+          onClick={() => window.print()}
+          onKeyDown={() => window.print()}
+        >
           Print
           <FaPrint style={{ marginLeft: "10px" }} />
         </span>
 
-        <h1>{heading}</h1>
+        <h3>{heading}</h3>
       </div>
 
-      <section className="scroll-box" onScroll={onScroll}>
-        {content}
-      </section>
+      <section className="scroll-box printable">{content}</section>
 
-      <section className="pt-2">
+      <section className="non-printable pt-2">
         <label htmlFor="acceptTerms">
           <input id="acceptTerms" type="checkbox" onClick={acceptTerms} />
           &nbsp;
@@ -38,10 +36,9 @@ export default function TermsOfUse({
       </section>
     </div>
   );
-}
+};
 
 TermsOfUse.propTypes = {
-  onScroll: PropTypes.func.isRequired,
   acceptTerms: PropTypes.func.isRequired,
   content: PropTypes.element.isRequired,
   heading: PropTypes.string.isRequired,

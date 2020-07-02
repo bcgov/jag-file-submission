@@ -21,7 +21,6 @@ const body = () => (
 
 const modal = {
   show: true,
-  handleShow: () => {},
   title: "Cancel process?",
   body
 };

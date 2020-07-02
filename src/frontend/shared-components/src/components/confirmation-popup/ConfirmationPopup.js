@@ -8,7 +8,7 @@ import { propTypes } from "../../types/propTypes";
 import "./ConfirmationPopup.css";
 
 export default function ConfirmationPopup({
-  modal: { show, handleShow, title, body },
+  modal: { show, title, body },
   mainButton,
   confirmButton,
   cancelButton
@@ -16,7 +16,7 @@ export default function ConfirmationPopup({
   return (
     <>
       <Button
-        onClick={handleShow}
+        onClick={mainButton.onClick}
         label={mainButton.label}
         styling={mainButton.styling}
       />
@@ -47,7 +47,6 @@ export default function ConfirmationPopup({
 ConfirmationPopup.propTypes = {
   modal: PropTypes.shape({
     show: PropTypes.bool.isRequired,
-    handleShow: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
     body: PropTypes.func.isRequired
   }).isRequired,

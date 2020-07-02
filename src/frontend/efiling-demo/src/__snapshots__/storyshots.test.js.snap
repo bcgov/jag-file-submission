@@ -54,6 +54,7 @@ exports[`Storyshots Cancel Default 1`] = `
       <div>
         <button
           className="normal-white btn"
+          disabled={false}
           onClick={[Function]}
           type="button"
         >
@@ -206,6 +207,7 @@ exports[`Storyshots Cancel Mobile 1`] = `
       <div>
         <button
           className="normal-white btn"
+          disabled={false}
           onClick={[Function]}
           type="button"
         >
@@ -389,6 +391,7 @@ exports[`Storyshots Home Default 1`] = `
       <div>
         <button
           className="normal-blue btn"
+          disabled={false}
           onClick={[Function]}
           type="button"
         >
@@ -573,6 +576,7 @@ exports[`Storyshots Home Mobile 1`] = `
       <div>
         <button
           className="normal-blue btn"
+          disabled={false}
           onClick={[Function]}
           type="button"
         >

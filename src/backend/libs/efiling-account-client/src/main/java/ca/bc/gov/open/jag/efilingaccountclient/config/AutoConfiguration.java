@@ -9,6 +9,7 @@ import ca.bc.gov.open.jag.efilingaccountclient.mappers.AccountDetailsMapperImpl;
 import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
+import ca.bceid.webservices.client.v9.BCeIDServiceSoap;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -40,14 +41,21 @@ public class AutoConfiguration {
     }
 
     @Bean
+    public BCeIDServiceSoap bCeIDServiceSoap() { return getPort(Clients.BCEID, BCeIDServiceSoap.class); }
+
+    @Bean
     public AccountDetailsMapper accountDetailsMapper() {
         return new AccountDetailsMapperImpl();
     }
 
     @Bean
     @ConditionalOnMissingBean({EfilingAccountService.class})
-    public EfilingAccountService efilingAccountService(AccountFacadeBean accountFacadeBean, RoleRegistryPortType roleRegistryPortType, AccountDetailsMapper accountDetailsMapper) {
-        return new CsoAccountServiceImpl(accountFacadeBean, roleRegistryPortType, accountDetailsMapper);
+    public EfilingAccountService efilingAccountService(AccountFacadeBean accountFacadeBean,
+                                                       RoleRegistryPortType roleRegistryPortType,
+                                                       BCeIDServiceSoap bCeIDServiceSoap,
+                                                       AccountDetailsMapper accountDetailsMapper) {
+        return new CsoAccountServiceImpl(accountFacadeBean, roleRegistryPortType,
+                                         bCeIDServiceSoap, accountDetailsMapper);
     }
 
     public <T> T getPort(Clients clients, Class<T> type) {

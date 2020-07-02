@@ -5,10 +5,7 @@ package ca.bc.gov.open.jag.efilingaccountclient.config;
 import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 
 import java.util.ArrayList;
@@ -22,13 +19,22 @@ public class AutoConfigurationTest {
     ApplicationContextRunner context = new ApplicationContextRunner()
             .withUserConfiguration(AutoConfiguration.class);
 
-
     private AutoConfiguration sut;
 
-
     @Test
-    @DisplayName("CASE1: Test that beans are created")
+    @DisplayName("Test that beans are created")
     public void testBeansAreGenerated() {
+
+        sut = new AutoConfiguration(initSoapProperties());
+
+        Assertions.assertNotNull(sut.accountFacadeBean());
+        Assertions.assertNotNull(sut.roleRegistryPortType());
+        Assertions.assertNotNull(sut.bCeIDServiceSoap());
+        Assertions.assertNotNull(sut.efilingAccountService(null, null, null, null));
+    }
+
+    private SoapProperties initSoapProperties() {
+
         ArrayList<EfilingSoapClientProperties> soapClientProperties = new ArrayList<>();
 
         EfilingSoapClientProperties accountProperties = new EfilingSoapClientProperties();
@@ -46,13 +52,16 @@ public class AutoConfigurationTest {
         roleProperties.setPassword(PASSWORD);
         soapClientProperties.add(roleProperties);
 
+        EfilingSoapClientProperties bceidProperties = new EfilingSoapClientProperties();
+        bceidProperties.setClient(Clients.BCEID);
+        bceidProperties.setUri(URI);
+        bceidProperties.setUserName(USERNAME);
+        bceidProperties.setPassword(PASSWORD);
+        soapClientProperties.add(bceidProperties);
+
         SoapProperties soapProperties = new SoapProperties();
         soapProperties.setClients(soapClientProperties);
 
-        sut = new AutoConfiguration(soapProperties);
-
-        Assertions.assertNotNull(sut.accountFacadeBean());
-        Assertions.assertNotNull(sut.roleRegistryPortType());
-        Assertions.assertNotNull(sut.efilingAccountService(null, null, null));
+        return soapProperties;
     }
 }
