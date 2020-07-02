@@ -141,7 +141,7 @@ public class generateFromRequestTest {
 
         Mockito
                 .when(efilingAccountServiceMock.getAccountDetails(
-                        Mockito.eq(TestHelpers.CASE_1.toString().replace("-", "").toUpperCase())))
+                        Mockito.eq(TestHelpers.CASE_1.toString().replace("-", "").toUpperCase()), Mockito.any()))
                 .thenReturn(accountDetails);
 
         Submission submissionCase1 = Submission
@@ -166,7 +166,8 @@ public class generateFromRequestTest {
 
         Mockito
                 .when(efilingAccountServiceMock.getAccountDetails(
-                        Mockito.eq(TestHelpers.CASE_2.toString().replace("-", "").toUpperCase())))
+                        Mockito.eq(TestHelpers.CASE_2.toString().replace("-", "").toUpperCase()),
+                        Mockito.any()))
                 .thenReturn(accountDetails);
 
         Mockito
@@ -181,7 +182,8 @@ public class generateFromRequestTest {
 
         Mockito
                 .when(efilingAccountServiceMock.getAccountDetails(
-                        Mockito.eq(TestHelpers.CASE_3.toString().replace("-", "").toUpperCase())))
+                        Mockito.eq(TestHelpers.CASE_3.toString().replace("-", "").toUpperCase()),
+                        Mockito.any()))
                 .thenReturn(accountDetails);
 
     }
