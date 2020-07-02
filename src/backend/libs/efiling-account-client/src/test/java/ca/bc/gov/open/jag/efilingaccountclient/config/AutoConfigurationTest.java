@@ -19,8 +19,19 @@ public class AutoConfigurationTest {
     ApplicationContextRunner context = new ApplicationContextRunner()
             .withUserConfiguration(AutoConfiguration.class);
 
-
     private AutoConfiguration sut;
+
+    @Test
+    @DisplayName("Test that beans are created")
+    public void testBeansAreGenerated() {
+
+        sut = new AutoConfiguration(initSoapProperties());
+
+        Assertions.assertNotNull(sut.accountFacadeBean());
+        Assertions.assertNotNull(sut.roleRegistryPortType());
+        Assertions.assertNotNull(sut.bCeIDServiceSoap());
+        Assertions.assertNotNull(sut.efilingAccountService(null, null, null, null));
+    }
 
     private SoapProperties initSoapProperties() {
 
@@ -52,17 +63,5 @@ public class AutoConfigurationTest {
         soapProperties.setClients(soapClientProperties);
 
         return soapProperties;
-    }
-
-    @Test
-    @DisplayName("Test that beans are created")
-    public void testBeansAreGenerated() {
-
-        sut = new AutoConfiguration(initSoapProperties());
-
-        Assertions.assertNotNull(sut.accountFacadeBean());
-        Assertions.assertNotNull(sut.roleRegistryPortType());
-        Assertions.assertNotNull(sut.bCeIDServiceSoap());
-        Assertions.assertNotNull(sut.efilingAccountService(null, null, null, null));
     }
 }
