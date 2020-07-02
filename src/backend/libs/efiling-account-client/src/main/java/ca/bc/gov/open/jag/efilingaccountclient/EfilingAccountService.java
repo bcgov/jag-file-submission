@@ -8,5 +8,5 @@ import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
  */
 public interface EfilingAccountService {
 
-    AccountDetails getAccountDetails(String userGuid) throws NestedEjbException_Exception;
+    AccountDetails getAccountDetails(String userGuid, String bceidAccountType) throws NestedEjbException_Exception;
 }

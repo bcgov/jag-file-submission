@@ -17,7 +17,6 @@ public class AccountDetails {
 
     protected AccountDetails(AccountDetails.Builder builder) {
 
-
         this.accountId = builder.accountId;
         this.clientId = builder.clientId;
         this.firstName = builder.firstName;

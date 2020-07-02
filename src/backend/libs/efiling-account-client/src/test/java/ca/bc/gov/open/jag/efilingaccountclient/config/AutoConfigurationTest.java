@@ -46,6 +46,13 @@ public class AutoConfigurationTest {
         roleProperties.setPassword(PASSWORD);
         soapClientProperties.add(roleProperties);
 
+        EfilingSoapClientProperties bceidProperties = new EfilingSoapClientProperties();
+        bceidProperties.setClient(Clients.BCEID);
+        bceidProperties.setUri(URI);
+        bceidProperties.setUserName(USERNAME);
+        bceidProperties.setPassword(PASSWORD);
+        soapClientProperties.add(bceidProperties);
+
         SoapProperties soapProperties = new SoapProperties();
         soapProperties.setClients(soapClientProperties);
 
@@ -53,6 +60,7 @@ public class AutoConfigurationTest {
 
         Assertions.assertNotNull(sut.accountFacadeBean());
         Assertions.assertNotNull(sut.roleRegistryPortType());
-        Assertions.assertNotNull(sut.efilingAccountService(null, null, null));
+        Assertions.assertNotNull(sut.bCeIDServiceSoap());
+        Assertions.assertNotNull(sut.efilingAccountService(null, null, null, null));
     }
 }
