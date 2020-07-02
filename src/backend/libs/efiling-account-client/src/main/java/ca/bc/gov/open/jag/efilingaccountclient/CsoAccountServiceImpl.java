@@ -12,7 +12,10 @@ import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bceid.webservices.client.v9.*;
 import org.springframework.util.StringUtils;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CsoAccountServiceImpl implements EfilingAccountService {
 
@@ -20,6 +23,19 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
     private final RoleRegistryPortType roleRegistryPortType;
     private final BCeIDServiceSoap bCeIDServiceSoap;
     private final AccountDetailsMapper accountDetailsMapper;
+
+    private static final Map<String, BCeIDAccountTypeCode> accountTypeLookup;
+    static {
+        Map<String, BCeIDAccountTypeCode> tempMap = new HashMap<String, BCeIDAccountTypeCode>();
+        tempMap.put("business", BCeIDAccountTypeCode.BUSINESS);
+        tempMap.put("verified individual", BCeIDAccountTypeCode.INDIVIDUAL);
+        tempMap.put("eds", BCeIDAccountTypeCode.EDS);
+        tempMap.put("internal", BCeIDAccountTypeCode.INTERNAL);
+        tempMap.put("ldb", BCeIDAccountTypeCode.LDB);
+        tempMap.put("ths", BCeIDAccountTypeCode.THS);
+
+        accountTypeLookup = Collections.unmodifiableMap(tempMap);;
+    }
 
     public CsoAccountServiceImpl(AccountFacadeBean accountFacadeBean,
                                  RoleRegistryPortType roleRegistryPortType,
@@ -67,6 +83,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         BCeIDAccountTypeCode accountTypeCode = getBCeIDAccountType(accountType);
 
         if (accountTypeCode != BCeIDAccountTypeCode.VOID) {
+            
             AccountDetailRequest request = new AccountDetailRequest();
             request.setOnlineServiceId("62B2-5550-4376-4DA7");
             request.setRequesterUserGuid(userGuid);
@@ -74,7 +91,6 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
             request.setUserGuid(userGuid);
             request.setAccountTypeCode(accountTypeCode);
             AccountDetailResponse response = bCeIDServiceSoap.getAccountDetail(request);
-            ResponseCode responseCode = response.getCode();
 
             if (response.getCode() == ResponseCode.SUCCESS) {
                 accountDetails = accountDetailsMapper.toAccountDetails(response.getAccount());
@@ -92,13 +108,8 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
     }
 
     private BCeIDAccountTypeCode getBCeIDAccountType(String bceidAccountType) {
-        if (bceidAccountType.equals("Business")) return BCeIDAccountTypeCode.BUSINESS;
-        if (bceidAccountType.equals("Individual")) return BCeIDAccountTypeCode.INDIVIDUAL;
-        if (bceidAccountType.equals("Verified Individual")) return BCeIDAccountTypeCode.VERIFIED_INDIVIDUAL;
-        if (bceidAccountType.equals("EDS")) return BCeIDAccountTypeCode.EDS;
-        if (bceidAccountType.equals("Internal")) return BCeIDAccountTypeCode.INTERNAL;
-        if (bceidAccountType.equals("LDB")) return BCeIDAccountTypeCode.LDB;
-        if (bceidAccountType.equals("THS")) return BCeIDAccountTypeCode.THS;
-        return BCeIDAccountTypeCode.VOID;
+        String lookUp = bceidAccountType.toLowerCase();
+        BCeIDAccountTypeCode code = accountTypeLookup.get(lookUp);
+        return code == null? BCeIDAccountTypeCode.VOID : code;
     }
 }
