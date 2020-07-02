@@ -1,28 +1,29 @@
 import React from "react";
 
 import Table from "./Table";
-import { getTableTestData } from "../../modules/tableTestData";
+import { getTableElementsTestData } from "../../modules/tableTestData";
 
 export default {
   title: "Table",
   component: Table
 };
 
-const tableData = getTableTestData();
+const tableData = getTableElementsTestData();
+const header = "BCeID Info";
 
-export const WithHeader = () => <Table table={tableData} />;
+export const WithHeader = () => <Table heading={header} elements={tableData} />;
 
-export const WithoutHeader = () => (
-  <Table table={{ ...tableData, heading: "" }} />
-);
+export const WithoutHeader = () => <Table elements={tableData} />;
 
 export const WithBlueStripeStyle = () => (
-  <Table table={{ ...tableData, styling: "blue-stripe" }} />
+  <Table elements={tableData} styling="blue-stripe" />
 );
 
-export const WithHeaderMobile = () => <Table table={tableData} />;
+export const WithHeaderMobile = () => (
+  <Table heading={header} elements={tableData} />
+);
 export const WithoutHeaderMobile = () => (
-  <Table table={{ ...tableData, heading: "", styling: "blue-stripe" }} />
+  <Table elements={tableData} styling="blue-stripe" />
 );
 
 const mobileViewport = {
