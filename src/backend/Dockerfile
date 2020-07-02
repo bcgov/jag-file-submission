@@ -10,10 +10,12 @@ ENV SERVICE_NAME=${SERVICE_NAME}
 
 COPY . .
 
-RUN mvn -B clean package \
+RUN mvn -B clean install \
         -P libs
 
 WORKDIR ${SERVICE_NAME}
+
+RUN ls
 
 RUN mvn -B clean package \
         -P ${MVN_PROFILE}

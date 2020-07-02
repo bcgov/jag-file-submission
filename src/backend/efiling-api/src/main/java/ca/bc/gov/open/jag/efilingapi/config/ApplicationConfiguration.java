@@ -1,7 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.config;
 
 import io.opentracing.Tracer;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -11,7 +10,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * Global Application Configuration
  */
 @Configuration
-@EnableConfigurationProperties(ApplicationProperties.class)
 public class ApplicationConfiguration {
 
     /**
