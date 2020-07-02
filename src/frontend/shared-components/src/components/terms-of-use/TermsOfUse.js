@@ -13,6 +13,7 @@ export const TermsOfUse = ({ acceptTerms, content, heading, confirmText }) => {
           className="print-page print"
           tabIndex={0}
           onClick={() => window.print()}
+          onKeyDown={() => window.print()}
         >
           Print
           <FaPrint style={{ marginLeft: "10px" }} />
