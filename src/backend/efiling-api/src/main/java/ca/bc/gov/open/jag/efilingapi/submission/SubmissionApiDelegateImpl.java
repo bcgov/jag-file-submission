@@ -1,7 +1,5 @@
 package ca.bc.gov.open.jag.efilingapi.submission;
 
-import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
-import ca.bc.gov.open.jag.efilingaccountclient.exception.CSOHasMultipleAccountException;
 import ca.bc.gov.open.jag.efilingapi.api.SubmissionApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
@@ -10,6 +8,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMappe
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.CSOHasMultipleAccountException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import org.slf4j.Logger;
@@ -74,10 +73,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         catch (StoreException e) {
             logger.warn(e.getMessage(), e);
             response =  new ResponseEntity(buildEfilingError(ErrorResponse.CACHE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        catch (NestedEjbException_Exception e) {
-            logger.warn(e.getMessage(), e);
-            response =  new ResponseEntity(buildEfilingError(ErrorResponse.GETPROFILESEXCEPTION), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         return response;

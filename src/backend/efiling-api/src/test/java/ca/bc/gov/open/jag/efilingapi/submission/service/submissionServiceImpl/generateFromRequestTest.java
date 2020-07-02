@@ -1,7 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service.submissionServiceImpl;
 
-import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
-import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
+
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
@@ -52,7 +52,7 @@ public class generateFromRequestTest {
 
 
     @BeforeAll
-    public void setUp() throws NestedEjbException_Exception {
+    public void setUp() {
 
         MockitoAnnotations.initMocks(this);
 
@@ -79,7 +79,7 @@ public class generateFromRequestTest {
 
     @Test
     @DisplayName("OK: with valid account should retun submission")
-    public void withValidAccountShouldReturnSubmission() throws NestedEjbException_Exception {
+    public void withValidAccountShouldReturnSubmission() {
 
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setUserId(TestHelpers.CASE_1);
@@ -110,7 +110,7 @@ public class generateFromRequestTest {
 
     @Test
     @DisplayName("Exception: with empty submission from store should throw StoreException")
-    public void withEmptySubmissionShouldThrowStoreException() throws NestedEjbException_Exception {
+    public void withEmptySubmissionShouldThrowStoreException() {
 
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setUserId(TestHelpers.CASE_2);
@@ -134,7 +134,7 @@ public class generateFromRequestTest {
 
     }
 
-    private void configureCase1(Fee fee) throws NestedEjbException_Exception {
+    private void configureCase1(Fee fee) {
 
 
         AccountDetails accountDetails = getAccountDetails(true, TestHelpers.CASE_1.toString());
@@ -159,7 +159,7 @@ public class generateFromRequestTest {
                 ArgumentMatchers.argThat(x -> StringUtils.equals(TestHelpers.CASE_1.toString() + FIRST_NAME, x.getAccountDetails().getFirstName())));
     }
 
-    private void configureCase2() throws NestedEjbException_Exception {
+    private void configureCase2() {
 
 
         AccountDetails accountDetails = getAccountDetails(true, TestHelpers.CASE_2.toString());
@@ -176,7 +176,7 @@ public class generateFromRequestTest {
                 ArgumentMatchers.argThat(x -> StringUtils.equals(TestHelpers.CASE_2.toString() + FIRST_NAME, x.getAccountDetails().getFirstName())));
     }
 
-    private void configureCase3() throws NestedEjbException_Exception {
+    private void configureCase3() {
 
         AccountDetails accountDetails = getAccountDetails(false, TestHelpers.CASE_3.toString());
 

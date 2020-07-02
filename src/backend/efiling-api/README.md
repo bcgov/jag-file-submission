@@ -1,5 +1,24 @@
 # efiling-api
 
+## Maven Profiles
+
+### Openshift
+
+This is a special profile for openshift, in the current image build openshift runs with an openshift profile.
+This profiles mostly enables splunk logging.
+
+```bash
+mvn install -P openshift
+```
+
+### Demo
+
+This profiles self isolate the application from any third party dependencies
+
+```bash
+mvn install -P demo
+```
+
 ## Configuration
 
 You should use environment variables to configure the jag efiling api

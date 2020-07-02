@@ -1,7 +1,5 @@
 package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 
-import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
-import ca.bc.gov.open.jag.efilingaccountclient.exception.CSOHasMultipleAccountException;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
@@ -14,6 +12,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMappe
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.CSOHasMultipleAccountException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import org.junit.jupiter.api.*;
@@ -50,7 +49,7 @@ public class GenerateUrlTest {
     private SubmissionStore submissionStoreMock;
 
     @BeforeAll
-    public void setUp() throws NestedEjbException_Exception {
+    public void setUp() {
 
         MockitoAnnotations.initMocks(this);
 
@@ -74,10 +73,6 @@ public class GenerateUrlTest {
         Mockito.doThrow(new StoreException("StoreException message"))
                 .when(submissionServiceMock).generateFromRequest(
                 ArgumentMatchers.argThat(x -> x.getUserId() == TestHelpers.CASE_4));
-
-        Mockito.doThrow(new NestedEjbException_Exception("NestedEjbException_Exception message"))
-                .when(submissionServiceMock).generateFromRequest(
-                ArgumentMatchers.argThat(x -> x.getUserId() == TestHelpers.CASE_5));
 
         // Testing the mapper part of this test
         generateUrlResponseMapperMock = new GenerateUrlResponseMapperImpl();
@@ -160,22 +155,4 @@ public class GenerateUrlTest {
         Assertions.assertEquals(ErrorResponse.CACHE_ERROR.getErrorMessage(), actualError.getMessage());
     }
 
-    @Test
-    @DisplayName("500: when NestedEjbException_Exception should return INTERNAL SERVER ERROR")
-    public void whenNestedEjbException_ExceptionShouldReturnInternalServerError() {
-        @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
-
-        generateUrlRequest.setDocumentProperties(TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE));
-        generateUrlRequest.setUserId(TestHelpers.CASE_5);
-        generateUrlRequest.setNavigation(TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL));
-
-        ResponseEntity actual = sut.generateUrl(generateUrlRequest);
-
-        EfilingError actualError = (EfilingError) actual.getBody();
-
-        Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode());
-        Assertions.assertEquals(ErrorResponse.GETPROFILESEXCEPTION.getErrorCode(), actualError.getError());
-        Assertions.assertEquals(ErrorResponse.GETPROFILESEXCEPTION.getErrorMessage(), actualError.getMessage());
-
-    }
 }

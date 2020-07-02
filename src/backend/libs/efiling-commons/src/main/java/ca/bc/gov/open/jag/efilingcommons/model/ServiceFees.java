@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilinglookupclient;
+package ca.bc.gov.open.jag.efilingcommons.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
