@@ -7,8 +7,14 @@ import "./TermsOfUse.css";
 export const TermsOfUse = ({ acceptTerms, content, heading, confirmText }) => {
   return (
     <div>
-      <div style={{ width: "100%" }}>
-        <span role="button" className="print-page print" tabIndex={0}>
+      <div className="non-printable full-width">
+        <span
+          role="button"
+          className="print-page print"
+          tabIndex={0}
+          onClick={() => window.print()}
+          onKeyDown={() => window.print()}
+        >
           Print
           <FaPrint style={{ marginLeft: "10px" }} />
         </span>
@@ -16,9 +22,9 @@ export const TermsOfUse = ({ acceptTerms, content, heading, confirmText }) => {
         <h3>{heading}</h3>
       </div>
 
-      <section className="scroll-box">{content}</section>
+      <section className="scroll-box printable">{content}</section>
 
-      <section className="pt-2">
+      <section className="non-printable pt-2">
         <label htmlFor="acceptTerms">
           <input id="acceptTerms" type="checkbox" onClick={acceptTerms} />
           &nbsp;

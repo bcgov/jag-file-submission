@@ -2,31 +2,35 @@
 
 exports[`CSOAccount Component Matches the snapshot 1`] = `
 <DocumentFragment>
-  <p>
-    E-File Submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
-    <a
-      href="https://www2.gov.bc.ca/gov/content/home/privacy"
-      rel="noopener noreferrer"
-      target="_blank"
-    >
-      Learn more about CSO
-    </a>
-    .
-  </p>
-  <p>
-    You need a CSO account to use E-File Submission.
-  </p>
-  <br />
-  <h2>
-    Create a Court Services Online (CSO) Account
-  </h2>
-  <p>
-    The following information will be used to create your CSO account.
-  </p>
-  <br />
+  <div
+    class="non-printable"
+  >
+    <p>
+      E-File Submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
+      <a
+        href="https://www2.gov.bc.ca/gov/content/home/privacy"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Learn more about CSO
+      </a>
+      .
+    </p>
+    <p>
+      You need a CSO account to use E-File Submission.
+    </p>
+    <br />
+    <h2>
+      Create a Court Services Online (CSO) Account
+    </h2>
+    <p>
+      The following information will be used to create your CSO account.
+    </p>
+    <br />
+  </div>
   <div>
     <div
-      style="width: 100%;"
+      class="non-printable full-width"
     >
       <span
         class="print-page print"
@@ -54,7 +58,7 @@ exports[`CSOAccount Component Matches the snapshot 1`] = `
       </h3>
     </div>
     <section
-      class="scroll-box"
+      class="scroll-box printable"
     >
       <p>
         The parties to this agreement are:
@@ -701,7 +705,7 @@ exports[`CSOAccount Component Matches the snapshot 1`] = `
       </ol>
     </section>
     <section
-      class="pt-2"
+      class="non-printable pt-2"
     >
       <label
         for="acceptTerms"
@@ -724,7 +728,7 @@ exports[`CSOAccount Component Matches the snapshot 1`] = `
     </section>
   </div>
   <section
-    class="buttons pt-4"
+    class="non-printable buttons pt-4"
   >
     <div>
       <button
