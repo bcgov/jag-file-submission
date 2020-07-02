@@ -55,13 +55,13 @@ const content = (
     </ol>
     <p>
       <b>&quot;Account Manager&quot;</b> means the individual or individuals
-      authorized by the Subscriber to be the Subscriber's contact person for the
-      purpose of managing the Subscription Account.
+      authorized by the Subscriber to be the Subscriber&apos;s contact person
+      for the purpose of managing the Subscription Account.
     </p>
     <p>
-      <b>&quot;BC OnLine&quot;</b> means the Province's system that enables
+      <b>&quot;BC OnLine&quot;</b> means the Province&apos;s system that enables
       information or service transactions by electronic means and that is known
-      as "BC OnLine".
+      as &quot;BC OnLine&quot;.
     </p>
     <p>
       <b>&quot;CSO&quot;</b> means Court Services Online, the electronic court
@@ -100,7 +100,8 @@ const content = (
     <p>
       <b>&quot;Subscriber&quot;</b> means the contracting party who has executed
       this agreement and includes any employees, associates, agents or nominees
-      of the Subscriber (defined as "registered user" in Supreme Court Rule 69).
+      of the Subscriber (defined as &quot;registered user&quot; in Supreme Court
+      Rule 69).
     </p>
     <p>
       <b>&quot;Subscription Account&quot;</b> means an account provided to a
@@ -115,10 +116,10 @@ const content = (
     </p>
     <p>
       <b>&quot;UserID&quot;</b> means each and every identification code
-      associated with the Subscriber's Subscription Account to permit the use of
-      the services available through CSO or each and every identification code
-      assigned by BC Online and associated with the user's account in BC Online
-      which permit the use of the services available through CSO.
+      associated with the Subscriber&apos;s Subscription Account to permit the
+      use of the services available through CSO or each and every identification
+      code assigned by BC Online and associated with the user&apos;s account in
+      BC Online which permit the use of the services available through CSO.
     </p>
     <p>
       <b>WARRANTY</b>
@@ -136,7 +137,7 @@ const content = (
             this agreement on the Subscriber's behalf is authorized to do so by
             the Subscriber and, if the Subscriber is a corporation, that the
             individual is authorized to do so by the Subscriber without affixing
-            a traditional signature or the Subscriber's corporate seal; and
+            a traditional signature or the Subscriber&apos;s corporate seal; and
           </li>
           <li>
             this agreement is legally binding upon and enforceable against the
@@ -151,20 +152,20 @@ const content = (
     <ol start="3">
       <li>
         The Subscriber is deemed to have accepted the terms and conditions set
-        out in this agreement by clicking the "I ACCEPT" icon located after the
-        text of this agreement. The Subscriber must then complete the Account
-        Profile Screen and submit it to the Province as an offer to subscribe to
-        the services available through CSO on the terms and conditions contained
-        in this agreement.
+        out in this agreement by clicking the &quot;I ACCEPT&quot; icon located
+        after the text of this agreement. The Subscriber must then complete the
+        Account Profile Screen and submit it to the Province as an offer to
+        subscribe to the services available through CSO on the terms and
+        conditions contained in this agreement.
       </li>
       <li>
         The Province, upon receipt of the acceptance of this agreement pursuant
-        to paragraph 3, may, at its sole discretion, accept the Subscriber's
-        offer by creating a Subscription Account and allowing the Subscriber to
-        access CSO services with a UserID and Password or, in the case of a BC
-        Online user who has signed the agreement pursuant to paragraph 3, by
-        allowing the Subscriber to access CSO services when the Subscriber is
-        logged on to BC Online and accesses CSO through BC Online.
+        to paragraph 3, may, at its sole discretion, accept the
+        Subscriber&apos;s offer by creating a Subscription Account and allowing
+        the Subscriber to access CSO services with a UserID and Password or, in
+        the case of a BC Online user who has signed the agreement pursuant to
+        paragraph 3, by allowing the Subscriber to access CSO services when the
+        Subscriber is logged on to BC Online and accesses CSO through BC Online.
       </li>
     </ol>
     <p>
@@ -182,7 +183,7 @@ const content = (
     <ol start="6">
       <li>
         The Subscriber agrees that, during the term of this agreement, the
-        Province may collect information about the Subscriber's use of CSO
+        Province may collect information about the Subscriber&apos;s use of CSO
         services including information relating to:
         <ol>
           <li>the frequency of log-on to CSO and use of the services</li>
@@ -384,7 +385,8 @@ const content = (
         of this agreement on the CSO web page or in any manner bring to the
         attention of any person accessing CSO through a UserID or Password some
         or all of the terms and conditions in this agreement but that doing so
-        does not limit the Subscriber's obligations pursuant to this agreement.
+        does not limit the Subscriber&apos;s obligations pursuant to this
+        agreement.
       </li>
     </ol>
     <p>
@@ -569,8 +571,8 @@ const content = (
             reason of an act or omission of the Province or of any servant,
             agent, contractor, or employee of the Province, or by reason of the
             operation or failure of the operation of CSO, the computer system
-            operating CSO or the Subscriber's computer hardware, software, or
-            equipment.
+            operating CSO or the Subscriber&apos;s computer hardware, software,
+            or equipment.
           </li>
           <li>
             If the Subscriber does not notify the Province in writing of errors
