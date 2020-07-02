@@ -1,35 +1,32 @@
 import React from "react";
+import { MdPerson } from "react-icons/md";
 
 import DisplayBox from "./DisplayBox";
-import {
-  getDisplayBoxTestDataNoIcon,
-  getDisplayBoxTestDataIcon,
-  getDisplayBoxTestDataStyle
-} from "../../modules/displayBoxTestData";
+import { getTestTable } from "../../modules/displayBoxTestData";
 
 export default {
   title: "DisplayBox",
   component: DisplayBox
 };
 
-export const WithoutIcon = () => (
-  <DisplayBox displayBox={getDisplayBoxTestDataNoIcon()} />
-);
+const table = getTestTable();
 
-export const WithIcon = () => (
-  <DisplayBox displayBox={getDisplayBoxTestDataIcon()} />
-);
+const icon = <MdPerson size={32} />;
+
+export const WithoutIcon = () => <DisplayBox element={table} />;
+
+export const WithIcon = () => <DisplayBox icon={icon} element={table} />;
 
 export const WithBlueBackground = () => (
-  <DisplayBox displayBox={getDisplayBoxTestDataStyle()} />
+  <DisplayBox styling={"blue-background"} icon={icon} element={table} />
 );
 
-export const WithoutIconMobile = () => (
-  <DisplayBox displayBox={getDisplayBoxTestDataNoIcon()} />
-);
+export const WithoutIconMobile = () => <DisplayBox element={table} />;
 
-export const WithIconMobile = () => (
-  <DisplayBox displayBox={getDisplayBoxTestDataIcon()} />
+export const WithIconMobile = () => <DisplayBox icon={icon} element={table} />;
+
+export const WithBlueBackgroundMobile = () => (
+  <DisplayBox styling={"blue-background"} icon={icon} element={table} />
 );
 
 const mobileViewport = {
@@ -42,3 +39,4 @@ const mobileViewport = {
 
 WithoutIconMobile.story = mobileViewport;
 WithIconMobile.story = mobileViewport;
+WithBlueBackgroundMobile.story = mobileViewport;

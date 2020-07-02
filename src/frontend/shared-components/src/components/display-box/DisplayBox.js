@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 
 import "./DisplayBox.css";
 
-export default function DisplayBox({ displayBox: { style, icon, element } }) {
+export default function DisplayBox({ styling, icon, element }) {
   return (
-    <div className={`display-box ${style}`}>
+    <div className={`display-box ${styling}`}>
       <div className={"display-icon"}>{icon}</div>
       <div className={"display-element"}>{element}</div>
     </div>
@@ -13,16 +13,12 @@ export default function DisplayBox({ displayBox: { style, icon, element } }) {
 }
 
 DisplayBox.propTypes = {
-  displayBox: PropTypes.shape({
-    style: PropTypes.string,
-    icon: PropTypes.element,
-    element: PropTypes.element.isRequired
-  }).isRequired
+  styling: PropTypes.string,
+  icon: PropTypes.element,
+  element: PropTypes.element.isRequired
 };
 
 DisplayBox.defaultProps = {
-  displayBox: {
-    style: "grey-background",
-    icon: ""
-  }
+  styling: "grey-background",
+  icon: ""
 };
