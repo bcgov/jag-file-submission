@@ -8,10 +8,10 @@ export default function Error({ page: { header, error } }) {
     <main>
       <Header header={header} />
       <div className="page">
-        <div className="content col-md-10">
+        <div className="content col-md-12">
           <p>
-            The following error occurred with your eFiling application. Please
-            click the button below to go back home.
+            The following error occurred with your submission. Please click the
+            button below to go back home.
           </p>
           <p>
             <b>{error}</b>

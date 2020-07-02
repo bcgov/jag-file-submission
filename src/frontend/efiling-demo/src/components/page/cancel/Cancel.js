@@ -8,10 +8,10 @@ export default function Cancel({ page: { header } }) {
     <main>
       <Header header={header} />
       <div className="page">
-        <div className="content col-md-10">
+        <div className="content col-md-12">
           <p>
-            You have cancelled your eFiling application. Please click the button
-            below to go back home.
+            You have cancelled your submission. Please click the button below to
+            go back home.
           </p>
           <Button
             onClick={() => header.history.push("/")}

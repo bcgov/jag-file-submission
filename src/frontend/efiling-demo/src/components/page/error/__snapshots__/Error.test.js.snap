@@ -43,10 +43,10 @@ exports[`Error Component matches the snapshot 1`] = `
       class="page"
     >
       <div
-        class="content col-md-10"
+        class="content col-md-12"
       >
         <p>
-          The following error occurred with your eFiling application. Please click the button below to go back home.
+          The following error occurred with your submission. Please click the button below to go back home.
         </p>
         <p>
           <b>

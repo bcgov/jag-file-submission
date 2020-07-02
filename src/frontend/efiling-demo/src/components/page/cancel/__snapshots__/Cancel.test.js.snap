@@ -43,10 +43,10 @@ exports[`Cancel Component matches the snapshot 1`] = `
       class="page"
     >
       <div
-        class="content col-md-10"
+        class="content col-md-12"
       >
         <p>
-          You have cancelled your eFiling application. Please click the button below to go back home.
+          You have cancelled your submission. Please click the button below to go back home.
         </p>
         <div>
           <button

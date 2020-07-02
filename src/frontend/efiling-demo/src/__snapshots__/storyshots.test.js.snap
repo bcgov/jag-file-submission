@@ -46,10 +46,10 @@ exports[`Storyshots Cancel Default 1`] = `
     className="page"
   >
     <div
-      className="content col-md-10"
+      className="content col-md-12"
     >
       <p>
-        You have cancelled your eFiling application. Please click the button below to go back home.
+        You have cancelled your submission. Please click the button below to go back home.
       </p>
       <div>
         <button
@@ -199,10 +199,10 @@ exports[`Storyshots Cancel Mobile 1`] = `
     className="page"
   >
     <div
-      className="content col-md-10"
+      className="content col-md-12"
     >
       <p>
-        You have cancelled your eFiling application. Please click the button below to go back home.
+        You have cancelled your submission. Please click the button below to go back home.
       </p>
       <div>
         <button
@@ -352,10 +352,10 @@ exports[`Storyshots Error Default 1`] = `
     className="page"
   >
     <div
-      className="content col-md-10"
+      className="content col-md-12"
     >
       <p>
-        The following error occurred with your eFiling application. Please click the button below to go back home.
+        The following error occurred with your submission. Please click the button below to go back home.
       </p>
       <p>
         <b>
@@ -511,10 +511,10 @@ exports[`Storyshots Error Mobile 1`] = `
     className="page"
   >
     <div
-      className="content col-md-10"
+      className="content col-md-12"
     >
       <p>
-        The following error occurred with your eFiling application. Please click the button below to go back home.
+        The following error occurred with your submission. Please click the button below to go back home.
       </p>
       <p>
         <b>
@@ -670,7 +670,7 @@ exports[`Storyshots Home Default 1`] = `
     className="page"
   >
     <div
-      className="content col-md-10"
+      className="content col-md-12"
     >
       <div>
         <label
@@ -855,7 +855,7 @@ exports[`Storyshots Home Mobile 1`] = `
     className="page"
   >
     <div
-      className="content col-md-10"
+      className="content col-md-12"
     >
       <div>
         <label
