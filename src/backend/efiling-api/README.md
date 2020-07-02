@@ -4,7 +4,7 @@
 
 ### Openshift
 
-This is a special profile for openshift, in the current image build openshift runs with an openshift profile.
+Current image build in openshift runs with `openshift` profile by default.
 This profiles mostly enables splunk logging.
 
 ```bash
