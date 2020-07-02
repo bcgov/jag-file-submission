@@ -28,7 +28,8 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
     static {
         Map<String, BCeIDAccountTypeCode> tempMap = new HashMap<String, BCeIDAccountTypeCode>();
         tempMap.put("business", BCeIDAccountTypeCode.BUSINESS);
-        tempMap.put("verified individual", BCeIDAccountTypeCode.INDIVIDUAL);
+        tempMap.put("individual", BCeIDAccountTypeCode.INDIVIDUAL);
+        tempMap.put("verified individual", BCeIDAccountTypeCode.VERIFIED_INDIVIDUAL);
         tempMap.put("eds", BCeIDAccountTypeCode.EDS);
         tempMap.put("internal", BCeIDAccountTypeCode.INTERNAL);
         tempMap.put("ldb", BCeIDAccountTypeCode.LDB);
