@@ -48,7 +48,7 @@ public class SubmissionServiceImpl implements SubmissionService {
     public Submission generateFromRequest(GenerateUrlRequest generateUrlRequest) throws NestedEjbException_Exception {
 
         logger.debug("Attempting to get user cso account information");
-        AccountDetails accountDetails = efilingAccountService.getAccountDetails(formatUserGuid(generateUrlRequest.getUserId()));
+        AccountDetails accountDetails = efilingAccountService.getAccountDetails(formatUserGuid(generateUrlRequest.getUserId()), "");
         logger.info("Successfully got cso account information");
 
         if (accountDetails != null && !accountDetails.isFileRolePresent()) {
