@@ -56,7 +56,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
 
         AccountDetails accountDetails = getCsoDetails(userGuid);
         if (null == accountDetails) {
-            accountDetails = getBCeidDetails(userGuid, bceidAccountType);
+            accountDetails = getBCeIDDetails(userGuid, bceidAccountType);
         }
 
         return accountDetails;
@@ -78,7 +78,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         return accountDetails;
     }
 
-    private AccountDetails getBCeidDetails(String userGuid, String accountType) {
+    private AccountDetails getBCeIDDetails(String userGuid, String accountType) {
 
         AccountDetails accountDetails = null;
         BCeIDAccountTypeCode accountTypeCode = getBCeIDAccountType(accountType);

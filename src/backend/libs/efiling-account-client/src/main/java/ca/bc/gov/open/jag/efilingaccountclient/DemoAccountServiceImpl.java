@@ -24,7 +24,7 @@ public class DemoAccountServiceImpl implements EfilingAccountService {
 
         csoAccounts.put(ACCOUNT_WITH_EFILING_ROLE.toString(), accountWithEfilingRole);
         csoAccounts.put(ACCOUNT_WITHOUT_EFILING_ROLE.toString(), accountWithoutEfilingRole );
-        csoAccounts.put(ACCOUNT_DOES_NOT_EXISTS.toString(), accountWithoutCso );
+        csoAccounts.put(ACCOUNT_DOES_NOT_EXIST.toString(), accountWithoutCso );
     }
 
 
