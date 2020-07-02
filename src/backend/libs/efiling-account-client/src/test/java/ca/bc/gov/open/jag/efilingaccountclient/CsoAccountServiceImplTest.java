@@ -56,9 +56,15 @@ public class CsoAccountServiceImplTest {
     public void init() throws NestedEjbException_Exception {
 
         MockitoAnnotations.initMocks(this);
+        initAccountFacadeMocks();
+        initRoleRegistryMocks();
+        initBceidAccountMocks();
 
-        //////////////////////////////////////////////////////////////////////////////////////
-        // Setup the account facade classes for the mock calls
+        sut = new CsoAccountServiceImpl(accountFacadeBeanMock, roleRegistryPortTypeMock, bCeIDServiceSoap, accountDetailsMapperMock);
+    }
+
+    private void initAccountFacadeMocks() throws NestedEjbException_Exception {
+
         ClientProfile profile =  new ClientProfile();
         profile.setAccountId(BigDecimal.TEN);
         profile.setClientId(BigDecimal.TEN);
@@ -71,9 +77,10 @@ public class CsoAccountServiceImplTest {
         Mockito.when(accountFacadeBeanMock.findProfiles(USERGUIDNOROLE)).thenReturn(profiles);
         Mockito.when(accountFacadeBeanMock.findProfiles(USERGUIDWITHFILEROLE)).thenReturn(profiles);
         Mockito.when(accountFacadeBeanMock.findProfiles(USERGUIDWITHNOCSO)).thenReturn(emptyProfiles);
+    }
 
-        //////////////////////////////////////////////////////////////////////////////////////
-        // Setup the role registry classes and mock calls
+    private void initRoleRegistryMocks() {
+
         RegisteredRole fileRole = new RegisteredRole();
         fileRole.setCode("FILE");
         UserRoles userRolesWithFileRole = new UserRoles();
@@ -84,7 +91,6 @@ public class CsoAccountServiceImplTest {
         UserRoles userRolesWithoutFileRole = new UserRoles();
         userRolesWithoutFileRole.getRoles().add(notFileRole);
 
-
         Mockito.when(roleRegistryMock.getRoleRegistrySourceRoleRegistryWsProviderRoleRegistryPort()).thenReturn(roleRegistryPortTypeMock);
         Mockito.when(roleRegistryPortTypeMock.getRolesForIdentifier("Courts", "CSO", USERGUIDWITHFILEROLE, "CAP")).thenReturn(userRolesWithFileRole);
         Mockito.when(roleRegistryPortTypeMock.getRolesForIdentifier("Courts", "CSO", USERGUIDNOROLE, "CAP")).thenReturn(userRolesWithoutFileRole);
@@ -93,11 +99,11 @@ public class CsoAccountServiceImplTest {
         Mockito.when(accountDetailsMapperMock.toAccountDetails(Mockito.any(), Mockito.eq(true))).thenReturn(csoUserDetailsWithRole);
 
         AccountDetails csoUserDetailsWithoutRole = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, false, "firstName", "lastName", "middleName","email");
-        AccountDetails accountDetailsWithNoCso = new AccountDetails(BigDecimal.ZERO, BigDecimal.ZERO, false, "firstName", "lastName", "middleName","email");
         Mockito.when(accountDetailsMapperMock.toAccountDetails(Mockito.any(), Mockito.eq(false))).thenReturn(csoUserDetailsWithoutRole);
+    }
 
-        //////////////////////////////////////////////////////////////////////////////////////
-        // Setup the BCeID account classes and mock calls
+    private void initBceidAccountMocks() {
+
         BCeIDAccountContact contact = new BCeIDAccountContact();
         BCeIDString str = new BCeIDString();
         str.setValue("email@email.com");
@@ -124,10 +130,9 @@ public class CsoAccountServiceImplTest {
 
         Mockito.when(bCeIDService.getBCeIDServiceSoap()).thenReturn(bCeIDServiceSoap);
         Mockito.when(bCeIDServiceSoap.getAccountDetail(any())).thenReturn(bCeIDResponse);
+
+        AccountDetails accountDetailsWithNoCso = new AccountDetails(BigDecimal.ZERO, BigDecimal.ZERO, false, "firstName", "lastName", "middleName","email");
         Mockito.when(accountDetailsMapperMock.toAccountDetails(Mockito.any())).thenReturn(accountDetailsWithNoCso);
-
-        sut = new CsoAccountServiceImpl(accountFacadeBeanMock, roleRegistryPortTypeMock, bCeIDServiceSoap, accountDetailsMapperMock);
-
     }
 
     @DisplayName("getAccountDetails called with empty userGuid")
