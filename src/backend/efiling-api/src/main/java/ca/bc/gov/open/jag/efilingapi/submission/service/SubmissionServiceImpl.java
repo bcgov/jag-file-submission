@@ -1,7 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service;
 
-import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
-import ca.bc.gov.open.jag.efilingaccountclient.EfilingAccountService;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.jag.efilingapi.fee.FeeService;
 import ca.bc.gov.open.jag.efilingapi.fee.models.FeeRequest;
@@ -45,7 +44,7 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     @Override
-    public Submission generateFromRequest(GenerateUrlRequest generateUrlRequest) throws NestedEjbException_Exception {
+    public Submission generateFromRequest(GenerateUrlRequest generateUrlRequest) {
 
         logger.debug("Attempting to get user cso account information");
         AccountDetails accountDetails = efilingAccountService.getAccountDetails(formatUserGuid(generateUrlRequest.getUserId()), "");

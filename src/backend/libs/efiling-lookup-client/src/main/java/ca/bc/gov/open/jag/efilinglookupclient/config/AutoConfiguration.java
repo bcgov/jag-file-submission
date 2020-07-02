@@ -1,12 +1,11 @@
 package ca.bc.gov.open.jag.efilinglookupclient.config;
 
-import ca.bc.gov.ag.csows.lookups.LookupFacade;
 import ca.bc.gov.ag.csows.lookups.LookupFacadeBean;
 import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
 import ca.bc.gov.open.jag.efilinglookupclient.CSOLookupServiceImpl;
-import ca.bc.gov.open.jag.efilinglookupclient.EfilingLookupService;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

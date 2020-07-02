@@ -1,12 +1,14 @@
 package ca.bc.gov.open.jag.efilinglookupclient;
 
 
-import ca.bc.gov.ag.csows.lookups.*;
-
+import ca.bc.gov.ag.csows.lookups.LookupFacadeBean;
+import ca.bc.gov.ag.csows.lookups.NestedEjbException_Exception;
+import ca.bc.gov.ag.csows.lookups.ServiceFee;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingLookupServiceException;
+import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -17,28 +19,36 @@ import java.util.GregorianCalendar;
 public class CSOLookupServiceImpl implements EfilingLookupService {
 
     private LookupFacadeBean lookupFacadeItf;
-    private static final Logger LOGGER = LoggerFactory.getLogger(CSOLookupServiceImpl.class);
 
     public CSOLookupServiceImpl(LookupFacadeBean lookupFacadeItf) {
         this.lookupFacadeItf = lookupFacadeItf;
     }
 
     @Override
-    public ServiceFee getServiceFee(String serviceId)  {
+    public ServiceFees getServiceFee(String serviceId)  {
 
         // NOTE- "DCFL" is the only string that will work here until we get our service types setup
-        if (StringUtils.isEmpty(serviceId)) return null;
+        // TODO: throw exception when service fee is null
+        if (StringUtils.isEmpty(serviceId)) throw new IllegalArgumentException("service Id is required");
 
-        ServiceFee response = null;
         try {
-            response = lookupFacadeItf.getServiceFee(serviceId,Date2XMLGregorian(new Date()));
+            ServiceFee fee = lookupFacadeItf.getServiceFee(serviceId, date2XMLGregorian(new Date()));
+
+            return new ServiceFees(
+                    toJoda(fee.getUpdDtm()),
+                    fee.getFeeAmt(),
+                    fee.getEntUserId(),
+                    fee.getServiceTypeCd(),
+                    toJoda(fee.getEffectiveDt()),
+                    fee.getUpdUserId(),
+                    toJoda(fee.getEntDtm()),
+                    toJoda(fee.getExpiryDt()));
+
         }
         catch(DatatypeConfigurationException | NestedEjbException_Exception e) {
-
-            LOGGER.error("Error calling getServiceFee: ", e);
+            throw new EfilingLookupServiceException("Exception while retrieving service fee", e.getCause());
         }
 
-        return response;
     }
 
     /**
@@ -47,12 +57,16 @@ public class CSOLookupServiceImpl implements EfilingLookupService {
      * @return XMLGregorianCalendar
      * @throws DatatypeConfigurationException
      */
-    private XMLGregorianCalendar Date2XMLGregorian(Date date) throws DatatypeConfigurationException {
+    private XMLGregorianCalendar date2XMLGregorian(Date date) throws DatatypeConfigurationException {
 
         GregorianCalendar c = new GregorianCalendar();
         c.setTime(date);
         XMLGregorianCalendar date2 = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
         return date2;
+    }
+
+    private DateTime toJoda(XMLGregorianCalendar date) {
+        return new DateTime(date.toGregorianCalendar().getTime());
     }
 
 }

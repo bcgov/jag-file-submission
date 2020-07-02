@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilinglookupclient;
 
+import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
 
