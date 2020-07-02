@@ -7,7 +7,7 @@ import "./TermsOfUse.css";
 export const TermsOfUse = ({ acceptTerms, content, heading, confirmText }) => {
   return (
     <div>
-      <div className="full-width">
+      <div className="non-printable full-width">
         <span
           role="button"
           className="print-page print"
@@ -24,7 +24,7 @@ export const TermsOfUse = ({ acceptTerms, content, heading, confirmText }) => {
 
       <section className="scroll-box printable">{content}</section>
 
-      <section className="pt-2">
+      <section className="non-printable pt-2">
         <label htmlFor="acceptTerms">
           <input id="acceptTerms" type="checkbox" onClick={acceptTerms} />
           &nbsp;

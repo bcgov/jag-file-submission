@@ -2710,11 +2710,12 @@ exports[`Storyshots Terms of Use Default 1`] = `
 >
   <div>
     <div
-      className="full-width"
+      className="non-printable full-width"
     >
       <span
         className="print-page print"
         onClick={[Function]}
+        onKeyDown={[Function]}
         role="button"
         tabIndex={0}
       >
@@ -3016,7 +3017,7 @@ exports[`Storyshots Terms of Use Default 1`] = `
       </ol>
     </section>
     <section
-      className="pt-2"
+      className="non-printable pt-2"
     >
       <label
         htmlFor="acceptTerms"
@@ -3300,11 +3301,12 @@ exports[`Storyshots Terms of Use Mobile 1`] = `
 >
   <div>
     <div
-      className="full-width"
+      className="non-printable full-width"
     >
       <span
         className="print-page print"
         onClick={[Function]}
+        onKeyDown={[Function]}
         role="button"
         tabIndex={0}
       >
@@ -3606,7 +3608,7 @@ exports[`Storyshots Terms of Use Mobile 1`] = `
       </ol>
     </section>
     <section
-      className="pt-2"
+      className="non-printable pt-2"
     >
       <label
         htmlFor="acceptTerms"
