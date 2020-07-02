@@ -1,0 +1,9 @@
+{
+  "accountGuid": [
+    {
+      "validGuid": "<validGuid>",
+      "invalidGuid": "<invalidGuid>",
+      "incorrectGuid": "<IncorrectGuid>"
+    }
+  ]
+}

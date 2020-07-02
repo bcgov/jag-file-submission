@@ -3,6 +3,7 @@ package stepDefinitions.frontendstepdefinitions;
 import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.EfilingPage;
 import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.LandingPage;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.DriverClass;
+import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonReader;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
@@ -11,11 +12,17 @@ import io.cucumber.java.en.When;
 import org.junit.Assert;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 public class LandingPageTest extends DriverClass {
 
      LandingPage landingPage;
      EfilingPage eFilingPage;
+
+    //DataProvider
+    public static Object[][] accountData() throws IOException {
+        return JsonReader.getData("src/test/java/testdatasource/account-data.json", "accountGuid", 1, 3);
+    }
 
     @Before ("@frontend")
     public void setUp() throws IOException {
@@ -45,9 +52,10 @@ public class LandingPageTest extends DriverClass {
     }
 
     @When("user enters a valid account guid {string}")
-    public void userEntersAValidAccountGuid(String accountGuid) {
+    public void userEntersAValidAccountGuid(String validGuid) throws IOException {
         landingPage = new LandingPage(driver);
-        landingPage.enterAccountGuid(accountGuid);
+        validGuid = (String) accountData()[0][0];
+        landingPage.enterAccountGuid(validGuid);
     }
 
     @Then("eFiling frontend page is displayed and cancel button exists")
@@ -85,17 +93,18 @@ public class LandingPageTest extends DriverClass {
     }
 
     @When("user enters non existing account guid {string}")
-    public void userEntersNonExistingAccountGuid(String accountGuid) {
+    public void userEntersNonExistingAccountGuid(String incorrectGuid) throws IOException {
+        landingPage = new LandingPage(driver);
+        incorrectGuid = (String) accountData()[0][1];
 
-        landingPage.enterAccountGuid(accountGuid);
+        landingPage.enterAccountGuid(incorrectGuid);
     }
 
     @When("user enters invalid account guid {string}")
-    public void userEntersInvalidAccountGuid(String accountGuid) {
+    public void userEntersInvalidAccountGuid(String invalidGuid) throws IOException {
         landingPage = new LandingPage(driver);
+        invalidGuid = (String) accountData()[0][2];
 
-        landingPage.enterAccountGuid(accountGuid);
+        landingPage.enterAccountGuid(invalidGuid);
     }
 }
-
-

@@ -38,7 +38,7 @@ public class LandingPage extends DriverClass {
     }
 
     public void enterAccountGuid(String guid) {
-        driver.findElement(guidInputForm).sendKeys(guid);
+         driver.findElement(guidInputForm).sendKeys(guid);
     }
 
     public void clickGenerateUrlButton() {
