@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingaccountclient.exception;
+package ca.bc.gov.open.jag.efilingcommons.exceptions;
 
 import java.text.MessageFormat;
 

@@ -119,6 +119,12 @@
 		</dependencies>
 	</dependencyManagement>
 
+	<profiles>
+		<profile>
+			<id>default</id>
+		</profile>
+	</profiles>
+
 	<build>
 		<plugins>
 
