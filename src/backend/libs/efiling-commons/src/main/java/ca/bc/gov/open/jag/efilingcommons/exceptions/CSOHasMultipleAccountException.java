@@ -2,7 +2,7 @@ package ca.bc.gov.open.jag.efilingcommons.exceptions;
 
 import java.text.MessageFormat;
 
-public class CSOHasMultipleAccountException extends EfilingAccountServiceException {
+public class CSOHasMultipleAccountException extends RuntimeException {
 
     public CSOHasMultipleAccountException(String clientId) {
 
