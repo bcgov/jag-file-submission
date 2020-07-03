@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Cancel Component matches the snapshot 1`] = `
+exports[`Error Component matches the snapshot 1`] = `
 <DocumentFragment>
   <main>
     <header>
@@ -46,8 +46,14 @@ exports[`Cancel Component matches the snapshot 1`] = `
         class="content col-md-12"
       >
         <p>
-          You have cancelled your submission. Please click the button below to go back home.
+          The following error occurred with your submission. Please click the button below to go back home.
         </p>
+        <p>
+          <b>
+            Could not communicate with CSO.
+          </b>
+        </p>
+        <br />
         <div>
           <button
             class="normal-white btn"

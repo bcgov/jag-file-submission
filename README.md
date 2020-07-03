@@ -60,6 +60,9 @@ CSO_ROLEREGISTRY_URI=
 CSO_LOOKUPFACADE_USERNAME=
 CSO_LOOKUPFACADE_PASSWORD=
 CSO_LOOKUPFACADE_URI=
+BCEID_LOOKUP_USERNAME=
+BCEID_LOOKUP_PASSWORD=
+BCEID_LOOKUP_URI=
 ```
 
 run
@@ -68,26 +71,36 @@ run
 docker-compose up -d --build
 ```
 
-Currently the docker image created will create a Redis container that the backend Spring Boot API interacts with.
+to get started, access the front end application [here](http://localhost:3001) and enter a user account and you will get redirected to the file upload.
 
-To confirm that your docker container is working you can perform a GET request to `http://localhost:8080/actuator` to see all available endpoints, or a GET request to `http://localhost:8080/actuator/health` to see the application status.
+![screen](docs/media/demo_app.png)
 
-It will also build the image and fires up the frontend container. The efiling-frontend application will run and be available on port 3000. The efiling-demo application will run and be available on port 3001.
+### List of services
 
-```bash
-docker-compose stop
-```
+#### efiling-frontend
 
-Stops the container and the frontend application from being run/served.
+React front end accessible at [http://localhost:3000](http://localhost:3000)
 
-### Redis
+#### efiling-demo
 
-WIP
+React front end demo app accessible at [http://localhost:3001](http://localhost:3001)
 
-### Rabbit MQ
+#### efiling-api
 
-WIP
+Efiling Api check health at [http://localhost:8080/actuator/health](http://localhost:8080/actuator/health)
 
-### Keycloak
+#### redis
+    
+A [redis](https://redis.io/) instance exposed on port 6379
 
-The docker-compose file creates a docker pod from Keycloak. It maps port 8080 to 8081, and the HTTP management interface can be found at `http://localhost:8081/auth`
+#### rabbitmq
+
+A [rabbitmq](https://www.rabbitmq.com/) access the management console at [http://localhost:15672](http://localhost:15672)
+
+#### postgres:
+
+A [postgresql](https://www.postgresql.org/) to support keycloak
+
+#### keycloak:
+
+A [keycloak](https://www.keycloak.org/) instance accessible at [http://localhost:8081/auth](http://localhost:8081/auth)

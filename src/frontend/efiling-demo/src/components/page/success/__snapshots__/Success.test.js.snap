@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Cancel Component matches the snapshot 1`] = `
+exports[`Success Component matches the snapshot 1`] = `
 <DocumentFragment>
   <main>
     <header>
@@ -46,7 +46,7 @@ exports[`Cancel Component matches the snapshot 1`] = `
         class="content col-md-12"
       >
         <p>
-          You have cancelled your submission. Please click the button below to go back home.
+          You have successfully completed your submission. Please click the button below to go back home.
         </p>
         <div>
           <button

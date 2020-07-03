@@ -23,6 +23,13 @@ ENV REACT_APP_API_BASE_URL=http://localhost:8080
 RUN yarn install
 RUN yarn global add react-scripts@3.4.1
 
+WORKDIR /shared-components
+
+RUN npm link ../${SERVICE_NAME}/node_modules/react
+
+# set working directory
+WORKDIR /${SERVICE_NAME}
+
 RUN linklocal
 
 # start app

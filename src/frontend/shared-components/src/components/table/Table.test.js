@@ -2,16 +2,17 @@ import React from "react";
 import testBasicSnapshot from "../../TestHelper";
 
 import Table from "./Table";
-import { getTableTestData } from "../../modules/tableTestData";
+import { getTableElementsTestData } from "../../modules/tableTestData";
 
-const tableData = getTableTestData();
+const tableData = getTableElementsTestData();
+const header = "BCeID Info";
 
 describe("Table Component", () => {
   test("Matches the default snapshot", () => {
-    testBasicSnapshot(<Table table={tableData} />);
+    testBasicSnapshot(<Table heading={header} elements={tableData} />);
   });
 
   test("Matches the blue striped snapshot", () => {
-    testBasicSnapshot(<Table table={{ ...tableData, style: "blue-stripe" }} />);
+    testBasicSnapshot(<Table elements={tableData} styling="blue-stripe" />);
   });
 });

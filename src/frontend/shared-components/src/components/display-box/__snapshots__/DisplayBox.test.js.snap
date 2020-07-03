@@ -30,7 +30,9 @@ exports[`DisplayBox Component Matches the 'with icon' snapshot 1`] = `
   <div
     className="display-element"
   >
-    <table>
+    <table
+      className=""
+    >
       <thead>
         <tr>
           <th
@@ -89,7 +91,9 @@ exports[`DisplayBox Component Matches the 'without icon' snapshot 1`] = `
   <div
     className="display-element"
   >
-    <table>
+    <table
+      className=""
+    >
       <thead>
         <tr>
           <th
@@ -168,7 +172,9 @@ exports[`DisplayBox Component Matches the blue-background snapshot 1`] = `
   <div
     className="display-element"
   >
-    <table>
+    <table
+      className=""
+    >
       <thead>
         <tr>
           <th
