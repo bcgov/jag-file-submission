@@ -73,32 +73,34 @@ docker-compose up -d --build
 
 to get started, access the front end application [here](http://localhost:3001) and enter a user account and you will get redirected to the file upload.
 
-What you will get:
+![screen](docs/media/demo_app.png)
 
-### efiling-frontend
+### List of services
+
+#### efiling-frontend
 
 React front end accessible at [http://localhost:3000](http://localhost:3000)
 
-### efiling-demo
+#### efiling-demo
 
 React front end demo app accessible at [http://localhost:3001](http://localhost:3001)
 
-### efiling-api
+#### efiling-api
 
 Efiling Api check health at [http://localhost:8080/actuator/health](http://localhost:8080/actuator/health)
 
-### redis
+#### redis
     
 A [redis](https://redis.io/) instance exposed on port 6379
 
-### rabbitmq
+#### rabbitmq
 
 A [rabbitmq](https://www.rabbitmq.com/) access the management console at [http://localhost:15672](http://localhost:15672)
 
-### postgres:
+#### postgres:
 
 A [postgresql](https://www.postgresql.org/) to support keycloak
 
-### keycloak:
+#### keycloak:
 
 A [keycloak](https://www.keycloak.org/) instance accessible at [http://localhost:8081/auth](http://localhost:8081/auth)
