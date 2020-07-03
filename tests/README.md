@@ -22,7 +22,7 @@ tests
 ## Running the maven Tests without cucumber tags
 
 1. Add values to the keys in config.properties file.
-2. Add test data values to the json files in 'test/java/testdatasource' package.
+1. Add test data values to the json files in 'test/java/testdatasource' package.
 
 In the 'tests' directory, you can run:
 

@@ -9,6 +9,10 @@ import java.util.List;
 
 public class JsonDataReader {
 
+    private JsonDataReader() {
+        throw new IllegalStateException("Json Reader Utility class");
+    }
+
     public static CsoAccountGuid getCsoAccountGuid() throws IOException {
 
         ObjectMapper mapper = new ObjectMapper();

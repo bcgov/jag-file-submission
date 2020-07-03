@@ -14,15 +14,15 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>1.8</java.version>
-    <selenium.version>3.141.59</selenium.version>
-    <restassured.version>4.3.0</restassured.version>
+    <org.seleniumhq.selenium.version>3.141.59</org.seleniumhq.selenium.version>
+    <io.rest-assured.version>4.3.0</io.rest-assured.version>
     <junit.version>4.12</junit.version>
-    <driver.version>4.0.0</driver.version>
-    <log4j.version>2.13.3</log4j.version>
-    <slf4j.version>1.7.30</slf4j.version>
-    <jackson.version>2.11.0</jackson.version>
+    <io.github.bonigarcia.version>4.0.0</io.github.bonigarcia.version>
+    <org.apache.logging.log4j.version>2.13.3</org.apache.logging.log4j.version>
+    <org.slf4j.version>1.7.30</org.slf4j.version>
+    <com.fasterxml.jackson.core.version>2.11.0</com.fasterxml.jackson.core.version>
     <gson.version>2.8.6</gson.version>
-    <cucumber.version>6.1.1</cucumber.version>
+    <io.cucumber.version>6.1.1</io.cucumber.version>
     <compiler.version>3.8.1</compiler.version>
     <surefire.version>3.0.0-M3</surefire.version>
   </properties>
@@ -31,22 +31,22 @@
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
-      <version>${selenium.version}</version>
+      <version>${org.seleniumhq.selenium.version}</version>
     </dependency>
     <dependency>
       <groupId>io.rest-assured</groupId>
       <artifactId>rest-assured</artifactId>
-      <version>${restassured.version}</version>
+      <version>${io.rest-assured.version}</version>
     </dependency>
     <dependency>
       <groupId>io.rest-assured</groupId>
       <artifactId>json-path</artifactId>
-      <version>${restassured.version}</version>
+      <version>${io.rest-assured.version}</version>
     </dependency>
     <dependency>
       <groupId>io.rest-assured</groupId>
       <artifactId>json-schema-validator</artifactId>
-      <version>${restassured.version}</version>
+      <version>${io.rest-assured.version}</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -57,48 +57,48 @@
     <dependency>
       <groupId>io.github.bonigarcia</groupId>
       <artifactId>webdrivermanager</artifactId>
-      <version>${driver.version}</version>
+      <version>${io.github.bonigarcia.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-api</artifactId>
-      <version>${log4j.version}</version>
+      <version>${org.apache.logging.log4j.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
-      <version>${log4j.version}</version>
+      <version>${org.apache.logging.log4j.version}</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-nop</artifactId>
-      <version>${slf4j.version}</version>
+      <version>${org.slf4j.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>${jackson.version}</version>
+      <version>${com.fasterxml.jackson.core.version}</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-annotations</artifactId>
-      <version>${jackson.version}</version>
+      <version>${com.fasterxml.jackson.core.version}</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
-      <version>${jackson.version}</version>
+      <version>${com.fasterxml.jackson.core.version}</version>
     </dependency>
     <dependency>
       <groupId>io.cucumber</groupId>
       <artifactId>cucumber-java</artifactId>
-      <version>${cucumber.version}</version>
+      <version>${io.cucumber.version}</version>
     </dependency>
     <dependency>
       <groupId>io.cucumber</groupId>
       <artifactId>cucumber-junit</artifactId>
-      <version>${cucumber.version}</version>
+      <version>${io.cucumber.version}</version>
     </dependency>
     <dependency>
       <groupId>org.hamcrest</groupId>
