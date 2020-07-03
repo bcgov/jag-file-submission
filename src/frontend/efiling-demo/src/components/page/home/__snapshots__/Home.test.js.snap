@@ -51,7 +51,7 @@ exports[`Home Component matches the snapshot 1`] = `
             for="textInputId"
           >
             <div
-              class="textinput_label"
+              class="input-label"
             >
               Account GUID
             </div>
@@ -67,7 +67,7 @@ exports[`Home Component matches the snapshot 1`] = `
             />
           </label>
           <input
-            class="editable_white"
+            class="editable-white"
             id="textInputId"
             placeholder="77da92db-0791-491e-8c58-1a969e67d2fa"
             type="text"

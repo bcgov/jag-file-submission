@@ -651,7 +651,7 @@ exports[`Storyshots Home No Account Exists 1`] = `
           <p>
             E-File Submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
             <a
-              href="https://www2.gov.bc.ca/gov/content/home/privacy"
+              href="https://justice.gov.bc.ca/cso/about/index.do"
               rel="noopener noreferrer"
               target="_blank"
             >
@@ -1537,7 +1537,7 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
           <p>
             E-File Submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
             <a
-              href="https://www2.gov.bc.ca/gov/content/home/privacy"
+              href="https://justice.gov.bc.ca/cso/about/index.do"
               rel="noopener noreferrer"
               target="_blank"
             >

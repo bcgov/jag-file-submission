@@ -1,12 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Input field when mandatory and no label matches the snapshot 1`] = `
+exports[`Input field matches the snapshot (non-editable-grey) 1`] = `
 <div>
   <input
-    className="editable_white"
+    className="editable-white"
     id="textInputId"
     onChange={[Function]}
     placeholder="Enter id"
+    readOnly={true}
     type="text"
   />
   <br />
@@ -16,14 +17,31 @@ exports[`Input field when mandatory and no label matches the snapshot 1`] = `
 </div>
 `;
 
-exports[`Input field when mandatory and with label matches the snapshot 1`] = `
+exports[`Input field when mandatory and no label matches the snapshot (editable white) 1`] = `
+<div>
+  <input
+    className="editable-white"
+    id="textInputId"
+    onChange={[Function]}
+    placeholder="Enter id"
+    readOnly={false}
+    type="text"
+  />
+  <br />
+  <span
+    className="error"
+  />
+</div>
+`;
+
+exports[`Input field when mandatory and with label matches the snapshot (editable white) 1`] = `
 <div>
   <label
     className="label"
     htmlFor="textInputId"
   >
     <div
-      className="textinput_label"
+      className="input-label"
     >
       Submission ID
     </div>
@@ -39,10 +57,11 @@ exports[`Input field when mandatory and with label matches the snapshot 1`] = `
     />
   </label>
   <input
-    className="editable_white"
+    className="editable-white"
     id="textInputId"
     onChange={[Function]}
     placeholder="Enter id"
+    readOnly={false}
     type="text"
   />
   <br />
@@ -52,13 +71,14 @@ exports[`Input field when mandatory and with label matches the snapshot 1`] = `
 </div>
 `;
 
-exports[`Input field when not mandatory and no label matches the snapshot 1`] = `
+exports[`Input field when not mandatory and no label matches the snapshot (editable white) 1`] = `
 <div>
   <input
-    className="editable_white"
+    className="editable-white"
     id="textInputId"
     onChange={[Function]}
     placeholder="Enter id"
+    readOnly={false}
     type="text"
   />
   <br />
@@ -68,14 +88,14 @@ exports[`Input field when not mandatory and no label matches the snapshot 1`] = 
 </div>
 `;
 
-exports[`Input field when not mandatory and with label matches the snapshot 1`] = `
+exports[`Input field when not mandatory and with label matches the snapshot (editable white) 1`] = `
 <div>
   <label
     className="label"
     htmlFor="textInputId"
   >
     <div
-      className="textinput_label"
+      className="input-label"
     >
       Submission ID
     </div>
@@ -86,10 +106,11 @@ exports[`Input field when not mandatory and with label matches the snapshot 1`] 
     />
   </label>
   <input
-    className="editable_white"
+    className="editable-white"
     id="textInputId"
     onChange={[Function]}
     placeholder="Enter id"
+    readOnly={false}
     type="text"
   />
   <br />

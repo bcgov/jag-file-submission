@@ -10,18 +10,29 @@ export default {
 
 const onClick = () => {};
 const label = "Button label";
-const styling = "normal-blue btn";
 
-const component = <Button onClick={onClick} label={label} styling={styling} />;
+const normalBlueComponent = (
+  <Button onClick={onClick} label={label} styling="normal-blue btn" />
+);
+const normalWhiteComponent = (
+  <Button onClick={onClick} label={label} styling="normal-white btn" />
+);
 
-export const Default = () => component;
+export const NormalBlue = () => normalBlueComponent;
 
-export const Mobile = () => component;
+export const NormalBlueMobile = () => normalBlueComponent;
 
-Mobile.story = {
+export const NormalWhite = () => normalWhiteComponent;
+
+export const NormalWhiteMobile = () => normalWhiteComponent;
+
+const mobileViewport = {
   parameters: {
     viewport: {
       defaultViewport: "mobile2"
     }
   }
 };
+
+NormalBlueMobile.story = mobileViewport;
+NormalWhiteMobile.story = mobileViewport;

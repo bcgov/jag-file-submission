@@ -678,7 +678,7 @@ exports[`Storyshots Home Default 1`] = `
           htmlFor="textInputId"
         >
           <div
-            className="textinput_label"
+            className="input-label"
           >
             Account GUID
           </div>
@@ -694,7 +694,7 @@ exports[`Storyshots Home Default 1`] = `
           />
         </label>
         <input
-          className="editable_white"
+          className="editable-white"
           id="textInputId"
           onChange={[Function]}
           placeholder="77da92db-0791-491e-8c58-1a969e67d2fa"
@@ -863,7 +863,7 @@ exports[`Storyshots Home Mobile 1`] = `
           htmlFor="textInputId"
         >
           <div
-            className="textinput_label"
+            className="input-label"
           >
             Account GUID
           </div>
@@ -879,7 +879,7 @@ exports[`Storyshots Home Mobile 1`] = `
           />
         </label>
         <input
-          className="editable_white"
+          className="editable-white"
           id="textInputId"
           onChange={[Function]}
           placeholder="77da92db-0791-491e-8c58-1a969e67d2fa"

@@ -4,7 +4,17 @@ import PropTypes from "prop-types";
 import "./Input.css";
 
 export const Input = ({
-  input: { label, id, value, placeholder, isRequired, errorMsg, styling, note },
+  input: {
+    label,
+    id,
+    value,
+    placeholder,
+    isRequired,
+    errorMsg,
+    styling,
+    note,
+    isReadOnly
+  },
   onChange
 }) => {
   let asterisk = "";
@@ -23,7 +33,7 @@ export const Input = ({
   if (label) {
     labelPart = (
       <label htmlFor={id} className="label">
-        <div className="textinput_label">{label}</div>
+        <div className="input-label">{label}</div>
         {asterisk}&nbsp;
         <span className="note">{note}</span>
       </label>
@@ -39,6 +49,7 @@ export const Input = ({
         id={id}
         defaultValue={value}
         placeholder={placeholder}
+        readOnly={isReadOnly}
         onChange={event => onChange(event.target.value)}
       />
       <br />
@@ -56,7 +67,8 @@ Input.propTypes = {
     isRequired: PropTypes.bool.isRequired,
     errorMsg: PropTypes.string,
     styling: PropTypes.string.isRequired,
-    note: PropTypes.string
+    note: PropTypes.string,
+    isReadOnly: PropTypes.bool
   }).isRequired,
   onChange: PropTypes.func.isRequired
 };
