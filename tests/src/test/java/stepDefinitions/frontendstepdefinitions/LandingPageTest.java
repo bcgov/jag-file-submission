@@ -3,7 +3,7 @@ package stepDefinitions.frontendstepdefinitions;
 import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.EfilingPage;
 import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.LandingPage;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.DriverClass;
-import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonReader;
+import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
@@ -12,17 +12,11 @@ import io.cucumber.java.en.When;
 import org.junit.Assert;
 
 import java.io.IOException;
-import java.text.ParseException;
 
 public class LandingPageTest extends DriverClass {
 
      LandingPage landingPage;
      EfilingPage eFilingPage;
-
-    //DataProvider
-    public static Object[][] accountData() throws IOException {
-        return JsonReader.getData("src/test/java/testdatasource/account-data.json", "accountGuid", 1, 3);
-    }
 
     @Before ("@frontend")
     public void setUp() throws IOException {
@@ -51,11 +45,12 @@ public class LandingPageTest extends DriverClass {
         log.info("Landing page title is verified");
     }
 
-    @When("user enters a valid account guid {string}")
-    public void userEntersAValidAccountGuid(String validGuid) throws IOException {
+    @When("user enters a valid existing CSO account guid {string}")
+    public void userEntersAValidExistingCsoAccountGuid(String validExistingCSOGuid) throws IOException {
         landingPage = new LandingPage(driver);
-        validGuid = (String) accountData()[0][0];
-        landingPage.enterAccountGuid(validGuid);
+
+        validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
+        landingPage.enterAccountGuid(validExistingCSOGuid);
     }
 
     @Then("eFiling frontend page is displayed and cancel button exists")
@@ -83,7 +78,7 @@ public class LandingPageTest extends DriverClass {
         landingPage = new LandingPage(driver);
 
         landingPage.clickGenerateUrlButton();
-        log.info("Generate Url button in Efiling frontend page is clicked");
+        log.info("Generate Url button in eFiling frontend page is clicked");
 
         String expMsg = "An error occurred while generating the URL. Please try again.";
         String actMsg =  landingPage.getErrorMessageText();
@@ -92,19 +87,19 @@ public class LandingPageTest extends DriverClass {
         log.info("Expected message is verified");
     }
 
-    @When("user enters non existing account guid {string}")
-    public void userEntersNonExistingAccountGuid(String incorrectGuid) throws IOException {
+    @When("user enters non existing CSO account guid {string}")
+    public void userEntersNonExistingCsoAccountGuid(String nonExistingCSOGuid) throws IOException {
         landingPage = new LandingPage(driver);
-        incorrectGuid = (String) accountData()[0][1];
 
-        landingPage.enterAccountGuid(incorrectGuid);
+        nonExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getNonExistingCSOGuid();
+        landingPage.enterAccountGuid(nonExistingCSOGuid);
     }
 
-    @When("user enters invalid account guid {string}")
-    public void userEntersInvalidAccountGuid(String invalidGuid) throws IOException {
+    @When("user enters invalid CSO account guid without eFiling role {string}")
+    public void userEntersInvalidCsoAccountGuidWithoutEfilingRole(String invalidNoRoleGuid) throws IOException {
         landingPage = new LandingPage(driver);
-        invalidGuid = (String) accountData()[0][2];
 
-        landingPage.enterAccountGuid(invalidGuid);
+        invalidNoRoleGuid = JsonDataReader.getCsoAccountGuid().getInvalidGuid();
+        landingPage.enterAccountGuid(invalidNoRoleGuid);
     }
 }

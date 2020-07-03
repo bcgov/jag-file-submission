@@ -1,9 +1,7 @@
-{
-  "accountGuid": [
-    {
-      "validGuid": "<validGuid>",
-      "invalidGuid": "<invalidGuid>",
-      "incorrectGuid": "<IncorrectGuid>"
-    }
-  ]
-}
+[
+  {
+    "validExistingCSOGuid": "<validExistingCSOGuid>",
+    "invalidGuid": "<invalidGuid>",
+    "nonExistingCSOGuid": "<nonExistingCSOGuid>"
+  }
+]

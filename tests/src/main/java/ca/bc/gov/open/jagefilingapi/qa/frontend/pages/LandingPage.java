@@ -2,6 +2,7 @@ package ca.bc.gov.open.jagefilingapi.qa.frontend.pages;
 
 import ca.bc.gov.open.jagefilingapi.qa.config.ReadConfig;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.DriverClass;
+import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -49,4 +50,3 @@ public class LandingPage extends DriverClass {
         return driver.findElement(getErrorText).getText();
     }
 }
-
