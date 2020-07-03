@@ -27,10 +27,10 @@ WORKDIR /shared-components
 
 RUN npm link ../efiling-frontend/node_modules/react
 
-RUN linklocal
-
 # set working directory
 WORKDIR /${SERVICE_NAME}
+
+RUN linklocal
 
 # start app
 CMD ["yarn", "start"]
