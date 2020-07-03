@@ -19,11 +19,11 @@ public class JsonDataReader {
         InputStream inputStream = new FileInputStream("src/test/java/testdatasource/account-data.json");
         TypeReference<List<CsoAccountGuid>> typeReference= new TypeReference<List<CsoAccountGuid>>() {};
         List<CsoAccountGuid> csoAccountGuids = mapper.readValue(inputStream, typeReference);
-        CsoAccountGuid accounts = null;
+        CsoAccountGuid account = null;
 
         for (CsoAccountGuid csoAccountGuid : csoAccountGuids) {
-            accounts = csoAccountGuid;
+            account = csoAccountGuid;
         }
-        return accounts;
+        return account;
     }
 }

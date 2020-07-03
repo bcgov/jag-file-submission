@@ -3,7 +3,7 @@ package ca.bc.gov.open.jagefilingapi.qa.testdatatypes;
 public class CsoAccountGuid {
 
     private String validExistingCSOGuid;
-    private String invalidGuid;
+    private String invalidNoFilingRoleGuid;
     private String nonExistingCSOGuid;
 
     public String getValidExistingCSOGuid() {
@@ -14,12 +14,12 @@ public class CsoAccountGuid {
         this.validExistingCSOGuid = validExistingCSOGuid;
     }
 
-    public String getInvalidGuid() {
-        return invalidGuid;
+    public String getInvalidNoFilingRoleGuid() {
+        return invalidNoFilingRoleGuid;
     }
 
-    public void setInvalidGuid(String invalidGuid) {
-        this.invalidGuid = invalidGuid;
+    public void setInvalidNoFilingRoleGuid(String invalidNoFilingRoleGuid) {
+        this.invalidNoFilingRoleGuid = invalidNoFilingRoleGuid;
     }
 
     public String getNonExistingCSOGuid() {

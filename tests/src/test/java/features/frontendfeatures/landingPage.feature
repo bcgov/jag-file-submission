@@ -10,7 +10,6 @@ Feature: As a user I would like to have my account verified
     Examples:
       | validExistingCSOGuid |
       | validExistingCSOGuid |
-      | validExistingCSOGuid |
 
   @frontend
   Scenario Outline: Verify non existing CSO account guid redirects to the eFiling form page
@@ -22,8 +21,8 @@ Feature: As a user I would like to have my account verified
 
   @frontend
   Scenario Outline: Verify invalid CSO account guid without eFiling role returns error message
-    When  user enters invalid CSO account guid without eFiling role "<invalidNoRoleGuid>"
+    When  user enters invalid CSO account guid without eFiling role "<invalidNoFilingRoleGuid>"
     Then error message is displayed
     Examples:
-      | invalidNoRoleGuid |
-      | invalidNoRoleGuid |
+      | invalidNoFilingRoleGuid |
+      | invalidNoFilingRoleGuid |

@@ -96,10 +96,10 @@ public class LandingPageTest extends DriverClass {
     }
 
     @When("user enters invalid CSO account guid without eFiling role {string}")
-    public void userEntersInvalidCsoAccountGuidWithoutEfilingRole(String invalidNoRoleGuid) throws IOException {
+    public void userEntersInvalidCsoAccountGuidWithoutEfilingRole(String invalidNoFilingRoleGuid) throws IOException {
         landingPage = new LandingPage(driver);
 
-        invalidNoRoleGuid = JsonDataReader.getCsoAccountGuid().getInvalidGuid();
-        landingPage.enterAccountGuid(invalidNoRoleGuid);
+        invalidNoFilingRoleGuid = JsonDataReader.getCsoAccountGuid().getInvalidNoFilingRoleGuid();
+        landingPage.enterAccountGuid(invalidNoFilingRoleGuid);
     }
 }

@@ -1,7 +1,7 @@
 [
   {
     "validExistingCSOGuid": "<validExistingCSOGuid>",
-    "invalidGuid": "<invalidGuid>",
+    "invalidNoFilingRoleGuid": "<invalidNoFilingRoleGuid>",
     "nonExistingCSOGuid": "<nonExistingCSOGuid>"
   }
 ]
