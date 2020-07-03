@@ -14,6 +14,7 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
     │   │   ├── efiling-api                     # efiling api
     │   │   ├── efiling-worker                  # file submission worker
     │   │   ├── libs                            # backend libraries
+    │   │   |   ├── efiling-account-client      # efiling soap client that checks CSO account, FILE role, BCeID account info    
     │   │   |   ├── efiling-submission-client   # efiling soap client that submits packages to CSO
     │   │   |   ├── efiling-lookup-client       # efiling soap client that looksup required info for submission
     │   │   |   └── efiling-status-client       # efiling soap client for checking status of a submitted package
