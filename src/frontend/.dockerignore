@@ -1,4 +1,7 @@
 node_modules
+efiling-demo/node_modules
+efiling-frontend/node_modules
+shared-components/node_modules
 build
 .dockerignore
 Dockerfile
