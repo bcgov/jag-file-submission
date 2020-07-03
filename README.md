@@ -74,9 +74,8 @@ docker-compose up -d --build
 
 to get started, access the front end application [here](http://localhost:3001) and enter a user account and you will get redirected to the file upload.
 
+![screen](docs/media/demoApp.png)
 You can get test accounts [here](https://bcgov.github.io/jag-file-submission/#/gettingStarted?id=test-accounts) when the app is running in demo mode.
-
-![screen](https://user-images.githubusercontent.com/55710226/86496547-cdfac680-bd32-11ea-84a4-a8e5a8bf42a2.png)
 
 ### List of services
 
