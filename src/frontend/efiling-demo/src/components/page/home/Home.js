@@ -36,7 +36,7 @@ const urlBody = {
 const input = {
   label: "Account GUID",
   id: "textInputId",
-  styling: "editable_white",
+  styling: "editable-white",
   isRequired: true,
   placeholder: "77da92db-0791-491e-8c58-1a969e67d2fa"
 };

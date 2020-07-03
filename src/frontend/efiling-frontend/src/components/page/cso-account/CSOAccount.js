@@ -32,7 +32,7 @@ export default function CSOAccount({ confirmationPopup }) {
           file documents with the Government of British Columbia Court Services
           Online (CSO).&nbsp;
           <a
-            href="https://www2.gov.bc.ca/gov/content/home/privacy"
+            href="https://justice.gov.bc.ca/cso/about/index.do"
             target="_blank"
             rel="noopener noreferrer"
           >
