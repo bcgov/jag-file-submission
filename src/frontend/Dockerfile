@@ -10,7 +10,6 @@ COPY . .
 WORKDIR /shared-components
 
 RUN yarn install
-RUN npm link ../efiling-frontend/node_modules/react
 
 # set working directory
 WORKDIR /${SERVICE_NAME}
@@ -23,6 +22,10 @@ ENV REACT_APP_API_BASE_URL=http://localhost:8080
 # install dependencies
 RUN yarn install
 RUN yarn global add react-scripts@3.4.1
+
+WORKDIR /shared-components
+
+RUN npm link ../efiling-frontend/node_modules/react
 
 RUN linklocal
 
