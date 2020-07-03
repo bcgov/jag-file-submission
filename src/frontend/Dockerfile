@@ -29,5 +29,8 @@ RUN npm link ../efiling-frontend/node_modules/react
 
 RUN linklocal
 
+# set working directory
+WORKDIR /${SERVICE_NAME}
+
 # start app
 CMD ["yarn", "start"]
