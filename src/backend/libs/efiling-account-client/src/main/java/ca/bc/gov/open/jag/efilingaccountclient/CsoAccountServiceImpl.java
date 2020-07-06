@@ -6,19 +6,14 @@ import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.UserRole
 import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
 import ca.bc.gov.ag.csows.accounts.ClientProfile;
 import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
-import ca.bc.gov.open.jag.efilingcommons.exceptions.CSOHasMultipleAccountException;
 import ca.bc.gov.open.jag.efilingaccountclient.mappers.AccountDetailsMapper;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.CSOHasMultipleAccountException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
-import ca.bceid.webservices.client.v9.*;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
-import org.springframework.util.StringUtils;
+import ca.bceid.webservices.client.v9.*;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CsoAccountServiceImpl implements EfilingAccountService {
 
@@ -53,13 +48,11 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
     }
 
     @Override
-    public AccountDetails getAccountDetails(String userGuid, String bceidAccountType) {
+    public AccountDetails getAccountDetails(UUID userGuid, String bceidAccountType) {
 
-        if (StringUtils.isEmpty(userGuid)) return null;
-
-        AccountDetails accountDetails = getCsoDetails(userGuid);
+        AccountDetails accountDetails = getCsoDetails(CsoHelpers.formatUserGuid(userGuid));
         if (null == accountDetails) {
-            accountDetails = getBCeIDDetails(userGuid, bceidAccountType);
+            accountDetails = getBCeIDDetails(CsoHelpers.formatUserGuid(userGuid), bceidAccountType);
         }
 
         return accountDetails;
@@ -72,9 +65,9 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         try {
             profiles.addAll(accountFacadeBean.findProfiles(userGuid));
         } catch (NestedEjbException_Exception e) {
-            throw new EfilingAccountServiceException("Exception while fetching account details", e.getCause());
+            throw new EfilingAccountServiceException("Exception while fetching account details", e);
         }
-        //An account must only one profile associated to proceed
+        // An account must only one profile associated to proceed
         if (profiles.size() == 1) {
             accountDetails = accountDetailsMapper.toAccountDetails(profiles.get(0), hasFileRole(userGuid));
         }
@@ -120,4 +113,6 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         BCeIDAccountTypeCode code = accountTypeLookup.get(lookUp);
         return code == null? BCeIDAccountTypeCode.VOID : code;
     }
+
+
 }
