@@ -42,5 +42,3 @@ public class TestUtil {
         return jsonPath.get(key);
     }
 }
-
-
