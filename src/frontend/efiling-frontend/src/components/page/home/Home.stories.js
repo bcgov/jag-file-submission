@@ -18,8 +18,7 @@ const header = {
   history: createMemoryHistory()
 };
 const confirmationPopup = getTestData();
-const applicantInfo = getApplicantInfo();
-const page = { header, confirmationPopup, applicantInfo };
+const page = { header, confirmationPopup };
 
 const submissionId = "abc123";
 const mock = new MockAdapter(axios);
@@ -36,6 +35,11 @@ const navigation = {
   }
 };
 const userDetails = {
+  bceid: "bobross42",
+  firstName: "Bob",
+  middleName: "Norman",
+  lastName: "Ross",
+  email: "bob.ross@example.com",
   accounts: [
     {
       type: "CSO"

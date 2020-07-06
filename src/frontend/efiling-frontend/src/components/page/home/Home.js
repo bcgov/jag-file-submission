@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import queryString from "query-string";
 import { useLocation } from "react-router-dom";
@@ -20,7 +20,8 @@ export const saveNavigationToSession = ({ cancel, success, error }) => {
 const checkCSOAccountStatus = (
   submissionId,
   setCsoAccountExists,
-  setShowLoader
+  setShowLoader,
+  setApplicantInfo
 ) => {
   axios
     .get(`/submission/${submissionId}`)
@@ -31,26 +32,47 @@ const checkCSOAccountStatus = (
         const csoAccountExists = userDetails.accounts.some(
           element => element.type === "CSO"
         );
-        if (csoAccountExists) setCsoAccountExists(true);
+        if (csoAccountExists) {
+          setCsoAccountExists(true);
+        }
       }
+
+      let applicantInfo = {
+        bceID: userDetails.bceid,
+        firstName: userDetails.firstName,
+        lastName: userDetails.lastName,
+        emailAddress: userDetails.email
+      };
+
+      if (userDetails.middleName) {
+        applicantInfo = {
+          ...applicantInfo,
+          middleName: userDetails.middleName
+        };
+      }
+
+      setApplicantInfo(applicantInfo);
+
       setShowLoader(false);
     })
     .catch(() => {});
 };
 
-export default function Home({
-  page: { header, confirmationPopup, applicantInfo }
-}) {
+export default function Home({ page: { header, confirmationPopup } }) {
   const [showLoader, setShowLoader] = useState(true);
   const [csoAccountExists, setCsoAccountExists] = useState(false);
+  const [applicantInfo, setApplicantInfo] = useState({});
   const location = useLocation();
   const queryParams = queryString.parse(location.search);
 
-  checkCSOAccountStatus(
-    queryParams.submissionId,
-    setCsoAccountExists,
-    setShowLoader
-  );
+  useEffect(() => {
+    checkCSOAccountStatus(
+      queryParams.submissionId,
+      setCsoAccountExists,
+      setShowLoader,
+      setApplicantInfo
+    );
+  }, [queryParams.submissionId]);
 
   const csoStatus = {
     accountExists: csoAccountExists,
