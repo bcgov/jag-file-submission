@@ -5,6 +5,7 @@ import axios from "axios";
 import { render, wait } from "@testing-library/react";
 import Home, { saveNavigationToSession } from "./Home";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
+import { getUserDetails } from "../../../modules/userDetails";
 
 const MockAdapter = require("axios-mock-adapter");
 
@@ -30,18 +31,7 @@ describe("Home", () => {
       url: ""
     }
   };
-  const userDetails = {
-    bceid: "bobross42",
-    firstName: "Bob",
-    middleName: "Norman",
-    lastName: "Ross",
-    email: "bob.ross@example.com",
-    accounts: [
-      {
-        type: "CSO"
-      }
-    ]
-  };
+  const userDetails = getUserDetails();
   let mock;
 
   beforeEach(() => {

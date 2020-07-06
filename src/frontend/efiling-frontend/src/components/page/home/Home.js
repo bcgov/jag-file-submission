@@ -16,6 +16,16 @@ export const saveNavigationToSession = ({ cancel, success, error }) => {
   if (error.url) sessionStorage.setItem("errorUrl", error.url);
 };
 
+const addUserInfo = (bceid, firstName, middleName, lastName, email) => {
+  return {
+    bceID: bceid,
+    firstName,
+    middleName,
+    lastName,
+    emailAddress: email
+  };
+};
+
 // make call to submission/{id} to get the user and navigation details
 const checkCSOAccountStatus = (
   submissionId,
@@ -37,19 +47,13 @@ const checkCSOAccountStatus = (
         }
       }
 
-      let applicantInfo = {
-        bceID: userDetails.bceid,
-        firstName: userDetails.firstName,
-        lastName: userDetails.lastName,
-        emailAddress: userDetails.email
-      };
-
-      if (userDetails.middleName) {
-        applicantInfo = {
-          ...applicantInfo,
-          middleName: userDetails.middleName
-        };
-      }
+      const applicantInfo = addUserInfo(
+        userDetails.bceid,
+        userDetails.firstName,
+        userDetails.middleName,
+        userDetails.lastName,
+        userDetails.email
+      );
 
       setApplicantInfo(applicantInfo);
 
