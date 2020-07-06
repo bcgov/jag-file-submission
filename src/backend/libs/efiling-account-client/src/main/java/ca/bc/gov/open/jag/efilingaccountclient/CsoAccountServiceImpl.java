@@ -67,7 +67,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         } catch (NestedEjbException_Exception e) {
             throw new EfilingAccountServiceException("Exception while fetching account details", e);
         }
-        // An account must only one profile associated to proceed
+        // An account must have only one profile associated with it to proceed
         if (profiles.size() == 1) {
             accountDetails = accountDetailsMapper.toAccountDetails(profiles.get(0), hasFileRole(userGuid));
         }
