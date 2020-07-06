@@ -19,7 +19,16 @@ const runTest = async (story, context) => {
   const asFragment = mount(storyElement);
 
   await wait(() => {
-    expect(asFragment).toMatchSpecificSnapshot(filename);
+    if (
+      filename ===
+      "components/confirmation-popup/__snapshots__/ConfirmationPopup.stories.storyshot"
+    ) {
+      setTimeout(() => {
+        expect(asFragment).toMatchSpecificSnapshot(filename);
+      }, 3000);
+    } else {
+      expect(asFragment).toMatchSpecificSnapshot(filename);
+    }
   });
 };
 

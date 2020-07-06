@@ -13,6 +13,10 @@ const store = new Store({
   show: false
 });
 
+setTimeout(() => {
+  store.callbacks[0].subscription = "testKey";
+}, 2000);
+
 const body = () => (
   <>
     <p>Your files will not be submitted.</p>
