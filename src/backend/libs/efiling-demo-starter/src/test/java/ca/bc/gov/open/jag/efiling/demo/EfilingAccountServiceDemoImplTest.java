@@ -11,7 +11,6 @@ public class EfilingAccountServiceDemoImplTest {
 
     public static final UUID ACCOUNT_WITH_EFILING_ROLE = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fa");
     public static final UUID ACCOUNT_WITHOUT_EFILING_ROLE = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fb");
-    public static final UUID ACCOUNT_DOES_NOT_EXISTS = UUID.fromString("88da92db-0791-491e-8c58-1a969e67d2fb");
 
     EfilingAccountServiceDemoImpl sut;
 
@@ -41,21 +40,6 @@ public class EfilingAccountServiceDemoImplTest {
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountId());
         Assertions.assertEquals(BigDecimal.TEN, actual.getClientId());
         Assertions.assertEquals(false, actual.isFileRolePresent());
-    }
-
-    @Test
-    @DisplayName("OK: should return a dummy account")
-    public void id3ShouldReturnDummyAccount() {
-
-        AccountDetails actual = sut.getAccountDetails(ACCOUNT_DOES_NOT_EXISTS, "");
-
-        Assertions.assertEquals(BigDecimal.ZERO, actual.getAccountId());
-        Assertions.assertEquals(BigDecimal.ZERO, actual.getClientId());
-        Assertions.assertEquals(false, actual.isFileRolePresent());
-        Assertions.assertEquals("Bob", actual.getFirstName());
-        Assertions.assertEquals("Rob", actual.getMiddleName());
-        Assertions.assertEquals("Ross", actual.getLastName());
-        Assertions.assertEquals("bross@paintit.com", actual.getEmail());
     }
 
 }
