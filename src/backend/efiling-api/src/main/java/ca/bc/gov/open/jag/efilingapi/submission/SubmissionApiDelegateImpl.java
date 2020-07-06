@@ -57,7 +57,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         try {
             response = ResponseEntity.ok(
                     generateUrlResponseMapper.toGenerateUrlResponse(
-                            submissionService.generateFromRequest(generateUrlRequest),
+                            submissionService.generateFromRequest(xAuthUserId, generateUrlRequest),
                             navigationProperties.getBaseUrl()));
             logger.info("successfully generated return url.");
         }
