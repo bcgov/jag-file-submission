@@ -32,7 +32,7 @@ public class CsoAccountServiceImplTest {
     private static final UUID USER_GUID_WITH_FILE_ROLE = UUID.randomUUID();
     private static final UUID USER_GUID_WITH_NO_CSO = UUID.randomUUID();
     private static final UUID USER_GUID_WITH_EJB_EXCEPTION = UUID.randomUUID();
-    private static final UUID USER_GUID_WITH_MULTIPROFILE = UUID.randomUUID();
+    private static final UUID USER_GUID_WITH_MULTI_PROFILE = UUID.randomUUID();
     public static final String DOMAIN = "Courts";
     public static final String APPLICATION = "CSO";
     public static final String IDENTIFIER_TYPE = "CAP";
