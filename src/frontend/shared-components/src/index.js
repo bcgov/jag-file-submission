@@ -6,5 +6,6 @@ export { Input } from "./components/input/Input";
 export { Button } from "./components/button/Button";
 export { Header } from "./components/header/Header";
 export { TermsOfUse } from "./components/terms-of-use/TermsOfUse";
+export { Sidecard } from "./components/sidecard/Sidecard";
 
 export default ConfirmationPopup;
