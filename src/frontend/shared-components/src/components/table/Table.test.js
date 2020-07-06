@@ -1,7 +1,7 @@
 import React from "react";
 import testBasicSnapshot from "../../TestHelper";
 
-import Table from "./Table";
+import { Table } from "./Table";
 import { getTableElementsTestData } from "../../modules/tableTestData";
 
 const tableData = getTableElementsTestData();
