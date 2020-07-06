@@ -44,10 +44,10 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     @Override
-    public Submission generateFromRequest(GenerateUrlRequest generateUrlRequest) {
+    public Submission generateFromRequest(UUID authUserId, GenerateUrlRequest generateUrlRequest) {
 
         logger.debug("Attempting to get user cso account information");
-        AccountDetails accountDetails = efilingAccountService.getAccountDetails(formatUserGuid(generateUrlRequest.getUserId()), "");
+        AccountDetails accountDetails = efilingAccountService.getAccountDetails(authUserId, "");
         logger.info("Successfully got cso account information");
 
         if (accountDetails != null && !accountDetails.isFileRolePresent()) {
@@ -68,10 +68,6 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         return cachedSubmission.get();
 
-    }
-
-    private String formatUserGuid(UUID id) {
-        return id.toString().replace("-", "").toUpperCase();
     }
 
     private long getExpiryDate() {

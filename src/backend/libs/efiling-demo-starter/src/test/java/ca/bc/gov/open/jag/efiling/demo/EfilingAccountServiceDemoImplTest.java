@@ -21,21 +21,22 @@ public class EfilingAccountServiceDemoImplTest {
     }
 
     @Test
-    @DisplayName("CASE 1: with account having efiling role")
-    public void withAccountHavingEfilingRole() {
+    @DisplayName("OK: should return id with file role")
+    public void id1ShouldReturnAccountWithFileRole() {
 
-        AccountDetails actual = sut.getAccountDetails(ACCOUNT_WITH_EFILING_ROLE.toString(), "");
+        AccountDetails actual = sut.getAccountDetails(ACCOUNT_WITH_EFILING_ROLE, "");
 
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountId());
         Assertions.assertEquals(BigDecimal.TEN, actual.getClientId());
         Assertions.assertEquals(true, actual.isFileRolePresent());
+
     }
 
     @Test
-    @DisplayName("CASE 2: with account not having efiling role")
-    public void withAccountHavingAdminRole() {
+    @DisplayName("OK: should return id without file role")
+    public void id2ShouldReturnAccountWithoutFileRole() {
 
-        AccountDetails actual = sut.getAccountDetails(ACCOUNT_WITHOUT_EFILING_ROLE.toString(), "");
+        AccountDetails actual = sut.getAccountDetails(ACCOUNT_WITHOUT_EFILING_ROLE, "");
 
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountId());
         Assertions.assertEquals(BigDecimal.TEN, actual.getClientId());
@@ -43,10 +44,10 @@ public class EfilingAccountServiceDemoImplTest {
     }
 
     @Test
-    @DisplayName("CASE 3: with no account should return null")
-    public void withNoAccountShouldBeNull() {
+    @DisplayName("OK: should return a dummy account")
+    public void id3ShouldReturnDummyAccount() {
 
-        AccountDetails actual = sut.getAccountDetails(ACCOUNT_DOES_NOT_EXISTS.toString(), "");
+        AccountDetails actual = sut.getAccountDetails(ACCOUNT_DOES_NOT_EXISTS, "");
 
         Assertions.assertEquals(BigDecimal.ZERO, actual.getAccountId());
         Assertions.assertEquals(BigDecimal.ZERO, actual.getClientId());
