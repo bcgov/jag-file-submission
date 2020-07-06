@@ -3248,6 +3248,370 @@ exports[`Storyshots Loader Page 1`] = `
 </Loader>
 `;
 
+exports[`Storyshots Sidecard Blue 1`] = `
+<Sidecard
+  sideCard={
+    Object {
+      "content": Array [
+        "E-File submission allows you to securely upload and electronically file documents.",
+      ],
+      "heading": "About E-File Submission",
+      "type": "blue",
+    }
+  }
+>
+  <div
+    className="dashboard-spacing"
+    style={
+      Object {
+        "position": "relative",
+      }
+    }
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="col-12 pt-2"
+        style={
+          Object {
+            "position": "relative",
+          }
+        }
+      >
+        <p />
+        <section
+          className="submit-container"
+          id="blue-section"
+        >
+          <h2
+            className="heading-style"
+          >
+            About E-File Submission
+          </h2>
+          <div
+            className="submit-content"
+          >
+            <span>
+              E-File submission allows you to securely upload and electronically file documents.
+            </span>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</Sidecard>
+`;
+
+exports[`Storyshots Sidecard Blue Grey 1`] = `
+<Sidecard
+  sideCard={
+    Object {
+      "content": Array [
+        "E-File submission allows you to securely upload and electronically file documents.",
+      ],
+      "heading": "About E-File Submission",
+      "type": "bluegrey",
+    }
+  }
+>
+  <div
+    className="dashboard-spacing"
+    style={
+      Object {
+        "position": "relative",
+      }
+    }
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="col-12 pt-2"
+        style={
+          Object {
+            "position": "relative",
+          }
+        }
+      >
+        <p />
+        <section
+          className="bluegrey-container"
+          id="bluegrey-section"
+        >
+          <div
+            className="container-background bluegrey-heading"
+          >
+            <h2
+              className="heading-style"
+            >
+              About E-File Submission
+            </h2>
+          </div>
+          <div
+            className="bluegrey-content"
+          >
+            <span
+              className="content-style"
+            >
+              E-File submission allows you to securely upload and electronically file documents.
+            </span>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</Sidecard>
+`;
+
+exports[`Storyshots Sidecard Blue Grey Mobile 1`] = `
+<Sidecard
+  sideCard={
+    Object {
+      "content": Array [
+        "E-File submission allows you to securely upload and electronically file documents.",
+      ],
+      "heading": "About E-File Submission",
+      "type": "bluegrey",
+    }
+  }
+>
+  <div
+    className="dashboard-spacing"
+    style={
+      Object {
+        "position": "relative",
+      }
+    }
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="col-12 pt-2"
+        style={
+          Object {
+            "position": "relative",
+          }
+        }
+      >
+        <p />
+        <section
+          className="bluegrey-container"
+          id="bluegrey-section"
+        >
+          <div
+            className="container-background bluegrey-heading"
+          >
+            <h2
+              className="heading-style"
+            >
+              About E-File Submission
+            </h2>
+          </div>
+          <div
+            className="bluegrey-content"
+          >
+            <span
+              className="content-style"
+            >
+              E-File submission allows you to securely upload and electronically file documents.
+            </span>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</Sidecard>
+`;
+
+exports[`Storyshots Sidecard Blue Mobile 1`] = `
+<Sidecard
+  sideCard={
+    Object {
+      "content": Array [
+        "E-File submission allows you to securely upload and electronically file documents.",
+      ],
+      "heading": "About E-File Submission",
+      "type": "blue",
+    }
+  }
+>
+  <div
+    className="dashboard-spacing"
+    style={
+      Object {
+        "position": "relative",
+      }
+    }
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="col-12 pt-2"
+        style={
+          Object {
+            "position": "relative",
+          }
+        }
+      >
+        <p />
+        <section
+          className="submit-container"
+          id="blue-section"
+        >
+          <h2
+            className="heading-style"
+          >
+            About E-File Submission
+          </h2>
+          <div
+            className="submit-content"
+          >
+            <span>
+              E-File submission allows you to securely upload and electronically file documents.
+            </span>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</Sidecard>
+`;
+
+exports[`Storyshots Sidecard Grey 1`] = `
+<Sidecard
+  sideCard={
+    Object {
+      "content": Array [
+        "E-File submission allows you to securely upload and electronically file documents.",
+      ],
+      "heading": "About E-File Submission",
+      "type": "grey",
+    }
+  }
+>
+  <div
+    className="dashboard-spacing"
+    style={
+      Object {
+        "position": "relative",
+      }
+    }
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="col-12 pt-2"
+        style={
+          Object {
+            "position": "relative",
+          }
+        }
+      >
+        <p />
+        <section
+          className="submit-container"
+          id="grey-section"
+          style={
+            Object {
+              "backgroundColor": "#F2F2F2",
+              "border": "none",
+              "color": "#000",
+            }
+          }
+        >
+          <h2
+            style={
+              Object {
+                "color": "#000",
+              }
+            }
+          >
+            About E-File Submission
+          </h2>
+          <div
+            className="submit-content"
+          >
+            <span>
+              E-File submission allows you to securely upload and electronically file documents.
+            </span>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</Sidecard>
+`;
+
+exports[`Storyshots Sidecard Grey Mobile 1`] = `
+<Sidecard
+  sideCard={
+    Object {
+      "content": Array [
+        "E-File submission allows you to securely upload and electronically file documents.",
+      ],
+      "heading": "About E-File Submission",
+      "type": "grey",
+    }
+  }
+>
+  <div
+    className="dashboard-spacing"
+    style={
+      Object {
+        "position": "relative",
+      }
+    }
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="col-12 pt-2"
+        style={
+          Object {
+            "position": "relative",
+          }
+        }
+      >
+        <p />
+        <section
+          className="submit-container"
+          id="grey-section"
+          style={
+            Object {
+              "backgroundColor": "#F2F2F2",
+              "border": "none",
+              "color": "#000",
+            }
+          }
+        >
+          <h2
+            style={
+              Object {
+                "color": "#000",
+              }
+            }
+          >
+            About E-File Submission
+          </h2>
+          <div
+            className="submit-content"
+          >
+            <span>
+              E-File submission allows you to securely upload and electronically file documents.
+            </span>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</Sidecard>
+`;
+
 exports[`Storyshots Table With Blue Stripe Style 1`] = `
 <Table
   elements={
