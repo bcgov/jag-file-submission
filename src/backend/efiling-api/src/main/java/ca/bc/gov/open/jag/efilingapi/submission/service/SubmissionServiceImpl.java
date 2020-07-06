@@ -13,12 +13,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.UUID;
 
 public class SubmissionServiceImpl implements SubmissionService {
 
     Logger logger = LoggerFactory.getLogger(SubmissionServiceImpl.class);
+
+    public static final UUID FAKE_ACCOUNT = UUID.fromString("88da92db-0791-491e-8c58-1a969e67d2fb");
 
     private final SubmissionStore submissionStore;
 
@@ -54,6 +57,8 @@ public class SubmissionServiceImpl implements SubmissionService {
             throw new InvalidAccountStateException("Account does not have CSO FILE ROLE");
         }
 
+        accountDetails = fakeFromBceId(authUserId);
+
         Optional<Submission> cachedSubmission = submissionStore.put(
                 submissionMapper.toSubmission(generateUrlRequest,
                         feeService.getFee(
@@ -67,6 +72,20 @@ public class SubmissionServiceImpl implements SubmissionService {
             throw new StoreException("exception while storing submission object");
 
         return cachedSubmission.get();
+
+    }
+
+    private AccountDetails fakeFromBceId(UUID authUserId) {
+
+        // TODO: implement account details service
+
+        logger.error("THIS IS FOR TESTING ONLY");
+
+        if(authUserId.equals(FAKE_ACCOUNT))
+            return new AccountDetails(BigDecimal.ZERO, BigDecimal.ZERO, false, "Bob", "Ross", "Rob", "bross@paintit.com");
+
+        return null;
+
 
     }
 

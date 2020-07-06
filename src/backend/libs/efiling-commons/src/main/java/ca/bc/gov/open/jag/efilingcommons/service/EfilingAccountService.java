@@ -10,4 +10,5 @@ import java.util.UUID;
 public interface EfilingAccountService {
 
     AccountDetails getAccountDetails(UUID userGuid, String bceidAccountType);
+
 }

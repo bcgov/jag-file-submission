@@ -26,6 +26,7 @@ import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.Optional;
+import java.util.UUID;
 
 import static ca.bc.gov.open.jag.efilingapi.api.model.EndpointAccess.VerbEnum.POST;
 
@@ -128,6 +129,40 @@ public class generateFromRequestTest {
         request.setDocumentProperties(CASE1_DOCUMENT_PROPERTIES);
 
         Assertions.assertThrows(InvalidAccountStateException.class, () -> sut.generateFromRequest(TestHelpers.CASE_3, request));
+
+    }
+
+    @Test
+    @DisplayName("TEMP: test demo acount")
+    public void testDemo()  {
+
+        UUID fakeaccount = UUID.fromString("88da92db-0791-491e-8c58-1a969e67d2fb");
+        GenerateUrlRequest request = new GenerateUrlRequest();
+        request.setNavigation(TestHelpers.createDefaultNavigation());
+        request.setDocumentProperties(CASE1_DOCUMENT_PROPERTIES);
+
+
+        AccountDetails accountDetails =  AccountDetails.builder().lastName("lastName").create();
+
+        Fee fee = new Fee(BigDecimal.TEN);
+        Submission submissionCase1 = Submission
+                .builder()
+                .accountDetails(accountDetails)
+                .navigation(TestHelpers.createDefaultNavigation())
+                .expiryDate(10)
+                .documentProperties(CASE1_DOCUMENT_PROPERTIES)
+                .fee(fee)
+                .create();
+
+        Mockito
+                .doReturn(Optional.of(submissionCase1))
+                .when(submissionStoreMock).put(
+                ArgumentMatchers.argThat(x -> StringUtils.equals("Ross", x.getAccountDetails().getLastName())));
+
+        Submission actual = sut.generateFromRequest(fakeaccount, request);
+
+        Assertions.assertEquals("lastName", actual.getAccountDetails().getLastName());
+
 
     }
 
