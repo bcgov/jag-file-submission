@@ -4,7 +4,6 @@ import { createMemoryHistory } from "history";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
-import { getApplicantInfo } from "../../../modules/applicantInfoTestData";
 
 import Home from "./Home";
 

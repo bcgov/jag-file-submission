@@ -5,7 +5,6 @@ import axios from "axios";
 import { render, wait } from "@testing-library/react";
 import Home, { saveNavigationToSession } from "./Home";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
-import { getApplicantInfo } from "../../../modules/applicantInfoTestData";
 
 const MockAdapter = require("axios-mock-adapter");
 
@@ -15,8 +14,7 @@ const header = {
 };
 
 const confirmationPopup = getTestData();
-const applicantInfo = getApplicantInfo();
-const page = { header, confirmationPopup, applicantInfo };
+const page = { header, confirmationPopup };
 
 describe("Home", () => {
   const submissionId = "abc123";
