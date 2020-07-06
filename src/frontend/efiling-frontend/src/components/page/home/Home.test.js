@@ -15,8 +15,8 @@ const header = {
 };
 
 const confirmationPopup = getTestData();
-const applicanInfo = getApplicantInfo();
-const page = { header, confirmationPopup, applicanInfo };
+const applicantInfo = getApplicantInfo();
+const page = { header, confirmationPopup, applicantInfo };
 
 describe("Home", () => {
   const submissionId = "abc123";
