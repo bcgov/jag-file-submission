@@ -82,11 +82,10 @@ public class generateFromRequestTest {
     public void withValidAccountShouldReturnSubmission() {
 
         GenerateUrlRequest request = new GenerateUrlRequest();
-        request.setUserId(TestHelpers.CASE_1);
         request.setNavigation(TestHelpers.createDefaultNavigation());
         request.setDocumentProperties(CASE1_DOCUMENT_PROPERTIES);
 
-        Submission actual = sut.generateFromRequest(request);
+        Submission actual = sut.generateFromRequest(TestHelpers.CASE_1, request);
 
         Assertions.assertEquals(TestHelpers.CASE_1.toString() + EMAIL, actual.getAccountDetails().getEmail());
         Assertions.assertEquals(TestHelpers.CASE_1.toString() + FIRST_NAME, actual.getAccountDetails().getFirstName());
@@ -113,11 +112,10 @@ public class generateFromRequestTest {
     public void withEmptySubmissionShouldThrowStoreException() {
 
         GenerateUrlRequest request = new GenerateUrlRequest();
-        request.setUserId(TestHelpers.CASE_2);
         request.setNavigation(TestHelpers.createDefaultNavigation());
         request.setDocumentProperties(CASE1_DOCUMENT_PROPERTIES);
 
-        Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(request));
+        Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(TestHelpers.CASE_2, request));
 
     }
 
@@ -126,11 +124,10 @@ public class generateFromRequestTest {
     public void withNoFileRoleShouldThrowInvalidAccountStateException() {
 
         GenerateUrlRequest request = new GenerateUrlRequest();
-        request.setUserId(TestHelpers.CASE_3);
         request.setNavigation(TestHelpers.createDefaultNavigation());
         request.setDocumentProperties(CASE1_DOCUMENT_PROPERTIES);
 
-        Assertions.assertThrows(InvalidAccountStateException.class, () -> sut.generateFromRequest(request));
+        Assertions.assertThrows(InvalidAccountStateException.class, () -> sut.generateFromRequest(TestHelpers.CASE_3, request));
 
     }
 
@@ -141,7 +138,8 @@ public class generateFromRequestTest {
 
         Mockito
                 .when(efilingAccountServiceMock.getAccountDetails(
-                        Mockito.eq(TestHelpers.CASE_1.toString().replace("-", "").toUpperCase()), Mockito.any()))
+                        Mockito.eq(TestHelpers.CASE_1),
+                        Mockito.any()))
                 .thenReturn(accountDetails);
 
         Submission submissionCase1 = Submission
@@ -166,7 +164,7 @@ public class generateFromRequestTest {
 
         Mockito
                 .when(efilingAccountServiceMock.getAccountDetails(
-                        Mockito.eq(TestHelpers.CASE_2.toString().replace("-", "").toUpperCase()),
+                        Mockito.eq(TestHelpers.CASE_2),
                         Mockito.any()))
                 .thenReturn(accountDetails);
 
@@ -182,7 +180,7 @@ public class generateFromRequestTest {
 
         Mockito
                 .when(efilingAccountServiceMock.getAccountDetails(
-                        Mockito.eq(TestHelpers.CASE_3.toString().replace("-", "").toUpperCase()),
+                        Mockito.eq(TestHelpers.CASE_3),
                         Mockito.any()))
                 .thenReturn(accountDetails);
 
