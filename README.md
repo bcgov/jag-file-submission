@@ -14,7 +14,7 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
     │   │   ├── efiling-api                     # efiling api
     │   │   ├── efiling-worker                  # file submission worker
     │   │   ├── libs                            # backend libraries
-    │   │   |   ├── efiling-account-client      # efiling soap client that checks CSO account, FILE role, BCeID account info    
+    │   │   |   ├── efiling-account-client      # efiling soap client that checks CSO account, FILE role, BCeID account info
     │   │   |   ├── efiling-submission-client   # efiling soap client that submits packages to CSO
     │   │   |   ├── efiling-lookup-client       # efiling soap client that looksup required info for submission
     │   │   |   └── efiling-status-client       # efiling soap client for checking status of a submitted package
@@ -44,7 +44,7 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
 ## Running the App
 
 By default a demo mode is enabled.
-if you want to integrate with the CSO application create a local `.env` at the root of the repository based off `.env.template`. 
+if you want to integrate with the CSO application create a local `.env` at the root of the repository based off `.env.template`.
 
 Change the `MVN_PROFILE` to `default`
 
@@ -74,8 +74,9 @@ docker-compose up -d --build
 
 to get started, access the front end application [here](http://localhost:3001) and enter a user account and you will get redirected to the file upload.
 
-![screen](docs/media/demoApp.png)
 You can get test accounts [here](https://bcgov.github.io/jag-file-submission/#/gettingStarted?id=test-accounts) when the app is running in demo mode.
+
+![screen](docs/media/demoApp.png)
 
 ### List of services
 
@@ -92,7 +93,7 @@ React front end demo app accessible at [http://localhost:3001](http://localhost:
 Efiling Api check health at [http://localhost:8080/actuator/health](http://localhost:8080/actuator/health)
 
 #### redis
-    
+
 A [redis](https://redis.io/) instance exposed on port 6379
 
 #### rabbitmq
