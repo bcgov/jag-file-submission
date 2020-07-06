@@ -91,7 +91,7 @@ public class CsoAccountServiceImplTest {
         List<ClientProfile> multiProfiles = new ArrayList<>();
         multiProfiles.add(profile);
         multiProfiles.add(profile);
-        Mockito.when(accountFacadeBeanMock.findProfiles(CsoHelpers.formatUserGuid(USER_GUID_WITH_MULTIPROFILE))).thenReturn(multiProfiles);
+        Mockito.when(accountFacadeBeanMock.findProfiles(CsoHelpers.formatUserGuid(USER_GUID_WITH_MULTI_PROFILE))).thenReturn(multiProfiles);
 
     }
 
@@ -215,7 +215,7 @@ public class CsoAccountServiceImplTest {
 
 
         CSOHasMultipleAccountException actual = Assertions.assertThrows(CSOHasMultipleAccountException.class, () -> {
-            sut.getAccountDetails(USER_GUID_WITH_MULTIPROFILE, "Individual");
+            sut.getAccountDetails(USER_GUID_WITH_MULTI_PROFILE, "Individual");
         });
 
         Assertions.assertEquals("Client 10 has multiple CSO profiles", actual.getMessage());
