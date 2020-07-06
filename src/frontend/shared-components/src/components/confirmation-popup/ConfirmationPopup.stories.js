@@ -50,13 +50,6 @@ const cancelButton = {
 };
 
 export const Default = () => {
-  console.log(store.callbacks);
-  console.log(typeof store.callbacks);
-  console.log(store.callbacks[0]);
-  setTimeout(() => {
-    console.log(store.callbacks[0]);
-  }, 2000);
-
   return (
     <State store={store}>
       {state => [
