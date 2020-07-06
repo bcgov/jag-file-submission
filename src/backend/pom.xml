@@ -40,7 +40,6 @@
 				<module>libs/efiling-bom</module>
 				<module>libs/efiling-commons</module>
 				<module>libs/efiling-lookup-client</module>
-				<module>libs/efiling-status-client</module>
 				<module>libs/efiling-account-client</module>
 				<module>libs/efiling-demo-starter</module>
 			</modules>
