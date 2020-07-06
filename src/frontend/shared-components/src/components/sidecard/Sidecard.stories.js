@@ -2,8 +2,6 @@ import React from "react";
 import { FaIdCard } from "react-icons/fa";
 import { Sidecard } from "./Sidecard";
 
-import "./Sidecard.css";
-
 export default {
   title: "Sidecard",
   component: Sidecard
@@ -16,17 +14,6 @@ const sideCard = {
   ],
   type: "blue"
 };
-
-const iconHeading = (
-  <div className="row">
-    <div className="side-card-row">
-      <div className="round-icon-wrapper">
-        <FaIdCard className="side-card-icon" />
-      </div>
-      <div className="side-card-title">About E-File Submission</div>
-    </div>
-  </div>
-);
 
 export const Blue = () => <Sidecard sideCard={sideCard} />;
 
@@ -48,13 +35,21 @@ export const BlueGreyMobile = () => (
 
 export const WithIcon = () => (
   <Sidecard
-    sideCard={{ ...sideCard, type: "bluegrey", heading: iconHeading }}
+    sideCard={{
+      ...sideCard,
+      type: "bluegrey",
+      icon: <FaIdCard className="side-card-icon" />
+    }}
   />
 );
 
 export const WithIconMobile = () => (
   <Sidecard
-    sideCard={{ ...sideCard, type: "bluegrey", heading: iconHeading }}
+    sideCard={{
+      ...sideCard,
+      type: "bluegrey",
+      icon: <FaIdCard className="side-card-icon" />
+    }}
   />
 );
 

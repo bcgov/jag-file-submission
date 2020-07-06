@@ -3619,26 +3619,10 @@ exports[`Storyshots Sidecard With Icon 1`] = `
       "content": Array [
         "E-File submission allows you to securely upload and electronically file documents.",
       ],
-      "heading": <div
-        className="row"
-      >
-        <div
-          className="side-card-row"
-        >
-          <div
-            className="round-icon-wrapper"
-          >
-            <FaIdCard
-              className="side-card-icon"
-            />
-          </div>
-          <div
-            className="side-card-title"
-          >
-            About E-File Submission
-          </div>
-        </div>
-      </div>,
+      "heading": "About E-File Submission",
+      "icon": <FaIdCard
+        className="side-card-icon"
+      />,
       "type": "bluegrey",
     }
   }
@@ -3748,26 +3732,10 @@ exports[`Storyshots Sidecard With Icon Mobile 1`] = `
       "content": Array [
         "E-File submission allows you to securely upload and electronically file documents.",
       ],
-      "heading": <div
-        className="row"
-      >
-        <div
-          className="side-card-row"
-        >
-          <div
-            className="round-icon-wrapper"
-          >
-            <FaIdCard
-              className="side-card-icon"
-            />
-          </div>
-          <div
-            className="side-card-title"
-          >
-            About E-File Submission
-          </div>
-        </div>
-      </div>,
+      "heading": "About E-File Submission",
+      "icon": <FaIdCard
+        className="side-card-icon"
+      />,
       "type": "bluegrey",
     }
   }
