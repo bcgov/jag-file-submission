@@ -55,9 +55,9 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         if (accountDetails != null && !accountDetails.isFileRolePresent()) {
             throw new InvalidAccountStateException("Account does not have CSO FILE ROLE");
+        } else if (accountDetails == null) {
+            accountDetails = fakeFromBceId(authUserId);
         }
-
-        accountDetails = fakeFromBceId(authUserId);
 
         Optional<Submission> cachedSubmission = submissionStore.put(
                 submissionMapper.toSubmission(generateUrlRequest,
