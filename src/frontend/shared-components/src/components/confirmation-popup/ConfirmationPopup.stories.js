@@ -24,7 +24,7 @@ const body = () => (
   </>
 );
 
-let modal = {
+const modal = {
   title: "Cancel process?",
   body
 };
