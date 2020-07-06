@@ -4,6 +4,7 @@ import { createMemoryHistory } from "history";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
+import { getApplicantInfo } from "../../../modules/applicantInfoTestData";
 
 import Home from "./Home";
 
@@ -17,7 +18,8 @@ const header = {
   history: createMemoryHistory()
 };
 const confirmationPopup = getTestData();
-const page = { header, confirmationPopup };
+const applicantInfo = getApplicantInfo();
+const page = { header, confirmationPopup, applicantInfo };
 
 const submissionId = "abc123";
 const mock = new MockAdapter(axios);

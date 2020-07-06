@@ -38,7 +38,9 @@ const checkCSOAccountStatus = (
     .catch(() => {});
 };
 
-export default function Home({ page: { header, confirmationPopup } }) {
+export default function Home({
+  page: { header, confirmationPopup, applicantInfo }
+}) {
   const [showLoader, setShowLoader] = useState(true);
   const [csoAccountExists, setCsoAccountExists] = useState(false);
   const location = useLocation();
@@ -62,7 +64,10 @@ export default function Home({ page: { header, confirmationPopup } }) {
         <div className="content col-md-12">
           {showLoader && <Loader page />}
           {!showLoader && !csoAccountExists && (
-            <CSOAccount confirmationPopup={confirmationPopup} />
+            <CSOAccount
+              confirmationPopup={confirmationPopup}
+              applicantInfo={applicantInfo}
+            />
           )}
           {!showLoader && csoAccountExists && (
             <CSOStatus csoStatus={csoStatus} />
