@@ -1,5 +1,6 @@
 import React from "react";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
+import { getApplicantInfo } from "../../../modules/applicantInfoTestData";
 
 import CSOAccount from "./CSOAccount";
 
@@ -9,13 +10,20 @@ export default {
 };
 
 const confirmationPopup = getTestData();
+const applicantInfo = getApplicantInfo();
 
 export const Default = () => (
-  <CSOAccount confirmationPopup={confirmationPopup} />
+  <CSOAccount
+    confirmationPopup={confirmationPopup}
+    applicantInfo={applicantInfo}
+  />
 );
 
 export const Mobile = () => (
-  <CSOAccount confirmationPopup={confirmationPopup} />
+  <CSOAccount
+    confirmationPopup={confirmationPopup}
+    applicantInfo={applicantInfo}
+  />
 );
 
 const mobileViewport = {

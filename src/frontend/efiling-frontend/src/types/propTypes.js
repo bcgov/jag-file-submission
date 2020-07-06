@@ -26,5 +26,12 @@ export const propTypes = {
       styling: PropTypes.string.isRequired,
       onClick: PropTypes.func.isRequired
     }).isRequired
-  }).isRequired
+  }).isRequired,
+  applicantInfo: PropTypes.shape({
+    bceID: PropTypes.string.isRequired,
+    firstName: PropTypes.string.isRequired,
+    middleName: PropTypes.string,
+    lastName: PropTypes.string.isRequired,
+    emailAddress: PropTypes.string.isRequired
+  })
 };
