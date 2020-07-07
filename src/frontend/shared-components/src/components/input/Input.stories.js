@@ -15,18 +15,7 @@ export default {
   component: Input
 };
 
-const nonEditableGrey = (
-  <Input
-    input={{
-      ...input,
-      styling: "non-editable-grey",
-      isReadOnly: true
-    }}
-    onChange={action("onChange")}
-  />
-);
-
-const editableWhiteMandatory = (
+export const EditableWhiteMandatory = () => (
   <Input
     input={{
       ...input,
@@ -37,7 +26,18 @@ const editableWhiteMandatory = (
   />
 );
 
-const editableWhiteWithLabel = (
+export const EditableWhiteMandatoryMobile = () => (
+  <Input
+    input={{
+      ...input,
+      styling: "editable-white",
+      isRequired: true
+    }}
+    onChange={action("onChange")}
+  />
+);
+
+export const EditableWhiteWithLabel = () => (
   <Input
     input={{
       ...input,
@@ -47,7 +47,17 @@ const editableWhiteWithLabel = (
   />
 );
 
-const editableWhiteNoLabel = (
+export const EditableWhiteWithLabelMobile = () => (
+  <Input
+    input={{
+      ...input,
+      styling: "editable-white"
+    }}
+    onChange={action("onChange")}
+  />
+);
+
+export const EditableWhiteNoLabel = () => (
   <Input
     input={{
       ...input,
@@ -58,21 +68,38 @@ const editableWhiteNoLabel = (
   />
 );
 
-export const EditableWhiteMandatory = () => editableWhiteMandatory;
+export const EditableWhiteNoLabelMobile = () => (
+  <Input
+    input={{
+      ...input,
+      styling: "editable-white",
+      label: ""
+    }}
+    onChange={action("onChange")}
+  />
+);
 
-export const EditableWhiteMandatoryMobile = () => editableWhiteMandatory;
+export const NonEditableGrey = () => (
+  <Input
+    input={{
+      ...input,
+      styling: "non-editable-grey",
+      isReadOnly: true
+    }}
+    onChange={action("onChange")}
+  />
+);
 
-export const EditableWhiteWithLabel = () => editableWhiteWithLabel;
-
-export const EditableWhiteWithLabelMobile = () => editableWhiteWithLabel;
-
-export const EditableWhiteNoLabel = () => editableWhiteNoLabel;
-
-export const EditableWhiteNoLabelMobile = () => editableWhiteNoLabel;
-
-export const NonEditableGrey = () => nonEditableGrey;
-
-export const NonEditableGreyMobile = () => nonEditableGrey;
+export const NonEditableGreyMobile = () => (
+  <Input
+    input={{
+      ...input,
+      styling: "non-editable-grey",
+      isReadOnly: true
+    }}
+    onChange={action("onChange")}
+  />
+);
 
 const mobileViewport = {
   parameters: {

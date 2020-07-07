@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from "react";
+import { State, Store } from "@sambego/storybook-state";
 
 import ConfirmationPopup from "./ConfirmationPopup";
 
@@ -7,6 +8,14 @@ export default {
   title: "ConfirmationPopup",
   component: ConfirmationPopup
 };
+
+const store = new Store({
+  show: false
+});
+
+setTimeout(() => {
+  store.callbacks[0].subscription = "testKey";
+}, 2000);
 
 const body = () => (
   <>
@@ -20,12 +29,11 @@ const body = () => (
 );
 
 const modal = {
-  show: true,
   title: "Cancel process?",
   body
 };
 
-const onButtonClick = () => {};
+const onButtonClick = () => store.set({ show: !store.get("show") });
 
 const mainButton = {
   label: "main label",
@@ -45,22 +53,34 @@ const cancelButton = {
   onClick: onButtonClick
 };
 
-export const Default = () => (
-  <ConfirmationPopup
-    modal={modal}
-    mainButton={mainButton}
-    confirmButton={confirmButton}
-    cancelButton={cancelButton}
-  />
-);
+export const Default = () => {
+  return (
+    <State store={store}>
+      {state => [
+        <ConfirmationPopup
+          key="popup"
+          modal={{ ...modal, show: state.show }}
+          mainButton={mainButton}
+          confirmButton={confirmButton}
+          cancelButton={cancelButton}
+        />
+      ]}
+    </State>
+  );
+};
 
 export const Mobile = () => (
-  <ConfirmationPopup
-    modal={modal}
-    mainButton={mainButton}
-    confirmButton={confirmButton}
-    cancelButton={cancelButton}
-  />
+  <State store={store}>
+    {state => [
+      <ConfirmationPopup
+        key="popup"
+        modal={{ ...modal, show: state.show }}
+        mainButton={mainButton}
+        confirmButton={confirmButton}
+        cancelButton={cancelButton}
+      />
+    ]}
+  </State>
 );
 
 Mobile.story = {
