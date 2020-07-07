@@ -9,7 +9,11 @@ const success = (
     <MdCheckBox size={32} />
   </div>
 );
-const warning = <MdError size={32} />;
+const warning = (
+  <div style={{ color: "rgb(252, 186, 25)" }}>
+    <MdError size={32} />
+  </div>
+);
 const error = <MdBlock size={32} />;
 
 export const Alert = ({ type, element }) => {
