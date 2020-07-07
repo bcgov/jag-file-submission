@@ -1,7 +1,6 @@
 package ca.bc.gov.open.jagefilingapi.qa.frontendutils;
 
 import ca.bc.gov.open.jagefilingapi.qa.config.ReadConfig;
-import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.LandingPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 public class DriverClass {
 
         public WebDriver driver;
-        public static Logger log = LogManager.getLogger(DriverClass.class);
+        public Logger log = LogManager.getLogger(DriverClass.class);
 
         public void initializeDriver() throws IOException {
             ReadConfig readConfig = new ReadConfig();
@@ -47,4 +46,3 @@ public class DriverClass {
             driver.manage().window().maximize();
         }
 }
-
