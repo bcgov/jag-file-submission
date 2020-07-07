@@ -1,5 +1,5 @@
 import React from "react";
-
+import { FaIdCard } from "react-icons/fa";
 import { Sidecard } from "./Sidecard";
 
 export default {
@@ -33,6 +33,26 @@ export const BlueGreyMobile = () => (
   <Sidecard sideCard={{ ...sideCard, type: "bluegrey" }} />
 );
 
+export const WithIcon = () => (
+  <Sidecard
+    sideCard={{
+      ...sideCard,
+      type: "bluegrey",
+      icon: <FaIdCard className="side-card-icon" />
+    }}
+  />
+);
+
+export const WithIconMobile = () => (
+  <Sidecard
+    sideCard={{
+      ...sideCard,
+      type: "bluegrey",
+      icon: <FaIdCard className="side-card-icon" />
+    }}
+  />
+);
+
 const mobileViewport = {
   parameters: {
     viewport: {
@@ -44,3 +64,4 @@ const mobileViewport = {
 BlueMobile.story = mobileViewport;
 GreyMobile.story = mobileViewport;
 BlueGreyMobile.story = mobileViewport;
+WithIconMobile.story = mobileViewport;
