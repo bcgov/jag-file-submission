@@ -10,6 +10,7 @@ import ConfirmationPopup, {
   Sidecard
 } from "shared-components";
 import { getContent } from "../../../modules/csoAccountAgreementContent";
+import { getSidecardData } from "../../../modules/sidecardData";
 import { translateApplicantInfo } from "../../../modules/translateApplicantInfo";
 import { propTypes } from "../../../types/propTypes";
 
@@ -19,27 +20,7 @@ const continueButton = {
   onClick: () => {}
 };
 
-const sideCard = {
-  heading: "About E-File Submission",
-  content: [
-    <p key="aboutCso">
-      E-File submission is a service to help you securely and electronically
-      file documents with the Government of British Columbia Court Services
-      Online (CSO).&nbsp;
-      <a
-        href="https://justice.gov.bc.ca/cso/about/index.do"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn more about CSO
-      </a>
-      .
-    </p>
-  ],
-  type: "bluegrey",
-  isWide: true,
-  icon: <MdPerson className="side-card-icon" />
-};
+const sideCard = getSidecardData().aboutCso;
 
 const content = getContent();
 
