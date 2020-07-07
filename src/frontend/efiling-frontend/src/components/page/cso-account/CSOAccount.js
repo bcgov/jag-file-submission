@@ -7,6 +7,7 @@ import ConfirmationPopup, {
   Button,
   DisplayBox,
   Table,
+  Alert,
   Sidecard
 } from "shared-components";
 import { getContent } from "../../../modules/csoAccountAgreementContent";
@@ -50,6 +51,11 @@ export default function CSOAccount({ confirmationPopup, applicantInfo }) {
       <div className="content col-md-8">
         <div className="non-printable">
           <h2>Create a Court Services Online (CSO) Account</h2>
+          <Alert
+            type="warning"
+            element="You need a CSO account to use E-File Submission. Create one now to continue."
+          />
+          <br />
           <p>
             The following information will be used to create your CSO account.
           </p>
