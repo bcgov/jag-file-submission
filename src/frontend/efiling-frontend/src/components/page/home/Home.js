@@ -16,9 +16,9 @@ export const saveNavigationToSession = ({ cancel, success, error }) => {
   if (error.url) sessionStorage.setItem("errorUrl", error.url);
 };
 
-const addUserInfo = (bceid, firstName, middleName, lastName, emailAddress) => {
+const addUserInfo = (bceID, firstName, middleName, lastName, emailAddress) => {
   return {
-    bceID: bceid,
+    bceID,
     firstName,
     middleName,
     lastName,
