@@ -106,7 +106,6 @@ export default function Home({ page: { header, confirmationPopup } }) {
 Home.propTypes = {
   page: PropTypes.shape({
     header: propTypes.header,
-    confirmationPopup: propTypes.confirmationPopup,
-    applicantInfo: propTypes.applicantInfo
+    confirmationPopup: propTypes.confirmationPopup
   }).isRequired
 };
