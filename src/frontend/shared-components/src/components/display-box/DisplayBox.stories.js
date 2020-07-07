@@ -21,6 +21,30 @@ export const WithBlueBackground = () => (
   <DisplayBox styling={"blue-background"} icon={icon} element={table} />
 );
 
+export const WithSuccess = () => (
+  <DisplayBox
+    styling={"success-background"}
+    icon={icon}
+    element="This is a success!"
+  />
+);
+
+export const WithAlert = () => (
+  <DisplayBox
+    styling={"warning-background"}
+    icon={icon}
+    element="This is an alert!"
+  />
+);
+
+export const WithWarning = () => (
+  <DisplayBox
+    styling={"error-background"}
+    icon={icon}
+    element="This is a warning!"
+  />
+);
+
 export const WithoutIconMobile = () => <DisplayBox element={table} />;
 
 export const WithIconMobile = () => <DisplayBox icon={icon} element={table} />;
