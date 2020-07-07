@@ -19,6 +19,7 @@ public class EFileSubmissionTest extends DriverClass {
      ReadConfig readConfig;
      LandingPage landingPage;
      EFileSubmissionPage eFileSubmissionPage;
+     private static final String EFILE_SUBMISSION_PAGE_TITLE = "eFiling Frontend";
 
     @Before("@frontend")
     public void setUp() throws IOException {
@@ -67,9 +68,7 @@ public class EFileSubmissionTest extends DriverClass {
         log.info("Generate Url button in landing page is clicked");
 
         String actualTitle = eFileSubmissionPage.verifyEfilingPageTitle();
-        String expTitle = "eFiling Frontend";
-
-        Assert.assertEquals(expTitle, actualTitle);
+        Assert.assertEquals(EFILE_SUBMISSION_PAGE_TITLE, actualTitle);
         log.info("eFiling Frontend page title is verified");
 
         eFileSubmissionPage.clickCancelButton();
@@ -120,9 +119,7 @@ public class EFileSubmissionTest extends DriverClass {
         eFileSubmissionPage = new EFileSubmissionPage(driver);
 
         String actualTitle = eFileSubmissionPage.verifyEfilingPageTitle();
-        String expTitle = "eFiling Frontend";
-
-        Assert.assertEquals(expTitle, actualTitle);
+        Assert.assertEquals(EFILE_SUBMISSION_PAGE_TITLE, actualTitle);
         log.info("eFiling Frontend page title is verified");
     }
 
@@ -143,9 +140,7 @@ public class EFileSubmissionTest extends DriverClass {
         log.info("Generate Url button in landing page is clicked");
 
         String actualTitle = eFileSubmissionPage.verifyEfilingPageTitle();
-        String expTitle = "eFiling Frontend";
-
-        Assert.assertEquals(expTitle, actualTitle);
+        Assert.assertEquals(EFILE_SUBMISSION_PAGE_TITLE, actualTitle);
         log.info("eFile submission page title is verified");
 
         boolean createCsoAccountBtnIsDisplayed = eFileSubmissionPage.verifyCreateCsoAccountBtnIsDisplayed();
