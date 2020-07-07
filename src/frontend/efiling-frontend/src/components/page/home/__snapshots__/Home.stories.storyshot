@@ -35,7 +35,7 @@ exports[`Storyshots Home Account Exists 1`] = `
           class="navbar-brand"
           id="title"
         >
-          eFiling Demo Client
+          E-File Submission
         </div>
       </nav>
     </header>
@@ -43,20 +43,18 @@ exports[`Storyshots Home Account Exists 1`] = `
       class="page"
     >
       <div
-        class="content col-md-12"
+        class="content col-md-8"
       >
+        <p>
+          Account exists! Proceed
+        </p>
         <div>
-          <p>
-            Account exists! Proceed
-          </p>
-          <div>
-            <button
-              class="normal-white btn"
-              type="button"
-            >
-              Cancel
-            </button>
-          </div>
+          <button
+            class="normal-white btn"
+            type="button"
+          >
+            Cancel
+          </button>
         </div>
       </div>
     </div>
@@ -186,7 +184,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
           class="navbar-brand"
           id="title"
         >
-          eFiling Demo Client
+          E-File Submission
         </div>
       </nav>
     </header>
@@ -194,20 +192,18 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
       class="page"
     >
       <div
-        class="content col-md-12"
+        class="content col-md-8"
       >
+        <p>
+          Account exists! Proceed
+        </p>
         <div>
-          <p>
-            Account exists! Proceed
-          </p>
-          <div>
-            <button
-              class="normal-white btn"
-              type="button"
-            >
-              Cancel
-            </button>
-          </div>
+          <button
+            class="normal-white btn"
+            type="button"
+          >
+            Cancel
+          </button>
         </div>
       </div>
     </div>
@@ -337,26 +333,18 @@ exports[`Storyshots Home Loader 1`] = `
           class="navbar-brand"
           id="title"
         >
-          eFiling Demo Client
+          E-File Submission
         </div>
       </nav>
     </header>
     <div
-      class="page"
+      class="loader-align"
     >
       <div
-        class="content col-md-12"
-      >
-        <div
-          class="loader-align"
-        >
-          <div
-            class="page-loader"
-          />
-          <br />
-          Loading... Please Wait
-        </div>
-      </div>
+        class="page-loader"
+      />
+      <br />
+      Loading... Please Wait
     </div>
     <footer
       class="footer"
@@ -484,26 +472,18 @@ exports[`Storyshots Home Loader Mobile 1`] = `
           class="navbar-brand"
           id="title"
         >
-          eFiling Demo Client
+          E-File Submission
         </div>
       </nav>
     </header>
     <div
-      class="page"
+      class="loader-align"
     >
       <div
-        class="content col-md-12"
-      >
-        <div
-          class="loader-align"
-        >
-          <div
-            class="page-loader"
-          />
-          <br />
-          Loading... Please Wait
-        </div>
-      </div>
+        class="page-loader"
+      />
+      <br />
+      Loading... Please Wait
     </div>
     <footer
       class="footer"
@@ -631,7 +611,7 @@ exports[`Storyshots Home No Account Exists 1`] = `
           class="navbar-brand"
           id="title"
         >
-          eFiling Demo Client
+          E-File Submission
         </div>
       </nav>
     </header>
@@ -639,26 +619,11 @@ exports[`Storyshots Home No Account Exists 1`] = `
       class="page"
     >
       <div
-        class="content col-md-12"
+        class="content col-md-8"
       >
         <div
           class="non-printable"
         >
-          <p>
-            E-File Submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
-            <a
-              href="https://justice.gov.bc.ca/cso/about/index.do"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Learn more about CSO
-            </a>
-            .
-          </p>
-          <p>
-            You need a CSO account to use E-File Submission.
-          </p>
-          <br />
           <h2>
             Create a Court Services Online (CSO) Account
           </h2>
@@ -1454,6 +1419,88 @@ exports[`Storyshots Home No Account Exists 1`] = `
             </button>
           </div>
         </section>
+      </div>
+      <div
+        class="sidecard"
+      >
+        <div
+          class="wide-dashboard-spacing"
+          style="position: relative;"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="col-12 pt-2"
+              style="position: relative;"
+            >
+              <p />
+              <section
+                class="bluegrey-container"
+                id="bluegrey-section"
+              >
+                <div
+                  class="container-background bluegrey-heading"
+                >
+                  <h2
+                    class="heading-style"
+                  >
+                    <div
+                      class="row"
+                    >
+                      <div
+                        class="side-card-row"
+                      >
+                        <div
+                          class="round-icon-wrapper"
+                        >
+                          <svg
+                            class="side-card-icon"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                            />
+                          </svg>
+                        </div>
+                        <div
+                          class="side-card-title"
+                        >
+                          About E-File Submission
+                        </div>
+                      </div>
+                    </div>
+                  </h2>
+                </div>
+                <div
+                  class="bluegrey-content"
+                >
+                  <span
+                    class="content-style"
+                  >
+                    <p>
+                      E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
+                      <a
+                        href="https://justice.gov.bc.ca/cso/about/index.do"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        Learn more about CSO
+                      </a>
+                      .
+                    </p>
+                  </span>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <footer
@@ -1582,7 +1629,7 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
           class="navbar-brand"
           id="title"
         >
-          eFiling Demo Client
+          E-File Submission
         </div>
       </nav>
     </header>
@@ -1590,26 +1637,11 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
       class="page"
     >
       <div
-        class="content col-md-12"
+        class="content col-md-8"
       >
         <div
           class="non-printable"
         >
-          <p>
-            E-File Submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
-            <a
-              href="https://justice.gov.bc.ca/cso/about/index.do"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Learn more about CSO
-            </a>
-            .
-          </p>
-          <p>
-            You need a CSO account to use E-File Submission.
-          </p>
-          <br />
           <h2>
             Create a Court Services Online (CSO) Account
           </h2>
@@ -2405,6 +2437,88 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
             </button>
           </div>
         </section>
+      </div>
+      <div
+        class="sidecard"
+      >
+        <div
+          class="wide-dashboard-spacing"
+          style="position: relative;"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="col-12 pt-2"
+              style="position: relative;"
+            >
+              <p />
+              <section
+                class="bluegrey-container"
+                id="bluegrey-section"
+              >
+                <div
+                  class="container-background bluegrey-heading"
+                >
+                  <h2
+                    class="heading-style"
+                  >
+                    <div
+                      class="row"
+                    >
+                      <div
+                        class="side-card-row"
+                      >
+                        <div
+                          class="round-icon-wrapper"
+                        >
+                          <svg
+                            class="side-card-icon"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                            />
+                          </svg>
+                        </div>
+                        <div
+                          class="side-card-title"
+                        >
+                          About E-File Submission
+                        </div>
+                      </div>
+                    </div>
+                  </h2>
+                </div>
+                <div
+                  class="bluegrey-content"
+                >
+                  <span
+                    class="content-style"
+                  >
+                    <p>
+                      E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
+                      <a
+                        href="https://justice.gov.bc.ca/cso/about/index.do"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        Learn more about CSO
+                      </a>
+                      .
+                    </p>
+                  </span>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <footer
