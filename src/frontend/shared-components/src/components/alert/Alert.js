@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { DisplayBox } from "../display-box/DisplayBox";
 
 const success = (
-  <div style={{ color: "rgb(252,186,25)" }}>
+  <div style={{ color: "#69e085" }}>
     <MdCheckBox size={32} />
   </div>
 );
