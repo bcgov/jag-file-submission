@@ -2238,10 +2238,10 @@ exports[`Storyshots DisplayBox With Icon 1`] = `
       size={32}
     />
   }
-  styling="grey-background"
+  styling=""
 >
   <div
-    className="display-box grey-background"
+    className="display-box "
   >
     <div
       className="display-icon"
@@ -2431,10 +2431,10 @@ exports[`Storyshots DisplayBox With Icon Mobile 1`] = `
       size={32}
     />
   }
-  styling="grey-background"
+  styling=""
 >
   <div
-    className="display-box grey-background"
+    className="display-box "
   >
     <div
       className="display-icon"
@@ -2797,10 +2797,10 @@ exports[`Storyshots DisplayBox Without Icon 1`] = `
     />
   }
   icon={null}
-  styling="grey-background"
+  styling=""
 >
   <div
-    className="display-box grey-background"
+    className="display-box "
   >
     <div
       className="display-icon"
@@ -2952,10 +2952,10 @@ exports[`Storyshots DisplayBox Without Icon Mobile 1`] = `
     />
   }
   icon={null}
-  styling="grey-background"
+  styling=""
 >
   <div
-    className="display-box grey-background"
+    className="display-box "
   >
     <div
       className="display-icon"
