@@ -6,6 +6,8 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
 
 ## Project Structure
 
+Do a thing
+
     .
     ├── .github                                 # Contains GitHub Related sources
     ├── openshift                               # openshift templates and pipeline
