@@ -37,8 +37,9 @@ export default function CSOAccount({ confirmationPopup, applicantInfo }) {
       <MdPerson size={32} />
     </div>
   );
-  const translatedApplicantInfo = translateApplicantInfo(applicantInfo);
-  const applicantTable = <Table elements={translatedApplicantInfo} />;
+  const applicantTable = (
+    <Table elements={translateApplicantInfo(applicantInfo)} />
+  );
 
   return (
     <>

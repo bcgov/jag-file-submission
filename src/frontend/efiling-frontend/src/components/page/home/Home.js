@@ -16,13 +16,13 @@ export const saveNavigationToSession = ({ cancel, success, error }) => {
   if (error.url) sessionStorage.setItem("errorUrl", error.url);
 };
 
-const addUserInfo = (bceid, firstName, middleName, lastName, email) => {
+const addUserInfo = (bceid, firstName, middleName, lastName, emailAddress) => {
   return {
     bceID: bceid,
     firstName,
     middleName,
     lastName,
-    emailAddress: email
+    emailAddress
   };
 };
 
@@ -42,9 +42,7 @@ const checkCSOAccountStatus = (
         const csoAccountExists = userDetails.accounts.some(
           element => element.type === "CSO"
         );
-        if (csoAccountExists) {
-          setCsoAccountExists(true);
-        }
+        if (csoAccountExists) setCsoAccountExists(true);
       }
 
       const applicantInfo = addUserInfo(
