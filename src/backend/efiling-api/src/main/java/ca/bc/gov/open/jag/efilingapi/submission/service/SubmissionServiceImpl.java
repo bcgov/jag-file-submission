@@ -47,10 +47,10 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     @Override
-    public Submission generateFromRequest(UUID authUserId, GenerateUrlRequest generateUrlRequest) {
+    public Submission generateFromRequest(UUID authUserId, String xAuthType, GenerateUrlRequest generateUrlRequest) {
 
         logger.debug("Attempting to get user cso account information");
-        AccountDetails accountDetails = efilingAccountService.getAccountDetails(authUserId, "");
+        AccountDetails accountDetails = efilingAccountService.getAccountDetails(authUserId, xAuthType);
         logger.info("Successfully got cso account information");
 
         if (accountDetails != null && !accountDetails.isFileRolePresent()) {
