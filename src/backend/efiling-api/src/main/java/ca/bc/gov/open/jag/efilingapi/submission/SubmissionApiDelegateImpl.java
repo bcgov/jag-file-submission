@@ -48,8 +48,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    public ResponseEntity<GenerateUrlResponse> generateUrl(UUID xAuthUserId,
-                                                           GenerateUrlRequest generateUrlRequest) {
+    public ResponseEntity<GenerateUrlResponse> generateUrl(UUID xAuthUserId, GenerateUrlRequest generateUrlRequest) {
         logger.info("Generate Url Request Received");
 
         ResponseEntity response;

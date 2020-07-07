@@ -39,7 +39,6 @@ public class generateFromRequestTest {
     private static final String EMAIL = "case1_email";
     private static final DocumentProperties CASE1_DOCUMENT_PROPERTIES = TestHelpers.createDocumentProperties("header", "http://doc", "subtype", "case1_type");
 
-
     private SubmissionServiceImpl sut;
 
     @Mock
