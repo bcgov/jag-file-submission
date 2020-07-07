@@ -47,3 +47,8 @@ export const Alert = ({ type, element }) => {
     </>
   );
 };
+
+Alert.propTypes = {
+  type: PropTypes.string.isRequired,
+  element: PropTypes.string.isRequired
+};

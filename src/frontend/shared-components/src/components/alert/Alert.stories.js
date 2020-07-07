@@ -19,6 +19,10 @@ export const Danger = () => (
   <Alert type="danger" element="This is a danger message!" />
 );
 
+export const SuccessMobile = () => (
+  <Alert type="success" element="This is a success message!" />
+);
+
 const mobileViewport = {
   parameters: {
     viewport: {
@@ -26,3 +30,5 @@ const mobileViewport = {
     }
   }
 };
+
+SuccessMobile.story = mobileViewport;
