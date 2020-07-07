@@ -1,6 +1,7 @@
 package stepDefinitions.frontendstepdefinitions;
 
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.DriverClass;
+import io.cucumber.java.After;
 import io.cucumber.java.Before;
 
 import java.io.IOException;
@@ -13,7 +14,7 @@ public class EfilingPageTest extends DriverClass {
             log.info("Browser is initialized");
         }
 
-        //@After ("@frontend")
+        @After("@frontend")
         public void tearDown() {
             driver.quit();
             log.info("Browser closed");

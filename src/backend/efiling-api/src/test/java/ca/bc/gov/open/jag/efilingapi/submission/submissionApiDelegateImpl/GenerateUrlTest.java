@@ -16,7 +16,6 @@ import ca.bc.gov.open.jag.efilingcommons.exceptions.CSOHasMultipleAccountExcepti
 import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import org.junit.jupiter.api.*;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -59,20 +58,23 @@ public class GenerateUrlTest {
         Submission submission = Submission.builder().expiryDate(10).create();
 
         Mockito.when(submissionServiceMock.generateFromRequest(
-                ArgumentMatchers.argThat(x -> x.getUserId() == TestHelpers.CASE_1)))
+                Mockito.eq(TestHelpers.CASE_1),
+                Mockito.any()))
                 .thenReturn(submission);
 
         Mockito.doThrow(new CSOHasMultipleAccountException("CSOHasMultipleAccountException message"))
                 .when(submissionServiceMock).generateFromRequest(
-                ArgumentMatchers.argThat(x -> x.getUserId() == TestHelpers.CASE_2));
+                Mockito.eq(TestHelpers.CASE_2),
+                Mockito.any());
 
         Mockito.doThrow(new InvalidAccountStateException("InvalidAccountStateException message"))
                 .when(submissionServiceMock).generateFromRequest(
-                ArgumentMatchers.argThat(x -> x.getUserId() == TestHelpers.CASE_3));
+                Mockito.eq(TestHelpers.CASE_3),
+                Mockito.any());
 
         Mockito.doThrow(new StoreException("StoreException message"))
-                .when(submissionServiceMock).generateFromRequest(
-                ArgumentMatchers.argThat(x -> x.getUserId() == TestHelpers.CASE_4));
+                .when(submissionServiceMock).generateFromRequest(Mockito.eq(TestHelpers.CASE_4),
+                Mockito.any());
 
         // Testing the mapper part of this test
         generateUrlResponseMapperMock = new GenerateUrlResponseMapperImpl();
@@ -89,10 +91,9 @@ public class GenerateUrlTest {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         generateUrlRequest.setDocumentProperties(TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE));
-        generateUrlRequest.setUserId(TestHelpers.CASE_1);
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL));
 
-        ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(generateUrlRequest);
+        ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(TestHelpers.CASE_1, generateUrlRequest);
 
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
         Assertions.assertTrue(actual.getBody().getEfilingUrl().matches("http:\\/\\/localhost\\?submissionId=[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}"));
@@ -107,10 +108,9 @@ public class GenerateUrlTest {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         generateUrlRequest.setDocumentProperties(TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE));
-        generateUrlRequest.setUserId(TestHelpers.CASE_2);
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL));
 
-        ResponseEntity actual = sut.generateUrl(generateUrlRequest);
+        ResponseEntity actual = sut.generateUrl(TestHelpers.CASE_2, generateUrlRequest);
 
         EfilingError actualError = (EfilingError) actual.getBody();
 
@@ -125,10 +125,9 @@ public class GenerateUrlTest {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         generateUrlRequest.setDocumentProperties(TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE));
-        generateUrlRequest.setUserId(TestHelpers.CASE_3);
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL));
 
-        ResponseEntity actual = sut.generateUrl(generateUrlRequest);
+        ResponseEntity actual = sut.generateUrl(TestHelpers.CASE_3, generateUrlRequest);
 
         EfilingError actualError = (EfilingError) actual.getBody();
 
@@ -143,10 +142,9 @@ public class GenerateUrlTest {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         generateUrlRequest.setDocumentProperties(TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE));
-        generateUrlRequest.setUserId(TestHelpers.CASE_4);
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL));
 
-        ResponseEntity actual = sut.generateUrl(generateUrlRequest);
+        ResponseEntity actual = sut.generateUrl(TestHelpers.CASE_4, generateUrlRequest);
 
         EfilingError actualError = (EfilingError) actual.getBody();
 

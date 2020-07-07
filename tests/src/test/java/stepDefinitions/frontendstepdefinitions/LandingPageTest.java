@@ -3,6 +3,7 @@ package stepDefinitions.frontendstepdefinitions;
 import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.EfilingPage;
 import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.LandingPage;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.DriverClass;
+import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
@@ -44,10 +45,12 @@ public class LandingPageTest extends DriverClass {
         log.info("Landing page title is verified");
     }
 
-    @When("user enters a valid account guid {string}")
-    public void userEntersAValidAccountGuid(String accountGuid) {
+    @When("user enters a valid existing CSO account guid {string}")
+    public void userEntersAValidExistingCsoAccountGuid(String validExistingCSOGuid) throws IOException {
         landingPage = new LandingPage(driver);
-        landingPage.enterAccountGuid(accountGuid);
+
+        validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
+        landingPage.enterAccountGuid(validExistingCSOGuid);
     }
 
     @Then("eFiling frontend page is displayed and cancel button exists")
@@ -75,7 +78,7 @@ public class LandingPageTest extends DriverClass {
         landingPage = new LandingPage(driver);
 
         landingPage.clickGenerateUrlButton();
-        log.info("Generate Url button in Efiling frontend page is clicked");
+        log.info("Generate Url button in eFiling frontend page is clicked");
 
         String expMsg = "An error occurred while generating the URL. Please try again.";
         String actMsg =  landingPage.getErrorMessageText();
@@ -84,18 +87,19 @@ public class LandingPageTest extends DriverClass {
         log.info("Expected message is verified");
     }
 
-    @When("user enters non existing account guid {string}")
-    public void userEntersNonExistingAccountGuid(String accountGuid) {
-
-        landingPage.enterAccountGuid(accountGuid);
-    }
-
-    @When("user enters invalid account guid {string}")
-    public void userEntersInvalidAccountGuid(String accountGuid) {
+    @When("user enters non existing CSO account guid {string}")
+    public void userEntersNonExistingCsoAccountGuid(String nonExistingCSOGuid) throws IOException {
         landingPage = new LandingPage(driver);
 
-        landingPage.enterAccountGuid(accountGuid);
+        nonExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getNonExistingCSOGuid();
+        landingPage.enterAccountGuid(nonExistingCSOGuid);
+    }
+
+    @When("user enters invalid CSO account guid without eFiling role {string}")
+    public void userEntersInvalidCsoAccountGuidWithoutEfilingRole(String invalidNoFilingRoleGuid) throws IOException {
+        landingPage = new LandingPage(driver);
+
+        invalidNoFilingRoleGuid = JsonDataReader.getCsoAccountGuid().getInvalidNoFilingRoleGuid();
+        landingPage.enterAccountGuid(invalidNoFilingRoleGuid);
     }
 }
-
-

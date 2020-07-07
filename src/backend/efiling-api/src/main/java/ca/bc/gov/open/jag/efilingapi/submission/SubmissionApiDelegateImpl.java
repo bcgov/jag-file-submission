@@ -18,7 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -49,8 +48,8 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    public ResponseEntity<GenerateUrlResponse> generateUrl(@Valid GenerateUrlRequest generateUrlRequest) {
-
+    public ResponseEntity<GenerateUrlResponse> generateUrl(UUID xAuthUserId,
+                                                           GenerateUrlRequest generateUrlRequest) {
         logger.info("Generate Url Request Received");
 
         ResponseEntity response;
@@ -58,7 +57,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         try {
             response = ResponseEntity.ok(
                     generateUrlResponseMapper.toGenerateUrlResponse(
-                            submissionService.generateFromRequest(generateUrlRequest),
+                            submissionService.generateFromRequest(xAuthUserId, generateUrlRequest),
                             navigationProperties.getBaseUrl()));
             logger.info("successfully generated return url.");
         }

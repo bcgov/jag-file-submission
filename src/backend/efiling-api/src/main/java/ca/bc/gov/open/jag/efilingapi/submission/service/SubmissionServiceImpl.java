@@ -13,12 +13,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.UUID;
 
 public class SubmissionServiceImpl implements SubmissionService {
 
     Logger logger = LoggerFactory.getLogger(SubmissionServiceImpl.class);
+
+    public static final UUID FAKE_ACCOUNT = UUID.fromString("88da92db-0791-491e-8c58-1a969e67d2fb");
 
     private final SubmissionStore submissionStore;
 
@@ -44,14 +47,16 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     @Override
-    public Submission generateFromRequest(GenerateUrlRequest generateUrlRequest) {
+    public Submission generateFromRequest(UUID authUserId, GenerateUrlRequest generateUrlRequest) {
 
         logger.debug("Attempting to get user cso account information");
-        AccountDetails accountDetails = efilingAccountService.getAccountDetails(formatUserGuid(generateUrlRequest.getUserId()), "");
+        AccountDetails accountDetails = efilingAccountService.getAccountDetails(authUserId, "");
         logger.info("Successfully got cso account information");
 
         if (accountDetails != null && !accountDetails.isFileRolePresent()) {
             throw new InvalidAccountStateException("Account does not have CSO FILE ROLE");
+        } else if (accountDetails == null) {
+            accountDetails = fakeFromBceId(authUserId);
         }
 
         Optional<Submission> cachedSubmission = submissionStore.put(
@@ -70,8 +75,18 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     }
 
-    private String formatUserGuid(UUID id) {
-        return id.toString().replace("-", "").toUpperCase();
+    private AccountDetails fakeFromBceId(UUID authUserId) {
+
+        // TODO: implement account details service
+
+        logger.error("THIS IS FOR TESTING ONLY");
+
+        if(authUserId.equals(FAKE_ACCOUNT))
+            return new AccountDetails(BigDecimal.ZERO, BigDecimal.ZERO, false, "Bob", "Ross", "Rob", "bross@paintit.com");
+
+        return null;
+
+
     }
 
     private long getExpiryDate() {
