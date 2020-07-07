@@ -47,13 +47,13 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     @Override
-    public Submission generateFromRequest(UUID authUserId, String xAuthType, GenerateUrlRequest generateUrlRequest) {
+    public Submission generateFromRequest(UUID authUserId, GenerateUrlRequest generateUrlRequest) {
 
         logger.debug("Attempting to get user cso account information");
-        AccountDetails accountDetails = efilingAccountService.getAccountDetails(authUserId, xAuthType);
+        AccountDetails accountDetails = efilingAccountService.getAccountDetails(authUserId, "Individual");
         logger.info("Successfully got cso account information");
 
-        if (accountDetails != null && !accountDetails.isFileRolePresent()) {
+        if (accountDetails != null && accountDetails.getAccountId() != null && !accountDetails.isFileRolePresent()) {
             throw new InvalidAccountStateException("Account does not have CSO FILE ROLE");
         } else if (accountDetails == null) {
             accountDetails = fakeFromBceId(authUserId);

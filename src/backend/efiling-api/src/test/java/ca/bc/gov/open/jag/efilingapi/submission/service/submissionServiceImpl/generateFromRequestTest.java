@@ -38,8 +38,6 @@ public class generateFromRequestTest {
     private static final String FIRST_NAME = "case1_firstName";
     private static final String EMAIL = "case1_email";
     private static final DocumentProperties CASE1_DOCUMENT_PROPERTIES = TestHelpers.createDocumentProperties("header", "http://doc", "subtype", "case1_type");
-    public static final String X_AUTH_TYPE = "xAuthType";
-
 
     private SubmissionServiceImpl sut;
 
@@ -87,7 +85,7 @@ public class generateFromRequestTest {
         request.setNavigation(TestHelpers.createDefaultNavigation());
         request.setDocumentProperties(CASE1_DOCUMENT_PROPERTIES);
 
-        Submission actual = sut.generateFromRequest(TestHelpers.CASE_1, X_AUTH_TYPE, request);
+        Submission actual = sut.generateFromRequest(TestHelpers.CASE_1, request);
 
         Assertions.assertEquals(TestHelpers.CASE_1.toString() + EMAIL, actual.getAccountDetails().getEmail());
         Assertions.assertEquals(TestHelpers.CASE_1.toString() + FIRST_NAME, actual.getAccountDetails().getFirstName());
@@ -117,7 +115,7 @@ public class generateFromRequestTest {
         request.setNavigation(TestHelpers.createDefaultNavigation());
         request.setDocumentProperties(CASE1_DOCUMENT_PROPERTIES);
 
-        Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(TestHelpers.CASE_2, X_AUTH_TYPE, request));
+        Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(TestHelpers.CASE_2, request));
 
     }
 
@@ -129,7 +127,7 @@ public class generateFromRequestTest {
         request.setNavigation(TestHelpers.createDefaultNavigation());
         request.setDocumentProperties(CASE1_DOCUMENT_PROPERTIES);
 
-        Assertions.assertThrows(InvalidAccountStateException.class, () -> sut.generateFromRequest(TestHelpers.CASE_3, X_AUTH_TYPE, request));
+        Assertions.assertThrows(InvalidAccountStateException.class, () -> sut.generateFromRequest(TestHelpers.CASE_3, request));
 
     }
 
@@ -160,7 +158,7 @@ public class generateFromRequestTest {
                 .when(submissionStoreMock).put(
                 ArgumentMatchers.argThat(x -> StringUtils.equals("Ross", x.getAccountDetails().getLastName())));
 
-        Submission actual = sut.generateFromRequest(fakeaccount, X_AUTH_TYPE, request);
+        Submission actual = sut.generateFromRequest(fakeaccount, request);
 
         Assertions.assertEquals("lastName", actual.getAccountDetails().getLastName());
 

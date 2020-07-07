@@ -48,9 +48,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    public ResponseEntity<GenerateUrlResponse> generateUrl(UUID xAuthUserId,
-                                                           String xAuthType,
-                                                           GenerateUrlRequest generateUrlRequest) {
+    public ResponseEntity<GenerateUrlResponse> generateUrl(UUID xAuthUserId, GenerateUrlRequest generateUrlRequest) {
         logger.info("Generate Url Request Received");
 
         ResponseEntity response;
@@ -58,7 +56,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         try {
             response = ResponseEntity.ok(
                     generateUrlResponseMapper.toGenerateUrlResponse(
-                            submissionService.generateFromRequest(xAuthUserId, xAuthType, generateUrlRequest),
+                            submissionService.generateFromRequest(xAuthUserId, generateUrlRequest),
                             navigationProperties.getBaseUrl()));
             logger.info("successfully generated return url.");
         }

@@ -23,13 +23,6 @@ paths:
             format: uuid
           required: true
           description: Authenticated user id
-        - in: header
-          name: X-Auth-Type
-          schema:
-            type: string
-            enum: [ Void, Individual, VerifiedIndividual, Business, Internal, LDB, EDS, THS ]
-          required: true
-          description: The authentication user type
       requestBody:
         description: requested parameters to generate a url
         required: true
