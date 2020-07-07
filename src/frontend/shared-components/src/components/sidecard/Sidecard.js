@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import "./Sidecard.css";
 
 export const Sidecard = ({
-  sideCard: { heading, content, type, image, imageLink, isWide }
+  sideCard: { heading, content, type, image, imageLink, isWide, icon }
 }) => {
   let sideCardCss = "dashboard-spacing";
   if (isWide) sideCardCss = "wide-dashboard-spacing";
@@ -52,7 +52,17 @@ export const Sidecard = ({
           {type === "bluegrey" && (
             <section id="bluegrey-section" className="bluegrey-container">
               <div className="container-background bluegrey-heading">
-                <h2 className="heading-style">{heading}</h2>
+                {!icon && <h2 className="heading-style">{heading}</h2>}
+                {icon && (
+                  <h2 className="heading-style">
+                    <div className="row">
+                      <div className="side-card-row">
+                        <div className="round-icon-wrapper">{icon}</div>
+                        <div className="side-card-title">{heading}</div>
+                      </div>
+                    </div>
+                  </h2>
+                )}
               </div>
               <div className="bluegrey-content">
                 <span className="content-style">{content}</span>
@@ -73,6 +83,7 @@ Sidecard.propTypes = {
     type: PropTypes.string.isRequired,
     image: PropTypes.string,
     imageLink: PropTypes.string,
-    isWide: PropTypes.bool
+    isWide: PropTypes.bool,
+    icon: PropTypes.element
   }).isRequired
 };

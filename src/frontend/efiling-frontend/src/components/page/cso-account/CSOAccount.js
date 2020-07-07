@@ -1,7 +1,15 @@
 /* eslint-disable react/require-default-props */
 import React, { useState, useEffect } from "react";
-import ConfirmationPopup, { TermsOfUse, Button } from "shared-components";
+import { MdPerson } from "react-icons/md";
+
+import ConfirmationPopup, {
+  TermsOfUse,
+  Button,
+  DisplayBox,
+  Table
+} from "shared-components";
 import { getContent } from "../../../modules/csoAccountAgreementContent";
+import { translateApplicantInfo } from "../../../modules/translateApplicantInfo";
 import { propTypes } from "../../../types/propTypes";
 
 const continueButton = {
@@ -12,7 +20,7 @@ const continueButton = {
 
 const content = getContent();
 
-export default function CSOAccount({ confirmationPopup }) {
+export default function CSOAccount({ confirmationPopup, applicantInfo }) {
   const [termsAccepted, acceptTerms] = useState(false);
   const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
 
@@ -23,6 +31,15 @@ export default function CSOAccount({ confirmationPopup }) {
       setContinueBtnEnabled(false);
     }
   }, [termsAccepted]);
+
+  const icon = (
+    <div style={{ color: "rgb(252,186,25)" }}>
+      <MdPerson size={32} />
+    </div>
+  );
+  const applicantTable = (
+    <Table elements={translateApplicantInfo(applicantInfo)} />
+  );
 
   return (
     <>
@@ -48,6 +65,8 @@ export default function CSOAccount({ confirmationPopup }) {
         <p>
           The following information will be used to create your CSO account.
         </p>
+
+        <DisplayBox icon={icon} element={applicantTable} />
 
         <br />
       </div>
@@ -78,5 +97,6 @@ export default function CSOAccount({ confirmationPopup }) {
 }
 
 CSOAccount.propTypes = {
-  confirmationPopup: propTypes.confirmationPopup
+  confirmationPopup: propTypes.confirmationPopup,
+  applicantInfo: propTypes.applicantInfo
 };

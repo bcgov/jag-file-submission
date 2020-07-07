@@ -12,7 +12,7 @@ const TableElement = ({ element: { name, value } }) => {
   );
 };
 
-export default function Table({ heading, elements, styling }) {
+export const Table = ({ heading, elements, styling }) => {
   const tableComponents = elements.map(element => {
     return <TableElement key={element.key || element.name} element={element} />;
   });
@@ -27,7 +27,7 @@ export default function Table({ heading, elements, styling }) {
       <tbody>{tableComponents}</tbody>
     </table>
   );
-}
+};
 
 TableElement.propTypes = {
   element: PropTypes.shape({
