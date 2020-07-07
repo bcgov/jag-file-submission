@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Loader Mobile 1`] = `
+<Loader
+  page={true}
+>
+  <div
+    className="loader-align"
+  >
+    <div
+      className="page-loader"
+    />
+    <br />
+    Loading... Please Wait
+  </div>
+</Loader>
+`;
+
+exports[`Storyshots Loader Page 1`] = `
+<Loader
+  page={true}
+>
+  <div
+    className="loader-align"
+  >
+    <div
+      className="page-loader"
+    />
+    <br />
+    Loading... Please Wait
+  </div>
+</Loader>
+`;

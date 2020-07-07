@@ -1,0 +1,1083 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots DisplayBox With Blue Background 1`] = `
+<DisplayBox
+  element={
+    <Table
+      elements={
+        Array [
+          Object {
+            "name": "BCeID",
+            "value": "bobross42",
+          },
+          Object {
+            "name": "Last Name",
+            "value": "Ross",
+          },
+          Object {
+            "name": "First Name",
+            "value": "Bob",
+          },
+          Object {
+            "name": "Email Address",
+            "value": "bob.ross@example.com",
+          },
+        ]
+      }
+      heading=""
+      styling=""
+    />
+  }
+  icon={
+    <MdPerson
+      size={32}
+    />
+  }
+  styling="blue-background"
+>
+  <div
+    className="display-box blue-background"
+  >
+    <div
+      className="display-icon"
+    >
+      <MdPerson
+        size={32}
+      >
+        <IconBase
+          attr={
+            Object {
+              "viewBox": "0 0 24 24",
+            }
+          }
+          size={32}
+        >
+          <svg
+            fill="currentColor"
+            height={32}
+            size={32}
+            stroke="currentColor"
+            strokeWidth="0"
+            style={
+              Object {
+                "color": undefined,
+              }
+            }
+            viewBox="0 0 24 24"
+            width={32}
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+              key="0"
+            />
+          </svg>
+        </IconBase>
+      </MdPerson>
+    </div>
+    <div
+      className="display-element"
+    >
+      <Table
+        elements={
+          Array [
+            Object {
+              "name": "BCeID",
+              "value": "bobross42",
+            },
+            Object {
+              "name": "Last Name",
+              "value": "Ross",
+            },
+            Object {
+              "name": "First Name",
+              "value": "Bob",
+            },
+            Object {
+              "name": "Email Address",
+              "value": "bob.ross@example.com",
+            },
+          ]
+        }
+        heading=""
+        styling=""
+      >
+        <table
+          className=""
+        >
+          <thead>
+            <tr>
+              <th
+                colSpan="2"
+              />
+            </tr>
+          </thead>
+          <tbody>
+            <TableElement
+              element={
+                Object {
+                  "name": "BCeID",
+                  "value": "bobross42",
+                }
+              }
+              key="BCeID"
+            >
+              <tr>
+                <td>
+                  BCeID
+                </td>
+                <td>
+                  bobross42
+                </td>
+              </tr>
+            </TableElement>
+            <TableElement
+              element={
+                Object {
+                  "name": "Last Name",
+                  "value": "Ross",
+                }
+              }
+              key="Last Name"
+            >
+              <tr>
+                <td>
+                  Last Name
+                </td>
+                <td>
+                  Ross
+                </td>
+              </tr>
+            </TableElement>
+            <TableElement
+              element={
+                Object {
+                  "name": "First Name",
+                  "value": "Bob",
+                }
+              }
+              key="First Name"
+            >
+              <tr>
+                <td>
+                  First Name
+                </td>
+                <td>
+                  Bob
+                </td>
+              </tr>
+            </TableElement>
+            <TableElement
+              element={
+                Object {
+                  "name": "Email Address",
+                  "value": "bob.ross@example.com",
+                }
+              }
+              key="Email Address"
+            >
+              <tr>
+                <td>
+                  Email Address
+                </td>
+                <td>
+                  bob.ross@example.com
+                </td>
+              </tr>
+            </TableElement>
+          </tbody>
+        </table>
+      </Table>
+    </div>
+  </div>
+</DisplayBox>
+`;
+
+exports[`Storyshots DisplayBox With Blue Background Mobile 1`] = `
+<DisplayBox
+  element={
+    <Table
+      elements={
+        Array [
+          Object {
+            "name": "BCeID",
+            "value": "bobross42",
+          },
+          Object {
+            "name": "Last Name",
+            "value": "Ross",
+          },
+          Object {
+            "name": "First Name",
+            "value": "Bob",
+          },
+          Object {
+            "name": "Email Address",
+            "value": "bob.ross@example.com",
+          },
+        ]
+      }
+      heading=""
+      styling=""
+    />
+  }
+  icon={
+    <MdPerson
+      size={32}
+    />
+  }
+  styling="blue-background"
+>
+  <div
+    className="display-box blue-background"
+  >
+    <div
+      className="display-icon"
+    >
+      <MdPerson
+        size={32}
+      >
+        <IconBase
+          attr={
+            Object {
+              "viewBox": "0 0 24 24",
+            }
+          }
+          size={32}
+        >
+          <svg
+            fill="currentColor"
+            height={32}
+            size={32}
+            stroke="currentColor"
+            strokeWidth="0"
+            style={
+              Object {
+                "color": undefined,
+              }
+            }
+            viewBox="0 0 24 24"
+            width={32}
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+              key="0"
+            />
+          </svg>
+        </IconBase>
+      </MdPerson>
+    </div>
+    <div
+      className="display-element"
+    >
+      <Table
+        elements={
+          Array [
+            Object {
+              "name": "BCeID",
+              "value": "bobross42",
+            },
+            Object {
+              "name": "Last Name",
+              "value": "Ross",
+            },
+            Object {
+              "name": "First Name",
+              "value": "Bob",
+            },
+            Object {
+              "name": "Email Address",
+              "value": "bob.ross@example.com",
+            },
+          ]
+        }
+        heading=""
+        styling=""
+      >
+        <table
+          className=""
+        >
+          <thead>
+            <tr>
+              <th
+                colSpan="2"
+              />
+            </tr>
+          </thead>
+          <tbody>
+            <TableElement
+              element={
+                Object {
+                  "name": "BCeID",
+                  "value": "bobross42",
+                }
+              }
+              key="BCeID"
+            >
+              <tr>
+                <td>
+                  BCeID
+                </td>
+                <td>
+                  bobross42
+                </td>
+              </tr>
+            </TableElement>
+            <TableElement
+              element={
+                Object {
+                  "name": "Last Name",
+                  "value": "Ross",
+                }
+              }
+              key="Last Name"
+            >
+              <tr>
+                <td>
+                  Last Name
+                </td>
+                <td>
+                  Ross
+                </td>
+              </tr>
+            </TableElement>
+            <TableElement
+              element={
+                Object {
+                  "name": "First Name",
+                  "value": "Bob",
+                }
+              }
+              key="First Name"
+            >
+              <tr>
+                <td>
+                  First Name
+                </td>
+                <td>
+                  Bob
+                </td>
+              </tr>
+            </TableElement>
+            <TableElement
+              element={
+                Object {
+                  "name": "Email Address",
+                  "value": "bob.ross@example.com",
+                }
+              }
+              key="Email Address"
+            >
+              <tr>
+                <td>
+                  Email Address
+                </td>
+                <td>
+                  bob.ross@example.com
+                </td>
+              </tr>
+            </TableElement>
+          </tbody>
+        </table>
+      </Table>
+    </div>
+  </div>
+</DisplayBox>
+`;
+
+exports[`Storyshots DisplayBox With Icon 1`] = `
+<DisplayBox
+  element={
+    <Table
+      elements={
+        Array [
+          Object {
+            "name": "BCeID",
+            "value": "bobross42",
+          },
+          Object {
+            "name": "Last Name",
+            "value": "Ross",
+          },
+          Object {
+            "name": "First Name",
+            "value": "Bob",
+          },
+          Object {
+            "name": "Email Address",
+            "value": "bob.ross@example.com",
+          },
+        ]
+      }
+      heading=""
+      styling=""
+    />
+  }
+  icon={
+    <MdPerson
+      size={32}
+    />
+  }
+  styling="grey-background"
+>
+  <div
+    className="display-box grey-background"
+  >
+    <div
+      className="display-icon"
+    >
+      <MdPerson
+        size={32}
+      >
+        <IconBase
+          attr={
+            Object {
+              "viewBox": "0 0 24 24",
+            }
+          }
+          size={32}
+        >
+          <svg
+            fill="currentColor"
+            height={32}
+            size={32}
+            stroke="currentColor"
+            strokeWidth="0"
+            style={
+              Object {
+                "color": undefined,
+              }
+            }
+            viewBox="0 0 24 24"
+            width={32}
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+              key="0"
+            />
+          </svg>
+        </IconBase>
+      </MdPerson>
+    </div>
+    <div
+      className="display-element"
+    >
+      <Table
+        elements={
+          Array [
+            Object {
+              "name": "BCeID",
+              "value": "bobross42",
+            },
+            Object {
+              "name": "Last Name",
+              "value": "Ross",
+            },
+            Object {
+              "name": "First Name",
+              "value": "Bob",
+            },
+            Object {
+              "name": "Email Address",
+              "value": "bob.ross@example.com",
+            },
+          ]
+        }
+        heading=""
+        styling=""
+      >
+        <table
+          className=""
+        >
+          <thead>
+            <tr>
+              <th
+                colSpan="2"
+              />
+            </tr>
+          </thead>
+          <tbody>
+            <TableElement
+              element={
+                Object {
+                  "name": "BCeID",
+                  "value": "bobross42",
+                }
+              }
+              key="BCeID"
+            >
+              <tr>
+                <td>
+                  BCeID
+                </td>
+                <td>
+                  bobross42
+                </td>
+              </tr>
+            </TableElement>
+            <TableElement
+              element={
+                Object {
+                  "name": "Last Name",
+                  "value": "Ross",
+                }
+              }
+              key="Last Name"
+            >
+              <tr>
+                <td>
+                  Last Name
+                </td>
+                <td>
+                  Ross
+                </td>
+              </tr>
+            </TableElement>
+            <TableElement
+              element={
+                Object {
+                  "name": "First Name",
+                  "value": "Bob",
+                }
+              }
+              key="First Name"
+            >
+              <tr>
+                <td>
+                  First Name
+                </td>
+                <td>
+                  Bob
+                </td>
+              </tr>
+            </TableElement>
+            <TableElement
+              element={
+                Object {
+                  "name": "Email Address",
+                  "value": "bob.ross@example.com",
+                }
+              }
+              key="Email Address"
+            >
+              <tr>
+                <td>
+                  Email Address
+                </td>
+                <td>
+                  bob.ross@example.com
+                </td>
+              </tr>
+            </TableElement>
+          </tbody>
+        </table>
+      </Table>
+    </div>
+  </div>
+</DisplayBox>
+`;
+
+exports[`Storyshots DisplayBox With Icon Mobile 1`] = `
+<DisplayBox
+  element={
+    <Table
+      elements={
+        Array [
+          Object {
+            "name": "BCeID",
+            "value": "bobross42",
+          },
+          Object {
+            "name": "Last Name",
+            "value": "Ross",
+          },
+          Object {
+            "name": "First Name",
+            "value": "Bob",
+          },
+          Object {
+            "name": "Email Address",
+            "value": "bob.ross@example.com",
+          },
+        ]
+      }
+      heading=""
+      styling=""
+    />
+  }
+  icon={
+    <MdPerson
+      size={32}
+    />
+  }
+  styling="grey-background"
+>
+  <div
+    className="display-box grey-background"
+  >
+    <div
+      className="display-icon"
+    >
+      <MdPerson
+        size={32}
+      >
+        <IconBase
+          attr={
+            Object {
+              "viewBox": "0 0 24 24",
+            }
+          }
+          size={32}
+        >
+          <svg
+            fill="currentColor"
+            height={32}
+            size={32}
+            stroke="currentColor"
+            strokeWidth="0"
+            style={
+              Object {
+                "color": undefined,
+              }
+            }
+            viewBox="0 0 24 24"
+            width={32}
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+              key="0"
+            />
+          </svg>
+        </IconBase>
+      </MdPerson>
+    </div>
+    <div
+      className="display-element"
+    >
+      <Table
+        elements={
+          Array [
+            Object {
+              "name": "BCeID",
+              "value": "bobross42",
+            },
+            Object {
+              "name": "Last Name",
+              "value": "Ross",
+            },
+            Object {
+              "name": "First Name",
+              "value": "Bob",
+            },
+            Object {
+              "name": "Email Address",
+              "value": "bob.ross@example.com",
+            },
+          ]
+        }
+        heading=""
+        styling=""
+      >
+        <table
+          className=""
+        >
+          <thead>
+            <tr>
+              <th
+                colSpan="2"
+              />
+            </tr>
+          </thead>
+          <tbody>
+            <TableElement
+              element={
+                Object {
+                  "name": "BCeID",
+                  "value": "bobross42",
+                }
+              }
+              key="BCeID"
+            >
+              <tr>
+                <td>
+                  BCeID
+                </td>
+                <td>
+                  bobross42
+                </td>
+              </tr>
+            </TableElement>
+            <TableElement
+              element={
+                Object {
+                  "name": "Last Name",
+                  "value": "Ross",
+                }
+              }
+              key="Last Name"
+            >
+              <tr>
+                <td>
+                  Last Name
+                </td>
+                <td>
+                  Ross
+                </td>
+              </tr>
+            </TableElement>
+            <TableElement
+              element={
+                Object {
+                  "name": "First Name",
+                  "value": "Bob",
+                }
+              }
+              key="First Name"
+            >
+              <tr>
+                <td>
+                  First Name
+                </td>
+                <td>
+                  Bob
+                </td>
+              </tr>
+            </TableElement>
+            <TableElement
+              element={
+                Object {
+                  "name": "Email Address",
+                  "value": "bob.ross@example.com",
+                }
+              }
+              key="Email Address"
+            >
+              <tr>
+                <td>
+                  Email Address
+                </td>
+                <td>
+                  bob.ross@example.com
+                </td>
+              </tr>
+            </TableElement>
+          </tbody>
+        </table>
+      </Table>
+    </div>
+  </div>
+</DisplayBox>
+`;
+
+exports[`Storyshots DisplayBox Without Icon 1`] = `
+<DisplayBox
+  element={
+    <Table
+      elements={
+        Array [
+          Object {
+            "name": "BCeID",
+            "value": "bobross42",
+          },
+          Object {
+            "name": "Last Name",
+            "value": "Ross",
+          },
+          Object {
+            "name": "First Name",
+            "value": "Bob",
+          },
+          Object {
+            "name": "Email Address",
+            "value": "bob.ross@example.com",
+          },
+        ]
+      }
+      heading=""
+      styling=""
+    />
+  }
+  icon={null}
+  styling="grey-background"
+>
+  <div
+    className="display-box grey-background"
+  >
+    <div
+      className="display-icon"
+    />
+    <div
+      className="display-element"
+    >
+      <Table
+        elements={
+          Array [
+            Object {
+              "name": "BCeID",
+              "value": "bobross42",
+            },
+            Object {
+              "name": "Last Name",
+              "value": "Ross",
+            },
+            Object {
+              "name": "First Name",
+              "value": "Bob",
+            },
+            Object {
+              "name": "Email Address",
+              "value": "bob.ross@example.com",
+            },
+          ]
+        }
+        heading=""
+        styling=""
+      >
+        <table
+          className=""
+        >
+          <thead>
+            <tr>
+              <th
+                colSpan="2"
+              />
+            </tr>
+          </thead>
+          <tbody>
+            <TableElement
+              element={
+                Object {
+                  "name": "BCeID",
+                  "value": "bobross42",
+                }
+              }
+              key="BCeID"
+            >
+              <tr>
+                <td>
+                  BCeID
+                </td>
+                <td>
+                  bobross42
+                </td>
+              </tr>
+            </TableElement>
+            <TableElement
+              element={
+                Object {
+                  "name": "Last Name",
+                  "value": "Ross",
+                }
+              }
+              key="Last Name"
+            >
+              <tr>
+                <td>
+                  Last Name
+                </td>
+                <td>
+                  Ross
+                </td>
+              </tr>
+            </TableElement>
+            <TableElement
+              element={
+                Object {
+                  "name": "First Name",
+                  "value": "Bob",
+                }
+              }
+              key="First Name"
+            >
+              <tr>
+                <td>
+                  First Name
+                </td>
+                <td>
+                  Bob
+                </td>
+              </tr>
+            </TableElement>
+            <TableElement
+              element={
+                Object {
+                  "name": "Email Address",
+                  "value": "bob.ross@example.com",
+                }
+              }
+              key="Email Address"
+            >
+              <tr>
+                <td>
+                  Email Address
+                </td>
+                <td>
+                  bob.ross@example.com
+                </td>
+              </tr>
+            </TableElement>
+          </tbody>
+        </table>
+      </Table>
+    </div>
+  </div>
+</DisplayBox>
+`;
+
+exports[`Storyshots DisplayBox Without Icon Mobile 1`] = `
+<DisplayBox
+  element={
+    <Table
+      elements={
+        Array [
+          Object {
+            "name": "BCeID",
+            "value": "bobross42",
+          },
+          Object {
+            "name": "Last Name",
+            "value": "Ross",
+          },
+          Object {
+            "name": "First Name",
+            "value": "Bob",
+          },
+          Object {
+            "name": "Email Address",
+            "value": "bob.ross@example.com",
+          },
+        ]
+      }
+      heading=""
+      styling=""
+    />
+  }
+  icon={null}
+  styling="grey-background"
+>
+  <div
+    className="display-box grey-background"
+  >
+    <div
+      className="display-icon"
+    />
+    <div
+      className="display-element"
+    >
+      <Table
+        elements={
+          Array [
+            Object {
+              "name": "BCeID",
+              "value": "bobross42",
+            },
+            Object {
+              "name": "Last Name",
+              "value": "Ross",
+            },
+            Object {
+              "name": "First Name",
+              "value": "Bob",
+            },
+            Object {
+              "name": "Email Address",
+              "value": "bob.ross@example.com",
+            },
+          ]
+        }
+        heading=""
+        styling=""
+      >
+        <table
+          className=""
+        >
+          <thead>
+            <tr>
+              <th
+                colSpan="2"
+              />
+            </tr>
+          </thead>
+          <tbody>
+            <TableElement
+              element={
+                Object {
+                  "name": "BCeID",
+                  "value": "bobross42",
+                }
+              }
+              key="BCeID"
+            >
+              <tr>
+                <td>
+                  BCeID
+                </td>
+                <td>
+                  bobross42
+                </td>
+              </tr>
+            </TableElement>
+            <TableElement
+              element={
+                Object {
+                  "name": "Last Name",
+                  "value": "Ross",
+                }
+              }
+              key="Last Name"
+            >
+              <tr>
+                <td>
+                  Last Name
+                </td>
+                <td>
+                  Ross
+                </td>
+              </tr>
+            </TableElement>
+            <TableElement
+              element={
+                Object {
+                  "name": "First Name",
+                  "value": "Bob",
+                }
+              }
+              key="First Name"
+            >
+              <tr>
+                <td>
+                  First Name
+                </td>
+                <td>
+                  Bob
+                </td>
+              </tr>
+            </TableElement>
+            <TableElement
+              element={
+                Object {
+                  "name": "Email Address",
+                  "value": "bob.ross@example.com",
+                }
+              }
+              key="Email Address"
+            >
+              <tr>
+                <td>
+                  Email Address
+                </td>
+                <td>
+                  bob.ross@example.com
+                </td>
+              </tr>
+            </TableElement>
+          </tbody>
+        </table>
+      </Table>
+    </div>
+  </div>
+</DisplayBox>
+`;
