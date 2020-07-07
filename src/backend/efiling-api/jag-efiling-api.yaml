@@ -4,59 +4,67 @@ info:
   title: jag-efiling-api
   description: Efiling api
 servers:
-- url: 'http://localhost:8080'
+  - url: "http://localhost:8080"
 tags:
-- name: submission
-  description: Submission Api
+  - name: submission
+    description: Submission Api
 paths:
-  '/submission/generateUrl':
+  "/submission/generateUrl":
     post:
       summary: Generates a secure URL for e-filing submission
       operationId: GenerateUrl
       tags:
-      - submission
+        - submission
+      parameters:
+        - in: header
+          name: X-Auth-UserId
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: Authenticated user id
       requestBody:
         description: requested parameters to generate a url
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/GenerateUrlRequest'
+              $ref: "#/components/schemas/GenerateUrlRequest"
       responses:
-        '200':
+        "200":
           description: File successfully received
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenerateUrlResponse'
-        '403':
+                $ref: "#/components/schemas/GenerateUrlResponse"
+        "403":
           description: Request does not meet the required criteria
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EfilingError'
-  '/submission/{id}':
+                $ref: "#/components/schemas/EfilingError"
+  "/submission/{id}":
     get:
       summary: Get user detail for a given submission
       operationId: GetSubmission
       tags:
-      - submission
+        - submission
       parameters:
-      - name: id
-        in: path
-        description: A submission id
-        required: true
-        schema:
-          type: string
-          format: uuid
+        - name: id
+          in: path
+          description: A submission id
+          required: true
+          schema:
+            type: string
+            format: uuid
       responses:
-        '200':
+        "200":
           description: Config found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetSubmissionResponse'
-        '404':
+                $ref: "#/components/schemas/GetSubmissionResponse"
+        "404":
           description: Config not found
 components:
   schemas:
@@ -75,9 +83,9 @@ components:
       type: object
       description: Submission Metadata used to describe the submission that will be e-filled
       required:
-      - type
-      - subType
-      - documentAccess
+        - type
+        - subType
+        - documentAccess
       properties:
         type:
           type: string
@@ -86,11 +94,11 @@ components:
           type: string
           description: the submission sub type
         submissionAccess:
-          $ref: '#/components/schemas/EndpointAccess'
+          $ref: "#/components/schemas/EndpointAccess"
     EfilingError:
       required:
-      - error
-      - message
+        - error
+        - message
       properties:
         error:
           type: string
@@ -112,18 +120,13 @@ components:
     GenerateUrlRequest:
       description: details about the required transaction
       required:
-      - userId
-      - navigation
-      - documentProperties
+        - navigation
+        - documentProperties
       properties:
-        userId:
-          type: string
-          format: uuid
-          description: a unique identifier for the user
         documentProperties:
-          $ref: '#/components/schemas/DocumentProperties'
+          $ref: "#/components/schemas/DocumentProperties"
         navigation:
-          $ref: '#/components/schemas/Navigation'
+          $ref: "#/components/schemas/Navigation"
     GenerateUrlResponse:
       description: A temporary url for uploading submission
       properties:
@@ -135,28 +138,28 @@ components:
     GetSubmissionResponse:
       type: object
       required:
-      - userDetails
-      - navigation
+        - userDetails
+        - navigation
       properties:
         userDetails:
-          $ref: '#/components/schemas/UserDetails'
+          $ref: "#/components/schemas/UserDetails"
         navigation:
-          $ref: '#/components/schemas/Navigation'
+          $ref: "#/components/schemas/Navigation"
     Navigation:
       required:
-      - success
-      - error
-      - cancel
+        - success
+        - error
+        - cancel
       properties:
         success:
-          $ref: '#/components/schemas/Redirect'
+          $ref: "#/components/schemas/Redirect"
         error:
-          $ref: '#/components/schemas/Redirect'
+          $ref: "#/components/schemas/Redirect"
         cancel:
-          $ref: '#/components/schemas/Redirect'
+          $ref: "#/components/schemas/Redirect"
     Redirect:
       required:
-      - url
+        - url
       properties:
         url:
           type: string
@@ -164,10 +167,10 @@ components:
       description: represents a user submitting a package
       type: object
       required:
-      - firstName
-      - lastName
-      - middleName
-      - email
+        - firstName
+        - lastName
+        - middleName
+        - email
       properties:
         firstName:
           type: string
@@ -184,4 +187,4 @@ components:
         accounts:
           type: array
           items:
-            $ref: '#/components/schemas/Account'
+            $ref: "#/components/schemas/Account"

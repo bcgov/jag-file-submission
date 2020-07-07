@@ -6,5 +6,4 @@ tests/logs
 *.log
 .idea
 tests/test-output
-*.png
 .env

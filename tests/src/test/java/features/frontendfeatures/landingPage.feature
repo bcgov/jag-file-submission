@@ -1,17 +1,28 @@
-Feature: User can navigate to the efiling landing page
+Feature: As a user I would like to have my account verified
 
   Background:
     Given user is on the landing page
 
   @frontend
-  Scenario: Verify valid account guid redirects efiling form page
-    When  user enters a valid account guid "enter valid guid"
+  Scenario Outline: Verify valid CSO account guid redirects to eFiling form page
+    When  user enters a valid existing CSO account guid "<validExistingCSOGuid>"
     Then eFiling frontend page is displayed and cancel button exists
+    Examples:
+      | validExistingCSOGuid |
+      | validExistingCSOGuid |
+
   @frontend
-  Scenario: Verify non existing account guid redirects to the efiling form page
-    When  user enters non existing account guid "123"
+  Scenario Outline: Verify non existing CSO account guid redirects to the eFiling form page
+    When  user enters non existing CSO account guid "<nonExistingCSOGuid>"
     Then eFiling frontend page is displayed and cancel button exists
+    Examples:
+      | nonExistingCSOGuid |
+      | nonExistingCSOGuid |
+
   @frontend
-  Scenario: Verify existing account guid with conflicts returns error message
-    When  user enters invalid account guid "enter invalid guid"
+  Scenario Outline: Verify invalid CSO account guid without eFiling role returns error message
+    When  user enters invalid CSO account guid without eFiling role "<invalidNoFilingRoleGuid>"
     Then error message is displayed
+    Examples:
+      | invalidNoFilingRoleGuid |
+      | invalidNoFilingRoleGuid |

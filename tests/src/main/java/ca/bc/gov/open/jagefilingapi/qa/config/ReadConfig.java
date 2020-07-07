@@ -33,5 +33,3 @@ public class ReadConfig {
             return prop.getProperty("browser");
     }
 }
-
-

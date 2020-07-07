@@ -26,6 +26,7 @@ import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.Optional;
+import java.util.UUID;
 
 import static ca.bc.gov.open.jag.efilingapi.api.model.EndpointAccess.VerbEnum.POST;
 
@@ -82,11 +83,10 @@ public class generateFromRequestTest {
     public void withValidAccountShouldReturnSubmission() {
 
         GenerateUrlRequest request = new GenerateUrlRequest();
-        request.setUserId(TestHelpers.CASE_1);
         request.setNavigation(TestHelpers.createDefaultNavigation());
         request.setDocumentProperties(CASE1_DOCUMENT_PROPERTIES);
 
-        Submission actual = sut.generateFromRequest(request);
+        Submission actual = sut.generateFromRequest(TestHelpers.CASE_1, request);
 
         Assertions.assertEquals(TestHelpers.CASE_1.toString() + EMAIL, actual.getAccountDetails().getEmail());
         Assertions.assertEquals(TestHelpers.CASE_1.toString() + FIRST_NAME, actual.getAccountDetails().getFirstName());
@@ -113,11 +113,10 @@ public class generateFromRequestTest {
     public void withEmptySubmissionShouldThrowStoreException() {
 
         GenerateUrlRequest request = new GenerateUrlRequest();
-        request.setUserId(TestHelpers.CASE_2);
         request.setNavigation(TestHelpers.createDefaultNavigation());
         request.setDocumentProperties(CASE1_DOCUMENT_PROPERTIES);
 
-        Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(request));
+        Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(TestHelpers.CASE_2, request));
 
     }
 
@@ -126,11 +125,44 @@ public class generateFromRequestTest {
     public void withNoFileRoleShouldThrowInvalidAccountStateException() {
 
         GenerateUrlRequest request = new GenerateUrlRequest();
-        request.setUserId(TestHelpers.CASE_3);
         request.setNavigation(TestHelpers.createDefaultNavigation());
         request.setDocumentProperties(CASE1_DOCUMENT_PROPERTIES);
 
-        Assertions.assertThrows(InvalidAccountStateException.class, () -> sut.generateFromRequest(request));
+        Assertions.assertThrows(InvalidAccountStateException.class, () -> sut.generateFromRequest(TestHelpers.CASE_3, request));
+
+    }
+
+    @Test
+    @DisplayName("TEMP: test demo acount")
+    public void testDemo()  {
+
+        UUID fakeaccount = UUID.fromString("88da92db-0791-491e-8c58-1a969e67d2fb");
+        GenerateUrlRequest request = new GenerateUrlRequest();
+        request.setNavigation(TestHelpers.createDefaultNavigation());
+        request.setDocumentProperties(CASE1_DOCUMENT_PROPERTIES);
+
+
+        AccountDetails accountDetails =  AccountDetails.builder().lastName("lastName").create();
+
+        Fee fee = new Fee(BigDecimal.TEN);
+        Submission submissionCase1 = Submission
+                .builder()
+                .accountDetails(accountDetails)
+                .navigation(TestHelpers.createDefaultNavigation())
+                .expiryDate(10)
+                .documentProperties(CASE1_DOCUMENT_PROPERTIES)
+                .fee(fee)
+                .create();
+
+        Mockito
+                .doReturn(Optional.of(submissionCase1))
+                .when(submissionStoreMock).put(
+                ArgumentMatchers.argThat(x -> StringUtils.equals("Ross", x.getAccountDetails().getLastName())));
+
+        Submission actual = sut.generateFromRequest(fakeaccount, request);
+
+        Assertions.assertEquals("lastName", actual.getAccountDetails().getLastName());
+
 
     }
 
@@ -141,7 +173,8 @@ public class generateFromRequestTest {
 
         Mockito
                 .when(efilingAccountServiceMock.getAccountDetails(
-                        Mockito.eq(TestHelpers.CASE_1.toString().replace("-", "").toUpperCase()), Mockito.any()))
+                        Mockito.eq(TestHelpers.CASE_1),
+                        Mockito.any()))
                 .thenReturn(accountDetails);
 
         Submission submissionCase1 = Submission
@@ -166,7 +199,7 @@ public class generateFromRequestTest {
 
         Mockito
                 .when(efilingAccountServiceMock.getAccountDetails(
-                        Mockito.eq(TestHelpers.CASE_2.toString().replace("-", "").toUpperCase()),
+                        Mockito.eq(TestHelpers.CASE_2),
                         Mockito.any()))
                 .thenReturn(accountDetails);
 
@@ -182,7 +215,7 @@ public class generateFromRequestTest {
 
         Mockito
                 .when(efilingAccountServiceMock.getAccountDetails(
-                        Mockito.eq(TestHelpers.CASE_3.toString().replace("-", "").toUpperCase()),
+                        Mockito.eq(TestHelpers.CASE_3),
                         Mockito.any()))
                 .thenReturn(accountDetails);
 

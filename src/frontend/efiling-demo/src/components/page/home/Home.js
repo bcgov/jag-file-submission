@@ -42,10 +42,10 @@ const input = {
 };
 
 const generateUrl = (accountGuid, setErrorExists) => {
-  const updatedUrlBody = { ...urlBody, userId: accountGuid };
-
   axios
-    .post(`/submission/generateUrl`, updatedUrlBody)
+    .post(`/submission/generateUrl`, urlBody, {
+      headers: { "X-Auth-UserId": accountGuid }
+    })
     .then(({ data: { efilingUrl } }) => {
       window.open(efilingUrl, "_self");
     })

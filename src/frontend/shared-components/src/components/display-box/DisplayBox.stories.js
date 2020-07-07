@@ -1,7 +1,7 @@
 import React from "react";
 import { MdPerson } from "react-icons/md";
 
-import DisplayBox from "./DisplayBox";
+import { DisplayBox } from "./DisplayBox";
 import { getTestTable } from "../../modules/displayBoxTestData";
 
 export default {

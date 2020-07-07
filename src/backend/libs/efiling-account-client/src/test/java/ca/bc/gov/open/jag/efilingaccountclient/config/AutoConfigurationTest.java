@@ -1,7 +1,8 @@
 package ca.bc.gov.open.jag.efilingaccountclient.config;
 
 
-
+import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountServiceImpl;
+import ca.bc.gov.open.jag.efilingaccountclient.mappers.AccountDetailsMapperImpl;
 import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
@@ -21,16 +22,21 @@ public class AutoConfigurationTest {
 
     private AutoConfiguration sut;
 
+    @BeforeAll
+    public void setup() {
+        sut = new AutoConfiguration(initSoapProperties());
+    }
+
     @Test
     @DisplayName("Test that beans are created")
     public void testBeansAreGenerated() {
 
-        sut = new AutoConfiguration(initSoapProperties());
 
         Assertions.assertNotNull(sut.accountFacadeBean());
         Assertions.assertNotNull(sut.roleRegistryPortType());
         Assertions.assertNotNull(sut.bCeIDServiceSoap());
-        Assertions.assertNotNull(sut.efilingAccountService(null, null, null, null));
+        Assertions.assertEquals(CsoAccountServiceImpl.class, sut.efilingAccountService(null, null, null, null).getClass());
+        Assertions.assertEquals(AccountDetailsMapperImpl.class, sut.accountDetailsMapper().getClass());
     }
 
     private SoapProperties initSoapProperties() {
@@ -43,7 +49,6 @@ public class AutoConfigurationTest {
         accountProperties.setUserName(USERNAME);
         accountProperties.setPassword(PASSWORD);
         soapClientProperties.add(accountProperties);
-
 
         EfilingSoapClientProperties roleProperties = new EfilingSoapClientProperties();
         roleProperties.setClient(Clients.ROLE);

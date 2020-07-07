@@ -95,3 +95,35 @@ img {
     padding-left: 0;
   }
 }
+
+.side-card-row {
+  white-space: nowrap;
+}
+
+.side-card-icon {
+  width: 35px;
+  height: 35px;
+  padding-bottom: 10px;
+}
+
+.round-icon-wrapper {
+  vertical-align: top;
+  height: 48px;
+  line-height: 55px;
+  width: 48px;
+  border-radius: 48px;
+  background-color: #7596c8;
+  text-align: center;
+  display: inline-block;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.side-card-title {
+  font-size: 20px;
+  font-weight: Semi-bold;
+  display: inline-block;
+  width: 100%;
+  white-space: normal;
+  padding-top: 12px;
+}

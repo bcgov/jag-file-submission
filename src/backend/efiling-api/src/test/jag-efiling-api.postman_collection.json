@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "a9a9926c-3731-4316-a657-ea4da5b0e530",
+    "_postman_id": "12584c3c-7c4d-4253-a3c2-96ca5fed2431",
     "name": "jag-efiling-api",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
@@ -9,10 +9,16 @@
       "name": "generate url",
       "request": {
         "method": "POST",
-        "header": [],
+        "header": [
+          {
+            "key": "X-Auth-UserId",
+            "value": "80AD31DA-0B8B-4E85-8F05-F693CF0B300D",
+            "type": "text"
+          }
+        ],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n  \"userId\": \"80AD31DA0B8B4E858F05F693CF0B300D\",\r\n  \"documentProperties\": {\r\n    \"type\": \"DCFL\",\r\n    \"subType\": \"string\",\r\n    \"submissionAccess\": {\r\n      \"url\": \"string\",\r\n      \"verb\": \"GET\",\r\n      \"headers\": {\r\n        \"additionalProp1\": \"string\",\r\n        \"additionalProp2\": \"string\",\r\n        \"additionalProp3\": \"string\"\r\n      }\r\n    }\r\n  },\r\n  \"navigation\": {\r\n    \"success\": {\r\n      \"url\": \"string\"\r\n    },\r\n    \"error\": {\r\n      \"url\": \"string\"\r\n    },\r\n    \"cancel\": {\r\n      \"url\": \"string\"\r\n    }\r\n  }\r\n}",
+          "raw": "{\r\n  \"documentProperties\": {\r\n    \"type\": \"DCFL\",\r\n    \"subType\": \"string\",\r\n    \"submissionAccess\": {\r\n      \"url\": \"string\",\r\n      \"verb\": \"GET\",\r\n      \"headers\": {\r\n        \"additionalProp1\": \"string\",\r\n        \"additionalProp2\": \"string\",\r\n        \"additionalProp3\": \"string\"\r\n      }\r\n    }\r\n  },\r\n  \"navigation\": {\r\n    \"success\": {\r\n      \"url\": \"string\"\r\n    },\r\n    \"error\": {\r\n      \"url\": \"string\"\r\n    },\r\n    \"cancel\": {\r\n      \"url\": \"string\"\r\n    }\r\n  }\r\n}",
           "options": {
             "raw": {
               "language": "json"

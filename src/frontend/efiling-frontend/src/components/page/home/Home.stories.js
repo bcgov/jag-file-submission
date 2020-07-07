@@ -4,6 +4,7 @@ import { createMemoryHistory } from "history";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
+import { getUserDetails } from "../../../modules/userDetails";
 
 import Home from "./Home";
 
@@ -33,13 +34,7 @@ const navigation = {
     url: ""
   }
 };
-const userDetails = {
-  accounts: [
-    {
-      type: "CSO"
-    }
-  ]
-};
+const userDetails = getUserDetails();
 
 const LoaderStateData = props => {
   mock.onGet(apiRequest).reply(400);

@@ -1,6 +1,6 @@
 import React from "react";
 
-import Table from "./Table";
+import { Table } from "./Table";
 import { getTableElementsTestData } from "../../modules/tableTestData";
 
 export default {
