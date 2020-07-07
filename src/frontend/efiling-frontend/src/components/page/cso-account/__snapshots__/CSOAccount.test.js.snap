@@ -18,7 +18,7 @@ exports[`CSOAccount Component Matches the snapshot 1`] = `
           The following information will be used to create your CSO account.
         </p>
         <div
-          class="display-box grey-background"
+          class="display-box "
         >
           <div
             class="display-icon"

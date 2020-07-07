@@ -18,7 +18,7 @@ exports[`Storyshots CSOAccount Default 1`] = `
           The following information will be used to create your CSO account.
         </p>
         <div
-          class="display-box grey-background"
+          class="display-box "
         >
           <div
             class="display-icon"
@@ -911,7 +911,7 @@ exports[`Storyshots CSOAccount Mobile 1`] = `
           The following information will be used to create your CSO account.
         </p>
         <div
-          class="display-box grey-background"
+          class="display-box "
         >
           <div
             class="display-icon"
