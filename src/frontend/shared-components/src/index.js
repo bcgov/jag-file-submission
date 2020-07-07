@@ -9,5 +9,6 @@ export { TermsOfUse } from "./components/terms-of-use/TermsOfUse";
 export { Sidecard } from "./components/sidecard/Sidecard";
 export { DisplayBox } from "./components/display-box/DisplayBox";
 export { Table } from "./components/table/Table";
+export { Alert } from "./components/alert/Alert";
 
 export default ConfirmationPopup;
