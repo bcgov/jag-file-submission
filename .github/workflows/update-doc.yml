@@ -5,14 +5,20 @@ on:
     branches: [main2]
 
 jobs:
-  updateBranch:
-    name: Update staging branch
+  sync-branches:
     runs-on: ubuntu-latest
+    name: Syncing branches
     steps:
-    - uses: actions/checkout@main2
-    - uses: Embraser01/update-git-branch-action@v1.0.0
-      if: github.ref == 'refs/heads/main2'
-      with:
-        branch: main2
-        force: 1 # To push-force to the branch
-        githubToken: ${{ secrets.PAT_TOKEN }} # Github Token
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Opening pull request
+        id: pull
+        uses: tretuna/sync-branches@1.1.0
+        with:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          FROM_BRANCH: "main2"
+          TO_BRANCH: "main3"
