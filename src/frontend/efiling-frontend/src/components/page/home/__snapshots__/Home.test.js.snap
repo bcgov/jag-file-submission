@@ -194,7 +194,7 @@ exports[`Home Component matches the snapshot when user cso account does not exis
             The following information will be used to create your CSO account.
           </p>
           <div
-            class="display-box grey-background"
+            class="display-box "
           >
             <div
               class="display-icon"

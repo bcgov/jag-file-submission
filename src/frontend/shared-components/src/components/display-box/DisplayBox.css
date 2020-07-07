@@ -20,6 +20,27 @@
   background-color: rgba(225, 232, 242, 1);
 }
 
+.success-background {
+  background-color: #e7f7ea;
+  border-top: 3px solid;
+  border-bottom: 3px solid;
+  border-color: #2e8540;
+}
+
+.warning-background {
+  background-color: rgb(252, 247, 228);
+  border-top: 3px solid;
+  border-bottom: 3px solid;
+  border-color: rgb(252, 186, 25);
+}
+
+.danger-background {
+  background-color: #f8dee0;
+  border-top: 3px solid;
+  border-bottom: 3px solid;
+  border-color: #d8292f;
+}
+
 .react-icons {
   vertical-align: middle;
 }
