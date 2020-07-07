@@ -1,31 +1,42 @@
 package ca.bc.gov.open.jagefilingapi.qa.frontend.pages;
 
 import ca.bc.gov.open.jagefilingapi.qa.config.ReadConfig;
-import ca.bc.gov.open.jagefilingapi.qa.frontendutils.DriverClass;
-import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
-import org.openqa.selenium.By;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.io.IOException;
 
-public class LandingPage extends DriverClass {
+public class LandingPage {
 
     private final WebDriver driver;
-    ReadConfig readConfig;
-    private final By guidInputForm = By.id("textInputId");
-    private final By generateUrlButton = By.xpath("//*[@id='root']/div/main/div/div/div[2]/button");
-    private final By getErrorText = By.xpath("//*[@id='root']/div/main/div/div/p");
 
-    //Initializing the driver
+    Logger log = LogManager.getLogger(LandingPage.class);
+    ReadConfig readConfig;
+
+    //Page Objects:
+    @FindBy(id = "textInputId")
+    WebElement guidInputForm;
+
+    @FindBy(xpath = "//*[@id='root']/div/main/div/div/div[2]/button")
+    WebElement generateUrlButton;
+
+    @FindBy(xpath = "//*[@id='root']/div/main/div/div/p")
+    WebElement getErrorText;
+
+    //Initializing the driver:
     public LandingPage(WebDriver driver) {
         this.driver = driver;
+        PageFactory.initElements(driver, this);
     }
 
     //Actions:
     public String verifyLandingPageTitle() {
-        WebDriverWait wait = new WebDriverWait(driver, 40);
+        WebDriverWait wait = new WebDriverWait(driver, 30);
         wait.until(ExpectedConditions.titleIs("eFiling Demo Client"));
         log.info("Waiting for the page to load...");
         return driver.getTitle();
@@ -39,14 +50,14 @@ public class LandingPage extends DriverClass {
     }
 
     public void enterAccountGuid(String guid) {
-         driver.findElement(guidInputForm).sendKeys(guid);
+         guidInputForm.sendKeys(guid);
     }
 
     public void clickGenerateUrlButton() {
-        driver.findElement(generateUrlButton).click();
+        generateUrlButton.click();
     }
 
     public String getErrorMessageText() {
-        return driver.findElement(getErrorText).getText();
+        return getErrorText.getText();
     }
 }
