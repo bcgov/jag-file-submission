@@ -2,17 +2,23 @@
 
 exports[`Storyshots CSOStatus Account Exists 1`] = `
 <DocumentFragment>
-  <div>
-    <p>
-      Account exists! Proceed
-    </p>
-    <div>
-      <button
-        class="normal-white btn"
-        type="button"
-      >
-        Cancel
-      </button>
+  <div
+    class="page"
+  >
+    <div
+      class="content col-md-8"
+    >
+      <p>
+        Account exists! Proceed
+      </p>
+      <div>
+        <button
+          class="normal-white btn"
+          type="button"
+        >
+          Cancel
+        </button>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -20,17 +26,23 @@ exports[`Storyshots CSOStatus Account Exists 1`] = `
 
 exports[`Storyshots CSOStatus Account Exists Mobile 1`] = `
 <DocumentFragment>
-  <div>
-    <p>
-      Account exists! Proceed
-    </p>
-    <div>
-      <button
-        class="normal-white btn"
-        type="button"
-      >
-        Cancel
-      </button>
+  <div
+    class="page"
+  >
+    <div
+      class="content col-md-8"
+    >
+      <p>
+        Account exists! Proceed
+      </p>
+      <div>
+        <button
+          class="normal-white btn"
+          type="button"
+        >
+          Cancel
+        </button>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -38,17 +50,23 @@ exports[`Storyshots CSOStatus Account Exists Mobile 1`] = `
 
 exports[`Storyshots CSOStatus No Account Exists 1`] = `
 <DocumentFragment>
-  <div>
-    <p>
-      Account does not exist, form will be here
-    </p>
-    <div>
-      <button
-        class="normal-white btn"
-        type="button"
-      >
-        Cancel
-      </button>
+  <div
+    class="page"
+  >
+    <div
+      class="content col-md-8"
+    >
+      <p>
+        Account does not exist, form will be here
+      </p>
+      <div>
+        <button
+          class="normal-white btn"
+          type="button"
+        >
+          Cancel
+        </button>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -56,17 +74,23 @@ exports[`Storyshots CSOStatus No Account Exists 1`] = `
 
 exports[`Storyshots CSOStatus No Account Exists Mobile 1`] = `
 <DocumentFragment>
-  <div>
-    <p>
-      Account does not exist, form will be here
-    </p>
-    <div>
-      <button
-        class="normal-white btn"
-        type="button"
-      >
-        Cancel
-      </button>
+  <div
+    class="page"
+  >
+    <div
+      class="content col-md-8"
+    >
+      <p>
+        Account does not exist, form will be here
+      </p>
+      <div>
+        <button
+          class="normal-white btn"
+          type="button"
+        >
+          Cancel
+        </button>
+      </div>
     </div>
   </div>
 </DocumentFragment>

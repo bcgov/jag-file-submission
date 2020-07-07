@@ -19,6 +19,10 @@ main {
   padding-bottom: 30px;
 }
 
+.sidecard {
+  width: 100%;
+}
+
 @media (max-width: 576px) {
   .page {
     flex-direction: column;
