@@ -49,6 +49,14 @@ export const WithoutIconMobile = () => <DisplayBox element={table} />;
 
 export const WithIconMobile = () => <DisplayBox icon={icon} element={table} />;
 
+export const WithWarningMobile = () => (
+  <DisplayBox
+    styling={"warning-background"}
+    icon={icon}
+    element="This is a warning message!"
+  />
+);
+
 export const WithBlueBackgroundMobile = () => (
   <DisplayBox styling={"blue-background"} icon={icon} element={table} />
 );
@@ -63,4 +71,5 @@ const mobileViewport = {
 
 WithoutIconMobile.story = mobileViewport;
 WithIconMobile.story = mobileViewport;
+WithWarningMobile.story = mobileViewport;
 WithBlueBackgroundMobile.story = mobileViewport;
