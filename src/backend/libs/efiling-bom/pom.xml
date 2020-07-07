@@ -8,8 +8,6 @@
     <artifactId>efiling-bom</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <packaging>pom</packaging>
-
     <properties>
         <io.github.openfeign.opentracing.version>0.4.1</io.github.openfeign.opentracing.version>
         <io.opentracing.contrib.version>3.1.2</io.opentracing.contrib.version>
