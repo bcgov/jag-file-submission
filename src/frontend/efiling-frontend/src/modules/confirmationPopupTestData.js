@@ -34,7 +34,7 @@ const body = () => (
 
 export function getTestData() {
   const modal = {
-    show: true,
+    show: false,
     title: "title",
     body
   };

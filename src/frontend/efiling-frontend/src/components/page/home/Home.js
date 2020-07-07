@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import queryString from "query-string";
 import { useLocation } from "react-router-dom";
@@ -16,11 +16,22 @@ export const saveNavigationToSession = ({ cancel, success, error }) => {
   if (error.url) sessionStorage.setItem("errorUrl", error.url);
 };
 
+const addUserInfo = (bceID, firstName, middleName, lastName, emailAddress) => {
+  return {
+    bceID,
+    firstName,
+    middleName,
+    lastName,
+    emailAddress
+  };
+};
+
 // make call to submission/{id} to get the user and navigation details
 const checkCSOAccountStatus = (
   submissionId,
   setCsoAccountExists,
-  setShowLoader
+  setShowLoader,
+  setApplicantInfo
 ) => {
   axios
     .get(`/submission/${submissionId}`)
@@ -33,6 +44,17 @@ const checkCSOAccountStatus = (
         );
         if (csoAccountExists) setCsoAccountExists(true);
       }
+
+      const applicantInfo = addUserInfo(
+        userDetails.bceid,
+        userDetails.firstName,
+        userDetails.middleName,
+        userDetails.lastName,
+        userDetails.email
+      );
+
+      setApplicantInfo(applicantInfo);
+
       setShowLoader(false);
     })
     .catch(() => {});
@@ -41,14 +63,18 @@ const checkCSOAccountStatus = (
 export default function Home({ page: { header, confirmationPopup } }) {
   const [showLoader, setShowLoader] = useState(true);
   const [csoAccountExists, setCsoAccountExists] = useState(false);
+  const [applicantInfo, setApplicantInfo] = useState({});
   const location = useLocation();
   const queryParams = queryString.parse(location.search);
 
-  checkCSOAccountStatus(
-    queryParams.submissionId,
-    setCsoAccountExists,
-    setShowLoader
-  );
+  useEffect(() => {
+    checkCSOAccountStatus(
+      queryParams.submissionId,
+      setCsoAccountExists,
+      setShowLoader,
+      setApplicantInfo
+    );
+  }, [queryParams.submissionId]);
 
   const csoStatus = {
     accountExists: csoAccountExists,
@@ -62,7 +88,10 @@ export default function Home({ page: { header, confirmationPopup } }) {
         <div className="content col-md-12">
           {showLoader && <Loader page />}
           {!showLoader && !csoAccountExists && (
-            <CSOAccount confirmationPopup={confirmationPopup} />
+            <CSOAccount
+              confirmationPopup={confirmationPopup}
+              applicantInfo={applicantInfo}
+            />
           )}
           {!showLoader && csoAccountExists && (
             <CSOStatus csoStatus={csoStatus} />
