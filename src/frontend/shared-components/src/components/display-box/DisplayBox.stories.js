@@ -25,23 +25,23 @@ export const WithSuccess = () => (
   <DisplayBox
     styling={"success-background"}
     icon={icon}
-    element="This is a success!"
-  />
-);
-
-export const WithAlert = () => (
-  <DisplayBox
-    styling={"warning-background"}
-    icon={icon}
-    element="This is an alert!"
+    element="This is a success message!"
   />
 );
 
 export const WithWarning = () => (
   <DisplayBox
-    styling={"error-background"}
+    styling={"warning-background"}
     icon={icon}
-    element="This is a warning!"
+    element="This is a warning message!"
+  />
+);
+
+export const WithDanger = () => (
+  <DisplayBox
+    styling={"danger-background"}
+    icon={icon}
+    element="This is a danger message!"
   />
 );
 
