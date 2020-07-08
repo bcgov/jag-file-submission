@@ -4,7 +4,8 @@ import { Alert } from "./Alert";
 
 export default {
   title: "Alert",
-  component: Alert
+  component: Alert,
+  includeStories: []
 };
 
 export const Success = () => (
@@ -15,8 +16,12 @@ export const Warning = () => (
   <Alert type="warning" element="This is a warning message!" />
 );
 
-export const Danger = () => (
-  <Alert type="danger" element="This is a danger message!" />
+export const Error = () => (
+  <Alert type="error" element="This is an error message!" />
+);
+
+export const Info = () => (
+  <Alert type="info" element="This is an info message!" />
 );
 
 export const SuccessMobile = () => (

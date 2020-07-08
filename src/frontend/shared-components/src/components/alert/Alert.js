@@ -1,5 +1,5 @@
 import React from "react";
-import { MdError, MdCancel, MdCheckBox } from "react-icons/md";
+import { MdError, MdCancel, MdCheckBox, MdInfo } from "react-icons/md";
 import PropTypes from "prop-types";
 
 import { DisplayBox } from "../display-box/DisplayBox";
@@ -14,35 +14,35 @@ const warning = (
     <MdError size={32} />
   </div>
 );
-const danger = (
+const error = (
   <div style={{ color: "#D8292F" }}>
     <MdCancel size={32} />
   </div>
 );
+const info = <MdInfo size={32} />;
 
 export const Alert = ({ type, element }) => {
   return (
     <>
       {type === "success" && (
         <DisplayBox
-          styling={"success-background"}
+          styling="success-background"
           icon={success}
           element={element}
         />
       )}
       {type === "warning" && (
         <DisplayBox
-          styling={"warning-background"}
+          styling="warning-background"
           icon={warning}
           element={element}
         />
       )}
-      {type === "danger" && (
-        <DisplayBox
-          styling={"danger-background"}
-          icon={danger}
-          element={element}
-        />
+      {type === "error" && (
+        <DisplayBox styling="error-background" icon={error} element={element} />
+      )}
+      {type === "info" && (
+        <DisplayBox styling="info-background" icon={info} element={element} />
       )}
     </>
   );
