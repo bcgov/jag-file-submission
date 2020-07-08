@@ -4,10 +4,11 @@ import { Footer } from "./Footer";
 
 export default {
   title: "Footer",
-  component: Footer
+  component: Footer,
+  includeStories: []
 };
 
-export const Default = () => <Footer />;
+export const Basic = () => <Footer />;
 
 export const Mobile = () => <Footer />;
 
