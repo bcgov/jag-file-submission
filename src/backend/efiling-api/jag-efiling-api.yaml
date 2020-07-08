@@ -66,6 +66,27 @@ paths:
                 $ref: "#/components/schemas/GetSubmissionResponse"
         "404":
           description: Config not found
+  "/csoAccount":
+    post:
+      summary: Create a CSO account
+      operationId: CreateAccount
+      description: In order to create an account an account item of type BCEID is required in the accounts field.
+      tags:
+      - account
+      requestBody:
+        description: cso account details
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserDetails"
+      responses:
+        "201":
+          description: Account Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDetails"
 components:
   schemas:
     Account:
