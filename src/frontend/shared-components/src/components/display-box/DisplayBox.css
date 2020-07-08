@@ -34,11 +34,18 @@
   border-color: rgb(252, 186, 25);
 }
 
-.danger-background {
+.error-background {
   background-color: #f8dee0;
   border-top: 3px solid;
   border-bottom: 3px solid;
   border-color: #d8292f;
+}
+
+.info-background {
+  background-color: #d9eaf7;
+  border-top: 3px solid;
+  border-bottom: 3px solid;
+  border-color: #313132;
 }
 
 .react-icons {
