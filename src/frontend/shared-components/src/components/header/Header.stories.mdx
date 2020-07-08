@@ -1,0 +1,50 @@
+import { Meta, Story } from "@storybook/addon-docs/blocks";
+import { Header } from "./Header";
+import * as stories from "./Header.stories.js";
+
+<Meta title="Header" component={Header} />
+
+# Header
+
+Headers help people understand what the product or service is about while providing a consistent
+look, feel, and functionality across government sites.
+
+## When to Use
+
+This header must appear on all public-facing online B.C. Government content and services
+
+## When not to Use
+
+Your product or service is not owned by the Government of British Columbia
+
+## API
+
+| Prop   | Type   | Required | Description                              | Default |
+| ------ | ------ | -------- | ---------------------------------------- | ------- |
+| header | object | true     | object with details regarding the header |         |
+
+The header object has its own properties that need to be present within it, as shown below:
+
+| Prop    | Type   | Required | Description                   |
+| ------- | ------ | -------- | ----------------------------- |
+| name    | string | true     | label for the header          |
+| history | object | true     | javascript DOM history object |
+
+<br />
+
+## Basic Header
+
+Used for success messages, typically for after an action is successfully performed.
+
+<Story name="Basic Header">{stories.Basic()}</Story>
+
+```bash
+import { useHistory } from "react-router-dom";
+
+const header = {
+  name: "Header title",
+  history: useHistory()
+};
+
+<Header header={header} />;
+```
