@@ -15,10 +15,10 @@ export const DisplayBox = ({ styling, icon, element }) => {
 DisplayBox.propTypes = {
   styling: PropTypes.string,
   icon: PropTypes.element,
-  element: PropTypes.element.isRequired
+  element: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired
 };
 
 DisplayBox.defaultProps = {
-  styling: "grey-background",
+  styling: "",
   icon: null
 };

@@ -11,20 +11,21 @@ export default {
 const onClick = () => {};
 const label = "Button label";
 
-const normalBlueComponent = (
+export const NormalBlue = () => (
   <Button onClick={onClick} label={label} styling="normal-blue btn" />
 );
-const normalWhiteComponent = (
+
+export const NormalBlueMobile = () => (
+  <Button onClick={onClick} label={label} styling="normal-blue btn" />
+);
+
+export const NormalWhite = () => (
   <Button onClick={onClick} label={label} styling="normal-white btn" />
 );
 
-export const NormalBlue = () => normalBlueComponent;
-
-export const NormalBlueMobile = () => normalBlueComponent;
-
-export const NormalWhite = () => normalWhiteComponent;
-
-export const NormalWhiteMobile = () => normalWhiteComponent;
+export const NormalWhiteMobile = () => (
+  <Button onClick={onClick} label={label} styling="normal-white btn" />
+);
 
 const mobileViewport = {
   parameters: {

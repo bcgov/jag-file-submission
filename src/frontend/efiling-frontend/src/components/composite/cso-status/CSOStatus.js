@@ -7,16 +7,18 @@ export default function CSOStatus({
   csoStatus: { accountExists, confirmationPopup }
 }) {
   return (
-    <div>
-      {accountExists && <p>Account exists! Proceed</p>}
-      {!accountExists && <p>Account does not exist, form will be here</p>}
+    <div className="page">
+      <div className="content col-md-8">
+        {accountExists && <p>Account exists! Proceed</p>}
+        {!accountExists && <p>Account does not exist, form will be here</p>}
 
-      <ConfirmationPopup
-        modal={confirmationPopup.modal}
-        mainButton={confirmationPopup.mainButton}
-        confirmButton={confirmationPopup.confirmButton}
-        cancelButton={confirmationPopup.cancelButton}
-      />
+        <ConfirmationPopup
+          modal={confirmationPopup.modal}
+          mainButton={confirmationPopup.mainButton}
+          confirmButton={confirmationPopup.confirmButton}
+          cancelButton={confirmationPopup.cancelButton}
+        />
+      </div>
     </div>
   );
 }

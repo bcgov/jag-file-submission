@@ -14,7 +14,7 @@ export default {
 };
 
 const header = {
-  name: "eFiling Demo Client",
+  name: "E-File Submission",
   history: createMemoryHistory()
 };
 const confirmationPopup = getTestData();

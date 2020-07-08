@@ -84,20 +84,14 @@ export default function Home({ page: { header, confirmationPopup } }) {
   return (
     <main>
       <Header header={header} />
-      <div className="page">
-        <div className="content col-md-12">
-          {showLoader && <Loader page />}
-          {!showLoader && !csoAccountExists && (
-            <CSOAccount
-              confirmationPopup={confirmationPopup}
-              applicantInfo={applicantInfo}
-            />
-          )}
-          {!showLoader && csoAccountExists && (
-            <CSOStatus csoStatus={csoStatus} />
-          )}
-        </div>
-      </div>
+      {showLoader && <Loader page />}
+      {!showLoader && !csoAccountExists && (
+        <CSOAccount
+          confirmationPopup={confirmationPopup}
+          applicantInfo={applicantInfo}
+        />
+      )}
+      {!showLoader && csoAccountExists && <CSOStatus csoStatus={csoStatus} />}
       <Footer />
     </main>
   );

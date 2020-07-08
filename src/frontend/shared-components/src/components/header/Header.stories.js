@@ -16,11 +16,9 @@ const header = {
   history
 };
 
-const component = <Header header={header} />;
+export const Default = () => <Header header={header} />;
 
-export const Default = () => component;
-
-export const Mobile = () => component;
+export const Mobile = () => <Header header={header} />;
 
 Mobile.story = {
   parameters: {

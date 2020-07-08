@@ -13,7 +13,7 @@
 
     <groupId>ca.bc.gov.open.jag</groupId>
     <artifactId>efiling-submission-client</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.2.0</version>
     <name>efiling-submission-client</name>
     <description>Client for handling submission of filings to CSO</description>
 
@@ -48,7 +48,7 @@
             <dependency>
                 <groupId>ca.bc.gov.open.jag</groupId>
                 <artifactId>efiling-bom</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>0.2.0</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

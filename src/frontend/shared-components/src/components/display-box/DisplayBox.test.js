@@ -17,6 +17,12 @@ describe("DisplayBox Component", () => {
     testBasicSnapshot(<DisplayBox icon={icon} element={table} />);
   });
 
+  test("Matches the warning snapshot", () => {
+    testBasicSnapshot(
+      <DisplayBox styling={"warning-background"} icon={icon} element={table} />
+    );
+  });
+
   test("Matches the blue-background snapshot", () => {
     testBasicSnapshot(
       <DisplayBox styling={"blue-background"} icon={icon} element={table} />

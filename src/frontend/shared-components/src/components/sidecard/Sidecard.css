@@ -96,21 +96,29 @@ img {
   }
 }
 
+@media (max-width: 950px) {
+  .side-card-title {
+    padding-top: 0 !important;
+  }
+}
+
 .side-card-row {
   white-space: nowrap;
+  display: flex;
 }
 
 .side-card-icon {
   width: 35px;
   height: 35px;
   padding-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .round-icon-wrapper {
   vertical-align: top;
-  height: 48px;
+  height: 40px;
   line-height: 55px;
-  width: 48px;
+  width: 50px;
   border-radius: 48px;
   background-color: #7596c8;
   text-align: center;
@@ -122,8 +130,7 @@ img {
 .side-card-title {
   font-size: 20px;
   font-weight: Semi-bold;
-  display: inline-block;
   width: 100%;
   white-space: normal;
-  padding-top: 12px;
+  padding-top: 10px;
 }
