@@ -70,7 +70,7 @@ paths:
     post:
       summary: Create a CSO account
       operationId: CreateAccount
-      description: In order to create an account an account item of type BCEID is required in the accounts field.
+      description: In order to create an account, an item with type BCEID is required in the accounts field.
       tags:
       - account
       requestBody:
