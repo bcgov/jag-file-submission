@@ -13,7 +13,7 @@
 
     <groupId>ca.bc.gov.open.jag</groupId>
     <artifactId>efiling-status-client</artifactId>
-    <version>0.2.0</version>
+    <version>0.3.0-SNAPSHOT</version>
     <name>efiling-status-client</name>
     <description>Client for status for CSO efiling submissions</description>
 
@@ -49,7 +49,7 @@
             <dependency>
                 <groupId>ca.bc.gov.open.jag</groupId>
                 <artifactId>efiling-bom</artifactId>
-                <version>0.2.0</version>
+                <version>0.3.0-SNAPSHOT</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
