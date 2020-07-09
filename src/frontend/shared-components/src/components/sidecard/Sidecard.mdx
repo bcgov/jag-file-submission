@@ -1,6 +1,5 @@
 import { Meta, Story } from "@storybook/addon-docs/blocks";
 import { Sidecard } from "./Sidecard";
-import * as stories from "./Sidecard.stories.js";
 
 <Meta title="Sidecard" component={Sidecard} />
 
@@ -48,7 +47,7 @@ The sidecard object has its own properties that need to be present within it, as
 
 Used to provide useful additional information to compliment content present on the screen.
 
-<Story name="Information (Blue) Sidecard">{stories.Blue()}</Story>
+<Story name="Information (Blue) Sidecard" id="sidecard--blue"></Story>
 
 ```bash
 const sideCard = {
@@ -66,7 +65,7 @@ const sideCard = {
 
 Used to typically provide info about a collection notice, or similar information.
 
-<Story name="Notice (Grey) Sidecard">{stories.Grey()}</Story>
+<Story name="Notice (Grey) Sidecard" id="sidecard--grey"></Story>
 
 ```bash
 const sideCard = {{ ...sideCard, type: "grey" }};
@@ -78,7 +77,7 @@ const sideCard = {{ ...sideCard, type: "grey" }};
 
 Used to provide useful additional information to compliment content present on the screen.
 
-<Story name="Information (Blue grey) Sidecard">{stories.BlueGrey()}</Story>
+<Story name="Information (Blue grey) Sidecard" id="sidecard--blue-grey"></Story>
 
 ```bash
 const sideCard = {{ ...sideCard, type: "bluegrey" }};
@@ -90,7 +89,7 @@ const sideCard = {{ ...sideCard, type: "bluegrey" }};
 
 Can be used with any of the above types of sidecards, to add an icon to the heading.
 
-<Story name="Sidecard with Icon">{stories.WithIcon()}</Story>
+<Story name="Sidecard with Icon" id="sidecard--with-icon"></Story>
 
 ```bash
 const sideCard = {{ ...sideCard, icon: <FaIdCard className="side-card-icon" /> }}
