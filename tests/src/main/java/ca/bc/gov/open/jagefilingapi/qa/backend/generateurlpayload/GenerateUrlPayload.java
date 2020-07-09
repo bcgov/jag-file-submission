@@ -12,7 +12,7 @@ public class GenerateUrlPayload {
         Cancel cancel = new Cancel(STRING);
         Headers headers = new Headers(STRING, STRING, STRING);
         SubmissionAccess submissionAccess = new SubmissionAccess(STRING,"GET", headers );
-        DocumentProperties documentProperties = new DocumentProperties(STRING, STRING, submissionAccess);
+        DocumentProperties documentProperties = new DocumentProperties("DFCL", STRING, submissionAccess);
         Navigation navigation = new Navigation(success,error,cancel);
 
         Payload payload = new Payload(documentProperties, navigation);

@@ -18,7 +18,7 @@ public class EFileSubmissionPage {
     Logger log = LogManager.getLogger(EFileSubmissionPage.class);
 
     //Page Objects:
-    @FindBy(xpath = "//*[@id='root']/div/main/div/div/div/div/button")
+    @FindBy(xpath = "//*[@id='root']/div/main/div/div/div/button")
     WebElement cancelButton;
 
     @FindBy(css = "body > div.fade.modal.show > div > div > div.mx-auto.mb-5 > div:nth-child(1) > button")

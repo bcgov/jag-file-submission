@@ -36,6 +36,10 @@ public class TestUtil {
         return new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON).build();
     }
 
+    public static ResponseSpecification errorResponseSpecification() {
+        return new ResponseSpecBuilder().expectStatusCode(403).expectContentType(ContentType.JSON).build();
+    }
+
     public static String getJsonPath(Response response, String key) {
         String resp = response.asString();
         JsonPath jsonPath = new JsonPath(resp);
