@@ -1,12 +1,17 @@
 import React from "react";
 import { createMemoryHistory } from "history";
+import mdx from "./Header.mdx";
 
 import { Header } from "./Header";
 
 export default {
   title: "Header",
   component: Header,
-  includeStories: []
+  parameters: {
+    docs: {
+      page: mdx
+    }
+  }
 };
 
 const history = createMemoryHistory();

@@ -1,6 +1,87 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Header Basic Header 1`] = `
+exports[`Storyshots Header Basic 1`] = `
+<Header
+  header={
+    Object {
+      "history": Object {
+        "action": "POP",
+        "block": [Function],
+        "canGo": [Function],
+        "createHref": [Function],
+        "entries": Array [
+          Object {
+            "hash": "",
+            "key": "testkey",
+            "pathname": "/",
+            "search": "",
+            "state": undefined,
+          },
+        ],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "index": 0,
+        "length": 1,
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "key": "testkey",
+          "pathname": "/",
+          "search": "",
+          "state": undefined,
+        },
+        "push": [Function],
+        "replace": [Function],
+      },
+      "name": "Header title",
+    }
+  }
+>
+  <header>
+    <nav
+      className="container-fluid navbar navbar-expand-lg navbar-dark"
+    >
+      <div
+        aria-labelledby="title"
+        className="navbar-brand pointer"
+      />
+      <img
+        alt="B.C. Government Logo"
+        className="img-fluid d-none d-md-block pointer"
+        height="44"
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        role="presentation"
+        src="undefined/images/bcid-logo-rev-en.svg"
+        width={181}
+      />
+      <img
+        alt="B.C. Government Logo"
+        className="img-fluid d-md-none pointer"
+        height="44"
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        role="presentation"
+        src="undefined/images/bcid-symbol-rev.svg"
+        width={64}
+      />
+      <div
+        aria-labelledby="title"
+        className="pointer navbar-brand nav-item nav-link"
+      />
+      <div
+        className="navbar-brand"
+        id="title"
+      >
+        Header title
+      </div>
+    </nav>
+  </header>
+</Header>
+`;
+
+exports[`Storyshots Header Mobile 1`] = `
 <Header
   header={
     Object {
