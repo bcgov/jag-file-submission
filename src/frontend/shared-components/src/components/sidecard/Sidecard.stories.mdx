@@ -1,0 +1,99 @@
+import { Meta, Story } from "@storybook/addon-docs/blocks";
+import { Sidecard } from "./Sidecard";
+import * as stories from "./Sidecard.stories.js";
+
+<Meta title="Sidecard" component={Sidecard} />
+
+# Sidecard
+
+Sidecards are an excerpt of text that has been pulled out and used as a visual clue
+to draw the eye to the text. They are used to help direct a user's attention
+to important pieces of information.
+
+## When to Use
+
+Differentiating a block of text from the content that surrounds it, for example:
+
+- Important snippets of information
+- Quotes
+- Examples
+- Additional information about the page
+
+## When not to Use
+
+- Warning notifications
+- Page alerts
+
+## API
+
+| Prop     | Type   | Required | Description                                | Default |
+| -------- | ------ | -------- | ------------------------------------------ | ------- |
+| sidecard | object | true     | object with details regarding the sidecard |         |
+
+The sidecard object has its own properties that need to be present within it, as shown below:
+
+| Prop      | Type          | Required | Description                                                                                       | Default |
+| --------- | ------------- | -------- | ------------------------------------------------------------------------------------------------- | ------- |
+| heading   | string/object | true     | text or html (jsx) code representing the label you wish to display as the heading of the sidecard |         |
+| content   | array         | true     | list of strings for content to be present in the sidecard                                         |         |
+| type      | string        | true     | represents the type of sidecard you wish to render                                                |         |
+| image     | string        | false    | url to your image to display                                                                      |         |
+| imageLink | string        | false    | url that your image links to on click                                                             |         |
+| isWide    | boolean       | false    | indicates if your sidecard is extra wide                                                          | false   |
+| icon      | element       | false    | html (jsx) representing the icon you wish to display                                              |         |
+
+<br />
+
+## Information (Blue) Sidecard
+
+Used to provide useful additional information to compliment content present on the screen.
+
+<Story name="Information (Blue) Sidecard">{stories.Blue()}</Story>
+
+```bash
+const sideCard = {
+  heading: "Heading",
+  content: [
+    "This is where I put my content for the sidecard"
+  ],
+  type: "blue"
+};
+
+<Sidecard sideCard={sideCard} />;
+```
+
+## Notice (Grey) Sidecard
+
+Used to typically provide info about a collection notice, or similar information.
+
+<Story name="Notice (Grey) Sidecard">{stories.Grey()}</Story>
+
+```bash
+const sideCard = {{ ...sideCard, type: "grey" }};
+
+<Sidecard sideCard={sideCard} />;
+```
+
+## Information (Blue grey) Sidecard
+
+Used to provide useful additional information to compliment content present on the screen.
+
+<Story name="Information (Blue grey) Sidecard">{stories.BlueGrey()}</Story>
+
+```bash
+const sideCard = {{ ...sideCard, type: "bluegrey" }};
+
+<Sidecard sideCard={sideCard} />;
+```
+
+## Sidecard with Icon
+
+Can be used with any of the above types of sidecards, to add an icon to the heading.
+
+<Story name="Sidecard with Icon">{stories.WithIcon()}</Story>
+
+```bash
+const sideCard = {{ ...sideCard, icon: <FaIdCard className="side-card-icon" /> }}
+
+<Sidecard sideCard={sideCard} />;
+```
