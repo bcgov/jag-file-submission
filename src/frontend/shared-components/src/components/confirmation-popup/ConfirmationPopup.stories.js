@@ -5,8 +5,9 @@ import { State, Store } from "@sambego/storybook-state";
 import ConfirmationPopup from "./ConfirmationPopup";
 
 export default {
-  title: "ConfirmationPopup",
-  component: ConfirmationPopup
+  title: "Confirmation Popup",
+  component: ConfirmationPopup,
+  includeStories: []
 };
 
 const store = new Store({
@@ -32,8 +33,8 @@ const modal = {
 const onButtonClick = () => store.set({ show: !store.get("show") });
 
 const mainButton = {
-  label: "main label",
-  styling: "normal-blue btn",
+  label: "Cancel",
+  styling: "normal-white btn",
   onClick: onButtonClick
 };
 
