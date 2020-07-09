@@ -73,6 +73,14 @@ paths:
       description: In order to create an account, an item with type BCEID is required in the accounts field.
       tags:
       - account
+      parameters:
+        - in: header
+          name: X-Auth-UserId
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: Authenticated user id
       requestBody:
         description: cso account details
         required: true
