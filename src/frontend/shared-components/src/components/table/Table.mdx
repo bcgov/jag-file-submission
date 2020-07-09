@@ -1,0 +1,65 @@
+import { Meta, Story } from "@storybook/addon-docs/blocks";
+import { Table } from "./Table";
+
+<Meta title="Table" component={Table} />
+
+# Table
+
+The table lets you aggregate a huge amount of data and present it in the clear and orderly way.
+
+## API
+
+| Prop     | Type             | Required | Description                                             | Default |
+| -------- | ---------------- | -------- | ------------------------------------------------------- | ------- |
+| heading  | string/object    | false    | value representing heading to display within table      | ""      |
+| elements | array of objects | false    | content of the table                                    | []      |
+| styling  | string           | false    | represents the styling you wish to apply for your table | ""      |
+
+The elements array contains objects of the following structure:
+
+| Prop  | Type          | Required | Description                                  | Default |
+| ----- | ------------- | -------- | -------------------------------------------- | ------- |
+| name  | string        | true     | the key of the key:value pair in the table   |         |
+| value | string/number | true     | the value of the key:value pair in the table |         |
+
+<br />
+
+## Without Header
+
+A table without a header.
+
+<Story name="Without Header" id="table--without-header"></Story>
+
+```bash
+const elements = [
+  { name: "BCeID", value: "bobross42" },
+  {
+    name: "Last Name",
+    value: "Ross"
+  },
+  { name: "First Name", value: "Bob" },
+  { name: "Email Address", value: "bob.ross@example.com" }
+];
+
+<Table elements={elements} />;
+```
+
+## With Header
+
+A table with a header.
+
+<Story name="With Header" id="table--with-header"></Story>
+
+```bash
+<Table heading="BCeID Info" elements={elements} />;
+```
+
+## With Blue Stripe
+
+A table with blue stripes.
+
+<Story name="With Blue Stripe" id="table--with-blue-stripe"></Story>
+
+```bash
+<Table elements={elements} styling="blue-stripe" />
+```

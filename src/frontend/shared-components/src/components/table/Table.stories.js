@@ -1,11 +1,17 @@
 import React from "react";
+import mdx from "./Table.mdx";
 
 import { Table } from "./Table";
 import { getTableElementsTestData } from "../../modules/tableTestData";
 
 export default {
   title: "Table",
-  component: Table
+  component: Table,
+  parameters: {
+    docs: {
+      page: mdx
+    }
+  }
 };
 
 const tableData = getTableElementsTestData();
@@ -15,16 +21,11 @@ export const WithHeader = () => <Table heading={header} elements={tableData} />;
 
 export const WithoutHeader = () => <Table elements={tableData} />;
 
-export const WithBlueStripeStyle = () => (
+export const WithBlueStripe = () => (
   <Table elements={tableData} styling="blue-stripe" />
 );
 
-export const WithHeaderMobile = () => (
-  <Table heading={header} elements={tableData} />
-);
-export const WithoutHeaderMobile = () => (
-  <Table elements={tableData} styling="blue-stripe" />
-);
+export const Mobile = () => <Table heading={header} elements={tableData} />;
 
 const mobileViewport = {
   parameters: {
@@ -34,5 +35,4 @@ const mobileViewport = {
   }
 };
 
-WithHeaderMobile.story = mobileViewport;
-WithoutHeaderMobile.story = mobileViewport;
+Mobile.story = mobileViewport;
