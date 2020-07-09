@@ -106,20 +106,18 @@ services:
       DB_VENDOR: H2
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
-      KEYCLOAK_IMPORT: /tmp/keycloak-local-realm.json 
+      KEYCLOAK_IMPORT: /tmp/realm-export.json
+      #KEYCLOAK_IMPORT: /tmp/keycloak-local-realm.json
       # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
       #JDBC_PARAMS: "ssl=true"
     volumes:
-      - ./.settings/realm-jag-efiling.json:/tmp/keycloak-local-realm.json
-      - ./.settings/keycloak-local-user.sh:/tmp/keycloak-local-user.sh
+      - ./.settings/realm-export.json:/tmp/realm-export.json
     ports:
       - 8081:8080
 
 volumes:
   data-redis:
   data-rabbit:
-  postgres_data:
-    driver: local
 
 networks:
   fisu-net:
