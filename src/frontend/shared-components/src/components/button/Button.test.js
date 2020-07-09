@@ -6,11 +6,31 @@ import { Button } from "./Button";
 describe("Button Component", () => {
   const onClick = jest.fn();
   const label = "Button label";
-  const styling = "normal-blue btn";
 
-  test("Button matches the snapshot", () => {
+  test("Matches the 'primary' snapshot", () => {
     const buttonComponent = (
-      <Button onClick={onClick} label={label} styling={styling} />
+      <Button onClick={onClick} label={label} styling="normal-blue btn" />
+    );
+
+    testBasicSnapshot(buttonComponent);
+  });
+
+  test("Matches the 'secondary' snapshot", () => {
+    const buttonComponent = (
+      <Button onClick={onClick} label={label} styling="normal-white btn" />
+    );
+
+    testBasicSnapshot(buttonComponent);
+  });
+
+  test("Matches the 'disabled' snapshot", () => {
+    const buttonComponent = (
+      <Button
+        onClick={onClick}
+        label={label}
+        styling="normal-blue btn"
+        disabled
+      />
     );
 
     testBasicSnapshot(buttonComponent);

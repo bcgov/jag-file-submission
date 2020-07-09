@@ -1,9 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Button Normal Blue 1`] = `
+exports[`Storyshots Button Disabled 1`] = `
+<Button
+  disabled={true}
+  label="Disabled"
+  onClick={[Function]}
+  styling="normal-blue btn"
+>
+  <div>
+    <button
+      className="normal-blue btn"
+      disabled={true}
+      onClick={[Function]}
+      type="button"
+    >
+      Disabled
+    </button>
+  </div>
+</Button>
+`;
+
+exports[`Storyshots Button Primary 1`] = `
 <Button
   disabled={false}
-  label="Button label"
+  label="Submit"
   onClick={[Function]}
   styling="normal-blue btn"
 >
@@ -14,36 +34,16 @@ exports[`Storyshots Button Normal Blue 1`] = `
       onClick={[Function]}
       type="button"
     >
-      Button label
+      Submit
     </button>
   </div>
 </Button>
 `;
 
-exports[`Storyshots Button Normal Blue Mobile 1`] = `
+exports[`Storyshots Button Secondary 1`] = `
 <Button
   disabled={false}
-  label="Button label"
-  onClick={[Function]}
-  styling="normal-blue btn"
->
-  <div>
-    <button
-      className="normal-blue btn"
-      disabled={false}
-      onClick={[Function]}
-      type="button"
-    >
-      Button label
-    </button>
-  </div>
-</Button>
-`;
-
-exports[`Storyshots Button Normal White 1`] = `
-<Button
-  disabled={false}
-  label="Button label"
+  label="Cancel"
   onClick={[Function]}
   styling="normal-white btn"
 >
@@ -54,27 +54,7 @@ exports[`Storyshots Button Normal White 1`] = `
       onClick={[Function]}
       type="button"
     >
-      Button label
-    </button>
-  </div>
-</Button>
-`;
-
-exports[`Storyshots Button Normal White Mobile 1`] = `
-<Button
-  disabled={false}
-  label="Button label"
-  onClick={[Function]}
-  styling="normal-white btn"
->
-  <div>
-    <button
-      className="normal-white btn"
-      disabled={false}
-      onClick={[Function]}
-      type="button"
-    >
-      Button label
+      Cancel
     </button>
   </div>
 </Button>

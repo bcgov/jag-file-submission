@@ -16,9 +16,13 @@ describe("Alert Component", () => {
     );
   });
 
-  test("Matches the 'danger' snapshot", () => {
+  test("Matches the 'error' snapshot", () => {
     testBasicSnapshot(
-      <Alert type="danger" element="This is a danger message!" />
+      <Alert type="error" element="This is an error message!" />
     );
+  });
+
+  test("Matches the 'info' snapshot", () => {
+    testBasicSnapshot(<Alert type="info" element="This is an info message!" />);
   });
 });

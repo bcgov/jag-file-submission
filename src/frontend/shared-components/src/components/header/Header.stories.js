@@ -5,18 +5,19 @@ import { Header } from "./Header";
 
 export default {
   title: "Header",
-  component: Header
+  component: Header,
+  includeStories: []
 };
 
 const history = createMemoryHistory();
 history.entries[0].key = "testkey"; // set mock test key so storyshot is deterministic
 
 const header = {
-  name: "File Submission",
+  name: "Header title",
   history
 };
 
-export const Default = () => <Header header={header} />;
+export const Basic = () => <Header header={header} />;
 
 export const Mobile = () => <Header header={header} />;
 

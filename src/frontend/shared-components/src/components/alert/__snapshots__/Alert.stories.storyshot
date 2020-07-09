@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Alert Danger 1`] = `
+exports[`Storyshots Alert Error 1`] = `
 <Alert
-  element="This is a danger message!"
-  type="danger"
+  element="This is an error message!"
+  type="error"
 >
   <DisplayBox
-    element="This is a danger message!"
+    element="This is an error message!"
     icon={
       <div
         style={
@@ -20,10 +20,10 @@ exports[`Storyshots Alert Danger 1`] = `
         />
       </div>
     }
-    styling="danger-background"
+    styling="error-background"
   >
     <div
-      className="display-box danger-background"
+      className="display-box error-background"
     >
       <div
         className="display-icon"
@@ -73,7 +73,71 @@ exports[`Storyshots Alert Danger 1`] = `
       <div
         className="display-element"
       >
-        This is a danger message!
+        This is an error message!
+      </div>
+    </div>
+  </DisplayBox>
+</Alert>
+`;
+
+exports[`Storyshots Alert Info 1`] = `
+<Alert
+  element="This is an info message!"
+  type="info"
+>
+  <DisplayBox
+    element="This is an info message!"
+    icon={
+      <MdInfo
+        size={32}
+      />
+    }
+    styling="info-background"
+  >
+    <div
+      className="display-box info-background"
+    >
+      <div
+        className="display-icon"
+      >
+        <MdInfo
+          size={32}
+        >
+          <IconBase
+            attr={
+              Object {
+                "viewBox": "0 0 24 24",
+              }
+            }
+            size={32}
+          >
+            <svg
+              fill="currentColor"
+              height={32}
+              size={32}
+              stroke="currentColor"
+              strokeWidth="0"
+              style={
+                Object {
+                  "color": undefined,
+                }
+              }
+              viewBox="0 0 24 24"
+              width={32}
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                key="0"
+              />
+            </svg>
+          </IconBase>
+        </MdInfo>
+      </div>
+      <div
+        className="display-element"
+      >
+        This is an info message!
       </div>
     </div>
   </DisplayBox>
@@ -81,86 +145,6 @@ exports[`Storyshots Alert Danger 1`] = `
 `;
 
 exports[`Storyshots Alert Success 1`] = `
-<Alert
-  element="This is a success message!"
-  type="success"
->
-  <DisplayBox
-    element="This is a success message!"
-    icon={
-      <div
-        style={
-          Object {
-            "color": "#2E8540",
-          }
-        }
-      >
-        <MdCheckBox
-          size={32}
-        />
-      </div>
-    }
-    styling="success-background"
-  >
-    <div
-      className="display-box success-background"
-    >
-      <div
-        className="display-icon"
-      >
-        <div
-          style={
-            Object {
-              "color": "#2E8540",
-            }
-          }
-        >
-          <MdCheckBox
-            size={32}
-          >
-            <IconBase
-              attr={
-                Object {
-                  "viewBox": "0 0 24 24",
-                }
-              }
-              size={32}
-            >
-              <svg
-                fill="currentColor"
-                height={32}
-                size={32}
-                stroke="currentColor"
-                strokeWidth="0"
-                style={
-                  Object {
-                    "color": undefined,
-                  }
-                }
-                viewBox="0 0 24 24"
-                width={32}
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
-                  key="0"
-                />
-              </svg>
-            </IconBase>
-          </MdCheckBox>
-        </div>
-      </div>
-      <div
-        className="display-element"
-      >
-        This is a success message!
-      </div>
-    </div>
-  </DisplayBox>
-</Alert>
-`;
-
-exports[`Storyshots Alert Success Mobile 1`] = `
 <Alert
   element="This is a success message!"
   type="success"

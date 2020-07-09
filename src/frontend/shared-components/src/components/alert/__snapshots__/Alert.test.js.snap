@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Alert Component Matches the 'danger' snapshot 1`] = `
+exports[`Alert Component Matches the 'error' snapshot 1`] = `
 <div
-  className="display-box danger-background"
+  className="display-box error-background"
 >
   <div
     className="display-icon"
@@ -38,7 +38,42 @@ exports[`Alert Component Matches the 'danger' snapshot 1`] = `
   <div
     className="display-element"
   >
-    This is a danger message!
+    This is an error message!
+  </div>
+</div>
+`;
+
+exports[`Alert Component Matches the 'info' snapshot 1`] = `
+<div
+  className="display-box info-background"
+>
+  <div
+    className="display-icon"
+  >
+    <svg
+      fill="currentColor"
+      height={32}
+      size={32}
+      stroke="currentColor"
+      strokeWidth="0"
+      style={
+        Object {
+          "color": undefined,
+        }
+      }
+      viewBox="0 0 24 24"
+      width={32}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+      />
+    </svg>
+  </div>
+  <div
+    className="display-element"
+  >
+    This is an info message!
   </div>
 </div>
 `;
