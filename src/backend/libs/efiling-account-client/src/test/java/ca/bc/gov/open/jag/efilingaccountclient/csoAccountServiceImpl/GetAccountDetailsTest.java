@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingaccountclient;
+package ca.bc.gov.open.jag.efilingaccountclient.csoAccountServiceImpl;
 
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RegisteredRole;
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RoleRegistry;
@@ -8,6 +8,8 @@ import ca.bc.gov.ag.csows.accounts.AccountFacade;
 import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
 import ca.bc.gov.ag.csows.accounts.ClientProfile;
 import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
+import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountServiceImpl;
+import ca.bc.gov.open.jag.efilingaccountclient.CsoHelpers;
 import ca.bc.gov.open.jag.efilingaccountclient.mappers.AccountDetailsMapper;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.CSOHasMultipleAccountException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
@@ -26,7 +28,8 @@ import java.util.UUID;
 import static org.mockito.ArgumentMatchers.any;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class CsoAccountServiceImplTest {
+@DisplayName("Get Account Details Test Suite")
+public class GetAccountDetailsTest {
 
     private static final UUID USER_GUID_NO_ROLE = UUID.randomUUID();
     private static final UUID USER_GUID_WITH_FILE_ROLE = UUID.randomUUID();
@@ -55,7 +58,7 @@ public class CsoAccountServiceImplTest {
     BCeIDService bCeIDService;
 
     @Mock
-    BCeIDServiceSoap bCeIDServiceSoap;
+    BCeIDServiceSoap bCeIDServiceSoapMock;
 
     @Mock
     AccountDetailsMapper accountDetailsMapperMock;
@@ -68,7 +71,7 @@ public class CsoAccountServiceImplTest {
         initRoleRegistryMocks();
         initBceIdAccountMocks();
 
-        sut = new CsoAccountServiceImpl(accountFacadeBeanMock, roleRegistryPortTypeMock, bCeIDServiceSoap, accountDetailsMapperMock);
+        sut = new CsoAccountServiceImpl(accountFacadeBeanMock, roleRegistryPortTypeMock, bCeIDServiceSoapMock, accountDetailsMapperMock);
     }
 
     private void initAccountFacadeMocks() throws NestedEjbException_Exception {
@@ -144,8 +147,8 @@ public class CsoAccountServiceImplTest {
         bCeIDResponse.setCode(ResponseCode.SUCCESS);
         bCeIDResponse.setAccount(bCeIDAccount);
 
-        Mockito.when(bCeIDService.getBCeIDServiceSoap()).thenReturn(bCeIDServiceSoap);
-        Mockito.when(bCeIDServiceSoap.getAccountDetail(any())).thenReturn(bCeIDResponse);
+        Mockito.when(bCeIDService.getBCeIDServiceSoap()).thenReturn(bCeIDServiceSoapMock);
+        Mockito.when(bCeIDServiceSoapMock.getAccountDetail(any())).thenReturn(bCeIDResponse);
 
         AccountDetails accountDetailsWithNoCso = new AccountDetails(BigDecimal.ZERO, BigDecimal.ZERO, false, "firstName", "lastName", "middleName","email");
         Mockito.when(accountDetailsMapperMock.toAccountDetails(Mockito.any())).thenReturn(accountDetailsWithNoCso);

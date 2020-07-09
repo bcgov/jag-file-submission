@@ -2,7 +2,9 @@ package ca.bc.gov.open.jag.efiling.demo;
 
 
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.CreateAccountRequest;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
+import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -29,5 +31,10 @@ public class EfilingAccountServiceDemoImpl implements EfilingAccountService {
 
     public AccountDetails getAccountDetails(UUID userGuid, String bceidAccountType) {
         return csoAccounts.get(userGuid);
+    }
+
+    @Override
+    public AccountDetails createAccount(CreateAccountRequest createAccountRequest) {
+        throw new NotImplementedException();
     }
 }

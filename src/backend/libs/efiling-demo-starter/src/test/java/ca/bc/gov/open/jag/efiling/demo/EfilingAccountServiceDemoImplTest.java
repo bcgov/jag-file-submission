@@ -1,6 +1,8 @@
 package ca.bc.gov.open.jag.efiling.demo;
 
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.CreateAccountRequest;
+import org.apache.commons.lang3.NotImplementedException;
 import org.junit.jupiter.api.*;
 
 import java.math.BigDecimal;
@@ -42,4 +44,11 @@ public class EfilingAccountServiceDemoImplTest {
         Assertions.assertEquals(false, actual.isFileRolePresent());
     }
 
+    @Test
+    @DisplayName("Not Implemented!")
+    public void notImplemented() {
+
+        Assertions.assertThrows(NotImplementedException.class, () -> sut.createAccount(CreateAccountRequest.builder().create()));
+
+    }
 }

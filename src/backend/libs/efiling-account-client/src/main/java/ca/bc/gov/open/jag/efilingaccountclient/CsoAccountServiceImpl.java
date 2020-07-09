@@ -10,8 +10,10 @@ import ca.bc.gov.open.jag.efilingaccountclient.mappers.AccountDetailsMapper;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.CSOHasMultipleAccountException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.CreateAccountRequest;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bceid.webservices.client.v9.*;
+import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.*;
 
@@ -56,6 +58,11 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         }
 
         return accountDetails;
+    }
+
+    @Override
+    public AccountDetails createAccount(CreateAccountRequest createAccountRequest) {
+        throw new NotImplementedException();
     }
 
     private AccountDetails getCsoDetails(String userGuid)  {
