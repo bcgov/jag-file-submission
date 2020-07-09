@@ -5,7 +5,8 @@ public enum APIResources {
     GENERATE_URL_API("/submission/generateUrl"),
     INCORRECT_GENERATE_URL_API("/submissions/generateUrl"),
     SUBMISSION("/submission/"),
-    EFILING_URL("http://localhost:3000/efiling");
+    EFILING_URL("http://localhost:3000/efiling"),
+    CREATE_CSO_ACCOUNT_API("/csoAccount");
 
     private final String resource;
 
