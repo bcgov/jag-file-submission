@@ -6,7 +6,6 @@ import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountServiceImpl;
 import ca.bc.gov.open.jag.efilingaccountclient.mappers.AccountDetailsMapper;
 import ca.bc.gov.open.jag.efilingcommons.model.CreateAccountRequest;
 import ca.bceid.webservices.client.v9.BCeIDServiceSoap;
-import org.apache.commons.lang3.NotImplementedException;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -39,10 +38,10 @@ public class CreateAccountTest {
     }
 
     @Test
-    @DisplayName("Not Implemented!")
+    @DisplayName("No Account Details")
     public void notImplemented() {
 
-        Assertions.assertThrows(NotImplementedException.class, () -> sut.createAccount(CreateAccountRequest.builder().create()));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.createAccount(CreateAccountRequest.builder().create()));
 
     }
 
