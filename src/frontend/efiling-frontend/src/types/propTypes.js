@@ -32,6 +32,6 @@ export const propTypes = {
     firstName: PropTypes.string.isRequired,
     middleName: PropTypes.string,
     lastName: PropTypes.string.isRequired,
-    emailAddress: PropTypes.string.isRequired
+    email: PropTypes.string.isRequired
   }).isRequired
 };

@@ -1,5 +1,6 @@
 /* eslint-disable react/require-default-props */
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { MdPerson } from "react-icons/md";
 
 import ConfirmationPopup, {
@@ -15,17 +16,15 @@ import { getSidecardData } from "../../../modules/sidecardData";
 import { translateApplicantInfo } from "../../../modules/translateApplicantInfo";
 import { propTypes } from "../../../types/propTypes";
 
-const continueButton = {
-  label: "Create CSO Account",
-  styling: "normal-blue btn",
-  onClick: () => {}
-};
-
 const sideCard = getSidecardData().aboutCso;
 
 const content = getContent();
 
-export default function CSOAccount({ confirmationPopup, applicantInfo }) {
+export default function CSOAccount({
+  confirmationPopup,
+  applicantInfo,
+  setCsoAccountExists
+}) {
   const [termsAccepted, acceptTerms] = useState(false);
   const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
 
@@ -36,6 +35,23 @@ export default function CSOAccount({ confirmationPopup, applicantInfo }) {
       setContinueBtnEnabled(false);
     }
   }, [termsAccepted]);
+
+  const createCSOAccount = applicantInfo => {
+    console.log(applicantInfo);
+    axios
+      .post(`/csoAccount`, applicantInfo)
+      .then(({ data }) => {
+        console.log(data);
+        setCsoAccountExists(true);
+      })
+      .catch(() => {});
+  };
+
+  const continueButton = {
+    label: "Create CSO Account",
+    styling: "normal-blue btn",
+    onClick: () => createCSOAccount(applicantInfo)
+  };
 
   const icon = (
     <div style={{ color: "rgb(252,186,25)" }}>

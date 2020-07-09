@@ -16,13 +16,13 @@ export const saveNavigationToSession = ({ cancel, success, error }) => {
   if (error.url) sessionStorage.setItem("errorUrl", error.url);
 };
 
-const addUserInfo = (bceID, firstName, middleName, lastName, emailAddress) => {
+const addUserInfo = (bceID, firstName, middleName, lastName, email) => {
   return {
     bceID,
     firstName,
     middleName,
     lastName,
-    emailAddress
+    email
   };
 };
 
@@ -89,6 +89,7 @@ export default function Home({ page: { header, confirmationPopup } }) {
         <CSOAccount
           confirmationPopup={confirmationPopup}
           applicantInfo={applicantInfo}
+          setCsoAccountExists={setCsoAccountExists}
         />
       )}
       {!showLoader && csoAccountExists && <CSOStatus csoStatus={csoStatus} />}
