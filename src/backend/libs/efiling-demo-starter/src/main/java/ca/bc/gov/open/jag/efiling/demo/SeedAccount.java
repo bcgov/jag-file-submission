@@ -9,13 +9,8 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
-
 @Component
 public class SeedAccount {
-
-    public static final UUID ACCOUNT_WITH_EFILING_ROLE = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fa");
-    public static final UUID ACCOUNT_WITHOUT_EFILING_ROLE = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fb");
 
     private static final Logger logger = LoggerFactory.getLogger(SeedAccount.class);
 
@@ -36,7 +31,7 @@ public class SeedAccount {
 
         CreateAccountRequest createAccount1 = CreateAccountRequest
                 .builder()
-                .universalId(ACCOUNT_WITH_EFILING_ROLE)
+                .universalId(Keys.ACCOUNT_WITH_EFILING_ROLE)
                 .firstName("temp")
                 .lastName("temp")
                 .middleName("temp")
@@ -49,7 +44,7 @@ public class SeedAccount {
 
         CreateAccountRequest createAccount2 = CreateAccountRequest
                 .builder()
-                .universalId(ACCOUNT_WITHOUT_EFILING_ROLE)
+                .universalId(Keys.ACCOUNT_WITHOUT_EFILING_ROLE)
                 .firstName("temp")
                 .lastName("temp")
                 .middleName("temp")

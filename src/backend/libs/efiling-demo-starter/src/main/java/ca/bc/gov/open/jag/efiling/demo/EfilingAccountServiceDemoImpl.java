@@ -30,6 +30,7 @@ public class EfilingAccountServiceDemoImpl implements EfilingAccountService {
                 .firstName(createAccountRequest.getFirstName())
                 .lastName(createAccountRequest.getLastName())
                 .middleName(createAccountRequest.getMiddleName())
+                .fileRolePresent(createAccountRequest.getUniversalId() == Keys.ACCOUNT_WITH_EFILING_ROLE)
                 .create();
 
         return accountDetails;
