@@ -19,14 +19,8 @@
 .bluegrey-content {
   height: auto;
   background: inherit;
-  background-color: rgba(241, 244, 250, 1);
+  background-color: #f2f2f2;
   box-sizing: border-box;
-  border-width: 4px;
-  border-style: solid;
-  border-color: rgba(255, 204, 0, 1);
-  border-left: 0px;
-  border-top: 0px;
-  border-right: 0px;
   padding-top: 15px;
 }
 
@@ -96,7 +90,7 @@ img {
   }
 }
 
-@media (max-width: 950px) {
+@media (max-width: 650px) {
   .side-card-title {
     padding-top: 0 !important;
   }
@@ -115,14 +109,7 @@ img {
 }
 
 .round-icon-wrapper {
-  vertical-align: top;
-  height: 40px;
-  line-height: 55px;
-  width: 60px;
-  border-radius: 48px;
-  background-color: #7596c8;
-  text-align: center;
-  display: inline-block;
+  padding-top: 8px;
   margin-left: 10px;
   margin-right: 10px;
 }
