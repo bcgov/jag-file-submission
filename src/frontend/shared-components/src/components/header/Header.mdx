@@ -1,6 +1,5 @@
 import { Meta, Story } from "@storybook/addon-docs/blocks";
 import { Header } from "./Header";
-import * as stories from "./Header.stories.js";
 
 <Meta title="Header" component={Header} />
 
@@ -36,7 +35,7 @@ The header object has its own properties that need to be present within it, as s
 
 Used at the top of the page.
 
-<Story name="Basic Header">{stories.Basic()}</Story>
+<Story name="Basic Header" id="header--basic"></Story>
 
 ```bash
 import { useHistory } from "react-router-dom";

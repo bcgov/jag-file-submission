@@ -1,11 +1,17 @@
 import React from "react";
 import { FaIdCard } from "react-icons/fa";
+import mdx from "./Sidecard.mdx";
+
 import { Sidecard } from "./Sidecard";
 
 export default {
   title: "Sidecard",
   component: Sidecard,
-  includeStories: []
+  parameters: {
+    docs: {
+      page: mdx
+    }
+  }
 };
 
 const sideCard = {
@@ -32,7 +38,7 @@ export const WithIcon = () => (
   />
 );
 
-export const WithIconMobile = () => (
+export const Mobile = () => (
   <Sidecard
     sideCard={{
       ...sideCard,
@@ -50,4 +56,4 @@ const mobileViewport = {
   }
 };
 
-WithIconMobile.story = mobileViewport;
+Mobile.story = mobileViewport;
