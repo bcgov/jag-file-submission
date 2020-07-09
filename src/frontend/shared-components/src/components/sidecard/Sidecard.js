@@ -10,7 +10,7 @@ export const Sidecard = ({
   let sideCardCss = "dashboard-spacing";
   if (isWide) sideCardCss = "wide-dashboard-spacing";
 
-  let sideCardTitleCss =
+  const sideCardTitleCss =
     heading.length > 30 ? "large-title" : "side-card-title";
 
   return (
