@@ -1,0 +1,40 @@
+import { Meta, Story } from "@storybook/addon-docs/blocks";
+import { Loader } from "./Loader";
+
+<Meta title="Loader" component={Loader} />
+
+# Loader
+
+Loaders serve as an indicator that there is an action being awaited on (usually async).
+
+## API
+
+| Prop | Type    | Required | Description                                   | Default |
+| ---- | ------- | -------- | --------------------------------------------- | ------- |
+| page | boolean | false    | indicates if it is a page-level loader or not | false   |
+
+<br />
+
+## Page Loader
+
+For usage when an entire page's contents need to be awaited on to load.
+Ex: Fetching data from BC Services Card to display on the page.
+
+<Story name="Page Loader" id="loader--page"></Story>
+
+```bash
+<Loader page />;
+```
+
+## Container Loader
+
+For usage when a container's contents need to be awaited on to load.
+Ex: After click of a button, need to wait on an action to occur.
+
+<Story name="Container Loader" id="loader--container"></Story>
+
+```bash
+<div style={{ background: "rgba(225, 232, 242, 1)", width: "200px" }}>
+  <Loader />
+</div>
+```
