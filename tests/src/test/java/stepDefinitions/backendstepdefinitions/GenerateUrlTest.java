@@ -167,7 +167,6 @@ public class GenerateUrlTest {
         middleName = jsonPath.get("userDetails.middleName");
         email = jsonPath.get("userDetails.email");
         String accounts = jsonPath.get("userDetails.accounts");
-        String fullName = firstName + " " + middleName + " " + lastName;
 
         assertThat(firstName, is(not(emptyString())));
         assertThat(lastName, is(not(emptyString())));
