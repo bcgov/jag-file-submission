@@ -30,7 +30,7 @@ public class GenerateUrlRequestBuilders {
         payloadData = new GenerateUrlPayload();
         APIResources resourceAPI = APIResources.valueOf(resourceValue);
 
-        String  nonExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getNonExistingCSOGuid();
+        String nonExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getNonExistingCSOGuid();
 
         request = given().spec(TestUtil.requestSpecification()).header(X_AUTH_USER_ID,nonExistingCSOGuid).body(payloadData.generateUrlFinalPayload());
         return request.when().post(resourceAPI.getResource()).then().spec(TestUtil.responseSpecification()).extract().response();
