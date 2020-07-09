@@ -1,6 +1,5 @@
 import { Meta, Story } from "@storybook/addon-docs/blocks";
 import { Alert } from "./Alert";
-import * as stories from "./Alert.stories.js";
 
 <Meta title="Alert" component={Alert} />
 
@@ -38,7 +37,7 @@ Telling users important and typically time sensitive information. This includes:
 
 Used for success messages, typically for after an action is successfully performed.
 
-<Story name="Success">{stories.Success()}</Story>
+<Story name="Success" id="alert--success"></Story>
 
 ```bash
 <Alert type="success" element="This is a success message!" />
@@ -48,7 +47,7 @@ Used for success messages, typically for after an action is successfully perform
 
 Used for warning messages, typically for explicitly informing a user of something important that must be considered.
 
-<Story name="Warning">{stories.Warning()}</Story>
+<Story name="Warning" id="alert--warning"></Story>
 
 ```bash
 <Alert type="warning" element="This is a warning message!" />
@@ -58,7 +57,7 @@ Used for warning messages, typically for explicitly informing a user of somethin
 
 Used for informative messages.
 
-<Story name="Info">{stories.Info()}</Story>
+<Story name="Info" id="alert--info"></Story>
 
 ```bash
 <Alert type="info" element="This is an info message!" />
@@ -68,7 +67,7 @@ Used for informative messages.
 
 Used for error messages, when something has gone wrong unexpectedly and the user needs to be aware of it.
 
-<Story name="Error">{stories.Error()}</Story>
+<Story name="Error" id="alert--error"></Story>
 
 ```bash
 <Alert type="error" element="This is an error message!" />

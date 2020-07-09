@@ -144,6 +144,86 @@ exports[`Storyshots Alert Info 1`] = `
 </Alert>
 `;
 
+exports[`Storyshots Alert Mobile 1`] = `
+<Alert
+  element="This is a success message!"
+  type="success"
+>
+  <DisplayBox
+    element="This is a success message!"
+    icon={
+      <div
+        style={
+          Object {
+            "color": "#2E8540",
+          }
+        }
+      >
+        <MdCheckBox
+          size={32}
+        />
+      </div>
+    }
+    styling="success-background"
+  >
+    <div
+      className="display-box success-background"
+    >
+      <div
+        className="display-icon"
+      >
+        <div
+          style={
+            Object {
+              "color": "#2E8540",
+            }
+          }
+        >
+          <MdCheckBox
+            size={32}
+          >
+            <IconBase
+              attr={
+                Object {
+                  "viewBox": "0 0 24 24",
+                }
+              }
+              size={32}
+            >
+              <svg
+                fill="currentColor"
+                height={32}
+                size={32}
+                stroke="currentColor"
+                strokeWidth="0"
+                style={
+                  Object {
+                    "color": undefined,
+                  }
+                }
+                viewBox="0 0 24 24"
+                width={32}
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                  key="0"
+                />
+              </svg>
+            </IconBase>
+          </MdCheckBox>
+        </div>
+      </div>
+      <div
+        className="display-element"
+      >
+        This is a success message!
+      </div>
+    </div>
+  </DisplayBox>
+</Alert>
+`;
+
 exports[`Storyshots Alert Success 1`] = `
 <Alert
   element="This is a success message!"
