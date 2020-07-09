@@ -1,13 +1,18 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from "react";
 import { State, Store } from "@sambego/storybook-state";
+import mdx from "./ConfirmationPopup.mdx";
 
 import ConfirmationPopup from "./ConfirmationPopup";
 
 export default {
   title: "Confirmation Popup",
   component: ConfirmationPopup,
-  includeStories: []
+  parameters: {
+    docs: {
+      page: mdx
+    }
+  }
 };
 
 const store = new Store({

@@ -25,7 +25,7 @@ const runTest = async (story, context) => {
     ) {
       setTimeout(() => {
         expect(asFragment).toMatchSpecificSnapshot(filename);
-      }, 3000);
+      }, 2000);
     } else {
       expect(asFragment).toMatchSpecificSnapshot(filename);
     }

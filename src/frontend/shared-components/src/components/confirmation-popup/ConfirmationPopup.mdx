@@ -1,6 +1,5 @@
 import { Meta, Story } from "@storybook/addon-docs/blocks";
 import { ConfirmationPopup } from "./ConfirmationPopup";
-import * as stories from "./ConfirmationPopup.stories.js";
 
 <Meta title="ConfirmationPopup" component={ConfirmationPopup} />
 
@@ -54,7 +53,7 @@ The mainButton, confirmButton, and cancelButton have their own properties as wel
 
 Used as a confirmation for a user cancelling their process.
 
-<Story name="Default">{stories.Default()}</Story>
+<Story name="Default" id="confirmation-popup--default"></Story>
 
 ```bash
 const body = () => (

@@ -1,0 +1,253 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Confirmation Popup Default 1`] = `
+<State
+  store={
+    Store {
+      "callbacks": Array [
+        Object {
+          "callback": [Function],
+          "subscription": "4e9ae9ef-4fed-4c33-b0b0-a3f67a5b83da",
+        },
+      ],
+      "state": Object {
+        "show": false,
+      },
+    }
+  }
+>
+  <ConfirmationPopup
+    cancelButton={
+      Object {
+        "label": "No, resume my process please",
+        "onClick": [Function],
+        "styling": "normal-white btn consistent-width",
+      }
+    }
+    confirmButton={
+      Object {
+        "label": "Yes, cancel my process please",
+        "onClick": [Function],
+        "styling": "normal-blue btn consistent-width",
+      }
+    }
+    key="popup"
+    mainButton={
+      Object {
+        "label": "Cancel",
+        "onClick": [Function],
+        "styling": "normal-white btn",
+      }
+    }
+    modal={
+      Object {
+        "body": [Function],
+        "show": false,
+        "title": "Cancel process?",
+      }
+    }
+  >
+    <Button
+      disabled={false}
+      label="Cancel"
+      onClick={[Function]}
+      styling="normal-white btn"
+    >
+      <div>
+        <button
+          className="normal-white btn"
+          disabled={false}
+          onClick={[Function]}
+          type="button"
+        >
+          Cancel
+        </button>
+      </div>
+    </Button>
+    <Bootstrap(Modal)
+      onHide={[Function]}
+      show={false}
+    >
+      <Modal
+        animation={true}
+        autoFocus={true}
+        backdrop={true}
+        bsPrefix="modal"
+        dialogAs={
+          Object {
+            "$$typeof": Symbol(react.forward_ref),
+            "displayName": "ModalDialog",
+            "render": [Function],
+          }
+        }
+        enforceFocus={true}
+        keyboard={true}
+        onHide={[Function]}
+        restoreFocus={true}
+        show={false}
+      >
+        <Modal
+          autoFocus={true}
+          backdrop={true}
+          backdropTransition={[Function]}
+          className="modal"
+          containerClassName="modal-open"
+          enforceFocus={true}
+          keyboard={true}
+          manager={
+            BootstrapModalManager {
+              "adjustAndStore": [Function],
+              "containers": Array [],
+              "data": Array [],
+              "handleContainerOverflow": true,
+              "hideSiblingNodes": true,
+              "modals": Array [],
+              "restore": [Function],
+              "scrollbarSize": 0,
+            }
+          }
+          onClick={[Function]}
+          onEnter={[Function]}
+          onEntering={[Function]}
+          onExited={[Function]}
+          onHide={[Function]}
+          onMouseUp={[Function]}
+          renderBackdrop={[Function]}
+          restoreFocus={true}
+          show={false}
+          style={Object {}}
+          transition={[Function]}
+        />
+      </Modal>
+    </Bootstrap(Modal)>
+  </ConfirmationPopup>
+</State>
+`;
+
+exports[`Storyshots Confirmation Popup Mobile 1`] = `
+<State
+  store={
+    Store {
+      "callbacks": Array [
+        Object {
+          "callback": [Function],
+          "subscription": "4e9ae9ef-4fed-4c33-b0b0-a3f67a5b83da",
+        },
+        Object {
+          "callback": [Function],
+          "subscription": "0a4b1f17-a0fa-4668-9eba-f0591145c975",
+        },
+      ],
+      "state": Object {
+        "show": false,
+      },
+    }
+  }
+>
+  <ConfirmationPopup
+    cancelButton={
+      Object {
+        "label": "No, resume my process please",
+        "onClick": [Function],
+        "styling": "normal-white btn consistent-width",
+      }
+    }
+    confirmButton={
+      Object {
+        "label": "Yes, cancel my process please",
+        "onClick": [Function],
+        "styling": "normal-blue btn consistent-width",
+      }
+    }
+    key="popup"
+    mainButton={
+      Object {
+        "label": "Cancel",
+        "onClick": [Function],
+        "styling": "normal-white btn",
+      }
+    }
+    modal={
+      Object {
+        "body": [Function],
+        "show": false,
+        "title": "Cancel process?",
+      }
+    }
+  >
+    <Button
+      disabled={false}
+      label="Cancel"
+      onClick={[Function]}
+      styling="normal-white btn"
+    >
+      <div>
+        <button
+          className="normal-white btn"
+          disabled={false}
+          onClick={[Function]}
+          type="button"
+        >
+          Cancel
+        </button>
+      </div>
+    </Button>
+    <Bootstrap(Modal)
+      onHide={[Function]}
+      show={false}
+    >
+      <Modal
+        animation={true}
+        autoFocus={true}
+        backdrop={true}
+        bsPrefix="modal"
+        dialogAs={
+          Object {
+            "$$typeof": Symbol(react.forward_ref),
+            "displayName": "ModalDialog",
+            "render": [Function],
+          }
+        }
+        enforceFocus={true}
+        keyboard={true}
+        onHide={[Function]}
+        restoreFocus={true}
+        show={false}
+      >
+        <Modal
+          autoFocus={true}
+          backdrop={true}
+          backdropTransition={[Function]}
+          className="modal"
+          containerClassName="modal-open"
+          enforceFocus={true}
+          keyboard={true}
+          manager={
+            BootstrapModalManager {
+              "adjustAndStore": [Function],
+              "containers": Array [],
+              "data": Array [],
+              "handleContainerOverflow": true,
+              "hideSiblingNodes": true,
+              "modals": Array [],
+              "restore": [Function],
+              "scrollbarSize": 0,
+            }
+          }
+          onClick={[Function]}
+          onEnter={[Function]}
+          onEntering={[Function]}
+          onExited={[Function]}
+          onHide={[Function]}
+          onMouseUp={[Function]}
+          renderBackdrop={[Function]}
+          restoreFocus={true}
+          show={false}
+          style={Object {}}
+          transition={[Function]}
+        />
+      </Modal>
+    </Bootstrap(Modal)>
+  </ConfirmationPopup>
+</State>
+`;
