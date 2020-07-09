@@ -7,8 +7,8 @@ exports[`Storyshots Input Editable White Mandatory 1`] = `
       "id": "textInputId",
       "isReadOnly": false,
       "isRequired": true,
-      "label": "Submission ID",
-      "placeholder": "Enter id",
+      "label": "Label Heading",
+      "placeholder": "Enter value",
       "styling": "editable-white",
     }
   }
@@ -22,7 +22,7 @@ exports[`Storyshots Input Editable White Mandatory 1`] = `
       <div
         className="input-label"
       >
-        Submission ID
+        Label Heading
       </div>
       <span
         className="mandatory"
@@ -39,58 +39,7 @@ exports[`Storyshots Input Editable White Mandatory 1`] = `
       className="editable-white"
       id="textInputId"
       onChange={[Function]}
-      placeholder="Enter id"
-      readOnly={false}
-      type="text"
-    />
-    <br />
-    <span
-      className="error"
-    />
-  </div>
-</Input>
-`;
-
-exports[`Storyshots Input Editable White Mandatory Mobile 1`] = `
-<Input
-  input={
-    Object {
-      "id": "textInputId",
-      "isReadOnly": false,
-      "isRequired": true,
-      "label": "Submission ID",
-      "placeholder": "Enter id",
-      "styling": "editable-white",
-    }
-  }
-  onChange={[Function]}
->
-  <div>
-    <label
-      className="label"
-      htmlFor="textInputId"
-    >
-      <div
-        className="input-label"
-      >
-        Submission ID
-      </div>
-      <span
-        className="mandatory"
-        id="asterisk"
-      >
-        *
-      </span>
-       
-      <span
-        className="note"
-      />
-    </label>
-    <input
-      className="editable-white"
-      id="textInputId"
-      onChange={[Function]}
-      placeholder="Enter id"
+      placeholder="Enter value"
       readOnly={false}
       type="text"
     />
@@ -110,7 +59,7 @@ exports[`Storyshots Input Editable White No Label 1`] = `
       "isReadOnly": false,
       "isRequired": false,
       "label": "",
-      "placeholder": "Enter id",
+      "placeholder": "Enter value",
       "styling": "editable-white",
     }
   }
@@ -121,38 +70,7 @@ exports[`Storyshots Input Editable White No Label 1`] = `
       className="editable-white"
       id="textInputId"
       onChange={[Function]}
-      placeholder="Enter id"
-      readOnly={false}
-      type="text"
-    />
-    <br />
-    <span
-      className="error"
-    />
-  </div>
-</Input>
-`;
-
-exports[`Storyshots Input Editable White No Label Mobile 1`] = `
-<Input
-  input={
-    Object {
-      "id": "textInputId",
-      "isReadOnly": false,
-      "isRequired": false,
-      "label": "",
-      "placeholder": "Enter id",
-      "styling": "editable-white",
-    }
-  }
-  onChange={[Function]}
->
-  <div>
-    <input
-      className="editable-white"
-      id="textInputId"
-      onChange={[Function]}
-      placeholder="Enter id"
+      placeholder="Enter value"
       readOnly={false}
       type="text"
     />
@@ -171,8 +89,8 @@ exports[`Storyshots Input Editable White With Label 1`] = `
       "id": "textInputId",
       "isReadOnly": false,
       "isRequired": false,
-      "label": "Submission ID",
-      "placeholder": "Enter id",
+      "label": "Label Heading",
+      "placeholder": "Enter value",
       "styling": "editable-white",
     }
   }
@@ -186,7 +104,7 @@ exports[`Storyshots Input Editable White With Label 1`] = `
       <div
         className="input-label"
       >
-        Submission ID
+        Label Heading
       </div>
        
       <span
@@ -197,7 +115,7 @@ exports[`Storyshots Input Editable White With Label 1`] = `
       className="editable-white"
       id="textInputId"
       onChange={[Function]}
-      placeholder="Enter id"
+      placeholder="Enter value"
       readOnly={false}
       type="text"
     />
@@ -209,16 +127,16 @@ exports[`Storyshots Input Editable White With Label 1`] = `
 </Input>
 `;
 
-exports[`Storyshots Input Editable White With Label Mobile 1`] = `
+exports[`Storyshots Input Mobile 1`] = `
 <Input
   input={
     Object {
       "id": "textInputId",
-      "isReadOnly": false,
+      "isReadOnly": true,
       "isRequired": false,
-      "label": "Submission ID",
-      "placeholder": "Enter id",
-      "styling": "editable-white",
+      "label": "Label Heading",
+      "placeholder": "Enter value",
+      "styling": "non-editable-grey",
     }
   }
   onChange={[Function]}
@@ -231,7 +149,7 @@ exports[`Storyshots Input Editable White With Label Mobile 1`] = `
       <div
         className="input-label"
       >
-        Submission ID
+        Label Heading
       </div>
        
       <span
@@ -239,11 +157,11 @@ exports[`Storyshots Input Editable White With Label Mobile 1`] = `
       />
     </label>
     <input
-      className="editable-white"
+      className="non-editable-grey"
       id="textInputId"
       onChange={[Function]}
-      placeholder="Enter id"
-      readOnly={false}
+      placeholder="Enter value"
+      readOnly={true}
       type="text"
     />
     <br />
@@ -261,8 +179,8 @@ exports[`Storyshots Input Non Editable Grey 1`] = `
       "id": "textInputId",
       "isReadOnly": true,
       "isRequired": false,
-      "label": "Submission ID",
-      "placeholder": "Enter id",
+      "label": "Label Heading",
+      "placeholder": "Enter value",
       "styling": "non-editable-grey",
     }
   }
@@ -276,7 +194,7 @@ exports[`Storyshots Input Non Editable Grey 1`] = `
       <div
         className="input-label"
       >
-        Submission ID
+        Label Heading
       </div>
        
       <span
@@ -287,7 +205,7 @@ exports[`Storyshots Input Non Editable Grey 1`] = `
       className="non-editable-grey"
       id="textInputId"
       onChange={[Function]}
-      placeholder="Enter id"
+      placeholder="Enter value"
       readOnly={true}
       type="text"
     />
@@ -299,16 +217,18 @@ exports[`Storyshots Input Non Editable Grey 1`] = `
 </Input>
 `;
 
-exports[`Storyshots Input Non Editable Grey Mobile 1`] = `
+exports[`Storyshots Input With Error Message 1`] = `
 <Input
   input={
     Object {
+      "errorMsg": "There is an error.",
       "id": "textInputId",
-      "isReadOnly": true,
+      "isReadOnly": false,
       "isRequired": false,
-      "label": "Submission ID",
-      "placeholder": "Enter id",
-      "styling": "non-editable-grey",
+      "label": "Label Heading",
+      "placeholder": "Enter value",
+      "styling": "editable-white",
+      "value": "some wrong value",
     }
   }
   onChange={[Function]}
@@ -321,7 +241,7 @@ exports[`Storyshots Input Non Editable Grey Mobile 1`] = `
       <div
         className="input-label"
       >
-        Submission ID
+        Label Heading
       </div>
        
       <span
@@ -329,17 +249,20 @@ exports[`Storyshots Input Non Editable Grey Mobile 1`] = `
       />
     </label>
     <input
-      className="non-editable-grey"
+      className="editable-white"
+      defaultValue="some wrong value"
       id="textInputId"
       onChange={[Function]}
-      placeholder="Enter id"
-      readOnly={true}
+      placeholder="Enter value"
+      readOnly={false}
       type="text"
     />
     <br />
     <span
       className="error"
-    />
+    >
+      There is an error.
+    </span>
   </div>
 </Input>
 `;
