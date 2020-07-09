@@ -1,11 +1,16 @@
 import React from "react";
+import mdx from "./Alert.mdx";
 
 import { Alert } from "./Alert";
 
 export default {
   title: "Alert",
   component: Alert,
-  includeStories: []
+  parameters: {
+    docs: {
+      page: mdx
+    }
+  }
 };
 
 export const Success = () => (
@@ -24,7 +29,7 @@ export const Info = () => (
   <Alert type="info" element="This is an info message!" />
 );
 
-export const SuccessMobile = () => (
+export const Mobile = () => (
   <Alert type="success" element="This is a success message!" />
 );
 
@@ -36,4 +41,4 @@ const mobileViewport = {
   }
 };
 
-SuccessMobile.story = mobileViewport;
+Mobile.story = mobileViewport;

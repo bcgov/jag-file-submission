@@ -1,0 +1,102 @@
+import { Meta, Story } from "@storybook/addon-docs/blocks";
+import { ConfirmationPopup } from "./ConfirmationPopup";
+
+<Meta title="ConfirmationPopup" component={ConfirmationPopup} />
+
+# Confirmation Popup
+
+Add dialogs to your site for lightboxes or user notifications.
+
+## When to Use
+
+The main use case for a confirmation popup is when you need your users to confirm
+an action that may lead to unexpected behaviour if it occurs without confirmation. Examples include:
+
+- Exiting the current site/process
+- Cancelling a step of the process
+- Anything that causes a loss of progress in the process
+
+## When not to Use
+
+- To display forms for the user to complete
+- Displaying non-critical information
+
+## API
+
+| Prop          | Type   | Required | Description                                                             | Default |
+| ------------- | ------ | -------- | ----------------------------------------------------------------------- | ------- |
+| modal         | object | true     | object describing aspects of the modal                                  |         |
+| mainButton    | object | true     | object describing the main button that appears outside the popup        |         |
+| confirmButton | object | true     | object describing the confirmation button that appears within the popup |         |
+| cancelButton  | object | true     | object describing the cancel button that appears within the popup       |         |
+
+The modal object has its own properties that need to be present within it, as shown below:
+
+| Prop  | Type     | Required | Description                                                  | Default |
+| ----- | -------- | -------- | ------------------------------------------------------------ | ------- |
+| show  | boolean  | true     | value representing whether the popup should be shown or not  |         |
+| title | string   | true     | value for the heading of the popup                           |         |
+| body  | function | true     | function rendering some jsx to display within the popup body |         |
+
+The mainButton, confirmButton, and cancelButton have their own properties as well, as shown below:
+
+| Prop     | Type     | Required | Description                                                                           | Default |
+| -------- | -------- | -------- | ------------------------------------------------------------------------------------- | ------- |
+| onClick  | function | true     | function executed on button click                                                     |         |
+| label    | string   | true     | text to be displayed on button                                                        |         |
+| styling  | string   | true     | list of css classnames to apply styling based on (ex: normal-blue, normal-white, btn) |         |
+| disabled | boolean  | false    | indicates whether button is disabled or enabled                                       | false   |
+
+<br />
+
+## Default Confirmation Popup
+
+Used as a confirmation for a user cancelling their process.
+
+<Story name="Default" id="confirmation-popup--default"></Story>
+
+```bash
+const body = () => (
+  <>
+    <p>Your files will not be submitted.</p>
+    <p>
+      You will be returned to:
+      <br />
+      <b>Original</b> website
+    </p>
+  </>
+);
+
+const modal = {
+  title: "Cancel process?",
+  body
+};
+
+const onButtonClick = () => store.set({ show: !store.get("show") });
+
+const mainButton = {
+  label: "main label",
+  styling: "normal-white btn",
+  onClick: onButtonClick
+};
+
+const confirmButton = {
+  label: "Yes, cancel my process please",
+  styling: "normal-blue btn consistent-width",
+  onClick: onButtonClick
+};
+
+const cancelButton = {
+  label: "No, resume my process please",
+  styling: "normal-white btn consistent-width",
+  onClick: onButtonClick
+};
+
+<ConfirmationPopup
+  key="popup"
+  modal={{ ...modal, show: state.show }}
+  mainButton={mainButton}
+  confirmButton={confirmButton}
+  cancelButton={cancelButton}
+/>
+```

@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots ConfirmationPopup Default 1`] = `
+exports[`Storyshots Confirmation Popup Default 1`] = `
 <State
   store={
     Store {
       "callbacks": Array [
         Object {
           "callback": [Function],
-          "subscription": "c086dc43-a1ba-434e-92b9-72893ba38d59",
+          "subscription": "4e9ae9ef-4fed-4c33-b0b0-a3f67a5b83da",
         },
       ],
       "state": Object {
@@ -34,9 +34,9 @@ exports[`Storyshots ConfirmationPopup Default 1`] = `
     key="popup"
     mainButton={
       Object {
-        "label": "main label",
+        "label": "Cancel",
         "onClick": [Function],
-        "styling": "normal-blue btn",
+        "styling": "normal-white btn",
       }
     }
     modal={
@@ -49,18 +49,18 @@ exports[`Storyshots ConfirmationPopup Default 1`] = `
   >
     <Button
       disabled={false}
-      label="main label"
+      label="Cancel"
       onClick={[Function]}
-      styling="normal-blue btn"
+      styling="normal-white btn"
     >
       <div>
         <button
-          className="normal-blue btn"
+          className="normal-white btn"
           disabled={false}
           onClick={[Function]}
           type="button"
         >
-          main label
+          Cancel
         </button>
       </div>
     </Button>
@@ -124,18 +124,18 @@ exports[`Storyshots ConfirmationPopup Default 1`] = `
 </State>
 `;
 
-exports[`Storyshots ConfirmationPopup Mobile 1`] = `
+exports[`Storyshots Confirmation Popup Mobile 1`] = `
 <State
   store={
     Store {
       "callbacks": Array [
         Object {
           "callback": [Function],
-          "subscription": "c086dc43-a1ba-434e-92b9-72893ba38d59",
+          "subscription": "4e9ae9ef-4fed-4c33-b0b0-a3f67a5b83da",
         },
         Object {
           "callback": [Function],
-          "subscription": "4406e8bd-0274-45a5-8fda-6204cff7f11a",
+          "subscription": "0a4b1f17-a0fa-4668-9eba-f0591145c975",
         },
       ],
       "state": Object {
@@ -162,9 +162,9 @@ exports[`Storyshots ConfirmationPopup Mobile 1`] = `
     key="popup"
     mainButton={
       Object {
-        "label": "main label",
+        "label": "Cancel",
         "onClick": [Function],
-        "styling": "normal-blue btn",
+        "styling": "normal-white btn",
       }
     }
     modal={
@@ -177,18 +177,18 @@ exports[`Storyshots ConfirmationPopup Mobile 1`] = `
   >
     <Button
       disabled={false}
-      label="main label"
+      label="Cancel"
       onClick={[Function]}
-      styling="normal-blue btn"
+      styling="normal-white btn"
     >
       <div>
         <button
-          className="normal-blue btn"
+          className="normal-white btn"
           disabled={false}
           onClick={[Function]}
           type="button"
         >
-          main label
+          Cancel
         </button>
       </div>
     </Button>

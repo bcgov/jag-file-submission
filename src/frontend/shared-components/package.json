@@ -79,8 +79,8 @@
       "!**/vendor/**"
     ],
     "transform": {
-      "^.+\\.[t|j]sx?$": "babel-jest",
-      "^.+\\.mdx$": "@storybook/addon-docs/jest-transform-mdx"
+      "^.+\\.mdx$": "@storybook/addon-docs/jest-transform-mdx",
+      "^.+\\.[t|j]sx?$": "babel-jest"
     },
     "setupFilesAfterEnv": [
       "<rootDir>/src/setupTests.js",
