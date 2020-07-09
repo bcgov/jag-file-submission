@@ -5,6 +5,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.CreateAccountRequest;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -13,7 +14,7 @@ import java.util.UUID;
 @Service
 public class EfilingAccountServiceDemoImpl implements EfilingAccountService {
 
-    @CachePut(cacheNames = "account", key = "#userGuid", unless="#result == null", cacheManager = "demoAccountCacheManager")
+    @Cacheable(cacheNames = "account", key = "#userGuid", unless="#result == null", cacheManager = "demoAccountCacheManager")
     public AccountDetails getAccountDetails(UUID userGuid, String bceidAccountType) {
         return null;
     }
@@ -34,4 +35,5 @@ public class EfilingAccountServiceDemoImpl implements EfilingAccountService {
         return accountDetails;
 
     }
+
 }

@@ -1,7 +1,9 @@
 package ca.bc.gov.open.jag.efiling.demo;
 
+import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -32,7 +34,8 @@ public class AutoConfiguration {
      * @return
      */
     @Bean(name = "demoAccountCacheManager")
-    public CacheManager demoAccountCacheManager(JedisConnectionFactory jedisConnectionFactory, Jackson2JsonRedisSerializer jackson2JsonRedisSerializer) {
+    public CacheManager demoAccountCacheManager(JedisConnectionFactory jedisConnectionFactory,
+                                                @Qualifier("accountSerializer") Jackson2JsonRedisSerializer jackson2JsonRedisSerializer) {
 
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
                 .disableCachingNullValues()
@@ -46,6 +49,9 @@ public class AutoConfiguration {
 
     }
 
-
+    @Bean(name = "accountSerializer")
+    public Jackson2JsonRedisSerializer jackson2JsonRedisSerializer() {
+        return new Jackson2JsonRedisSerializer(AccountDetails.class);
+    }
 
 }

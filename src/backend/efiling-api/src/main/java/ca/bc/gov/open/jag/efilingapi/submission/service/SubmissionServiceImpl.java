@@ -86,7 +86,6 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         return null;
 
-
     }
 
     private long getExpiryDate() {

@@ -10,48 +10,14 @@ This guide will provide you with all information you need to get started.
 
 Use the following accounts to test the application
 
-| Account Guid                         | Description                                              |
-| ------------------------------------ | -------------------------------------------------------- |
+| Account Guid | Description |
+| --- | --- |
 | 77da92db-0791-491e-8c58-1a969e67d2fa | An account with a linked CSO account and an efiling role |
 | 77da92db-0791-491e-8c58-1a969e67d2fb | An account with a linked CSO account and no efiling role |
-| 88da92db-0791-491e-8c58-1a969e67d2fb | An account without CSO account but a fake bceid profile  |
+| 88da92db-0791-491e-8c58-1a969e67d2fb | Bob Ross, a user without CSO account but a bceid profile |
 
 ## Quick start
 
-Generate a secure url by calling the generateUrl endpoint
-
-```bash
-
-curl --location --request POST 'http://localhost:8080/document/generateUrl' \
---header 'Content-Type: application/json' \
---data-raw '{
-  "documentMetadata": {
-    "type": "string",
-    "subType": "string",
-    "documentAccess": {
-      "url": "string",
-      "verb": "GET",
-      "headers": {
-        "additionalProp1": "string",
-        "additionalProp2": "string",
-        "additionalProp3": "string"
-      }
-    }
-  },
-  "navigation": {
-    "success": {
-      "url": "string"
-    },
-    "error": {
-      "url": "string"
-    },
-    "cancel": {
-      "url": "string"
-    }
-  }
-}'
-
-```
 
 ## Api Documentation
 

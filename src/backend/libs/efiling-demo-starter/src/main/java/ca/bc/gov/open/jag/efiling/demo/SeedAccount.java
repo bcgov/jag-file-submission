@@ -32,7 +32,7 @@ public class SeedAccount {
         init();
     }
 
-    public void init() {
+    private void init() {
 
         CreateAccountRequest createAccount1 = CreateAccountRequest
                 .builder()

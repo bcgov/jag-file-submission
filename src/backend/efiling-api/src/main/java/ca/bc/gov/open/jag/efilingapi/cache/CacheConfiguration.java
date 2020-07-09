@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingapi.cache;
 
 
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -91,7 +92,9 @@ public class CacheConfiguration {
      */
     @Bean(name = "submissionCacheManager")
     @Primary
-    public CacheManager submissionCacheManager(JedisConnectionFactory jedisConnectionFactory, Jackson2JsonRedisSerializer jackson2JsonRedisSerializer) {
+    public CacheManager submissionCacheManager(
+            JedisConnectionFactory jedisConnectionFactory,
+            @Qualifier("submissionSerializer") Jackson2JsonRedisSerializer jackson2JsonRedisSerializer) {
 
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
                 .disableCachingNullValues()
@@ -105,7 +108,8 @@ public class CacheConfiguration {
                 .cacheDefaults(redisCacheConfiguration).build();
     }
 
-    @Bean
+    @Bean(name = "submissionSerializer")
+    @Primary
     public Jackson2JsonRedisSerializer jackson2JsonRedisSerializer() {
         return new Jackson2JsonRedisSerializer(Submission.class);
     }
