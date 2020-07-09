@@ -10,6 +10,9 @@ export const Sidecard = ({
   let sideCardCss = "dashboard-spacing";
   if (isWide) sideCardCss = "wide-dashboard-spacing";
 
+  const sideCardTitleCss =
+    heading.length > 30 ? "large-title" : "side-card-title";
+
   return (
     <div className={sideCardCss} style={{ position: "relative" }}>
       <div className="row">
@@ -58,7 +61,7 @@ export const Sidecard = ({
                     <div className="row">
                       <div className="side-card-row">
                         <div className="round-icon-wrapper">{icon}</div>
-                        <div className="side-card-title">{heading}</div>
+                        <div className={sideCardTitleCss}>{heading}</div>
                       </div>
                     </div>
                   </h2>
@@ -77,8 +80,7 @@ export const Sidecard = ({
 
 Sidecard.propTypes = {
   sideCard: PropTypes.shape({
-    heading: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
-      .isRequired,
+    heading: PropTypes.string.isRequired,
     content: PropTypes.array.isRequired,
     type: PropTypes.string.isRequired,
     image: PropTypes.string,

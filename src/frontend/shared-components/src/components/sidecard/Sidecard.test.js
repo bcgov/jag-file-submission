@@ -39,4 +39,16 @@ describe("Sidecard", () => {
   test("Matches the snapshot when it is wide", () => {
     testBasicSnapshot(<Sidecard sideCard={{ ...sideCard, isWide: true }} />);
   });
+
+  test("Matches the snapshot when heading is long", () => {
+    testBasicSnapshot(
+      <Sidecard
+        sideCard={{
+          ...sideCard,
+          heading:
+            "heading is quite long so we can use custom styling to see it render"
+        }}
+      />
+    );
+  });
 });
