@@ -12,9 +12,7 @@ import static io.restassured.RestAssured.given;
 public class GenerateUrlRequestBuilders {
 
     private  RequestSpecification request;
-
-    public GenerateUrlRequestBuilders() {
-    }
+    private static final String X_AUTH_USER_ID = "X-Auth-UserId";
 
     private  GenerateUrlPayload payloadData;
 
@@ -24,7 +22,7 @@ public class GenerateUrlRequestBuilders {
 
         String validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
-        request = given().spec(TestUtil.requestSpecification()).header("X-Auth-UserId",validExistingCSOGuid).body(payloadData.generateUrlFinalPayload());
+        request = given().spec(TestUtil.requestSpecification()).header(X_AUTH_USER_ID,validExistingCSOGuid).body(payloadData.generateUrlFinalPayload());
         return request.when().post(resourceAPI.getResource()).then().spec(TestUtil.responseSpecification()).extract().response();
     }
 
@@ -34,7 +32,7 @@ public class GenerateUrlRequestBuilders {
 
         String  nonExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getNonExistingCSOGuid();
 
-        request = given().spec(TestUtil.requestSpecification()).header("X-Auth-UserId",nonExistingCSOGuid).body(payloadData.generateUrlFinalPayload());
+        request = given().spec(TestUtil.requestSpecification()).header(X_AUTH_USER_ID,nonExistingCSOGuid).body(payloadData.generateUrlFinalPayload());
         return request.when().post(resourceAPI.getResource()).then().spec(TestUtil.responseSpecification()).extract().response();
     }
 
@@ -44,7 +42,7 @@ public class GenerateUrlRequestBuilders {
         APIResources resourceAPI = APIResources.valueOf(resourceValue);
         String invalidNoFilingRoleGuid = JsonDataReader.getCsoAccountGuid().getInvalidNoFilingRoleGuid();
 
-        request = given().spec(TestUtil.requestSpecification()).header("X-Auth-UserId",invalidNoFilingRoleGuid).body(payloadData.generateUrlFinalPayload());
+        request = given().spec(TestUtil.requestSpecification()).header(X_AUTH_USER_ID,invalidNoFilingRoleGuid).body(payloadData.generateUrlFinalPayload());
         return request.when().post(resourceAPI.getResource()).then().spec(TestUtil.errorResponseSpecification()).extract().response();
     }
 
@@ -54,7 +52,7 @@ public class GenerateUrlRequestBuilders {
 
         String validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
-        request = given().spec(TestUtil.requestSpecification()).header("X-Auth-UserId", validExistingCSOGuid).body(payloadData.generateUrlFinalPayload());
+        request = given().spec(TestUtil.requestSpecification()).header(X_AUTH_USER_ID, validExistingCSOGuid).body(payloadData.generateUrlFinalPayload());
         return request.when().post(resourceIncorrect.getResource()).then().extract().response();
     }
 
@@ -64,7 +62,7 @@ public class GenerateUrlRequestBuilders {
 
         String validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
-        request = given().spec(TestUtil.requestSpecification()).header("X-Auth-UserId",validExistingCSOGuid).body(payloadData.generateUrlFinalPayload());
+        request = given().spec(TestUtil.requestSpecification()).header(X_AUTH_USER_ID,validExistingCSOGuid).body(payloadData.generateUrlFinalPayload());
         return request.when().post(resourceInvalid.getResource() + "s").then().extract().response();
     }
 }

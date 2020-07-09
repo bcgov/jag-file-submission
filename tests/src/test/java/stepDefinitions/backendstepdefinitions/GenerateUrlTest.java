@@ -40,16 +40,12 @@ public class GenerateUrlTest {
     private  String lastName;
     private  String middleName;
     private  String email;
-    private  String fullName;
     private static final String CONTENT_TYPE = "application/json";
     public Logger log = LogManager.getLogger(DriverClass.class);
 
-    public GenerateUrlTest() {
-    }
-
     @Given("POST http request is made to {string} with valid existing CSO account guid in header")
     public void postHttpRequestIsMadeToWithValidExistingCsoAccountGuidInHeader(String resource) throws IOException {
-        GenerateUrlRequestBuilders generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
+        generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
 
         response = generateUrlRequestBuilders.requestWithValidCSOAccountGuid(resource);
     }
@@ -103,14 +99,14 @@ public class GenerateUrlTest {
 
     @Given("POST http request is made to {string} with non existing CSO account guid in the header")
     public void postHttpRequestIsMadeToWithNonExistingCsoAccountGuidInHeader(String resource) throws IOException {
-        GenerateUrlRequestBuilders generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
+        generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
 
         response = generateUrlRequestBuilders.requestWithNonExistingCSOAccountGuid(resource);
     }
 
     @Given("POST http request is made to {string} with invalid CSO account guid in the header")
     public void postHttpRequestIsMadeToWithInvalidCsoAccountGuidInHeader(String resource) throws IOException {
-        GenerateUrlRequestBuilders generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
+        generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
 
         response = generateUrlRequestBuilders.requestWithInvalidCSOAccountGuid(resource);
     }
@@ -171,7 +167,7 @@ public class GenerateUrlTest {
         middleName = jsonPath.get("userDetails.middleName");
         email = jsonPath.get("userDetails.email");
         String accounts = jsonPath.get("userDetails.accounts");
-        fullName = firstName + " " + middleName + " " + lastName;
+        String fullName = firstName + " " + middleName + " " + lastName;
 
         assertThat(firstName, is(not(emptyString())));
         assertThat(lastName, is(not(emptyString())));
