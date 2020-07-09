@@ -3,9 +3,7 @@ package ca.bc.gov.open.jag.efilingaccountclient;
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RegisteredRole;
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RoleRegistryPortType;
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.UserRoles;
-import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
-import ca.bc.gov.ag.csows.accounts.ClientProfile;
-import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
+import ca.bc.gov.ag.csows.accounts.*;
 import ca.bc.gov.open.jag.efilingaccountclient.mappers.AccountDetailsMapper;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.CSOHasMultipleAccountException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
@@ -13,7 +11,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.CreateAccountRequest;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bceid.webservices.client.v9.*;
-import org.apache.commons.lang3.NotImplementedException;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 
@@ -35,7 +33,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         tempMap.put("ldb", BCeIDAccountTypeCode.LDB);
         tempMap.put("ths", BCeIDAccountTypeCode.THS);
 
-        accountTypeLookup = Collections.unmodifiableMap(tempMap);;
+        accountTypeLookup = Collections.unmodifiableMap(tempMap);
     }
 
     public CsoAccountServiceImpl(AccountFacadeBean accountFacadeBean,
@@ -61,8 +59,33 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
     }
 
     @Override
-    public AccountDetails createAccount(CreateAccountRequest createAccountRequest) {
-        throw new NotImplementedException();
+    public AccountDetails createAccount(CreateAccountRequest createAccountRequest)  {
+
+        // Validate the incoming data
+        if (StringUtils.isEmpty(createAccountRequest.getFirstName()) ||
+        StringUtils.isEmpty(createAccountRequest.getLastName()) ||
+        StringUtils.isEmpty(createAccountRequest.getEmail()) ||
+        StringUtils.isEmpty(createAccountRequest.getUniversalId().toString())) {
+            throw new IllegalArgumentException("First Name, Last Name, Email, and Universal ID are required");
+        }
+
+        AccountDetails accountDetails = null;
+
+        try {
+            Account account = new Account();
+            Client client = new Client();
+            client.setAuthenticatedClientGuid(CsoHelpers.formatUserGuid(createAccountRequest.getUniversalId()));
+            List<RoleAssignment> roles = new ArrayList<>();
+            ClientProfile clientProfile = accountFacadeBean.createAccount(account, client, roles);
+            if (null != clientProfile) {
+                accountDetails = accountDetailsMapper.toAccountDetails(clientProfile, hasFileRole(CsoHelpers.formatUserGuid(createAccountRequest.getUniversalId())));
+            }
+        }
+        catch (NestedEjbException_Exception e) {
+            throw new EfilingAccountServiceException("Exception while creating CSO account", e.getCause());
+        }
+
+        return accountDetails;
     }
 
     private AccountDetails getCsoDetails(String userGuid)  {
