@@ -1,0 +1,67 @@
+import { Meta, Story } from "@storybook/addon-docs/blocks";
+import { DisplayBox } from "./DisplayBox";
+
+<Meta title="DisplayBox" component={DisplayBox} />
+
+# Display Box
+
+The display box is used to highlight or group together information with an optional icon.
+
+## API
+
+| Prop    | Type           | Required | Description                                               | Default |
+| ------- | -------------- | -------- | --------------------------------------------------------- | ------- |
+| styling | string         | false    | css classnames representing the styling you wish to apply | ""      |
+| icon    | element        | false    | jsx element representing the icon                         | null    |
+| element | string/element | true     | display element jsx for the content of the display box    |         |
+
+<br />
+
+## Display Box (Without Icon)
+
+Used for content with no icon. In this case, rendering a table within the display box.
+
+<Story name="Without Icon" id="displaybox--without-icon"></Story>
+
+```bash
+const elements = [
+  { name: "BCeID", value: "bobross42" },
+  {
+    name: "Last Name",
+    value: "Ross"
+  },
+  { name: "First Name", value: "Bob" },
+  { name: "Email Address", value: "bob.ross@example.com" }
+];
+
+const table = <Table elements={elements} />
+
+<DisplayBox element={table} />;
+```
+
+## Display Box (With Icon)
+
+Used for content with an icon.
+
+<Story name="With Icon" id="displaybox--with-icon"></Story>
+
+```bash
+const icon = <MdPerson size={32} />;
+
+<DisplayBox icon={icon} element={table} />;
+```
+
+## Display Box (With Blue Background)
+
+Used for content with a gov-themed blue background.
+
+<Story
+  name="With Blue Background"
+  id="displaybox--with-blue-background"
+></Story>
+
+```bash
+const icon = <MdPerson size={32} />;
+
+<DisplayBox styling="blue-background" icon={icon} element={table} />
+```

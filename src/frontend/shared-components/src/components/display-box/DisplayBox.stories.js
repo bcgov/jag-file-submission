@@ -1,12 +1,18 @@
 import React from "react";
 import { MdPerson } from "react-icons/md";
+import mdx from "./DisplayBox.mdx";
 
 import { DisplayBox } from "./DisplayBox";
 import { getTestTable } from "../../modules/displayBoxTestData";
 
 export default {
   title: "DisplayBox",
-  component: DisplayBox
+  component: DisplayBox,
+  parameters: {
+    docs: {
+      page: mdx
+    }
+  }
 };
 
 const table = getTestTable();
@@ -18,47 +24,11 @@ export const WithoutIcon = () => <DisplayBox element={table} />;
 export const WithIcon = () => <DisplayBox icon={icon} element={table} />;
 
 export const WithBlueBackground = () => (
-  <DisplayBox styling={"blue-background"} icon={icon} element={table} />
+  <DisplayBox styling="blue-background" icon={icon} element={table} />
 );
 
-export const WithSuccess = () => (
-  <DisplayBox
-    styling={"success-background"}
-    icon={icon}
-    element="This is a success message!"
-  />
-);
-
-export const WithWarning = () => (
-  <DisplayBox
-    styling={"warning-background"}
-    icon={icon}
-    element="This is a warning message!"
-  />
-);
-
-export const WithDanger = () => (
-  <DisplayBox
-    styling={"danger-background"}
-    icon={icon}
-    element="This is a danger message!"
-  />
-);
-
-export const WithoutIconMobile = () => <DisplayBox element={table} />;
-
-export const WithIconMobile = () => <DisplayBox icon={icon} element={table} />;
-
-export const WithWarningMobile = () => (
-  <DisplayBox
-    styling={"warning-background"}
-    icon={icon}
-    element="This is a warning message!"
-  />
-);
-
-export const WithBlueBackgroundMobile = () => (
-  <DisplayBox styling={"blue-background"} icon={icon} element={table} />
+export const Mobile = () => (
+  <DisplayBox styling="blue-background" icon={icon} element={table} />
 );
 
 const mobileViewport = {
@@ -69,7 +39,4 @@ const mobileViewport = {
   }
 };
 
-WithoutIconMobile.story = mobileViewport;
-WithIconMobile.story = mobileViewport;
-WithWarningMobile.story = mobileViewport;
-WithBlueBackgroundMobile.story = mobileViewport;
+Mobile.story = mobileViewport;

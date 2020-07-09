@@ -1,0 +1,42 @@
+import { Meta, Story } from "@storybook/addon-docs/blocks";
+import { TermsOfUse } from "./TermsOfUse";
+
+<Meta title="TermsOfUse" component={TermsOfUse} />
+
+# Terms Of Use
+
+The Terms of Use, or sometimes known as the Electronic Service Agreement, are used when you
+need to present terms/conditions to the user which they must be aware of and consent to
+prior to proceeding with their process in your application.
+
+## API
+
+| Prop        | Type     | Required | Description                                               | Default |
+| ----------- | -------- | -------- | --------------------------------------------------------- | ------- |
+| acceptTerms | function | true     | describes what happens when user accepts the terms of use |         |
+| content     | element  | true     | jsx representing the content of the terms of use          |         |
+| heading     | string   | true     | value of the heading for the terms of use                 |         |
+| confirmText | string   | true     | text for the accept terms section                         |         |
+
+<br />
+
+## Basic Terms of Use
+
+The typical terms of use, with the ability to print the terms.
+
+<Story name="Terms of Use" id="terms-of-use--default"></Story>
+
+```bash
+const heading = "Terms of Use";
+
+const confirmText = "I accept these terms and conditions";
+
+const content = getTestData();
+
+<TermsOfUse
+  acceptTerms={action("accept terms of use")}
+  content={content}
+  heading={heading}
+  confirmText={confirmText}
+/>
+```
