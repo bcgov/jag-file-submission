@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -22,7 +21,7 @@ public class SeedAccount {
 
     private final EfilingAccountService efilingAccountService;
 
-    public SeedAccount(Environment environment, EfilingAccountService efilingAccountService){
+    public SeedAccount(EfilingAccountService efilingAccountService){
 
         this.efilingAccountService = efilingAccountService;
 

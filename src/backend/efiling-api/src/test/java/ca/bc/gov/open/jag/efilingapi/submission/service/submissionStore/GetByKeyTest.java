@@ -38,22 +38,5 @@ public class GetByKeyTest {
 
     }
 
-    @Test
-    @DisplayName("CASE 2: with put in cache should put return submission")
-    public void withSubmissionShouldReturnOptional() {
-
-        DocumentProperties documentProperties = new DocumentProperties();
-        documentProperties.setSubType("subtype");
-
-        Submission submission = Submission
-                .builder()
-                .documentProperties(documentProperties)
-                .create();
-        Optional<Submission> actual = sut.put(submission);
-        Assertions.assertTrue(actual.isPresent());
-        Assertions.assertEquals("subtype", actual.get().getDocumentProperties().getSubType());
-
-    }
-
 
 }

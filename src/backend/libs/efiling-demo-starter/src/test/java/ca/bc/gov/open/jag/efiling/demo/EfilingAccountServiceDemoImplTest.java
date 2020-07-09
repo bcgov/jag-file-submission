@@ -2,17 +2,15 @@ package ca.bc.gov.open.jag.efiling.demo;
 
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.CreateAccountRequest;
-import org.apache.commons.lang3.NotImplementedException;
 import org.junit.jupiter.api.*;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class EfilingAccountServiceDemoImplTest {
 
-    public static final UUID ACCOUNT_WITH_EFILING_ROLE = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fa");
-    public static final UUID ACCOUNT_WITHOUT_EFILING_ROLE = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fb");
+    public static final UUID ACCOUNT_ID = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fa");
+    public static final String FIRST_NAME = "firstName";
 
     EfilingAccountServiceDemoImpl sut;
 
@@ -22,33 +20,22 @@ public class EfilingAccountServiceDemoImplTest {
     }
 
     @Test
-    @DisplayName("OK: should return id with file role")
-    public void id1ShouldReturnAccountWithFileRole() {
+    @DisplayName("OK: with empty cache should return null")
+    public void withEmptyCacheShouldReturnNull() {
 
-        AccountDetails actual = sut.getAccountDetails(ACCOUNT_WITH_EFILING_ROLE, "");
-
-        Assertions.assertEquals(BigDecimal.TEN, actual.getAccountId());
-        Assertions.assertEquals(BigDecimal.TEN, actual.getClientId());
-        Assertions.assertEquals(true, actual.isFileRolePresent());
+        AccountDetails actual = sut.getAccountDetails(ACCOUNT_ID, "");
+        Assertions.assertNull(actual);
 
     }
 
     @Test
-    @DisplayName("OK: should return id without file role")
-    public void id2ShouldReturnAccountWithoutFileRole() {
+    @DisplayName("OK: should create an account")
+    public void shouldCreateAnAccount() {
 
-        AccountDetails actual = sut.getAccountDetails(ACCOUNT_WITHOUT_EFILING_ROLE, "");
-
-        Assertions.assertEquals(BigDecimal.TEN, actual.getAccountId());
-        Assertions.assertEquals(BigDecimal.TEN, actual.getClientId());
-        Assertions.assertEquals(false, actual.isFileRolePresent());
-    }
-
-    @Test
-    @DisplayName("Not Implemented!")
-    public void notImplemented() {
-
-        Assertions.assertThrows(NotImplementedException.class, () -> sut.createAccount(CreateAccountRequest.builder().create()));
+         AccountDetails actual = sut.createAccount(CreateAccountRequest.builder().universalId(ACCOUNT_ID).firstName(FIRST_NAME).create());
+         Assertions.assertEquals(ACCOUNT_ID, actual.getUniversalId());
+         Assertions.assertEquals(FIRST_NAME, actual.getFirstName());
 
     }
+
 }
