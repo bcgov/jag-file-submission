@@ -16,9 +16,6 @@ Use the following accounts to test the application
 | 77da92db-0791-491e-8c58-1a969e67d2fb | An account with a linked CSO account and no efiling role |
 | 88da92db-0791-491e-8c58-1a969e67d2fb | Bob Ross, a user without CSO account but a bceid profile |
 
-## Quick start
-
-
 ## Api Documentation
 
 E-filing-api is documented using [openapi](http://editor.swagger.io/?url=https://raw.githubusercontent.com/bcgov/jag-file-submission/master/src/backend/efiling-api/jag-efiling-api.yaml) and we have a [postman collection](https://raw.githubusercontent.com/bcgov/jag-file-submission/master/src/backend/jag-efiling-api/src/test/jag-efiling-api.postman_collection.json) that you can use to test the e-filing-api
