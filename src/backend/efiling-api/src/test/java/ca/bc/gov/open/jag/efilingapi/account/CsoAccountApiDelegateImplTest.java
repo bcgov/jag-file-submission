@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.account;
 
+import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.Account;
 import ca.bc.gov.open.jag.efilingapi.api.model.UserDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
@@ -35,7 +36,7 @@ public class CsoAccountApiDelegateImplTest {
                 .thenReturn(AccountDetails.builder()
                         .fileRolePresent(true)
                         .accountId(BigDecimal.ONE)
-                        .universalId(UUID.randomUUID())
+                        .universalId(TestHelpers.CASE_1)
                         .lastName(LAST_NAME)
                         .firstName(FIRST_NAME)
                         .middleName(MIDDLE_NAME)
@@ -50,7 +51,6 @@ public class CsoAccountApiDelegateImplTest {
     @DisplayName("201: should return an account with cso")
     public void whenAccountCreatedShouldReturn201() {
 
-
         UserDetails userDetails = new UserDetails();
         userDetails.setLastName(LAST_NAME);
         userDetails.setMiddleName(MIDDLE_NAME);
@@ -60,9 +60,10 @@ public class CsoAccountApiDelegateImplTest {
         account.setType(Account.TypeEnum.BCEID);
         account.setIdentifier(UUID.randomUUID().toString());
         userDetails.addAccountsItem(account);
-        ResponseEntity<UserDetails> actual = sut.createAccount(UUID.randomUUID(), userDetails);
+        ResponseEntity<UserDetails> actual = sut.createAccount(TestHelpers.CASE_1, userDetails);
 
         Assertions.assertEquals(HttpStatus.CREATED, actual.getStatusCode());
+        Assertions.assertEquals(TestHelpers.CASE_1, actual.getBody().getUniversalId());
         Assertions.assertEquals(LAST_NAME, actual.getBody().getLastName());
         Assertions.assertEquals(MIDDLE_NAME, actual.getBody().getMiddleName());
         Assertions.assertEquals(EMAIL, actual.getBody().getEmail());

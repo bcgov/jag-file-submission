@@ -108,6 +108,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
                 userDetails.addAccountsItem(account);
             }
 
+            userDetails.setUniversalId(submission.getAccountDetails().getUniversalId());
             userDetails.setFirstName(submission.getAccountDetails().getFirstName());
             userDetails.setLastName(submission.getAccountDetails().getLastName());
             userDetails.setMiddleName(submission.getAccountDetails().getMiddleName());
@@ -115,6 +116,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         } else {
 
+            // TODO: remove this
             userDetails.setFirstName("firstName");
             userDetails.setLastName("lastName");
             userDetails.setMiddleName("middleName");

@@ -196,11 +196,16 @@ components:
       description: represents a user submitting a package
       type: object
       required:
+        - universalId
         - firstName
         - lastName
         - middleName
         - email
       properties:
+        universalId:
+          type: string
+          format: uuid
+          description: the user universal identifier
         firstName:
           type: string
           description: the user first name
