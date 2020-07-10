@@ -38,9 +38,15 @@ export default function CSOAccount({
 
   const createCSOAccount = applicantDetails => {
     axios
-      .post(`/csoAccount`, applicantDetails)
-      .then(({ data: { universalId } }) => {
-        sessionStorage.setItem("universalId", universalId);
+      .post(`/csoAccount`, applicantDetails, {
+        headers: { "X-Auth-UserId": sessionStorage.getItem("universalId") }
+      })
+      .then(({ data: { accounts } }) => {
+        accounts.map(account => {
+          if (account.type === "CSO") {
+            sessionStorage.setItem("csoAccountId", account.identifier);
+          }
+        });
         setCsoAccountExists(true);
       })
       .catch(() => {});
