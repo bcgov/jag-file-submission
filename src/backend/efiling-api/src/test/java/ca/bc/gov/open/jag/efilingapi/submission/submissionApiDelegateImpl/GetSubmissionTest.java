@@ -66,6 +66,7 @@ public class GetSubmissionTest {
                 .accountDetails(
                         AccountDetails
                                 .builder()
+                                .universalId(TestHelpers.CASE_2)
                                 .accountId(BigDecimal.TEN)
                                 .firstName(FIRST_NAME + CASE_2)
                                 .lastName(LAST_NAME + CASE_2)
@@ -101,6 +102,7 @@ public class GetSubmissionTest {
 
         ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission(CASE_2);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
+        assertEquals(TestHelpers.CASE_2, actual.getBody().getUserDetails().getUniversalId());
         assertEquals(EMAIL + CASE_2, actual.getBody().getUserDetails().getEmail());
         assertEquals(FIRST_NAME + CASE_2, actual.getBody().getUserDetails().getFirstName());
         assertEquals(LAST_NAME + CASE_2, actual.getBody().getUserDetails().getLastName());

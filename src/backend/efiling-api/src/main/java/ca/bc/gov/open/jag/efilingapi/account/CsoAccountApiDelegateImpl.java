@@ -40,6 +40,7 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
                 .create());
 
         UserDetails result = new UserDetails();
+        result.setUniversalId(accountDetails.getUniversalId());
         Account csoAccount = new Account();
         csoAccount.setType(Account.TypeEnum.CSO);
         csoAccount.setIdentifier(accountDetails.getAccountId().toString());
