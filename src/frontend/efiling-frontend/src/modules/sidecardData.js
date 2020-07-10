@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React from "react";
 import { MdInfoOutline, MdPerson } from "react-icons/md";
 
