@@ -96,6 +96,10 @@ Efiling Api check health at [http://localhost:8080/actuator/health](http://local
 
 A [redis](https://redis.io/) instance exposed on port 6379
 
+#### redis commander:
+
+A [redis-commander](http://joeferner.github.io/redis-commander/) instance to query redis accessible at [http://localhost:8082](http://localhost:8082)
+
 #### rabbitmq
 
 A [rabbitmq](https://www.rabbitmq.com/) access the management console at [http://localhost:15672](http://localhost:15672)

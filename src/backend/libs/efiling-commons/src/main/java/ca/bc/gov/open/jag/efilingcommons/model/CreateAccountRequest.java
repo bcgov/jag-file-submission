@@ -28,6 +28,14 @@ public class CreateAccountRequest {
     }
 
     /**
+     * Get the universalId
+     * @return
+     */
+    public UUID getUniversalId() {
+        return universalId;
+    }
+
+    /**
      * Get the account First Name
      * @return
      */
