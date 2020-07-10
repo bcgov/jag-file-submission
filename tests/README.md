@@ -21,18 +21,19 @@ tests
 
 ## Running the maven Tests without cucumber tags
 
-1. Add values to the keys in config.properties file.
-1. Add test data values to the json files in 'test/java/testdatasource' package.
+[config.properties](tests\src\main\java\ca\bc\gov\open\jagefilingapi\qa\config\config.properties) are pointing to docker, change it for other source.
 
-In the 'tests' directory, you can run:
+[account-data.json](tests\src\test\java\testdatasource\account-data.json) uses demo accounts, value can be changed.
 
-### `mvn clean install`
+```bash
+cd tests
+```
 
-Installs all the required mvn dependencies.
+Run the tests
 
-### `mvn test`
-
-Runs the tests on the specified browser.
+```bash
+mvn clean verify
+```
 
 ## Running the Cucumber Tests with tags
 
