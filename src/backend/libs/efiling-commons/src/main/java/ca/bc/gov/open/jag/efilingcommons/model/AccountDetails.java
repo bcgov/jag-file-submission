@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 public class AccountDetails {
 
+    private UUID universalId;
     private BigDecimal accountId;
     private BigDecimal clientId;
     private String firstName;
@@ -17,6 +19,7 @@ public class AccountDetails {
 
     protected AccountDetails(AccountDetails.Builder builder) {
 
+        this.universalId = builder.universalId;
         this.accountId = builder.accountId;
         this.clientId = builder.clientId;
         this.firstName = builder.firstName;
@@ -33,13 +36,16 @@ public class AccountDetails {
     }
 
     @JsonCreator
-    public AccountDetails(@JsonProperty("accountId") BigDecimal accountId,
-                                        @JsonProperty("clientId") BigDecimal clientId,
-                                        @JsonProperty("fileRolePresent") boolean fileRolePresent,
-                                        @JsonProperty("firstName") String firstName,
-                                        @JsonProperty("lastName") String lastName,
-                                        @JsonProperty("middleName") String middleName,
-                                        @JsonProperty("email") String email) {
+    public AccountDetails(
+            @JsonProperty("universalId") UUID universalId,
+            @JsonProperty("accountId") BigDecimal accountId,
+            @JsonProperty("clientId") BigDecimal clientId,
+            @JsonProperty("fileRolePresent") boolean fileRolePresent,
+            @JsonProperty("firstName") String firstName,
+            @JsonProperty("lastName") String lastName,
+            @JsonProperty("middleName") String middleName,
+            @JsonProperty("email") String email) {
+        this.universalId = universalId;
         this.accountId = accountId;
         this.clientId = clientId;
         this.firstName = firstName;
@@ -47,6 +53,10 @@ public class AccountDetails {
         this.email = email;
         this.middleName = middleName;
         this.fileRolePresent = fileRolePresent;
+    }
+
+    public UUID getUniversalId() {
+        return universalId;
     }
 
     public BigDecimal getAccountId() {
@@ -79,6 +89,7 @@ public class AccountDetails {
 
     public static class Builder {
 
+        private UUID universalId;
         private BigDecimal accountId;
         private BigDecimal clientId;
         private String firstName;
@@ -86,6 +97,11 @@ public class AccountDetails {
         private String email;
         private String middleName;
         private boolean fileRolePresent;
+
+        public Builder universalId(UUID universalId) {
+            this.universalId = universalId;
+            return this;
+        }
 
         public Builder accountId(BigDecimal accountId) {
             this.accountId = accountId;

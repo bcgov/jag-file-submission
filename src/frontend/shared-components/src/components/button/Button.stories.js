@@ -1,21 +1,23 @@
 import React from "react";
 import { action } from "@storybook/addon-actions";
+import mdx from "./Button.mdx";
+
 import { Button } from "./Button";
 import "./Button.css";
 
 export default {
   title: "Button",
   component: Button,
-  includeStories: []
+  parameters: {
+    docs: {
+      page: mdx
+    }
+  }
 };
 
 const onClick = () => action("button was clicked");
 
 export const Primary = () => (
-  <Button onClick={onClick} label="Submit" styling="normal-blue btn" />
-);
-
-export const PrimaryMobile = () => (
   <Button onClick={onClick} label="Submit" styling="normal-blue btn" />
 );
 
@@ -32,6 +34,10 @@ export const Disabled = () => (
   />
 );
 
+export const Mobile = () => (
+  <Button onClick={onClick} label="Submit" styling="normal-blue btn" />
+);
+
 const mobileViewport = {
   parameters: {
     viewport: {
@@ -40,4 +46,4 @@ const mobileViewport = {
   }
 };
 
-PrimaryMobile.story = mobileViewport;
+Mobile.story = mobileViewport;

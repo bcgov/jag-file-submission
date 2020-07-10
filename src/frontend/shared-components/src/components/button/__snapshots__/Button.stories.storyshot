@@ -20,6 +20,26 @@ exports[`Storyshots Button Disabled 1`] = `
 </Button>
 `;
 
+exports[`Storyshots Button Mobile 1`] = `
+<Button
+  disabled={false}
+  label="Submit"
+  onClick={[Function]}
+  styling="normal-blue btn"
+>
+  <div>
+    <button
+      className="normal-blue btn"
+      disabled={false}
+      onClick={[Function]}
+      type="button"
+    >
+      Submit
+    </button>
+  </div>
+</Button>
+`;
+
 exports[`Storyshots Button Primary 1`] = `
 <Button
   disabled={false}

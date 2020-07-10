@@ -201,6 +201,60 @@ exports[`Sidecard Matches the grey card snapshot 1`] = `
 </div>
 `;
 
+exports[`Sidecard Matches the snapshot when heading is long 1`] = `
+<div
+  className="dashboard-spacing"
+  style={
+    Object {
+      "position": "relative",
+    }
+  }
+>
+  <div
+    className="row"
+  >
+    <div
+      className="col-12 pt-2"
+      style={
+        Object {
+          "position": "relative",
+        }
+      }
+    >
+      <p />
+      <section
+        className="submit-container"
+        id="grey-section"
+        style={
+          Object {
+            "backgroundColor": "#F2F2F2",
+            "border": "none",
+            "color": "#000",
+          }
+        }
+      >
+        <h2
+          style={
+            Object {
+              "color": "#000",
+            }
+          }
+        >
+          heading is quite long so we can use custom styling to see it render
+        </h2>
+        <div
+          className="submit-content"
+        >
+          <span>
+            content
+          </span>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`Sidecard Matches the snapshot when it is wide 1`] = `
 <div
   className="wide-dashboard-spacing"

@@ -77,6 +77,23 @@ services:
       - fisu-net
 
   #############################################################################################
+  ###                                 REDIS COMMANDER                                       ###
+  #############################################################################################
+  redis-commander:
+    container_name: redis-commander
+    hostname: redis-commander
+    image: rediscommander/redis-commander:latest
+    restart: always
+    environment: 
+      - REDIS_PORT=6379
+      - REDIS_HOST=redis
+      - REDIS_PASSWORD=admin
+    ports:
+      - "8082:8081"
+    networks:
+      - fisu-net
+
+  #############################################################################################
   ###                             RABBIT MQ SERVER                                          ###
   #############################################################################################
   rabbitmq:
@@ -109,6 +126,7 @@ services:
       - ./.settings/realm-export.json:/tmp/realm-export.json
     ports:
       - 8081:8080
+    command: ["-Dkeycloak.profile.feature.upload_scripts=enabled"]
 
 volumes:
   data-redis:

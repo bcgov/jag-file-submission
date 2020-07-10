@@ -52,9 +52,9 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
     @Override
     public AccountDetails getAccountDetails(UUID userGuid, String bceidAccountType) {
 
-        AccountDetails accountDetails = getCsoDetails(CsoHelpers.formatUserGuid(userGuid));
+        AccountDetails accountDetails = getCsoDetails(userGuid);
         if (null == accountDetails) {
-            accountDetails = getBCeIDDetails(CsoHelpers.formatUserGuid(userGuid), bceidAccountType);
+            accountDetails = getBCeIDDetails(userGuid, bceidAccountType);
         }
 
         return accountDetails;
@@ -65,18 +65,18 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         throw new NotImplementedException();
     }
 
-    private AccountDetails getCsoDetails(String userGuid)  {
+    private AccountDetails getCsoDetails(UUID userGuid)  {
 
         AccountDetails accountDetails = null;
         List<ClientProfile> profiles = new ArrayList<>();
         try {
-            profiles.addAll(accountFacadeBean.findProfiles(userGuid));
+            profiles.addAll(accountFacadeBean.findProfiles(CsoHelpers.formatUserGuid(userGuid)));
         } catch (NestedEjbException_Exception e) {
             throw new EfilingAccountServiceException("Exception while fetching account details", e);
         }
         // An account must have only one profile associated with it to proceed
         if (profiles.size() == 1) {
-            accountDetails = accountDetailsMapper.toAccountDetails(profiles.get(0), hasFileRole(userGuid));
+            accountDetails = accountDetailsMapper.toAccountDetails(userGuid, profiles.get(0), hasFileRole(CsoHelpers.formatUserGuid(userGuid)));
         }
         else if (profiles.size() > 1) {
             throw new CSOHasMultipleAccountException(profiles.get(0).getClientId().toString());
@@ -85,7 +85,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         return accountDetails;
     }
 
-    private AccountDetails getBCeIDDetails(String userGuid, String accountType) {
+    private AccountDetails getBCeIDDetails(UUID userGuid, String accountType) {
 
         AccountDetails accountDetails = null;
         BCeIDAccountTypeCode accountTypeCode = getBCeIDAccountType(accountType);
@@ -94,14 +94,14 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
 
             AccountDetailRequest request = new AccountDetailRequest();
             request.setOnlineServiceId("62B2-5550-4376-4DA7");
-            request.setRequesterUserGuid(userGuid);
+            request.setRequesterUserGuid(CsoHelpers.formatUserGuid(userGuid));
             request.setRequesterAccountTypeCode(accountTypeCode);
-            request.setUserGuid(userGuid);
+            request.setUserGuid(CsoHelpers.formatUserGuid(userGuid));
             request.setAccountTypeCode(accountTypeCode);
             AccountDetailResponse response = bCeIDServiceSoap.getAccountDetail(request);
 
             if (response.getCode() == ResponseCode.SUCCESS) {
-                accountDetails = accountDetailsMapper.toAccountDetails(response.getAccount());
+                accountDetails = accountDetailsMapper.toAccountDetails(userGuid, response.getAccount());
             }
         }
 

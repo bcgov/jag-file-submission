@@ -1,6 +1,5 @@
 import { Meta, Story } from "@storybook/addon-docs/blocks";
 import { Button } from "./Button";
-import * as stories from "./Button.stories.js";
 
 <Meta title="Button" component={Button} />
 
@@ -31,7 +30,7 @@ The most important actions you want users to take on your site.
 
 Supporting actions on your page such as Cancel, Delete, or supporting information.
 
-<Story name="Primary">{stories.Primary()}</Story>
+<Story name="Primary" id="button--primary"></Story>
 
 ```bash
 <Button onClick={onClick} label="Submit" styling="normal-blue btn" />
@@ -49,7 +48,7 @@ Supporting actions users can take on your site.
 
 Primary actions on your page such as Submit, or Start. Use a `Primary Button` instead.
 
-<Story name="Secondary">{stories.Secondary()}</Story>
+<Story name="Secondary" id="button--secondary"></Story>
 
 ```bash
 <Button onClick={onClick} label="Submit" styling="normal-white btn" />
@@ -61,7 +60,7 @@ A button that can’t be clicked and doesn’t react to hover. A disabled button
 greyed out to indicate to users that they cannot undertake the action associated
 with it. This is usually for page logic reasons.
 
-<Story name="Disabled">{stories.Disabled()}</Story>
+<Story name="Disabled" id="button--disabled"></Story>
 
 ```bash
 <Button onClick={onClick} label="Disabled" styling="normal-blue btn" disabled />

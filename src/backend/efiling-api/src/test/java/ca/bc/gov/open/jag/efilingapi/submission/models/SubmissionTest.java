@@ -24,12 +24,16 @@ public class SubmissionTest {
     private static final String SUBTYPE = "SUBTYPE";
     private static final String URL = "http://doc.com";
     private static final String HEADER = "HEADER";
+    private static final String FIRST_NAME = "firstName";
+    private static final String LAST_NAME = "lastName";
+    private static final String MIDDLE_NAME = "middleName";
+    private static final String EMAIL = "email";
 
     @Test
     @DisplayName("CASE 1: testing constructor")
     public void testingConstructor() {
         Fee fee = new Fee(BigDecimal.TEN);
-        AccountDetails accountDetails = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, true, "firstName", "lastName", "middleName", "email");
+        AccountDetails accountDetails = new AccountDetails(UUID.randomUUID(), BigDecimal.TEN, BigDecimal.ONE, true, FIRST_NAME, LAST_NAME, MIDDLE_NAME, EMAIL);
 
         Submission actual = new Submission(
                 UUID.randomUUID(),
@@ -39,6 +43,7 @@ public class SubmissionTest {
                 accountDetails,
                 1);
 
+
         Assertions.assertEquals(TYPE, actual.getDocumentProperties().getType());
         Assertions.assertEquals(SUBTYPE, actual.getDocumentProperties().getSubType());
         Assertions.assertEquals(URL, actual.getDocumentProperties().getSubmissionAccess().getUrl());
@@ -47,6 +52,13 @@ public class SubmissionTest {
         Assertions.assertEquals(CANCEL, actual.getNavigation().getCancel().getUrl());
         Assertions.assertEquals(CASE_1, actual.getNavigation().getSuccess().getUrl());
         Assertions.assertEquals(BigDecimal.TEN, actual.getFee().getAmount());
+        Assertions.assertNotNull(actual.getAccountDetails().getUniversalId());
+        Assertions.assertEquals(EMAIL, actual.getAccountDetails().getEmail());
+        Assertions.assertEquals(FIRST_NAME, actual.getAccountDetails().getFirstName());
+        Assertions.assertEquals(LAST_NAME, actual.getAccountDetails().getLastName());
+        Assertions.assertEquals(MIDDLE_NAME, actual.getAccountDetails().getMiddleName());
+        Assertions.assertEquals(BigDecimal.TEN, actual.getAccountDetails().getAccountId());
+        Assertions.assertEquals(BigDecimal.ONE, actual.getAccountDetails().getClientId());
 
     }
 

@@ -82,10 +82,9 @@ public class SubmissionServiceImpl implements SubmissionService {
         logger.error("THIS IS FOR TESTING ONLY");
 
         if(authUserId.equals(FAKE_ACCOUNT))
-            return new AccountDetails(BigDecimal.ZERO, BigDecimal.ZERO, false, "Bob", "Ross", "Rob", "bross@paintit.com");
+            return new AccountDetails(authUserId, BigDecimal.ZERO, BigDecimal.ZERO, false, "Bob", "Ross", "Rob", "bross@paintit.com");
 
         return null;
-
 
     }
 

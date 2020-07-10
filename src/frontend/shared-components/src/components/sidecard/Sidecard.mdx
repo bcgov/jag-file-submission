@@ -1,6 +1,5 @@
 import { Meta, Story } from "@storybook/addon-docs/blocks";
 import { Sidecard } from "./Sidecard";
-import * as stories from "./Sidecard.stories.js";
 
 <Meta title="Sidecard" component={Sidecard} />
 
@@ -32,15 +31,15 @@ Differentiating a block of text from the content that surrounds it, for example:
 
 The sidecard object has its own properties that need to be present within it, as shown below:
 
-| Prop      | Type          | Required | Description                                                                                       | Default |
-| --------- | ------------- | -------- | ------------------------------------------------------------------------------------------------- | ------- |
-| heading   | string/object | true     | text or html (jsx) code representing the label you wish to display as the heading of the sidecard |         |
-| content   | array         | true     | list of strings for content to be present in the sidecard                                         |         |
-| type      | string        | true     | represents the type of sidecard you wish to render                                                |         |
-| image     | string        | false    | url to your image to display                                                                      |         |
-| imageLink | string        | false    | url that your image links to on click                                                             |         |
-| isWide    | boolean       | false    | indicates if your sidecard is extra wide                                                          | false   |
-| icon      | element       | false    | html (jsx) representing the icon you wish to display                                              |         |
+| Prop      | Type    | Required | Description                                                                    | Default |
+| --------- | ------- | -------- | ------------------------------------------------------------------------------ | ------- |
+| heading   | string  | true     | text representing the label you wish to display as the heading of the sidecard |         |
+| content   | array   | true     | list of strings for content to be present in the sidecard                      |         |
+| type      | string  | true     | represents the type of sidecard you wish to render                             |         |
+| image     | string  | false    | url to your image to display                                                   |         |
+| imageLink | string  | false    | url that your image links to on click                                          |         |
+| isWide    | boolean | false    | indicates if your sidecard is extra wide                                       | false   |
+| icon      | element | false    | html (jsx) representing the icon you wish to display                           |         |
 
 <br />
 
@@ -48,7 +47,7 @@ The sidecard object has its own properties that need to be present within it, as
 
 Used to provide useful additional information to compliment content present on the screen.
 
-<Story name="Information (Blue) Sidecard">{stories.Blue()}</Story>
+<Story name="Information (Blue) Sidecard" id="sidecard--blue"></Story>
 
 ```bash
 const sideCard = {
@@ -66,7 +65,7 @@ const sideCard = {
 
 Used to typically provide info about a collection notice, or similar information.
 
-<Story name="Notice (Grey) Sidecard">{stories.Grey()}</Story>
+<Story name="Notice (Grey) Sidecard" id="sidecard--grey"></Story>
 
 ```bash
 const sideCard = {{ ...sideCard, type: "grey" }};
@@ -78,7 +77,7 @@ const sideCard = {{ ...sideCard, type: "grey" }};
 
 Used to provide useful additional information to compliment content present on the screen.
 
-<Story name="Information (Blue grey) Sidecard">{stories.BlueGrey()}</Story>
+<Story name="Information (Blue grey) Sidecard" id="sidecard--blue-grey"></Story>
 
 ```bash
 const sideCard = {{ ...sideCard, type: "bluegrey" }};
@@ -90,7 +89,7 @@ const sideCard = {{ ...sideCard, type: "bluegrey" }};
 
 Can be used with any of the above types of sidecards, to add an icon to the heading.
 
-<Story name="Sidecard with Icon">{stories.WithIcon()}</Story>
+<Story name="Sidecard with Icon" id="sidecard--with-icon"></Story>
 
 ```bash
 const sideCard = {{ ...sideCard, icon: <FaIdCard className="side-card-icon" /> }}
