@@ -30,6 +30,8 @@ an action that may lead to unexpected behaviour if it occurs without confirmatio
 | confirmButton | object | true     | object describing the confirmation button that appears within the popup |         |
 | cancelButton  | object | true     | object describing the cancel button that appears within the popup       |         |
 
+### Modal API
+
 The modal object has its own properties that need to be present within it, as shown below:
 
 | Prop  | Type     | Required | Description                                                  | Default |
@@ -37,6 +39,8 @@ The modal object has its own properties that need to be present within it, as sh
 | show  | boolean  | true     | value representing whether the popup should be shown or not  |         |
 | title | string   | true     | value for the heading of the popup                           |         |
 | body  | function | true     | function rendering some jsx to display within the popup body |         |
+
+### Button API
 
 The mainButton, confirmButton, and cancelButton have their own properties as well, as shown below:
 
@@ -75,7 +79,7 @@ const modal = {
 const onButtonClick = () => store.set({ show: !store.get("show") });
 
 const mainButton = {
-  label: "main label",
+  label: "Click Me",
   styling: "normal-white btn",
   onClick: onButtonClick
 };
