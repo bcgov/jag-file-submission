@@ -1,7 +1,7 @@
 [
   {
-    "validExistingCSOGuid": "<validExistingCSOGuid>",
-    "invalidNoFilingRoleGuid": "<invalidNoFilingRoleGuid>",
-    "nonExistingCSOGuid": "<nonExistingCSOGuid>"
+    "validExistingCSOGuid": "77da92db-0791-491e-8c58-1a969e67d2fa",
+    "invalidNoFilingRoleGuid": "77da92db-0791-491e-8c58-1a969e67d2fb",
+    "nonExistingCSOGuid": "88da92db-0791-491e-8c58-1a969e67d2fb"
   }
 ]
