@@ -1,0 +1,17 @@
+name: Generate/Upload all Coverage Reports
+
+on:
+  push:
+    branches: [tests/documentation]
+
+jobs:
+  cucumber-tests:
+
+    name: Runs cucumber-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      # Get Code Climate binary
+      - name: build docker and run tests
+        run: docker-compose up && mvn verify -f tests/pom.xml
