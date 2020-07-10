@@ -25,6 +25,7 @@
 }
 
 .content-style {
+  padding-right: 15px;
   padding-bottom: 10px;
   padding-left: 15px;
   display: flex;
