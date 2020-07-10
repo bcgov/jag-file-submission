@@ -8,7 +8,17 @@ public class CreateCsoAccountPayload {
     private static final String STRING = "string";
 
     public String createCsoAccountPayload() throws JsonProcessingException {
-        Accounts accounts = new Accounts(STRING, STRING);
+        Accounts[] accounts = new Accounts[1];
+        accounts[0] = new Accounts("BCEID",STRING);
+        CsoPayload csoPayload = new CsoPayload(STRING, STRING, STRING, STRING, accounts);
+
+        ObjectMapper csoAccountPayload = new ObjectMapper();
+        return csoAccountPayload.writeValueAsString(csoPayload);
+    }
+
+    public String createIncorrectTypeCsoAccountPayload() throws JsonProcessingException {
+        Accounts[] accounts = new Accounts[1];
+        accounts[0] = new Accounts("BCED",STRING);
         CsoPayload csoPayload = new CsoPayload(STRING, STRING, STRING, STRING, accounts);
 
         ObjectMapper csoAccountPayload = new ObjectMapper();

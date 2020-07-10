@@ -1,7 +1,7 @@
 [
   {
-    "validExistingCSOGuid": "5EDDA221-61C0-43AB-9D50-8158BF4A7828",
+    "validExistingCSOGuid": "77da92db-0791-491e-8c58-1a969e67d2fa",
     "invalidNoFilingRoleGuid": "77da92db-0791-491e-8c58-1a969e67d2fb",
-    "nonExistingCSOGuid": "C88923E1-7C08-43FC-B34E-318CDD177A41"
+    "nonExistingCSOGuid": "88da92db-0791-491e-8c58-1a969e67d2fb"
   }
 ]

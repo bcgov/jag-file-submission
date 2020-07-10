@@ -3,15 +3,15 @@ package ca.bc.gov.open.jagefilingapi.qa.backend.createcsoaccountpayload;
 public class CsoPayload {
 
     private String firstName;
-    private String middleName;
     private String lastName;
+    private String middleName;
     private String email;
-    Accounts accounts;
+    Accounts[] accounts;
 
-    public CsoPayload(String firstName, String middleName, String lastName, String email, Accounts accounts) {
+    public CsoPayload(String firstName, String lastName, String middleName, String email, Accounts[] accounts) {
         this.firstName = firstName;
-        this.middleName = middleName;
         this.lastName = lastName;
+        this.middleName = middleName;
         this.email = email;
         this.accounts = accounts;
     }
@@ -48,7 +48,7 @@ public class CsoPayload {
         this.email = email;
     }
 
-    public Accounts getAccounts() { return accounts; }
+    public Accounts[] getAccounts() { return accounts; }
 
-    public void setAccounts(Accounts accounts) { this.accounts = accounts; }
+    public void setAccounts(Accounts[] accounts) { this.accounts = accounts; }
 }
