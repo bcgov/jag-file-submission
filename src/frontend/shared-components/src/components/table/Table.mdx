@@ -65,3 +65,31 @@ A table with blue stripes.
 ```bash
 <Table elements={elements} styling="blue-stripe" />
 ```
+
+## With Bold Values
+
+A table with bolded values.
+
+<Story name="With Bold Values" id="table--with-bold-values"></Story>
+
+```bash
+const tableDataWithBoldValues = [
+  { name: "Key", value: "Value", isValueBold: true }
+];
+
+<Table elements={tableDataWithBoldValues} />
+```
+
+## With Bold Names
+
+A table with bolded names.
+
+<Story name="With Bold Names" id="table--with-bold-names"></Story>
+
+```bash
+const tableDataWithBoldNames = [
+  { name: "Key", value: "Value", isNameBold: true }
+];
+
+<Table elements={tableDataWithBoldNames} />
+```

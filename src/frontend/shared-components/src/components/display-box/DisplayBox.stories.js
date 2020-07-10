@@ -27,6 +27,10 @@ export const WithBlueBackground = () => (
   <DisplayBox styling="blue-background" icon={icon} element={table} />
 );
 
+export const WithBorder = () => (
+  <DisplayBox styling="border-background" icon={icon} element={table} />
+);
+
 export const Mobile = () => (
   <DisplayBox styling="blue-background" icon={icon} element={table} />
 );
