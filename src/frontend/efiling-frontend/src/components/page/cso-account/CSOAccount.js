@@ -36,12 +36,11 @@ export default function CSOAccount({
     }
   }, [termsAccepted]);
 
-  const createCSOAccount = applicantInfo => {
-    console.log(applicantInfo);
+  const createCSOAccount = applicantDetails => {
     axios
-      .post(`/csoAccount`, applicantInfo)
-      .then(({ data }) => {
-        console.log(data);
+      .post(`/csoAccount`, applicantDetails)
+      .then(({ data: { universalId } }) => {
+        sessionStorage.setItem("universalId", universalId);
         setCsoAccountExists(true);
       })
       .catch(() => {});
@@ -111,5 +110,6 @@ export default function CSOAccount({
 
 CSOAccount.propTypes = {
   confirmationPopup: propTypes.confirmationPopup,
-  applicantInfo: propTypes.applicantInfo
+  applicantInfo: propTypes.applicantInfo,
+  setCsoAccountExists: propTypes.setState
 };
