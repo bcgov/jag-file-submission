@@ -12,9 +12,9 @@ Use the following accounts to test the application
 
 | Account Guid | Description |
 | --- | --- |
-| 77da92db-0791-491e-8c58-1a969e67d2fa | An account with a linked CSO account and efiling role |
-| 77da92db-0791-491e-8c58-1a969e67d2fb | An account with a linked CSO account and no efiling role |
-| 88da92db-0791-491e-8c58-1a969e67d2fb | Bob Ross, a user without CSO account but a bceid profile |
+| 77da92db-0791-491e-8c58-1a969e67d2fa | Vivian Brown has a linked CSO account and file role |
+| 77da92db-0791-491e-8c58-1a969e67d2fb | Lynda Ridge has a linked CSO account but no file role |
+| 88da92db-0791-491e-8c58-1a969e67d2fb | Bob Ross doesn't have a CSO account but he has a bceid profile |
 
 ## Api Documentation
 

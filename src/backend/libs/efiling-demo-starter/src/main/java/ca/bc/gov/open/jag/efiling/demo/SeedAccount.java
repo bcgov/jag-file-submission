@@ -32,9 +32,9 @@ public class SeedAccount {
         CreateAccountRequest createAccount1 = CreateAccountRequest
                 .builder()
                 .universalId(Keys.ACCOUNT_WITH_EFILING_ROLE)
-                .firstName("Steve")
-                .lastName("Ross")
-                .email("steven.ross@example.com")
+                .firstName("Vivian")
+                .lastName("Brown")
+                .email("vbrown@paintit.com")
                 .create();
 
         AccountDetails account1 = efilingAccountService.createAccount(createAccount1);
@@ -44,10 +44,9 @@ public class SeedAccount {
         CreateAccountRequest createAccount2 = CreateAccountRequest
                 .builder()
                 .universalId(Keys.ACCOUNT_WITHOUT_EFILING_ROLE)
-                .firstName("Bob")
-                .lastName("Ross")
-                .middleName("Norman")
-                .email("bob.ross@example.com")
+                .firstName("Lynda")
+                .lastName("Ridge")
+                .email("lridge@paintit.com")
                 .create();
 
         AccountDetails account2 = efilingAccountService.createAccount(createAccount2);
