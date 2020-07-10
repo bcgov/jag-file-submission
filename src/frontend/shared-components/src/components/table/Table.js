@@ -3,11 +3,16 @@ import PropTypes from "prop-types";
 
 import "./Table.css";
 
-const TableElement = ({ element: { name, value } }) => {
+const TableElement = ({ element: { name, value, isValueBold } }) => {
   return (
     <tr>
       <td>{name}</td>
-      <td>{value}</td>
+      {isValueBold && (
+        <td>
+          <b>{value}</b>
+        </td>
+      )}
+      {!isValueBold && <td>{value}</td>}
     </tr>
   );
 };

@@ -12,11 +12,8 @@ exports[`PackageConfirmation Component Matches the snapshot 1`] = `
         Package Confirmation
       </h2>
       <p>
-        The following documents will be submitted to
+        Review your package for accuracy before submitting.
       </p>
-      <h3>
-        Review your package for accuracy before submitting
-      </h3>
       <div
         class="display-box border-background"
       >
@@ -37,7 +34,7 @@ exports[`PackageConfirmation Component Matches the snapshot 1`] = `
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M6 2c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6H6zm7 7V3.5L18.5 9H13z"
+                d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
               />
             </svg>
           </div>
@@ -52,8 +49,49 @@ exports[`PackageConfirmation Component Matches the snapshot 1`] = `
       </div>
       <br />
       <p>
-        If you have any supporting or related documents you may upload them now.
+        <a>
+          Return to the parent application website
+        </a>
+         to correct errors or missing information in this package.
       </p>
+      <br />
+      <h3>
+        Summary
+      </h3>
+      <table
+        class=""
+      >
+        <thead>
+          <tr>
+            <th
+              colspan="2"
+            />
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              Statutory Fees:
+            </td>
+            <td>
+              <b>
+                $100.00
+              </b>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Number of Documents in Package:
+            </td>
+            <td>
+              <b>
+                10
+              </b>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br />
       <section
         class="inline-block pt-2"
       >
