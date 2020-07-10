@@ -7,7 +7,7 @@ exports[`Storyshots Confirmation Popup Default 1`] = `
       "callbacks": Array [
         Object {
           "callback": [Function],
-          "subscription": "4e9ae9ef-4fed-4c33-b0b0-a3f67a5b83da",
+          "subscription": "b883404c-5e03-4ab5-b7b4-1d8f1821f9e7",
         },
       ],
       "state": Object {
@@ -34,7 +34,7 @@ exports[`Storyshots Confirmation Popup Default 1`] = `
     key="popup"
     mainButton={
       Object {
-        "label": "Cancel",
+        "label": "Click Me",
         "onClick": [Function],
         "styling": "normal-white btn",
       }
@@ -49,7 +49,7 @@ exports[`Storyshots Confirmation Popup Default 1`] = `
   >
     <Button
       disabled={false}
-      label="Cancel"
+      label="Click Me"
       onClick={[Function]}
       styling="normal-white btn"
     >
@@ -60,7 +60,7 @@ exports[`Storyshots Confirmation Popup Default 1`] = `
           onClick={[Function]}
           type="button"
         >
-          Cancel
+          Click Me
         </button>
       </div>
     </Button>
@@ -131,11 +131,11 @@ exports[`Storyshots Confirmation Popup Mobile 1`] = `
       "callbacks": Array [
         Object {
           "callback": [Function],
-          "subscription": "4e9ae9ef-4fed-4c33-b0b0-a3f67a5b83da",
+          "subscription": "b883404c-5e03-4ab5-b7b4-1d8f1821f9e7",
         },
         Object {
           "callback": [Function],
-          "subscription": "0a4b1f17-a0fa-4668-9eba-f0591145c975",
+          "subscription": "71a88f05-1e5f-4478-b287-d303fc7d195c",
         },
       ],
       "state": Object {
@@ -162,7 +162,7 @@ exports[`Storyshots Confirmation Popup Mobile 1`] = `
     key="popup"
     mainButton={
       Object {
-        "label": "Cancel",
+        "label": "Click Me",
         "onClick": [Function],
         "styling": "normal-white btn",
       }
@@ -177,7 +177,7 @@ exports[`Storyshots Confirmation Popup Mobile 1`] = `
   >
     <Button
       disabled={false}
-      label="Cancel"
+      label="Click Me"
       onClick={[Function]}
       styling="normal-white btn"
     >
@@ -188,7 +188,7 @@ exports[`Storyshots Confirmation Popup Mobile 1`] = `
           onClick={[Function]}
           type="button"
         >
-          Cancel
+          Click Me
         </button>
       </div>
     </Button>
