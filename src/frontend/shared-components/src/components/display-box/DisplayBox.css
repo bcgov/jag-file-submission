@@ -20,6 +20,12 @@
   background-color: rgba(225, 232, 242, 1);
 }
 
+.border-background {
+  border-width: thin;
+  border-style: solid;
+  border-color: lightgrey;
+}
+
 .success-background {
   background-color: #e7f7ea;
   border-top: 1px solid;

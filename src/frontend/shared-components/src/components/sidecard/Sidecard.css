@@ -90,6 +90,12 @@ img {
   }
 }
 
+@media (max-width: 950px) {
+  .side-card-title {
+    padding-top: 0px !important;
+  }
+}
+
 .side-card-row {
   white-space: nowrap;
   display: flex;
