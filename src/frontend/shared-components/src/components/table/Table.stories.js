@@ -16,9 +16,9 @@ export default {
 
 const tableData = getTableElementsTestData();
 const header = "BCeID Info";
-const tableDataWithBoldValues = [
-  { name: "Key", value: "Value", isValueBold: true }
-];
+const basicTableElement = { name: "Key", value: "Value" };
+const tableDataWithBoldValues = [{ ...basicTableElement, isValueBold: true }];
+const tableDataWithBoldNames = [{ ...basicTableElement, isNameBold: true }];
 
 export const WithHeader = () => <Table heading={header} elements={tableData} />;
 
@@ -31,6 +31,8 @@ export const WithBlueStripe = () => (
 export const WithBoldValues = () => (
   <Table elements={tableDataWithBoldValues} />
 );
+
+export const WithBoldNames = () => <Table elements={tableDataWithBoldNames} />;
 
 export const Mobile = () => <Table heading={header} elements={tableData} />;
 
