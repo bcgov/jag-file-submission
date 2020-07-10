@@ -32,10 +32,9 @@ public class SeedAccount {
         CreateAccountRequest createAccount1 = CreateAccountRequest
                 .builder()
                 .universalId(Keys.ACCOUNT_WITH_EFILING_ROLE)
-                .firstName("temp")
-                .lastName("temp")
-                .middleName("temp")
-                .email("temp")
+                .firstName("Steve")
+                .lastName("Ross")
+                .email("steven.ross@example.com")
                 .create();
 
         AccountDetails account1 = efilingAccountService.createAccount(createAccount1);
