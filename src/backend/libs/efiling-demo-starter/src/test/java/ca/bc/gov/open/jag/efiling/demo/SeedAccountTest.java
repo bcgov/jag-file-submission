@@ -32,7 +32,7 @@ public class SeedAccountTest {
     }
 
     @Test
-    @DisplayName("OK: when application start should seed 2 accounts")
+    @DisplayName("OK: on application start should seed 2 accounts")
     public void whenInitShouldCreate2Accounts() {
 
         sut.onApplicationEvent(eventMock);
