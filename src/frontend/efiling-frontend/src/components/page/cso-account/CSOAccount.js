@@ -42,7 +42,7 @@ export default function CSOAccount({
         headers: { "X-Auth-UserId": sessionStorage.getItem("universalId") }
       })
       .then(({ data: { accounts } }) => {
-        accounts.map(account => {
+        accounts.forEach(account => {
           if (account.type === "CSO") {
             sessionStorage.setItem("csoAccountId", account.identifier);
           }
