@@ -3,6 +3,12 @@
 exports[`Storyshots Alert Error 1`] = `
 <Alert
   element="This is an error message!"
+  icon={
+    <MdCancel
+      size={32}
+    />
+  }
+  styling="error-background"
   type="error"
 >
   <DisplayBox
@@ -83,14 +89,22 @@ exports[`Storyshots Alert Error 1`] = `
 exports[`Storyshots Alert Info 1`] = `
 <Alert
   element="This is an info message!"
+  icon={
+    <MdInfo
+      size={32}
+    />
+  }
+  styling="info-background"
   type="info"
 >
   <DisplayBox
     element="This is an info message!"
     icon={
-      <MdInfo
-        size={32}
-      />
+      <React.Fragment>
+        <MdInfo
+          size={32}
+        />
+      </React.Fragment>
     }
     styling="info-background"
   >
@@ -147,6 +161,12 @@ exports[`Storyshots Alert Info 1`] = `
 exports[`Storyshots Alert Mobile 1`] = `
 <Alert
   element="This is a success message!"
+  icon={
+    <MdCheckBox
+      size={32}
+    />
+  }
+  styling="success-background"
   type="success"
 >
   <DisplayBox
@@ -227,6 +247,12 @@ exports[`Storyshots Alert Mobile 1`] = `
 exports[`Storyshots Alert Success 1`] = `
 <Alert
   element="This is a success message!"
+  icon={
+    <MdCheckBox
+      size={32}
+    />
+  }
+  styling="success-background"
   type="success"
 >
   <DisplayBox
@@ -307,6 +333,12 @@ exports[`Storyshots Alert Success 1`] = `
 exports[`Storyshots Alert Warning 1`] = `
 <Alert
   element="This is a warning message!"
+  icon={
+    <MdError
+      size={32}
+    />
+  }
+  styling="warning-background"
   type="warning"
 >
   <DisplayBox
