@@ -38,7 +38,7 @@ export default function CSOAccount({
 
   const createCSOAccount = applicantDetails => {
     axios
-      .post(`/csoAccount`, applicantDetails, {
+      .post("/csoAccount", applicantDetails, {
         headers: { "X-Auth-UserId": sessionStorage.getItem("universalId") }
       })
       .then(({ data: { accounts } }) => {
