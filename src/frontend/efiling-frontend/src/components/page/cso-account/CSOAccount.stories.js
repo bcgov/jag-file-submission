@@ -1,4 +1,8 @@
 import React from "react";
+import { action } from "@storybook/addon-actions";
+import axios from "axios";
+import MockAdapter from "axios-mock-adapter";
+
 import { getTestData } from "../../../modules/confirmationPopupTestData";
 import { getApplicantInfo } from "../../../modules/applicantInfoTestData";
 
@@ -11,20 +15,36 @@ export default {
 
 const confirmationPopup = getTestData();
 const applicantInfo = getApplicantInfo();
+const setCsoAccountExists = action("setCso");
 
-export const Default = () => (
+const mock = new MockAdapter(axios);
+const API_REQUEST = "/csoAccount";
+
+const CreateAccount = props => {
+  mock.onPost(API_REQUEST).reply(201, "success");
+
+  return props.children({
+    confirmationPopup,
+    applicantInfo,
+    setCsoAccountExists
+  });
+};
+
+const baseComponent = data => (
   <CSOAccount
-    confirmationPopup={confirmationPopup}
-    applicantInfo={applicantInfo}
+    confirmationPopup={data.confirmationPopup}
+    applicantInfo={data.applicantInfo}
+    setCsoAccountExists={data.setCsoAccountExists}
   />
 );
 
-export const Mobile = () => (
-  <CSOAccount
-    confirmationPopup={confirmationPopup}
-    applicantInfo={applicantInfo}
-  />
+const defaultCreateAccount = (
+  <CreateAccount>{data => baseComponent(data)}</CreateAccount>
 );
+
+export const Default = () => defaultCreateAccount;
+
+export const Mobile = () => defaultCreateAccount;
 
 const mobileViewport = {
   parameters: {

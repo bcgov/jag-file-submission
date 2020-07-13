@@ -28,7 +28,7 @@ const urlBody = {
       url: "string"
     },
     cancel: {
-      url: "http://localhost:3001/efiling-demo/cancel"
+      url: `${window.location.origin}/efiling-demo/cancel`
     }
   }
 };
