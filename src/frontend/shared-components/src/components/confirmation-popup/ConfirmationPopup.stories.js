@@ -38,7 +38,7 @@ const modal = {
 const onButtonClick = () => store.set({ show: !store.get("show") });
 
 const mainButton = {
-  label: "Cancel",
+  label: "Click Me",
   styling: "normal-white btn",
   onClick: onButtonClick
 };

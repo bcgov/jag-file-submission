@@ -228,6 +228,108 @@ exports[`Storyshots Table With Blue Stripe 1`] = `
 </Table>
 `;
 
+exports[`Storyshots Table With Bold Names 1`] = `
+<Table
+  elements={
+    Array [
+      Object {
+        "isNameBold": true,
+        "name": "Key",
+        "value": "Value",
+      },
+    ]
+  }
+  heading=""
+  styling=""
+>
+  <table
+    className=""
+  >
+    <thead>
+      <tr>
+        <th
+          colSpan="2"
+        />
+      </tr>
+    </thead>
+    <tbody>
+      <TableElement
+        element={
+          Object {
+            "isNameBold": true,
+            "name": "Key",
+            "value": "Value",
+          }
+        }
+        key="Key"
+      >
+        <tr>
+          <td>
+            <b>
+              Key
+            </b>
+          </td>
+          <td>
+            Value
+          </td>
+        </tr>
+      </TableElement>
+    </tbody>
+  </table>
+</Table>
+`;
+
+exports[`Storyshots Table With Bold Values 1`] = `
+<Table
+  elements={
+    Array [
+      Object {
+        "isValueBold": true,
+        "name": "Key",
+        "value": "Value",
+      },
+    ]
+  }
+  heading=""
+  styling=""
+>
+  <table
+    className=""
+  >
+    <thead>
+      <tr>
+        <th
+          colSpan="2"
+        />
+      </tr>
+    </thead>
+    <tbody>
+      <TableElement
+        element={
+          Object {
+            "isValueBold": true,
+            "name": "Key",
+            "value": "Value",
+          }
+        }
+        key="Key"
+      >
+        <tr>
+          <td>
+            Key
+          </td>
+          <td>
+            <b>
+              Value
+            </b>
+          </td>
+        </tr>
+      </TableElement>
+    </tbody>
+  </table>
+</Table>
+`;
+
 exports[`Storyshots Table With Header 1`] = `
 <Table
   elements={

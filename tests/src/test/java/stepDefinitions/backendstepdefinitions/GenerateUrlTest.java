@@ -41,7 +41,7 @@ public class GenerateUrlTest {
     private  String middleName;
     private  String email;
     private static final String CONTENT_TYPE = "application/json";
-    public Logger log = LogManager.getLogger(DriverClass.class);
+    public Logger log = LogManager.getLogger(GenerateUrlTest.class);
 
     @Given("POST http request is made to {string} with valid existing CSO account guid in header")
     public void postHttpRequestIsMadeToWithValidExistingCsoAccountGuidInHeader(String resource) throws IOException {

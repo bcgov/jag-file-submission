@@ -4,7 +4,7 @@ import queryString from "query-string";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { Header, Footer, Loader } from "shared-components";
-import CSOStatus from "../../composite/cso-status/CSOStatus";
+import PackageConfirmation from "../package-confirmation/PackageConfirmation";
 import CSOAccount from "../cso-account/CSOAccount";
 import { propTypes } from "../../../types/propTypes";
 
@@ -76,8 +76,7 @@ export default function Home({ page: { header, confirmationPopup } }) {
     );
   }, [queryParams.submissionId]);
 
-  const csoStatus = {
-    accountExists: csoAccountExists,
+  const packageConfirmation = {
     confirmationPopup
   };
 
@@ -92,7 +91,9 @@ export default function Home({ page: { header, confirmationPopup } }) {
           setCsoAccountExists={setCsoAccountExists}
         />
       )}
-      {!showLoader && csoAccountExists && <CSOStatus csoStatus={csoStatus} />}
+      {!showLoader && csoAccountExists && (
+        <PackageConfirmation packageConfirmation={packageConfirmation} />
+      )}
       <Footer />
     </main>
   );
