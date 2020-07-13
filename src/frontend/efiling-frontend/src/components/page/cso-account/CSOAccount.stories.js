@@ -15,7 +15,7 @@ export default {
 
 const confirmationPopup = getTestData();
 const applicantInfo = getApplicantInfo();
-const setCsoAccountExists = action("setCso");
+const setCsoAccountStatus = action("setCso");
 
 const mock = new MockAdapter(axios);
 const API_REQUEST = "/csoAccount";
@@ -26,7 +26,7 @@ const CreateAccount = props => {
   return props.children({
     confirmationPopup,
     applicantInfo,
-    setCsoAccountExists
+    setCsoAccountStatus
   });
 };
 
@@ -34,7 +34,7 @@ const baseComponent = data => (
   <CSOAccount
     confirmationPopup={data.confirmationPopup}
     applicantInfo={data.applicantInfo}
-    setCsoAccountExists={data.setCsoAccountExists}
+    setCsoAccountStatus={data.setCsoAccountStatus}
   />
 );
 
