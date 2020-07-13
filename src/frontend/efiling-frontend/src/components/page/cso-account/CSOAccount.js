@@ -1,7 +1,7 @@
 /* eslint-disable react/require-default-props */
 import React, { useState, useEffect } from "react";
+import { MdPerson, MdError } from "react-icons/md";
 import axios from "axios";
-import { MdPerson } from "react-icons/md";
 
 import ConfirmationPopup, {
   TermsOfUse,
@@ -73,7 +73,9 @@ export default function CSOAccount({
         <div className="non-printable">
           <h2>Create a Court Services Online (CSO) Account</h2>
           <Alert
+            icon={<MdError size={32} />}
             type="warning"
+            styling="warning-background"
             element="You need a CSO account to use E-File Submission. Create one now to continue."
           />
           <br />

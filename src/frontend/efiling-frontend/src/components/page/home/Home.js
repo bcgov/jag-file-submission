@@ -16,9 +16,9 @@ export const saveNavigationToSession = ({ cancel, success, error }) => {
   if (error.url) sessionStorage.setItem("errorUrl", error.url);
 };
 
-const addUserInfo = (bceID, firstName, middleName, lastName, email) => {
+const addUserInfo = ({ bceid, firstName, middleName, lastName, email }) => {
   return {
-    bceID,
+    bceid,
     firstName,
     middleName,
     lastName,
@@ -46,13 +46,7 @@ const checkCSOAccountStatus = (
         if (csoAccountExists) setCsoAccountExists(true);
       }
 
-      const applicantInfo = addUserInfo(
-        userDetails.bceid,
-        userDetails.firstName,
-        userDetails.middleName,
-        userDetails.lastName,
-        userDetails.email
-      );
+      const applicantInfo = addUserInfo(userDetails);
 
       setApplicantInfo(applicantInfo);
 

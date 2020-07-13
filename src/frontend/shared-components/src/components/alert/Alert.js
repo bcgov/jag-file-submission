@@ -1,54 +1,32 @@
 import React from "react";
-import { MdError, MdCancel, MdCheckBox, MdInfo } from "react-icons/md";
 import PropTypes from "prop-types";
 
 import { DisplayBox } from "../display-box/DisplayBox";
+import "./Alert.css";
 
-const success = (
-  <div style={{ color: "#2E8540" }}>
-    <MdCheckBox size={32} />
-  </div>
-);
-const warning = (
-  <div style={{ color: "rgb(252, 186, 25)" }}>
-    <MdError size={32} />
-  </div>
-);
-const error = (
-  <div style={{ color: "#D8292F" }}>
-    <MdCancel size={32} />
-  </div>
-);
-const info = <MdInfo size={32} />;
+const generateIcon = (icon, type) => {
+  const success = <div style={{ color: "#2E8540" }}>{icon}</div>;
+  const warning = <div style={{ color: "rgb(252, 186, 25)" }}>{icon}</div>;
+  const error = <div style={{ color: "#D8292F" }}>{icon}</div>;
+  const info = <>{icon}</>;
 
-export const Alert = ({ type, element }) => {
+  if (type === "success") return success;
+  if (type === "warning") return warning;
+  if (type === "error") return error;
+  return info;
+};
+
+export const Alert = ({ type, styling, element, icon }) => {
+  const generatedIcon = generateIcon(icon, type);
+
   return (
-    <>
-      {type === "success" && (
-        <DisplayBox
-          styling="success-background"
-          icon={success}
-          element={element}
-        />
-      )}
-      {type === "warning" && (
-        <DisplayBox
-          styling="warning-background"
-          icon={warning}
-          element={element}
-        />
-      )}
-      {type === "error" && (
-        <DisplayBox styling="error-background" icon={error} element={element} />
-      )}
-      {type === "info" && (
-        <DisplayBox styling="info-background" icon={info} element={element} />
-      )}
-    </>
+    <DisplayBox styling={styling} icon={generatedIcon} element={element} />
   );
 };
 
 Alert.propTypes = {
   type: PropTypes.string.isRequired,
-  element: PropTypes.string.isRequired
+  element: PropTypes.string.isRequired,
+  icon: PropTypes.element.isRequired,
+  styling: PropTypes.string.isRequired
 };
