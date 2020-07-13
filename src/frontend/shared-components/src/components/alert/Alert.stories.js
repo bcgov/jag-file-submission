@@ -1,4 +1,5 @@
 import React from "react";
+import { MdError, MdCancel, MdCheckBox, MdInfo } from "react-icons/md";
 import mdx from "./Alert.mdx";
 
 import { Alert } from "./Alert";
@@ -14,23 +15,48 @@ export default {
 };
 
 export const Success = () => (
-  <Alert type="success" element="This is a success message!" />
+  <Alert
+    icon={<MdCheckBox size={32} />}
+    type="success"
+    styling="success-background"
+    element="This is a success message!"
+  />
 );
 
 export const Warning = () => (
-  <Alert type="warning" element="This is a warning message!" />
+  <Alert
+    icon={<MdError size={32} />}
+    type="warning"
+    styling="warning-background"
+    element="This is a warning message!"
+  />
 );
 
 export const Error = () => (
-  <Alert type="error" element="This is an error message!" />
+  <Alert
+    icon={<MdCancel size={32} />}
+    type="error"
+    styling="error-background"
+    element="This is an error message!"
+  />
 );
 
 export const Info = () => (
-  <Alert type="info" element="This is an info message!" />
+  <Alert
+    icon={<MdInfo size={32} />}
+    type="info"
+    styling="info-background"
+    element="This is an info message!"
+  />
 );
 
 export const Mobile = () => (
-  <Alert type="success" element="This is a success message!" />
+  <Alert
+    icon={<MdCheckBox size={32} />}
+    type="success"
+    styling="success-background"
+    element="This is a success message!"
+  />
 );
 
 const mobileViewport = {
