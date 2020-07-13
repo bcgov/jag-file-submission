@@ -8,20 +8,20 @@ describe("Textarea Component", () => {
   const onChange = jest.fn();
 
   test("with label matches the snapshot", () => {
-    const textArea = <Textarea label={label} onChange={onChange} />;
+    const textArea = <Textarea id="1" label={label} onChange={onChange} />;
 
     testBasicSnapshot(textArea);
   });
 
   test("without label matches the snapshot", () => {
-    const textArea = <Textarea onChange={onChange} />;
+    const textArea = <Textarea id="1" onChange={onChange} />;
 
     testBasicSnapshot(textArea);
   });
 
   test("on change updates the value in the textarea", () => {
     const { container } = render(
-      <Textarea label={label} onChange={onChange} />
+      <Textarea id="1" label={label} onChange={onChange} />
     );
 
     fireEvent.change(getByRole(container, "textbox"), {
