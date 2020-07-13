@@ -27,7 +27,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"documentProperties\": {\r\n    \"type\": \"DCFL\",\r\n    \"subType\": \"string\",\r\n    \"submissionAccess\": {\r\n      \"url\": \"string\",\r\n      \"verb\": \"GET\",\r\n      \"headers\": {\r\n        \"additionalProp1\": \"string\",\r\n        \"additionalProp2\": \"string\",\r\n        \"additionalProp3\": \"string\"\r\n      }\r\n    }\r\n  },\r\n  \"navigation\": {\r\n    \"success\": {\r\n      \"url\": \"string\"\r\n    },\r\n    \"error\": {\r\n      \"url\": \"string\"\r\n    },\r\n    \"cancel\": {\r\n      \"url\": \"string\"\r\n    }\r\n  }\r\n}",
+              "raw": "{\r\n  \"parentApplication\": {\r\n    \"applicationType\": \"string\",\r\n    \"courtLocation\": \"string\",\r\n    \"courtLevel\": \"string\",\r\n    \"courtClass\": \"string\",\r\n    \"documentType\": \"string\",\r\n    \"courtDivision\": \"string\",\r\n    \"participationClass\": \"string\",\r\n    \"indigenousStatus\": \"string\",\r\n    \"courtFileNumber\": \"string\"\r\n  },\r\n  \"documentProperties\": {\r\n    \"type\": \"DCFL\",\r\n    \"subType\": \"string\",\r\n    \"submissionAccess\": {\r\n      \"url\": \"string\",\r\n      \"verb\": \"GET\",\r\n      \"headers\": {\r\n        \"additionalProp1\": \"string\",\r\n        \"additionalProp2\": \"string\",\r\n        \"additionalProp3\": \"string\"\r\n      }\r\n    }\r\n  },\r\n  \"navigation\": {\r\n    \"success\": {\r\n      \"url\": \"string\"\r\n    },\r\n    \"error\": {\r\n      \"url\": \"string\"\r\n    },\r\n    \"cancel\": {\r\n      \"url\": \"string\"\r\n    }\r\n  }\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -48,9 +48,8 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/submission/4fa58287-6f3b-471e-b0dd-7d30a1ab66df",
-              "host": ["localhost"],
-              "port": "8080",
+              "raw": "{{baseUrl}}/submission/4fa58287-6f3b-471e-b0dd-7d30a1ab66df",
+              "host": ["{{baseUrl}}"],
               "path": ["submission", "4fa58287-6f3b-471e-b0dd-7d30a1ab66df"]
             }
           },
@@ -62,10 +61,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/submission/4fa58287-6f3b-471e-b0dd-7d30a1ab66df",
-              "host": ["localhost"],
-              "port": "8080",
-              "path": ["submission", "4fa58287-6f3b-471e-b0dd-7d30a1ab66df"]
+              "raw": "{{baseUrl}}/submission/packageInformation/4fa58287-6f3b-471e-b0dd-7d30a1ab66df",
+              "host": ["{{baseUrl}}"],
+              "path": [
+                "submission",
+                "packageInformation",
+                "4fa58287-6f3b-471e-b0dd-7d30a1ab66df"
+              ]
             }
           },
           "response": []
