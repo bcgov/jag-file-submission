@@ -1,117 +1,102 @@
 {
-	"info": {
-		"_postman_id": "12584c3c-7c4d-4253-a3c2-96ca5fed2431",
-		"name": "jag-efiling-api",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "submission",
-			"item": [
-				{
-					"name": "generate url",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "X-Auth-UserId",
-								"value": "5EDDA221-61C0-43AB-9D50-8158BF4A7828",
-								"type": "text"
-							},
-							{
-								"key": "X-Auth-Type",
-								"value": "Individual",
-								"type": "text",
-								"disabled": true
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"documentProperties\": {\r\n    \"type\": \"DCFL\",\r\n    \"subType\": \"string\",\r\n    \"submissionAccess\": {\r\n      \"url\": \"string\",\r\n      \"verb\": \"GET\",\r\n      \"headers\": {\r\n        \"additionalProp1\": \"string\",\r\n        \"additionalProp2\": \"string\",\r\n        \"additionalProp3\": \"string\"\r\n      }\r\n    }\r\n  },\r\n  \"navigation\": {\r\n    \"success\": {\r\n      \"url\": \"string\"\r\n    },\r\n    \"error\": {\r\n      \"url\": \"string\"\r\n    },\r\n    \"cancel\": {\r\n      \"url\": \"string\"\r\n    }\r\n  }\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/submission/generateUrl",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"submission",
-								"generateUrl"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Submission",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/submission/4fa58287-6f3b-471e-b0dd-7d30a1ab66df",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"submission",
-								"4fa58287-6f3b-471e-b0dd-7d30a1ab66df"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"protocolProfileBehavior": {}
-		},
-		{
-			"name": "Account",
-			"item": [
-				{
-					"name": "CreateCSO",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": ""
-						}
-					},
-					"response": []
-				}
-			],
-			"protocolProfileBehavior": {}
-		},
-		{
-			"name": "Health",
-			"item": [
-				{
-					"name": "acutator",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/actuator/info",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"actuator",
-								"info"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"protocolProfileBehavior": {}
-		}
-	],
-	"protocolProfileBehavior": {}
+  "info": {
+    "_postman_id": "c12642b5-e243-41cb-9dcc-72e7e1e37aff",
+    "name": "jag-efiling-api",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "submission",
+      "item": [
+        {
+          "name": "generate url",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Auth-UserId",
+                "value": "5EDDA221-61C0-43AB-9D50-8158BF4A7828",
+                "type": "text"
+              },
+              {
+                "key": "X-Auth-Type",
+                "value": "Individual",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"documentProperties\": {\r\n    \"type\": \"DCFL\",\r\n    \"subType\": \"string\",\r\n    \"submissionAccess\": {\r\n      \"url\": \"string\",\r\n      \"verb\": \"GET\",\r\n      \"headers\": {\r\n        \"additionalProp1\": \"string\",\r\n        \"additionalProp2\": \"string\",\r\n        \"additionalProp3\": \"string\"\r\n      }\r\n    }\r\n  },\r\n  \"navigation\": {\r\n    \"success\": {\r\n      \"url\": \"string\"\r\n    },\r\n    \"error\": {\r\n      \"url\": \"string\"\r\n    },\r\n    \"cancel\": {\r\n      \"url\": \"string\"\r\n    }\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/submission/generateUrl",
+              "host": ["{{baseUrl}}"],
+              "path": ["submission", "generateUrl"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Submission",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/submission/4fa58287-6f3b-471e-b0dd-7d30a1ab66df",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["submission", "4fa58287-6f3b-471e-b0dd-7d30a1ab66df"]
+            }
+          },
+          "response": []
+        }
+      ],
+      "protocolProfileBehavior": {}
+    },
+    {
+      "name": "Account",
+      "item": [
+        {
+          "name": "CreateCSO",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        }
+      ],
+      "protocolProfileBehavior": {}
+    },
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "acutator",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/actuator/info",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["actuator", "info"]
+            }
+          },
+          "response": []
+        }
+      ],
+      "protocolProfileBehavior": {}
+    }
+  ],
+  "protocolProfileBehavior": {}
 }
