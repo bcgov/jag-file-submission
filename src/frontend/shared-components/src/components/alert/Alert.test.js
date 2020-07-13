@@ -1,5 +1,5 @@
 import React from "react";
-import { MdInfo } from "react-icons/md";
+import { MdError, MdCancel, MdCheckBox, MdInfo } from "react-icons/md";
 
 import testBasicSnapshot from "../../TestHelper";
 import { Alert } from "./Alert";
@@ -8,7 +8,7 @@ describe("Alert Component", () => {
   test("Matches the 'success' snapshot", () => {
     testBasicSnapshot(
       <Alert
-        icon={<MdInfo size={32} />}
+        icon={<MdCheckBox size={32} />}
         type="success"
         styling="success-background"
         element="This is a success message!"
@@ -22,7 +22,7 @@ describe("Alert Component", () => {
         styling="warning-background"
         type="warning"
         element="This is a warning message!"
-        icon={<MdInfo size={32} />}
+        icon={<MdError size={32} />}
       />
     );
   });
@@ -32,7 +32,7 @@ describe("Alert Component", () => {
       <Alert
         type="error"
         element="This is an error message!"
-        icon={<MdInfo size={32} />}
+        icon={<MdCancel size={32} />}
         styling="error-background"
       />
     );
