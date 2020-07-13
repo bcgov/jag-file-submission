@@ -80,7 +80,10 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
             List<RoleAssignment> roles = setCreateAccountRoles();
             ClientProfile clientProfile = accountFacadeBean.createAccount(account, client, roles);
             if (null != clientProfile) {
-                accountDetails = accountDetailsMapper.toAccountDetails(clientProfile, hasFileRole(CsoHelpers.formatUserGuid(createAccountRequest.getUniversalId())));
+                accountDetails = accountDetailsMapper.toAccountDetails(
+                        createAccountRequest.getUniversalId(),
+                        clientProfile,
+                        hasFileRole(CsoHelpers.formatUserGuid(createAccountRequest.getUniversalId())));
             }
         }
         catch (DatatypeConfigurationException | NestedEjbException_Exception e) {

@@ -67,10 +67,6 @@ public class CreateAccountRequest {
         return email;
     }
 
-    public UUID getUniversalId() {
-        return universalId;
-    }
-
     public static class Builder {
 
         private UUID universalId;
