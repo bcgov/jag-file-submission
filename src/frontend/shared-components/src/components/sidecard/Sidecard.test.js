@@ -2,7 +2,7 @@ import React from "react";
 import testBasicSnapshot from "../../TestHelper";
 import { Sidecard } from "./Sidecard";
 
-describe("Sidecard", () => {
+describe("Sidecard Component", () => {
   const sideCard = {
     heading: "header",
     content: ["content"],

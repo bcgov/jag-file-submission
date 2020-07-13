@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Textarea Component with label matches the snapshot 1`] = `
+Array [
+  <div
+    className="text-label"
+  >
+    <label>
+      some label
+    </label>
+  </div>,
+  <textarea
+    className="text-input"
+    cols="60"
+    onChange={[Function]}
+    rows="8"
+  />,
+]
+`;
+
+exports[`Textarea Component without label matches the snapshot 1`] = `
+Array [
+  "",
+  <textarea
+    className="text-input"
+    cols="60"
+    onChange={[Function]}
+    rows="8"
+  />,
+]
+`;

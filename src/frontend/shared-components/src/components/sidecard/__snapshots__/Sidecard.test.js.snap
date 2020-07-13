@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Sidecard Matches the blue card snapshot with image 1`] = `
+exports[`Sidecard Component Matches the blue card snapshot with image 1`] = `
 <div
   className="dashboard-spacing"
   style={
@@ -55,7 +55,7 @@ exports[`Sidecard Matches the blue card snapshot with image 1`] = `
 </div>
 `;
 
-exports[`Sidecard Matches the blue card snapshot without image 1`] = `
+exports[`Sidecard Component Matches the blue card snapshot without image 1`] = `
 <div
   className="dashboard-spacing"
   style={
@@ -98,7 +98,7 @@ exports[`Sidecard Matches the blue card snapshot without image 1`] = `
 </div>
 `;
 
-exports[`Sidecard Matches the bluegrey card snapshot 1`] = `
+exports[`Sidecard Component Matches the bluegrey card snapshot 1`] = `
 <div
   className="dashboard-spacing"
   style={
@@ -147,7 +147,7 @@ exports[`Sidecard Matches the bluegrey card snapshot 1`] = `
 </div>
 `;
 
-exports[`Sidecard Matches the grey card snapshot 1`] = `
+exports[`Sidecard Component Matches the grey card snapshot 1`] = `
 <div
   className="dashboard-spacing"
   style={
@@ -201,7 +201,7 @@ exports[`Sidecard Matches the grey card snapshot 1`] = `
 </div>
 `;
 
-exports[`Sidecard Matches the snapshot when heading is long 1`] = `
+exports[`Sidecard Component Matches the snapshot when heading is long 1`] = `
 <div
   className="dashboard-spacing"
   style={
@@ -255,7 +255,7 @@ exports[`Sidecard Matches the snapshot when heading is long 1`] = `
 </div>
 `;
 
-exports[`Sidecard Matches the snapshot when it is wide 1`] = `
+exports[`Sidecard Component Matches the snapshot when it is wide 1`] = `
 <div
   className="wide-dashboard-spacing"
   style={

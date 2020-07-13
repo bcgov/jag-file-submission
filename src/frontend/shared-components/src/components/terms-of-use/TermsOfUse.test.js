@@ -5,7 +5,7 @@ import { getTestData } from "../../modules/termsOfUseTestData";
 
 import { TermsOfUse } from "./TermsOfUse";
 
-describe("TermsOfUse", () => {
+describe("TermsOfUse Component", () => {
   window.print = jest.fn();
   const acceptTerms = jest.fn();
 

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TermsOfUse Matches the snapshot 1`] = `
+exports[`TermsOfUse Component Matches the snapshot 1`] = `
 <div>
   <div
     className="non-printable full-width"

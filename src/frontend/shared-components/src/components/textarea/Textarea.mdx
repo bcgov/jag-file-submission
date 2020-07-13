@@ -1,0 +1,46 @@
+import { Meta, Story } from "@storybook/addon-docs/blocks";
+import { Textarea } from "./Textarea";
+
+<Meta title="Textarea" component={Textarea} />
+
+# Textarea
+
+A textarea allows users to input multiple lines of text.
+
+## When to Use
+
+Users need to enter more than a single line of text
+
+## When not to Use
+
+When users need to enter only one line of text, use a text input instead
+
+## API
+
+| Prop     | Type     | Required | Description                                              | Default |
+| -------- | -------- | -------- | -------------------------------------------------------- | ------- |
+| label    | string   | false    | value of the heading label for the textarea              | ""      |
+| onChange | function | true     | function describing what to do on text area value change |         |
+| id       | string   | true     | value uniquely identifying the textarea                  |         |
+
+<br />
+
+## With Label
+
+Textarea with a label for an additional description of what text needs to be entered.
+
+<Story name="With Label" id="textarea--with-label"></Story>
+
+```bash
+<Textarea id="1" onChange={action("onChange")} label="Can you provide more detail?" />;
+```
+
+## Without Label
+
+Textarea without any heading label.
+
+<Story name="Without Label" id="textarea--without-label"></Story>
+
+```bash
+<Textarea id="1" onChange={action("onChange")} />;
+```

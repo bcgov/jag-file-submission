@@ -3,7 +3,7 @@ import { render, fireEvent, getByRole } from "@testing-library/react";
 import { Input } from "./Input";
 import testBasicSnapshot from "../../TestHelper";
 
-describe("Input", () => {
+describe("Input Component", () => {
   const input = {
     styling: "editable-white",
     id: "textInputId",
@@ -12,7 +12,7 @@ describe("Input", () => {
 
   const onChange = jest.fn();
 
-  test("field when mandatory and with label matches the snapshot (editable white)", () => {
+  test("when mandatory and with label matches the snapshot (editable white)", () => {
     const inputElement = (
       <Input
         input={{
@@ -28,7 +28,7 @@ describe("Input", () => {
     testBasicSnapshot(inputElement);
   });
 
-  test("field when not mandatory and with label matches the snapshot (editable white)", () => {
+  test("when not mandatory and with label matches the snapshot (editable white)", () => {
     const inputElement = (
       <Input
         input={{
@@ -44,7 +44,7 @@ describe("Input", () => {
     testBasicSnapshot(inputElement);
   });
 
-  test("field when mandatory and no label matches the snapshot (editable white)", () => {
+  test("when mandatory and no label matches the snapshot (editable white)", () => {
     const inputElement = (
       <Input
         input={{
@@ -59,7 +59,7 @@ describe("Input", () => {
     testBasicSnapshot(inputElement);
   });
 
-  test("field when not mandatory and no label matches the snapshot (editable white)", () => {
+  test("when not mandatory and no label matches the snapshot (editable white)", () => {
     const inputElement = (
       <Input
         input={{
@@ -74,7 +74,7 @@ describe("Input", () => {
     testBasicSnapshot(inputElement);
   });
 
-  test("field matches the snapshot (non-editable-grey)", () => {
+  test("matches the snapshot (non-editable-grey)", () => {
     const inputElement = (
       <Input
         input={{
@@ -90,7 +90,7 @@ describe("Input", () => {
     testBasicSnapshot(inputElement);
   });
 
-  test("field on change updates the value in the input field", () => {
+  test("on change updates the value in the input field", () => {
     const { container } = render(
       <Input
         input={{
