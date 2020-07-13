@@ -28,10 +28,10 @@ export const propTypes = {
     }).isRequired
   }).isRequired,
   applicantInfo: PropTypes.shape({
-    bceID: PropTypes.string.isRequired,
+    bceid: PropTypes.string.isRequired,
     firstName: PropTypes.string.isRequired,
     middleName: PropTypes.string,
     lastName: PropTypes.string.isRequired,
-    emailAddress: PropTypes.string.isRequired
+    email: PropTypes.string.isRequired
   }).isRequired
 };
