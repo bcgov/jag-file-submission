@@ -55,6 +55,20 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Get PackageInformation",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/submission/4fa58287-6f3b-471e-b0dd-7d30a1ab66df",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["submission", "4fa58287-6f3b-471e-b0dd-7d30a1ab66df"]
+            }
+          },
+          "response": []
         }
       ],
       "protocolProfileBehavior": {}
