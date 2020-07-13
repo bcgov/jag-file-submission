@@ -214,6 +214,14 @@ components:
           type: string
         documentType:
           type: string
+        courtDivision:
+          type: string
+        participationClass:
+          type: string
+        indigenousStatus:
+          type: string
+        courtFileNumber:
+          type: string
     UserDetails:
       description: represents a user submitting a package
       type: object
