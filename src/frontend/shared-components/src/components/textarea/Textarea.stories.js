@@ -18,15 +18,19 @@ export const WithLabel = () => (
   <Textarea
     onChange={action("onChange")}
     label="Can you provide more detail?"
+    id="1"
   />
 );
 
-export const WithoutLabel = () => <Textarea onChange={action("onChange")} />;
+export const WithoutLabel = () => (
+  <Textarea onChange={action("onChange")} id="1" />
+);
 
 export const Mobile = () => (
   <Textarea
     onChange={action("onChange")}
     label="Can you provide more detail?"
+    id="1"
   />
 );
 
