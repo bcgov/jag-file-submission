@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Input field matches the snapshot (non-editable-grey) 1`] = `
+exports[`Input Component matches the snapshot (non-editable-grey) 1`] = `
 <div>
   <input
     className="editable-white"
@@ -17,7 +17,7 @@ exports[`Input field matches the snapshot (non-editable-grey) 1`] = `
 </div>
 `;
 
-exports[`Input field when mandatory and no label matches the snapshot (editable white) 1`] = `
+exports[`Input Component when mandatory and no label matches the snapshot (editable white) 1`] = `
 <div>
   <input
     className="editable-white"
@@ -34,7 +34,7 @@ exports[`Input field when mandatory and no label matches the snapshot (editable 
 </div>
 `;
 
-exports[`Input field when mandatory and with label matches the snapshot (editable white) 1`] = `
+exports[`Input Component when mandatory and with label matches the snapshot (editable white) 1`] = `
 <div>
   <label
     className="label"
@@ -71,7 +71,7 @@ exports[`Input field when mandatory and with label matches the snapshot (editabl
 </div>
 `;
 
-exports[`Input field when not mandatory and no label matches the snapshot (editable white) 1`] = `
+exports[`Input Component when not mandatory and no label matches the snapshot (editable white) 1`] = `
 <div>
   <input
     className="editable-white"
@@ -88,7 +88,7 @@ exports[`Input field when not mandatory and no label matches the snapshot (edita
 </div>
 `;
 
-exports[`Input field when not mandatory and with label matches the snapshot (editable white) 1`] = `
+exports[`Input Component when not mandatory and with label matches the snapshot (editable white) 1`] = `
 <div>
   <label
     className="label"
