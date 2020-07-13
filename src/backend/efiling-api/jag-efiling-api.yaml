@@ -72,7 +72,7 @@ paths:
       operationId: CreateAccount
       description: In order to create an account, an item with type BCEID is required in the accounts field.
       tags:
-      - account
+        - account
       parameters:
         - in: header
           name: X-Auth-UserId
@@ -149,9 +149,12 @@ components:
     GenerateUrlRequest:
       description: details about the required transaction
       required:
+        - parentApplication
         - navigation
         - documentProperties
       properties:
+        parentApplication:
+          $ref: "#/components/schemas/ParentApplication"
         documentProperties:
           $ref: "#/components/schemas/DocumentProperties"
         navigation:
@@ -191,6 +194,33 @@ components:
         - url
       properties:
         url:
+          type: string
+    ParentApplication:
+      type: object
+      required:
+        - applicationType
+        - courtLocation
+        - courtLevel
+        - courtClass
+        - documentType
+      properties:
+        applicationType:
+          type: string
+        courtLocation:
+          type: string
+        courtLevel:
+          type: string
+        courtClass:
+          type: string
+        documentType:
+          type: string
+        courtDivision:
+          type: string
+        participationClass:
+          type: string
+        indigenousStatus:
+          type: string
+        courtFileNumber:
           type: string
     UserDetails:
       description: represents a user submitting a package
