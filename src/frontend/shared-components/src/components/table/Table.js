@@ -3,11 +3,23 @@ import PropTypes from "prop-types";
 
 import "./Table.css";
 
-const TableElement = ({ element: { name, value } }) => {
+const TableElement = ({
+  element: { name, value, isValueBold, isNameBold }
+}) => {
   return (
     <tr>
-      <td>{name}</td>
-      <td>{value}</td>
+      {isNameBold && (
+        <td>
+          <b>{name}</b>
+        </td>
+      )}
+      {!isNameBold && <td>{name}</td>}
+      {isValueBold && (
+        <td>
+          <b>{value}</b>
+        </td>
+      )}
+      {!isValueBold && <td>{value}</td>}
     </tr>
   );
 };
@@ -32,7 +44,9 @@ export const Table = ({ heading, elements, styling }) => {
 TableElement.propTypes = {
   element: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired
+    value: PropTypes.string.isRequired,
+    isValueBold: PropTypes.bool,
+    isNameBold: PropTypes.bool
   }).isRequired
 };
 

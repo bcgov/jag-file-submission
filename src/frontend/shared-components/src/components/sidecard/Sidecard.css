@@ -25,6 +25,7 @@
 }
 
 .content-style {
+  padding-right: 15px;
   padding-bottom: 10px;
   padding-left: 15px;
   display: flex;
@@ -87,6 +88,12 @@ img {
 
   .wide-dashboard-spacing {
     padding-left: 0;
+  }
+}
+
+@media (max-width: 950px) {
+  .side-card-title {
+    padding-top: 0px !important;
   }
 }
 

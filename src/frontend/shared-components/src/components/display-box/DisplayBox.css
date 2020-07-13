@@ -10,6 +10,7 @@
 
 .display-element {
   width: 100%;
+  padding-top: 3px;
 }
 
 .grey-background {
@@ -18,6 +19,12 @@
 
 .blue-background {
   background-color: rgba(225, 232, 242, 1);
+}
+
+.border-background {
+  border-width: thin;
+  border-style: solid;
+  border-color: lightgrey;
 }
 
 .success-background {
