@@ -65,9 +65,9 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
 
         // Validate the incoming data
         if (StringUtils.isEmpty(createAccountRequest.getFirstName()) ||
-        StringUtils.isEmpty(createAccountRequest.getLastName()) ||
-        StringUtils.isEmpty(createAccountRequest.getEmail()) ||
-        StringUtils.isEmpty(createAccountRequest.getUniversalId().toString())) {
+                StringUtils.isEmpty(createAccountRequest.getLastName()) || 
+                StringUtils.isEmpty(createAccountRequest.getEmail()) ||
+                StringUtils.isEmpty(createAccountRequest.getUniversalId().toString())) {
             throw new IllegalArgumentException("First Name, Last Name, Email, and Universal ID are required");
         }
 
