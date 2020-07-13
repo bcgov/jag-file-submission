@@ -33,5 +33,6 @@ export const propTypes = {
     middleName: PropTypes.string,
     lastName: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  setState: PropTypes.func.isRequired
 };

@@ -37,6 +37,7 @@ const checkCSOAccountStatus = (
     .get(`/submission/${submissionId}`)
     .then(({ data: { userDetails, navigation } }) => {
       saveNavigationToSession(navigation);
+      sessionStorage.setItem("universalId", userDetails.universalId);
 
       if (userDetails.accounts) {
         const csoAccountExists = userDetails.accounts.some(
@@ -82,6 +83,7 @@ export default function Home({ page: { header, confirmationPopup } }) {
         <CSOAccount
           confirmationPopup={confirmationPopup}
           applicantInfo={applicantInfo}
+          setCsoAccountExists={setCsoAccountExists}
         />
       )}
       {!showLoader && csoAccountExists && (
