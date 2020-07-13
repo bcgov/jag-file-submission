@@ -21,6 +21,7 @@ When users need to enter only one line of text, use a text input instead
 | -------- | -------- | -------- | -------------------------------------------------------- | ------- |
 | label    | string   | false    | value of the heading label for the textarea              | ""      |
 | onChange | function | true     | function describing what to do on text area value change |         |
+| id       | string   | true     | value uniquely identifying the textarea                  |         |
 
 <br />
 
@@ -31,7 +32,7 @@ Textarea with a label for an additional description of what text needs to be ent
 <Story name="With Label" id="textarea--with-label"></Story>
 
 ```bash
-<Textarea onChange={action("onChange")} label="Can you provide more detail?" />;
+<Textarea id="1" onChange={action("onChange")} label="Can you provide more detail?" />;
 ```
 
 ## Without Label
@@ -41,5 +42,5 @@ Textarea without any heading label.
 <Story name="Without Label" id="textarea--without-label"></Story>
 
 ```bash
-<Textarea onChange={action("onChange")} />;
+<Textarea id="1" onChange={action("onChange")} />;
 ```
