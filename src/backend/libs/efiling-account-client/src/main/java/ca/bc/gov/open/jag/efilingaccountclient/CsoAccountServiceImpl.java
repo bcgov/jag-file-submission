@@ -13,6 +13,8 @@ import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bceid.webservices.client.v9.*;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.*;
 
 public class CsoAccountServiceImpl implements EfilingAccountService {
@@ -72,16 +74,16 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         AccountDetails accountDetails = null;
 
         try {
-            Account account = new Account();
-            Client client = new Client();
-            client.setAuthenticatedClientGuid(CsoHelpers.formatUserGuid(createAccountRequest.getUniversalId()));
-            List<RoleAssignment> roles = new ArrayList<>();
+
+            Account account = setCreateAccountDetails(createAccountRequest);
+            Client client = setCreateAccountClientDetails(createAccountRequest);
+            List<RoleAssignment> roles = setCreateAccountRoles();
             ClientProfile clientProfile = accountFacadeBean.createAccount(account, client, roles);
             if (null != clientProfile) {
                 accountDetails = accountDetailsMapper.toAccountDetails(clientProfile, hasFileRole(CsoHelpers.formatUserGuid(createAccountRequest.getUniversalId())));
             }
         }
-        catch (NestedEjbException_Exception e) {
+        catch (DatatypeConfigurationException | NestedEjbException_Exception e) {
             throw new EfilingAccountServiceException("Exception while creating CSO account", e.getCause());
         }
 
@@ -139,10 +141,62 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
     }
 
     private BCeIDAccountTypeCode getBCeIDAccountType(String bceidAccountType) {
+
         String lookUp = bceidAccountType.toLowerCase();
         BCeIDAccountTypeCode code = accountTypeLookup.get(lookUp);
         return code == null? BCeIDAccountTypeCode.VOID : code;
     }
 
+    private Account setCreateAccountDetails(CreateAccountRequest createAccountRequest) throws DatatypeConfigurationException {
 
+        Account account = new Account();
+        String accountName = createAccountRequest.getFirstName() + " " + createAccountRequest.getLastName();
+
+        account.setAccountNm(accountName);
+        account.setAccountPrefixTxt("SA");
+        account.setAccountStatusCd("ACT");
+        account.setAuthenticatedAccountGuid(CsoHelpers.formatUserGuid(createAccountRequest.getUniversalId()));
+        account.setEmailTxt(createAccountRequest.getEmail());
+        account.setEntDtm(CsoHelpers.date2XMLGregorian(new Date()));
+        account.setFeeExemptYnBoolean(false);
+        account.setRegisteredCreditCardYnBoolean(false);
+
+        return account;
+    }
+
+    private Client setCreateAccountClientDetails(CreateAccountRequest createAccountRequest) throws DatatypeConfigurationException {
+        Client client = new Client();
+        XMLGregorianCalendar date =  CsoHelpers.date2XMLGregorian(new Date());
+
+        client.setAuthenticatedClientGuid(CsoHelpers.formatUserGuid(createAccountRequest.getUniversalId()));
+        client.setClientPrefixTxt("CS");
+        client.setClientStatusCd("ACT");
+        client.setEmailTxt(createAccountRequest.getEmail());
+        client.setEntDtm(date);
+        client.setGivenNm(createAccountRequest.getFirstName());
+        client.setMiddleNm(createAccountRequest.getMiddleName());
+        client.setRegisteredCreditCardYnBoolean(false);
+        client.setServiceConditionsAcceptDtm(date);
+        client.setSurnameNm(createAccountRequest.getLastName());
+
+        return client;
+    }
+
+    private List<RoleAssignment> setCreateAccountRoles() {
+
+        List<RoleAssignment> roles = new ArrayList<>();
+        RoleAssignment role = new RoleAssignment();
+        role.setActiveYn(true);
+
+        role.setRegisteredClientRoleCd("IND");
+        roles.add(role);
+
+        role.setRegisteredClientRoleCd("CAEF");
+        roles.add(role);
+
+        role.setRegisteredClientRoleCd("FILE");
+        roles.add(role);
+
+        return roles;
+    }
 }
