@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { DisplayBox } from "../display-box/DisplayBox";
+import "./Alert.css";
 
 const generateIcon = (icon, type) => {
   const success = <div style={{ color: "#2E8540" }}>{icon}</div>;
