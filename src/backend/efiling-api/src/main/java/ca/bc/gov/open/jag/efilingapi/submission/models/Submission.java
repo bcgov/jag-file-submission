@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.models;
 
+import ca.bc.gov.open.jag.efilingapi.api.model.ParentApplication;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingapi.fee.models.Fee;
 import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
@@ -22,6 +23,8 @@ public class Submission {
 
     private Navigation navigation;
 
+    private ParentApplication parentApplication;
+
     private Fee fee;
 
     private AccountDetails accountDetails;
@@ -30,6 +33,7 @@ public class Submission {
         this.id = UUID.randomUUID();
         this.documentProperties = builder.documentProperties;
         this.navigation = builder.navigation;
+        this.parentApplication = builder.parentApplication;
         this.fee = builder.fee;
         this.accountDetails = builder.accountDetails;
         this.expiryDate = builder.expiryDate;
@@ -44,12 +48,14 @@ public class Submission {
             @JsonProperty("id") UUID id,
             @JsonProperty("submissionMetadata") DocumentProperties documentProperties,
             @JsonProperty("navigation") Navigation navigation,
+            @JsonProperty("parentApplication") ParentApplication parentApplication,
             @JsonProperty("fee") Fee fee,
             @JsonProperty("accountDetails") AccountDetails accountDetails,
             @JsonProperty("expiryDate") long expiryDate) {
         this.id = id;
         this.documentProperties = documentProperties;
         this.navigation = navigation;
+        this.parentApplication = parentApplication;
         this.fee = fee;
         this.accountDetails = accountDetails;
         this.expiryDate = expiryDate;
@@ -64,6 +70,8 @@ public class Submission {
     public Navigation getNavigation() {
         return navigation;
     }
+
+    public ParentApplication getParentApplication() { return parentApplication; }
 
     public Fee getFee() {
         return fee;
@@ -81,6 +89,7 @@ public class Submission {
 
         private DocumentProperties documentProperties;
         private Navigation navigation;
+        private ParentApplication parentApplication;
         private Fee fee;
         private AccountDetails accountDetails;
         private long expiryDate;
@@ -92,6 +101,11 @@ public class Submission {
 
         public Builder navigation(Navigation navigation) {
             this.navigation = navigation;
+            return this;
+        }
+
+        public Builder parentApplication(ParentApplication parentApplication) {
+            this.parentApplication = parentApplication;
             return this;
         }
 

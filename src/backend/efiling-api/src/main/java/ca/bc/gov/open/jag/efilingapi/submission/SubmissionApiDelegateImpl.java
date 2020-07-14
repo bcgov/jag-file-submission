@@ -130,18 +130,22 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     @Override
     public ResponseEntity<GetPacakageInformationResponse> getPackageInformation(UUID id) {
-        //TODO: implement information retrieval currently example data provided or the field name if not.
+        Optional<Submission> fromCacheSubmission = this.submissionStore.getByKey(id);
+
+        if(!fromCacheSubmission.isPresent())
+            return ResponseEntity.notFound().build();
+
         GetPacakageInformationResponse response = new GetPacakageInformationResponse();
         ParentApplication parentApplication = new ParentApplication();
-        parentApplication.setApplicationType("ApplType");
-        parentApplication.setCourtLocation("Kelwona law courts");
-        parentApplication.setCourtLevel("P");
-        parentApplication.setCourtDivision("R");
-        parentApplication.setCourtClass("E");
-        parentApplication.setParticipationClass("ParticipationClass");
-        parentApplication.setIndigenousStatus("IndigenousStatus");
-        parentApplication.setDocumentType("POR");
-        parentApplication.setCourtFileNumber("123");
+        parentApplication.setApplicationType(fromCacheSubmission.get().getParentApplication().getApplicationType());
+        parentApplication.setCourtLocation(fromCacheSubmission.get().getParentApplication().getCourtLocation());
+        parentApplication.setCourtLevel(fromCacheSubmission.get().getParentApplication().getCourtLevel());
+        parentApplication.setCourtDivision(fromCacheSubmission.get().getParentApplication().getCourtDivision());
+        parentApplication.setCourtClass(fromCacheSubmission.get().getParentApplication().getCourtClass());
+        parentApplication.setParticipationClass(fromCacheSubmission.get().getParentApplication().getParticipationClass());
+        parentApplication.setIndigenousStatus(fromCacheSubmission.get().getParentApplication().getIndigenousStatus());
+        parentApplication.setDocumentType(fromCacheSubmission.get().getParentApplication().getDocumentType());
+        parentApplication.setCourtFileNumber(fromCacheSubmission.get().getParentApplication().getCourtFileNumber());
         response.setParentApplication(parentApplication);
         return ResponseEntity.ok(response);
     }

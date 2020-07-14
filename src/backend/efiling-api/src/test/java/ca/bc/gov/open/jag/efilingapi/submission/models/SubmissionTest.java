@@ -39,6 +39,7 @@ public class SubmissionTest {
                 UUID.randomUUID(),
                 TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE),
                 TestHelpers.createNavigation(CASE_1, CANCEL, ERROR),
+                TestHelpers.createParentApplication(),
                 fee,
                 accountDetails,
                 1);

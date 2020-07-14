@@ -1,9 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
-import ca.bc.gov.open.jag.efilingapi.api.model.Redirect;
-import ca.bc.gov.open.jag.efilingapi.api.model.EndpointAccess;
-import ca.bc.gov.open.jag.efilingapi.api.model.Navigation;
+import ca.bc.gov.open.jag.efilingapi.api.model.*;
 
 import java.util.Collections;
 import java.util.UUID;
@@ -44,6 +41,20 @@ public class TestHelpers {
         errorRedirect.setUrl(error);
         navigation.setError(errorRedirect);
         return navigation;
+    }
+
+    public static ParentApplication createParentApplication() {
+        ParentApplication parentApplication = new ParentApplication();
+        parentApplication.setApplicationType("ApplicationType");
+        parentApplication.setCourtLocation("Kelwona law courts");
+        parentApplication.setCourtLevel("P");
+        parentApplication.setCourtDivision("R");
+        parentApplication.setCourtClass("E");
+        parentApplication.setParticipationClass("ParticipationClass");
+        parentApplication.setIndigenousStatus("IndigenousStatus");
+        parentApplication.setDocumentType("POR");
+        parentApplication.setCourtFileNumber("123");
+        return parentApplication;
     }
 
     public static Navigation createDefaultNavigation() {
