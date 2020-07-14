@@ -23,6 +23,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("SubmissionApiDelegateImpl test suite")
@@ -88,7 +89,7 @@ public class GenerateUrlTest {
         generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
-        ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(TestHelpers.CASE_1, generateUrlRequest);
+        ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(TestHelpers.CASE_1, UUID.randomUUID(), generateUrlRequest);
 
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
         Assertions.assertTrue(actual.getBody().getEfilingUrl().matches("http:\\/\\/localhost\\?submissionId=[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}"));
@@ -105,7 +106,7 @@ public class GenerateUrlTest {
         generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
-        ResponseEntity actual = sut.generateUrl(TestHelpers.CASE_2, generateUrlRequest);
+        ResponseEntity actual = sut.generateUrl(TestHelpers.CASE_2, UUID.randomUUID(), generateUrlRequest);
 
         EfilingError actualError = (EfilingError) actual.getBody();
 
@@ -122,7 +123,7 @@ public class GenerateUrlTest {
         generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
-        ResponseEntity actual = sut.generateUrl(TestHelpers.CASE_3, generateUrlRequest);
+        ResponseEntity actual = sut.generateUrl(TestHelpers.CASE_3, UUID.randomUUID(), generateUrlRequest);
 
         EfilingError actualError = (EfilingError) actual.getBody();
 
@@ -139,7 +140,7 @@ public class GenerateUrlTest {
         generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
-        ResponseEntity actual = sut.generateUrl(TestHelpers.CASE_4, generateUrlRequest);
+        ResponseEntity actual = sut.generateUrl(TestHelpers.CASE_4, UUID.randomUUID(), generateUrlRequest);
 
         EfilingError actualError = (EfilingError) actual.getBody();
 
