@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { MdCreditCard } from "react-icons/md";
 import ConfirmationPopup, {
@@ -18,48 +18,52 @@ const feesData = [
   { name: "Total Fees:", value: "$110.00", isValueBold: true }
 ];
 
-const elements = [
-  {
-    name: (
-      <div style={{ width: "80%" }}>
-        <Table elements={feesData} />
-        <br />
-        <br />
-        <p>
-          The registry will process statutory fees when your documents are
-          filed.
-        </p>
-      </div>
-    ),
-    value: (
-      <>
-        <p>
-          I have reviewed the information and the documents in this filing
-          package and am prepared to submit them for filing. I agree that all
-          fees for this filing package may be charged to the credit card
-          registered to my account.
-        </p>
-        <label
-          className="pt-3"
-          style={{ float: "right" }}
-          htmlFor="agreePayment"
-        >
-          <input
-            id="agreePayment"
-            type="checkbox"
-            onClick={() => console.log("agree")}
-          />
-          &nbsp;
-          <b>I agree</b>
-          <span id="asterisk" className="mandatory">
-            *
-          </span>
-        </label>
-      </>
-    ),
-    isSideBySide: true
-  }
-];
+const getTableElements = (paymentAgreed, setPaymentAgreed) => {
+  const elements = [
+    {
+      name: (
+        <div style={{ width: "80%" }}>
+          <Table elements={feesData} />
+          <br />
+          <br />
+          <p>
+            The registry will process statutory fees when your documents are
+            filed.
+          </p>
+        </div>
+      ),
+      value: (
+        <>
+          <p>
+            I have reviewed the information and the documents in this filing
+            package and am prepared to submit them for filing. I agree that all
+            fees for this filing package may be charged to the credit card
+            registered to my account.
+          </p>
+          <label
+            className="pt-3"
+            style={{ float: "right" }}
+            htmlFor="agreePayment"
+          >
+            <input
+              id="agreePayment"
+              type="checkbox"
+              onClick={() => setPaymentAgreed(!paymentAgreed)}
+            />
+            &nbsp;
+            <b>I agree</b>
+            <span id="asterisk" className="mandatory">
+              *
+            </span>
+          </label>
+        </>
+      ),
+      isSideBySide: true
+    }
+  ];
+
+  return elements;
+};
 
 const submitButton = {
   label: "Submit",
@@ -75,8 +79,11 @@ const backButton = {
 
 const aboutCsoSidecard = getSidecardData().aboutCso;
 const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
+const rushSubmissionSidecard = getSidecardData().rushSubmission;
 
 export default function Payment({ payment: { confirmationPopup } }) {
+  const [paymentAgreed, setPaymentAgreed] = useState(false);
+
   return (
     <div className="page">
       <div className="content col-md-8">
@@ -106,7 +113,11 @@ export default function Payment({ payment: { confirmationPopup } }) {
 
         <DisplayBox
           styling="display-left-element"
-          element={<Table elements={elements} />}
+          element={
+            <Table
+              elements={getTableElements(paymentAgreed, setPaymentAgreed)}
+            />
+          }
         />
 
         <br />
@@ -130,11 +141,13 @@ export default function Payment({ payment: { confirmationPopup } }) {
             label={submitButton.label}
             onClick={submitButton.onClick}
             styling={submitButton.styling}
+            disabled={!paymentAgreed}
           />
         </section>
       </div>
 
       <div className="sidecard">
+        <Sidecard sideCard={rushSubmissionSidecard} />
         <Sidecard sideCard={csoAccountDetailsSidecard} />
         <Sidecard sideCard={aboutCsoSidecard} />
       </div>

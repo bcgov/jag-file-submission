@@ -217,6 +217,7 @@ exports[`Storyshots Payment Default 1`] = `
         <div>
           <button
             class="normal-blue btn"
+            disabled=""
             type="button"
           >
             Submit
@@ -227,6 +228,84 @@ exports[`Storyshots Payment Default 1`] = `
     <div
       class="sidecard"
     >
+      <div
+        class="wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col-12 pt-2"
+            style="position: relative;"
+          >
+            <p />
+            <section
+              class="bluegrey-container"
+              id="bluegrey-section"
+            >
+              <div
+                class="container-background bluegrey-heading"
+              >
+                <h2
+                  class="heading-style"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="side-card-row"
+                    >
+                      <div
+                        class="round-icon-wrapper"
+                      >
+                        <svg
+                          class="side-card-icon"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42C16.07 4.74 14.12 4 12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9 9-4.03 9-9c0-2.12-.74-4.07-1.97-5.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="side-card-title"
+                      >
+                        Rush/Urgent Submission
+                      </div>
+                    </div>
+                  </div>
+                </h2>
+              </div>
+              <div
+                class="bluegrey-content"
+              >
+                <span
+                  class="content-style"
+                >
+                  <p>
+                    If you wish to request that this package be submitted on an urgent (rush) basis, you must provide a reason for your request to be considered. 
+                    <a
+                      href="https://justice.gov.bc.ca/cso/about/index.do"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      Request rush submission
+                    </a>
+                    .
+                  </p>
+                </span>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
       <div
         class="wide-dashboard-spacing"
         style="position: relative;"
@@ -613,6 +692,7 @@ exports[`Storyshots Payment Mobile 1`] = `
         <div>
           <button
             class="normal-blue btn"
+            disabled=""
             type="button"
           >
             Submit
@@ -623,6 +703,84 @@ exports[`Storyshots Payment Mobile 1`] = `
     <div
       class="sidecard"
     >
+      <div
+        class="wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col-12 pt-2"
+            style="position: relative;"
+          >
+            <p />
+            <section
+              class="bluegrey-container"
+              id="bluegrey-section"
+            >
+              <div
+                class="container-background bluegrey-heading"
+              >
+                <h2
+                  class="heading-style"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="side-card-row"
+                    >
+                      <div
+                        class="round-icon-wrapper"
+                      >
+                        <svg
+                          class="side-card-icon"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42C16.07 4.74 14.12 4 12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9 9-4.03 9-9c0-2.12-.74-4.07-1.97-5.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="side-card-title"
+                      >
+                        Rush/Urgent Submission
+                      </div>
+                    </div>
+                  </div>
+                </h2>
+              </div>
+              <div
+                class="bluegrey-content"
+              >
+                <span
+                  class="content-style"
+                >
+                  <p>
+                    If you wish to request that this package be submitted on an urgent (rush) basis, you must provide a reason for your request to be considered. 
+                    <a
+                      href="https://justice.gov.bc.ca/cso/about/index.do"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      Request rush submission
+                    </a>
+                    .
+                  </p>
+                </span>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
       <div
         class="wide-dashboard-spacing"
         style="position: relative;"

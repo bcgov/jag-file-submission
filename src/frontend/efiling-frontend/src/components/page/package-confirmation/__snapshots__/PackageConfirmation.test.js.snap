@@ -372,7 +372,7 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
           </div>
         </div>
         <div
-          class="display-element"
+          class="display-right-element"
         >
           CSO Account created successfully.
         </div>
@@ -410,7 +410,7 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
           </div>
         </div>
         <div
-          class="display-element"
+          class="display-right-element"
         >
           <p>
             View
@@ -439,25 +439,66 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              Statutory Fees:
+          <tr
+            class=""
+            colspan="2"
+          >
+            <td
+              class="side-by-side"
+            >
+              <div
+                style="width: 80%;"
+              >
+                <table
+                  class=""
+                >
+                  <thead>
+                    <tr>
+                      <th
+                        colspan="2"
+                      />
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      class=""
+                      colspan="2"
+                    >
+                      <td
+                        class=""
+                      >
+                        Statutory Fees:
+                      </td>
+                      <td
+                        style="text-align: right;"
+                      >
+                        <b>
+                          $100.00
+                        </b>
+                      </td>
+                    </tr>
+                    <tr
+                      class=""
+                      colspan="2"
+                    >
+                      <td
+                        class=""
+                      >
+                        Number of Documents in Package:
+                      </td>
+                      <td
+                        style="text-align: right;"
+                      >
+                        <b>
+                          10
+                        </b>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </td>
-            <td>
-              <b>
-                $100.00
-              </b>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Number of Documents in Package:
-            </td>
-            <td>
-              <b>
-                10
-              </b>
-            </td>
+            <td />
           </tr>
         </tbody>
       </table>
