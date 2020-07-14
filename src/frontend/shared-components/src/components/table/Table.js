@@ -60,7 +60,8 @@ TableElement.propTypes = {
     isNameBold: PropTypes.bool,
     isSideBySide: PropTypes.bool,
     isEmptyRow: PropTypes.bool
-  }).isRequired
+  }).isRequired,
+  isFeesData: PropTypes.bool
 };
 
 Table.propTypes = {
