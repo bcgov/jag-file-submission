@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots PackageConfirmation Default 1`] = `
+exports[`Storyshots PackageConfirmation Existing Account 1`] = `
 <DocumentFragment>
   <div
     class="page"
@@ -471,6 +471,337 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
               </div>
             </td>
             <td />
+          </tr>
+        </tbody>
+      </table>
+      <br />
+      <section
+        class="inline-block pt-2"
+      >
+        <div>
+          <button
+            class="normal-white btn"
+            type="button"
+          >
+            Upload Documents
+          </button>
+        </div>
+      </section>
+      <section
+        class="buttons pt-2"
+      >
+        <div>
+          <button
+            class="normal-white btn"
+            type="button"
+          >
+            Cancel
+          </button>
+        </div>
+        <div>
+          <button
+            class="normal-blue btn"
+            type="button"
+          >
+            Continue to Payment
+          </button>
+        </div>
+      </section>
+    </div>
+    <div
+      class="sidecard"
+    >
+      <div
+        class="wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col-12 pt-2"
+            style="position: relative;"
+          >
+            <p />
+            <section
+              class="bluegrey-container"
+              id="bluegrey-section"
+            >
+              <div
+                class="container-background bluegrey-heading"
+              >
+                <h2
+                  class="heading-style"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="side-card-row"
+                    >
+                      <div
+                        class="round-icon-wrapper"
+                      >
+                        <svg
+                          class="side-card-icon"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="side-card-title"
+                      >
+                        Your CSO Account
+                      </div>
+                    </div>
+                  </div>
+                </h2>
+              </div>
+              <div
+                class="bluegrey-content"
+              >
+                <span
+                  class="content-style"
+                >
+                  <p>
+                    CSO account 
+                    <b>
+                      blah
+                    </b>
+                     is linked to your Basic BCeID account 
+                    <b>
+                      blah2
+                    </b>
+                     and will be used to file documents. 
+                    <a
+                      href="https://justice.gov.bc.ca/cso/about/index.do"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      View your CSO account details
+                    </a>
+                    .
+                  </p>
+                </span>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div
+        class="wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col-12 pt-2"
+            style="position: relative;"
+          >
+            <p />
+            <section
+              class="bluegrey-container"
+              id="bluegrey-section"
+            >
+              <div
+                class="container-background bluegrey-heading"
+              >
+                <h2
+                  class="heading-style"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="side-card-row"
+                    >
+                      <div
+                        class="round-icon-wrapper"
+                      >
+                        <svg
+                          class="side-card-icon"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="side-card-title"
+                      >
+                        About E-File Submission
+                      </div>
+                    </div>
+                  </div>
+                </h2>
+              </div>
+              <div
+                class="bluegrey-content"
+              >
+                <span
+                  class="content-style"
+                >
+                  <p>
+                    E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
+                    <a
+                      href="https://justice.gov.bc.ca/cso/about/index.do"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      Learn more about CSO
+                    </a>
+                    .
+                  </p>
+                </span>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Storyshots PackageConfirmation New Account 1`] = `
+<DocumentFragment>
+  <div
+    class="page"
+  >
+    <div
+      class="content col-md-8"
+    >
+      <div
+        class="display-box success-background"
+      >
+        <div
+          class="display-icon"
+        >
+          <div
+            style="color: rgb(46, 133, 64);"
+          >
+            <svg
+              fill="currentColor"
+              height="32"
+              size="32"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="32"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+              />
+            </svg>
+          </div>
+        </div>
+        <div
+          class="display-element"
+        >
+          CSO Account created successfully.
+        </div>
+      </div>
+      <br />
+      <h2>
+        Package Confirmation
+      </h2>
+      <p>
+        Review your package for accuracy before submitting.
+      </p>
+      <div
+        class="display-box border-background"
+      >
+        <div
+          class="display-icon"
+        >
+          <div
+            style="color: rgb(252, 186, 25);"
+          >
+            <svg
+              fill="currentColor"
+              height="32"
+              size="32"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="32"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+              />
+            </svg>
+          </div>
+        </div>
+        <div
+          class="display-element"
+        >
+          <p>
+            View
+          </p>
+        </div>
+      </div>
+      <br />
+      <p>
+        <a
+          href="cancelurl.com"
+        >
+          Return to the parent application website
+        </a>
+         to correct errors or missing information in this package.
+      </p>
+      <br />
+      <h3>
+        Summary
+      </h3>
+      <table
+        class=""
+      >
+        <thead>
+          <tr>
+            <th
+              colspan="2"
+            />
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              Statutory Fees:
+            </td>
+            <td>
+              <b>
+                $100.00
+              </b>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Number of Documents in Package:
+            </td>
+            <td>
+              <b>
+                10
+              </b>
+            </td>
           </tr>
         </tbody>
       </table>

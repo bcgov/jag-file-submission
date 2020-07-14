@@ -1,5 +1,10 @@
 package ca.bc.gov.open.jag.efilingaccountclient;
 
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.UUID;
 
 /**
@@ -18,4 +23,17 @@ public class CsoHelpers {
         return id.toString().replace("-", "").toUpperCase();
     }
 
+    /**
+     * Helper function to convert a Date to an XMLGregorianCalendar date for sending to SOAP
+     * @param date
+     * @return XMLGregorianCalendar
+     * @throws DatatypeConfigurationException
+     */
+    public static XMLGregorianCalendar date2XMLGregorian(Date date) throws DatatypeConfigurationException {
+
+        GregorianCalendar c = new GregorianCalendar();
+        c.setTime(date);
+        XMLGregorianCalendar date2 = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+        return date2;
+    }
 }

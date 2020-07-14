@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { MdDescription } from "react-icons/md";
+import { MdDescription, MdCheckBox } from "react-icons/md";
 import ConfirmationPopup, {
+  Alert,
   Button,
   Sidecard,
   DisplayBox,
@@ -60,11 +61,23 @@ const documentIcon = (
 );
 
 export default function PackageConfirmation({
-  packageConfirmation: { confirmationPopup }
+  packageConfirmation: { confirmationPopup },
+  csoAccountStatus: { isNew }
 }) {
   return (
     <div className="page">
       <div className="content col-md-8">
+        {isNew && (
+          <>
+            <Alert
+              icon={<MdCheckBox size={32} />}
+              type="success"
+              styling="success-background"
+              element="CSO Account created successfully."
+            />
+            <br />
+          </>
+        )}
         <h2>Package Confirmation</h2>
         <p>Review your package for accuracy before submitting.</p>
 
@@ -125,5 +138,8 @@ export default function PackageConfirmation({
 PackageConfirmation.propTypes = {
   packageConfirmation: PropTypes.shape({
     confirmationPopup: propTypes.confirmationPopup
+  }).isRequired,
+  csoAccountStatus: PropTypes.shape({
+    isNew: PropTypes.bool
   }).isRequired
 };
