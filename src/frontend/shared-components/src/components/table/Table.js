@@ -4,18 +4,21 @@ import PropTypes from "prop-types";
 import "./Table.css";
 
 const TableElement = ({
-  element: { name, value, isValueBold, isNameBold }
+  element: { name, value, isValueBold, isNameBold, isSideBySide, isEmptyRow }
 }) => {
+  const columnWidth = isSideBySide ? "side-by-side" : "";
+  const emptyRow = isEmptyRow ? "empty-row" : "";
+
   return (
-    <tr>
+    <tr colSpan="2" className={emptyRow}>
       {isNameBold && (
-        <td>
+        <td className={columnWidth}>
           <b>{name}</b>
         </td>
       )}
-      {!isNameBold && <td>{name}</td>}
+      {!isNameBold && <td className={columnWidth}>{name}</td>}
       {isValueBold && (
-        <td>
+        <td style={{ textAlign: "right" }}>
           <b>{value}</b>
         </td>
       )}
@@ -43,10 +46,12 @@ export const Table = ({ heading, elements, styling }) => {
 
 TableElement.propTypes = {
   element: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
+    name: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     isValueBold: PropTypes.bool,
-    isNameBold: PropTypes.bool
+    isNameBold: PropTypes.bool,
+    isSideBySide: PropTypes.bool,
+    isEmptyRow: PropTypes.bool
   }).isRequired
 };
 
@@ -54,8 +59,9 @@ Table.propTypes = {
   heading: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   elements: PropTypes.arrayOf(
     PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+      name: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+        .isRequired,
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
         .isRequired
     }).isRequired
   ),
