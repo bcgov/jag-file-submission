@@ -5,18 +5,21 @@ FROM maven:3.6.3-jdk-8 as build
 
 ARG MVN_PROFILE
 ARG SERVICE_NAME
+ARG SKIP_TESTS=false
 
 ENV SERVICE_NAME=${SERVICE_NAME}
 
 COPY . .
 
 RUN mvn -B clean install \
-        -P libs
+        -P libs \
+        -Dmaven.test.skip=${SKIP_TESTS}
 
 WORKDIR ${SERVICE_NAME}
 
 RUN mvn -B clean package \
-        -P ${MVN_PROFILE}
+        -P ${MVN_PROFILE} \
+        -Dmaven.test.skip=${SKIP_TESTS}
 
 #############################################################################################
 
