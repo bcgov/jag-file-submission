@@ -244,8 +244,11 @@ components:
     ClientApplication:
       type: object
       required:
+        - displayName
         - type
       properties:
+        displayName:
+          type: string
         type:
           type: string
     UserDetails:
