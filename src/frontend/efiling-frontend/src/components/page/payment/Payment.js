@@ -11,6 +11,7 @@ import ConfirmationPopup, {
 import { getSidecardData } from "../../../modules/sidecardData";
 import { propTypes } from "../../../types/propTypes";
 
+// TODO: Extract to module to generate this
 const feesData = [
   { name: "Some Fees:", value: "$100.00", isValueBold: true },
   { name: "Some More Fees:", value: "$10.00", isValueBold: true },
@@ -18,6 +19,8 @@ const feesData = [
   { name: "Total Fees:", value: "$110.00", isValueBold: true }
 ];
 
+// TODO: refactor and simplify/reduce LOC
+// Possibly extract responsibility of generating this to a module
 const getTableElements = (paymentAgreed, setPaymentAgreed) => {
   const elements = [
     {
