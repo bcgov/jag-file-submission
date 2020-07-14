@@ -114,6 +114,25 @@ export const eFilePackage = (files, accountGuid, setErrorExists) => {
     });
 };
 
+const uploadFiles = files => {
+  const formData = new FormData();
+
+  console.log(files[0].file);
+
+  for (let i = 0; i < files.length; i++) {
+    formData.append(`files[${i}]`, files[i]);
+  }
+
+  axios
+    .post(`http://demo0217811.mockable.io/`, formData)
+    .then(response => {
+      console.log(response);
+    })
+    .catch(() => {
+      console.log("An error occurred with the upload. Please try again.");
+    });
+};
+
 export default function Home({ page: { header } }) {
   const [errorExists, setErrorExists] = useState(false);
   const [accountGuid, setAccountGuid] = useState(null);
@@ -139,6 +158,19 @@ export default function Home({ page: { header } }) {
             label="E-File my Package"
             styling="normal-blue btn"
             testId="generate-url-btn"
+          />
+          <br />
+          <FilePond
+            files={files}
+            allowMultiple
+            onupdatefiles={setFiles}
+            labelIdle='Drag and Drop your files or <span class="filepond--label-action">Browse</span>'
+          />
+          <br />
+          <Button
+            onClick={() => uploadFiles(files)}
+            label="Upload"
+            styling="normal-blue btn"
           />
           <br />
           {errorExists && (
