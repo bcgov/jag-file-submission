@@ -21,36 +21,34 @@ tests
 
 ## Running the maven Tests without cucumber tags
 
-1. Add values to the keys in config.properties file.
-1. Add test data values to the json files in 'test/java/testdatasource' package.
+[config.properties](src/main/java/ca/bc/gov/open/jagefilingapi/qa/config/config.properties) are pointing to docker, change it for other source.
 
-In the 'tests' directory, you can run:
+[account-data.json](src/test/java/testdatasource/account-data.json) uses demo accounts, value can be changed.
 
-### `mvn clean install`
+```bash
+cd tests
+```
 
-Installs all the required mvn dependencies.
+Run the tests
 
-### `mvn test`
+```bash
+mvn clean verify
+```
 
-Runs the tests on the specified browser.
+Running the tests create an html report [here](test-output/extent/HtmlReport/ExtentHtml.html)
 
-## Running the Cucumber Tests with tags
+## Cucumber Tags
 
-Add values to the keys in config.properties file
-Update tags value in 'RunCucumberTest' class
+We support running the tests with the current tags:
 
-In the 'tests' directory, you can run:
+### @backend
 
-### `mvn test -Dcucumber.options="--tags '@tagname'"`
+This would only run backend tests.
 
-This runs the tests that are tagged with the specific tag name.
-Without the 'tags' option all tests gets executed.
+```bash
+cd tests
+```
 
-Alternatively, both frontend and backend tests can be run from
-RunCucumberTest.java class
-
-## Reports
-
-Html reports will be saved in the test-output folder to view the test results in the browser
-
-### `test/test-output/extent`
+```bash
+mvn verify -Dcucumber.options="--tags '@backend'"
+```

@@ -29,7 +29,7 @@ const addUserInfo = ({ bceid, firstName, middleName, lastName, email }) => {
 // make call to submission/{id} to get the user and navigation details
 const checkCSOAccountStatus = (
   submissionId,
-  setCsoAccountExists,
+  setCsoAccountStatus,
   setShowLoader,
   setApplicantInfo
 ) => {
@@ -43,7 +43,8 @@ const checkCSOAccountStatus = (
         const csoAccountExists = userDetails.accounts.some(
           element => element.type === "CSO"
         );
-        if (csoAccountExists) setCsoAccountExists(true);
+        if (csoAccountExists)
+          setCsoAccountStatus({ isNew: false, exists: true });
       }
 
       const applicantInfo = addUserInfo(userDetails);
@@ -57,7 +58,10 @@ const checkCSOAccountStatus = (
 
 export default function Home({ page: { header, confirmationPopup } }) {
   const [showLoader, setShowLoader] = useState(true);
-  const [csoAccountExists, setCsoAccountExists] = useState(false);
+  const [csoAccountStatus, setCsoAccountStatus] = useState({
+    exists: false,
+    isNew: false
+  });
   const [applicantInfo, setApplicantInfo] = useState({});
   const location = useLocation();
   const queryParams = queryString.parse(location.search);
@@ -65,7 +69,7 @@ export default function Home({ page: { header, confirmationPopup } }) {
   useEffect(() => {
     checkCSOAccountStatus(
       queryParams.submissionId,
-      setCsoAccountExists,
+      setCsoAccountStatus,
       setShowLoader,
       setApplicantInfo
     );
@@ -79,15 +83,18 @@ export default function Home({ page: { header, confirmationPopup } }) {
     <main>
       <Header header={header} />
       {showLoader && <Loader page />}
-      {!showLoader && !csoAccountExists && (
+      {!showLoader && !csoAccountStatus.exists && (
         <CSOAccount
           confirmationPopup={confirmationPopup}
           applicantInfo={applicantInfo}
-          setCsoAccountExists={setCsoAccountExists}
+          setCsoAccountStatus={setCsoAccountStatus}
         />
       )}
-      {!showLoader && csoAccountExists && (
-        <PackageConfirmation packageConfirmation={packageConfirmation} />
+      {!showLoader && csoAccountStatus.exists && (
+        <PackageConfirmation
+          packageConfirmation={packageConfirmation}
+          csoAccountStatus={csoAccountStatus}
+        />
       )}
       <Footer />
     </main>

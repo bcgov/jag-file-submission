@@ -1,9 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
-import ca.bc.gov.open.jag.efilingapi.api.model.Redirect;
-import ca.bc.gov.open.jag.efilingapi.api.model.EndpointAccess;
-import ca.bc.gov.open.jag.efilingapi.api.model.Navigation;
+import ca.bc.gov.open.jag.efilingapi.api.model.*;
 
 import java.util.Collections;
 import java.util.UUID;
@@ -44,6 +41,22 @@ public class TestHelpers {
         errorRedirect.setUrl(error);
         navigation.setError(errorRedirect);
         return navigation;
+    }
+
+    public static ClientApplication createClientApplication(String applicationType, String courtLocation, String courtLevel,
+                                                            String courtDivision, String courtClass, String participationClass,
+                                                            String indigenousStatus, String documentType, String courtFileNumber) {
+        ClientApplication clientApplication = new ClientApplication();
+        clientApplication.setApplicationType(applicationType);
+        clientApplication.setCourtLocation(courtLocation);
+        clientApplication.setCourtLevel(courtLevel);
+        clientApplication.setCourtDivision(courtDivision);
+        clientApplication.setCourtClass(courtClass);
+        clientApplication.setParticipationClass(participationClass);
+        clientApplication.setIndigenousStatus(indigenousStatus);
+        clientApplication.setDocumentType(documentType);
+        clientApplication.setCourtFileNumber(courtFileNumber);
+        return clientApplication;
     }
 
     public static Navigation createDefaultNavigation() {

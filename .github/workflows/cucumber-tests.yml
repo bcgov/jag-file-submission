@@ -1,0 +1,20 @@
+name: Cucumber Tests
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  cucumber-tests:
+
+    name: Runs cucumber-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: install chromium driver
+        run: sudo apt-get -yqq install chromium-chromedriver
+
+      # Get Code Climate binary
+      - name: build docker and run tests
+        run: docker-compose up -d efiling-frontend efiling-demo efiling-api redis && mvn verify -f tests/pom.xml

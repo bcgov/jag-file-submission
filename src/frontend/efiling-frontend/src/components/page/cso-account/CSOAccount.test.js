@@ -17,7 +17,7 @@ import CSOAccount from "./CSOAccount";
 describe("CSOAccount Component", () => {
   const confirmationPopup = getTestData();
   const applicantInfo = getApplicantInfo();
-  const setCsoAccountExists = jest.fn();
+  const setCsoAccountStatus = jest.fn();
 
   const mock = new MockAdapter(axios);
   const API_REQUEST = "/csoAccount";
@@ -27,14 +27,14 @@ describe("CSOAccount Component", () => {
       <CSOAccount
         confirmationPopup={confirmationPopup}
         applicantInfo={applicantInfo}
-        setCsoAccountExists={setCsoAccountExists}
+        setCsoAccountStatus={setCsoAccountStatus}
       />
     );
 
     expect(asFragment()).toMatchSnapshot();
   });
 
-  test("On success, setCsoAccountExists to true", async () => {
+  test("On success, setCsoAccountStatus exists and isNew to true", async () => {
     mock
       .onPost(API_REQUEST)
       .reply(201, { accounts: [{ type: "CSO", identifier: "identifier" }] });
@@ -43,7 +43,7 @@ describe("CSOAccount Component", () => {
       <CSOAccount
         confirmationPopup={confirmationPopup}
         applicantInfo={applicantInfo}
-        setCsoAccountExists={setCsoAccountExists}
+        setCsoAccountStatus={setCsoAccountStatus}
       />
     );
 
@@ -54,6 +54,6 @@ describe("CSOAccount Component", () => {
     fireEvent.click(getByText(container, "Create CSO Account"));
     await wait(() => {});
 
-    expect(setCsoAccountExists).toHaveBeenCalled();
+    expect(setCsoAccountStatus).toHaveBeenCalled();
   });
 });
