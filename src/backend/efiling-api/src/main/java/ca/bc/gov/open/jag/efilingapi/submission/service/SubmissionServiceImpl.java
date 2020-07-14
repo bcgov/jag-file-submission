@@ -63,7 +63,8 @@ public class SubmissionServiceImpl implements SubmissionService {
                 submissionMapper.toSubmission(generateUrlRequest,
                         feeService.getFee(
                                 new FeeRequest(
-                                        generateUrlRequest.getPackage().getDocuments().get(0).getType())),
+                                        generateUrlRequest.getDocumentProperties().getType(),
+                                        generateUrlRequest.getDocumentProperties().getSubType())),
                         accountDetails,
                         getExpiryDate()));
 

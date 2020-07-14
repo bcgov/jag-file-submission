@@ -3,7 +3,6 @@ package ca.bc.gov.open.jag.efilingapi;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.UUID;
 
 public class TestHelpers {
@@ -18,11 +17,16 @@ public class TestHelpers {
     public static final String CANCEL_URL = "http://cancel";
     public static final String ERROR_URL = "http://error";
 
-    public static ModelPackage createPackage(Court court, List<DocumentProperties> documents) {
-        ModelPackage modelPackage = new ModelPackage();
-        modelPackage.setCourt(court);
-        modelPackage.setDocuments(documents);
-        return modelPackage;
+    public static DocumentProperties createDocumentProperties(String header, String url, String subtype, String type) {
+        DocumentProperties documentProperties = new DocumentProperties();
+        EndpointAccess documentAccess = new EndpointAccess();
+        documentAccess.setHeaders(Collections.singletonMap(header, header));
+        documentAccess.setUrl(url);
+        documentAccess.setVerb(EndpointAccess.VerbEnum.POST);
+        documentProperties.setSubmissionAccess(documentAccess);
+        documentProperties.setSubType(subtype);
+        documentProperties.setType(type);
+        return documentProperties;
     }
 
     public static Navigation createNavigation(String success, String cancel, String error) {
@@ -39,11 +43,19 @@ public class TestHelpers {
         return navigation;
     }
 
-    public static ClientApplication createClientApplication(String displayName, String type) {
+    public static ClientApplication createClientApplication(String applicationType, String courtLocation, String courtLevel,
+                                                            String courtDivision, String courtClass, String participationClass,
+                                                            String indigenousStatus, String documentType, String courtFileNumber) {
         ClientApplication clientApplication = new ClientApplication();
-        clientApplication.setDisplayName(displayName);
-        clientApplication.setType(type);
-
+        clientApplication.setApplicationType(applicationType);
+        clientApplication.setCourtLocation(courtLocation);
+        clientApplication.setCourtLevel(courtLevel);
+        clientApplication.setCourtDivision(courtDivision);
+        clientApplication.setCourtClass(courtClass);
+        clientApplication.setParticipationClass(participationClass);
+        clientApplication.setIndigenousStatus(indigenousStatus);
+        clientApplication.setDocumentType(documentType);
+        clientApplication.setCourtFileNumber(courtFileNumber);
         return clientApplication;
     }
 

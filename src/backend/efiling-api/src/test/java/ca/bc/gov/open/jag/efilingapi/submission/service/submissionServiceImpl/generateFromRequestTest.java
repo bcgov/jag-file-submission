@@ -1,8 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service.submissionServiceImpl;
 
 
-import ca.bc.gov.open.jag.efilingapi.api.model.Court;
-import ca.bc.gov.open.jag.efilingapi.api.model.ModelPackage;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
@@ -27,7 +25,10 @@ import org.springframework.boot.autoconfigure.cache.CacheProperties;
 
 import java.math.BigDecimal;
 import java.time.Duration;
-import java.util.*;
+import java.util.Optional;
+import java.util.UUID;
+
+import static ca.bc.gov.open.jag.efilingapi.api.model.EndpointAccess.VerbEnum.POST;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class generateFromRequestTest {
@@ -36,14 +37,8 @@ public class generateFromRequestTest {
     private static final String LAST_NAME = "case1_lastName";
     private static final String FIRST_NAME = "case1_firstName";
     private static final String EMAIL = "case1_email";
-    private static final String DIVISION = "DIVISION";
-    private static final String FILENUMBER = "FILENUMBER";
-    private static final String LEVEL = "LEVEL";
-    private static final String LOCATION = "LOCATION";
-    private static final String PARTICIPATIONCLASS = "PARTICIPATIONCLASS";
-    private static final String PROPERTYCLASS = "PROPERTYCLASS";
-    private static final String TYPE = "TYPE";
-    private static final String DESCRIPTION = "DESCRIPTION";
+    private static final DocumentProperties CASE1_DOCUMENT_PROPERTIES = TestHelpers.createDocumentProperties("header", "http://doc", "subtype", "case1_type");
+
     private SubmissionServiceImpl sut;
 
     @Mock
@@ -88,7 +83,7 @@ public class generateFromRequestTest {
 
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setNavigation(TestHelpers.createDefaultNavigation());
-        request.setPackage(TestHelpers.createPackage(getCourt(), getDocs()));
+        request.setDocumentProperties(CASE1_DOCUMENT_PROPERTIES);
 
         Submission actual = sut.generateFromRequest(TestHelpers.CASE_1, request);
 
@@ -102,16 +97,13 @@ public class generateFromRequestTest {
         Assertions.assertEquals(TestHelpers.CANCEL_URL, actual.getNavigation().getCancel().getUrl());
         Assertions.assertEquals(TestHelpers.SUCCESS_URL, actual.getNavigation().getSuccess().getUrl());
         Assertions.assertEquals(10, actual.getExpiryDate());
+        Assertions.assertEquals("subtype", actual.getDocumentProperties().getSubType());
+        Assertions.assertEquals("case1_type", actual.getDocumentProperties().getType());
+        Assertions.assertEquals("http://doc", actual.getDocumentProperties().getSubmissionAccess().getUrl());
+        Assertions.assertEquals("header", actual.getDocumentProperties().getSubmissionAccess().getHeaders().get("header"));
+        Assertions.assertEquals(POST, actual.getDocumentProperties().getSubmissionAccess().getVerb());
         Assertions.assertEquals(BigDecimal.valueOf(7.0), actual.getFee().getAmount());
         Assertions.assertNotNull(actual.getId());
-        Assertions.assertEquals(DIVISION, actual.getModelPackage().getCourt().getDivision());
-        Assertions.assertEquals(FILENUMBER, actual.getModelPackage().getCourt().getFileNumber());
-        Assertions.assertEquals(LEVEL, actual.getModelPackage().getCourt().getLevel());
-        Assertions.assertEquals(LOCATION, actual.getModelPackage().getCourt().getLocation());
-        Assertions.assertEquals(PARTICIPATIONCLASS, actual.getModelPackage().getCourt().getParticipatingClass());
-        Assertions.assertEquals(PROPERTYCLASS, actual.getModelPackage().getCourt().getPropertyClass());
-        Assertions.assertEquals(TYPE, actual.getModelPackage().getDocuments().get(0).getType());
-        Assertions.assertEquals(DESCRIPTION, actual.getModelPackage().getDocuments().get(0).getDescription());
 
     }
 
@@ -121,8 +113,7 @@ public class generateFromRequestTest {
 
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setNavigation(TestHelpers.createDefaultNavigation());
-        request.setPackage(TestHelpers.createPackage(getCourt(), getDocs()));
-
+        request.setDocumentProperties(CASE1_DOCUMENT_PROPERTIES);
 
         Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(TestHelpers.CASE_2, request));
 
@@ -134,8 +125,7 @@ public class generateFromRequestTest {
 
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setNavigation(TestHelpers.createDefaultNavigation());
-        request.setPackage(TestHelpers.createPackage(getCourt(), getDocs()));
-
+        request.setDocumentProperties(CASE1_DOCUMENT_PROPERTIES);
 
         Assertions.assertThrows(InvalidAccountStateException.class, () -> sut.generateFromRequest(TestHelpers.CASE_3, request));
 
@@ -148,8 +138,7 @@ public class generateFromRequestTest {
         UUID fakeaccount = UUID.fromString("88da92db-0791-491e-8c58-1a969e67d2fb");
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setNavigation(TestHelpers.createDefaultNavigation());
-        request.setPackage(TestHelpers.createPackage(getCourt(), getDocs()));
-
+        request.setDocumentProperties(CASE1_DOCUMENT_PROPERTIES);
 
 
         AccountDetails accountDetails =  AccountDetails.builder().lastName("lastName").create();
@@ -160,7 +149,7 @@ public class generateFromRequestTest {
                 .accountDetails(accountDetails)
                 .navigation(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
-                .modelPackage(TestHelpers.createPackage(getCourt(), getDocs()))
+                .documentProperties(CASE1_DOCUMENT_PROPERTIES)
                 .fee(fee)
                 .create();
 
@@ -192,7 +181,7 @@ public class generateFromRequestTest {
                 .accountDetails(accountDetails)
                 .navigation(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
-                .modelPackage(TestHelpers.createPackage(getCourt(), getDocs()))
+                .documentProperties(CASE1_DOCUMENT_PROPERTIES)
                 .fee(fee)
                 .create();
 
@@ -244,20 +233,5 @@ public class generateFromRequestTest {
                 .create();
     }
 
-    private Court getCourt() {
-        Court court = new Court();
-        court.setDivision(DIVISION);
-        court.setFileNumber(FILENUMBER);
-        court.setLevel(LEVEL);
-        court.setLocation(LOCATION);
-        court.setParticipatingClass(PARTICIPATIONCLASS);
-        court.setPropertyClass(PROPERTYCLASS);
-        return court;
-    }
-    private List<DocumentProperties> getDocs() {
-        DocumentProperties documentProperties = new DocumentProperties();
-        documentProperties.setType(TYPE);
-        documentProperties.setDescription(DESCRIPTION);
-        return Arrays.asList(documentProperties);
-    }
+
 }

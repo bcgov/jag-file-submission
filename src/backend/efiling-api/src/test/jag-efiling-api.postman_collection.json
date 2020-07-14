@@ -27,7 +27,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"clientApplication\": {\r\n    \"displayName\": \"string\",\r\n    \"type\": \"string\"\r\n  },\r\n  \"package\": {\r\n    \"court\": {\r\n      \"location\": \"string\",\r\n      \"level\": \"string\",\r\n      \"class\": \"string\",\r\n      \"division\": \"string\",\r\n      \"fileNumber\": \"string\",\r\n      \"participatingClass\": \"string\"\r\n    },\r\n    \"documents\": [\r\n      {\r\n        \"name\": \"string\",\r\n        \"description\": \"string\",\r\n        \"type\": \"DCFL\"\r\n      }\r\n    ]\r\n  },\r\n  \"navigation\": {\r\n    \"success\": {\r\n      \"url\": \"string\"\r\n    },\r\n    \"error\": {\r\n      \"url\": \"string\"\r\n    },\r\n    \"cancel\": {\r\n      \"url\": \"string\"\r\n    }\r\n  }\r\n}",
+              "raw": "{\r\n  \"clientApplication\": {\r\n    \"applicationType\": \"string\",\r\n    \"courtLocation\": \"string\",\r\n    \"courtLevel\": \"string\",\r\n    \"courtClass\": \"string\",\r\n    \"documentType\": \"string\",\r\n    \"courtDivision\": \"string\",\r\n    \"participationClass\": \"string\",\r\n    \"indigenousStatus\": \"string\",\r\n    \"courtFileNumber\": \"string\"\r\n  },\r\n  \"documentProperties\": {\r\n    \"type\": \"DCFL\",\r\n    \"subType\": \"string\",\r\n    \"submissionAccess\": {\r\n      \"url\": \"string\",\r\n      \"verb\": \"GET\",\r\n      \"headers\": {\r\n        \"additionalProp1\": \"string\",\r\n        \"additionalProp2\": \"string\",\r\n        \"additionalProp3\": \"string\"\r\n      }\r\n    }\r\n  },\r\n  \"navigation\": {\r\n    \"success\": {\r\n      \"url\": \"string\"\r\n    },\r\n    \"error\": {\r\n      \"url\": \"string\"\r\n    },\r\n    \"cancel\": {\r\n      \"url\": \"string\"\r\n    }\r\n  }\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -101,8 +101,10 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/actuator/info",
-              "host": ["{{baseUrl}}"],
+              "raw": "http://localhost:8080/actuator/info",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
               "path": ["actuator", "info"]
             }
           },

@@ -10,11 +10,13 @@ import org.junit.jupiter.api.TestInstance;
 public class FeeRequestTest {
 
     private static final String DOCTYPE = "DOCTYPE";
+    private static final String SUBDOCTYPE = "SUBDOCTYPE";
 
     @Test
     @DisplayName("CASE1: Test getters")
     public void testGettSetter() {
-        FeeRequest testFee = new FeeRequest(DOCTYPE);
+        FeeRequest testFee = new FeeRequest(DOCTYPE, SUBDOCTYPE);
         Assertions.assertEquals(DOCTYPE, testFee.getDocumentType());
+        Assertions.assertEquals(SUBDOCTYPE, testFee.getDocumentSubType());
     }
 }

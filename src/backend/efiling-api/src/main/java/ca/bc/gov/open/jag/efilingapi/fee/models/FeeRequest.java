@@ -6,13 +6,19 @@ package ca.bc.gov.open.jag.efilingapi.fee.models;
 public class FeeRequest {
 
     private String documentType;
+    private String documentSubType;
 
-    public FeeRequest(String documentType) {
+    public FeeRequest(String documentType, String documentSubType) {
         this.documentType = documentType;
+        this.documentSubType = documentSubType;
     }
 
     public String getDocumentType() {
         return documentType;
+    }
+
+    public String getDocumentSubType() {
+        return documentSubType;
     }
 
 }
