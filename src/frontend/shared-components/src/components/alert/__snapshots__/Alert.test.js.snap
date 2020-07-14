@@ -36,7 +36,7 @@ exports[`Alert Component Matches the 'error' snapshot 1`] = `
     </div>
   </div>
   <div
-    className="display-element"
+    className="display-right-element"
   >
     This is an error message!
   </div>
@@ -71,7 +71,7 @@ exports[`Alert Component Matches the 'info' snapshot 1`] = `
     </svg>
   </div>
   <div
-    className="display-element"
+    className="display-right-element"
   >
     This is an info message!
   </div>
@@ -114,7 +114,7 @@ exports[`Alert Component Matches the 'success' snapshot 1`] = `
     </div>
   </div>
   <div
-    className="display-element"
+    className="display-right-element"
   >
     This is a success message!
   </div>
@@ -157,7 +157,7 @@ exports[`Alert Component Matches the 'warning' snapshot 1`] = `
     </div>
   </div>
   <div
-    className="display-element"
+    className="display-right-element"
   >
     This is a warning message!
   </div>

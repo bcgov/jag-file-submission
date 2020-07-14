@@ -15,3 +15,15 @@ td {
 .blue-stripe tbody tr:nth-child(odd) {
   background: rgba(225, 232, 242, 1);
 }
+
+.side-by-side {
+  width: 60%;
+}
+
+.empty-row td {
+  border-bottom: 1px solid black;
+}
+
+.right-align {
+  text-align: right;
+}

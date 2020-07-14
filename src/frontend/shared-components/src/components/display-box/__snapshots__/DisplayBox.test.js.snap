@@ -28,7 +28,7 @@ exports[`DisplayBox Component Matches the 'with icon' snapshot 1`] = `
     </svg>
   </div>
   <div
-    className="display-element"
+    className="display-right-element"
   >
     <table
       className=""
@@ -43,32 +43,52 @@ exports[`DisplayBox Component Matches the 'with icon' snapshot 1`] = `
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             BCeID
           </td>
           <td>
             bobross42
           </td>
         </tr>
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             Last Name
           </td>
           <td>
             Ross
           </td>
         </tr>
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             First Name
           </td>
           <td>
             Bob
           </td>
         </tr>
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             Email Address
           </td>
           <td>
@@ -86,10 +106,7 @@ exports[`DisplayBox Component Matches the 'without icon' snapshot 1`] = `
   className="display-box "
 >
   <div
-    className="display-icon"
-  />
-  <div
-    className="display-element"
+    className="display-right-element"
   >
     <table
       className=""
@@ -104,32 +121,52 @@ exports[`DisplayBox Component Matches the 'without icon' snapshot 1`] = `
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             BCeID
           </td>
           <td>
             bobross42
           </td>
         </tr>
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             Last Name
           </td>
           <td>
             Ross
           </td>
         </tr>
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             First Name
           </td>
           <td>
             Bob
           </td>
         </tr>
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             Email Address
           </td>
           <td>
@@ -170,7 +207,7 @@ exports[`DisplayBox Component Matches the blue-background snapshot 1`] = `
     </svg>
   </div>
   <div
-    className="display-element"
+    className="display-right-element"
   >
     <table
       className=""
@@ -185,32 +222,52 @@ exports[`DisplayBox Component Matches the blue-background snapshot 1`] = `
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             BCeID
           </td>
           <td>
             bobross42
           </td>
         </tr>
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             Last Name
           </td>
           <td>
             Ross
           </td>
         </tr>
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             First Name
           </td>
           <td>
             Bob
           </td>
         </tr>
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             Email Address
           </td>
           <td>
@@ -251,7 +308,7 @@ exports[`DisplayBox Component Matches the warning snapshot 1`] = `
     </svg>
   </div>
   <div
-    className="display-element"
+    className="display-right-element"
   >
     <table
       className=""
@@ -266,32 +323,52 @@ exports[`DisplayBox Component Matches the warning snapshot 1`] = `
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             BCeID
           </td>
           <td>
             bobross42
           </td>
         </tr>
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             Last Name
           </td>
           <td>
             Ross
           </td>
         </tr>
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             First Name
           </td>
           <td>
             Bob
           </td>
         </tr>
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             Email Address
           </td>
           <td>
