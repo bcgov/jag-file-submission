@@ -4,7 +4,21 @@ import axios from "axios";
 import { Header, Footer, Input, Button } from "shared-components";
 import { propTypes } from "../../../types/propTypes";
 
+// Import React FilePond
+import { FilePond, registerPlugin } from "react-filepond";
+
+// Import FilePond styles
+import "filepond/dist/filepond.min.css";
+
+// Import the Image EXIF Orientation and Image Preview plugins
+import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+
 import "../page.css";
+
+// Register the plugins
+registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 const urlBody = {
   documentProperties: {
@@ -54,9 +68,29 @@ const generateUrl = (accountGuid, setErrorExists) => {
     });
 };
 
+const uploadFiles = files => {
+  const formData = new FormData();
+
+  console.log(files[0].file);
+
+  for (let i = 0; i < files.length; i++) {
+    formData.append(`files[${i}]`, files[i]);
+  }
+
+  axios
+    .post(`http://demo0217811.mockable.io/`, formData)
+    .then(response => {
+      console.log(response);
+    })
+    .catch(() => {
+      console.log("An error occurred with the upload. Please try again.");
+    });
+};
+
 export default function Home({ page: { header } }) {
   const [errorExists, setErrorExists] = useState(false);
   const [accountGuid, setAccountGuid] = useState(null);
+  const [files, setFiles] = useState([]);
 
   return (
     <main>
@@ -70,6 +104,19 @@ export default function Home({ page: { header } }) {
             label="Generate URL"
             styling="normal-blue btn"
             testId="generate-url-btn"
+          />
+          <br />
+          <FilePond
+            files={files}
+            allowMultiple
+            onupdatefiles={setFiles}
+            labelIdle='Drag and Drop your files or <span class="filepond--label-action">Browse</span>'
+          />
+          <br />
+          <Button
+            onClick={() => uploadFiles(files)}
+            label="Upload"
+            styling="normal-blue btn"
           />
           <br />
           {errorExists && (
