@@ -84,7 +84,7 @@ public class GetPackageInformationTest {
     @Test
     @DisplayName("200: pass id and get values")
     public void withCorrectIDReturnResult() {
-        ResponseEntity<GetPacakageInformationResponse> actual = sut.getPackageInformation(CASE_1);
+        ResponseEntity<GetPacakageInformationResponse> actual = sut.getSubmissionPackage(CASE_1);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertEquals(APPL_TYPE, actual.getBody().getParentApplication().getApplicationType());
         assertEquals(KELWONA_LAW_COURTS, actual.getBody().getParentApplication().getCourtLocation());
@@ -99,7 +99,7 @@ public class GetPackageInformationTest {
     @Test
     @DisplayName("404: with incorrect id return 404")
     public void withInCorrectIDReturnNotFound() {
-        ResponseEntity<GetPacakageInformationResponse> actual = sut.getPackageInformation(CASE_2);
+        ResponseEntity<GetPacakageInformationResponse> actual = sut.getSubmissionPackage(CASE_2);
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
     }
 }

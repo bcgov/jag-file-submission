@@ -129,7 +129,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    public ResponseEntity<GetPacakageInformationResponse> getPackageInformation(UUID id) {
+    public ResponseEntity<GetPacakageInformationResponse> getSubmissionPackage(UUID id) {
         Optional<Submission> fromCacheSubmission = this.submissionStore.getByKey(id);
 
         if(!fromCacheSubmission.isPresent())
