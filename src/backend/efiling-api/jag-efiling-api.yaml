@@ -95,7 +95,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserDetails"
-  "/submission/packageInformation/{id}":
+  "/submission/{id}/package":
     get:
       summary: Get package information
       operationId: GetPackageInformation

@@ -61,12 +61,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/submission/packageInformation/4fa58287-6f3b-471e-b0dd-7d30a1ab66df",
+              "raw": "{{baseUrl}}/submission/48a67125-e02a-449c-bb6d-ba6d9cb37db6/package",
               "host": ["{{baseUrl}}"],
               "path": [
                 "submission",
-                "packageInformation",
-                "4fa58287-6f3b-471e-b0dd-7d30a1ab66df"
+                "48a67125-e02a-449c-bb6d-ba6d9cb37db6",
+                "package"
               ]
             }
           },
