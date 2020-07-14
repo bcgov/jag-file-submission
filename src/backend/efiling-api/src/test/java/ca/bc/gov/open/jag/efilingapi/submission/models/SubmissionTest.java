@@ -28,6 +28,15 @@ public class SubmissionTest {
     private static final String LAST_NAME = "lastName";
     private static final String MIDDLE_NAME = "middleName";
     private static final String EMAIL = "email";
+    private static final String APPLICATION_TYPE = "ApplicationType";
+    private static final String COURT_LOCATION = "CourtLocation";
+    private static final String COURT_LEVEL = "CourtLevel";
+    private static final String COURT_DIVISION = "CourtDivision";
+    private static final String COURT_CLASS = "CourtClass";
+    private static final String PARTICIPATION_CLASS = "ParticipationClass";
+    private static final String INDIGENOUS_STATUS = "IndigenousStatus";
+    private static final String DOCUMENT_TYPE = "DocumentType";
+    private static final String COURT_FILE_NUMBER = "CourtFileNumber";
 
     @Test
     @DisplayName("CASE 1: testing constructor")
@@ -39,7 +48,10 @@ public class SubmissionTest {
                 UUID.randomUUID(),
                 TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE),
                 TestHelpers.createNavigation(CASE_1, CANCEL, ERROR),
-                TestHelpers.createParentApplication(),
+                TestHelpers.createParentApplication(APPLICATION_TYPE, COURT_LOCATION,
+                                                COURT_LEVEL, COURT_DIVISION, COURT_CLASS,
+                                                PARTICIPATION_CLASS, INDIGENOUS_STATUS,
+                                                DOCUMENT_TYPE, COURT_FILE_NUMBER),
                 fee,
                 accountDetails,
                 1);
@@ -60,7 +72,15 @@ public class SubmissionTest {
         Assertions.assertEquals(MIDDLE_NAME, actual.getAccountDetails().getMiddleName());
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountDetails().getAccountId());
         Assertions.assertEquals(BigDecimal.ONE, actual.getAccountDetails().getClientId());
-
+        Assertions.assertEquals(APPLICATION_TYPE, actual.getParentApplication().getApplicationType());
+        Assertions.assertEquals(COURT_LOCATION, actual.getParentApplication().getCourtLocation());
+        Assertions.assertEquals(COURT_LEVEL, actual.getParentApplication().getCourtLevel());
+        Assertions.assertEquals(COURT_DIVISION, actual.getParentApplication().getCourtDivision());
+        Assertions.assertEquals(COURT_CLASS, actual.getParentApplication().getCourtClass());
+        Assertions.assertEquals(PARTICIPATION_CLASS, actual.getParentApplication().getParticipationClass());
+        Assertions.assertEquals(INDIGENOUS_STATUS, actual.getParentApplication().getIndigenousStatus());
+        Assertions.assertEquals(DOCUMENT_TYPE, actual.getParentApplication().getDocumentType());
+        Assertions.assertEquals(COURT_FILE_NUMBER, actual.getParentApplication().getCourtFileNumber());
     }
 
 }

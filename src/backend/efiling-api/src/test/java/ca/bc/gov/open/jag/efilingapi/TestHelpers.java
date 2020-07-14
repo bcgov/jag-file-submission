@@ -43,17 +43,19 @@ public class TestHelpers {
         return navigation;
     }
 
-    public static ParentApplication createParentApplication() {
+    public static ParentApplication createParentApplication(String applicationType, String courtLocation, String courtLevel,
+                                                            String courtDivision, String courtClass, String participationClass,
+                                                            String indigenousStatus, String documentType, String courtFileNumber) {
         ParentApplication parentApplication = new ParentApplication();
-        parentApplication.setApplicationType("ApplicationType");
-        parentApplication.setCourtLocation("Kelwona law courts");
-        parentApplication.setCourtLevel("P");
-        parentApplication.setCourtDivision("R");
-        parentApplication.setCourtClass("E");
-        parentApplication.setParticipationClass("ParticipationClass");
-        parentApplication.setIndigenousStatus("IndigenousStatus");
-        parentApplication.setDocumentType("POR");
-        parentApplication.setCourtFileNumber("123");
+        parentApplication.setApplicationType(applicationType);
+        parentApplication.setCourtLocation(courtLocation);
+        parentApplication.setCourtLevel(courtLevel);
+        parentApplication.setCourtDivision(courtDivision);
+        parentApplication.setCourtClass(courtClass);
+        parentApplication.setParticipationClass(participationClass);
+        parentApplication.setIndigenousStatus(indigenousStatus);
+        parentApplication.setDocumentType(documentType);
+        parentApplication.setCourtFileNumber(courtFileNumber);
         return parentApplication;
     }
 

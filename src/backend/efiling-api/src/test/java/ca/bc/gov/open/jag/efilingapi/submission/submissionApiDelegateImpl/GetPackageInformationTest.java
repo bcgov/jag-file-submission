@@ -31,6 +31,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DisplayName("SubmissionApiDelegateImpl test suite")
 public class GetPackageInformationTest {
 
+    private static final String APPL_TYPE = "ApplType";
+    private static final String KELWONA_LAW_COURTS = "Kelwona law courts";
+    private static final String COURT_LEVEL = "P";
+    private static final String COURT_DIVISION = "R";
+    private static final String COURT_CLASS = "E";
+    private static final String PARTICIPATION_CLASS = "ParticipationClass";
+    private static final String INDIGENOUS_STATUS = "IndigenousStatus";
+    private static final String DOCUMENT_TYPE = "POR";
+    private static final String COURT_FILE_NUMBER = "123";
     private SubmissionApiDelegateImpl sut;
 
     @Mock
@@ -43,7 +52,7 @@ public class GetPackageInformationTest {
     private SubmissionStore submissionStoreMock;
 
     private static final UUID CASE_1 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fe");
-
+    private static final UUID CASE_2 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fa");
     @BeforeAll
     public void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -52,15 +61,15 @@ public class GetPackageInformationTest {
         navigationProperties.setBaseUrl("http://localhost");
 
         ParentApplication parentApplication = new ParentApplication();
-        parentApplication.setApplicationType("ApplType");
-        parentApplication.setCourtLocation("Kelwona law courts");
-        parentApplication.setCourtLevel("P");
-        parentApplication.setCourtDivision("R");
-        parentApplication.setCourtClass("E");
-        parentApplication.setParticipationClass("ParticipationClass");
-        parentApplication.setIndigenousStatus("IndigenousStatus");
-        parentApplication.setDocumentType("POR");
-        parentApplication.setCourtFileNumber("123");
+        parentApplication.setApplicationType(APPL_TYPE);
+        parentApplication.setCourtLocation(KELWONA_LAW_COURTS);
+        parentApplication.setCourtLevel(COURT_LEVEL);
+        parentApplication.setCourtDivision(COURT_DIVISION);
+        parentApplication.setCourtClass(COURT_CLASS);
+        parentApplication.setParticipationClass(PARTICIPATION_CLASS);
+        parentApplication.setIndigenousStatus(INDIGENOUS_STATUS);
+        parentApplication.setDocumentType(DOCUMENT_TYPE);
+        parentApplication.setCourtFileNumber(COURT_FILE_NUMBER);
 
         Submission submissionWithParentApplication = Submission
                 .builder()
@@ -73,18 +82,24 @@ public class GetPackageInformationTest {
     }
 
     @Test
-    @DisplayName("200: pass id and get hardcoded values")
-    public void withNullRedisStorageResponseReturnNotFound() {
+    @DisplayName("200: pass id and get values")
+    public void withCorrectIDReturnResult() {
         ResponseEntity<GetPacakageInformationResponse> actual = sut.getPackageInformation(CASE_1);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertEquals("ApplType", actual.getBody().getParentApplication().getApplicationType());
-        assertEquals("Kelwona law courts", actual.getBody().getParentApplication().getCourtLocation());
-        assertEquals("P", actual.getBody().getParentApplication().getCourtLevel());
-        assertEquals("R", actual.getBody().getParentApplication().getCourtDivision());
-        assertEquals("E", actual.getBody().getParentApplication().getCourtClass());
-        assertEquals("ParticipationClass", actual.getBody().getParentApplication().getParticipationClass());
-        assertEquals("IndigenousStatus", actual.getBody().getParentApplication().getIndigenousStatus());
-        assertEquals("POR", actual.getBody().getParentApplication().getDocumentType());
-        assertEquals("123", actual.getBody().getParentApplication().getCourtFileNumber());
+        assertEquals(APPL_TYPE, actual.getBody().getParentApplication().getApplicationType());
+        assertEquals(KELWONA_LAW_COURTS, actual.getBody().getParentApplication().getCourtLocation());
+        assertEquals(COURT_LEVEL, actual.getBody().getParentApplication().getCourtLevel());
+        assertEquals(COURT_DIVISION, actual.getBody().getParentApplication().getCourtDivision());
+        assertEquals(COURT_CLASS, actual.getBody().getParentApplication().getCourtClass());
+        assertEquals(PARTICIPATION_CLASS, actual.getBody().getParentApplication().getParticipationClass());
+        assertEquals(INDIGENOUS_STATUS, actual.getBody().getParentApplication().getIndigenousStatus());
+        assertEquals(DOCUMENT_TYPE, actual.getBody().getParentApplication().getDocumentType());
+        assertEquals(COURT_FILE_NUMBER, actual.getBody().getParentApplication().getCourtFileNumber());
+    }
+    @Test
+    @DisplayName("404: with incorrect id return 404")
+    public void withInCorrectIDReturnNotFound() {
+        ResponseEntity<GetPacakageInformationResponse> actual = sut.getPackageInformation(CASE_2);
+        assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
     }
 }
