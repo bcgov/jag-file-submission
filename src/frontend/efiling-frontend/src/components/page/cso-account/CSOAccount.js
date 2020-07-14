@@ -23,7 +23,7 @@ const content = getContent();
 export default function CSOAccount({
   confirmationPopup,
   applicantInfo,
-  setCsoAccountExists
+  setCsoAccountStatus
 }) {
   const [termsAccepted, acceptTerms] = useState(false);
   const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
@@ -47,7 +47,7 @@ export default function CSOAccount({
             sessionStorage.setItem("csoAccountId", account.identifier);
           }
         });
-        setCsoAccountExists(true);
+        setCsoAccountStatus({ exists: true, isNew: true });
       })
       .catch(() => {});
   };
@@ -119,5 +119,5 @@ export default function CSOAccount({
 CSOAccount.propTypes = {
   confirmationPopup: propTypes.confirmationPopup,
   applicantInfo: propTypes.applicantInfo,
-  setCsoAccountExists: propTypes.setState
+  setCsoAccountStatus: propTypes.setState
 };
