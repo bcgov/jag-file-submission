@@ -13,6 +13,7 @@ public interface SubmissionMapper {
 
     @Mapping(source = "generateUrlRequest.documentProperties", target = "documentProperties")
     @Mapping(source = "generateUrlRequest.navigation", target = "navigation")
+    @Mapping(source = "generateUrlRequest.clientApplication", target = "clientApplication")
     @Mapping(source = "fee", target = "fee")
     @Mapping(source = "accountDetails", target = "accountDetails")
     @Mapping(source = "expiryDate", target = "expiryDate")
