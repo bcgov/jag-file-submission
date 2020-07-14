@@ -95,6 +95,29 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserDetails"
+  "/submission/{id}/package":
+    get:
+      summary: Get package information
+      operationId: GetSubmissionPackage
+      tags:
+        - submission
+      parameters:
+        - name: id
+          in: path
+          description: A submission id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Package Information found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetPacakageInformationResponse"
+        "404":
+          description: Package Information not found
 components:
   schemas:
     Account:
@@ -153,8 +176,8 @@ components:
         - navigation
         - documentProperties
       properties:
-        parentApplication:
-          $ref: "#/components/schemas/ParentApplication"
+        clientApplication:
+          $ref: "#/components/schemas/ClientApplication"
         documentProperties:
           $ref: "#/components/schemas/DocumentProperties"
         navigation:
@@ -177,6 +200,11 @@ components:
           $ref: "#/components/schemas/UserDetails"
         navigation:
           $ref: "#/components/schemas/Navigation"
+    GetPacakageInformationResponse:
+      type: object
+      properties:
+        clientApplication:
+          $ref: "#/components/schemas/ClientApplication"
     Navigation:
       required:
         - success
@@ -195,7 +223,7 @@ components:
       properties:
         url:
           type: string
-    ParentApplication:
+    ClientApplication:
       type: object
       required:
         - applicationType
