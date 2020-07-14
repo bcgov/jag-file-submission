@@ -22,10 +22,10 @@ public class LandingPage {
     @FindBy(id = "textInputId")
     WebElement guidInputForm;
 
-    @FindBy(xpath = "//*[@id='root']/div/main/div/div/div[2]/button")
+    @FindBy(xpath = "//*[@data-test-id='generate-url-btn']")
     WebElement generateUrlButton;
 
-    @FindBy(xpath = "//*[@id='root']/div/main/div/div/p")
+    @FindBy(xpath = "//p[@data-test-id='error-text']")
     WebElement getErrorText;
 
     //Initializing the driver:

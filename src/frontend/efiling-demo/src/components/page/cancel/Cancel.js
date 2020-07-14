@@ -8,7 +8,7 @@ export default function Cancel({ page: { header } }) {
     <main>
       <Header header={header} />
       <div className="page">
-        <div className="content col-md-12">
+        <div className="content col-md-12" data-test-id="return-home-btn">
           <p>
             You have cancelled your submission. Please click the button below to
             go back home.

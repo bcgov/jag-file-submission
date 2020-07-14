@@ -1,6 +1,6 @@
 Feature: User id is authenticated and user details are retrieved with generated navigation urls (success, cancel, error)
 
-   @backend
+  # @backend
   Scenario: Verify secure url is generated for requests made with valid CSO account guid in the request header
     Given POST http request is made to "GENERATE_URL_API" with valid existing CSO account guid in header
     When status code is 200 and content type is verified

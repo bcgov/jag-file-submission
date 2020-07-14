@@ -57,7 +57,10 @@ export default function PackageConfirmation({
         <br />
 
         <p>
-          <a href={sessionStorage.getItem("cancelUrl")}>
+          <a
+            href={sessionStorage.getItem("cancelUrl")}
+            data-test-id="return-link"
+          >
             Return to the parent application website
           </a>
           &nbsp;to correct errors or missing information in this package.
@@ -71,7 +74,7 @@ export default function PackageConfirmation({
 
         <br />
 
-        <section className="inline-block pt-2">
+        <section className="inline-block pt-2" data-test-id="upload-btn">
           <Button
             label={uploadButton.label}
             onClick={uploadButton.onClick}
@@ -79,7 +82,7 @@ export default function PackageConfirmation({
           />
         </section>
 
-        <section className="buttons pt-2">
+        <section className="buttons pt-2" data-test-id="cancel-btn">
           <ConfirmationPopup
             modal={confirmationPopup.modal}
             mainButton={confirmationPopup.mainButton}

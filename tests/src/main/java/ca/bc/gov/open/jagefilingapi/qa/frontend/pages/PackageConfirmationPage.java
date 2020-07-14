@@ -10,15 +10,15 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class EFileSubmissionPage {
+public class PackageConfirmationPage {
 
     private final WebDriver driver;
     private WebDriverWait wait;
 
-    Logger log = LogManager.getLogger(EFileSubmissionPage.class);
+    Logger log = LogManager.getLogger(PackageConfirmationPage.class);
 
     //Page Objects:
-    @FindBy(xpath = "//*[@data-test-id=['cso-btns']")
+    @FindBy(xpath = "//*[@id='root']/div/main/div/div/div/button")
     WebElement cancelButton;
 
     @FindBy(css = "body > div.fade.modal.show > div > div > div.mx-auto.mb-5 > div:nth-child(1) > button")
@@ -27,7 +27,7 @@ public class EFileSubmissionPage {
     @FindBy(css = "body > div.fade.modal.show > div > div > div.mx-auto.mb-5 > div:nth-child(3) > button")
     WebElement resumeSubmission;
 
-    @FindBy(xpath = "//*[@data-test-id=['return-home-btn']")
+    @FindBy(xpath = "//*[@id='root']/div/main/div/div/div/button")
     WebElement returnHomeButton;
 
     @FindBy(id = "acceptTerms")
@@ -40,7 +40,7 @@ public class EFileSubmissionPage {
     WebElement acceptTermsCancelButton;
 
     //Initializing the driver:
-    public EFileSubmissionPage(WebDriver driver) {
+    public PackageConfirmationPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
@@ -48,7 +48,7 @@ public class EFileSubmissionPage {
     //Actions:
     public String verifyEfilingPageTitle() {
         wait = new WebDriverWait(driver, 30);
-        wait.until(ExpectedConditions.titleIs("eFiling Frontend"));
+        wait.until(ExpectedConditions.titleIs("E-File submission"));
         log.info("Waiting for the page to load...");
         return driver.getTitle();
     }

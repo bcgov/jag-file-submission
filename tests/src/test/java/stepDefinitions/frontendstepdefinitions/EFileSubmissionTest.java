@@ -19,7 +19,7 @@ public class EFileSubmissionTest extends DriverClass {
      ReadConfig readConfig;
      LandingPage landingPage;
      EFileSubmissionPage eFileSubmissionPage;
-     private static final String EFILE_SUBMISSION_PAGE_TITLE = "eFiling Frontend";
+     private static final String EFILE_SUBMISSION_PAGE_TITLE = "E-File submission";
 
     @Before("@frontend")
     public void setUp() throws IOException {
