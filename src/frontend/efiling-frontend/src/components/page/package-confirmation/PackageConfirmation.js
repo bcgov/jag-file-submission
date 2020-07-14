@@ -43,7 +43,7 @@ const elements = [
   {
     name: (
       <div style={{ width: "80%" }}>
-        <Table elements={feesData} />
+        <Table isFeesData elements={feesData} />
       </div>
     ),
     value: "",

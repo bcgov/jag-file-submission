@@ -139,7 +139,7 @@ exports[`Storyshots Home Account Exists 1`] = `
                           Statutory Fees:
                         </td>
                         <td
-                          style="text-align: right;"
+                          class="right-align"
                         >
                           <b>
                             $100.00
@@ -156,7 +156,7 @@ exports[`Storyshots Home Account Exists 1`] = `
                           Number of Documents in Package:
                         </td>
                         <td
-                          style="text-align: right;"
+                          class="right-align"
                         >
                           <b>
                             10
@@ -604,7 +604,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
                           Statutory Fees:
                         </td>
                         <td
-                          style="text-align: right;"
+                          class="right-align"
                         >
                           <b>
                             $100.00
@@ -621,7 +621,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
                           Number of Documents in Package:
                         </td>
                         <td
-                          style="text-align: right;"
+                          class="right-align"
                         >
                           <b>
                             10

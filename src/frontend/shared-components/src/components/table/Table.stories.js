@@ -41,7 +41,7 @@ export const WithBoldValues = () => (
 
 export const WithBoldNames = () => <Table elements={tableDataWithBoldNames} />;
 
-export const WithFees = () => <Table elements={feesData} />;
+export const WithFees = () => <Table isFeesData elements={feesData} />;
 
 export const Mobile = () => <Table heading={header} elements={tableData} />;
 

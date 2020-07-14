@@ -23,3 +23,7 @@ td {
 .empty-row td {
   border-bottom: 1px solid black;
 }
+
+.right-align {
+  text-align: right;
+}

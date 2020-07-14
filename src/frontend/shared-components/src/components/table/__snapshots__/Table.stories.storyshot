@@ -23,6 +23,7 @@ exports[`Storyshots Table Mobile 1`] = `
     ]
   }
   heading="BCeID Info"
+  isFeesData={false}
   styling=""
 >
   <table
@@ -45,6 +46,7 @@ exports[`Storyshots Table Mobile 1`] = `
             "value": "bobross42",
           }
         }
+        isFeesData={false}
         key="BCeID"
       >
         <tr
@@ -68,6 +70,7 @@ exports[`Storyshots Table Mobile 1`] = `
             "value": "Ross",
           }
         }
+        isFeesData={false}
         key="Last Name"
       >
         <tr
@@ -91,6 +94,7 @@ exports[`Storyshots Table Mobile 1`] = `
             "value": "Bob",
           }
         }
+        isFeesData={false}
         key="First Name"
       >
         <tr
@@ -114,6 +118,7 @@ exports[`Storyshots Table Mobile 1`] = `
             "value": "bob.ross@example.com",
           }
         }
+        isFeesData={false}
         key="Email Address"
       >
         <tr
@@ -158,6 +163,7 @@ exports[`Storyshots Table With Blue Stripe 1`] = `
     ]
   }
   heading=""
+  isFeesData={false}
   styling="blue-stripe"
 >
   <table
@@ -178,6 +184,7 @@ exports[`Storyshots Table With Blue Stripe 1`] = `
             "value": "bobross42",
           }
         }
+        isFeesData={false}
         key="BCeID"
       >
         <tr
@@ -201,6 +208,7 @@ exports[`Storyshots Table With Blue Stripe 1`] = `
             "value": "Ross",
           }
         }
+        isFeesData={false}
         key="Last Name"
       >
         <tr
@@ -224,6 +232,7 @@ exports[`Storyshots Table With Blue Stripe 1`] = `
             "value": "Bob",
           }
         }
+        isFeesData={false}
         key="First Name"
       >
         <tr
@@ -247,6 +256,7 @@ exports[`Storyshots Table With Blue Stripe 1`] = `
             "value": "bob.ross@example.com",
           }
         }
+        isFeesData={false}
         key="Email Address"
       >
         <tr
@@ -280,6 +290,7 @@ exports[`Storyshots Table With Bold Names 1`] = `
     ]
   }
   heading=""
+  isFeesData={false}
   styling=""
 >
   <table
@@ -301,6 +312,7 @@ exports[`Storyshots Table With Bold Names 1`] = `
             "value": "Value",
           }
         }
+        isFeesData={false}
         key="Key"
       >
         <tr
@@ -336,6 +348,7 @@ exports[`Storyshots Table With Bold Values 1`] = `
     ]
   }
   heading=""
+  isFeesData={false}
   styling=""
 >
   <table
@@ -357,6 +370,7 @@ exports[`Storyshots Table With Bold Values 1`] = `
             "value": "Value",
           }
         }
+        isFeesData={false}
         key="Key"
       >
         <tr
@@ -369,11 +383,7 @@ exports[`Storyshots Table With Bold Values 1`] = `
             Key
           </td>
           <td
-            style={
-              Object {
-                "textAlign": "right",
-              }
-            }
+            className=""
           >
             <b>
               Value
@@ -413,6 +423,7 @@ exports[`Storyshots Table With Fees 1`] = `
     ]
   }
   heading=""
+  isFeesData={true}
   styling=""
 >
   <table
@@ -434,6 +445,7 @@ exports[`Storyshots Table With Fees 1`] = `
             "value": "$100.00",
           }
         }
+        isFeesData={true}
         key="Some Fees:"
       >
         <tr
@@ -446,11 +458,7 @@ exports[`Storyshots Table With Fees 1`] = `
             Some Fees:
           </td>
           <td
-            style={
-              Object {
-                "textAlign": "right",
-              }
-            }
+            className="right-align"
           >
             <b>
               $100.00
@@ -466,6 +474,7 @@ exports[`Storyshots Table With Fees 1`] = `
             "value": "$10.00",
           }
         }
+        isFeesData={true}
         key="Some More Fees:"
       >
         <tr
@@ -478,11 +487,7 @@ exports[`Storyshots Table With Fees 1`] = `
             Some More Fees:
           </td>
           <td
-            style={
-              Object {
-                "textAlign": "right",
-              }
-            }
+            className="right-align"
           >
             <b>
               $10.00
@@ -498,6 +503,7 @@ exports[`Storyshots Table With Fees 1`] = `
             "value": "",
           }
         }
+        isFeesData={true}
         key=""
       >
         <tr
@@ -518,6 +524,7 @@ exports[`Storyshots Table With Fees 1`] = `
             "value": "$110.00",
           }
         }
+        isFeesData={true}
         key="Total Fees:"
       >
         <tr
@@ -530,11 +537,7 @@ exports[`Storyshots Table With Fees 1`] = `
             Total Fees:
           </td>
           <td
-            style={
-              Object {
-                "textAlign": "right",
-              }
-            }
+            className="right-align"
           >
             <b>
               $110.00
@@ -570,6 +573,7 @@ exports[`Storyshots Table With Header 1`] = `
     ]
   }
   heading="BCeID Info"
+  isFeesData={false}
   styling=""
 >
   <table
@@ -592,6 +596,7 @@ exports[`Storyshots Table With Header 1`] = `
             "value": "bobross42",
           }
         }
+        isFeesData={false}
         key="BCeID"
       >
         <tr
@@ -615,6 +620,7 @@ exports[`Storyshots Table With Header 1`] = `
             "value": "Ross",
           }
         }
+        isFeesData={false}
         key="Last Name"
       >
         <tr
@@ -638,6 +644,7 @@ exports[`Storyshots Table With Header 1`] = `
             "value": "Bob",
           }
         }
+        isFeesData={false}
         key="First Name"
       >
         <tr
@@ -661,6 +668,7 @@ exports[`Storyshots Table With Header 1`] = `
             "value": "bob.ross@example.com",
           }
         }
+        isFeesData={false}
         key="Email Address"
       >
         <tr
@@ -705,6 +713,7 @@ exports[`Storyshots Table Without Header 1`] = `
     ]
   }
   heading=""
+  isFeesData={false}
   styling=""
 >
   <table
@@ -725,6 +734,7 @@ exports[`Storyshots Table Without Header 1`] = `
             "value": "bobross42",
           }
         }
+        isFeesData={false}
         key="BCeID"
       >
         <tr
@@ -748,6 +758,7 @@ exports[`Storyshots Table Without Header 1`] = `
             "value": "Ross",
           }
         }
+        isFeesData={false}
         key="Last Name"
       >
         <tr
@@ -771,6 +782,7 @@ exports[`Storyshots Table Without Header 1`] = `
             "value": "Bob",
           }
         }
+        isFeesData={false}
         key="First Name"
       >
         <tr
@@ -794,6 +806,7 @@ exports[`Storyshots Table Without Header 1`] = `
             "value": "bob.ross@example.com",
           }
         }
+        isFeesData={false}
         key="Email Address"
       >
         <tr

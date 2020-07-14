@@ -1343,7 +1343,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                           Statutory Fees:
                         </td>
                         <td
-                          style="text-align: right;"
+                          class="right-align"
                         >
                           <b>
                             $100.00
@@ -1360,7 +1360,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                           Number of Documents in Package:
                         </td>
                         <td
-                          style="text-align: right;"
+                          class="right-align"
                         >
                           <b>
                             10

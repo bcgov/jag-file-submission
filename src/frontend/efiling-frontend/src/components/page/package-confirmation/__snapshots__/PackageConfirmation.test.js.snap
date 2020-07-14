@@ -100,7 +100,7 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
                         Statutory Fees:
                       </td>
                       <td
-                        style="text-align: right;"
+                        class="right-align"
                       >
                         <b>
                           $100.00
@@ -117,7 +117,7 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
                         Number of Documents in Package:
                       </td>
                       <td
-                        style="text-align: right;"
+                        class="right-align"
                       >
                         <b>
                           10
@@ -470,7 +470,7 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
                         Statutory Fees:
                       </td>
                       <td
-                        style="text-align: right;"
+                        class="right-align"
                       >
                         <b>
                           $100.00
@@ -487,7 +487,7 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
                         Number of Documents in Package:
                       </td>
                       <td
-                        style="text-align: right;"
+                        class="right-align"
                       >
                         <b>
                           10

@@ -101,7 +101,7 @@ exports[`Storyshots Payment Default 1`] = `
                             Some Fees:
                           </td>
                           <td
-                            style="text-align: right;"
+                            class="right-align"
                           >
                             <b>
                               $100.00
@@ -118,7 +118,7 @@ exports[`Storyshots Payment Default 1`] = `
                             Some More Fees:
                           </td>
                           <td
-                            style="text-align: right;"
+                            class="right-align"
                           >
                             <b>
                               $10.00
@@ -144,7 +144,7 @@ exports[`Storyshots Payment Default 1`] = `
                             Total Fees:
                           </td>
                           <td
-                            style="text-align: right;"
+                            class="right-align"
                           >
                             <b>
                               $110.00
@@ -576,7 +576,7 @@ exports[`Storyshots Payment Mobile 1`] = `
                             Some Fees:
                           </td>
                           <td
-                            style="text-align: right;"
+                            class="right-align"
                           >
                             <b>
                               $100.00
@@ -593,7 +593,7 @@ exports[`Storyshots Payment Mobile 1`] = `
                             Some More Fees:
                           </td>
                           <td
-                            style="text-align: right;"
+                            class="right-align"
                           >
                             <b>
                               $10.00
@@ -619,7 +619,7 @@ exports[`Storyshots Payment Mobile 1`] = `
                             Total Fees:
                           </td>
                           <td
-                            style="text-align: right;"
+                            class="right-align"
                           >
                             <b>
                               $110.00
