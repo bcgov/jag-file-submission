@@ -29,14 +29,12 @@ const feesData = [
   {
     name: "Statutory Fees:",
     value: "$100.00",
-    isValueBold: true,
-    isSideBySide: true
+    isValueBold: true
   },
   {
     name: "Number of Documents in Package:",
     value: "10",
-    isValueBold: true,
-    isSideBySide: true
+    isValueBold: true
   }
 ];
 
