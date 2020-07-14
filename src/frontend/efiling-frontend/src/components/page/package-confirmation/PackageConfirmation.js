@@ -118,5 +118,8 @@ export default function PackageConfirmation({
 PackageConfirmation.propTypes = {
   packageConfirmation: PropTypes.shape({
     confirmationPopup: propTypes.confirmationPopup
+  }).isRequired,
+  csoAccountStatus: PropTypes.shape({
+    isNew: PropTypes.bool
   }).isRequired
 };
