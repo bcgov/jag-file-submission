@@ -28,9 +28,6 @@ import javax.validation.Valid;
 @DisplayName("SubmissionApiDelegateImpl test suite")
 public class GenerateUrlTest {
 
-    private static final String HEADER = "test";
-    private static final String URL = "http://doc";
-    private static final String SUBTYPE = "subtype";
     private static final String TYPE = "type";
     private static final String SUCCESSURL = "http://success";
     private static final String CANCELURL = "http://cancel";

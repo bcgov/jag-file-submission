@@ -135,10 +135,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         if(!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
 
-        ModelPackage response = new ModelPackage();
-        response.setDocuments(fromCacheSubmission.get().getModelPackage().getDocuments());
-        response.setCourt(fromCacheSubmission.get().getModelPackage().getCourt());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(fromCacheSubmission.get().getModelPackage());
     }
 
     public EfilingError buildEfilingError(ErrorResponse errorResponse) {
