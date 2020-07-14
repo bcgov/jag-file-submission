@@ -115,7 +115,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GetPacakageInformationResponse"
+                $ref: "#/components/schemas/Package"
         "404":
           description: Package Information not found
 components:
@@ -136,17 +136,17 @@ components:
       description: Submission Metadata used to describe the submission that will be e-filled
       required:
         - type
-        - subType
-        - documentAccess
+        - name
       properties:
+        name:
+          type: string
+          description: the name of the document
+        description:
+          type: string
+          description: the description of the document
         type:
           type: string
           description: the submission type
-        subType:
-          type: string
-          description: the submission sub type
-        submissionAccess:
-          $ref: "#/components/schemas/EndpointAccess"
     EfilingError:
       required:
         - error
@@ -156,19 +156,6 @@ components:
           type: string
         message:
           type: string
-    EndpointAccess:
-      type: object
-      description: Represent an http endpoint
-      properties:
-        url:
-          type: string
-        verb:
-          type: string
-          enum: [GET, POST]
-        headers:
-          type: object
-          additionalProperties:
-            type: string
     GenerateUrlRequest:
       description: details about the required transaction
       required:
@@ -178,8 +165,8 @@ components:
       properties:
         clientApplication:
           $ref: "#/components/schemas/ClientApplication"
-        documentProperties:
-          $ref: "#/components/schemas/DocumentProperties"
+        package:
+          $ref: "#/components/schemas/Package"
         navigation:
           $ref: "#/components/schemas/Navigation"
     GenerateUrlResponse:
@@ -200,11 +187,6 @@ components:
           $ref: "#/components/schemas/UserDetails"
         navigation:
           $ref: "#/components/schemas/Navigation"
-    GetPacakageInformationResponse:
-      type: object
-      properties:
-        clientApplication:
-          $ref: "#/components/schemas/ClientApplication"
     Navigation:
       required:
         - success
@@ -217,6 +199,42 @@ components:
           $ref: "#/components/schemas/Redirect"
         cancel:
           $ref: "#/components/schemas/Redirect"
+    Package:
+      type: object
+      description: A package can contain one or multiple documents that have or are being submitted electronically for new or existing court file.
+      properties:
+        court:
+          $ref: "#/components/schemas/Court"
+        documents:
+          type: array
+          items:
+            $ref: "#/components/schemas/DocumentProperties"
+    Court:
+      type: object
+      description: "Court related information"
+      required:
+        - location
+        - level
+        - class
+        - division
+      properties:
+        location:
+          type: string
+          description: the court location
+        level:
+          type: string
+          description: the court level
+        class:
+          type: string
+          description: the court class
+        division:
+          type: string
+          description: the court division
+        fileNumber:
+          type: string
+          description: the file number if case already exists
+        participatingClass:
+          type: string
     Redirect:
       required:
         - url
@@ -226,29 +244,12 @@ components:
     ClientApplication:
       type: object
       required:
-        - applicationType
-        - courtLocation
-        - courtLevel
-        - courtClass
-        - documentType
+        - displayName
+        - type
       properties:
-        applicationType:
+        displayName:
           type: string
-        courtLocation:
-          type: string
-        courtLevel:
-          type: string
-        courtClass:
-          type: string
-        documentType:
-          type: string
-        courtDivision:
-          type: string
-        participationClass:
-          type: string
-        indigenousStatus:
-          type: string
-        courtFileNumber:
+        type:
           type: string
     UserDetails:
       description: represents a user submitting a package

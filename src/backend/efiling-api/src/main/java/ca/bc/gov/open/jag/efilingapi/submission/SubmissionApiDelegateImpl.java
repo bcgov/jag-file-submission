@@ -129,15 +129,13 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    public ResponseEntity<GetPacakageInformationResponse> getSubmissionPackage(UUID id) {
+    public ResponseEntity<ModelPackage> getSubmissionPackage(UUID id) {
         Optional<Submission> fromCacheSubmission = this.submissionStore.getByKey(id);
 
         if(!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
 
-        GetPacakageInformationResponse response = new GetPacakageInformationResponse();
-        response.setClientApplication(fromCacheSubmission.get().getClientApplication());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(fromCacheSubmission.get().getModelPackage());
     }
 
     public EfilingError buildEfilingError(ErrorResponse errorResponse) {
