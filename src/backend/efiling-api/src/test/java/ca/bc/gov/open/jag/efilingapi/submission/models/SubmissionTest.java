@@ -48,7 +48,7 @@ public class SubmissionTest {
                 UUID.randomUUID(),
                 TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE),
                 TestHelpers.createNavigation(CASE_1, CANCEL, ERROR),
-                TestHelpers.createParentApplication(APPLICATION_TYPE, COURT_LOCATION,
+                TestHelpers.createClientApplication(APPLICATION_TYPE, COURT_LOCATION,
                                                 COURT_LEVEL, COURT_DIVISION, COURT_CLASS,
                                                 PARTICIPATION_CLASS, INDIGENOUS_STATUS,
                                                 DOCUMENT_TYPE, COURT_FILE_NUMBER),
@@ -72,15 +72,15 @@ public class SubmissionTest {
         Assertions.assertEquals(MIDDLE_NAME, actual.getAccountDetails().getMiddleName());
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountDetails().getAccountId());
         Assertions.assertEquals(BigDecimal.ONE, actual.getAccountDetails().getClientId());
-        Assertions.assertEquals(APPLICATION_TYPE, actual.getParentApplication().getApplicationType());
-        Assertions.assertEquals(COURT_LOCATION, actual.getParentApplication().getCourtLocation());
-        Assertions.assertEquals(COURT_LEVEL, actual.getParentApplication().getCourtLevel());
-        Assertions.assertEquals(COURT_DIVISION, actual.getParentApplication().getCourtDivision());
-        Assertions.assertEquals(COURT_CLASS, actual.getParentApplication().getCourtClass());
-        Assertions.assertEquals(PARTICIPATION_CLASS, actual.getParentApplication().getParticipationClass());
-        Assertions.assertEquals(INDIGENOUS_STATUS, actual.getParentApplication().getIndigenousStatus());
-        Assertions.assertEquals(DOCUMENT_TYPE, actual.getParentApplication().getDocumentType());
-        Assertions.assertEquals(COURT_FILE_NUMBER, actual.getParentApplication().getCourtFileNumber());
+        Assertions.assertEquals(APPLICATION_TYPE, actual.getClientApplication().getApplicationType());
+        Assertions.assertEquals(COURT_LOCATION, actual.getClientApplication().getCourtLocation());
+        Assertions.assertEquals(COURT_LEVEL, actual.getClientApplication().getCourtLevel());
+        Assertions.assertEquals(COURT_DIVISION, actual.getClientApplication().getCourtDivision());
+        Assertions.assertEquals(COURT_CLASS, actual.getClientApplication().getCourtClass());
+        Assertions.assertEquals(PARTICIPATION_CLASS, actual.getClientApplication().getParticipationClass());
+        Assertions.assertEquals(INDIGENOUS_STATUS, actual.getClientApplication().getIndigenousStatus());
+        Assertions.assertEquals(DOCUMENT_TYPE, actual.getClientApplication().getDocumentType());
+        Assertions.assertEquals(COURT_FILE_NUMBER, actual.getClientApplication().getCourtFileNumber());
     }
 
 }

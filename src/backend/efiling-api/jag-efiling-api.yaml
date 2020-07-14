@@ -176,8 +176,8 @@ components:
         - navigation
         - documentProperties
       properties:
-        parentApplication:
-          $ref: "#/components/schemas/ParentApplication"
+        clientApplication:
+          $ref: "#/components/schemas/ClientApplication"
         documentProperties:
           $ref: "#/components/schemas/DocumentProperties"
         navigation:
@@ -203,8 +203,8 @@ components:
     GetPacakageInformationResponse:
       type: object
       properties:
-        parentApplication:
-          $ref: "#/components/schemas/ParentApplication"
+        clientApplication:
+          $ref: "#/components/schemas/ClientApplication"
     Navigation:
       required:
         - success
@@ -223,7 +223,7 @@ components:
       properties:
         url:
           type: string
-    ParentApplication:
+    ClientApplication:
       type: object
       required:
         - applicationType

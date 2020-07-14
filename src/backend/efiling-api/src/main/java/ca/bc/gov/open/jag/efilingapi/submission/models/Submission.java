@@ -1,6 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.models;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.ParentApplication;
+import ca.bc.gov.open.jag.efilingapi.api.model.ClientApplication;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingapi.fee.models.Fee;
 import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
@@ -23,7 +23,7 @@ public class Submission {
 
     private Navigation navigation;
 
-    private ParentApplication parentApplication;
+    private ClientApplication clientApplication;
 
     private Fee fee;
 
@@ -33,7 +33,7 @@ public class Submission {
         this.id = UUID.randomUUID();
         this.documentProperties = builder.documentProperties;
         this.navigation = builder.navigation;
-        this.parentApplication = builder.parentApplication;
+        this.clientApplication = builder.clientApplication;
         this.fee = builder.fee;
         this.accountDetails = builder.accountDetails;
         this.expiryDate = builder.expiryDate;
@@ -48,14 +48,14 @@ public class Submission {
             @JsonProperty("id") UUID id,
             @JsonProperty("submissionMetadata") DocumentProperties documentProperties,
             @JsonProperty("navigation") Navigation navigation,
-            @JsonProperty("parentApplication") ParentApplication parentApplication,
+            @JsonProperty("clientApplication") ClientApplication clientApplication,
             @JsonProperty("fee") Fee fee,
             @JsonProperty("accountDetails") AccountDetails accountDetails,
             @JsonProperty("expiryDate") long expiryDate) {
         this.id = id;
         this.documentProperties = documentProperties;
         this.navigation = navigation;
-        this.parentApplication = parentApplication;
+        this.clientApplication = clientApplication;
         this.fee = fee;
         this.accountDetails = accountDetails;
         this.expiryDate = expiryDate;
@@ -71,7 +71,7 @@ public class Submission {
         return navigation;
     }
 
-    public ParentApplication getParentApplication() { return parentApplication; }
+    public ClientApplication getClientApplication() { return clientApplication; }
 
     public Fee getFee() {
         return fee;
@@ -89,7 +89,7 @@ public class Submission {
 
         private DocumentProperties documentProperties;
         private Navigation navigation;
-        private ParentApplication parentApplication;
+        private ClientApplication clientApplication;
         private Fee fee;
         private AccountDetails accountDetails;
         private long expiryDate;
@@ -104,8 +104,8 @@ public class Submission {
             return this;
         }
 
-        public Builder parentApplication(ParentApplication parentApplication) {
-            this.parentApplication = parentApplication;
+        public Builder clientApplication(ClientApplication clientApplication) {
+            this.clientApplication = clientApplication;
             return this;
         }
 

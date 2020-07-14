@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 
+import ca.bc.gov.open.jag.efilingapi.api.model.ClientApplication;
 import ca.bc.gov.open.jag.efilingapi.api.model.GetPacakageInformationResponse;
 import ca.bc.gov.open.jag.efilingapi.api.model.ParentApplication;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
@@ -56,20 +57,20 @@ public class GetPackageInformationTest {
         NavigationProperties navigationProperties = new NavigationProperties();
         navigationProperties.setBaseUrl("http://localhost");
 
-        ParentApplication parentApplication = new ParentApplication();
-        parentApplication.setApplicationType(APPL_TYPE);
-        parentApplication.setCourtLocation(COURT_LOCATION);
-        parentApplication.setCourtLevel(COURT_LEVEL);
-        parentApplication.setCourtDivision(COURT_DIVISION);
-        parentApplication.setCourtClass(COURT_CLASS);
-        parentApplication.setParticipationClass(PARTICIPATION_CLASS);
-        parentApplication.setIndigenousStatus(INDIGENOUS_STATUS);
-        parentApplication.setDocumentType(DOCUMENT_TYPE);
-        parentApplication.setCourtFileNumber(COURT_FILE_NUMBER);
+        ClientApplication clientApplication = new ClientApplication();
+        clientApplication.setApplicationType(APPL_TYPE);
+        clientApplication.setCourtLocation(COURT_LOCATION);
+        clientApplication.setCourtLevel(COURT_LEVEL);
+        clientApplication.setCourtDivision(COURT_DIVISION);
+        clientApplication.setCourtClass(COURT_CLASS);
+        clientApplication.setParticipationClass(PARTICIPATION_CLASS);
+        clientApplication.setIndigenousStatus(INDIGENOUS_STATUS);
+        clientApplication.setDocumentType(DOCUMENT_TYPE);
+        clientApplication.setCourtFileNumber(COURT_FILE_NUMBER);
 
         Submission submissionWithParentApplication = Submission
                 .builder()
-                .parentApplication(parentApplication)
+                .clientApplication(clientApplication)
                 .create();
 
         Mockito.when(submissionStoreMock.getByKey(CASE_1)).thenReturn(Optional.of(submissionWithParentApplication));
@@ -82,15 +83,15 @@ public class GetPackageInformationTest {
     public void withCorrectIDReturnResult() {
         ResponseEntity<GetPacakageInformationResponse> actual = sut.getSubmissionPackage(CASE_1);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertEquals(APPL_TYPE, actual.getBody().getParentApplication().getApplicationType());
-        assertEquals(COURT_LOCATION, actual.getBody().getParentApplication().getCourtLocation());
-        assertEquals(COURT_LEVEL, actual.getBody().getParentApplication().getCourtLevel());
-        assertEquals(COURT_DIVISION, actual.getBody().getParentApplication().getCourtDivision());
-        assertEquals(COURT_CLASS, actual.getBody().getParentApplication().getCourtClass());
-        assertEquals(PARTICIPATION_CLASS, actual.getBody().getParentApplication().getParticipationClass());
-        assertEquals(INDIGENOUS_STATUS, actual.getBody().getParentApplication().getIndigenousStatus());
-        assertEquals(DOCUMENT_TYPE, actual.getBody().getParentApplication().getDocumentType());
-        assertEquals(COURT_FILE_NUMBER, actual.getBody().getParentApplication().getCourtFileNumber());
+        assertEquals(APPL_TYPE, actual.getBody().getClientApplication().getApplicationType());
+        assertEquals(COURT_LOCATION, actual.getBody().getClientApplication().getCourtLocation());
+        assertEquals(COURT_LEVEL, actual.getBody().getClientApplication().getCourtLevel());
+        assertEquals(COURT_DIVISION, actual.getBody().getClientApplication().getCourtDivision());
+        assertEquals(COURT_CLASS, actual.getBody().getClientApplication().getCourtClass());
+        assertEquals(PARTICIPATION_CLASS, actual.getBody().getClientApplication().getParticipationClass());
+        assertEquals(INDIGENOUS_STATUS, actual.getBody().getClientApplication().getIndigenousStatus());
+        assertEquals(DOCUMENT_TYPE, actual.getBody().getClientApplication().getDocumentType());
+        assertEquals(COURT_FILE_NUMBER, actual.getBody().getClientApplication().getCourtFileNumber());
     }
     @Test
     @DisplayName("404: with incorrect id return 404")

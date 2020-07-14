@@ -43,20 +43,20 @@ public class TestHelpers {
         return navigation;
     }
 
-    public static ParentApplication createParentApplication(String applicationType, String courtLocation, String courtLevel,
+    public static ClientApplication createClientApplication(String applicationType, String courtLocation, String courtLevel,
                                                             String courtDivision, String courtClass, String participationClass,
                                                             String indigenousStatus, String documentType, String courtFileNumber) {
-        ParentApplication parentApplication = new ParentApplication();
-        parentApplication.setApplicationType(applicationType);
-        parentApplication.setCourtLocation(courtLocation);
-        parentApplication.setCourtLevel(courtLevel);
-        parentApplication.setCourtDivision(courtDivision);
-        parentApplication.setCourtClass(courtClass);
-        parentApplication.setParticipationClass(participationClass);
-        parentApplication.setIndigenousStatus(indigenousStatus);
-        parentApplication.setDocumentType(documentType);
-        parentApplication.setCourtFileNumber(courtFileNumber);
-        return parentApplication;
+        ClientApplication clientApplication = new ClientApplication();
+        clientApplication.setApplicationType(applicationType);
+        clientApplication.setCourtLocation(courtLocation);
+        clientApplication.setCourtLevel(courtLevel);
+        clientApplication.setCourtDivision(courtDivision);
+        clientApplication.setCourtClass(courtClass);
+        clientApplication.setParticipationClass(participationClass);
+        clientApplication.setIndigenousStatus(indigenousStatus);
+        clientApplication.setDocumentType(documentType);
+        clientApplication.setCourtFileNumber(courtFileNumber);
+        return clientApplication;
     }
 
     public static Navigation createDefaultNavigation() {

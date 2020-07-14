@@ -136,7 +136,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             return ResponseEntity.notFound().build();
 
         GetPacakageInformationResponse response = new GetPacakageInformationResponse();
-        response.setParentApplication(fromCacheSubmission.get().getParentApplication());
+        response.setClientApplication(fromCacheSubmission.get().getClientApplication());
         return ResponseEntity.ok(response);
     }
 
