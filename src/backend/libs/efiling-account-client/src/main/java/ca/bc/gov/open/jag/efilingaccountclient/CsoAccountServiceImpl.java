@@ -3,9 +3,7 @@ package ca.bc.gov.open.jag.efilingaccountclient;
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RegisteredRole;
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RoleRegistryPortType;
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.UserRoles;
-import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
-import ca.bc.gov.ag.csows.accounts.ClientProfile;
-import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
+import ca.bc.gov.ag.csows.accounts.*;
 import ca.bc.gov.open.jag.efilingaccountclient.mappers.AccountDetailsMapper;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.CSOHasMultipleAccountException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
@@ -13,8 +11,10 @@ import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.CreateAccountRequest;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bceid.webservices.client.v9.*;
-import org.apache.commons.lang3.NotImplementedException;
+import org.apache.commons.lang3.StringUtils;
 
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.*;
 
 public class CsoAccountServiceImpl implements EfilingAccountService {
@@ -35,7 +35,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         tempMap.put("ldb", BCeIDAccountTypeCode.LDB);
         tempMap.put("ths", BCeIDAccountTypeCode.THS);
 
-        accountTypeLookup = Collections.unmodifiableMap(tempMap);;
+        accountTypeLookup = Collections.unmodifiableMap(tempMap);
     }
 
     public CsoAccountServiceImpl(AccountFacadeBean accountFacadeBean,
@@ -61,8 +61,36 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
     }
 
     @Override
-    public AccountDetails createAccount(CreateAccountRequest createAccountRequest) {
-        throw new NotImplementedException();
+    public AccountDetails createAccount(CreateAccountRequest createAccountRequest)  {
+
+        // Validate the incoming data
+        if (StringUtils.isEmpty(createAccountRequest.getFirstName()) ||
+                StringUtils.isEmpty(createAccountRequest.getLastName()) ||
+                StringUtils.isEmpty(createAccountRequest.getEmail()) ||
+                StringUtils.isEmpty(createAccountRequest.getUniversalId().toString())) {
+            throw new IllegalArgumentException("First Name, Last Name, Email, and Universal ID are required");
+        }
+
+        AccountDetails accountDetails = null;
+
+        try {
+
+            Account account = setCreateAccountDetails(createAccountRequest);
+            Client client = setCreateAccountClientDetails(createAccountRequest);
+            List<RoleAssignment> roles = setCreateAccountRoles();
+            ClientProfile clientProfile = accountFacadeBean.createAccount(account, client, roles);
+            if (null != clientProfile) {
+                accountDetails = accountDetailsMapper.toAccountDetails(
+                        createAccountRequest.getUniversalId(),
+                        clientProfile,
+                        hasFileRole(CsoHelpers.formatUserGuid(createAccountRequest.getUniversalId())));
+            }
+        }
+        catch (DatatypeConfigurationException | NestedEjbException_Exception e) {
+            throw new EfilingAccountServiceException("Exception while creating CSO account", e.getCause());
+        }
+
+        return accountDetails;
     }
 
     private AccountDetails getCsoDetails(UUID userGuid)  {
@@ -116,10 +144,62 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
     }
 
     private BCeIDAccountTypeCode getBCeIDAccountType(String bceidAccountType) {
+
         String lookUp = bceidAccountType.toLowerCase();
         BCeIDAccountTypeCode code = accountTypeLookup.get(lookUp);
         return code == null? BCeIDAccountTypeCode.VOID : code;
     }
 
+    private Account setCreateAccountDetails(CreateAccountRequest createAccountRequest) throws DatatypeConfigurationException {
 
+        Account account = new Account();
+        String accountName = createAccountRequest.getFirstName() + " " + createAccountRequest.getLastName();
+
+        account.setAccountNm(accountName);
+        account.setAccountPrefixTxt("SA");
+        account.setAccountStatusCd("ACT");
+        account.setAuthenticatedAccountGuid(CsoHelpers.formatUserGuid(createAccountRequest.getUniversalId()));
+        account.setEmailTxt(createAccountRequest.getEmail());
+        account.setEntDtm(CsoHelpers.date2XMLGregorian(new Date()));
+        account.setFeeExemptYnBoolean(false);
+        account.setRegisteredCreditCardYnBoolean(false);
+
+        return account;
+    }
+
+    private Client setCreateAccountClientDetails(CreateAccountRequest createAccountRequest) throws DatatypeConfigurationException {
+        Client client = new Client();
+        XMLGregorianCalendar date =  CsoHelpers.date2XMLGregorian(new Date());
+
+        client.setAuthenticatedClientGuid(CsoHelpers.formatUserGuid(createAccountRequest.getUniversalId()));
+        client.setClientPrefixTxt("CS");
+        client.setClientStatusCd("ACT");
+        client.setEmailTxt(createAccountRequest.getEmail());
+        client.setEntDtm(date);
+        client.setGivenNm(createAccountRequest.getFirstName());
+        client.setMiddleNm(createAccountRequest.getMiddleName());
+        client.setRegisteredCreditCardYnBoolean(false);
+        client.setServiceConditionsAcceptDtm(date);
+        client.setSurnameNm(createAccountRequest.getLastName());
+
+        return client;
+    }
+
+    private List<RoleAssignment> setCreateAccountRoles() {
+
+        List<RoleAssignment> roles = new ArrayList<>();
+        RoleAssignment role = new RoleAssignment();
+        role.setActiveYn(true);
+
+        role.setRegisteredClientRoleCd("IND");
+        roles.add(role);
+
+        role.setRegisteredClientRoleCd("CAEF");
+        roles.add(role);
+
+        role.setRegisteredClientRoleCd("FILE");
+        roles.add(role);
+
+        return roles;
+    }
 }
