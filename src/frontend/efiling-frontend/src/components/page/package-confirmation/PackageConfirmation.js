@@ -26,9 +26,29 @@ const uploadButton = {
 };
 
 // TODO: Fix values
-const summaryTableData = [
-  { name: "Statutory Fees:", value: "$100.00", isValueBold: true },
-  { name: "Number of Documents in Package:", value: "10", isValueBold: true }
+const feesData = [
+  {
+    name: "Statutory Fees:",
+    value: "$100.00",
+    isValueBold: true
+  },
+  {
+    name: "Number of Documents in Package:",
+    value: "10",
+    isValueBold: true
+  }
+];
+
+const elements = [
+  {
+    name: (
+      <div style={{ width: "80%" }}>
+        <Table isFeesData elements={feesData} />
+      </div>
+    ),
+    value: "",
+    isSideBySide: true
+  }
 ];
 
 const aboutCsoSidecard = getSidecardData().aboutCso;
@@ -83,7 +103,7 @@ export default function PackageConfirmation({
 
         <h3>Summary</h3>
 
-        <Table elements={summaryTableData} />
+        <Table elements={elements} />
 
         <br />
 

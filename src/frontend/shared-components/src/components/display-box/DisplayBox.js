@@ -6,8 +6,8 @@ import "./DisplayBox.css";
 export const DisplayBox = ({ styling, icon, element }) => {
   return (
     <div className={`display-box ${styling}`}>
-      <div className="display-icon">{icon}</div>
-      <div className="display-element">{element}</div>
+      {icon && <div className="display-icon">{icon}</div>}
+      <div className="display-right-element">{element}</div>
     </div>
   );
 };

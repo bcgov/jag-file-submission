@@ -39,6 +39,26 @@ const table = <Table elements={elements} />
 <DisplayBox element={table} />;
 ```
 
+## Display Box (With Side by Side Content)
+
+Used for left and right column content.
+
+<Story
+  name="With Side by Side Content"
+  id="displaybox--with-side-by-side-content"
+></Story>
+
+```bash
+const elements = [
+  {
+    name: <p style={{ width: "80%" }}>This is the content on the left of the display box. Maybe there will be other content on the right too.</p>,
+    value: <p style={{ width: "80%" }}>This is the content on the right of the display box. There already is content on the left side of the box.</p>
+  },
+];
+
+<DisplayBox styling="display-left-element" element={<Table elements={elements} />} />;
+```
+
 ## Display Box (With Icon)
 
 Used for content with an icon.

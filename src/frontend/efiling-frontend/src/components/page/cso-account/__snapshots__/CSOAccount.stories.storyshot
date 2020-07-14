@@ -40,7 +40,7 @@ exports[`Storyshots CSOAccount Default 1`] = `
             </div>
           </div>
           <div
-            class="display-element"
+            class="display-right-element"
           >
             You need a CSO account to use E-File Submission. Create one now to continue.
           </div>
@@ -75,7 +75,7 @@ exports[`Storyshots CSOAccount Default 1`] = `
             </div>
           </div>
           <div
-            class="display-element"
+            class="display-right-element"
           >
             <table
               class=""
@@ -88,24 +88,39 @@ exports[`Storyshots CSOAccount Default 1`] = `
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>
+                <tr
+                  class=""
+                  colspan="2"
+                >
+                  <td
+                    class=""
+                  >
                     BCeID:
                   </td>
                   <td>
                     bobross42
                   </td>
                 </tr>
-                <tr>
-                  <td>
+                <tr
+                  class=""
+                  colspan="2"
+                >
+                  <td
+                    class=""
+                  >
                     Full Name:
                   </td>
                   <td>
                     Bob  Ross
                   </td>
                 </tr>
-                <tr>
-                  <td>
+                <tr
+                  class=""
+                  colspan="2"
+                >
+                  <td
+                    class=""
+                  >
                     Email Address:
                   </td>
                   <td>
@@ -965,7 +980,7 @@ exports[`Storyshots CSOAccount Mobile 1`] = `
             </div>
           </div>
           <div
-            class="display-element"
+            class="display-right-element"
           >
             You need a CSO account to use E-File Submission. Create one now to continue.
           </div>
@@ -1000,7 +1015,7 @@ exports[`Storyshots CSOAccount Mobile 1`] = `
             </div>
           </div>
           <div
-            class="display-element"
+            class="display-right-element"
           >
             <table
               class=""
@@ -1013,24 +1028,39 @@ exports[`Storyshots CSOAccount Mobile 1`] = `
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>
+                <tr
+                  class=""
+                  colspan="2"
+                >
+                  <td
+                    class=""
+                  >
                     BCeID:
                   </td>
                   <td>
                     bobross42
                   </td>
                 </tr>
-                <tr>
-                  <td>
+                <tr
+                  class=""
+                  colspan="2"
+                >
+                  <td
+                    class=""
+                  >
                     Full Name:
                   </td>
                   <td>
                     Bob  Ross
                   </td>
                 </tr>
-                <tr>
-                  <td>
+                <tr
+                  class=""
+                  colspan="2"
+                >
+                  <td
+                    class=""
+                  >
                     Email Address:
                   </td>
                   <td>

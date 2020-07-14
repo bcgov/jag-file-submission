@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots PackageConfirmation Existing Account 1`] = `
+exports[`Storyshots Payment Default 1`] = `
 <DocumentFragment>
   <div
     class="page"
@@ -9,13 +9,10 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
       class="content col-md-8"
     >
       <h2>
-        Package Confirmation
+        Payment
       </h2>
-      <p>
-        Review your package for accuracy before submitting.
-      </p>
       <div
-        class="display-box border-background"
+        class="display-box warning-background no-padding-bottom"
       >
         <div
           class="display-icon"
@@ -34,7 +31,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+                d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"
               />
             </svg>
           </div>
@@ -43,97 +40,156 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
           class="display-right-element"
         >
           <p>
-            View
+            Your credit card, BLAH, will be charged. 
+            <a
+              href="https://justice.gov.bc.ca/cso/about/index.do"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Register a new Credit Card
+            </a>
+            .
           </p>
         </div>
       </div>
       <br />
-      <p>
-        <a
-          href="cancelurl.com"
-        >
-          Return to the parent application website
-        </a>
-         to correct errors or missing information in this package.
-      </p>
-      <br />
-      <h3>
-        Summary
-      </h3>
-      <table
-        class=""
+      <div
+        class="display-box display-left-element"
       >
-        <thead>
-          <tr>
-            <th
-              colspan="2"
-            />
-          </tr>
-        </thead>
-        <tbody>
-          <tr
+        <div
+          class="display-right-element"
+        >
+          <table
             class=""
-            colspan="2"
           >
-            <td
-              class="side-by-side"
-            >
-              <div
-                style="width: 80%;"
+            <thead>
+              <tr>
+                <th
+                  colspan="2"
+                />
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class=""
+                colspan="2"
               >
-                <table
-                  class=""
+                <td
+                  class="side-by-side"
                 >
-                  <thead>
-                    <tr>
-                      <th
-                        colspan="2"
-                      />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr
+                  <div
+                    style="width: 80%;"
+                  >
+                    <table
                       class=""
-                      colspan="2"
                     >
-                      <td
-                        class=""
-                      >
-                        Statutory Fees:
-                      </td>
-                      <td
-                        class="right-align"
-                      >
-                        <b>
-                          $100.00
-                        </b>
-                      </td>
-                    </tr>
-                    <tr
-                      class=""
-                      colspan="2"
+                      <thead>
+                        <tr>
+                          <th
+                            colspan="2"
+                          />
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          class=""
+                          colspan="2"
+                        >
+                          <td
+                            class=""
+                          >
+                            Some Fees:
+                          </td>
+                          <td
+                            class="right-align"
+                          >
+                            <b>
+                              $100.00
+                            </b>
+                          </td>
+                        </tr>
+                        <tr
+                          class=""
+                          colspan="2"
+                        >
+                          <td
+                            class=""
+                          >
+                            Some More Fees:
+                          </td>
+                          <td
+                            class="right-align"
+                          >
+                            <b>
+                              $10.00
+                            </b>
+                          </td>
+                        </tr>
+                        <tr
+                          class="empty-row"
+                          colspan="2"
+                        >
+                          <td
+                            class=""
+                          />
+                          <td />
+                        </tr>
+                        <tr
+                          class=""
+                          colspan="2"
+                        >
+                          <td
+                            class=""
+                          >
+                            Total Fees:
+                          </td>
+                          <td
+                            class="right-align"
+                          >
+                            <b>
+                              $110.00
+                            </b>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <br />
+                    <br />
+                    <p>
+                      The registry will process statutory fees when your documents are filed.
+                    </p>
+                  </div>
+                </td>
+                <td>
+                  <p>
+                    I have reviewed the information and the documents in this filing package and am prepared to submit them for filing. I agree that all fees for this filing package may be charged to the credit card registered to my account.
+                  </p>
+                  <label
+                    class="pt-3"
+                    for="agreePayment"
+                    style="float: right;"
+                  >
+                    <input
+                      id="agreePayment"
+                      type="checkbox"
+                    />
+                     
+                    <b>
+                      I agree
+                    </b>
+                    <span
+                      class="mandatory"
+                      id="asterisk"
                     >
-                      <td
-                        class=""
-                      >
-                        Number of Documents in Package:
-                      </td>
-                      <td
-                        class="right-align"
-                      >
-                        <b>
-                          10
-                        </b>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </td>
-            <td />
-          </tr>
-        </tbody>
-      </table>
+                      *
+                    </span>
+                  </label>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
       <br />
       <section
         class="inline-block pt-2"
@@ -143,7 +199,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
             class="normal-white btn"
             type="button"
           >
-            Upload Documents
+            &lt; Back
           </button>
         </div>
       </section>
@@ -161,9 +217,10 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
         <div>
           <button
             class="normal-blue btn"
+            disabled=""
             type="button"
           >
-            Continue to Payment
+            Submit
           </button>
         </div>
       </section>
@@ -171,6 +228,84 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
     <div
       class="sidecard"
     >
+      <div
+        class="wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col-12 pt-2"
+            style="position: relative;"
+          >
+            <p />
+            <section
+              class="bluegrey-container"
+              id="bluegrey-section"
+            >
+              <div
+                class="container-background bluegrey-heading"
+              >
+                <h2
+                  class="heading-style"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="side-card-row"
+                    >
+                      <div
+                        class="round-icon-wrapper"
+                      >
+                        <svg
+                          class="side-card-icon"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42C16.07 4.74 14.12 4 12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9 9-4.03 9-9c0-2.12-.74-4.07-1.97-5.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="side-card-title"
+                      >
+                        Rush/Urgent Submission
+                      </div>
+                    </div>
+                  </div>
+                </h2>
+              </div>
+              <div
+                class="bluegrey-content"
+              >
+                <span
+                  class="content-style"
+                >
+                  <p>
+                    If you wish to request that this package be submitted on an urgent (rush) basis, you must provide a reason for your request to be considered. 
+                    <a
+                      href="https://justice.gov.bc.ca/cso/about/index.do"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      Request rush submission
+                    </a>
+                    .
+                  </p>
+                </span>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
       <div
         class="wide-dashboard-spacing"
         style="position: relative;"
@@ -340,7 +475,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
 </DocumentFragment>
 `;
 
-exports[`Storyshots PackageConfirmation Mobile 1`] = `
+exports[`Storyshots Payment Mobile 1`] = `
 <DocumentFragment>
   <div
     class="page"
@@ -349,13 +484,10 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
       class="content col-md-8"
     >
       <h2>
-        Package Confirmation
+        Payment
       </h2>
-      <p>
-        Review your package for accuracy before submitting.
-      </p>
       <div
-        class="display-box border-background"
+        class="display-box warning-background no-padding-bottom"
       >
         <div
           class="display-icon"
@@ -374,7 +506,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+                d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"
               />
             </svg>
           </div>
@@ -383,97 +515,156 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
           class="display-right-element"
         >
           <p>
-            View
+            Your credit card, BLAH, will be charged. 
+            <a
+              href="https://justice.gov.bc.ca/cso/about/index.do"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Register a new Credit Card
+            </a>
+            .
           </p>
         </div>
       </div>
       <br />
-      <p>
-        <a
-          href="cancelurl.com"
-        >
-          Return to the parent application website
-        </a>
-         to correct errors or missing information in this package.
-      </p>
-      <br />
-      <h3>
-        Summary
-      </h3>
-      <table
-        class=""
+      <div
+        class="display-box display-left-element"
       >
-        <thead>
-          <tr>
-            <th
-              colspan="2"
-            />
-          </tr>
-        </thead>
-        <tbody>
-          <tr
+        <div
+          class="display-right-element"
+        >
+          <table
             class=""
-            colspan="2"
           >
-            <td
-              class="side-by-side"
-            >
-              <div
-                style="width: 80%;"
+            <thead>
+              <tr>
+                <th
+                  colspan="2"
+                />
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class=""
+                colspan="2"
               >
-                <table
-                  class=""
+                <td
+                  class="side-by-side"
                 >
-                  <thead>
-                    <tr>
-                      <th
-                        colspan="2"
-                      />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr
+                  <div
+                    style="width: 80%;"
+                  >
+                    <table
                       class=""
-                      colspan="2"
                     >
-                      <td
-                        class=""
-                      >
-                        Statutory Fees:
-                      </td>
-                      <td
-                        class="right-align"
-                      >
-                        <b>
-                          $100.00
-                        </b>
-                      </td>
-                    </tr>
-                    <tr
-                      class=""
-                      colspan="2"
+                      <thead>
+                        <tr>
+                          <th
+                            colspan="2"
+                          />
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          class=""
+                          colspan="2"
+                        >
+                          <td
+                            class=""
+                          >
+                            Some Fees:
+                          </td>
+                          <td
+                            class="right-align"
+                          >
+                            <b>
+                              $100.00
+                            </b>
+                          </td>
+                        </tr>
+                        <tr
+                          class=""
+                          colspan="2"
+                        >
+                          <td
+                            class=""
+                          >
+                            Some More Fees:
+                          </td>
+                          <td
+                            class="right-align"
+                          >
+                            <b>
+                              $10.00
+                            </b>
+                          </td>
+                        </tr>
+                        <tr
+                          class="empty-row"
+                          colspan="2"
+                        >
+                          <td
+                            class=""
+                          />
+                          <td />
+                        </tr>
+                        <tr
+                          class=""
+                          colspan="2"
+                        >
+                          <td
+                            class=""
+                          >
+                            Total Fees:
+                          </td>
+                          <td
+                            class="right-align"
+                          >
+                            <b>
+                              $110.00
+                            </b>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <br />
+                    <br />
+                    <p>
+                      The registry will process statutory fees when your documents are filed.
+                    </p>
+                  </div>
+                </td>
+                <td>
+                  <p>
+                    I have reviewed the information and the documents in this filing package and am prepared to submit them for filing. I agree that all fees for this filing package may be charged to the credit card registered to my account.
+                  </p>
+                  <label
+                    class="pt-3"
+                    for="agreePayment"
+                    style="float: right;"
+                  >
+                    <input
+                      id="agreePayment"
+                      type="checkbox"
+                    />
+                     
+                    <b>
+                      I agree
+                    </b>
+                    <span
+                      class="mandatory"
+                      id="asterisk"
                     >
-                      <td
-                        class=""
-                      >
-                        Number of Documents in Package:
-                      </td>
-                      <td
-                        class="right-align"
-                      >
-                        <b>
-                          10
-                        </b>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </td>
-            <td />
-          </tr>
-        </tbody>
-      </table>
+                      *
+                    </span>
+                  </label>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
       <br />
       <section
         class="inline-block pt-2"
@@ -483,7 +674,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
             class="normal-white btn"
             type="button"
           >
-            Upload Documents
+            &lt; Back
           </button>
         </div>
       </section>
@@ -501,9 +692,10 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
         <div>
           <button
             class="normal-blue btn"
+            disabled=""
             type="button"
           >
-            Continue to Payment
+            Submit
           </button>
         </div>
       </section>
@@ -553,14 +745,14 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
                           xmlns="http://www.w3.org/2000/svg"
                         >
                           <path
-                            d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                            d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42C16.07 4.74 14.12 4 12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9 9-4.03 9-9c0-2.12-.74-4.07-1.97-5.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"
                           />
                         </svg>
                       </div>
                       <div
                         class="side-card-title"
                       >
-                        Your CSO Account
+                        Rush/Urgent Submission
                       </div>
                     </div>
                   </div>
@@ -573,21 +765,13 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
                   class="content-style"
                 >
                   <p>
-                    CSO account 
-                    <b>
-                      blah
-                    </b>
-                     is linked to your Basic BCeID account 
-                    <b>
-                      blah2
-                    </b>
-                     and will be used to file documents. 
+                    If you wish to request that this package be submitted on an urgent (rush) basis, you must provide a reason for your request to be considered. 
                     <a
                       href="https://justice.gov.bc.ca/cso/about/index.do"
                       rel="noopener noreferrer"
                       target="_blank"
                     >
-                      View your CSO account details
+                      Request rush submission
                     </a>
                     .
                   </p>
@@ -597,292 +781,6 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
           </div>
         </div>
       </div>
-      <div
-        class="wide-dashboard-spacing"
-        style="position: relative;"
-      >
-        <div
-          class="row"
-        >
-          <div
-            class="col-12 pt-2"
-            style="position: relative;"
-          >
-            <p />
-            <section
-              class="bluegrey-container"
-              id="bluegrey-section"
-            >
-              <div
-                class="container-background bluegrey-heading"
-              >
-                <h2
-                  class="heading-style"
-                >
-                  <div
-                    class="row"
-                  >
-                    <div
-                      class="side-card-row"
-                    >
-                      <div
-                        class="round-icon-wrapper"
-                      >
-                        <svg
-                          class="side-card-icon"
-                          fill="currentColor"
-                          height="1em"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
-                          />
-                        </svg>
-                      </div>
-                      <div
-                        class="side-card-title"
-                      >
-                        About E-File Submission
-                      </div>
-                    </div>
-                  </div>
-                </h2>
-              </div>
-              <div
-                class="bluegrey-content"
-              >
-                <span
-                  class="content-style"
-                >
-                  <p>
-                    E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
-                    <a
-                      href="https://justice.gov.bc.ca/cso/about/index.do"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      Learn more about CSO
-                    </a>
-                    .
-                  </p>
-                </span>
-              </div>
-            </section>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</DocumentFragment>
-`;
-
-exports[`Storyshots PackageConfirmation New Account 1`] = `
-<DocumentFragment>
-  <div
-    class="page"
-  >
-    <div
-      class="content col-md-8"
-    >
-      <div
-        class="display-box success-background"
-      >
-        <div
-          class="display-icon"
-        >
-          <div
-            style="color: rgb(46, 133, 64);"
-          >
-            <svg
-              fill="currentColor"
-              height="32"
-              size="32"
-              stroke="currentColor"
-              stroke-width="0"
-              viewBox="0 0 24 24"
-              width="32"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
-              />
-            </svg>
-          </div>
-        </div>
-        <div
-          class="display-right-element"
-        >
-          CSO Account created successfully.
-        </div>
-      </div>
-      <br />
-      <h2>
-        Package Confirmation
-      </h2>
-      <p>
-        Review your package for accuracy before submitting.
-      </p>
-      <div
-        class="display-box border-background"
-      >
-        <div
-          class="display-icon"
-        >
-          <div
-            style="color: rgb(252, 186, 25);"
-          >
-            <svg
-              fill="currentColor"
-              height="32"
-              size="32"
-              stroke="currentColor"
-              stroke-width="0"
-              viewBox="0 0 24 24"
-              width="32"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
-              />
-            </svg>
-          </div>
-        </div>
-        <div
-          class="display-right-element"
-        >
-          <p>
-            View
-          </p>
-        </div>
-      </div>
-      <br />
-      <p>
-        <a
-          href="cancelurl.com"
-        >
-          Return to the parent application website
-        </a>
-         to correct errors or missing information in this package.
-      </p>
-      <br />
-      <h3>
-        Summary
-      </h3>
-      <table
-        class=""
-      >
-        <thead>
-          <tr>
-            <th
-              colspan="2"
-            />
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            class=""
-            colspan="2"
-          >
-            <td
-              class="side-by-side"
-            >
-              <div
-                style="width: 80%;"
-              >
-                <table
-                  class=""
-                >
-                  <thead>
-                    <tr>
-                      <th
-                        colspan="2"
-                      />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr
-                      class=""
-                      colspan="2"
-                    >
-                      <td
-                        class=""
-                      >
-                        Statutory Fees:
-                      </td>
-                      <td
-                        class="right-align"
-                      >
-                        <b>
-                          $100.00
-                        </b>
-                      </td>
-                    </tr>
-                    <tr
-                      class=""
-                      colspan="2"
-                    >
-                      <td
-                        class=""
-                      >
-                        Number of Documents in Package:
-                      </td>
-                      <td
-                        class="right-align"
-                      >
-                        <b>
-                          10
-                        </b>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </td>
-            <td />
-          </tr>
-        </tbody>
-      </table>
-      <br />
-      <section
-        class="inline-block pt-2"
-      >
-        <div>
-          <button
-            class="normal-white btn"
-            type="button"
-          >
-            Upload Documents
-          </button>
-        </div>
-      </section>
-      <section
-        class="buttons pt-2"
-      >
-        <div>
-          <button
-            class="normal-white btn"
-            type="button"
-          >
-            Cancel
-          </button>
-        </div>
-        <div>
-          <button
-            class="normal-blue btn"
-            type="button"
-          >
-            Continue to Payment
-          </button>
-        </div>
-      </section>
-    </div>
-    <div
-      class="sidecard"
-    >
       <div
         class="wide-dashboard-spacing"
         style="position: relative;"

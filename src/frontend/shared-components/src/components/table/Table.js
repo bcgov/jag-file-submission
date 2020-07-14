@@ -4,18 +4,23 @@ import PropTypes from "prop-types";
 import "./Table.css";
 
 const TableElement = ({
-  element: { name, value, isValueBold, isNameBold }
+  element: { name, value, isValueBold, isNameBold, isSideBySide, isEmptyRow },
+  isFeesData
 }) => {
+  const columnWidth = isSideBySide ? "side-by-side" : "";
+  const emptyRow = isEmptyRow ? "empty-row" : "";
+  const rightAlign = isFeesData ? "right-align" : "";
+
   return (
-    <tr>
+    <tr colSpan="2" className={emptyRow}>
       {isNameBold && (
-        <td>
+        <td className={columnWidth}>
           <b>{name}</b>
         </td>
       )}
-      {!isNameBold && <td>{name}</td>}
+      {!isNameBold && <td className={columnWidth}>{name}</td>}
       {isValueBold && (
-        <td>
+        <td className={rightAlign}>
           <b>{value}</b>
         </td>
       )}
@@ -24,9 +29,15 @@ const TableElement = ({
   );
 };
 
-export const Table = ({ heading, elements, styling }) => {
+export const Table = ({ heading, elements, styling, isFeesData }) => {
   const tableComponents = elements.map(element => {
-    return <TableElement key={element.key || element.name} element={element} />;
+    return (
+      <TableElement
+        isFeesData={isFeesData}
+        key={element.key || element.name}
+        element={element}
+      />
+    );
   });
 
   return (
@@ -43,27 +54,37 @@ export const Table = ({ heading, elements, styling }) => {
 
 TableElement.propTypes = {
   element: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
+    name: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     isValueBold: PropTypes.bool,
-    isNameBold: PropTypes.bool
-  }).isRequired
+    isNameBold: PropTypes.bool,
+    isSideBySide: PropTypes.bool,
+    isEmptyRow: PropTypes.bool
+  }).isRequired,
+  isFeesData: PropTypes.bool.isRequired
 };
 
 Table.propTypes = {
   heading: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   elements: PropTypes.arrayOf(
     PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-        .isRequired
+      name: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+        .isRequired,
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+        .isRequired,
+      isValueBold: PropTypes.bool,
+      isNameBold: PropTypes.bool,
+      isSideBySide: PropTypes.bool,
+      isEmptyRow: PropTypes.bool
     }).isRequired
   ),
-  styling: PropTypes.string
+  styling: PropTypes.string,
+  isFeesData: PropTypes.bool
 };
 
 Table.defaultProps = {
   styling: "",
   heading: "",
-  elements: []
+  elements: [],
+  isFeesData: false
 };
