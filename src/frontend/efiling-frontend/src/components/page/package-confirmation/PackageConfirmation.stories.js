@@ -12,12 +12,27 @@ const confirmationPopup = getTestData();
 
 const packageConfirmation = { confirmationPopup };
 
-export const Default = () => (
-  <PackageConfirmation packageConfirmation={packageConfirmation} />
+const csoAccountStatus = { isNew: false };
+
+export const ExistingAccount = () => (
+  <PackageConfirmation
+    packageConfirmation={packageConfirmation}
+    csoAccountStatus={csoAccountStatus}
+  />
+);
+
+export const NewAccount = () => (
+  <PackageConfirmation
+    packageConfirmation={packageConfirmation}
+    csoAccountStatus={{ ...csoAccountStatus, isNew: true }}
+  />
 );
 
 export const Mobile = () => (
-  <PackageConfirmation packageConfirmation={packageConfirmation} />
+  <PackageConfirmation
+    packageConfirmation={packageConfirmation}
+    csoAccountStatus={csoAccountStatus}
+  />
 );
 
 const mobileViewport = {
