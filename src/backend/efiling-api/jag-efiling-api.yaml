@@ -98,7 +98,7 @@ paths:
   "/submission/{id}/package":
     get:
       summary: Get package information
-      operationId: GetPackageInformation
+      operationId: GetSubmissionPackage
       tags:
         - submission
       parameters:
