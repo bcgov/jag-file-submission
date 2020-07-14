@@ -136,17 +136,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             return ResponseEntity.notFound().build();
 
         GetPacakageInformationResponse response = new GetPacakageInformationResponse();
-        ParentApplication parentApplication = new ParentApplication();
-        parentApplication.setApplicationType(fromCacheSubmission.get().getParentApplication().getApplicationType());
-        parentApplication.setCourtLocation(fromCacheSubmission.get().getParentApplication().getCourtLocation());
-        parentApplication.setCourtLevel(fromCacheSubmission.get().getParentApplication().getCourtLevel());
-        parentApplication.setCourtDivision(fromCacheSubmission.get().getParentApplication().getCourtDivision());
-        parentApplication.setCourtClass(fromCacheSubmission.get().getParentApplication().getCourtClass());
-        parentApplication.setParticipationClass(fromCacheSubmission.get().getParentApplication().getParticipationClass());
-        parentApplication.setIndigenousStatus(fromCacheSubmission.get().getParentApplication().getIndigenousStatus());
-        parentApplication.setDocumentType(fromCacheSubmission.get().getParentApplication().getDocumentType());
-        parentApplication.setCourtFileNumber(fromCacheSubmission.get().getParentApplication().getCourtFileNumber());
-        response.setParentApplication(parentApplication);
+        response.setParentApplication(fromCacheSubmission.get().getParentApplication());
         return ResponseEntity.ok(response);
     }
 
