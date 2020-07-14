@@ -1,8 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 
-import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.GetPacakageInformationResponse;
-import ca.bc.gov.open.jag.efilingapi.api.model.GetSubmissionResponse;
 import ca.bc.gov.open.jag.efilingapi.api.model.ParentApplication;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
@@ -10,7 +8,6 @@ import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMappe
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
-import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +18,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -32,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class GetPackageInformationTest {
 
     private static final String APPL_TYPE = "ApplType";
-    private static final String KELWONA_LAW_COURTS = "Kelwona law courts";
+    private static final String COURT_LOCATION = "Kelwona law courts";
     private static final String COURT_LEVEL = "P";
     private static final String COURT_DIVISION = "R";
     private static final String COURT_CLASS = "E";
@@ -62,7 +58,7 @@ public class GetPackageInformationTest {
 
         ParentApplication parentApplication = new ParentApplication();
         parentApplication.setApplicationType(APPL_TYPE);
-        parentApplication.setCourtLocation(KELWONA_LAW_COURTS);
+        parentApplication.setCourtLocation(COURT_LOCATION);
         parentApplication.setCourtLevel(COURT_LEVEL);
         parentApplication.setCourtDivision(COURT_DIVISION);
         parentApplication.setCourtClass(COURT_CLASS);
@@ -87,7 +83,7 @@ public class GetPackageInformationTest {
         ResponseEntity<GetPacakageInformationResponse> actual = sut.getSubmissionPackage(CASE_1);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertEquals(APPL_TYPE, actual.getBody().getParentApplication().getApplicationType());
-        assertEquals(KELWONA_LAW_COURTS, actual.getBody().getParentApplication().getCourtLocation());
+        assertEquals(COURT_LOCATION, actual.getBody().getParentApplication().getCourtLocation());
         assertEquals(COURT_LEVEL, actual.getBody().getParentApplication().getCourtLevel());
         assertEquals(COURT_DIVISION, actual.getBody().getParentApplication().getCourtDivision());
         assertEquals(COURT_CLASS, actual.getBody().getParentApplication().getCourtClass());
