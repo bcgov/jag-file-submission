@@ -119,6 +119,19 @@ export default function Home({ page: { header } }) {
             styling="normal-blue btn"
           />
           <br />
+          <FilePond
+            files={files}
+            allowMultiple
+            onupdatefiles={setFiles}
+            labelIdle='Drag and Drop your files or <span class="filepond--label-action">Browse</span>'
+          />
+          <br />
+          <Button
+            onClick={() => uploadFiles(files)}
+            label="Upload"
+            styling="normal-blue btn"
+          />
+          <br />
           {errorExists && (
             <p className="error">
               An error occurred while generating the URL. Please try again.
