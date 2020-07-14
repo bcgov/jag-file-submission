@@ -76,7 +76,7 @@ exports[`Storyshots DisplayBox Mobile 1`] = `
       </MdPerson>
     </div>
     <div
-      className="display-element"
+      className="display-right-element"
     >
       <Table
         elements={
@@ -122,8 +122,13 @@ exports[`Storyshots DisplayBox Mobile 1`] = `
               }
               key="BCeID"
             >
-              <tr>
-                <td>
+              <tr
+                className=""
+                colSpan="2"
+              >
+                <td
+                  className=""
+                >
                   BCeID
                 </td>
                 <td>
@@ -140,8 +145,13 @@ exports[`Storyshots DisplayBox Mobile 1`] = `
               }
               key="Last Name"
             >
-              <tr>
-                <td>
+              <tr
+                className=""
+                colSpan="2"
+              >
+                <td
+                  className=""
+                >
                   Last Name
                 </td>
                 <td>
@@ -158,8 +168,13 @@ exports[`Storyshots DisplayBox Mobile 1`] = `
               }
               key="First Name"
             >
-              <tr>
-                <td>
+              <tr
+                className=""
+                colSpan="2"
+              >
+                <td
+                  className=""
+                >
                   First Name
                 </td>
                 <td>
@@ -176,8 +191,13 @@ exports[`Storyshots DisplayBox Mobile 1`] = `
               }
               key="Email Address"
             >
-              <tr>
-                <td>
+              <tr
+                className=""
+                colSpan="2"
+              >
+                <td
+                  className=""
+                >
                   Email Address
                 </td>
                 <td>
@@ -269,7 +289,7 @@ exports[`Storyshots DisplayBox With Blue Background 1`] = `
       </MdPerson>
     </div>
     <div
-      className="display-element"
+      className="display-right-element"
     >
       <Table
         elements={
@@ -315,8 +335,13 @@ exports[`Storyshots DisplayBox With Blue Background 1`] = `
               }
               key="BCeID"
             >
-              <tr>
-                <td>
+              <tr
+                className=""
+                colSpan="2"
+              >
+                <td
+                  className=""
+                >
                   BCeID
                 </td>
                 <td>
@@ -333,8 +358,13 @@ exports[`Storyshots DisplayBox With Blue Background 1`] = `
               }
               key="Last Name"
             >
-              <tr>
-                <td>
+              <tr
+                className=""
+                colSpan="2"
+              >
+                <td
+                  className=""
+                >
                   Last Name
                 </td>
                 <td>
@@ -351,8 +381,13 @@ exports[`Storyshots DisplayBox With Blue Background 1`] = `
               }
               key="First Name"
             >
-              <tr>
-                <td>
+              <tr
+                className=""
+                colSpan="2"
+              >
+                <td
+                  className=""
+                >
                   First Name
                 </td>
                 <td>
@@ -369,8 +404,13 @@ exports[`Storyshots DisplayBox With Blue Background 1`] = `
               }
               key="Email Address"
             >
-              <tr>
-                <td>
+              <tr
+                className=""
+                colSpan="2"
+              >
+                <td
+                  className=""
+                >
                   Email Address
                 </td>
                 <td>
@@ -462,7 +502,7 @@ exports[`Storyshots DisplayBox With Border 1`] = `
       </MdPerson>
     </div>
     <div
-      className="display-element"
+      className="display-right-element"
     >
       <Table
         elements={
@@ -508,8 +548,13 @@ exports[`Storyshots DisplayBox With Border 1`] = `
               }
               key="BCeID"
             >
-              <tr>
-                <td>
+              <tr
+                className=""
+                colSpan="2"
+              >
+                <td
+                  className=""
+                >
                   BCeID
                 </td>
                 <td>
@@ -526,8 +571,13 @@ exports[`Storyshots DisplayBox With Border 1`] = `
               }
               key="Last Name"
             >
-              <tr>
-                <td>
+              <tr
+                className=""
+                colSpan="2"
+              >
+                <td
+                  className=""
+                >
                   Last Name
                 </td>
                 <td>
@@ -544,8 +594,13 @@ exports[`Storyshots DisplayBox With Border 1`] = `
               }
               key="First Name"
             >
-              <tr>
-                <td>
+              <tr
+                className=""
+                colSpan="2"
+              >
+                <td
+                  className=""
+                >
                   First Name
                 </td>
                 <td>
@@ -562,8 +617,13 @@ exports[`Storyshots DisplayBox With Border 1`] = `
               }
               key="Email Address"
             >
-              <tr>
-                <td>
+              <tr
+                className=""
+                colSpan="2"
+              >
+                <td
+                  className=""
+                >
                   Email Address
                 </td>
                 <td>
@@ -655,7 +715,7 @@ exports[`Storyshots DisplayBox With Icon 1`] = `
       </MdPerson>
     </div>
     <div
-      className="display-element"
+      className="display-right-element"
     >
       <Table
         elements={
@@ -701,8 +761,13 @@ exports[`Storyshots DisplayBox With Icon 1`] = `
               }
               key="BCeID"
             >
-              <tr>
-                <td>
+              <tr
+                className=""
+                colSpan="2"
+              >
+                <td
+                  className=""
+                >
                   BCeID
                 </td>
                 <td>
@@ -719,8 +784,13 @@ exports[`Storyshots DisplayBox With Icon 1`] = `
               }
               key="Last Name"
             >
-              <tr>
-                <td>
+              <tr
+                className=""
+                colSpan="2"
+              >
+                <td
+                  className=""
+                >
                   Last Name
                 </td>
                 <td>
@@ -737,8 +807,13 @@ exports[`Storyshots DisplayBox With Icon 1`] = `
               }
               key="First Name"
             >
-              <tr>
-                <td>
+              <tr
+                className=""
+                colSpan="2"
+              >
+                <td
+                  className=""
+                >
                   First Name
                 </td>
                 <td>
@@ -755,12 +830,163 @@ exports[`Storyshots DisplayBox With Icon 1`] = `
               }
               key="Email Address"
             >
-              <tr>
-                <td>
+              <tr
+                className=""
+                colSpan="2"
+              >
+                <td
+                  className=""
+                >
                   Email Address
                 </td>
                 <td>
                   bob.ross@example.com
+                </td>
+              </tr>
+            </TableElement>
+          </tbody>
+        </table>
+      </Table>
+    </div>
+  </div>
+</DisplayBox>
+`;
+
+exports[`Storyshots DisplayBox With Side By Side Content 1`] = `
+<DisplayBox
+  element={
+    <Table
+      elements={
+        Array [
+          Object {
+            "isSideBySide": true,
+            "name": <p
+              style={
+                Object {
+                  "width": "80%",
+                }
+              }
+            >
+              This is the content on the left of the display box. Maybe there will be other content on the right too.
+            </p>,
+            "value": <p
+              style={
+                Object {
+                  "width": "80%",
+                }
+              }
+            >
+              This is the content on the right of the display box. There already is content on the left side of the box.
+            </p>,
+          },
+        ]
+      }
+      heading=""
+      styling=""
+    />
+  }
+  icon={null}
+  styling="display-left-element"
+>
+  <div
+    className="display-box display-left-element"
+  >
+    <div
+      className="display-right-element"
+    >
+      <Table
+        elements={
+          Array [
+            Object {
+              "isSideBySide": true,
+              "name": <p
+                style={
+                  Object {
+                    "width": "80%",
+                  }
+                }
+              >
+                This is the content on the left of the display box. Maybe there will be other content on the right too.
+              </p>,
+              "value": <p
+                style={
+                  Object {
+                    "width": "80%",
+                  }
+                }
+              >
+                This is the content on the right of the display box. There already is content on the left side of the box.
+              </p>,
+            },
+          ]
+        }
+        heading=""
+        styling=""
+      >
+        <table
+          className=""
+        >
+          <thead>
+            <tr>
+              <th
+                colSpan="2"
+              />
+            </tr>
+          </thead>
+          <tbody>
+            <TableElement
+              element={
+                Object {
+                  "isSideBySide": true,
+                  "name": <p
+                    style={
+                      Object {
+                        "width": "80%",
+                      }
+                    }
+                  >
+                    This is the content on the left of the display box. Maybe there will be other content on the right too.
+                  </p>,
+                  "value": <p
+                    style={
+                      Object {
+                        "width": "80%",
+                      }
+                    }
+                  >
+                    This is the content on the right of the display box. There already is content on the left side of the box.
+                  </p>,
+                }
+              }
+              key="[object Object]"
+            >
+              <tr
+                className=""
+                colSpan="2"
+              >
+                <td
+                  className="side-by-side"
+                >
+                  <p
+                    style={
+                      Object {
+                        "width": "80%",
+                      }
+                    }
+                  >
+                    This is the content on the left of the display box. Maybe there will be other content on the right too.
+                  </p>
+                </td>
+                <td>
+                  <p
+                    style={
+                      Object {
+                        "width": "80%",
+                      }
+                    }
+                  >
+                    This is the content on the right of the display box. There already is content on the left side of the box.
+                  </p>
                 </td>
               </tr>
             </TableElement>
@@ -807,10 +1033,7 @@ exports[`Storyshots DisplayBox Without Icon 1`] = `
     className="display-box "
   >
     <div
-      className="display-icon"
-    />
-    <div
-      className="display-element"
+      className="display-right-element"
     >
       <Table
         elements={
@@ -856,8 +1079,13 @@ exports[`Storyshots DisplayBox Without Icon 1`] = `
               }
               key="BCeID"
             >
-              <tr>
-                <td>
+              <tr
+                className=""
+                colSpan="2"
+              >
+                <td
+                  className=""
+                >
                   BCeID
                 </td>
                 <td>
@@ -874,8 +1102,13 @@ exports[`Storyshots DisplayBox Without Icon 1`] = `
               }
               key="Last Name"
             >
-              <tr>
-                <td>
+              <tr
+                className=""
+                colSpan="2"
+              >
+                <td
+                  className=""
+                >
                   Last Name
                 </td>
                 <td>
@@ -892,8 +1125,13 @@ exports[`Storyshots DisplayBox Without Icon 1`] = `
               }
               key="First Name"
             >
-              <tr>
-                <td>
+              <tr
+                className=""
+                colSpan="2"
+              >
+                <td
+                  className=""
+                >
                   First Name
                 </td>
                 <td>
@@ -910,8 +1148,13 @@ exports[`Storyshots DisplayBox Without Icon 1`] = `
               }
               key="Email Address"
             >
-              <tr>
-                <td>
+              <tr
+                className=""
+                colSpan="2"
+              >
+                <td
+                  className=""
+                >
                   Email Address
                 </td>
                 <td>

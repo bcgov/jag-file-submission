@@ -47,8 +47,13 @@ exports[`Storyshots Table Mobile 1`] = `
         }
         key="BCeID"
       >
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             BCeID
           </td>
           <td>
@@ -65,8 +70,13 @@ exports[`Storyshots Table Mobile 1`] = `
         }
         key="Last Name"
       >
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             Last Name
           </td>
           <td>
@@ -83,8 +93,13 @@ exports[`Storyshots Table Mobile 1`] = `
         }
         key="First Name"
       >
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             First Name
           </td>
           <td>
@@ -101,8 +116,13 @@ exports[`Storyshots Table Mobile 1`] = `
         }
         key="Email Address"
       >
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             Email Address
           </td>
           <td>
@@ -160,8 +180,13 @@ exports[`Storyshots Table With Blue Stripe 1`] = `
         }
         key="BCeID"
       >
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             BCeID
           </td>
           <td>
@@ -178,8 +203,13 @@ exports[`Storyshots Table With Blue Stripe 1`] = `
         }
         key="Last Name"
       >
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             Last Name
           </td>
           <td>
@@ -196,8 +226,13 @@ exports[`Storyshots Table With Blue Stripe 1`] = `
         }
         key="First Name"
       >
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             First Name
           </td>
           <td>
@@ -214,8 +249,13 @@ exports[`Storyshots Table With Blue Stripe 1`] = `
         }
         key="Email Address"
       >
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             Email Address
           </td>
           <td>
@@ -263,8 +303,13 @@ exports[`Storyshots Table With Bold Names 1`] = `
         }
         key="Key"
       >
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             <b>
               Key
             </b>
@@ -314,13 +359,185 @@ exports[`Storyshots Table With Bold Values 1`] = `
         }
         key="Key"
       >
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             Key
           </td>
-          <td>
+          <td
+            style={
+              Object {
+                "textAlign": "right",
+              }
+            }
+          >
             <b>
               Value
+            </b>
+          </td>
+        </tr>
+      </TableElement>
+    </tbody>
+  </table>
+</Table>
+`;
+
+exports[`Storyshots Table With Fees 1`] = `
+<Table
+  elements={
+    Array [
+      Object {
+        "isValueBold": true,
+        "name": "Some Fees:",
+        "value": "$100.00",
+      },
+      Object {
+        "isValueBold": true,
+        "name": "Some More Fees:",
+        "value": "$10.00",
+      },
+      Object {
+        "isEmptyRow": true,
+        "name": "",
+        "value": "",
+      },
+      Object {
+        "isValueBold": true,
+        "name": "Total Fees:",
+        "value": "$110.00",
+      },
+    ]
+  }
+  heading=""
+  styling=""
+>
+  <table
+    className=""
+  >
+    <thead>
+      <tr>
+        <th
+          colSpan="2"
+        />
+      </tr>
+    </thead>
+    <tbody>
+      <TableElement
+        element={
+          Object {
+            "isValueBold": true,
+            "name": "Some Fees:",
+            "value": "$100.00",
+          }
+        }
+        key="Some Fees:"
+      >
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
+            Some Fees:
+          </td>
+          <td
+            style={
+              Object {
+                "textAlign": "right",
+              }
+            }
+          >
+            <b>
+              $100.00
+            </b>
+          </td>
+        </tr>
+      </TableElement>
+      <TableElement
+        element={
+          Object {
+            "isValueBold": true,
+            "name": "Some More Fees:",
+            "value": "$10.00",
+          }
+        }
+        key="Some More Fees:"
+      >
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
+            Some More Fees:
+          </td>
+          <td
+            style={
+              Object {
+                "textAlign": "right",
+              }
+            }
+          >
+            <b>
+              $10.00
+            </b>
+          </td>
+        </tr>
+      </TableElement>
+      <TableElement
+        element={
+          Object {
+            "isEmptyRow": true,
+            "name": "",
+            "value": "",
+          }
+        }
+        key=""
+      >
+        <tr
+          className="empty-row"
+          colSpan="2"
+        >
+          <td
+            className=""
+          />
+          <td />
+        </tr>
+      </TableElement>
+      <TableElement
+        element={
+          Object {
+            "isValueBold": true,
+            "name": "Total Fees:",
+            "value": "$110.00",
+          }
+        }
+        key="Total Fees:"
+      >
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
+            Total Fees:
+          </td>
+          <td
+            style={
+              Object {
+                "textAlign": "right",
+              }
+            }
+          >
+            <b>
+              $110.00
             </b>
           </td>
         </tr>
@@ -377,8 +594,13 @@ exports[`Storyshots Table With Header 1`] = `
         }
         key="BCeID"
       >
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             BCeID
           </td>
           <td>
@@ -395,8 +617,13 @@ exports[`Storyshots Table With Header 1`] = `
         }
         key="Last Name"
       >
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             Last Name
           </td>
           <td>
@@ -413,8 +640,13 @@ exports[`Storyshots Table With Header 1`] = `
         }
         key="First Name"
       >
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             First Name
           </td>
           <td>
@@ -431,8 +663,13 @@ exports[`Storyshots Table With Header 1`] = `
         }
         key="Email Address"
       >
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             Email Address
           </td>
           <td>
@@ -490,8 +727,13 @@ exports[`Storyshots Table Without Header 1`] = `
         }
         key="BCeID"
       >
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             BCeID
           </td>
           <td>
@@ -508,8 +750,13 @@ exports[`Storyshots Table Without Header 1`] = `
         }
         key="Last Name"
       >
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             Last Name
           </td>
           <td>
@@ -526,8 +773,13 @@ exports[`Storyshots Table Without Header 1`] = `
         }
         key="First Name"
       >
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             First Name
           </td>
           <td>
@@ -544,8 +796,13 @@ exports[`Storyshots Table Without Header 1`] = `
         }
         key="Email Address"
       >
-        <tr>
-          <td>
+        <tr
+          className=""
+          colSpan="2"
+        >
+          <td
+            className=""
+          >
             Email Address
           </td>
           <td>

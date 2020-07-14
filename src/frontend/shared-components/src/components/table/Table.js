@@ -62,7 +62,11 @@ Table.propTypes = {
       name: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
         .isRequired,
       value: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
-        .isRequired
+        .isRequired,
+      isValueBold: PropTypes.bool,
+      isNameBold: PropTypes.bool,
+      isSideBySide: PropTypes.bool,
+      isEmptyRow: PropTypes.bool
     }).isRequired
   ),
   styling: PropTypes.string
