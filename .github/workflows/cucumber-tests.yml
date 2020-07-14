@@ -17,4 +17,4 @@ jobs:
 
       # Get Code Climate binary
       - name: build docker and run tests
-        run: docker-compose up -d && mvn verify -f tests/pom.xml
+        run: docker-compose up -d efiling-frontend efiling-demo efiling-api redis && mvn verify -f tests/pom.xml

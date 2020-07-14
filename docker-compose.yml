@@ -37,6 +37,7 @@ services:
       args:
         - SERVICE_NAME=efiling-api
         - MVN_PROFILE=${MVN_PROFILE:-demo}
+        - SKIP_TESTS=true
     ports:
       - "8080:8080"
     environment:
