@@ -2,7 +2,6 @@ package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.ClientApplication;
 import ca.bc.gov.open.jag.efilingapi.api.model.GetPacakageInformationResponse;
-import ca.bc.gov.open.jag.efilingapi.api.model.ParentApplication;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMapper;
