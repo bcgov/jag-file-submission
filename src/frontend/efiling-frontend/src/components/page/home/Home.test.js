@@ -82,7 +82,10 @@ describe("Home", () => {
       expect(sessionStorage.getItem("cancelUrl")).toBeFalsy();
     });
 
-    expect(window.open).toHaveBeenCalled();
+    expect(window.open).toHaveBeenCalledWith(
+      "error.com?status=400&message=There was a problem.",
+      "_self"
+    );
   });
 
   test("saveNavigationToSession saves urls to session storage when url values are truthy", () => {

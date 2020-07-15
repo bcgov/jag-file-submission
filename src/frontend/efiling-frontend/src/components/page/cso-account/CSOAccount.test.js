@@ -61,6 +61,7 @@ describe("CSOAccount Component", () => {
 
   test("On failed account creation, should redirect to parent application", async () => {
     mock.onPost(API_REQUEST).reply(400, { message: "There was a problem." });
+    sessionStorage.setItem("errorUrl", "error.com");
 
     const { container } = render(
       <CSOAccount
@@ -77,6 +78,9 @@ describe("CSOAccount Component", () => {
     fireEvent.click(getByText(container, "Create CSO Account"));
     await wait(() => {});
 
-    expect(window.open).toHaveBeenCalled();
+    expect(window.open).toHaveBeenCalledWith(
+      "error.com?status=400&message=There was a problem.",
+      "_self"
+    );
   });
 });
