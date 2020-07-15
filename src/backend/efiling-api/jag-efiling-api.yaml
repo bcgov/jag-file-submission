@@ -30,8 +30,10 @@ paths:
               type: object
               properties:
                 files:
-                  type: string
-                  format: binary
+                  type: array
+                  items:
+                    type: string
+                    format: binary
       responses:
         "200":
           description: File successfully received
