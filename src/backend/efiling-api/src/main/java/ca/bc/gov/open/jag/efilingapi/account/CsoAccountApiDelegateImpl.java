@@ -43,16 +43,7 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
                     .email(userDetails.getEmail())
                     .create());
 
-            UserDetails result = new UserDetails();
-            result.setUniversalId(accountDetails.getUniversalId());
-            Account csoAccount = new Account();
-            csoAccount.setType(Account.TypeEnum.CSO);
-            csoAccount.setIdentifier(accountDetails.getAccountId().toString());
-            result.addAccountsItem(csoAccount);
-            result.setEmail(accountDetails.getEmail());
-            result.setFirstName(accountDetails.getFirstName());
-            result.setLastName(accountDetails.getLastName());
-            result.setMiddleName(accountDetails.getMiddleName());
+            UserDetails result = totUserDetails(accountDetails);
 
             return new ResponseEntity<>(result, HttpStatus.CREATED);
 
@@ -65,6 +56,23 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
 
         }
 
+    }
+
+    private UserDetails totUserDetails(AccountDetails accountDetails) {
+
+        // TODO: replace with mapstruct
+
+        UserDetails result = new UserDetails();
+        result.setUniversalId(accountDetails.getUniversalId());
+        Account csoAccount = new Account();
+        csoAccount.setType(Account.TypeEnum.CSO);
+        csoAccount.setIdentifier(accountDetails.getAccountId().toString());
+        result.addAccountsItem(csoAccount);
+        result.setEmail(accountDetails.getEmail());
+        result.setFirstName(accountDetails.getFirstName());
+        result.setLastName(accountDetails.getLastName());
+        result.setMiddleName(accountDetails.getMiddleName());
+        return result;
     }
 
 }
