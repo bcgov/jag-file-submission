@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingapi;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -13,6 +14,15 @@ public class TestHelpers {
     public static final UUID CASE_3 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fb");
     public static final UUID CASE_4 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fc");
     public static final UUID CASE_5 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fd");
+
+    public static final String DIVISION = "DIVISION";
+    public static final String FILENUMBER = "FILENUMBER";
+    public static final String LEVEL = "LEVEL";
+    public static final String LOCATION = "LOCATION";
+    public static final String PARTICIPATIONCLASS = "PARTICIPATIONCLASS";
+    public static final String PROPERTYCLASS = "PROPERTYCLASS";
+    public static final String DESCRIPTION = "DESCRIPTION";
+    public static final String TYPE = "TYPE";
 
     public static final String SUCCESS_URL = "http://success";
     public static final String CANCEL_URL = "http://cancel";
@@ -45,6 +55,26 @@ public class TestHelpers {
         clientApplication.setType(type);
 
         return clientApplication;
+    }
+
+    public static Court createCourt() {
+        Court court = new Court();
+        court.setDivision(DIVISION);
+        court.setFileNumber(FILENUMBER);
+        court.setLevel(LEVEL);
+        court.setLocation(LOCATION);
+        court.setParticipatingClass(PARTICIPATIONCLASS);
+        court.setPropertyClass(PROPERTYCLASS);
+
+        return court;
+    }
+
+    public static List<DocumentProperties> createDocumentList() {
+        DocumentProperties documentProperties = new DocumentProperties();
+        documentProperties.setType(TYPE);
+        documentProperties.setDescription(DESCRIPTION);
+
+        return Arrays.asList(documentProperties);
     }
 
     public static Navigation createDefaultNavigation() {
