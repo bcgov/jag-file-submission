@@ -838,6 +838,7 @@ exports[`CSOAccount Component Matches the snapshot 1`] = `
         <div>
           <button
             class="normal-white btn"
+            data-test-id="main-cancel-btn"
             type="button"
           >
             Cancel
@@ -846,6 +847,7 @@ exports[`CSOAccount Component Matches the snapshot 1`] = `
         <div>
           <button
             class="normal-blue btn"
+            data-test-id="create-cso-btn"
             disabled=""
             type="button"
           >

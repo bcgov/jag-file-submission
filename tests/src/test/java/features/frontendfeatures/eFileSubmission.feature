@@ -59,3 +59,14 @@ Feature: As a user my account should be validated and provided with an option to
     Examples:
       | invalidNoFilingRoleGuid |
       | invalidNoFilingRoleGuid |
+
+  @frontend
+  Scenario Outline: Verify there are no broken links in the page
+    When  user enters a valid existing CSO account guid "<validExistingCSOGuid>"
+    Then eFile submission page is displayed and user clicks the cancel button
+    Then user clicks resume E-File submission in the confirmation window
+    And verify there are no broken links in the page
+
+    Examples:
+      | validExistingCSOGuid |
+      | validExistingCSOGuid |

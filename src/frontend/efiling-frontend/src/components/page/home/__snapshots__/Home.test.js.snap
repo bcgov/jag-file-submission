@@ -1014,6 +1014,7 @@ exports[`Home Component matches the snapshot when user cso account does not exis
           <div>
             <button
               class="normal-white btn"
+              data-test-id="main-cancel-btn"
               type="button"
             >
               Cancel
@@ -1022,6 +1023,7 @@ exports[`Home Component matches the snapshot when user cso account does not exis
           <div>
             <button
               class="normal-blue btn"
+              data-test-id="create-cso-btn"
               disabled=""
               type="button"
             >
@@ -1291,6 +1293,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
         <br />
         <p>
           <a
+            data-test-id="return-link"
             href="cancelurl.com"
           >
             Return to the parent application website
@@ -1382,6 +1385,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
           <div>
             <button
               class="normal-white btn"
+              data-test-id="upload-btn"
               type="button"
             >
               Upload Documents
@@ -1394,6 +1398,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
           <div>
             <button
               class="normal-white btn"
+              data-test-id="main-cancel-btn"
               type="button"
             >
               Cancel
@@ -1402,6 +1407,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
           <div>
             <button
               class="normal-blue btn"
+              data-test-id="continue-btn"
               type="button"
             >
               Continue to Payment
