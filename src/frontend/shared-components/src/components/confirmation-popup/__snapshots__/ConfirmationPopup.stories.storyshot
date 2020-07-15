@@ -7,7 +7,7 @@ exports[`Storyshots Confirmation Popup Default 1`] = `
       "callbacks": Array [
         Object {
           "callback": [Function],
-          "subscription": "b883404c-5e03-4ab5-b7b4-1d8f1821f9e7",
+          "subscription": "d3ce690b-b3cf-44ad-8223-f12bb3a933c0",
         },
       ],
       "state": Object {
@@ -52,10 +52,12 @@ exports[`Storyshots Confirmation Popup Default 1`] = `
       label="Click Me"
       onClick={[Function]}
       styling="normal-white btn"
+      testId="main-cancel-btn"
     >
       <div>
         <button
           className="normal-white btn"
+          data-test-id="main-cancel-btn"
           disabled={false}
           onClick={[Function]}
           type="button"
@@ -131,11 +133,11 @@ exports[`Storyshots Confirmation Popup Mobile 1`] = `
       "callbacks": Array [
         Object {
           "callback": [Function],
-          "subscription": "b883404c-5e03-4ab5-b7b4-1d8f1821f9e7",
+          "subscription": "d3ce690b-b3cf-44ad-8223-f12bb3a933c0",
         },
         Object {
           "callback": [Function],
-          "subscription": "71a88f05-1e5f-4478-b287-d303fc7d195c",
+          "subscription": "dd827e46-829d-42a3-8dc1-2559bb3230d9",
         },
       ],
       "state": Object {
@@ -180,10 +182,12 @@ exports[`Storyshots Confirmation Popup Mobile 1`] = `
       label="Click Me"
       onClick={[Function]}
       styling="normal-white btn"
+      testId="main-cancel-btn"
     >
       <div>
         <button
           className="normal-white btn"
+          data-test-id="main-cancel-btn"
           disabled={false}
           onClick={[Function]}
           type="button"

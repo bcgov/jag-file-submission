@@ -6,10 +6,12 @@ exports[`Storyshots Button Disabled 1`] = `
   label="Disabled"
   onClick={[Function]}
   styling="normal-blue btn"
+  testId=""
 >
   <div>
     <button
       className="normal-blue btn"
+      data-test-id=""
       disabled={true}
       onClick={[Function]}
       type="button"
@@ -26,10 +28,12 @@ exports[`Storyshots Button Mobile 1`] = `
   label="Submit"
   onClick={[Function]}
   styling="normal-blue btn"
+  testId=""
 >
   <div>
     <button
       className="normal-blue btn"
+      data-test-id=""
       disabled={false}
       onClick={[Function]}
       type="button"
@@ -46,10 +50,12 @@ exports[`Storyshots Button Primary 1`] = `
   label="Submit"
   onClick={[Function]}
   styling="normal-blue btn"
+  testId=""
 >
   <div>
     <button
       className="normal-blue btn"
+      data-test-id=""
       disabled={false}
       onClick={[Function]}
       type="button"
@@ -66,10 +72,12 @@ exports[`Storyshots Button Secondary 1`] = `
   label="Cancel"
   onClick={[Function]}
   styling="normal-white btn"
+  testId=""
 >
   <div>
     <button
       className="normal-white btn"
+      data-test-id=""
       disabled={false}
       onClick={[Function]}
       type="button"

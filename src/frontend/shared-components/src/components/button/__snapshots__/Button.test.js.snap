@@ -4,6 +4,7 @@ exports[`Button Component Matches the 'disabled' snapshot 1`] = `
 <div>
   <button
     className="normal-blue btn"
+    data-test-id=""
     disabled={true}
     onClick={[MockFunction]}
     type="button"
@@ -17,6 +18,7 @@ exports[`Button Component Matches the 'primary' snapshot 1`] = `
 <div>
   <button
     className="normal-blue btn"
+    data-test-id=""
     disabled={false}
     onClick={[MockFunction]}
     type="button"
@@ -30,6 +32,7 @@ exports[`Button Component Matches the 'secondary' snapshot 1`] = `
 <div>
   <button
     className="normal-white btn"
+    data-test-id=""
     disabled={false}
     onClick={[MockFunction]}
     type="button"
