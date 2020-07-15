@@ -134,10 +134,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserDetails"
-  "/submission/{id}/package":
+  "/submission/{id}/filing-package":
     get:
-      summary: Get package information
-      operationId: GetSubmissionPackage
+      summary: Get filing package information
+      operationId: GetSubmissionFilingPackage
       tags:
         - submission
       parameters:
@@ -150,13 +150,13 @@ paths:
             format: uuid
       responses:
         "200":
-          description: Package Information found
+          description: Filing Package Information found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Package"
+                $ref: "#/components/schemas/FilingPackage"
         "404":
-          description: Package Information not found
+          description: Filing Package Information not found
 components:
   schemas:
     Account:
@@ -204,8 +204,8 @@ components:
       properties:
         clientApplication:
           $ref: "#/components/schemas/ClientApplication"
-        package:
-          $ref: "#/components/schemas/Package"
+        filingPackage:
+          $ref: "#/components/schemas/FilingPackage"
         navigation:
           $ref: "#/components/schemas/Navigation"
     GenerateUrlResponse:
@@ -238,9 +238,9 @@ components:
           $ref: "#/components/schemas/Redirect"
         cancel:
           $ref: "#/components/schemas/Redirect"
-    Package:
+    FilingPackage:
       type: object
-      description: A package can contain one or multiple documents that have or are being submitted electronically for new or existing court file.
+      description: A filing package can contain one or multiple documents that have or are being submitted electronically for new or existing court file.
       properties:
         court:
           $ref: "#/components/schemas/Court"
@@ -304,7 +304,7 @@ components:
           type: number
           description: the number of document received
     UserDetails:
-      description: represents a user submitting a package
+      description: represents a user submitting a filing package
       type: object
       required:
         - universalId
