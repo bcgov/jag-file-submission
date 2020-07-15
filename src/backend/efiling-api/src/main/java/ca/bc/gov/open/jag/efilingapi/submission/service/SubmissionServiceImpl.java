@@ -93,13 +93,9 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private List<ServiceFees> getFees(List<DocumentProperties> documents) {
         return  documents.stream()
-                .map(doc -> {
-                    try {
-                        return efilingLookupService.getServiceFee(doc.getType());
-                    } catch (DatatypeConfigurationException e) {
-                        return new ServiceFees(null, BigDecimal.valueOf(0), null, doc.getType(),null, null, null, null);
-                    }
-                })
+                .map(doc ->
+                    efilingLookupService.getServiceFee(doc.getType())
+                )
                 .collect(Collectors.toList());
     }
 
