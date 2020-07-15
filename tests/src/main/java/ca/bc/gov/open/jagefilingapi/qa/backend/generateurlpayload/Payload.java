@@ -2,20 +2,20 @@ package ca.bc.gov.open.jagefilingapi.qa.backend.generateurlpayload;
 
 public class Payload {
 
-    DocumentProperties documentProperties;
+    Documents documents;
     Navigation navigation;
 
-    public Payload(DocumentProperties documentProperties, Navigation navigation) {
-        this.documentProperties = documentProperties;
+    public Payload(Documents documents, Navigation navigation) {
+        this.documents = documents;
         this.navigation = navigation;
     }
 
-    public DocumentProperties getDocumentProperties() {
-        return documentProperties;
+    public Documents getDocuments() {
+        return documents;
     }
 
-    public void setDocumentProperties(DocumentProperties documentProperties) {
-        this.documentProperties = documentProperties;
+    public void setDocuments(Documents documents) {
+        this.documents = documents;
     }
 
     public Navigation getNavigation() {
