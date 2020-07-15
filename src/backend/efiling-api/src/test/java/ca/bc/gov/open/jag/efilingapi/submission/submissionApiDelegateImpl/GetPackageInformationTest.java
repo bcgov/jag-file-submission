@@ -1,7 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
-import ca.bc.gov.open.jag.efilingapi.api.model.ModelPackage;
+import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMapper;
@@ -43,7 +43,7 @@ public class GetPackageInformationTest {
 
         Submission submissionWithParentApplication = Submission
                 .builder()
-                .modelPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
+                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
                 .create();
 
         Mockito.when(submissionStoreMock.getByKey(TestHelpers.CASE_1)).thenReturn(Optional.of(submissionWithParentApplication));
@@ -54,7 +54,7 @@ public class GetPackageInformationTest {
     @Test
     @DisplayName("200: pass id and get values")
     public void withCorrectIDReturnResult() {
-        ResponseEntity<ModelPackage> actual = sut.getSubmissionPackage(TestHelpers.CASE_1);
+        ResponseEntity<FilingPackage> actual = sut.getSubmissionFilingPackage(TestHelpers.CASE_1);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         Assertions.assertEquals(TestHelpers.DIVISION, actual.getBody().getCourt().getDivision());
         Assertions.assertEquals(TestHelpers.FILENUMBER, actual.getBody().getCourt().getFileNumber());
@@ -69,7 +69,7 @@ public class GetPackageInformationTest {
     @Test
     @DisplayName("404: with incorrect id return 404")
     public void withInCorrectIDReturnNotFound() {
-        ResponseEntity<ModelPackage> actual = sut.getSubmissionPackage(TestHelpers.CASE_2);
+        ResponseEntity<FilingPackage> actual = sut.getSubmissionFilingPackage(TestHelpers.CASE_2);
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
     }
 }
