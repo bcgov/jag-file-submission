@@ -30,16 +30,16 @@ import static org.junit.Assert.*;
 
 public class GenerateUrlTest {
 
-    private  Response response;
+    private Response response;
     private GenerateUrlRequestBuilders generateUrlRequestBuilders;
-    private  GenerateUrlPayload payloadData;
-    private  String submissionId;
-    private  String submissionIdQuery;
-    private  JsonPath jsonPath;
-    private  String firstName;
-    private  String lastName;
-    private  String middleName;
-    private  String email;
+    private GenerateUrlPayload payloadData;
+    private String submissionId;
+    private String submissionIdQuery;
+    private JsonPath jsonPath;
+    private String firstName;
+    private String lastName;
+    private String middleName;
+    private String email;
     private static final String CONTENT_TYPE = "application/json";
     public Logger log = LogManager.getLogger(GenerateUrlTest.class);
 
