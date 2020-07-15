@@ -33,7 +33,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "coverage": "jest --coverage",
-    "precommit": "pretty-quick --staged",
+    "precommit": "pretty-quick --staged && lint-staged",
     "prepush": "lint-staged"
   },
   "eslintConfig": {
