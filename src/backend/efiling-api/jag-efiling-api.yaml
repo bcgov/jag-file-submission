@@ -299,6 +299,10 @@ components:
         submissionId:
           type: string
           format: uuid
+          description: a unique identifier for the submission
+        received:
+          type: number
+          description: the number of document received
     UserDetails:
       description: represents a user submitting a package
       type: object

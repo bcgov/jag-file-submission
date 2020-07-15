@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -53,6 +54,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     public ResponseEntity<UploadSubmissionDocumentsResponse> uploadSubmissionDocuments(UUID xAuthUserId, List<MultipartFile> files) {
         UploadSubmissionDocumentsResponse response = new UploadSubmissionDocumentsResponse();
         response.setSubmissionId(UUID.randomUUID());
+        response.setReceived(new BigDecimal(files != null ? files.size() : 0));
         return ResponseEntity.ok(response);
     }
 
