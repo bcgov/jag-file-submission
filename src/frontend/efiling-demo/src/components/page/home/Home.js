@@ -2,9 +2,6 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { Header, Footer, Input, Button } from "shared-components";
-import { propTypes } from "../../../types/propTypes";
-
-// Import React FilePond
 import { FilePond, registerPlugin } from "react-filepond";
 
 // Import FilePond styles
@@ -15,6 +12,7 @@ import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orien
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 
+import { propTypes } from "../../../types/propTypes";
 import "../page.css";
 
 // Register the plugins
@@ -67,7 +65,7 @@ export const eFilePackage = (files, accountGuid, setErrorExists) => {
   const formData = new FormData();
   const documentData = [];
 
-  for (let i = 0; i < files.length; i++) {
+  for (let i = 0; i < files.length; i += 1) {
     formData.append("files", files[i].file);
     documentData.push({
       name: files[i].file.name,
@@ -75,8 +73,6 @@ export const eFilePackage = (files, accountGuid, setErrorExists) => {
       type: files[i].file.type
     });
   }
-
-  console.log("jhejrgeg");
 
   axios
     .post("/submission/documents", formData, {
