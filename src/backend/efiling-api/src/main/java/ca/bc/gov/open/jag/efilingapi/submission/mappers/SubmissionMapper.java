@@ -8,15 +8,17 @@ import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface SubmissionMapper {
 
     @Mapping(source = "generateUrlRequest.navigation", target = "navigation")
     @Mapping(source = "generateUrlRequest.clientApplication", target = "clientApplication")
     @Mapping(source = "generateUrlRequest.package", target = "modelPackage")
-    @Mapping(source = "fee", target = "fee")
+    @Mapping(source = "fees", target = "fees")
     @Mapping(source = "accountDetails", target = "accountDetails")
     @Mapping(source = "expiryDate", target = "expiryDate")
-    Submission toSubmission(GenerateUrlRequest generateUrlRequest, Fee fee, AccountDetails accountDetails, long expiryDate);
+    Submission toSubmission(GenerateUrlRequest generateUrlRequest, List<Fee> fees, AccountDetails accountDetails, long expiryDate);
 
 }

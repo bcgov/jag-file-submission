@@ -1,5 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service;
 
+import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
+import ca.bc.gov.open.jag.efilingapi.fee.models.Fee;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.jag.efilingapi.fee.FeeService;
@@ -14,8 +16,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class SubmissionServiceImpl implements SubmissionService {
 
@@ -59,11 +63,11 @@ public class SubmissionServiceImpl implements SubmissionService {
             accountDetails = fakeFromBceId(authUserId);
         }
 
+
+
         Optional<Submission> cachedSubmission = submissionStore.put(
                 submissionMapper.toSubmission(generateUrlRequest,
-                        feeService.getFee(
-                                new FeeRequest(
-                                        generateUrlRequest.getPackage().getDocuments().get(0).getType())),
+                        getFees(generateUrlRequest.getPackage().getDocuments()),
                         accountDetails,
                         getExpiryDate()));
 
@@ -85,6 +89,14 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         return null;
 
+    }
+
+    private List<Fee> getFees(List<DocumentProperties> documents) {
+        return  documents.stream()
+                .map(doc -> feeService.getFee(
+                                new FeeRequest(
+                                        doc.getType())))
+                .collect(Collectors.toList());
     }
 
     private long getExpiryDate() {

@@ -39,7 +39,7 @@ public class SubmissionTest {
                 TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()),
                 TestHelpers.createNavigation(CASE_1, CANCEL, ERROR),
                 TestHelpers.createClientApplication(DISPLAYNAME, TYPE),
-                fee,
+                Arrays.asList(fee,fee),
                 accountDetails,
                 1);
 
@@ -49,7 +49,8 @@ public class SubmissionTest {
         Assertions.assertEquals(ERROR, actual.getNavigation().getError().getUrl());
         Assertions.assertEquals(CANCEL, actual.getNavigation().getCancel().getUrl());
         Assertions.assertEquals(CASE_1, actual.getNavigation().getSuccess().getUrl());
-        Assertions.assertEquals(BigDecimal.TEN, actual.getFee().getAmount());
+        Assertions.assertEquals(BigDecimal.TEN, actual.getFees().get(0).getAmount());
+        Assertions.assertEquals(BigDecimal.TEN, actual.getFees().get(1).getAmount());
         Assertions.assertNotNull(actual.getAccountDetails().getUniversalId());
         Assertions.assertEquals(EMAIL, actual.getAccountDetails().getEmail());
         Assertions.assertEquals(FIRST_NAME, actual.getAccountDetails().getFirstName());

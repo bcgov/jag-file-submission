@@ -72,7 +72,7 @@ public class generateFromRequestTest {
 
 
     @Test
-    @DisplayName("OK: with valid account should retun submission")
+    @DisplayName("OK: with valid account should return submission")
     public void withValidAccountShouldReturnSubmission() {
 
         GenerateUrlRequest request = new GenerateUrlRequest();
@@ -91,7 +91,8 @@ public class generateFromRequestTest {
         Assertions.assertEquals(TestHelpers.CANCEL_URL, actual.getNavigation().getCancel().getUrl());
         Assertions.assertEquals(TestHelpers.SUCCESS_URL, actual.getNavigation().getSuccess().getUrl());
         Assertions.assertEquals(10, actual.getExpiryDate());
-        Assertions.assertEquals(BigDecimal.valueOf(7.0), actual.getFee().getAmount());
+        Assertions.assertEquals(BigDecimal.valueOf(7.0), actual.getFees().get(0).getAmount());
+        Assertions.assertEquals(BigDecimal.valueOf(7.0), actual.getFees().get(1).getAmount());
         Assertions.assertNotNull(actual.getId());
         Assertions.assertEquals(TestHelpers.DIVISION, actual.getModelPackage().getCourt().getDivision());
         Assertions.assertEquals(TestHelpers.FILENUMBER, actual.getModelPackage().getCourt().getFileNumber());
@@ -150,7 +151,7 @@ public class generateFromRequestTest {
                 .navigation(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
                 .modelPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
-                .fee(fee)
+                .fees(Arrays.asList(fee))
                 .create();
 
         Mockito
@@ -182,7 +183,7 @@ public class generateFromRequestTest {
                 .navigation(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
                 .modelPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
-                .fee(fee)
+                .fees(Arrays.asList(fee,fee))
                 .create();
 
         Mockito

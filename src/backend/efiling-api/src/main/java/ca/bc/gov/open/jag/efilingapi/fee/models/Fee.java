@@ -9,7 +9,6 @@ import java.math.BigDecimal;
  * Represents a fee structure
  */
 public class Fee {
-
     private BigDecimal amount;
 
     @JsonCreator
