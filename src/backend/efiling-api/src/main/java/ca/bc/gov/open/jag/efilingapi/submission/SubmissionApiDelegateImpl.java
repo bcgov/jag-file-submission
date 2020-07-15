@@ -51,10 +51,11 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    public ResponseEntity<UploadSubmissionDocumentsResponse> uploadSubmissionDocuments(UUID xAuthUserId, List<MultipartFile> files) {
+    public ResponseEntity<UploadSubmissionDocumentsResponse> uploadSubmissionDocuments(UUID xAuthUserId, MultipartFile files) {
         UploadSubmissionDocumentsResponse response = new UploadSubmissionDocumentsResponse();
         response.setSubmissionId(UUID.randomUUID());
-        response.setReceived(new BigDecimal(files != null ? files.size() : 0));
+        response.setReceived(new BigDecimal(files != null ? 1 : 0));
+        // response.setReceived(new BigDecimal(files != null ? files.size() : 0));
         return ResponseEntity.ok(response);
     }
 
