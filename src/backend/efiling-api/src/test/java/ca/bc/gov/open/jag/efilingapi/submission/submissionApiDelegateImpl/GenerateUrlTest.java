@@ -28,13 +28,8 @@ import javax.validation.Valid;
 @DisplayName("SubmissionApiDelegateImpl test suite")
 public class GenerateUrlTest {
 
-    private static final String HEADER = "test";
-    private static final String URL = "http://doc";
-    private static final String SUBTYPE = "subtype";
     private static final String TYPE = "type";
-    private static final String SUCCESSURL = "http://success";
-    private static final String CANCELURL = "http://cancel";
-    private static final String ERRORURL = "http://error";
+    private static final String DISPLAYNAME = "DISPLAYNAME";
 
 
     private SubmissionApiDelegateImpl sut;
@@ -90,8 +85,8 @@ public class GenerateUrlTest {
 
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
-        generateUrlRequest.setDocumentProperties(TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE));
-        generateUrlRequest.setNavigation(TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL));
+        generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
+        generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
         ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(TestHelpers.CASE_1, generateUrlRequest);
 
@@ -107,8 +102,8 @@ public class GenerateUrlTest {
     public void whenCSOHasMultipleAccountExceptionShouldReturnBadRequest() {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
-        generateUrlRequest.setDocumentProperties(TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE));
-        generateUrlRequest.setNavigation(TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL));
+        generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
+        generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
         ResponseEntity actual = sut.generateUrl(TestHelpers.CASE_2, generateUrlRequest);
 
@@ -124,8 +119,8 @@ public class GenerateUrlTest {
     public void whenInvalidAccountStateExceptionShouldReturnForbidden() {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
-        generateUrlRequest.setDocumentProperties(TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE));
-        generateUrlRequest.setNavigation(TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL));
+        generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
+        generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
         ResponseEntity actual = sut.generateUrl(TestHelpers.CASE_3, generateUrlRequest);
 
@@ -141,8 +136,8 @@ public class GenerateUrlTest {
     public void whenStoreExceptionShouldReturnInternalServerError() {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
-        generateUrlRequest.setDocumentProperties(TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE));
-        generateUrlRequest.setNavigation(TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL));
+        generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
+        generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
         ResponseEntity actual = sut.generateUrl(TestHelpers.CASE_4, generateUrlRequest);
 

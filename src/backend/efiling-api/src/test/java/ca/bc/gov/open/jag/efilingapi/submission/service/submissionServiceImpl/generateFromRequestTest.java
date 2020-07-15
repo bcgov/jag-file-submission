@@ -3,7 +3,6 @@ package ca.bc.gov.open.jag.efilingapi.submission.service.submissionServiceImpl;
 
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
-import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.jag.efilingapi.fee.FeeService;
 import ca.bc.gov.open.jag.efilingapi.fee.models.Fee;
@@ -25,10 +24,7 @@ import org.springframework.boot.autoconfigure.cache.CacheProperties;
 
 import java.math.BigDecimal;
 import java.time.Duration;
-import java.util.Optional;
-import java.util.UUID;
-
-import static ca.bc.gov.open.jag.efilingapi.api.model.EndpointAccess.VerbEnum.POST;
+import java.util.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class generateFromRequestTest {
@@ -37,8 +33,6 @@ public class generateFromRequestTest {
     private static final String LAST_NAME = "case1_lastName";
     private static final String FIRST_NAME = "case1_firstName";
     private static final String EMAIL = "case1_email";
-    private static final DocumentProperties CASE1_DOCUMENT_PROPERTIES = TestHelpers.createDocumentProperties("header", "http://doc", "subtype", "case1_type");
-
     private SubmissionServiceImpl sut;
 
     @Mock
@@ -83,7 +77,7 @@ public class generateFromRequestTest {
 
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setNavigation(TestHelpers.createDefaultNavigation());
-        request.setDocumentProperties(CASE1_DOCUMENT_PROPERTIES);
+        request.setPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()));
 
         Submission actual = sut.generateFromRequest(TestHelpers.CASE_1, request);
 
@@ -97,13 +91,16 @@ public class generateFromRequestTest {
         Assertions.assertEquals(TestHelpers.CANCEL_URL, actual.getNavigation().getCancel().getUrl());
         Assertions.assertEquals(TestHelpers.SUCCESS_URL, actual.getNavigation().getSuccess().getUrl());
         Assertions.assertEquals(10, actual.getExpiryDate());
-        Assertions.assertEquals("subtype", actual.getDocumentProperties().getSubType());
-        Assertions.assertEquals("case1_type", actual.getDocumentProperties().getType());
-        Assertions.assertEquals("http://doc", actual.getDocumentProperties().getSubmissionAccess().getUrl());
-        Assertions.assertEquals("header", actual.getDocumentProperties().getSubmissionAccess().getHeaders().get("header"));
-        Assertions.assertEquals(POST, actual.getDocumentProperties().getSubmissionAccess().getVerb());
         Assertions.assertEquals(BigDecimal.valueOf(7.0), actual.getFee().getAmount());
         Assertions.assertNotNull(actual.getId());
+        Assertions.assertEquals(TestHelpers.DIVISION, actual.getModelPackage().getCourt().getDivision());
+        Assertions.assertEquals(TestHelpers.FILENUMBER, actual.getModelPackage().getCourt().getFileNumber());
+        Assertions.assertEquals(TestHelpers.LEVEL, actual.getModelPackage().getCourt().getLevel());
+        Assertions.assertEquals(TestHelpers.LOCATION, actual.getModelPackage().getCourt().getLocation());
+        Assertions.assertEquals(TestHelpers.PARTICIPATIONCLASS, actual.getModelPackage().getCourt().getParticipatingClass());
+        Assertions.assertEquals(TestHelpers.PROPERTYCLASS, actual.getModelPackage().getCourt().getPropertyClass());
+        Assertions.assertEquals(TestHelpers.TYPE, actual.getModelPackage().getDocuments().get(0).getType());
+        Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getModelPackage().getDocuments().get(0).getDescription());
 
     }
 
@@ -113,7 +110,8 @@ public class generateFromRequestTest {
 
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setNavigation(TestHelpers.createDefaultNavigation());
-        request.setDocumentProperties(CASE1_DOCUMENT_PROPERTIES);
+        request.setPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()));
+
 
         Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(TestHelpers.CASE_2, request));
 
@@ -125,7 +123,8 @@ public class generateFromRequestTest {
 
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setNavigation(TestHelpers.createDefaultNavigation());
-        request.setDocumentProperties(CASE1_DOCUMENT_PROPERTIES);
+        request.setPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()));
+
 
         Assertions.assertThrows(InvalidAccountStateException.class, () -> sut.generateFromRequest(TestHelpers.CASE_3, request));
 
@@ -138,7 +137,8 @@ public class generateFromRequestTest {
         UUID fakeaccount = UUID.fromString("88da92db-0791-491e-8c58-1a969e67d2fb");
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setNavigation(TestHelpers.createDefaultNavigation());
-        request.setDocumentProperties(CASE1_DOCUMENT_PROPERTIES);
+        request.setPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()));
+
 
 
         AccountDetails accountDetails =  AccountDetails.builder().lastName("lastName").create();
@@ -149,7 +149,7 @@ public class generateFromRequestTest {
                 .accountDetails(accountDetails)
                 .navigation(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
-                .documentProperties(CASE1_DOCUMENT_PROPERTIES)
+                .modelPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
                 .fee(fee)
                 .create();
 
@@ -181,7 +181,7 @@ public class generateFromRequestTest {
                 .accountDetails(accountDetails)
                 .navigation(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
-                .documentProperties(CASE1_DOCUMENT_PROPERTIES)
+                .modelPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
                 .fee(fee)
                 .create();
 
@@ -232,6 +232,5 @@ public class generateFromRequestTest {
                 .clientId(BigDecimal.ONE)
                 .create();
     }
-
 
 }
