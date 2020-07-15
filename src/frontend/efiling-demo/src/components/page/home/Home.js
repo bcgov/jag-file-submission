@@ -63,7 +63,7 @@ const input = {
   placeholder: "77da92db-0791-491e-8c58-1a969e67d2fa"
 };
 
-const eFilePackage = (files, accountGuid, setErrorExists) => {
+export const eFilePackage = (files, accountGuid, setErrorExists) => {
   const formData = new FormData();
   const documentData = [];
 
