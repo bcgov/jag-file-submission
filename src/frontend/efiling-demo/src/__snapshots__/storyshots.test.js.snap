@@ -357,8 +357,15 @@ exports[`Storyshots Error Default 1`] = `
       <p>
         The following error occurred with your submission. Please click the button below to go back home.
       </p>
-      <p>
+      <p
+        className="error-info"
+      >
         <b>
+          Status: 
+          400
+        </b>
+        <b>
+          Message: 
           Could not communicate with CSO.
         </b>
       </p>
@@ -516,8 +523,15 @@ exports[`Storyshots Error Mobile 1`] = `
       <p>
         The following error occurred with your submission. Please click the button below to go back home.
       </p>
-      <p>
+      <p
+        className="error-info"
+      >
         <b>
+          Status: 
+          400
+        </b>
+        <b>
+          Message: 
           Could not communicate with CSO.
         </b>
       </p>

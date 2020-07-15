@@ -54,7 +54,11 @@ const checkCSOAccountStatus = (
       setShowLoader(false);
     })
     .catch(error => {
-      console.log(error);
+      const errorUrl = sessionStorage.getItem("errorUrl");
+      window.open(
+        `${errorUrl}?status=${error.response.status}&message=${error.response.data.message}`,
+        "_self"
+      );
     });
 };
 

@@ -1,17 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import queryString from "query-string";
-import { useLocation } from "react-router-dom";
+
 import { Header, Footer, Button } from "shared-components";
 import { propTypes } from "../../../types/propTypes";
+import "./Error.css";
 
-export default function Error({ page: { header, error } }) {
-  const location = useLocation();
-  const queryParams = queryString.parse(location.search);
-
-  const status = queryParams.status;
-  const message = queryParams.message;
-
+export default function Error({ page: { header, status, message } }) {
   return (
     <main>
       <Header header={header} />
@@ -21,10 +15,15 @@ export default function Error({ page: { header, error } }) {
             The following error occurred with your submission. Please click the
             button below to go back home.
           </p>
-          <p>
-            <b>{error}</b>
-            <b>{status}</b>
-            <b>{message}</b>
+          <p className="error-info">
+            <b>
+              Status:&nbsp;
+              {status}
+            </b>
+            <b>
+              Message:&nbsp;
+              {message}
+            </b>
           </p>
           <br />
           <Button
@@ -42,6 +41,7 @@ export default function Error({ page: { header, error } }) {
 Error.propTypes = {
   page: PropTypes.shape({
     header: propTypes.header,
-    error: PropTypes.string.isRequired
+    status: PropTypes.string.isRequired,
+    message: PropTypes.string.isRequired
   }).isRequired
 };

@@ -1,7 +1,5 @@
 package ca.bc.gov.open.jag.efilingapi.submission.models;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.Court;
-import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.fee.models.Fee;
@@ -28,34 +26,17 @@ public class SubmissionTest {
     private static final String MIDDLE_NAME = "middleName";
     private static final String EMAIL = "email";
     private static final String DISPLAYNAME = "DISPLAYNAME";
-    private static final String DIVISION = "DIVISION";
-    private static final String FILENUMBER = "FILENUMBER";
-    private static final String LEVEL = "LEVEL";
-    private static final String LOCATION = "LOCATION";
-    private static final String PARTICIPATIONCLASS = "PARTICIPATIONCLASS";
-    private static final String PROPERTYCLASS = "PROPERTYCLASS";
-    private static final String DESCRIPTION = "DESCRIPTION";
 
     @Test
     @DisplayName("CASE 1: testing constructor")
     public void testingConstructor() {
         Fee fee = new Fee(BigDecimal.TEN);
         AccountDetails accountDetails = new AccountDetails(UUID.randomUUID(), BigDecimal.TEN, BigDecimal.ONE, true, FIRST_NAME, LAST_NAME, MIDDLE_NAME, EMAIL);
-        Court court = new Court();
-        court.setDivision(DIVISION);
-        court.setFileNumber(FILENUMBER);
-        court.setLevel(LEVEL);
-        court.setLocation(LOCATION);
-        court.setParticipatingClass(PARTICIPATIONCLASS);
-        court.setPropertyClass(PROPERTYCLASS);
 
-        DocumentProperties documentProperties = new DocumentProperties();
-        documentProperties.setType(TYPE);
-        documentProperties.setDescription(DESCRIPTION);
 
         Submission actual = new Submission(
                 UUID.randomUUID(),
-                TestHelpers.createPackage(court, Arrays.asList(documentProperties)),
+                TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()),
                 TestHelpers.createNavigation(CASE_1, CANCEL, ERROR),
                 TestHelpers.createClientApplication(DISPLAYNAME, TYPE),
                 fee,
@@ -76,14 +57,14 @@ public class SubmissionTest {
         Assertions.assertEquals(MIDDLE_NAME, actual.getAccountDetails().getMiddleName());
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountDetails().getAccountId());
         Assertions.assertEquals(BigDecimal.ONE, actual.getAccountDetails().getClientId());
-        Assertions.assertEquals(DIVISION, actual.getModelPackage().getCourt().getDivision());
-        Assertions.assertEquals(FILENUMBER, actual.getModelPackage().getCourt().getFileNumber());
-        Assertions.assertEquals(LEVEL, actual.getModelPackage().getCourt().getLevel());
-        Assertions.assertEquals(LOCATION, actual.getModelPackage().getCourt().getLocation());
-        Assertions.assertEquals(PARTICIPATIONCLASS, actual.getModelPackage().getCourt().getParticipatingClass());
-        Assertions.assertEquals(PROPERTYCLASS, actual.getModelPackage().getCourt().getPropertyClass());
-        Assertions.assertEquals(TYPE, actual.getModelPackage().getDocuments().get(0).getType());
-        Assertions.assertEquals(DESCRIPTION, actual.getModelPackage().getDocuments().get(0).getDescription());
+        Assertions.assertEquals(TestHelpers.DIVISION, actual.getModelPackage().getCourt().getDivision());
+        Assertions.assertEquals(TestHelpers.FILENUMBER, actual.getModelPackage().getCourt().getFileNumber());
+        Assertions.assertEquals(TestHelpers.LEVEL, actual.getModelPackage().getCourt().getLevel());
+        Assertions.assertEquals(TestHelpers.LOCATION, actual.getModelPackage().getCourt().getLocation());
+        Assertions.assertEquals(TestHelpers.PARTICIPATIONCLASS, actual.getModelPackage().getCourt().getParticipatingClass());
+        Assertions.assertEquals(TestHelpers.PROPERTYCLASS, actual.getModelPackage().getCourt().getPropertyClass());
+        Assertions.assertEquals(TestHelpers.TYPE, actual.getModelPackage().getDocuments().get(0).getType());
+        Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getModelPackage().getDocuments().get(0).getDescription());
     }
 
 }

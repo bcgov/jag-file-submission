@@ -8,9 +8,10 @@ const header = {
   history: createMemoryHistory()
 };
 
-const error = "Could not communicate with CSO.";
+const status = "400";
+const message = "Could not communicate with CSO.";
 
-const page = { header, error };
+const page = { header, status, message };
 
 describe("Error", () => {
   test("Component matches the snapshot", () => {

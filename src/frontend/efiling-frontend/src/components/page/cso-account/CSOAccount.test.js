@@ -19,6 +19,8 @@ describe("CSOAccount Component", () => {
   const applicantInfo = getApplicantInfo();
   const setCsoAccountStatus = jest.fn();
 
+  window.open = jest.fn();
+
   const mock = new MockAdapter(axios);
   const API_REQUEST = "/csoAccount";
 
@@ -55,5 +57,26 @@ describe("CSOAccount Component", () => {
     await wait(() => {});
 
     expect(setCsoAccountStatus).toHaveBeenCalled();
+  });
+
+  test("On failed account creation, should redirect to parent application", async () => {
+    mock.onPost(API_REQUEST).reply(400, { message: "There was a problem." });
+
+    const { container } = render(
+      <CSOAccount
+        confirmationPopup={confirmationPopup}
+        applicantInfo={applicantInfo}
+        setCsoAccountStatus={setCsoAccountStatus}
+      />
+    );
+
+    expect(getByText(container, "Create CSO Account").disabled).toBeTruthy();
+    fireEvent.click(getByRole(container, "checkbox"));
+    expect(getByText(container, "Create CSO Account").disabled).toBeFalsy();
+
+    fireEvent.click(getByText(container, "Create CSO Account"));
+    await wait(() => {});
+
+    expect(window.open).toHaveBeenCalled();
   });
 });

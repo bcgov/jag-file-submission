@@ -7,18 +7,26 @@ import { propTypes } from "../../../types/propTypes";
 import "../page.css";
 
 const urlBody = {
-  documentProperties: {
-    type: "string",
-    subType: "string",
-    submissionAccess: {
-      url: "string",
-      verb: "GET",
-      headers: {
-        additionalProp1: "string",
-        additionalProp2: "string",
-        additionalProp3: "string"
+  clientApplication: {
+    displayName: "Demo App",
+    type: "app"
+  },
+  package: {
+    court: {
+      location: "string",
+      level: "string",
+      class: "string",
+      division: "string",
+      fileNumber: "string",
+      participatingClass: "string"
+    },
+    documents: [
+      {
+        name: "string",
+        description: "string",
+        type: "string"
       }
-    }
+    ]
   },
   navigation: {
     success: {

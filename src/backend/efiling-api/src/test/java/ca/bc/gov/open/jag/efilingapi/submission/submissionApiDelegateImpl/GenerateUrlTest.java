@@ -29,9 +29,6 @@ import javax.validation.Valid;
 public class GenerateUrlTest {
 
     private static final String TYPE = "type";
-    private static final String SUCCESSURL = "http://success";
-    private static final String CANCELURL = "http://cancel";
-    private static final String ERRORURL = "http://error";
     private static final String DISPLAYNAME = "DISPLAYNAME";
 
 
@@ -89,7 +86,7 @@ public class GenerateUrlTest {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
-        generateUrlRequest.setNavigation(TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL));
+        generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
         ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(TestHelpers.CASE_1, generateUrlRequest);
 
@@ -106,7 +103,7 @@ public class GenerateUrlTest {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
-        generateUrlRequest.setNavigation(TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL));
+        generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
         ResponseEntity actual = sut.generateUrl(TestHelpers.CASE_2, generateUrlRequest);
 
@@ -123,7 +120,7 @@ public class GenerateUrlTest {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
-        generateUrlRequest.setNavigation(TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL));
+        generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
         ResponseEntity actual = sut.generateUrl(TestHelpers.CASE_3, generateUrlRequest);
 
@@ -140,7 +137,7 @@ public class GenerateUrlTest {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
-        generateUrlRequest.setNavigation(TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL));
+        generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
         ResponseEntity actual = sut.generateUrl(TestHelpers.CASE_4, generateUrlRequest);
 
