@@ -76,6 +76,8 @@ export const eFilePackage = (files, accountGuid, setErrorExists) => {
     });
   }
 
+  console.log("jhejrgeg");
+
   axios
     .post("/submission/documents", formData, {
       headers: {
