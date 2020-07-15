@@ -48,9 +48,14 @@ exports[`Error Component matches the snapshot 1`] = `
         <p>
           The following error occurred with your submission. Please click the button below to go back home.
         </p>
-        <p>
+        <p
+          class="error-info"
+        >
           <b>
-            Could not communicate with CSO.
+            Status: 400
+          </b>
+          <b>
+            Message: Could not communicate with CSO.
           </b>
         </p>
         <br />
