@@ -37,7 +37,7 @@ const navigation = {
 const userDetails = getUserDetails();
 
 const LoaderStateData = props => {
-  mock.onGet(apiRequest).reply(400);
+  mock.onGet(apiRequest).reply(400, { message: "There was an error" });
   return props.children({ page });
 };
 

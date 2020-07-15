@@ -50,7 +50,6 @@ export default function CSOAccount({
         setCsoAccountStatus({ exists: true, isNew: true });
       })
       .catch(error => {
-        console.log(error.response);
         const errorUrl = sessionStorage.getItem("errorUrl");
         window.open(
           `${errorUrl}?status=${error.response.status}&message=${error.response.data.message}`,
