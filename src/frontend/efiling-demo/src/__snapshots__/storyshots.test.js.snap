@@ -361,11 +361,11 @@ exports[`Storyshots Error Default 1`] = `
         className="error-info"
       >
         <b>
-          Status: 
+          Status: 
           400
         </b>
         <b>
-          Message: 
+          Message: 
           Could not communicate with CSO.
         </b>
       </p>
@@ -527,11 +527,11 @@ exports[`Storyshots Error Mobile 1`] = `
         className="error-info"
       >
         <b>
-          Status: 
+          Status: 
           400
         </b>
         <b>
-          Message: 
+          Message: 
           Could not communicate with CSO.
         </b>
       </p>

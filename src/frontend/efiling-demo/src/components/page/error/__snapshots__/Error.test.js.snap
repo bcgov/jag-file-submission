@@ -52,10 +52,10 @@ exports[`Error Component matches the snapshot 1`] = `
           class="error-info"
         >
           <b>
-            Status: 400
+            Status: 400
           </b>
           <b>
-            Message: Could not communicate with CSO.
+            Message: Could not communicate with CSO.
           </b>
         </p>
         <br />
