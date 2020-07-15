@@ -8,7 +8,7 @@ export default function Cancel({ page: { header } }) {
     <main>
       <Header header={header} />
       <div className="page">
-        <div className="content col-md-12" data-test-id="return-home-btn">
+        <div className="content col-md-12">
           <p>
             You have cancelled your submission. Please click the button below to
             go back home.
@@ -17,6 +17,7 @@ export default function Cancel({ page: { header } }) {
             onClick={() => header.history.push("/")}
             label="Return home"
             styling="normal-white btn"
+            testId="return-home-btn"
           />
         </div>
       </div>

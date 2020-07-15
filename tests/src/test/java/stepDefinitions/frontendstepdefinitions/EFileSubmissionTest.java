@@ -3,22 +3,32 @@ package stepDefinitions.frontendstepdefinitions;
 import ca.bc.gov.open.jagefilingapi.qa.config.ReadConfig;
 import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.EFileSubmissionPage;
 import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.LandingPage;
+import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.PackageConfirmationPage;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.DriverClass;
+import ca.bc.gov.open.jagefilingapi.qa.frontendutils.FrontendTestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebElement;
+
 import java.io.IOException;
+import java.util.List;
 
 public class EFileSubmissionTest extends DriverClass {
 
      ReadConfig readConfig;
      LandingPage landingPage;
      EFileSubmissionPage eFileSubmissionPage;
+     PackageConfirmationPage packageConfirmationPage;
      private static final String EFILE_SUBMISSION_PAGE_TITLE = "E-File submission";
 
     @Before("@frontend")
@@ -28,7 +38,13 @@ public class EFileSubmissionTest extends DriverClass {
     }
 
     @After("@frontend")
-    public void tearDown(){
+    public void tearDown(Scenario scenario){
+        if(scenario.isFailed()) {
+            String testName = scenario.getName();
+                log.info(testName + "is Failed");
+                final byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+                scenario.attach(screenshot, "image/png", "Failed test");
+        }
         driver.close();
         driver.quit();
         log.info("Browser closed");
@@ -57,19 +73,25 @@ public class EFileSubmissionTest extends DriverClass {
 
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
         landingPage.enterAccountGuid(validExistingCSOGuid);
+
+        landingPage.clickGenerateUrlButton();
+        log.info("Generate Url button in landing page is clicked");
     }
 
     @Then("eFile submission page is displayed and user clicks the cancel button")
     public void eFileSubmissionPageIsDisplayedAncUserClicksTheCancelButton() {
         eFileSubmissionPage = new EFileSubmissionPage(driver);
-        landingPage = new LandingPage(driver);
-
-        landingPage.clickGenerateUrlButton();
-        log.info("Generate Url button in landing page is clicked");
+        packageConfirmationPage = new PackageConfirmationPage(driver);
 
         String actualTitle = eFileSubmissionPage.verifyEfilingPageTitle();
         Assert.assertEquals(EFILE_SUBMISSION_PAGE_TITLE, actualTitle);
         log.info("eFiling Frontend page title is verified");
+
+        boolean uploadDocumentsBtnIsDisplayed = packageConfirmationPage.verifyUploadDocumentIsDisplayed();
+        Assert.assertTrue(uploadDocumentsBtnIsDisplayed);
+
+        boolean continuePaymentBtnIsDisplayed = packageConfirmationPage.verifyContinuePaymentBtnIsDisplayed();
+        Assert.assertTrue(continuePaymentBtnIsDisplayed);
 
         eFileSubmissionPage.clickCancelButton();
     }
@@ -175,5 +197,17 @@ public class EFileSubmissionTest extends DriverClass {
         Assert.assertEquals(actMsg, expMsg);
 
         log.info("Expected message is verified");
+    }
+
+    @Then("verify there are no broken links in the page")
+    public void verifyThereAreNoBrokenLinksInThePage() throws IOException {
+        List<WebElement> links = driver.findElements(By.tagName("a"));
+
+        log.info("Total links are " + links.size());
+
+        for (WebElement element : links) {
+            String url = element.getAttribute("href");
+            FrontendTestUtil.verifyLinkActive(url);
+        }
     }
 }

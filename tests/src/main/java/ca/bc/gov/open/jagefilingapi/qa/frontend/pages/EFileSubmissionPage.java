@@ -18,26 +18,23 @@ public class EFileSubmissionPage {
     Logger log = LogManager.getLogger(EFileSubmissionPage.class);
 
     //Page Objects:
-    @FindBy(xpath = "//*[@data-test-id=['cso-btns']")
+    @FindBy(xpath = "//button[@data-test-id='main-cancel-btn']")
     WebElement cancelButton;
 
-    @FindBy(css = "body > div.fade.modal.show > div > div > div.mx-auto.mb-5 > div:nth-child(1) > button")
+    @FindBy(xpath = "//button[@data-test-id='modal-confirm-btn']")
     WebElement confirmCancelSubmission;
 
-    @FindBy(css = "body > div.fade.modal.show > div > div > div.mx-auto.mb-5 > div:nth-child(3) > button")
+    @FindBy(xpath = "//button[@data-test-id='modal-cancel-btn']")
     WebElement resumeSubmission;
 
-    @FindBy(xpath = "//*[@data-test-id=['return-home-btn']")
+    @FindBy(xpath = "//button[@data-test-id='return-home-btn']")
     WebElement returnHomeButton;
 
     @FindBy(id = "acceptTerms")
     WebElement acceptTermsCheckbox;
 
-    @FindBy(xpath = "//*[@id='root']/div/main/div/div/section/div[2]/button")
+    @FindBy(xpath = "//button[@data-test-id='create-cso-btn']")
     WebElement createCsoAccountButton;
-
-    @FindBy(xpath = "//*[@id='root']/div/main/div/div/section/div[1]/button")
-    WebElement acceptTermsCancelButton;
 
     //Initializing the driver:
     public EFileSubmissionPage(WebDriver driver) {
@@ -48,7 +45,7 @@ public class EFileSubmissionPage {
     //Actions:
     public String verifyEfilingPageTitle() {
         wait = new WebDriverWait(driver, 30);
-        wait.until(ExpectedConditions.titleIs("eFiling Frontend"));
+        wait.until(ExpectedConditions.titleIs("E-File submission"));
         log.info("Waiting for the page to load...");
         return driver.getTitle();
     }
@@ -100,6 +97,6 @@ public class EFileSubmissionPage {
     }
 
     public void clickAcceptTermsCancelButton() {
-        acceptTermsCancelButton.click();
+        cancelButton.click();
     }
 }

@@ -107,15 +107,16 @@ export default function PackageConfirmation({
 
         <br />
 
-        <section className="inline-block pt-2" data-test-id="upload-btn">
+        <section className="inline-block pt-2">
           <Button
             label={uploadButton.label}
             onClick={uploadButton.onClick}
             styling={uploadButton.styling}
+            testId="upload-btn"
           />
         </section>
 
-        <section className="buttons pt-2" data-test-id="cancel-btn">
+        <section className="buttons pt-2">
           <ConfirmationPopup
             modal={confirmationPopup.modal}
             mainButton={confirmationPopup.mainButton}
@@ -126,6 +127,7 @@ export default function PackageConfirmation({
             label={continueButton.label}
             onClick={continueButton.onClick}
             styling={continueButton.styling}
+            testId="continue-btn"
           />
         </section>
       </div>
