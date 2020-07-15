@@ -33,8 +33,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "coverage": "jest --coverage",
-    "precommit": "pretty-quick --staged && lint-staged",
-    "prepush": "lint-staged"
+    "precommit": "pretty-quick --staged && lint-staged"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -122,8 +121,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn run precommit",
-      "pre-push": "yarn run prepush"
+      "pre-commit": "yarn run precommit"
     }
   }
 }
