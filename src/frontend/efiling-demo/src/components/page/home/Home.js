@@ -117,23 +117,52 @@ export const eFilePackage = (files, accountGuid, setErrorExists) => {
 const uploadFiles = files => {
   const xId = "77da92db-0791-491e-8c58-1a969e67d2fa";
   const formData = new FormData();
+  const documentData = [];
 
   for (let i = 0; i < files.length; i++) {
     formData.append("files", files[i].file);
+    documentData.push({
+      name: files[i].file.name,
+      description: "file description",
+      type: files[i].file.type
+    });
   }
+
+  console.log(files[0].file);
 
   axios
     .post("/submission/documents", formData, {
       headers: {
-        "X-Auth-UserId": xId,
+        "X-Auth-UserId": accountGuid,
         "Content-Type": "multipart/form-data"
       }
     })
     .then(response => {
-      console.log(response);
+      const { submissionId } = response.data;
+
+      const updatedUrlBody = {
+        ...urlBody,
+        package: {
+          ...package,
+          documents: documentData
+        }
+      };
+
+      console.log(updatedUrlBody);
+
+      axios
+        .post(`/submission/${submissionId}/generateUrl`, urlBody, {
+          headers: { "X-Auth-UserId": accountGuid }
+        })
+        .then(({ data: { efilingUrl } }) => {
+          // window.open(efilingUrl, "_self");
+        })
+        .catch(() => {
+          setErrorExists(true);
+        });
     })
     .catch(() => {
-      console.log("An error occurred with the upload. Please try again.");
+      setErrorExists(true);
     });
 };
 
@@ -172,8 +201,8 @@ export default function Home({ page: { header } }) {
           />
           <br />
           <Button
-            onClick={() => uploadFiles(files)}
-            label="Upload"
+            onClick={() => eFilePackage(files, accountGuid, setErrorExists)}
+            label="E-File my Package"
             styling="normal-blue btn"
           />
           <br />
