@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingapi.submission.service;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingapi.fee.models.Fee;
+import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.jag.efilingapi.fee.FeeService;
@@ -11,10 +12,12 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 
+import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -35,6 +38,8 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private final EfilingAccountService efilingAccountService;
 
+    private final EfilingLookupService efilingLookupService;
+
     private final FeeService feeService;
 
     public SubmissionServiceImpl(
@@ -42,11 +47,13 @@ public class SubmissionServiceImpl implements SubmissionService {
             CacheProperties cacheProperties,
             SubmissionMapper submissionMapper,
             EfilingAccountService efilingAccountService,
+            EfilingLookupService efilingLookupService,
             FeeService feeService) {
         this.submissionStore = submissionStore;
         this.cacheProperties = cacheProperties;
         this.submissionMapper = submissionMapper;
         this.efilingAccountService = efilingAccountService;
+        this.efilingLookupService = efilingLookupService;
         this.feeService = feeService;
     }
 
@@ -91,11 +98,15 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     }
 
-    private List<Fee> getFees(List<DocumentProperties> documents) {
+    private List<ServiceFees> getFees(List<DocumentProperties> documents) {
         return  documents.stream()
-                .map(doc -> feeService.getFee(
-                                new FeeRequest(
-                                        doc.getType())))
+                .map(doc -> {
+                    try {
+                        return efilingLookupService.getServiceFee(doc.getType());
+                    } catch (DatatypeConfigurationException e) {
+                        return new ServiceFees(null, BigDecimal.valueOf(0), null, doc.getType(),null, null, null, null);
+                    }
+                })
                 .collect(Collectors.toList());
     }
 

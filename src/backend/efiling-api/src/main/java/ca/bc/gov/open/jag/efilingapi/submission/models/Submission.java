@@ -5,6 +5,7 @@ import ca.bc.gov.open.jag.efilingapi.api.model.ModelPackage;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingapi.fee.models.Fee;
 import ca.bc.gov.open.jag.efilingapi.api.model.Navigation;
+import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -26,7 +27,7 @@ public class Submission {
 
     private ModelPackage modelPackage;
 
-    private List<Fee> fees;
+    private List<ServiceFees> fees;
 
     private AccountDetails accountDetails;
 
@@ -50,7 +51,7 @@ public class Submission {
             @JsonProperty("package") ModelPackage modelPackage,
             @JsonProperty("navigation") Navigation navigation,
             @JsonProperty("clientApplication") ClientApplication clientApplication,
-            @JsonProperty("fees") List<Fee> fees,
+            @JsonProperty("fees") List<ServiceFees> fees,
             @JsonProperty("accountDetails") AccountDetails accountDetails,
             @JsonProperty("expiryDate") long expiryDate) {
         this.id = id;
@@ -74,7 +75,7 @@ public class Submission {
 
     public ClientApplication getClientApplication() { return clientApplication; }
 
-    public List<Fee> getFees() {
+    public List<ServiceFees> getFees() {
         return fees;
     }
 
@@ -91,7 +92,7 @@ public class Submission {
         private ModelPackage modelPackage;
         private Navigation navigation;
         private ClientApplication clientApplication;
-        private List<Fee> fees;
+        private List<ServiceFees> fees;
         private AccountDetails accountDetails;
         private long expiryDate;
 
@@ -110,7 +111,7 @@ public class Submission {
             return this;
         }
 
-        public Builder fees(List<Fee> fees) {
+        public Builder fees(List<ServiceFees> fees) {
             this.fees = fees;
             return this;
         }

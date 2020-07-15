@@ -33,6 +33,8 @@ public class CSOLookupServiceImpl implements EfilingLookupService {
 
         try {
             ServiceFee fee = lookupFacadeItf.getServiceFee(serviceId, date2XMLGregorian(new Date()));
+            if (fee == null)
+                return null;
 
             return new ServiceFees(
                     toJoda(fee.getUpdDtm()),
@@ -66,7 +68,10 @@ public class CSOLookupServiceImpl implements EfilingLookupService {
     }
 
     private DateTime toJoda(XMLGregorianCalendar date) {
-        return new DateTime(date.toGregorianCalendar().getTime());
+        if (date != null) {
+            return new DateTime(date.toGregorianCalendar().getTime());
+        }
+        return null;
     }
 
 }
