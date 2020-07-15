@@ -16,8 +16,8 @@ public interface SubmissionMapper {
 
     @Mapping(source = "generateUrlRequest.navigation", target = "navigation")
     @Mapping(source = "generateUrlRequest.clientApplication", target = "clientApplication")
-    @Mapping(source = "generateUrlRequest.package", target = "modelPackage")
-    @Mapping(source = "fees", target = "fees")
+    @Mapping(source = "generateUrlRequest.filingPackage", target = "filingPackage")
+    @Mapping(source = "fee", target = "fee")
     @Mapping(source = "accountDetails", target = "accountDetails")
     @Mapping(source = "expiryDate", target = "expiryDate")
     Submission toSubmission(GenerateUrlRequest generateUrlRequest, List<ServiceFees> fees, AccountDetails accountDetails, long expiryDate);

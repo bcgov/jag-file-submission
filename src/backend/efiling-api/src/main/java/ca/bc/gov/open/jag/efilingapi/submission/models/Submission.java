@@ -1,9 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission.models;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.ClientApplication;
-import ca.bc.gov.open.jag.efilingapi.api.model.ModelPackage;
-import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
-import ca.bc.gov.open.jag.efilingapi.fee.models.Fee;
+import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.api.model.Navigation;
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -25,7 +23,7 @@ public class Submission {
 
     private ClientApplication clientApplication;
 
-    private ModelPackage modelPackage;
+    private FilingPackage filingPackage;
 
     private List<ServiceFees> fees;
 
@@ -33,7 +31,7 @@ public class Submission {
 
     protected Submission(Submission.Builder builder) {
         this.id = UUID.randomUUID();
-        this.modelPackage = builder.modelPackage;
+        this.filingPackage = builder.filingPackage;
         this.navigation = builder.navigation;
         this.clientApplication = builder.clientApplication;
         this.fees = builder.fees;
@@ -48,14 +46,14 @@ public class Submission {
     @JsonCreator
     public Submission(
             @JsonProperty("id") UUID id,
-            @JsonProperty("package") ModelPackage modelPackage,
+            @JsonProperty("package") FilingPackage filingPackage,
             @JsonProperty("navigation") Navigation navigation,
             @JsonProperty("clientApplication") ClientApplication clientApplication,
             @JsonProperty("fees") List<ServiceFees> fees,
             @JsonProperty("accountDetails") AccountDetails accountDetails,
             @JsonProperty("expiryDate") long expiryDate) {
         this.id = id;
-        this.modelPackage = modelPackage;
+        this.filingPackage = filingPackage;
         this.navigation = navigation;
         this.clientApplication = clientApplication;
         this.fees = fees;
@@ -65,8 +63,8 @@ public class Submission {
 
     public UUID getId() { return id; }
 
-    public ModelPackage getModelPackage() {
-        return modelPackage;
+    public FilingPackage getFilingPackage() {
+        return filingPackage;
     }
 
     public Navigation getNavigation() {
@@ -89,15 +87,15 @@ public class Submission {
 
     public static class Builder {
 
-        private ModelPackage modelPackage;
+        private FilingPackage filingPackage;
         private Navigation navigation;
         private ClientApplication clientApplication;
         private List<ServiceFees> fees;
         private AccountDetails accountDetails;
         private long expiryDate;
 
-        public Builder modelPackage(ModelPackage modelPackage) {
-            this.modelPackage =  modelPackage;
+        public Builder filingPackage(FilingPackage filingPackage) {
+            this.filingPackage =  filingPackage;
             return this;
         }
 

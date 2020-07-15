@@ -79,7 +79,7 @@ public class generateFromRequestTest {
     public void withValidAccountShouldReturnSubmission() {
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setNavigation(TestHelpers.createDefaultNavigation());
-        request.setPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()));
+        request.setFilingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()));
 
         Submission actual = sut.generateFromRequest(TestHelpers.CASE_1, request);
 
@@ -96,14 +96,14 @@ public class generateFromRequestTest {
         Assertions.assertEquals(BigDecimal.valueOf(7.0), actual.getFees().get(0).getFeeAmt());
         Assertions.assertEquals(BigDecimal.valueOf(7.0), actual.getFees().get(1).getFeeAmt());
         Assertions.assertNotNull(actual.getId());
-        Assertions.assertEquals(TestHelpers.DIVISION, actual.getModelPackage().getCourt().getDivision());
-        Assertions.assertEquals(TestHelpers.FILENUMBER, actual.getModelPackage().getCourt().getFileNumber());
-        Assertions.assertEquals(TestHelpers.LEVEL, actual.getModelPackage().getCourt().getLevel());
-        Assertions.assertEquals(TestHelpers.LOCATION, actual.getModelPackage().getCourt().getLocation());
-        Assertions.assertEquals(TestHelpers.PARTICIPATIONCLASS, actual.getModelPackage().getCourt().getParticipatingClass());
-        Assertions.assertEquals(TestHelpers.PROPERTYCLASS, actual.getModelPackage().getCourt().getPropertyClass());
-        Assertions.assertEquals(TestHelpers.TYPE, actual.getModelPackage().getDocuments().get(0).getType());
-        Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getModelPackage().getDocuments().get(0).getDescription());
+        Assertions.assertEquals(TestHelpers.DIVISION, actual.getFilingPackage().getCourt().getDivision());
+        Assertions.assertEquals(TestHelpers.FILENUMBER, actual.getFilingPackage().getCourt().getFileNumber());
+        Assertions.assertEquals(TestHelpers.LEVEL, actual.getFilingPackage().getCourt().getLevel());
+        Assertions.assertEquals(TestHelpers.LOCATION, actual.getFilingPackage().getCourt().getLocation());
+        Assertions.assertEquals(TestHelpers.PARTICIPATIONCLASS, actual.getFilingPackage().getCourt().getParticipatingClass());
+        Assertions.assertEquals(TestHelpers.PROPERTYCLASS, actual.getFilingPackage().getCourt().getPropertyClass());
+        Assertions.assertEquals(TestHelpers.TYPE, actual.getFilingPackage().getDocuments().get(0).getType());
+        Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getFilingPackage().getDocuments().get(0).getDescription());
 
     }
 
@@ -113,7 +113,7 @@ public class generateFromRequestTest {
 
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setNavigation(TestHelpers.createDefaultNavigation());
-        request.setPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()));
+        request.setFilingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()));
 
 
         Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(TestHelpers.CASE_2, request));
@@ -126,7 +126,7 @@ public class generateFromRequestTest {
 
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setNavigation(TestHelpers.createDefaultNavigation());
-        request.setPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()));
+        request.setFilingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()));
 
 
         Assertions.assertThrows(InvalidAccountStateException.class, () -> sut.generateFromRequest(TestHelpers.CASE_3, request));
@@ -140,7 +140,7 @@ public class generateFromRequestTest {
         UUID fakeaccount = UUID.fromString("88da92db-0791-491e-8c58-1a969e67d2fb");
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setNavigation(TestHelpers.createDefaultNavigation());
-        request.setPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()));
+        request.setFilingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()));
 
 
 
@@ -152,8 +152,8 @@ public class generateFromRequestTest {
                 .accountDetails(accountDetails)
                 .navigation(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
-                .modelPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
-                .fees(Arrays.asList(fee))
+                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
+                .fee(fee)
                 .create();
 
         Mockito
@@ -184,8 +184,8 @@ public class generateFromRequestTest {
                 .accountDetails(accountDetails)
                 .navigation(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
-                .modelPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
-                .fees(Arrays.asList(fee,fee))
+                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
+                .fee(fee)
                 .create();
 
         Mockito
