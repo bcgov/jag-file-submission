@@ -29,28 +29,27 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
     @Override
     public ResponseEntity<UserDetails> createAccount(UUID xAuthUserId, UserDetails userDetails) {
 
+            AccountDetails accountDetails = efilingAccountService.createAccount(CreateAccountRequest
+                    .builder()
+                    .universalId(xAuthUserId)
+                    .firstName(userDetails.getFirstName())
+                    .lastName(userDetails.getLastName())
+                    .middleName(userDetails.getMiddleName())
+                    .email(userDetails.getEmail())
+                    .create());
 
-        AccountDetails accountDetails = efilingAccountService.createAccount(CreateAccountRequest
-                .builder()
-                .universalId(xAuthUserId)
-                .firstName(userDetails.getFirstName())
-                .lastName(userDetails.getLastName())
-                .middleName(userDetails.getMiddleName())
-                .email(userDetails.getEmail())
-                .create());
+            UserDetails result = new UserDetails();
+            result.setUniversalId(accountDetails.getUniversalId());
+            Account csoAccount = new Account();
+            csoAccount.setType(Account.TypeEnum.CSO);
+            csoAccount.setIdentifier(accountDetails.getAccountId().toString());
+            result.addAccountsItem(csoAccount);
+            result.setEmail(accountDetails.getEmail());
+            result.setFirstName(accountDetails.getFirstName());
+            result.setLastName(accountDetails.getLastName());
+            result.setMiddleName(accountDetails.getMiddleName());
 
-        UserDetails result = new UserDetails();
-        result.setUniversalId(accountDetails.getUniversalId());
-        Account csoAccount = new Account();
-        csoAccount.setType(Account.TypeEnum.CSO);
-        csoAccount.setIdentifier(accountDetails.getAccountId().toString());
-        result.addAccountsItem(csoAccount);
-        result.setEmail(accountDetails.getEmail());
-        result.setFirstName(accountDetails.getFirstName());
-        result.setLastName(accountDetails.getLastName());
-        result.setMiddleName(accountDetails.getMiddleName());
-
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
+            return new ResponseEntity<>(result, HttpStatus.CREATED);
 
     }
 
