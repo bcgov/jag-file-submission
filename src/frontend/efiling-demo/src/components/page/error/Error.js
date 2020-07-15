@@ -16,8 +16,14 @@ export default function Error({ page: { header, status, message } }) {
             button below to go back home.
           </p>
           <p className="error-info">
-            <b>Status: {status}</b>
-            <b>Message: {message}</b>
+            <b>
+              Status:&nbsp;
+              {status}
+            </b>
+            <b>
+              Message:&nbsp;
+              {message}
+            </b>
           </p>
           <br />
           <Button
