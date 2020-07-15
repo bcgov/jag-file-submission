@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
+import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
@@ -34,6 +35,11 @@ public class GetPackageInformationTest {
     @Mock
     private SubmissionStore submissionStoreMock;
 
+    @Mock
+    private DocumentStore documentStoreMock;
+
+    private static final UUID CASE_1 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fe");
+    private static final UUID CASE_2 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fa");
     @BeforeAll
     public void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -48,7 +54,8 @@ public class GetPackageInformationTest {
 
         Mockito.when(submissionStoreMock.getByKey(TestHelpers.CASE_1)).thenReturn(Optional.of(submissionWithParentApplication));
 
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock);
+
     }
 
     @Test

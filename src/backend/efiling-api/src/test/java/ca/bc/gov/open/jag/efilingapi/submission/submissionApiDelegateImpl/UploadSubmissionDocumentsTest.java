@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.UploadSubmissionDocumentsResponse;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
+import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
@@ -31,10 +32,13 @@ public class UploadSubmissionDocumentsTest {
     @Mock
     private NavigationProperties navigationProperties;
 
+    @Mock
+    private DocumentStore documentStoreMock;
+
     @BeforeAll
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock);
     }
 
 

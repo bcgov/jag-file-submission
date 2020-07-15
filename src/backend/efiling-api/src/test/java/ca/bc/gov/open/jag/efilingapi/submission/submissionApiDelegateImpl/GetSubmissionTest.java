@@ -4,6 +4,7 @@ import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.Account;
 import ca.bc.gov.open.jag.efilingapi.api.model.GetSubmissionResponse;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
+import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
@@ -51,6 +52,9 @@ public class GetSubmissionTest {
     @Mock
     private SubmissionStore submissionStoreMock;
 
+    @Mock
+    private DocumentStore documentStoreMock;
+
     @BeforeAll
     public void setUp() {
 
@@ -83,7 +87,7 @@ public class GetSubmissionTest {
 
         Mockito.when(submissionStoreMock.getByKey(TestHelpers.CASE_3)).thenReturn(Optional.of(submissionWithoutCsoAccount));
 
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock);
 
     }
 

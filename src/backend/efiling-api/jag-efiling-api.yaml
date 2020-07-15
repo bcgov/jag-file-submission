@@ -105,6 +105,59 @@ paths:
                 $ref: "#/components/schemas/GetSubmissionResponse"
         "404":
           description: Config not found
+  "/submission/{id}/package":
+    get:
+      summary: Get package information
+      operationId: GetSubmissionPackage
+      tags:
+        - submission
+      parameters:
+        - name: id
+          in: path
+          description: A submission id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Package Information found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Package"
+        "404":
+          description: Package Information not found
+  "/submission/{id}/document/{filename}":
+    get:
+      summary: Get document by name
+      operationId: GetSubmissionDocument
+      tags:
+        - submission
+      parameters:
+        - name: id
+          in: path
+          description: A submission id
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: filename
+          in: path
+          description: A document name
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Package Information found
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: Document not found
   "/csoAccount":
     post:
       summary: Create a CSO account

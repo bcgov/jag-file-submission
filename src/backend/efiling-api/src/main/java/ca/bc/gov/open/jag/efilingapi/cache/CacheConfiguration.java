@@ -22,6 +22,7 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,6 +114,28 @@ public class CacheConfiguration {
     public Jackson2JsonRedisSerializer jackson2JsonRedisSerializer() {
         return new Jackson2JsonRedisSerializer(Submission.class);
     }
+
+
+    /**
+     * Configures the cache manager
+     * @param jedisConnectionFactory A jedisConnectionFactory
+     * @return
+     */
+    @Bean(name = "documentCacheManager")
+    public CacheManager documentCacheManager(
+            JedisConnectionFactory jedisConnectionFactory) {
+
+        RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
+                .disableCachingNullValues()
+                .entryTtl(Duration.ofHours(24));
+
+        redisCacheConfiguration.usePrefix();
+
+        return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(jedisConnectionFactory)
+                .cacheDefaults(redisCacheConfiguration).build();
+    }
+
+
 
 
 }
