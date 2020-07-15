@@ -2,7 +2,10 @@ package ca.bc.gov.open.jag.efilingapi.account;
 
 import ca.bc.gov.open.jag.efilingapi.api.CsoAccountApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.Account;
+import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.api.model.UserDetails;
+import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.CreateAccountRequest;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
@@ -29,6 +32,8 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
     @Override
     public ResponseEntity<UserDetails> createAccount(UUID xAuthUserId, UserDetails userDetails) {
 
+        try {
+
             AccountDetails accountDetails = efilingAccountService.createAccount(CreateAccountRequest
                     .builder()
                     .universalId(xAuthUserId)
@@ -50,6 +55,15 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
             result.setMiddleName(accountDetails.getMiddleName());
 
             return new ResponseEntity<>(result, HttpStatus.CREATED);
+
+        } catch (EfilingAccountServiceException e) {
+
+            EfilingError response = new EfilingError();
+            response.setError(ErrorResponse.CREATE_ACCOUNT_EXCEPTION.getErrorCode());
+            response.setMessage(ErrorResponse.CREATE_ACCOUNT_EXCEPTION.getErrorMessage());
+            return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+
+        }
 
     }
 
