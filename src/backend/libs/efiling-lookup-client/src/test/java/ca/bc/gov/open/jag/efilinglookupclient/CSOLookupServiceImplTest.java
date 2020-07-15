@@ -12,6 +12,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigDecimal;
 
@@ -52,10 +53,10 @@ public class CSOLookupServiceImplTest {
         Mockito.when(serviceFeeMock.getEntUserId()).thenReturn(ENT_USER_ID);
         Mockito.when(serviceFeeMock.getServiceTypeCd()).thenReturn(SERVICE_TYPE_CD);
         Mockito.when(serviceFeeMock.getUpdUserId()).thenReturn(UPD_USER_ID);
-        Mockito.when(updDtmMock.toGregorianCalendar()).thenReturn(new DateTime(2020, 7, 1, 10,10).toGregorianCalendar());
-        Mockito.when(expiryDtMock.toGregorianCalendar()).thenReturn(new DateTime(2020, 7, 2, 10,10).toGregorianCalendar());
-        Mockito.when(entDtmMock.toGregorianCalendar()).thenReturn(new DateTime(2020, 7, 3, 10,10).toGregorianCalendar());
-        Mockito.when(effectiveDtMock.toGregorianCalendar()).thenReturn(new DateTime(2020, 7, 4, 10,10).toGregorianCalendar());
+        updDtmMock = DatatypeFactory.newInstance().newXMLGregorianCalendar("2020-07-01T13:54:46.773-07:00");
+        expiryDtMock= DatatypeFactory.newInstance().newXMLGregorianCalendar("2020-07-02T13:54:46.773-07:00");
+        entDtmMock= DatatypeFactory.newInstance().newXMLGregorianCalendar("2020-07-03T13:54:46.773-07:00");
+        effectiveDtMock= DatatypeFactory.newInstance().newXMLGregorianCalendar("2020-07-15T13:54:46.773-07:00");
         Mockito
                 .when(serviceFeeMock.getEffectiveDt())
                 .thenReturn(effectiveDtMock);
@@ -94,7 +95,7 @@ public class CSOLookupServiceImplTest {
 
         ServiceFees actual = sut.getServiceFee(SERVICE_ID);
         Assertions.assertEquals(BigDecimal.TEN, actual.getFeeAmt());
-        Assertions.assertEquals(4, DateTime.parse(actual.getEffectiveDt()).getDayOfMonth());
+        Assertions.assertEquals(15, DateTime.parse(actual.getEffectiveDt()).getDayOfMonth());
         Assertions.assertEquals(3, DateTime.parse(actual.getEntDtm()).getDayOfMonth());
         Assertions.assertEquals(ENT_USER_ID, actual.getEntUserId());
         Assertions.assertEquals(2, DateTime.parse(actual.getExpiryDt()).getDayOfMonth());
