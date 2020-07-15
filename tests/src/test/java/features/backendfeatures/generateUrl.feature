@@ -27,14 +27,12 @@ Feature: User id is authenticated and user details are retrieved with generated 
     Then verify response returns invalid role error and message
 
   @backend
-  @negative
   Scenario: Verify secure url is not generated if path is incorrect
     Given POST http request is made to "INCORRECT_GENERATE_URL_API" with incorrect path
     When status code is 404 and content type is verified
     Then verify error message is present and message has no value
 
   @backend
-  @negative
   Scenario: Verify secure url is not generated if path is invalid
     Given POST http request is made to "GENERATE_URL_API" with invalid path
     When status code is 405 and content type is verified
