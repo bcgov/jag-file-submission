@@ -25,7 +25,7 @@ const urlBody = {
     displayName: "Demo App",
     type: "app"
   },
-  package: {
+  filingPackage: {
     court: {
       location: "string",
       level: "string",
@@ -76,8 +76,6 @@ const eFilePackage = (files, accountGuid, setErrorExists) => {
     });
   }
 
-  console.log(files[0].file);
-
   axios
     .post("/submission/documents", formData, {
       headers: {
@@ -90,20 +88,18 @@ const eFilePackage = (files, accountGuid, setErrorExists) => {
 
       const updatedUrlBody = {
         ...urlBody,
-        package: {
-          ...package,
+        filingPackage: {
+          ...urlBody.filingPackage,
           documents: documentData
         }
       };
 
-      console.log(updatedUrlBody);
-
       axios
-        .post(`/submission/${submissionId}/generateUrl`, urlBody, {
+        .post(`/submission/${submissionId}/generateUrl`, updatedUrlBody, {
           headers: { "X-Auth-UserId": accountGuid }
         })
         .then(({ data: { efilingUrl } }) => {
-          // window.open(efilingUrl, "_self");
+          window.open(efilingUrl, "_self");
         })
         .catch(() => {
           setErrorExists(true);
