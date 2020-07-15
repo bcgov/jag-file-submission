@@ -132,10 +132,10 @@ public class GenerateUrlTest {
         List<String> type = jsonPath.get( "userDetails.accounts.type");
         List<String> identifier = jsonPath.get( "userDetails.accounts.identifier");
 
-        assertThat(firstName, is(emptyString()));
-        assertThat(lastName, is(emptyString()));
-        assertThat(middleName, is(emptyString()));
-        assertThat(email, is(emptyString()));
+        assertThat(firstName, is(not(emptyString())));
+        assertThat(lastName, is(not(emptyString())));
+        assertThat(middleName, is(not(emptyString())));
+        assertThat(email, is(not(emptyString())));
         log.info("Names and email objects from the valid CSO account submission response have empty values");
 
         assertFalse(type.isEmpty());
