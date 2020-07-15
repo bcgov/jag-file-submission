@@ -74,7 +74,6 @@ public class generateFromRequestTest {
     @Test
     @DisplayName("OK: with valid account should return submission")
     public void withValidAccountShouldReturnSubmission() {
-
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setNavigation(TestHelpers.createDefaultNavigation());
         request.setPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()));
