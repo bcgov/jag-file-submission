@@ -69,16 +69,20 @@ const generateUrl = (accountGuid, setErrorExists) => {
 };
 
 const uploadFiles = files => {
+  const xId = "77da92db-0791-491e-8c58-1a969e67d2fa";
   const formData = new FormData();
 
-  console.log(files[0].file);
-
   for (let i = 0; i < files.length; i++) {
-    formData.append(`files[${i}]`, files[i]);
+    formData.append("files", files[i].file);
   }
 
   axios
-    .post(`http://demo0217811.mockable.io/`, formData)
+    .post("/submission/documents", formData, {
+      headers: {
+        "X-Auth-UserId": xId,
+        "Content-Type": "multipart/form-data"
+      }
+    })
     .then(response => {
       console.log(response);
     })
