@@ -1,11 +1,9 @@
 package ca.bc.gov.open.jag.efilingapi;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
-import ca.bc.gov.open.jag.efilingapi.api.model.Redirect;
-import ca.bc.gov.open.jag.efilingapi.api.model.EndpointAccess;
-import ca.bc.gov.open.jag.efilingapi.api.model.Navigation;
+import ca.bc.gov.open.jag.efilingapi.api.model.*;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 public class TestHelpers {
@@ -20,16 +18,11 @@ public class TestHelpers {
     public static final String CANCEL_URL = "http://cancel";
     public static final String ERROR_URL = "http://error";
 
-    public static DocumentProperties createDocumentProperties(String header, String url, String subtype, String type) {
-        DocumentProperties documentProperties = new DocumentProperties();
-        EndpointAccess documentAccess = new EndpointAccess();
-        documentAccess.setHeaders(Collections.singletonMap(header, header));
-        documentAccess.setUrl(url);
-        documentAccess.setVerb(EndpointAccess.VerbEnum.POST);
-        documentProperties.setSubmissionAccess(documentAccess);
-        documentProperties.setSubType(subtype);
-        documentProperties.setType(type);
-        return documentProperties;
+    public static ModelPackage createPackage(Court court, List<DocumentProperties> documents) {
+        ModelPackage modelPackage = new ModelPackage();
+        modelPackage.setCourt(court);
+        modelPackage.setDocuments(documents);
+        return modelPackage;
     }
 
     public static Navigation createNavigation(String success, String cancel, String error) {
@@ -44,6 +37,14 @@ public class TestHelpers {
         errorRedirect.setUrl(error);
         navigation.setError(errorRedirect);
         return navigation;
+    }
+
+    public static ClientApplication createClientApplication(String displayName, String type) {
+        ClientApplication clientApplication = new ClientApplication();
+        clientApplication.setDisplayName(displayName);
+        clientApplication.setType(type);
+
+        return clientApplication;
     }
 
     public static Navigation createDefaultNavigation() {

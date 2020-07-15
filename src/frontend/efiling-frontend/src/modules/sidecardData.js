@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from "react";
-import { MdInfoOutline, MdPerson } from "react-icons/md";
+import { MdInfoOutline, MdPerson, MdTimer } from "react-icons/md";
 
 const aboutCso = {
   heading: "About E-File Submission",
@@ -47,9 +47,32 @@ const csoAccountDetails = {
   icon: <MdPerson className="side-card-icon" />
 };
 
+const rushSubmission = {
+  heading: "Rush/Urgent Submission",
+  content: [
+    <p key="rushSubmission">
+      If you wish to request that this package be submitted on an urgent (rush)
+      basis, you must provide a reason for your request to be considered.&nbsp;
+      {/* TODO: fix url and blahs */}
+      <a
+        href="https://justice.gov.bc.ca/cso/about/index.do"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Request rush submission
+      </a>
+      .
+    </p>
+  ],
+  type: "bluegrey",
+  isWide: true,
+  icon: <MdTimer className="side-card-icon" />
+};
+
 export function getSidecardData() {
   return {
     aboutCso,
-    csoAccountDetails
+    csoAccountDetails,
+    rushSubmission
   };
 }

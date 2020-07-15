@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service.submissionStore;
 
+import ca.bc.gov.open.jag.efilingapi.api.model.ClientApplication;
 import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStoreImpl;
@@ -26,13 +27,13 @@ public class PutTest {
     @DisplayName("CASE 1: with valid submission should store submission")
     public void withValidObjectShouldPut() {
 
-        DocumentProperties documentMetadata = new DocumentProperties();
-        documentMetadata.setType("type");
-        Submission submission = new Submission.Builder().documentProperties(documentMetadata).create();
+        ClientApplication clientApplication = new ClientApplication();
+        clientApplication.setType("type");
+        Submission submission = new Submission.Builder().clientApplication(clientApplication).create();
         Optional<Submission> actual = sut.put(submission);
 
         Assertions.assertTrue(actual.isPresent());
-        Assertions.assertEquals("type", actual.get().getDocumentProperties().getType());
+        Assertions.assertEquals("type", actual.get().getClientApplication().getType());
 
     }
 

@@ -14,32 +14,52 @@ exports[`Table Component Matches the blue striped snapshot 1`] = `
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>
+    <tr
+      className=""
+      colSpan="2"
+    >
+      <td
+        className=""
+      >
         BCeID
       </td>
       <td>
         bobross42
       </td>
     </tr>
-    <tr>
-      <td>
+    <tr
+      className=""
+      colSpan="2"
+    >
+      <td
+        className=""
+      >
         Last Name
       </td>
       <td>
         Ross
       </td>
     </tr>
-    <tr>
-      <td>
+    <tr
+      className=""
+      colSpan="2"
+    >
+      <td
+        className=""
+      >
         First Name
       </td>
       <td>
         Bob
       </td>
     </tr>
-    <tr>
-      <td>
+    <tr
+      className=""
+      colSpan="2"
+    >
+      <td
+        className=""
+      >
         Email Address
       </td>
       <td>
@@ -64,32 +84,52 @@ exports[`Table Component Matches the default snapshot 1`] = `
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>
+    <tr
+      className=""
+      colSpan="2"
+    >
+      <td
+        className=""
+      >
         BCeID
       </td>
       <td>
         bobross42
       </td>
     </tr>
-    <tr>
-      <td>
+    <tr
+      className=""
+      colSpan="2"
+    >
+      <td
+        className=""
+      >
         Last Name
       </td>
       <td>
         Ross
       </td>
     </tr>
-    <tr>
-      <td>
+    <tr
+      className=""
+      colSpan="2"
+    >
+      <td
+        className=""
+      >
         First Name
       </td>
       <td>
         Bob
       </td>
     </tr>
-    <tr>
-      <td>
+    <tr
+      className=""
+      colSpan="2"
+    >
+      <td
+        className=""
+      >
         Email Address
       </td>
       <td>

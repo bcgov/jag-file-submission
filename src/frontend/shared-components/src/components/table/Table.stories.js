@@ -14,6 +14,13 @@ export default {
   }
 };
 
+const feesData = [
+  { name: "Some Fees:", value: "$100.00", isValueBold: true },
+  { name: "Some More Fees:", value: "$10.00", isValueBold: true },
+  { name: "", value: "", isEmptyRow: true },
+  { name: "Total Fees:", value: "$110.00", isValueBold: true }
+];
+
 const tableData = getTableElementsTestData();
 const header = "BCeID Info";
 const basicTableElement = { name: "Key", value: "Value" };
@@ -33,6 +40,8 @@ export const WithBoldValues = () => (
 );
 
 export const WithBoldNames = () => <Table elements={tableDataWithBoldNames} />;
+
+export const WithFees = () => <Table isFeesData elements={feesData} />;
 
 export const Mobile = () => <Table heading={header} elements={tableData} />;
 

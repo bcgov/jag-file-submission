@@ -22,7 +22,7 @@ public class GetFeeTest {
     @DisplayName("CASE1: with any request should return 7")
     public void withAnyRequestShouldReturnSeven() {
 
-        Fee actual = sut.getFee(new FeeRequest("type", "subtype"));
+        Fee actual = sut.getFee(new FeeRequest("type"));
 
         Assertions.assertEquals(new BigDecimal(7), actual.getAmount());
 

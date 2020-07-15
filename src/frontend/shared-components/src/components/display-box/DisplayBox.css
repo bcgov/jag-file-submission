@@ -4,13 +4,22 @@
   padding: 15px;
 }
 
+.no-padding-bottom {
+  padding: 10px;
+  padding-bottom: 0px !important;
+}
+
 .display-icon {
   padding-right: 15px;
 }
 
-.display-element {
+.display-right-element {
   width: 100%;
   padding-top: 3px;
+}
+
+.display-left-element {
+  padding-left: 0px !important;
 }
 
 .grey-background {
