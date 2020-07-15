@@ -61,7 +61,7 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
             EfilingError response = new EfilingError();
             response.setError(ErrorResponse.CREATE_ACCOUNT_EXCEPTION.getErrorCode());
             response.setMessage(ErrorResponse.CREATE_ACCOUNT_EXCEPTION.getErrorMessage());
-            return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
 
         }
 
