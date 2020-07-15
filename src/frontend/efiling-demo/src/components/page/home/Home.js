@@ -22,10 +22,10 @@ const urlBody = {
   },
   navigation: {
     success: {
-      url: "string"
+      url: `${window.location.origin}/efiling-demo/success`
     },
     error: {
-      url: "string"
+      url: `${window.location.origin}/efiling-demo/error`
     },
     cancel: {
       url: `${window.location.origin}/efiling-demo/cancel`

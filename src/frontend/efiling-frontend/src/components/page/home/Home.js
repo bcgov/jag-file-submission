@@ -53,7 +53,9 @@ const checkCSOAccountStatus = (
 
       setShowLoader(false);
     })
-    .catch(() => {});
+    .catch(error => {
+      console.log(error);
+    });
 };
 
 export default function Home({ page: { header, confirmationPopup } }) {
