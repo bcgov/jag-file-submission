@@ -13,14 +13,14 @@ public class ServiceFees {
     @SuppressWarnings("squid:S00107")
     @JsonCreator
     public ServiceFees(
-            @JsonProperty("udpDtm") DateTime udpDtm,
+            @JsonProperty("udpDtm") String udpDtm,
             @JsonProperty("feeAmt") BigDecimal feeAmt,
             @JsonProperty("entUserId") String entUserId,
             @JsonProperty("serviceTypeCd") String serviceTypeCd,
-            @JsonProperty("effectiveDt") DateTime effectiveDt,
+            @JsonProperty("effectiveDt") String effectiveDt,
             @JsonProperty("updUserId") String updUserId,
-            @JsonProperty("entDtm") DateTime entDtm,
-            @JsonProperty("expiryDt") DateTime expiryDt) {
+            @JsonProperty("entDtm") String entDtm,
+            @JsonProperty("expiryDt") String expiryDt) {
 
         this.udpDtm = udpDtm;
         this.feeAmt = feeAmt;
@@ -32,11 +32,11 @@ public class ServiceFees {
         this.expiryDt = expiryDt;
     }
 
-    public DateTime getUdpDtm() {
+    public String getUdpDtm() {
         return udpDtm;
     }
 
-    public void setUdpDtm(DateTime udpDtm) {
+    public void setUdpDtm(String udpDtm) {
         this.udpDtm = udpDtm;
     }
 
@@ -64,11 +64,11 @@ public class ServiceFees {
         this.serviceTypeCd = serviceTypeCd;
     }
 
-    public DateTime getEffectiveDt() {
+    public String getEffectiveDt() {
         return effectiveDt;
     }
 
-    public void setEffectiveDt(DateTime effectiveDt) {
+    public void setEffectiveDt(String effectiveDt) {
         this.effectiveDt = effectiveDt;
     }
 
@@ -80,28 +80,28 @@ public class ServiceFees {
         this.updUserId = updUserId;
     }
 
-    public DateTime getEntDtm() {
+    public String getEntDtm() {
         return entDtm;
     }
 
-    public void setEntDtm(DateTime entDtm) {
+    public void setEntDtm(String entDtm) {
         this.entDtm = entDtm;
     }
 
-    public DateTime getExpiryDt() {
+    public String getExpiryDt() {
         return expiryDt;
     }
 
-    public void setExpiryDt(DateTime expiryDt) {
+    public void setExpiryDt(String expiryDt) {
         this.expiryDt = expiryDt;
     }
 
-    DateTime udpDtm;
+    String udpDtm;
     BigDecimal feeAmt;
     String entUserId;
     String serviceTypeCd;
-    DateTime effectiveDt;
+    String effectiveDt;
     String updUserId;
-    DateTime entDtm;
-    DateTime expiryDt;
+    String entDtm;
+    String expiryDt;
 }

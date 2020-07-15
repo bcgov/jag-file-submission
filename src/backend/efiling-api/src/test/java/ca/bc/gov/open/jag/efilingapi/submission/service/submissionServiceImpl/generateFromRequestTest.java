@@ -43,8 +43,6 @@ public class generateFromRequestTest {
     @Mock
     private CacheProperties cachePropertiesMock;
     @Mock
-    private FeeService feeServiceMock;
-    @Mock
     private EfilingAccountService efilingAccountServiceMock;
 
     @Mock
@@ -70,7 +68,7 @@ public class generateFromRequestTest {
 
         // Testing mapper as part of this unit test
         SubmissionMapper submissionMapper = new SubmissionMapperImpl();
-        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, submissionMapper, efilingAccountServiceMock, efilingLookupService, feeServiceMock);
+        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, submissionMapper, efilingAccountServiceMock, efilingLookupService);
 
     }
 

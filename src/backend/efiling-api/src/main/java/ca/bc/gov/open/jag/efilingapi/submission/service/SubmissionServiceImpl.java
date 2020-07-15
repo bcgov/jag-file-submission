@@ -1,12 +1,9 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
-import ca.bc.gov.open.jag.efilingapi.fee.models.Fee;
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
-import ca.bc.gov.open.jag.efilingapi.fee.FeeService;
-import ca.bc.gov.open.jag.efilingapi.fee.models.FeeRequest;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
@@ -40,21 +37,17 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private final EfilingLookupService efilingLookupService;
 
-    private final FeeService feeService;
-
     public SubmissionServiceImpl(
             SubmissionStore submissionStore,
             CacheProperties cacheProperties,
             SubmissionMapper submissionMapper,
             EfilingAccountService efilingAccountService,
-            EfilingLookupService efilingLookupService,
-            FeeService feeService) {
+            EfilingLookupService efilingLookupService) {
         this.submissionStore = submissionStore;
         this.cacheProperties = cacheProperties;
         this.submissionMapper = submissionMapper;
         this.efilingAccountService = efilingAccountService;
         this.efilingLookupService = efilingLookupService;
-        this.feeService = feeService;
     }
 
     @Override

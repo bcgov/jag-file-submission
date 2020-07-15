@@ -1,7 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission;
 
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
-import ca.bc.gov.open.jag.efilingapi.fee.FeeService;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
@@ -36,16 +35,13 @@ public class SubmissionConfig {
     public SubmissionService submissionService(SubmissionStore submissionStore,
                                                SubmissionMapper submissionMapper,
                                                EfilingAccountService efilingAccountService,
-                                               EfilingLookupService efilingLookupService,
-                                               FeeService feeService) {
+                                               EfilingLookupService efilingLookupService) {
 
         return new SubmissionServiceImpl(submissionStore,
                 cacheProperties,
                 submissionMapper,
                 efilingAccountService,
-                efilingLookupService,
-                feeService);
-
+                efilingLookupService);
     }
 
 }
