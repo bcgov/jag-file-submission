@@ -182,11 +182,16 @@ components:
       required:
         - userDetails
         - navigation
+        - fees
       properties:
         userDetails:
           $ref: "#/components/schemas/UserDetails"
         navigation:
           $ref: "#/components/schemas/Navigation"
+        fees:
+          type: array
+          items:
+            $ref: "#/components/schemas/Fee"
     Navigation:
       required:
         - success
@@ -251,6 +256,20 @@ components:
           type: string
         type:
           type: string
+    Fee:
+      description: the fees associated to a submission
+      type: object
+      required:
+        - feeAmt
+        - serviceTypeCd
+      properties:
+        feeAmt:
+          type: number
+          format: double
+          description: the fee amount
+        serviceTypeCd:
+          type: string
+          description: the type assoiciated with the fee
     UserDetails:
       description: represents a user submitting a package
       type: object

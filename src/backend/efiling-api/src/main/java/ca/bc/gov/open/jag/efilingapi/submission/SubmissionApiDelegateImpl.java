@@ -11,6 +11,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.CSOHasMultipleAccountException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
+import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @EnableConfigurationProperties(NavigationProperties.class)
@@ -91,8 +93,21 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         response.setNavigation(fromCacheSubmission.get().getNavigation());
 
+        if (fromCacheSubmission.get().getFees() != null) {
+            response.setFees(fromCacheSubmission.get().getFees().stream()
+                    .map(fee -> mapFee(fee))
+                    .collect(Collectors.toList())
+            );
+        }
         return ResponseEntity.ok(response);
 
+    }
+
+    private Fee mapFee(ServiceFees serviceFees) {
+        Fee fee = new Fee();
+        fee.serviceTypeCd(serviceFees.getServiceTypeCd());
+        fee.feeAmt(serviceFees.getFeeAmt().doubleValue());
+        return fee;
     }
 
     private UserDetails buildUserDetails(Submission submission) {
