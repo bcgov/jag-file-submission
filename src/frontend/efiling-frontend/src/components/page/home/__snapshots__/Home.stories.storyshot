@@ -87,6 +87,7 @@ exports[`Storyshots Home Account Exists 1`] = `
         <br />
         <p>
           <a
+            data-test-id="return-link"
             href="cancelurl.com"
           >
             Return to the parent application website
@@ -178,6 +179,7 @@ exports[`Storyshots Home Account Exists 1`] = `
           <div>
             <button
               class="normal-white btn"
+              data-test-id="upload-btn"
               type="button"
             >
               Upload Documents
@@ -190,6 +192,7 @@ exports[`Storyshots Home Account Exists 1`] = `
           <div>
             <button
               class="normal-white btn"
+              data-test-id="main-cancel-btn"
               type="button"
             >
               Cancel
@@ -198,6 +201,7 @@ exports[`Storyshots Home Account Exists 1`] = `
           <div>
             <button
               class="normal-blue btn"
+              data-test-id="continue-btn"
               type="button"
             >
               Continue to Payment
@@ -552,6 +556,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
         <br />
         <p>
           <a
+            data-test-id="return-link"
             href="cancelurl.com"
           >
             Return to the parent application website
@@ -643,6 +648,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
           <div>
             <button
               class="normal-white btn"
+              data-test-id="upload-btn"
               type="button"
             >
               Upload Documents
@@ -655,6 +661,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
           <div>
             <button
               class="normal-white btn"
+              data-test-id="main-cancel-btn"
               type="button"
             >
               Cancel
@@ -663,6 +670,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
           <div>
             <button
               class="normal-blue btn"
+              data-test-id="continue-btn"
               type="button"
             >
               Continue to Payment
@@ -2083,6 +2091,7 @@ exports[`Storyshots Home No Account Exists 1`] = `
           <div>
             <button
               class="normal-white btn"
+              data-test-id="main-cancel-btn"
               type="button"
             >
               Cancel
@@ -2091,6 +2100,7 @@ exports[`Storyshots Home No Account Exists 1`] = `
           <div>
             <button
               class="normal-blue btn"
+              data-test-id="create-cso-btn"
               disabled=""
               type="button"
             >
@@ -3148,6 +3158,7 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
           <div>
             <button
               class="normal-white btn"
+              data-test-id="main-cancel-btn"
               type="button"
             >
               Cancel
@@ -3156,6 +3167,7 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
           <div>
             <button
               class="normal-blue btn"
+              data-test-id="create-cso-btn"
               disabled=""
               type="button"
             >

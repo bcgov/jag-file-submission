@@ -54,6 +54,7 @@ exports[`Storyshots Cancel Default 1`] = `
       <div>
         <button
           className="normal-white btn"
+          data-test-id="return-home-btn"
           disabled={false}
           onClick={[Function]}
           type="button"
@@ -207,6 +208,7 @@ exports[`Storyshots Cancel Mobile 1`] = `
       <div>
         <button
           className="normal-white btn"
+          data-test-id="return-home-btn"
           disabled={false}
           onClick={[Function]}
           type="button"
@@ -366,6 +368,7 @@ exports[`Storyshots Error Default 1`] = `
       <div>
         <button
           className="normal-white btn"
+          data-test-id=""
           disabled={false}
           onClick={[Function]}
           type="button"
@@ -525,6 +528,7 @@ exports[`Storyshots Error Mobile 1`] = `
       <div>
         <button
           className="normal-white btn"
+          data-test-id=""
           disabled={false}
           onClick={[Function]}
           type="button"
@@ -709,6 +713,7 @@ exports[`Storyshots Home Default 1`] = `
       <div>
         <button
           className="normal-blue btn"
+          data-test-id="generate-url-btn"
           disabled={false}
           onClick={[Function]}
           type="button"
@@ -894,6 +899,7 @@ exports[`Storyshots Home Mobile 1`] = `
       <div>
         <button
           className="normal-blue btn"
+          data-test-id="generate-url-btn"
           disabled={false}
           onClick={[Function]}
           type="button"
@@ -1048,6 +1054,7 @@ exports[`Storyshots Success Default 1`] = `
       <div>
         <button
           className="normal-white btn"
+          data-test-id=""
           disabled={false}
           onClick={[Function]}
           type="button"
@@ -1201,6 +1208,7 @@ exports[`Storyshots Success Mobile 1`] = `
       <div>
         <button
           className="normal-white btn"
+          data-test-id=""
           disabled={false}
           onClick={[Function]}
           type="button"

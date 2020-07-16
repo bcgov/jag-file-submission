@@ -82,6 +82,7 @@ exports[`Home Component matches the snapshot 1`] = `
         <div>
           <button
             class="normal-blue btn"
+            data-test-id="generate-url-btn"
             type="button"
           >
             Generate URL

@@ -69,6 +69,7 @@ export default function Home({ page: { header } }) {
             onClick={() => generateUrl(accountGuid, setErrorExists)}
             label="Generate URL"
             styling="normal-blue btn"
+            testId="generate-url-btn"
           />
           <br />
           {errorExists && (
