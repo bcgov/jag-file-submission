@@ -27,7 +27,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"clientApplication\": {\r\n    \"displayName\": \"string\",\r\n    \"type\": \"string\"\r\n  },\r\n  \"package\": {\r\n    \"court\": {\r\n      \"location\": \"string\",\r\n      \"level\": \"string\",\r\n      \"class\": \"string\",\r\n      \"division\": \"string\",\r\n      \"fileNumber\": \"string\",\r\n      \"participatingClass\": \"string\"\r\n    },\r\n    \"documents\": [\r\n      {\r\n        \"name\": \"string\",\r\n        \"description\": \"string\",\r\n        \"type\": \"DCFL\"\r\n      },\r\n      {\r\n        \"name\": \"string\",\r\n        \"description\": \"string\",\r\n        \"type\": \"DCFL\"\r\n      }\r\n    ]\r\n  },\r\n  \"navigation\": {\r\n    \"success\": {\r\n      \"url\": \"string\"\r\n    },\r\n    \"error\": {\r\n      \"url\": \"string\"\r\n    },\r\n    \"cancel\": {\r\n      \"url\": \"string\"\r\n    }\r\n  }\r\n}",
+              "raw": "{\r\n    \"clientApplication\": {\r\n    \"displayName\": \"string\",\r\n    \"type\": \"string\"\r\n  },\r\n  \"package\": {\r\n    \"court\": {\r\n      \"location\": \"string\",\r\n      \"level\": \"string\",\r\n      \"class\": \"string\",\r\n      \"division\": \"string\",\r\n      \"fileNumber\": \"string\",\r\n      \"participatingClass\": \"string\"\r\n    },\r\n    \"documents\": [\r\n      {\r\n        \"name\": \"string\",\r\n        \"description\": \"string\",\r\n        \"type\": \"DCFL\"\r\n      },\r\n      {\r\n        \"name\": \"string\",\r\n        \"description\": \"string\",\r\n        \"type\": \"NOTDCFL\"\r\n      }\r\n    ]\r\n  },\r\n  \"navigation\": {\r\n    \"success\": {\r\n      \"url\": \"string\"\r\n    },\r\n    \"error\": {\r\n      \"url\": \"string\"\r\n    },\r\n    \"cancel\": {\r\n      \"url\": \"string\"\r\n    }\r\n  }\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -35,9 +35,13 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/submission/generateUrl",
+              "raw": "{{baseUrl}}/submission/ca3d7006-6b21-4147-aac5-c458b2df24e8/generateUrl",
               "host": ["{{baseUrl}}"],
-              "path": ["submission", "generateUrl"]
+              "path": [
+                "submission",
+                "ca3d7006-6b21-4147-aac5-c458b2df24e8",
+                "generateUrl"
+              ]
             }
           },
           "response": []
