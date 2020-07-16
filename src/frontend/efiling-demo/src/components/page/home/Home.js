@@ -100,9 +100,7 @@ export const eFilePackage = (files, accountGuid, setErrorExists) => {
         "Content-Type": "multipart/form-data"
       }
     })
-    .then(response => {
-      const { submissionId } = response.data;
-
+    .then(({ data: { submissionId } }) => {
       axios
         .post(`/submission/${submissionId}/generateUrl`, updatedUrlBody, {
           headers: { "X-Auth-UserId": accountGuid }
@@ -110,13 +108,9 @@ export const eFilePackage = (files, accountGuid, setErrorExists) => {
         .then(({ data: { efilingUrl } }) => {
           window.open(efilingUrl, "_self");
         })
-        .catch(() => {
-          setErrorExists(true);
-        });
+        .catch(() => setErrorExists(true));
     })
-    .catch(() => {
-      setErrorExists(true);
-    });
+    .catch(() => setErrorExists(true));
 };
 
 export default function Home({ page: { header } }) {
