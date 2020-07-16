@@ -98,6 +98,8 @@ export const eFilePackage = (files, accountGuid, setErrorExists) => {
     .then(response => {
       const { submissionId } = response.data;
 
+      console.log("jhsgdhsjdg");
+
       axios
         .post(`/submission/${submissionId}/generateUrl`, updatedUrlBody, {
           headers: { "X-Auth-UserId": accountGuid }
