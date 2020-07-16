@@ -5,6 +5,7 @@ public enum ErrorResponse {
     ACCOUNTEXCEPTION("Client has multiple CSO profiles."),
     DOCUMENT_REQUIRED("At least one document is required."),
     DOCUMENT_STORAGE_FAILURE("An unknown error happened while storing documents."),
+    DOCUMENT_NOT_FOUND("Document not found"),
     CREATE_ACCOUNT_EXCEPTION("Error Creating CSO account."),
     CACHE_ERROR("Cache related error.");
 
