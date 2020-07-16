@@ -92,17 +92,14 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         } catch (IOException e) {
             return new ResponseEntity(
-                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_STORAGE_FAILURE).create(),
-                    HttpStatus.INTERNAL_SERVER_ERROR);
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_STORAGE_FAILURE).create(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        UploadSubmissionDocumentsResponse response = new UploadSubmissionDocumentsResponse();
-        response.setSubmissionId(submissionId);
-        response.setReceived(new BigDecimal(files.size()));
+        logger.info("{} stored in cache", files.size());
 
         MDC.remove(EFILING_SUBMISSION_ID);
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(new UploadSubmissionDocumentsResponse().submissionId(submissionId).received(new BigDecimal(files.size())));
 
     }
 
