@@ -23,6 +23,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -57,8 +58,6 @@ public class GetSubmissionTest {
 
         NavigationProperties navigationProperties = new NavigationProperties();
         navigationProperties.setBaseUrl("http://localhost");
-        ServiceFees fee1 = new ServiceFees(null, BigDecimal.TEN, null, SERVICE_TYPE_CD,null, null, null, null);
-        ServiceFees fee2 = new ServiceFees(null, BigDecimal.ONE, null, SERVICE_TYPE_CD1,null, null, null, null);
         Submission submissionWithCsoAccount = Submission
                 .builder()
                 .accountDetails(
@@ -72,7 +71,7 @@ public class GetSubmissionTest {
                                 .fileRolePresent(true)
                                 .email(EMAIL + TestHelpers.CASE_2).create())
                 .navigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
-                .fees(Arrays.asList(fee1, fee2))
+                .fees(createFees())
                 .create();
 
         Mockito.when(submissionStoreMock.getByKey(TestHelpers.CASE_2)).thenReturn(Optional.of(submissionWithCsoAccount));
@@ -133,6 +132,12 @@ public class GetSubmissionTest {
         assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigation().getSuccess().getUrl());
         assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigation().getCancel().getUrl());
         assertEquals(TestHelpers.ERROR_URL, actual.getBody().getNavigation().getError().getUrl());
+    }
+
+    private List<ServiceFees> createFees() {
+        ServiceFees fee1 = new ServiceFees(null, BigDecimal.TEN, null, SERVICE_TYPE_CD,null, null, null, null);
+        ServiceFees fee2 = new ServiceFees(null, BigDecimal.ONE, null, SERVICE_TYPE_CD1,null, null, null, null);
+        return Arrays.asList(fee1, fee2);
     }
 
 }
