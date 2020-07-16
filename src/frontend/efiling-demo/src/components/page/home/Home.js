@@ -114,6 +114,8 @@ export const eFilePackage = (files, accountGuid, setErrorExists) => {
     });
 };
 
+console.log("heyeyey");
+
 export default function Home({ page: { header } }) {
   const [errorExists, setErrorExists] = useState(false);
   const [accountGuid, setAccountGuid] = useState(null);
