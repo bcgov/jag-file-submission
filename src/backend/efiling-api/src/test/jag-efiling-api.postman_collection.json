@@ -71,6 +71,40 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "documents",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Auth-UserId",
+                "value": "5EDDA221-61C0-43AB-9D50-8158BF4A7828",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "/C:/Users/177141/Documents/stuff.docx"
+                },
+                {
+                  "key": "file2",
+                  "type": "file",
+                  "src": "/C:/Users/177141/Documents/things.rtf"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/submission/documents",
+              "host": ["{{baseUrl}}"],
+              "path": ["submission", "documents"]
+            }
+          },
+          "response": []
         }
       ],
       "protocolProfileBehavior": {}
