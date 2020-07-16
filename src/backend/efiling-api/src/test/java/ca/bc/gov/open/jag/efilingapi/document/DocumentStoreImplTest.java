@@ -15,6 +15,7 @@ public class DocumentStoreImplTest {
     }
 
     @Test
+    @DisplayName("OK: should return byte array")
     public void withoutCacheShouldReturnIt() {
 
         byte[] actual = sut.put("id", DUMMY_CONTENT.getBytes());
@@ -23,6 +24,7 @@ public class DocumentStoreImplTest {
     }
 
     @Test
+    @DisplayName("OK: should return null")
     public void withoutCacheShouldReturnNull() {
 
         Assertions.assertNull(sut.get("id"));
