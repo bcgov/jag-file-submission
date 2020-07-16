@@ -13,6 +13,7 @@ import org.joda.time.DateTime;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -33,16 +34,18 @@ public class CSOLookupServiceImpl implements EfilingLookupService {
 
         try {
             ServiceFee fee = lookupFacadeItf.getServiceFee(serviceId, date2XMLGregorian(new Date()));
+            if (fee == null)
+                return new ServiceFees(null, BigDecimal.ZERO, null, serviceId, null, null, null, null);
 
             return new ServiceFees(
-                    toJoda(fee.getUpdDtm()),
+                    toJoda(fee.getUpdDtm()).toString(),
                     fee.getFeeAmt(),
                     fee.getEntUserId(),
                     fee.getServiceTypeCd(),
-                    toJoda(fee.getEffectiveDt()),
+                    toJoda(fee.getEffectiveDt()).toString(),
                     fee.getUpdUserId(),
-                    toJoda(fee.getEntDtm()),
-                    toJoda(fee.getExpiryDt()));
+                    toJoda(fee.getEntDtm()).toString(),
+                    toJoda(fee.getExpiryDt()).toString());
 
         }
         catch(DatatypeConfigurationException | NestedEjbException_Exception e) {
@@ -66,7 +69,10 @@ public class CSOLookupServiceImpl implements EfilingLookupService {
     }
 
     private DateTime toJoda(XMLGregorianCalendar date) {
-        return new DateTime(date.toGregorianCalendar().getTime());
+        if (date != null) {
+            return DateTime.parse(date.toString());
+        }
+        return new DateTime();
     }
 
 }

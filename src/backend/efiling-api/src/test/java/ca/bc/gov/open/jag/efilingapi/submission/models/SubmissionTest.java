@@ -1,8 +1,10 @@
 package ca.bc.gov.open.jag.efilingapi.submission.models;
 
+import ca.bc.gov.open.jag.efilingapi.fee.FeeService;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.fee.models.Fee;
+import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,7 +32,7 @@ public class SubmissionTest {
     @Test
     @DisplayName("CASE 1: testing constructor")
     public void testingConstructor() {
-        Fee fee = new Fee(BigDecimal.TEN);
+        ServiceFees fee = new ServiceFees(null, BigDecimal.TEN, null, "DCFL",null, null, null, null);
         AccountDetails accountDetails = new AccountDetails(UUID.randomUUID(), BigDecimal.TEN, BigDecimal.ONE, true, FIRST_NAME, LAST_NAME, MIDDLE_NAME, EMAIL);
 
 
@@ -39,7 +41,7 @@ public class SubmissionTest {
                 TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()),
                 TestHelpers.createNavigation(CASE_1, CANCEL, ERROR),
                 TestHelpers.createClientApplication(DISPLAYNAME, TYPE),
-                fee,
+                Arrays.asList(fee,fee),
                 accountDetails,
                 1);
 
@@ -49,7 +51,8 @@ public class SubmissionTest {
         Assertions.assertEquals(ERROR, actual.getNavigation().getError().getUrl());
         Assertions.assertEquals(CANCEL, actual.getNavigation().getCancel().getUrl());
         Assertions.assertEquals(CASE_1, actual.getNavigation().getSuccess().getUrl());
-        Assertions.assertEquals(BigDecimal.TEN, actual.getFee().getAmount());
+        Assertions.assertEquals(BigDecimal.TEN, actual.getFees().get(0).getFeeAmt());
+        Assertions.assertEquals(BigDecimal.TEN, actual.getFees().get(1).getFeeAmt());
         Assertions.assertNotNull(actual.getAccountDetails().getUniversalId());
         Assertions.assertEquals(EMAIL, actual.getAccountDetails().getEmail());
         Assertions.assertEquals(FIRST_NAME, actual.getAccountDetails().getFirstName());
