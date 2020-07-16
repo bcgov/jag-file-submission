@@ -3,11 +3,11 @@ import { createMemoryHistory } from "history";
 import { MemoryRouter } from "react-router-dom";
 import axios from "axios";
 import { render, wait } from "@testing-library/react";
+import MockAdapter from "axios-mock-adapter";
+
 import Home, { saveNavigationToSession } from "./Home";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
 import { getUserDetails } from "../../../modules/userDetails";
-
-const MockAdapter = require("axios-mock-adapter");
 
 const header = {
   name: "eFiling Frontend",
@@ -32,8 +32,10 @@ describe("Home", () => {
     }
   };
   const userDetails = getUserDetails();
-  let mock;
 
+  window.open = jest.fn();
+
+  let mock;
   beforeEach(() => {
     mock = new MockAdapter(axios);
     sessionStorage.clear();
@@ -71,7 +73,8 @@ describe("Home", () => {
   });
 
   test("Component matches the snapshot when still loading", async () => {
-    mock.onGet(apiRequest).reply(400);
+    mock.onGet(apiRequest).reply(400, { message: "There was an error." });
+    sessionStorage.setItem("errorUrl", "error.com");
 
     const { asFragment } = render(component);
 
@@ -79,6 +82,11 @@ describe("Home", () => {
       expect(asFragment()).toMatchSnapshot();
       expect(sessionStorage.getItem("cancelUrl")).toBeFalsy();
     });
+
+    expect(window.open).toHaveBeenCalledWith(
+      "error.com?status=400&message=There was an error.",
+      "_self"
+    );
   });
 
   test("saveNavigationToSession saves urls to session storage when url values are truthy", () => {

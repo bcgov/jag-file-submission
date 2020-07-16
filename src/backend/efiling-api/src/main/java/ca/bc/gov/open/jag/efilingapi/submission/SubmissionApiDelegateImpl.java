@@ -150,10 +150,12 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     public EfilingError buildEfilingError(ErrorResponse errorResponse) {
+
         EfilingError response = new EfilingError();
         response.setError(errorResponse.getErrorCode());
         response.setMessage(errorResponse.getErrorMessage());
         return response;
+
     }
 
 }

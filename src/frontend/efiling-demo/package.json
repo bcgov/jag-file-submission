@@ -16,6 +16,7 @@
     "filepond-plugin-image-preview": "^4.6.4",
     "history": "^4.10.1",
     "prop-types": "^15.7.2",
+    "query-string": "^6.11.1",
     "react": "^16.13.1",
     "react-app-polyfill": "^1.0.6",
     "react-dom": "^16.13.1",

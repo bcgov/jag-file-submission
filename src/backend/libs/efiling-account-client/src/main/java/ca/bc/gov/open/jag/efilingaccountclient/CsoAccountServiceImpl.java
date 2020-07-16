@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.ws.WebServiceException;
 import java.util.*;
 
 public class CsoAccountServiceImpl implements EfilingAccountService {
@@ -86,7 +87,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
                         hasFileRole(CsoHelpers.formatUserGuid(createAccountRequest.getUniversalId())));
             }
         }
-        catch (DatatypeConfigurationException | NestedEjbException_Exception e) {
+        catch (DatatypeConfigurationException | NestedEjbException_Exception | WebServiceException e) {
             throw new EfilingAccountServiceException("Exception while creating CSO account", e.getCause());
         }
 
@@ -99,7 +100,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         List<ClientProfile> profiles = new ArrayList<>();
         try {
             profiles.addAll(accountFacadeBean.findProfiles(CsoHelpers.formatUserGuid(userGuid)));
-        } catch (NestedEjbException_Exception e) {
+        } catch (NestedEjbException_Exception | WebServiceException e) {
             throw new EfilingAccountServiceException("Exception while fetching account details", e);
         }
         // An account must have only one profile associated with it to proceed
