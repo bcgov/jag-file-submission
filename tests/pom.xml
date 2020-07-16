@@ -25,6 +25,11 @@
     <io.cucumber.version>6.1.1</io.cucumber.version>
     <compiler.version>3.8.1</compiler.version>
     <surefire.version>3.0.0-M3</surefire.version>
+    <io.springfox.version>2.9.2</io.springfox.version>
+    <io.swagger.version>1.6.2</io.swagger.version>
+    <default-package>ca.bc.gov.open.jag.efilingapi.qa</default-package>
+    <org.springdoc.version>1.4.3</org.springdoc.version>
+    <org.openapitools.version>0.2.1</org.openapitools.version>
   </properties>
 
   <dependencies>
@@ -112,6 +117,31 @@
       <version>1.0.0</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>io.swagger</groupId>
+      <artifactId>swagger-annotations</artifactId>
+      <version>${io.swagger.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-ui</artifactId>
+      <version>${org.springdoc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-swagger2</artifactId>
+      <version>${io.springfox.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-swagger-ui</artifactId>
+      <version>${io.springfox.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openapitools</groupId>
+      <artifactId>jackson-databind-nullable</artifactId>
+      <version>${org.openapitools.version}</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -140,6 +170,34 @@
             <include>**/*CucumberTest*.java</include>
           </includes>
         </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.openapitools</groupId>
+        <artifactId>openapi-generator-maven-plugin</artifactId>
+        <version>4.3.1</version>
+        <executions>
+          <execution>
+            <id>spring-boot-api</id>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <inputSpec>https://raw.githubusercontent.com/bcgov/jag-file-submission/master/src/backend/efiling-api/jag-efiling-api.yaml</inputSpec>
+              <generatorName>spring</generatorName>
+              <configOptions>
+                <dateLibrary>joda</dateLibrary>
+                <delegatePattern>true</delegatePattern>
+              </configOptions>
+              <generateSupportingFiles>false</generateSupportingFiles>
+              <generateApis>false</generateApis>
+              <library>spring-boot</library>
+              <apiPackage>${default-package}.api</apiPackage>
+              <modelPackage>${default-package}.api.model</modelPackage>
+              <invokerPackage>${default-package}.api.handler</invokerPackage>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

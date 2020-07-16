@@ -22,7 +22,17 @@ public class GenerateUrlRequestBuilders {
 
         String validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
-        request = given().spec(TestUtil.requestSpecification()).header(X_AUTH_USER_ID,validExistingCSOGuid).body(payloadData.generateUrlFinalPayload());
+        request = given().spec(TestUtil.requestSpecification()).header(X_AUTH_USER_ID,validExistingCSOGuid).body(payloadData.validGenerateUrlPayload());
+        return request.when().post(resourceAPI.getResource()).then().spec(TestUtil.responseSpecification()).extract().response();
+    }
+
+    public Response requestWithDifferentData(String resourceValue) throws IOException {
+        payloadData = new GenerateUrlPayload();
+        APIResources resourceAPI = APIResources.valueOf(resourceValue);
+
+        String validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
+
+        request = given().spec(TestUtil.requestSpecification()).header(X_AUTH_USER_ID,validExistingCSOGuid).body(payloadData.invalidGenerateUrlPayload());
         return request.when().post(resourceAPI.getResource()).then().spec(TestUtil.responseSpecification()).extract().response();
     }
 
@@ -32,7 +42,7 @@ public class GenerateUrlRequestBuilders {
 
         String nonExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getNonExistingCSOGuid();
 
-        request = given().spec(TestUtil.requestSpecification()).header(X_AUTH_USER_ID,nonExistingCSOGuid).body(payloadData.generateUrlFinalPayload());
+        request = given().spec(TestUtil.requestSpecification()).header(X_AUTH_USER_ID,nonExistingCSOGuid).body(payloadData.validGenerateUrlPayload());
         return request.when().post(resourceAPI.getResource()).then().spec(TestUtil.responseSpecification()).extract().response();
     }
 
@@ -42,7 +52,7 @@ public class GenerateUrlRequestBuilders {
         APIResources resourceAPI = APIResources.valueOf(resourceValue);
         String invalidNoFilingRoleGuid = JsonDataReader.getCsoAccountGuid().getInvalidNoFilingRoleGuid();
 
-        request = given().spec(TestUtil.requestSpecification()).header(X_AUTH_USER_ID,invalidNoFilingRoleGuid).body(payloadData.generateUrlFinalPayload());
+        request = given().spec(TestUtil.requestSpecification()).header(X_AUTH_USER_ID,invalidNoFilingRoleGuid).body(payloadData.validGenerateUrlPayload());
         return request.when().post(resourceAPI.getResource()).then().spec(TestUtil.errorResponseSpecification()).extract().response();
     }
 
@@ -52,7 +62,7 @@ public class GenerateUrlRequestBuilders {
 
         String validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
-        request = given().spec(TestUtil.requestSpecification()).header(X_AUTH_USER_ID, validExistingCSOGuid).body(payloadData.generateUrlFinalPayload());
+        request = given().spec(TestUtil.requestSpecification()).header(X_AUTH_USER_ID, validExistingCSOGuid).body(payloadData.validGenerateUrlPayload());
         return request.when().post(resourceIncorrect.getResource()).then().extract().response();
     }
 
@@ -62,7 +72,7 @@ public class GenerateUrlRequestBuilders {
 
         String validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
-        request = given().spec(TestUtil.requestSpecification()).header(X_AUTH_USER_ID,validExistingCSOGuid).body(payloadData.generateUrlFinalPayload());
+        request = given().spec(TestUtil.requestSpecification()).header(X_AUTH_USER_ID,validExistingCSOGuid).body(payloadData.validGenerateUrlPayload());
         return request.when().post(resourceInvalid.getResource() + "s").then().extract().response();
     }
 }
