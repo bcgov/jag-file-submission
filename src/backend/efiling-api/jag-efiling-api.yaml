@@ -150,7 +150,7 @@ paths:
             type: string
       responses:
         "200":
-          description: Package Information found
+          description: Filing Package Information found
           content:
             application/octet-stream:
               schema:
