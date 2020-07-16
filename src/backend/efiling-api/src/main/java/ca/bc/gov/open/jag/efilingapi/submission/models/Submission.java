@@ -21,8 +21,6 @@ public class Submission {
 
     private long expiryDate;
 
-    private boolean isAwesome;
-
     private Navigation navigation;
 
     private ClientApplication clientApplication;

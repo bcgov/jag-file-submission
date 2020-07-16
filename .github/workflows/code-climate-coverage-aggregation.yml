@@ -80,6 +80,10 @@ jobs:
       - name: Run Yarn Install - eFiling Frontend
         run: yarn --cwd src/frontend/efiling-frontend install
 
+      # Run lint-staged - eFiling Frontend
+      - name: Run lint-staged - eFiling Frontend
+        run: yarn --cwd src/frontend/efiling-frontend run precommit
+
       # Install link local globally
       - name: Install linklocal
         run: sudo npm install -g --unsafe-perm linklocal
@@ -102,6 +106,10 @@ jobs:
       # Run Yarn Install - eFiling Demo
       - name: Run Yarn Install - eFiling Demo
         run: yarn --cwd src/frontend/efiling-demo install
+
+      # Run lint-staged - eFiling Demo
+      - name: Run lint-staged - eFiling Demo
+        run: yarn --cwd src/frontend/efiling-demo run precommit
 
       # Yarn Coverage - eFiling Demo
       - name: Run Yarn Coverage - eFiling Demo
