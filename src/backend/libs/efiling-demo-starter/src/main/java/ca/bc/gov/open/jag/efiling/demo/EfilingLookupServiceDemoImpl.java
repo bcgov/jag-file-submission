@@ -11,14 +11,14 @@ public class EfilingLookupServiceDemoImpl implements EfilingLookupService {
     @Override
     public ServiceFees getServiceFee(String serviceId) {
 
-        return  new ServiceFees(DateTime.now(),
+        return  new ServiceFees(DateTime.now().toString(),
                 BigDecimal.valueOf(7),
                 "entUserId",
                 "serviceTypeCd",
-                DateTime.now(),
+                DateTime.now().toString(),
                 "updUserId",
-                DateTime.now(),
-                DateTime.now());
+                DateTime.now().toString(),
+                DateTime.now().toString());
 
     }
 }

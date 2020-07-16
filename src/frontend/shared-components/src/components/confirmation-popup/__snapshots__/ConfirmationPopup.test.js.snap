@@ -36,10 +36,12 @@ exports[`ConfirmationPopup Component Matches the snapshot 1`] = `
     label="main label"
     onClick={[MockFunction]}
     styling="normal-blue btn"
+    testId="main-cancel-btn"
   >
     <div>
       <button
         className="normal-blue btn"
+        data-test-id="main-cancel-btn"
         disabled={false}
         onClick={[MockFunction]}
         type="button"
@@ -148,6 +150,7 @@ exports[`ConfirmationPopup Component Matches the snapshot 1`] = `
                         <div>
                           <button
                             class="normal-blue btn consistent-width"
+                            data-test-id="modal-confirm-btn"
                             type="button"
                           >
                             Yes, cancel my process please
@@ -157,6 +160,7 @@ exports[`ConfirmationPopup Component Matches the snapshot 1`] = `
                         <div>
                           <button
                             class="normal-white btn consistent-width"
+                            data-test-id="modal-cancel-btn"
                             type="button"
                           >
                             No, resume my process please
@@ -238,6 +242,7 @@ exports[`ConfirmationPopup Component Matches the snapshot 1`] = `
                             <div>
                               <button
                                 class="normal-blue btn consistent-width"
+                                data-test-id="modal-confirm-btn"
                                 type="button"
                               >
                                 Yes, cancel my process please
@@ -247,6 +252,7 @@ exports[`ConfirmationPopup Component Matches the snapshot 1`] = `
                             <div>
                               <button
                                 class="normal-white btn consistent-width"
+                                data-test-id="modal-cancel-btn"
                                 type="button"
                               >
                                 No, resume my process please
@@ -336,6 +342,7 @@ exports[`ConfirmationPopup Component Matches the snapshot 1`] = `
                         <div>
                           <button
                             class="normal-blue btn consistent-width"
+                            data-test-id="modal-confirm-btn"
                             type="button"
                           >
                             Yes, cancel my process please
@@ -345,6 +352,7 @@ exports[`ConfirmationPopup Component Matches the snapshot 1`] = `
                         <div>
                           <button
                             class="normal-white btn consistent-width"
+                            data-test-id="modal-cancel-btn"
                             type="button"
                           >
                             No, resume my process please
@@ -449,6 +457,7 @@ exports[`ConfirmationPopup Component Matches the snapshot 1`] = `
                       <div>
                         <button
                           class="normal-blue btn consistent-width"
+                          data-test-id="modal-confirm-btn"
                           type="button"
                         >
                           Yes, cancel my process please
@@ -458,6 +467,7 @@ exports[`ConfirmationPopup Component Matches the snapshot 1`] = `
                       <div>
                         <button
                           class="normal-white btn consistent-width"
+                          data-test-id="modal-cancel-btn"
                           type="button"
                         >
                           No, resume my process please
@@ -635,10 +645,12 @@ exports[`ConfirmationPopup Component Matches the snapshot 1`] = `
                             label="Yes, cancel my process please"
                             onClick={[MockFunction]}
                             styling="normal-blue btn consistent-width"
+                            testId="modal-confirm-btn"
                           >
                             <div>
                               <button
                                 className="normal-blue btn consistent-width"
+                                data-test-id="modal-confirm-btn"
                                 disabled={false}
                                 onClick={[MockFunction]}
                                 type="button"
@@ -653,10 +665,12 @@ exports[`ConfirmationPopup Component Matches the snapshot 1`] = `
                             label="No, resume my process please"
                             onClick={[MockFunction]}
                             styling="normal-white btn consistent-width"
+                            testId="modal-cancel-btn"
                           >
                             <div>
                               <button
                                 className="normal-white btn consistent-width"
+                                data-test-id="modal-cancel-btn"
                                 disabled={false}
                                 onClick={[MockFunction]}
                                 type="button"

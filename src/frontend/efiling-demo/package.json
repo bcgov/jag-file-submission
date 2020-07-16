@@ -32,7 +32,8 @@
     "build-storybook": "build-storybook -s public",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "coverage": "jest --coverage"
+    "coverage": "jest --coverage",
+    "precommit": "pretty-quick --staged && lint-staged"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -74,8 +75,14 @@
     "eslint-plugin-react-hooks": "^1.7.0",
     "husky": "^4.2.5",
     "jest-sonar-reporter": "^2.0.0",
+    "lint-staged": "^10.2.11",
     "prettier": "1.19.1",
     "pretty-quick": "^2.0.1"
+  },
+  "lint-staged": {
+    "src/**/*.js": [
+      "eslint ."
+    ]
   },
   "jest": {
     "watchPathIgnorePatterns": [
@@ -114,8 +121,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged",
-      "pre-push": "npx eslint ."
+      "pre-commit": "yarn run precommit"
     }
   }
 }

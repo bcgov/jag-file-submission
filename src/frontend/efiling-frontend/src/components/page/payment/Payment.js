@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-wrap-multilines */
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { MdCreditCard } from "react-icons/md";

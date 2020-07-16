@@ -30,16 +30,16 @@ import static org.junit.Assert.*;
 
 public class GenerateUrlTest {
 
-    private  Response response;
+    private Response response;
     private GenerateUrlRequestBuilders generateUrlRequestBuilders;
-    private  GenerateUrlPayload payloadData;
-    private  String submissionId;
-    private  String submissionIdQuery;
-    private  JsonPath jsonPath;
-    private  String firstName;
-    private  String lastName;
-    private  String middleName;
-    private  String email;
+    private GenerateUrlPayload payloadData;
+    private String submissionId;
+    private String submissionIdQuery;
+    private JsonPath jsonPath;
+    private String firstName;
+    private String lastName;
+    private String middleName;
+    private String email;
     private static final String CONTENT_TYPE = "application/json";
     public Logger log = LogManager.getLogger(GenerateUrlTest.class);
 
@@ -132,10 +132,10 @@ public class GenerateUrlTest {
         List<String> type = jsonPath.get( "userDetails.accounts.type");
         List<String> identifier = jsonPath.get( "userDetails.accounts.identifier");
 
-        assertThat(firstName, is(emptyString()));
-        assertThat(lastName, is(emptyString()));
-        assertThat(middleName, is(emptyString()));
-        assertThat(email, is(emptyString()));
+        assertThat(firstName, is(not(emptyString())));
+        assertThat(lastName, is(not(emptyString())));
+        assertThat(middleName, is(not(emptyString())));
+        assertThat(email, is(not(emptyString())));
         log.info("Names and email objects from the valid CSO account submission response have empty values");
 
         assertFalse(type.isEmpty());
