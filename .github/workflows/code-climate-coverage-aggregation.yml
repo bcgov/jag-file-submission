@@ -80,6 +80,10 @@ jobs:
       - name: Run Yarn Install - eFiling Demo
         run: yarn --cwd src/frontend/efiling-demo install
 
+      # Run lint - eFiling Demo
+      - name: Run lint - eFiling Demo
+        run: yarn --cwd src/frontend/efiling-demo run lint
+
       # Yarn Coverage - eFiling Demo
       - name: Run Yarn Coverage - eFiling Demo
         run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/efiling-demo coverage
