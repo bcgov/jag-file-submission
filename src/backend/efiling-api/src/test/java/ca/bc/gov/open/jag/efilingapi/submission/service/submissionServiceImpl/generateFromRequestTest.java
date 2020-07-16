@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service.submissionServiceImpl;
 
 
+import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
@@ -14,6 +15,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
@@ -22,6 +24,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 
+import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.*;
@@ -40,20 +43,20 @@ public class generateFromRequestTest {
     @Mock
     private CacheProperties cachePropertiesMock;
     @Mock
-    private FeeService feeServiceMock;
-    @Mock
     private EfilingAccountService efilingAccountServiceMock;
 
+    @Mock
+    private EfilingLookupService efilingLookupService;
 
     @BeforeAll
-    public void setUp() {
+    public void setUp() throws DatatypeConfigurationException {
 
         MockitoAnnotations.initMocks(this);
 
-        Fee fee = new Fee(BigDecimal.valueOf(7.00));
+        ServiceFees fee = new ServiceFees(null, BigDecimal.valueOf(7.00), null, "DCFL",null, null, null, null);
         Mockito.doReturn(fee)
-                .when(feeServiceMock)
-                .getFee(Mockito.any());
+                .when(efilingLookupService)
+                .getServiceFee(Mockito.any());
 
         configureCase1(fee);
         configureCase2();
@@ -65,16 +68,15 @@ public class generateFromRequestTest {
 
         // Testing mapper as part of this unit test
         SubmissionMapper submissionMapper = new SubmissionMapperImpl();
-        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, submissionMapper, efilingAccountServiceMock, feeServiceMock);
+        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, submissionMapper, efilingAccountServiceMock, efilingLookupService);
 
     }
 
 
 
     @Test
-    @DisplayName("OK: with valid account should retun submission")
+    @DisplayName("OK: with valid account should return submission")
     public void withValidAccountShouldReturnSubmission() {
-
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setNavigation(TestHelpers.createDefaultNavigation());
         request.setPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()));
@@ -91,7 +93,8 @@ public class generateFromRequestTest {
         Assertions.assertEquals(TestHelpers.CANCEL_URL, actual.getNavigation().getCancel().getUrl());
         Assertions.assertEquals(TestHelpers.SUCCESS_URL, actual.getNavigation().getSuccess().getUrl());
         Assertions.assertEquals(10, actual.getExpiryDate());
-        Assertions.assertEquals(BigDecimal.valueOf(7.0), actual.getFee().getAmount());
+        Assertions.assertEquals(BigDecimal.valueOf(7.0), actual.getFees().get(0).getFeeAmt());
+        Assertions.assertEquals(BigDecimal.valueOf(7.0), actual.getFees().get(1).getFeeAmt());
         Assertions.assertNotNull(actual.getId());
         Assertions.assertEquals(TestHelpers.DIVISION, actual.getModelPackage().getCourt().getDivision());
         Assertions.assertEquals(TestHelpers.FILENUMBER, actual.getModelPackage().getCourt().getFileNumber());
@@ -143,14 +146,14 @@ public class generateFromRequestTest {
 
         AccountDetails accountDetails =  AccountDetails.builder().lastName("lastName").create();
 
-        Fee fee = new Fee(BigDecimal.TEN);
+        ServiceFees fee = new ServiceFees(null, BigDecimal.valueOf(10), null, "DCFL",null, null, null, null);
         Submission submissionCase1 = Submission
                 .builder()
                 .accountDetails(accountDetails)
                 .navigation(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
                 .modelPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
-                .fee(fee)
+                .fees(Arrays.asList(fee))
                 .create();
 
         Mockito
@@ -165,7 +168,7 @@ public class generateFromRequestTest {
 
     }
 
-    private void configureCase1(Fee fee) {
+    private void configureCase1(ServiceFees fee) {
 
 
         AccountDetails accountDetails = getAccountDetails(true, TestHelpers.CASE_1.toString());
@@ -182,7 +185,7 @@ public class generateFromRequestTest {
                 .navigation(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
                 .modelPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
-                .fee(fee)
+                .fees(Arrays.asList(fee,fee))
                 .create();
 
         Mockito

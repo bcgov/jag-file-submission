@@ -7,6 +7,6 @@ import javax.xml.datatype.DatatypeConfigurationException;
 
 public interface EfilingLookupService {
 
-    ServiceFees getServiceFee(String serviceId) throws DatatypeConfigurationException;
+    ServiceFees getServiceFee(String serviceId);
 
 }
