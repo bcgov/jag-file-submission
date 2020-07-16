@@ -17,6 +17,7 @@ export default function Cancel({ page: { header } }) {
             onClick={() => header.history.push("/")}
             label="Return home"
             styling="normal-white btn"
+            testId="return-home-btn"
           />
         </div>
       </div>

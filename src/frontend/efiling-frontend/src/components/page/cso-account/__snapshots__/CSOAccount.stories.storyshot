@@ -838,6 +838,7 @@ exports[`Storyshots CSOAccount Default 1`] = `
         <div>
           <button
             class="normal-white btn"
+            data-test-id="main-cancel-btn"
             type="button"
           >
             Cancel
@@ -846,6 +847,7 @@ exports[`Storyshots CSOAccount Default 1`] = `
         <div>
           <button
             class="normal-blue btn"
+            data-test-id="create-cso-btn"
             disabled=""
             type="button"
           >
@@ -1778,6 +1780,7 @@ exports[`Storyshots CSOAccount Mobile 1`] = `
         <div>
           <button
             class="normal-white btn"
+            data-test-id="main-cancel-btn"
             type="button"
           >
             Cancel
@@ -1786,6 +1789,7 @@ exports[`Storyshots CSOAccount Mobile 1`] = `
         <div>
           <button
             class="normal-blue btn"
+            data-test-id="create-cso-btn"
             disabled=""
             type="button"
           >

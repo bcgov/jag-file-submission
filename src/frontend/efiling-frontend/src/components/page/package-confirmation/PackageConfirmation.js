@@ -90,7 +90,10 @@ export default function PackageConfirmation({
         <br />
 
         <p>
-          <a href={sessionStorage.getItem("cancelUrl")}>
+          <a
+            href={sessionStorage.getItem("cancelUrl")}
+            data-test-id="return-link"
+          >
             Return to the parent application website
           </a>
           &nbsp;to correct errors or missing information in this package.
@@ -109,6 +112,7 @@ export default function PackageConfirmation({
             label={uploadButton.label}
             onClick={uploadButton.onClick}
             styling={uploadButton.styling}
+            testId="upload-btn"
           />
         </section>
 
@@ -123,6 +127,7 @@ export default function PackageConfirmation({
             label={continueButton.label}
             onClick={continueButton.onClick}
             styling={continueButton.styling}
+            testId="continue-btn"
           />
         </section>
       </div>

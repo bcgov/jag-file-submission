@@ -50,6 +50,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
       <br />
       <p>
         <a
+          data-test-id="return-link"
           href="cancelurl.com"
         >
           Return to the parent application website
@@ -141,6 +142,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
         <div>
           <button
             class="normal-white btn"
+            data-test-id="upload-btn"
             type="button"
           >
             Upload Documents
@@ -153,6 +155,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
         <div>
           <button
             class="normal-white btn"
+            data-test-id="main-cancel-btn"
             type="button"
           >
             Cancel
@@ -161,6 +164,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
         <div>
           <button
             class="normal-blue btn"
+            data-test-id="continue-btn"
             type="button"
           >
             Continue to Payment
@@ -390,6 +394,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
       <br />
       <p>
         <a
+          data-test-id="return-link"
           href="cancelurl.com"
         >
           Return to the parent application website
@@ -481,6 +486,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
         <div>
           <button
             class="normal-white btn"
+            data-test-id="upload-btn"
             type="button"
           >
             Upload Documents
@@ -493,6 +499,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
         <div>
           <button
             class="normal-white btn"
+            data-test-id="main-cancel-btn"
             type="button"
           >
             Cancel
@@ -501,6 +508,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
         <div>
           <button
             class="normal-blue btn"
+            data-test-id="continue-btn"
             type="button"
           >
             Continue to Payment
@@ -762,6 +770,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
       <br />
       <p>
         <a
+          data-test-id="return-link"
           href="cancelurl.com"
         >
           Return to the parent application website
@@ -853,6 +862,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
         <div>
           <button
             class="normal-white btn"
+            data-test-id="upload-btn"
             type="button"
           >
             Upload Documents
@@ -865,6 +875,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
         <div>
           <button
             class="normal-white btn"
+            data-test-id="main-cancel-btn"
             type="button"
           >
             Cancel
@@ -873,6 +884,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
         <div>
           <button
             class="normal-blue btn"
+            data-test-id="continue-btn"
             type="button"
           >
             Continue to Payment

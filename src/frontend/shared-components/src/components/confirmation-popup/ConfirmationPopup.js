@@ -19,6 +19,7 @@ export default function ConfirmationPopup({
         onClick={mainButton.onClick}
         label={mainButton.label}
         styling={mainButton.styling}
+        testId="main-cancel-btn"
       />
 
       <Modal show={show} onHide={cancelButton.onClick}>
@@ -31,12 +32,14 @@ export default function ConfirmationPopup({
             styling={confirmButton.styling}
             onClick={confirmButton.onClick}
             label={confirmButton.label}
+            testId="modal-confirm-btn"
           />
           <br />
           <Button
             styling={cancelButton.styling}
             onClick={cancelButton.onClick}
             label={cancelButton.label}
+            testId="modal-cancel-btn"
           />
         </div>
       </Modal>

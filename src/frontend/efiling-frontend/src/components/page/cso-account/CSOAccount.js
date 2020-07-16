@@ -108,6 +108,7 @@ export default function CSOAccount({
           />
           <Button
             label={continueButton.label}
+            testId="create-cso-btn"
             onClick={continueButton.onClick}
             styling={continueButton.styling}
             disabled={!continueBtnEnabled}
