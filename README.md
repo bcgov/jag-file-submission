@@ -21,7 +21,6 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
     │   └── frontend                            # frontend applications
     │       ├── efiling-frontend                # efiling frontend
     │       └── efiling-demo                    # efiling demo app frontend
-    │       └── shared-components               # shared bcgov themed component library
     ├── COMPLIANCE.yaml                         #
     ├── CONTRIBUTING.md                         #
     ├── LICENSE                                 # Apache License
@@ -38,7 +37,6 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
 | frontend             | all client side applications                 | [README](src/frontend/README.md)                     |
 | efiling-frontend     | the frontend for uploading documents         | [README](src/frontend/efiling-frontend/README.md)    |
 | efiling-demo         | the frontend for demo application            | [README](src/frontend/efiling-demo/README.md)        |
-| shared-components    | shared bcgov themed component library        | [README](src/frontend/shared-components/README.md)   |
 | cucumber-tests       | automated tests for frontend and backend     | [README](tests/README.md)                            |
 
 ## Running the App
