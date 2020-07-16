@@ -31,6 +31,5 @@ exclude_patterns:
   # Frontend Pattern Excludes
   - "src/frontend/*/src/*.js"
   - "src/frontend/efiling-frontend/src/modules/confirmationPopupTestData.js"
-  - "src/frontend/shared-components/src/modules/termsOfUseTestData.js"
   - "src/frontend/*/public/"
   - "src/frontend/*/.storybook/"
