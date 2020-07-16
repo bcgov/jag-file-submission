@@ -41,6 +41,29 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UploadSubmissionDocumentsResponse"
+  "/submission/{id}":
+    get:
+      summary: Get user detail for a given submission
+      operationId: GetSubmission
+      tags:
+        - submission
+      parameters:
+        - name: id
+          in: path
+          description: A submission id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Config found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetSubmissionResponse"
+        "404":
+          description: Config not foun
   "/submission/{id}/generateUrl":
     post:
       summary: Generates a secure URL for e-filing submission
@@ -82,10 +105,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EfilingError"
-  "/submission/{id}":
+  "/submission/{id}/filing-package":
     get:
-      summary: Get user detail for a given submission
-      operationId: GetSubmission
+      summary: Get filing package information
+      operationId: GetSubmissionFilingPackage
       tags:
         - submission
       parameters:
@@ -98,13 +121,43 @@ paths:
             format: uuid
       responses:
         "200":
-          description: Config found
+          description: Filing Package Information found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GetSubmissionResponse"
+                $ref: "#/components/schemas/FilingPackage"
         "404":
-          description: Config not found
+          description: Filing Package Information not found
+  "/submission/{id}/document/{filename}":
+    get:
+      summary: Get document by name
+      operationId: GetSubmissionDocument
+      tags:
+        - submission
+      parameters:
+        - name: id
+          in: path
+          description: A submission id
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: filename
+          in: path
+          description: A document name
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Package Information found
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: Document not found
   "/csoAccount":
     post:
       summary: Create a CSO account
@@ -134,29 +187,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserDetails"
-  "/submission/{id}/filing-package":
-    get:
-      summary: Get filing package information
-      operationId: GetSubmissionFilingPackage
-      tags:
-        - submission
-      parameters:
-        - name: id
-          in: path
-          description: A submission id
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        "200":
-          description: Filing Package Information found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/FilingPackage"
-        "404":
-          description: Filing Package Information not found
 components:
   schemas:
     Account:

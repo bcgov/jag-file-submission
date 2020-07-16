@@ -3,6 +3,9 @@ package ca.bc.gov.open.jag.efilingapi.submission;
 import ca.bc.gov.open.jag.efilingapi.api.SubmissionApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
+import ca.bc.gov.open.jag.efilingapi.document.Document;
+import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
+import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
@@ -14,13 +17,18 @@ import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -32,6 +40,8 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     Logger logger = LoggerFactory.getLogger(SubmissionApiDelegateImpl.class);
 
+    private static final String EFILING_SUBMISSION_ID = "efiling.submissionId";
+
     private final SubmissionService submissionService;
 
     private final SubmissionStore submissionStore;
@@ -40,24 +50,69 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     private final NavigationProperties navigationProperties;
 
+    private final DocumentStore documentStore;
 
     public SubmissionApiDelegateImpl(
             SubmissionService submissionService,
             GenerateUrlResponseMapper generateUrlResponseMapper,
             NavigationProperties navigationProperties,
-            SubmissionStore submissionStore) {
+            SubmissionStore submissionStore, DocumentStore documentStore) {
         this.submissionService = submissionService;
         this.generateUrlResponseMapper = generateUrlResponseMapper;
         this.navigationProperties = navigationProperties;
         this.submissionStore = submissionStore;
+        this.documentStore = documentStore;
     }
 
     @Override
     public ResponseEntity<UploadSubmissionDocumentsResponse> uploadSubmissionDocuments(UUID xAuthUserId, List<MultipartFile> files) {
+
+        if (files == null || files.isEmpty())
+            return new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_REQUIRED).create(),
+                    HttpStatus.BAD_REQUEST);
+
+        UUID submissionId = UUID.randomUUID();
+
+        MDC.put(EFILING_SUBMISSION_ID, submissionId.toString());
+        logger.info("new request for efiling {}", submissionId);
+
+        try {
+
+            for (MultipartFile file : files) {
+                Document document = Document
+                        .builder()
+                        .submissionId(submissionId)
+                        .fileName(file.getResource().getFilename())
+                        .content(file.getBytes())
+                        .create();
+
+                documentStore.put(document.getCompositeId(), document.getContent());
+            }
+
+        } catch (IOException e) {
+            return new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_STORAGE_FAILURE).create(),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
         UploadSubmissionDocumentsResponse response = new UploadSubmissionDocumentsResponse();
-        response.setSubmissionId(UUID.randomUUID());
+        response.setSubmissionId(submissionId);
         response.setReceived(new BigDecimal(files != null ? files.size() : 0));
+
+        MDC.remove(EFILING_SUBMISSION_ID);
+
         return ResponseEntity.ok(response);
+
+    }
+
+    @Override
+    public ResponseEntity<Resource> getSubmissionDocument(UUID id, String filename) {
+
+        byte[] bytes = documentStore.get(MessageFormat.format("{0}_{1}", id.toString(), filename));
+
+        return ResponseEntity.ok(new ByteArrayResource(bytes));
+
     }
 
     @Override
