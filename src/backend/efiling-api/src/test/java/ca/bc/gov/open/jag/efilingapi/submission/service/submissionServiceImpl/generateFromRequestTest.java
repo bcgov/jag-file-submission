@@ -1,12 +1,8 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service.submissionServiceImpl;
 
 
-import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
-import ca.bc.gov.open.jag.efilingapi.fee.FeeService;
-import ca.bc.gov.open.jag.efilingapi.fee.models.Fee;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
@@ -15,6 +11,8 @@ import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.*;
@@ -147,13 +145,16 @@ public class generateFromRequestTest {
         AccountDetails accountDetails =  AccountDetails.builder().lastName("lastName").create();
 
         ServiceFees fee = new ServiceFees(null, BigDecimal.valueOf(10), null, "DCFL",null, null, null, null);
+        List<ServiceFees> fees = new ArrayList<>();
+
+
         Submission submissionCase1 = Submission
                 .builder()
                 .accountDetails(accountDetails)
                 .navigation(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
                 .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
-                .fee(fee)
+                .fees(fees)
                 .create();
 
         Mockito
@@ -185,7 +186,7 @@ public class generateFromRequestTest {
                 .navigation(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
                 .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
-                .fee(fee)
+                .fees(Arrays.asList(fee,fee))
                 .create();
 
         Mockito
