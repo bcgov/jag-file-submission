@@ -18,7 +18,10 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -50,7 +53,15 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    public ResponseEntity<GenerateUrlResponse> generateUrl(UUID xAuthUserId, GenerateUrlRequest generateUrlRequest) {
+    public ResponseEntity<UploadSubmissionDocumentsResponse> uploadSubmissionDocuments(UUID xAuthUserId, List<MultipartFile> files) {
+        UploadSubmissionDocumentsResponse response = new UploadSubmissionDocumentsResponse();
+        response.setSubmissionId(UUID.randomUUID());
+        response.setReceived(new BigDecimal(files != null ? files.size() : 0));
+        return ResponseEntity.ok(response);
+    }
+
+    @Override
+    public ResponseEntity<GenerateUrlResponse> generateUrl(UUID xAuthUserId, UUID id, GenerateUrlRequest generateUrlRequest) {
         logger.info("Generate Url Request Received");
 
         ResponseEntity response;
@@ -144,13 +155,13 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    public ResponseEntity<ModelPackage> getSubmissionPackage(UUID id) {
+    public ResponseEntity<FilingPackage> getSubmissionFilingPackage(UUID id) {
         Optional<Submission> fromCacheSubmission = this.submissionStore.getByKey(id);
 
         if(!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
 
-        return ResponseEntity.ok(fromCacheSubmission.get().getModelPackage());
+        return ResponseEntity.ok(fromCacheSubmission.get().getFilingPackage());
     }
 
     public EfilingError buildEfilingError(ErrorResponse errorResponse) {

@@ -1,7 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission.models;
 
-import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
+import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -58,14 +58,14 @@ public class SubmissionTest {
         Assertions.assertEquals(MIDDLE_NAME, actual.getAccountDetails().getMiddleName());
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountDetails().getAccountId());
         Assertions.assertEquals(BigDecimal.ONE, actual.getAccountDetails().getClientId());
-        Assertions.assertEquals(TestHelpers.DIVISION, actual.getModelPackage().getCourt().getDivision());
-        Assertions.assertEquals(TestHelpers.FILENUMBER, actual.getModelPackage().getCourt().getFileNumber());
-        Assertions.assertEquals(TestHelpers.LEVEL, actual.getModelPackage().getCourt().getLevel());
-        Assertions.assertEquals(TestHelpers.LOCATION, actual.getModelPackage().getCourt().getLocation());
-        Assertions.assertEquals(TestHelpers.PARTICIPATIONCLASS, actual.getModelPackage().getCourt().getParticipatingClass());
-        Assertions.assertEquals(TestHelpers.PROPERTYCLASS, actual.getModelPackage().getCourt().getPropertyClass());
-        Assertions.assertEquals(TestHelpers.TYPE, actual.getModelPackage().getDocuments().get(0).getType());
-        Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getModelPackage().getDocuments().get(0).getDescription());
+        Assertions.assertEquals(TestHelpers.DIVISION, actual.getFilingPackage().getCourt().getDivision());
+        Assertions.assertEquals(TestHelpers.FILENUMBER, actual.getFilingPackage().getCourt().getFileNumber());
+        Assertions.assertEquals(TestHelpers.LEVEL, actual.getFilingPackage().getCourt().getLevel());
+        Assertions.assertEquals(TestHelpers.LOCATION, actual.getFilingPackage().getCourt().getLocation());
+        Assertions.assertEquals(TestHelpers.PARTICIPATIONCLASS, actual.getFilingPackage().getCourt().getParticipatingClass());
+        Assertions.assertEquals(TestHelpers.PROPERTYCLASS, actual.getFilingPackage().getCourt().getPropertyClass());
+        Assertions.assertEquals(TestHelpers.TYPE, actual.getFilingPackage().getDocuments().get(0).getType());
+        Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getFilingPackage().getDocuments().get(0).getDescription());
     }
 
 }
