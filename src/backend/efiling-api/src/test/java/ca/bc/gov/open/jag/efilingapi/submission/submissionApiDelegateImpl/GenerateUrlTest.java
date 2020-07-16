@@ -5,6 +5,7 @@ import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlResponse;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
+import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMapper;
@@ -43,6 +44,9 @@ public class GenerateUrlTest {
     @Mock
     private SubmissionStore submissionStoreMock;
 
+    @Mock
+    private DocumentStore documentStoreMock;
+
     @BeforeAll
     public void setUp() {
 
@@ -75,7 +79,7 @@ public class GenerateUrlTest {
         // Testing the mapper part of this test
         generateUrlResponseMapperMock = new GenerateUrlResponseMapperImpl();
 
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock);
 
     }
 
