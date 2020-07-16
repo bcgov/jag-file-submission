@@ -88,6 +88,8 @@ const generatePackageData = files => {
 export const eFilePackage = (files, accountGuid, setErrorExists) => {
   const { formData, updatedUrlBody } = generatePackageData(files);
 
+  console.log("test lint");
+
   axios
     .post("/submission/documents", formData, {
       headers: {
