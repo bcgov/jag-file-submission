@@ -24,14 +24,6 @@ public class Document {
         return new Builder();
     }
 
-    public UUID getSubmissionId() {
-        return submissionId;
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
     public byte[] getContent() {
         return content;
     }
