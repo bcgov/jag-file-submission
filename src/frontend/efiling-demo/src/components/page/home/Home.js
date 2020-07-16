@@ -70,7 +70,7 @@ const generatePackageData = files => {
     documentData.push({
       name: files[i].file.name,
       description: "file description",
-      type: files[i].file.type
+      type: "file type"
     });
   }
 
