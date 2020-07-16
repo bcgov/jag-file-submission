@@ -40,11 +40,12 @@ const checkCSOAccountStatus = (
       sessionStorage.setItem("universalId", userDetails.universalId);
 
       if (userDetails.accounts) {
-        const csoAccountExists = userDetails.accounts.some(
-          element => element.type === "CSO"
-        );
-        if (csoAccountExists)
+        const csoAccount = userDetails.accounts.find(o => o.type === "CSO");
+
+        if (csoAccount.identifier) {
+          sessionStorage.setItem("csoAccountId", csoAccount.identifier);
           setCsoAccountStatus({ isNew: false, exists: true });
+        }
       }
 
       const applicantInfo = addUserInfo(userDetails);

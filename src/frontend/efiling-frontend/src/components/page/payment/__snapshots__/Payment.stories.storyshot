@@ -373,7 +373,7 @@ exports[`Storyshots Payment Default 1`] = `
                   <p>
                     CSO account 
                     <b>
-                      blah
+                      123
                     </b>
                      is linked to your Basic BCeID account 
                     <b>
@@ -851,7 +851,7 @@ exports[`Storyshots Payment Mobile 1`] = `
                   <p>
                     CSO account 
                     <b>
-                      blah
+                      123
                     </b>
                      is linked to your Basic BCeID account 
                     <b>

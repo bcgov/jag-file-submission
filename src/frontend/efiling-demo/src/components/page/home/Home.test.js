@@ -53,7 +53,7 @@ describe("Home", () => {
       expect(
         getByText(
           container,
-          "An error occurred while generating the URL. Please try again."
+          "An error occurred while eFiling your package. Please make sure you upload at least one file and try again."
         )
       ).toBeInTheDocument();
     });
@@ -74,7 +74,7 @@ describe("Home", () => {
       expect(
         getByText(
           container,
-          "An error occurred while generating the URL. Please try again."
+          "An error occurred while eFiling your package. Please make sure you upload at least one file and try again."
         )
       ).toBeInTheDocument();
     });

@@ -86,6 +86,11 @@ const generatePackageData = files => {
 };
 
 export const eFilePackage = (files, accountGuid, setErrorExists) => {
+  if (!files || files.length === 0) {
+    setErrorExists(true);
+    return;
+  }
+
   const { formData, updatedUrlBody } = generatePackageData(files);
 
   axios
@@ -143,7 +148,8 @@ export default function Home({ page: { header } }) {
           <br />
           {errorExists && (
             <p className="error">
-              An error occurred while generating the URL. Please try again.
+              An error occurred while eFiling your package. Please make sure you
+              upload at least one file and try again.
             </p>
           )}
         </div>

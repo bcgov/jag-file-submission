@@ -8,6 +8,8 @@ export default {
   component: Payment
 };
 
+sessionStorage.setItem("csoAccountId", "123");
+
 const confirmationPopup = getTestData();
 
 const payment = { confirmationPopup };
