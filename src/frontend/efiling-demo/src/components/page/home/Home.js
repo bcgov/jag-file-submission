@@ -138,6 +138,7 @@ export default function Home({ page: { header } }) {
             onClick={() => eFilePackage(files, accountGuid, setErrorExists)}
             label="E-File my Package"
             styling="normal-blue btn"
+            testId="generate-url-btn"
           />
           <br />
           {errorExists && (
