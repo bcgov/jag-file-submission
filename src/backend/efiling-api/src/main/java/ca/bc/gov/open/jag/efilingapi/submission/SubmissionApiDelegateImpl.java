@@ -98,7 +98,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         UploadSubmissionDocumentsResponse response = new UploadSubmissionDocumentsResponse();
         response.setSubmissionId(submissionId);
-        response.setReceived(new BigDecimal(files != null ? files.size() : 0));
+        response.setReceived(new BigDecimal(files.size()));
 
         MDC.remove(EFILING_SUBMISSION_ID);
 
