@@ -85,8 +85,6 @@ const aboutCsoSidecard = getSidecardData().aboutCso;
 const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
 const rushSubmissionSidecard = getSidecardData().rushSubmission;
 
-console.log("jhsgdhgs");
-
 export default function Payment({ payment: { confirmationPopup } }) {
   const [paymentAgreed, setPaymentAgreed] = useState(false);
 
