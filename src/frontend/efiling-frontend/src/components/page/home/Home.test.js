@@ -73,7 +73,8 @@ describe("Home", () => {
   });
 
   test("Component matches the snapshot when still loading", async () => {
-    mock.onGet(apiRequest).reply(400, { message: "There was an error" });
+    mock.onGet(apiRequest).reply(400, { message: "There was an error." });
+    sessionStorage.setItem("errorUrl", "error.com");
 
     const { asFragment } = render(component);
 
@@ -83,7 +84,7 @@ describe("Home", () => {
     });
 
     expect(window.open).toHaveBeenCalledWith(
-      "error.com?status=400&message=There was a problem.",
+      "error.com?status=400&message=There was an error.",
       "_self"
     );
   });
