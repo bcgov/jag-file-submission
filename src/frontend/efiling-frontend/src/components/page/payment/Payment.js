@@ -81,11 +81,10 @@ const backButton = {
   styling: "normal-white btn"
 };
 
-const aboutCsoSidecard = getSidecardData().aboutCso;
-const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
-const rushSubmissionSidecard = getSidecardData().rushSubmission;
-
 export default function Payment({ payment: { confirmationPopup } }) {
+  const aboutCsoSidecard = getSidecardData().aboutCso;
+  const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
+  const rushSubmissionSidecard = getSidecardData().rushSubmission;
   const [paymentAgreed, setPaymentAgreed] = useState(false);
 
   return (

@@ -51,9 +51,6 @@ const elements = [
   }
 ];
 
-const aboutCsoSidecard = getSidecardData().aboutCso;
-const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
-
 const documentIcon = (
   <div style={{ color: "rgb(252, 186, 25)" }}>
     <MdDescription size={32} />
@@ -64,6 +61,9 @@ export default function PackageConfirmation({
   packageConfirmation: { confirmationPopup },
   csoAccountStatus: { isNew }
 }) {
+  const aboutCsoSidecard = getSidecardData().aboutCso;
+  const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
+
   return (
     <div className="page">
       <div className="content col-md-8">

@@ -9,6 +9,8 @@ describe("PackageConfirmation Component", () => {
   const packageConfirmation = { confirmationPopup };
   const csoAccountStatus = { isNew: false };
 
+  sessionStorage.setItem("csoAccountId", "123");
+
   test("Matches the existing account snapshot", () => {
     const { asFragment } = render(
       <PackageConfirmation
