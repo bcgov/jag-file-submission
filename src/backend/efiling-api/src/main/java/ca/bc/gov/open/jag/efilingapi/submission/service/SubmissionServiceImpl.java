@@ -1,20 +1,19 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
-import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 
-import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -67,7 +66,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         Optional<Submission> cachedSubmission = submissionStore.put(
                 submissionMapper.toSubmission(generateUrlRequest,
-                        getFees(generateUrlRequest.getPackage().getDocuments()),
+                        getFees(generateUrlRequest.getFilingPackage().getDocuments()),
                         accountDetails,
                         getExpiryDate()));
 
