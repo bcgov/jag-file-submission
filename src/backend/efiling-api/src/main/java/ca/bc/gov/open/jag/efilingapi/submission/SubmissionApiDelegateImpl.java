@@ -109,7 +109,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @Override
     public ResponseEntity<Resource> getSubmissionDocument(UUID id, String filename) {
 
-        byte[] bytes = documentStore.get(MessageFormat.format("{0}_{1}", id.toString(), filename));
+        byte[] bytes = documentStore.get(MessageFormat.format("{0}_{1}", id, filename));
 
         if(bytes == null) return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_NOT_FOUND), HttpStatus.NOT_FOUND);
 
