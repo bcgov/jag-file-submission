@@ -68,32 +68,13 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      # Run Yarn Install - Shared Components
-      - name: Run Yarn Install - Shared components
-        run: yarn --cwd src/frontend/shared-components install
-
-      # Yarn Coverage - Shared Components
-      - name: Run Yarn Coverage - Shared components
-        run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/shared-components coverage
-
       # Run Yarn Install - eFiling Frontend
       - name: Run Yarn Install - eFiling Frontend
         run: yarn --cwd src/frontend/efiling-frontend install
 
-      # Install link local globally
-      - name: Install linklocal
-        run: sudo npm install -g --unsafe-perm linklocal
-
-      # Link react versions between apps
-      - name: Run npm link
-        run: |
-          npm --prefix ${{ github.workspace }}/src/frontend/shared-components link ${{ github.workspace }}/src/frontend/efiling-frontend/node_modules/react
-
-      # Run linklocal
-      - name: Run linklocal
-        run: |
-          cd ${{ github.workspace }}/src/frontend/efiling-frontend
-          linklocal
+      # Run lint - eFiling Frontend
+      - name: Run lint - eFiling Frontend
+        run: yarn --cwd src/frontend/efiling-frontend run lint
 
       # Yarn Coverage - eFiling Frontend
       - name: Run Yarn Coverage - eFiling Frontend
@@ -102,6 +83,10 @@ jobs:
       # Run Yarn Install - eFiling Demo
       - name: Run Yarn Install - eFiling Demo
         run: yarn --cwd src/frontend/efiling-demo install
+
+      # Run lint - eFiling Demo
+      - name: Run lint - eFiling Demo
+        run: yarn --cwd src/frontend/efiling-demo run lint
 
       # Yarn Coverage - eFiling Demo
       - name: Run Yarn Coverage - eFiling Demo
@@ -116,11 +101,6 @@ jobs:
       - name: Format the FRONTEND DEMO coverage report
         run: |
           ./cc-test-reporter format-coverage -t lcov -o coverage/frontend-demo-codeclimate.json ${{github.workspace}}/src/frontend/efiling-demo/coverage/lcov.info
-
-      # Formatting the SHARED COMPONENTS coverage report
-      - name: Format the SHARED COMPONENTS coverage report
-        run: |
-          ./cc-test-reporter format-coverage -t lcov -o coverage/shared-components-codeclimate.json ${{github.workspace}}/src/frontend/shared-components/coverage/lcov.info
 
       # List all formatted files in coverage directory
       - name: WHERE AM I - FORMATTED?

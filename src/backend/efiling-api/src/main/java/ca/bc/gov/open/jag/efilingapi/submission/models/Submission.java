@@ -1,13 +1,15 @@
 package ca.bc.gov.open.jag.efilingapi.submission.models;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.ClientApplication;
-import ca.bc.gov.open.jag.efilingapi.api.model.ModelPackage;
+import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
-import ca.bc.gov.open.jag.efilingapi.fee.models.Fee;
 import ca.bc.gov.open.jag.efilingapi.api.model.Navigation;
+import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -23,18 +25,18 @@ public class Submission {
 
     private ClientApplication clientApplication;
 
-    private ModelPackage modelPackage;
+    private FilingPackage filingPackage;
 
-    private Fee fee;
+    private List<ServiceFees> fees;
 
     private AccountDetails accountDetails;
 
     protected Submission(Submission.Builder builder) {
         this.id = UUID.randomUUID();
-        this.modelPackage = builder.modelPackage;
+        this.filingPackage = builder.filingPackage;
         this.navigation = builder.navigation;
         this.clientApplication = builder.clientApplication;
-        this.fee = builder.fee;
+        this.fees = builder.fees;
         this.accountDetails = builder.accountDetails;
         this.expiryDate = builder.expiryDate;
     }
@@ -46,25 +48,25 @@ public class Submission {
     @JsonCreator
     public Submission(
             @JsonProperty("id") UUID id,
-            @JsonProperty("package") ModelPackage modelPackage,
+            @JsonProperty("package") FilingPackage filingPackage,
             @JsonProperty("navigation") Navigation navigation,
             @JsonProperty("clientApplication") ClientApplication clientApplication,
-            @JsonProperty("fee") Fee fee,
+            @JsonProperty("fees") List<ServiceFees> fees,
             @JsonProperty("accountDetails") AccountDetails accountDetails,
             @JsonProperty("expiryDate") long expiryDate) {
         this.id = id;
-        this.modelPackage = modelPackage;
+        this.filingPackage = filingPackage;
         this.navigation = navigation;
         this.clientApplication = clientApplication;
-        this.fee = fee;
+        this.fees = fees;
         this.accountDetails = accountDetails;
         this.expiryDate = expiryDate;
     }
 
     public UUID getId() { return id; }
 
-    public ModelPackage getModelPackage() {
-        return modelPackage;
+    public FilingPackage getFilingPackage() {
+        return filingPackage;
     }
 
     public Navigation getNavigation() {
@@ -73,8 +75,8 @@ public class Submission {
 
     public ClientApplication getClientApplication() { return clientApplication; }
 
-    public Fee getFee() {
-        return fee;
+    public List<ServiceFees> getFees() {
+        return fees;
     }
 
     public AccountDetails getAccountDetails() {
@@ -87,15 +89,15 @@ public class Submission {
 
     public static class Builder {
 
-        private ModelPackage modelPackage;
+        private FilingPackage filingPackage;
         private Navigation navigation;
         private ClientApplication clientApplication;
-        private Fee fee;
+        private List<ServiceFees> fees;
         private AccountDetails accountDetails;
         private long expiryDate;
 
-        public Builder modelPackage(ModelPackage modelPackage) {
-            this.modelPackage =  modelPackage;
+        public Builder filingPackage(FilingPackage filingPackage) {
+            this.filingPackage =  filingPackage;
             return this;
         }
 
@@ -109,8 +111,8 @@ public class Submission {
             return this;
         }
 
-        public Builder fee(Fee fee) {
-            this.fee = fee;
+        public Builder fees(List<ServiceFees> fees) {
+            this.fees = fees;
             return this;
         }
 

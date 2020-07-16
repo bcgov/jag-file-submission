@@ -51,6 +51,7 @@ exports[`Cancel Component matches the snapshot 1`] = `
         <div>
           <button
             class="normal-white btn"
+            data-test-id="return-home-btn"
             type="button"
           >
             Return home

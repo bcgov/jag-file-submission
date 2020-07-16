@@ -79,12 +79,23 @@ exports[`Home Component matches the snapshot 1`] = `
           />
         </div>
         <br />
+        <br />
+        <div
+          class="filepond--wrapper"
+        >
+          <input
+            multiple=""
+            type="file"
+          />
+        </div>
+        <br />
         <div>
           <button
             class="normal-blue btn"
+            data-test-id="generate-url-btn"
             type="button"
           >
-            Generate URL
+            E-File my Package
           </button>
         </div>
         <br />

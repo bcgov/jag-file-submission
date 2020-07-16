@@ -54,6 +54,7 @@ exports[`Storyshots Cancel Default 1`] = `
       <div>
         <button
           className="normal-white btn"
+          data-test-id="return-home-btn"
           disabled={false}
           onClick={[Function]}
           type="button"
@@ -207,6 +208,7 @@ exports[`Storyshots Cancel Mobile 1`] = `
       <div>
         <button
           className="normal-white btn"
+          data-test-id="return-home-btn"
           disabled={false}
           onClick={[Function]}
           type="button"
@@ -357,8 +359,15 @@ exports[`Storyshots Error Default 1`] = `
       <p>
         The following error occurred with your submission. Please click the button below to go back home.
       </p>
-      <p>
+      <p
+        className="error-info"
+      >
         <b>
+          Status: 
+          400
+        </b>
+        <b>
+          Message: 
           Could not communicate with CSO.
         </b>
       </p>
@@ -366,6 +375,7 @@ exports[`Storyshots Error Default 1`] = `
       <div>
         <button
           className="normal-white btn"
+          data-test-id=""
           disabled={false}
           onClick={[Function]}
           type="button"
@@ -516,8 +526,15 @@ exports[`Storyshots Error Mobile 1`] = `
       <p>
         The following error occurred with your submission. Please click the button below to go back home.
       </p>
-      <p>
+      <p
+        className="error-info"
+      >
         <b>
+          Status: 
+          400
+        </b>
+        <b>
+          Message: 
           Could not communicate with CSO.
         </b>
       </p>
@@ -525,6 +542,7 @@ exports[`Storyshots Error Mobile 1`] = `
       <div>
         <button
           className="normal-white btn"
+          data-test-id=""
           disabled={false}
           onClick={[Function]}
           type="button"
@@ -706,14 +724,25 @@ exports[`Storyshots Home Default 1`] = `
         />
       </div>
       <br />
+      <br />
+      <div
+        className="filepond--wrapper"
+      >
+        <input
+          multiple={true}
+          type="file"
+        />
+      </div>
+      <br />
       <div>
         <button
           className="normal-blue btn"
+          data-test-id="generate-url-btn"
           disabled={false}
           onClick={[Function]}
           type="button"
         >
-          Generate URL
+          E-File my Package
         </button>
       </div>
       <br />
@@ -891,14 +920,25 @@ exports[`Storyshots Home Mobile 1`] = `
         />
       </div>
       <br />
+      <br />
+      <div
+        className="filepond--wrapper"
+      >
+        <input
+          multiple={true}
+          type="file"
+        />
+      </div>
+      <br />
       <div>
         <button
           className="normal-blue btn"
+          data-test-id="generate-url-btn"
           disabled={false}
           onClick={[Function]}
           type="button"
         >
-          Generate URL
+          E-File my Package
         </button>
       </div>
       <br />
@@ -1048,6 +1088,7 @@ exports[`Storyshots Success Default 1`] = `
       <div>
         <button
           className="normal-white btn"
+          data-test-id=""
           disabled={false}
           onClick={[Function]}
           type="button"
@@ -1201,6 +1242,7 @@ exports[`Storyshots Success Mobile 1`] = `
       <div>
         <button
           className="normal-white btn"
+          data-test-id=""
           disabled={false}
           onClick={[Function]}
           type="button"

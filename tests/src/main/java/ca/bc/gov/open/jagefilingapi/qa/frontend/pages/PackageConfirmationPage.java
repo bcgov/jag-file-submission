@@ -7,8 +7,6 @@ import org.openqa.selenium.support.PageFactory;
 
 public class PackageConfirmationPage {
 
-    private final WebDriver driver;
-
     //Page Objects:
     @FindBy(xpath = "//button[@data-test-id='upload-btn']")
     WebElement uploadDocumentsBtn;
@@ -18,7 +16,6 @@ public class PackageConfirmationPage {
 
     //Initializing the driver:
     public PackageConfirmationPage(WebDriver driver) {
-        this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 

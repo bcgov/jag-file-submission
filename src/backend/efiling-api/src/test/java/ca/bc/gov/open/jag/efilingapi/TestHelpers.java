@@ -3,7 +3,6 @@ package ca.bc.gov.open.jag.efilingapi;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,8 +27,8 @@ public class TestHelpers {
     public static final String CANCEL_URL = "http://cancel";
     public static final String ERROR_URL = "http://error";
 
-    public static ModelPackage createPackage(Court court, List<DocumentProperties> documents) {
-        ModelPackage modelPackage = new ModelPackage();
+    public static FilingPackage createPackage(Court court, List<DocumentProperties> documents) {
+        FilingPackage modelPackage = new FilingPackage();
         modelPackage.setCourt(court);
         modelPackage.setDocuments(documents);
         return modelPackage;

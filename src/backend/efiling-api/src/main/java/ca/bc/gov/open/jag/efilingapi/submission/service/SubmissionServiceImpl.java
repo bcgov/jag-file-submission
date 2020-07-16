@@ -1,21 +1,24 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service;
 
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
+import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
-import ca.bc.gov.open.jag.efilingapi.fee.FeeService;
-import ca.bc.gov.open.jag.efilingapi.fee.models.FeeRequest;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class SubmissionServiceImpl implements SubmissionService {
 
@@ -31,19 +34,19 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private final EfilingAccountService efilingAccountService;
 
-    private final FeeService feeService;
+    private final EfilingLookupService efilingLookupService;
 
     public SubmissionServiceImpl(
             SubmissionStore submissionStore,
             CacheProperties cacheProperties,
             SubmissionMapper submissionMapper,
             EfilingAccountService efilingAccountService,
-            FeeService feeService) {
+            EfilingLookupService efilingLookupService) {
         this.submissionStore = submissionStore;
         this.cacheProperties = cacheProperties;
         this.submissionMapper = submissionMapper;
         this.efilingAccountService = efilingAccountService;
-        this.feeService = feeService;
+        this.efilingLookupService = efilingLookupService;
     }
 
     @Override
@@ -59,11 +62,11 @@ public class SubmissionServiceImpl implements SubmissionService {
             accountDetails = fakeFromBceId(authUserId);
         }
 
+
+
         Optional<Submission> cachedSubmission = submissionStore.put(
                 submissionMapper.toSubmission(generateUrlRequest,
-                        feeService.getFee(
-                                new FeeRequest(
-                                        generateUrlRequest.getPackage().getDocuments().get(0).getType())),
+                        getFees(generateUrlRequest.getFilingPackage().getDocuments()),
                         accountDetails,
                         getExpiryDate()));
 
@@ -85,6 +88,14 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         return null;
 
+    }
+
+    private List<ServiceFees> getFees(List<DocumentProperties> documents) {
+        return  documents.stream()
+                .map(doc ->
+                    efilingLookupService.getServiceFee(doc.getType())
+                )
+                .collect(Collectors.toList());
     }
 
     private long getExpiryDate() {

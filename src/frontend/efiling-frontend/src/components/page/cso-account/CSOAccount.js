@@ -49,7 +49,13 @@ export default function CSOAccount({
         });
         setCsoAccountStatus({ exists: true, isNew: true });
       })
-      .catch(() => {});
+      .catch(error => {
+        const errorUrl = sessionStorage.getItem("errorUrl");
+        window.open(
+          `${errorUrl}?status=${error.response.status}&message=${error.response.data.message}`,
+          "_self"
+        );
+      });
   };
 
   const continueButton = {

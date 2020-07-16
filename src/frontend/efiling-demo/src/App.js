@@ -16,7 +16,7 @@ export default function App() {
   const location = useLocation();
   const queryParams = queryString.parse(location.search);
 
-  const { error } = queryParams;
+  const { status, message } = queryParams;
 
   const header = {
     name: "eFiling Demo Client",
@@ -34,7 +34,7 @@ export default function App() {
           <Cancel page={{ header }} />
         </Route>
         <Route exact path="/efiling-demo/error">
-          <Error page={{ header, error }} />
+          <Error page={{ header, status, message }} />
         </Route>
         <Route exact path="/efiling-demo/success">
           <Success page={{ header }} />

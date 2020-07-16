@@ -2,30 +2,50 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { Header, Footer, Input, Button } from "shared-components";
-import { propTypes } from "../../../types/propTypes";
+import { FilePond, registerPlugin } from "react-filepond";
 
+// Import FilePond styles
+import "filepond/dist/filepond.min.css";
+
+// Import the Image EXIF Orientation and Image Preview plugins
+import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+
+import { propTypes } from "../../../types/propTypes";
 import "../page.css";
 
+// Register the plugins
+registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
+
 const urlBody = {
-  documentProperties: {
-    type: "string",
-    subType: "string",
-    submissionAccess: {
-      url: "string",
-      verb: "GET",
-      headers: {
-        additionalProp1: "string",
-        additionalProp2: "string",
-        additionalProp3: "string"
+  clientApplication: {
+    displayName: "Demo App",
+    type: "app"
+  },
+  filingPackage: {
+    court: {
+      location: "string",
+      level: "string",
+      class: "string",
+      division: "string",
+      fileNumber: "string",
+      participatingClass: "string"
+    },
+    documents: [
+      {
+        name: "string",
+        description: "string",
+        type: "string"
       }
-    }
+    ]
   },
   navigation: {
     success: {
-      url: "string"
+      url: `${window.location.origin}/efiling-demo/success`
     },
     error: {
-      url: "string"
+      url: `${window.location.origin}/efiling-demo/error`
     },
     cancel: {
       url: `${window.location.origin}/efiling-demo/cancel`
@@ -41,13 +61,53 @@ const input = {
   placeholder: "77da92db-0791-491e-8c58-1a969e67d2fa"
 };
 
-const generateUrl = (accountGuid, setErrorExists) => {
+const generatePackageData = files => {
+  const formData = new FormData();
+  const documentData = [];
+
+  for (let i = 0; i < files.length; i += 1) {
+    formData.append("files", files[i].file);
+    documentData.push({
+      name: files[i].file.name,
+      description: "file description",
+      type: "file type"
+    });
+  }
+
+  const updatedUrlBody = {
+    ...urlBody,
+    filingPackage: {
+      ...urlBody.filingPackage,
+      documents: documentData
+    }
+  };
+
+  return { formData, updatedUrlBody };
+};
+
+export const eFilePackage = (files, accountGuid, setErrorExists) => {
+  const { formData, updatedUrlBody } = generatePackageData(files);
+
   axios
-    .post(`/submission/generateUrl`, urlBody, {
-      headers: { "X-Auth-UserId": accountGuid }
+    .post("/submission/documents", formData, {
+      headers: {
+        "X-Auth-UserId": accountGuid,
+        "Content-Type": "multipart/form-data"
+      }
     })
-    .then(({ data: { efilingUrl } }) => {
-      window.open(efilingUrl, "_self");
+    .then(response => {
+      const { submissionId } = response.data;
+
+      axios
+        .post(`/submission/${submissionId}/generateUrl`, updatedUrlBody, {
+          headers: { "X-Auth-UserId": accountGuid }
+        })
+        .then(({ data: { efilingUrl } }) => {
+          window.open(efilingUrl, "_self");
+        })
+        .catch(() => {
+          setErrorExists(true);
+        });
     })
     .catch(() => {
       setErrorExists(true);
@@ -57,6 +117,7 @@ const generateUrl = (accountGuid, setErrorExists) => {
 export default function Home({ page: { header } }) {
   const [errorExists, setErrorExists] = useState(false);
   const [accountGuid, setAccountGuid] = useState(null);
+  const [files, setFiles] = useState([]);
 
   return (
     <main>
@@ -65,9 +126,17 @@ export default function Home({ page: { header } }) {
         <div className="content col-md-12">
           <Input input={input} onChange={setAccountGuid} />
           <br />
+          <br />
+          <FilePond
+            files={files}
+            allowMultiple
+            onupdatefiles={setFiles}
+            labelIdle='Drag and Drop your files or <span class="filepond--label-action">Browse</span>'
+          />
+          <br />
           <Button
-            onClick={() => generateUrl(accountGuid, setErrorExists)}
-            label="Generate URL"
+            onClick={() => eFilePackage(files, accountGuid, setErrorExists)}
+            label="E-File my Package"
             styling="normal-blue btn"
             testId="generate-url-btn"
           />
