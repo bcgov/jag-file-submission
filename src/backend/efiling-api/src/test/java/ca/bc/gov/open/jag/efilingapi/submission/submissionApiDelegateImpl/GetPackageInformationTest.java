@@ -38,8 +38,6 @@ public class GetPackageInformationTest {
     @Mock
     private DocumentStore documentStoreMock;
 
-    private static final UUID CASE_1 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fe");
-    private static final UUID CASE_2 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fa");
     @BeforeAll
     public void setUp() {
         MockitoAnnotations.initMocks(this);

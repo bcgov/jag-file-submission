@@ -5,6 +5,7 @@ import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.Document;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
+import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
@@ -51,7 +52,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     private final DocumentStore documentStore;
 
-
     public SubmissionApiDelegateImpl(
             SubmissionService submissionService,
             GenerateUrlResponseMapper generateUrlResponseMapper,
@@ -69,16 +69,19 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @Override
     public ResponseEntity<UploadSubmissionDocumentsResponse> uploadSubmissionDocuments(UUID xAuthUserId, List<MultipartFile> files) {
 
+        if (files == null || files.isEmpty())
+            return new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_REQUIRED).create(),
+                    HttpStatus.BAD_REQUEST);
+
         UUID submissionId = UUID.randomUUID();
 
         MDC.put(EFILING_SUBMISSION_ID, submissionId.toString());
         logger.info("new request for efiling {}", submissionId);
 
+        try {
 
-        files.stream().forEach(file -> {
-
-            try {
-
+            for (MultipartFile file : files) {
                 Document document = Document
                         .builder()
                         .submissionId(submissionId)
@@ -87,13 +90,13 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
                         .create();
 
                 documentStore.put(document.getCompositeId(), document.getContent());
-
-            } catch (IOException e) {
-                e.printStackTrace();
             }
 
-        });
-
+        } catch (IOException e) {
+            return new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_STORAGE_FAILURE).create(),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
         UploadSubmissionDocumentsResponse response = new UploadSubmissionDocumentsResponse();
         response.setSubmissionId(submissionId);
