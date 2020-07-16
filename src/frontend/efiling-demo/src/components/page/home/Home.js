@@ -61,7 +61,7 @@ const input = {
   placeholder: "77da92db-0791-491e-8c58-1a969e67d2fa"
 };
 
-export const eFilePackage = (files, accountGuid, setErrorExists) => {
+const generatePackageData = files => {
   const formData = new FormData();
   const documentData = [];
 
@@ -74,6 +74,20 @@ export const eFilePackage = (files, accountGuid, setErrorExists) => {
     });
   }
 
+  const updatedUrlBody = {
+    ...urlBody,
+    filingPackage: {
+      ...urlBody.filingPackage,
+      documents: documentData
+    }
+  };
+
+  return { formData, updatedUrlBody };
+};
+
+export const eFilePackage = (files, accountGuid, setErrorExists) => {
+  const { formData, updatedUrlBody } = generatePackageData(files);
+
   axios
     .post("/submission/documents", formData, {
       headers: {
@@ -83,14 +97,6 @@ export const eFilePackage = (files, accountGuid, setErrorExists) => {
     })
     .then(response => {
       const { submissionId } = response.data;
-
-      const updatedUrlBody = {
-        ...urlBody,
-        filingPackage: {
-          ...urlBody.filingPackage,
-          documents: documentData
-        }
-      };
 
       axios
         .post(`/submission/${submissionId}/generateUrl`, updatedUrlBody, {
