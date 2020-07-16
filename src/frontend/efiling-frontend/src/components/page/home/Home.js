@@ -83,7 +83,8 @@ export default function Home({ page: { header, confirmationPopup } }) {
   }, [queryParams.submissionId]);
 
   const packageConfirmation = {
-    confirmationPopup
+    confirmationPopup,
+    submissionId: queryParams.submissionId
   };
 
   return (

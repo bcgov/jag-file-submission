@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { MdDescription, MdCheckBox } from "react-icons/md";
 import ConfirmationPopup, {
@@ -8,6 +8,7 @@ import ConfirmationPopup, {
   DisplayBox,
   Table
 } from "shared-components";
+import axios from "axios";
 import { getSidecardData } from "../../../modules/sidecardData";
 import { propTypes } from "../../../types/propTypes";
 
@@ -42,7 +43,7 @@ const feesData = [
 const elements = [
   {
     name: (
-      <div style={{ width: "80%" }}>
+      <div style={{ width: "60%" }}>
         <Table isFeesData elements={feesData} />
       </div>
     ),
@@ -51,18 +52,53 @@ const elements = [
   }
 ];
 
+const generateTableData = file => {
+  return [
+    {
+      name: (
+        <div style={{ width: "80%" }}>
+          <p>{file.name}</p>
+        </div>
+      ),
+      value: (
+        <>
+          <p>
+            Description: <b>{file.description}</b>
+          </p>
+          <p>
+            Statutory Fee: <b>Some tingg</b>
+          </p>
+        </>
+      ),
+      isSideBySide: true
+    }
+  ];
+};
+
 const documentIcon = (
   <div style={{ color: "rgb(252, 186, 25)" }}>
     <MdDescription size={32} />
   </div>
 );
 
+const getFilingPackageData = (submissionId, setFiles) => {
+  axios
+    .get(`/submission/${submissionId}/filing-package`)
+    .then(({ data: { documents } }) => {
+      setFiles(documents);
+    })
+    .catch(() => window.open(sessionStorage.getItem("errorUrl"), "_self"));
+};
+
 export default function PackageConfirmation({
-  packageConfirmation: { confirmationPopup },
+  packageConfirmation: { confirmationPopup, submissionId },
   csoAccountStatus: { isNew }
 }) {
+  const [files, setFiles] = useState([]);
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
+
+  getFilingPackageData(submissionId, setFiles);
 
   return (
     <div className="page">
@@ -81,11 +117,19 @@ export default function PackageConfirmation({
         <h2>Package Confirmation</h2>
         <p>Review your package for accuracy before submitting.</p>
 
-        <DisplayBox
-          styling="border-background"
-          icon={documentIcon}
-          element={<p>View</p>}
-        />
+        {files.map(
+          file => (
+            <div key={file.name}>
+              <DisplayBox
+                styling="border-background"
+                icon={documentIcon}
+                element={<Table elements={generateTableData(file)} />}
+              />
+              <br />
+            </div>
+          )
+          // padding-top: inherit for display-icon in display box
+        )}
 
         <br />
 
@@ -142,7 +186,8 @@ export default function PackageConfirmation({
 
 PackageConfirmation.propTypes = {
   packageConfirmation: PropTypes.shape({
-    confirmationPopup: propTypes.confirmationPopup
+    confirmationPopup: propTypes.confirmationPopup,
+    submissionId: PropTypes.string.isRequired
   }).isRequired,
   csoAccountStatus: PropTypes.shape({
     isNew: PropTypes.bool
