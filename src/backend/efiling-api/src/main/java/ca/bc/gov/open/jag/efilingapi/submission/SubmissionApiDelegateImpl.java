@@ -115,7 +115,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         byte[] bytes = documentStore.get(document.getCompositeId());
 
-        if(bytes == null) return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_NOT_FOUND), HttpStatus.NOT_FOUND);
+        if(bytes == null) return ResponseEntity.notFound().build();
 
         return ResponseEntity.ok(new ByteArrayResource(bytes));
 
