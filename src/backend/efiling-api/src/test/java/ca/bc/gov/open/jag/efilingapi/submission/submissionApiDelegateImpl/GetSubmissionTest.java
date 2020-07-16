@@ -10,6 +10,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,6 +37,8 @@ public class GetSubmissionTest {
     private static final String FIRST_NAME = "firstName";
     private static final String LAST_NAME = "lastName";
     private static final String MIDDLE_NAME = "middleName";
+    private static final String SERVICE_TYPE_CD = "DCFL";
+    private static final String SERVICE_TYPE_CD1 = "NOTDCFL";
 
     private SubmissionApiDelegateImpl sut;
 
@@ -53,7 +58,6 @@ public class GetSubmissionTest {
 
         NavigationProperties navigationProperties = new NavigationProperties();
         navigationProperties.setBaseUrl("http://localhost");
-
         Submission submissionWithCsoAccount = Submission
                 .builder()
                 .accountDetails(
@@ -67,6 +71,7 @@ public class GetSubmissionTest {
                                 .fileRolePresent(true)
                                 .email(EMAIL + TestHelpers.CASE_2).create())
                 .navigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
+                .fees(createFees())
                 .create();
 
         Mockito.when(submissionStoreMock.getByKey(TestHelpers.CASE_2)).thenReturn(Optional.of(submissionWithCsoAccount));
@@ -106,6 +111,11 @@ public class GetSubmissionTest {
         assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigation().getSuccess().getUrl());
         assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigation().getCancel().getUrl());
         assertEquals(TestHelpers.ERROR_URL, actual.getBody().getNavigation().getError().getUrl());
+        assertEquals(2, actual.getBody().getFees().size());
+        assertEquals(BigDecimal.TEN.doubleValue(), actual.getBody().getFees().get(0).getFeeAmt());
+        assertEquals(SERVICE_TYPE_CD, actual.getBody().getFees().get(0).getServiceTypeCd());
+        assertEquals(BigDecimal.ONE.doubleValue(), actual.getBody().getFees().get(1).getFeeAmt());
+        assertEquals(SERVICE_TYPE_CD1, actual.getBody().getFees().get(1).getServiceTypeCd());
     }
 
     @Test
@@ -122,6 +132,12 @@ public class GetSubmissionTest {
         assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigation().getSuccess().getUrl());
         assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigation().getCancel().getUrl());
         assertEquals(TestHelpers.ERROR_URL, actual.getBody().getNavigation().getError().getUrl());
+    }
+
+    private List<ServiceFees> createFees() {
+        ServiceFees fee1 = new ServiceFees(null, BigDecimal.TEN, null, SERVICE_TYPE_CD,null, null, null, null);
+        ServiceFees fee2 = new ServiceFees(null, BigDecimal.ONE, null, SERVICE_TYPE_CD1,null, null, null, null);
+        return Arrays.asList(fee1, fee2);
     }
 
 }
