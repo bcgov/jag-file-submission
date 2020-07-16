@@ -28,7 +28,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -82,6 +81,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             for (MultipartFile file : files) {
                 Document document = Document
                         .builder()
+                        .owner(xAuthUserId)
                         .submissionId(submissionId)
                         .fileName(file.getResource().getFilename())
                         .content(file.getBytes())
@@ -104,9 +104,16 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    public ResponseEntity<Resource> getSubmissionDocument(UUID id, String filename) {
+    public ResponseEntity<Resource> getSubmissionDocument(UUID xAuthUserId, UUID id, String filename) {
 
-        byte[] bytes = documentStore.get(MessageFormat.format("{0}_{1}", id, filename));
+        Document document = Document
+                .builder()
+                .owner(xAuthUserId)
+                .submissionId(id)
+                .fileName(filename)
+                .create();
+
+        byte[] bytes = documentStore.get(document.getCompositeId());
 
         if(bytes == null) return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_NOT_FOUND), HttpStatus.NOT_FOUND);
 

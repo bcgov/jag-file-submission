@@ -52,7 +52,7 @@ public class GetSubmissionDocumentTest {
     @DisplayName("200: when document in cache should return 200")
     public void withDocumentInCacheShouldReturn200() {
 
-        ResponseEntity<Resource> actual = sut.getSubmissionDocument(UUID.randomUUID(), "test.txt");
+        ResponseEntity<Resource> actual = sut.getSubmissionDocument(UUID.randomUUID(), UUID.randomUUID(), "test.txt");
 
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
 
@@ -61,7 +61,7 @@ public class GetSubmissionDocumentTest {
     @Test
     @DisplayName("404: when document is missing should retunr 404")
     public void withNoDocumentShouldReturn404() {
-        ResponseEntity<Resource> actual = sut.getSubmissionDocument(UUID.randomUUID(), "test2.txt");
+        ResponseEntity<Resource> actual = sut.getSubmissionDocument(UUID.randomUUID(), UUID.randomUUID(), "test2.txt");
 
         Assertions.assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
     }

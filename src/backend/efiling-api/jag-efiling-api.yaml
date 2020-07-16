@@ -135,6 +135,13 @@ paths:
       tags:
         - submission
       parameters:
+        - in: header
+          name: X-Auth-UserId
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: Authenticated user id
         - name: id
           in: path
           description: A submission id

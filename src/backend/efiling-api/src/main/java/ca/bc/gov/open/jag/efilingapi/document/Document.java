@@ -10,6 +10,8 @@ public class Document {
 
     private UUID submissionId;
 
+    private UUID owner;
+
     private String fileName;
 
     private byte[] content;
@@ -18,6 +20,7 @@ public class Document {
         this.submissionId = builder.submissionId;
         this.fileName = builder.fileName;
         this.content = builder.content;
+        this.owner = builder.owner;
     }
 
     public static Builder builder() {
@@ -29,14 +32,16 @@ public class Document {
     }
 
     public String getCompositeId() {
-        return MessageFormat.format("{0}_{1}", submissionId, fileName);
+        return MessageFormat.format("{0}_{1}_{2}", owner, submissionId, fileName);
     }
 
     public static class Builder {
 
         private UUID submissionId;
+        private UUID owner;
         private String fileName;
         private byte[] content;
+
 
         public Builder submissionId (UUID submissionId) {
             this.submissionId = submissionId;
@@ -50,6 +55,11 @@ public class Document {
 
         public Builder content (byte[] content) {
             this.content = content;
+            return this;
+        }
+
+        public Builder owner (UUID owner) {
+            this.owner = owner;
             return this;
         }
 
