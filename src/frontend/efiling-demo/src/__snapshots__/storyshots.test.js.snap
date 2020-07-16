@@ -724,6 +724,16 @@ exports[`Storyshots Home Default 1`] = `
         />
       </div>
       <br />
+      <br />
+      <div
+        className="filepond--wrapper"
+      >
+        <input
+          multiple={true}
+          type="file"
+        />
+      </div>
+      <br />
       <div>
         <button
           className="normal-blue btn"
@@ -732,7 +742,7 @@ exports[`Storyshots Home Default 1`] = `
           onClick={[Function]}
           type="button"
         >
-          Generate URL
+          E-File my Package
         </button>
       </div>
       <br />
@@ -910,6 +920,16 @@ exports[`Storyshots Home Mobile 1`] = `
         />
       </div>
       <br />
+      <br />
+      <div
+        className="filepond--wrapper"
+      >
+        <input
+          multiple={true}
+          type="file"
+        />
+      </div>
+      <br />
       <div>
         <button
           className="normal-blue btn"
@@ -918,7 +938,7 @@ exports[`Storyshots Home Mobile 1`] = `
           onClick={[Function]}
           type="button"
         >
-          Generate URL
+          E-File my Package
         </button>
       </div>
       <br />
