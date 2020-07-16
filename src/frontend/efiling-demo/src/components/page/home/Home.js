@@ -138,19 +138,7 @@ export default function Home({ page: { header } }) {
             onClick={() => eFilePackage(files, accountGuid, setErrorExists)}
             label="E-File my Package"
             styling="normal-blue btn"
-          />
-          <br />
-          <FilePond
-            files={files}
-            allowMultiple
-            onupdatefiles={setFiles}
-            labelIdle='Drag and Drop your files or <span class="filepond--label-action">Browse</span>'
-          />
-          <br />
-          <Button
-            onClick={() => uploadFiles(files)}
-            label="Upload"
-            styling="normal-blue btn"
+            testId="generate-url-btn"
           />
           <br />
           {errorExists && (
