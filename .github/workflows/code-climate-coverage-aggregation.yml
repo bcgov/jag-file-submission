@@ -68,32 +68,9 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      # Run Yarn Install - Shared Components
-      - name: Run Yarn Install - Shared components
-        run: yarn --cwd src/frontend/shared-components install
-
-      # Yarn Coverage - Shared Components
-      - name: Run Yarn Coverage - Shared components
-        run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/shared-components coverage
-
       # Run Yarn Install - eFiling Frontend
       - name: Run Yarn Install - eFiling Frontend
         run: yarn --cwd src/frontend/efiling-frontend install
-
-      # Install link local globally
-      - name: Install linklocal
-        run: sudo npm install -g --unsafe-perm linklocal
-
-      # Link react versions between apps
-      - name: Run npm link
-        run: |
-          npm --prefix ${{ github.workspace }}/src/frontend/shared-components link ${{ github.workspace }}/src/frontend/efiling-frontend/node_modules/react
-
-      # Run linklocal
-      - name: Run linklocal
-        run: |
-          cd ${{ github.workspace }}/src/frontend/efiling-frontend
-          linklocal
 
       # Yarn Coverage - eFiling Frontend
       - name: Run Yarn Coverage - eFiling Frontend
