@@ -72,10 +72,13 @@ jobs:
       - name: Run Yarn Install - eFiling Frontend
         run: yarn --cwd src/frontend/efiling-frontend install
 
+<<<<<<< HEAD
       # Run lint - eFiling Frontend
       - name: Run lint - eFiling Frontend
         run: yarn --cwd src/frontend/efiling-frontend run lint
 
+=======
+>>>>>>> 00b05fc029535e9d69425d6422b68e161c0ed414
       # Yarn Coverage - eFiling Frontend
       - name: Run Yarn Coverage - eFiling Frontend
         run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/efiling-frontend coverage
