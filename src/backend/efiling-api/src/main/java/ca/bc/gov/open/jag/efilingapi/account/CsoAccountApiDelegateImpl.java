@@ -43,6 +43,7 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
                     .email(userDetails.getEmail())
                     .create());
 
+            
             UserDetails result = totUserDetails(accountDetails);
 
             return new ResponseEntity<>(result, HttpStatus.CREATED);
