@@ -3,13 +3,7 @@ FROM node:13.12.0-alpine
 
 ARG SERVICE_NAME
 
-RUN npm install -g linklocal
-
 COPY . .
-
-WORKDIR /shared-components
-
-RUN yarn install
 
 # set working directory
 WORKDIR /${SERVICE_NAME}
@@ -23,14 +17,8 @@ ENV REACT_APP_API_BASE_URL=http://localhost:8080
 RUN yarn install
 RUN yarn global add react-scripts@3.4.1
 
-WORKDIR /shared-components
-
-RUN npm link ../${SERVICE_NAME}/node_modules/react
-
 # set working directory
 WORKDIR /${SERVICE_NAME}
-
-RUN linklocal
 
 # start app
 CMD ["yarn", "start"]
