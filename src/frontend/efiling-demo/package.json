@@ -33,7 +33,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "coverage": "jest --coverage",
-    "precommit": "pretty-quick --staged && lint-staged"
+    "precommit": "pretty-quick --staged"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -74,14 +74,9 @@
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^1.7.0",
     "jest-sonar-reporter": "^2.0.0",
-    "lint-staged": "^10.2.11",
     "prettier": "1.19.1",
-    "pretty-quick": "^2.0.1"
-  },
-  "lint-staged": {
-    "src/**/*.js": [
-      "eslint ."
-    ]
+    "pretty-quick": "^2.0.1",
+    "husky": "^4.2.5"
   },
   "jest": {
     "watchPathIgnorePatterns": [
@@ -117,5 +112,10 @@
     "reportPath": "coverage",
     "reportFile": "test-report.xml",
     "indent": 4
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn run precommit"
+    }
   }
 }

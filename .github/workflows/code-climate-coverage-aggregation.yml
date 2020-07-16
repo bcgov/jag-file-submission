@@ -80,9 +80,9 @@ jobs:
       - name: Run Yarn Install - eFiling Frontend
         run: yarn --cwd src/frontend/efiling-frontend install
 
-      # Run lint-staged - eFiling Frontend
-      - name: Run lint-staged - eFiling Frontend
-        run: yarn --cwd src/frontend/efiling-frontend run precommit
+      # Run lint - eFiling Frontend
+      - name: Run lint - eFiling Frontend
+        run: yarn --cwd src/frontend/efiling-frontend run lint
 
       # Install link local globally
       - name: Install linklocal
@@ -107,9 +107,9 @@ jobs:
       - name: Run Yarn Install - eFiling Demo
         run: yarn --cwd src/frontend/efiling-demo install
 
-      # Run lint-staged - eFiling Demo
-      - name: Run lint-staged - eFiling Demo
-        run: yarn --cwd src/frontend/efiling-demo run precommit
+      # Run lint - eFiling Demo
+      - name: Run lint - eFiling Demo
+        run: yarn --cwd src/frontend/efiling-demo run lint
 
       # Yarn Coverage - eFiling Demo
       - name: Run Yarn Coverage - eFiling Demo
