@@ -76,7 +76,6 @@ public class GetSubmissionTest {
                                 .fileRolePresent(true)
                                 .email(EMAIL + TestHelpers.CASE_2).create())
                 .navigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
-                .fees(createFees())
                 .create();
 
         Mockito.when(submissionStoreMock.get(Mockito.eq(TestHelpers.CASE_2), Mockito.any())).thenReturn(Optional.of(submissionWithCsoAccount));
@@ -116,11 +115,7 @@ public class GetSubmissionTest {
         assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigation().getSuccess().getUrl());
         assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigation().getCancel().getUrl());
         assertEquals(TestHelpers.ERROR_URL, actual.getBody().getNavigation().getError().getUrl());
-        assertEquals(2, actual.getBody().getFees().size());
-        assertEquals(BigDecimal.TEN.doubleValue(), actual.getBody().getFees().get(0).getFeeAmt());
-        assertEquals(SERVICE_TYPE_CD, actual.getBody().getFees().get(0).getServiceTypeCd());
-        assertEquals(BigDecimal.ONE.doubleValue(), actual.getBody().getFees().get(1).getFeeAmt());
-        assertEquals(SERVICE_TYPE_CD1, actual.getBody().getFees().get(1).getServiceTypeCd());
+
     }
 
     @Test

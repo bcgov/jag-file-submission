@@ -98,8 +98,6 @@ public class generateFromRequestTest {
         Assertions.assertEquals(TestHelpers.CANCEL_URL, actual.getNavigation().getCancel().getUrl());
         Assertions.assertEquals(TestHelpers.SUCCESS_URL, actual.getNavigation().getSuccess().getUrl());
         Assertions.assertEquals(10, actual.getExpiryDate());
-        Assertions.assertEquals(BigDecimal.valueOf(7.0), actual.getFees().get(0).getFeeAmt());
-        Assertions.assertEquals(BigDecimal.valueOf(7.0), actual.getFees().get(1).getFeeAmt());
         Assertions.assertNotNull(actual.getId());
         Assertions.assertEquals(TestHelpers.DIVISION, actual.getFilingPackage().getCourt().getDivision());
         Assertions.assertEquals(TestHelpers.FILENUMBER, actual.getFilingPackage().getCourt().getFileNumber());
@@ -162,7 +160,6 @@ public class generateFromRequestTest {
                 .navigation(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
                 .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
-                .fees(fees)
                 .create();
 
         Mockito
@@ -196,7 +193,6 @@ public class generateFromRequestTest {
                 .navigation(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
                 .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
-                .fees(Arrays.asList(fee,fee))
                 .create();
 
         Mockito
