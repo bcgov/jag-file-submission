@@ -29,7 +29,6 @@ public class GenerateUrlAndSubmissionTest {
 
     private Response response;
     private GenerateUrlRequestBuilders generateUrlRequestBuilders;
-    private GenerateUrlPayload payloadData;
     private String submissionId;
     private String submissionIdQuery;
     private JsonPath jsonPath;
@@ -157,7 +156,6 @@ public class GenerateUrlAndSubmissionTest {
 
     @Then("verify universal id, user details, account type and identifier values are returned and not empty")
     public void verifyUniversalIdUserDetailsAccountTypeAndIdentifierValuesAreReturnedAndNotEmpty() throws IOException {
-        payloadData = new GenerateUrlPayload();
         jsonPath = new JsonPath(response.asString());
 
         String validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
@@ -190,7 +188,6 @@ public class GenerateUrlAndSubmissionTest {
 
     @And("verify success, error and cancel navigation urls are returned")
     public void verifySuccessErrorAndCancelNavigationUrlsAreReturned() {
-        payloadData = new GenerateUrlPayload();
         jsonPath = new JsonPath(response.asString());
 
         String successUrl = jsonPath.get("navigation.success.url");
@@ -204,7 +201,6 @@ public class GenerateUrlAndSubmissionTest {
 
     @Then("verify accounts value is null but names and email details are returned")
     public void verifyAccountsValueIsNullButNamesAndEmailDetailsAreReturned() throws IOException {
-        payloadData = new GenerateUrlPayload();
         jsonPath = new JsonPath(response.asString());
 
         String nonExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getNonExistingCSOGuid();
@@ -234,7 +230,6 @@ public class GenerateUrlAndSubmissionTest {
 
     @Then("verify response returns invalid role error and message")
     public void verifyResponseReturnsInvalidRoleErrorAndMessage() {
-        payloadData = new GenerateUrlPayload();
         jsonPath = new JsonPath(response.asString());
 
         String error = jsonPath.get("error");

@@ -29,21 +29,22 @@ public class GenerateUrlPayload {
     private FilingPackage filingPackage;
     private Navigation navigation;
     private GenerateUrlRequest generateUrlRequest;
+    private static final String STRING = "string";
 
     public String validGenerateUrlPayload() throws IOException {
         generateUrlRequest = new GenerateUrlRequest();
 
-        TYPEFIRST = "string";
-        DISPLAYNAME = "string";
+        TYPEFIRST = STRING;
+        DISPLAYNAME = STRING;
 
-        DIVISION = "string";
-        FILENUMBER = "string";
-        LEVEL = "string";
-        LOCATION = "string";
-        PARTICIPATIONCLASS ="string";
-        PROPERTYCLASS = "string";
-        NAME = "string";
-        DESCRIPTION = "string";
+        DIVISION = STRING;
+        FILENUMBER = STRING;
+        LEVEL = STRING;
+        LOCATION = STRING;
+        PARTICIPATIONCLASS =STRING;
+        PROPERTYCLASS = STRING;
+        NAME = STRING;
+        DESCRIPTION = STRING;
         TYPESECOND = "DFCL";
 
         SUCCESS_URL = "http://success";
@@ -51,14 +52,14 @@ public class GenerateUrlPayload {
         ERROR_URL = "http://error";
 
         ObjectMapper objMap = new ObjectMapper();
-        return objMap.writeValueAsString(generateUrlRequestPayload(clientApplication, filingPackage, navigation));
+        return objMap.writeValueAsString(generateUrlRequestPayload());
     }
 
-    public GenerateUrlRequest generateUrlRequestPayload(ClientApplication clientApplication, FilingPackage filingPackage,Navigation navigation){
+    public GenerateUrlRequest generateUrlRequestPayload(){
         generateUrlRequest = new GenerateUrlRequest();
 
         generateUrlRequest.setClientApplication(createClientApplication(DISPLAYNAME,TYPEFIRST));
-        generateUrlRequest.setFilingPackage(createPackage(createCourt(), createDocumentList()));
+        generateUrlRequest.setFilingPackage(createPackage(createCourtDetails(), createDocumentList()));
         generateUrlRequest.setNavigation(createNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL));
 
         return generateUrlRequest;
@@ -100,7 +101,7 @@ public class GenerateUrlPayload {
         return navigation;
     }
 
-    public Court createCourt() {
+    public Court createCourtDetails() {
         Court court = new Court();
 
         court.setDivision(DIVISION);
