@@ -22,6 +22,7 @@ public class GetDocumentDetailsTest {
 
     private static final String DOCUMENT_TYPE_CD = "ACODE";
     private static final String DESCRIPTION = "DESCRIPTION";
+    private static final String NODOC = "NODOC";
     @Mock
     FilingStatusFacadeBean filingStatusFacadeBean;
 
@@ -43,7 +44,7 @@ public class GetDocumentDetailsTest {
         sut = new CSOStatusServiceImpl(filingStatusFacadeBean);
     }
 
-    @DisplayName("OK: test returns null ")
+    @DisplayName("OK: test returns document ")
     @Test
     public void testWithFoundResult() {
         DocumentDetails result = sut.getDocumentDetails(DOCUMENT_TYPE_CD);
@@ -51,7 +52,14 @@ public class GetDocumentDetailsTest {
         Assertions.assertEquals(BigDecimal.TEN, result.getStatutoryFeeAmount());
     }
 
-    @DisplayName("Failure: test returns null ")
+    @DisplayName("OK: test returns null ")
+    @Test
+    public void testWithNoResult() {
+        DocumentDetails result = sut.getDocumentDetails(NODOC);
+        Assertions.assertNull(result);
+    }
+
+    @DisplayName("Failure: throws exception")
     @Test
     public void testThrowException() throws NestedEjbException_Exception {
         Mockito.when(filingStatusFacadeBean.getDocumentTypes(any(),any())).thenThrow(NestedEjbException_Exception.class);
