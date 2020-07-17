@@ -6,6 +6,7 @@ import axios from "axios";
 import { Header, Footer, Loader } from "shared-components";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
 import CSOAccount from "../cso-account/CSOAccount";
+import Error from "../error/Error";
 import { propTypes } from "../../../types/propTypes";
 
 import "../page.css";
@@ -31,7 +32,8 @@ const checkCSOAccountStatus = (
   submissionId,
   setCsoAccountStatus,
   setShowLoader,
-  setApplicantInfo
+  setApplicantInfo,
+  setError
 ) => {
   axios
     .get(`/submission/${submissionId}`)
@@ -51,15 +53,21 @@ const checkCSOAccountStatus = (
       const applicantInfo = addUserInfo(userDetails);
 
       setApplicantInfo(applicantInfo);
-
-      setShowLoader(false);
     })
     .catch(error => {
       const errorUrl = sessionStorage.getItem("errorUrl");
-      window.open(
-        `${errorUrl}?status=${error.response.status}&message=${error.response.data.message}`,
-        "_self"
-      );
+
+      if (errorUrl) {
+        window.open(
+          `${errorUrl}?status=${error.response.status}&message=${error.response.data.message}`,
+          "_self"
+        );
+      } else {
+        setError(true);
+      }
+    })
+    .finally(() => {
+      setShowLoader(false);
     });
 };
 
@@ -70,6 +78,7 @@ export default function Home({ page: { header, confirmationPopup } }) {
     isNew: false
   });
   const [applicantInfo, setApplicantInfo] = useState({});
+  const [error, setError] = useState(false);
   const location = useLocation();
   const queryParams = queryString.parse(location.search);
 
@@ -103,6 +112,7 @@ export default function Home({ page: { header, confirmationPopup } }) {
           csoAccountStatus={csoAccountStatus}
         />
       )}
+      {!showLoader && error && <Error />}
       <Footer />
     </main>
   );
