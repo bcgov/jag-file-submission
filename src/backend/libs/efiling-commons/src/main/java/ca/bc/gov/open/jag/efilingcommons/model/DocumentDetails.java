@@ -7,15 +7,15 @@ public class DocumentDetails {
 
     private String desc;
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
     @JsonCreator
-    public DocumentDetails(@JsonProperty("desc") String desc) {
-        this.desc = desc;
+    public DocumentDetails(@JsonProperty("description") String description) {
+        this.description = description;
     }
 }
