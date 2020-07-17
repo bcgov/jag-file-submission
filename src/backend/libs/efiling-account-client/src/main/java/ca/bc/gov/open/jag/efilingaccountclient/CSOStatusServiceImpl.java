@@ -23,9 +23,13 @@ public class CSOStatusServiceImpl implements EfilingDocumentService {
     public DocumentDetails getDocumentDetails(String documentType) {
         try {
             List<DocumentType> documentTypes = filingStatusFacadeBean.getDocumentTypes("", "");
+            return documentTypes.stream()
+                    .filter(doc -> doc.getDocumentTypeCd() == documentType)
+                    .map(doc -> new DocumentDetails(doc.getDocumentTypeDesc(), doc.getDefaultStatutoryFee()))
+                    .findAny()
+                    .get();
         } catch (NestedEjbException_Exception e) {
             throw new EfilingLookupServiceException("Exception while retrieving service fee", e.getCause());
         }
-        return null;
     }
 }
