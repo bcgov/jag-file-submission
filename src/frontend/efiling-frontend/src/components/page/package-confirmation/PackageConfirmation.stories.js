@@ -18,10 +18,16 @@ const packageConfirmation = { confirmationPopup, submissionId };
 const csoAccountStatus = { isNew: false };
 const documents = [
   {
-    name: "file name",
-    description: "file description",
+    name: "file name 1",
+    description: "file description 1",
     type: "file type",
     statutoryFeeAmount: 40
+  },
+  {
+    name: "file name 2",
+    description: "file description 2",
+    type: "file type",
+    statutoryFeeAmount: 0
   }
 ];
 

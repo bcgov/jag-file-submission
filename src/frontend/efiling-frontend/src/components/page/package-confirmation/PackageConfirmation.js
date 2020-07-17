@@ -65,14 +65,17 @@ const generateTableData = file => {
       value: file.description,
       isValueBold: true,
       isClose: true
-    },
-    {
+    }
+  ];
+
+  if (file.statutoryFeeAmount > 0) {
+    data.push({
       name: "Statutory Fee:",
       value: `$ ${file.statutoryFeeAmount}`,
       isValueBold: true,
       isClose: true
-    }
-  ];
+    });
+  }
 
   return [
     {

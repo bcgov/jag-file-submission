@@ -29,12 +29,15 @@ const addUserInfo = ({ bceid, firstName, middleName, lastName, email }) => {
 // make call to submission/{id} to get the user and navigation details
 const checkCSOAccountStatus = (
   submissionId,
+  temp,
   setCsoAccountStatus,
   setShowLoader,
   setApplicantInfo
 ) => {
   axios
-    .get(`/submission/${submissionId}`)
+    .get(`/submission/${submissionId}`, {
+      "X-Auth-UserId": temp
+    })
     .then(({ data: { userDetails, navigation } }) => {
       saveNavigationToSession(navigation);
       sessionStorage.setItem("universalId", userDetails.universalId);
@@ -76,6 +79,7 @@ export default function Home({ page: { header, confirmationPopup } }) {
   useEffect(() => {
     checkCSOAccountStatus(
       queryParams.submissionId,
+      queryParams.temp,
       setCsoAccountStatus,
       setShowLoader,
       setApplicantInfo
