@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { MdDescription, MdCheckBox } from "react-icons/md";
 import ConfirmationPopup, {
@@ -26,60 +26,66 @@ const uploadButton = {
   styling: "normal-white btn"
 };
 
-// TODO: Fix values
-const feesData = [
-  {
-    name: "Statutory Fees:",
-    value: "$100.00",
-    isValueBold: true
-  },
-  {
-    name: "Number of Documents in Package:",
-    value: "10",
-    isValueBold: true
-  }
-];
+const generateTotalFeeTable = files => {
+  let totalStatFee = 0;
+  files.forEach(file => {
+    totalStatFee += file.statutoryFeeAmount;
+  });
 
-const elements = [
-  {
-    name: (
-      <div style={{ width: "60%" }}>
-        <Table isFeesData elements={feesData} />
-      </div>
-    ),
-    value: "",
-    isSideBySide: true
-  }
-];
+  const feesData = [
+    {
+      name: "Statutory Fees:",
+      value: `$ ${totalStatFee}`,
+      isValueBold: true
+    },
+    {
+      name: "Number of Documents in Package:",
+      value: files.length,
+      isValueBold: true
+    }
+  ];
 
-const generateTableData = file => {
   return [
     {
       name: (
-        <div style={{ width: "80%" }}>
-          <p>{file.name}</p>
+        <div style={{ width: "60%" }}>
+          <Table isFeesData elements={feesData} />
         </div>
       ),
-      value: (
-        <>
-          <p>
-            Description: <b>{file.description}</b>
-          </p>
-          <p>
-            Statutory Fee: <b>Some tingg</b>
-          </p>
-        </>
-      ),
+      value: "",
       isSideBySide: true
     }
   ];
 };
 
-const documentIcon = (
-  <div style={{ color: "rgb(252, 186, 25)" }}>
-    <MdDescription size={32} />
-  </div>
-);
+const generateTableData = file => {
+  const data = [
+    {
+      name: "Description:",
+      value: file.description,
+      isValueBold: true,
+      isClose: true
+    },
+    {
+      name: "Statutory Fee:",
+      value: `$ ${file.statutoryFeeAmount}`,
+      isValueBold: true,
+      isClose: true
+    }
+  ];
+
+  return [
+    {
+      name: (
+        <div style={{ width: "80%" }}>
+          <span>{file.name}</span>
+        </div>
+      ),
+      value: <Table elements={data} />,
+      verticalMiddle: true
+    }
+  ];
+};
 
 const getFilingPackageData = (submissionId, setFiles) => {
   axios
@@ -98,7 +104,9 @@ export default function PackageConfirmation({
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
 
-  getFilingPackageData(submissionId, setFiles);
+  useEffect(() => {
+    getFilingPackageData(submissionId, setFiles);
+  }, [files, submissionId]);
 
   return (
     <div className="page">
@@ -117,19 +125,20 @@ export default function PackageConfirmation({
         <h2>Package Confirmation</h2>
         <p>Review your package for accuracy before submitting.</p>
 
-        {files.map(
-          file => (
-            <div key={file.name}>
-              <DisplayBox
-                styling="border-background"
-                icon={documentIcon}
-                element={<Table elements={generateTableData(file)} />}
-              />
-              <br />
-            </div>
-          )
-          // padding-top: inherit for display-icon in display box
-        )}
+        {files.map(file => (
+          <div key={file.name}>
+            <DisplayBox
+              styling="border-background display-file"
+              icon={
+                <div style={{ color: "rgb(252, 186, 25)" }}>
+                  <MdDescription size={32} />
+                </div>
+              }
+              element={<Table elements={generateTableData(file)} />}
+            />
+            <br />
+          </div>
+        ))}
 
         <br />
 
@@ -147,7 +156,7 @@ export default function PackageConfirmation({
 
         <h3>Summary</h3>
 
-        <Table elements={elements} />
+        <Table elements={generateTotalFeeTable(files)} />
 
         <br />
 
