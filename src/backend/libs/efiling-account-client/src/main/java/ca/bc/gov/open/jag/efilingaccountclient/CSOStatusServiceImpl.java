@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 public class CSOStatusServiceImpl implements EfilingDocumentService {
 
     @Override
-    public DocumentDetails getDocumentDetails(String serviceId) {
+    public DocumentDetails getDocumentDetails(String documentType) {
         return null;
     }
 }
