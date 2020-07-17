@@ -4,6 +4,6 @@ public enum Clients {
     ACCOUNT,
     ROLE,
     LOOKUP,
-    DOCUMENT,
+    STATUS,
     BCEID;
 }

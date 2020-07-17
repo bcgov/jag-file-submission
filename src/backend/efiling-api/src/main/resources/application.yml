@@ -28,7 +28,7 @@ jag:
           userName: ${CSO_LOOKUPFACADE_USERNAME}
           password: ${CSO_LOOKUPFACADE_PASSWORD}
           uri: ${CSO_LOOKUPFACADE_URI:http://localhost:8091}
-        - client: DOCUMENT
+        - client: STATUS
           userName: ${FILING_STATSFACADE_USERNAME}
           password: ${FILING_STATSFACADE_PASSWORD}
           uri: ${FILING_STATSFACADE_URI:http://localhost:8091}
