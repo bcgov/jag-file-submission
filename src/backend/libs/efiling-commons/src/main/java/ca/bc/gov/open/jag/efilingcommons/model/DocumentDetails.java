@@ -15,7 +15,7 @@ public class DocumentDetails {
         this.desc = desc;
     }
     @JsonCreator
-    public DocumentDetails(@JsonProperty("desc") String desc) {
-        this.desc = desc;
+    public DocumentDetails(@JsonProperty("description") String description) {
+        this.description = description;
     }
 }
