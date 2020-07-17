@@ -10,6 +10,8 @@ import org.mockito.MockitoAnnotations;
 @DisplayName("Get Document Details Test Suite")
 public class GetDocumentDetailsTest {
 
+    @Mock
+    FilingStatusFacadeBean filingStatusFacadeBean;
 
     private static CSOStatusServiceImpl sut;
 
@@ -18,7 +20,7 @@ public class GetDocumentDetailsTest {
 
         MockitoAnnotations.initMocks(this);
 
-        sut = new CSOStatusServiceImpl();
+        sut = new CSOStatusServiceImpl(filingStatusFacadeBean);
     }
 
     @DisplayName("OK: test returns null ")
