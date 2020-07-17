@@ -26,6 +26,7 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -78,14 +79,14 @@ public class GetSubmissionTest {
                 .fees(createFees())
                 .create();
 
-        Mockito.when(submissionStoreMock.getByKey(TestHelpers.CASE_2)).thenReturn(Optional.of(submissionWithCsoAccount));
+        Mockito.when(submissionStoreMock.get(Mockito.eq(TestHelpers.CASE_2), Mockito.any())).thenReturn(Optional.of(submissionWithCsoAccount));
 
         Submission submissionWithoutCsoAccount = Submission
                 .builder()
                 .navigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
                 .create();
 
-        Mockito.when(submissionStoreMock.getByKey(TestHelpers.CASE_3)).thenReturn(Optional.of(submissionWithoutCsoAccount));
+        Mockito.when(submissionStoreMock.get(Mockito.eq(TestHelpers.CASE_3), Mockito.any())).thenReturn(Optional.of(submissionWithoutCsoAccount));
 
         sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock);
 
@@ -94,7 +95,7 @@ public class GetSubmissionTest {
     @Test
     @DisplayName("404: With null redis storage response return NotFound")
     public void withNullRedisStorageResponseReturnNotFound() {
-        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission(TestHelpers.CASE_1);
+        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission(UUID.randomUUID(), TestHelpers.CASE_1);
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
     }
 
@@ -102,7 +103,7 @@ public class GetSubmissionTest {
     @DisplayName("200: With user having cso account and efiling role return submission details")
     public void withUserHavingCsoAccountShouldReturnUserDetailsAndAccount() {
 
-        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission(TestHelpers.CASE_2);
+        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission(UUID.randomUUID(), TestHelpers.CASE_2);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertEquals(TestHelpers.CASE_2, actual.getBody().getUserDetails().getUniversalId());
         assertEquals(EMAIL + TestHelpers.CASE_2, actual.getBody().getUserDetails().getEmail());
@@ -126,7 +127,7 @@ public class GetSubmissionTest {
     @DisplayName("200: With user not having cso account")
     public void withUserHavingNoCsoAccountShouldReturnUserDetailsButNoAccount() {
 
-        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission(TestHelpers.CASE_3);
+        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission(UUID.randomUUID(), TestHelpers.CASE_3);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertEquals(EMAIL, actual.getBody().getUserDetails().getEmail());
         assertEquals(FIRST_NAME, actual.getBody().getUserDetails().getFirstName());

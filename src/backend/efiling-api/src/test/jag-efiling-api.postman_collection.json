@@ -1,154 +1,683 @@
 {
-  "info": {
-    "_postman_id": "c12642b5-e243-41cb-9dcc-72e7e1e37aff",
-    "name": "jag-efiling-api",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "submission",
-      "item": [
-        {
-          "name": "generate url",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "X-Auth-UserId",
-                "value": "5EDDA221-61C0-43AB-9D50-8158BF4A7828",
-                "type": "text"
-              },
-              {
-                "key": "X-Auth-Type",
-                "value": "Individual",
-                "type": "text",
-                "disabled": true
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"clientApplication\": {\r\n    \"displayName\": \"string\",\r\n    \"type\": \"string\"\r\n  },\r\n  \"package\": {\r\n    \"court\": {\r\n      \"location\": \"string\",\r\n      \"level\": \"string\",\r\n      \"class\": \"string\",\r\n      \"division\": \"string\",\r\n      \"fileNumber\": \"string\",\r\n      \"participatingClass\": \"string\"\r\n    },\r\n    \"documents\": [\r\n      {\r\n        \"name\": \"string\",\r\n        \"description\": \"string\",\r\n        \"type\": \"DCFL\"\r\n      },\r\n      {\r\n        \"name\": \"string\",\r\n        \"description\": \"string\",\r\n        \"type\": \"NOTDCFL\"\r\n      }\r\n    ]\r\n  },\r\n  \"navigation\": {\r\n    \"success\": {\r\n      \"url\": \"string\"\r\n    },\r\n    \"error\": {\r\n      \"url\": \"string\"\r\n    },\r\n    \"cancel\": {\r\n      \"url\": \"string\"\r\n    }\r\n  }\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{baseUrl}}/submission/ca3d7006-6b21-4147-aac5-c458b2df24e8/generateUrl",
-              "host": ["{{baseUrl}}"],
-              "path": [
-                "submission",
-                "ca3d7006-6b21-4147-aac5-c458b2df24e8",
-                "generateUrl"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Get Submission",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/submission/4fa58287-6f3b-471e-b0dd-7d30a1ab66df",
-              "host": ["{{baseUrl}}"],
-              "path": ["submission", "4fa58287-6f3b-471e-b0dd-7d30a1ab66df"]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Get PackageInformation",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/submission/48a67125-e02a-449c-bb6d-ba6d9cb37db6/package",
-              "host": ["{{baseUrl}}"],
-              "path": [
-                "submission",
-                "48a67125-e02a-449c-bb6d-ba6d9cb37db6",
-                "package"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "documents",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "X-Auth-UserId",
-                "value": "5EDDA221-61C0-43AB-9D50-8158BF4A7828",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "formdata",
-              "formdata": [
-                {
-                  "key": "file",
-                  "type": "file",
-                  "src": "/C:/Users/177141/Documents/stuff.docx"
-                },
-                {
-                  "key": "file2",
-                  "type": "file",
-                  "src": "/C:/Users/177141/Documents/things.rtf"
-                }
-              ]
-            },
-            "url": {
-              "raw": "{{baseUrl}}/submission/documents",
-              "host": ["{{baseUrl}}"],
-              "path": ["submission", "documents"]
-            }
-          },
-          "response": []
-        }
-      ],
-      "protocolProfileBehavior": {}
-    },
-    {
-      "name": "Account",
-      "item": [
-        {
-          "name": "CreateCSO",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": ""
-            }
-          },
-          "response": []
-        }
-      ],
-      "protocolProfileBehavior": {}
-    },
-    {
-      "name": "Health",
-      "item": [
-        {
-          "name": "acutator",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/actuator/info",
-              "host": ["{{baseUrl}}"],
-              "path": ["actuator", "info"]
-            }
-          },
-          "response": []
-        }
-      ],
-      "protocolProfileBehavior": {}
-    }
-  ],
-  "protocolProfileBehavior": {}
+	"info": {
+		"_postman_id": "249652ef-1ba9-462a-99b3-679d8c34683f",
+		"name": "jag-efiling-api",
+		"description": "Efiling api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "submission",
+			"item": [
+				{
+					"name": "{id}",
+					"item": [
+						{
+							"name": "Get user detail for a given submission",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-Auth-UserId",
+										"value": "{{x-Auth-UserId}}",
+										"description": "(Required) Authenticated user id"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/submission/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"submission",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{submissionId}}",
+											"description": "(Required) A submission id"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Config found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "X-Auth-UserId",
+												"value": "<uuid>",
+												"description": "(Required) Authenticated user id"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/submission/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"submission",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"userDetails\": {\n  \"universalId\": \"amet velit\",\n  \"firstName\": \"dolore qui commodo\",\n  \"lastName\": \"id tempor quis enim Excepteur\",\n  \"middleName\": \"ut magna occaecat\",\n  \"email\": \"aute in\",\n  \"accounts\": [\n   {\n    \"type\": \"BCEID\",\n    \"identifier\": \"et elit dolor m\"\n   },\n   {\n    \"type\": \"CSO\",\n    \"identifier\": \"mollit reprehenderit adipisicing nulla\"\n   }\n  ]\n },\n \"navigation\": {\n  \"success\": {\n   \"url\": \"mollit dolore officia et adipisicing\"\n  },\n  \"error\": {\n   \"url\": \"non reprehenderit laborum in laboris\"\n  },\n  \"cancel\": {\n   \"url\": \"Ut s\"\n  }\n },\n \"fees\": [\n  {\n   \"feeAmt\": -88520371.33262028,\n   \"serviceTypeCd\": \"exercitation ipsum\"\n  },\n  {\n   \"feeAmt\": 4171825.591308221,\n   \"serviceTypeCd\": \"nisi\"\n  }\n ]\n}"
+								},
+								{
+									"name": "Config not foun",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "X-Auth-UserId",
+												"value": "<uuid>",
+												"description": "(Required) Authenticated user id"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/submission/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"submission",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Generates a secure URL for e-filing submission",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Auth-UserId",
+										"value": "{{x-Auth-UserId}}",
+										"description": "(Required) Authenticated user id"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"navigation\": {\n        \"success\": {\n            \"url\": \"http//somewhere.com\"\n        },\n        \"error\": {\n            \"url\": \"http//somewhere.com\"\n        },\n        \"cancel\": {\n            \"url\": \"http//somewhere.com\"\n        }\n    },\n    \"clientApplication\": {\n        \"displayName\": \"my app\",\n        \"type\": \"APP\"\n    },\n    \"filingPackage\": {\n        \"court\": {\n            \"location\": \"<location>\",\n            \"level\": \"<level>\",\n            \"class\": \"<class>\",\n            \"division\": \"<division>\",\n            \"fileNumber\": \"<fileNumber>\",\n            \"participatingClass\": \"<participatingClass>\"\n        },\n        \"documents\": [\n            {\n                \"type\": \"<type>\",\n                \"name\": \"<name>\",\n                \"description\": \"<description>\"\n            },\n            {\n                \"type\": \"<type>\",\n                \"name\": \"<name>\",\n                \"description\": \"<description>\"\n            }\n        ]\n    }\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/submission/:id/generateUrl",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"submission",
+										":id",
+										"generateUrl"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{submissionId}}",
+											"description": "(Required) A submission id"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Request does not meet the required criteria",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "X-Auth-UserId",
+												"value": "<uuid>",
+												"description": "(Required) Authenticated user id"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"navigation\": {\n        \"success\": {\n            \"url\": \"laboris adipisicing\"\n        },\n        \"error\": {\n            \"url\": \"aliquip\"\n        },\n        \"cancel\": {\n            \"url\": \"ad in\"\n        }\n    },\n    \"clientApplication\": {\n        \"displayName\": \"<string>\",\n        \"type\": \"<string>\"\n    },\n    \"filingPackage\": {\n        \"court\": {\n            \"location\": \"<string>\",\n            \"level\": \"<string>\",\n            \"class\": \"<string>\",\n            \"division\": \"<string>\",\n            \"fileNumber\": \"<string>\",\n            \"participatingClass\": \"<string>\"\n        },\n        \"documents\": [\n            {\n                \"type\": \"<string>\",\n                \"name\": \"<string>\",\n                \"description\": \"<string>\"\n            },\n            {\n                \"type\": \"<string>\",\n                \"name\": \"<string>\",\n                \"description\": \"<string>\"\n            }\n        ]\n    }\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/submission/:id/generateUrl",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"submission",
+												":id",
+												"generateUrl"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"error\": \"aliquip dolor\",\n \"message\": \"aliquip voluptate\"\n}"
+								},
+								{
+									"name": "File successfully received",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "X-Auth-UserId",
+												"value": "<uuid>",
+												"description": "(Required) Authenticated user id"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"navigation\": {\n        \"success\": {\n            \"url\": \"laboris adipisicing\"\n        },\n        \"error\": {\n            \"url\": \"aliquip\"\n        },\n        \"cancel\": {\n            \"url\": \"ad in\"\n        }\n    },\n    \"clientApplication\": {\n        \"displayName\": \"<string>\",\n        \"type\": \"<string>\"\n    },\n    \"filingPackage\": {\n        \"court\": {\n            \"location\": \"<string>\",\n            \"level\": \"<string>\",\n            \"class\": \"<string>\",\n            \"division\": \"<string>\",\n            \"fileNumber\": \"<string>\",\n            \"participatingClass\": \"<string>\"\n        },\n        \"documents\": [\n            {\n                \"type\": \"<string>\",\n                \"name\": \"<string>\",\n                \"description\": \"<string>\"\n            },\n            {\n                \"type\": \"<string>\",\n                \"name\": \"<string>\",\n                \"description\": \"<string>\"\n            }\n        ]\n    }\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/submission/:id/generateUrl",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"submission",
+												":id",
+												"generateUrl"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"expiryDate\": 65910561,\n \"efilingUrl\": \"exercitation officia pariatur magna i\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Get filing package information",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-Auth-UserId",
+										"value": "{{x-Auth-UserId}}",
+										"description": "(Required) Authenticated user id"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/submission/:id/filing-package",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"submission",
+										":id",
+										"filing-package"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{submissionId}}",
+											"description": "(Required) A submission id"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Filing Package Information not found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "X-Auth-UserId",
+												"value": "<uuid>",
+												"description": "(Required) Authenticated user id"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/submission/:id/filing-package",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"submission",
+												":id",
+												"filing-package"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Filing Package Information found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "X-Auth-UserId",
+												"value": "<uuid>",
+												"description": "(Required) Authenticated user id"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/submission/:id/filing-package",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"submission",
+												":id",
+												"filing-package"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"court\": {\n  \"location\": \"<string>\",\n  \"level\": \"<string>\",\n  \"class\": \"<string>\",\n  \"division\": \"<string>\",\n  \"fileNumber\": \"<string>\",\n  \"participatingClass\": \"<string>\"\n },\n \"documents\": [\n  {\n   \"type\": \"<string>\",\n   \"name\": \"<string>\",\n   \"description\": \"<string>\"\n  },\n  {\n   \"type\": \"<string>\",\n   \"name\": \"<string>\",\n   \"description\": \"<string>\"\n  }\n ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Get document by name",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-Auth-UserId",
+										"value": "{{x-Auth-UserId}}",
+										"description": "(Required) Authenticated user id"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/submission/:id/document/:filename",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"submission",
+										":id",
+										"document",
+										":filename"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{submissionId}}",
+											"description": "(Required) A submission id"
+										},
+										{
+											"key": "filename",
+											"value": "",
+											"description": "(Required) A document name"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Filing Package Information found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "X-Auth-UserId",
+												"value": "<uuid>",
+												"description": "(Required) Authenticated user id"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/submission/:id/document/:filename",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"submission",
+												":id",
+												"document",
+												":filename"
+											],
+											"variable": [
+												{
+													"key": "id"
+												},
+												{
+													"key": "filename"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/octet-stream"
+										}
+									],
+									"cookie": [],
+									"body": "ea"
+								},
+								{
+									"name": "Document not found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "X-Auth-UserId",
+												"value": "<uuid>",
+												"description": "(Required) Authenticated user id"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/submission/:id/document/:filename",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"submission",
+												":id",
+												"document",
+												":filename"
+											],
+											"variable": [
+												{
+													"key": "id"
+												},
+												{
+													"key": "filename"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Initial documents upload",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d807551-8b0d-4cf0-835b-398b9bbb1567",
+								"exec": [
+									"pm.test(\"submissionId\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.environment.set(\"submissionId\", jsonData.submissionId);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Auth-UserId",
+								"value": "{{x-Auth-UserId}}",
+								"description": "(Required) Authenticated user id"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/submission/documents",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"submission",
+								"documents"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "File successfully received",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Auth-UserId",
+										"value": "<uuid>",
+										"description": "(Required) Authenticated user id"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "files",
+											"value": "[\"<binary>\",\"<binary>\"]",
+											"description": {
+												"content": "",
+												"type": "text/plain"
+											},
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseUrl}}/submission/documents",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"submission",
+										"documents"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"submissionId\": \"nisi\",\n \"received\": 29508064.475584164\n}"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Create a CSO account",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Auth-UserId",
+						"value": "{{x-Auth-UserId}}",
+						"description": "(Required) Authenticated user id"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"universalId\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"middleName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"accounts\": [\n        {\n            \"type\": \"BCEID\",\n            \"identifier\": \"adipisicing\"\n        },\n        {\n            \"type\": \"CSO\",\n            \"identifier\": \"anim laborum\"\n        }\n    ]\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/csoAccount",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"csoAccount"
+					]
+				},
+				"description": "In order to create an account, an item with type BCEID is required in the accounts field."
+			},
+			"response": [
+				{
+					"name": "Account Created",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Auth-UserId",
+								"value": "<uuid>",
+								"description": "(Required) Authenticated user id"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"universalId\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"middleName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"accounts\": [\n        {\n            \"type\": \"CSO\",\n            \"identifier\": \"velit et cupidatat laborum eu\"\n        },\n        {\n            \"type\": \"BCEID\",\n            \"identifier\": \"in adipisicing tempor\"\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/csoAccount",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"csoAccount"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"universalId\": \"<string>\",\n \"firstName\": \"<string>\",\n \"lastName\": \"<string>\",\n \"middleName\": \"<string>\",\n \"email\": \"<string>\",\n \"accounts\": [\n  {\n   \"type\": \"CSO\",\n   \"identifier\": \"velit et cupidatat laborum eu\"\n  },\n  {\n   \"type\": \"BCEID\",\n   \"identifier\": \"in adipisicing tempor\"\n  }\n ]\n}"
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"id": "baseUrl",
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
 }

@@ -12,6 +12,6 @@ public interface SubmissionStore {
 
     Optional<Submission> put(Submission submission);
 
-    Optional<Submission> getByKey(UUID key);
+    Optional<Submission> get(UUID submissionId, UUID owner);
 
 }

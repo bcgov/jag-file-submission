@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service.submissionStore;
 
 
+import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStoreImpl;
@@ -14,7 +15,6 @@ import java.util.UUID;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class GetByKeyTest {
 
-    private static final UUID ID = UUID.randomUUID();
     private static final String TYPE = "type";
 
     @InjectMocks
@@ -33,7 +33,7 @@ public class GetByKeyTest {
     @DisplayName("CASE 1: without cache always return empty")
     public void withExistingIdShouldReturnSubmission() {
 
-        Optional<Submission> actual = sut.getByKey(ID);
+        Optional<Submission> actual = sut.get(TestHelpers.CASE_1, UUID.randomUUID());
         Assertions.assertEquals(Optional.empty(), actual);
 
     }
