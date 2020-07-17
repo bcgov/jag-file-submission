@@ -14,6 +14,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingStatsService;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
@@ -38,13 +39,18 @@ public class generateFromRequestTest {
 
     @Mock
     private SubmissionStore submissionStoreMock;
+
     @Mock
     private CacheProperties cachePropertiesMock;
+
     @Mock
     private EfilingAccountService efilingAccountServiceMock;
 
     @Mock
     private EfilingLookupService efilingLookupService;
+
+    @Mock
+    private EfilingStatsService efilingStatsService;
 
     @BeforeAll
     public void setUp() throws DatatypeConfigurationException {
