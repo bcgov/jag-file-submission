@@ -40,6 +40,10 @@ public class TestUtil {
         return new ResponseSpecBuilder().expectStatusCode(403).expectContentType(ContentType.JSON).build();
     }
 
+    public static ResponseSpecification withoutIdResponseSpecification() {
+        return new ResponseSpecBuilder().expectStatusCode(405).expectContentType(ContentType.JSON).build();
+    }
+
     public static ResponseSpecification createCsoAccountResponseSpecification() {
         return new ResponseSpecBuilder().expectStatusCode(201).expectContentType(ContentType.JSON).build();
     }
@@ -51,6 +55,7 @@ public class TestUtil {
     public static ResponseSpecification createCsoAccountIncorrectPathErrorResponseSpecification() {
         return new ResponseSpecBuilder().expectStatusCode(404).expectContentType(ContentType.JSON).build();
     }
+
 
     public static String getJsonPath(Response response, String key) {
         String resp = response.asString();
