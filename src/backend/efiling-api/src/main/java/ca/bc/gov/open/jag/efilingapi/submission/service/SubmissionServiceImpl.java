@@ -1,11 +1,15 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.*;
+import ca.bc.gov.open.jag.efilingapi.api.model.Document;
+import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
+import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
+import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
@@ -111,8 +115,12 @@ public class SubmissionServiceImpl implements SubmissionService {
     private Document toDocument(DocumentProperties documentProperties) {
 
         Document document = new Document();
-        document.setDescription("To be implemented");
-        document.setStatutoryFeeAmount(BigDecimal.TEN);
+
+        DocumentDetails details = efilingDocumentService.getDocumentDetails(documentProperties.getType());
+
+        document.setDescription(details.getDescription());
+        document.setStatutoryFeeAmount(details.getStatutoryFeeAmount());
+
         document.setType(documentProperties.getType());
         document.setName(documentProperties.getName());
         return document;

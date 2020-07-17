@@ -11,6 +11,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
@@ -107,6 +108,7 @@ public class generateFromRequestTest {
         Assertions.assertEquals(TestHelpers.PROPERTYCLASS, actual.getFilingPackage().getCourt().getPropertyClass());
         Assertions.assertEquals(TestHelpers.TYPE, actual.getFilingPackage().getDocuments().get(0).getType());
         Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getFilingPackage().getDocuments().get(0).getDescription());
+        Assertions.assertEquals(BigDecimal.TEN, actual.getFilingPackage().getDocuments().get(0).getStatutoryFeeAmount());
 
     }
 
@@ -184,6 +186,9 @@ public class generateFromRequestTest {
                         Mockito.eq(TestHelpers.CASE_1),
                         Mockito.any()))
                 .thenReturn(accountDetails);
+
+        Mockito.when(efilingDocumentService.getDocumentDetails(Mockito.any()))
+                .thenReturn(new DocumentDetails(TestHelpers.DESCRIPTION, BigDecimal.TEN));
 
         Submission submissionCase1 = Submission
                 .builder()
