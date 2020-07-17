@@ -118,7 +118,7 @@ public class GenerateUrlAndSubmissionTest {
     }
 
     @Given("{string} id with filing package path is submitted with GET http request")
-    public void id_with_filing_package_path_is_submitted_with_GET_http_request(String resource) throws IOException {
+    public void idWithFilingPackagePathIsSubmittedWithGETHttpRequest(String resource) throws IOException {
         APIResources resourceGet = APIResources.valueOf(resource);
 
         RequestSpecification request = given().spec(TestUtil.requestSpecification());
@@ -126,7 +126,7 @@ public class GenerateUrlAndSubmissionTest {
     }
 
     @Then("verify court details and document details are returned and not empty")
-    public void verify_court_details_and_document_details_are_returned_and_not_empty() {
+    public void verifyCourtDetailsAndDocumentDetailsAreReturnedAndNotEmpty() {
         jsonPath = new JsonPath(response.asString());
 
         String location = jsonPath.get("court.location");
