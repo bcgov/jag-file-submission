@@ -284,7 +284,13 @@ components:
       allOf:
         - $ref: "#/components/schemas/BasePacakge"
       description: A filing package can contain one or multiple documents that have or are being submitted electronically for new or existing court file.
+      required:
+        - submissionFeeAmount
+        - documents
       properties:
+        submissionFeeAmount:
+          type: number
+          description: Package submission fee.
         documents:
           type: array
           items:

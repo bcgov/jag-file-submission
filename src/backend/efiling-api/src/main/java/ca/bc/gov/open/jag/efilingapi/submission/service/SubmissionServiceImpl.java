@@ -1,7 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
-import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
+import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
@@ -9,14 +8,13 @@ import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -70,10 +68,10 @@ public class SubmissionServiceImpl implements SubmissionService {
         Optional<Submission> cachedSubmission = submissionStore.put(
                 submissionMapper.toSubmission(
                         submissionId,
-                        authUserId,
                         generateUrlRequest,
-                        getFees(generateUrlRequest.getFilingPackage().getDocuments()),
+                        toFilingPackage(generateUrlRequest.getFilingPackage()),
                         accountDetails,
+                        getStatutoryFeeAmount(generateUrlRequest),
                         getExpiryDate()));
 
         if(!cachedSubmission.isPresent())
@@ -96,12 +94,40 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     }
 
-    private List<ServiceFees> getFees(List<DocumentProperties> documents) {
-        return  documents.stream()
-                .map(doc ->
-                    efilingLookupService.getServiceFee(doc.getType())
-                )
-                .collect(Collectors.toList());
+    private FilingPackage toFilingPackage(InitialPackage initialPackage) {
+
+        FilingPackage filingPackage = new FilingPackage();
+        filingPackage.setCourt(initialPackage.getCourt());
+        filingPackage.setDocuments(
+        filingPackage
+                .getDocuments()
+                .stream()
+                .map(documentProperties -> toDocument(documentProperties))
+                .collect(Collectors.toList()));
+        return filingPackage;
+
+    }
+
+
+    private Document toDocument(DocumentProperties documentProperties) {
+
+        Document document = new Document();
+        document.setDescription("To be implemented");
+        document.setStatutoryFeeAmount(BigDecimal.TEN);
+        document.setType(documentProperties.getType());
+        document.setName(documentProperties.getName());
+        return document;
+
+    }
+
+    private BigDecimal getStatutoryFeeAmount(GenerateUrlRequest request) {
+
+        // TODO: implement
+        request.getClientApplication().setType("DCFL");
+        ServiceFees fee = efilingLookupService.getServiceFee(request.getClientApplication().getType());
+
+        return fee == null ? BigDecimal.ZERO : fee.getFeeAmt();
+
     }
 
     private long getExpiryDate() {

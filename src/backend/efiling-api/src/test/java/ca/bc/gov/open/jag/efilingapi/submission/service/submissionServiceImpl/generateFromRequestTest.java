@@ -83,7 +83,7 @@ public class generateFromRequestTest {
     public void withValidAccountShouldReturnSubmission() {
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setNavigation(TestHelpers.createDefaultNavigation());
-        request.setFilingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()));
+        request.setFilingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList()));
 
         Submission actual = sut.generateFromRequest(TestHelpers.CASE_1, TestHelpers.CASE_1, request);
 
@@ -117,7 +117,7 @@ public class generateFromRequestTest {
 
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setNavigation(TestHelpers.createDefaultNavigation());
-        request.setFilingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()));
+        request.setFilingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList()));
 
 
         Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(TestHelpers.CASE_2, TestHelpers.CASE_2, request));
@@ -130,7 +130,7 @@ public class generateFromRequestTest {
 
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setNavigation(TestHelpers.createDefaultNavigation());
-        request.setFilingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()));
+        request.setFilingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList()));
 
 
         Assertions.assertThrows(InvalidAccountStateException.class, () -> sut.generateFromRequest(TestHelpers.CASE_3, TestHelpers.CASE_3, request));
@@ -144,7 +144,7 @@ public class generateFromRequestTest {
         UUID fakeaccount = UUID.fromString("88da92db-0791-491e-8c58-1a969e67d2fb");
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setNavigation(TestHelpers.createDefaultNavigation());
-        request.setFilingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()));
+        request.setFilingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList()));
 
         AccountDetails accountDetails =  AccountDetails.builder().lastName("lastName").create();
 
@@ -157,7 +157,7 @@ public class generateFromRequestTest {
                 .accountDetails(accountDetails)
                 .navigation(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
-                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
+                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList()))
                 .fees(fees)
                 .create();
 
@@ -191,7 +191,7 @@ public class generateFromRequestTest {
                 .accountDetails(accountDetails)
                 .navigation(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
-                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
+                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList()))
                 .fees(Arrays.asList(fee,fee))
                 .create();
 

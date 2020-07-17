@@ -37,7 +37,7 @@ public class SubmissionTest {
         Submission actual = new Submission(
                 UUID.randomUUID(),
                 UUID.randomUUID(),
-                TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()),
+                TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList()),
                 TestHelpers.createNavigation(CASE_1, CANCEL, ERROR),
                 TestHelpers.createClientApplication(DISPLAYNAME, TYPE),
                 Arrays.asList(fee,fee),

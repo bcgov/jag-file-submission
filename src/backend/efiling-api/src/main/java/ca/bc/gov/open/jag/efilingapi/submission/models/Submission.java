@@ -8,6 +8,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,6 +33,8 @@ public class Submission {
 
     private AccountDetails accountDetails;
 
+    private BigDecimal statutoryFeeAmount;
+
     protected Submission(Submission.Builder builder) {
         this.id = builder.id;
         this.owner = builder.owner;
@@ -41,6 +44,7 @@ public class Submission {
         this.fees = builder.fees;
         this.accountDetails = builder.accountDetails;
         this.expiryDate = builder.expiryDate;
+        this.statutoryFeeAmount = builder.statutoryFeeAmount;
     }
 
     public static Submission.Builder builder() {
@@ -103,6 +107,7 @@ public class Submission {
         private List<ServiceFees> fees;
         private AccountDetails accountDetails;
         private long expiryDate;
+        private BigDecimal statutoryFeeAmount;
 
         public Builder id (UUID id) {
             this.id = id;
@@ -140,6 +145,11 @@ public class Submission {
 
         public Builder expiryDate(long expiryDate) {
             this.expiryDate = expiryDate;
+            return this;
+        }
+
+        public Builder statutoryFeeAmount(BigDecimal statutoryFeeAmount) {
+            this.statutoryFeeAmount= statutoryFeeAmount;
             return this;
         }
 
