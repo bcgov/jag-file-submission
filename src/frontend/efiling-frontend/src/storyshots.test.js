@@ -1,7 +1,8 @@
 import initStoryshots, {
   Stories2SnapsConverter
 } from "@storybook/addon-storyshots";
-import { render, wait } from "@testing-library/react";
+import { wait } from "@testing-library/react";
+import { mount } from "enzyme";
 import { createSerializer } from "enzyme-to-json";
 
 const converter = new Stories2SnapsConverter();
@@ -15,10 +16,10 @@ const runTest = async (story, context) => {
 
   const storyElement = story.render();
 
-  const { asFragment } = render(storyElement);
+  const asFragment = mount(storyElement);
 
   await wait(() => {
-    expect(asFragment()).toMatchSpecificSnapshot(filename);
+    expect(asFragment).toMatchSpecificSnapshot(filename);
   });
 };
 

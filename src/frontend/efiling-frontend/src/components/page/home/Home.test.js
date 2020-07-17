@@ -20,6 +20,7 @@ const page = { header, confirmationPopup };
 describe("Home", () => {
   const submissionId = "abc123";
   const apiRequest = `/submission/${submissionId}`;
+  const apiRequestFiling = `/submission/${submissionId}/filing-package`;
   const navigation = {
     cancel: {
       url: "cancelurl.com"
@@ -31,6 +32,20 @@ describe("Home", () => {
       url: ""
     }
   };
+  const documents = [
+    {
+      name: "file name 1",
+      description: "file description 1",
+      type: "file type",
+      statutoryFeeAmount: 40
+    },
+    {
+      name: "file name 2",
+      description: "file description 2",
+      type: "file type",
+      statutoryFeeAmount: 0
+    }
+  ];
   const userDetails = getUserDetails();
 
   window.open = jest.fn();
@@ -49,6 +64,7 @@ describe("Home", () => {
 
   test("Component matches the snapshot when user cso account exists", async () => {
     mock.onGet(apiRequest).reply(200, { userDetails, navigation });
+    mock.onGet(apiRequestFiling).reply(200, { documents });
 
     const { asFragment } = render(component);
 

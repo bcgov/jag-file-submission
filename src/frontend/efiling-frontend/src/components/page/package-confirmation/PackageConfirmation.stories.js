@@ -32,7 +32,7 @@ const documents = [
 ];
 
 const LoadData = props => {
-  mock.onGet(apiRequest).reply(200, { documents });
+  mock.onGet(apiRequest).reply(200, { documents: documents });
   return props.children({ packageConfirmation, csoAccountStatus });
 };
 

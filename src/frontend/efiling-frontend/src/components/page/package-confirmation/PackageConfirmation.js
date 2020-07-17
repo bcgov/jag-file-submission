@@ -27,6 +27,8 @@ const uploadButton = {
 };
 
 const generateTotalFeeTable = files => {
+  console.log("FILES:", files);
+
   let totalStatFee = 0;
   files.forEach(file => {
     totalStatFee += file.statutoryFeeAmount;
@@ -100,6 +102,7 @@ const getFilingPackageData = (submissionId, setFiles, files) => {
       }
     })
     .then(({ data: { documents } }) => {
+      console.log("documents", documents);
       setFiles(documents);
     })
     .catch(() => window.open(sessionStorage.getItem("errorUrl"), "_self"));

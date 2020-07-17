@@ -469,6 +469,301 @@ exports[`Storyshots Home Account Exists 1`] = `
 </DocumentFragment>
 `;
 
+exports[`Storyshots Home Account Exists 2`] = `
+<LoaderStateData>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "key": "testKey",
+          "search": "?submissionId=abc123",
+        },
+      ]
+    }
+  >
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "key": "testKey",
+              "pathname": "/",
+              "search": "?submissionId=abc123",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "key": "testKey",
+            "pathname": "/",
+            "search": "?submissionId=abc123",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <Home
+        page={
+          Object {
+            "confirmationPopup": Object {
+              "cancelButton": Object {
+                "label": "No, dont cancel",
+                "onClick": [Function],
+                "styling": "normal-white btn consistent-width",
+              },
+              "confirmButton": Object {
+                "label": "Yes, cancel",
+                "onClick": [Function],
+                "styling": "normal-blue btn consistent-width",
+              },
+              "mainButton": Object {
+                "label": "Cancel",
+                "onClick": [Function],
+                "styling": "normal-white btn",
+              },
+              "modal": Object {
+                "body": [Function],
+                "show": false,
+                "title": "title",
+              },
+            },
+            "header": Object {
+              "history": Object {
+                "action": "POP",
+                "block": [Function],
+                "canGo": [Function],
+                "createHref": [Function],
+                "entries": Array [
+                  Object {
+                    "hash": "",
+                    "key": "5zowy2",
+                    "pathname": "/",
+                    "search": "",
+                    "state": undefined,
+                  },
+                ],
+                "go": [Function],
+                "goBack": [Function],
+                "goForward": [Function],
+                "index": 0,
+                "length": 1,
+                "listen": [Function],
+                "location": Object {
+                  "hash": "",
+                  "key": "5zowy2",
+                  "pathname": "/",
+                  "search": "",
+                  "state": undefined,
+                },
+                "push": [Function],
+                "replace": [Function],
+              },
+              "name": "E-File Submission",
+            },
+          }
+        }
+      >
+        <main>
+          <Header
+            header={
+              Object {
+                "history": Object {
+                  "action": "POP",
+                  "block": [Function],
+                  "canGo": [Function],
+                  "createHref": [Function],
+                  "entries": Array [
+                    Object {
+                      "hash": "",
+                      "key": "5zowy2",
+                      "pathname": "/",
+                      "search": "",
+                      "state": undefined,
+                    },
+                  ],
+                  "go": [Function],
+                  "goBack": [Function],
+                  "goForward": [Function],
+                  "index": 0,
+                  "length": 1,
+                  "listen": [Function],
+                  "location": Object {
+                    "hash": "",
+                    "key": "5zowy2",
+                    "pathname": "/",
+                    "search": "",
+                    "state": undefined,
+                  },
+                  "push": [Function],
+                  "replace": [Function],
+                },
+                "name": "E-File Submission",
+              }
+            }
+          >
+            <header>
+              <nav
+                className="container-fluid navbar navbar-expand-lg navbar-dark"
+              >
+                <div
+                  aria-labelledby="title"
+                  className="navbar-brand pointer"
+                />
+                <img
+                  alt="B.C. Government Logo"
+                  className="img-fluid d-none d-md-block pointer"
+                  height="44"
+                  onClick={[Function]}
+                  onKeyDown={[Function]}
+                  role="presentation"
+                  src="undefined/images/bcid-logo-rev-en.svg"
+                  width={181}
+                />
+                <img
+                  alt="B.C. Government Logo"
+                  className="img-fluid d-md-none pointer"
+                  height="44"
+                  onClick={[Function]}
+                  onKeyDown={[Function]}
+                  role="presentation"
+                  src="undefined/images/bcid-symbol-rev.svg"
+                  width={64}
+                />
+                <div
+                  aria-labelledby="title"
+                  className="pointer navbar-brand nav-item nav-link"
+                />
+                <div
+                  className="navbar-brand"
+                  id="title"
+                >
+                  E-File Submission
+                </div>
+              </nav>
+            </header>
+          </Header>
+          <Loader
+            page={true}
+          >
+            <div
+              className="loader-align"
+            >
+              <div
+                className="page-loader"
+              />
+              <br />
+              Loading... Please Wait
+            </div>
+          </Loader>
+          <Footer>
+            <footer
+              className="footer"
+            >
+              <nav
+                className="navbar navbar-expand-sm navbar-dark justify-content-end"
+              >
+                <FooterToggler>
+                  <button
+                    className="navbar-toggler"
+                    data-target="#footerBar"
+                    data-toggle="collapse"
+                    type="button"
+                  >
+                    <span
+                      className="navbar-toggler-icon"
+                    />
+                  </button>
+                </FooterToggler>
+                <div
+                  className="collapse navbar-collapse flex-grow-0"
+                  id="footerBar"
+                >
+                  <ul
+                    className="navbar-nav text-right"
+                  >
+                    <li
+                      className="nav-item m-1"
+                    >
+                      <a
+                        className="nav-link"
+                        href="https://www2.gov.bc.ca"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        BC Government
+                      </a>
+                    </li>
+                    <li
+                      className="nav-item m-1"
+                    >
+                      <a
+                        className="nav-link"
+                        href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        Disclaimer
+                      </a>
+                    </li>
+                    <li
+                      className="nav-item m-1"
+                    >
+                      <a
+                        className="nav-link"
+                        href="https://www2.gov.bc.ca/gov/content/home/privacy"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        Privacy
+                      </a>
+                    </li>
+                    <li
+                      className="nav-item m-1"
+                    >
+                      <a
+                        className="nav-link"
+                        href="https://www2.gov.bc.ca/gov/content/home/accessibility"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        Accessibility
+                      </a>
+                    </li>
+                    <li
+                      className="nav-item m-1"
+                    >
+                      <a
+                        className="nav-link"
+                        href="https://www2.gov.bc.ca/gov/content/home/copyright"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        Copyright
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </nav>
+            </footer>
+          </Footer>
+        </main>
+      </Home>
+    </Router>
+  </MemoryRouter>
+</LoaderStateData>
+`;
+
 exports[`Storyshots Home Account Exists Mobile 1`] = `
 <DocumentFragment>
   <main>
@@ -3349,3 +3644,148 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
   </main>
 </DocumentFragment>
 `;
+
+exports[`Storyshots Home No Account Exists Mobile 2`] = `<DocumentFragment />`;
+
+exports[`Storyshots Home No Account Exists Mobile 3`] = `
+<DocumentFragment>
+  <main>
+    <header>
+      <nav
+        class="container-fluid navbar navbar-expand-lg navbar-dark"
+      >
+        <div
+          aria-labelledby="title"
+          class="navbar-brand pointer"
+        />
+        <img
+          alt="B.C. Government Logo"
+          class="img-fluid d-none d-md-block pointer"
+          height="44"
+          role="presentation"
+          src="undefined/images/bcid-logo-rev-en.svg"
+          width="181"
+        />
+        <img
+          alt="B.C. Government Logo"
+          class="img-fluid d-md-none pointer"
+          height="44"
+          role="presentation"
+          src="undefined/images/bcid-symbol-rev.svg"
+          width="64"
+        />
+        <div
+          aria-labelledby="title"
+          class="pointer navbar-brand nav-item nav-link"
+        />
+        <div
+          class="navbar-brand"
+          id="title"
+        >
+          E-File Submission
+        </div>
+      </nav>
+    </header>
+    <div
+      class="loader-align"
+    >
+      <div
+        class="page-loader"
+      />
+      <br />
+      Loading... Please Wait
+    </div>
+    <footer
+      class="footer"
+    >
+      <nav
+        class="navbar navbar-expand-sm navbar-dark justify-content-end"
+      >
+        <button
+          class="navbar-toggler"
+          data-target="#footerBar"
+          data-toggle="collapse"
+          type="button"
+        >
+          <span
+            class="navbar-toggler-icon"
+          />
+        </button>
+        <div
+          class="collapse navbar-collapse flex-grow-0"
+          id="footerBar"
+        >
+          <ul
+            class="navbar-nav text-right"
+          >
+            <li
+              class="nav-item m-1"
+            >
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                BC Government
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
+            >
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Disclaimer
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
+            >
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/privacy"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Privacy
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
+            >
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/accessibility"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Accessibility
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
+            >
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/copyright"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Copyright
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </footer>
+  </main>
+</DocumentFragment>
+`;
+
+exports[`Storyshots PackageConfirmation Existing Account 1`] = `<DocumentFragment />`;
+
+exports[`Storyshots PackageConfirmation Existing Account 2`] = `<DocumentFragment />`;
