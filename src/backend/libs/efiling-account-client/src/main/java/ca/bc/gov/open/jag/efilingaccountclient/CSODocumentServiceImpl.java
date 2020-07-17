@@ -12,14 +12,20 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CSOStatusServiceImpl implements EfilingDocumentService {
+public class CSODocumentServiceImpl implements EfilingDocumentService {
 
     private final FilingStatusFacadeBean filingStatusFacadeBean;
 
-    public CSOStatusServiceImpl(FilingStatusFacadeBean filingStatusFacadeBean) {
+    public CSODocumentServiceImpl(FilingStatusFacadeBean filingStatusFacadeBean) {
         this.filingStatusFacadeBean = filingStatusFacadeBean;
     }
 
+    /**
+     * <arg0>P</arg0> --> level
+     * <arg1>F</arg1> --> class
+     * @param documentType
+     * @return
+     */
     @Override
     public DocumentDetails getDocumentDetails(String documentType) {
         try {

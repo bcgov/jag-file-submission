@@ -3,7 +3,7 @@ package ca.bc.gov.open.jag.efilingaccountclient.config;
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RoleRegistryPortType;
 import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
-import ca.bc.gov.open.jag.efilingaccountclient.CSOStatusServiceImpl;
+import ca.bc.gov.open.jag.efilingaccountclient.CSODocumentServiceImpl;
 import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountServiceImpl;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingaccountclient.mappers.AccountDetailsMapper;
@@ -67,7 +67,7 @@ public class AutoConfiguration {
     @Bean
     @ConditionalOnMissingBean({EfilingDocumentService.class})
     public EfilingDocumentService efilingDocumentService(FilingStatusFacadeBean filingStatusFacadeBean) {
-        return new CSOStatusServiceImpl(filingStatusFacadeBean);
+        return new CSODocumentServiceImpl(filingStatusFacadeBean);
     }
 
     public <T> T getPort(Clients clients, Class<T> type) {
