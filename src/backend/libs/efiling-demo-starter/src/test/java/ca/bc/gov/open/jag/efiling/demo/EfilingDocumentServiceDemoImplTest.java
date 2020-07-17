@@ -19,7 +19,7 @@ public class EfilingDocumentServiceDemoImplTest {
         String serviceId = "TestServiceId";
         DocumentDetails actual = service.getDocumentDetails(serviceId);
 
-        Assertions.assertEquals("This is a doc", actual.getDesc());
+        Assertions.assertEquals("This is a doc", actual.getDescription());
 
     }
 }
