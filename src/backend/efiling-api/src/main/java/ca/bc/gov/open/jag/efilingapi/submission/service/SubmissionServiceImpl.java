@@ -106,7 +106,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                 .getDocuments()
                 .stream()
                 .map(documentProperties -> toDocument(
-                        request.getFilingPackage().getCourt().getLocation(),
+                        request.getFilingPackage().getCourt().getLevel(),
                         request.getFilingPackage().getCourt().getPropertyClass(),
                         documentProperties))
                 .collect(Collectors.toList()));
