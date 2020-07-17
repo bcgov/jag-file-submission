@@ -188,12 +188,24 @@ components:
         name:
           type: string
           description: the name of the document
-        description:
-          type: string
-          description: the description of the document
         type:
           type: string
           description: the submission type
+    Document:
+      required:
+        - description
+        - statutoryFeeAmount
+      type: object
+      description: A Efiling Document
+      allOf:
+        - $ref: "#/components/schemas/DocumentProperties"
+      properties:
+        description:
+          type: string
+          description: the description of the document
+        statutoryFeeAmount:
+          type: number
+          description: statutory fee amount
     EfilingError:
       required:
         - error
@@ -213,7 +225,7 @@ components:
         clientApplication:
           $ref: "#/components/schemas/ClientApplication"
         filingPackage:
-          $ref: "#/components/schemas/FilingPackage"
+          $ref: "#/components/schemas/InitialPackage"
         navigation:
           $ref: "#/components/schemas/Navigation"
     GenerateUrlResponse:
@@ -251,16 +263,32 @@ components:
           $ref: "#/components/schemas/Redirect"
         cancel:
           $ref: "#/components/schemas/Redirect"
-    FilingPackage:
+    BasePacakge:
       type: object
       description: A filing package can contain one or multiple documents that have or are being submitted electronically for new or existing court file.
       properties:
         court:
           $ref: "#/components/schemas/Court"
+    InitialPackage:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/BasePacakge"
+      description: A filing package can contain one or multiple documents that have or are being submitted electronically for new or existing court file.
+      properties:
         documents:
           type: array
           items:
             $ref: "#/components/schemas/DocumentProperties"
+    FilingPackage:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/BasePacakge"
+      description: A filing package can contain one or multiple documents that have or are being submitted electronically for new or existing court file.
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: "#/components/schemas/Document"
     Court:
       type: object
       description: "Court related information"
