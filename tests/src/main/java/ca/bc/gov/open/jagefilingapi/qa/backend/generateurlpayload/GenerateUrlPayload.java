@@ -9,47 +9,26 @@ import java.util.List;
 
 public class GenerateUrlPayload {
 
-    private String DIVISION = null;
-    private String FILENUMBER = null;
-    private String LEVEL = null;
-    private String LOCATION = null;
-    private String PARTICIPATIONCLASS = null;
-    private String PROPERTYCLASS = null;
-    private String NAME = null;
-    private String DESCRIPTION = null;
-    private String TYPEFIRST = null;
-    private String TYPESECOND = null;
-    private String DISPLAYNAME = null;
+    private static final String DIVISION = "division";
+    private static final String FILENUMBER = "file number";
+    private static final String LEVEL = "level";
+    private static final String LOCATION = "location";
+    private static final String PARTICIPATIONCLASS = "class";
+    private static final String PROPERTYCLASS = "property class";
+    private static final String NAME = "name";
+    private static final String DESCRIPTION = "description";
+    private static final String TYPEFIRST = "Client application type";
+    private static final String TYPESECOND = "Document type";
+    private static final String DISPLAYNAME = "Display name";
 
-    public String SUCCESS_URL = null;
-    public String CANCEL_URL = null;
-    public String ERROR_URL = null;
+    public static final String SUCCESS_URL = "http://success.com";
+    public static final String CANCEL_URL = "http://cancel.com";
+    public static final String ERROR_URL = "http://error.com";
 
-    private ClientApplication clientApplication;
-    private FilingPackage filingPackage;
-    private Navigation navigation;
     private GenerateUrlRequest generateUrlRequest;
-    private static final String STRING = "string";
 
     public String validGenerateUrlPayload() throws IOException {
         generateUrlRequest = new GenerateUrlRequest();
-
-        TYPEFIRST = STRING;
-        DISPLAYNAME = STRING;
-
-        DIVISION = STRING;
-        FILENUMBER = STRING;
-        LEVEL = STRING;
-        LOCATION = STRING;
-        PARTICIPATIONCLASS =STRING;
-        PROPERTYCLASS = STRING;
-        NAME = STRING;
-        DESCRIPTION = STRING;
-        TYPESECOND = "DFCL";
-
-        SUCCESS_URL = "http://success";
-        CANCEL_URL = "http://cancel";
-        ERROR_URL = "http://error";
 
         ObjectMapper objMap = new ObjectMapper();
         return objMap.writeValueAsString(generateUrlRequestPayload());
@@ -66,7 +45,7 @@ public class GenerateUrlPayload {
     }
 
     public ClientApplication createClientApplication(String displayName, String type) {
-        clientApplication = new ClientApplication();
+        ClientApplication clientApplication = new ClientApplication();
 
         clientApplication.setDisplayName(displayName);
         clientApplication.setType(type);
@@ -75,7 +54,7 @@ public class GenerateUrlPayload {
     }
 
     public FilingPackage createPackage(Court court, List<DocumentProperties> documents) {
-        filingPackage = new FilingPackage();
+        FilingPackage filingPackage = new FilingPackage();
 
         filingPackage.setCourt(court);
         filingPackage.setDocuments(documents);
@@ -84,7 +63,7 @@ public class GenerateUrlPayload {
     }
 
     public Navigation createNavigation(String success, String cancel, String error) {
-        navigation = new Navigation();
+        Navigation navigation = new Navigation();
         Redirect successRedirect = new Redirect();
 
         successRedirect.setUrl(success);
