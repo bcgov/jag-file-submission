@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class DocumentDetails {
 
-    private String desc;
+    private String description;
 
     public String getDescription() {
         return description;
