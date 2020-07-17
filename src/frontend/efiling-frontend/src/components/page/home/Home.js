@@ -36,7 +36,9 @@ const checkCSOAccountStatus = (
 ) => {
   axios
     .get(`/submission/${submissionId}`, {
-      "X-Auth-UserId": temp
+      headers: {
+        "X-Auth-UserId": temp
+      }
     })
     .then(({ data: { userDetails, navigation } }) => {
       saveNavigationToSession(navigation);

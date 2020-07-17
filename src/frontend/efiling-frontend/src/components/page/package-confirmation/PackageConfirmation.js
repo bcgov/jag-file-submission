@@ -90,9 +90,15 @@ const generateTableData = file => {
   ];
 };
 
-const getFilingPackageData = (submissionId, setFiles) => {
+const getFilingPackageData = (submissionId, setFiles, files) => {
+  if (files.length > 0) return;
+
   axios
-    .get(`/submission/${submissionId}/filing-package`)
+    .get(`/submission/${submissionId}/filing-package`, {
+      headers: {
+        "X-Auth-UserId": sessionStorage.getItem("universalId")
+      }
+    })
     .then(({ data: { documents } }) => {
       setFiles(documents);
     })
@@ -108,7 +114,7 @@ export default function PackageConfirmation({
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
 
   useEffect(() => {
-    getFilingPackageData(submissionId, setFiles);
+    getFilingPackageData(submissionId, setFiles, files);
   }, [files, submissionId]);
 
   return (

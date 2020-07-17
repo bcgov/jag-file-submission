@@ -26,8 +26,8 @@ const urlBody = {
   filingPackage: {
     court: {
       location: "string",
-      level: "string",
-      class: "string",
+      level: "P",
+      class: "F",
       division: "string",
       fileNumber: "string",
       participatingClass: "string"
@@ -70,7 +70,7 @@ const generatePackageData = files => {
     documentData.push({
       name: files[i].file.name,
       description: "file description",
-      type: "file type"
+      type: "AFF"
     });
   }
 
