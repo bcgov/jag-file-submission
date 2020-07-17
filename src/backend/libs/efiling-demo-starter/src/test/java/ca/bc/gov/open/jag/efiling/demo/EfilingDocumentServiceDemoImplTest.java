@@ -6,6 +6,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
+import java.math.BigDecimal;
+
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("Demo Efiling Stats Client Test Suite")
@@ -20,6 +22,6 @@ public class EfilingDocumentServiceDemoImplTest {
         DocumentDetails actual = service.getDocumentDetails(serviceId);
 
         Assertions.assertEquals("This is a doc", actual.getDescription());
-
+        Assertions.assertEquals(BigDecimal.valueOf(7), actual.getStatutoryFeeAmount());
     }
 }
