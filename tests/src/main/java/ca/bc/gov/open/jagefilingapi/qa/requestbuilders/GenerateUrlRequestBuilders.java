@@ -66,13 +66,13 @@ public class GenerateUrlRequestBuilders {
         return request.when().post(resourceInvalid.getResource()  + validExistingCSOGuid + "/generateUrs").then().extract().response();
     }
 
-    public Response requestWithInvalidNoIdAndIncorrectPath(String resourceValue) throws IOException {
+    public Response requestWithoutIdInThePath(String resourceValue) throws IOException {
         payloadData = new GenerateUrlPayload();
-        APIResources resourceInvalid = APIResources.valueOf(resourceValue);
+        APIResources resourceValid = APIResources.valueOf(resourceValue);
 
         String validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
         request = given().spec(TestUtil.requestSpecification()).header(X_AUTH_USER_ID,validExistingCSOGuid).body(payloadData.validGenerateUrlPayload());
-        return request.when().post(resourceInvalid.getResource() + "/generateUrs").then().extract().response();
+        return request.when().post(resourceValid.getResource() + "generateUrl").then().extract().response();
     }
 }

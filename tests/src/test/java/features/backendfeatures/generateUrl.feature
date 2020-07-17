@@ -17,7 +17,6 @@ Feature: User id is authenticated and user details are retrieved with generated 
     Then verify response returns "EFILING_URL" and expiry date
     Given "SUBMISSION" id is submitted with GET http request
     When status code is 200 and content type is verified
-    # Account values in response are not null for now. Will update the test case when database can be reset.
     Then verify accounts value is null but names and email details are returned
     And verify success, error and cancel navigation urls are returned
 
@@ -44,6 +43,6 @@ Feature: User id is authenticated and user details are retrieved with generated 
   @backend
   #@negative
   Scenario: Verify secure url is not generated if path is missing id parameter
-    Given POST http request is made to "GENERATE_URL_API" with invalid path
+    Given POST http request is made to "GENERATE_URL_API" without id in the path
     When status code is 405 and content type is verified
     Then verify error message is present and message has no value

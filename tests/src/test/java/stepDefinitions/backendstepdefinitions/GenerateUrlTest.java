@@ -144,7 +144,7 @@ public class GenerateUrlTest {
         assertThat(universalId, is(equalToIgnoringCase(validExistingCSOGuid)));
         assertThat(firstName, is(not(emptyString())));
         assertThat(lastName, is(not(emptyString())));
-        assertNotNull(middleName);
+        assertThat(middleName, is(not(emptyString())));
         assertThat(email, is(not(emptyString())));
         log.info("Names and email objects from the valid CSO account submission response does not have empty values");
 
@@ -182,10 +182,7 @@ public class GenerateUrlTest {
         middleName = jsonPath.get("userDetails.middleName");
         email = jsonPath.get("userDetails.email");
 
-        //To do: Created accounts should be deleted or reset. Modify tests when done.
-
-        List<String> type = jsonPath.get( "userDetails.accounts.type");
-        List<String> identifier = jsonPath.get( "userDetails.accounts.identifier");
+        String accounts = jsonPath.get("accounts");
 
         List<String> feeAmt = jsonPath.get( "fees.feeAmt");
         List<String> serviceTypeCd = jsonPath.get( "fees.serviceTypeCd");
@@ -196,8 +193,7 @@ public class GenerateUrlTest {
         assertThat(email, is(not(emptyString())));
         log.info("Names and email objects from the valid CSO account submission response have valid values.");
 
-        assertFalse(type.isEmpty());
-        assertFalse(identifier.isEmpty());
+        assertNull(accounts);
         assertFalse(feeAmt.isEmpty());
         assertFalse(serviceTypeCd.isEmpty());
         log.info("Accounts object value from the valid CSO account submission response is null but fee amount and .");
@@ -249,5 +245,12 @@ public class GenerateUrlTest {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
 
         response = generateUrlRequestBuilders.requestWithInvalidPath(resource);
+    }
+
+    @Given("POST http request is made to {string} without id in the path")
+    public void POSTHttpRequestIsMadeToWithoutIdInThePath(String resource) throws IOException {
+        generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
+
+        response = generateUrlRequestBuilders.requestWithoutIdInThePath(resource);
     }
 }
