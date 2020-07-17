@@ -6,7 +6,8 @@ const userDetails = {
   email: "bob.ross@example.com",
   accounts: [
     {
-      type: "CSO"
+      type: "CSO",
+      identifier: "123"
     }
   ]
 };

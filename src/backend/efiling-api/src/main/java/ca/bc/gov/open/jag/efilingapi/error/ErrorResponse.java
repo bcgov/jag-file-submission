@@ -3,7 +3,8 @@ package ca.bc.gov.open.jag.efilingapi.error;
 public enum ErrorResponse {
     INVALIDROLE("User does not have a valid role for this request."),
     ACCOUNTEXCEPTION("Client has multiple CSO profiles."),
-    GETPROFILESEXCEPTION("Calling CSO accountFacade.getProfiles caused an exception."),
+    DOCUMENT_REQUIRED("At least one document is required."),
+    DOCUMENT_STORAGE_FAILURE("An unknown error happened while storing documents."),
     CREATE_ACCOUNT_EXCEPTION("Error Creating CSO account."),
     CACHE_ERROR("Cache related error.");
 
