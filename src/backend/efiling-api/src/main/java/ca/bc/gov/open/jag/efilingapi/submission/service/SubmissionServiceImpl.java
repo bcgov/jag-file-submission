@@ -55,7 +55,7 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     @Override
-    public Submission generateFromRequest(UUID authUserId, GenerateUrlRequest generateUrlRequest) {
+    public Submission generateFromRequest(UUID authUserId, UUID submissionId, GenerateUrlRequest generateUrlRequest) {
 
         logger.debug("Attempting to get user cso account information");
         AccountDetails accountDetails = efilingAccountService.getAccountDetails(authUserId, "Individual");
@@ -67,10 +67,11 @@ public class SubmissionServiceImpl implements SubmissionService {
             accountDetails = fakeFromBceId(authUserId);
         }
 
-
-
         Optional<Submission> cachedSubmission = submissionStore.put(
-                submissionMapper.toSubmission(generateUrlRequest,
+                submissionMapper.toSubmission(
+                        submissionId,
+                        authUserId,
+                        generateUrlRequest,
                         getFees(generateUrlRequest.getFilingPackage().getDocuments()),
                         accountDetails,
                         getExpiryDate()));

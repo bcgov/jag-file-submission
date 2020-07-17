@@ -14,14 +14,14 @@ public class SubmissionStoreImpl implements SubmissionStore {
 
 
     @Override
-    @CachePut(cacheNames = "submission", key = "#submission.id", cacheManager = "submissionCacheManager")
+    @CachePut(cacheNames = "submission", key = "{ #submission.id, #submission.owner }", cacheManager = "submissionCacheManager")
     public Optional<Submission> put(Submission submission) {
         return Optional.of(submission);
     }
 
     @Override
-    @Cacheable(cacheNames = "submission", key = "#key", cacheManager = "submissionCacheManager", unless="#result == null")
-    public Optional<Submission> getByKey(UUID key) {
+    @Cacheable(cacheNames = "submission", key = "{ #submissionId, #owner }", cacheManager = "submissionCacheManager", unless="#result == null")
+    public Optional<Submission> get(UUID submissionId, UUID owner) {
         return Optional.empty();
     }
 

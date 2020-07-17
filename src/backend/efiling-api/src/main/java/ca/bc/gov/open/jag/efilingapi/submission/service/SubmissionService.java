@@ -7,6 +7,6 @@ import java.util.UUID;
 
 public interface SubmissionService {
 
-    Submission generateFromRequest(UUID authUserId, GenerateUrlRequest generateUrlRequest);
+    Submission generateFromRequest(UUID authUserId, UUID submissionId, GenerateUrlRequest generateUrlRequest);
 
 }

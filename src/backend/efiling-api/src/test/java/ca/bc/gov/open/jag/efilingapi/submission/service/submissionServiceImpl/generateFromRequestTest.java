@@ -85,7 +85,7 @@ public class generateFromRequestTest {
         request.setNavigation(TestHelpers.createDefaultNavigation());
         request.setFilingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()));
 
-        Submission actual = sut.generateFromRequest(TestHelpers.CASE_1, request);
+        Submission actual = sut.generateFromRequest(TestHelpers.CASE_1, TestHelpers.CASE_1, request);
 
         Assertions.assertEquals(TestHelpers.CASE_1.toString() + EMAIL, actual.getAccountDetails().getEmail());
         Assertions.assertEquals(TestHelpers.CASE_1.toString() + FIRST_NAME, actual.getAccountDetails().getFirstName());
@@ -120,7 +120,7 @@ public class generateFromRequestTest {
         request.setFilingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()));
 
 
-        Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(TestHelpers.CASE_2, request));
+        Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(TestHelpers.CASE_2, TestHelpers.CASE_2, request));
 
     }
 
@@ -133,7 +133,7 @@ public class generateFromRequestTest {
         request.setFilingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()));
 
 
-        Assertions.assertThrows(InvalidAccountStateException.class, () -> sut.generateFromRequest(TestHelpers.CASE_3, request));
+        Assertions.assertThrows(InvalidAccountStateException.class, () -> sut.generateFromRequest(TestHelpers.CASE_3, TestHelpers.CASE_3, request));
 
     }
 
@@ -145,8 +145,6 @@ public class generateFromRequestTest {
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setNavigation(TestHelpers.createDefaultNavigation());
         request.setFilingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()));
-
-
 
         AccountDetails accountDetails =  AccountDetails.builder().lastName("lastName").create();
 
@@ -168,7 +166,7 @@ public class generateFromRequestTest {
                 .when(submissionStoreMock).put(
                 ArgumentMatchers.argThat(x -> StringUtils.equals("Ross", x.getAccountDetails().getLastName())));
 
-        Submission actual = sut.generateFromRequest(fakeaccount, request);
+        Submission actual = sut.generateFromRequest(fakeaccount, fakeaccount, request);
 
         Assertions.assertEquals("lastName", actual.getAccountDetails().getLastName());
 
@@ -188,6 +186,8 @@ public class generateFromRequestTest {
 
         Submission submissionCase1 = Submission
                 .builder()
+                .id(TestHelpers.CASE_1)
+                .owner(TestHelpers.CASE_1)
                 .accountDetails(accountDetails)
                 .navigation(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
