@@ -238,7 +238,7 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
                   <p>
                     CSO account 
                     <b>
-                      blah
+                      123
                     </b>
                      is linked to your Basic BCeID account 
                     <b>
@@ -613,7 +613,7 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
                   <p>
                     CSO account 
                     <b>
-                      blah
+                      123
                     </b>
                      is linked to your Basic BCeID account 
                     <b>

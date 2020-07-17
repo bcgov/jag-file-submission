@@ -276,7 +276,7 @@ exports[`Storyshots Home Account Exists 1`] = `
                     <p>
                       CSO account 
                       <b>
-                        blah
+                        123
                       </b>
                        is linked to your Basic BCeID account 
                       <b>
@@ -745,7 +745,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
                     <p>
                       CSO account 
                       <b>
-                        blah
+                        123
                       </b>
                        is linked to your Basic BCeID account 
                       <b>

@@ -37,6 +37,7 @@ const navigation = {
 const userDetails = getUserDetails();
 
 const LoaderStateData = props => {
+  window.open = () => {};
   mock.onGet(apiRequest).reply(400, { message: "There was an error" });
   return props.children({ page });
 };
