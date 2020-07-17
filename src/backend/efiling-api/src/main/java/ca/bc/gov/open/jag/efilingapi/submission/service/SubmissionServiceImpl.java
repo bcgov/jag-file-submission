@@ -69,9 +69,8 @@ public class SubmissionServiceImpl implements SubmissionService {
                 submissionMapper.toSubmission(
                         submissionId,
                         generateUrlRequest,
-                        toFilingPackage(generateUrlRequest.getFilingPackage()),
+                        toFilingPackage(generateUrlRequest),
                         accountDetails,
-                        getStatutoryFeeAmount(generateUrlRequest),
                         getExpiryDate()));
 
         if(!cachedSubmission.isPresent())
@@ -94,12 +93,12 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     }
 
-    private FilingPackage toFilingPackage(InitialPackage initialPackage) {
+    private FilingPackage toFilingPackage(GenerateUrlRequest request) {
 
         FilingPackage filingPackage = new FilingPackage();
-        filingPackage.setCourt(initialPackage.getCourt());
-        filingPackage.setDocuments(
-        filingPackage
+        filingPackage.setCourt(request.getFilingPackage().getCourt());
+        filingPackage.setSubmissionFeeAmount(getStatutoryFeeAmount(request));
+        filingPackage.setDocuments(request.getFilingPackage()
                 .getDocuments()
                 .stream()
                 .map(documentProperties -> toDocument(documentProperties))

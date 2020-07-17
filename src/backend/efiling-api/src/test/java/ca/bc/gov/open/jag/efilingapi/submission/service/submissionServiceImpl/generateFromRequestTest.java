@@ -82,8 +82,9 @@ public class generateFromRequestTest {
     @DisplayName("OK: with valid account should return submission")
     public void withValidAccountShouldReturnSubmission() {
         GenerateUrlRequest request = new GenerateUrlRequest();
+        request.setClientApplication(TestHelpers.createClientApplication("app", "app"));
         request.setNavigation(TestHelpers.createDefaultNavigation());
-        request.setFilingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList()));
+        request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList()));
 
         Submission actual = sut.generateFromRequest(TestHelpers.CASE_1, TestHelpers.CASE_1, request);
 
@@ -116,8 +117,9 @@ public class generateFromRequestTest {
     public void withEmptySubmissionShouldThrowStoreException() {
 
         GenerateUrlRequest request = new GenerateUrlRequest();
+        request.setClientApplication(TestHelpers.createClientApplication("app", "type"));
         request.setNavigation(TestHelpers.createDefaultNavigation());
-        request.setFilingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList()));
+        request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList()));
 
 
         Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(TestHelpers.CASE_2, TestHelpers.CASE_2, request));
@@ -129,8 +131,9 @@ public class generateFromRequestTest {
     public void withNoFileRoleShouldThrowInvalidAccountStateException() {
 
         GenerateUrlRequest request = new GenerateUrlRequest();
+        request.setClientApplication(TestHelpers.createClientApplication("app", "type"));
         request.setNavigation(TestHelpers.createDefaultNavigation());
-        request.setFilingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList()));
+        request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList()));
 
 
         Assertions.assertThrows(InvalidAccountStateException.class, () -> sut.generateFromRequest(TestHelpers.CASE_3, TestHelpers.CASE_3, request));
@@ -143,8 +146,9 @@ public class generateFromRequestTest {
 
         UUID fakeaccount = UUID.fromString("88da92db-0791-491e-8c58-1a969e67d2fb");
         GenerateUrlRequest request = new GenerateUrlRequest();
+        request.setClientApplication(TestHelpers.createClientApplication("app", "type"));
         request.setNavigation(TestHelpers.createDefaultNavigation());
-        request.setFilingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList()));
+        request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList()));
 
         AccountDetails accountDetails =  AccountDetails.builder().lastName("lastName").create();
 
@@ -157,7 +161,7 @@ public class generateFromRequestTest {
                 .accountDetails(accountDetails)
                 .navigation(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
-                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList()))
+                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
                 .fees(fees)
                 .create();
 
@@ -191,7 +195,7 @@ public class generateFromRequestTest {
                 .accountDetails(accountDetails)
                 .navigation(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
-                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList()))
+                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
                 .fees(Arrays.asList(fee,fee))
                 .create();
 

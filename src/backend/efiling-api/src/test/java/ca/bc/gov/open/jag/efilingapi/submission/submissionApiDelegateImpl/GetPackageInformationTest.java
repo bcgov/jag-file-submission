@@ -48,7 +48,7 @@ public class GetPackageInformationTest {
 
         Submission submissionWithParentApplication = Submission
                 .builder()
-                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList()))
+                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
                 .create();
 
         Mockito.when(submissionStoreMock.get(Mockito.eq(TestHelpers.CASE_1), Mockito.any())).thenReturn(Optional.of(submissionWithParentApplication));

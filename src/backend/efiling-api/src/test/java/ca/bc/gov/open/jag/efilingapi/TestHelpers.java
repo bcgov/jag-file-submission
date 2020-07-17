@@ -27,6 +27,13 @@ public class TestHelpers {
     public static final String CANCEL_URL = "http://cancel";
     public static final String ERROR_URL = "http://error";
 
+    public static InitialPackage createInitalPackage(Court court, List<DocumentProperties> documentProperties) {
+        InitialPackage initialPackage = new InitialPackage();
+        initialPackage.setCourt(court);
+        initialPackage.setDocuments(documentProperties);
+        return initialPackage;
+    }
+
     public static FilingPackage createPackage(Court court, List<Document> documents) {
         FilingPackage modelPackage = new FilingPackage();
         modelPackage.setCourt(court);
@@ -78,6 +85,7 @@ public class TestHelpers {
 
     public static List<Document> createDocumentList() {
         Document documentProperties = new Document();
+        documentProperties.setDescription(DESCRIPTION);
         documentProperties.setName("random.txt");
         documentProperties.setType(TYPE);
 
