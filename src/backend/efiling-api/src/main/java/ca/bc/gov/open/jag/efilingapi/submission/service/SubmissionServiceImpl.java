@@ -62,8 +62,6 @@ public class SubmissionServiceImpl implements SubmissionService {
             accountDetails = fakeFromBceId(authUserId);
         }
 
-
-
         Optional<Submission> cachedSubmission = submissionStore.put(
                 submissionMapper.toSubmission(
                         submissionId,

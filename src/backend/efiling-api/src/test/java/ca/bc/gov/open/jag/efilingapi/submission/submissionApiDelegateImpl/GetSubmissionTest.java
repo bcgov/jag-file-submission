@@ -79,14 +79,14 @@ public class GetSubmissionTest {
                 .fees(createFees())
                 .create();
 
-        Mockito.when(submissionStoreMock.get(UUID.randomUUID(), TestHelpers.CASE_2)).thenReturn(Optional.of(submissionWithCsoAccount));
+        Mockito.when(submissionStoreMock.get(Mockito.eq(TestHelpers.CASE_2), Mockito.any())).thenReturn(Optional.of(submissionWithCsoAccount));
 
         Submission submissionWithoutCsoAccount = Submission
                 .builder()
                 .navigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
                 .create();
 
-        Mockito.when(submissionStoreMock.get(UUID.randomUUID(), TestHelpers.CASE_3)).thenReturn(Optional.of(submissionWithoutCsoAccount));
+        Mockito.when(submissionStoreMock.get(Mockito.eq(TestHelpers.CASE_3), Mockito.any())).thenReturn(Optional.of(submissionWithoutCsoAccount));
 
         sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock);
 
