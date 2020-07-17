@@ -16,13 +16,7 @@ paths:
       tags:
         - submission
       parameters:
-        - in: header
-          name: X-Auth-UserId
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: Authenticated user id
+        - $ref: "#/components/parameters/xAuthUserId"
       requestBody:
         content:
           multipart/form-data:
@@ -48,13 +42,8 @@ paths:
       tags:
         - submission
       parameters:
-        - name: id
-          in: path
-          description: A submission id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: "#/components/parameters/xAuthUserId"
+        - $ref: "#/components/parameters/submissionId"
       responses:
         "200":
           description: Config found
@@ -71,20 +60,8 @@ paths:
       tags:
         - submission
       parameters:
-        - in: header
-          name: X-Auth-UserId
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: Authenticated user id
-        - name: id
-          in: path
-          description: A submission id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: "#/components/parameters/xAuthUserId"
+        - $ref: "#/components/parameters/submissionId"
       requestBody:
         description: requested parameters to generate a url
         required: true
@@ -112,13 +89,8 @@ paths:
       tags:
         - submission
       parameters:
-        - name: id
-          in: path
-          description: A submission id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: "#/components/parameters/xAuthUserId"
+        - $ref: "#/components/parameters/submissionId"
       responses:
         "200":
           description: Filing Package Information found
@@ -135,20 +107,8 @@ paths:
       tags:
         - submission
       parameters:
-        - in: header
-          name: X-Auth-UserId
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: Authenticated user id
-        - name: id
-          in: path
-          description: A submission id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: "#/components/parameters/xAuthUserId"
+        - $ref: "#/components/parameters/submissionId"
         - name: filename
           in: path
           description: A document name
@@ -173,13 +133,7 @@ paths:
       tags:
         - account
       parameters:
-        - in: header
-          name: X-Auth-UserId
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: Authenticated user id
+        - $ref: "#/components/parameters/xAuthUserId"
       requestBody:
         description: cso account details
         required: true
@@ -195,6 +149,23 @@ paths:
               schema:
                 $ref: "#/components/schemas/UserDetails"
 components:
+  parameters:
+    xAuthUserId:
+      name: X-Auth-UserId
+      in: header
+      schema:
+        type: string
+        format: uuid
+      required: true
+      description: Authenticated user id
+    submissionId:
+      name: id
+      in: path
+      description: A submission id
+      required: true
+      schema:
+        type: string
+        format: uuid
   schemas:
     Account:
       type: object
