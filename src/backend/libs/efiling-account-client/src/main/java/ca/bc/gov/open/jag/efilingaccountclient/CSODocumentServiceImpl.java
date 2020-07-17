@@ -3,7 +3,7 @@ package ca.bc.gov.open.jag.efilingaccountclient;
 import ca.bc.gov.ag.csows.filing.status.DocumentType;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
-import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingLookupServiceException;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import org.springframework.stereotype.Service;
@@ -31,13 +31,22 @@ public class CSODocumentServiceImpl implements EfilingDocumentService {
         try {
             //TODO: we need to find out what arg0 and arg1 represent
             List<DocumentType> documentTypes = filingStatusFacadeBean.getDocumentTypes(courtLevel, courtClass);
+
+            if(documentTypes == null) return null;
+
             Optional<DocumentDetails> documentDetails = documentTypes.stream()
-                    .filter(doc -> doc.getDocumentTypeCd() == documentType)
-                    .map(doc -> new DocumentDetails(doc.getDocumentTypeDesc(), doc.getDefaultStatutoryFee()))
-                    .findFirst();
-            return documentDetails.orElse(null);
+                    .filter(doc -> doc.getDocumentTypeCd().equals(documentType))
+                    .findFirst()
+                    .map(doc -> new DocumentDetails(doc.getDocumentTypeDesc(), doc.getDefaultStatutoryFee()));
+
+            if(!documentDetails.isPresent())
+                throw new EfilingDocumentServiceException("Document type does not exists");
+
+            return documentDetails.get();
+
+
         } catch (NestedEjbException_Exception e) {
-            throw new EfilingLookupServiceException("Exception while retrieving service fee", e.getCause());
+            throw new EfilingDocumentServiceException("Exception while retrieving document details", e.getCause());
         }
     }
 }
