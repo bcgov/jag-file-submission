@@ -1,6 +1,9 @@
 package ca.bc.gov.open.jag.efilingapi.document;
 
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import org.junit.jupiter.api.*;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("DocumentStoreImpl test suite")
@@ -9,9 +12,13 @@ public class DocumentStoreImplTest {
     public static final String DUMMY_CONTENT = "test";
     private DocumentStoreImpl sut;
 
+    @Mock
+    private EfilingDocumentService efilingDocumentServiceMock;
+
     @BeforeAll
     public void setUp() {
-        sut = new DocumentStoreImpl();
+        MockitoAnnotations.initMocks(this);
+        sut = new DocumentStoreImpl(efilingDocumentServiceMock);
     }
 
     @Test

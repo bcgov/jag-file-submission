@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingapi.submission.service.submissionServiceImpl;
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
+import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
@@ -15,7 +16,6 @@ import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
@@ -27,7 +27,10 @@ import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
 import java.time.Duration;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class generateFromRequestTest {
@@ -51,7 +54,7 @@ public class generateFromRequestTest {
     private EfilingLookupService efilingLookupService;
 
     @Mock
-    private EfilingDocumentService efilingDocumentService;
+    private DocumentStore documentStoreMock;
 
     @BeforeAll
     public void setUp() throws DatatypeConfigurationException {
@@ -73,7 +76,7 @@ public class generateFromRequestTest {
 
         // Testing mapper as part of this unit test
         SubmissionMapper submissionMapper = new SubmissionMapperImpl();
-        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, submissionMapper, efilingAccountServiceMock, efilingLookupService, efilingDocumentService);
+        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, submissionMapper, efilingAccountServiceMock, efilingLookupService, documentStoreMock);
 
     }
 
@@ -187,7 +190,7 @@ public class generateFromRequestTest {
                         Mockito.any()))
                 .thenReturn(accountDetails);
 
-        Mockito.when(efilingDocumentService.getDocumentDetails(Mockito.any(), Mockito.any(), Mockito.any()))
+        Mockito.when(documentStoreMock.getDocumentDetails(Mockito.any(), Mockito.any(), Mockito.any()))
                 .thenReturn(new DocumentDetails(TestHelpers.DESCRIPTION, BigDecimal.TEN));
 
         Submission submissionCase1 = Submission

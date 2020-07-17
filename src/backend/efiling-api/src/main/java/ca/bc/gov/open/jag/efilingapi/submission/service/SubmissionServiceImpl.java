@@ -4,6 +4,7 @@ import ca.bc.gov.open.jag.efilingapi.api.model.Document;
 import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
+import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
@@ -12,7 +13,6 @@ import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +39,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private final EfilingLookupService efilingLookupService;
 
-    private final EfilingDocumentService efilingDocumentService;
+    private final DocumentStore documentStore;
 
     public SubmissionServiceImpl(
             SubmissionStore submissionStore,
@@ -47,13 +47,13 @@ public class SubmissionServiceImpl implements SubmissionService {
             SubmissionMapper submissionMapper,
             EfilingAccountService efilingAccountService,
             EfilingLookupService efilingLookupService,
-            EfilingDocumentService efilingDocumentService) {
+            DocumentStore documentStore) {
         this.submissionStore = submissionStore;
         this.cacheProperties = cacheProperties;
         this.submissionMapper = submissionMapper;
         this.efilingAccountService = efilingAccountService;
         this.efilingLookupService = efilingLookupService;
-        this.efilingDocumentService = efilingDocumentService;
+        this.documentStore = documentStore;
     }
 
     @Override
@@ -119,7 +119,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         Document document = new Document();
 
-        DocumentDetails details = efilingDocumentService.getDocumentDetails(courtLevel, courtClass, documentProperties.getType());
+        DocumentDetails details = documentStore.getDocumentDetails(courtLevel, courtClass, documentProperties.getType());
 
         document.setDescription(details.getDescription());
         document.setStatutoryFeeAmount(details.getStatutoryFeeAmount());

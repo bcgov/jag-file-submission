@@ -19,7 +19,7 @@ public class DocumentConfigurationTest {
     @DisplayName("OK: check types")
     public void checkRegisteredBeans() {
 
-        DocumentStore actual = sut.documentStore();
+        DocumentStore actual = sut.documentStore(null);
 
         Assertions.assertEquals(DocumentStoreImpl.class, actual.getClass());
 
