@@ -10,6 +10,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingStatsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
@@ -36,17 +37,21 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private final EfilingLookupService efilingLookupService;
 
+    private final EfilingStatsService efilingStatsService;
+
     public SubmissionServiceImpl(
             SubmissionStore submissionStore,
             CacheProperties cacheProperties,
             SubmissionMapper submissionMapper,
             EfilingAccountService efilingAccountService,
-            EfilingLookupService efilingLookupService) {
+            EfilingLookupService efilingLookupService,
+            EfilingStatsService efilingStatsService) {
         this.submissionStore = submissionStore;
         this.cacheProperties = cacheProperties;
         this.submissionMapper = submissionMapper;
         this.efilingAccountService = efilingAccountService;
         this.efilingLookupService = efilingLookupService;
+        this.efilingStatsService = efilingStatsService;
     }
 
     @Override
