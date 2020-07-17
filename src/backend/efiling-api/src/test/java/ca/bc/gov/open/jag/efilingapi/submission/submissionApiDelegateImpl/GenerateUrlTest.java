@@ -55,7 +55,7 @@ public class GenerateUrlTest {
         NavigationProperties navigationProperties = new NavigationProperties();
         navigationProperties.setBaseUrl("http://localhost");
 
-        Submission submission = Submission.builder().id(TestHelpers.CASE_1).expiryDate(10).create();
+        Submission submission = Submission.builder().id(TestHelpers.CASE_1).owner(TestHelpers.CASE_2).expiryDate(10).create();
 
         Mockito.when(submissionServiceMock.generateFromRequest(
                 Mockito.any(),
@@ -101,7 +101,7 @@ public class GenerateUrlTest {
         ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(UUID.randomUUID(), TestHelpers.CASE_1, generateUrlRequest);
 
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
-        Assertions.assertEquals("http://localhost?submissionId=" + TestHelpers.CASE_1.toString() , actual.getBody().getEfilingUrl());
+        Assertions.assertEquals("http://localhost?submissionId=" + TestHelpers.CASE_1.toString() + "&temp=" + TestHelpers.CASE_2 , actual.getBody().getEfilingUrl());
         Assertions.assertNotNull(actual.getBody().getExpiryDate());
 
     }
