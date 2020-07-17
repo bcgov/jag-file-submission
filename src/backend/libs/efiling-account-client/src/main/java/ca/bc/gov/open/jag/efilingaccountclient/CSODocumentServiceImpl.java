@@ -27,10 +27,10 @@ public class CSODocumentServiceImpl implements EfilingDocumentService {
      * @return
      */
     @Override
-    public DocumentDetails getDocumentDetails(String documentType) {
+    public DocumentDetails getDocumentDetails(String courtLevel, String courtClass, String documentType) {
         try {
             //TODO: we need to find out what arg0 and arg1 represent
-            List<DocumentType> documentTypes = filingStatusFacadeBean.getDocumentTypes("", "");
+            List<DocumentType> documentTypes = filingStatusFacadeBean.getDocumentTypes(courtLevel, courtClass);
             Optional<DocumentDetails> documentDetails = documentTypes.stream()
                     .filter(doc -> doc.getDocumentTypeCd() == documentType)
                     .map(doc -> new DocumentDetails(doc.getDocumentTypeDesc(), doc.getDefaultStatutoryFee()))

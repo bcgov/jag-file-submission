@@ -187,7 +187,7 @@ public class generateFromRequestTest {
                         Mockito.any()))
                 .thenReturn(accountDetails);
 
-        Mockito.when(efilingDocumentService.getDocumentDetails(Mockito.any()))
+        Mockito.when(efilingDocumentService.getDocumentDetails(Mockito.any(), Mockito.any(), Mockito.any()))
                 .thenReturn(new DocumentDetails(TestHelpers.DESCRIPTION, BigDecimal.TEN));
 
         Submission submissionCase1 = Submission

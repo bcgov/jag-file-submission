@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.mockito.Mockito;
 
 import java.math.BigDecimal;
 
@@ -19,7 +20,7 @@ public class EfilingDocumentServiceDemoImplTest {
         EfilingDocumentServiceDemoImpl service = new EfilingDocumentServiceDemoImpl();
 
         String serviceId = "TestServiceId";
-        DocumentDetails actual = service.getDocumentDetails(serviceId);
+        DocumentDetails actual = service.getDocumentDetails(serviceId, Mockito.any(), Mockito.any());
 
         Assertions.assertEquals("This is a doc", actual.getDescription());
         Assertions.assertEquals(BigDecimal.valueOf(7), actual.getStatutoryFeeAmount());

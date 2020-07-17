@@ -105,18 +105,21 @@ public class SubmissionServiceImpl implements SubmissionService {
         filingPackage.setDocuments(request.getFilingPackage()
                 .getDocuments()
                 .stream()
-                .map(documentProperties -> toDocument(documentProperties))
+                .map(documentProperties -> toDocument(
+                        request.getFilingPackage().getCourt().getLocation(),
+                        request.getFilingPackage().getCourt().getPropertyClass(),
+                        documentProperties))
                 .collect(Collectors.toList()));
         return filingPackage;
 
     }
 
 
-    private Document toDocument(DocumentProperties documentProperties) {
+    private Document toDocument(String courtLevel, String courtClass, DocumentProperties documentProperties) {
 
         Document document = new Document();
 
-        DocumentDetails details = efilingDocumentService.getDocumentDetails(documentProperties.getType());
+        DocumentDetails details = efilingDocumentService.getDocumentDetails(courtLevel, courtClass, documentProperties.getType());
 
         document.setDescription(details.getDescription());
         document.setStatutoryFeeAmount(details.getStatutoryFeeAmount());

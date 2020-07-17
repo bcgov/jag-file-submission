@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 public class EfilingDocumentServiceDemoImpl implements EfilingDocumentService {
     @Override
-    public DocumentDetails getDocumentDetails(String documentType) {
+    public DocumentDetails getDocumentDetails(String courtLevel, String courtClass, String documentType) {
         return new DocumentDetails("This is a doc", BigDecimal.valueOf(7));
     }
 }
