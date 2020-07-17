@@ -38,8 +38,8 @@ public class GenerateUrlPayload {
         generateUrlRequest = new GenerateUrlRequest();
 
         generateUrlRequest.setClientApplication(createClientApplication(DISPLAYNAME,TYPEFIRST));
-        generateUrlRequest.setFilingPackage(createPackage(createCourtDetails(), createDocumentList()));
-        generateUrlRequest.setNavigation(createNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL));
+        generateUrlRequest.setFilingPackage(createPackage(createCourtDetails(), createDocumentsList()));
+        generateUrlRequest.setNavigation(createNavigationDetails(SUCCESS_URL, CANCEL_URL, ERROR_URL));
 
         return generateUrlRequest;
     }
@@ -62,7 +62,7 @@ public class GenerateUrlPayload {
         return filingPackage;
     }
 
-    public Navigation createNavigation(String success, String cancel, String error) {
+    public Navigation createNavigationDetails(String success, String cancel, String error) {
         Navigation navigation = new Navigation();
         Redirect successRedirect = new Redirect();
 
@@ -93,7 +93,7 @@ public class GenerateUrlPayload {
         return court;
     }
 
-    public List<DocumentProperties> createDocumentList() {
+    public List<DocumentProperties> createDocumentsList() {
         DocumentProperties documentProperties = new DocumentProperties();
 
         documentProperties.setName(NAME);
@@ -104,6 +104,6 @@ public class GenerateUrlPayload {
     }
 
     public Navigation createDefaultNavigation() {
-        return createNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL);
+        return createNavigationDetails(SUCCESS_URL, CANCEL_URL, ERROR_URL);
     }
 }
