@@ -51,7 +51,7 @@ public class GetPackageInformationTest {
                 .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
                 .create();
 
-        Mockito.when(submissionStoreMock.get(Mockito.any(), TestHelpers.CASE_1)).thenReturn(Optional.of(submissionWithParentApplication));
+        Mockito.when(submissionStoreMock.get(Mockito.eq(TestHelpers.CASE_1), Mockito.any())).thenReturn(Optional.of(submissionWithParentApplication));
 
         sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock);
     }
