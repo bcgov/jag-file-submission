@@ -1,9 +1,11 @@
 package stepDefinitions.backendstepdefinitions;
 
+import ca.bc.gov.open.jag.efilingapi.qa.api.model.Navigation;
 import ca.bc.gov.open.jagefilingapi.qa.backend.generateurlpayload.GenerateUrlPayload;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.APIResources;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.DriverClass;
+import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
 import ca.bc.gov.open.jagefilingapi.qa.requestbuilders.GenerateUrlRequestBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.java.en.And;
@@ -15,6 +17,7 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hamcrest.Matchers;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,8 +27,7 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.emptyString;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 public class GenerateUrlTest {
@@ -36,6 +38,7 @@ public class GenerateUrlTest {
     private String submissionId;
     private String submissionIdQuery;
     private JsonPath jsonPath;
+    private String universalId;
     private String firstName;
     private String lastName;
     private String middleName;
@@ -119,11 +122,14 @@ public class GenerateUrlTest {
         response = request.when().get(resourceGet.getResource() + submissionId).then().spec(TestUtil.responseSpecification()).extract().response();
     }
 
-    @Then("verify account type and identifier values are returned and other user details are empty")
-    public void verifyAccountTypeAndIdentifierValuesAreReturnedAndOtherUserDetailsAreEmpty() {
+    @Then("verify universal id, user details, account type and identifier values are returned and not empty")
+    public void verifyUniversalIdUserDetailsAccountTypeAndIdentifierValuesAreReturnedAndNotEmpty() throws IOException {
         payloadData = new GenerateUrlPayload();
         jsonPath = new JsonPath(response.asString());
 
+        String validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
+
+        universalId = jsonPath.get("userDetails.universalId");
         firstName = jsonPath.get("userDetails.firstName");
         lastName = jsonPath.get("userDetails.lastName");
         middleName = jsonPath.get("userDetails.middleName");
@@ -132,50 +138,69 @@ public class GenerateUrlTest {
         List<String> type = jsonPath.get( "userDetails.accounts.type");
         List<String> identifier = jsonPath.get( "userDetails.accounts.identifier");
 
+        List<String> feeAmt = jsonPath.get( "fees.feeAmt");
+        List<String> serviceTypeCd = jsonPath.get( "fees.serviceTypeCd");
+
+        assertThat(universalId, is(equalToIgnoringCase(validExistingCSOGuid)));
         assertThat(firstName, is(not(emptyString())));
         assertThat(lastName, is(not(emptyString())));
-        assertThat(middleName, is(not(emptyString())));
+        assertNotNull(middleName);
         assertThat(email, is(not(emptyString())));
-        log.info("Names and email objects from the valid CSO account submission response have empty values");
+        log.info("Names and email objects from the valid CSO account submission response does not have empty values");
 
         assertFalse(type.isEmpty());
         assertFalse(identifier.isEmpty());
-        log.info("Account type and identifier objects from the valid CSO account submission response have valid values");
+        assertFalse(feeAmt.isEmpty());
+        assertFalse(serviceTypeCd.isEmpty());
+        log.info("Account type, identifier, fee and service objects from the valid CSO account submission response have valid values");
     }
 
     @And("verify success, error and cancel navigation urls are returned")
-    public void verifySuccessErrorAndCancelNavigationUrlsAreReturned() throws IOException {
+    public void verifySuccessErrorAndCancelNavigationUrlsAreReturned() {
         payloadData = new GenerateUrlPayload();
         jsonPath = new JsonPath(response.asString());
 
-        Map<String, String> respNavigation = jsonPath.getMap("navigation");
+        String successUrl = jsonPath.get("navigation.success.url");
+        String errorUrl = jsonPath.get("navigation.error.url");
+        String cancelUrl = jsonPath.get("navigation.cancel.url");
 
-        ObjectMapper objMap = new ObjectMapper();
-        String actualResponse = objMap.writeValueAsString(respNavigation);
-      //  String expectedResponse = payloadData.getNavigationData();
-
-       // assertEquals(expectedResponse,actualResponse);
+        assertNotNull(successUrl);
+        assertNotNull(errorUrl);
+        assertNotNull(cancelUrl);
     }
 
     @Then("verify accounts value is null but names and email details are returned")
-    public void verifyAccountsValueIsNullButNamesAndEmailDetailsAreReturned() {
+    public void verifyAccountsValueIsNullButNamesAndEmailDetailsAreReturned() throws IOException {
         payloadData = new GenerateUrlPayload();
         jsonPath = new JsonPath(response.asString());
 
+        String nonExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getNonExistingCSOGuid();
+
+        universalId = jsonPath.get("userDetails.universalId");
         firstName = jsonPath.get("userDetails.firstName");
         lastName = jsonPath.get("userDetails.lastName");
         middleName = jsonPath.get("userDetails.middleName");
         email = jsonPath.get("userDetails.email");
-        String accounts = jsonPath.get("userDetails.accounts");
 
+        //To do: Created accounts should be deleted or reset. Modify tests when done.
+
+        List<String> type = jsonPath.get( "userDetails.accounts.type");
+        List<String> identifier = jsonPath.get( "userDetails.accounts.identifier");
+
+        List<String> feeAmt = jsonPath.get( "fees.feeAmt");
+        List<String> serviceTypeCd = jsonPath.get( "fees.serviceTypeCd");
+
+        assertThat(universalId, is(equalToIgnoringCase(nonExistingCSOGuid)));
         assertThat(firstName, is(not(emptyString())));
         assertThat(lastName, is(not(emptyString())));
-        assertThat(middleName, is(not(emptyString())));
         assertThat(email, is(not(emptyString())));
         log.info("Names and email objects from the valid CSO account submission response have valid values.");
 
-        assertNull(accounts);
-        log.info("Accounts object value from the valid CSO account submission response is null.");
+        assertFalse(type.isEmpty());
+        assertFalse(identifier.isEmpty());
+        assertFalse(feeAmt.isEmpty());
+        assertFalse(serviceTypeCd.isEmpty());
+        log.info("Accounts object value from the valid CSO account submission response is null but fee amount and .");
     }
 
     @Then("verify response returns invalid role error and message")

@@ -1,8 +1,6 @@
 package ca.bc.gov.open.jagefilingapi.qa.backend.generateurlpayload;
 
 import ca.bc.gov.open.jag.efilingapi.qa.api.model.*;
-import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -19,20 +17,24 @@ public class GenerateUrlPayload {
     private String PROPERTYCLASS = null;
     private String NAME = null;
     private String DESCRIPTION = null;
-    private String TYPE = null;
+    private String TYPEFIRST = null;
+    private String TYPESECOND = null;
     private String DISPLAYNAME = null;
 
-    private String SUCCESS_URL = null;
-    private String CANCEL_URL = null;
-    private String ERROR_URL = null;
+    public String SUCCESS_URL = null;
+    public String CANCEL_URL = null;
+    public String ERROR_URL = null;
 
-    private ModelPackage modelPackage;
-    private Navigation navigation;
     private ClientApplication clientApplication;
+    private FilingPackage filingPackage;
+    private Navigation navigation;
     private GenerateUrlRequest generateUrlRequest;
 
     public String validGenerateUrlPayload() throws IOException {
         generateUrlRequest = new GenerateUrlRequest();
+
+        TYPEFIRST = "string";
+        DISPLAYNAME = "string";
 
         DIVISION = "string";
         FILENUMBER = "string";
@@ -42,57 +44,42 @@ public class GenerateUrlPayload {
         PROPERTYCLASS = "string";
         NAME = "string";
         DESCRIPTION = "string";
-        TYPE = "string";
-        DISPLAYNAME = "string";
+        TYPESECOND = "DFCL";
 
         SUCCESS_URL = "http://success";
         CANCEL_URL = "http://cancel";
         ERROR_URL = "http://error";
 
         ObjectMapper objMap = new ObjectMapper();
-        System.out.println(generateUrlRequestPayload(clientApplication, modelPackage, navigation).toString());
-        return objMap.writeValueAsString(generateUrlRequestPayload(clientApplication, modelPackage, navigation));
+        return objMap.writeValueAsString(generateUrlRequestPayload(clientApplication, filingPackage, navigation));
     }
 
-    public String invalidGenerateUrlPayload() throws JsonProcessingException {
+    public GenerateUrlRequest generateUrlRequestPayload(ClientApplication clientApplication, FilingPackage filingPackage,Navigation navigation){
         generateUrlRequest = new GenerateUrlRequest();
 
-        DIVISION = "tst";
-        FILENUMBER = "3535";
-        LEVEL = "time";
-        LOCATION = "test";
-        PARTICIPATIONCLASS = "get";
-        PROPERTYCLASS = "pst";
-        NAME = "some";
-        DESCRIPTION = "mopre";
-        TYPE = "tet";
-        DISPLAYNAME = "dp";
-
-        SUCCESS_URL = "http://success";
-        CANCEL_URL = "http://cancel";
-        ERROR_URL = "http://error";
-
-        ObjectMapper objMap = new ObjectMapper();
-        System.out.println(generateUrlRequestPayload(clientApplication, modelPackage, navigation).toString());
-        return objMap.writeValueAsString(generateUrlRequestPayload(clientApplication, modelPackage, navigation));
-    }
-
-    public GenerateUrlRequest generateUrlRequestPayload(ClientApplication clientApplication, ModelPackage modelPackage,Navigation navigation){
-        generateUrlRequest = new GenerateUrlRequest();
-        generateUrlRequest.setClientApplication(createClientApplication(DISPLAYNAME,TYPE));
-        generateUrlRequest.setPackage(createPackage(createCourt(), createDocumentList()));
+        generateUrlRequest.setClientApplication(createClientApplication(DISPLAYNAME,TYPEFIRST));
+        generateUrlRequest.setFilingPackage(createPackage(createCourt(), createDocumentList()));
         generateUrlRequest.setNavigation(createNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL));
 
         return generateUrlRequest;
     }
 
-    public ModelPackage createPackage(Court court, List<DocumentProperties> documents) {
-        modelPackage = new ModelPackage();
+    public ClientApplication createClientApplication(String displayName, String type) {
+        clientApplication = new ClientApplication();
 
-        modelPackage.setCourt(court);
-        modelPackage.setDocuments(documents);
+        clientApplication.setDisplayName(displayName);
+        clientApplication.setType(type);
 
-        return modelPackage;
+        return clientApplication;
+    }
+
+    public FilingPackage createPackage(Court court, List<DocumentProperties> documents) {
+        filingPackage = new FilingPackage();
+
+        filingPackage.setCourt(court);
+        filingPackage.setDocuments(documents);
+
+        return filingPackage;
     }
 
     public Navigation createNavigation(String success, String cancel, String error) {
@@ -113,15 +100,6 @@ public class GenerateUrlPayload {
         return navigation;
     }
 
-    public ClientApplication createClientApplication(String displayName, String type) {
-        clientApplication = new ClientApplication();
-
-        clientApplication.setDisplayName(displayName);
-        clientApplication.setType(type);
-
-        return clientApplication;
-    }
-
     public Court createCourt() {
         Court court = new Court();
 
@@ -139,7 +117,7 @@ public class GenerateUrlPayload {
         DocumentProperties documentProperties = new DocumentProperties();
 
         documentProperties.setName(NAME);
-        documentProperties.setType(TYPE);
+        documentProperties.setType(TYPESECOND);
         documentProperties.setDescription(DESCRIPTION);
 
         return Arrays.asList(documentProperties);
