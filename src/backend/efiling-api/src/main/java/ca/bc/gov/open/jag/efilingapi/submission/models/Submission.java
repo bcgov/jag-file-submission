@@ -69,6 +69,8 @@ public class Submission {
 
     public UUID getId() { return id; }
 
+    public UUID getOwner() { return owner; }
+
     public FilingPackage getFilingPackage() {
         return filingPackage;
     }
