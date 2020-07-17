@@ -9,12 +9,12 @@ import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("Demo Efiling Stats Client Test Suite")
-public class EfilingStatsServiceDemoImplTest {
+public class EfilingDocumentServiceDemoImplTest {
     @DisplayName("CASE 1: Testing Demo getDocumentDetails")
     @Test
     public void testDemoLookupServiceTest() {
 
-        EfilingStatsServiceDemoImpl service = new EfilingStatsServiceDemoImpl();
+        EfilingDocumentServiceDemoImpl service = new EfilingDocumentServiceDemoImpl();
 
         String serviceId = "TestServiceId";
         DocumentDetails actual = service.getDocumentDetails(serviceId);

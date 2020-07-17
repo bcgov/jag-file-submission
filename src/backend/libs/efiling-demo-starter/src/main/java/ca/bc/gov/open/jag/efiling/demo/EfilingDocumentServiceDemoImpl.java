@@ -1,9 +1,9 @@
 package ca.bc.gov.open.jag.efiling.demo;
 
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingStatsService;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 
-public class EfilingStatsServiceDemoImpl implements EfilingStatsService {
+public class EfilingDocumentServiceDemoImpl implements EfilingDocumentService {
     @Override
     public DocumentDetails getDocumentDetails(String serviceId) {
         return new DocumentDetails("This is a doc");

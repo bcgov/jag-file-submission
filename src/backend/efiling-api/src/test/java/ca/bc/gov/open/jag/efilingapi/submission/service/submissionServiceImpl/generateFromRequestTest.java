@@ -14,7 +14,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingStatsService;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
@@ -50,7 +50,7 @@ public class generateFromRequestTest {
     private EfilingLookupService efilingLookupService;
 
     @Mock
-    private EfilingStatsService efilingStatsService;
+    private EfilingDocumentService efilingDocumentService;
 
     @BeforeAll
     public void setUp() throws DatatypeConfigurationException {
@@ -72,7 +72,7 @@ public class generateFromRequestTest {
 
         // Testing mapper as part of this unit test
         SubmissionMapper submissionMapper = new SubmissionMapperImpl();
-        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, submissionMapper, efilingAccountServiceMock, efilingLookupService, efilingStatsService);
+        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, submissionMapper, efilingAccountServiceMock, efilingLookupService, efilingDocumentService);
 
     }
 
