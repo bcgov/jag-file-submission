@@ -1,13 +1,10 @@
 package stepDefinitions.backendstepdefinitions;
 
-import ca.bc.gov.open.jag.efilingapi.qa.api.model.Navigation;
 import ca.bc.gov.open.jagefilingapi.qa.backend.generateurlpayload.GenerateUrlPayload;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.APIResources;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
-import ca.bc.gov.open.jagefilingapi.qa.frontendutils.DriverClass;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
 import ca.bc.gov.open.jagefilingapi.qa.requestbuilders.GenerateUrlRequestBuilders;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -17,12 +14,10 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hamcrest.Matchers;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
-import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
@@ -30,7 +25,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
-public class GenerateUrlTest {
+public class GenerateUrlAndSubmissionTest {
 
     private Response response;
     private GenerateUrlRequestBuilders generateUrlRequestBuilders;
@@ -44,7 +39,7 @@ public class GenerateUrlTest {
     private String middleName;
     private String email;
     private static final String CONTENT_TYPE = "application/json";
-    public Logger log = LogManager.getLogger(GenerateUrlTest.class);
+    public Logger log = LogManager.getLogger(GenerateUrlAndSubmissionTest.class);
 
     @Given("POST http request is made to {string} with valid existing CSO account guid in header")
     public void postHttpRequestIsMadeToWithValidExistingCsoAccountGuidInHeader(String resource) throws IOException {
@@ -121,6 +116,44 @@ public class GenerateUrlTest {
         RequestSpecification request = given().spec(TestUtil.requestSpecification());
         response = request.when().get(resourceGet.getResource() + submissionId).then().spec(TestUtil.responseSpecification()).extract().response();
     }
+
+    @Given("{string} id with filing package path is submitted with GET http request")
+    public void id_with_filing_package_path_is_submitted_with_GET_http_request(String resource) throws IOException {
+        APIResources resourceGet = APIResources.valueOf(resource);
+
+        RequestSpecification request = given().spec(TestUtil.requestSpecification());
+        response = request.when().get(resourceGet.getResource() + submissionId + "/filing-package").then().spec(TestUtil.responseSpecification()).extract().response();
+    }
+
+    @Then("verify court details and document details are returned and not empty")
+    public void verify_court_details_and_document_details_are_returned_and_not_empty() {
+        jsonPath = new JsonPath(response.asString());
+
+        String location = jsonPath.get("court.location");
+        String level = jsonPath.get("court.level");
+        String courtClass = jsonPath.get("court.class");
+        String division = jsonPath.get("court.division");
+        String fileNumber = jsonPath.get("court.fileNumber");
+        String participatingClass = jsonPath.get("court.participatingClass");
+
+        List<String> name = jsonPath.get("documents.name");
+        List<String> description = jsonPath.get("documents.description");
+        List<String> type = jsonPath.get("documents.type");
+
+        assertThat(location, is(not(emptyString())));
+        assertThat(level, is(not(emptyString())));
+        assertThat(courtClass, is(not(emptyString())));
+        assertThat(division, is(not(emptyString())));
+        assertThat(fileNumber, is(not(emptyString())));
+        assertThat(participatingClass, is(not(emptyString())));
+        log.info("Court and document details response have valid values");
+
+        assertFalse(type.isEmpty());
+        assertFalse(name.isEmpty());
+        assertFalse(description.isEmpty());
+        log.info("Account type, description and name objects from the valid CSO account submission response have valid values");
+    }
+
 
     @Then("verify universal id, user details, account type and identifier values are returned and not empty")
     public void verifyUniversalIdUserDetailsAccountTypeAndIdentifierValuesAreReturnedAndNotEmpty() throws IOException {
