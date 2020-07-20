@@ -236,4 +236,30 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     }
 
+
+    public String mySupperFunction(String param1, String param2, Boolean param3, int param4, int param5, String param6) {
+
+
+        for(int i = 0; i <= param4; i++) {
+
+            if(param1 == "test") {
+
+                if(param3 && param2 == "good") {
+
+                    logger.info("I think we are doing good here!");
+                    return param1 + param2;
+                }
+
+                return param1;
+
+            }
+
+            return param3.toString();
+
+        }
+
+        return "I think my contract will end today!";
+
+    }
+
 }
