@@ -118,7 +118,7 @@ export default function Home({ page: { header, confirmationPopup } }) {
               icon={<MdCancel size={32} />}
               type="error"
               styling="error-background"
-              element="You have arrived at this site incorrectly."
+              element="Authorized users only."
             />
           </div>
         </div>
