@@ -5,7 +5,7 @@ import axios from "axios";
 import { render, wait } from "@testing-library/react";
 import MockAdapter from "axios-mock-adapter";
 
-import Home, { saveNavigationToSession } from "./Home";
+import Home, { saveDataToSessionStorage } from "./Home";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
 import { getUserDetails } from "../../../modules/userDetails";
 import { getDocumentsData } from "../../../modules/documentTestData";
@@ -96,15 +96,18 @@ describe("Home", () => {
     );
   });
 
-  test("saveNavigationToSession saves urls to session storage when url values are truthy", () => {
+  test("saveDataToSessionStorage saves urls to session storage when values are truthy", () => {
     expect(sessionStorage.getItem("cancelUrl")).toBeFalsy();
     expect(sessionStorage.getItem("successUrl")).toBeFalsy();
     expect(sessionStorage.getItem("errorUrl")).toBeFalsy();
 
-    saveNavigationToSession(navigation);
+    const user = { universalId: "123" };
+
+    saveDataToSessionStorage(navigation, user);
 
     expect(sessionStorage.getItem("cancelUrl")).toEqual("cancelurl.com");
     expect(sessionStorage.getItem("successUrl")).toEqual("successurl.com");
     expect(sessionStorage.getItem("errorUrl")).toBeFalsy();
+    expect(sessionStorage.getItem("universalId")).toEqual("123");
   });
 });

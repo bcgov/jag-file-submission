@@ -71,6 +71,7 @@ const generateTableData = file => {
       isClose: true
     }
   ];
+
   if (file.statutoryFeeAmount > 0) {
     data.push({
       name: "Statutory Fee:",
@@ -79,11 +80,16 @@ const generateTableData = file => {
       isClose: true
     });
   }
+
+  return generateTable(file.name, data);
+};
+
+const generateTable = (fileName, data) => {
   return [
     {
       name: (
         <div style={{ width: "80%" }}>
-          <span>{file.name}</span>
+          <span>{fileName}</span>
         </div>
       ),
       value: <Table elements={data} />,
@@ -133,6 +139,7 @@ export default function PackageConfirmation({
             <br />
           </>
         )}
+
         <h2>Package Confirmation</h2>
         <p>Review your package for accuracy before submitting.</p>
 
