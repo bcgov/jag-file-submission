@@ -31,7 +31,7 @@ const navigation = {
     url: "successurl.com"
   },
   error: {
-    url: ""
+    url: "error.com"
   }
 };
 const userDetails = getUserDetails();

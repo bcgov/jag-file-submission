@@ -6,6 +6,7 @@ import axios from "axios";
 import { MdCancel } from "react-icons/md";
 
 import { Header, Footer, Loader, Alert } from "shared-components";
+import { errorRedirect } from "../../../modules/errorRedirect";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
 import CSOAccount from "../cso-account/CSOAccount";
 import { propTypes } from "../../../types/propTypes";
@@ -57,11 +58,11 @@ const checkCSOAccountStatus = (
     })
     .catch(error => {
       const errorUrl = sessionStorage.getItem("errorUrl");
-
       if (errorUrl) {
-        window.open(
-          `${errorUrl}?status=${error.response.status}&message=${error.response.data.message}`,
-          "_self"
+        errorRedirect(
+          errorUrl,
+          error.response.status,
+          error.response.data.message
         );
       }
 
