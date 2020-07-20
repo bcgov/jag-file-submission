@@ -4,7 +4,7 @@ import ca.bc.gov.ag.csows.filing.status.DocumentType;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingaccountclient.CSODocumentServiceImpl;
-import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingLookupServiceException;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
@@ -57,17 +57,10 @@ public class GetDocumentDetailsTest {
         Assertions.assertEquals(BigDecimal.TEN, result.getStatutoryFeeAmount());
     }
 
-    @DisplayName("OK: test returns null ")
-    @Test
-    public void testWithNoResult() {
-        DocumentDetails result = sut.getDocumentDetails(NODOC, COURT_CLASS, NODOC);
-        Assertions.assertNull(result);
-    }
-
     @DisplayName("Failure: throws exception")
     @Test
     public void testThrowException() throws NestedEjbException_Exception {
 
-        Assertions.assertThrows(EfilingLookupServiceException.class, () -> sut.getDocumentDetails(EXCEPTION, COURT_CLASS,""));
+        Assertions.assertThrows(EfilingDocumentServiceException.class, () -> sut.getDocumentDetails(EXCEPTION, COURT_CLASS,""));
     }
 }
