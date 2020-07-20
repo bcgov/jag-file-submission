@@ -64,7 +64,7 @@ public class GetDocumentDetailsTest {
         Assertions.assertThrows(EfilingDocumentServiceException.class, () -> sut.getDocumentDetails(NODOC, COURT_CLASS, NODOC));
     }
 
-    @DisplayName("Failure: throws exception")
+    @DisplayName("Failure: when SOAP service throws NestedEjbException_Exception, service should throw EfilingDocumentServiceException")
     @Test
     public void testThrowException() throws NestedEjbException_Exception {
 
