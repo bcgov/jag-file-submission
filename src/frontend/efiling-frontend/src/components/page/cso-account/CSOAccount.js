@@ -51,11 +51,20 @@ export default function CSOAccount({
         setCsoAccountStatus({ exists: true, isNew: true });
       })
       .catch(error => {
-        errorRedirect(
-          sessionStorage.getItem("errorUrl"),
-          error.response.status,
+        const errorUrl = sessionStorage.getItem("errorUrl");
+        if (
+          errorUrl &&
+          error.response &&
+          error.response.status &&
+          error.response.data &&
           error.response.data.message
-        );
+        ) {
+          errorRedirect(
+            errorUrl,
+            error.response.status,
+            error.response.data.message
+          );
+        }
       });
   };
 
