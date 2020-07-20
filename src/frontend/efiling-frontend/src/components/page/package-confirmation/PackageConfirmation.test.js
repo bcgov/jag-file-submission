@@ -23,7 +23,7 @@ describe("PackageConfirmation Component", () => {
   });
 
   test("Matches the existing account snapshot", async () => {
-    mock.onGet(apiRequest).reply(200, { documents: documents });
+    mock.onGet(apiRequest).reply(200, { documents });
 
     const { asFragment } = render(
       <PackageConfirmation
@@ -38,7 +38,7 @@ describe("PackageConfirmation Component", () => {
   });
 
   test("Matches the new account snapshot", async () => {
-    mock.onGet(apiRequest).reply(200, { documents: documents });
+    mock.onGet(apiRequest).reply(200, { documents });
 
     const { asFragment } = render(
       <PackageConfirmation

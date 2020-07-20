@@ -20,7 +20,7 @@ const documents = getDocumentsData();
 
 const LoadData = props => {
   const mock = new MockAdapter(axios);
-  mock.onGet(apiRequest).reply(200, { documents: documents });
+  mock.onGet(apiRequest).reply(200, { documents });
   return props.children({ packageConfirmation, csoAccountStatus });
 };
 
