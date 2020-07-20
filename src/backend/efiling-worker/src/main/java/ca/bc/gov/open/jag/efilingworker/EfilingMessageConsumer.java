@@ -33,6 +33,5 @@ public class EfilingMessageConsumer {
         logger.info("Uploading file");
         documentStoreService.uploadFile(new File(""));
         logger.info("Submitting");
-        efilingSubmissionService.submitFiling(new FilingPackage());
     }
 }
