@@ -105,7 +105,7 @@
     },
     "verbose": true,
     "testResultsProcessor": "jest-sonar-reporter",
-    "collectCoverage": false,
+    "collectCoverage": true,
     "coverageReporters": [
       "text",
       "lcov"

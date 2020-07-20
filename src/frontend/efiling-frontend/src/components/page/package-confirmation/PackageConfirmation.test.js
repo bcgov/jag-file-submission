@@ -17,6 +17,8 @@ describe("PackageConfirmation Component", () => {
 
   sessionStorage.setItem("csoAccountId", "123");
 
+  window.open = jest.fn();
+
   let mock;
   beforeEach(() => {
     mock = new MockAdapter(axios);
@@ -49,6 +51,23 @@ describe("PackageConfirmation Component", () => {
 
     await wait(() => {
       expect(asFragment()).toMatchSnapshot();
+    });
+  });
+
+  test("When call to retrieve filing package fails, redirects to error page of client app", async () => {
+    sessionStorage.setItem("errorUrl", "error.com");
+
+    mock.onGet(apiRequest).reply(400);
+
+    render(
+      <PackageConfirmation
+        packageConfirmation={packageConfirmation}
+        csoAccountStatus={csoAccountStatus}
+      />
+    );
+
+    await wait(() => {
+      expect(window.open).toHaveBeenCalledWith("error.com", "_self");
     });
   });
 });
