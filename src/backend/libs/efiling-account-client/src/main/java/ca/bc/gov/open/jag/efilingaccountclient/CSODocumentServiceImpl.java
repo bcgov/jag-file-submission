@@ -42,7 +42,7 @@ public class CSODocumentServiceImpl implements EfilingDocumentService {
                 throw new EfilingDocumentServiceException("Document type does not exists");
 
             return documentDetails.get();
-            
+
         } catch (NestedEjbException_Exception e) {
             throw new EfilingDocumentServiceException("Exception while retrieving document details", e.getCause());
         }
