@@ -71,20 +71,7 @@ const checkCSOAccountStatus = (
       setRequiredState(userDetails, setApplicantInfo, setShowLoader);
     })
     .catch(error => {
-      const errorUrl = sessionStorage.getItem("errorUrl");
-      if (
-        errorUrl &&
-        error.response &&
-        error.response.status &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        errorRedirect(
-          errorUrl,
-          error.response.status,
-          error.response.data.message
-        );
-      }
+      errorRedirect(sessionStorage.getItem("errorUrl"), error);
 
       setError(true);
     })
