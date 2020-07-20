@@ -29,7 +29,6 @@ public class CSODocumentServiceImpl implements EfilingDocumentService {
     @Override
     public DocumentDetails getDocumentDetails(String courtLevel, String courtClass, String documentType) {
         try {
-            //TODO: we need to find out what arg0 and arg1 represent
             List<DocumentType> documentTypes = filingStatusFacadeBean.getDocumentTypes(courtLevel, courtClass);
 
             if(documentTypes == null) return null;
@@ -43,7 +42,6 @@ public class CSODocumentServiceImpl implements EfilingDocumentService {
                 throw new EfilingDocumentServiceException("Document type does not exists");
 
             return documentDetails.get();
-
 
         } catch (NestedEjbException_Exception e) {
             throw new EfilingDocumentServiceException("Exception while retrieving document details", e.getCause());
