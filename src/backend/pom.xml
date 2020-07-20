@@ -23,8 +23,6 @@
 			<id>all</id>
 			<modules>
 				<module>libs/efiling-commons</module>
-				<module>libs/efiling-submission-client</module>
-				<module>libs/efiling-lookup-client</module>
 				<module>libs/efiling-cso-starter</module>
 				<module>libs/efiling-bom</module>
 				<module>libs/efiling-demo-starter</module>
@@ -38,7 +36,6 @@
 			<modules>
 				<module>libs/efiling-bom</module>
 				<module>libs/efiling-commons</module>
-				<module>libs/efiling-lookup-client</module>
 				<module>libs/efiling-cso-starter</module>
 				<module>libs/efiling-demo-starter</module>
 			</modules>

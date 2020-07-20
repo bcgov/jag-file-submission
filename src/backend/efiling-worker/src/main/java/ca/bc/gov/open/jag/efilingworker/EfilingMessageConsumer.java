@@ -1,7 +1,5 @@
 package ca.bc.gov.open.jag.efilingworker;
 
-import ca.bc.gov.ag.csows.filing.FilingPackage;
-import ca.bc.gov.open.jag.efilingsubmissionclient.EfilingSubmissionService;
 import ca.bc.gov.open.jag.efilingworker.service.DocumentStoreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,11 +15,8 @@ public class EfilingMessageConsumer {
 
     private final DocumentStoreService documentStoreService;
 
-    private final EfilingSubmissionService efilingSubmissionService;
-
-    public EfilingMessageConsumer(DocumentStoreService documentStoreService, EfilingSubmissionService efilingSubmissionService) {
+    public EfilingMessageConsumer(DocumentStoreService documentStoreService) {
         this.documentStoreService = documentStoreService;
-        this.efilingSubmissionService = efilingSubmissionService;
     }
 
     @RabbitListener(queues = Keys.QUEUE_NAME)
@@ -33,6 +28,5 @@ public class EfilingMessageConsumer {
         logger.info("Uploading file");
         documentStoreService.uploadFile(new File(""));
         logger.info("Submitting");
-        efilingSubmissionService.submitFiling(new FilingPackage());
     }
 }
