@@ -33,7 +33,7 @@ const navigation = {
     url: "successurl.com"
   },
   error: {
-    url: "error.com"
+    url: ""
   }
 };
 const documents = getDocumentsData();

@@ -9,6 +9,7 @@ import Home, { saveDataToSessionStorage } from "./Home";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
 import { getUserDetails } from "../../../modules/userDetails";
 import { getDocumentsData } from "../../../modules/documentTestData";
+import { getNavigationData } from "../../../modules/navigationTestData";
 
 const header = {
   name: "eFiling Frontend",
@@ -23,17 +24,7 @@ describe("Home", () => {
   const temp = "temp";
   const apiRequest = `/submission/${submissionId}`;
   const apiRequestFiling = `/submission/${submissionId}/filing-package`;
-  const navigation = {
-    cancel: {
-      url: "cancelurl.com"
-    },
-    success: {
-      url: "successurl.com"
-    },
-    error: {
-      url: ""
-    }
-  };
+  const navigation = getNavigationData();
   const documents = getDocumentsData();
   const userDetails = getUserDetails();
 
@@ -101,9 +92,7 @@ describe("Home", () => {
     expect(sessionStorage.getItem("successUrl")).toBeFalsy();
     expect(sessionStorage.getItem("errorUrl")).toBeFalsy();
 
-    const user = { universalId: "123" };
-
-    saveDataToSessionStorage(navigation, user);
+    saveDataToSessionStorage(navigation, userDetails);
 
     expect(sessionStorage.getItem("cancelUrl")).toEqual("cancelurl.com");
     expect(sessionStorage.getItem("successUrl")).toEqual("successurl.com");
