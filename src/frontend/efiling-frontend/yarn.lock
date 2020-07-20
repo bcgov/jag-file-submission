@@ -5245,6 +5245,11 @@ diffie-hellman@^5.0.0:
     miller-rabin "^4.0.0"
     randombytes "^2.0.0"
 
+dinero.js@^1.8.1:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/dinero.js/-/dinero.js-1.8.1.tgz#775a647629b4195af9d02f46e9b7fa1fd81e906d"
+  integrity sha512-AQ09MDKonkGUrhBZZFx4tPTVcVJuHJ0VEA73LvcBoBB2eQSi1DbapeXj4wnUUpx1hVnPdyev1xPNnNMGy/Au0g==
+
 dir-glob@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/dir-glob/-/dir-glob-2.0.0.tgz#0b205d2b6aef98238ca286598a8204d29d0a0034"
@@ -12496,9 +12501,9 @@ shallowequal@^1.1.0:
   resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-1.1.0.tgz#188d521de95b9087404fd4dcb68b13df0ae4e7f8"
   integrity sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==
 
-"shared-components@https://github.com/SierraSystems/bcgov-shared-components/releases/download/0.3.3/shared-components-0.3.3.tgz":
-  version "0.3.3"
-  resolved "https://github.com/SierraSystems/bcgov-shared-components/releases/download/0.3.3/shared-components-0.3.3.tgz#ef88243fc549a44ecc9798fab44b4acec64adc83"
+"shared-components@https://github.com/SierraSystems/bcgov-shared-components/releases/download/0.3.4/shared-components-0.3.4.tgz":
+  version "0.3.4"
+  resolved "https://github.com/SierraSystems/bcgov-shared-components/releases/download/0.3.4/shared-components-0.3.4.tgz#372ac2eca919366e319820154409b61440e812a2"
   dependencies:
     "@bcgov/bootstrap-theme" "github:bcgov/bootstrap-theme"
     babel-plugin-transform-export-extensions "^6.22.0"

@@ -77,7 +77,7 @@ export default function CSOAccount({
     <div className="page">
       <div className="content col-md-8">
         <div className="non-printable">
-          <h2>Create a Court Services Online (CSO) Account</h2>
+          <h1>Create a Court Services Online (CSO) Account</h1>
           <Alert
             icon={<MdError size={32} />}
             type="warning"

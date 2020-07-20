@@ -8,28 +8,22 @@ import ConfirmationPopup, {
   DisplayBox,
   Table
 } from "shared-components";
+import Dinero from "dinero.js";
 import axios from "axios";
 import { getSidecardData } from "../../../modules/sidecardData";
 import { propTypes } from "../../../types/propTypes";
 
 import "./PackageConfirmation.css";
-
-const continueButton = {
-  label: "Continue to Payment",
-  onClick: () => console.log("continue on click"),
-  styling: "normal-blue btn"
-};
-
-const uploadButton = {
-  label: "Upload Documents",
-  onClick: () => console.log("upload on click"),
-  styling: "normal-white btn"
-};
+import Payment from "../payment/Payment";
 
 const calculateTotalStatutoryFee = files => {
-  let totalStatFee = 0;
+  let totalStatFee = Dinero({ amount: 0 });
   files.forEach(file => {
-    totalStatFee += file.statutoryFeeAmount;
+    totalStatFee = totalStatFee.add(
+      Dinero({
+        amount: parseInt((file.statutoryFeeAmount * 100).toFixed(0), 10)
+      })
+    );
   });
 
   return totalStatFee;
@@ -39,7 +33,7 @@ const generateTotalFeeTable = files => {
   const feesData = [
     {
       name: "Statutory Fees:",
-      value: `$ ${calculateTotalStatutoryFee(files)}`,
+      value: calculateTotalStatutoryFee(files).toFormat("$0,0.00"),
       isValueBold: true
     },
     {
@@ -53,7 +47,7 @@ const generateTotalFeeTable = files => {
     {
       name: (
         <div style={{ width: "60%" }}>
-          <Table isFeesData elements={feesData} />
+          <Table elements={feesData} />
         </div>
       ),
       value: "",
@@ -89,7 +83,9 @@ const generateTableData = file => {
   if (file.statutoryFeeAmount > 0) {
     data.push({
       name: "Statutory Fee:",
-      value: `$ ${file.statutoryFeeAmount}`,
+      value: Dinero({
+        amount: parseInt((file.statutoryFeeAmount * 100).toFixed(0), 10)
+      }).toFormat("$0,0.00"),
       isValueBold: true,
       isClose: true
     });
@@ -118,12 +114,15 @@ export default function PackageConfirmation({
   csoAccountStatus: { isNew }
 }) {
   const [files, setFiles] = useState([]);
+  const [showPayment, setShowPayment] = useState(false);
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
 
   useEffect(() => {
     getFilingPackageData(submissionId, setFiles, files);
   }, [files, submissionId]);
+
+  if (showPayment) return <Payment payment={{ confirmationPopup }} />;
 
   return (
     <div className="page">
@@ -140,8 +139,18 @@ export default function PackageConfirmation({
           </>
         )}
 
-        <h2>Package Confirmation</h2>
-        <p>Review your package for accuracy before submitting.</p>
+        <h1>Package Confirmation</h1>
+        <span>
+          Review your package for accuracy and upload any additional or
+          supporting documents.
+        </span>
+        <br />
+        <span>
+          If there are any errors in these documents, please Cancel this process
+          and re-submit.
+        </span>
+        <br />
+        <br />
 
         {files.map(file => (
           <div key={file.name}>
@@ -158,34 +167,15 @@ export default function PackageConfirmation({
           </div>
         ))}
 
+        <h3>
+          Do you have additional documents to upload?&nbsp;
+          <a href="#">Upload them now.</a>
+        </h3>
         <br />
 
-        <p>
-          <a
-            href={sessionStorage.getItem("cancelUrl")}
-            data-test-id="return-link"
-          >
-            Return to the parent application website
-          </a>
-          &nbsp;to correct errors or missing information in this package.
-        </p>
-
-        <br />
-
-        <h3>Summary</h3>
-
+        <h2>Summary</h2>
         <Table elements={generateTotalFeeTable(files)} />
-
         <br />
-
-        <section className="inline-block pt-2">
-          <Button
-            label={uploadButton.label}
-            onClick={uploadButton.onClick}
-            styling={uploadButton.styling}
-            testId="upload-btn"
-          />
-        </section>
 
         <section className="buttons pt-2">
           <ConfirmationPopup
@@ -195,9 +185,9 @@ export default function PackageConfirmation({
             cancelButton={confirmationPopup.cancelButton}
           />
           <Button
-            label={continueButton.label}
-            onClick={continueButton.onClick}
-            styling={continueButton.styling}
+            label="Continue to Payment"
+            onClick={() => setShowPayment(true)}
+            styling="normal-blue btn"
             testId="continue-btn"
           />
         </section>

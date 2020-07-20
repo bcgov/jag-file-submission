@@ -37,9 +37,14 @@ describe("CSOAccount Component", () => {
   });
 
   test("On success, setCsoAccountStatus exists and isNew to true", async () => {
-    mock
-      .onPost(API_REQUEST)
-      .reply(201, { accounts: [{ type: "CSO", identifier: "identifier" }] });
+    sessionStorage.setItem("csoAccountId", null);
+
+    mock.onPost(API_REQUEST).reply(201, {
+      accounts: [
+        { type: "CSO", identifier: "identifier" },
+        { type: "notCSO", identifier: "newIdentifier" }
+      ]
+    });
 
     const { container } = render(
       <CSOAccount
@@ -57,6 +62,30 @@ describe("CSOAccount Component", () => {
     await wait(() => {});
 
     expect(setCsoAccountStatus).toHaveBeenCalled();
+    expect(sessionStorage.getItem("csoAccountId")).toEqual("identifier");
+  });
+
+  test("On success, if not type of CSO then it does not set the value in session storage", async () => {
+    sessionStorage.setItem("csoAccountId", "someId");
+
+    mock.onPost(API_REQUEST).reply(201, {
+      accounts: [
+        { type: "notCSO", identifier: "identifier" },
+        { type: "notCSO", identifier: "newIdentifier" }
+      ]
+    });
+
+    render(
+      <CSOAccount
+        confirmationPopup={confirmationPopup}
+        applicantInfo={applicantInfo}
+        setCsoAccountStatus={setCsoAccountStatus}
+      />
+    );
+
+    await wait(() => {});
+
+    expect(sessionStorage.getItem("csoAccountId")).toEqual("someId");
   });
 
   test("On failed account creation, should redirect to parent application", async () => {

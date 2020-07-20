@@ -12499,9 +12499,9 @@ shallowequal@^1.1.0:
   resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-1.1.0.tgz#188d521de95b9087404fd4dcb68b13df0ae4e7f8"
   integrity sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==
 
-"shared-components@https://github.com/SierraSystems/bcgov-shared-components/releases/download/0.3.2/shared-components-0.3.2.tgz":
-  version "0.3.2"
-  resolved "https://github.com/SierraSystems/bcgov-shared-components/releases/download/0.3.2/shared-components-0.3.2.tgz#47ddc81f90a5409f67b8bf3a39aa041a42369134"
+"shared-components@https://github.com/SierraSystems/bcgov-shared-components/releases/download/0.3.4/shared-components-0.3.4.tgz":
+  version "0.3.4"
+  resolved "https://github.com/SierraSystems/bcgov-shared-components/releases/download/0.3.4/shared-components-0.3.4.tgz#372ac2eca919366e319820154409b61440e812a2"
   dependencies:
     "@bcgov/bootstrap-theme" "github:bcgov/bootstrap-theme"
     babel-plugin-transform-export-extensions "^6.22.0"

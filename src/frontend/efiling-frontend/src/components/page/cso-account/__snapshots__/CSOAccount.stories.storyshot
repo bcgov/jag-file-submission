@@ -11,9 +11,9 @@ exports[`Storyshots CSOAccount Default 1`] = `
       <div
         class="non-printable"
       >
-        <h2>
+        <h1>
           Create a Court Services Online (CSO) Account
-        </h2>
+        </h1>
         <div
           class="display-box warning-background"
         >
@@ -953,9 +953,9 @@ exports[`Storyshots CSOAccount Mobile 1`] = `
       <div
         class="non-printable"
       >
-        <h2>
+        <h1>
           Create a Court Services Online (CSO) Account
-        </h2>
+        </h1>
         <div
           class="display-box warning-background"
         >
