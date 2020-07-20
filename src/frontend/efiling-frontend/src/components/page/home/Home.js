@@ -31,6 +31,13 @@ const addUserInfo = ({ bceid, firstName, middleName, lastName, email }) => {
   };
 };
 
+const setRequiredState = (userDetails, setApplicantInfo, setShowLoader) => {
+  const applicantInfo = addUserInfo(userDetails);
+
+  setApplicantInfo(applicantInfo);
+  setShowLoader(false);
+};
+
 // make call to submission/{id} to get the user and navigation details
 const checkCSOAccountStatus = (
   submissionId,
@@ -56,10 +63,7 @@ const checkCSOAccountStatus = (
           setCsoAccountStatus({ isNew: false, exists: true });
         }
       }
-
-      const applicantInfo = addUserInfo(userDetails);
-      setApplicantInfo(applicantInfo);
-      setShowLoader(false);
+      setRequiredState(userDetails, setApplicantInfo, setShowLoader);
     })
     .catch(error => {
       window.open(
