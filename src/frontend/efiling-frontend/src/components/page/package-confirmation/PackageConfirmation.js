@@ -167,9 +167,11 @@ export default function PackageConfirmation({
           </div>
         ))}
 
+        {/* TODO: temporary lint disable, remove later */}
+        {/* eslint-disable jsx-a11y/anchor-is-valid */}
         <h3>
           Do you have additional documents to upload?&nbsp;
-          <a href="#">Upload them now.</a>
+          <a>Upload them now.</a>
         </h3>
         <br />
 

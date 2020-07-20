@@ -14,7 +14,6 @@ describe("PackageConfirmation Component", () => {
   const packageConfirmation = { confirmationPopup, submissionId };
   const csoAccountStatus = { isNew: false };
   const documents = getDocumentsData();
-  const setShowPayment = jest.fn();
 
   sessionStorage.setItem("csoAccountId", "123");
 

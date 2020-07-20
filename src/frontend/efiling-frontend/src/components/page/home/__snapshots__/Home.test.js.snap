@@ -1470,9 +1470,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
         </div>
         <h3>
           Do you have additional documents to upload? 
-          <a
-            href="#"
-          >
+          <a>
             Upload them now.
           </a>
         </h3>
