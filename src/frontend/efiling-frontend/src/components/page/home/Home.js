@@ -62,6 +62,7 @@ const checkCSOAccountStatus = (
     .catch(error => {
       console.log(error);
       const errorUrl = sessionStorage.getItem("errorUrl");
+      console.log(errorUrl);
       window.open(
         `${errorUrl}?status=${error.response.status}&message=${error.response.data.message}`,
         "_self"

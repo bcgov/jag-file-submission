@@ -22,7 +22,6 @@ const page = { header, confirmationPopup };
 
 const submissionId = "abc123";
 const temp = "temp";
-const mock = new MockAdapter(axios);
 const apiRequest = `/submission/${submissionId}`;
 const apiRequestFiling = `/submission/${submissionId}/filing-package`;
 const navigation = {
@@ -52,19 +51,24 @@ const documents = [
 ];
 const userDetails = getUserDetails();
 
+sessionStorage.setItem("errorUrl", "error.com");
+
 const LoaderStateData = props => {
+  const mock = new MockAdapter(axios);
   window.open = () => {};
-  mock.onGet(apiRequest).replyOnce(400, { message: "There was an error" });
+  mock.onGet(apiRequest).reply(400, { message: "There was an error" });
   return props.children({ page });
 };
 
 const AccountExistsStateData = props => {
+  const mock = new MockAdapter(axios);
   mock.onGet(apiRequest).reply(200, { userDetails, navigation });
   mock.onGet(apiRequestFiling).reply(200, { documents });
   return props.children({ page });
 };
 
 const NoAccountExistsStateData = props => {
+  const mock = new MockAdapter(axios);
   mock.onGet(apiRequest).reply(200, {
     userDetails: { ...userDetails, accounts: null },
     navigation
@@ -98,24 +102,18 @@ const noAccountExistsComponent = (
 
 export const Loader = () => loaderComponent;
 
-// export const LoaderMobile = () => loaderComponent;
+export const AccountExists = () => accountExistsComponent;
 
-// export const AccountExists = () => accountExistsComponent;
+export const NoAccountExists = () => noAccountExistsComponent;
 
-// export const AccountExistsMobile = () => accountExistsComponent;
+export const NoAccountExistsMobile = () => noAccountExistsComponent;
 
-// export const NoAccountExists = () => noAccountExistsComponent;
+const mobileViewport = {
+  parameters: {
+    viewport: {
+      defaultViewport: "mobile2"
+    }
+  }
+};
 
-// export const NoAccountExistsMobile = () => noAccountExistsComponent;
-
-// const mobileViewport = {
-//   parameters: {
-//     viewport: {
-//       defaultViewport: "mobile2"
-//     }
-//   }
-// };
-
-// LoaderMobile.story = mobileViewport;
-// AccountExistsMobile.story = mobileViewport;
-// NoAccountExistsMobile.story = mobileViewport;
+NoAccountExistsMobile.story = mobileViewport;

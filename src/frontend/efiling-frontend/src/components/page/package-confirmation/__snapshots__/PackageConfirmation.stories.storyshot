@@ -1,1812 +1,966 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots PackageConfirmation Existing Account 1`] = `
-<div
-  className="page"
->
+<DocumentFragment>
   <div
-    className="content col-md-8"
-  >
-    <h2>
-      Package Confirmation
-    </h2>
-    <p>
-      Review your package for accuracy before submitting.
-    </p>
-    <div>
-      <div
-        className="display-box border-background display-file"
-      >
-        <div
-          className="display-icon"
-        >
-          <div
-            style={
-              Object {
-                "color": "rgb(252, 186, 25)",
-              }
-            }
-          >
-            <svg
-              fill="currentColor"
-              height={32}
-              size={32}
-              stroke="currentColor"
-              strokeWidth="0"
-              style={
-                Object {
-                  "color": undefined,
-                }
-              }
-              viewBox="0 0 24 24"
-              width={32}
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
-              />
-            </svg>
-          </div>
-        </div>
-        <div
-          className="display-right-element"
-        >
-          <table
-            className=""
-          >
-            <thead>
-              <tr>
-                <th
-                  colSpan="2"
-                >
-                  
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                className=""
-                colSpan="2"
-              >
-                <td
-                  className="vertical-middle"
-                >
-                  <div
-                    style={
-                      Object {
-                        "width": "80%",
-                      }
-                    }
-                  >
-                    <span>
-                      file name 1
-                    </span>
-                  </div>
-                </td>
-                <td>
-                  <table
-                    className=""
-                  >
-                    <thead>
-                      <tr>
-                        <th
-                          colSpan="2"
-                        >
-                          
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr
-                        className=""
-                        colSpan="2"
-                      >
-                        <td
-                          className="reduce-width"
-                        >
-                          Description:
-                        </td>
-                        <td
-                          className=""
-                        >
-                          <b>
-                            file description 1
-                          </b>
-                        </td>
-                      </tr>
-                      <tr
-                        className=""
-                        colSpan="2"
-                      >
-                        <td
-                          className="reduce-width"
-                        >
-                          Statutory Fee:
-                        </td>
-                        <td
-                          className=""
-                        >
-                          <b>
-                            $ 40
-                          </b>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <br />
-    </div>
-    <div>
-      <div
-        className="display-box border-background display-file"
-      >
-        <div
-          className="display-icon"
-        >
-          <div
-            style={
-              Object {
-                "color": "rgb(252, 186, 25)",
-              }
-            }
-          >
-            <svg
-              fill="currentColor"
-              height={32}
-              size={32}
-              stroke="currentColor"
-              strokeWidth="0"
-              style={
-                Object {
-                  "color": undefined,
-                }
-              }
-              viewBox="0 0 24 24"
-              width={32}
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
-              />
-            </svg>
-          </div>
-        </div>
-        <div
-          className="display-right-element"
-        >
-          <table
-            className=""
-          >
-            <thead>
-              <tr>
-                <th
-                  colSpan="2"
-                >
-                  
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                className=""
-                colSpan="2"
-              >
-                <td
-                  className="vertical-middle"
-                >
-                  <div
-                    style={
-                      Object {
-                        "width": "80%",
-                      }
-                    }
-                  >
-                    <span>
-                      file name 2
-                    </span>
-                  </div>
-                </td>
-                <td>
-                  <table
-                    className=""
-                  >
-                    <thead>
-                      <tr>
-                        <th
-                          colSpan="2"
-                        >
-                          
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr
-                        className=""
-                        colSpan="2"
-                      >
-                        <td
-                          className="reduce-width"
-                        >
-                          Description:
-                        </td>
-                        <td
-                          className=""
-                        >
-                          <b>
-                            file description 2
-                          </b>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <br />
-    </div>
-    <br />
-    <p>
-      <a
-        data-test-id="return-link"
-        href={null}
-      >
-        Return to the parent application website
-      </a>
-       to correct errors or missing information in this package.
-    </p>
-    <br />
-    <h3>
-      Summary
-    </h3>
-    <table
-      className=""
-    >
-      <thead>
-        <tr>
-          <th
-            colSpan="2"
-          >
-            
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          className=""
-          colSpan="2"
-        >
-          <td
-            className="side-by-side"
-          >
-            <div
-              style={
-                Object {
-                  "width": "60%",
-                }
-              }
-            >
-              <table
-                className=""
-              >
-                <thead>
-                  <tr>
-                    <th
-                      colSpan="2"
-                    >
-                      
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    className=""
-                    colSpan="2"
-                  >
-                    <td
-                      className=""
-                    >
-                      Statutory Fees:
-                    </td>
-                    <td
-                      className="right-align"
-                    >
-                      <b>
-                        $ 40
-                      </b>
-                    </td>
-                  </tr>
-                  <tr
-                    className=""
-                    colSpan="2"
-                  >
-                    <td
-                      className=""
-                    >
-                      Number of Documents in Package:
-                    </td>
-                    <td
-                      className="right-align"
-                    >
-                      <b>
-                        2
-                      </b>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </td>
-          <td>
-            
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <br />
-    <section
-      className="inline-block pt-2"
-    >
-      <div>
-        <button
-          className="normal-white btn"
-          data-test-id="upload-btn"
-          disabled={false}
-          onClick={[Function]}
-          type="button"
-        >
-          Upload Documents
-        </button>
-      </div>
-    </section>
-    <section
-      className="buttons pt-2"
-    >
-      <div>
-        <button
-          className="normal-white btn"
-          data-test-id="main-cancel-btn"
-          disabled={false}
-          onClick={[Function]}
-          type="button"
-        >
-          Cancel
-        </button>
-      </div>
-      <div>
-        <button
-          className="normal-blue btn"
-          data-test-id="continue-btn"
-          disabled={false}
-          onClick={[Function]}
-          type="button"
-        >
-          Continue to Payment
-        </button>
-      </div>
-    </section>
-  </div>
-  <div
-    className="sidecard"
+    class="page"
   >
     <div
-      className="wide-dashboard-spacing"
-      style={
-        Object {
-          "position": "relative",
-        }
-      }
+      class="content col-md-8"
     >
-      <div
-        className="row"
-      >
-        <div
-          className="col-12 pt-2"
-          style={
-            Object {
-              "position": "relative",
-            }
-          }
+      <h2>
+        Package Confirmation
+      </h2>
+      <p>
+        Review your package for accuracy before submitting.
+      </p>
+      <br />
+      <p>
+        <a
+          data-test-id="return-link"
+          href="cancelurl.com"
         >
-          <p />
-          <section
-            className="bluegrey-container"
-            id="bluegrey-section"
+          Return to the parent application website
+        </a>
+         to correct errors or missing information in this package.
+      </p>
+      <br />
+      <h3>
+        Summary
+      </h3>
+      <table
+        class=""
+      >
+        <thead>
+          <tr>
+            <th
+              colspan="2"
+            />
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class=""
+            colspan="2"
           >
-            <div
-              className="container-background bluegrey-heading"
+            <td
+              class="side-by-side"
             >
-              <h2
-                className="heading-style"
+              <div
+                style="width: 60%;"
               >
-                <div
-                  className="row"
+                <table
+                  class=""
                 >
-                  <div
-                    className="side-card-row"
-                  >
-                    <div
-                      className="round-icon-wrapper"
+                  <thead>
+                    <tr>
+                      <th
+                        colspan="2"
+                      />
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      class=""
+                      colspan="2"
                     >
-                      <svg
-                        className="side-card-icon"
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        strokeWidth="0"
-                        style={
-                          Object {
-                            "color": undefined,
-                          }
-                        }
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
+                      <td
+                        class=""
                       >
-                        <path
-                          d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-                        />
-                      </svg>
-                    </div>
-                    <div
-                      className="side-card-title"
+                        Statutory Fees:
+                      </td>
+                      <td
+                        class="right-align"
+                      >
+                        <b>
+                          $ 0
+                        </b>
+                      </td>
+                    </tr>
+                    <tr
+                      class=""
+                      colspan="2"
                     >
-                      Your CSO Account
-                    </div>
-                  </div>
-                </div>
-              </h2>
-            </div>
-            <div
-              className="bluegrey-content"
-            >
-              <span
-                className="content-style"
-              >
-                <p>
-                  CSO account 
-                  <b>
-                    123
-                  </b>
-                   is linked to your Basic BCeID account 
-                  <b>
-                    blah2
-                  </b>
-                   and will be used to file documents. 
-                  <a
-                    href="https://justice.gov.bc.ca/cso/about/index.do"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    View your CSO account details
-                  </a>
-                  .
-                </p>
-              </span>
-            </div>
-          </section>
+                      <td
+                        class=""
+                      >
+                        Number of Documents in Package:
+                      </td>
+                      <td
+                        class="right-align"
+                      >
+                        <b>
+                          0
+                        </b>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </td>
+            <td />
+          </tr>
+        </tbody>
+      </table>
+      <br />
+      <section
+        class="inline-block pt-2"
+      >
+        <div>
+          <button
+            class="normal-white btn"
+            data-test-id="upload-btn"
+            type="button"
+          >
+            Upload Documents
+          </button>
         </div>
-      </div>
+      </section>
+      <section
+        class="buttons pt-2"
+      >
+        <div>
+          <button
+            class="normal-white btn"
+            data-test-id="main-cancel-btn"
+            type="button"
+          >
+            Cancel
+          </button>
+        </div>
+        <div>
+          <button
+            class="normal-blue btn"
+            data-test-id="continue-btn"
+            type="button"
+          >
+            Continue to Payment
+          </button>
+        </div>
+      </section>
     </div>
     <div
-      className="wide-dashboard-spacing"
-      style={
-        Object {
-          "position": "relative",
-        }
-      }
+      class="sidecard"
     >
       <div
-        className="row"
+        class="wide-dashboard-spacing"
+        style="position: relative;"
       >
         <div
-          className="col-12 pt-2"
-          style={
-            Object {
-              "position": "relative",
-            }
-          }
+          class="row"
         >
-          <p />
-          <section
-            className="bluegrey-container"
-            id="bluegrey-section"
+          <div
+            class="col-12 pt-2"
+            style="position: relative;"
           >
-            <div
-              className="container-background bluegrey-heading"
+            <p />
+            <section
+              class="bluegrey-container"
+              id="bluegrey-section"
             >
-              <h2
-                className="heading-style"
+              <div
+                class="container-background bluegrey-heading"
               >
-                <div
-                  className="row"
+                <h2
+                  class="heading-style"
                 >
                   <div
-                    className="side-card-row"
+                    class="row"
                   >
                     <div
-                      className="round-icon-wrapper"
+                      class="side-card-row"
                     >
-                      <svg
-                        className="side-card-icon"
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        strokeWidth="0"
-                        style={
-                          Object {
-                            "color": undefined,
-                          }
-                        }
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
+                      <div
+                        class="round-icon-wrapper"
                       >
-                        <path
-                          d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
-                        />
-                      </svg>
-                    </div>
-                    <div
-                      className="side-card-title"
-                    >
-                      About E-File Submission
+                        <svg
+                          class="side-card-icon"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="side-card-title"
+                      >
+                        Your CSO Account
+                      </div>
                     </div>
                   </div>
-                </div>
-              </h2>
-            </div>
-            <div
-              className="bluegrey-content"
-            >
-              <span
-                className="content-style"
+                </h2>
+              </div>
+              <div
+                class="bluegrey-content"
               >
-                <p>
-                  E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
-                  <a
-                    href="https://justice.gov.bc.ca/cso/about/index.do"
-                    rel="noopener noreferrer"
-                    target="_blank"
+                <span
+                  class="content-style"
+                >
+                  <p>
+                    CSO account 
+                    <b>
+                      123
+                    </b>
+                     is linked to your Basic BCeID account 
+                    <b>
+                      blah2
+                    </b>
+                     and will be used to file documents. 
+                    <a
+                      href="https://justice.gov.bc.ca/cso/about/index.do"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      View your CSO account details
+                    </a>
+                    .
+                  </p>
+                </span>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div
+        class="wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col-12 pt-2"
+            style="position: relative;"
+          >
+            <p />
+            <section
+              class="bluegrey-container"
+              id="bluegrey-section"
+            >
+              <div
+                class="container-background bluegrey-heading"
+              >
+                <h2
+                  class="heading-style"
+                >
+                  <div
+                    class="row"
                   >
-                    Learn more about CSO
-                  </a>
-                  .
-                </p>
-              </span>
-            </div>
-          </section>
+                    <div
+                      class="side-card-row"
+                    >
+                      <div
+                        class="round-icon-wrapper"
+                      >
+                        <svg
+                          class="side-card-icon"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="side-card-title"
+                      >
+                        About E-File Submission
+                      </div>
+                    </div>
+                  </div>
+                </h2>
+              </div>
+              <div
+                class="bluegrey-content"
+              >
+                <span
+                  class="content-style"
+                >
+                  <p>
+                    E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
+                    <a
+                      href="https://justice.gov.bc.ca/cso/about/index.do"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      Learn more about CSO
+                    </a>
+                    .
+                  </p>
+                </span>
+              </div>
+            </section>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</DocumentFragment>
 `;
 
 exports[`Storyshots PackageConfirmation Mobile 1`] = `
-<div
-  className="page"
->
+<DocumentFragment>
   <div
-    className="content col-md-8"
-  >
-    <h2>
-      Package Confirmation
-    </h2>
-    <p>
-      Review your package for accuracy before submitting.
-    </p>
-    <div>
-      <div
-        className="display-box border-background display-file"
-      >
-        <div
-          className="display-icon"
-        >
-          <div
-            style={
-              Object {
-                "color": "rgb(252, 186, 25)",
-              }
-            }
-          >
-            <svg
-              fill="currentColor"
-              height={32}
-              size={32}
-              stroke="currentColor"
-              strokeWidth="0"
-              style={
-                Object {
-                  "color": undefined,
-                }
-              }
-              viewBox="0 0 24 24"
-              width={32}
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
-              />
-            </svg>
-          </div>
-        </div>
-        <div
-          className="display-right-element"
-        >
-          <table
-            className=""
-          >
-            <thead>
-              <tr>
-                <th
-                  colSpan="2"
-                >
-                  
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                className=""
-                colSpan="2"
-              >
-                <td
-                  className="vertical-middle"
-                >
-                  <div
-                    style={
-                      Object {
-                        "width": "80%",
-                      }
-                    }
-                  >
-                    <span>
-                      file name 1
-                    </span>
-                  </div>
-                </td>
-                <td>
-                  <table
-                    className=""
-                  >
-                    <thead>
-                      <tr>
-                        <th
-                          colSpan="2"
-                        >
-                          
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr
-                        className=""
-                        colSpan="2"
-                      >
-                        <td
-                          className="reduce-width"
-                        >
-                          Description:
-                        </td>
-                        <td
-                          className=""
-                        >
-                          <b>
-                            file description 1
-                          </b>
-                        </td>
-                      </tr>
-                      <tr
-                        className=""
-                        colSpan="2"
-                      >
-                        <td
-                          className="reduce-width"
-                        >
-                          Statutory Fee:
-                        </td>
-                        <td
-                          className=""
-                        >
-                          <b>
-                            $ 40
-                          </b>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <br />
-    </div>
-    <div>
-      <div
-        className="display-box border-background display-file"
-      >
-        <div
-          className="display-icon"
-        >
-          <div
-            style={
-              Object {
-                "color": "rgb(252, 186, 25)",
-              }
-            }
-          >
-            <svg
-              fill="currentColor"
-              height={32}
-              size={32}
-              stroke="currentColor"
-              strokeWidth="0"
-              style={
-                Object {
-                  "color": undefined,
-                }
-              }
-              viewBox="0 0 24 24"
-              width={32}
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
-              />
-            </svg>
-          </div>
-        </div>
-        <div
-          className="display-right-element"
-        >
-          <table
-            className=""
-          >
-            <thead>
-              <tr>
-                <th
-                  colSpan="2"
-                >
-                  
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                className=""
-                colSpan="2"
-              >
-                <td
-                  className="vertical-middle"
-                >
-                  <div
-                    style={
-                      Object {
-                        "width": "80%",
-                      }
-                    }
-                  >
-                    <span>
-                      file name 2
-                    </span>
-                  </div>
-                </td>
-                <td>
-                  <table
-                    className=""
-                  >
-                    <thead>
-                      <tr>
-                        <th
-                          colSpan="2"
-                        >
-                          
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr
-                        className=""
-                        colSpan="2"
-                      >
-                        <td
-                          className="reduce-width"
-                        >
-                          Description:
-                        </td>
-                        <td
-                          className=""
-                        >
-                          <b>
-                            file description 2
-                          </b>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <br />
-    </div>
-    <br />
-    <p>
-      <a
-        data-test-id="return-link"
-        href={null}
-      >
-        Return to the parent application website
-      </a>
-       to correct errors or missing information in this package.
-    </p>
-    <br />
-    <h3>
-      Summary
-    </h3>
-    <table
-      className=""
-    >
-      <thead>
-        <tr>
-          <th
-            colSpan="2"
-          >
-            
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          className=""
-          colSpan="2"
-        >
-          <td
-            className="side-by-side"
-          >
-            <div
-              style={
-                Object {
-                  "width": "60%",
-                }
-              }
-            >
-              <table
-                className=""
-              >
-                <thead>
-                  <tr>
-                    <th
-                      colSpan="2"
-                    >
-                      
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    className=""
-                    colSpan="2"
-                  >
-                    <td
-                      className=""
-                    >
-                      Statutory Fees:
-                    </td>
-                    <td
-                      className="right-align"
-                    >
-                      <b>
-                        $ 40
-                      </b>
-                    </td>
-                  </tr>
-                  <tr
-                    className=""
-                    colSpan="2"
-                  >
-                    <td
-                      className=""
-                    >
-                      Number of Documents in Package:
-                    </td>
-                    <td
-                      className="right-align"
-                    >
-                      <b>
-                        2
-                      </b>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </td>
-          <td>
-            
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <br />
-    <section
-      className="inline-block pt-2"
-    >
-      <div>
-        <button
-          className="normal-white btn"
-          data-test-id="upload-btn"
-          disabled={false}
-          onClick={[Function]}
-          type="button"
-        >
-          Upload Documents
-        </button>
-      </div>
-    </section>
-    <section
-      className="buttons pt-2"
-    >
-      <div>
-        <button
-          className="normal-white btn"
-          data-test-id="main-cancel-btn"
-          disabled={false}
-          onClick={[Function]}
-          type="button"
-        >
-          Cancel
-        </button>
-      </div>
-      <div>
-        <button
-          className="normal-blue btn"
-          data-test-id="continue-btn"
-          disabled={false}
-          onClick={[Function]}
-          type="button"
-        >
-          Continue to Payment
-        </button>
-      </div>
-    </section>
-  </div>
-  <div
-    className="sidecard"
+    class="page"
   >
     <div
-      className="wide-dashboard-spacing"
-      style={
-        Object {
-          "position": "relative",
-        }
-      }
+      class="content col-md-8"
     >
-      <div
-        className="row"
-      >
-        <div
-          className="col-12 pt-2"
-          style={
-            Object {
-              "position": "relative",
-            }
-          }
+      <h2>
+        Package Confirmation
+      </h2>
+      <p>
+        Review your package for accuracy before submitting.
+      </p>
+      <br />
+      <p>
+        <a
+          data-test-id="return-link"
+          href="cancelurl.com"
         >
-          <p />
-          <section
-            className="bluegrey-container"
-            id="bluegrey-section"
+          Return to the parent application website
+        </a>
+         to correct errors or missing information in this package.
+      </p>
+      <br />
+      <h3>
+        Summary
+      </h3>
+      <table
+        class=""
+      >
+        <thead>
+          <tr>
+            <th
+              colspan="2"
+            />
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class=""
+            colspan="2"
           >
-            <div
-              className="container-background bluegrey-heading"
+            <td
+              class="side-by-side"
             >
-              <h2
-                className="heading-style"
+              <div
+                style="width: 60%;"
               >
-                <div
-                  className="row"
+                <table
+                  class=""
                 >
-                  <div
-                    className="side-card-row"
-                  >
-                    <div
-                      className="round-icon-wrapper"
+                  <thead>
+                    <tr>
+                      <th
+                        colspan="2"
+                      />
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      class=""
+                      colspan="2"
                     >
-                      <svg
-                        className="side-card-icon"
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        strokeWidth="0"
-                        style={
-                          Object {
-                            "color": undefined,
-                          }
-                        }
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
+                      <td
+                        class=""
                       >
-                        <path
-                          d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-                        />
-                      </svg>
-                    </div>
-                    <div
-                      className="side-card-title"
+                        Statutory Fees:
+                      </td>
+                      <td
+                        class="right-align"
+                      >
+                        <b>
+                          $ 0
+                        </b>
+                      </td>
+                    </tr>
+                    <tr
+                      class=""
+                      colspan="2"
                     >
-                      Your CSO Account
-                    </div>
-                  </div>
-                </div>
-              </h2>
-            </div>
-            <div
-              className="bluegrey-content"
-            >
-              <span
-                className="content-style"
-              >
-                <p>
-                  CSO account 
-                  <b>
-                    123
-                  </b>
-                   is linked to your Basic BCeID account 
-                  <b>
-                    blah2
-                  </b>
-                   and will be used to file documents. 
-                  <a
-                    href="https://justice.gov.bc.ca/cso/about/index.do"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    View your CSO account details
-                  </a>
-                  .
-                </p>
-              </span>
-            </div>
-          </section>
+                      <td
+                        class=""
+                      >
+                        Number of Documents in Package:
+                      </td>
+                      <td
+                        class="right-align"
+                      >
+                        <b>
+                          0
+                        </b>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </td>
+            <td />
+          </tr>
+        </tbody>
+      </table>
+      <br />
+      <section
+        class="inline-block pt-2"
+      >
+        <div>
+          <button
+            class="normal-white btn"
+            data-test-id="upload-btn"
+            type="button"
+          >
+            Upload Documents
+          </button>
         </div>
-      </div>
+      </section>
+      <section
+        class="buttons pt-2"
+      >
+        <div>
+          <button
+            class="normal-white btn"
+            data-test-id="main-cancel-btn"
+            type="button"
+          >
+            Cancel
+          </button>
+        </div>
+        <div>
+          <button
+            class="normal-blue btn"
+            data-test-id="continue-btn"
+            type="button"
+          >
+            Continue to Payment
+          </button>
+        </div>
+      </section>
     </div>
     <div
-      className="wide-dashboard-spacing"
-      style={
-        Object {
-          "position": "relative",
-        }
-      }
+      class="sidecard"
     >
       <div
-        className="row"
+        class="wide-dashboard-spacing"
+        style="position: relative;"
       >
         <div
-          className="col-12 pt-2"
-          style={
-            Object {
-              "position": "relative",
-            }
-          }
+          class="row"
         >
-          <p />
-          <section
-            className="bluegrey-container"
-            id="bluegrey-section"
+          <div
+            class="col-12 pt-2"
+            style="position: relative;"
           >
-            <div
-              className="container-background bluegrey-heading"
+            <p />
+            <section
+              class="bluegrey-container"
+              id="bluegrey-section"
             >
-              <h2
-                className="heading-style"
+              <div
+                class="container-background bluegrey-heading"
               >
-                <div
-                  className="row"
+                <h2
+                  class="heading-style"
                 >
                   <div
-                    className="side-card-row"
+                    class="row"
                   >
                     <div
-                      className="round-icon-wrapper"
+                      class="side-card-row"
                     >
-                      <svg
-                        className="side-card-icon"
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        strokeWidth="0"
-                        style={
-                          Object {
-                            "color": undefined,
-                          }
-                        }
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
+                      <div
+                        class="round-icon-wrapper"
                       >
-                        <path
-                          d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
-                        />
-                      </svg>
-                    </div>
-                    <div
-                      className="side-card-title"
-                    >
-                      About E-File Submission
+                        <svg
+                          class="side-card-icon"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="side-card-title"
+                      >
+                        Your CSO Account
+                      </div>
                     </div>
                   </div>
-                </div>
-              </h2>
-            </div>
-            <div
-              className="bluegrey-content"
-            >
-              <span
-                className="content-style"
+                </h2>
+              </div>
+              <div
+                class="bluegrey-content"
               >
-                <p>
-                  E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
-                  <a
-                    href="https://justice.gov.bc.ca/cso/about/index.do"
-                    rel="noopener noreferrer"
-                    target="_blank"
+                <span
+                  class="content-style"
+                >
+                  <p>
+                    CSO account 
+                    <b>
+                      123
+                    </b>
+                     is linked to your Basic BCeID account 
+                    <b>
+                      blah2
+                    </b>
+                     and will be used to file documents. 
+                    <a
+                      href="https://justice.gov.bc.ca/cso/about/index.do"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      View your CSO account details
+                    </a>
+                    .
+                  </p>
+                </span>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div
+        class="wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col-12 pt-2"
+            style="position: relative;"
+          >
+            <p />
+            <section
+              class="bluegrey-container"
+              id="bluegrey-section"
+            >
+              <div
+                class="container-background bluegrey-heading"
+              >
+                <h2
+                  class="heading-style"
+                >
+                  <div
+                    class="row"
                   >
-                    Learn more about CSO
-                  </a>
-                  .
-                </p>
-              </span>
-            </div>
-          </section>
+                    <div
+                      class="side-card-row"
+                    >
+                      <div
+                        class="round-icon-wrapper"
+                      >
+                        <svg
+                          class="side-card-icon"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="side-card-title"
+                      >
+                        About E-File Submission
+                      </div>
+                    </div>
+                  </div>
+                </h2>
+              </div>
+              <div
+                class="bluegrey-content"
+              >
+                <span
+                  class="content-style"
+                >
+                  <p>
+                    E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
+                    <a
+                      href="https://justice.gov.bc.ca/cso/about/index.do"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      Learn more about CSO
+                    </a>
+                    .
+                  </p>
+                </span>
+              </div>
+            </section>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</DocumentFragment>
 `;
 
 exports[`Storyshots PackageConfirmation New Account 1`] = `
-<div
-  className="page"
->
+<DocumentFragment>
   <div
-    className="content col-md-8"
+    class="page"
   >
     <div
-      className="display-box success-background"
+      class="content col-md-8"
     >
       <div
-        className="display-icon"
+        class="display-box success-background"
       >
         <div
-          style={
-            Object {
-              "color": "#2E8540",
-            }
-          }
+          class="display-icon"
         >
-          <svg
-            fill="currentColor"
-            height={32}
-            size={32}
-            stroke="currentColor"
-            strokeWidth="0"
-            style={
-              Object {
-                "color": undefined,
-              }
-            }
-            viewBox="0 0 24 24"
-            width={32}
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            style="color: rgb(46, 133, 64);"
           >
-            <path
-              d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+            <svg
+              fill="currentColor"
+              height="32"
+              size="32"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="32"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+              />
+            </svg>
+          </div>
+        </div>
+        <div
+          class="display-right-element"
+        >
+          CSO Account created successfully.
+        </div>
+      </div>
+      <br />
+      <h2>
+        Package Confirmation
+      </h2>
+      <p>
+        Review your package for accuracy before submitting.
+      </p>
+      <br />
+      <p>
+        <a
+          data-test-id="return-link"
+          href="cancelurl.com"
+        >
+          Return to the parent application website
+        </a>
+         to correct errors or missing information in this package.
+      </p>
+      <br />
+      <h3>
+        Summary
+      </h3>
+      <table
+        class=""
+      >
+        <thead>
+          <tr>
+            <th
+              colspan="2"
             />
-          </svg>
-        </div>
-      </div>
-      <div
-        className="display-right-element"
-      >
-        CSO Account created successfully.
-      </div>
-    </div>
-    <br />
-    <h2>
-      Package Confirmation
-    </h2>
-    <p>
-      Review your package for accuracy before submitting.
-    </p>
-    <div>
-      <div
-        className="display-box border-background display-file"
-      >
-        <div
-          className="display-icon"
-        >
-          <div
-            style={
-              Object {
-                "color": "rgb(252, 186, 25)",
-              }
-            }
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class=""
+            colspan="2"
           >
-            <svg
-              fill="currentColor"
-              height={32}
-              size={32}
-              stroke="currentColor"
-              strokeWidth="0"
-              style={
-                Object {
-                  "color": undefined,
-                }
-              }
-              viewBox="0 0 24 24"
-              width={32}
-              xmlns="http://www.w3.org/2000/svg"
+            <td
+              class="side-by-side"
             >
-              <path
-                d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
-              />
-            </svg>
-          </div>
-        </div>
-        <div
-          className="display-right-element"
-        >
-          <table
-            className=""
-          >
-            <thead>
-              <tr>
-                <th
-                  colSpan="2"
-                >
-                  
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                className=""
-                colSpan="2"
+              <div
+                style="width: 60%;"
               >
-                <td
-                  className="vertical-middle"
+                <table
+                  class=""
                 >
-                  <div
-                    style={
-                      Object {
-                        "width": "80%",
-                      }
-                    }
-                  >
-                    <span>
-                      file name 1
-                    </span>
-                  </div>
-                </td>
-                <td>
-                  <table
-                    className=""
-                  >
-                    <thead>
-                      <tr>
-                        <th
-                          colSpan="2"
-                        >
-                          
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr
-                        className=""
-                        colSpan="2"
+                  <thead>
+                    <tr>
+                      <th
+                        colspan="2"
+                      />
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      class=""
+                      colspan="2"
+                    >
+                      <td
+                        class=""
                       >
-                        <td
-                          className="reduce-width"
-                        >
-                          Description:
-                        </td>
-                        <td
-                          className=""
-                        >
-                          <b>
-                            file description 1
-                          </b>
-                        </td>
-                      </tr>
-                      <tr
-                        className=""
-                        colSpan="2"
+                        Statutory Fees:
+                      </td>
+                      <td
+                        class="right-align"
                       >
-                        <td
-                          className="reduce-width"
-                        >
-                          Statutory Fee:
-                        </td>
-                        <td
-                          className=""
-                        >
-                          <b>
-                            $ 40
-                          </b>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+                        <b>
+                          $ 0
+                        </b>
+                      </td>
+                    </tr>
+                    <tr
+                      class=""
+                      colspan="2"
+                    >
+                      <td
+                        class=""
+                      >
+                        Number of Documents in Package:
+                      </td>
+                      <td
+                        class="right-align"
+                      >
+                        <b>
+                          0
+                        </b>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </td>
+            <td />
+          </tr>
+        </tbody>
+      </table>
       <br />
-    </div>
-    <div>
-      <div
-        className="display-box border-background display-file"
+      <section
+        class="inline-block pt-2"
       >
-        <div
-          className="display-icon"
-        >
-          <div
-            style={
-              Object {
-                "color": "rgb(252, 186, 25)",
-              }
-            }
+        <div>
+          <button
+            class="normal-white btn"
+            data-test-id="upload-btn"
+            type="button"
           >
-            <svg
-              fill="currentColor"
-              height={32}
-              size={32}
-              stroke="currentColor"
-              strokeWidth="0"
-              style={
-                Object {
-                  "color": undefined,
-                }
-              }
-              viewBox="0 0 24 24"
-              width={32}
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
-              />
-            </svg>
-          </div>
+            Upload Documents
+          </button>
         </div>
-        <div
-          className="display-right-element"
-        >
-          <table
-            className=""
-          >
-            <thead>
-              <tr>
-                <th
-                  colSpan="2"
-                >
-                  
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                className=""
-                colSpan="2"
-              >
-                <td
-                  className="vertical-middle"
-                >
-                  <div
-                    style={
-                      Object {
-                        "width": "80%",
-                      }
-                    }
-                  >
-                    <span>
-                      file name 2
-                    </span>
-                  </div>
-                </td>
-                <td>
-                  <table
-                    className=""
-                  >
-                    <thead>
-                      <tr>
-                        <th
-                          colSpan="2"
-                        >
-                          
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr
-                        className=""
-                        colSpan="2"
-                      >
-                        <td
-                          className="reduce-width"
-                        >
-                          Description:
-                        </td>
-                        <td
-                          className=""
-                        >
-                          <b>
-                            file description 2
-                          </b>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <br />
-    </div>
-    <br />
-    <p>
-      <a
-        data-test-id="return-link"
-        href={null}
+      </section>
+      <section
+        class="buttons pt-2"
       >
-        Return to the parent application website
-      </a>
-       to correct errors or missing information in this package.
-    </p>
-    <br />
-    <h3>
-      Summary
-    </h3>
-    <table
-      className=""
-    >
-      <thead>
-        <tr>
-          <th
-            colSpan="2"
+        <div>
+          <button
+            class="normal-white btn"
+            data-test-id="main-cancel-btn"
+            type="button"
           >
-            
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          className=""
-          colSpan="2"
-        >
-          <td
-            className="side-by-side"
-          >
-            <div
-              style={
-                Object {
-                  "width": "60%",
-                }
-              }
-            >
-              <table
-                className=""
-              >
-                <thead>
-                  <tr>
-                    <th
-                      colSpan="2"
-                    >
-                      
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    className=""
-                    colSpan="2"
-                  >
-                    <td
-                      className=""
-                    >
-                      Statutory Fees:
-                    </td>
-                    <td
-                      className="right-align"
-                    >
-                      <b>
-                        $ 40
-                      </b>
-                    </td>
-                  </tr>
-                  <tr
-                    className=""
-                    colSpan="2"
-                  >
-                    <td
-                      className=""
-                    >
-                      Number of Documents in Package:
-                    </td>
-                    <td
-                      className="right-align"
-                    >
-                      <b>
-                        2
-                      </b>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </td>
-          <td>
-            
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <br />
-    <section
-      className="inline-block pt-2"
-    >
-      <div>
-        <button
-          className="normal-white btn"
-          data-test-id="upload-btn"
-          disabled={false}
-          onClick={[Function]}
-          type="button"
-        >
-          Upload Documents
-        </button>
-      </div>
-    </section>
-    <section
-      className="buttons pt-2"
-    >
-      <div>
-        <button
-          className="normal-white btn"
-          data-test-id="main-cancel-btn"
-          disabled={false}
-          onClick={[Function]}
-          type="button"
-        >
-          Cancel
-        </button>
-      </div>
-      <div>
-        <button
-          className="normal-blue btn"
-          data-test-id="continue-btn"
-          disabled={false}
-          onClick={[Function]}
-          type="button"
-        >
-          Continue to Payment
-        </button>
-      </div>
-    </section>
-  </div>
-  <div
-    className="sidecard"
-  >
-    <div
-      className="wide-dashboard-spacing"
-      style={
-        Object {
-          "position": "relative",
-        }
-      }
-    >
-      <div
-        className="row"
-      >
-        <div
-          className="col-12 pt-2"
-          style={
-            Object {
-              "position": "relative",
-            }
-          }
-        >
-          <p />
-          <section
-            className="bluegrey-container"
-            id="bluegrey-section"
-          >
-            <div
-              className="container-background bluegrey-heading"
-            >
-              <h2
-                className="heading-style"
-              >
-                <div
-                  className="row"
-                >
-                  <div
-                    className="side-card-row"
-                  >
-                    <div
-                      className="round-icon-wrapper"
-                    >
-                      <svg
-                        className="side-card-icon"
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        strokeWidth="0"
-                        style={
-                          Object {
-                            "color": undefined,
-                          }
-                        }
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-                        />
-                      </svg>
-                    </div>
-                    <div
-                      className="side-card-title"
-                    >
-                      Your CSO Account
-                    </div>
-                  </div>
-                </div>
-              </h2>
-            </div>
-            <div
-              className="bluegrey-content"
-            >
-              <span
-                className="content-style"
-              >
-                <p>
-                  CSO account 
-                  <b>
-                    123
-                  </b>
-                   is linked to your Basic BCeID account 
-                  <b>
-                    blah2
-                  </b>
-                   and will be used to file documents. 
-                  <a
-                    href="https://justice.gov.bc.ca/cso/about/index.do"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    View your CSO account details
-                  </a>
-                  .
-                </p>
-              </span>
-            </div>
-          </section>
+            Cancel
+          </button>
         </div>
-      </div>
+        <div>
+          <button
+            class="normal-blue btn"
+            data-test-id="continue-btn"
+            type="button"
+          >
+            Continue to Payment
+          </button>
+        </div>
+      </section>
     </div>
     <div
-      className="wide-dashboard-spacing"
-      style={
-        Object {
-          "position": "relative",
-        }
-      }
+      class="sidecard"
     >
       <div
-        className="row"
+        class="wide-dashboard-spacing"
+        style="position: relative;"
       >
         <div
-          className="col-12 pt-2"
-          style={
-            Object {
-              "position": "relative",
-            }
-          }
+          class="row"
         >
-          <p />
-          <section
-            className="bluegrey-container"
-            id="bluegrey-section"
+          <div
+            class="col-12 pt-2"
+            style="position: relative;"
           >
-            <div
-              className="container-background bluegrey-heading"
+            <p />
+            <section
+              class="bluegrey-container"
+              id="bluegrey-section"
             >
-              <h2
-                className="heading-style"
+              <div
+                class="container-background bluegrey-heading"
               >
-                <div
-                  className="row"
+                <h2
+                  class="heading-style"
                 >
                   <div
-                    className="side-card-row"
+                    class="row"
                   >
                     <div
-                      className="round-icon-wrapper"
+                      class="side-card-row"
                     >
-                      <svg
-                        className="side-card-icon"
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        strokeWidth="0"
-                        style={
-                          Object {
-                            "color": undefined,
-                          }
-                        }
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
+                      <div
+                        class="round-icon-wrapper"
                       >
-                        <path
-                          d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
-                        />
-                      </svg>
-                    </div>
-                    <div
-                      className="side-card-title"
-                    >
-                      About E-File Submission
+                        <svg
+                          class="side-card-icon"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="side-card-title"
+                      >
+                        Your CSO Account
+                      </div>
                     </div>
                   </div>
-                </div>
-              </h2>
-            </div>
-            <div
-              className="bluegrey-content"
-            >
-              <span
-                className="content-style"
+                </h2>
+              </div>
+              <div
+                class="bluegrey-content"
               >
-                <p>
-                  E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
-                  <a
-                    href="https://justice.gov.bc.ca/cso/about/index.do"
-                    rel="noopener noreferrer"
-                    target="_blank"
+                <span
+                  class="content-style"
+                >
+                  <p>
+                    CSO account 
+                    <b>
+                      123
+                    </b>
+                     is linked to your Basic BCeID account 
+                    <b>
+                      blah2
+                    </b>
+                     and will be used to file documents. 
+                    <a
+                      href="https://justice.gov.bc.ca/cso/about/index.do"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      View your CSO account details
+                    </a>
+                    .
+                  </p>
+                </span>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div
+        class="wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col-12 pt-2"
+            style="position: relative;"
+          >
+            <p />
+            <section
+              class="bluegrey-container"
+              id="bluegrey-section"
+            >
+              <div
+                class="container-background bluegrey-heading"
+              >
+                <h2
+                  class="heading-style"
+                >
+                  <div
+                    class="row"
                   >
-                    Learn more about CSO
-                  </a>
-                  .
-                </p>
-              </span>
-            </div>
-          </section>
+                    <div
+                      class="side-card-row"
+                    >
+                      <div
+                        class="round-icon-wrapper"
+                      >
+                        <svg
+                          class="side-card-icon"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="side-card-title"
+                      >
+                        About E-File Submission
+                      </div>
+                    </div>
+                  </div>
+                </h2>
+              </div>
+              <div
+                class="bluegrey-content"
+              >
+                <span
+                  class="content-style"
+                >
+                  <p>
+                    E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
+                    <a
+                      href="https://justice.gov.bc.ca/cso/about/index.do"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      Learn more about CSO
+                    </a>
+                    .
+                  </p>
+                </span>
+              </div>
+            </section>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</DocumentFragment>
 `;
