@@ -21,8 +21,10 @@ const confirmationPopup = getTestData();
 const page = { header, confirmationPopup };
 
 const submissionId = "abc123";
+const temp = "temp";
 const mock = new MockAdapter(axios);
 const apiRequest = `/submission/${submissionId}`;
+const apiRequestFiling = `/submission/${submissionId}/filing-package`;
 const navigation = {
   cancel: {
     url: "cancelurl.com"
@@ -31,19 +33,34 @@ const navigation = {
     url: "successurl.com"
   },
   error: {
-    url: ""
+    url: "error.com"
   }
 };
+const documents = [
+  {
+    name: "file name 1",
+    description: "file description 1",
+    type: "file type",
+    statutoryFeeAmount: 40
+  },
+  {
+    name: "file name 2",
+    description: "file description 2",
+    type: "file type",
+    statutoryFeeAmount: 0
+  }
+];
 const userDetails = getUserDetails();
 
 const LoaderStateData = props => {
   window.open = () => {};
-  mock.onGet(apiRequest).reply(400, { message: "There was an error" });
+  mock.onGet(apiRequest).replyOnce(400, { message: "There was an error" });
   return props.children({ page });
 };
 
 const AccountExistsStateData = props => {
   mock.onGet(apiRequest).reply(200, { userDetails, navigation });
+  mock.onGet(apiRequestFiling).reply(200, { documents });
   return props.children({ page });
 };
 
@@ -58,7 +75,7 @@ const NoAccountExistsStateData = props => {
 const homeComponent = data => (
   <MemoryRouter
     initialEntries={[
-      { search: `?submissionId=${submissionId}`, key: "testKey" }
+      { search: `?submissionId=${submissionId}&temp=${temp}`, key: "testKey" }
     ]}
   >
     <Home page={data.page} />
@@ -81,24 +98,24 @@ const noAccountExistsComponent = (
 
 export const Loader = () => loaderComponent;
 
-export const LoaderMobile = () => loaderComponent;
+// export const LoaderMobile = () => loaderComponent;
 
-export const AccountExists = () => accountExistsComponent;
+// export const AccountExists = () => accountExistsComponent;
 
-export const AccountExistsMobile = () => accountExistsComponent;
+// export const AccountExistsMobile = () => accountExistsComponent;
 
-export const NoAccountExists = () => noAccountExistsComponent;
+// export const NoAccountExists = () => noAccountExistsComponent;
 
-export const NoAccountExistsMobile = () => noAccountExistsComponent;
+// export const NoAccountExistsMobile = () => noAccountExistsComponent;
 
-const mobileViewport = {
-  parameters: {
-    viewport: {
-      defaultViewport: "mobile2"
-    }
-  }
-};
+// const mobileViewport = {
+//   parameters: {
+//     viewport: {
+//       defaultViewport: "mobile2"
+//     }
+//   }
+// };
 
-LoaderMobile.story = mobileViewport;
-AccountExistsMobile.story = mobileViewport;
-NoAccountExistsMobile.story = mobileViewport;
+// LoaderMobile.story = mobileViewport;
+// AccountExistsMobile.story = mobileViewport;
+// NoAccountExistsMobile.story = mobileViewport;

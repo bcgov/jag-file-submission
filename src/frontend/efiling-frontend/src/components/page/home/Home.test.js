@@ -19,6 +19,7 @@ const page = { header, confirmationPopup };
 
 describe("Home", () => {
   const submissionId = "abc123";
+  const temp = "temp";
   const apiRequest = `/submission/${submissionId}`;
   const apiRequestFiling = `/submission/${submissionId}/filing-package`;
   const navigation = {
@@ -57,7 +58,9 @@ describe("Home", () => {
   });
 
   const component = (
-    <MemoryRouter initialEntries={[`?submissionId=${submissionId}`]}>
+    <MemoryRouter
+      initialEntries={[`?submissionId=${submissionId}&temp=${temp}`]}
+    >
       <Home page={page} />
     </MemoryRouter>
   );
