@@ -25,7 +25,7 @@ public class ServiceFees {
         return feeAmount;
     }
 
-    public void setFeeAmount(BigDecimal feeAmt) {
+    public void setFeeAmount(BigDecimal feeAmount) {
         this.feeAmount = feeAmount;
     }
 
