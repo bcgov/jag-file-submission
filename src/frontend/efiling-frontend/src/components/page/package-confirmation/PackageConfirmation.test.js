@@ -3,6 +3,7 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { render, wait } from "@testing-library/react";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
+import { getDocumentsData } from "../../../modules/documentTestData";
 
 import PackageConfirmation from "./PackageConfirmation";
 
@@ -12,20 +13,7 @@ describe("PackageConfirmation Component", () => {
   const apiRequest = `/submission/${submissionId}/filing-package`;
   const packageConfirmation = { confirmationPopup, submissionId };
   const csoAccountStatus = { isNew: false };
-  const documents = [
-    {
-      name: "file name 1",
-      description: "file description 1",
-      type: "file type",
-      statutoryFeeAmount: 40
-    },
-    {
-      name: "file name 2",
-      description: "file description 2",
-      type: "file type",
-      statutoryFeeAmount: 0
-    }
-  ];
+  const documents = getDocumentsData();
 
   sessionStorage.setItem("csoAccountId", "123");
 

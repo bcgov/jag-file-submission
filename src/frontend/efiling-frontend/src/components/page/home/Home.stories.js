@@ -5,6 +5,7 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
 import { getUserDetails } from "../../../modules/userDetails";
+import { getDocumentsData } from "../../../modules/documentTestData";
 
 import Home from "./Home";
 
@@ -35,20 +36,7 @@ const navigation = {
     url: "error.com"
   }
 };
-const documents = [
-  {
-    name: "file name 1",
-    description: "file description 1",
-    type: "file type",
-    statutoryFeeAmount: 40
-  },
-  {
-    name: "file name 2",
-    description: "file description 2",
-    type: "file type",
-    statutoryFeeAmount: 0
-  }
-];
+const documents = getDocumentsData();
 const userDetails = getUserDetails();
 
 sessionStorage.setItem("errorUrl", "error.com");

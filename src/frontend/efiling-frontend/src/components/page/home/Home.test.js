@@ -8,6 +8,7 @@ import MockAdapter from "axios-mock-adapter";
 import Home, { saveNavigationToSession } from "./Home";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
 import { getUserDetails } from "../../../modules/userDetails";
+import { getDocumentsData } from "../../../modules/documentTestData";
 
 const header = {
   name: "eFiling Frontend",
@@ -33,20 +34,7 @@ describe("Home", () => {
       url: ""
     }
   };
-  const documents = [
-    {
-      name: "file name 1",
-      description: "file description 1",
-      type: "file type",
-      statutoryFeeAmount: 40
-    },
-    {
-      name: "file name 2",
-      description: "file description 2",
-      type: "file type",
-      statutoryFeeAmount: 0
-    }
-  ];
+  const documents = getDocumentsData();
   const userDetails = getUserDetails();
 
   window.open = jest.fn();
