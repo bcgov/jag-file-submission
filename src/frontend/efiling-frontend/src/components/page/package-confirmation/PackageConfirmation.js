@@ -62,6 +62,20 @@ const generateTotalFeeTable = files => {
   ];
 };
 
+const generateTable = (fileName, data) => {
+  return [
+    {
+      name: (
+        <div style={{ width: "80%" }}>
+          <span>{fileName}</span>
+        </div>
+      ),
+      value: <Table elements={data} />,
+      verticalMiddle: true
+    }
+  ];
+};
+
 const generateTableData = file => {
   const data = [
     {
@@ -82,20 +96,6 @@ const generateTableData = file => {
   }
 
   return generateTable(file.name, data);
-};
-
-const generateTable = (fileName, data) => {
-  return [
-    {
-      name: (
-        <div style={{ width: "80%" }}>
-          <span>{fileName}</span>
-        </div>
-      ),
-      value: <Table elements={data} />,
-      verticalMiddle: true
-    }
-  ];
 };
 
 const getFilingPackageData = (submissionId, setFiles, files) => {
