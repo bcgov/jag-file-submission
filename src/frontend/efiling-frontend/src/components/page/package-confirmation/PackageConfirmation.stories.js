@@ -11,7 +11,6 @@ export default {
 };
 
 const submissionId = "abc123";
-const mock = new MockAdapter(axios);
 const apiRequest = `/submission/${submissionId}/filing-package`;
 const confirmationPopup = getTestData();
 const packageConfirmation = { confirmationPopup, submissionId };
@@ -32,6 +31,7 @@ const documents = [
 ];
 
 const LoadData = props => {
+  const mock = new MockAdapter(axios);
   mock.onGet(apiRequest).reply(200, { documents: documents });
   return props.children({ packageConfirmation, csoAccountStatus });
 };

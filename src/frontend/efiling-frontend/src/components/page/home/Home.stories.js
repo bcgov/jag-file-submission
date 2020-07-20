@@ -104,6 +104,8 @@ export const Loader = () => loaderComponent;
 
 export const AccountExists = () => accountExistsComponent;
 
+export const AccountExistsMobile = () => accountExistsComponent;
+
 export const NoAccountExists = () => noAccountExistsComponent;
 
 export const NoAccountExistsMobile = () => noAccountExistsComponent;
@@ -116,4 +118,5 @@ const mobileViewport = {
   }
 };
 
+AccountExistsMobile.story = mobileViewport;
 NoAccountExistsMobile.story = mobileViewport;
