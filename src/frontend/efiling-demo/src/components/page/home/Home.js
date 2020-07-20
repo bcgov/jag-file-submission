@@ -18,6 +18,7 @@ import "../page.css";
 // Register the plugins
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
+// Note: Some of these values are temporarily hard-coded
 const urlBody = {
   clientApplication: {
     displayName: "Demo App",

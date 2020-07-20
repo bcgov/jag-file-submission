@@ -26,7 +26,7 @@ const uploadButton = {
   styling: "normal-white btn"
 };
 
-const calculateTotalFee = files => {
+const calculateTotalStatutoryFee = files => {
   let totalStatFee = 0;
   files.forEach(file => {
     totalStatFee += file.statutoryFeeAmount;
@@ -39,7 +39,7 @@ const generateTotalFeeTable = files => {
   const feesData = [
     {
       name: "Statutory Fees:",
-      value: `$ ${calculateTotalFee(files)}`,
+      value: `$ ${calculateTotalStatutoryFee(files)}`,
       isValueBold: true
     },
     {

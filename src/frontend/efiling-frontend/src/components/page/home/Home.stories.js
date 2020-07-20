@@ -6,6 +6,7 @@ import MockAdapter from "axios-mock-adapter";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
 import { getUserDetails } from "../../../modules/userDetails";
 import { getDocumentsData } from "../../../modules/documentTestData";
+import { getNavigationData } from "../../../modules/navigationTestData";
 
 import Home from "./Home";
 
@@ -24,18 +25,8 @@ const page = { header, confirmationPopup };
 const submissionId = "abc123";
 const temp = "temp";
 const apiRequest = `/submission/${submissionId}`;
-const apiRequestFiling = `/submission/${submissionId}/filing-package`;
-const navigation = {
-  cancel: {
-    url: "cancelurl.com"
-  },
-  success: {
-    url: "successurl.com"
-  },
-  error: {
-    url: ""
-  }
-};
+const getFilingPackagePath = `/submission/${submissionId}/filing-package`;
+const navigation = getNavigationData();
 const documents = getDocumentsData();
 const userDetails = getUserDetails();
 
@@ -51,7 +42,7 @@ const LoaderStateData = props => {
 const AccountExistsStateData = props => {
   const mock = new MockAdapter(axios);
   mock.onGet(apiRequest).reply(200, { userDetails, navigation });
-  mock.onGet(apiRequestFiling).reply(200, { documents });
+  mock.onGet(getFilingPackagePath).reply(200, { documents });
   return props.children({ page });
 };
 

@@ -23,7 +23,7 @@ describe("Home", () => {
   const submissionId = "abc123";
   const temp = "temp";
   const apiRequest = `/submission/${submissionId}`;
-  const apiRequestFiling = `/submission/${submissionId}/filing-package`;
+  const getFilingPackagePath = `/submission/${submissionId}/filing-package`;
   const navigation = getNavigationData();
   const documents = getDocumentsData();
   const userDetails = getUserDetails();
@@ -46,7 +46,7 @@ describe("Home", () => {
 
   test("Component matches the snapshot when user cso account exists", async () => {
     mock.onGet(apiRequest).reply(200, { userDetails, navigation });
-    mock.onGet(apiRequestFiling).reply(200, { documents });
+    mock.onGet(getFilingPackagePath).reply(200, { documents });
 
     const { asFragment } = render(component);
 
