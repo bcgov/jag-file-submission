@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission;
 
+import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.api.SubmissionApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
@@ -38,8 +39,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     Logger logger = LoggerFactory.getLogger(SubmissionApiDelegateImpl.class);
 
-    private static final String EFILING_SUBMISSION_ID = "efiling.submissionId";
-
     private final SubmissionService submissionService;
 
     private final SubmissionStore submissionStore;
@@ -72,7 +71,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         UUID submissionId = UUID.randomUUID();
 
-        MDC.put(EFILING_SUBMISSION_ID, submissionId.toString());
+        MDC.put(Keys.EFILING_SUBMISSION_ID, submissionId.toString());
         logger.info("new request for efiling {}", submissionId);
 
         try {
@@ -96,7 +95,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         logger.info("{} stored in cache", files.size());
 
-        MDC.remove(EFILING_SUBMISSION_ID);
+        MDC.remove(Keys.EFILING_SUBMISSION_ID);
 
         return ResponseEntity.ok(new UploadSubmissionDocumentsResponse().submissionId(submissionId).received(new BigDecimal(files.size())));
 
@@ -104,6 +103,9 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     @Override
     public ResponseEntity<Resource> getSubmissionDocument(UUID xAuthUserId, UUID id, String filename) {
+
+
+        MDC.put(Keys.EFILING_SUBMISSION_ID, id.toString());
 
         Document document = Document
                 .builder()
@@ -116,12 +118,16 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         if(bytes == null) return ResponseEntity.notFound().build();
 
+        MDC.remove(Keys.EFILING_SUBMISSION_ID);
+
         return ResponseEntity.ok(new ByteArrayResource(bytes));
 
     }
 
     @Override
     public ResponseEntity<GenerateUrlResponse> generateUrl(UUID xAuthUserId, UUID id, GenerateUrlRequest generateUrlRequest) {
+
+        MDC.put(Keys.EFILING_SUBMISSION_ID, id.toString());
 
         logger.info("Generate Url Request Received");
 
@@ -150,12 +156,16 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             response =  new ResponseEntity(buildEfilingError(ErrorResponse.CACHE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+        MDC.remove(Keys.EFILING_SUBMISSION_ID);
+
         return response;
 
     }
 
     @Override
     public ResponseEntity<GetSubmissionResponse> getSubmission(UUID xAuthUserId, UUID id) {
+
+        MDC.put(Keys.EFILING_SUBMISSION_ID, id.toString());
 
         Optional<Submission> fromCacheSubmission = this.submissionStore.get(id, xAuthUserId);
 
@@ -167,6 +177,8 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         response.setUserDetails(buildUserDetails(fromCacheSubmission.get()));
 
         response.setNavigation(fromCacheSubmission.get().getNavigation());
+
+        MDC.remove(Keys.EFILING_SUBMISSION_ID);
 
         return ResponseEntity.ok(response);
 
