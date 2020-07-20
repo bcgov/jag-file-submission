@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingaccountclient.csoAccountServiceImpl;
+package ca.bc.gov.open.jag.efilingcsostarter.csoAccountServiceImpl;
 
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RegisteredRole;
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RoleRegistry;
@@ -8,9 +8,9 @@ import ca.bc.gov.ag.csows.accounts.AccountFacade;
 import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
 import ca.bc.gov.ag.csows.accounts.ClientProfile;
 import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
-import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountServiceImpl;
-import ca.bc.gov.open.jag.efilingaccountclient.CsoHelpers;
-import ca.bc.gov.open.jag.efilingaccountclient.mappers.AccountDetailsMapper;
+import ca.bc.gov.open.jag.efilingcsostarter.CsoAccountServiceImpl;
+import ca.bc.gov.open.jag.efilingcsostarter.CsoHelpers;
+import ca.bc.gov.open.jag.efilingcsostarter.mappers.AccountDetailsMapper;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.CSOHasMultipleAccountException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;

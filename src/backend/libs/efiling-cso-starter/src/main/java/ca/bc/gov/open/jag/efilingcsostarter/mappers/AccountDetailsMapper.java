@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingaccountclient.mappers;
+package ca.bc.gov.open.jag.efilingcsostarter.mappers;
 
 import ca.bc.gov.ag.csows.accounts.ClientProfile;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;

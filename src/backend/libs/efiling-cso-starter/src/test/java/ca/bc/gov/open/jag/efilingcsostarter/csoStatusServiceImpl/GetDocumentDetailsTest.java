@@ -1,9 +1,9 @@
-package ca.bc.gov.open.jag.efilingaccountclient.csoStatusServiceImpl;
+package ca.bc.gov.open.jag.efilingcsostarter.csoStatusServiceImpl;
 
 import ca.bc.gov.ag.csows.filing.status.DocumentType;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
-import ca.bc.gov.open.jag.efilingaccountclient.CSODocumentServiceImpl;
+import ca.bc.gov.open.jag.efilingcsostarter.CSODocumentServiceImpl;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import org.junit.jupiter.api.*;

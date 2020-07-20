@@ -1,9 +1,9 @@
-package ca.bc.gov.open.jag.efilingaccountclient.csoAccountServiceImpl;
+package ca.bc.gov.open.jag.efilingcsostarter.csoAccountServiceImpl;
 
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RoleRegistryPortType;
 import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
-import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountServiceImpl;
-import ca.bc.gov.open.jag.efilingaccountclient.mappers.AccountDetailsMapper;
+import ca.bc.gov.open.jag.efilingcsostarter.CsoAccountServiceImpl;
+import ca.bc.gov.open.jag.efilingcsostarter.mappers.AccountDetailsMapper;
 import ca.bc.gov.open.jag.efilingcommons.model.CreateAccountRequest;
 import ca.bceid.webservices.client.v9.BCeIDServiceSoap;
 import org.junit.jupiter.api.*;

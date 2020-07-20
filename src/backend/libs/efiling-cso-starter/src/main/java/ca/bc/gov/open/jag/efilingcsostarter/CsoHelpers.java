@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingaccountclient;
+package ca.bc.gov.open.jag.efilingcsostarter;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
