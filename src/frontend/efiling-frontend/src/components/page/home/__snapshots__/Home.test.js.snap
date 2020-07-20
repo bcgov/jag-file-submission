@@ -73,7 +73,7 @@ exports[`Home Component matches the snapshot when error encountered 1`] = `
           <div
             class="display-right-element"
           >
-            You have arrived at this site incorrectly. Stahp!
+            You have arrived at this site incorrectly.
           </div>
         </div>
       </div>
