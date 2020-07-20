@@ -1,11 +1,10 @@
-package ca.bc.gov.open.jag.efilingaccountclient;
+package ca.bc.gov.open.jag.efilingcsostarter;
 
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RegisteredRole;
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RoleRegistryPortType;
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.UserRoles;
 import ca.bc.gov.ag.csows.accounts.*;
-import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
-import ca.bc.gov.open.jag.efilingaccountclient.mappers.AccountDetailsMapper;
+import ca.bc.gov.open.jag.efilingcsostarter.mappers.AccountDetailsMapper;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.CSOHasMultipleAccountException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
