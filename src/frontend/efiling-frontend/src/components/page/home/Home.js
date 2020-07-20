@@ -63,9 +63,9 @@ const checkCSOAccountStatus = (
           `${errorUrl}?status=${error.response.status}&message=${error.response.data.message}`,
           "_self"
         );
-      } else {
-        setError(true);
       }
+
+      setError(true);
     })
     .finally(() => {
       setShowLoader(false);

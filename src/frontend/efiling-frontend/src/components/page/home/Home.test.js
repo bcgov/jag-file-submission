@@ -72,7 +72,7 @@ describe("Home", () => {
     });
   });
 
-  test("Component matches the snapshot when still loading", async () => {
+  test("Component matches the snapshot when error encountered", async () => {
     mock.onGet(apiRequest).reply(400, { message: "There was an error." });
     sessionStorage.setItem("errorUrl", "error.com");
 
