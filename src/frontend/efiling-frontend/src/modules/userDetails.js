@@ -1,4 +1,5 @@
 const userDetails = {
+  universalId: "123",
   bceid: "bobross42",
   firstName: "Bob",
   middleName: "Norman",

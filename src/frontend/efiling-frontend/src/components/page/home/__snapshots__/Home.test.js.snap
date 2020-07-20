@@ -1287,38 +1287,210 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
         <p>
           Review your package for accuracy before submitting.
         </p>
-        <div
-          class="display-box border-background"
-        >
+        <div>
           <div
-            class="display-icon"
+            class="display-box border-background display-file"
           >
             <div
-              style="color: rgb(252, 186, 25);"
+              class="display-icon"
             >
-              <svg
-                fill="currentColor"
-                height="32"
-                size="32"
-                stroke="currentColor"
-                stroke-width="0"
-                viewBox="0 0 24 24"
-                width="32"
-                xmlns="http://www.w3.org/2000/svg"
+              <div
+                style="color: rgb(252, 186, 25);"
               >
-                <path
-                  d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
-                />
-              </svg>
+                <svg
+                  fill="currentColor"
+                  height="32"
+                  size="32"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="32"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div
+              class="display-right-element"
+            >
+              <table
+                class=""
+              >
+                <thead>
+                  <tr>
+                    <th
+                      colspan="2"
+                    />
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    class=""
+                    colspan="2"
+                  >
+                    <td
+                      class="vertical-middle"
+                    >
+                      <div
+                        style="width: 80%;"
+                      >
+                        <span>
+                          file name 1
+                        </span>
+                      </div>
+                    </td>
+                    <td>
+                      <table
+                        class=""
+                      >
+                        <thead>
+                          <tr>
+                            <th
+                              colspan="2"
+                            />
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            class=""
+                            colspan="2"
+                          >
+                            <td
+                              class="reduce-width"
+                            >
+                              Description:
+                            </td>
+                            <td
+                              class=""
+                            >
+                              <b>
+                                file description 1
+                              </b>
+                            </td>
+                          </tr>
+                          <tr
+                            class=""
+                            colspan="2"
+                          >
+                            <td
+                              class="reduce-width"
+                            >
+                              Statutory Fee:
+                            </td>
+                            <td
+                              class=""
+                            >
+                              <b>
+                                $ 40
+                              </b>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
+          <br />
+        </div>
+        <div>
           <div
-            class="display-right-element"
+            class="display-box border-background display-file"
           >
-            <p>
-              View
-            </p>
+            <div
+              class="display-icon"
+            >
+              <div
+                style="color: rgb(252, 186, 25);"
+              >
+                <svg
+                  fill="currentColor"
+                  height="32"
+                  size="32"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="32"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div
+              class="display-right-element"
+            >
+              <table
+                class=""
+              >
+                <thead>
+                  <tr>
+                    <th
+                      colspan="2"
+                    />
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    class=""
+                    colspan="2"
+                  >
+                    <td
+                      class="vertical-middle"
+                    >
+                      <div
+                        style="width: 80%;"
+                      >
+                        <span>
+                          file name 2
+                        </span>
+                      </div>
+                    </td>
+                    <td>
+                      <table
+                        class=""
+                      >
+                        <thead>
+                          <tr>
+                            <th
+                              colspan="2"
+                            />
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            class=""
+                            colspan="2"
+                          >
+                            <td
+                              class="reduce-width"
+                            >
+                              Description:
+                            </td>
+                            <td
+                              class=""
+                            >
+                              <b>
+                                file description 2
+                              </b>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
+          <br />
         </div>
         <br />
         <p>
@@ -1353,7 +1525,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                 class="side-by-side"
               >
                 <div
-                  style="width: 80%;"
+                  style="width: 60%;"
                 >
                   <table
                     class=""
@@ -1379,7 +1551,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                           class="right-align"
                         >
                           <b>
-                            $100.00
+                            $ 40
                           </b>
                         </td>
                       </tr>
@@ -1396,7 +1568,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                           class="right-align"
                         >
                           <b>
-                            10
+                            2
                           </b>
                         </td>
                       </tr>

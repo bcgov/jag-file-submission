@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { MdDescription, MdCheckBox } from "react-icons/md";
 import ConfirmationPopup, {
@@ -8,6 +8,7 @@ import ConfirmationPopup, {
   DisplayBox,
   Table
 } from "shared-components";
+import axios from "axios";
 import { getSidecardData } from "../../../modules/sidecardData";
 import { propTypes } from "../../../types/propTypes";
 
@@ -25,44 +26,104 @@ const uploadButton = {
   styling: "normal-white btn"
 };
 
-// TODO: Fix values
-const feesData = [
-  {
-    name: "Statutory Fees:",
-    value: "$100.00",
-    isValueBold: true
-  },
-  {
-    name: "Number of Documents in Package:",
-    value: "10",
-    isValueBold: true
-  }
-];
+const calculateTotalStatutoryFee = files => {
+  let totalStatFee = 0;
+  files.forEach(file => {
+    totalStatFee += file.statutoryFeeAmount;
+  });
 
-const elements = [
-  {
-    name: (
-      <div style={{ width: "80%" }}>
-        <Table isFeesData elements={feesData} />
-      </div>
-    ),
-    value: "",
-    isSideBySide: true
-  }
-];
+  return totalStatFee;
+};
 
-const documentIcon = (
-  <div style={{ color: "rgb(252, 186, 25)" }}>
-    <MdDescription size={32} />
-  </div>
-);
+const generateTotalFeeTable = files => {
+  const feesData = [
+    {
+      name: "Statutory Fees:",
+      value: `$ ${calculateTotalStatutoryFee(files)}`,
+      isValueBold: true
+    },
+    {
+      name: "Number of Documents in Package:",
+      value: `${files.length}`,
+      isValueBold: true
+    }
+  ];
+
+  return [
+    {
+      name: (
+        <div style={{ width: "60%" }}>
+          <Table isFeesData elements={feesData} />
+        </div>
+      ),
+      value: "",
+      isSideBySide: true
+    }
+  ];
+};
+
+const generateTable = (fileName, data) => {
+  return [
+    {
+      name: (
+        <div style={{ width: "80%" }}>
+          <span>{fileName}</span>
+        </div>
+      ),
+      value: <Table elements={data} />,
+      verticalMiddle: true
+    }
+  ];
+};
+
+const generateTableData = file => {
+  const data = [
+    {
+      name: "Description:",
+      value: file.description,
+      isValueBold: true,
+      isClose: true
+    }
+  ];
+
+  if (file.statutoryFeeAmount > 0) {
+    data.push({
+      name: "Statutory Fee:",
+      value: `$ ${file.statutoryFeeAmount}`,
+      isValueBold: true,
+      isClose: true
+    });
+  }
+
+  return generateTable(file.name, data);
+};
+
+const getFilingPackageData = (submissionId, setFiles, files) => {
+  if (files.length > 0) return;
+
+  axios
+    .get(`/submission/${submissionId}/filing-package`, {
+      headers: {
+        "X-Auth-UserId": sessionStorage.getItem("universalId")
+      }
+    })
+    .then(({ data: { documents } }) => {
+      setFiles(documents);
+    })
+    .catch(() => window.open(sessionStorage.getItem("errorUrl"), "_self"));
+};
 
 export default function PackageConfirmation({
-  packageConfirmation: { confirmationPopup },
+  packageConfirmation: { confirmationPopup, submissionId },
   csoAccountStatus: { isNew }
 }) {
+  const [files, setFiles] = useState([]);
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
+
+  useEffect(() => {
+    getFilingPackageData(submissionId, setFiles, files);
+  }, [files, submissionId]);
 
   return (
     <div className="page">
@@ -78,14 +139,24 @@ export default function PackageConfirmation({
             <br />
           </>
         )}
+
         <h2>Package Confirmation</h2>
         <p>Review your package for accuracy before submitting.</p>
 
-        <DisplayBox
-          styling="border-background"
-          icon={documentIcon}
-          element={<p>View</p>}
-        />
+        {files.map(file => (
+          <div key={file.name}>
+            <DisplayBox
+              styling="border-background display-file"
+              icon={
+                <div style={{ color: "rgb(252, 186, 25)" }}>
+                  <MdDescription size={32} />
+                </div>
+              }
+              element={<Table elements={generateTableData(file)} />}
+            />
+            <br />
+          </div>
+        ))}
 
         <br />
 
@@ -103,7 +174,7 @@ export default function PackageConfirmation({
 
         <h3>Summary</h3>
 
-        <Table elements={elements} />
+        <Table elements={generateTotalFeeTable(files)} />
 
         <br />
 
@@ -142,7 +213,8 @@ export default function PackageConfirmation({
 
 PackageConfirmation.propTypes = {
   packageConfirmation: PropTypes.shape({
-    confirmationPopup: propTypes.confirmationPopup
+    confirmationPopup: propTypes.confirmationPopup,
+    submissionId: PropTypes.string.isRequired
   }).isRequired,
   csoAccountStatus: PropTypes.shape({
     isNew: PropTypes.bool

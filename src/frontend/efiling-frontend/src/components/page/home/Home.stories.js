@@ -5,6 +5,8 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
 import { getUserDetails } from "../../../modules/userDetails";
+import { getDocumentsData } from "../../../modules/documentTestData";
+import { getNavigationData } from "../../../modules/navigationTestData";
 
 import Home from "./Home";
 
@@ -21,32 +23,31 @@ const confirmationPopup = getTestData();
 const page = { header, confirmationPopup };
 
 const submissionId = "abc123";
-const mock = new MockAdapter(axios);
+const temp = "temp";
 const apiRequest = `/submission/${submissionId}`;
-const navigation = {
-  cancel: {
-    url: "cancelurl.com"
-  },
-  success: {
-    url: "successurl.com"
-  },
-  error: {
-    url: "error.com"
-  }
-};
+const getFilingPackagePath = `/submission/${submissionId}/filing-package`;
+const navigation = getNavigationData();
+const documents = getDocumentsData();
 const userDetails = getUserDetails();
 
+sessionStorage.setItem("errorUrl", "error.com");
+
 const LoaderStateData = props => {
+  const mock = new MockAdapter(axios);
+  window.open = () => {};
   mock.onGet(apiRequest).reply(400, { message: "There was an error" });
   return props.children({ page });
 };
 
 const AccountExistsStateData = props => {
+  const mock = new MockAdapter(axios);
   mock.onGet(apiRequest).reply(200, { userDetails, navigation });
+  mock.onGet(getFilingPackagePath).reply(200, { documents });
   return props.children({ page });
 };
 
 const NoAccountExistsStateData = props => {
+  const mock = new MockAdapter(axios);
   mock.onGet(apiRequest).reply(200, {
     userDetails: { ...userDetails, accounts: null },
     navigation
@@ -57,7 +58,7 @@ const NoAccountExistsStateData = props => {
 const homeComponent = data => (
   <MemoryRouter
     initialEntries={[
-      { search: `?submissionId=${submissionId}`, key: "testKey" }
+      { search: `?submissionId=${submissionId}&temp=${temp}`, key: "testKey" }
     ]}
   >
     <Home page={data.page} />
