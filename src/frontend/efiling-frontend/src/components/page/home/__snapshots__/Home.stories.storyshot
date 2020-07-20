@@ -264,7 +264,9 @@ exports[`Storyshots Home Account Exists 1`] = `
         </div>
         <h3>
           Do you have additional documents to upload? 
-          <a>
+          <a
+            href="#"
+          >
             Upload them now.
           </a>
         </h3>
@@ -894,7 +896,9 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
         </div>
         <h3>
           Do you have additional documents to upload? 
-          <a>
+          <a
+            href="#"
+          >
             Upload them now.
           </a>
         </h3>

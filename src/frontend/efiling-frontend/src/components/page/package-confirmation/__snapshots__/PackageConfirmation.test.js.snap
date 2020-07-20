@@ -227,7 +227,9 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
       </div>
       <h3>
         Do you have additional documents to upload? 
-        <a>
+        <a
+          href="#"
+        >
           Upload them now.
         </a>
       </h3>
@@ -764,7 +766,9 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
       </div>
       <h3>
         Do you have additional documents to upload? 
-        <a>
+        <a
+          href="#"
+        >
           Upload them now.
         </a>
       </h3>

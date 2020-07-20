@@ -171,7 +171,7 @@ export default function PackageConfirmation({
         {/* eslint-disable jsx-a11y/anchor-is-valid */}
         <h3>
           Do you have additional documents to upload?&nbsp;
-          <a>Upload them now.</a>
+          <a href="#">Upload them now.</a>
         </h3>
         <br />
 
