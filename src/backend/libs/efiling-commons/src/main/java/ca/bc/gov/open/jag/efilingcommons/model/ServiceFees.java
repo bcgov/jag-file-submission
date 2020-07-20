@@ -9,23 +9,24 @@ import java.math.BigDecimal;
 
 public class ServiceFees {
 
+
     // Allowing 8 params to constructor as it is a map to SOAP reply
     @SuppressWarnings("squid:S00107")
     @JsonCreator
     public ServiceFees(
-            @JsonProperty("feeAmt") BigDecimal feeAmt,
+            @JsonProperty("feeAmount") BigDecimal feeAmount,
             @JsonProperty("serviceTypeCd") String serviceTypeCd) {
-        this.feeAmt = feeAmt;
+        this.feeAmount = feeAmount;
         this.serviceTypeCd = serviceTypeCd;
     }
 
 
-    public BigDecimal getFeeAmt() {
-        return feeAmt;
+    public BigDecimal getFeeAmount() {
+        return feeAmount;
     }
 
-    public void setFeeAmt(BigDecimal feeAmt) {
-        this.feeAmt = feeAmt;
+    public void setFeeAmount(BigDecimal feeAmt) {
+        this.feeAmount = feeAmount;
     }
 
     public String getServiceTypeCd() {
@@ -36,6 +37,6 @@ public class ServiceFees {
         this.serviceTypeCd = serviceTypeCd;
     }
 
-    BigDecimal feeAmt;
+    BigDecimal feeAmount;
     String serviceTypeCd;
 }

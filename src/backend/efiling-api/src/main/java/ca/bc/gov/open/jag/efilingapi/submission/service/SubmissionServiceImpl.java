@@ -136,7 +136,7 @@ public class SubmissionServiceImpl implements SubmissionService {
         request.getClientApplication().setType("DCFL");
         ServiceFees fee = efilingLookupService.getServiceFee(request.getClientApplication().getType());
 
-        return fee == null ? BigDecimal.ZERO : fee.getFeeAmt();
+        return fee == null ? BigDecimal.ZERO : fee.getFeeAmount();
 
     }
 

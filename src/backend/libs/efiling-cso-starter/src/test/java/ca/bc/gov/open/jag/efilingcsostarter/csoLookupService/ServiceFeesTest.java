@@ -21,6 +21,6 @@ public class ServiceFeesTest {
     @Test
     public void testServiceFeesConstructor() {
         Assertions.assertEquals(serviceId, sut.getServiceTypeCd());
-        Assertions.assertEquals(BigDecimal.ZERO, sut.getFeeAmt());
+        Assertions.assertEquals(BigDecimal.ZERO, sut.getFeeAmount());
     }
 }

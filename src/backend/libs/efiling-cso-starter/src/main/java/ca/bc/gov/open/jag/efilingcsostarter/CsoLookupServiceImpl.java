@@ -23,7 +23,6 @@ public class CsoLookupServiceImpl implements EfilingLookupService {
     public ServiceFees getServiceFee(String serviceId)  {
 
         // NOTE- "DCFL" is the only string that will work here until we get our service types setup
-        // TODO: throw exception when service fee is null
         if (StringUtils.isEmpty(serviceId)) throw new IllegalArgumentException("service Id is required");
 
         try {
