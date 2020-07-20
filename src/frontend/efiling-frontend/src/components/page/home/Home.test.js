@@ -91,7 +91,6 @@ describe("Home", () => {
 
     await wait(() => {
       expect(asFragment()).toMatchSnapshot();
-      expect(sessionStorage.getItem("cancelUrl")).toBeFalsy();
     });
 
     expect(window.open).toHaveBeenCalledWith(
