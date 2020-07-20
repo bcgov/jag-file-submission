@@ -58,7 +58,13 @@ const checkCSOAccountStatus = (
     })
     .catch(error => {
       const errorUrl = sessionStorage.getItem("errorUrl");
-      if (errorUrl) {
+      if (
+        errorUrl &&
+        error.response &&
+        error.response.status &&
+        error.response.data &&
+        error.response.data.message
+      ) {
         errorRedirect(
           errorUrl,
           error.response.status,
