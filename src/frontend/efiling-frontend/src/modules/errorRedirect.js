@@ -11,4 +11,6 @@ export function errorRedirect(errorUrl, error) {
       "_self"
     );
   }
+
+  return null;
 }
