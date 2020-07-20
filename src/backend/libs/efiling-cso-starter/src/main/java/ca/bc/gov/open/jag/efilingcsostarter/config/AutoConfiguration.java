@@ -8,8 +8,8 @@ import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
+import ca.bc.gov.open.jag.efilingcsostarter.CsoDocumentServiceImpl;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
-import ca.bc.gov.open.jag.efilingcsostarter.CSODocumentServiceImpl;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoLookupServiceImpl;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoAccountServiceImpl;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.AccountDetailsMapper;
@@ -72,7 +72,7 @@ public class AutoConfiguration {
     @Bean
     @ConditionalOnMissingBean({EfilingDocumentService.class})
     public EfilingDocumentService efilingDocumentService(FilingStatusFacadeBean filingStatusFacadeBean) {
-        return new CSODocumentServiceImpl(filingStatusFacadeBean);
+        return new CsoDocumentServiceImpl(filingStatusFacadeBean);
     }
 
     @Bean
