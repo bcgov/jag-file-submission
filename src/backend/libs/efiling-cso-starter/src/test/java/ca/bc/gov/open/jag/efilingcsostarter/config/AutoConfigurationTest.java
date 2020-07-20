@@ -1,12 +1,11 @@
 package ca.bc.gov.open.jag.efilingcsostarter.config;
 
 
-import ca.bc.gov.open.jag.efilingcsostarter.CsoAccountServiceImpl;
-import ca.bc.gov.open.jag.efilingaccountclient.mappers.AccountDetailsMapperImpl;
 import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
-import ca.bc.gov.open.jag.efilingcsostarter.config.AutoConfiguration;
+import ca.bc.gov.open.jag.efilingcsostarter.CsoAccountServiceImpl;
+import ca.bc.gov.open.jag.efilingcsostarter.mappers.AccountDetailsMapperImpl;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 
