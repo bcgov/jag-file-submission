@@ -61,7 +61,7 @@ public class generateFromRequestTest {
 
         MockitoAnnotations.initMocks(this);
 
-        ServiceFees fee = new ServiceFees(null, BigDecimal.valueOf(7.00), null, "DCFL",null, null, null, null);
+        ServiceFees fee = new ServiceFees( BigDecimal.valueOf(7.00), "DCFL");
         Mockito.doReturn(fee)
                 .when(efilingLookupService)
                 .getServiceFee(Mockito.any());
@@ -155,7 +155,7 @@ public class generateFromRequestTest {
 
         AccountDetails accountDetails =  AccountDetails.builder().lastName("lastName").create();
 
-        ServiceFees fee = new ServiceFees(null, BigDecimal.valueOf(10), null, "DCFL",null, null, null, null);
+        ServiceFees fee = new ServiceFees( BigDecimal.valueOf(10), "DCFL");
         List<ServiceFees> fees = new ArrayList<>();
 
 

@@ -135,8 +135,8 @@ public class GetSubmissionTest {
     }
 
     private List<ServiceFees> createFees() {
-        ServiceFees fee1 = new ServiceFees(null, BigDecimal.TEN, null, SERVICE_TYPE_CD,null, null, null, null);
-        ServiceFees fee2 = new ServiceFees(null, BigDecimal.ONE, null, SERVICE_TYPE_CD1,null, null, null, null);
+        ServiceFees fee1 = new ServiceFees(BigDecimal.TEN, SERVICE_TYPE_CD);
+        ServiceFees fee2 = new ServiceFees(BigDecimal.ONE, SERVICE_TYPE_CD1);
         return Arrays.asList(fee1, fee2);
     }
 

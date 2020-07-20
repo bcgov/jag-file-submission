@@ -92,17 +92,9 @@ public class CSOLookupServiceImplTest {
     @DisplayName("OK: getServiceFee called with any non-empty serviceId")
     @Test
     public void testWithPopulatedServiceId() {
-
         ServiceFees actual = sut.getServiceFee(SERVICE_ID);
         Assertions.assertEquals(BigDecimal.TEN, actual.getFeeAmt());
-        Assertions.assertEquals(15, DateTime.parse(actual.getEffectiveDt()).getDayOfMonth());
-        Assertions.assertEquals(3, DateTime.parse(actual.getEntDtm()).getDayOfMonth());
-        Assertions.assertEquals(ENT_USER_ID, actual.getEntUserId());
-        Assertions.assertEquals(2, DateTime.parse(actual.getExpiryDt()).getDayOfMonth());
         Assertions.assertEquals(SERVICE_TYPE_CD, actual.getServiceTypeCd());
-        Assertions.assertEquals(UPD_USER_ID, actual.getUpdUserId());
-        Assertions.assertEquals(1, DateTime.parse(actual.getUdpDtm()).getDayOfMonth());
-
     }
 
     @DisplayName("Exception: with NestedEjbException_Exception should throw EfilingLookupServiceException")

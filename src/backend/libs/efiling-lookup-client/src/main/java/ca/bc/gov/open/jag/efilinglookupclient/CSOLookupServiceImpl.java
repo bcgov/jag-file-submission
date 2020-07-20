@@ -36,17 +36,11 @@ public class CSOLookupServiceImpl implements EfilingLookupService {
         try {
             ServiceFee fee = lookupFacadeItf.getServiceFee(serviceId, date2XMLGregorian(new Date()));
             if (fee == null)
-                return new ServiceFees(null, BigDecimal.ZERO, null, serviceId, null, null, null, null);
+                throw new EfilingLookupServiceException("Fee not found");
 
             return new ServiceFees(
-                    toJoda(fee.getUpdDtm()).toString(),
                     fee.getFeeAmt(),
-                    fee.getEntUserId(),
-                    fee.getServiceTypeCd(),
-                    toJoda(fee.getEffectiveDt()).toString(),
-                    fee.getUpdUserId(),
-                    toJoda(fee.getEntDtm()).toString(),
-                    toJoda(fee.getExpiryDt()).toString());
+                    fee.getServiceTypeCd());
 
         }
         catch(DatatypeConfigurationException | NestedEjbException_Exception e) {
@@ -62,18 +56,9 @@ public class CSOLookupServiceImpl implements EfilingLookupService {
      * @throws DatatypeConfigurationException
      */
     private XMLGregorianCalendar date2XMLGregorian(Date date) throws DatatypeConfigurationException {
-
         GregorianCalendar c = new GregorianCalendar();
         c.setTime(date);
-        XMLGregorianCalendar date2 = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
-        return date2;
-    }
-
-    private DateTime toJoda(XMLGregorianCalendar date) {
-        if (date != null) {
-            return DateTime.parse(date.toString());
-        }
-        return new DateTime();
+        return DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
     }
 
 }

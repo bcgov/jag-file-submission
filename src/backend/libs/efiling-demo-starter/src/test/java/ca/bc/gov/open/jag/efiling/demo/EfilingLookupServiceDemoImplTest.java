@@ -24,14 +24,7 @@ public class EfilingLookupServiceDemoImplTest {
         ServiceFees actual = service.getServiceFee(serviceId);
 
         Assertions.assertEquals(BigDecimal.valueOf(7), actual.getFeeAmt());
-        Assertions.assertEquals(DateTime.now().getDayOfMonth(), DateTime.parse(actual.getEffectiveDt()).getDayOfMonth());
-        Assertions.assertEquals(DateTime.now().getDayOfMonth(), DateTime.parse(actual.getEntDtm()).getDayOfMonth());
-        Assertions.assertEquals("entUserId", actual.getEntUserId());
-        Assertions.assertEquals(DateTime.now().getDayOfMonth(), DateTime.parse(actual.getExpiryDt()).getDayOfMonth());
         Assertions.assertEquals("serviceTypeCd", actual.getServiceTypeCd());
-        Assertions.assertEquals("updUserId", actual.getUpdUserId());
-        Assertions.assertEquals(DateTime.now().getDayOfMonth(), DateTime.parse(actual.getUdpDtm()).getDayOfMonth());
-
 
     }
 
