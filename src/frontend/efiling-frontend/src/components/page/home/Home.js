@@ -10,10 +10,15 @@ import { propTypes } from "../../../types/propTypes";
 
 import "../page.css";
 
-export const saveNavigationToSession = ({ cancel, success, error }) => {
+export const saveDataToSessionStorage = (
+  { cancel, success, error },
+  { universalId }
+) => {
   if (cancel.url) sessionStorage.setItem("cancelUrl", cancel.url);
   if (success.url) sessionStorage.setItem("successUrl", success.url);
   if (error.url) sessionStorage.setItem("errorUrl", error.url);
+
+  sessionStorage.setItem("universalId", universalId);
 };
 
 const addUserInfo = ({ bceid, firstName, middleName, lastName, email }) => {
@@ -26,18 +31,29 @@ const addUserInfo = ({ bceid, firstName, middleName, lastName, email }) => {
   };
 };
 
+const setRequiredState = (userDetails, setApplicantInfo, setShowLoader) => {
+  const applicantInfo = addUserInfo(userDetails);
+
+  setApplicantInfo(applicantInfo);
+  setShowLoader(false);
+};
+
 // make call to submission/{id} to get the user and navigation details
 const checkCSOAccountStatus = (
   submissionId,
+  temp,
   setCsoAccountStatus,
   setShowLoader,
   setApplicantInfo
 ) => {
   axios
-    .get(`/submission/${submissionId}`)
+    .get(`/submission/${submissionId}`, {
+      headers: {
+        "X-Auth-UserId": temp
+      }
+    })
     .then(({ data: { userDetails, navigation } }) => {
-      saveNavigationToSession(navigation);
-      sessionStorage.setItem("universalId", userDetails.universalId);
+      saveDataToSessionStorage(navigation, userDetails);
 
       if (userDetails.accounts) {
         const csoAccount = userDetails.accounts.find(o => o.type === "CSO");
@@ -47,17 +63,13 @@ const checkCSOAccountStatus = (
           setCsoAccountStatus({ isNew: false, exists: true });
         }
       }
-
-      const applicantInfo = addUserInfo(userDetails);
-
-      setApplicantInfo(applicantInfo);
-
-      setShowLoader(false);
+      setRequiredState(userDetails, setApplicantInfo, setShowLoader);
     })
     .catch(error => {
-      const errorUrl = sessionStorage.getItem("errorUrl");
       window.open(
-        `${errorUrl}?status=${error.response.status}&message=${error.response.data.message}`,
+        `${sessionStorage.getItem("errorUrl")}?status=${
+          error.response.status
+        }&message=${error.response.data.message}`,
         "_self"
       );
     });
@@ -76,6 +88,7 @@ export default function Home({ page: { header, confirmationPopup } }) {
   useEffect(() => {
     checkCSOAccountStatus(
       queryParams.submissionId,
+      queryParams.temp,
       setCsoAccountStatus,
       setShowLoader,
       setApplicantInfo
@@ -83,7 +96,8 @@ export default function Home({ page: { header, confirmationPopup } }) {
   }, [queryParams.submissionId]);
 
   const packageConfirmation = {
-    confirmationPopup
+    confirmationPopup,
+    submissionId: queryParams.submissionId
   };
 
   return (
