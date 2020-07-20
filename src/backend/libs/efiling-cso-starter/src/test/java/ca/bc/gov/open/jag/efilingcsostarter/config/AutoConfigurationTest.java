@@ -4,7 +4,7 @@ package ca.bc.gov.open.jag.efilingcsostarter.config;
 import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
-import ca.bc.gov.open.jag.efilingcsostarter.CSODocumentServiceImpl;
+import ca.bc.gov.open.jag.efilingcsostarter.CsoDocumentServiceImpl;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoLookupServiceImpl;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoAccountServiceImpl;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.AccountDetailsMapperImpl;
@@ -38,7 +38,7 @@ public class AutoConfigurationTest {
         Assertions.assertNotNull(sut.roleRegistryPortType());
         Assertions.assertNotNull(sut.bCeIDServiceSoap());
         Assertions.assertEquals(CsoAccountServiceImpl.class, sut.efilingAccountService(null, null, null, null).getClass());
-        Assertions.assertEquals(CSODocumentServiceImpl.class, sut.efilingDocumentService(null).getClass());
+        Assertions.assertEquals(CsoDocumentServiceImpl.class, sut.efilingDocumentService(null).getClass());
         Assertions.assertEquals(CsoLookupServiceImpl.class, sut.efilingLookupService(null).getClass());
         Assertions.assertEquals(AccountDetailsMapperImpl.class, sut.accountDetailsMapper().getClass());
     }
