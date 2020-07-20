@@ -1,12 +1,16 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service;
 
+import ca.bc.gov.open.jag.efilingapi.api.model.Document;
 import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
+import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
+import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
@@ -15,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -36,17 +39,21 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private final EfilingLookupService efilingLookupService;
 
+    private final DocumentStore documentStore;
+
     public SubmissionServiceImpl(
             SubmissionStore submissionStore,
             CacheProperties cacheProperties,
             SubmissionMapper submissionMapper,
             EfilingAccountService efilingAccountService,
-            EfilingLookupService efilingLookupService) {
+            EfilingLookupService efilingLookupService,
+            DocumentStore documentStore) {
         this.submissionStore = submissionStore;
         this.cacheProperties = cacheProperties;
         this.submissionMapper = submissionMapper;
         this.efilingAccountService = efilingAccountService;
         this.efilingLookupService = efilingLookupService;
+        this.documentStore = documentStore;
     }
 
     @Override
@@ -65,9 +72,8 @@ public class SubmissionServiceImpl implements SubmissionService {
         Optional<Submission> cachedSubmission = submissionStore.put(
                 submissionMapper.toSubmission(
                         submissionId,
-                        authUserId,
                         generateUrlRequest,
-                        getFees(generateUrlRequest.getFilingPackage().getDocuments()),
+                        toFilingPackage(generateUrlRequest),
                         accountDetails,
                         getExpiryDate()));
 
@@ -91,12 +97,47 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     }
 
-    private List<ServiceFees> getFees(List<DocumentProperties> documents) {
-        return  documents.stream()
-                .map(doc ->
-                    efilingLookupService.getServiceFee(doc.getType())
-                )
-                .collect(Collectors.toList());
+    private FilingPackage toFilingPackage(GenerateUrlRequest request) {
+
+        FilingPackage filingPackage = new FilingPackage();
+        filingPackage.setCourt(request.getFilingPackage().getCourt());
+        filingPackage.setSubmissionFeeAmount(getStatutoryFeeAmount(request));
+        filingPackage.setDocuments(request.getFilingPackage()
+                .getDocuments()
+                .stream()
+                .map(documentProperties -> toDocument(
+                        request.getFilingPackage().getCourt().getLevel(),
+                        request.getFilingPackage().getCourt().getPropertyClass(),
+                        documentProperties))
+                .collect(Collectors.toList()));
+        return filingPackage;
+
+    }
+
+
+    private Document toDocument(String courtLevel, String courtClass, DocumentProperties documentProperties) {
+
+        Document document = new Document();
+
+        DocumentDetails details = documentStore.getDocumentDetails(courtLevel, courtClass, documentProperties.getType());
+
+        document.setDescription(details.getDescription());
+        document.setStatutoryFeeAmount(details.getStatutoryFeeAmount());
+
+        document.setType(documentProperties.getType());
+        document.setName(documentProperties.getName());
+        return document;
+
+    }
+
+    private BigDecimal getStatutoryFeeAmount(GenerateUrlRequest request) {
+
+        // TODO: implement
+        request.getClientApplication().setType("DCFL");
+        ServiceFees fee = efilingLookupService.getServiceFee(request.getClientApplication().getType());
+
+        return fee == null ? BigDecimal.ZERO : fee.getFeeAmt();
+
     }
 
     private long getExpiryDate() {

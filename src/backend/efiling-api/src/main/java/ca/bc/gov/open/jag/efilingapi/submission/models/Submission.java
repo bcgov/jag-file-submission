@@ -4,11 +4,9 @@ import ca.bc.gov.open.jag.efilingapi.api.model.ClientApplication;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.api.model.Navigation;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -28,8 +26,6 @@ public class Submission {
 
     private FilingPackage filingPackage;
 
-    private List<ServiceFees> fees;
-
     private AccountDetails accountDetails;
 
     protected Submission(Submission.Builder builder) {
@@ -38,7 +34,6 @@ public class Submission {
         this.filingPackage = builder.filingPackage;
         this.navigation = builder.navigation;
         this.clientApplication = builder.clientApplication;
-        this.fees = builder.fees;
         this.accountDetails = builder.accountDetails;
         this.expiryDate = builder.expiryDate;
     }
@@ -54,7 +49,6 @@ public class Submission {
             @JsonProperty("package") FilingPackage filingPackage,
             @JsonProperty("navigation") Navigation navigation,
             @JsonProperty("clientApplication") ClientApplication clientApplication,
-            @JsonProperty("fees") List<ServiceFees> fees,
             @JsonProperty("accountDetails") AccountDetails accountDetails,
             @JsonProperty("expiryDate") long expiryDate) {
         this.id = id;
@@ -62,7 +56,6 @@ public class Submission {
         this.filingPackage = filingPackage;
         this.navigation = navigation;
         this.clientApplication = clientApplication;
-        this.fees = fees;
         this.accountDetails = accountDetails;
         this.expiryDate = expiryDate;
     }
@@ -81,10 +74,6 @@ public class Submission {
 
     public ClientApplication getClientApplication() { return clientApplication; }
 
-    public List<ServiceFees> getFees() {
-        return fees;
-    }
-
     public AccountDetails getAccountDetails() {
         return accountDetails;
     }
@@ -100,7 +89,6 @@ public class Submission {
         private FilingPackage filingPackage;
         private Navigation navigation;
         private ClientApplication clientApplication;
-        private List<ServiceFees> fees;
         private AccountDetails accountDetails;
         private long expiryDate;
 
@@ -125,11 +113,6 @@ public class Submission {
 
         public Builder clientApplication(ClientApplication clientApplication) {
             this.clientApplication = clientApplication;
-            return this;
-        }
-
-        public Builder fees(List<ServiceFees> fees) {
-            this.fees = fees;
             return this;
         }
 

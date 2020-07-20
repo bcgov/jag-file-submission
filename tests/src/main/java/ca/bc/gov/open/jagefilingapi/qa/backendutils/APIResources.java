@@ -2,7 +2,7 @@ package ca.bc.gov.open.jagefilingapi.qa.backendutils;
 
 public enum APIResources {
 
-    GENERATE_URL_API("/submission/generateUrl"),
+    GENERATE_URL_API("/submission/"),
     INCORRECT_GENERATE_URL_API("/submissions/generateUrl"),
     SUBMISSION("/submission/"),
     EFILING_URL("http://localhost:3000/efiling"),

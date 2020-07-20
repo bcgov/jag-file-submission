@@ -2,6 +2,8 @@ package ca.bc.gov.open.jag.efilingaccountclient.config;
 
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RoleRegistryPortType;
 import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
+import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
+import ca.bc.gov.open.jag.efilingaccountclient.CSODocumentServiceImpl;
 import ca.bc.gov.open.jag.efilingaccountclient.CsoAccountServiceImpl;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingaccountclient.mappers.AccountDetailsMapper;
@@ -9,6 +11,7 @@ import ca.bc.gov.open.jag.efilingaccountclient.mappers.AccountDetailsMapperImpl;
 import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import ca.bceid.webservices.client.v9.BCeIDServiceSoap;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
@@ -44,6 +47,9 @@ public class AutoConfiguration {
     public BCeIDServiceSoap bCeIDServiceSoap() { return getPort(Clients.BCEID, BCeIDServiceSoap.class); }
 
     @Bean
+    public FilingStatusFacadeBean filingStatusFacadeBean() { return getPort(Clients.STATUS, FilingStatusFacadeBean.class); }
+
+    @Bean
     public AccountDetailsMapper accountDetailsMapper() {
         return new AccountDetailsMapperImpl();
     }
@@ -56,6 +62,12 @@ public class AutoConfiguration {
                                                        AccountDetailsMapper accountDetailsMapper) {
         return new CsoAccountServiceImpl(accountFacadeBean, roleRegistryPortType,
                                          bCeIDServiceSoap, accountDetailsMapper);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean({EfilingDocumentService.class})
+    public EfilingDocumentService efilingDocumentService(FilingStatusFacadeBean filingStatusFacadeBean) {
+        return new CSODocumentServiceImpl(filingStatusFacadeBean);
     }
 
     public <T> T getPort(Clients clients, Class<T> type) {

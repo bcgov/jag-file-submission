@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingapi;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -27,7 +28,14 @@ public class TestHelpers {
     public static final String CANCEL_URL = "http://cancel";
     public static final String ERROR_URL = "http://error";
 
-    public static FilingPackage createPackage(Court court, List<DocumentProperties> documents) {
+    public static InitialPackage createInitalPackage(Court court, List<DocumentProperties> documentProperties) {
+        InitialPackage initialPackage = new InitialPackage();
+        initialPackage.setCourt(court);
+        initialPackage.setDocuments(documentProperties);
+        return initialPackage;
+    }
+
+    public static FilingPackage createPackage(Court court, List<Document> documents) {
         FilingPackage modelPackage = new FilingPackage();
         modelPackage.setCourt(court);
         modelPackage.setDocuments(documents);
@@ -68,13 +76,25 @@ public class TestHelpers {
         return court;
     }
 
-    public static List<DocumentProperties> createDocumentList() {
+    public static List<DocumentProperties> createDocumentPropertiesList() {
         DocumentProperties documentProperties = new DocumentProperties();
+        documentProperties.setName("random.txt");
         documentProperties.setType(TYPE);
-        documentProperties.setDescription(DESCRIPTION);
 
         return Arrays.asList(documentProperties);
     }
+
+    public static List<Document> createDocumentList() {
+        Document documentProperties = new Document();
+        documentProperties.setDescription(DESCRIPTION);
+        documentProperties.setStatutoryFeeAmount(BigDecimal.TEN);
+        documentProperties.setName("random.txt");
+        documentProperties.setType(TYPE);
+
+        return Arrays.asList(documentProperties);
+    }
+
+
 
     public static Navigation createDefaultNavigation() {
         return createNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL);

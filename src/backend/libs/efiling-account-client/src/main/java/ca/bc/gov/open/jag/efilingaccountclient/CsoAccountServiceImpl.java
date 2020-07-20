@@ -4,6 +4,7 @@ import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.Register
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RoleRegistryPortType;
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.UserRoles;
 import ca.bc.gov.ag.csows.accounts.*;
+import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.open.jag.efilingaccountclient.mappers.AccountDetailsMapper;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.CSOHasMultipleAccountException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
@@ -48,6 +49,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         this.roleRegistryPortType = roleRegistryPortType;
         this.bCeIDServiceSoap = bCeIDServiceSoap;
         this.accountDetailsMapper = accountDetailsMapper;
+
     }
 
     @Override

@@ -12,9 +12,9 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.CSOHasMultipleAccountException;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
-import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -31,7 +31,6 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @EnableConfigurationProperties(NavigationProperties.class)
@@ -142,6 +141,9 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         catch (InvalidAccountStateException e) {
             logger.warn(e.getMessage(), e);
             response =  new ResponseEntity(buildEfilingError(ErrorResponse.INVALIDROLE), HttpStatus.FORBIDDEN);
+        } catch (EfilingDocumentServiceException e) {
+            logger.warn(e.getMessage(), e);
+            response =  new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         catch (StoreException e) {
             logger.warn(e.getMessage(), e);
@@ -166,21 +168,8 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         response.setNavigation(fromCacheSubmission.get().getNavigation());
 
-        if (fromCacheSubmission.get().getFees() != null) {
-            response.setFees(fromCacheSubmission.get().getFees().stream()
-                    .map(fee -> mapFee(fee))
-                    .collect(Collectors.toList())
-            );
-        }
         return ResponseEntity.ok(response);
 
-    }
-
-    private Fee mapFee(ServiceFees serviceFees) {
-        Fee fee = new Fee();
-        fee.serviceTypeCd(serviceFees.getServiceTypeCd());
-        fee.feeAmt(serviceFees.getFeeAmt().doubleValue());
-        return fee;
     }
 
     private UserDetails buildUserDetails(Submission submission) {

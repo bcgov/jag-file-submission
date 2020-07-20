@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.cache;
 
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -92,7 +93,7 @@ public class AutoConfigurationTest {
         });
     }
 
-    @DisplayName("CASE4: correct input should return cacheManager")
+    @DisplayName("CASE4: correct input should return submission cacheManager")
     @Test
     public void correctInputShouldReturnCacheManager() {
         JedisConnectionFactory jedisConnectionFactory = Mockito.mock(JedisConnectionFactory.class);
@@ -103,15 +104,31 @@ public class AutoConfigurationTest {
     @DisplayName("CASE5: Return correct class")
     @Test
     public void correctReturnJackson2JsonRedisSerializer() {
-        Jackson2JsonRedisSerializer result = sut.jackson2JsonRedisSerializer();
-        Assertions.assertNotNull(result);
+        Jackson2JsonRedisSerializer actual = sut.jackson2JsonRedisSerializer();
+        Assertions.assertNotNull(actual);
     }
 
-    @DisplayName("OK: correct input should return cacheManager")
+    @DisplayName("OK: correct input should return document cacheManager")
     @Test
     public void correctInputShouldReturnDocumentCacheManager() {
         JedisConnectionFactory jedisConnectionFactory = Mockito.mock(JedisConnectionFactory.class);
         CacheManager cacheManager = sut.documentCacheManager(jedisConnectionFactory);
         Assertions.assertNotNull(cacheManager);
+    }
+
+    @DisplayName("OK: correct input should return documentDetails cacheManager")
+    @Test
+    public void cdorrectInputShouldReturnDocumentCacheManager() {
+        JedisConnectionFactory jedisConnectionFactory = Mockito.mock(JedisConnectionFactory.class);
+        CacheManager cacheManager = sut.documentDetailsCacheManager(jedisConnectionFactory, new Jackson2JsonRedisSerializer(DocumentDetails.class));
+        Assertions.assertNotNull(cacheManager);
+    }
+
+
+    @DisplayName("OK: should return DocumentDetails Serializer")
+    @Test
+    public void correctReturnDocumentDetailsJackson2JsonRedisSerializer() {
+        Jackson2JsonRedisSerializer actual = sut.documentDetailsSerializer();
+        Assertions.assertNotNull(actual);
     }
 }
