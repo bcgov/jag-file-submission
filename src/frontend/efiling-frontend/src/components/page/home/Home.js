@@ -3,10 +3,11 @@ import PropTypes from "prop-types";
 import queryString from "query-string";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import { Header, Footer, Loader } from "shared-components";
+import { MdCancel } from "react-icons/md";
+
+import { Header, Footer, Loader, Alert } from "shared-components";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
 import CSOAccount from "../cso-account/CSOAccount";
-import Error from "../error/Error";
 import { propTypes } from "../../../types/propTypes";
 
 import "../page.css";
@@ -87,7 +88,8 @@ export default function Home({ page: { header, confirmationPopup } }) {
       queryParams.submissionId,
       setCsoAccountStatus,
       setShowLoader,
-      setApplicantInfo
+      setApplicantInfo,
+      setError
     );
   }, [queryParams.submissionId]);
 
@@ -99,20 +101,31 @@ export default function Home({ page: { header, confirmationPopup } }) {
     <main>
       <Header header={header} />
       {showLoader && <Loader page />}
-      {!showLoader && !csoAccountStatus.exists && (
+      {!showLoader && error && (
+        <div className="page">
+          <div className="content col-md-8">
+            <Alert
+              icon={<MdCancel size={32} />}
+              type="error"
+              styling="error-background"
+              element="You have arrived at this site incorrectly. Stahp!"
+            />
+          </div>
+        </div>
+      )}
+      {!showLoader && !error && !csoAccountStatus.exists && (
         <CSOAccount
           confirmationPopup={confirmationPopup}
           applicantInfo={applicantInfo}
           setCsoAccountStatus={setCsoAccountStatus}
         />
       )}
-      {!showLoader && csoAccountStatus.exists && (
+      {!showLoader && !error && csoAccountStatus.exists && (
         <PackageConfirmation
           packageConfirmation={packageConfirmation}
           csoAccountStatus={csoAccountStatus}
         />
       )}
-      {!showLoader && error && <Error />}
       <Footer />
     </main>
   );

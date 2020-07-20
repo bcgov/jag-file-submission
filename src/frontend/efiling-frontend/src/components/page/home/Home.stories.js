@@ -37,7 +37,6 @@ const navigation = {
 const userDetails = getUserDetails();
 
 const LoaderStateData = props => {
-  window.open = () => {};
   mock.onGet(apiRequest).reply(400, { message: "There was an error" });
   return props.children({ page });
 };
@@ -79,9 +78,9 @@ const noAccountExistsComponent = (
   </NoAccountExistsStateData>
 );
 
-export const Loader = () => loaderComponent;
+export const Error = () => loaderComponent;
 
-export const LoaderMobile = () => loaderComponent;
+export const ErrorMobile = () => loaderComponent;
 
 export const AccountExists = () => accountExistsComponent;
 
@@ -99,6 +98,6 @@ const mobileViewport = {
   }
 };
 
-LoaderMobile.story = mobileViewport;
+ErrorMobile.story = mobileViewport;
 AccountExistsMobile.story = mobileViewport;
 NoAccountExistsMobile.story = mobileViewport;
