@@ -3,7 +3,7 @@ package ca.bc.gov.open.jag.efilingcsostarter.csoStatusServiceImpl;
 import ca.bc.gov.ag.csows.filing.status.DocumentType;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
-import ca.bc.gov.open.jag.efilingcsostarter.CSODocumentServiceImpl;
+import ca.bc.gov.open.jag.efilingcsostarter.CsoDocumentServiceImpl;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import org.junit.jupiter.api.*;
@@ -30,7 +30,7 @@ public class GetDocumentDetailsTest {
     @Mock
     FilingStatusFacadeBean filingStatusFacadeBean;
 
-    private static CSODocumentServiceImpl sut;
+    private static CsoDocumentServiceImpl sut;
 
     @BeforeAll
     public void setUp() throws NestedEjbException_Exception {
@@ -46,7 +46,7 @@ public class GetDocumentDetailsTest {
 
         Mockito.when(filingStatusFacadeBean.getDocumentTypes(Mockito.eq(EXCEPTION),any())).thenThrow(NestedEjbException_Exception.class);
 
-        sut = new CSODocumentServiceImpl(filingStatusFacadeBean);
+        sut = new CsoDocumentServiceImpl(filingStatusFacadeBean);
     }
 
     @DisplayName("OK: test returns document ")
