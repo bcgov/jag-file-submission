@@ -70,7 +70,20 @@ describe("Home", () => {
     });
   });
 
-  test("Component matches the snapshot when still loading", async () => {
+  test("Component matches the snapshot when error encountered, does not attempt to redirect with no errorUrl", async () => {
+    mock.onGet(apiRequest).reply(400, { message: "There was an error." });
+
+    const { asFragment } = render(component);
+
+    await wait(() => {
+      expect(asFragment()).toMatchSnapshot();
+      expect(sessionStorage.getItem("cancelUrl")).toBeFalsy();
+    });
+
+    expect(window.open).not.toHaveBeenCalled();
+  });
+
+  test("Component matches the snapshot when error encountered", async () => {
     mock.onGet(apiRequest).reply(400, { message: "There was an error." });
     sessionStorage.setItem("errorUrl", "error.com");
 
@@ -78,7 +91,6 @@ describe("Home", () => {
 
     await wait(() => {
       expect(asFragment()).toMatchSnapshot();
-      expect(sessionStorage.getItem("cancelUrl")).toBeFalsy();
     });
 
     expect(window.open).toHaveBeenCalledWith(

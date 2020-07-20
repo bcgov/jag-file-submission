@@ -3,7 +3,10 @@ import PropTypes from "prop-types";
 import queryString from "query-string";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import { Header, Footer, Loader } from "shared-components";
+import { MdCancel } from "react-icons/md";
+
+import { Header, Footer, Loader, Alert } from "shared-components";
+import { errorRedirect } from "../../../modules/errorRedirect";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
 import CSOAccount from "../cso-account/CSOAccount";
 import { propTypes } from "../../../types/propTypes";
@@ -44,7 +47,8 @@ const checkCSOAccountStatus = (
   temp,
   setCsoAccountStatus,
   setShowLoader,
-  setApplicantInfo
+  setApplicantInfo,
+  setError
 ) => {
   axios
     .get(`/submission/${submissionId}`, {
@@ -63,15 +67,16 @@ const checkCSOAccountStatus = (
           setCsoAccountStatus({ isNew: false, exists: true });
         }
       }
+
       setRequiredState(userDetails, setApplicantInfo, setShowLoader);
     })
     .catch(error => {
-      window.open(
-        `${sessionStorage.getItem("errorUrl")}?status=${
-          error.response.status
-        }&message=${error.response.data.message}`,
-        "_self"
-      );
+      errorRedirect(sessionStorage.getItem("errorUrl"), error);
+
+      setError(true);
+    })
+    .finally(() => {
+      setShowLoader(false);
     });
 };
 
@@ -82,6 +87,7 @@ export default function Home({ page: { header, confirmationPopup } }) {
     isNew: false
   });
   const [applicantInfo, setApplicantInfo] = useState({});
+  const [error, setError] = useState(false);
   const location = useLocation();
   const queryParams = queryString.parse(location.search);
 
@@ -91,7 +97,8 @@ export default function Home({ page: { header, confirmationPopup } }) {
       queryParams.temp,
       setCsoAccountStatus,
       setShowLoader,
-      setApplicantInfo
+      setApplicantInfo,
+      setError
     );
   }, [queryParams.submissionId]);
 
@@ -104,14 +111,26 @@ export default function Home({ page: { header, confirmationPopup } }) {
     <main>
       <Header header={header} />
       {showLoader && <Loader page />}
-      {!showLoader && !csoAccountStatus.exists && (
+      {!showLoader && error && (
+        <div className="page">
+          <div className="content col-md-8">
+            <Alert
+              icon={<MdCancel size={32} />}
+              type="error"
+              styling="error-background"
+              element="Authorized users only."
+            />
+          </div>
+        </div>
+      )}
+      {!showLoader && !error && !csoAccountStatus.exists && (
         <CSOAccount
           confirmationPopup={confirmationPopup}
           applicantInfo={applicantInfo}
           setCsoAccountStatus={setCsoAccountStatus}
         />
       )}
-      {!showLoader && csoAccountStatus.exists && (
+      {!showLoader && !error && csoAccountStatus.exists && (
         <PackageConfirmation
           packageConfirmation={packageConfirmation}
           csoAccountStatus={csoAccountStatus}

@@ -14,6 +14,7 @@ import ConfirmationPopup, {
 import { getContent } from "../../../modules/csoAccountAgreementContent";
 import { getSidecardData } from "../../../modules/sidecardData";
 import { translateApplicantInfo } from "../../../modules/translateApplicantInfo";
+import { errorRedirect } from "../../../modules/errorRedirect";
 import { propTypes } from "../../../types/propTypes";
 
 const sideCard = getSidecardData().aboutCso;
@@ -50,11 +51,7 @@ export default function CSOAccount({
         setCsoAccountStatus({ exists: true, isNew: true });
       })
       .catch(error => {
-        const errorUrl = sessionStorage.getItem("errorUrl");
-        window.open(
-          `${errorUrl}?status=${error.response.status}&message=${error.response.data.message}`,
-          "_self"
-        );
+        errorRedirect(sessionStorage.getItem("errorUrl"), error);
       });
   };
 

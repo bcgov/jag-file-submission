@@ -79,7 +79,9 @@ const noAccountExistsComponent = (
   </NoAccountExistsStateData>
 );
 
-export const Loader = () => loaderComponent;
+export const Error = () => loaderComponent;
+
+export const ErrorMobile = () => loaderComponent;
 
 export const AccountExists = () => accountExistsComponent;
 
@@ -97,5 +99,6 @@ const mobileViewport = {
   }
 };
 
+ErrorMobile.story = mobileViewport;
 AccountExistsMobile.story = mobileViewport;
 NoAccountExistsMobile.story = mobileViewport;
