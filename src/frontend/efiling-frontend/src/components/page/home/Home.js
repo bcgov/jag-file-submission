@@ -60,12 +60,11 @@ const checkCSOAccountStatus = (
       saveDataToSessionStorage(navigation, userDetails);
 
       if (userDetails.accounts) {
-        const csoAccount = userDetails.accounts.find(o => o.type === "CSO");
-
-        if (csoAccount.identifier) {
-          sessionStorage.setItem("csoAccountId", csoAccount.identifier);
-          setCsoAccountStatus({ isNew: false, exists: true });
-        }
+        const csoAccountIdentifier = userDetails.accounts.find(
+          o => o.type === "CSO"
+        ).identifier;
+        sessionStorage.setItem("csoAccountId", csoAccountIdentifier);
+        setCsoAccountStatus({ isNew: false, exists: true });
       }
 
       setRequiredState(userDetails, setApplicantInfo, setShowLoader);

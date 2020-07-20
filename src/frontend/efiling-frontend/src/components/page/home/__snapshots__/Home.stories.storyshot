@@ -45,12 +45,18 @@ exports[`Storyshots Home Account Exists 1`] = `
       <div
         class="content col-md-8"
       >
-        <h2>
+        <h1>
           Package Confirmation
-        </h2>
-        <p>
-          Review your package for accuracy before submitting.
-        </p>
+        </h1>
+        <span>
+          Review your package for accuracy and upload any additional or supporting documents.
+        </span>
+        <br />
+        <span>
+          If there are any errors in these documents, please Cancel this process and re-submit.
+        </span>
+        <br />
+        <br />
         <div>
           <div
             class="display-box border-background display-file"
@@ -148,7 +154,7 @@ exports[`Storyshots Home Account Exists 1`] = `
                               class=""
                             >
                               <b>
-                                $ 40
+                                $40.00
                               </b>
                             </td>
                           </tr>
@@ -256,20 +262,18 @@ exports[`Storyshots Home Account Exists 1`] = `
           </div>
           <br />
         </div>
-        <br />
-        <p>
-          <a
-            data-test-id="return-link"
-            href="cancelurl.com"
-          >
-            Return to the parent application website
-          </a>
-           to correct errors or missing information in this package.
-        </p>
-        <br />
         <h3>
-          Summary
+          Do you have additional documents to upload? 
+          <a
+            href="#"
+          >
+            Upload them now.
+          </a>
         </h3>
+        <br />
+        <h2>
+          Summary
+        </h2>
         <table
           class=""
         >
@@ -312,10 +316,10 @@ exports[`Storyshots Home Account Exists 1`] = `
                           Statutory Fees:
                         </td>
                         <td
-                          class="right-align"
+                          class=""
                         >
                           <b>
-                            $ 40
+                            $40.00
                           </b>
                         </td>
                       </tr>
@@ -329,7 +333,7 @@ exports[`Storyshots Home Account Exists 1`] = `
                           Number of Documents in Package:
                         </td>
                         <td
-                          class="right-align"
+                          class=""
                         >
                           <b>
                             2
@@ -345,19 +349,6 @@ exports[`Storyshots Home Account Exists 1`] = `
           </tbody>
         </table>
         <br />
-        <section
-          class="inline-block pt-2"
-        >
-          <div>
-            <button
-              class="normal-white btn"
-              data-test-id="upload-btn"
-              type="button"
-            >
-              Upload Documents
-            </button>
-          </div>
-        </section>
         <section
           class="buttons pt-2"
         >
@@ -686,12 +677,18 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
       <div
         class="content col-md-8"
       >
-        <h2>
+        <h1>
           Package Confirmation
-        </h2>
-        <p>
-          Review your package for accuracy before submitting.
-        </p>
+        </h1>
+        <span>
+          Review your package for accuracy and upload any additional or supporting documents.
+        </span>
+        <br />
+        <span>
+          If there are any errors in these documents, please Cancel this process and re-submit.
+        </span>
+        <br />
+        <br />
         <div>
           <div
             class="display-box border-background display-file"
@@ -789,7 +786,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
                               class=""
                             >
                               <b>
-                                $ 40
+                                $40.00
                               </b>
                             </td>
                           </tr>
@@ -897,20 +894,18 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
           </div>
           <br />
         </div>
-        <br />
-        <p>
-          <a
-            data-test-id="return-link"
-            href="cancelurl.com"
-          >
-            Return to the parent application website
-          </a>
-           to correct errors or missing information in this package.
-        </p>
-        <br />
         <h3>
-          Summary
+          Do you have additional documents to upload? 
+          <a
+            href="#"
+          >
+            Upload them now.
+          </a>
         </h3>
+        <br />
+        <h2>
+          Summary
+        </h2>
         <table
           class=""
         >
@@ -953,10 +948,10 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
                           Statutory Fees:
                         </td>
                         <td
-                          class="right-align"
+                          class=""
                         >
                           <b>
-                            $ 40
+                            $40.00
                           </b>
                         </td>
                       </tr>
@@ -970,7 +965,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
                           Number of Documents in Package:
                         </td>
                         <td
-                          class="right-align"
+                          class=""
                         >
                           <b>
                             2
@@ -986,19 +981,6 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
           </tbody>
         </table>
         <br />
-        <section
-          class="inline-block pt-2"
-        >
-          <div>
-            <button
-              class="normal-white btn"
-              data-test-id="upload-btn"
-              type="button"
-            >
-              Upload Documents
-            </button>
-          </div>
-        </section>
         <section
           class="buttons pt-2"
         >
@@ -1668,9 +1650,9 @@ exports[`Storyshots Home No Account Exists 1`] = `
         <div
           class="non-printable"
         >
-          <h2>
+          <h1>
             Create a Court Services Online (CSO) Account
-          </h2>
+          </h1>
           <div
             class="display-box warning-background"
           >
@@ -2735,9 +2717,9 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
         <div
           class="non-printable"
         >
-          <h2>
+          <h1>
             Create a Court Services Online (CSO) Account
-          </h2>
+          </h1>
           <div
             class="display-box warning-background"
           >

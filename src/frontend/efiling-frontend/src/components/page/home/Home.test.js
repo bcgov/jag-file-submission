@@ -99,7 +99,7 @@ describe("Home", () => {
     );
   });
 
-  test("saveDataToSessionStorage saves urls to session storage when values are truthy", () => {
+  test("saveDataToSessionStorage saves urls to session storage", () => {
     expect(sessionStorage.getItem("cancelUrl")).toBeFalsy();
     expect(sessionStorage.getItem("successUrl")).toBeFalsy();
     expect(sessionStorage.getItem("errorUrl")).toBeFalsy();
@@ -109,6 +109,23 @@ describe("Home", () => {
     expect(sessionStorage.getItem("cancelUrl")).toEqual("cancelurl.com");
     expect(sessionStorage.getItem("successUrl")).toEqual("successurl.com");
     expect(sessionStorage.getItem("errorUrl")).toBeFalsy();
+    expect(sessionStorage.getItem("universalId")).toEqual("123");
+
+    sessionStorage.clear();
+
+    saveDataToSessionStorage(
+      {
+        ...navigation,
+        cancel: { url: "" },
+        success: { url: "" },
+        error: { url: "error.com" }
+      },
+      userDetails
+    );
+
+    expect(sessionStorage.getItem("cancelUrl")).toBeFalsy();
+    expect(sessionStorage.getItem("successUrl")).toBeFalsy();
+    expect(sessionStorage.getItem("errorUrl")).toEqual("error.com");
     expect(sessionStorage.getItem("universalId")).toEqual("123");
   });
 });

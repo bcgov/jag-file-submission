@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-import { render, wait } from "@testing-library/react";
+import { render, wait, fireEvent, getByText } from "@testing-library/react";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
 import { getDocumentsData } from "../../../modules/documentTestData";
 
@@ -68,6 +68,23 @@ describe("PackageConfirmation Component", () => {
 
     await wait(() => {
       expect(window.open).toHaveBeenCalledWith("error.com", "_self");
+    });
+  });
+
+  test("On click of continue to payment button, it redirects to the payment page", async () => {
+    mock.onGet(apiRequest).reply(200, { documents });
+
+    const { container, asFragment } = render(
+      <PackageConfirmation
+        packageConfirmation={packageConfirmation}
+        csoAccountStatus={csoAccountStatus}
+      />
+    );
+
+    fireEvent.click(getByText(container, "Continue to Payment"));
+
+    await wait(() => {
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 });
