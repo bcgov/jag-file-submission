@@ -6,6 +6,7 @@ import ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +29,11 @@ public class CSODocumentServiceImpl implements EfilingDocumentService {
      */
     @Override
     public DocumentDetails getDocumentDetails(String courtLevel, String courtClass, String documentType) {
+
+        if(StringUtils.isBlank(courtLevel)) throw new IllegalArgumentException("courtLevel is required.");
+        if(StringUtils.isBlank(courtClass)) throw new IllegalArgumentException("courtClass level is required.");
+        if(StringUtils.isBlank(documentType)) throw new IllegalArgumentException("documentType level is required.");
+
         try {
             List<DocumentType> documentTypes = filingStatusFacadeBean.getDocumentTypes(courtLevel, courtClass);
 

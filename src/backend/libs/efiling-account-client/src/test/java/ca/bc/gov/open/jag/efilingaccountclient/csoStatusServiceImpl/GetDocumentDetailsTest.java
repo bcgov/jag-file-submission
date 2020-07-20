@@ -57,10 +57,49 @@ public class GetDocumentDetailsTest {
         Assertions.assertEquals(BigDecimal.TEN, result.getStatutoryFeeAmount());
     }
 
+    @DisplayName("Exception: when not finding document should throw exception")
+    @Test
+    public void whenNotFindingDocumentsShouldThrowError() {
+
+        Assertions.assertThrows(EfilingDocumentServiceException.class, () -> sut.getDocumentDetails(NODOC, COURT_CLASS, NODOC));
+    }
+
     @DisplayName("Failure: throws exception")
     @Test
     public void testThrowException() throws NestedEjbException_Exception {
 
-        Assertions.assertThrows(EfilingDocumentServiceException.class, () -> sut.getDocumentDetails(EXCEPTION, COURT_CLASS,""));
+        Assertions.assertThrows(EfilingDocumentServiceException.class, () -> sut.getDocumentDetails(EXCEPTION, COURT_CLASS,"type"));
     }
+
+    @DisplayName("Exception: courtLevel is required")
+    @Test
+    public void whenCourtLevelIsBlankShouldThrowIllegalArgumentException() {
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentDetails(null, "class", "type"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentDetails("", "class", "type"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentDetails(" ", "class", "type"));
+
+    }
+
+    @DisplayName("Exception: courtClass is required")
+    @Test
+    public void whenCourtClassIsBlankShouldThrowIllegalArgumentException() {
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentDetails("level", null, "type"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentDetails("level", "", "type"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentDetails("level", " ", "type"));
+
+    }
+
+
+    @DisplayName("Exception: documentType is required")
+    @Test
+    public void whenDocumentTypeIsBlankShouldThrowIllegalArgumentException() {
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentDetails("level", "class", null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentDetails("level", "class", ""));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentDetails("level", "class", " "));
+
+    }
+
 }
