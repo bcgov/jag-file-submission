@@ -12,6 +12,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.CSOHasMultipleAccountException;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import org.slf4j.Logger;
@@ -140,6 +141,9 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         catch (InvalidAccountStateException e) {
             logger.warn(e.getMessage(), e);
             response =  new ResponseEntity(buildEfilingError(ErrorResponse.INVALIDROLE), HttpStatus.FORBIDDEN);
+        } catch (EfilingDocumentServiceException e) {
+            logger.warn(e.getMessage(), e);
+            response =  new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         catch (StoreException e) {
             logger.warn(e.getMessage(), e);

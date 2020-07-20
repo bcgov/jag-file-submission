@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingapi.cache;
 
 
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
@@ -132,6 +133,33 @@ public class CacheConfiguration {
 
         return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(jedisConnectionFactory)
                 .cacheDefaults(redisCacheConfiguration).build();
+    }
+
+    /**
+     * Configures the cache manager
+     * @param jedisConnectionFactory A jedisConnectionFactory
+     * @return
+     */
+    @Bean(name = "documentDetailsCacheManager")
+    public CacheManager documentDetailsCacheManager(
+            JedisConnectionFactory jedisConnectionFactory,
+            @Qualifier("documentDetailsSerializer") Jackson2JsonRedisSerializer documentDetailsSerializer) {
+
+        RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
+                .disableCachingNullValues()
+                .entryTtl(Duration.ofHours(24))
+                .serializeValuesWith(RedisSerializationContext
+                        .SerializationPair.fromSerializer(documentDetailsSerializer));;
+
+        redisCacheConfiguration.usePrefix();
+
+        return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(jedisConnectionFactory)
+                .cacheDefaults(redisCacheConfiguration).build();
+    }
+
+    @Bean(name = "documentDetailsSerializer")
+    public Jackson2JsonRedisSerializer documentDetailsSerializer() {
+        return new Jackson2JsonRedisSerializer(DocumentDetails.class);
     }
 
 

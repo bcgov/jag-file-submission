@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingapi;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -86,6 +87,7 @@ public class TestHelpers {
     public static List<Document> createDocumentList() {
         Document documentProperties = new Document();
         documentProperties.setDescription(DESCRIPTION);
+        documentProperties.setStatutoryFeeAmount(BigDecimal.TEN);
         documentProperties.setName("random.txt");
         documentProperties.setType(TYPE);
 
