@@ -54,9 +54,7 @@ const checkCSOAccountStatus = (
       }
 
       const applicantInfo = addUserInfo(userDetails);
-
       setApplicantInfo(applicantInfo);
-
       setShowLoader(false);
     })
     .catch(error => {
