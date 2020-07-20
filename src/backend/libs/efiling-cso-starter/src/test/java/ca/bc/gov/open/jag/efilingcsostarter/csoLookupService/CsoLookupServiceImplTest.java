@@ -12,8 +12,6 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigDecimal;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -23,9 +21,7 @@ import static org.mockito.ArgumentMatchers.any;
 public class CsoLookupServiceImplTest {
 
     private static final String SERVICE_ID = "ServiceId";
-    public static final String ENT_USER_ID = "entUserId";
     public static final String SERVICE_TYPE_CD = "serviceTypeCd";
-    public static final String UPD_USER_ID = "updUserId";
     public static final String SERVICE_ID_EXCEPTION = "exception";
 
     CsoLookupServiceImpl sut;
@@ -35,40 +31,13 @@ public class CsoLookupServiceImplTest {
 
     @Mock
     ServiceFee serviceFeeMock;
-    @Mock
-    private XMLGregorianCalendar updDtmMock;
-    @Mock
-    private XMLGregorianCalendar expiryDtMock;
-    @Mock
-    private XMLGregorianCalendar entDtmMock;
-    @Mock
-    private XMLGregorianCalendar effectiveDtMock;
-
 
     @BeforeEach
-    public void init() throws NestedEjbException_Exception, DatatypeConfigurationException {
+    public void init() throws NestedEjbException_Exception {
 
         MockitoAnnotations.initMocks(this);
         Mockito.when(serviceFeeMock.getFeeAmt()).thenReturn(BigDecimal.TEN);
-        Mockito.when(serviceFeeMock.getEntUserId()).thenReturn(ENT_USER_ID);
         Mockito.when(serviceFeeMock.getServiceTypeCd()).thenReturn(SERVICE_TYPE_CD);
-        Mockito.when(serviceFeeMock.getUpdUserId()).thenReturn(UPD_USER_ID);
-        updDtmMock = DatatypeFactory.newInstance().newXMLGregorianCalendar("2020-07-01T13:54:46.773-07:00");
-        expiryDtMock= DatatypeFactory.newInstance().newXMLGregorianCalendar("2020-07-02T13:54:46.773-07:00");
-        entDtmMock= DatatypeFactory.newInstance().newXMLGregorianCalendar("2020-07-03T13:54:46.773-07:00");
-        effectiveDtMock= DatatypeFactory.newInstance().newXMLGregorianCalendar("2020-07-15T13:54:46.773-07:00");
-        Mockito
-                .when(serviceFeeMock.getEffectiveDt())
-                .thenReturn(effectiveDtMock);
-        Mockito
-                .when(serviceFeeMock.getEntDtm())
-                .thenReturn(entDtmMock);
-        Mockito
-                .when(serviceFeeMock.getExpiryDt())
-                .thenReturn(expiryDtMock);
-        Mockito
-                .when(serviceFeeMock.getUpdDtm())
-                .thenReturn(updDtmMock);
 
         Mockito
                 .when(lookupFacadeBeanMock.getServiceFee(Mockito.eq(SERVICE_ID), any()))
