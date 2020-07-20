@@ -1,7 +1,6 @@
-package ca.bc.gov.open.jag.efilinglookupclient;
+package ca.bc.gov.open.jag.efilingcsostarter.csoLookupService;
 
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
-import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
 
 import java.math.BigDecimal;

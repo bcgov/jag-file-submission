@@ -1,11 +1,11 @@
-package ca.bc.gov.open.jag.efilinglookupclient;
+package ca.bc.gov.open.jag.efilingcsostarter.csoLookupService;
 
 import ca.bc.gov.ag.csows.lookups.LookupFacadeBean;
 import ca.bc.gov.ag.csows.lookups.NestedEjbException_Exception;
 import ca.bc.gov.ag.csows.lookups.ServiceFee;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingLookupServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
-import org.joda.time.DateTime;
+import ca.bc.gov.open.jag.efilingcsostarter.CsoLookupServiceImpl;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -20,7 +20,7 @@ import static org.mockito.ArgumentMatchers.any;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("CSO Efiling Lookup Client Test Suite")
-public class CSOLookupServiceImplTest {
+public class CsoLookupServiceImplTest {
 
     private static final String SERVICE_ID = "ServiceId";
     public static final String ENT_USER_ID = "entUserId";
@@ -28,7 +28,7 @@ public class CSOLookupServiceImplTest {
     public static final String UPD_USER_ID = "updUserId";
     public static final String SERVICE_ID_EXCEPTION = "exception";
 
-    CSOLookupServiceImpl sut;
+    CsoLookupServiceImpl sut;
 
     @Mock
     LookupFacadeBean lookupFacadeBeanMock;
@@ -78,7 +78,7 @@ public class CSOLookupServiceImplTest {
                 .when(lookupFacadeBeanMock.getServiceFee(Mockito.eq(SERVICE_ID_EXCEPTION), Mockito.any()))
                 .thenThrow(new NestedEjbException_Exception("random"));
 
-        sut = new CSOLookupServiceImpl(lookupFacadeBeanMock);
+        sut = new CsoLookupServiceImpl(lookupFacadeBeanMock);
 
     }
 
