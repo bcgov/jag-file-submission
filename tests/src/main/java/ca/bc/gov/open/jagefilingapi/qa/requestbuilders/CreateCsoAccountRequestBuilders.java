@@ -16,7 +16,7 @@ public class CreateCsoAccountRequestBuilders {
     private RequestSpecification request;
     private CreateCsoAccountPayload csoAccountPayloadData;
     private static final String X_AUTH_USER_ID = "X-Auth-UserId";
-    private static String validExistingCSOGuid;
+    private String validExistingCSOGuid;
 
     public Response requestWithValidRequestBody(String resourceValue) throws IOException {
         csoAccountPayloadData = new CreateCsoAccountPayload();
@@ -36,6 +36,7 @@ public class CreateCsoAccountRequestBuilders {
     public Response requestWithIncorrectAccountType(String resourceValue) throws IOException {
         csoAccountPayloadData = new CreateCsoAccountPayload();
         APIResources validCreateAccountResourceAPI = APIResources.valueOf(resourceValue);
+        validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
         request = given().spec(TestUtil.requestSpecification())
                 .header(X_AUTH_USER_ID, validExistingCSOGuid)
