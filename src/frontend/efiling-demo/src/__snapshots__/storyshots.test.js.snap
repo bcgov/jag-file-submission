@@ -734,6 +734,24 @@ exports[`Storyshots Home Default 1`] = `
         />
       </div>
       <br />
+      <div
+        className="text-label"
+      >
+        <label
+          htmlFor="1"
+        >
+          Provide filing package JSON data:
+        </label>
+      </div>
+      <textarea
+        className="text-input"
+        cols="60"
+        id="1"
+        onChange={[Function]}
+        rows="8"
+      />
+      <br />
+      <br />
       <div>
         <button
           className="normal-blue btn"
@@ -745,6 +763,7 @@ exports[`Storyshots Home Default 1`] = `
           E-File my Package
         </button>
       </div>
+      <br />
       <br />
     </div>
   </div>
@@ -930,6 +949,24 @@ exports[`Storyshots Home Mobile 1`] = `
         />
       </div>
       <br />
+      <div
+        className="text-label"
+      >
+        <label
+          htmlFor="1"
+        >
+          Provide filing package JSON data:
+        </label>
+      </div>
+      <textarea
+        className="text-input"
+        cols="60"
+        id="1"
+        onChange={[Function]}
+        rows="8"
+      />
+      <br />
+      <br />
       <div>
         <button
           className="normal-blue btn"
@@ -941,6 +978,7 @@ exports[`Storyshots Home Mobile 1`] = `
           E-File my Package
         </button>
       </div>
+      <br />
       <br />
     </div>
   </div>

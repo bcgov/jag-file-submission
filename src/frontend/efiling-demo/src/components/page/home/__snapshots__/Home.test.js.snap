@@ -89,6 +89,23 @@ exports[`Home Component matches the snapshot 1`] = `
           />
         </div>
         <br />
+        <div
+          class="text-label"
+        >
+          <label
+            for="1"
+          >
+            Provide filing package JSON data:
+          </label>
+        </div>
+        <textarea
+          class="text-input"
+          cols="60"
+          id="1"
+          rows="8"
+        />
+        <br />
+        <br />
         <div>
           <button
             class="normal-blue btn"
@@ -98,6 +115,7 @@ exports[`Home Component matches the snapshot 1`] = `
             E-File my Package
           </button>
         </div>
+        <br />
         <br />
       </div>
     </div>
