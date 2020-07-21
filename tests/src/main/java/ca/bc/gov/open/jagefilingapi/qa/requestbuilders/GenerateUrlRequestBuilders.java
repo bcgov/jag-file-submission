@@ -19,6 +19,8 @@ public class GenerateUrlRequestBuilders {
     private static final String X_AUTH_USER_ID = "X-Auth-UserId";
     private static final String GENERATE_URL_PATH = "/generateUrl";
     private static final String UPLOAD_FILE_PATH = "src/test/java/testdatasource";
+    private static final String FILES = "files";
+    private static final String FILE_NAME_PATH = "/backend.png";
 
     private  GenerateUrlPayload payloadData;
 
@@ -28,11 +30,11 @@ public class GenerateUrlRequestBuilders {
         APIResources resourceAPI = APIResources.valueOf(resourceValue);
         String validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
-        File pngFile = new File(UPLOAD_FILE_PATH + "/backend.png");
+        File pngFile = new File(UPLOAD_FILE_PATH + FILE_NAME_PATH);
 
         request = RestAssured.given().spec(TestUtil.submitDocumentsRequestSpecification())
                 .header(X_AUTH_USER_ID,validExistingCSOGuid)
-                .multiPart("files",  pngFile);
+                .multiPart(FILES,  pngFile);
 
         return request.when().post(resourceAPI.getResource()).then()
                 .spec(TestUtil.validDocumentResponseSpecification())
@@ -52,10 +54,10 @@ public class GenerateUrlRequestBuilders {
 
         request = RestAssured.given().spec(TestUtil.submitDocumentsRequestSpecification())
                 .header(X_AUTH_USER_ID,validExistingCSOGuid)
-                .multiPart("files",  pngFile)
-                .multiPart("files",  textFile)
-                .multiPart("files",  pdfFile)
-                .multiPart("files",  jpgFile);
+                .multiPart(FILES,  pngFile)
+                .multiPart(FILES,  textFile)
+                .multiPart(FILES,  pdfFile)
+                .multiPart(FILES,  jpgFile);
 
         return request.when().post(resourceAPI.getResource()).then()
                 .spec(TestUtil.validDocumentResponseSpecification())
@@ -68,7 +70,7 @@ public class GenerateUrlRequestBuilders {
         APIResources resourceAPI = APIResources.valueOf(resourceValue);
         String validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
-        File pngFile = new File(UPLOAD_FILE_PATH + "/backend.png");
+        File pngFile = new File(UPLOAD_FILE_PATH + FILE_NAME_PATH);
 
         request = RestAssured.given().spec(TestUtil.submitDocumentsRequestSpecification())
                 .header(X_AUTH_USER_ID,validExistingCSOGuid)
@@ -85,11 +87,11 @@ public class GenerateUrlRequestBuilders {
         APIResources resourceAPI = APIResources.valueOf(resourceValue);
         String nonExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getNonExistingCSOGuid();
 
-        File pngFile = new File(UPLOAD_FILE_PATH + "/backend.png");
+        File pngFile = new File(UPLOAD_FILE_PATH + FILE_NAME_PATH);
 
         request = RestAssured.given().spec(TestUtil.submitDocumentsRequestSpecification())
                 .header(X_AUTH_USER_ID,nonExistingCSOGuid)
-                .multiPart("files",  pngFile);
+                .multiPart(FILES,  pngFile);
 
         return request.when().post(resourceAPI.getResource()).then()
                 .spec(TestUtil.validDocumentResponseSpecification())

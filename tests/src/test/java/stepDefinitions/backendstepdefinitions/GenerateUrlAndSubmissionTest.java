@@ -21,9 +21,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
@@ -42,11 +40,14 @@ public class GenerateUrlAndSubmissionTest {
     private String lastName;
     private String middleName;
     private String email;
-    private static final String CONTENT_TYPE = "application/json";
-    private static final String X_AUTH_USER_ID = "X-Auth-UserId";
     private String validExistingCSOGuid;
     private String nonExistingCSOGuid;
     private GenerateUrlPayload payloadData;
+    private static final String CONTENT_TYPE = "application/json";
+    private static final String X_AUTH_USER_ID = "X-Auth-UserId";
+    private static final String ERROR = "error";
+    private static final String MESSAGE = "message";
+    private static final String SUBMISSION_ID = "submissionId";
     public Logger log = LogManager.getLogger(GenerateUrlAndSubmissionTest.class);
 
     @Given("POST http request is made to {string} with valid existing CSO account guid and a single image file")
@@ -86,7 +87,7 @@ public class GenerateUrlAndSubmissionTest {
     public void verifySubmissionIdAndDocumentCountIsReceived() {
         jsonPath = new JsonPath(response.asString());
 
-        submissionId = TestUtil.getJsonPath(response, "submissionId");
+        submissionId = TestUtil.getJsonPath(response, SUBMISSION_ID);
         int receivedCount = jsonPath.get("received");
 
         switch (receivedCount) {
@@ -131,7 +132,7 @@ public class GenerateUrlAndSubmissionTest {
         String respTemp = null;
 
         for (NameValuePair param : params) {
-            if (param.getName().equals("submissionId")) {
+            if (param.getName().equals(SUBMISSION_ID)) {
                 respSubId = param.getValue();
             } else if (param.getName().equals("temp")) {
                 respTemp = param.getValue();
@@ -309,7 +310,7 @@ public class GenerateUrlAndSubmissionTest {
         String respTemp = null;
 
         for (NameValuePair param : params) {
-            if (param.getName().equals("submissionId")) {
+            if (param.getName().equals(SUBMISSION_ID)) {
                 respSubId = param.getValue();
             } else if (param.getName().equals("temp")) {
                 respTemp = param.getValue();
@@ -337,8 +338,6 @@ public class GenerateUrlAndSubmissionTest {
     @Then("verify accounts value is null but names and email details are returned")
     public void verifyAccountsValueIsNullButNamesAndEmailDetailsAreReturned() throws IOException {
         jsonPath = new JsonPath(response.asString());
-
-        String nonExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getNonExistingCSOGuid();
 
         universalId = jsonPath.get("userDetails.universalId");
         firstName = jsonPath.get("userDetails.firstName");
@@ -399,8 +398,8 @@ public class GenerateUrlAndSubmissionTest {
     @Then("verify response returns document required error and message")
     public void verifyResponseReturnsDocumentRequiredErrorAndMessage() {
         jsonPath = new JsonPath(response.asString());
-        String error = jsonPath.get("error");
-        String message = jsonPath.get("message");
+        String error = jsonPath.get(ERROR);
+        String message = jsonPath.get(MESSAGE);
 
         assertEquals("DOCUMENT_REQUIRED", error);
         assertEquals("At least one document is required.", message);
@@ -410,8 +409,8 @@ public class GenerateUrlAndSubmissionTest {
     public void verifyResponseReturnsInvalidRoleErrorAndMessage() {
         jsonPath = new JsonPath(response.asString());
 
-        String error = jsonPath.get("error");
-        String message = jsonPath.get("message");
+        String error = jsonPath.get(ERROR);
+        String message = jsonPath.get(MESSAGE);
 
         assertEquals("INVALIDROLE", error);
         assertEquals("User does not have a valid role for this request.", message);
@@ -428,8 +427,8 @@ public class GenerateUrlAndSubmissionTest {
     public void verifyErrorMessageIsPresentAndMessageHasNoValue() {
         jsonPath = new JsonPath(response.asString());
 
-        String error = TestUtil.getJsonPath(response, "error");
-        String message = TestUtil.getJsonPath(response, "message");
+        String error = TestUtil.getJsonPath(response, ERROR);
+        String message = TestUtil.getJsonPath(response, MESSAGE);
         int statusCode = jsonPath.get("status");
 
         switch (statusCode) {
