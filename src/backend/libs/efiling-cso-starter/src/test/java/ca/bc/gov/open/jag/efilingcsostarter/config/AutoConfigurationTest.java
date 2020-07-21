@@ -6,7 +6,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoCourtServiceImpl;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoDocumentServiceImpl;
-import ca.bc.gov.open.jag.efilingcsostarter.CsoLookupServiceImpl;
+import ca.bc.gov.open.jag.efilingcsostarter.CsoPackageServiceImpl;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoAccountServiceImpl;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.AccountDetailsMapperImpl;
 import org.junit.jupiter.api.*;

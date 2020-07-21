@@ -13,9 +13,9 @@ import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
+import ca.bc.gov.open.jag.efilingcommons.model.SubmissionFee;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingPackageService;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
@@ -51,7 +51,7 @@ public class generateFromRequestTest {
     private EfilingAccountService efilingAccountServiceMock;
 
     @Mock
-    private EfilingLookupService efilingLookupService;
+    private EfilingPackageService efilingPackageService;
 
     @Mock
     private DocumentStore documentStoreMock;
@@ -61,10 +61,10 @@ public class generateFromRequestTest {
 
         MockitoAnnotations.initMocks(this);
 
-        ServiceFees fee = new ServiceFees( BigDecimal.valueOf(7.00), "DCFL");
+        SubmissionFee fee = new SubmissionFee( BigDecimal.valueOf(7.00), "DCFL");
         Mockito.doReturn(fee)
-                .when(efilingLookupService)
-                .getServiceFee(Mockito.any());
+                .when(efilingPackageService)
+                .getSubmissionFee(Mockito.any());
 
         configureCase1(fee);
         configureCase2();
@@ -76,7 +76,7 @@ public class generateFromRequestTest {
 
         // Testing mapper as part of this unit test
         SubmissionMapper submissionMapper = new SubmissionMapperImpl();
-        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, submissionMapper, efilingAccountServiceMock, efilingLookupService, documentStoreMock);
+        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, submissionMapper, efilingAccountServiceMock, efilingPackageService, documentStoreMock);
 
     }
 
@@ -156,8 +156,8 @@ public class generateFromRequestTest {
 
         AccountDetails accountDetails =  AccountDetails.builder().lastName("lastName").create();
 
-        ServiceFees fee = new ServiceFees( BigDecimal.valueOf(10), "DCFL");
-        List<ServiceFees> fees = new ArrayList<>();
+        SubmissionFee fee = new SubmissionFee( BigDecimal.valueOf(10), "DCFL");
+        List<SubmissionFee> fees = new ArrayList<>();
 
 
         Submission submissionCase1 = Submission
@@ -180,7 +180,7 @@ public class generateFromRequestTest {
 
     }
 
-    private void configureCase1(ServiceFees fee) {
+    private void configureCase1(SubmissionFee fee) {
 
 
         AccountDetails accountDetails = getAccountDetails(true, TestHelpers.CASE_1.toString());

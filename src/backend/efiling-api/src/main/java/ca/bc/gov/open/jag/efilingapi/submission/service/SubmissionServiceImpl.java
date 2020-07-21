@@ -12,9 +12,9 @@ import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
+import ca.bc.gov.open.jag.efilingcommons.model.SubmissionFee;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingPackageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
@@ -38,7 +38,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private final EfilingAccountService efilingAccountService;
 
-    private final EfilingLookupService efilingLookupService;
+    private final EfilingPackageService efilingPackageService;
 
     private final DocumentStore documentStore;
 
@@ -47,13 +47,13 @@ public class SubmissionServiceImpl implements SubmissionService {
             CacheProperties cacheProperties,
             SubmissionMapper submissionMapper,
             EfilingAccountService efilingAccountService,
-            EfilingLookupService efilingLookupService,
+            EfilingPackageService efilingPackageService,
             DocumentStore documentStore) {
         this.submissionStore = submissionStore;
         this.cacheProperties = cacheProperties;
         this.submissionMapper = submissionMapper;
         this.efilingAccountService = efilingAccountService;
-        this.efilingLookupService = efilingLookupService;
+        this.efilingPackageService = efilingPackageService;
         this.documentStore = documentStore;
     }
 

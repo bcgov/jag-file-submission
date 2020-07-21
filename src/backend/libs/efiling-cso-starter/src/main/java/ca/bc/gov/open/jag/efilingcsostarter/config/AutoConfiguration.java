@@ -12,8 +12,8 @@ import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoCourtServiceImpl;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoDocumentServiceImpl;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
-import ca.bc.gov.open.jag.efilingcsostarter.CsoLookupServiceImpl;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingPackageService;
+import ca.bc.gov.open.jag.efilingcsostarter.CsoPackageServiceImpl;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoAccountServiceImpl;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.AccountDetailsMapper;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.AccountDetailsMapperImpl;
@@ -82,9 +82,9 @@ public class AutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnMissingBean({EfilingLookupService.class})
-    public EfilingLookupService efilingLookupService (LookupFacadeBean lookupFacadeBean) {
-        return new CsoLookupServiceImpl(lookupFacadeBean);
+    @ConditionalOnMissingBean({EfilingPackageService.class})
+    public EfilingPackageService efilingLookupService (LookupFacadeBean lookupFacadeBean) {
+        return new CsoPackageServiceImpl(lookupFacadeBean);
     }
 
     @Bean

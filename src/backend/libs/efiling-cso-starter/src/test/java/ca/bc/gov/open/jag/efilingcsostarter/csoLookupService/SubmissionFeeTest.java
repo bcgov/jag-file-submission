@@ -1,20 +1,20 @@
 package ca.bc.gov.open.jag.efilingcsostarter.csoLookupService;
 
-import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
+import ca.bc.gov.open.jag.efilingcommons.model.SubmissionFee;
 import org.junit.jupiter.api.*;
 
 import java.math.BigDecimal;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("Efiling ServiceFees Test")
-public class ServiceFeesTest {
+public class SubmissionFeeTest {
 
-    private ServiceFees sut;
+    private SubmissionFee sut;
     private static final String serviceId = "ServiceID";
 
     @BeforeAll
     public void setUp() {
-        sut = new ServiceFees(BigDecimal.ZERO, serviceId);
+        sut = new SubmissionFee(BigDecimal.ZERO, serviceId);
     }
 
     @DisplayName("CASE 1: Testing Service Fees Constructor")

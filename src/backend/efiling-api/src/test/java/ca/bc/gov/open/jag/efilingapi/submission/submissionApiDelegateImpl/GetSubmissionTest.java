@@ -11,7 +11,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
+import ca.bc.gov.open.jag.efilingcommons.model.SubmissionFee;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -134,9 +134,9 @@ public class GetSubmissionTest {
         assertEquals(TestHelpers.ERROR_URL, actual.getBody().getNavigation().getError().getUrl());
     }
 
-    private List<ServiceFees> createFees() {
-        ServiceFees fee1 = new ServiceFees(BigDecimal.TEN, SERVICE_TYPE_CD);
-        ServiceFees fee2 = new ServiceFees(BigDecimal.ONE, SERVICE_TYPE_CD1);
+    private List<SubmissionFee> createFees() {
+        SubmissionFee fee1 = new SubmissionFee(BigDecimal.TEN, SERVICE_TYPE_CD);
+        SubmissionFee fee2 = new SubmissionFee(BigDecimal.ONE, SERVICE_TYPE_CD1);
         return Arrays.asList(fee1, fee2);
     }
 

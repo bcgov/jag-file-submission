@@ -2,7 +2,7 @@ package ca.bc.gov.open.jag.efilingapi.submission.models;
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
+import ca.bc.gov.open.jag.efilingcommons.model.SubmissionFee;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,7 +29,7 @@ public class SubmissionTest {
     @Test
     @DisplayName("CASE 1: testing constructor")
     public void testingConstructor() {
-        ServiceFees fee = new ServiceFees(BigDecimal.TEN, "DCFL");
+        SubmissionFee fee = new SubmissionFee(BigDecimal.TEN, "DCFL");
         AccountDetails accountDetails = new AccountDetails(UUID.randomUUID(), BigDecimal.TEN, BigDecimal.ONE, true, FIRST_NAME, LAST_NAME, MIDDLE_NAME, EMAIL);
 
 

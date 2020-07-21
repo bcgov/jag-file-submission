@@ -2,18 +2,17 @@ package ca.bc.gov.open.jag.efilingcommons.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.joda.time.*;
 
 import java.math.BigDecimal;
 
 
-public class ServiceFees {
+public class SubmissionFee {
 
 
     // Allowing 8 params to constructor as it is a map to SOAP reply
     @SuppressWarnings("squid:S00107")
     @JsonCreator
-    public ServiceFees(
+    public SubmissionFee(
             @JsonProperty("feeAmount") BigDecimal feeAmount,
             @JsonProperty("serviceTypeCd") String serviceTypeCd) {
         this.feeAmount = feeAmount;

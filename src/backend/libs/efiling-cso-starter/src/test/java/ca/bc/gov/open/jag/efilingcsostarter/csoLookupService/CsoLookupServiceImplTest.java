@@ -4,8 +4,8 @@ import ca.bc.gov.ag.csows.lookups.LookupFacadeBean;
 import ca.bc.gov.ag.csows.lookups.NestedEjbException_Exception;
 import ca.bc.gov.ag.csows.lookups.ServiceFee;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingLookupServiceException;
-import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
-import ca.bc.gov.open.jag.efilingcsostarter.CsoLookupServiceImpl;
+import ca.bc.gov.open.jag.efilingcommons.model.SubmissionFee;
+import ca.bc.gov.open.jag.efilingcsostarter.CsoPackageServiceImpl;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -24,7 +24,7 @@ public class CsoLookupServiceImplTest {
     public static final String SERVICE_TYPE_CD = "serviceTypeCd";
     public static final String SERVICE_ID_EXCEPTION = "exception";
 
-    CsoLookupServiceImpl sut;
+    CsoPackageServiceImpl sut;
 
     @Mock
     LookupFacadeBean lookupFacadeBeanMock;
@@ -52,7 +52,7 @@ public class CsoLookupServiceImplTest {
                 .thenReturn(null);
 
 
-        sut = new CsoLookupServiceImpl(lookupFacadeBeanMock);
+        sut = new CsoPackageServiceImpl(lookupFacadeBeanMock);
 
     }
 
@@ -60,13 +60,13 @@ public class CsoLookupServiceImplTest {
     @Test
     public void testWithEmptyServiceId() {
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getServiceFee(""));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getSubmissionFee(""));
     }
 
     @DisplayName("OK: getServiceFee called with any non-empty serviceId")
     @Test
     public void testWithPopulatedServiceId() {
-        ServiceFees actual = sut.getServiceFee(SERVICE_ID);
+        SubmissionFee actual = sut.getSubmissionFee(SERVICE_ID);
         Assertions.assertEquals(BigDecimal.TEN, actual.getFeeAmount());
         Assertions.assertEquals(SERVICE_TYPE_CD, actual.getServiceTypeCd());
     }
@@ -75,14 +75,14 @@ public class CsoLookupServiceImplTest {
     @Test
     public void whenNestedEjbException_ExceptionShouldThrowEfilingLookupServiceException() {
 
-        Assertions.assertThrows(EfilingLookupServiceException.class, () -> sut.getServiceFee(SERVICE_ID_EXCEPTION));
+        Assertions.assertThrows(EfilingLookupServiceException.class, () -> sut.getSubmissionFee(SERVICE_ID_EXCEPTION));
 
     }
     @DisplayName("Exception: with null result should throw EfilingLookupServiceException")
     @Test
     public void whenNullResultShouldThrowEfilingLookupServiceException() {
 
-        Assertions.assertThrows(EfilingLookupServiceException.class, () -> sut.getServiceFee(SERVICE_ID_NULL));
+        Assertions.assertThrows(EfilingLookupServiceException.class, () -> sut.getSubmissionFee(SERVICE_ID_NULL));
 
     }
 }
