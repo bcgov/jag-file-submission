@@ -41,6 +41,9 @@ You should use environment variables to configure the jag efiling api
 | FILING_STATSFACADE_USERNAME | String  | status facade username                       | not set by default             |
 | FILING_STATSFACADE_PASSWORD | String  | status facade password                       | not set by default             |
 | FILING_STATSFACADE_URI      | String  | status facade URI                            | not set by default             |
+| CSOWS_USERNAME              | String  | csows username                               | not set by default             |
+| CSOWS_PASSWORD              | String  | csows password                               | not set by default             |
+| CSOWS_URI                   | String  | csows URI                                    | not set by default             |
 | BCEID_LOOKUP_USERNAME       | String  | bceid lookup username                        | not set by default             |
 | BCEID_LOOKUP_PASSWORD       | String  | bceid lookup password                        | not set by default             |
 | BCEID_LOOKUP_URI            | String  | bceid lookup URI                             | not set by default             |

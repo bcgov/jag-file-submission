@@ -32,6 +32,10 @@ jag:
           userName: ${FILING_STATSFACADE_USERNAME}
           password: ${FILING_STATSFACADE_PASSWORD}
           uri: ${FILING_STATSFACADE_URI:http://localhost:8091}
+        - client: CSOWS
+          userName: ${CSOWS_USERNAME}
+          password: ${CSOWS_PASSWORD}
+          uri: ${CSOWS_URI:http://localhost:8091}
         - client: BCEID
           userName: ${BCEID_LOOKUP_USERNAME}
           password: ${BCEID_LOOKUP_PASSWORD}

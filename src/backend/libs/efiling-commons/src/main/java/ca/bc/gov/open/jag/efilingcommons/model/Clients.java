@@ -5,5 +5,6 @@ public enum Clients {
     ROLE,
     LOOKUP,
     STATUS,
+    CSOWS,
     BCEID;
 }

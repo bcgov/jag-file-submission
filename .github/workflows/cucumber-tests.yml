@@ -15,6 +15,20 @@ jobs:
       - name: install chromium driver
         run: sudo apt-get -yqq install chromium-chromedriver
 
-      # Get Code Climate binary
+      # Build Docker and Run Tests
       - name: build docker and run tests
         run: docker-compose up -d efiling-frontend efiling-demo efiling-api redis && mvn verify -f tests/pom.xml
+
+      # Upload Spark report for debugging purposes
+      - name: Upload Spark report for debugging purposes
+        uses: actions/upload-artifact@v2
+        with:
+          name: cucumber-spark-report
+          path: tests\test-output\extent\Spark\Index.html
+          
+      # Upload Cucumber JSON for debugging purposes
+      - name: Upload Cucumber JSON for debugging purposes
+        uses: actions/upload-artifact@v2
+        with:
+          name: cucumber-json-report
+          path: tests\target\cucumber-reports\CucumberTestReport.json
