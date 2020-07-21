@@ -4,8 +4,8 @@ Feature: As a user my account should be validated and provided with an option to
     Given user is on the landing page
 
   @frontend
-  Scenario Outline: Verify user with valid CSO account guid can cancel a E-File submission
-    When user enters a valid existing CSO account guid "<validExistingCSOGuid>"
+  Scenario Outline: Verify user with valid CSO account guid can upload a document for E-File submission
+    When user enters a valid existing CSO account guid "<validExistingCSOGuid>" and uploads a document
     Then eFile submission page is displayed and user clicks the cancel button
     Then user confirms the cancellation in the confirmation window
     And  user is navigated to the cancel page
@@ -17,7 +17,7 @@ Feature: As a user my account should be validated and provided with an option to
 
   @frontend
   Scenario Outline: Verify user with valid CSO account guid is able to proceed with E-File submission if cancel button is clicked
-    When user enters a valid existing CSO account guid "<validExistingCSOGuid>"
+    When user enters a valid existing CSO account guid "<validExistingCSOGuid>" and uploads a document
     Then eFile submission page is displayed and user clicks the cancel button
     Then user clicks resume E-File submission in the confirmation window
     And the user stays on the E-File submission page
@@ -28,7 +28,7 @@ Feature: As a user my account should be validated and provided with an option to
 
   @frontend
   Scenario Outline: Verify user with non existing CSO account guid can cancel CSO account creation after accepting the user agreement
-    When user enters non existing CSO account guid "<nonExistingCSOGuid>"
+    When user enters non existing CSO account guid "<nonExistingCSOGuid>" and uploads a document
     Then eFile submission page with user agreement is displayed
     And user accepts agreement and clicks cancel button
     Then user confirms the cancellation in the confirmation window
@@ -41,7 +41,7 @@ Feature: As a user my account should be validated and provided with an option to
 
   @frontend
   Scenario Outline: Verify user with non existing CSO account guid is able to proceed with E-File submission if cancel button is clicked
-    When user enters non existing CSO account guid "<nonExistingCSOGuid>"
+    When user enters non existing CSO account guid "<nonExistingCSOGuid>" and uploads a document
     Then eFile submission page with user agreement is displayed
     And user accepts agreement and clicks cancel button
     Then user clicks resume E-File submission in the confirmation window
@@ -62,7 +62,7 @@ Feature: As a user my account should be validated and provided with an option to
 
   @frontend
   Scenario Outline: Verify there are no broken links in the page
-    When  user enters a valid existing CSO account guid "<validExistingCSOGuid>"
+    When  user enters a valid existing CSO account guid "<validExistingCSOGuid>" and uploads a document
     Then eFile submission page is displayed and user clicks the cancel button
     Then user clicks resume E-File submission in the confirmation window
     And verify there are no broken links in the page

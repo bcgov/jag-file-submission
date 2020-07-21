@@ -28,6 +28,13 @@ public class LandingPage {
     @FindBy(xpath = "//*[@id='root']/div/main/div/div/p")
     WebElement getErrorText;
 
+    @FindBy(xpath = "//*[starts-with(@id,'filepond--browser')]")
+    WebElement chooseFile;
+
+    @FindBy(xpath = "//*[starts-with(@id,'filepond--item')]")
+    WebElement selectedFile;
+
+
     //Initializing the driver:
     public LandingPage(WebDriver driver) {
         this.driver = driver;
@@ -59,5 +66,11 @@ public class LandingPage {
 
     public String getErrorMessageText() {
         return getErrorText.getText();
+    }
+
+    public void chooseFileToUpload(String file) {
+        chooseFile.sendKeys(file);
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.visibilityOf(selectedFile));
     }
 }

@@ -30,6 +30,8 @@ public class EFileSubmissionTest extends DriverClass {
      EFileSubmissionPage eFileSubmissionPage;
      PackageConfirmationPage packageConfirmationPage;
      private static final String EFILE_SUBMISSION_PAGE_TITLE = "E-File submission";
+     private static final String PDF_PATH = "/src/test/java/testdatasource/test-pdf-document.pdf";
+     private String filePath;
 
     @Before("@frontend")
     public void setUp() throws IOException {
@@ -67,15 +69,18 @@ public class EFileSubmissionTest extends DriverClass {
         log.info("Landing page title is verified");
     }
 
-    @When("user enters a valid existing CSO account guid {string}")
-    public void userEntersAValidExistingCsoAccountGuid(String validExistingCSOGuid) throws IOException {
+    @When("user enters a valid existing CSO account guid {string} and uploads a document")
+    public void userEntersAValidExistingCsoAccountGuidAndUploadsADocument(String validExistingCSOGuid) throws IOException {
         landingPage = new LandingPage(driver);
 
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
         landingPage.enterAccountGuid(validExistingCSOGuid);
 
+        filePath = System.getProperty("user.dir") + PDF_PATH;
+        landingPage.chooseFileToUpload(filePath);
+
         landingPage.clickGenerateUrlButton();
-        log.info("Generate Url button in landing page is clicked");
+        log.info("Pdf file is uploaded successfully.");
     }
 
     @Then("eFile submission page is displayed and user clicks the cancel button")
@@ -87,11 +92,10 @@ public class EFileSubmissionTest extends DriverClass {
         Assert.assertEquals(EFILE_SUBMISSION_PAGE_TITLE, actualTitle);
         log.info("eFiling Frontend page title is verified");
 
-        boolean uploadDocumentsBtnIsDisplayed = packageConfirmationPage.verifyUploadDocumentIsDisplayed();
-        Assert.assertTrue(uploadDocumentsBtnIsDisplayed);
-
         boolean continuePaymentBtnIsDisplayed = packageConfirmationPage.verifyContinuePaymentBtnIsDisplayed();
         Assert.assertTrue(continuePaymentBtnIsDisplayed);
+
+        packageConfirmationPage.clickContinuePaymentBtn();
 
         eFileSubmissionPage.clickCancelButton();
     }
@@ -145,21 +149,24 @@ public class EFileSubmissionTest extends DriverClass {
         log.info("eFiling Frontend page title is verified");
     }
 
-    @When("user enters non existing CSO account guid {string}")
-    public void userEntersNonExistingCsoAccountGuid(String nonExistingCSOGuid) throws IOException {
+    @When("user enters non existing CSO account guid {string} and uploads a document")
+    public void userEntersNonExistingCsoAccountGuidAndUploadsADocument(String nonExistingCSOGuid) throws IOException {
         landingPage = new LandingPage(driver);
 
         nonExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getNonExistingCSOGuid();
         landingPage.enterAccountGuid(nonExistingCSOGuid);
+
+        filePath = System.getProperty("user.dir") + PDF_PATH;
+        landingPage.chooseFileToUpload(filePath);
+
+        landingPage.clickGenerateUrlButton();
+        log.info("Pdf file is uploaded successfully.");
     }
 
     @Then("eFile submission page with user agreement is displayed")
     public void eFileSubmissionPageWithUserAgreementIsDisplayed() {
         eFileSubmissionPage = new EFileSubmissionPage(driver);
         landingPage = new LandingPage(driver);
-
-        landingPage.clickGenerateUrlButton();
-        log.info("Generate Url button in landing page is clicked");
 
         String actualTitle = eFileSubmissionPage.verifyEfilingPageTitle();
         Assert.assertEquals(EFILE_SUBMISSION_PAGE_TITLE, actualTitle);
@@ -192,7 +199,7 @@ public class EFileSubmissionTest extends DriverClass {
         landingPage.clickGenerateUrlButton();
         log.info("Generate Url button in eFiling frontend page is clicked");
 
-        String expMsg = "An error occurred while generating the URL. Please try again.";
+        String expMsg = "An error occurred while eFiling your package. Please make sure you upload at least one file and try again.";
         String actMsg =  landingPage.getErrorMessageText();
         Assert.assertEquals(actMsg, expMsg);
 
