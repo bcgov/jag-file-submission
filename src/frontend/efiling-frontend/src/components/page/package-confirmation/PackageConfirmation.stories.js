@@ -1,5 +1,8 @@
 import React from "react";
+import axios from "axios";
+import MockAdapter from "axios-mock-adapter";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
+import { getDocumentsData } from "../../../modules/documentTestData";
 
 import PackageConfirmation from "./PackageConfirmation";
 
@@ -8,31 +11,50 @@ export default {
   component: PackageConfirmation
 };
 
+const submissionId = "abc123";
+const apiRequest = `/submission/${submissionId}/filing-package`;
 const confirmationPopup = getTestData();
-
-const packageConfirmation = { confirmationPopup };
-
+const packageConfirmation = { confirmationPopup, submissionId };
 const csoAccountStatus = { isNew: false };
+const documents = getDocumentsData();
+
+const LoadData = props => {
+  const mock = new MockAdapter(axios);
+  mock.onGet(apiRequest).reply(200, { documents });
+  return props.children({ packageConfirmation, csoAccountStatus });
+};
 
 export const ExistingAccount = () => (
-  <PackageConfirmation
-    packageConfirmation={packageConfirmation}
-    csoAccountStatus={csoAccountStatus}
-  />
+  <LoadData>
+    {data => (
+      <PackageConfirmation
+        packageConfirmation={data.packageConfirmation}
+        csoAccountStatus={data.csoAccountStatus}
+      />
+    )}
+  </LoadData>
 );
 
 export const NewAccount = () => (
-  <PackageConfirmation
-    packageConfirmation={packageConfirmation}
-    csoAccountStatus={{ ...csoAccountStatus, isNew: true }}
-  />
+  <LoadData>
+    {data => (
+      <PackageConfirmation
+        packageConfirmation={data.packageConfirmation}
+        csoAccountStatus={{ ...data.csoAccountStatus, isNew: true }}
+      />
+    )}
+  </LoadData>
 );
 
 export const Mobile = () => (
-  <PackageConfirmation
-    packageConfirmation={packageConfirmation}
-    csoAccountStatus={csoAccountStatus}
-  />
+  <LoadData>
+    {data => (
+      <PackageConfirmation
+        packageConfirmation={data.packageConfirmation}
+        csoAccountStatus={data.csoAccountStatus}
+      />
+    )}
+  </LoadData>
 );
 
 const mobileViewport = {

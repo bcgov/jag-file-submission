@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.document;
 
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -7,8 +8,8 @@ import org.springframework.context.annotation.Configuration;
 public class DocumentConfiguration {
 
     @Bean
-    public DocumentStore documentStore() {
-        return new DocumentStoreImpl();
+    public DocumentStore documentStore(EfilingDocumentService efilingDocumentService) {
+        return new DocumentStoreImpl(efilingDocumentService);
     }
 
 }

@@ -56,15 +56,8 @@
 
         <dependency>
             <groupId>ca.bc.gov.open.jag</groupId>
-            <artifactId>efiling-account-client</artifactId>
+            <artifactId>efiling-cso-starter</artifactId>
             <version>0.3.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>ca.bc.gov.open.jag</groupId>
-            <artifactId>efiling-lookup-client</artifactId>
-            <version>0.3.0-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>

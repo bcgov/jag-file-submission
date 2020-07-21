@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingapi.submission.service.submissionServiceImpl;
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
+import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
@@ -11,10 +12,10 @@ import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
@@ -26,7 +27,10 @@ import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
 import java.time.Duration;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class generateFromRequestTest {
@@ -50,14 +54,14 @@ public class generateFromRequestTest {
     private EfilingLookupService efilingLookupService;
 
     @Mock
-    private EfilingDocumentService efilingDocumentService;
+    private DocumentStore documentStoreMock;
 
     @BeforeAll
     public void setUp() throws DatatypeConfigurationException {
 
         MockitoAnnotations.initMocks(this);
 
-        ServiceFees fee = new ServiceFees(null, BigDecimal.valueOf(7.00), null, "DCFL",null, null, null, null);
+        ServiceFees fee = new ServiceFees( BigDecimal.valueOf(7.00), "DCFL");
         Mockito.doReturn(fee)
                 .when(efilingLookupService)
                 .getServiceFee(Mockito.any());
@@ -72,7 +76,7 @@ public class generateFromRequestTest {
 
         // Testing mapper as part of this unit test
         SubmissionMapper submissionMapper = new SubmissionMapperImpl();
-        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, submissionMapper, efilingAccountServiceMock, efilingLookupService, efilingDocumentService);
+        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, submissionMapper, efilingAccountServiceMock, efilingLookupService, documentStoreMock);
 
     }
 
@@ -107,6 +111,7 @@ public class generateFromRequestTest {
         Assertions.assertEquals(TestHelpers.PROPERTYCLASS, actual.getFilingPackage().getCourt().getPropertyClass());
         Assertions.assertEquals(TestHelpers.TYPE, actual.getFilingPackage().getDocuments().get(0).getType());
         Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getFilingPackage().getDocuments().get(0).getDescription());
+        Assertions.assertEquals(BigDecimal.TEN, actual.getFilingPackage().getDocuments().get(0).getStatutoryFeeAmount());
 
     }
 
@@ -150,7 +155,7 @@ public class generateFromRequestTest {
 
         AccountDetails accountDetails =  AccountDetails.builder().lastName("lastName").create();
 
-        ServiceFees fee = new ServiceFees(null, BigDecimal.valueOf(10), null, "DCFL",null, null, null, null);
+        ServiceFees fee = new ServiceFees( BigDecimal.valueOf(10), "DCFL");
         List<ServiceFees> fees = new ArrayList<>();
 
 
@@ -184,6 +189,9 @@ public class generateFromRequestTest {
                         Mockito.eq(TestHelpers.CASE_1),
                         Mockito.any()))
                 .thenReturn(accountDetails);
+
+        Mockito.when(documentStoreMock.getDocumentDetails(Mockito.any(), Mockito.any(), Mockito.any()))
+                .thenReturn(new DocumentDetails(TestHelpers.DESCRIPTION, BigDecimal.TEN));
 
         Submission submissionCase1 = Submission
                 .builder()

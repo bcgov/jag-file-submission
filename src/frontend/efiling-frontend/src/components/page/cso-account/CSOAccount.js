@@ -14,6 +14,7 @@ import ConfirmationPopup, {
 import { getContent } from "../../../modules/csoAccountAgreementContent";
 import { getSidecardData } from "../../../modules/sidecardData";
 import { translateApplicantInfo } from "../../../modules/translateApplicantInfo";
+import { errorRedirect } from "../../../modules/errorRedirect";
 import { propTypes } from "../../../types/propTypes";
 
 const sideCard = getSidecardData().aboutCso;
@@ -50,11 +51,7 @@ export default function CSOAccount({
         setCsoAccountStatus({ exists: true, isNew: true });
       })
       .catch(error => {
-        const errorUrl = sessionStorage.getItem("errorUrl");
-        window.open(
-          `${errorUrl}?status=${error.response.status}&message=${error.response.data.message}`,
-          "_self"
-        );
+        errorRedirect(sessionStorage.getItem("errorUrl"), error);
       });
   };
 
@@ -77,7 +74,7 @@ export default function CSOAccount({
     <div className="page">
       <div className="content col-md-8">
         <div className="non-printable">
-          <h2>Create a Court Services Online (CSO) Account</h2>
+          <h1>Create a Court Services Online (CSO) Account</h1>
           <Alert
             icon={<MdError size={32} />}
             type="warning"
