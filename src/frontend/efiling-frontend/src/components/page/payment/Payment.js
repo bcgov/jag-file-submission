@@ -11,6 +11,7 @@ import ConfirmationPopup, {
 } from "shared-components";
 import { getSidecardData } from "../../../modules/sidecardData";
 import { propTypes } from "../../../types/propTypes";
+import PackageConfirmation from "../package-confirmation/PackageConfirmation";
 
 // TODO: Extract to module to generate this
 const feesData = [
@@ -75,17 +76,23 @@ const submitButton = {
   styling: "normal-blue btn"
 };
 
-const backButton = {
-  label: "< Back",
-  onClick: () => console.log("back click"),
-  styling: "normal-white btn"
-};
-
-export default function Payment({ payment: { confirmationPopup } }) {
+export default function Payment({
+  payment: { confirmationPopup, submissionId }
+}) {
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
   const rushSubmissionSidecard = getSidecardData().rushSubmission;
   const [paymentAgreed, setPaymentAgreed] = useState(false);
+  const [showPackageConfirmation, setShowPackageConfirmation] = useState(false);
+
+  if (showPackageConfirmation) {
+    return (
+      <PackageConfirmation
+        packageConfirmation={{ confirmationPopup, submissionId }}
+        csoAccountStatus={{ isNew: false }}
+      />
+    );
+  }
 
   return (
     <div className="page">
@@ -127,9 +134,9 @@ export default function Payment({ payment: { confirmationPopup } }) {
 
         <section className="inline-block pt-2">
           <Button
-            label={backButton.label}
-            onClick={backButton.onClick}
-            styling={backButton.styling}
+            label="< Back"
+            onClick={() => setShowPackageConfirmation(true)}
+            styling="normal-white btn"
           />
         </section>
 
@@ -160,6 +167,7 @@ export default function Payment({ payment: { confirmationPopup } }) {
 
 Payment.propTypes = {
   payment: PropTypes.shape({
-    confirmationPopup: propTypes.confirmationPopup
+    confirmationPopup: propTypes.confirmationPopup,
+    submissionId: PropTypes.string.isRequired
   }).isRequired
 };
