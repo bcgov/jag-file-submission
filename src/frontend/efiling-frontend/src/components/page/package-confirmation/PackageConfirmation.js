@@ -40,7 +40,7 @@ const openFile = (file, submissionId) => {
     })
     .then(response => {
       // TODO: do not use hard coded type
-      const fileData = new Blob([response.data], { type: "application/pdf" });
+      const fileData = new Blob([response.data], { type: file.mimeType });
       const fileUrl = URL.createObjectURL(fileData);
 
       window.open(fileUrl);
