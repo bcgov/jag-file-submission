@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class CsoCourtServiceImpl implements EfilingCourtService {
 
-    private Csows csows;
+    private final Csows csows;
 
     public CsoCourtServiceImpl(Csows csows) {
         this.csows = csows;
@@ -24,13 +24,10 @@ public class CsoCourtServiceImpl implements EfilingCourtService {
         if (StringUtils.isBlank(agencyIdentifierCd)) throw new IllegalArgumentException("Agency identifier is required");
 
         CsoAgencyArr csoAgencyArr = csows.getCourtLocations();
-        Optional<CsoAgencyRec> csoAgencyRec =  csoAgencyArr.getArray().stream()
+        return csoAgencyArr.getArray().stream()
                 .filter(court -> court.getAgenAgencyIdentifierCd().equals(agencyIdentifierCd))
-                .findFirst();
-        if (csoAgencyRec.isPresent()) {
-            return new CourtDetails(csoAgencyRec.get().getAgenId(), csoAgencyRec.get().getAgenAgencyNm());
-        } else {
-            throw new EfilingCourtServiceException("Court not found");
-        }
+                .findFirst()
+                .map(court -> new CourtDetails(court.getAgenId(), court.getAgenAgencyNm()))
+                .orElseThrow(() -> new EfilingCourtServiceException("Court not found"));
     }
 }
