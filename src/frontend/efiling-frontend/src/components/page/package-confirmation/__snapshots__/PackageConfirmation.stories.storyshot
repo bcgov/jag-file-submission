@@ -72,6 +72,8 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
                     >
                       <span
                         class="file-href"
+                        role="button"
+                        tabindex="0"
                       >
                         file name 1
                       </span>
@@ -185,6 +187,8 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
                     >
                       <span
                         class="file-href"
+                        role="button"
+                        tabindex="0"
                       >
                         file name 2
                       </span>
@@ -583,6 +587,8 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
                     >
                       <span
                         class="file-href"
+                        role="button"
+                        tabindex="0"
                       >
                         file name 1
                       </span>
@@ -696,6 +702,8 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
                     >
                       <span
                         class="file-href"
+                        role="button"
+                        tabindex="0"
                       >
                         file name 2
                       </span>
@@ -1126,6 +1134,8 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
                     >
                       <span
                         class="file-href"
+                        role="button"
+                        tabindex="0"
                       >
                         file name 1
                       </span>
@@ -1239,6 +1249,8 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
                     >
                       <span
                         class="file-href"
+                        role="button"
+                        tabindex="0"
                       >
                         file name 2
                       </span>

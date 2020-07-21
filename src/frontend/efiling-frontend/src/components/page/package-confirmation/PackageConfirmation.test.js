@@ -14,6 +14,12 @@ describe("PackageConfirmation Component", () => {
   const packageConfirmation = { confirmationPopup, submissionId };
   const csoAccountStatus = { isNew: false };
   const documents = getDocumentsData();
+  const file = {
+    name: "file name 1",
+    description: "file description 1",
+    type: "file type",
+    statutoryFeeAmount: 40
+  };
 
   sessionStorage.setItem("csoAccountId", "123");
 
@@ -87,14 +93,8 @@ describe("PackageConfirmation Component", () => {
     });
   });
 
-  test("Successfully opens the file in new window when get document call succeeds", async () => {
+  test("Successfully opens the file in new window when get document call succeeds (on click)", async () => {
     const blob = new Blob(["foo", "bar"]);
-    const file = {
-      name: "file name 1",
-      description: "file description 1",
-      type: "file type",
-      statutoryFeeAmount: 40
-    };
 
     global.URL.createObjectURL = jest.fn();
     global.URL.createObjectURL.mockReturnValueOnce("fileurl.com");
@@ -120,14 +120,34 @@ describe("PackageConfirmation Component", () => {
     });
   });
 
-  test("Fails to open the file in new window when get document call fails", async () => {
-    const file = {
-      name: "file name 1",
-      description: "file description 1",
-      type: "file type",
-      statutoryFeeAmount: 40
-    };
+  test("Successfully opens the file in new window when get document call succeeds (on keydown)", async () => {
+    const blob = new Blob(["foo", "bar"]);
 
+    global.URL.createObjectURL = jest.fn();
+    global.URL.createObjectURL.mockReturnValueOnce("fileurl.com");
+
+    mock.onGet(apiRequest).reply(200, { documents });
+    mock.onGet(`/submission/${submissionId}/document/${file.name}`).reply(200, {
+      blob
+    });
+
+    const { container } = render(
+      <PackageConfirmation
+        packageConfirmation={packageConfirmation}
+        csoAccountStatus={csoAccountStatus}
+      />
+    );
+
+    await wait(() => {});
+
+    fireEvent.keyDown(getByText(container, file.name));
+
+    await wait(() => {
+      expect(window.open).toHaveBeenCalledWith("fileurl.com");
+    });
+  });
+
+  test("Fails to open the file in new window when get document call fails", async () => {
     sessionStorage.setItem("errorUrl", "error.com");
 
     mock.onGet(apiRequest).reply(200, { documents });

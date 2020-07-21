@@ -39,11 +39,9 @@ const openFile = (file, submissionId) => {
       }
     })
     .then(response => {
-      //TODO: do not use hard coded type
-      const file = new Blob([response.data], { type: "application/pdf" });
-
-      //Build a URL from the file
-      const fileUrl = URL.createObjectURL(file);
+      // TODO: do not use hard coded type
+      const fileData = new Blob([response.data], { type: "application/pdf" });
+      const fileUrl = URL.createObjectURL(fileData);
 
       window.open(fileUrl);
     })
@@ -85,6 +83,9 @@ const generateTable = (file, data, submissionId) => {
       name: (
         <div style={{ width: "80%" }}>
           <span
+            onKeyDown={() => openFile(file, submissionId)}
+            role="button"
+            tabIndex={0}
             className="file-href"
             onClick={() => openFile(file, submissionId)}
           >

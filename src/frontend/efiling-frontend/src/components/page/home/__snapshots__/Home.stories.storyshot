@@ -109,6 +109,8 @@ exports[`Storyshots Home Account Exists 1`] = `
                       >
                         <span
                           class="file-href"
+                          role="button"
+                          tabindex="0"
                         >
                           file name 1
                         </span>
@@ -222,6 +224,8 @@ exports[`Storyshots Home Account Exists 1`] = `
                       >
                         <span
                           class="file-href"
+                          role="button"
+                          tabindex="0"
                         >
                           file name 2
                         </span>
@@ -745,6 +749,8 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
                       >
                         <span
                           class="file-href"
+                          role="button"
+                          tabindex="0"
                         >
                           file name 1
                         </span>
@@ -858,6 +864,8 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
                       >
                         <span
                           class="file-href"
+                          role="button"
+                          tabindex="0"
                         >
                           file name 2
                         </span>
