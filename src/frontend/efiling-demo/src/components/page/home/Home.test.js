@@ -6,7 +6,7 @@ import {
   wait,
   getByText,
   fireEvent,
-  getByRole
+  getAllByRole
 } from "@testing-library/react";
 import Home, { eFilePackage } from "./Home";
 
@@ -34,6 +34,9 @@ describe("Home", () => {
   ];
   const accountGuid = "guid";
   const submissionId = "123";
+  const filingPackage = {
+    documents: [files[0].file]
+  };
 
   beforeEach(() => {
     mock = new MockAdapter(axios);
@@ -49,7 +52,7 @@ describe("Home", () => {
     mock.onPost("/submission/documents").reply(200, { submissionId });
     mock.onPost("/submission/generateUrl").reply(400);
 
-    eFilePackage(files, accountGuid, setErrorExists);
+    eFilePackage(files, accountGuid, setErrorExists, filingPackage);
 
     await wait(() => {
       expect(setErrorExists).toHaveBeenCalledWith(true);
@@ -59,7 +62,7 @@ describe("Home", () => {
   test("eFilePackage function displays an error message on page on failure of uploadDocuments call", async () => {
     mock.onPost("/submission/documents").reply(400);
 
-    eFilePackage(files, accountGuid, setErrorExists);
+    eFilePackage(files, accountGuid, setErrorExists, filingPackage);
 
     await wait(() => {
       expect(setErrorExists).toHaveBeenCalledWith(true);
@@ -74,7 +77,7 @@ describe("Home", () => {
       .onPost(`/submission/${submissionId}/generateUrl`)
       .reply(200, { efilingUrl });
 
-    eFilePackage(files, accountGuid, setErrorExists);
+    eFilePackage(files, accountGuid, setErrorExists, filingPackage);
 
     await wait(() => {
       expect(window.open).toHaveBeenCalledTimes(1);
@@ -85,8 +88,14 @@ describe("Home", () => {
   test("eFilePackage functions returns error when no files uploaded", async () => {
     const { container } = render(<Home page={page} />);
 
-    fireEvent.change(getByRole(container, "textbox"), {
+    const textbox = getAllByRole(container, "textbox");
+
+    fireEvent.change(textbox[0], {
       target: { value: "" }
+    });
+
+    fireEvent.change(textbox[1], {
+      target: { value: JSON.stringify(filingPackage) }
     });
 
     fireEvent.click(getByText(container, "E-File my Package"));
@@ -100,5 +109,15 @@ describe("Home", () => {
       ).toBeInTheDocument();
       expect(setErrorExists).toHaveBeenCalledWith(true);
     });
+  });
+
+  test("eFilePackage does not make axios call when no formdata present (due to incorrect filingPackage data)", () => {
+    const improperFilingPackage = {
+      documents: [{ name: "wrongname", type: "type" }]
+    };
+
+    eFilePackage(files, accountGuid, setErrorExists, improperFilingPackage);
+
+    expect(setErrorExists).toHaveBeenCalledWith(true);
   });
 });

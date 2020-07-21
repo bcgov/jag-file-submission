@@ -1,7 +1,8 @@
+/* eslint-disable react/jsx-curly-newline */
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
-import { Header, Footer, Input, Button } from "shared-components";
+import { Header, Footer, Input, Textarea, Button } from "shared-components";
 import { FilePond, registerPlugin } from "react-filepond";
 
 // Import FilePond styles
@@ -24,23 +25,7 @@ const urlBody = {
     displayName: "Demo App",
     type: "app"
   },
-  filingPackage: {
-    court: {
-      location: "string",
-      level: "P",
-      class: "F",
-      division: "string",
-      fileNumber: "string",
-      participatingClass: "string"
-    },
-    documents: [
-      {
-        name: "string",
-        description: "string",
-        type: "string"
-      }
-    ]
-  },
+  filingPackage: {},
   navigation: {
     success: {
       url: `${window.location.origin}/efiling-demo/success`
@@ -62,23 +47,28 @@ const input = {
   placeholder: "77da92db-0791-491e-8c58-1a969e67d2fa"
 };
 
-const generatePackageData = files => {
+const generatePackageData = (files, filingPackage) => {
   const formData = new FormData();
   const documentData = [];
 
   for (let i = 0; i < files.length; i += 1) {
     formData.append("files", files[i].file);
+
+    const document = filingPackage.documents.find(
+      doc => doc.name === files[i].file.name
+    );
+    if (!document || !document.type) return {};
+
     documentData.push({
       name: files[i].file.name,
-      description: "file description",
-      type: "AFF"
+      type: document.type
     });
   }
 
   const updatedUrlBody = {
     ...urlBody,
     filingPackage: {
-      ...urlBody.filingPackage,
+      ...filingPackage,
       documents: documentData
     }
   };
@@ -86,13 +76,20 @@ const generatePackageData = files => {
   return { formData, updatedUrlBody };
 };
 
-export const eFilePackage = (files, accountGuid, setErrorExists) => {
-  if (!files || files.length === 0) {
-    setErrorExists(true);
-    return;
-  }
+export const eFilePackage = (
+  files,
+  accountGuid,
+  setErrorExists,
+  filingPackage
+) => {
+  if (!files || files.length === 0) return false;
 
-  const { formData, updatedUrlBody } = generatePackageData(files);
+  const { formData, updatedUrlBody } = generatePackageData(
+    files,
+    filingPackage
+  );
+
+  if (!formData || !updatedUrlBody) return false;
 
   axios
     .post("/submission/documents", formData, {
@@ -112,11 +109,14 @@ export const eFilePackage = (files, accountGuid, setErrorExists) => {
         .catch(() => setErrorExists(true));
     })
     .catch(() => setErrorExists(true));
+
+  return true;
 };
 
 export default function Home({ page: { header } }) {
   const [errorExists, setErrorExists] = useState(false);
   const [accountGuid, setAccountGuid] = useState(null);
+  const [filingPackage, setFilingPackage] = useState(null);
   const [files, setFiles] = useState([]);
 
   return (
@@ -134,18 +134,41 @@ export default function Home({ page: { header } }) {
             labelIdle='Drag and Drop your files or <span class="filepond--label-action">Browse</span>'
           />
           <br />
+          <Textarea
+            id="1"
+            label="Provide filing package JSON data:"
+            onChange={val => setFilingPackage(JSON.parse(val))}
+          />
+          <br />
+          <br />
           <Button
-            onClick={() => eFilePackage(files, accountGuid, setErrorExists)}
+            onClick={() => {
+              const result = eFilePackage(
+                files,
+                accountGuid,
+                setErrorExists,
+                filingPackage
+              );
+              if (!result) setErrorExists(true);
+            }}
             label="E-File my Package"
             styling="normal-blue btn"
             testId="generate-url-btn"
           />
           <br />
+          <br />
           {errorExists && (
-            <p className="error">
-              An error occurred while eFiling your package. Please make sure you
-              upload at least one file and try again.
-            </p>
+            <>
+              <span className="error">
+                An error occurred while eFiling your package. Please make sure
+                you upload at least one file and try again.
+              </span>
+              <br />
+              <span className="error">
+                Also, ensure your JSON is valid and that the document file
+                name(s) match with your uploaded documents.
+              </span>
+            </>
           )}
         </div>
       </div>
