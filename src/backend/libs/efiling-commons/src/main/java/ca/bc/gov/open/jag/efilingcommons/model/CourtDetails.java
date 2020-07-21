@@ -19,7 +19,7 @@ public class CourtDetails {
         return courtId;
     }
 
-    public void setCourtId(BigDecimal feeAmount) {
+    public void setCourtId(BigDecimal courtId) {
         this.courtId = courtId;
     }
 
@@ -27,7 +27,7 @@ public class CourtDetails {
         return courtDescription;
     }
 
-    public void setCourtDescription(String serviceTypeCd) {
+    public void setCourtDescription(String courtDescription) {
         this.courtDescription = courtDescription;
     }
 
