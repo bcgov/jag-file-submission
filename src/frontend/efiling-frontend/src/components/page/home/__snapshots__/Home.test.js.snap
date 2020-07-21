@@ -1512,7 +1512,9 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                       <div
                         style="width: 80%;"
                       >
-                        <span>
+                        <span
+                          class="file-href"
+                        >
                           file name 1
                         </span>
                       </div>
@@ -1623,7 +1625,9 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                       <div
                         style="width: 80%;"
                       >
-                        <span>
+                        <span
+                          class="file-href"
+                        >
                           file name 2
                         </span>
                       </div>

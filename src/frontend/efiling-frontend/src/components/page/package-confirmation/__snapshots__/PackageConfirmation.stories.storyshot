@@ -70,7 +70,9 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
                     <div
                       style="width: 80%;"
                     >
-                      <span>
+                      <span
+                        class="file-href"
+                      >
                         file name 1
                       </span>
                     </div>
@@ -181,7 +183,9 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
                     <div
                       style="width: 80%;"
                     >
-                      <span>
+                      <span
+                        class="file-href"
+                      >
                         file name 2
                       </span>
                     </div>
@@ -577,7 +581,9 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
                     <div
                       style="width: 80%;"
                     >
-                      <span>
+                      <span
+                        class="file-href"
+                      >
                         file name 1
                       </span>
                     </div>
@@ -688,7 +694,9 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
                     <div
                       style="width: 80%;"
                     >
-                      <span>
+                      <span
+                        class="file-href"
+                      >
                         file name 2
                       </span>
                     </div>
@@ -1116,7 +1124,9 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
                     <div
                       style="width: 80%;"
                     >
-                      <span>
+                      <span
+                        class="file-href"
+                      >
                         file name 1
                       </span>
                     </div>
@@ -1227,7 +1237,9 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
                     <div
                       style="width: 80%;"
                     >
-                      <span>
+                      <span
+                        class="file-href"
+                      >
                         file name 2
                       </span>
                     </div>
