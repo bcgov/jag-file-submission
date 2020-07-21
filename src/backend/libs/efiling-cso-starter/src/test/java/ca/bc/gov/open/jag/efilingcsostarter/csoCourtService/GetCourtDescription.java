@@ -50,7 +50,7 @@ public class GetCourtDescription {
 
         sut = new CsoCourtServiceImpl(csowsMock);
     }
-    @DisplayName("Exception: with null paramtere throws Illegal Argument exception")
+    @DisplayName("Exception: with null parameter throws Illegal Argument exception")
     @Test
     public void withNullParameterThrowsIllegalArgument() {
 
