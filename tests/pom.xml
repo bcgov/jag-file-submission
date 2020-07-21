@@ -15,7 +15,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>1.8</java.version>
     <org.seleniumhq.selenium.version>3.141.59</org.seleniumhq.selenium.version>
-    <io.rest-assured.version>4.3.0</io.rest-assured.version>
+    <io.rest-assured.version>4.3.1</io.rest-assured.version>
     <junit.version>4.12</junit.version>
     <io.github.bonigarcia.version>4.0.0</io.github.bonigarcia.version>
     <org.apache.logging.log4j.version>2.13.3</org.apache.logging.log4j.version>
