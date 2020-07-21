@@ -24,7 +24,6 @@ public class CreateCsoAccountPayload {
     public String createIncorrectTypeCsoAccountPayload() throws IOException {
         Accounts[] accounts = new Accounts[1];
         accounts[0] = new Accounts("BCED",STRING);
-        //validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
         CsoPayload csoPayload = new CsoPayload(validExistingCSOGuid, STRING, STRING, STRING, STRING, accounts);
 
         ObjectMapper csoAccountPayload = new ObjectMapper();

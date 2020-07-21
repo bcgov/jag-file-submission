@@ -47,8 +47,8 @@ public class EFileSubmissionTest extends DriverClass {
                 final byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
                 scenario.attach(screenshot, "image/png", "Failed test");
         }
-        /*driver.close();
-        driver.quit();*/
+        driver.close();
+        driver.quit();
         log.info("Browser closed");
     }
 
