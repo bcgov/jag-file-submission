@@ -15,7 +15,7 @@ jobs:
       - name: install chromium driver
         run: sudo apt-get -yqq install chromium-chromedriver
 
-      # Get Code Climate binary
+      # Build Docker and Run Tests
       - name: build docker and run tests
         run: docker-compose up -d efiling-frontend efiling-demo efiling-api redis && mvn verify -f tests/pom.xml
 
