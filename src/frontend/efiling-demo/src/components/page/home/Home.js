@@ -25,7 +25,22 @@ const urlBody = {
     displayName: "Demo App",
     type: "app"
   },
-  filingPackage: {},
+  filingPackage: {
+    court: {
+      location: "string",
+      level: "P",
+      class: "F",
+      division: "string",
+      fileNumber: "string",
+      participatingClass: "string"
+    },
+    documents: [
+      {
+        name: "string",
+        type: "AFF"
+      }
+    ]
+  },
   navigation: {
     success: {
       url: `${window.location.origin}/efiling-demo/success`
