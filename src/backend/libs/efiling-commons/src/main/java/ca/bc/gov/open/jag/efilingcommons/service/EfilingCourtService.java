@@ -1,7 +1,7 @@
 package ca.bc.gov.open.jag.efilingcommons.service;
 
-import java.math.BigDecimal;
+import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
 
 public interface EfilingCourtService {
-    String getCourtDescription(String agencyIdentifierCd);
+    CourtDetails getCourtDescription(String agencyIdentifierCd);
 }

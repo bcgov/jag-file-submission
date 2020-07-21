@@ -5,12 +5,14 @@ import ca.bc.gov.ag.csows.ceis.CsoAgencyRec;
 import ca.bc.gov.ag.csows.ceis.Csows;
 import ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingLookupServiceException;
+import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoCourtServiceImpl;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -38,9 +40,11 @@ public class GetCourtDescription {
         CsoAgencyRec csoAgencyRec1 = new CsoAgencyRec();
         csoAgencyRec1.setAgenAgencyIdentifierCd(AGEN_AGENCY_IDENTIFIER_CD);
         csoAgencyRec1.setAgenAgencyNm(AGEN_AGENCY_NM);
+        csoAgencyRec1.setAgenId(BigDecimal.TEN);
         CsoAgencyRec csoAgencyRec2 = new CsoAgencyRec();
         csoAgencyRec2.setAgenAgencyIdentifierCd(AGEN_AGENCY_IDENTIFIER_CD1);
         csoAgencyRec2.setAgenAgencyNm(AGEN_AGENCY_NM1);
+        csoAgencyRec2.setAgenId(BigDecimal.TEN);
         Mockito.when(csoAgencyArrMock.getArray()).thenReturn(Arrays.asList(csoAgencyRec1, csoAgencyRec2));
         Mockito.when(csowsMock.getCourtLocations()).thenReturn(csoAgencyArrMock);
 
@@ -57,9 +61,10 @@ public class GetCourtDescription {
     @Test
     public void withValidStringAndExistingLocationReturnDescription() {
 
-        String result = sut.getCourtDescription(AGEN_AGENCY_IDENTIFIER_CD);
+        CourtDetails result = sut.getCourtDescription(AGEN_AGENCY_IDENTIFIER_CD);
 
-        Assertions.assertEquals(AGEN_AGENCY_NM, result);
+        Assertions.assertEquals(AGEN_AGENCY_NM, result.getCourtDescription());
+        Assertions.assertEquals(BigDecimal.TEN, result.getCourtId());
 
     }
     @DisplayName("Exception: with no result should throw EfilingLookupServiceException")

@@ -1,10 +1,13 @@
 package ca.bc.gov.open.jag.efiling.demo;
 
+import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
+
+import java.math.BigDecimal;
 
 public class EfilingCourtServiceDemoImpl implements EfilingCourtService {
     @Override
-    public String getCourtDescription(String agencyIdentifierCd) {
-        return "Imma Court";
+    public CourtDetails getCourtDescription(String agencyIdentifierCd) {
+        return new CourtDetails(BigDecimal.TEN, "Imma Court");
     }
 }

@@ -5,6 +5,7 @@ import ca.bc.gov.ag.csows.ceis.CsoAgencyRec;
 import ca.bc.gov.ag.csows.ceis.Csows;
 
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtServiceException;
+import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import org.apache.commons.lang3.StringUtils;
 
@@ -19,7 +20,7 @@ public class CsoCourtServiceImpl implements EfilingCourtService {
     }
 
     @Override
-    public String getCourtDescription(String agencyIdentifierCd) {
+    public CourtDetails getCourtDescription(String agencyIdentifierCd) {
         if (StringUtils.isBlank(agencyIdentifierCd)) throw new IllegalArgumentException("Agency identifier is required");
 
         CsoAgencyArr csoAgencyArr = csows.getCourtLocations();
@@ -27,7 +28,7 @@ public class CsoCourtServiceImpl implements EfilingCourtService {
                 .filter(court -> court.getAgenAgencyIdentifierCd().equals(agencyIdentifierCd))
                 .findFirst();
         if (csoAgencyRec.isPresent()) {
-            return csoAgencyRec.get().getAgenAgencyNm();
+            return new CourtDetails(csoAgencyRec.get().getAgenId(), csoAgencyRec.get().getAgenAgencyNm());
         } else {
             throw new EfilingCourtServiceException("Court not found");
         }
