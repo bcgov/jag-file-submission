@@ -206,6 +206,9 @@ components:
         statutoryFeeAmount:
           type: number
           description: statutory fee amount
+        mimeType:
+          type: string
+          description: File mime type
     EfilingError:
       required:
         - error

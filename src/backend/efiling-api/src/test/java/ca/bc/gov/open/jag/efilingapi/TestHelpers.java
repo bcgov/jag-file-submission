@@ -90,6 +90,7 @@ public class TestHelpers {
         documentProperties.setStatutoryFeeAmount(BigDecimal.TEN);
         documentProperties.setName("random.txt");
         documentProperties.setType(TYPE);
+        documentProperties.setMimeType("application/txt");
 
         return Arrays.asList(documentProperties);
     }
