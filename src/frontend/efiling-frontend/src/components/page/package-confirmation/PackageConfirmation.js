@@ -151,7 +151,8 @@ export default function PackageConfirmation({
     getFilingPackageData(submissionId, setFiles, files);
   }, [files, submissionId]);
 
-  if (showPayment) return <Payment payment={{ confirmationPopup }} />;
+  if (showPayment)
+    return <Payment payment={{ confirmationPopup, submissionId }} />;
 
   return (
     <div className="page">
