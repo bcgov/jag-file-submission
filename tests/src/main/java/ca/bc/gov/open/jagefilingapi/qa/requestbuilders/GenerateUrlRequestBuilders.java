@@ -62,19 +62,20 @@ public class GenerateUrlRequestBuilders {
                 .extract().response();
     }
 
-    public Response requestWithValidCSOAccountGuid(String resourceValue) throws IOException {
+    public Response requestWithInvalidKeyValue(String resourceValue) throws IOException {
         payloadData = new GenerateUrlPayload();
 
         APIResources resourceAPI = APIResources.valueOf(resourceValue);
         String validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
-        request = given().spec(TestUtil.requestSpecification())
-                .header(X_AUTH_USER_ID,validExistingCSOGuid)
-                .body(payloadData.validGenerateUrlPayload());
+        File pngFile = new File(UPLOAD_FILE_PATH + "/backend.png");
 
-        return request.when().post(resourceAPI.getResource() + validExistingCSOGuid + GENERATE_URL_PATH)
-                .then()
-                .spec(TestUtil.responseSpecification())
+        request = RestAssured.given().spec(TestUtil.submitDocumentsRequestSpecification())
+                .header(X_AUTH_USER_ID,validExistingCSOGuid)
+                .multiPart("file",  pngFile);
+
+        return request.when().post(resourceAPI.getResource()).then()
+                .spec(TestUtil.createCsoAccountIncorrectTypeErrorResponseSpecification())
                 .extract().response();
     }
 
@@ -84,12 +85,14 @@ public class GenerateUrlRequestBuilders {
         APIResources resourceAPI = APIResources.valueOf(resourceValue);
         String nonExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getNonExistingCSOGuid();
 
-        request = given().spec(TestUtil.requestSpecification())
-                .header(X_AUTH_USER_ID,nonExistingCSOGuid)
-                .body(payloadData.validGenerateUrlPayload());
+        File pngFile = new File(UPLOAD_FILE_PATH + "/backend.png");
 
-        return request.when().post(resourceAPI.getResource() + nonExistingCSOGuid + GENERATE_URL_PATH)
-                .then().spec(TestUtil.responseSpecification())
+        request = RestAssured.given().spec(TestUtil.submitDocumentsRequestSpecification())
+                .header(X_AUTH_USER_ID,nonExistingCSOGuid)
+                .multiPart("files",  pngFile);
+
+        return request.when().post(resourceAPI.getResource()).then()
+                .spec(TestUtil.validDocumentResponseSpecification())
                 .extract().response();
     }
 

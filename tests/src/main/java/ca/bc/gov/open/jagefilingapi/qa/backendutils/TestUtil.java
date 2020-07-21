@@ -72,6 +72,9 @@ public class TestUtil {
         return new ResponseSpecBuilder().expectStatusCode(404).expectContentType(ContentType.JSON).build();
     }
 
+    public static ResponseSpecification documentValidResponseSpecification() {
+        return new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.fromContentType("application/octet-stream")).build();
+    }
 
     public static String getJsonPath(Response response, String key) {
         String resp = response.asString();
