@@ -14,14 +14,19 @@ describe("PackageConfirmation Component", () => {
   const packageConfirmation = { confirmationPopup, submissionId };
   const csoAccountStatus = { isNew: false };
   const documents = getDocumentsData();
+  const file = {
+    name: "file name 1",
+    description: "file description 1",
+    type: "file type",
+    statutoryFeeAmount: 40
+  };
 
   sessionStorage.setItem("csoAccountId", "123");
-
-  window.open = jest.fn();
 
   let mock;
   beforeEach(() => {
     mock = new MockAdapter(axios);
+    window.open = jest.fn();
   });
 
   test("Matches the existing account snapshot", async () => {
@@ -85,6 +90,87 @@ describe("PackageConfirmation Component", () => {
 
     await wait(() => {
       expect(asFragment()).toMatchSnapshot();
+    });
+  });
+
+  test("Successfully opens the file in new window when get document call succeeds (on click)", async () => {
+    const blob = new Blob(["foo", "bar"]);
+
+    global.URL.createObjectURL = jest.fn();
+    global.URL.createObjectURL.mockReturnValueOnce("fileurl.com");
+
+    mock.onGet(apiRequest).reply(200, { documents });
+    mock.onGet(`/submission/${submissionId}/document/${file.name}`).reply(200, {
+      blob
+    });
+
+    const { container } = render(
+      <PackageConfirmation
+        packageConfirmation={packageConfirmation}
+        csoAccountStatus={csoAccountStatus}
+      />
+    );
+
+    await wait(() => {});
+
+    fireEvent.click(getByText(container, file.name));
+
+    await wait(() => {
+      expect(window.open).toHaveBeenCalledWith("fileurl.com");
+    });
+  });
+
+  test("Successfully opens the file in new window when get document call succeeds (on keydown)", async () => {
+    const blob = new Blob(["foo", "bar"]);
+
+    global.URL.createObjectURL = jest.fn();
+    global.URL.createObjectURL.mockReturnValueOnce("fileurl.com");
+
+    mock.onGet(apiRequest).reply(200, { documents });
+    mock.onGet(`/submission/${submissionId}/document/${file.name}`).reply(200, {
+      blob
+    });
+
+    const { container } = render(
+      <PackageConfirmation
+        packageConfirmation={packageConfirmation}
+        csoAccountStatus={csoAccountStatus}
+      />
+    );
+
+    await wait(() => {});
+
+    fireEvent.keyDown(getByText(container, file.name));
+
+    await wait(() => {
+      expect(window.open).toHaveBeenCalledWith("fileurl.com");
+    });
+  });
+
+  test("Fails to open the file in new window when get document call fails", async () => {
+    sessionStorage.setItem("errorUrl", "error.com");
+
+    mock.onGet(apiRequest).reply(200, { documents });
+    mock
+      .onGet(`/submission/${submissionId}/document/${file.name}`)
+      .reply(400, { message: "There was an error." });
+
+    const { container } = render(
+      <PackageConfirmation
+        packageConfirmation={packageConfirmation}
+        csoAccountStatus={csoAccountStatus}
+      />
+    );
+
+    await wait(() => {});
+
+    fireEvent.click(getByText(container, file.name));
+
+    await wait(() => {
+      expect(window.open).toHaveBeenCalledWith(
+        "error.com?status=400&message=There was an error.",
+        "_self"
+      );
     });
   });
 });

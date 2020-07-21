@@ -1,3 +1,9 @@
 .inline-block {
   display: inline-block;
 }
+
+.file-href {
+  cursor: pointer;
+  color: #1a5a96;
+  text-decoration: underline;
+}
