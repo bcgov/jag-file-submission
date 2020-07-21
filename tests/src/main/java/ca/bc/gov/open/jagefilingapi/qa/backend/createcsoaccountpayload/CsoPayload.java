@@ -2,18 +2,30 @@ package ca.bc.gov.open.jagefilingapi.qa.backend.createcsoaccountpayload;
 
 public class CsoPayload {
 
+    private String universalId;
     private String firstName;
     private String lastName;
     private String middleName;
     private String email;
     Accounts[] accounts;
 
-    public CsoPayload(String firstName, String lastName, String middleName, String email, Accounts[] accounts) {
+    public CsoPayload(String universalId, String firstName, String lastName,
+                      String middleName, String email, Accounts[] accounts) {
+
+        this.universalId = universalId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.middleName = middleName;
         this.email = email;
         this.accounts = accounts;
+    }
+
+    public String getUniversalId() {
+        return universalId;
+    }
+
+    public void setUniversalId(String universalId) {
+        this.universalId = universalId;
     }
 
     public String getFirstName() {

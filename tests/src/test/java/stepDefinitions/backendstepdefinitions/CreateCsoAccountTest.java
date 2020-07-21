@@ -1,6 +1,7 @@
 package stepDefinitions.backendstepdefinitions;
 
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
+import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
 import ca.bc.gov.open.jagefilingapi.qa.requestbuilders.CreateCsoAccountRequestBuilders;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -57,9 +58,10 @@ public class CreateCsoAccountTest {
     }
 
     @Then("verify response returns names, email and accounts with type and identifiers")
-    public void verifyResponseReturnsNamesEmailAndAccountsWithTypeAndIdentifiers() {
+    public void verifyResponseReturnsNamesEmailAndAccountsWithTypeAndIdentifiers() throws IOException {
         jsonPath = new JsonPath(response.asString());
 
+        String respUniversalId = jsonPath.get("universalId");
         String respFirstName = jsonPath.get("firstName");
         String respLastName = jsonPath.get("lastName");
         String respMiddleName = jsonPath.get("middleName");
@@ -67,22 +69,19 @@ public class CreateCsoAccountTest {
 
         List<String> respTypes = jsonPath.get("accounts.type");
         String requestType = respTypes.get(0);
-        String responseType = respTypes.get(1);
 
         List<String> respIdentifiers = jsonPath.get("accounts.identifier");
         String requestId = respIdentifiers.get(0);
-        String responseId = respIdentifiers.get(1);
 
+        String validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
+
+        assertEquals(validExistingCSOGuid,respUniversalId);
         assertThat(respFirstName, is(not(emptyString())));
         assertThat(respLastName, is(not(emptyString())));
         assertThat(respMiddleName, is(not(emptyString())));
         assertThat(respEmail, is(not(emptyString())));
-
-        assertEquals("BCEID", requestType);
-        assertEquals("CSO", responseType);
-
-        assertEquals("string", requestId);
-        assertEquals("id", responseId);
+        assertEquals("CSO", requestType);
+        assertEquals("1", requestId);
     }
 
     @Given("POST http request is made to {string} with incorrect account type")

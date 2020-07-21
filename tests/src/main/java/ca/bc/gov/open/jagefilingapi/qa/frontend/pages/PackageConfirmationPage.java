@@ -27,4 +27,8 @@ public class PackageConfirmationPage {
     public boolean verifyContinuePaymentBtnIsDisplayed() {
         return continuePaymentBtn.isDisplayed();
     }
+
+    public void clickContinuePaymentBtn() {
+         continuePaymentBtn.click();
+    }
 }
