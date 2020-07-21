@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-curly-newline */
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
