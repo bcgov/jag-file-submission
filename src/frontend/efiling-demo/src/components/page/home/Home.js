@@ -109,6 +109,8 @@ export const eFilePackage = (
         .catch(() => setErrorExists(true));
     })
     .catch(() => setErrorExists(true));
+
+  return true;
 };
 
 export default function Home({ page: { header } }) {
