@@ -11,8 +11,9 @@ export default {
 sessionStorage.setItem("csoAccountId", "123");
 
 const confirmationPopup = getTestData();
+const submissionId = "abc123";
 
-const payment = { confirmationPopup };
+const payment = { confirmationPopup, submissionId };
 
 export const Default = () => <Payment payment={payment} />;
 

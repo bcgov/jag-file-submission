@@ -7,6 +7,7 @@ import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
+import ca.bc.gov.open.jag.efilingapi.utils.FileUtils;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
@@ -123,9 +124,10 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         document.setDescription(details.getDescription());
         document.setStatutoryFeeAmount(details.getStatutoryFeeAmount());
-
         document.setType(documentProperties.getType());
         document.setName(documentProperties.getName());
+        document.setMimeType(FileUtils.guessContentTypeFromName(documentProperties.getName()));
+
         return document;
 
     }
@@ -135,7 +137,6 @@ public class SubmissionServiceImpl implements SubmissionService {
         // TODO: implement
         request.getClientApplication().setType("DCFL");
         ServiceFees fee = efilingLookupService.getServiceFee(request.getClientApplication().getType());
-
         return fee == null ? BigDecimal.ZERO : fee.getFeeAmount();
 
     }
@@ -143,6 +144,5 @@ public class SubmissionServiceImpl implements SubmissionService {
     private long getExpiryDate() {
         return System.currentTimeMillis() + cacheProperties.getRedis().getTimeToLive().toMillis();
     }
-
 
 }

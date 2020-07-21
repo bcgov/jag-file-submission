@@ -12,6 +12,7 @@ import Dinero from "dinero.js";
 import axios from "axios";
 import { getSidecardData } from "../../../modules/sidecardData";
 import { propTypes } from "../../../types/propTypes";
+import { errorRedirect } from "../../../modules/errorRedirect";
 
 import "./PackageConfirmation.css";
 import Payment from "../payment/Payment";
@@ -27,6 +28,26 @@ const calculateTotalStatutoryFee = files => {
   });
 
   return totalStatFee;
+};
+
+const openFile = (file, submissionId) => {
+  axios
+    .get(`/submission/${submissionId}/document/${file.name}`, {
+      responseType: "blob",
+      headers: {
+        "X-Auth-UserId": sessionStorage.getItem("universalId")
+      }
+    })
+    .then(response => {
+      // TODO: do not use hard coded type
+      const fileData = new Blob([response.data], { type: file.mimeType });
+      const fileUrl = URL.createObjectURL(fileData);
+
+      window.open(fileUrl);
+    })
+    .catch(error => {
+      errorRedirect(sessionStorage.getItem("errorUrl"), error);
+    });
 };
 
 const generateTotalFeeTable = files => {
@@ -56,12 +77,20 @@ const generateTotalFeeTable = files => {
   ];
 };
 
-const generateTable = (fileName, data) => {
+const generateTable = (file, data, submissionId) => {
   return [
     {
       name: (
         <div style={{ width: "80%" }}>
-          <span>{fileName}</span>
+          <span
+            onKeyDown={() => openFile(file, submissionId)}
+            role="button"
+            tabIndex={0}
+            className="file-href"
+            onClick={() => openFile(file, submissionId)}
+          >
+            {file.name}
+          </span>
         </div>
       ),
       value: <Table elements={data} />,
@@ -70,7 +99,7 @@ const generateTable = (fileName, data) => {
   ];
 };
 
-const generateTableData = file => {
+const generateTableData = (file, submissionId) => {
   const data = [
     {
       name: "Description:",
@@ -91,7 +120,7 @@ const generateTableData = file => {
     });
   }
 
-  return generateTable(file.name, data);
+  return generateTable(file, data, submissionId);
 };
 
 const getFilingPackageData = (submissionId, setFiles, files) => {
@@ -122,7 +151,8 @@ export default function PackageConfirmation({
     getFilingPackageData(submissionId, setFiles, files);
   }, [files, submissionId]);
 
-  if (showPayment) return <Payment payment={{ confirmationPopup }} />;
+  if (showPayment)
+    return <Payment payment={{ confirmationPopup, submissionId }} />;
 
   return (
     <div className="page">
@@ -161,7 +191,9 @@ export default function PackageConfirmation({
                   <MdDescription size={32} />
                 </div>
               }
-              element={<Table elements={generateTableData(file)} />}
+              element={
+                <Table elements={generateTableData(file, submissionId)} />
+              }
             />
             <br />
           </div>
