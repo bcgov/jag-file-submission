@@ -29,7 +29,23 @@ public class TestUtil {
 
         PrintStream log = new PrintStream(new FileOutputStream("logs/backendLogging.txt"));
         baseURI= readConfig.getBaseUri();
-        return new RequestSpecBuilder().setBaseUri(baseURI).addFilter(RequestLoggingFilter.logRequestTo(log)).addFilter(ResponseLoggingFilter.logResponseTo(log)).setContentType(ContentType.JSON).build();
+        return new RequestSpecBuilder().setBaseUri(baseURI).addFilter(RequestLoggingFilter
+                .logRequestTo(log)).addFilter(ResponseLoggingFilter.logResponseTo(log))
+                .setContentType(ContentType.JSON).build();
+    }
+
+    public static RequestSpecification submitDocumentsRequestSpecification() throws IOException {
+        ReadConfig readConfig = new ReadConfig();
+
+        PrintStream log = new PrintStream(new FileOutputStream("logs/backendLogging.txt"));
+        baseURI= readConfig.getBaseUri();
+        return new RequestSpecBuilder().setBaseUri(baseURI).addFilter(RequestLoggingFilter
+                .logRequestTo(log)).addFilter(ResponseLoggingFilter.logResponseTo(log))
+                .build();
+    }
+
+    public static ResponseSpecification validDocumentResponseSpecification() {
+        return new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON).build();
     }
 
     public static ResponseSpecification responseSpecification() {

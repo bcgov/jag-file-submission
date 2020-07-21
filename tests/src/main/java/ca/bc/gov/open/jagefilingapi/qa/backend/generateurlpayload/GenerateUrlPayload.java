@@ -38,7 +38,7 @@ public class GenerateUrlPayload {
         generateUrlRequest = new GenerateUrlRequest();
 
         generateUrlRequest.setClientApplication(createClientApplication(DISPLAYNAME,TYPEFIRST));
-        generateUrlRequest.setFilingPackage(createPackage(createCourtDetails(), createDocumentsList()));
+       // generateUrlRequest.setFilingPackage(createPackage(createCourtDetails(), createDocumentsList()));
         generateUrlRequest.setNavigation(createNavigationDetails(SUCCESS_URL, CANCEL_URL, ERROR_URL));
 
         return generateUrlRequest;
@@ -57,7 +57,7 @@ public class GenerateUrlPayload {
         FilingPackage filingPackage = new FilingPackage();
 
         filingPackage.setCourt(court);
-        filingPackage.setDocuments(documents);
+       // filingPackage.setDocuments(documents);
 
         return filingPackage;
     }
@@ -98,7 +98,7 @@ public class GenerateUrlPayload {
 
         documentProperties.setName(NAME);
         documentProperties.setType(TYPESECOND);
-        documentProperties.setDescription(DESCRIPTION);
+    //    documentProperties.setDescription(DESCRIPTION);
 
         return Arrays.asList(documentProperties);
     }

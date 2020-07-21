@@ -16,7 +16,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
@@ -38,13 +37,15 @@ public class GenerateUrlAndSubmissionTest {
     private String middleName;
     private String email;
     private static final String CONTENT_TYPE = "application/json";
+    private static final String X_AUTH_USER_ID = "X-Auth-UserId";
+    private String validExistingCSOGuid;
+    private  GenerateUrlPayload payloadData;
     public Logger log = LogManager.getLogger(GenerateUrlAndSubmissionTest.class);
 
-    @Given("POST http request is made to {string} with valid existing CSO account guid in header")
-    public void postHttpRequestIsMadeToWithValidExistingCsoAccountGuidInHeader(String resource) throws IOException {
+    @Given("POST http request is made to {string} with valid existing CSO account guid and a single image file")
+    public void postHttpRequestIsMadeToWithValidExistingCsoAccountGuidAndASingleImageFile(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
-
-        response = generateUrlRequestBuilders.requestWithValidCSOAccountGuid(resource);
+         response = generateUrlRequestBuilders.validRequestWithSingleDocument(resource);
     }
 
     @When("status code is {int} and content type is verified")
@@ -73,33 +74,58 @@ public class GenerateUrlAndSubmissionTest {
         }
     }
 
-    @Then("verify response returns {string} and expiry date")
-    public void theResponseReturnsAndExpiryDate(String resource) {
-        APIResources resourceUrl = APIResources.valueOf(resource);
+    @Then("verify submission id and document count is received")
+    public void verifySubmissionIdAndDocumentCountIsReceived() {
         jsonPath = new JsonPath(response.asString());
 
-        String respUrl = TestUtil.getJsonPath(response, "efilingUrl");
-        Long respExpDate = jsonPath.get("expiryDate");
+        submissionId = TestUtil.getJsonPath(response, "submissionId");
+        int receivedCount = jsonPath.get("received");
 
-        submissionId = null;
-        try {
-            URL url = new URL(respUrl);
-            submissionIdQuery = url.getQuery();
-            submissionId = submissionIdQuery.split("=")[1];
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        assertEquals(respUrl, resourceUrl.getResource().concat("?") + submissionIdQuery);
-        assertNotNull(respExpDate);
+        assertNotNull(submissionId);
+        assertEquals(1, receivedCount);
     }
 
-    @Given("POST http request is made to {string} with non existing CSO account guid in the header")
-    public void postHttpRequestIsMadeToWithNonExistingCsoAccountGuidInHeader(String resource) throws IOException {
-        generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
+    @Given("POST http request is made to {string} with client application, court details and navigation urls")
+    public void POSTHttpRequestIsMadeToWithClientApplicationCourtDetailsAndNavigationUrls(String resource) throws IOException {
+      /*  generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
 
-        response = generateUrlRequestBuilders.requestWithNonExistingCSOAccountGuid(resource);
+        response = generateUrlRequestBuilders.requestWithNonExistingCSOAccountGuid(resource);*/
+        payloadData = new GenerateUrlPayload();
+
+        APIResources resourceGet = APIResources.valueOf(resource);
+
+        validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
+
+        RequestSpecification request = given()
+                .spec(TestUtil.requestSpecification())
+                .header(X_AUTH_USER_ID,validExistingCSOGuid)
+                .body(payloadData.validGenerateUrlPayload());
+        response = request.when().get(resourceGet.getResource() + submissionId + "/generateUrl")
+                .then()
+                .spec(TestUtil.responseSpecification())
+                .extract().response();
+
+        System.out.println(response);
     }
+
+    @Given("{string} id is submitted with GET http request")
+    public void idIsSubmittedWithGetHttpRequest(String resource) throws IOException {
+        APIResources resourceGet = APIResources.valueOf(resource);
+
+        validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
+
+        RequestSpecification request = given()
+                .spec(TestUtil.requestSpecification())
+                .header(X_AUTH_USER_ID,validExistingCSOGuid);
+        response = request.when().get(resourceGet.getResource() + submissionId)
+                .then()
+                .spec(TestUtil.responseSpecification())
+                .extract().response();
+
+        System.out.println(response);
+    }
+
+
 
     @Given("POST http request is made to {string} with invalid CSO account guid in the header")
     public void postHttpRequestIsMadeToWithInvalidCsoAccountGuidInHeader(String resource) throws IOException {
@@ -107,15 +133,6 @@ public class GenerateUrlAndSubmissionTest {
 
         response = generateUrlRequestBuilders.requestWithInvalidCSOAccountGuid(resource);
     }
-
-    @When("{string} id is submitted with GET http request")
-    public void idIsSubmittedWithGetHttpRequest(String resource) throws IOException {
-        APIResources resourceGet = APIResources.valueOf(resource);
-
-        RequestSpecification request = given().spec(TestUtil.requestSpecification());
-        response = request.when().get(resourceGet.getResource() + submissionId).then().spec(TestUtil.responseSpecification()).extract().response();
-    }
-
     @Given("{string} id with filing package path is submitted with GET http request")
     public void idWithFilingPackagePathIsSubmittedWithGETHttpRequest(String resource) throws IOException {
         APIResources resourceGet = APIResources.valueOf(resource);
