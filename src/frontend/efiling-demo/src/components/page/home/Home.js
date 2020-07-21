@@ -48,6 +48,8 @@ const input = {
 };
 
 const generatePackageData = (files, filingPackage) => {
+  if (!files || files.length === 0) return {};
+
   const formData = new FormData();
   const documentData = [];
 
@@ -82,11 +84,6 @@ export const eFilePackage = (
   setErrorExists,
   filingPackage
 ) => {
-  if (!files || files.length === 0) {
-    setErrorExists(true);
-    return;
-  }
-
   const { formData, updatedUrlBody } = generatePackageData(
     files,
     filingPackage
