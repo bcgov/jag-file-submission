@@ -2,12 +2,15 @@ package ca.bc.gov.open.jag.efilingcsostarter.config;
 
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RoleRegistryPortType;
 import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
+import ca.bc.gov.ag.csows.ceis.Csows;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
+import ca.bc.gov.open.jag.efilingcsostarter.CsoCourtServiceImpl;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoDocumentServiceImpl;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoLookupServiceImpl;
@@ -79,6 +82,12 @@ public class AutoConfiguration {
     @ConditionalOnMissingBean({EfilingLookupService.class})
     public EfilingLookupService efilingLookupService (LookupFacadeBean lookupFacadeBean) {
         return new CsoLookupServiceImpl(lookupFacadeBean);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean({EfilingCourtService.class})
+    public EfilingCourtService efilingCourtService (Csows csows) {
+        return new CsoCourtServiceImpl(csows);
     }
 
     public <T> T getPort(Clients clients, Class<T> type) {
