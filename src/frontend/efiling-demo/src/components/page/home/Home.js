@@ -48,8 +48,6 @@ const input = {
 };
 
 const generatePackageData = (files, filingPackage) => {
-  if (!files || files.length === 0) return {};
-
   const formData = new FormData();
   const documentData = [];
 
@@ -84,15 +82,14 @@ export const eFilePackage = (
   setErrorExists,
   filingPackage
 ) => {
+  if (!files || files.length === 0) return false;
+
   const { formData, updatedUrlBody } = generatePackageData(
     files,
     filingPackage
   );
 
-  if (!formData || !updatedUrlBody) {
-    setErrorExists(true);
-    return;
-  }
+  if (!formData || !updatedUrlBody) return false;
 
   axios
     .post("/submission/documents", formData, {
@@ -143,9 +140,15 @@ export default function Home({ page: { header } }) {
           <br />
           <br />
           <Button
-            onClick={() =>
-              eFilePackage(files, accountGuid, setErrorExists, filingPackage)
-            }
+            onClick={() => {
+              const result = eFilePackage(
+                files,
+                accountGuid,
+                setErrorExists,
+                filingPackage
+              );
+              if (!result) setErrorExists(true);
+            }}
             label="E-File my Package"
             styling="normal-blue btn"
             testId="generate-url-btn"
