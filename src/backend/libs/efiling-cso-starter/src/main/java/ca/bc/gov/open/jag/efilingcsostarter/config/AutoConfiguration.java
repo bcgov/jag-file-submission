@@ -58,6 +58,9 @@ public class AutoConfiguration {
     public LookupFacadeBean lookupFacadeBean() { return getPort(Clients.LOOKUP, LookupFacadeBean.class); }
 
     @Bean
+    public Csows csows() { return getPort(Clients.CSOWS, Csows.class); }
+
+    @Bean
     public AccountDetailsMapper accountDetailsMapper() {
         return new AccountDetailsMapperImpl();
     }
