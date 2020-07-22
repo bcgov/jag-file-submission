@@ -17,10 +17,19 @@ const confirmationPopup = getTestData();
 const packageConfirmation = { confirmationPopup, submissionId };
 const csoAccountStatus = { isNew: false };
 const documents = getDocumentsData();
+const courtData = {
+  locationDescription: "Court location",
+  fileNumber: "Court file number",
+  level: "Level",
+  courtClass: "Class"
+};
+const submissionFeeAmount = 25.5;
 
 const LoadData = props => {
   const mock = new MockAdapter(axios);
-  mock.onGet(apiRequest).reply(200, { documents });
+  mock
+    .onGet(apiRequest)
+    .reply(200, { documents, court: courtData, submissionFeeAmount });
   return props.children({ packageConfirmation, csoAccountStatus });
 };
 

@@ -29,7 +29,7 @@ const urlBody = {
     court: {
       location: "string",
       level: "P",
-      class: "F",
+      courtClass: "F",
       division: "string",
       fileNumber: "string",
       participatingClass: "string"

@@ -1,4 +1,5 @@
 import React from "react";
+import Dinero from "dinero.js";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
 
 import Payment from "./Payment";
@@ -16,10 +17,34 @@ const courtData = {
   locationDescription: "Court location",
   fileNumber: "Court file number",
   level: "Level",
-  class: "Class"
+  courtClass: "Class"
 };
+const fileSummaryData = [
+  {
+    name: "Number of Documents in Package:",
+    value: "5",
+    isValueBold: true
+  },
+  {
+    name: "Statutory Fees:",
+    value: "$150.00",
+    isValueBold: true
+  },
+  {
+    name: "Submission Fee:",
+    value: "$7.00",
+    isValueBold: true
+  }
+];
+const overallTotalFeeData = Dinero({ amount: 157 * 100 });
 
-const payment = { confirmationPopup, submissionId, courtData };
+const payment = {
+  confirmationPopup,
+  submissionId,
+  courtData,
+  fileSummaryData,
+  overallTotalFeeData
+};
 
 export const Default = () => <Payment payment={payment} />;
 

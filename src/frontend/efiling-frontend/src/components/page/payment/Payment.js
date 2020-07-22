@@ -13,8 +13,14 @@ import ConfirmationPopup, {
 import { getSidecardData } from "../../../modules/sidecardData";
 import { propTypes } from "../../../types/propTypes";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
+import { generateFileSummaryData } from "../../../modules/generateFileSummaryData";
 
-const generateCourtDataTable = ({ fileNumber, locationDescription, level }) => {
+const generateCourtDataTable = ({
+  fileNumber,
+  locationDescription,
+  level,
+  courtClass
+}) => {
   const courtElements = [
     {
       name: "Court File Number:",
@@ -28,7 +34,7 @@ const generateCourtDataTable = ({ fileNumber, locationDescription, level }) => {
     },
     {
       name: "Level and Class:",
-      value: `${level}`,
+      value: `${level} ${courtClass}`,
       isValueBold: true
     }
   ];
@@ -36,7 +42,7 @@ const generateCourtDataTable = ({ fileNumber, locationDescription, level }) => {
   return [
     {
       name: (
-        <div style={{ width: "40%", minWidth: "fit-content" }}>
+        <div style={{ width: "45%", minWidth: "fit-content" }}>
           <Table elements={courtElements} />
         </div>
       ),
@@ -46,22 +52,14 @@ const generateCourtDataTable = ({ fileNumber, locationDescription, level }) => {
   ];
 };
 
-// TODO: Extract to module to generate this
-const feesData = [
-  { name: "Some Fees:", value: "$100.00", isValueBold: true },
-  { name: "Some More Fees:", value: "$10.00", isValueBold: true },
-  { name: "", value: "", isEmptyRow: true },
-  { name: "Total Fees:", value: "$110.00", isValueBold: true }
-];
+const getTableElements = (files, submissionFee) => {
+  const fileSummary = generateFileSummaryData(files, submissionFee, true);
 
-// TODO: refactor and simplify/reduce LOC
-// Possibly extract responsibility of generating this to a module
-const getTableElements = (paymentAgreed, setPaymentAgreed) => {
   const elements = [
     {
       name: (
-        <div style={{ width: "80%" }}>
-          <Table isFeesData elements={feesData} />
+        <div style={{ width: "60%", minWidth: "fit-content" }}>
+          <Table isFeesData elements={fileSummary} />
         </div>
       ),
       value: (
@@ -89,7 +87,7 @@ const submitButton = {
 };
 
 export default function Payment({
-  payment: { confirmationPopup, submissionId, courtData }
+  payment: { confirmationPopup, submissionId, courtData, files, submissionFee }
 }) {
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
@@ -132,11 +130,7 @@ export default function Payment({
         <br />
         <DisplayBox
           styling="display-left-element"
-          element={
-            <Table
-              elements={getTableElements(paymentAgreed, setPaymentAgreed)}
-            />
-          }
+          element={<Table elements={getTableElements(files, submissionFee)} />}
         />
         <br />
         <h1>Package Submission Details</h1>
