@@ -1,7 +1,6 @@
 package ca.bc.gov.open.jag.efilingcsostarter;
 
 import ca.bc.gov.ag.csows.ceis.CsoAgencyArr;
-import ca.bc.gov.ag.csows.ceis.CsoAgencyRec;
 import ca.bc.gov.ag.csows.ceis.Csows;
 
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtServiceException;
@@ -9,7 +8,6 @@ import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Optional;
 
 public class CsoCourtServiceImpl implements EfilingCourtService {
 
