@@ -6,5 +6,6 @@ public enum Clients {
     LOOKUP,
     STATUS,
     CSOWS,
+    FILING,
     BCEID;
 }
