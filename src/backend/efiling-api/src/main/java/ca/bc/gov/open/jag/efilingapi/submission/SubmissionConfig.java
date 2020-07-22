@@ -8,6 +8,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStoreImpl;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.context.annotation.Bean;
@@ -37,6 +38,7 @@ public class SubmissionConfig {
                                                SubmissionMapper submissionMapper,
                                                EfilingAccountService efilingAccountService,
                                                EfilingLookupService efilingLookupService,
+                                               EfilingCourtService efilingCourtService,
                                                DocumentStore documentStore) {
 
         return new SubmissionServiceImpl(submissionStore,
@@ -44,6 +46,7 @@ public class SubmissionConfig {
                 submissionMapper,
                 efilingAccountService,
                 efilingLookupService,
+                efilingCourtService,
                 documentStore);
     }
 

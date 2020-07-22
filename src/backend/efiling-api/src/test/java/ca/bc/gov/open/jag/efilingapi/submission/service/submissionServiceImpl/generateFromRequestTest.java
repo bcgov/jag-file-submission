@@ -12,9 +12,11 @@ import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.*;
@@ -32,6 +34,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static org.mockito.ArgumentMatchers.any;
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class generateFromRequestTest {
 
@@ -39,6 +43,7 @@ public class generateFromRequestTest {
     private static final String LAST_NAME = "case1_lastName";
     private static final String FIRST_NAME = "case1_firstName";
     private static final String EMAIL = "case1_email";
+
     private SubmissionServiceImpl sut;
 
     @Mock
@@ -54,6 +59,9 @@ public class generateFromRequestTest {
     private EfilingLookupService efilingLookupService;
 
     @Mock
+    private EfilingCourtService efilingCourtService;
+
+    @Mock
     private DocumentStore documentStoreMock;
 
     @BeforeAll
@@ -64,7 +72,9 @@ public class generateFromRequestTest {
         ServiceFees fee = new ServiceFees( BigDecimal.valueOf(7.00), "DCFL");
         Mockito.doReturn(fee)
                 .when(efilingLookupService)
-                .getServiceFee(Mockito.any());
+                .getServiceFee(any());
+
+        Mockito.when(efilingCourtService.getCourtDescription(any())).thenReturn(new CourtDetails(BigDecimal.TEN, TestHelpers.COURT_DESCRIPTION));
 
         configureCase1(fee);
         configureCase2();
@@ -76,10 +86,9 @@ public class generateFromRequestTest {
 
         // Testing mapper as part of this unit test
         SubmissionMapper submissionMapper = new SubmissionMapperImpl();
-        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, submissionMapper, efilingAccountServiceMock, efilingLookupService, documentStoreMock);
+        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, submissionMapper, efilingAccountServiceMock, efilingLookupService, efilingCourtService, documentStoreMock);
 
     }
-
 
 
     @Test
@@ -111,6 +120,8 @@ public class generateFromRequestTest {
         Assertions.assertEquals(TestHelpers.PROPERTYCLASS, actual.getFilingPackage().getCourt().getPropertyClass());
         Assertions.assertEquals(TestHelpers.TYPE, actual.getFilingPackage().getDocuments().get(0).getType());
         Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getFilingPackage().getDocuments().get(0).getDescription());
+        Assertions.assertEquals(TestHelpers.COURT_DESCRIPTION, actual.getFilingPackage().getCourt().getLocationDescription());
+        Assertions.assertEquals(BigDecimal.TEN, actual.getFilingPackage().getCourt().getLocationId());
         Assertions.assertEquals(BigDecimal.TEN, actual.getFilingPackage().getDocuments().get(0).getStatutoryFeeAmount());
         Assertions.assertEquals("application/txt", actual.getFilingPackage().getDocuments().get(0).getMimeType());
 
@@ -188,10 +199,10 @@ public class generateFromRequestTest {
         Mockito
                 .when(efilingAccountServiceMock.getAccountDetails(
                         Mockito.eq(TestHelpers.CASE_1),
-                        Mockito.any()))
+                        any()))
                 .thenReturn(accountDetails);
 
-        Mockito.when(documentStoreMock.getDocumentDetails(Mockito.any(), Mockito.any(), Mockito.any()))
+        Mockito.when(documentStoreMock.getDocumentDetails(any(), any(), any()))
                 .thenReturn(new DocumentDetails(TestHelpers.DESCRIPTION, BigDecimal.TEN));
 
         Submission submissionCase1 = Submission
@@ -218,7 +229,7 @@ public class generateFromRequestTest {
         Mockito
                 .when(efilingAccountServiceMock.getAccountDetails(
                         Mockito.eq(TestHelpers.CASE_2),
-                        Mockito.any()))
+                        any()))
                 .thenReturn(accountDetails);
 
         Mockito
@@ -234,7 +245,7 @@ public class generateFromRequestTest {
         Mockito
                 .when(efilingAccountServiceMock.getAccountDetails(
                         Mockito.eq(TestHelpers.CASE_3),
-                        Mockito.any()))
+                        any()))
                 .thenReturn(accountDetails);
 
     }
