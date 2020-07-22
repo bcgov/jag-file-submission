@@ -299,7 +299,7 @@ components:
       required:
         - location
         - level
-        - class
+        - courtClass
         - division
       properties:
         location:
@@ -314,7 +314,7 @@ components:
         level:
           type: string
           description: the court level
-        class:
+        courtClass:
           type: string
           description: the court class
         division:

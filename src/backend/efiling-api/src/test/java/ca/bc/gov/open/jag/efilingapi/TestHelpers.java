@@ -72,7 +72,7 @@ public class TestHelpers {
         court.setLevel(LEVEL);
         court.setLocation(LOCATION);
         court.setParticipatingClass(PARTICIPATIONCLASS);
-        court.setPropertyClass(PROPERTYCLASS);
+        court.setCourtClass(PROPERTYCLASS);
         court.setLocationId(BigDecimal.TEN);
         court.setLocationDescription(COURT_DESCRIPTION);
         return court;
@@ -96,8 +96,6 @@ public class TestHelpers {
 
         return Arrays.asList(documentProperties);
     }
-
-
 
     public static Navigation createDefaultNavigation() {
         return createNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL);
