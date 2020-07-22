@@ -23,7 +23,7 @@
     "react-scripts": "3.4.1",
     "react-test-renderer": "^16.12.0",
     "regenerator-runtime": "^0.13.5",
-    "shared-components": "https://github.com/SierraSystems/bcgov-shared-components/releases/download/0.3.5/shared-components-0.3.5.tgz",
+    "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/0.3.5/shared-components-0.3.5.tgz",
     "webpack": "4.42.0"
   },
   "scripts": {
