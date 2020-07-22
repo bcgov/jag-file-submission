@@ -12,8 +12,14 @@ sessionStorage.setItem("csoAccountId", "123");
 
 const confirmationPopup = getTestData();
 const submissionId = "abc123";
+const courtData = {
+  locationDescription: "Court location",
+  fileNumber: "Court file number",
+  level: "Level",
+  class: "Class"
+};
 
-const payment = { confirmationPopup, submissionId };
+const payment = { confirmationPopup, submissionId, courtData };
 
 export const Default = () => <Payment payment={payment} />;
 

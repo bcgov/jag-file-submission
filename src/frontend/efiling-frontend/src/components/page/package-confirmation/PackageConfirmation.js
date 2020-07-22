@@ -123,7 +123,7 @@ const generateTableData = (file, submissionId) => {
   return generateTable(file, data, submissionId);
 };
 
-const getFilingPackageData = (submissionId, setFiles, files) => {
+const getFilingPackageData = (submissionId, setFiles, files, setCourtData) => {
   if (files.length > 0) return;
 
   axios
@@ -133,7 +133,7 @@ const getFilingPackageData = (submissionId, setFiles, files) => {
       }
     })
     .then(({ data: { documents, court } }) => {
-      console.log(court);
+      setCourtData(court);
       setFiles(documents);
     })
     .catch(() => window.open(sessionStorage.getItem("errorUrl"), "_self"));
@@ -144,16 +144,17 @@ export default function PackageConfirmation({
   csoAccountStatus: { isNew }
 }) {
   const [files, setFiles] = useState([]);
+  const [courtData, setCourtData] = useState(null);
   const [showPayment, setShowPayment] = useState(false);
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
 
   useEffect(() => {
-    getFilingPackageData(submissionId, setFiles, files);
+    getFilingPackageData(submissionId, setFiles, files, setCourtData);
   }, [files, submissionId]);
 
   if (showPayment)
-    return <Payment payment={{ confirmationPopup, submissionId }} />;
+    return <Payment payment={{ confirmationPopup, submissionId, courtData }} />;
 
   return (
     <div className="page">

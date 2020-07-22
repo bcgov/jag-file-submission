@@ -14,21 +14,21 @@ import { getSidecardData } from "../../../modules/sidecardData";
 import { propTypes } from "../../../types/propTypes";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
 
-const generateCourtDataTable = () => {
-  const courtData = [
+const generateCourtDataTable = ({ fileNumber, locationDescription, level }) => {
+  const courtElements = [
     {
       name: "Court File Number:",
-      value: "Valkjsdjks",
+      value: fileNumber,
       isValueBold: true
     },
     {
       name: "Location:",
-      value: "Valkjsdjks",
+      value: locationDescription,
       isValueBold: true
     },
     {
       name: "Level and Class:",
-      value: "Valkjsdjks",
+      value: `${level}`,
       isValueBold: true
     }
   ];
@@ -37,7 +37,7 @@ const generateCourtDataTable = () => {
     {
       name: (
         <div style={{ width: "40%", minWidth: "fit-content" }}>
-          <Table elements={courtData} />
+          <Table elements={courtElements} />
         </div>
       ),
       value: "",
@@ -89,7 +89,7 @@ const submitButton = {
 };
 
 export default function Payment({
-  payment: { confirmationPopup, submissionId }
+  payment: { confirmationPopup, submissionId, courtData }
 }) {
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
@@ -141,7 +141,7 @@ export default function Payment({
         <br />
         <h1>Package Submission Details</h1>
         <p>Your package will be filed to:</p>
-        <Table elements={generateCourtDataTable()} />
+        <Table elements={generateCourtDataTable(courtData)} />
         <Callout
           text={calloutText}
           checkboxLabel="I agree"
@@ -182,6 +182,7 @@ export default function Payment({
 Payment.propTypes = {
   payment: PropTypes.shape({
     confirmationPopup: propTypes.confirmationPopup,
-    submissionId: PropTypes.string.isRequired
+    submissionId: PropTypes.string.isRequired,
+    courtData: PropTypes.object.isRequired
   }).isRequired
 };
