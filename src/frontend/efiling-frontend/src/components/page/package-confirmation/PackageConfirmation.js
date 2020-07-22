@@ -132,7 +132,8 @@ const getFilingPackageData = (submissionId, setFiles, files) => {
         "X-Auth-UserId": sessionStorage.getItem("universalId")
       }
     })
-    .then(({ data: { documents } }) => {
+    .then(({ data: { documents, court } }) => {
+      console.log(court);
       setFiles(documents);
     })
     .catch(() => window.open(sessionStorage.getItem("errorUrl"), "_self"));

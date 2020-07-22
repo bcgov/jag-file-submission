@@ -7,11 +7,44 @@ import ConfirmationPopup, {
   Sidecard,
   Alert,
   DisplayBox,
-  Table
+  Table,
+  Callout
 } from "shared-components";
 import { getSidecardData } from "../../../modules/sidecardData";
 import { propTypes } from "../../../types/propTypes";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
+
+const generateCourtDataTable = () => {
+  const courtData = [
+    {
+      name: "Court File Number:",
+      value: "Valkjsdjks",
+      isValueBold: true
+    },
+    {
+      name: "Location:",
+      value: "Valkjsdjks",
+      isValueBold: true
+    },
+    {
+      name: "Level and Class:",
+      value: "Valkjsdjks",
+      isValueBold: true
+    }
+  ];
+
+  return [
+    {
+      name: (
+        <div style={{ width: "40%", minWidth: "fit-content" }}>
+          <Table elements={courtData} />
+        </div>
+      ),
+      value: "",
+      isSideBySide: true
+    }
+  ];
+};
 
 // TODO: Extract to module to generate this
 const feesData = [
@@ -29,39 +62,13 @@ const getTableElements = (paymentAgreed, setPaymentAgreed) => {
       name: (
         <div style={{ width: "80%" }}>
           <Table isFeesData elements={feesData} />
-          <br />
-          <br />
-          <p>
-            The registry will process statutory fees when your documents are
-            filed.
-          </p>
         </div>
       ),
       value: (
-        <>
-          <p>
-            I have reviewed the information and the documents in this filing
-            package and am prepared to submit them for filing. I agree that all
-            fees for this filing package may be charged to the credit card
-            registered to my account.
-          </p>
-          <label
-            className="pt-3"
-            style={{ float: "right" }}
-            htmlFor="agreePayment"
-          >
-            <input
-              id="agreePayment"
-              type="checkbox"
-              onClick={() => setPaymentAgreed(!paymentAgreed)}
-            />
-            &nbsp;
-            <b>I agree</b>
-            <span id="asterisk" className="mandatory">
-              *
-            </span>
-          </label>
-        </>
+        <p>
+          The registry will process statutory fees when your documents are
+          filed.
+        </p>
       ),
       isSideBySide: true
     }
@@ -69,6 +76,11 @@ const getTableElements = (paymentAgreed, setPaymentAgreed) => {
 
   return elements;
 };
+
+const calloutText = `I have reviewed the information and the documents in this filing
+package and am prepared to submit them for filing. I agree that all
+fees for this filing package may be charged to the credit card
+registered to my account.`;
 
 const submitButton = {
   label: "Submit",
@@ -97,8 +109,7 @@ export default function Payment({
   return (
     <div className="page">
       <div className="content col-md-8">
-        <h2>Payment</h2>
-
+        <h1>Payment</h1>
         {/* TODO: Fix credit card info and link to register card */}
         <Alert
           icon={<MdCreditCard size={32} />}
@@ -118,9 +129,7 @@ export default function Payment({
             </p>
           }
         />
-
         <br />
-
         <DisplayBox
           styling="display-left-element"
           element={
@@ -129,9 +138,16 @@ export default function Payment({
             />
           }
         />
-
         <br />
-
+        <h1>Package Submission Details</h1>
+        <p>Your package will be filed to:</p>
+        <Table elements={generateCourtDataTable()} />
+        <Callout
+          text={calloutText}
+          checkboxLabel="I agree"
+          agreeCallout={() => setPaymentAgreed(!paymentAgreed)}
+        />
+        <br />
         <section className="inline-block pt-2">
           <Button
             label="< Back"
@@ -139,7 +155,6 @@ export default function Payment({
             styling="normal-white btn"
           />
         </section>
-
         <section className="buttons pt-2">
           <ConfirmationPopup
             modal={confirmationPopup.modal}
@@ -155,7 +170,6 @@ export default function Payment({
           />
         </section>
       </div>
-
       <div className="sidecard">
         <Sidecard sideCard={rushSubmissionSidecard} />
         <Sidecard sideCard={csoAccountDetailsSidecard} />
