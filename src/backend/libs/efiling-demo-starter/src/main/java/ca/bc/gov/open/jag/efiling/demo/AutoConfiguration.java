@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efiling.demo;
 
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,6 +32,10 @@ public class AutoConfiguration {
 
     @Bean
     public EfilingDocumentService efilingDocumentService() { return new EfilingDocumentServiceDemoImpl(); }
+
+    @Bean
+    public EfilingCourtService efilingCourtService() { return new EfilingCourtServiceDemoImpl(); }
+
 
     /**
      * Configures the cache manager for demo accounts
