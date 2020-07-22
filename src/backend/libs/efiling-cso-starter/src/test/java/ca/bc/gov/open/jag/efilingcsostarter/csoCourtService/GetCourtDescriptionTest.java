@@ -3,8 +3,7 @@ package ca.bc.gov.open.jag.efilingcsostarter.csoCourtService;
 import ca.bc.gov.ag.csows.ceis.CsoAgencyArr;
 import ca.bc.gov.ag.csows.ceis.CsoAgencyRec;
 import ca.bc.gov.ag.csows.ceis.Csows;
-import ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
-import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingLookupServiceException;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoCourtServiceImpl;
 import org.junit.jupiter.api.*;
@@ -16,9 +15,8 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class GetCourtDescription {
+public class GetCourtDescriptionTest {
     private static final String NOVALUE = "NOVALUE";
-    private static final String FOUND = "FOUND";
     private static final String AGEN_AGENCY_NM = "FOUNDAGENCY";
     private static final String AGEN_AGENCY_IDENTIFIER_CD = "FOUND";
     private static final String AGEN_AGENCY_IDENTIFIER_CD1 = "OTHER";
@@ -71,7 +69,7 @@ public class GetCourtDescription {
     @Test
     public void withNoFoundResultShouldThrowEfilingLookupServiceException() {
 
-        Assertions.assertThrows(EfilingLookupServiceException.class, () -> sut.getCourtDescription(NOVALUE));
+        Assertions.assertThrows(EfilingCourtServiceException.class, () -> sut.getCourtDescription(NOVALUE));
 
     }
 }

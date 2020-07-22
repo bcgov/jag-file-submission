@@ -23,6 +23,7 @@ public class TestHelpers {
     public static final String PROPERTYCLASS = "PROPERTYCLASS";
     public static final String DESCRIPTION = "DESCRIPTION";
     public static final String TYPE = "TYPE";
+    public static final String COURT_DESCRIPTION = "TESTCOURTDESC";
 
     public static final String SUCCESS_URL = "http://success";
     public static final String CANCEL_URL = "http://cancel";
@@ -72,7 +73,8 @@ public class TestHelpers {
         court.setLocation(LOCATION);
         court.setParticipatingClass(PARTICIPATIONCLASS);
         court.setPropertyClass(PROPERTYCLASS);
-
+        court.setLocationId(BigDecimal.TEN);
+        court.setLocationDescription(COURT_DESCRIPTION);
         return court;
     }
 

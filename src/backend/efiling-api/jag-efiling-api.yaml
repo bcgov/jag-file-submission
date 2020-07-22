@@ -305,6 +305,12 @@ components:
         location:
           type: string
           description: the court location
+        locationDescription:
+          type: string
+          description: the court location description
+        locationId:
+          type: number
+          description: the court location id
         level:
           type: string
           description: the court level

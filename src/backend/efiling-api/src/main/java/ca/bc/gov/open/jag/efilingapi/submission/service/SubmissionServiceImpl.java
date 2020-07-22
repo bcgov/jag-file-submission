@@ -1,9 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.Document;
-import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
-import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
-import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
+import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
@@ -11,9 +8,11 @@ import ca.bc.gov.open.jag.efilingapi.utils.FileUtils;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +39,8 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private final EfilingLookupService efilingLookupService;
 
+    private final EfilingCourtService efilingCourtService;
+
     private final DocumentStore documentStore;
 
     public SubmissionServiceImpl(
@@ -48,12 +49,13 @@ public class SubmissionServiceImpl implements SubmissionService {
             SubmissionMapper submissionMapper,
             EfilingAccountService efilingAccountService,
             EfilingLookupService efilingLookupService,
-            DocumentStore documentStore) {
+            EfilingCourtService efilingCourtService, DocumentStore documentStore) {
         this.submissionStore = submissionStore;
         this.cacheProperties = cacheProperties;
         this.submissionMapper = submissionMapper;
         this.efilingAccountService = efilingAccountService;
         this.efilingLookupService = efilingLookupService;
+        this.efilingCourtService = efilingCourtService;
         this.documentStore = documentStore;
     }
 
@@ -101,7 +103,7 @@ public class SubmissionServiceImpl implements SubmissionService {
     private FilingPackage toFilingPackage(GenerateUrlRequest request) {
 
         FilingPackage filingPackage = new FilingPackage();
-        filingPackage.setCourt(request.getFilingPackage().getCourt());
+        filingPackage.setCourt(populateCourtDetails(request.getFilingPackage().getCourt()));
         filingPackage.setSubmissionFeeAmount(getStatutoryFeeAmount(request));
         filingPackage.setDocuments(request.getFilingPackage()
                 .getDocuments()
@@ -115,6 +117,12 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     }
 
+    private Court populateCourtDetails(Court court) {
+        CourtDetails courtDetails = efilingCourtService.getCourtDescription(court.getLocation());
+        court.setLocationDescription(courtDetails.getCourtDescription());
+        court.setLocationId(courtDetails.getCourtId());
+        return court;
+    }
 
     private Document toDocument(String courtLevel, String courtClass, DocumentProperties documentProperties) {
 
