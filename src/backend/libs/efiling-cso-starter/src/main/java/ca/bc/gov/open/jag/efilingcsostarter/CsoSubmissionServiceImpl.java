@@ -20,7 +20,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     public BigDecimal submitFilingPackage(UUID submissionId) {
         if(submissionId == null) throw new IllegalArgumentException("Submission id cannot be null");
         FilingPackage filingPackage = new FilingPackage();
-
+//TODO: add required information for the filing package
         try {
             return filingFacadeBean.submitFiling(filingPackage);
         } catch (NestedEjbException_Exception e) {
