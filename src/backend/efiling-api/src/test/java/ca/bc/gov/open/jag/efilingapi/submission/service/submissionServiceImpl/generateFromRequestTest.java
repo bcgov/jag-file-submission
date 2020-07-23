@@ -78,7 +78,7 @@ public class generateFromRequestTest {
                 .when(efilingLookupService)
                 .getServiceFee(any());
 
-        Mockito.when(efilingCourtService.getCourtDescription(any())).thenReturn(new CourtDetails(BigDecimal.TEN, TestHelpers.COURT_DESCRIPTION));
+        Mockito.when(efilingCourtService.getCourtDescription(any())).thenReturn(new CourtDetails(BigDecimal.TEN, TestHelpers.COURT_DESCRIPTION, TestHelpers.CLASS_DESCRIPTION, TestHelpers.LEVEL_DESCRIPTION));
 
         configureCase1(fee);
         configureCase2();
@@ -125,7 +125,8 @@ public class generateFromRequestTest {
         Assertions.assertEquals(TestHelpers.TYPE, actual.getFilingPackage().getDocuments().get(0).getType());
         Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getFilingPackage().getDocuments().get(0).getDescription());
         Assertions.assertEquals(TestHelpers.COURT_DESCRIPTION, actual.getFilingPackage().getCourt().getLocationDescription());
-        Assertions.assertEquals(BigDecimal.TEN, actual.getFilingPackage().getCourt().getLocationId());
+        Assertions.assertEquals(TestHelpers.LEVEL_DESCRIPTION, actual.getFilingPackage().getCourt().getLevelDescription());
+        Assertions.assertEquals(TestHelpers.CLASS_DESCRIPTION, actual.getFilingPackage().getCourt().getClassDescription());
         Assertions.assertEquals(BigDecimal.TEN, actual.getFilingPackage().getDocuments().get(0).getStatutoryFeeAmount());
         Assertions.assertEquals("application/txt", actual.getFilingPackage().getDocuments().get(0).getMimeType());
 
