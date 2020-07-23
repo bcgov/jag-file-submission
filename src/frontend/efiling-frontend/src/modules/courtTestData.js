@@ -1,8 +1,8 @@
 const court = {
   locationDescription: "Court location",
   fileNumber: "Court file number",
-  level: "Level",
-  courtClass: "Class"
+  levelDescription: "Level",
+  classDescription: "Class"
 };
 
 export function getCourtData() {
