@@ -1308,7 +1308,7 @@ exports[`PackageConfirmation Component On click of continue to payment button, i
               class="side-by-side"
             >
               <div
-                style="width: 60%; min-width: fit-content;"
+                class="fit-table"
               >
                 <table
                   class=""
