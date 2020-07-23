@@ -26,12 +26,6 @@ export default function Upload({
     );
   }
 
-  const files = acceptedFiles.map(file => (
-    <li key={file.path}>
-      {file.path} - {file.size} bytes
-    </li>
-  ));
-
   return (
     <div className="page">
       <div className="content col-md-8">
