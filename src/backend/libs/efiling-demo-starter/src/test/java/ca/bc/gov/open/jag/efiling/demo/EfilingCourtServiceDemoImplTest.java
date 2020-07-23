@@ -20,6 +20,8 @@ public class EfilingCourtServiceDemoImplTest {
 
         CourtDetails actual = sut.getCourtDescription("SOMEVALUE");
         Assertions.assertEquals("Imma Court", actual.getCourtDescription());
+        Assertions.assertEquals("Imma Level", actual.getLevelDescription());
+        Assertions.assertEquals("Imma Class", actual.getClassDescription());
         Assertions.assertEquals(BigDecimal.TEN, actual.getCourtId());
     }
 }
