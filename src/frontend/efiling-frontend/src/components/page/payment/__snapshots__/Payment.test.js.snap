@@ -861,7 +861,7 @@ exports[`Payment Component On back click, it redirects back to the package confi
               class="side-by-side"
             >
               <div
-                style="width: 45%; min-width: fit-content;"
+                class="fit-table"
               >
                 <table
                   class=""

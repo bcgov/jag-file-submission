@@ -7,3 +7,8 @@
   color: #1a5a96;
   text-decoration: underline;
 }
+
+.fit-table {
+  width: 60%;
+  min-width: fit-content;
+}

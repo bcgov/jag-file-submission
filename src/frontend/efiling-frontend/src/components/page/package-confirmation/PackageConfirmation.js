@@ -44,7 +44,7 @@ const generateTotalFeeTable = (files, submissionFee) => {
   return [
     {
       name: (
-        <div style={{ width: "45%", minWidth: "fit-content" }}>
+        <div className="fit-table">
           <Table elements={fileSummary} />
         </div>
       ),

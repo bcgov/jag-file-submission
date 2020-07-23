@@ -1708,7 +1708,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                 class="side-by-side"
               >
                 <div
-                  style="width: 45%; min-width: fit-content;"
+                  class="fit-table"
                 >
                   <table
                     class=""
