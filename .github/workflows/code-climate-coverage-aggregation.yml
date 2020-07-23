@@ -183,15 +183,6 @@ jobs:
       - name: Build with Maven
         run: mvn -B verify -P all --file src/backend/pom.xml
 
-      # Loop through all BACKEND services to show that jacoco reports have been generated
-      - name: WHERE AM I - BACKEND?
-        run: |
-          for s in efiling-backend-demo efiling-api
-          do
-              ls ${{ github.workspace }}/src/backend/$s/target/site/jacoco;
-          done
-        if: ${{ env.ACTION_DEBUG }}
-
       # Formatting the BACKEND coverage reports generated (dynamically)
       - name: Format BACKEND coverage reports
         run: |
