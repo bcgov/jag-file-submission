@@ -7,61 +7,66 @@ import ConfirmationPopup, {
   Sidecard,
   Alert,
   DisplayBox,
-  Table
+  Table,
+  Callout
 } from "shared-components";
 import { getSidecardData } from "../../../modules/sidecardData";
 import { propTypes } from "../../../types/propTypes";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
+import { generateFileSummaryData } from "../../../modules/generateFileSummaryData";
 
-// TODO: Extract to module to generate this
-const feesData = [
-  { name: "Some Fees:", value: "$100.00", isValueBold: true },
-  { name: "Some More Fees:", value: "$10.00", isValueBold: true },
-  { name: "", value: "", isEmptyRow: true },
-  { name: "Total Fees:", value: "$110.00", isValueBold: true }
-];
+const generateCourtDataTable = ({
+  fileNumber,
+  locationDescription,
+  level,
+  courtClass
+}) => {
+  const courtElements = [
+    {
+      name: "Court File Number:",
+      value: fileNumber,
+      isValueBold: true
+    },
+    {
+      name: "Location:",
+      value: locationDescription,
+      isValueBold: true
+    },
+    {
+      name: "Level and Class:",
+      value: `${level} ${courtClass}`,
+      isValueBold: true
+    }
+  ];
 
-// TODO: refactor and simplify/reduce LOC
-// Possibly extract responsibility of generating this to a module
-const getTableElements = (paymentAgreed, setPaymentAgreed) => {
+  return [
+    {
+      name: (
+        <div style={{ width: "45%", minWidth: "fit-content" }}>
+          <Table elements={courtElements} />
+        </div>
+      ),
+      value: "",
+      isSideBySide: true
+    }
+  ];
+};
+
+const getTableElements = (files, submissionFee) => {
+  const fileSummary = generateFileSummaryData(files, submissionFee, true);
+
   const elements = [
     {
       name: (
-        <div style={{ width: "80%" }}>
-          <Table isFeesData elements={feesData} />
-          <br />
-          <br />
-          <p>
-            The registry will process statutory fees when your documents are
-            filed.
-          </p>
+        <div style={{ width: "60%", minWidth: "fit-content" }}>
+          <Table isFeesData elements={fileSummary} />
         </div>
       ),
       value: (
-        <>
-          <p>
-            I have reviewed the information and the documents in this filing
-            package and am prepared to submit them for filing. I agree that all
-            fees for this filing package may be charged to the credit card
-            registered to my account.
-          </p>
-          <label
-            className="pt-3"
-            style={{ float: "right" }}
-            htmlFor="agreePayment"
-          >
-            <input
-              id="agreePayment"
-              type="checkbox"
-              onClick={() => setPaymentAgreed(!paymentAgreed)}
-            />
-            &nbsp;
-            <b>I agree</b>
-            <span id="asterisk" className="mandatory">
-              *
-            </span>
-          </label>
-        </>
+        <p>
+          The registry will process statutory fees when your documents are
+          filed.
+        </p>
       ),
       isSideBySide: true
     }
@@ -70,6 +75,11 @@ const getTableElements = (paymentAgreed, setPaymentAgreed) => {
   return elements;
 };
 
+const calloutText = `I have reviewed the information and the documents in this filing
+package and am prepared to submit them for filing. I agree that all
+fees for this filing package may be charged to the credit card
+registered to my account.`;
+
 const submitButton = {
   label: "Submit",
   onClick: () => console.log("submit click"),
@@ -77,7 +87,7 @@ const submitButton = {
 };
 
 export default function Payment({
-  payment: { confirmationPopup, submissionId }
+  payment: { confirmationPopup, submissionId, courtData, files, submissionFee }
 }) {
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
@@ -97,8 +107,7 @@ export default function Payment({
   return (
     <div className="page">
       <div className="content col-md-8">
-        <h2>Payment</h2>
-
+        <h1>Payment</h1>
         {/* TODO: Fix credit card info and link to register card */}
         <Alert
           icon={<MdCreditCard size={32} />}
@@ -118,20 +127,21 @@ export default function Payment({
             </p>
           }
         />
-
         <br />
-
         <DisplayBox
           styling="display-left-element"
-          element={
-            <Table
-              elements={getTableElements(paymentAgreed, setPaymentAgreed)}
-            />
-          }
+          element={<Table elements={getTableElements(files, submissionFee)} />}
         />
-
         <br />
-
+        <h1>Package Submission Details</h1>
+        <p>Your package will be filed to:</p>
+        <Table elements={generateCourtDataTable(courtData)} />
+        <Callout
+          text={calloutText}
+          checkboxLabel="I agree"
+          agreeCallout={() => setPaymentAgreed(!paymentAgreed)}
+        />
+        <br />
         <section className="inline-block pt-2">
           <Button
             label="< Back"
@@ -139,7 +149,6 @@ export default function Payment({
             styling="normal-white btn"
           />
         </section>
-
         <section className="buttons pt-2">
           <ConfirmationPopup
             modal={confirmationPopup.modal}
@@ -155,7 +164,6 @@ export default function Payment({
           />
         </section>
       </div>
-
       <div className="sidecard">
         <Sidecard sideCard={rushSubmissionSidecard} />
         <Sidecard sideCard={csoAccountDetailsSidecard} />
@@ -168,6 +176,9 @@ export default function Payment({
 Payment.propTypes = {
   payment: PropTypes.shape({
     confirmationPopup: propTypes.confirmationPopup,
-    submissionId: PropTypes.string.isRequired
+    submissionId: PropTypes.string.isRequired,
+    courtData: PropTypes.object.isRequired,
+    files: PropTypes.array.isRequired,
+    submissionFee: PropTypes.number.isRequired
   }).isRequired
 };

@@ -13,22 +13,10 @@ import axios from "axios";
 import { getSidecardData } from "../../../modules/sidecardData";
 import { propTypes } from "../../../types/propTypes";
 import { errorRedirect } from "../../../modules/errorRedirect";
+import { generateFileSummaryData } from "../../../modules/generateFileSummaryData";
 
 import "./PackageConfirmation.css";
 import Payment from "../payment/Payment";
-
-const calculateTotalStatutoryFee = files => {
-  let totalStatFee = Dinero({ amount: 0 });
-  files.forEach(file => {
-    totalStatFee = totalStatFee.add(
-      Dinero({
-        amount: parseInt((file.statutoryFeeAmount * 100).toFixed(0), 10)
-      })
-    );
-  });
-
-  return totalStatFee;
-};
 
 const openFile = (file, submissionId) => {
   axios
@@ -50,25 +38,14 @@ const openFile = (file, submissionId) => {
     });
 };
 
-const generateTotalFeeTable = files => {
-  const feesData = [
-    {
-      name: "Statutory Fees:",
-      value: calculateTotalStatutoryFee(files).toFormat("$0,0.00"),
-      isValueBold: true
-    },
-    {
-      name: "Number of Documents in Package:",
-      value: `${files.length}`,
-      isValueBold: true
-    }
-  ];
+const generateTotalFeeTable = (files, submissionFee) => {
+  const fileSummary = generateFileSummaryData(files, submissionFee, false);
 
   return [
     {
       name: (
-        <div style={{ width: "60%" }}>
-          <Table elements={feesData} />
+        <div style={{ width: "45%", minWidth: "fit-content" }}>
+          <Table elements={fileSummary} />
         </div>
       ),
       value: "",
@@ -123,7 +100,13 @@ const generateTableData = (file, submissionId) => {
   return generateTable(file, data, submissionId);
 };
 
-const getFilingPackageData = (submissionId, setFiles, files) => {
+const getFilingPackageData = (
+  submissionId,
+  setFiles,
+  files,
+  setCourtData,
+  setSubmissionFee
+) => {
   if (files.length > 0) return;
 
   axios
@@ -132,7 +115,9 @@ const getFilingPackageData = (submissionId, setFiles, files) => {
         "X-Auth-UserId": sessionStorage.getItem("universalId")
       }
     })
-    .then(({ data: { documents } }) => {
+    .then(({ data: { documents, court, submissionFeeAmount } }) => {
+      setCourtData(court);
+      setSubmissionFee(submissionFeeAmount);
       setFiles(documents);
     })
     .catch(() => window.open(sessionStorage.getItem("errorUrl"), "_self"));
@@ -143,16 +128,35 @@ export default function PackageConfirmation({
   csoAccountStatus: { isNew }
 }) {
   const [files, setFiles] = useState([]);
+  const [courtData, setCourtData] = useState(null);
+  const [submissionFee, setSubmissionFee] = useState(null);
   const [showPayment, setShowPayment] = useState(false);
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
 
   useEffect(() => {
-    getFilingPackageData(submissionId, setFiles, files);
+    getFilingPackageData(
+      submissionId,
+      setFiles,
+      files,
+      setCourtData,
+      setSubmissionFee
+    );
   }, [files, submissionId]);
 
-  if (showPayment)
-    return <Payment payment={{ confirmationPopup, submissionId }} />;
+  if (showPayment) {
+    return (
+      <Payment
+        payment={{
+          confirmationPopup,
+          submissionId,
+          courtData,
+          files,
+          submissionFee
+        }}
+      />
+    );
+  }
 
   return (
     <div className="page">
@@ -168,7 +172,6 @@ export default function PackageConfirmation({
             <br />
           </>
         )}
-
         <h1>Package Confirmation</h1>
         <span>
           Review your package for accuracy and upload any additional or
@@ -181,7 +184,6 @@ export default function PackageConfirmation({
         </span>
         <br />
         <br />
-
         {files.map(file => (
           <div key={file.name}>
             <DisplayBox
@@ -198,7 +200,6 @@ export default function PackageConfirmation({
             <br />
           </div>
         ))}
-
         {/* TODO: temporary lint disable, remove later */}
         {/* eslint-disable jsx-a11y/anchor-is-valid */}
         <h3>
@@ -206,11 +207,11 @@ export default function PackageConfirmation({
           <a href="#">Upload them now.</a>
         </h3>
         <br />
-
-        <h2>Summary</h2>
-        <Table elements={generateTotalFeeTable(files)} />
         <br />
-
+        <h2>Summary</h2>
+        <br />
+        <Table elements={generateTotalFeeTable(files, submissionFee)} />
+        <br />
         <section className="buttons pt-2">
           <ConfirmationPopup
             modal={confirmationPopup.modal}
@@ -226,7 +227,6 @@ export default function PackageConfirmation({
           />
         </section>
       </div>
-
       <div className="sidecard">
         <Sidecard sideCard={csoAccountDetailsSidecard} />
         <Sidecard sideCard={aboutCsoSidecard} />

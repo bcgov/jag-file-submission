@@ -8,9 +8,9 @@ exports[`Payment Component Matches the snapshot 1`] = `
     <div
       class="content col-md-8"
     >
-      <h2>
+      <h1>
         Payment
-      </h2>
+      </h1>
       <div
         class="display-box warning-background no-padding-bottom"
       >
@@ -78,7 +78,7 @@ exports[`Payment Component Matches the snapshot 1`] = `
                   class="side-by-side"
                 >
                   <div
-                    style="width: 80%;"
+                    style="width: 60%; min-width: fit-content;"
                   >
                     <table
                       class=""
@@ -98,13 +98,13 @@ exports[`Payment Component Matches the snapshot 1`] = `
                           <td
                             class=""
                           >
-                            Some Fees:
+                            Number of Documents in Package:
                           </td>
                           <td
                             class="right-align"
                           >
                             <b>
-                              $100.00
+                              2
                             </b>
                           </td>
                         </tr>
@@ -115,13 +115,30 @@ exports[`Payment Component Matches the snapshot 1`] = `
                           <td
                             class=""
                           >
-                            Some More Fees:
+                            Statutory Fees:
                           </td>
                           <td
                             class="right-align"
                           >
                             <b>
-                              $10.00
+                              $40.00
+                            </b>
+                          </td>
+                        </tr>
+                        <tr
+                          class=""
+                          colspan="2"
+                        >
+                          <td
+                            class=""
+                          >
+                            Submission Fee:
+                          </td>
+                          <td
+                            class="right-align"
+                          >
+                            <b>
+                              $25.50
                             </b>
                           </td>
                         </tr>
@@ -141,54 +158,156 @@ exports[`Payment Component Matches the snapshot 1`] = `
                           <td
                             class=""
                           >
-                            Total Fees:
+                            Total Fee:
                           </td>
                           <td
                             class="right-align"
                           >
                             <b>
-                              $110.00
+                              $65.50
                             </b>
                           </td>
                         </tr>
                       </tbody>
                     </table>
-                    <br />
-                    <br />
-                    <p>
-                      The registry will process statutory fees when your documents are filed.
-                    </p>
                   </div>
                 </td>
                 <td>
                   <p>
-                    I have reviewed the information and the documents in this filing package and am prepared to submit them for filing. I agree that all fees for this filing package may be charged to the credit card registered to my account.
+                    The registry will process statutory fees when your documents are filed.
                   </p>
-                  <label
-                    class="pt-3"
-                    for="agreePayment"
-                    style="float: right;"
-                  >
-                    <input
-                      id="agreePayment"
-                      type="checkbox"
-                    />
-                     
-                    <b>
-                      I agree
-                    </b>
-                    <span
-                      class="mandatory"
-                      id="asterisk"
-                    >
-                      *
-                    </span>
-                  </label>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
+      </div>
+      <br />
+      <h1>
+        Package Submission Details
+      </h1>
+      <p>
+        Your package will be filed to:
+      </p>
+      <table
+        class=""
+      >
+        <thead>
+          <tr>
+            <th
+              colspan="2"
+            />
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class=""
+            colspan="2"
+          >
+            <td
+              class="side-by-side"
+            >
+              <div
+                style="width: 45%; min-width: fit-content;"
+              >
+                <table
+                  class=""
+                >
+                  <thead>
+                    <tr>
+                      <th
+                        colspan="2"
+                      />
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      class=""
+                      colspan="2"
+                    >
+                      <td
+                        class=""
+                      >
+                        Court File Number:
+                      </td>
+                      <td
+                        class=""
+                      >
+                        <b>
+                          Court file number
+                        </b>
+                      </td>
+                    </tr>
+                    <tr
+                      class=""
+                      colspan="2"
+                    >
+                      <td
+                        class=""
+                      >
+                        Location:
+                      </td>
+                      <td
+                        class=""
+                      >
+                        <b>
+                          Court location
+                        </b>
+                      </td>
+                    </tr>
+                    <tr
+                      class=""
+                      colspan="2"
+                    >
+                      <td
+                        class=""
+                      >
+                        Level and Class:
+                      </td>
+                      <td
+                        class=""
+                      >
+                        <b>
+                          Level Class
+                        </b>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </td>
+            <td />
+          </tr>
+        </tbody>
+      </table>
+      <div
+        class="bcgov-callout-checkbox"
+      >
+        <p>
+          I have reviewed the information and the documents in this filing
+package and am prepared to submit them for filing. I agree that all
+fees for this filing package may be charged to the credit card
+registered to my account.
+        </p>
+        <label
+          for="agreeCallout"
+          style="float: right;"
+        >
+          <input
+            id="agreeCallout"
+            type="checkbox"
+          />
+           
+          <b>
+            I agree
+          </b>
+          <span
+            class="mandatory"
+            id="asterisk"
+          >
+            *
+          </span>
+        </label>
       </div>
       <br />
       <section
@@ -496,6 +615,219 @@ exports[`Payment Component On back click, it redirects back to the package confi
       </span>
       <br />
       <br />
+      <div>
+        <div
+          class="display-box border-background display-file"
+        >
+          <div
+            class="display-icon"
+          >
+            <div
+              style="color: rgb(252, 186, 25);"
+            >
+              <svg
+                fill="currentColor"
+                height="32"
+                size="32"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+                />
+              </svg>
+            </div>
+          </div>
+          <div
+            class="display-right-element"
+          >
+            <table
+              class=""
+            >
+              <thead>
+                <tr>
+                  <th
+                    colspan="2"
+                  />
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class=""
+                  colspan="2"
+                >
+                  <td
+                    class="vertical-middle"
+                  >
+                    <div
+                      style="width: 80%;"
+                    >
+                      <span
+                        class="file-href"
+                        role="button"
+                        tabindex="0"
+                      >
+                        file name 1
+                      </span>
+                    </div>
+                  </td>
+                  <td>
+                    <table
+                      class=""
+                    >
+                      <thead>
+                        <tr>
+                          <th
+                            colspan="2"
+                          />
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          class=""
+                          colspan="2"
+                        >
+                          <td
+                            class="reduce-width"
+                          >
+                            Description:
+                          </td>
+                          <td
+                            class=""
+                          >
+                            <b>
+                              file description 1
+                            </b>
+                          </td>
+                        </tr>
+                        <tr
+                          class=""
+                          colspan="2"
+                        >
+                          <td
+                            class="reduce-width"
+                          >
+                            Statutory Fee:
+                          </td>
+                          <td
+                            class=""
+                          >
+                            <b>
+                              $40.00
+                            </b>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <br />
+      </div>
+      <div>
+        <div
+          class="display-box border-background display-file"
+        >
+          <div
+            class="display-icon"
+          >
+            <div
+              style="color: rgb(252, 186, 25);"
+            >
+              <svg
+                fill="currentColor"
+                height="32"
+                size="32"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+                />
+              </svg>
+            </div>
+          </div>
+          <div
+            class="display-right-element"
+          >
+            <table
+              class=""
+            >
+              <thead>
+                <tr>
+                  <th
+                    colspan="2"
+                  />
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class=""
+                  colspan="2"
+                >
+                  <td
+                    class="vertical-middle"
+                  >
+                    <div
+                      style="width: 80%;"
+                    >
+                      <span
+                        class="file-href"
+                        role="button"
+                        tabindex="0"
+                      >
+                        file name 2
+                      </span>
+                    </div>
+                  </td>
+                  <td>
+                    <table
+                      class=""
+                    >
+                      <thead>
+                        <tr>
+                          <th
+                            colspan="2"
+                          />
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          class=""
+                          colspan="2"
+                        >
+                          <td
+                            class="reduce-width"
+                          >
+                            Description:
+                          </td>
+                          <td
+                            class=""
+                          >
+                            <b>
+                              file description 2
+                            </b>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <br />
+      </div>
       <h3>
         Do you have additional documents to upload? 
         <a
@@ -505,9 +837,11 @@ exports[`Payment Component On back click, it redirects back to the package confi
         </a>
       </h3>
       <br />
+      <br />
       <h2>
         Summary
       </h2>
+      <br />
       <table
         class=""
       >
@@ -527,7 +861,7 @@ exports[`Payment Component On back click, it redirects back to the package confi
               class="side-by-side"
             >
               <div
-                style="width: 60%;"
+                style="width: 45%; min-width: fit-content;"
               >
                 <table
                   class=""
@@ -547,13 +881,13 @@ exports[`Payment Component On back click, it redirects back to the package confi
                       <td
                         class=""
                       >
-                        Statutory Fees:
+                        Number of Documents in Package:
                       </td>
                       <td
                         class=""
                       >
                         <b>
-                          $0.00
+                          2
                         </b>
                       </td>
                     </tr>
@@ -564,13 +898,30 @@ exports[`Payment Component On back click, it redirects back to the package confi
                       <td
                         class=""
                       >
-                        Number of Documents in Package:
+                        Statutory Fees:
                       </td>
                       <td
                         class=""
                       >
                         <b>
-                          0
+                          $40.00
+                        </b>
+                      </td>
+                    </tr>
+                    <tr
+                      class=""
+                      colspan="2"
+                    >
+                      <td
+                        class=""
+                      >
+                        Submission Fee:
+                      </td>
+                      <td
+                        class=""
+                      >
+                        <b>
+                          $25.50
                         </b>
                       </td>
                     </tr>

@@ -1,5 +1,7 @@
 import React from "react";
+import { getDocumentsData } from "../../../modules/documentTestData";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
+import { getCourtData } from "../../../modules/courtTestData";
 
 import Payment from "./Payment";
 
@@ -12,8 +14,17 @@ sessionStorage.setItem("csoAccountId", "123");
 
 const confirmationPopup = getTestData();
 const submissionId = "abc123";
+const courtData = getCourtData();
+const files = getDocumentsData();
+const submissionFee = 25.5;
 
-const payment = { confirmationPopup, submissionId };
+const payment = {
+  confirmationPopup,
+  submissionId,
+  courtData,
+  files,
+  submissionFee
+};
 
 export const Default = () => <Payment payment={payment} />;
 

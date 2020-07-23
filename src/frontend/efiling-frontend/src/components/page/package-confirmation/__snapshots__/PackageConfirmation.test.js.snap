@@ -242,9 +242,11 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
         </a>
       </h3>
       <br />
+      <br />
       <h2>
         Summary
       </h2>
+      <br />
       <table
         class=""
       >
@@ -264,7 +266,7 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
               class="side-by-side"
             >
               <div
-                style="width: 60%;"
+                style="width: 45%; min-width: fit-content;"
               >
                 <table
                   class=""
@@ -277,6 +279,23 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
                     </tr>
                   </thead>
                   <tbody>
+                    <tr
+                      class=""
+                      colspan="2"
+                    >
+                      <td
+                        class=""
+                      >
+                        Number of Documents in Package:
+                      </td>
+                      <td
+                        class=""
+                      >
+                        <b>
+                          2
+                        </b>
+                      </td>
+                    </tr>
                     <tr
                       class=""
                       colspan="2"
@@ -301,13 +320,13 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
                       <td
                         class=""
                       >
-                        Number of Documents in Package:
+                        Submission Fee:
                       </td>
                       <td
                         class=""
                       >
                         <b>
-                          2
+                          $25.50
                         </b>
                       </td>
                     </tr>
@@ -789,9 +808,11 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
         </a>
       </h3>
       <br />
+      <br />
       <h2>
         Summary
       </h2>
+      <br />
       <table
         class=""
       >
@@ -811,7 +832,7 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
               class="side-by-side"
             >
               <div
-                style="width: 60%;"
+                style="width: 45%; min-width: fit-content;"
               >
                 <table
                   class=""
@@ -824,6 +845,23 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
                     </tr>
                   </thead>
                   <tbody>
+                    <tr
+                      class=""
+                      colspan="2"
+                    >
+                      <td
+                        class=""
+                      >
+                        Number of Documents in Package:
+                      </td>
+                      <td
+                        class=""
+                      >
+                        <b>
+                          2
+                        </b>
+                      </td>
+                    </tr>
                     <tr
                       class=""
                       colspan="2"
@@ -848,13 +886,13 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
                       <td
                         class=""
                       >
-                        Number of Documents in Package:
+                        Submission Fee:
                       </td>
                       <td
                         class=""
                       >
                         <b>
-                          2
+                          $25.50
                         </b>
                       </td>
                     </tr>
@@ -1070,9 +1108,9 @@ exports[`PackageConfirmation Component On click of continue to payment button, i
     <div
       class="content col-md-8"
     >
-      <h2>
+      <h1>
         Payment
-      </h2>
+      </h1>
       <div
         class="display-box warning-background no-padding-bottom"
       >
@@ -1140,7 +1178,7 @@ exports[`PackageConfirmation Component On click of continue to payment button, i
                   class="side-by-side"
                 >
                   <div
-                    style="width: 80%;"
+                    style="width: 60%; min-width: fit-content;"
                   >
                     <table
                       class=""
@@ -1160,13 +1198,13 @@ exports[`PackageConfirmation Component On click of continue to payment button, i
                           <td
                             class=""
                           >
-                            Some Fees:
+                            Number of Documents in Package:
                           </td>
                           <td
                             class="right-align"
                           >
                             <b>
-                              $100.00
+                              2
                             </b>
                           </td>
                         </tr>
@@ -1177,13 +1215,30 @@ exports[`PackageConfirmation Component On click of continue to payment button, i
                           <td
                             class=""
                           >
-                            Some More Fees:
+                            Statutory Fees:
                           </td>
                           <td
                             class="right-align"
                           >
                             <b>
-                              $10.00
+                              $40.00
+                            </b>
+                          </td>
+                        </tr>
+                        <tr
+                          class=""
+                          colspan="2"
+                        >
+                          <td
+                            class=""
+                          >
+                            Submission Fee:
+                          </td>
+                          <td
+                            class="right-align"
+                          >
+                            <b>
+                              $25.50
                             </b>
                           </td>
                         </tr>
@@ -1203,54 +1258,156 @@ exports[`PackageConfirmation Component On click of continue to payment button, i
                           <td
                             class=""
                           >
-                            Total Fees:
+                            Total Fee:
                           </td>
                           <td
                             class="right-align"
                           >
                             <b>
-                              $110.00
+                              $65.50
                             </b>
                           </td>
                         </tr>
                       </tbody>
                     </table>
-                    <br />
-                    <br />
-                    <p>
-                      The registry will process statutory fees when your documents are filed.
-                    </p>
                   </div>
                 </td>
                 <td>
                   <p>
-                    I have reviewed the information and the documents in this filing package and am prepared to submit them for filing. I agree that all fees for this filing package may be charged to the credit card registered to my account.
+                    The registry will process statutory fees when your documents are filed.
                   </p>
-                  <label
-                    class="pt-3"
-                    for="agreePayment"
-                    style="float: right;"
-                  >
-                    <input
-                      id="agreePayment"
-                      type="checkbox"
-                    />
-                     
-                    <b>
-                      I agree
-                    </b>
-                    <span
-                      class="mandatory"
-                      id="asterisk"
-                    >
-                      *
-                    </span>
-                  </label>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
+      </div>
+      <br />
+      <h1>
+        Package Submission Details
+      </h1>
+      <p>
+        Your package will be filed to:
+      </p>
+      <table
+        class=""
+      >
+        <thead>
+          <tr>
+            <th
+              colspan="2"
+            />
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class=""
+            colspan="2"
+          >
+            <td
+              class="side-by-side"
+            >
+              <div
+                style="width: 45%; min-width: fit-content;"
+              >
+                <table
+                  class=""
+                >
+                  <thead>
+                    <tr>
+                      <th
+                        colspan="2"
+                      />
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      class=""
+                      colspan="2"
+                    >
+                      <td
+                        class=""
+                      >
+                        Court File Number:
+                      </td>
+                      <td
+                        class=""
+                      >
+                        <b>
+                          Court file number
+                        </b>
+                      </td>
+                    </tr>
+                    <tr
+                      class=""
+                      colspan="2"
+                    >
+                      <td
+                        class=""
+                      >
+                        Location:
+                      </td>
+                      <td
+                        class=""
+                      >
+                        <b>
+                          Court location
+                        </b>
+                      </td>
+                    </tr>
+                    <tr
+                      class=""
+                      colspan="2"
+                    >
+                      <td
+                        class=""
+                      >
+                        Level and Class:
+                      </td>
+                      <td
+                        class=""
+                      >
+                        <b>
+                          Level Class
+                        </b>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </td>
+            <td />
+          </tr>
+        </tbody>
+      </table>
+      <div
+        class="bcgov-callout-checkbox"
+      >
+        <p>
+          I have reviewed the information and the documents in this filing
+package and am prepared to submit them for filing. I agree that all
+fees for this filing package may be charged to the credit card
+registered to my account.
+        </p>
+        <label
+          for="agreeCallout"
+          style="float: right;"
+        >
+          <input
+            id="agreeCallout"
+            type="checkbox"
+          />
+           
+          <b>
+            I agree
+          </b>
+          <span
+            class="mandatory"
+            id="asterisk"
+          >
+            *
+          </span>
+        </label>
       </div>
       <br />
       <section

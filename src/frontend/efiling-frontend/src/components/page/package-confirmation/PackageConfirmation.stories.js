@@ -3,6 +3,7 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
 import { getDocumentsData } from "../../../modules/documentTestData";
+import { getCourtData } from "../../../modules/courtTestData";
 
 import PackageConfirmation from "./PackageConfirmation";
 
@@ -17,10 +18,14 @@ const confirmationPopup = getTestData();
 const packageConfirmation = { confirmationPopup, submissionId };
 const csoAccountStatus = { isNew: false };
 const documents = getDocumentsData();
+const courtData = getCourtData();
+const submissionFeeAmount = 25.5;
 
 const LoadData = props => {
   const mock = new MockAdapter(axios);
-  mock.onGet(apiRequest).reply(200, { documents });
+  mock
+    .onGet(apiRequest)
+    .reply(200, { documents, court: courtData, submissionFeeAmount });
   return props.children({ packageConfirmation, csoAccountStatus });
 };
 

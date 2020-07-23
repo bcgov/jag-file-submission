@@ -4,6 +4,7 @@ import MockAdapter from "axios-mock-adapter";
 import { render, wait, fireEvent, getByText } from "@testing-library/react";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
 import { getDocumentsData } from "../../../modules/documentTestData";
+import { getCourtData } from "../../../modules/courtTestData";
 
 import PackageConfirmation from "./PackageConfirmation";
 
@@ -20,6 +21,8 @@ describe("PackageConfirmation Component", () => {
     type: "file type",
     statutoryFeeAmount: 40
   };
+  const court = getCourtData();
+  const submissionFeeAmount = 25.5;
 
   sessionStorage.setItem("csoAccountId", "123");
 
@@ -30,7 +33,9 @@ describe("PackageConfirmation Component", () => {
   });
 
   test("Matches the existing account snapshot", async () => {
-    mock.onGet(apiRequest).reply(200, { documents });
+    mock
+      .onGet(apiRequest)
+      .reply(200, { documents, court, submissionFeeAmount });
 
     const { asFragment } = render(
       <PackageConfirmation
@@ -45,7 +50,9 @@ describe("PackageConfirmation Component", () => {
   });
 
   test("Matches the new account snapshot", async () => {
-    mock.onGet(apiRequest).reply(200, { documents });
+    mock
+      .onGet(apiRequest)
+      .reply(200, { documents, court, submissionFeeAmount });
 
     const { asFragment } = render(
       <PackageConfirmation
@@ -77,7 +84,9 @@ describe("PackageConfirmation Component", () => {
   });
 
   test("On click of continue to payment button, it redirects to the payment page", async () => {
-    mock.onGet(apiRequest).reply(200, { documents });
+    mock
+      .onGet(apiRequest)
+      .reply(200, { documents, court, submissionFeeAmount });
 
     const { container, asFragment } = render(
       <PackageConfirmation
@@ -86,11 +95,11 @@ describe("PackageConfirmation Component", () => {
       />
     );
 
+    await wait(() => {});
+
     fireEvent.click(getByText(container, "Continue to Payment"));
 
-    await wait(() => {
-      expect(asFragment()).toMatchSnapshot();
-    });
+    expect(asFragment()).toMatchSnapshot();
   });
 
   test("Successfully opens the file in new window when get document call succeeds (on click)", async () => {
@@ -99,7 +108,9 @@ describe("PackageConfirmation Component", () => {
     global.URL.createObjectURL = jest.fn();
     global.URL.createObjectURL.mockReturnValueOnce("fileurl.com");
 
-    mock.onGet(apiRequest).reply(200, { documents });
+    mock
+      .onGet(apiRequest)
+      .reply(200, { documents, court, submissionFeeAmount });
     mock.onGet(`/submission/${submissionId}/document/${file.name}`).reply(200, {
       blob
     });
@@ -126,7 +137,9 @@ describe("PackageConfirmation Component", () => {
     global.URL.createObjectURL = jest.fn();
     global.URL.createObjectURL.mockReturnValueOnce("fileurl.com");
 
-    mock.onGet(apiRequest).reply(200, { documents });
+    mock
+      .onGet(apiRequest)
+      .reply(200, { documents, court, submissionFeeAmount });
     mock.onGet(`/submission/${submissionId}/document/${file.name}`).reply(200, {
       blob
     });
@@ -150,7 +163,9 @@ describe("PackageConfirmation Component", () => {
   test("Fails to open the file in new window when get document call fails", async () => {
     sessionStorage.setItem("errorUrl", "error.com");
 
-    mock.onGet(apiRequest).reply(200, { documents });
+    mock
+      .onGet(apiRequest)
+      .reply(200, { documents, court, submissionFeeAmount });
     mock
       .onGet(`/submission/${submissionId}/document/${file.name}`)
       .reply(400, { message: "There was an error." });

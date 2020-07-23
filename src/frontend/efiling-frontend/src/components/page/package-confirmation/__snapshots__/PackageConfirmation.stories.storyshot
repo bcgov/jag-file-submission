@@ -242,9 +242,11 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
         </a>
       </h3>
       <br />
+      <br />
       <h2>
         Summary
       </h2>
+      <br />
       <table
         class=""
       >
@@ -264,7 +266,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
               class="side-by-side"
             >
               <div
-                style="width: 60%;"
+                style="width: 45%; min-width: fit-content;"
               >
                 <table
                   class=""
@@ -277,6 +279,23 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
                     </tr>
                   </thead>
                   <tbody>
+                    <tr
+                      class=""
+                      colspan="2"
+                    >
+                      <td
+                        class=""
+                      >
+                        Number of Documents in Package:
+                      </td>
+                      <td
+                        class=""
+                      >
+                        <b>
+                          2
+                        </b>
+                      </td>
+                    </tr>
                     <tr
                       class=""
                       colspan="2"
@@ -301,13 +320,13 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
                       <td
                         class=""
                       >
-                        Number of Documents in Package:
+                        Submission Fee:
                       </td>
                       <td
                         class=""
                       >
                         <b>
-                          2
+                          $25.50
                         </b>
                       </td>
                     </tr>
@@ -757,9 +776,11 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
         </a>
       </h3>
       <br />
+      <br />
       <h2>
         Summary
       </h2>
+      <br />
       <table
         class=""
       >
@@ -779,7 +800,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
               class="side-by-side"
             >
               <div
-                style="width: 60%;"
+                style="width: 45%; min-width: fit-content;"
               >
                 <table
                   class=""
@@ -792,6 +813,23 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
                     </tr>
                   </thead>
                   <tbody>
+                    <tr
+                      class=""
+                      colspan="2"
+                    >
+                      <td
+                        class=""
+                      >
+                        Number of Documents in Package:
+                      </td>
+                      <td
+                        class=""
+                      >
+                        <b>
+                          2
+                        </b>
+                      </td>
+                    </tr>
                     <tr
                       class=""
                       colspan="2"
@@ -816,13 +854,13 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
                       <td
                         class=""
                       >
-                        Number of Documents in Package:
+                        Submission Fee:
                       </td>
                       <td
                         class=""
                       >
                         <b>
-                          2
+                          $25.50
                         </b>
                       </td>
                     </tr>
@@ -1304,9 +1342,11 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
         </a>
       </h3>
       <br />
+      <br />
       <h2>
         Summary
       </h2>
+      <br />
       <table
         class=""
       >
@@ -1326,7 +1366,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
               class="side-by-side"
             >
               <div
-                style="width: 60%;"
+                style="width: 45%; min-width: fit-content;"
               >
                 <table
                   class=""
@@ -1339,6 +1379,23 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
                     </tr>
                   </thead>
                   <tbody>
+                    <tr
+                      class=""
+                      colspan="2"
+                    >
+                      <td
+                        class=""
+                      >
+                        Number of Documents in Package:
+                      </td>
+                      <td
+                        class=""
+                      >
+                        <b>
+                          2
+                        </b>
+                      </td>
+                    </tr>
                     <tr
                       class=""
                       colspan="2"
@@ -1363,13 +1420,13 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
                       <td
                         class=""
                       >
-                        Number of Documents in Package:
+                        Submission Fee:
                       </td>
                       <td
                         class=""
                       >
                         <b>
-                          2
+                          $25.50
                         </b>
                       </td>
                     </tr>
