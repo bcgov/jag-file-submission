@@ -1,6 +1,7 @@
 import React from "react";
 import { getDocumentsData } from "../../../modules/documentTestData";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
+import { getCourtData } from "../../../modules/courtTestData";
 
 import Payment from "./Payment";
 
@@ -13,12 +14,7 @@ sessionStorage.setItem("csoAccountId", "123");
 
 const confirmationPopup = getTestData();
 const submissionId = "abc123";
-const courtData = {
-  locationDescription: "Court location",
-  fileNumber: "Court file number",
-  level: "Level",
-  courtClass: "Class"
-};
+const courtData = getCourtData();
 const files = getDocumentsData();
 const submissionFee = 25.5;
 

@@ -10,6 +10,7 @@ import { getTestData } from "../../../modules/confirmationPopupTestData";
 import { getUserDetails } from "../../../modules/userDetails";
 import { getDocumentsData } from "../../../modules/documentTestData";
 import { getNavigationData } from "../../../modules/navigationTestData";
+import { getCourtData } from "../../../modules/courtTestData";
 
 const header = {
   name: "eFiling Frontend",
@@ -26,6 +27,8 @@ describe("Home", () => {
   const getFilingPackagePath = `/submission/${submissionId}/filing-package`;
   const navigation = getNavigationData();
   const documents = getDocumentsData();
+  const court = getCourtData();
+  const submissionFeeAmount = 25.5;
   const userDetails = getUserDetails();
 
   window.open = jest.fn();
@@ -46,7 +49,9 @@ describe("Home", () => {
 
   test("Component matches the snapshot when user cso account exists", async () => {
     mock.onGet(apiRequest).reply(200, { userDetails, navigation });
-    mock.onGet(getFilingPackagePath).reply(200, { documents });
+    mock
+      .onGet(getFilingPackagePath)
+      .reply(200, { documents, court, submissionFeeAmount });
 
     const { asFragment } = render(component);
 

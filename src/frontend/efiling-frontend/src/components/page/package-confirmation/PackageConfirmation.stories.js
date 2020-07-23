@@ -3,6 +3,7 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
 import { getDocumentsData } from "../../../modules/documentTestData";
+import { getCourtData } from "../../../modules/courtTestData";
 
 import PackageConfirmation from "./PackageConfirmation";
 
@@ -17,12 +18,7 @@ const confirmationPopup = getTestData();
 const packageConfirmation = { confirmationPopup, submissionId };
 const csoAccountStatus = { isNew: false };
 const documents = getDocumentsData();
-const courtData = {
-  locationDescription: "Court location",
-  fileNumber: "Court file number",
-  level: "Level",
-  courtClass: "Class"
-};
+const courtData = getCourtData();
 const submissionFeeAmount = 25.5;
 
 const LoadData = props => {

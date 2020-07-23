@@ -6,6 +6,7 @@ import MockAdapter from "axios-mock-adapter";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
 import { getUserDetails } from "../../../modules/userDetails";
 import { getDocumentsData } from "../../../modules/documentTestData";
+import { getCourtData } from "../../../modules/courtTestData";
 import { getNavigationData } from "../../../modules/navigationTestData";
 
 import Home from "./Home";
@@ -28,6 +29,8 @@ const apiRequest = `/submission/${submissionId}`;
 const getFilingPackagePath = `/submission/${submissionId}/filing-package`;
 const navigation = getNavigationData();
 const documents = getDocumentsData();
+const court = getCourtData();
+const submissionFeeAmount = 25.5;
 const userDetails = getUserDetails();
 
 sessionStorage.setItem("errorUrl", "error.com");
@@ -42,7 +45,9 @@ const LoaderStateData = props => {
 const AccountExistsStateData = props => {
   const mock = new MockAdapter(axios);
   mock.onGet(apiRequest).reply(200, { userDetails, navigation });
-  mock.onGet(getFilingPackagePath).reply(200, { documents });
+  mock
+    .onGet(getFilingPackagePath)
+    .reply(200, { documents, court, submissionFeeAmount });
   return props.children({ page });
 };
 
