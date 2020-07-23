@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { useDropzone } from "react-dropzone";
 import { Sidecard, Button } from "shared-components";
 import { getSidecardData } from "../../../modules/sidecardData";
+import { propTypes } from "../../../types/propTypes";
 
 import "./Upload.css";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
@@ -77,3 +79,10 @@ export default function Upload({
     </div>
   );
 }
+
+Upload.propTypes = {
+  upload: PropTypes.shape({
+    confirmationPopup: propTypes.confirmationPopup,
+    submissionId: PropTypes.string.isRequired
+  }).isRequired
+};
