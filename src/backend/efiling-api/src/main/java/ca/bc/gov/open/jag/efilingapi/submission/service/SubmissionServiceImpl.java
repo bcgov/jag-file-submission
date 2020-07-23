@@ -14,6 +14,8 @@ import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
+import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
@@ -41,6 +43,8 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private final EfilingCourtService efilingCourtService;
 
+    private final EfilingSubmissionService efilingSubmissionService;
+
     private final DocumentStore documentStore;
 
     public SubmissionServiceImpl(
@@ -49,13 +53,14 @@ public class SubmissionServiceImpl implements SubmissionService {
             SubmissionMapper submissionMapper,
             EfilingAccountService efilingAccountService,
             EfilingLookupService efilingLookupService,
-            EfilingCourtService efilingCourtService, DocumentStore documentStore) {
+            EfilingCourtService efilingCourtService, EfilingSubmissionService efilingSubmissionService, DocumentStore documentStore) {
         this.submissionStore = submissionStore;
         this.cacheProperties = cacheProperties;
         this.submissionMapper = submissionMapper;
         this.efilingAccountService = efilingAccountService;
         this.efilingLookupService = efilingLookupService;
         this.efilingCourtService = efilingCourtService;
+        this.efilingSubmissionService = efilingSubmissionService;
         this.documentStore = documentStore;
     }
 
@@ -85,6 +90,15 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         return cachedSubmission.get();
 
+    }
+
+    @Override
+    public SubmitFilingPackageResponse submitFilingPackage(UUID authUserId, UUID submissionId, SubmitFilingPackageRequest submitFilingPackageRequest) {
+        SubmitFilingPackageResponse result = new SubmitFilingPackageResponse();
+        //TODO: create a pull submitting model
+        result.setTransactionId(efilingSubmissionService.submitFilingPackage(submissionId));
+        result.setAcknowledge(LocalDate.now());
+        return result;
     }
 
     private AccountDetails fakeFromBceId(UUID authUserId) {

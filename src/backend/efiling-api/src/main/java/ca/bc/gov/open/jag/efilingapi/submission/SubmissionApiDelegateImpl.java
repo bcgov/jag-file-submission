@@ -12,11 +12,8 @@ import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMappe
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
-import ca.bc.gov.open.jag.efilingcommons.exceptions.CSOHasMultipleAccountException;
-import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
-import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
-import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -50,19 +47,18 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     private final DocumentStore documentStore;
 
-    private final EfilingSubmissionService efilingSubmissionService;
+
 
     public SubmissionApiDelegateImpl(
             SubmissionService submissionService,
             GenerateUrlResponseMapper generateUrlResponseMapper,
             NavigationProperties navigationProperties,
-            SubmissionStore submissionStore, DocumentStore documentStore, EfilingSubmissionService efilingSubmissionService) {
+            SubmissionStore submissionStore, DocumentStore documentStore) {
         this.submissionService = submissionService;
         this.generateUrlResponseMapper = generateUrlResponseMapper;
         this.navigationProperties = navigationProperties;
         this.submissionStore = submissionStore;
         this.documentStore = documentStore;
-        this.efilingSubmissionService = efilingSubmissionService;
     }
 
     @Override
@@ -233,15 +229,18 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     @Override
     public ResponseEntity<SubmitFilingPackageResponse> submit(UUID xAuthUserId, UUID id, SubmitFilingPackageRequest submitFilingPackageRequest) {
-
+        ResponseEntity response;
         MDC.put(Keys.EFILING_SUBMISSION_ID, id.toString());
         //TODO: this will get the submission details from the cache and build a submission object
-        SubmitFilingPackageResponse result = new SubmitFilingPackageResponse();
-        result.setTransactionId(efilingSubmissionService.submitFilingPackage(id));
-
+        try {
+            SubmitFilingPackageResponse result = submissionService.submitFilingPackage(xAuthUserId, id, submitFilingPackageRequest);
+            response = ResponseEntity.ok(result);
+        } catch (EfilingSubmissionServiceException e) {
+            response = new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         MDC.remove(Keys.EFILING_SUBMISSION_ID);
 
-        return ResponseEntity.ok(result);
+        return response;
     }
 
     public EfilingError buildEfilingError(ErrorResponse errorResponse) {

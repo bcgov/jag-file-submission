@@ -57,8 +57,6 @@ public class GetSubmissionTest {
     @Mock
     private DocumentStore documentStoreMock;
 
-    @Mock
-    private EfilingSubmissionService efilingSubmissionServiceMock;
 
     @BeforeAll
     public void setUp() {
@@ -91,7 +89,7 @@ public class GetSubmissionTest {
 
         Mockito.when(submissionStoreMock.get(Mockito.eq(TestHelpers.CASE_3), Mockito.any())).thenReturn(Optional.of(submissionWithoutCsoAccount));
 
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock, efilingSubmissionServiceMock);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock);
 
     }
 

@@ -49,9 +49,6 @@ public class GenerateUrlTest {
     @Mock
     private DocumentStore documentStoreMock;
 
-    @Mock
-    private EfilingSubmissionService efilingSubmissionServiceMock;
-
     @BeforeAll
     public void setUp() {
 
@@ -95,7 +92,7 @@ public class GenerateUrlTest {
         // Testing the mapper part of this test
         generateUrlResponseMapperMock = new GenerateUrlResponseMapperImpl();
 
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock, efilingSubmissionServiceMock);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock);
 
     }
 

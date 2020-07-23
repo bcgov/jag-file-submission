@@ -427,7 +427,11 @@ components:
       type: object
       required:
         - transactionId
+        - acknowledge
       properties:
         transactionId:
           type: number
           description: the transaction id returned from cso
+        acknowledge:
+          type: date
+          description: date transaction was returned

@@ -34,8 +34,6 @@ public class GetSubmissionDocumentTest {
     @Mock
     private DocumentStore documentStoreMock;
 
-    @Mock
-    private EfilingSubmissionService efilingSubmissionServiceMock;
 
     @BeforeAll
     public void setUp() {
@@ -47,7 +45,7 @@ public class GetSubmissionDocumentTest {
 
         Mockito.when(documentStoreMock.get(Mockito.endsWith("test.txt"))).thenReturn(CONTENT.getBytes());
 
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock, efilingSubmissionServiceMock);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock);
 
     }
 

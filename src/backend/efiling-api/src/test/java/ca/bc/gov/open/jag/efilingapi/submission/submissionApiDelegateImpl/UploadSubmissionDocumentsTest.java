@@ -48,8 +48,6 @@ public class UploadSubmissionDocumentsTest {
     private DocumentStore documentStoreMock;
     @Mock
     private Resource resourceMock;
-    @Mock
-    private EfilingSubmissionService efilingSubmissionServiceMock;
 
     @BeforeAll
     public void setUp() throws IOException {
@@ -59,7 +57,7 @@ public class UploadSubmissionDocumentsTest {
         Mockito.when(multipartFileMock.getResource()).thenReturn(resourceMock);
         Mockito.when(multipartFileMock.getBytes()).thenThrow(new IOException("random"));
 
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock, efilingSubmissionServiceMock);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock);
     }
 
     @Test
