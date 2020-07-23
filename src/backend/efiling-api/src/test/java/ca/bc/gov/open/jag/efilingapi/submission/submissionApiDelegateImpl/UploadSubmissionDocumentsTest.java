@@ -8,6 +8,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -47,6 +48,8 @@ public class UploadSubmissionDocumentsTest {
     private DocumentStore documentStoreMock;
     @Mock
     private Resource resourceMock;
+    @Mock
+    private EfilingSubmissionService efilingSubmissionServiceMock;
 
     @BeforeAll
     public void setUp() throws IOException {
@@ -56,7 +59,7 @@ public class UploadSubmissionDocumentsTest {
         Mockito.when(multipartFileMock.getResource()).thenReturn(resourceMock);
         Mockito.when(multipartFileMock.getBytes()).thenThrow(new IOException("random"));
 
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock, efilingSubmissionServiceMock);
     }
 
     @Test

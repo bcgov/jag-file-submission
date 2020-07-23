@@ -1,10 +1,7 @@
 package ca.bc.gov.open.jag.efiling.demo;
 
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
+import ca.bc.gov.open.jag.efilingcommons.service.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
@@ -35,6 +32,9 @@ public class AutoConfiguration {
 
     @Bean
     public EfilingCourtService efilingCourtService() { return new EfilingCourtServiceDemoImpl(); }
+
+    @Bean
+    public EfilingSubmissionService efilingSubmissionService() { return new EfilingSubmissionServiceDemoImpl(); }
 
 
     /**

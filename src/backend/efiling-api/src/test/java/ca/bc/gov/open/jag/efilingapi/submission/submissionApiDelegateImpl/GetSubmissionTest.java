@@ -12,6 +12,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -56,6 +57,9 @@ public class GetSubmissionTest {
     @Mock
     private DocumentStore documentStoreMock;
 
+    @Mock
+    private EfilingSubmissionService efilingSubmissionServiceMock;
+
     @BeforeAll
     public void setUp() {
 
@@ -87,7 +91,7 @@ public class GetSubmissionTest {
 
         Mockito.when(submissionStoreMock.get(Mockito.eq(TestHelpers.CASE_3), Mockito.any())).thenReturn(Optional.of(submissionWithoutCsoAccount));
 
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock, efilingSubmissionServiceMock);
 
     }
 

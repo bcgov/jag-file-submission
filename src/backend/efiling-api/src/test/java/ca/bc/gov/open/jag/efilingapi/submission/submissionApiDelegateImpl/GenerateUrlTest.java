@@ -17,6 +17,7 @@ import ca.bc.gov.open.jag.efilingcommons.exceptions.CSOHasMultipleAccountExcepti
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -47,6 +48,9 @@ public class GenerateUrlTest {
 
     @Mock
     private DocumentStore documentStoreMock;
+
+    @Mock
+    private EfilingSubmissionService efilingSubmissionServiceMock;
 
     @BeforeAll
     public void setUp() {
@@ -91,7 +95,7 @@ public class GenerateUrlTest {
         // Testing the mapper part of this test
         generateUrlResponseMapperMock = new GenerateUrlResponseMapperImpl();
 
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock, efilingSubmissionServiceMock);
 
     }
 

@@ -1,9 +1,6 @@
 package ca.bc.gov.open.jag.efiling.demo;
 
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
+import ca.bc.gov.open.jag.efilingcommons.service.*;
 import org.junit.jupiter.api.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -38,7 +35,7 @@ public class AutoConfigurationTest {
     public void autoConfigurationShouldReturnEfilingDocumentServiceDemoImpl() {
 
         EfilingDocumentService actual = sut.efilingDocumentService();
-        Assertions.assertEquals(EfilingDocumentService.class, actual.getClass());
+        Assertions.assertEquals(EfilingDocumentServiceDemoImpl.class, actual.getClass());
 
     }
 
@@ -47,10 +44,17 @@ public class AutoConfigurationTest {
     public void autoConfigurationShouldReturnEfilingCourtServiceDemoImpl() {
 
         EfilingCourtService actual = sut.efilingCourtService();
-        Assertions.assertEquals(EfilingCourtService.class, actual.getClass());
+        Assertions.assertEquals(EfilingCourtServiceDemoImpl.class, actual.getClass());
 
     }
 
+    @Test
+    @DisplayName("OK: AutoConfiguration should return instance of EfilingSubmissionServiceDemoImpl")
+    public void autoConfigurationShouldReturnEfilingSubmissionServiceDemoImpl() {
 
+        EfilingSubmissionService actual = sut.efilingSubmissionService();
+        Assertions.assertEquals(EfilingSubmissionServiceDemoImpl.class, actual.getClass());
+
+    }
 
 }

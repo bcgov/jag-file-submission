@@ -9,6 +9,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMappe
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -39,6 +40,9 @@ public class GetPackageInformationTest {
     @Mock
     private DocumentStore documentStoreMock;
 
+    @Mock
+    private EfilingSubmissionService efilingSubmissionServiceMock;
+
     @BeforeAll
     public void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -53,7 +57,7 @@ public class GetPackageInformationTest {
 
         Mockito.when(submissionStoreMock.get(Mockito.eq(TestHelpers.CASE_1), Mockito.any())).thenReturn(Optional.of(submissionWithParentApplication));
 
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock, efilingSubmissionServiceMock);
     }
 
     @Test

@@ -16,6 +16,7 @@ import ca.bc.gov.open.jag.efilingcommons.exceptions.CSOHasMultipleAccountExcepti
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -49,16 +50,19 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     private final DocumentStore documentStore;
 
+    private final EfilingSubmissionService efilingSubmissionService;
+
     public SubmissionApiDelegateImpl(
             SubmissionService submissionService,
             GenerateUrlResponseMapper generateUrlResponseMapper,
             NavigationProperties navigationProperties,
-            SubmissionStore submissionStore, DocumentStore documentStore) {
+            SubmissionStore submissionStore, DocumentStore documentStore, EfilingSubmissionService efilingSubmissionService) {
         this.submissionService = submissionService;
         this.generateUrlResponseMapper = generateUrlResponseMapper;
         this.navigationProperties = navigationProperties;
         this.submissionStore = submissionStore;
         this.documentStore = documentStore;
+        this.efilingSubmissionService = efilingSubmissionService;
     }
 
     @Override
@@ -225,6 +229,19 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             return ResponseEntity.notFound().build();
 
         return ResponseEntity.ok(fromCacheSubmission.get().getFilingPackage());
+    }
+
+    @Override
+    public ResponseEntity<SubmitFilingPackageResponse> submit(UUID xAuthUserId, UUID id, SubmitFilingPackageRequest submitFilingPackageRequest) {
+
+        MDC.put(Keys.EFILING_SUBMISSION_ID, id.toString());
+        //TODO: this will get the submission details from the cache and build a submission object
+        SubmitFilingPackageResponse result = new SubmitFilingPackageResponse();
+        result.setTransactionId(efilingSubmissionService.submitFilingPackage(id));
+
+        MDC.remove(Keys.EFILING_SUBMISSION_ID);
+
+        return ResponseEntity.ok(result);
     }
 
     public EfilingError buildEfilingError(ErrorResponse errorResponse) {

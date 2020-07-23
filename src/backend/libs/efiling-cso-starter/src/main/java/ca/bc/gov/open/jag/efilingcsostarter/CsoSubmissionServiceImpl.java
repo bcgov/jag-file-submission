@@ -7,6 +7,7 @@ import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceExce
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     private final FilingFacadeBean filingFacadeBean;
@@ -16,13 +17,14 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     }
 
     @Override
-    public BigDecimal submitFilingPackage(String stuff) {
+    public BigDecimal submitFilingPackage(UUID submissionId) {
+        if(submissionId == null) throw new IllegalArgumentException("Submission id cannot be null");
         FilingPackage filingPackage = new FilingPackage();
+
         try {
             return filingFacadeBean.submitFiling(filingPackage);
         } catch (NestedEjbException_Exception e) {
             throw new EfilingSubmissionServiceException("Exception while retrieving submitting filing", e.getCause());
         }
-
     }
 }
