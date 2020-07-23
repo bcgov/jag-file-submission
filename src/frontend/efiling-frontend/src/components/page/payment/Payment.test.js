@@ -51,13 +51,11 @@ describe("Payment Component", () => {
   });
 
   test("On back click, it redirects back to the package confirmation page", async () => {
-    mock
-      .onGet(apiRequest)
-      .reply(200, {
-        documents: files,
-        court: courtData,
-        submissionFeeAmount: submissionFee
-      });
+    mock.onGet(apiRequest).reply(200, {
+      documents: files,
+      court: courtData,
+      submissionFeeAmount: submissionFee
+    });
 
     const { container, asFragment } = render(<Payment payment={payment} />);
 
