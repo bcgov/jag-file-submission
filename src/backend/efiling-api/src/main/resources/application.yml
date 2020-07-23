@@ -8,6 +8,17 @@ spring:
   cache:
     redis:
       time-to-live: ${CACHE_TTL:600000}
+keycloak:
+  auth-server-url: http://localhost:8081/auth
+  realm: SpringBootKeycloak
+  resource: login-app
+  public-client: true
+  security-constraints:
+    - authRoles:
+      - user
+    - securityCollections:
+      - patterns:
+        - /submission/*
 jag:
   efiling:
     global:
