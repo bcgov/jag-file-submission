@@ -1,4 +1,5 @@
 import React from "react";
+import { getTestData } from "../../../modules/confirmationPopupTestData";
 
 import Upload from "./Upload";
 
@@ -7,9 +8,13 @@ export default {
   component: Upload
 };
 
-export const Default = () => <Upload />;
+const confirmationPopup = getTestData();
+const submissionId = "abc123";
+const upload = { confirmationPopup, submissionId };
 
-export const Mobile = () => <Upload />;
+export const Default = () => <Upload upload={upload} />;
+
+export const Mobile = () => <Upload upload={upload} />;
 
 const mobileViewport = {
   parameters: {

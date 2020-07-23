@@ -77,14 +77,48 @@ const rushSubmission = () => {
   };
 };
 
+const amendments = () => {
+  return {
+    heading: "Amendments",
+    content: [
+      <p key="amendments">
+        Please indicate document uploads that are amendments - changes or
+        alterations to existing, previously submitted documents.
+      </p>
+    ],
+    type: "bluegrey",
+    isWide: true,
+    icon: <MdInfoOutline className="side-card-icon" />
+  };
+};
+
+const supremeCourtScheduling = () => {
+  return {
+    heading: "Supreme Court Scheduling",
+    content: [
+      <p key="scs">
+        Please indicate if your document upload has been approved for Supreme
+        Court Scheduling...
+      </p>
+    ],
+    type: "bluegrey",
+    isWide: true,
+    icon: <MdInfoOutline className="side-card-icon" />
+  };
+};
+
 export function getSidecardData() {
   const aboutCsoCard = aboutCso();
   const csoAccountDetailsCard = csoAccountDetails();
   const rushSubmissionCard = rushSubmission();
+  const amendmentsCard = amendments();
+  const supremeCourtSchedulingCard = supremeCourtScheduling();
 
   return {
     aboutCso: aboutCsoCard,
     csoAccountDetails: csoAccountDetailsCard,
-    rushSubmission: rushSubmissionCard
+    rushSubmission: rushSubmissionCard,
+    amendments: amendmentsCard,
+    supremeCourtScheduling: supremeCourtSchedulingCard
   };
 }

@@ -830,11 +830,13 @@ exports[`Payment Component On back click, it redirects back to the package confi
       </div>
       <h3>
         Do you have additional documents to upload? 
-        <a
-          href="#"
+        <span
+          class="file-href"
+          role="button"
+          tabindex="0"
         >
           Upload them now.
-        </a>
+        </span>
       </h3>
       <br />
       <br />
