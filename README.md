@@ -14,10 +14,10 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
     │   │   ├── efiling-api                     # efiling api
     │   │   ├── efiling-worker                  # file submission worker
     │   │   ├── libs                            # backend libraries
-    │   │   |   ├── efiling-bom      # pom Bill Of Materials
-    │   │   |   ├── efiling-commons   # efiling soap client that submits packages to CSO
-    │   │   |   ├── efiling-cso-starter      # efiling soap client that contains all soap implementations
-    │   │   |   └── efiling-demo-starter       # efiling demo app that mocks all soap implementations
+    │   │   |   ├── efiling-bom                 # pom Bill Of Materials
+    │   │   |   ├── efiling-commons             # efiling soap client that submits packages to CSO
+    │   │   |   ├── efiling-cso-starter         # efiling soap client that contains all soap implementations
+    │   │   |   └── efiling-demo-starter        # efiling demo app that mocks all soap implementations
     │   └── frontend                            # frontend applications
     │       ├── efiling-frontend                # efiling frontend
     │       └── efiling-demo                    # efiling demo app frontend
