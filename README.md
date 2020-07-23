@@ -14,10 +14,10 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
     │   │   ├── efiling-api                     # efiling api
     │   │   ├── efiling-worker                  # file submission worker
     │   │   ├── libs                            # backend libraries
-    │   │   |   ├── efiling-account-client      # efiling soap client that checks CSO account, FILE role, BCeID account info
-    │   │   |   ├── efiling-submission-client   # efiling soap client that submits packages to CSO
-    │   │   |   ├── efiling-lookup-client       # efiling soap client that looksup required info for submission
-    │   │   |   └── efiling-status-client       # efiling soap client for checking status of a submitted package
+    │   │   |   ├── efiling-bom      # pom Bill Of Materials
+    │   │   |   ├── efiling-commons   # efiling soap client that submits packages to CSO
+    │   │   |   ├── efiling-cso-starter      # efiling soap client that contains all soap implementations
+    │   │   |   └── efiling-demo-starter       # efiling demo app that mocks all soap implementations
     │   └── frontend                            # frontend applications
     │       ├── efiling-frontend                # efiling frontend
     │       └── efiling-demo                    # efiling demo app frontend
@@ -28,16 +28,17 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
 
 ## Apps
 
-| Name                 | description                                  | doc                                                  |
-| -------------------- | -------------------------------------------- | ---------------------------------------------------- |
-| backend              | all server side services                     | [README](src/backend/README.md)                      |
-| efiling-api          | the main api for interating with the service | [README](src/backend/efiling-api/README.md)          |
-| efiling-demo-backend | a demo backend that emulates a client        | [README](src/backend/efiling-backend-demo/README.md) |
-| efiling-worker       | process submitted documents                  | [README](src/backend/efiling-worker/README.md)       |
-| frontend             | all client side applications                 | [README](src/frontend/README.md)                     |
-| efiling-frontend     | the frontend for uploading documents         | [README](src/frontend/efiling-frontend/README.md)    |
-| efiling-demo         | the frontend for demo application            | [README](src/frontend/efiling-demo/README.md)        |
-| cucumber-tests       | automated tests for frontend and backend     | [README](tests/README.md)                            |
+| Name                | description                                  | doc                                                      |
+| ------------------- | -------------------------------------------- | -------------------------------------------------------- |
+| backend             | all server side services                     | [README](src/backend/README.md)                          |
+| efiling-api         | the main api for interating with the service | [README](src/backend/efiling-api/README.md)              |
+| efiling-worker      | process submitted documents                  | [README](src/backend/efiling-worker/README.md)           |
+| efiling-cso-starter | soap client implementations                  | [README](src/backend/libs/efiling-cso-starter/README.md) |
+| efiling-worker      | process submitted documents                  | [README](src/backend/efiling-worker/README.md)           |
+| frontend            | all client side applications                 | [README](src/frontend/README.md)                         |
+| efiling-frontend    | the frontend for uploading documents         | [README](src/frontend/efiling-frontend/README.md)        |
+| efiling-demo        | the frontend for demo application            | [README](src/frontend/efiling-demo/README.md)            |
+| cucumber-tests      | automated tests for frontend and backend     | [README](tests/README.md)                                |
 
 ## Running the App
 
