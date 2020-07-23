@@ -208,7 +208,7 @@ exports[`Payment Component Matches the snapshot 1`] = `
               class="side-by-side"
             >
               <div
-                style="width: 45%; min-width: fit-content;"
+                style="width: 60%; min-width: fit-content;"
               >
                 <table
                   class=""

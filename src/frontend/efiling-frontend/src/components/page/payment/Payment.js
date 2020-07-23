@@ -18,8 +18,8 @@ import { generateFileSummaryData } from "../../../modules/generateFileSummaryDat
 const generateCourtDataTable = ({
   fileNumber,
   locationDescription,
-  level,
-  courtClass
+  levelDescription,
+  classDescription
 }) => {
   const courtElements = [
     {
@@ -34,7 +34,7 @@ const generateCourtDataTable = ({
     },
     {
       name: "Level and Class:",
-      value: `${level} ${courtClass}`,
+      value: `${levelDescription} ${classDescription}`,
       isValueBold: true
     }
   ];
@@ -42,7 +42,7 @@ const generateCourtDataTable = ({
   return [
     {
       name: (
-        <div style={{ width: "45%", minWidth: "fit-content" }}>
+        <div style={{ width: "60%", minWidth: "fit-content" }}>
           <Table elements={courtElements} />
         </div>
       ),
