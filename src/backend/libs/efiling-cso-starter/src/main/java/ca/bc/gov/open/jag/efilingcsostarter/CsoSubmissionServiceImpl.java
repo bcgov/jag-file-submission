@@ -24,7 +24,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         try {
             return filingFacadeBean.submitFiling(filingPackage);
         } catch (NestedEjbException_Exception e) {
-            throw new EfilingSubmissionServiceException("Exception while retrieving submitting filing", e.getCause());
+            throw new EfilingSubmissionServiceException("Exception while submitting filing", e.getCause());
         }
     }
 }
