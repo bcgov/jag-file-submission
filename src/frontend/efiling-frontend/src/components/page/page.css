@@ -40,3 +40,8 @@ main {
     padding-bottom: 100px;
   }
 }
+
+.fit-table {
+  width: 60%;
+  min-width: fit-content;
+}

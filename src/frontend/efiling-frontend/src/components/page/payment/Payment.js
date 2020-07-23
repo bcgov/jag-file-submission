@@ -42,7 +42,7 @@ const generateCourtDataTable = ({
   return [
     {
       name: (
-        <div style={{ width: "60%", minWidth: "fit-content" }}>
+        <div className="fit-table">
           <Table elements={courtElements} />
         </div>
       ),
