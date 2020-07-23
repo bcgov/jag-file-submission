@@ -66,7 +66,7 @@ public class GetPackageInformationTest {
         Assertions.assertEquals(TestHelpers.LEVEL, actual.getBody().getCourt().getLevel());
         Assertions.assertEquals(TestHelpers.LOCATION, actual.getBody().getCourt().getLocation());
         Assertions.assertEquals(TestHelpers.PARTICIPATIONCLASS, actual.getBody().getCourt().getParticipatingClass());
-        Assertions.assertEquals(TestHelpers.PROPERTYCLASS, actual.getBody().getCourt().getPropertyClass());
+        Assertions.assertEquals(TestHelpers.PROPERTYCLASS, actual.getBody().getCourt().getCourtClass());
         Assertions.assertEquals(TestHelpers.TYPE, actual.getBody().getDocuments().get(0).getType());
         Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getBody().getDocuments().get(0).getDescription());
 
