@@ -208,7 +208,7 @@ exports[`Storyshots Payment Default 1`] = `
               class="side-by-side"
             >
               <div
-                style="width: 45%; min-width: fit-content;"
+                style="width: 60%; min-width: fit-content;"
               >
                 <table
                   class=""
@@ -805,7 +805,7 @@ exports[`Storyshots Payment Mobile 1`] = `
               class="side-by-side"
             >
               <div
-                style="width: 45%; min-width: fit-content;"
+                style="width: 60%; min-width: fit-content;"
               >
                 <table
                   class=""
