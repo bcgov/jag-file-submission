@@ -23,14 +23,11 @@ function calculateTotalFee(totalStatFee, submissionFee) {
   return total;
 }
 
-export function generateFileSummaryData(files, submissionFee, withTotal) {
-  const totalStatFee = calculateTotalStatFee(files);
-  const totalOverallFee = calculateTotalFee(totalStatFee, submissionFee);
-
-  const result = [
+function generateTableContent(numDocuments, totalStatFee, submissionFee) {
+  return [
     {
       name: "Number of Documents in Package:",
-      value: `${files.length}`,
+      value: `${numDocuments}`,
       isValueBold: true
     },
     {
@@ -46,6 +43,17 @@ export function generateFileSummaryData(files, submissionFee, withTotal) {
       isValueBold: true
     }
   ];
+}
+
+export function generateFileSummaryData(files, submissionFee, withTotal) {
+  const totalStatFee = calculateTotalStatFee(files);
+  const totalOverallFee = calculateTotalFee(totalStatFee, submissionFee);
+  const numDocuments = files.length;
+  const result = generateTableContent(
+    numDocuments,
+    totalStatFee,
+    submissionFee
+  );
 
   if (withTotal) {
     result.push(
