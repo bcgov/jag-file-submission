@@ -82,6 +82,35 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EfilingError"
+  "/submission/{id}/submit-filing-package":
+    post:
+      summary: Submit the filing package to cso
+      operationId: Submit
+      tags:
+        - submission
+      parameters:
+        - $ref: "#/components/parameters/xAuthUserId"
+        - $ref: "#/components/parameters/submissionId"
+      requestBody:
+        description: filing submit parameters
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubmitFilingPackageRequest"
+      responses:
+        "200":
+          description: Filing package succesfully submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SubmitFilingPackageResponse"
+        "403":
+          description: Request does not meet the required criteria
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EfilingError"
   "/submission/{id}/filing-package":
     get:
       summary: Get filing package information
@@ -384,3 +413,25 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Account"
+    SubmitFilingPackageRequest:
+      description: submit filing package
+      type: object
+      required:
+        - isRushOrder
+      properties:
+        isRushOrder:
+          type: boolean
+          description: the request is a rush order
+    SubmitFilingPackageResponse:
+      description: result of submit filing package
+      type: object
+      required:
+        - transactionId
+        - acknowledge
+      properties:
+        transactionId:
+          type: number
+          description: the transaction id returned from cso
+        acknowledge:
+          type: date
+          description: date transaction was returned

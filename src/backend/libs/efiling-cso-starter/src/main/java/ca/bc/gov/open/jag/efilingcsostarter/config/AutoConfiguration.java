@@ -3,18 +3,13 @@ package ca.bc.gov.open.jag.efilingcsostarter.config;
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RoleRegistryPortType;
 import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
 import ca.bc.gov.ag.csows.ceis.Csows;
+import ca.bc.gov.ag.csows.filing.FilingFacadeBean;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
-import ca.bc.gov.open.jag.efilingcsostarter.CsoCourtServiceImpl;
-import ca.bc.gov.open.jag.efilingcsostarter.CsoDocumentServiceImpl;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
-import ca.bc.gov.open.jag.efilingcsostarter.CsoLookupServiceImpl;
-import ca.bc.gov.open.jag.efilingcsostarter.CsoAccountServiceImpl;
+import ca.bc.gov.open.jag.efilingcommons.service.*;
+import ca.bc.gov.open.jag.efilingcsostarter.*;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.AccountDetailsMapper;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.AccountDetailsMapperImpl;
 import ca.bceid.webservices.client.v9.BCeIDServiceSoap;
@@ -61,6 +56,9 @@ public class AutoConfiguration {
     public Csows csows() { return getPort(Clients.CSOWS, Csows.class); }
 
     @Bean
+    public FilingFacadeBean filingFacadeBean() { return getPort(Clients.FILING, FilingFacadeBean.class); }
+
+    @Bean
     public AccountDetailsMapper accountDetailsMapper() {
         return new AccountDetailsMapperImpl();
     }
@@ -83,15 +81,20 @@ public class AutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean({EfilingLookupService.class})
-    public EfilingLookupService efilingLookupService (LookupFacadeBean lookupFacadeBean) {
+    public EfilingLookupService efilingLookupService(LookupFacadeBean lookupFacadeBean) {
         return new CsoLookupServiceImpl(lookupFacadeBean);
     }
 
     @Bean
     @ConditionalOnMissingBean({EfilingCourtService.class})
-    public EfilingCourtService efilingCourtService (Csows csows) {
+    public EfilingCourtService efilingCourtService(Csows csows) {
         return new CsoCourtServiceImpl(csows);
     }
+
+    @Bean
+    @ConditionalOnMissingBean({EfilingSubmissionService.class})
+    public EfilingSubmissionService efilingSubmissionService(FilingFacadeBean filingFacadeBean) { return new CsoSubmissionServiceImpl(filingFacadeBean); }
+
 
     public <T> T getPort(Clients clients, Class<T> type) {
         JaxWsProxyFactoryBean jaxWsProxyFactoryBean = new JaxWsProxyFactoryBean();

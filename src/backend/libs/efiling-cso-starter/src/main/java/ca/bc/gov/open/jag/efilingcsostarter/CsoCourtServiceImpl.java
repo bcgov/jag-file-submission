@@ -22,6 +22,7 @@ public class CsoCourtServiceImpl implements EfilingCourtService {
         if (StringUtils.isBlank(agencyIdentifierCd)) throw new IllegalArgumentException("Agency identifier is required");
 
         CsoAgencyArr csoAgencyArr = csows.getCourtLocations();
+
         return csoAgencyArr.getArray().stream()
                 .filter(court -> court.getAgenAgencyIdentifierCd().equals(agencyIdentifierCd))
                 .findFirst()
