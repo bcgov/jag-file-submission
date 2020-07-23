@@ -1104,6 +1104,224 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
 </DocumentFragment>
 `;
 
+exports[`PackageConfirmation Component On click of Upload them now text, it redirects to the upload page 1`] = `
+<DocumentFragment>
+  <div
+    class="page"
+  >
+    <div
+      class="content col-md-8"
+    >
+      <h1>
+        Document Upload
+      </h1>
+      <div
+        class="dropzone-outer-box"
+        tabindex="0"
+      >
+        <div
+          class="dropzone-inner-box"
+        >
+          <input
+            autocomplete="off"
+            multiple=""
+            style="display: none;"
+            tabindex="-1"
+            type="file"
+          />
+          <span>
+            <h2>
+              Drag and drop or 
+              <span
+                class="file-href"
+              >
+                choose documents
+              </span>
+            </h2>
+            <div>
+              <span>
+                to upload additional documents to your package
+              </span>
+              <br />
+              <span>
+                (max 10mb per document)
+              </span>
+            </div>
+          </span>
+        </div>
+      </div>
+      <br />
+      <section
+        class="buttons pt-2"
+      >
+        <div>
+          <button
+            class="normal-white btn"
+            data-test-id=""
+            type="button"
+          >
+            Cancel Upload
+          </button>
+        </div>
+        <div>
+          <button
+            class="normal-blue btn"
+            data-test-id=""
+            type="button"
+          >
+            Continue
+          </button>
+        </div>
+      </section>
+    </div>
+    <div
+      class="sidecard"
+    >
+      <div
+        class="wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col-12 pt-2"
+            style="position: relative;"
+          >
+            <p />
+            <section
+              class="bluegrey-container"
+              id="bluegrey-section"
+            >
+              <div
+                class="container-background bluegrey-heading"
+              >
+                <h2
+                  class="heading-style"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="side-card-row"
+                    >
+                      <div
+                        class="round-icon-wrapper"
+                      >
+                        <svg
+                          class="side-card-icon"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="side-card-title"
+                      >
+                        Amendments
+                      </div>
+                    </div>
+                  </div>
+                </h2>
+              </div>
+              <div
+                class="bluegrey-content"
+              >
+                <span
+                  class="content-style"
+                >
+                  <p>
+                    Please indicate document uploads that are amendments - changes or alterations to existing, previously submitted documents.
+                  </p>
+                </span>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div
+        class="wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col-12 pt-2"
+            style="position: relative;"
+          >
+            <p />
+            <section
+              class="bluegrey-container"
+              id="bluegrey-section"
+            >
+              <div
+                class="container-background bluegrey-heading"
+              >
+                <h2
+                  class="heading-style"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="side-card-row"
+                    >
+                      <div
+                        class="round-icon-wrapper"
+                      >
+                        <svg
+                          class="side-card-icon"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="side-card-title"
+                      >
+                        Supreme Court Scheduling
+                      </div>
+                    </div>
+                  </div>
+                </h2>
+              </div>
+              <div
+                class="bluegrey-content"
+              >
+                <span
+                  class="content-style"
+                >
+                  <p>
+                    Please indicate if your document upload has been approved for Supreme Court Scheduling...
+                  </p>
+                </span>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`PackageConfirmation Component On click of continue to payment button, it redirects to the payment page 1`] = `
 <DocumentFragment>
   <div
@@ -1689,6 +1907,224 @@ registered to my account.
                       Learn more about CSO
                     </a>
                     .
+                  </p>
+                </span>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`PackageConfirmation Component On keydown of Upload them now text, it redirects to the upload page 1`] = `
+<DocumentFragment>
+  <div
+    class="page"
+  >
+    <div
+      class="content col-md-8"
+    >
+      <h1>
+        Document Upload
+      </h1>
+      <div
+        class="dropzone-outer-box"
+        tabindex="0"
+      >
+        <div
+          class="dropzone-inner-box"
+        >
+          <input
+            autocomplete="off"
+            multiple=""
+            style="display: none;"
+            tabindex="-1"
+            type="file"
+          />
+          <span>
+            <h2>
+              Drag and drop or 
+              <span
+                class="file-href"
+              >
+                choose documents
+              </span>
+            </h2>
+            <div>
+              <span>
+                to upload additional documents to your package
+              </span>
+              <br />
+              <span>
+                (max 10mb per document)
+              </span>
+            </div>
+          </span>
+        </div>
+      </div>
+      <br />
+      <section
+        class="buttons pt-2"
+      >
+        <div>
+          <button
+            class="normal-white btn"
+            data-test-id=""
+            type="button"
+          >
+            Cancel Upload
+          </button>
+        </div>
+        <div>
+          <button
+            class="normal-blue btn"
+            data-test-id=""
+            type="button"
+          >
+            Continue
+          </button>
+        </div>
+      </section>
+    </div>
+    <div
+      class="sidecard"
+    >
+      <div
+        class="wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col-12 pt-2"
+            style="position: relative;"
+          >
+            <p />
+            <section
+              class="bluegrey-container"
+              id="bluegrey-section"
+            >
+              <div
+                class="container-background bluegrey-heading"
+              >
+                <h2
+                  class="heading-style"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="side-card-row"
+                    >
+                      <div
+                        class="round-icon-wrapper"
+                      >
+                        <svg
+                          class="side-card-icon"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="side-card-title"
+                      >
+                        Amendments
+                      </div>
+                    </div>
+                  </div>
+                </h2>
+              </div>
+              <div
+                class="bluegrey-content"
+              >
+                <span
+                  class="content-style"
+                >
+                  <p>
+                    Please indicate document uploads that are amendments - changes or alterations to existing, previously submitted documents.
+                  </p>
+                </span>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div
+        class="wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col-12 pt-2"
+            style="position: relative;"
+          >
+            <p />
+            <section
+              class="bluegrey-container"
+              id="bluegrey-section"
+            >
+              <div
+                class="container-background bluegrey-heading"
+              >
+                <h2
+                  class="heading-style"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="side-card-row"
+                    >
+                      <div
+                        class="round-icon-wrapper"
+                      >
+                        <svg
+                          class="side-card-icon"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="side-card-title"
+                      >
+                        Supreme Court Scheduling
+                      </div>
+                    </div>
+                  </div>
+                </h2>
+              </div>
+              <div
+                class="bluegrey-content"
+              >
+                <span
+                  class="content-style"
+                >
+                  <p>
+                    Please indicate if your document upload has been approved for Supreme Court Scheduling...
                   </p>
                 </span>
               </div>

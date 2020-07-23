@@ -160,7 +160,8 @@ export default function PackageConfirmation({
     );
   }
 
-  if (showUpload) return <Upload upload={(confirmationPopup, submissionId)} />;
+  if (showUpload)
+    return <Upload upload={{ confirmationPopup, submissionId }} />;
 
   return (
     <div className="page">
