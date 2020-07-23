@@ -12,17 +12,13 @@ keycloak:
   auth-server-url: http://localhost:8081/auth
   realm: SpringBootKeycloak
   resource: login-app
-#  ssl-required: external
-  credentials:
-    secret: 3d7be270-34a5-4c4f-82cb-d0d22cb88aa8
-  use-resource-role-mappings: true
-  bearer-only: true
-#  security-constraints:
-#    - authRoles:
-#      - user
-#    - securityCollections:
-#      - patterns:
-#        - /submission/*
+  public-client: true
+  security-constraints:
+    - authRoles:
+      - user
+    - securityCollections:
+      - patterns:
+        - /submission/*
 jag:
   efiling:
     global:
