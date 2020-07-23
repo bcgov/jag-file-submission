@@ -177,6 +177,8 @@ Payment.propTypes = {
   payment: PropTypes.shape({
     confirmationPopup: propTypes.confirmationPopup,
     submissionId: PropTypes.string.isRequired,
-    courtData: PropTypes.object.isRequired
+    courtData: PropTypes.object.isRequired,
+    files: PropTypes.array.isRequired,
+    submissionFee: PropTypes.number.isRequired
   }).isRequired
 };
