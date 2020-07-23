@@ -290,26 +290,18 @@ components:
           $ref: "#/components/schemas/Redirect"
         cancel:
           $ref: "#/components/schemas/Redirect"
-    BasePacakge:
-      type: object
-      description: A filing package can contain one or multiple documents that have or are being submitted electronically for new or existing court file.
-      properties:
-        court:
-          $ref: "#/components/schemas/Court"
     InitialPackage:
       type: object
-      allOf:
-        - $ref: "#/components/schemas/BasePacakge"
       description: A filing package can contain one or multiple documents that have or are being submitted electronically for new or existing court file.
       properties:
         documents:
           type: array
           items:
             $ref: "#/components/schemas/DocumentProperties"
+        court:
+          $ref: "#/components/schemas/CourtBase"
     FilingPackage:
       type: object
-      allOf:
-        - $ref: "#/components/schemas/BasePacakge"
       description: A filing package can contain one or multiple documents that have or are being submitted electronically for new or existing court file.
       required:
         - submissionFeeAmount
@@ -318,11 +310,13 @@ components:
         submissionFeeAmount:
           type: number
           description: Package submission fee.
+        court:
+          $ref: "#/components/schemas/Court"
         documents:
           type: array
           items:
             $ref: "#/components/schemas/Document"
-    Court:
+    CourtBase:
       type: object
       description: "Court related information"
       required:
@@ -334,12 +328,6 @@ components:
         location:
           type: string
           description: the court location
-        locationDescription:
-          type: string
-          description: the court location description
-        locationId:
-          type: number
-          description: the court location id
         level:
           type: string
           description: the court level
@@ -354,6 +342,23 @@ components:
           description: the file number if case already exists
         participatingClass:
           type: string
+    Court:
+      type: object
+      description: "Court related information"
+      allOf:
+        - $ref: "#/components/schemas/CourtBase"
+      required:
+        - locationDescription
+      properties:
+        locationDescription:
+          type: string
+          description: the court location description
+        levelDescription:
+          type: string
+          description: the court location description
+        classDescription:
+          type: string
+          description: the court location description
     Redirect:
       required:
         - url

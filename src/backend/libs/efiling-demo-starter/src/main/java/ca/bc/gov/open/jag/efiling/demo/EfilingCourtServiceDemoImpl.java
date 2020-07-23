@@ -8,6 +8,6 @@ import java.math.BigDecimal;
 public class EfilingCourtServiceDemoImpl implements EfilingCourtService {
     @Override
     public CourtDetails getCourtDescription(String agencyIdentifierCd) {
-        return new CourtDetails(BigDecimal.TEN, "Imma Court");
+        return new CourtDetails(BigDecimal.TEN, "Imma Court", "Imma Class", "Imma Level");
     }
 }
