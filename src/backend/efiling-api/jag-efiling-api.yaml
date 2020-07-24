@@ -250,7 +250,7 @@ components:
     GenerateUrlRequest:
       description: details about the required transaction
       required:
-        - parentApplication
+        - clientApplication
         - navigation
         - documentProperties
       properties:
@@ -375,6 +375,7 @@ components:
           type: string
         type:
           type: string
+          description: the client Court Services Online Application Code
     UploadSubmissionDocumentsResponse:
       description: represents upload document response
       type: object

@@ -164,8 +164,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private BigDecimal getStatutoryFeeAmount(GenerateUrlRequest request) {
 
-        // TODO: implement
-        request.getClientApplication().setType("DCFL");
+        request.getClientApplication().setType(request.getClientApplication().getType());
         ServiceFees fee = efilingLookupService.getServiceFee(request.getClientApplication().getType());
         return fee == null ? BigDecimal.ZERO : fee.getFeeAmount();
 
