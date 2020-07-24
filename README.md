@@ -43,9 +43,8 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
 ## Running the App
 
 By default a demo mode is enabled.
-if you want to integrate with the CSO application, first create a local `.env` at the root of the repository based off `.env.template`.
 
-Change the `MVN_PROFILE` to `default`
+First create a local `.env` at the root of the repository based off `.env.template`.
 
 Configure Keycloak
 
@@ -55,7 +54,17 @@ docker-compose up -d --build keycloak
 
 go to [Efiling-api credentials](http://localhost:8081/auth/admin/master/console/#/realms/SpringBootKeycloak/clients/b7fd5f2f-d047-4916-a35e-0f7c622dfb5d/credentials) and click generate Secrets
 
-copy the value of the secret in your `.env`
+Copy the value of the secret to the `KEYCLOAK_CREDENTIALS_SECRET` in your `.env` file
+
+Create a user [here](http://localhost:8081/auth/admin/master/console/#/create/user/SpringBootKeycloak) 
+
+Click on the Credentials tab
+
+Set the password and set Temporary OFF
+
+Click Reset Password
+
+If you want to integrate with the CSO application change the `MVN_PROFILE` to `default`
 
 Set the following environement variables:
 
