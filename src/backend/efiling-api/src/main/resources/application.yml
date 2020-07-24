@@ -9,20 +9,13 @@ spring:
     redis:
       time-to-live: ${CACHE_TTL:600000}
 keycloak:
-  auth-server-url: http://localhost:8081/auth
-  realm: SpringBootKeycloak
-  resource: login-app
-#  ssl-required: external
+  auth-server-url: ${KEYCLOAK_AUTH_SERVER_URL}
+  realm: ${KEYCLOAK_REALM}
+  resource: ${KEYCLOAK_RESOURCE}
   credentials:
-    secret: 3d7be270-34a5-4c4f-82cb-d0d22cb88aa8
+    secret: ${KEYCLOAK_CREDENTIALS_SECRET}
   use-resource-role-mappings: true
   bearer-only: true
-#  security-constraints:
-#    - authRoles:
-#      - user
-#    - securityCollections:
-#      - patterns:
-#        - /submission/*
 jag:
   efiling:
     global:
