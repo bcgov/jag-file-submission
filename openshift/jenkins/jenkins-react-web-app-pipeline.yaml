@@ -1,0 +1,90 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  creationTimestamp: "2020-07-20T18:33:44Z"
+  labels:
+    application: react-web-app-pipeline
+    template: master-build-pipeline
+  name: react-web-app-pipeline
+  namespace: qzaydf-tools
+  resourceVersion: "1953305356"
+  selfLink: >-
+    /apis/build.openshift.io/v1/namespaces/qzaydf-tools/buildconfigs/react-web-app-pipeline
+  uid: 8ae2d4ab-cab7-11ea-97c7-005056832285
+spec:
+  failedBuildsHistoryLimit: 5
+  nodeSelector: {}
+  output: {}
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    git:
+      ref: master
+      uri: "https://github.com/bcgov/jag-file-submission"
+    type: Git
+  strategy:
+    jenkinsPipelineStrategy:
+      env:
+        - name: APP_NAME
+          value: react-web-app
+        - name: JENKINS_POD
+          value: nodejs
+        - name: TOOLS_NAMESPACE
+          value: qzaydf-tools
+        - name: DEV_NAMESPACE
+          value: qzaydf-dev
+      jenkinsfile: |-
+        try {
+            
+            node("${JENKINS_POD}") {
+            
+                primary_node = env.NODE_NAME
+
+                stage("Building the BUILDER") {
+                    openshift.withCluster() {
+                        openshift.withProject("${TOOLS_NAMESPACE}") {
+                            sh 'oc start-build react-web-app-builder -n qzaydf-tools --wait'
+                        }
+                    }
+                }
+                
+                stage("Building the Static Web App on NGINX") {
+                    openshift.withCluster() {
+                        openshift.withProject("${TOOLS_NAMESPACE}") {
+                            sh 'oc start-build static-web-app-running-on-nginx -n qzaydf-tools --wait'
+                        }
+                    }
+                }
+                
+                stage("Waiting for Dev to Finish Deploying") {
+                    openshift.withCluster() {
+                        openshift.withProject("${DEV_NAMESPACE}") {
+                            //sh '''oc rollout latest dc/react-web-app -n qzaydf-dev && \
+                            sh 'oc rollout status dc/react-web-app '
+                        }
+                    }
+                }
+                
+            }
+
+        } catch (err) {
+           echo "in catch block"
+
+           currentBuild.result = 'FAILURE'
+           env.ERR = "${err}"
+           node {
+              sh "curl -XPOST '${LIFECYCLE_WEBHOOK}' -H 'Content-type: application/json' --data '{\"username\":\"The Pipe Lion\",\"icon_emoji\":\":lion_face:\",\"text\": \"${APP_NAME} Pipeline Failure - ${ERR}\"}'"
+           }
+           echo "Caught: ${err}"
+           throw err
+        }
+    type: JenkinsPipeline
+  successfulBuildsHistoryLimit: 5
+  triggers:
+    - type: ConfigChange
+    - github:
+        secret: "${GITHUB_WEBHOOK_SECRET}"
+      type: GitHub
+status:
+  lastVersion: 20
