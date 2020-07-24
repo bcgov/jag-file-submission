@@ -54,132 +54,90 @@ exports[`Payment Component Matches the snapshot 1`] = `
       </div>
       <br />
       <div
-        class="display-box display-left-element"
+        class="half-width"
       >
         <div
-          class="display-right-element"
+          class="bcgov-table "
         >
-          <table
-            class=""
+          <b />
+          <div
+            class="bcgov-table-body"
           >
-            <thead>
-              <tr>
-                <th
-                  colspan="2"
-                />
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                class=""
-                colspan="2"
+            <div
+              class="bcgov-row-fees "
+            >
+              <div
+                class="bcgov-vertical-middle "
               >
-                <td
-                  class="side-by-side"
-                >
-                  <div
-                    style="width: 60%; min-width: fit-content;"
-                  >
-                    <table
-                      class=""
-                    >
-                      <thead>
-                        <tr>
-                          <th
-                            colspan="2"
-                          />
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr
-                          class=""
-                          colspan="2"
-                        >
-                          <td
-                            class=""
-                          >
-                            Number of Documents in Package:
-                          </td>
-                          <td
-                            class="right-align"
-                          >
-                            <b>
-                              2
-                            </b>
-                          </td>
-                        </tr>
-                        <tr
-                          class=""
-                          colspan="2"
-                        >
-                          <td
-                            class=""
-                          >
-                            Statutory Fees:
-                          </td>
-                          <td
-                            class="right-align"
-                          >
-                            <b>
-                              $40.00
-                            </b>
-                          </td>
-                        </tr>
-                        <tr
-                          class=""
-                          colspan="2"
-                        >
-                          <td
-                            class=""
-                          >
-                            Submission Fee:
-                          </td>
-                          <td
-                            class="right-align"
-                          >
-                            <b>
-                              $25.50
-                            </b>
-                          </td>
-                        </tr>
-                        <tr
-                          class="empty-row"
-                          colspan="2"
-                        >
-                          <td
-                            class=""
-                          />
-                          <td />
-                        </tr>
-                        <tr
-                          class=""
-                          colspan="2"
-                        >
-                          <td
-                            class=""
-                          >
-                            Total Fee:
-                          </td>
-                          <td
-                            class="right-align"
-                          >
-                            <b>
-                              $65.50
-                            </b>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </td>
-                <td>
-                  <p>
-                    The registry will process statutory fees when your documents are filed.
-                  </p>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                Number of Documents in Package:
+              </div>
+              <div
+                class="bcgov-table-value bcgov-right-align"
+              >
+                <b>
+                  2
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row-fees "
+            >
+              <div
+                class="bcgov-vertical-middle "
+              >
+                Statutory Fees:
+              </div>
+              <div
+                class="bcgov-table-value bcgov-right-align"
+              >
+                <b>
+                  $40.00
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row-fees "
+            >
+              <div
+                class="bcgov-vertical-middle "
+              >
+                Submission Fee:
+              </div>
+              <div
+                class="bcgov-table-value bcgov-right-align"
+              >
+                <b>
+                  $25.50
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row-fees bcgov-empty-row"
+            >
+              <div
+                class="bcgov-vertical-middle "
+              />
+              <div
+                class="bcgov-table-value bcgov-right-align"
+              />
+            </div>
+            <div
+              class="bcgov-row-fees "
+            >
+              <div
+                class="bcgov-vertical-middle "
+              >
+                Total Fee:
+              </div>
+              <div
+                class="bcgov-table-value bcgov-right-align"
+              >
+                <b>
+                  $65.50
+                </b>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <br />
@@ -189,97 +147,67 @@ exports[`Payment Component Matches the snapshot 1`] = `
       <p>
         Your package will be filed to:
       </p>
-      <table
-        class=""
+      <div
+        class="court-half-width"
       >
-        <thead>
-          <tr>
-            <th
-              colspan="2"
-            />
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            class=""
-            colspan="2"
+        <div
+          class="bcgov-table "
+        >
+          <b />
+          <div
+            class="bcgov-table-body"
           >
-            <td
-              class="side-by-side"
+            <div
+              class="bcgov-row "
             >
               <div
-                class="fit-table"
+                class="bcgov-vertical-middle "
               >
-                <table
-                  class=""
-                >
-                  <thead>
-                    <tr>
-                      <th
-                        colspan="2"
-                      />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr
-                      class=""
-                      colspan="2"
-                    >
-                      <td
-                        class=""
-                      >
-                        Court File Number:
-                      </td>
-                      <td
-                        class=""
-                      >
-                        <b>
-                          Court file number
-                        </b>
-                      </td>
-                    </tr>
-                    <tr
-                      class=""
-                      colspan="2"
-                    >
-                      <td
-                        class=""
-                      >
-                        Location:
-                      </td>
-                      <td
-                        class=""
-                      >
-                        <b>
-                          Court location
-                        </b>
-                      </td>
-                    </tr>
-                    <tr
-                      class=""
-                      colspan="2"
-                    >
-                      <td
-                        class=""
-                      >
-                        Level and Class:
-                      </td>
-                      <td
-                        class=""
-                      >
-                        <b>
-                          Level Class
-                        </b>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                Court File Number:
               </div>
-            </td>
-            <td />
-          </tr>
-        </tbody>
-      </table>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  Court file number
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-vertical-middle "
+              >
+                Location:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  Court location
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-vertical-middle "
+              >
+                Level and Class:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  Level Class
+                </b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div
         class="bcgov-callout-checkbox"
       >
@@ -287,7 +215,7 @@ exports[`Payment Component Matches the snapshot 1`] = `
           I have reviewed the information and the documents in this filing
 package and am prepared to submit them for filing. I agree that all
 fees for this filing package may be charged to the credit card
-registered to my account.
+registered to my account. Statutory fees will be processed when documents are filed.
         </p>
         <label
           for="agreeCallout"
@@ -644,23 +572,18 @@ exports[`Payment Component On back click, it redirects back to the package confi
           <div
             class="display-right-element"
           >
-            <table
-              class=""
+            <div
+              class="bcgov-table "
             >
-              <thead>
-                <tr>
-                  <th
-                    colspan="2"
-                  />
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  class=""
-                  colspan="2"
+              <b />
+              <div
+                class="bcgov-table-body"
+              >
+                <div
+                  class="bcgov-row "
                 >
-                  <td
-                    class="vertical-middle"
+                  <div
+                    class="bcgov-vertical-middle "
                   >
                     <div
                       style="width: 80%;"
@@ -673,59 +596,55 @@ exports[`Payment Component On back click, it redirects back to the package confi
                         file name 1
                       </span>
                     </div>
-                  </td>
-                  <td>
-                    <table
-                      class=""
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    <div
+                      class="bcgov-table "
                     >
-                      <thead>
-                        <tr>
-                          <th
-                            colspan="2"
-                          />
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr
-                          class=""
-                          colspan="2"
+                      <b />
+                      <div
+                        class="bcgov-table-body"
+                      >
+                        <div
+                          class="bcgov-row "
                         >
-                          <td
-                            class="reduce-width"
+                          <div
+                            class="bcgov-vertical-middle bcgov-reduce-width"
                           >
                             Description:
-                          </td>
-                          <td
-                            class=""
+                          </div>
+                          <div
+                            class="bcgov-table-value "
                           >
                             <b>
                               file description 1
                             </b>
-                          </td>
-                        </tr>
-                        <tr
-                          class=""
-                          colspan="2"
+                          </div>
+                        </div>
+                        <div
+                          class="bcgov-row "
                         >
-                          <td
-                            class="reduce-width"
+                          <div
+                            class="bcgov-vertical-middle bcgov-reduce-width"
                           >
                             Statutory Fee:
-                          </td>
-                          <td
-                            class=""
+                          </div>
+                          <div
+                            class="bcgov-table-value "
                           >
                             <b>
                               $40.00
                             </b>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <br />
@@ -759,23 +678,18 @@ exports[`Payment Component On back click, it redirects back to the package confi
           <div
             class="display-right-element"
           >
-            <table
-              class=""
+            <div
+              class="bcgov-table "
             >
-              <thead>
-                <tr>
-                  <th
-                    colspan="2"
-                  />
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  class=""
-                  colspan="2"
+              <b />
+              <div
+                class="bcgov-table-body"
+              >
+                <div
+                  class="bcgov-row "
                 >
-                  <td
-                    class="vertical-middle"
+                  <div
+                    class="bcgov-vertical-middle "
                   >
                     <div
                       style="width: 80%;"
@@ -788,42 +702,39 @@ exports[`Payment Component On back click, it redirects back to the package confi
                         file name 2
                       </span>
                     </div>
-                  </td>
-                  <td>
-                    <table
-                      class=""
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    <div
+                      class="bcgov-table "
                     >
-                      <thead>
-                        <tr>
-                          <th
-                            colspan="2"
-                          />
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr
-                          class=""
-                          colspan="2"
+                      <b />
+                      <div
+                        class="bcgov-table-body"
+                      >
+                        <div
+                          class="bcgov-row "
                         >
-                          <td
-                            class="reduce-width"
+                          <div
+                            class="bcgov-vertical-middle bcgov-reduce-width"
                           >
                             Description:
-                          </td>
-                          <td
-                            class=""
+                          </div>
+                          <div
+                            class="bcgov-table-value "
                           >
                             <b>
                               file description 2
                             </b>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <br />
@@ -844,97 +755,67 @@ exports[`Payment Component On back click, it redirects back to the package confi
         Summary
       </h2>
       <br />
-      <table
-        class=""
+      <div
+        class="near-half-width"
       >
-        <thead>
-          <tr>
-            <th
-              colspan="2"
-            />
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            class=""
-            colspan="2"
+        <div
+          class="bcgov-table "
+        >
+          <b />
+          <div
+            class="bcgov-table-body"
           >
-            <td
-              class="side-by-side"
+            <div
+              class="bcgov-row "
             >
               <div
-                class="fit-table"
+                class="bcgov-vertical-middle "
               >
-                <table
-                  class=""
-                >
-                  <thead>
-                    <tr>
-                      <th
-                        colspan="2"
-                      />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr
-                      class=""
-                      colspan="2"
-                    >
-                      <td
-                        class=""
-                      >
-                        Number of Documents in Package:
-                      </td>
-                      <td
-                        class=""
-                      >
-                        <b>
-                          2
-                        </b>
-                      </td>
-                    </tr>
-                    <tr
-                      class=""
-                      colspan="2"
-                    >
-                      <td
-                        class=""
-                      >
-                        Statutory Fees:
-                      </td>
-                      <td
-                        class=""
-                      >
-                        <b>
-                          $40.00
-                        </b>
-                      </td>
-                    </tr>
-                    <tr
-                      class=""
-                      colspan="2"
-                    >
-                      <td
-                        class=""
-                      >
-                        Submission Fee:
-                      </td>
-                      <td
-                        class=""
-                      >
-                        <b>
-                          $25.50
-                        </b>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                Number of Documents in Package:
               </div>
-            </td>
-            <td />
-          </tr>
-        </tbody>
-      </table>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  2
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-vertical-middle "
+              >
+                Statutory Fees:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  $40.00
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-vertical-middle "
+              >
+                Submission Fee:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  $25.50
+                </b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <br />
       <section
         class="buttons pt-2"

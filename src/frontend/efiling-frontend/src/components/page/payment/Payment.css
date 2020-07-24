@@ -1,0 +1,13 @@
+.half-width {
+  width: 50%;
+}
+
+.court-half-width {
+  width: 50%;
+}
+
+@media (max-width: 1200px) {
+  .half-width {
+    width: 80%;
+  }
+}

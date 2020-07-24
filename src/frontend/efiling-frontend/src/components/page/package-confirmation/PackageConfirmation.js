@@ -39,22 +39,6 @@ const openFile = (file, submissionId) => {
     });
 };
 
-const generateTotalFeeTable = (files, submissionFee) => {
-  const fileSummary = generateFileSummaryData(files, submissionFee, false);
-
-  return [
-    {
-      name: (
-        <div className="fit-table">
-          <Table elements={fileSummary} />
-        </div>
-      ),
-      value: "",
-      isSideBySide: true
-    }
-  ];
-};
-
 const generateTable = (file, data, submissionId) => {
   return [
     {
@@ -221,7 +205,11 @@ export default function PackageConfirmation({
         <br />
         <h2>Summary</h2>
         <br />
-        <Table elements={generateTotalFeeTable(files, submissionFee)} />
+        <div className="near-half-width">
+          <Table
+            elements={generateFileSummaryData(files, submissionFee, false)}
+          />
+        </div>
         <br />
         <section className="buttons pt-2">
           <ConfirmationPopup

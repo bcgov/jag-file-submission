@@ -452,58 +452,57 @@ exports[`Home Component matches the snapshot when user cso account does not exis
             <div
               class="display-right-element"
             >
-              <table
-                class=""
+              <div
+                class="bcgov-table "
               >
-                <thead>
-                  <tr>
-                    <th
-                      colspan="2"
-                    />
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    class=""
-                    colspan="2"
+                <b />
+                <div
+                  class="bcgov-table-body"
+                >
+                  <div
+                    class="bcgov-row "
                   >
-                    <td
-                      class=""
+                    <div
+                      class="bcgov-vertical-middle "
                     >
                       BCeID:
-                    </td>
-                    <td>
+                    </div>
+                    <div
+                      class="bcgov-table-value "
+                    >
                       bobross42
-                    </td>
-                  </tr>
-                  <tr
-                    class=""
-                    colspan="2"
+                    </div>
+                  </div>
+                  <div
+                    class="bcgov-row "
                   >
-                    <td
-                      class=""
+                    <div
+                      class="bcgov-vertical-middle "
                     >
                       Full Name:
-                    </td>
-                    <td>
+                    </div>
+                    <div
+                      class="bcgov-table-value "
+                    >
                       Bob Norman Ross
-                    </td>
-                  </tr>
-                  <tr
-                    class=""
-                    colspan="2"
+                    </div>
+                  </div>
+                  <div
+                    class="bcgov-row "
                   >
-                    <td
-                      class=""
+                    <div
+                      class="bcgov-vertical-middle "
                     >
                       Email Address:
-                    </td>
-                    <td>
+                    </div>
+                    <div
+                      class="bcgov-table-value "
+                    >
                       bob.ross@example.com
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <br />
@@ -1491,23 +1490,18 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
             <div
               class="display-right-element"
             >
-              <table
-                class=""
+              <div
+                class="bcgov-table "
               >
-                <thead>
-                  <tr>
-                    <th
-                      colspan="2"
-                    />
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    class=""
-                    colspan="2"
+                <b />
+                <div
+                  class="bcgov-table-body"
+                >
+                  <div
+                    class="bcgov-row "
                   >
-                    <td
-                      class="vertical-middle"
+                    <div
+                      class="bcgov-vertical-middle "
                     >
                       <div
                         style="width: 80%;"
@@ -1520,59 +1514,55 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                           file name 1
                         </span>
                       </div>
-                    </td>
-                    <td>
-                      <table
-                        class=""
+                    </div>
+                    <div
+                      class="bcgov-table-value "
+                    >
+                      <div
+                        class="bcgov-table "
                       >
-                        <thead>
-                          <tr>
-                            <th
-                              colspan="2"
-                            />
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr
-                            class=""
-                            colspan="2"
+                        <b />
+                        <div
+                          class="bcgov-table-body"
+                        >
+                          <div
+                            class="bcgov-row "
                           >
-                            <td
-                              class="reduce-width"
+                            <div
+                              class="bcgov-vertical-middle bcgov-reduce-width"
                             >
                               Description:
-                            </td>
-                            <td
-                              class=""
+                            </div>
+                            <div
+                              class="bcgov-table-value "
                             >
                               <b>
                                 file description 1
                               </b>
-                            </td>
-                          </tr>
-                          <tr
-                            class=""
-                            colspan="2"
+                            </div>
+                          </div>
+                          <div
+                            class="bcgov-row "
                           >
-                            <td
-                              class="reduce-width"
+                            <div
+                              class="bcgov-vertical-middle bcgov-reduce-width"
                             >
                               Statutory Fee:
-                            </td>
-                            <td
-                              class=""
+                            </div>
+                            <div
+                              class="bcgov-table-value "
                             >
                               <b>
                                 $40.00
                               </b>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <br />
@@ -1606,23 +1596,18 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
             <div
               class="display-right-element"
             >
-              <table
-                class=""
+              <div
+                class="bcgov-table "
               >
-                <thead>
-                  <tr>
-                    <th
-                      colspan="2"
-                    />
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    class=""
-                    colspan="2"
+                <b />
+                <div
+                  class="bcgov-table-body"
+                >
+                  <div
+                    class="bcgov-row "
                   >
-                    <td
-                      class="vertical-middle"
+                    <div
+                      class="bcgov-vertical-middle "
                     >
                       <div
                         style="width: 80%;"
@@ -1635,42 +1620,39 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                           file name 2
                         </span>
                       </div>
-                    </td>
-                    <td>
-                      <table
-                        class=""
+                    </div>
+                    <div
+                      class="bcgov-table-value "
+                    >
+                      <div
+                        class="bcgov-table "
                       >
-                        <thead>
-                          <tr>
-                            <th
-                              colspan="2"
-                            />
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr
-                            class=""
-                            colspan="2"
+                        <b />
+                        <div
+                          class="bcgov-table-body"
+                        >
+                          <div
+                            class="bcgov-row "
                           >
-                            <td
-                              class="reduce-width"
+                            <div
+                              class="bcgov-vertical-middle bcgov-reduce-width"
                             >
                               Description:
-                            </td>
-                            <td
-                              class=""
+                            </div>
+                            <div
+                              class="bcgov-table-value "
                             >
                               <b>
                                 file description 2
                               </b>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <br />
@@ -1691,97 +1673,67 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
           Summary
         </h2>
         <br />
-        <table
-          class=""
+        <div
+          class="near-half-width"
         >
-          <thead>
-            <tr>
-              <th
-                colspan="2"
-              />
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              class=""
-              colspan="2"
+          <div
+            class="bcgov-table "
+          >
+            <b />
+            <div
+              class="bcgov-table-body"
             >
-              <td
-                class="side-by-side"
+              <div
+                class="bcgov-row "
               >
                 <div
-                  class="fit-table"
+                  class="bcgov-vertical-middle "
                 >
-                  <table
-                    class=""
-                  >
-                    <thead>
-                      <tr>
-                        <th
-                          colspan="2"
-                        />
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr
-                        class=""
-                        colspan="2"
-                      >
-                        <td
-                          class=""
-                        >
-                          Number of Documents in Package:
-                        </td>
-                        <td
-                          class=""
-                        >
-                          <b>
-                            2
-                          </b>
-                        </td>
-                      </tr>
-                      <tr
-                        class=""
-                        colspan="2"
-                      >
-                        <td
-                          class=""
-                        >
-                          Statutory Fees:
-                        </td>
-                        <td
-                          class=""
-                        >
-                          <b>
-                            $40.00
-                          </b>
-                        </td>
-                      </tr>
-                      <tr
-                        class=""
-                        colspan="2"
-                      >
-                        <td
-                          class=""
-                        >
-                          Submission Fee:
-                        </td>
-                        <td
-                          class=""
-                        >
-                          <b>
-                            $25.50
-                          </b>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  Number of Documents in Package:
                 </div>
-              </td>
-              <td />
-            </tr>
-          </tbody>
-        </table>
+                <div
+                  class="bcgov-table-value "
+                >
+                  <b>
+                    2
+                  </b>
+                </div>
+              </div>
+              <div
+                class="bcgov-row "
+              >
+                <div
+                  class="bcgov-vertical-middle "
+                >
+                  Statutory Fees:
+                </div>
+                <div
+                  class="bcgov-table-value "
+                >
+                  <b>
+                    $40.00
+                  </b>
+                </div>
+              </div>
+              <div
+                class="bcgov-row "
+              >
+                <div
+                  class="bcgov-vertical-middle "
+                >
+                  Submission Fee:
+                </div>
+                <div
+                  class="bcgov-table-value "
+                >
+                  <b>
+                    $25.50
+                  </b>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <br />
         <section
           class="buttons pt-2"

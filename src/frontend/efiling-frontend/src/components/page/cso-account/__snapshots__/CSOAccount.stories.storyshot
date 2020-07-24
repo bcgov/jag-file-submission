@@ -77,58 +77,57 @@ exports[`Storyshots CSOAccount Default 1`] = `
           <div
             class="display-right-element"
           >
-            <table
-              class=""
+            <div
+              class="bcgov-table "
             >
-              <thead>
-                <tr>
-                  <th
-                    colspan="2"
-                  />
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  class=""
-                  colspan="2"
+              <b />
+              <div
+                class="bcgov-table-body"
+              >
+                <div
+                  class="bcgov-row "
                 >
-                  <td
-                    class=""
+                  <div
+                    class="bcgov-vertical-middle "
                   >
                     BCeID:
-                  </td>
-                  <td>
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
                     bobross42
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  colspan="2"
+                  </div>
+                </div>
+                <div
+                  class="bcgov-row "
                 >
-                  <td
-                    class=""
+                  <div
+                    class="bcgov-vertical-middle "
                   >
                     Full Name:
-                  </td>
-                  <td>
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
                     Bob  Ross
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  colspan="2"
+                  </div>
+                </div>
+                <div
+                  class="bcgov-row "
                 >
-                  <td
-                    class=""
+                  <div
+                    class="bcgov-vertical-middle "
                   >
                     Email Address:
-                  </td>
-                  <td>
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
                     bob.ross@example.com
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <br />
@@ -1019,58 +1018,57 @@ exports[`Storyshots CSOAccount Mobile 1`] = `
           <div
             class="display-right-element"
           >
-            <table
-              class=""
+            <div
+              class="bcgov-table "
             >
-              <thead>
-                <tr>
-                  <th
-                    colspan="2"
-                  />
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  class=""
-                  colspan="2"
+              <b />
+              <div
+                class="bcgov-table-body"
+              >
+                <div
+                  class="bcgov-row "
                 >
-                  <td
-                    class=""
+                  <div
+                    class="bcgov-vertical-middle "
                   >
                     BCeID:
-                  </td>
-                  <td>
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
                     bobross42
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  colspan="2"
+                  </div>
+                </div>
+                <div
+                  class="bcgov-row "
                 >
-                  <td
-                    class=""
+                  <div
+                    class="bcgov-vertical-middle "
                   >
                     Full Name:
-                  </td>
-                  <td>
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
                     Bob  Ross
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  colspan="2"
+                  </div>
+                </div>
+                <div
+                  class="bcgov-row "
                 >
-                  <td
-                    class=""
+                  <div
+                    class="bcgov-vertical-middle "
                   >
                     Email Address:
-                  </td>
-                  <td>
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
                     bob.ross@example.com
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <br />

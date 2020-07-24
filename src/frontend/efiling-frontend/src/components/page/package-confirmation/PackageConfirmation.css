@@ -7,3 +7,9 @@
   color: #1a5a96;
   text-decoration: underline;
 }
+
+@media (min-width: 1200px) {
+  .near-half-width {
+    width: 60% !important;
+  }
+}
