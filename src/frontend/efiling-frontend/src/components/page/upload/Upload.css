@@ -1,0 +1,24 @@
+.dropzone-outer-box {
+  border: 1px dashed #707070;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+}
+
+.dropzone-inner-box {
+  display: flex;
+}
+
+.dropzone-inner-box span {
+  align-self: center;
+}
+
+.dropzone-inner-box div {
+  text-align: center;
+}
+
+.file-href {
+  cursor: pointer;
+  color: #1a5a96;
+  text-decoration: underline;
+}

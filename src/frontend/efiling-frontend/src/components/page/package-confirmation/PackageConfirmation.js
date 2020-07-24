@@ -17,6 +17,7 @@ import { generateFileSummaryData } from "../../../modules/generateFileSummaryDat
 
 import "./PackageConfirmation.css";
 import Payment from "../payment/Payment";
+import Upload from "../upload/Upload";
 
 const openFile = (file, submissionId) => {
   axios
@@ -131,6 +132,7 @@ export default function PackageConfirmation({
   const [courtData, setCourtData] = useState(null);
   const [submissionFee, setSubmissionFee] = useState(null);
   const [showPayment, setShowPayment] = useState(false);
+  const [showUpload, setShowUpload] = useState(false);
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
 
@@ -157,6 +159,9 @@ export default function PackageConfirmation({
       />
     );
   }
+
+  if (showUpload)
+    return <Upload upload={{ confirmationPopup, submissionId }} />;
 
   return (
     <div className="page">
@@ -200,11 +205,17 @@ export default function PackageConfirmation({
             <br />
           </div>
         ))}
-        {/* TODO: temporary lint disable, remove later */}
-        {/* eslint-disable jsx-a11y/anchor-is-valid */}
         <h3>
           Do you have additional documents to upload?&nbsp;
-          <a href="#">Upload them now.</a>
+          <span
+            onKeyDown={() => setShowUpload(true)}
+            role="button"
+            tabIndex={0}
+            className="file-href"
+            onClick={() => setShowUpload(true)}
+          >
+            Upload them now.
+          </span>
         </h3>
         <br />
         <br />

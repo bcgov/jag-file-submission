@@ -102,6 +102,44 @@ describe("PackageConfirmation Component", () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
+  test("On click of Upload them now text, it redirects to the upload page", async () => {
+    mock
+      .onGet(apiRequest)
+      .reply(200, { documents, court, submissionFeeAmount });
+
+    const { container, asFragment } = render(
+      <PackageConfirmation
+        packageConfirmation={packageConfirmation}
+        csoAccountStatus={csoAccountStatus}
+      />
+    );
+
+    await wait(() => {});
+
+    fireEvent.click(getByText(container, "Upload them now."));
+
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  test("On keydown of Upload them now text, it redirects to the upload page", async () => {
+    mock
+      .onGet(apiRequest)
+      .reply(200, { documents, court, submissionFeeAmount });
+
+    const { container, asFragment } = render(
+      <PackageConfirmation
+        packageConfirmation={packageConfirmation}
+        csoAccountStatus={csoAccountStatus}
+      />
+    );
+
+    await wait(() => {});
+
+    fireEvent.keyDown(getByText(container, "Upload them now."));
+
+    expect(asFragment()).toMatchSnapshot();
+  });
+
   test("Successfully opens the file in new window when get document call succeeds (on click)", async () => {
     const blob = new Blob(["foo", "bar"]);
 

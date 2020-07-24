@@ -235,11 +235,13 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
       </div>
       <h3>
         Do you have additional documents to upload? 
-        <a
-          href="#"
+        <span
+          class="file-href"
+          role="button"
+          tabindex="0"
         >
           Upload them now.
-        </a>
+        </span>
       </h3>
       <br />
       <br />
@@ -769,11 +771,13 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
       </div>
       <h3>
         Do you have additional documents to upload? 
-        <a
-          href="#"
+        <span
+          class="file-href"
+          role="button"
+          tabindex="0"
         >
           Upload them now.
-        </a>
+        </span>
       </h3>
       <br />
       <br />
@@ -1335,11 +1339,13 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
       </div>
       <h3>
         Do you have additional documents to upload? 
-        <a
-          href="#"
+        <span
+          class="file-href"
+          role="button"
+          tabindex="0"
         >
           Upload them now.
-        </a>
+        </span>
       </h3>
       <br />
       <br />
