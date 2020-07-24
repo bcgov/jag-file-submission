@@ -1,204 +1,228 @@
-apiVersion: build.openshift.io/v1
-kind: BuildConfig
+apiVersion: v1
+kind: Template
+labels:
+  template: master-build-pipeline
+message: |-
+  A Jenkins server must be instantiated in this project to manage
+  the Pipeline BuildConfig created by this template.  You will be able to log in to
+  it using your OpenShift user credentials.
 metadata:
-  creationTimestamp: "2020-07-20T19:50:28Z"
-  labels:
-    application: jag-api-pipeline
-    template: master-build-pipeline
-  name: jag-api-pipeline
-  namespace: qzaydf-tools
-  resourceVersion: "1950908513"
-  selfLink: >-
-    /apis/build.openshift.io/v1/namespaces/qzaydf-tools/buildconfigs/jag-api-pipeline
-  uid: 431fffff-cac2-11ea-97c7-005056832285
-spec:
-  failedBuildsHistoryLimit: 5
-  nodeSelector: {}
-  output: {}
-  postCommit: {}
-  resources: {}
-  runPolicy: Serial
-  source:
-    contextDir: src/backend/efiling-api
-    git:
-      ref: master
-      uri: "https://github.com/bcgov/jag-file-submission"
-    type: Git
-  strategy:
-    jenkinsPipelineStrategy:
-      env:
-        - name: APP_NAME
-          value: fla-springboot-backend
-        - name: LIFECYCLE_WEBHOOK
-        - name: GIT_SOURCE_URL
-          value: "https://github.com/bcgov/jag-file-submission"
-        - name: GIT_SOURCE_REF
-          value: master
-        - name: GIT_CREDENTIALS_ID
-          value: XItSbkxOy3W0uMgwSxwUWvDkB6LvghShbwbX18Ol
-        - name: GIT_CONTEXT_DIR
-          value: src/backend
-        - name: CHECKOUT_SRC
-          value: "${gitCheckoutRequired}"
-        - name: JENKINS_POD
-          value: maven
-        - name: SONAR_TOKEN
-        - name: SONAR_CREDENTIAL_ID
-        - name: SONAR_URL
-          value: "http://sonarqube:9000"
-        - name: SONAR_COMMAND
-        - name: SONAR_ENABLED
-          value: "false"
-        - name: TOOLS_NAMESPACE
-          value: qzaydf-tools
-        - name: DEV_NAMESPACE
-          value: qzaydf-dev
-        - name: TEST_NAMESPACE
-          value: qzaydf-test
-        - name: PROD_NAMESPACE
-          value: qzaydf-prod
-        - name: ROUTE_TYPE
-          value: private
-      jenkinsfile: >-
-        try {
-          timeout(time: 33, unit: 'MINUTES') {
-            node("${JENKINS_POD}") {
+  annotations:
+    openshift.io/display-name: Master Pipeline Template
+    description: |-
+      This is a template for OpenShift Jenkins Pipelines.
+    iconClass: icon-jenkins
+    tags: instant-app,jenkins
+  name: pipeline-build-template
+parameters:
+  - description: Openshift Pipeline Name
+    displayName: Openshift Pipeline Name (ex// jag-api-pipeline)
+    name: pipelineName
+    required: true
+    value:
+  - description: Openshift Namespace Prefix
+    displayName: Namespace Prefix (ie// 6 character code for openshift like pjztlm)
+    name: namespacePrefix
+    required: true
+    value:
+  - description: Github url
+    displayName: Github url  (ex// https://github.com/bcgov/jag-file-submission)
+    name: gitURL
+    required: true
+    value:
+  - description: Context Directory
+    displayName: Context Directory
+    name: contextDir
+    required: true
+    value:
+objects:
+  - apiVersion: v1
+    kind: BuildConfig
+    metadata:
+      labels:
+        application: ${pipelineName}
+        template: master-build-pipeline
+      name: ${pipelineName}
+      namespace: ${namespacePrefix}-tools
+    spec:
+      failedBuildsHistoryLimit: 5
+      nodeSelector: {}
+      output: {}
+      postCommit: {}
+      resources: {}
+      runPolicy: Serial
+      source:
+        contextDir: ${contextDir}
+        git:
+          ref: master
+          uri: ${gitURL}
+        type: Git
+      strategy:
+        jenkinsPipelineStrategy:
+          env:
+            - name: APP_NAME
+              value: ${pipelineName}
+            - name: LIFECYCLE_WEBHOOK
+            - name: GIT_SOURCE_URL
+              value: ${gitURL}
+            - name: GIT_SOURCE_REF
+              value: master
+            - name: GIT_CONTEXT_DIR
+              value: ${contextDir}
+            - name: CHECKOUT_SRC
+              value: "${gitCheckoutRequired}"
+            - name: JENKINS_POD
+              value: maven
+            - name: TOOLS_NAMESPACE
+              value: ${namespacePrefix}-tools
+            - name: DEV_NAMESPACE
+              value: ${namespacePrefix}-dev
+            - name: TEST_NAMESPACE
+              value: ${namespacePrefix}-test
+            - name: PROD_NAMESPACE
+              value: ${namespacePrefix}-prod
+            - name: ROUTE_TYPE
+              value: private
+          jenkinsfile: >-
+            try {
+              timeout(time: 33, unit: 'MINUTES') {
+                node("${JENKINS_POD}") {
 
-              // Checkout Openshift metadata template
-              stage("Git Checkout") {
-                dir("${APP_NAME}") {
-                  git url: "https://github.com/ChrisHoban/ssg-openshift-meta-templates.git"
+                  // Checkout Openshift metadata template
+                  stage("Git Checkout") {
+                    dir("${APP_NAME}") {
+                      git url: ${gitURL}
 
-                  artifactPath = "/openshift/templates/${APP_NAME}-dc.yaml"
-                  artifactExists = fileExists artifactPath
+                      artifactPath = "/openshift/applications/deployments/${APP_NAME}-dc.yaml"
+                      artifactExists = fileExists artifactPath
 
-                  if (artifactExists){
-                    env.DEPLOYMENT_CONFIG_PATH = artifactPath
-                  } else {
-                    env.DEPLOYMENT_CONFIG_PATH = "openshift/meta-templates/deployment-config.yaml"
+                      if (artifactExists){
+                        env.DEPLOYMENT_CONFIG_PATH = artifactPath
+                      } else {
+                        env.DEPLOYMENT_CONFIG_PATH = "openshift/meta-templates/deployment-config.yaml"
+                      }
+                      sh "echo deployment config path: ${DEPLOYMENT_CONFIG_PATH}"
+                    }
                   }
-                  sh "echo deployment config path: ${DEPLOYMENT_CONFIG_PATH}"
-                }
-              }
 
-              // Build Image
-              stage("Build ${APP_NAME}") {
-                dir("${APP_NAME}") {
-                  timeout(time: 12, unit: 'MINUTES') {
-                    openshift.withCluster() {
-                      openshift.withProject() {
-                        def bld = openshift.startBuild(env.APP_NAME)
-                        bld.untilEach {
-                          return (it.object().status.phase == "Complete")
+                  // Build Image
+                  stage("Build ${APP_NAME}") {
+                    dir("${APP_NAME}") {
+                      timeout(time: 12, unit: 'MINUTES') {
+                        openshift.withCluster() {
+                          openshift.withProject() {
+                            def bld = openshift.startBuild(env.APP_NAME)
+                            bld.untilEach {
+                              return (it.object().status.phase == "Complete")
+                            }
+                            bld.logs('-f')
+                          }
                         }
-                        bld.logs('-f')
                       }
                     }
                   }
+                  
+                  stage('Promote to DEV') {
+                    openshift.withCluster() {
+                      sh "echo Tagging image for DEV"
+                      openshift.tag("${APP_NAME}:latest", "${APP_NAME}:dev")
+                    }
+                  }
+
+                  stage("Deploy ${APP_NAME}") {
+                    deploy("${DEPLOYMENT_CONFIG_PATH}", "${APP_NAME}", "${TOOLS_NAMESPACE}", "${DEV_NAMESPACE}", "${ROUTE_TYPE}", "dev")
+                  }
                 }
               }
-              
-              stage('Promote to DEV') {
-                openshift.withCluster() {
-                  sh "echo Tagging image for DEV"
-                  openshift.tag("${APP_NAME}:latest", "${APP_NAME}:dev")
-                }
+            } catch (err) {
+              echo "in catch block"
+
+              currentBuild.result = 'FAILURE'
+              env.ERR = "${err}"
+              node {
+                  sh "curl -XPOST '${LIFECYCLE_WEBHOOK}' -H 'Content-type: application/json' --data '{\"username\":\"The Pipe Lion\",\"icon_emoji\":\":lion_face:\",\"text\": \"${APP_NAME} Pipeline Failure - ${ERR}\"}'"
               }
-
-              stage("Deploy ${APP_NAME}") {
-                deploy("${DEPLOYMENT_CONFIG_PATH}", "${APP_NAME}", "${TOOLS_NAMESPACE}", "${DEV_NAMESPACE}", "${ROUTE_TYPE}", "dev")
-              }
-            }
-          }
-        } catch (err) {
-          echo "in catch block"
-
-          currentBuild.result = 'FAILURE'
-          env.ERR = "${err}"
-          node {
-              sh "curl -XPOST '${LIFECYCLE_WEBHOOK}' -H 'Content-type: application/json' --data '{\"username\":\"The Pipe Lion\",\"icon_emoji\":\":lion_face:\",\"text\": \"${APP_NAME} Pipeline Failure - ${ERR}\"}'"
-          }
-          echo "Caught: ${err}"
-          throw err
-        }
-
-        String getCommit() {
-            return sh(script: 'git rev-parse HEAD', returnStdout: true)?.trim()
-        }
-
-        // Deploy application to environment
-
-        def deploy(String deploymentConfigPath, String appName, String
-        sourceNamespace, String targetNamespace, String routeType, String
-        version) {
-          dir("fla-springboot-backend") {
-
-            deployTemplates("${deploymentConfigPath}", "fla-springboot-backend", "${sourceNamespace}", "${targetNamespace}", "private", "${version}")
-
-            sh "echo Wait for service to be up"
-            timeout(time: 5, unit: 'MINUTES') {
-              openshift.withCluster() {
-                openshift.withProject("${targetNamespace}") {
-                  def dc = openshift.selector('dc', "fla-springboot-backend")
-                  // this will wait until the desired replicas are available
-                  dc.rollout().status()
-                }
-              }
+              echo "Caught: ${err}"
+              throw err
             }
 
-          }
-        }
+            String getCommit() {
+                return sh(script: 'git rev-parse HEAD', returnStdout: true)?.trim()
+            }
 
-        // Create a service routes using the default template
+            // Deploy application to environment
 
-        def createServiceRoute(String appName, String targetNamespace, String
-        suffix) {
-          sh "oc process -f openshift/meta-templates/service-route.yaml \
-            -p appName=fla-springboot-backend \
-            -p suffix=${suffix} \
-            -p namespace=${targetNamespace} | oc apply -f - -n ${targetNamespace}"
+            def deploy(String deploymentConfigPath, String appName, String
+            sourceNamespace, String targetNamespace, String routeType, String
+            version) {
+              dir("fla-springboot-backend") {
 
-        }
+                deployTemplates("${deploymentConfigPath}", "fla-springboot-backend", "${sourceNamespace}", "${targetNamespace}", "private", "${version}")
 
-        // deploy template by Priority: Project Repo Template > OpenShift
-        Template Exists (Skip) > Default Meta Template
+                sh "echo Wait for service to be up"
+                timeout(time: 5, unit: 'MINUTES') {
+                  openshift.withCluster() {
+                    openshift.withProject("${targetNamespace}") {
+                      def dc = openshift.selector('dc', "fla-springboot-backend")
+                      // this will wait until the desired replicas are available
+                      dc.rollout().status()
+                    }
+                  }
+                }
 
-        def deployTemplates(String deploymentConfigPath, String appName, String
-        sourceNamespace, String targetNamespace, String routeType, String
-        version){
-            def templateExists
-            openshift.withCluster() {
-              openshift.withProject("${targetNamespace}") {
-                templateExists = openshift.selector( "dc", "fla-springboot-backend").exists()
               }
             }
 
-            if(templateExists){
-              sh "echo fla-springboot-backend Deployment Configuration Exists in ${targetNamespace}, skipping baseline template deploy"
-            }else{
-              sh "echo fla-springboot-backend Deployment Configuration not found in ${targetNamespace}, performing baseline template deploy"
+            // Create a service routes using the default template
 
-              // deploy generic deploymentconfig
-              sh "oc process -f ${deploymentConfigPath} \
+            def createServiceRoute(String appName, String targetNamespace, String
+            suffix) {
+              sh "oc process -f openshift/meta-templates/service-route.yaml \
                 -p appName=fla-springboot-backend \
-                -p namespace=${sourceNamespace} \
-                -p TAG=${version} | oc apply -f - -n ${targetNamespace}"
+                -p suffix=${suffix} \
+                -p namespace=${targetNamespace} | oc apply -f - -n ${targetNamespace}"
 
-              // Deploy generic route
-              if(routeType == "private") {
-                createServiceRoute("fla-springboot-backend", "${targetNamespace}", "pathfinder.bcgov")
-              } else if (routeType == "public") {
-                createServiceRoute("fla-springboot-backend", "${targetNamespace}", "pathfinder.gov.bc.ca")
-              }
             }
 
-        }
-    type: JenkinsPipeline
-  successfulBuildsHistoryLimit: 5
-  triggers:
-    - type: ConfigChange
-    - github:
-        secret: "${GITHUB_WEBHOOK_SECRET}"
-      type: GitHub
-status:
-  lastVersion: 27
+            // deploy template by Priority: Project Repo Template > OpenShift
+            Template Exists (Skip) > Default Meta Template
+
+            def deployTemplates(String deploymentConfigPath, String appName, String
+            sourceNamespace, String targetNamespace, String routeType, String
+            version){
+                def templateExists
+                openshift.withCluster() {
+                  openshift.withProject("${targetNamespace}") {
+                    templateExists = openshift.selector( "dc", "fla-springboot-backend").exists()
+                  }
+                }
+
+                if(templateExists){
+                  sh "echo fla-springboot-backend Deployment Configuration Exists in ${targetNamespace}, skipping baseline template deploy"
+                }else{
+                  sh "echo fla-springboot-backend Deployment Configuration not found in ${targetNamespace}, performing baseline template deploy"
+
+                  // deploy generic deploymentconfig
+                  sh "oc process -f ${deploymentConfigPath} \
+                    -p appName=fla-springboot-backend \
+                    -p namespace=${sourceNamespace} \
+                    -p TAG=${version} | oc apply -f - -n ${targetNamespace}"
+
+                  // Deploy generic route
+                  if(routeType == "private") {
+                    createServiceRoute("fla-springboot-backend", "${targetNamespace}", "pathfinder.bcgov")
+                  } else if (routeType == "public") {
+                    createServiceRoute("fla-springboot-backend", "${targetNamespace}", "pathfinder.gov.bc.ca")
+                  }
+                }
+
+            }
+        type: JenkinsPipeline
+      successfulBuildsHistoryLimit: 5
+      triggers:
+        - type: ConfigChange
+        - github:
+            secret: "${GITHUB_WEBHOOK_SECRET}"
+          type: GitHub
+    status:
+      lastVersion: 0
