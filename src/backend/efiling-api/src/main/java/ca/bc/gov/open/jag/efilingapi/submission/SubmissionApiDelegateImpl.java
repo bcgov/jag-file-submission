@@ -229,7 +229,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    @RolesAllowed("efiling-default")
+    @RolesAllowed("efiling-user")
     public ResponseEntity<SubmitFilingPackageResponse> submit(UUID xAuthUserId, UUID id, SubmitFilingPackageRequest submitFilingPackageRequest) {
         ResponseEntity response;
         MDC.put(Keys.EFILING_SUBMISSION_ID, id.toString());
