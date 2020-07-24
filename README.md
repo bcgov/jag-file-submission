@@ -47,6 +47,16 @@ if you want to integrate with the CSO application, first create a local `.env` a
 
 Change the `MVN_PROFILE` to `default`
 
+Configure Keycloak
+
+```bash
+docker-compose up -d --build keycloak
+```
+
+go to [Efiling-api credentials](http://localhost:8081/auth/admin/master/console/#/realms/SpringBootKeycloak/clients/b7fd5f2f-d047-4916-a35e-0f7c622dfb5d/credentials) and click generate Secrets
+
+copy the value of the secret in your `.env`
+
 Set the following environement variables:
 
 ```
