@@ -50,7 +50,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     private final DocumentStore documentStore;
 
 
-
     public SubmissionApiDelegateImpl(
             SubmissionService submissionService,
             GenerateUrlResponseMapper generateUrlResponseMapper,
@@ -230,7 +229,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    @Secured
+    @RolesAllowed("efiling-default")
     public ResponseEntity<SubmitFilingPackageResponse> submit(UUID xAuthUserId, UUID id, SubmitFilingPackageRequest submitFilingPackageRequest) {
         ResponseEntity response;
         MDC.put(Keys.EFILING_SUBMISSION_ID, id.toString());
