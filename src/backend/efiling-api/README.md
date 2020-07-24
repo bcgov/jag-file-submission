@@ -50,10 +50,10 @@ You should use environment variables to configure the jag efiling api
 | BCEID_LOOKUP_USERNAME       | String  | bceid lookup username                        | not set by default             |
 | BCEID_LOOKUP_PASSWORD       | String  | bceid lookup password                        | not set by default             |
 | BCEID_LOOKUP_URI            | String  | bceid lookup URI                             | not set by default             |
-| KEYCLOAK_AUTH_SERVER_URL | String | The keycloak auth server URL                            | not set by default             |
-| KEYCLOAK_REALM | String | The keycloak realm name                           | not set by default             |
-| KEYCLOAK_RESOURCE | String | The keycloak resource name                               | not set by default             |
-| KEYCLOAK_CREDENTIALS_SECRET | String | The keycloak Credentials Secrets                        | not set by default             |
+| KEYCLOAK_AUTH_SERVER_URL    | String  | The keycloak auth server URL                 | not set by default             |
+| KEYCLOAK_REALM              | String  | The keycloak realm name                      | not set by default             |
+| KEYCLOAK_RESOURCE           | String  | The keycloak resource name                   | not set by default             |
+| KEYCLOAK_CREDENTIALS_SECRET | String  | The keycloak Credentials Secrets             | not set by default             |
 
 
 ## Backend Folder Structure
