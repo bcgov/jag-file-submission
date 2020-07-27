@@ -135,6 +135,8 @@ services:
     ports:
       - 8081:8080
     command: ["-Dkeycloak.profile.feature.upload_scripts=enabled"]
+    networks:
+      - fisu-net
 
 volumes:
   data-redis:
