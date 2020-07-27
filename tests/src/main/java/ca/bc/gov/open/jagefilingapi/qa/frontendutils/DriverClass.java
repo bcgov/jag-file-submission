@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -24,6 +25,10 @@ public class DriverClass {
             switch (browser) {
                 case "chrome":
                     WebDriverManager.chromedriver().setup();
+                   /* ChromeOptions options = new ChromeOptions();
+                    options.addArguments("--no-sandbox");
+                    options.addArguments("--disable-dev-shm-usage");
+                    options.addArguments("--headless");*/
                     driver = new ChromeDriver();
                     break;
                 case "firefox":
