@@ -31,13 +31,13 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest",
+    "test": "jest --env=jest-environment-jsdom-sixteen",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "coverage": "jest --coverage",
+    "coverage": "jest --coverage --env=jest-environment-jsdom-sixteen",
     "precommit": "pretty-quick --staged"
   },
   "eslintConfig": {
@@ -81,7 +81,8 @@
     "jest-sonar-reporter": "^2.0.0",
     "prettier": "2.0.5",
     "pretty-quick": "^2.0.1",
-    "husky": "^4.2.5"
+    "husky": "^4.2.5",
+    "jest-environment-jsdom-sixteen": "^1.0.3"
   },
   "jest": {
     "watchPathIgnorePatterns": [
