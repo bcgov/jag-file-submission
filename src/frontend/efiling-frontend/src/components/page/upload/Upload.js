@@ -23,13 +23,13 @@ const icon = (
   </div>
 );
 
-const generateTable = () => {
+const generateTable = file => {
   return [
     {
       name: (
         <div className="center-alignment fill-space">
           {icon}
-          <span className="minor-margin-left">jhsgdhjsgjh</span>
+          <span className="file-href minor-margin-left">{file.name}</span>
         </div>
       ),
       value: (
@@ -53,14 +53,14 @@ const generateTable = () => {
         <div className="table-value">
           <div className="minor-margin-right">
             <Radio
-              id="no"
+              id="no-amendment"
               name="amendment"
               label="No"
               onSelect={val => console.log(val)}
             />
           </div>
           <Radio
-            id="yes"
+            id="yes-amendment"
             name="amendment"
             label="Yes"
             onSelect={val => console.log(val)}
@@ -79,15 +79,15 @@ const generateTable = () => {
         <div className="table-value">
           <div className="minor-margin-right">
             <Radio
-              id="no"
-              name="amendment"
+              id="no-supreme"
+              name="supreme"
               label="No"
               onSelect={val => console.log(val)}
             />
           </div>
           <Radio
-            id="yes"
-            name="amendment"
+            id="yes-supreme"
+            name="supreme"
             label="Yes"
             onSelect={val => console.log(val)}
           />
@@ -99,9 +99,9 @@ const generateTable = () => {
 
 const items = [
   "Select document description",
-  "Option 2",
-  "Option 3",
-  "Option 4"
+  "Affidavit",
+  "Affidavit of Attempted Service",
+  "Case Conference Brief"
 ];
 
 export default function Upload({
@@ -147,13 +147,17 @@ export default function Upload({
           <>
             <h2>Select Description for each uploaded document to continue</h2>
             <br />
-            <div>
-              <DisplayBox
-                styling="border-background"
-                element={<Table elements={generateTable()} />}
-              />
-              <br />
-            </div>
+            {acceptedFiles.map(file => (
+              <div>
+                <DisplayBox
+                  styling="border-background"
+                  element={
+                    <Table key={file.name} elements={generateTable(file)} />
+                  }
+                />
+                <br />
+              </div>
+            ))}
           </>
         )}
         <section className="buttons pt-2">
