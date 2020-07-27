@@ -2,7 +2,7 @@ import React from "react";
 import { createMemoryHistory } from "history";
 import { MemoryRouter } from "react-router-dom";
 import axios from "axios";
-import { render, wait } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import MockAdapter from "axios-mock-adapter";
 
 import Home, { saveDataToSessionStorage } from "./Home";
@@ -55,10 +55,10 @@ describe("Home", () => {
 
     const { asFragment } = render(component);
 
-    await wait(() => {
-      expect(asFragment()).toMatchSnapshot();
-      expect(sessionStorage.getItem("cancelUrl")).toEqual("cancelurl.com");
-    });
+    await waitFor(() => {});
+
+    expect(asFragment()).toMatchSnapshot();
+    expect(sessionStorage.getItem("cancelUrl")).toEqual("cancelurl.com");
   });
 
   test("Component matches the snapshot when user cso account does not exist", async () => {
@@ -69,10 +69,10 @@ describe("Home", () => {
 
     const { asFragment } = render(component);
 
-    await wait(() => {
-      expect(asFragment()).toMatchSnapshot();
-      expect(sessionStorage.getItem("cancelUrl")).toEqual("cancelurl.com");
-    });
+    await waitFor(() => {});
+
+    expect(asFragment()).toMatchSnapshot();
+    expect(sessionStorage.getItem("cancelUrl")).toEqual("cancelurl.com");
   });
 
   test("Component matches the snapshot when error encountered, does not attempt to redirect with no errorUrl", async () => {
@@ -80,11 +80,10 @@ describe("Home", () => {
 
     const { asFragment } = render(component);
 
-    await wait(() => {
-      expect(asFragment()).toMatchSnapshot();
-      expect(sessionStorage.getItem("cancelUrl")).toBeFalsy();
-    });
+    await waitFor(() => {});
 
+    expect(asFragment()).toMatchSnapshot();
+    expect(sessionStorage.getItem("cancelUrl")).toBeFalsy();
     expect(window.open).not.toHaveBeenCalled();
   });
 
@@ -94,10 +93,9 @@ describe("Home", () => {
 
     const { asFragment } = render(component);
 
-    await wait(() => {
-      expect(asFragment()).toMatchSnapshot();
-    });
+    await waitFor(() => {});
 
+    expect(asFragment()).toMatchSnapshot();
     expect(window.open).toHaveBeenCalledWith(
       "error.com?status=400&message=There was an error.",
       "_self"
