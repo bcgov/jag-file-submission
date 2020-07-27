@@ -31,7 +31,7 @@ public class SubmitFilingPackageTest {
 
         MockitoAnnotations.initMocks(this);
 
-        sut = new CsoSubmissionServiceImpl(filingFacadeBeanMock, serviceFacadeBean);
+        sut = new CsoSubmissionServiceImpl(filingFacadeBeanMock, serviceFacadeBean, null);
 
     }
 
