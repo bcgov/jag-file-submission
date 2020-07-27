@@ -6,7 +6,7 @@ import {
   fireEvent,
   getByText,
   getByRole,
-  wait
+  waitFor
 } from "@testing-library/react";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
 import { getDocumentsData } from "../../../modules/documentTestData";
@@ -61,8 +61,8 @@ describe("Payment Component", () => {
 
     fireEvent.click(getByText(container, "< Back"));
 
-    await wait(() => {
-      expect(asFragment()).toMatchSnapshot();
-    });
+    await waitFor(() => {});
+
+    expect(asFragment()).toMatchSnapshot();
   });
 });
