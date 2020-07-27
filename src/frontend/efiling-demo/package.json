@@ -26,7 +26,6 @@
     "react-test-renderer": "^16.12.0",
     "regenerator-runtime": "^0.13.5",
     "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/0.4.8/shared-components-0.4.8.tgz",
-    "webpack": "4.44.0"
   },
   "scripts": {
     "start": "react-scripts start",

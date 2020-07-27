@@ -6,14 +6,16 @@ on:
 
 jobs:
   cucumber-tests:
-
     name: Runs cucumber-tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
-      - name: install chromium driver
-        run: sudo apt-get -yqq install chromium-chromedriver
+      # Using shell script to install Google Chrome
+      - name: Install Google Chrome
+        run: |
+          chmod +x ./scripts/installChrome.sh
+           ./scripts/installChrome.sh
 
       # Build Docker and Run Tests
       - name: build docker and run tests
@@ -25,7 +27,7 @@ jobs:
         with:
           name: cucumber-spark-report
           path: tests\test-output\extent\Spark\Index.html
-          
+
       # Upload Cucumber JSON for debugging purposes
       - name: Upload Cucumber JSON for debugging purposes
         uses: actions/upload-artifact@v2
