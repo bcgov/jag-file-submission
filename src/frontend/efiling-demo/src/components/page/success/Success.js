@@ -27,6 +27,6 @@ export default function Success({ page: { header } }) {
 
 Success.propTypes = {
   page: PropTypes.shape({
-    header: propTypes.header
-  }).isRequired
+    header: propTypes.header,
+  }).isRequired,
 };

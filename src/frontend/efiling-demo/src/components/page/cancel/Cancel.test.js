@@ -5,7 +5,7 @@ import Cancel from "./Cancel";
 
 const header = {
   name: "eFiling Demo Client",
-  history: createMemoryHistory()
+  history: createMemoryHistory(),
 };
 
 const page = { header };

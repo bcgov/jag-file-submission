@@ -5,12 +5,12 @@ import Error from "./Error";
 
 export default {
   title: "Error",
-  component: Error
+  component: Error,
 };
 
 const header = {
   name: "eFiling Demo Client",
-  history: createMemoryHistory()
+  history: createMemoryHistory(),
 };
 
 const status = "400";
@@ -25,7 +25,7 @@ export const Mobile = () => <Error page={page} />;
 Mobile.story = {
   parameters: {
     viewport: {
-      defaultViewport: "mobile2"
-    }
-  }
+      defaultViewport: "mobile2",
+    },
+  },
 };

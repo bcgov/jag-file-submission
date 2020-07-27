@@ -5,12 +5,12 @@ import Home from "./Home";
 
 export default {
   title: "Home",
-  component: Home
+  component: Home,
 };
 
 const header = {
   name: "eFiling Demo Client",
-  history: createMemoryHistory()
+  history: createMemoryHistory(),
 };
 
 const page = { header };
@@ -22,7 +22,7 @@ export const Mobile = () => <Home page={page} />;
 Mobile.story = {
   parameters: {
     viewport: {
-      defaultViewport: "mobile2"
-    }
-  }
+      defaultViewport: "mobile2",
+    },
+  },
 };

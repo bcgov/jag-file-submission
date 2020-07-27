@@ -4,7 +4,7 @@ import {
   Route,
   Redirect,
   useHistory,
-  useLocation
+  useLocation,
 } from "react-router-dom";
 import queryString from "query-string";
 import Home from "./components/page/home/Home";
@@ -20,7 +20,7 @@ export default function App() {
 
   const header = {
     name: "eFiling Demo Client",
-    history: useHistory()
+    history: useHistory(),
   };
 
   return (

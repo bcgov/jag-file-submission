@@ -28,6 +28,6 @@ export default function Cancel({ page: { header } }) {
 
 Cancel.propTypes = {
   page: PropTypes.shape({
-    header: propTypes.header
-  }).isRequired
+    header: propTypes.header,
+  }).isRequired,
 };
