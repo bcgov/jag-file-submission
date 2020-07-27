@@ -30,6 +30,7 @@ public class EFileSubmissionTest extends DriverClass {
      EFileSubmissionPage eFileSubmissionPage;
      PackageConfirmationPage packageConfirmationPage;
      private static final String EFILE_SUBMISSION_PAGE_TITLE = "E-File submission";
+    private static final String BASE_PATH = "user.dir";
      private static final String PDF_PATH = "/src/test/java/testdatasource/test-pdf-document.pdf";
      private String filePath;
 
@@ -76,8 +77,10 @@ public class EFileSubmissionTest extends DriverClass {
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
         landingPage.enterAccountGuid(validExistingCSOGuid);
 
-        filePath = System.getProperty("user.dir") + PDF_PATH;
+        filePath = System.getProperty(BASE_PATH) + PDF_PATH;
         landingPage.chooseFileToUpload(filePath);
+
+        landingPage.enterJsonData();
 
         landingPage.clickGenerateUrlButton();
         log.info("Pdf file is uploaded successfully.");
@@ -156,8 +159,10 @@ public class EFileSubmissionTest extends DriverClass {
         nonExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getNonExistingCSOGuid();
         landingPage.enterAccountGuid(nonExistingCSOGuid);
 
-        filePath = System.getProperty("user.dir") + PDF_PATH;
+        filePath = System.getProperty(BASE_PATH) + PDF_PATH;
         landingPage.chooseFileToUpload(filePath);
+
+        landingPage.enterJsonData();
 
         landingPage.clickGenerateUrlButton();
         log.info("Pdf file is uploaded successfully.");
@@ -190,6 +195,11 @@ public class EFileSubmissionTest extends DriverClass {
 
         invalidNoFilingRoleGuid = JsonDataReader.getCsoAccountGuid().getInvalidNoFilingRoleGuid();
         landingPage.enterAccountGuid(invalidNoFilingRoleGuid);
+
+        filePath = System.getProperty(BASE_PATH) + PDF_PATH;
+        landingPage.chooseFileToUpload(filePath);
+
+        landingPage.enterJsonData();
     }
 
     @Then("error message is displayed")

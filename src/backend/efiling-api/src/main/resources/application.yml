@@ -40,6 +40,10 @@ jag:
           userName: ${FILING_FACADE_USERNAME}
           password: ${FILING_FACADE_PASSWORD}
           uri: ${FILING_FACADE_URI:http://localhost:8091}
+        - client: SERVICE
+          userName: ${CSO_SERVICEFACADE_USERNAME}
+          password: ${CSO_SERVICEFACADE_PASSWORD}
+          uri: ${CSO_SERVICEFACADE_URI:http://localhost:8091}
         - client: BCEID
           userName: ${BCEID_LOOKUP_USERNAME}
           password: ${BCEID_LOOKUP_PASSWORD}
