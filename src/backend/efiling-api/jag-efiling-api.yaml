@@ -8,6 +8,8 @@ servers:
 tags:
   - name: submission
     description: Submission Api
+security:
+  - bearerAuth: []
 paths:
   "/submission/documents":
     post:
@@ -178,6 +180,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/UserDetails"
 components:
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   parameters:
     xAuthUserId:
       name: X-Auth-UserId

@@ -8,6 +8,14 @@ spring:
   cache:
     redis:
       time-to-live: ${CACHE_TTL:600000}
+keycloak:
+  auth-server-url: ${KEYCLOAK_AUTH_SERVER_URL}
+  realm: ${KEYCLOAK_REALM}
+  resource: ${KEYCLOAK_RESOURCE}
+  credentials:
+    secret: ${KEYCLOAK_CREDENTIALS_SECRET}
+  use-resource-role-mappings: true
+  bearer-only: true
 jag:
   efiling:
     global:
