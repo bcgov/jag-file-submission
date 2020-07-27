@@ -11,7 +11,7 @@
     "bootstrap": "^4.4.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
-    "filepond": "^4.14.0",
+    "filepond": "^4.19.0",
     "filepond-plugin-image-exif-orientation": "^1.0.9",
     "filepond-plugin-image-preview": "^4.6.4",
     "history": "^4.10.1",

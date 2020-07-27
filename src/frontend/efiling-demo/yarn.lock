@@ -6363,10 +6363,10 @@ filepond-plugin-image-preview@^4.6.4:
   resolved "https://registry.yarnpkg.com/filepond-plugin-image-preview/-/filepond-plugin-image-preview-4.6.4.tgz#19edade651559cf8c9fb97bcc8ce56af16ebae67"
   integrity sha512-grlFJv1LH4E7IzsKTIFI52LuyLQa+lXMqmUnSm0cufDblRXHxdraRkjj/88bd9pyVJm206dBXQnlIVVyEaE5xg==
 
-filepond@^4.14.0:
-  version "4.18.0"
-  resolved "https://registry.yarnpkg.com/filepond/-/filepond-4.18.0.tgz#6d56d3d13b55b5f49530351c4b11946ab682dfc4"
-  integrity sha512-lIRv27uYU0DQjUNa0G+aGsdmkhxdEzk9k2gbOsWLQdO+4u6FGNPjA1lUfy5vkF4ifx2GEeO1X+xP6Kqyb6tWaw==
+filepond@^4.19.0:
+  version "4.19.0"
+  resolved "https://registry.yarnpkg.com/filepond/-/filepond-4.19.0.tgz#577097787597134cac991fe9e4cde050c300d0b2"
+  integrity sha512-v/lYpu5YXoM5ctNxCaM4LMFedgFcZjp+YSkjJWSUiG+2i79YRuLOS99WWqMWTEdwW5av2AEzDYRp56VR6Qc5aA==
 
 filesize@3.6.1:
   version "3.6.1"
