@@ -1,7 +1,7 @@
 import React from "react";
 import {
   render,
-  wait,
+  waitFor,
   getByText,
   getByRole,
   fireEvent
@@ -59,7 +59,7 @@ describe("CSOAccount Component", () => {
     expect(getByText(container, "Create CSO Account").disabled).toBeFalsy();
 
     fireEvent.click(getByText(container, "Create CSO Account"));
-    await wait(() => {});
+    await waitFor(() => {});
 
     expect(setCsoAccountStatus).toHaveBeenCalled();
     expect(sessionStorage.getItem("csoAccountId")).toEqual("identifier");
@@ -83,7 +83,7 @@ describe("CSOAccount Component", () => {
       />
     );
 
-    await wait(() => {});
+    await waitFor(() => {});
 
     expect(sessionStorage.getItem("csoAccountId")).toEqual("someId");
   });
@@ -105,7 +105,7 @@ describe("CSOAccount Component", () => {
     expect(getByText(container, "Create CSO Account").disabled).toBeFalsy();
 
     fireEvent.click(getByText(container, "Create CSO Account"));
-    await wait(() => {});
+    await waitFor(() => {});
 
     expect(window.open).toHaveBeenCalledWith(
       "error.com?status=400&message=There was a problem.",

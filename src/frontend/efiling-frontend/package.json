@@ -24,19 +24,19 @@
     "react-scripts": "3.4.1",
     "react-test-renderer": "^16.12.0",
     "regenerator-runtime": "^0.13.7",
-    "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/0.4.5/shared-components-0.4.5.tgz",
-    "webpack": "4.42.0"
+    "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/0.4.6/shared-components-0.4.6.tgz",
+    "webpack": "4.44.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest",
+    "test": "jest --env=jest-environment-jsdom-sixteen",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "coverage": "jest --coverage",
+    "coverage": "jest --coverage --env=jest-environment-jsdom-sixteen",
     "precommit": "pretty-quick --staged"
   },
   "eslintConfig": {
@@ -55,8 +55,8 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.8.4",
-    "@babel/preset-env": "^7.8.4",
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
     "@storybook/addon-actions": "^5.3.19",
     "@storybook/addon-links": "^5.3.19",
     "@storybook/addon-storyshots": "^5.3.14",
@@ -64,16 +64,16 @@
     "@storybook/addons": "^5.3.19",
     "@storybook/preset-create-react-app": "^3.0.0",
     "@storybook/react": "^5.3.19",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/react-hooks": "3.2.1",
+    "@testing-library/jest-dom": "^5.11.1",
+    "@testing-library/react": "^10.4.7",
+    "@testing-library/react-hooks": "3.4.1",
     "@testing-library/user-event": "^12.0.15",
     "axios-mock-adapter": "^1.18.1",
     "enzyme-to-json": "^3.5.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.20.4",
@@ -81,7 +81,8 @@
     "husky": "^4.2.5",
     "jest-sonar-reporter": "^2.0.0",
     "prettier": "1.19.1",
-    "pretty-quick": "^2.0.1"
+    "pretty-quick": "^2.0.1",
+    "jest-environment-jsdom-sixteen": "^1.0.3"
   },
   "jest": {
     "watchPathIgnorePatterns": [

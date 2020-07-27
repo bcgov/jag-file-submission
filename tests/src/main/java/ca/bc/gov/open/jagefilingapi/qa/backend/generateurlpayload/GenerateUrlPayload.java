@@ -24,6 +24,9 @@ public class GenerateUrlPayload {
     public static final String SUCCESS_URL = "http://success.com";
     public static final String CANCEL_URL = "http://cancel.com";
     public static final String ERROR_URL = "http://error.com";
+    private static final String LEVEL_DESCRIPTION = "level description";
+    private static final String CLASS_DESCRIPTION = "class description";
+    private static final String COURT_DESCRIPTION = "court description";
 
     private GenerateUrlRequest generateUrlRequest;
 
@@ -87,8 +90,10 @@ public class GenerateUrlPayload {
         court.setLevel(LEVEL);
         court.setLocation(LOCATION);
         court.setParticipatingClass(PARTICIPATIONCLASS);
-        court.setPropertyClass(PROPERTYCLASS);
-
+        court.setCourtClass(PROPERTYCLASS);
+        court.setLevelDescription(LEVEL_DESCRIPTION);
+        court.setClassDescription(CLASS_DESCRIPTION);
+        court.setLocationDescription(COURT_DESCRIPTION);
         return court;
     }
 
