@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-import { render, wait, fireEvent, getByText } from "@testing-library/react";
+import { render, waitFor, fireEvent, getByText } from "@testing-library/react";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
 import { getDocumentsData } from "../../../modules/documentTestData";
 import { getCourtData } from "../../../modules/courtTestData";
@@ -44,9 +44,9 @@ describe("PackageConfirmation Component", () => {
       />
     );
 
-    await wait(() => {
-      expect(asFragment()).toMatchSnapshot();
-    });
+    await waitFor(() => {});
+
+    expect(asFragment()).toMatchSnapshot();
   });
 
   test("Matches the new account snapshot", async () => {
@@ -61,9 +61,9 @@ describe("PackageConfirmation Component", () => {
       />
     );
 
-    await wait(() => {
-      expect(asFragment()).toMatchSnapshot();
-    });
+    await waitFor(() => {});
+
+    expect(asFragment()).toMatchSnapshot();
   });
 
   test("When call to retrieve filing package fails, redirects to error page of client app", async () => {
@@ -78,9 +78,9 @@ describe("PackageConfirmation Component", () => {
       />
     );
 
-    await wait(() => {
-      expect(window.open).toHaveBeenCalledWith("error.com", "_self");
-    });
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalledWith("error.com", "_self");
   });
 
   test("On click of continue to payment button, it redirects to the payment page", async () => {
@@ -95,7 +95,7 @@ describe("PackageConfirmation Component", () => {
       />
     );
 
-    await wait(() => {});
+    await waitFor(() => {});
 
     fireEvent.click(getByText(container, "Continue to Payment"));
 
@@ -114,7 +114,7 @@ describe("PackageConfirmation Component", () => {
       />
     );
 
-    await wait(() => {});
+    await waitFor(() => {});
 
     fireEvent.click(getByText(container, "Upload them now."));
 
@@ -133,7 +133,7 @@ describe("PackageConfirmation Component", () => {
       />
     );
 
-    await wait(() => {});
+    await waitFor(() => {});
 
     fireEvent.keyDown(getByText(container, "Upload them now."));
 
@@ -160,13 +160,13 @@ describe("PackageConfirmation Component", () => {
       />
     );
 
-    await wait(() => {});
+    await waitFor(() => {});
 
     fireEvent.click(getByText(container, file.name));
 
-    await wait(() => {
-      expect(window.open).toHaveBeenCalledWith("fileurl.com");
-    });
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalledWith("fileurl.com");
   });
 
   test("Successfully opens the file in new window when get document call succeeds (on keydown)", async () => {
@@ -189,13 +189,13 @@ describe("PackageConfirmation Component", () => {
       />
     );
 
-    await wait(() => {});
+    await waitFor(() => {});
 
     fireEvent.keyDown(getByText(container, file.name));
 
-    await wait(() => {
-      expect(window.open).toHaveBeenCalledWith("fileurl.com");
-    });
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalledWith("fileurl.com");
   });
 
   test("Fails to open the file in new window when get document call fails", async () => {
@@ -215,15 +215,15 @@ describe("PackageConfirmation Component", () => {
       />
     );
 
-    await wait(() => {});
+    await waitFor(() => {});
 
     fireEvent.click(getByText(container, file.name));
 
-    await wait(() => {
-      expect(window.open).toHaveBeenCalledWith(
-        "error.com?status=400&message=There was an error.",
-        "_self"
-      );
-    });
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalledWith(
+      "error.com?status=400&message=There was an error.",
+      "_self"
+    );
   });
 });

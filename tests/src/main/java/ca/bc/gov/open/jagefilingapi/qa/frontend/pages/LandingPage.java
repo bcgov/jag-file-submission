@@ -25,7 +25,7 @@ public class LandingPage {
     @FindBy(xpath = "//button[@data-test-id='generate-url-btn']")
     WebElement generateUrlButton;
 
-    @FindBy(xpath = "//*[@id='root']/div/main/div/div/p")
+    @FindBy(xpath = "//*[@id='root']/div/main/div/div/span[1]")
     WebElement getErrorText;
 
     @FindBy(xpath = "//*[starts-with(@id,'filepond--browser')]")
@@ -34,6 +34,8 @@ public class LandingPage {
     @FindBy(xpath = "//*[starts-with(@id,'filepond--item')]")
     WebElement selectedFile;
 
+    @FindBy(xpath = "//*[@id='1']")
+    WebElement textInput;
 
     //Initializing the driver:
     public LandingPage(WebDriver driver) {
@@ -72,5 +74,26 @@ public class LandingPage {
         chooseFile.sendKeys(file);
         WebDriverWait wait = new WebDriverWait(driver, 30);
         wait.until(ExpectedConditions.visibilityOf(selectedFile));
+
+
+    }
+
+    public void enterJsonData() {
+        String json  = "{\n" +
+                "    \"court\": {\n" +
+                "        \"location\": \"string\",\n" +
+                "        \"level\": \"P\",\n" +
+                "        \"class\": \"F\",\n" +
+                "        \"division\": \"string\",\n" +
+                "        \"fileNumber\": \"string\",\n" +
+                "        \"participatingClass\": \"string\"\n" +
+                "    },\n" +
+                "    \"documents\": [{\n" +
+                "        \"name\": \"test-pdf-document.pdf\",\n" +
+                "        \"type\": \"AFF\"\n" +
+                "    }]\n" +
+                "}";
+        textInput.sendKeys(json);
+
     }
 }
