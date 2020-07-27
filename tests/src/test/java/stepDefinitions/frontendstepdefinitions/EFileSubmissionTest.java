@@ -36,7 +36,7 @@ public class EFileSubmissionTest extends DriverClass {
 
     @Before("@frontend")
     public void setUp() throws IOException {
-        initializeDriver();
+        driverSetUp();
         log.info("Browser is initialized from the driver class");
     }
 
