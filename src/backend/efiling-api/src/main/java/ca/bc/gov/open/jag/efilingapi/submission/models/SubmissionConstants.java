@@ -6,5 +6,5 @@ public class SubmissionConstants {
 
     }
 
-    public static final String STATUTORY_FEE_TYPE = "DCFL";
+    public static final String SUBMISSION_FEE_TYPE = "DCFL";
 }
