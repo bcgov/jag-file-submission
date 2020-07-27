@@ -6,7 +6,6 @@ import ConfirmationPopup, {
   Button,
   Sidecard,
   Alert,
-  DisplayBox,
   Table,
   Callout
 } from "shared-components";
@@ -15,13 +14,15 @@ import { propTypes } from "../../../types/propTypes";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
 import { generateFileSummaryData } from "../../../modules/generateFileSummaryData";
 
+import "./Payment.css";
+
 const generateCourtDataTable = ({
   fileNumber,
   locationDescription,
   levelDescription,
   classDescription
 }) => {
-  const courtElements = [
+  return [
     {
       name: "Court File Number:",
       value: fileNumber,
@@ -38,47 +39,12 @@ const generateCourtDataTable = ({
       isValueBold: true
     }
   ];
-
-  return [
-    {
-      name: (
-        <div className="fit-table">
-          <Table elements={courtElements} />
-        </div>
-      ),
-      value: "",
-      isSideBySide: true
-    }
-  ];
-};
-
-const getTableElements = (files, submissionFee) => {
-  const fileSummary = generateFileSummaryData(files, submissionFee, true);
-
-  const elements = [
-    {
-      name: (
-        <div style={{ width: "60%", minWidth: "fit-content" }}>
-          <Table isFeesData elements={fileSummary} />
-        </div>
-      ),
-      value: (
-        <p>
-          The registry will process statutory fees when your documents are
-          filed.
-        </p>
-      ),
-      isSideBySide: true
-    }
-  ];
-
-  return elements;
 };
 
 const calloutText = `I have reviewed the information and the documents in this filing
 package and am prepared to submit them for filing. I agree that all
 fees for this filing package may be charged to the credit card
-registered to my account.`;
+registered to my account. Statutory fees will be processed when documents are filed.`;
 
 const submitButton = {
   label: "Submit",
@@ -128,14 +94,18 @@ export default function Payment({
           }
         />
         <br />
-        <DisplayBox
-          styling="display-left-element"
-          element={<Table elements={getTableElements(files, submissionFee)} />}
-        />
+        <div className="half-width">
+          <Table
+            isFeesData
+            elements={generateFileSummaryData(files, submissionFee, true)}
+          />
+        </div>
         <br />
         <h1>Package Submission Details</h1>
         <p>Your package will be filed to:</p>
-        <Table elements={generateCourtDataTable(courtData)} />
+        <div className="court-half-width">
+          <Table elements={generateCourtDataTable(courtData)} />
+        </div>
         <Callout
           text={calloutText}
           checkboxLabel="I agree"
