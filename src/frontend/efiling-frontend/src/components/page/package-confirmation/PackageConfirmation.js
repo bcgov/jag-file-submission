@@ -55,8 +55,7 @@ const generateTable = (file, data, submissionId) => {
           </span>
         </div>
       ),
-      value: <Table elements={data} />,
-      verticalMiddle: true
+      value: <Table elements={data} />
     }
   ];
 };
@@ -66,8 +65,7 @@ const generateTableData = (file, submissionId) => {
     {
       name: "Description:",
       value: file.description,
-      isValueBold: true,
-      isClose: true
+      isValueBold: true
     }
   ];
 
@@ -77,8 +75,7 @@ const generateTableData = (file, submissionId) => {
       value: Dinero({
         amount: parseInt((file.statutoryFeeAmount * 100).toFixed(0), 10)
       }).toFormat("$0,0.00"),
-      isValueBold: true,
-      isClose: true
+      isValueBold: true
     });
   }
 
@@ -183,7 +180,12 @@ export default function PackageConfirmation({
                 </div>
               }
               element={
-                <Table elements={generateTableData(file, submissionId)} />
+                <Table
+                  elementStyles={{
+                    columnStyle: "bcgov-vertical-middle bcgov-fill-width"
+                  }}
+                  elements={generateTableData(file, submissionId)}
+                />
               }
             />
             <br />

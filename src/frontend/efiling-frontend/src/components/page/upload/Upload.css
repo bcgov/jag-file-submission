@@ -39,6 +39,10 @@
   }
 }
 
+.text-center-alignment {
+  text-align: center;
+}
+
 .center-alignment {
   display: flex;
   align-items: center;

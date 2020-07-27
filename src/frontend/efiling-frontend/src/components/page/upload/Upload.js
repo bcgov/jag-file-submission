@@ -34,7 +34,7 @@ const generateTable = () => {
       ),
       value: (
         <>
-          <div className="table-value">
+          <div className="table-value top-spacing">
             <Dropdown
               label="Description:"
               items={items}
@@ -43,8 +43,7 @@ const generateTable = () => {
           </div>
           <br />
         </>
-      ),
-      verticalMiddle: false
+      )
     },
     {
       name: (
@@ -131,7 +130,7 @@ export default function Upload({
           <div className="dropzone-inner-box">
             <input {...getInputProps()} />
             <span>
-              <h2>
+              <h2 className="text-center-alignment">
                 Drag and drop or&nbsp;
                 <span className="file-href">choose documents</span>
               </h2>
