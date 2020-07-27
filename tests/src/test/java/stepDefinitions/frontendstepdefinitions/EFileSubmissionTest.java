@@ -79,6 +79,8 @@ public class EFileSubmissionTest extends DriverClass {
         filePath = System.getProperty("user.dir") + PDF_PATH;
         landingPage.chooseFileToUpload(filePath);
 
+        landingPage.enterJsonData();
+
         landingPage.clickGenerateUrlButton();
         log.info("Pdf file is uploaded successfully.");
     }
@@ -159,6 +161,8 @@ public class EFileSubmissionTest extends DriverClass {
         filePath = System.getProperty("user.dir") + PDF_PATH;
         landingPage.chooseFileToUpload(filePath);
 
+        landingPage.enterJsonData();
+
         landingPage.clickGenerateUrlButton();
         log.info("Pdf file is uploaded successfully.");
     }
@@ -190,6 +194,11 @@ public class EFileSubmissionTest extends DriverClass {
 
         invalidNoFilingRoleGuid = JsonDataReader.getCsoAccountGuid().getInvalidNoFilingRoleGuid();
         landingPage.enterAccountGuid(invalidNoFilingRoleGuid);
+
+        filePath = System.getProperty("user.dir") + PDF_PATH;
+        landingPage.chooseFileToUpload(filePath);
+
+        landingPage.enterJsonData();
     }
 
     @Then("error message is displayed")
