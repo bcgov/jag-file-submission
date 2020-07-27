@@ -26,6 +26,7 @@ module.exports = {
     "import/prefer-default-export": "off",
     "react/jsx-wrap-multilines": "off",
     "import/no-cycle": "off",
+    "react/forbid-prop-types": "off",
     "prettier/prettier": ["error"]
   }
 };
