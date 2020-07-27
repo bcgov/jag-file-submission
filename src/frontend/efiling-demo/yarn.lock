@@ -12647,9 +12647,9 @@ shallowequal@^1.1.0:
   resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-1.1.0.tgz#188d521de95b9087404fd4dcb68b13df0ae4e7f8"
   integrity sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==
 
-"shared-components@https://github.com/bcgov/react-shared-components/releases/download/0.4.6/shared-components-0.4.6.tgz":
-  version "0.4.6"
-  resolved "https://github.com/bcgov/react-shared-components/releases/download/0.4.6/shared-components-0.4.6.tgz#afd6cffc0890df5b0b795f62da52a6751b15d977"
+"shared-components@https://github.com/bcgov/react-shared-components/releases/download/0.4.8/shared-components-0.4.8.tgz":
+  version "0.4.8"
+  resolved "https://github.com/bcgov/react-shared-components/releases/download/0.4.8/shared-components-0.4.8.tgz#cdce8bff4e4a03ac78aa6aa107819f00c94a1173"
   dependencies:
     "@bcgov/bootstrap-theme" "github:bcgov/bootstrap-theme"
     babel-plugin-transform-export-extensions "^6.22.0"
