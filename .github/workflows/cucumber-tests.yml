@@ -14,8 +14,8 @@ jobs:
       # Using shell script to install Google Chrome
       - name: Install Google Chrome
         run: |
-          chmod +x ./scripts/InstallChrome.sh
-           ./scripts/InstallChrome.sh
+          chmod +x ./scripts/installChrome.sh
+           ./scripts/installChrome.sh
 
       # Build Docker and Run Tests
       - name: build docker and run tests
