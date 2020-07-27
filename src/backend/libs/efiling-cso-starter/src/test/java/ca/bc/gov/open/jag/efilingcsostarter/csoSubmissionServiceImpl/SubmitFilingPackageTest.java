@@ -1,7 +1,7 @@
 package ca.bc.gov.open.jag.efilingcsostarter.csoSubmissionServiceImpl;
 
 import ca.bc.gov.ag.csows.filing.FilingFacadeBean;
-import ca.bc.gov.ag.csows.filing.NestedEjbException_Exception;
+import ca.bc.gov.ag.csows.services.ServiceFacadeBean;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoSubmissionServiceImpl;
 import org.junit.jupiter.api.*;
@@ -23,13 +23,15 @@ public class SubmitFilingPackageTest {
     @Mock
     FilingFacadeBean filingFacadeBeanMock;
 
+    @Mock
+    ServiceFacadeBean serviceFacadeBean;
 
     @BeforeEach
     public void init() {
 
         MockitoAnnotations.initMocks(this);
 
-        sut = new CsoSubmissionServiceImpl(filingFacadeBeanMock);
+        sut = new CsoSubmissionServiceImpl(filingFacadeBeanMock, serviceFacadeBean, null);
 
     }
 
@@ -46,13 +48,11 @@ public class SubmitFilingPackageTest {
         Mockito.when(filingFacadeBeanMock.submitFiling(any())).thenReturn(BigDecimal.TEN);
         BigDecimal actual = sut.submitFilingPackage(CASE_1);
         Assertions.assertEquals(BigDecimal.TEN, actual);
-
     }
     @DisplayName("Exception: with NestedEjbException_Exception should throw EfilingLookupServiceException")
     @Test
     public void whenNestedEjbException_ExceptionShouldThrowEfilingSubmissionServiceException() throws ca.bc.gov.ag.csows.filing.NestedEjbException_Exception {
         Mockito.when(filingFacadeBeanMock.submitFiling(any())).thenThrow(new ca.bc.gov.ag.csows.filing.NestedEjbException_Exception());
         Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(CASE_1));
-
     }
 }

@@ -4,10 +4,7 @@ package ca.bc.gov.open.jag.efilingcsostarter.config;
 import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
-import ca.bc.gov.open.jag.efilingcsostarter.CsoCourtServiceImpl;
-import ca.bc.gov.open.jag.efilingcsostarter.CsoDocumentServiceImpl;
-import ca.bc.gov.open.jag.efilingcsostarter.CsoLookupServiceImpl;
-import ca.bc.gov.open.jag.efilingcsostarter.CsoAccountServiceImpl;
+import ca.bc.gov.open.jag.efilingcsostarter.*;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.AccountDetailsMapperImpl;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
@@ -42,6 +39,7 @@ public class AutoConfigurationTest {
         Assertions.assertEquals(CsoDocumentServiceImpl.class, sut.efilingDocumentService(null).getClass());
         Assertions.assertEquals(CsoLookupServiceImpl.class, sut.efilingLookupService(null).getClass());
         Assertions.assertEquals(CsoCourtServiceImpl.class, sut.efilingCourtService(null).getClass());
+        Assertions.assertEquals(CsoSubmissionServiceImpl.class, sut.efilingSubmissionService(null,null, null).getClass());
         Assertions.assertEquals(AccountDetailsMapperImpl.class, sut.accountDetailsMapper().getClass());
     }
 
