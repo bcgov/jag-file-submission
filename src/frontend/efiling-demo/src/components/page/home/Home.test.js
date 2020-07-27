@@ -3,7 +3,7 @@ import { createMemoryHistory } from "history";
 import axios from "axios";
 import {
   render,
-  wait,
+  waitFor,
   getByText,
   fireEvent,
   getAllByRole,
@@ -54,9 +54,9 @@ describe("Home", () => {
 
     eFilePackage(files, accountGuid, setErrorExists, filingPackage);
 
-    await wait(() => {
-      expect(setErrorExists).toHaveBeenCalledWith(true);
-    });
+    await waitFor(() => {});
+
+    expect(setErrorExists).toHaveBeenCalledWith(true);
   });
 
   test("eFilePackage function displays an error message on page on failure of uploadDocuments call", async () => {
@@ -64,9 +64,9 @@ describe("Home", () => {
 
     eFilePackage(files, accountGuid, setErrorExists, filingPackage);
 
-    await wait(() => {
-      expect(setErrorExists).toHaveBeenCalledWith(true);
-    });
+    await waitFor(() => {});
+
+    expect(setErrorExists).toHaveBeenCalledWith(true);
   });
 
   test("eFilePackage function generates the proper documentData for the updated url body and redirects to frontend app on success", async () => {
@@ -79,10 +79,10 @@ describe("Home", () => {
 
     eFilePackage(files, accountGuid, setErrorExists, filingPackage);
 
-    await wait(() => {
-      expect(window.open).toHaveBeenCalledTimes(1);
-      expect(window.open).toHaveBeenCalledWith(efilingUrl, "_self");
-    });
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalledTimes(1);
+    expect(window.open).toHaveBeenCalledWith(efilingUrl, "_self");
   });
 
   test("eFilePackage functions returns error when no files uploaded", async () => {
@@ -100,15 +100,15 @@ describe("Home", () => {
 
     fireEvent.click(getByText(container, "E-File my Package"));
 
-    await wait(() => {
-      expect(
-        getByText(
-          container,
-          "An error occurred while eFiling your package. Please make sure you upload at least one file and try again."
-        )
-      ).toBeInTheDocument();
-      expect(setErrorExists).toHaveBeenCalledWith(true);
-    });
+    await waitFor(() => {});
+
+    expect(
+      getByText(
+        container,
+        "An error occurred while eFiling your package. Please make sure you upload at least one file and try again."
+      )
+    ).toBeInTheDocument();
+    expect(setErrorExists).toHaveBeenCalledWith(true);
   });
 
   test("eFilePackage does not make axios call when no formdata present (due to incorrect filingPackage data)", () => {
