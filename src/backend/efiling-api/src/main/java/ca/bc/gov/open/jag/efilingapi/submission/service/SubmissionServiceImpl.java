@@ -4,6 +4,7 @@ import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
+import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.utils.FileUtils;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
@@ -164,8 +165,8 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private BigDecimal getStatutoryFeeAmount(GenerateUrlRequest request) {
 
-        request.getClientApplication().setType(request.getClientApplication().getType());
-        ServiceFees fee = efilingLookupService.getServiceFee(request.getClientApplication().getType());
+        request.getClientApplication().setType(SubmissionConstants.STATUTORY_FEE_TYPE);
+        ServiceFees fee = efilingLookupService.getServiceFee(SubmissionConstants.STATUTORY_FEE_TYPE);
         return fee == null ? BigDecimal.ZERO : fee.getFeeAmount();
 
     }
