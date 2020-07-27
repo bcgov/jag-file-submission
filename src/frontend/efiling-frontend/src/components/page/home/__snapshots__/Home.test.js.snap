@@ -463,7 +463,7 @@ exports[`Home Component matches the snapshot when user cso account does not exis
                     class="bcgov-row "
                   >
                     <div
-                      class="bcgov-vertical-middle "
+                      class="bcgov-fill-width"
                     >
                       BCeID:
                     </div>
@@ -477,7 +477,7 @@ exports[`Home Component matches the snapshot when user cso account does not exis
                     class="bcgov-row "
                   >
                     <div
-                      class="bcgov-vertical-middle "
+                      class="bcgov-fill-width"
                     >
                       Full Name:
                     </div>
@@ -491,7 +491,7 @@ exports[`Home Component matches the snapshot when user cso account does not exis
                     class="bcgov-row "
                   >
                     <div
-                      class="bcgov-vertical-middle "
+                      class="bcgov-fill-width"
                     >
                       Email Address:
                     </div>
@@ -1501,7 +1501,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                     class="bcgov-row "
                   >
                     <div
-                      class="bcgov-vertical-middle "
+                      class="bcgov-vertical-middle bcgov-fill-width"
                     >
                       <div
                         style="width: 80%;"
@@ -1529,7 +1529,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                             class="bcgov-row "
                           >
                             <div
-                              class="bcgov-vertical-middle bcgov-reduce-width"
+                              class="bcgov-fill-width"
                             >
                               Description:
                             </div>
@@ -1545,7 +1545,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                             class="bcgov-row "
                           >
                             <div
-                              class="bcgov-vertical-middle bcgov-reduce-width"
+                              class="bcgov-fill-width"
                             >
                               Statutory Fee:
                             </div>
@@ -1607,7 +1607,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                     class="bcgov-row "
                   >
                     <div
-                      class="bcgov-vertical-middle "
+                      class="bcgov-vertical-middle bcgov-fill-width"
                     >
                       <div
                         style="width: 80%;"
@@ -1635,7 +1635,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                             class="bcgov-row "
                           >
                             <div
-                              class="bcgov-vertical-middle bcgov-reduce-width"
+                              class="bcgov-fill-width"
                             >
                               Description:
                             </div>
@@ -1687,7 +1687,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                 class="bcgov-row "
               >
                 <div
-                  class="bcgov-vertical-middle "
+                  class="bcgov-fill-width"
                 >
                   Number of Documents in Package:
                 </div>
@@ -1703,7 +1703,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                 class="bcgov-row "
               >
                 <div
-                  class="bcgov-vertical-middle "
+                  class="bcgov-fill-width"
                 >
                   Statutory Fees:
                 </div>
@@ -1719,7 +1719,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                 class="bcgov-row "
               >
                 <div
-                  class="bcgov-vertical-middle "
+                  class="bcgov-fill-width"
                 >
                   Submission Fee:
                 </div>

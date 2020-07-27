@@ -26,7 +26,9 @@ exports[`Upload Component Matches the snapshot 1`] = `
             type="file"
           />
           <span>
-            <h2>
+            <h2
+              class="text-center-alignment"
+            >
               Drag and drop or 
               <span
                 class="file-href"
@@ -278,7 +280,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
                   class="bcgov-row "
                 >
                   <div
-                    class="bcgov-vertical-middle "
+                    class="bcgov-vertical-middle bcgov-fill-width"
                   >
                     <div
                       style="width: 80%;"
@@ -306,7 +308,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
                           class="bcgov-row "
                         >
                           <div
-                            class="bcgov-vertical-middle bcgov-reduce-width"
+                            class="bcgov-fill-width"
                           >
                             Description:
                           </div>
@@ -322,7 +324,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
                           class="bcgov-row "
                         >
                           <div
-                            class="bcgov-vertical-middle bcgov-reduce-width"
+                            class="bcgov-fill-width"
                           >
                             Statutory Fee:
                           </div>
@@ -384,7 +386,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
                   class="bcgov-row "
                 >
                   <div
-                    class="bcgov-vertical-middle "
+                    class="bcgov-vertical-middle bcgov-fill-width"
                   >
                     <div
                       style="width: 80%;"
@@ -412,7 +414,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
                           class="bcgov-row "
                         >
                           <div
-                            class="bcgov-vertical-middle bcgov-reduce-width"
+                            class="bcgov-fill-width"
                           >
                             Description:
                           </div>
@@ -464,7 +466,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
               class="bcgov-row "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Number of Documents in Package:
               </div>
@@ -480,7 +482,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
               class="bcgov-row "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Statutory Fees:
               </div>
@@ -496,7 +498,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
               class="bcgov-row "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Submission Fee:
               </div>
