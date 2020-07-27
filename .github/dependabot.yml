@@ -6,9 +6,15 @@ updates:
     schedule:
       interval: "daily"
       time: "18:00"
-  # npm dependencies
+  # npm dependencies - frontend
   - package-ecosystem: "npm"
-    directory: "/src/frontend"
+    directory: "/src/frontend/efiling-frontend"
+    schedule:
+      interval: "daily"
+      time: "18:00"
+  # npm dependencies - demo
+  - package-ecosystem: "npm"
+    directory: "/src/frontend/efiling-demo"
     schedule:
       interval: "daily"
       time: "18:00"
