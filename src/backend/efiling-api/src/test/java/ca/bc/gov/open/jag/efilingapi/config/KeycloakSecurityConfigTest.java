@@ -20,14 +20,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class KeycloakSecurityConfigTest {
 
-
     ApplicationContextRunner context = new ApplicationContextRunner()
             .withUserConfiguration(KeycloakSecurityConfig.class);
 
-
     @Test
     public void testConfigure() throws Exception {
-
 
         context.run(it -> {
             assertThat(it).hasSingleBean(SessionAuthenticationStrategy.class);
@@ -35,10 +32,5 @@ public class KeycloakSecurityConfigTest {
         });
 
     }
-
-
-
-
-
 
 }
