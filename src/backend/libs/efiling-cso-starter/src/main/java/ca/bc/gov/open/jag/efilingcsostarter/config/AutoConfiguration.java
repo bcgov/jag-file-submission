@@ -5,6 +5,7 @@ import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
 import ca.bc.gov.ag.csows.ceis.Csows;
 import ca.bc.gov.ag.csows.filing.FilingFacadeBean;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
+import ca.bc.gov.ag.csows.services.ServiceFacadeBean;
 import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
@@ -59,6 +60,9 @@ public class AutoConfiguration {
     public FilingFacadeBean filingFacadeBean() { return getPort(Clients.FILING, FilingFacadeBean.class); }
 
     @Bean
+    public ServiceFacadeBean serviceFacadeBean() { return getPort(Clients.SERVICE, ServiceFacadeBean.class); }
+
+    @Bean
     public AccountDetailsMapper accountDetailsMapper() {
         return new AccountDetailsMapperImpl();
     }
@@ -93,7 +97,8 @@ public class AutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean({EfilingSubmissionService.class})
-    public EfilingSubmissionService efilingSubmissionService(FilingFacadeBean filingFacadeBean) { return new CsoSubmissionServiceImpl(filingFacadeBean); }
+    public EfilingSubmissionService efilingSubmissionService(FilingFacadeBean filingFacadeBean,
+                                                             ServiceFacadeBean serviceFacadeBean) { return new CsoSubmissionServiceImpl(filingFacadeBean, serviceFacadeBean); }
 
 
     public <T> T getPort(Clients clients, Class<T> type) {
