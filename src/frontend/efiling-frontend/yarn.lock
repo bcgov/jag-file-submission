@@ -1134,7 +1134,8 @@
 
 "@bcgov/bootstrap-theme@github:bcgov/bootstrap-theme":
   version "1.1.3"
-  resolved "https://codeload.github.com/bcgov/bootstrap-theme/tar.gz/bc5075e9a030313a51e1d77c161cbec15ebff419"
+  uid "917825b1395fb9079f09fd731b857e585dd9bee0"
+  resolved "https://codeload.github.com/bcgov/bootstrap-theme/tar.gz/917825b1395fb9079f09fd731b857e585dd9bee0"
 
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
