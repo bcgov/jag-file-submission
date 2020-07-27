@@ -25,11 +25,7 @@ public class DriverClass {
             switch (browser) {
                 case "chrome":
                     WebDriverManager.chromedriver().setup();
-                    ChromeOptions options = new ChromeOptions();
-                    options.addArguments("--no-sandbox");
-                    options.addArguments("--disable-dev-shm-usage");
-                    options.addArguments("--headless");
-                    driver = new ChromeDriver(options);
+                    driver = new ChromeDriver();
                     break;
                 case "firefox":
                     WebDriverManager.firefoxdriver().setup();
