@@ -42,6 +42,6 @@ Error.propTypes = {
   page: PropTypes.shape({
     header: propTypes.header,
     status: PropTypes.string.isRequired,
-    message: PropTypes.string.isRequired
-  }).isRequired
+    message: PropTypes.string.isRequired,
+  }).isRequired,
 };

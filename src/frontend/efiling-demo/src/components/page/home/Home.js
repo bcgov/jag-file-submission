@@ -23,7 +23,7 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 const urlBody = {
   clientApplication: {
     displayName: "Demo App",
-    type: "app"
+    type: "app",
   },
   filingPackage: {
     court: {
@@ -32,26 +32,26 @@ const urlBody = {
       courtClass: "F",
       division: "string",
       fileNumber: "string",
-      participatingClass: "string"
+      participatingClass: "string",
     },
     documents: [
       {
         name: "string",
-        type: "AFF"
-      }
-    ]
+        type: "AFF",
+      },
+    ],
   },
   navigation: {
     success: {
-      url: `${window.location.origin}/efiling-demo/success`
+      url: `${window.location.origin}/efiling-demo/success`,
     },
     error: {
-      url: `${window.location.origin}/efiling-demo/error`
+      url: `${window.location.origin}/efiling-demo/error`,
     },
     cancel: {
-      url: `${window.location.origin}/efiling-demo/cancel`
-    }
-  }
+      url: `${window.location.origin}/efiling-demo/cancel`,
+    },
+  },
 };
 
 const input = {
@@ -59,7 +59,7 @@ const input = {
   id: "textInputId",
   styling: "editable-white",
   isRequired: true,
-  placeholder: "77da92db-0791-491e-8c58-1a969e67d2fa"
+  placeholder: "77da92db-0791-491e-8c58-1a969e67d2fa",
 };
 
 const generatePackageData = (files, filingPackage) => {
@@ -70,13 +70,13 @@ const generatePackageData = (files, filingPackage) => {
     formData.append("files", files[i].file);
 
     const document = filingPackage.documents.find(
-      doc => doc.name === files[i].file.name
+      (doc) => doc.name === files[i].file.name
     );
     if (!document || !document.type) return {};
 
     documentData.push({
       name: files[i].file.name,
-      type: document.type
+      type: document.type,
     });
   }
 
@@ -84,8 +84,8 @@ const generatePackageData = (files, filingPackage) => {
     ...urlBody,
     filingPackage: {
       ...filingPackage,
-      documents: documentData
-    }
+      documents: documentData,
+    },
   };
 
   return { formData, updatedUrlBody };
@@ -110,13 +110,13 @@ export const eFilePackage = (
     .post("/submission/documents", formData, {
       headers: {
         "X-Auth-UserId": accountGuid,
-        "Content-Type": "multipart/form-data"
-      }
+        "Content-Type": "multipart/form-data",
+      },
     })
     .then(({ data: { submissionId } }) => {
       axios
         .post(`/submission/${submissionId}/generateUrl`, updatedUrlBody, {
-          headers: { "X-Auth-UserId": accountGuid }
+          headers: { "X-Auth-UserId": accountGuid },
         })
         .then(({ data: { efilingUrl } }) => {
           window.open(efilingUrl, "_self");
@@ -152,7 +152,7 @@ export default function Home({ page: { header } }) {
           <Textarea
             id="1"
             label="Provide filing package JSON data:"
-            onChange={val => setFilingPackage(JSON.parse(val))}
+            onChange={(val) => setFilingPackage(JSON.parse(val))}
           />
           <br />
           <br />
@@ -194,6 +194,6 @@ export default function Home({ page: { header } }) {
 
 Home.propTypes = {
   page: PropTypes.shape({
-    header: propTypes.header
-  }).isRequired
+    header: propTypes.header,
+  }).isRequired,
 };

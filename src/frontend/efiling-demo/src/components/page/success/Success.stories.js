@@ -5,12 +5,12 @@ import Success from "./Success";
 
 export default {
   title: "Success",
-  component: Success
+  component: Success,
 };
 
 const header = {
   name: "eFiling Demo Client",
-  history: createMemoryHistory()
+  history: createMemoryHistory(),
 };
 
 const page = { header };
@@ -22,7 +22,7 @@ export const Mobile = () => <Success page={page} />;
 Mobile.story = {
   parameters: {
     viewport: {
-      defaultViewport: "mobile2"
-    }
-  }
+      defaultViewport: "mobile2",
+    },
+  },
 };

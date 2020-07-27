@@ -6,7 +6,7 @@ import {
   wait,
   getByText,
   fireEvent,
-  getAllByRole
+  getAllByRole,
 } from "@testing-library/react";
 import Home, { eFilePackage } from "./Home";
 
@@ -16,7 +16,7 @@ window.open = jest.fn();
 
 const header = {
   name: "eFiling Demo Client",
-  history: createMemoryHistory()
+  history: createMemoryHistory(),
 };
 
 const page = { header };
@@ -28,14 +28,14 @@ describe("Home", () => {
     {
       file: {
         name: "filename",
-        type: "filetype"
-      }
-    }
+        type: "filetype",
+      },
+    },
   ];
   const accountGuid = "guid";
   const submissionId = "123";
   const filingPackage = {
-    documents: [files[0].file]
+    documents: [files[0].file],
   };
 
   beforeEach(() => {
@@ -91,11 +91,11 @@ describe("Home", () => {
     const textbox = getAllByRole(container, "textbox");
 
     fireEvent.change(textbox[0], {
-      target: { value: "" }
+      target: { value: "" },
     });
 
     fireEvent.change(textbox[1], {
-      target: { value: JSON.stringify(filingPackage) }
+      target: { value: JSON.stringify(filingPackage) },
     });
 
     fireEvent.click(getByText(container, "E-File my Package"));
@@ -113,7 +113,7 @@ describe("Home", () => {
 
   test("eFilePackage does not make axios call when no formdata present (due to incorrect filingPackage data)", () => {
     const improperFilingPackage = {
-      documents: [{ name: "wrongname", type: "type" }]
+      documents: [{ name: "wrongname", type: "type" }],
     };
 
     eFilePackage(files, accountGuid, setErrorExists, improperFilingPackage);

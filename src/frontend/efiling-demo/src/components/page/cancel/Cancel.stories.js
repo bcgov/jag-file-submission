@@ -5,12 +5,12 @@ import Cancel from "./Cancel";
 
 export default {
   title: "Cancel",
-  component: Cancel
+  component: Cancel,
 };
 
 const header = {
   name: "eFiling Demo Client",
-  history: createMemoryHistory()
+  history: createMemoryHistory(),
 };
 
 const page = { header };
@@ -22,7 +22,7 @@ export const Mobile = () => <Cancel page={page} />;
 Mobile.story = {
   parameters: {
     viewport: {
-      defaultViewport: "mobile2"
-    }
-  }
+      defaultViewport: "mobile2",
+    },
+  },
 };
