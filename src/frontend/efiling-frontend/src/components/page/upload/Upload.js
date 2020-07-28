@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { useDropzone } from "react-dropzone";
+import Dropzone, { useDropzone } from "react-dropzone";
 import { MdDescription, MdDeleteForever } from "react-icons/md";
 import {
   Sidecard,
@@ -117,22 +117,26 @@ export default function Upload({
     <div className="page">
       <div className="content col-md-8">
         <h1>Document Upload</h1>
-        <div {...getRootProps({ className: "dropzone-outer-box" })}>
-          <div className="dropzone-inner-box">
-            <input {...getInputProps()} />
-            <span>
-              <h2 className="text-center-alignment">
-                Drag and drop or&nbsp;
-                <span className="file-href">choose documents</span>
-              </h2>
-              <div>
-                <span>to upload additional documents to your package</span>
-                <br />
-                <span>(max 10mb per document)</span>
+        <Dropzone>
+          {() => (
+            <div {...getRootProps({ className: "dropzone-outer-box" })}>
+              <div className="dropzone-inner-box">
+                <input {...getInputProps()} />
+                <span>
+                  <h2 className="text-center-alignment">
+                    Drag and drop or&nbsp;
+                    <span className="file-href">choose documents</span>
+                  </h2>
+                  <div>
+                    <span>to upload additional documents to your package</span>
+                    <br />
+                    <span>(max 10mb per document)</span>
+                  </div>
+                </span>
               </div>
-            </span>
-          </div>
-        </div>
+            </div>
+          )}
+        </Dropzone>
         <br />
         {acceptedFiles.length > 0 && (
           <>
@@ -164,7 +168,6 @@ export default function Upload({
           />
         </section>
       </div>
-
       <div className="sidecard">
         <Sidecard sideCard={amendmentsSidecard} />
         <Sidecard sideCard={supremeCourtSchedulingSidecard} />
