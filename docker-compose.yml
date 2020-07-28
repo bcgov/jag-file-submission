@@ -27,6 +27,10 @@ services:
         - SERVICE_NAME=efiling-demo
     ports:
       - 3001:3000
+    environment:
+      - REACT_APP_KEYCLOAK_URL=http://keycloak:8080/auth
+      - REACT_APP_KEYCLOAK_REALM=github
+      - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-demo
 
   #############################################################################################
   ###                           Efiling api backend app                                     ###
