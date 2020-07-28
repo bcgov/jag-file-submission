@@ -12,7 +12,8 @@
     "dinero.js": "^1.8.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
-    "history": "^4.10.1",
+    "history": "^5.0.0",
+    "keycloak-js": "^11.0.0",
     "prop-types": "^15.7.2",
     "query-string": "^6.11.1",
     "react": "^16.13.1",
@@ -63,10 +64,10 @@
     "@storybook/addons": "^5.3.19",
     "@storybook/preset-create-react-app": "^3.0.0",
     "@storybook/react": "^5.3.19",
-    "@testing-library/jest-dom": "^5.11.1",
+    "@testing-library/jest-dom": "^5.11.2",
     "@testing-library/react": "^10.4.7",
     "@testing-library/react-hooks": "3.4.1",
-    "@testing-library/user-event": "^12.0.15",
+    "@testing-library/user-event": "^12.0.17",
     "axios-mock-adapter": "^1.18.1",
     "enzyme-to-json": "^3.5.0",
     "eslint": "^6.8.0",
@@ -78,10 +79,10 @@
     "eslint-plugin-react": "^7.20.4",
     "eslint-plugin-react-hooks": "^4.0.8",
     "husky": "^4.2.5",
+    "jest-environment-jsdom-sixteen": "^1.0.3",
     "jest-sonar-reporter": "^2.0.0",
     "prettier": "2.0.5",
-    "pretty-quick": "^2.0.1",
-    "jest-environment-jsdom-sixteen": "^1.0.3"
+    "pretty-quick": "^2.0.1"
   },
   "jest": {
     "watchPathIgnorePatterns": [
@@ -89,6 +90,8 @@
     ],
     "collectCoverageFrom": [
       "src/**/*.js",
+      "!src/*.js",
+      "!src/components/hoc/*.js",
       "!src/index.js",
       "!**/node_modules/**",
       "!**/vendor/**",
