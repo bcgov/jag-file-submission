@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import Keycloak from "keycloak-js";
 import Home from "../page/home/Home";
+import { propTypes } from "../../types/propTypes";
 
 let url;
 let realm;
@@ -57,3 +59,10 @@ export default function AuthenticationGuard({
     </>
   );
 }
+
+AuthenticationGuard.propTypes = {
+  page: PropTypes.shape({
+    header: propTypes.header,
+    confirmationPopup: propTypes.confirmationPopup,
+  }).isRequired,
+};
