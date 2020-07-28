@@ -9,7 +9,7 @@ import {
   DisplayBox,
   Table,
   Dropdown,
-  Radio
+  Radio,
 } from "shared-components";
 import { getSidecardData } from "../../../modules/sidecardData";
 import { propTypes } from "../../../types/propTypes";
@@ -23,7 +23,7 @@ const icon = (
   </div>
 );
 
-const generateTable = file => {
+const generateTable = (file) => {
   return [
     {
       name: (
@@ -38,12 +38,12 @@ const generateTable = file => {
             <Dropdown
               label="Description:"
               items={items}
-              onSelect={val => console.log(val)}
+              onSelect={(val) => console.log(val)}
             />
           </div>
           <br />
         </>
-      )
+      ),
     },
     {
       name: (
@@ -56,17 +56,17 @@ const generateTable = file => {
               id="no-amendment"
               name="amendment"
               label="No"
-              onSelect={val => console.log(val)}
+              onSelect={(val) => console.log(val)}
             />
           </div>
           <Radio
             id="yes-amendment"
             name="amendment"
             label="Yes"
-            onSelect={val => console.log(val)}
+            onSelect={(val) => console.log(val)}
           />
         </div>
-      )
+      ),
     },
     {
       name: (
@@ -82,18 +82,18 @@ const generateTable = file => {
               id="no-supreme"
               name="supreme"
               label="No"
-              onSelect={val => console.log(val)}
+              onSelect={(val) => console.log(val)}
             />
           </div>
           <Radio
             id="yes-supreme"
             name="supreme"
             label="Yes"
-            onSelect={val => console.log(val)}
+            onSelect={(val) => console.log(val)}
           />
         </div>
-      )
-    }
+      ),
+    },
   ];
 };
 
@@ -101,11 +101,11 @@ const items = [
   "Select document description",
   "Affidavit",
   "Affidavit of Attempted Service",
-  "Case Conference Brief"
+  "Case Conference Brief",
 ];
 
 export default function Upload({
-  upload: { confirmationPopup, submissionId }
+  upload: { confirmationPopup, submissionId },
 }) {
   const amendmentsSidecard = getSidecardData().amendments;
   const supremeCourtSchedulingSidecard = getSidecardData()
@@ -147,7 +147,7 @@ export default function Upload({
           <>
             <h2>Select Description for each uploaded document to continue</h2>
             <br />
-            {acceptedFiles.map(file => (
+            {acceptedFiles.map((file) => (
               <div>
                 <DisplayBox
                   styling="border-background"
@@ -185,6 +185,6 @@ export default function Upload({
 Upload.propTypes = {
   upload: PropTypes.shape({
     confirmationPopup: propTypes.confirmationPopup,
-    submissionId: PropTypes.string.isRequired
-  }).isRequired
+    submissionId: PropTypes.string.isRequired,
+  }).isRequired,
 };

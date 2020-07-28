@@ -4,7 +4,7 @@ import {
   waitFor,
   getByText,
   getByRole,
-  fireEvent
+  fireEvent,
 } from "@testing-library/react";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
@@ -42,8 +42,8 @@ describe("CSOAccount Component", () => {
     mock.onPost(API_REQUEST).reply(201, {
       accounts: [
         { type: "CSO", identifier: "identifier" },
-        { type: "notCSO", identifier: "newIdentifier" }
-      ]
+        { type: "notCSO", identifier: "newIdentifier" },
+      ],
     });
 
     const { container } = render(
@@ -71,8 +71,8 @@ describe("CSOAccount Component", () => {
     mock.onPost(API_REQUEST).reply(201, {
       accounts: [
         { type: "notCSO", identifier: "identifier" },
-        { type: "notCSO", identifier: "newIdentifier" }
-      ]
+        { type: "notCSO", identifier: "newIdentifier" },
+      ],
     });
 
     render(

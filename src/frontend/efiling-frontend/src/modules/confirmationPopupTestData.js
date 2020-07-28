@@ -6,19 +6,19 @@ const onButtonClick = () => {};
 const mainButton = {
   label: "Cancel",
   styling: "normal-white btn",
-  onClick: onButtonClick
+  onClick: onButtonClick,
 };
 
 const confirmButton = {
   label: "Yes, cancel",
   styling: "normal-blue btn consistent-width",
-  onClick: onButtonClick
+  onClick: onButtonClick,
 };
 
 const cancelButton = {
   label: "No, dont cancel",
   styling: "normal-white btn consistent-width",
-  onClick: onButtonClick
+  onClick: onButtonClick,
 };
 
 const body = () => (
@@ -36,7 +36,7 @@ export function getTestData() {
   const modal = {
     show: false,
     title: "title",
-    body
+    body,
   };
 
   return { modal, mainButton, confirmButton, cancelButton };

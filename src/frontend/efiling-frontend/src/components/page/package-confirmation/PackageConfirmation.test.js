@@ -19,7 +19,7 @@ describe("PackageConfirmation Component", () => {
     name: "file name 1",
     description: "file description 1",
     type: "file type",
-    statutoryFeeAmount: 40
+    statutoryFeeAmount: 40,
   };
   const court = getCourtData();
   const submissionFeeAmount = 25.5;
@@ -150,7 +150,7 @@ describe("PackageConfirmation Component", () => {
       .onGet(apiRequest)
       .reply(200, { documents, court, submissionFeeAmount });
     mock.onGet(`/submission/${submissionId}/document/${file.name}`).reply(200, {
-      blob
+      blob,
     });
 
     const { container } = render(
@@ -179,7 +179,7 @@ describe("PackageConfirmation Component", () => {
       .onGet(apiRequest)
       .reply(200, { documents, court, submissionFeeAmount });
     mock.onGet(`/submission/${submissionId}/document/${file.name}`).reply(200, {
-      blob
+      blob,
     });
 
     const { container } = render(

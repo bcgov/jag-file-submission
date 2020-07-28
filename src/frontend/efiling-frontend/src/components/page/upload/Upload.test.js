@@ -17,7 +17,7 @@ describe("Upload Component", () => {
 
   const upload = {
     confirmationPopup,
-    submissionId
+    submissionId,
   };
 
   const apiRequest = `/submission/${submissionId}/filing-package`;

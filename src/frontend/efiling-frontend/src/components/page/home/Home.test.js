@@ -14,7 +14,7 @@ import { getCourtData } from "../../../modules/courtTestData";
 
 const header = {
   name: "eFiling Frontend",
-  history: createMemoryHistory()
+  history: createMemoryHistory(),
 };
 
 const confirmationPopup = getTestData();
@@ -64,7 +64,7 @@ describe("Home", () => {
   test("Component matches the snapshot when user cso account does not exist", async () => {
     mock.onGet(apiRequest).reply(200, {
       userDetails: { ...userDetails, accounts: null },
-      navigation
+      navigation,
     });
 
     const { asFragment } = render(component);
@@ -121,7 +121,7 @@ describe("Home", () => {
         ...navigation,
         cancel: { url: "" },
         success: { url: "" },
-        error: { url: "error.com" }
+        error: { url: "error.com" },
       },
       userDetails
     );

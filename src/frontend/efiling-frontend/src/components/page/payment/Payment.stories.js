@@ -7,7 +7,7 @@ import Payment from "./Payment";
 
 export default {
   title: "Payment",
-  component: Payment
+  component: Payment,
 };
 
 sessionStorage.setItem("csoAccountId", "123");
@@ -23,7 +23,7 @@ const payment = {
   submissionId,
   courtData,
   files,
-  submissionFee
+  submissionFee,
 };
 
 export const Default = () => <Payment payment={payment} />;
@@ -33,9 +33,9 @@ export const Mobile = () => <Payment payment={payment} />;
 const mobileViewport = {
   parameters: {
     viewport: {
-      defaultViewport: "mobile2"
-    }
-  }
+      defaultViewport: "mobile2",
+    },
+  },
 };
 
 Mobile.story = mobileViewport;
