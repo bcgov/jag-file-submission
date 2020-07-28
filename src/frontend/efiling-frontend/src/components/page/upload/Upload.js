@@ -101,7 +101,7 @@ export default function Upload({
   const amendmentsSidecard = getSidecardData().amendments;
   const supremeCourtSchedulingSidecard = getSidecardData()
     .supremeCourtScheduling;
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
+  // const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
   const [showPackageConfirmation, setShowPackageConfirmation] = useState(false);
 
   if (showPackageConfirmation) {
@@ -117,9 +117,12 @@ export default function Upload({
     <div className="page">
       <div className="content col-md-8">
         <h1>Document Upload</h1>
-        <Dropzone>
-          {() => (
-            <div {...getRootProps({ className: "dropzone-outer-box" })}>
+        <Dropzone onDrop={(acceptedFile) => console.log(acceptedFile)}>
+          {({ getRootProps, getInputProps }) => (
+            <div
+              data-testid="alan"
+              {...getRootProps({ className: "dropzone-outer-box" })}
+            >
               <div className="dropzone-inner-box">
                 <input {...getInputProps()} />
                 <span>
@@ -138,7 +141,7 @@ export default function Upload({
           )}
         </Dropzone>
         <br />
-        {acceptedFiles.length > 0 && (
+        {/* {acceptedFiles.length > 0 && (
           <>
             <h2>Select Description for each uploaded document to continue</h2>
             <br />
@@ -154,7 +157,7 @@ export default function Upload({
               </div>
             ))}
           </>
-        )}
+        )} */}
         <section className="buttons pt-2">
           <Button
             label="Cancel Upload"
