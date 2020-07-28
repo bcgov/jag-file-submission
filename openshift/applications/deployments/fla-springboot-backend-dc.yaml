@@ -1,15 +1,10 @@
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
-  creationTimestamp: "2020-07-16T19:34:00Z"
   labels:
     application: modern-web-app-demo
   name: static-web-app-demo-running-on-nginx
   namespace: qzaydf-tools
-  resourceVersion: "1949040244"
-  selfLink: >-
-    /apis/build.openshift.io/v1/namespaces/qzaydf-tools/buildconfigs/static-web-app-demo-running-on-nginx
-  uid: 4c578e7d-c79b-11ea-97c7-005056832285
 spec:
   failedBuildsHistoryLimit: 5
   nodeSelector: null
@@ -57,4 +52,4 @@ spec:
           docker-registry.default.svc:5000/qzaydf-tools/react-web-app-demo-builder@sha256:d4ba3613a6b0928b1cc3dac158c41d1159d0b4b31278f2fad40cd82566cd9930
       type: ImageChange
 status:
-  lastVersion: 15
+  lastVersion: 0
