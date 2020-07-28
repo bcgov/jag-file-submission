@@ -32,7 +32,7 @@ services:
     ports:
       - 3001:3000
     environment:
-      - REACT_APP_KEYCLOAK_URL=http://keycloak:8080/auth
+      - REACT_APP_KEYCLOAK_URL=http://localhost:8081/auth
       - REACT_APP_KEYCLOAK_REALM=github
       - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-demo
 
@@ -134,10 +134,10 @@ services:
       KEYCLOAK_IMPORT: /tmp/realm-export.json
       KEYCLOAK_AUTH_SERVER_URL: http://localhost:8081/auth
       KEYCLOAK_REALM: SpringBootKeycloak
-      KEYCLOAK_RESOURCE: login-app
+      KEYCLOAK_RESOURCE: efiling-api
       KEYCLOAK_CREDENTIALS_SECRET: 3d7be270-34a5-4c4f-82cb-d0d22cb88aa8
       # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
-      #JDBC_PARAMS: "ssl=true"
+      # JDBC_PARAMS: "ssl=true"
     volumes:
       - ./.settings/realm-export.json:/tmp/realm-export.json
     ports:
