@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useDropzone } from "react-dropzone";
-import { MdDescription } from "react-icons/md";
+import { MdDescription, MdDeleteForever } from "react-icons/md";
 import {
   Sidecard,
   Button,
@@ -17,92 +17,83 @@ import { propTypes } from "../../../types/propTypes";
 import "./Upload.css";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
 
-const icon = (
-  <div style={{ color: "rgb(252, 186, 25)" }}>
-    <MdDescription size={32} />
-  </div>
-);
-
-const generateTable = (file) => {
-  return [
-    {
-      name: (
-        <div className="center-alignment fill-space">
-          {icon}
-          <span className="file-href minor-margin-left">{file.name}</span>
-        </div>
-      ),
-      value: (
-        <>
-          <div className="table-value top-spacing">
-            <Dropdown
-              label="Description:"
-              items={items}
-              onSelect={(val) => console.log(val)}
-            />
-          </div>
-          <br />
-        </>
-      ),
-    },
-    {
-      name: (
-        <div className="major-padding-left">Is this document an amendment?</div>
-      ),
-      value: (
-        <div className="table-value">
-          <div className="minor-margin-right">
-            <Radio
-              id="no-amendment"
-              name="amendment"
-              label="No"
-              onSelect={(val) => console.log(val)}
-            />
-          </div>
-          <Radio
-            id="yes-amendment"
-            name="amendment"
-            label="Yes"
-            onSelect={(val) => console.log(val)}
-          />
-        </div>
-      ),
-    },
-    {
-      name: (
-        <div className="major-padding-left">
-          Is this document that needs to go to supreme court scheduling aln
-          dodge man?
-        </div>
-      ),
-      value: (
-        <div className="table-value">
-          <div className="minor-margin-right">
-            <Radio
-              id="no-supreme"
-              name="supreme"
-              label="No"
-              onSelect={(val) => console.log(val)}
-            />
-          </div>
-          <Radio
-            id="yes-supreme"
-            name="supreme"
-            label="Yes"
-            onSelect={(val) => console.log(val)}
-          />
-        </div>
-      ),
-    },
-  ];
-};
-
 const items = [
   "Select document description",
   "Affidavit",
   "Affidavit of Attempted Service",
   "Case Conference Brief",
 ];
+
+const generateFileJSX = (fileName) => {
+  return (
+    <div className="center-alignment fill-space">
+      <div style={{ color: "rgb(252, 186, 25)" }}>
+        <MdDescription size={32} />
+      </div>
+      <span className="file-href minor-margin-left">{fileName}</span>
+      <MdDeleteForever className="minor-margin-left" size={32} />
+    </div>
+  );
+};
+
+const generateRadioButtonJSX = (fileName, type) => {
+  return (
+    <div className="table-value">
+      <div className="minor-margin-right">
+        <Radio
+          id={`no-${type}-${fileName}`}
+          name={`${type}-${fileName}`}
+          label="No"
+          onSelect={(val) => console.log(val)}
+        />
+      </div>
+      <Radio
+        id={`yes-${type}-${fileName}`}
+        name={`${type}-${fileName}`}
+        label="Yes"
+        onSelect={(val) => console.log(val)}
+      />
+    </div>
+  );
+};
+
+const generateDropdownJSX = () => {
+  return (
+    <>
+      <div className="table-value top-spacing">
+        <Dropdown
+          label="Description:"
+          items={items}
+          onSelect={(val) => console.log(val)}
+        />
+      </div>
+      <br />
+    </>
+  );
+};
+
+const generateTable = (file) => {
+  return [
+    {
+      name: generateFileJSX(file.name),
+      value: generateDropdownJSX(),
+    },
+    {
+      name: (
+        <div className="major-padding-left">Is this document an amendment?</div>
+      ),
+      value: generateRadioButtonJSX(file.name, "amendment"),
+    },
+    {
+      name: (
+        <div className="major-padding-left">
+          Is this document that needs to go to supreme court scheduling?
+        </div>
+      ),
+      value: generateRadioButtonJSX(file.name, "supreme"),
+    },
+  ];
+};
 
 export default function Upload({
   upload: { confirmationPopup, submissionId },
