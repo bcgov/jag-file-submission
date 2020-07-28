@@ -37,25 +37,25 @@ jag:
           password: ${CSO_LOOKUPFACADE_PASSWORD}
           uri: ${CSO_LOOKUPFACADE_URI:http://localhost:8091}
         - client: STATUS
-          userName: ${FILING_STATSFACADE_USERNAME}
-          password: ${FILING_STATSFACADE_PASSWORD}
-          uri: ${FILING_STATSFACADE_URI:http://localhost:8091}
+          userName: ${CSO_FILINGSTATSFACADE_USERNAME}
+          password: ${CSO_FILINGSTATSFACADE_PASSWORD}
+          uri: ${CSO_FILINGSTATSFACADE_URI:http://localhost:8091}
         - client: CSOWS
           userName: ${CSOWS_USERNAME}
           password: ${CSOWS_PASSWORD}
           uri: ${CSOWS_URI:http://localhost:8091}
         - client: FILING
-          userName: ${FILING_FACADE_USERNAME}
-          password: ${FILING_FACADE_PASSWORD}
-          uri: ${FILING_FACADE_URI:http://localhost:8091}
+          userName: ${CSO_FILINGFACADE_USERNAME}
+          password: ${CSO_FILINGFACADE_PASSWORD}
+          uri: ${CSO_FILINGFACADE_URI:http://localhost:8091}
         - client: SERVICE
           userName: ${CSO_SERVICEFACADE_USERNAME}
           password: ${CSO_SERVICEFACADE_PASSWORD}
           uri: ${CSO_SERVICEFACADE_URI:http://localhost:8091}
         - client: BCEID
-          userName: ${BCEID_LOOKUP_USERNAME}
-          password: ${BCEID_LOOKUP_PASSWORD}
-          uri: ${BCEID_LOOKUP_URI:http://localhost:8091}
+          userName: ${CSO_BCEIDSERVICE_USERNAME}
+          password: ${CSO_BCEIDSERVICE_PASSWORD}
+          uri: ${CSO_BCEIDSERVICE_URI:http://localhost:8091}
 
 info:
   app:
