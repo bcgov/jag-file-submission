@@ -39,9 +39,6 @@ public class DriverClass {
                     WebDriverManager.edgedriver().setup();
                     driver = new EdgeDriver();
                     break;
-                case "ie":
-                    WebDriverManager.iedriver().setup();
-                    driver = new InternetExplorerDriver();
                 default:
                     log.info("URL value is not available in the properties file.");
             }
