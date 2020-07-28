@@ -30,7 +30,7 @@ exclude_patterns:
 
   # Frontend Pattern Excludes
   - "src/frontend/*/src/*.js"
-  - "src/frontend/*/src/components/hoc/*.js"
+  - "src/frontend/efiling-demo/src/components/hoc/AuthenticationGuard.js"
   - "src/frontend/efiling-frontend/src/modules/confirmationPopupTestData.js"
   - "src/frontend/*/public/"
   - "src/frontend/*/.storybook/"
