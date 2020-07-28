@@ -30,7 +30,7 @@ const addUserInfo = ({ bceid, firstName, middleName, lastName, email }) => {
     firstName,
     middleName,
     lastName,
-    email
+    email,
   };
 };
 
@@ -53,15 +53,15 @@ const checkCSOAccountStatus = (
   axios
     .get(`/submission/${submissionId}`, {
       headers: {
-        "X-Auth-UserId": temp
-      }
+        "X-Auth-UserId": temp,
+      },
     })
     .then(({ data: { userDetails, navigation } }) => {
       saveDataToSessionStorage(navigation, userDetails);
 
       if (userDetails.accounts) {
         const csoAccountIdentifier = userDetails.accounts.find(
-          o => o.type === "CSO"
+          (o) => o.type === "CSO"
         ).identifier;
         sessionStorage.setItem("csoAccountId", csoAccountIdentifier);
         setCsoAccountStatus({ isNew: false, exists: true });
@@ -69,7 +69,7 @@ const checkCSOAccountStatus = (
 
       setRequiredState(userDetails, setApplicantInfo, setShowLoader);
     })
-    .catch(error => {
+    .catch((error) => {
       errorRedirect(sessionStorage.getItem("errorUrl"), error);
 
       setError(true);
@@ -83,7 +83,7 @@ export default function Home({ page: { header, confirmationPopup } }) {
   const [showLoader, setShowLoader] = useState(true);
   const [csoAccountStatus, setCsoAccountStatus] = useState({
     exists: false,
-    isNew: false
+    isNew: false,
   });
   const [applicantInfo, setApplicantInfo] = useState({});
   const [error, setError] = useState(false);
@@ -103,7 +103,7 @@ export default function Home({ page: { header, confirmationPopup } }) {
 
   const packageConfirmation = {
     confirmationPopup,
-    submissionId: queryParams.submissionId
+    submissionId: queryParams.submissionId,
   };
 
   return (
@@ -143,6 +143,6 @@ export default function Home({ page: { header, confirmationPopup } }) {
 Home.propTypes = {
   page: PropTypes.shape({
     header: propTypes.header,
-    confirmationPopup: propTypes.confirmationPopup
-  }).isRequired
+    confirmationPopup: propTypes.confirmationPopup,
+  }).isRequired,
 };

@@ -5,23 +5,23 @@ import Home from "./components/page/home/Home";
 
 const mainButton = {
   label: "Cancel",
-  styling: "normal-white btn"
+  styling: "normal-white btn",
 };
 
 const confirmButton = {
   label: "Yes, cancel E-File Submission",
-  styling: "normal-blue btn consistent-width"
+  styling: "normal-blue btn consistent-width",
 };
 
 const cancelButton = {
   label: "No, resume E-File Submission",
-  styling: "normal-white btn consistent-width"
+  styling: "normal-white btn consistent-width",
 };
 
 export default function App() {
   const header = {
     name: "E-File Submission",
-    history: useHistory()
+    history: useHistory(),
   };
 
   const [show, setShow] = useState(false);
@@ -51,14 +51,14 @@ export default function App() {
   const modal = {
     show,
     title: "Cancel E-File Submission?",
-    body
+    body,
   };
 
   const confirmationPopup = {
     modal,
     mainButton: { ...mainButton, onClick: handleShow },
     confirmButton: { ...confirmButton, onClick: handleConfirm },
-    cancelButton: { ...cancelButton, onClick: handleClose }
+    cancelButton: { ...cancelButton, onClick: handleClose },
   };
 
   return (

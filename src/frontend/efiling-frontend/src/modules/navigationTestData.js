@@ -1,13 +1,13 @@
 const navigation = {
   cancel: {
-    url: "cancelurl.com"
+    url: "cancelurl.com",
   },
   success: {
-    url: "successurl.com"
+    url: "successurl.com",
   },
   error: {
-    url: ""
-  }
+    url: "",
+  },
 };
 
 export function getNavigationData() {

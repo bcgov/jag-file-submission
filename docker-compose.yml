@@ -58,6 +58,10 @@ services:
       - BCEID_LOOKUP_USERNAME=${BCEID_LOOKUP_USERNAME}
       - BCEID_LOOKUP_PASSWORD=${BCEID_LOOKUP_PASSWORD}
       - BCEID_LOOKUP_URI=${BCEID_LOOKUP_URI}
+      - KEYCLOAK_AUTH_SERVER_URL=http://keycloak:8080/auth
+      - KEYCLOAK_REALM=SpringBootKeycloak
+      - KEYCLOAK_RESOURCE=efiling-api
+      - KEYCLOAK_CREDENTIALS_SECRET=${KEYCLOAK_CREDENTIALS_SECRET}
     networks:
       - fisu-net
 
@@ -84,7 +88,7 @@ services:
     hostname: redis-commander
     image: rediscommander/redis-commander:latest
     restart: always
-    environment: 
+    environment:
       - REDIS_PORT=6379
       - REDIS_HOST=redis
       - REDIS_PASSWORD=admin
@@ -120,6 +124,10 @@ services:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
       KEYCLOAK_IMPORT: /tmp/realm-export.json
+      KEYCLOAK_AUTH_SERVER_URL: http://localhost:8081/auth
+      KEYCLOAK_REALM: SpringBootKeycloak
+      KEYCLOAK_RESOURCE: login-app
+      KEYCLOAK_CREDENTIALS_SECRET: 3d7be270-34a5-4c4f-82cb-d0d22cb88aa8
       # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
       #JDBC_PARAMS: "ssl=true"
     volumes:
@@ -127,6 +135,20 @@ services:
     ports:
       - 8081:8080
     command: ["-Dkeycloak.profile.feature.upload_scripts=enabled"]
+    networks:
+      - fisu-net
+
+  #############################################################################################
+  ###                                        NGINX                                       ###
+  #############################################################################################
+  nginx:
+    image: nginx:latest
+    volumes:
+      - .settings/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 8083:80
+    networks:
+      - fisu-net
 
 volumes:
   data-redis:

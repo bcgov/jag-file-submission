@@ -9,7 +9,7 @@ import ConfirmationPopup, {
   DisplayBox,
   Table,
   Alert,
-  Sidecard
+  Sidecard,
 } from "shared-components";
 import { getContent } from "../../../modules/csoAccountAgreementContent";
 import { getSidecardData } from "../../../modules/sidecardData";
@@ -24,7 +24,7 @@ const content = getContent();
 export default function CSOAccount({
   confirmationPopup,
   applicantInfo,
-  setCsoAccountStatus
+  setCsoAccountStatus,
 }) {
   const [termsAccepted, acceptTerms] = useState(false);
   const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
@@ -37,20 +37,20 @@ export default function CSOAccount({
     }
   }, [termsAccepted]);
 
-  const createCSOAccount = applicantDetails => {
+  const createCSOAccount = (applicantDetails) => {
     axios
       .post("/csoAccount", applicantDetails, {
-        headers: { "X-Auth-UserId": sessionStorage.getItem("universalId") }
+        headers: { "X-Auth-UserId": sessionStorage.getItem("universalId") },
       })
       .then(({ data: { accounts } }) => {
-        accounts.forEach(account => {
+        accounts.forEach((account) => {
           if (account.type === "CSO") {
             sessionStorage.setItem("csoAccountId", account.identifier);
           }
         });
         setCsoAccountStatus({ exists: true, isNew: true });
       })
-      .catch(error => {
+      .catch((error) => {
         errorRedirect(sessionStorage.getItem("errorUrl"), error);
       });
   };
@@ -58,7 +58,7 @@ export default function CSOAccount({
   const continueButton = {
     label: "Create CSO Account",
     styling: "normal-blue btn",
-    onClick: () => createCSOAccount(applicantInfo)
+    onClick: () => createCSOAccount(applicantInfo),
   };
 
   const icon = (
@@ -123,5 +123,5 @@ export default function CSOAccount({
 CSOAccount.propTypes = {
   confirmationPopup: propTypes.confirmationPopup,
   applicantInfo: propTypes.applicantInfo,
-  setCsoAccountStatus: propTypes.setState
+  setCsoAccountStatus: propTypes.setState,
 };

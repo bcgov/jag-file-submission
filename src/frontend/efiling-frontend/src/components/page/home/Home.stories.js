@@ -13,12 +13,12 @@ import Home from "./Home";
 
 export default {
   title: "Home",
-  component: Home
+  component: Home,
 };
 
 const header = {
   name: "E-File Submission",
-  history: createMemoryHistory()
+  history: createMemoryHistory(),
 };
 const confirmationPopup = getTestData();
 const page = { header, confirmationPopup };
@@ -35,14 +35,14 @@ const userDetails = getUserDetails();
 
 sessionStorage.setItem("errorUrl", "error.com");
 
-const LoaderStateData = props => {
+const LoaderStateData = (props) => {
   const mock = new MockAdapter(axios);
   window.open = () => {};
   mock.onGet(apiRequest).reply(400, { message: "There was an error" });
   return props.children({ page });
 };
 
-const AccountExistsStateData = props => {
+const AccountExistsStateData = (props) => {
   const mock = new MockAdapter(axios);
   mock.onGet(apiRequest).reply(200, { userDetails, navigation });
   mock
@@ -51,19 +51,19 @@ const AccountExistsStateData = props => {
   return props.children({ page });
 };
 
-const NoAccountExistsStateData = props => {
+const NoAccountExistsStateData = (props) => {
   const mock = new MockAdapter(axios);
   mock.onGet(apiRequest).reply(200, {
     userDetails: { ...userDetails, accounts: null },
-    navigation
+    navigation,
   });
   return props.children({ page });
 };
 
-const homeComponent = data => (
+const homeComponent = (data) => (
   <MemoryRouter
     initialEntries={[
-      { search: `?submissionId=${submissionId}&temp=${temp}`, key: "testKey" }
+      { search: `?submissionId=${submissionId}&temp=${temp}`, key: "testKey" },
     ]}
   >
     <Home page={data.page} />
@@ -71,16 +71,18 @@ const homeComponent = data => (
 );
 
 const loaderComponent = (
-  <LoaderStateData>{data => homeComponent(data)}</LoaderStateData>
+  <LoaderStateData>{(data) => homeComponent(data)}</LoaderStateData>
 );
 
 const accountExistsComponent = (
-  <AccountExistsStateData>{data => homeComponent(data)}</AccountExistsStateData>
+  <AccountExistsStateData>
+    {(data) => homeComponent(data)}
+  </AccountExistsStateData>
 );
 
 const noAccountExistsComponent = (
   <NoAccountExistsStateData>
-    {data => homeComponent(data)}
+    {(data) => homeComponent(data)}
   </NoAccountExistsStateData>
 );
 
@@ -99,9 +101,9 @@ export const NoAccountExistsMobile = () => noAccountExistsComponent;
 const mobileViewport = {
   parameters: {
     viewport: {
-      defaultViewport: "mobile2"
-    }
-  }
+      defaultViewport: "mobile2",
+    },
+  },
 };
 
 ErrorMobile.story = mobileViewport;

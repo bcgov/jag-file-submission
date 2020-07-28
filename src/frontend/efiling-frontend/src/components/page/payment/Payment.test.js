@@ -6,7 +6,7 @@ import {
   fireEvent,
   getByText,
   getByRole,
-  wait
+  waitFor,
 } from "@testing-library/react";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
 import { getDocumentsData } from "../../../modules/documentTestData";
@@ -26,7 +26,7 @@ describe("Payment Component", () => {
     submissionId,
     courtData,
     files,
-    submissionFee
+    submissionFee,
   };
 
   let mock;
@@ -54,15 +54,15 @@ describe("Payment Component", () => {
     mock.onGet(apiRequest).reply(200, {
       documents: files,
       court: courtData,
-      submissionFeeAmount: submissionFee
+      submissionFeeAmount: submissionFee,
     });
 
     const { container, asFragment } = render(<Payment payment={payment} />);
 
     fireEvent.click(getByText(container, "< Back"));
 
-    await wait(() => {
-      expect(asFragment()).toMatchSnapshot();
-    });
+    await waitFor(() => {});
+
+    expect(asFragment()).toMatchSnapshot();
   });
 });

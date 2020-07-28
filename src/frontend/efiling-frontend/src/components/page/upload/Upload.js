@@ -10,7 +10,7 @@ import "./Upload.css";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
 
 export default function Upload({
-  upload: { confirmationPopup, submissionId }
+  upload: { confirmationPopup, submissionId },
 }) {
   const amendmentsSidecard = getSidecardData().amendments;
   const supremeCourtSchedulingSidecard = getSidecardData()
@@ -78,6 +78,6 @@ export default function Upload({
 Upload.propTypes = {
   upload: PropTypes.shape({
     confirmationPopup: propTypes.confirmationPopup,
-    submissionId: PropTypes.string.isRequired
-  }).isRequired
+    submissionId: PropTypes.string.isRequired,
+  }).isRequired,
 };

@@ -22,9 +22,11 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.security.RolesAllowed;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
@@ -46,7 +48,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     private final NavigationProperties navigationProperties;
 
     private final DocumentStore documentStore;
-
 
 
     public SubmissionApiDelegateImpl(
@@ -228,6 +229,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
+    @RolesAllowed("efiling-user")
     public ResponseEntity<SubmitFilingPackageResponse> submit(UUID xAuthUserId, UUID id, SubmitFilingPackageRequest submitFilingPackageRequest) {
         ResponseEntity response;
         MDC.put(Keys.EFILING_SUBMISSION_ID, id.toString());

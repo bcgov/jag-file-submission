@@ -6,7 +6,7 @@ import ConfirmationPopup, {
   Button,
   Sidecard,
   DisplayBox,
-  Table
+  Table,
 } from "shared-components";
 import Dinero from "dinero.js";
 import axios from "axios";
@@ -24,17 +24,17 @@ const openFile = (file, submissionId) => {
     .get(`/submission/${submissionId}/document/${file.name}`, {
       responseType: "blob",
       headers: {
-        "X-Auth-UserId": sessionStorage.getItem("universalId")
-      }
+        "X-Auth-UserId": sessionStorage.getItem("universalId"),
+      },
     })
-    .then(response => {
+    .then((response) => {
       // TODO: do not use hard coded type
       const fileData = new Blob([response.data], { type: file.mimeType });
       const fileUrl = URL.createObjectURL(fileData);
 
       window.open(fileUrl);
     })
-    .catch(error => {
+    .catch((error) => {
       errorRedirect(sessionStorage.getItem("errorUrl"), error);
     });
 };
@@ -56,8 +56,8 @@ const generateTable = (file, data, submissionId) => {
         </div>
       ),
       value: <Table elements={data} />,
-      verticalMiddle: true
-    }
+      verticalMiddle: true,
+    },
   ];
 };
 
@@ -67,18 +67,18 @@ const generateTableData = (file, submissionId) => {
       name: "Description:",
       value: file.description,
       isValueBold: true,
-      isClose: true
-    }
+      isClose: true,
+    },
   ];
 
   if (file.statutoryFeeAmount > 0) {
     data.push({
       name: "Statutory Fee:",
       value: Dinero({
-        amount: parseInt((file.statutoryFeeAmount * 100).toFixed(0), 10)
+        amount: parseInt((file.statutoryFeeAmount * 100).toFixed(0), 10),
       }).toFormat("$0,0.00"),
       isValueBold: true,
-      isClose: true
+      isClose: true,
     });
   }
 
@@ -97,8 +97,8 @@ const getFilingPackageData = (
   axios
     .get(`/submission/${submissionId}/filing-package`, {
       headers: {
-        "X-Auth-UserId": sessionStorage.getItem("universalId")
-      }
+        "X-Auth-UserId": sessionStorage.getItem("universalId"),
+      },
     })
     .then(({ data: { documents, court, submissionFeeAmount } }) => {
       setCourtData(court);
@@ -110,7 +110,7 @@ const getFilingPackageData = (
 
 export default function PackageConfirmation({
   packageConfirmation: { confirmationPopup, submissionId },
-  csoAccountStatus: { isNew }
+  csoAccountStatus: { isNew },
 }) {
   const [files, setFiles] = useState([]);
   const [courtData, setCourtData] = useState(null);
@@ -138,7 +138,7 @@ export default function PackageConfirmation({
           submissionId,
           courtData,
           files,
-          submissionFee
+          submissionFee,
         }}
       />
     );
@@ -173,7 +173,7 @@ export default function PackageConfirmation({
         </span>
         <br />
         <br />
-        {files.map(file => (
+        {files.map((file) => (
           <div key={file.name}>
             <DisplayBox
               styling="border-background display-file"
@@ -237,9 +237,9 @@ export default function PackageConfirmation({
 PackageConfirmation.propTypes = {
   packageConfirmation: PropTypes.shape({
     confirmationPopup: propTypes.confirmationPopup,
-    submissionId: PropTypes.string.isRequired
+    submissionId: PropTypes.string.isRequired,
   }).isRequired,
   csoAccountStatus: PropTypes.shape({
-    isNew: PropTypes.bool
-  }).isRequired
+    isNew: PropTypes.bool,
+  }).isRequired,
 };

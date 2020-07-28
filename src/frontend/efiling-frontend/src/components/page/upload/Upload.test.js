@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-import { render, fireEvent, getByText, wait } from "@testing-library/react";
+import { render, fireEvent, getByText, waitFor } from "@testing-library/react";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
 import { getDocumentsData } from "../../../modules/documentTestData";
 import { getCourtData } from "../../../modules/courtTestData";
@@ -17,7 +17,7 @@ describe("Upload Component", () => {
 
   const upload = {
     confirmationPopup,
-    submissionId
+    submissionId,
   };
 
   const apiRequest = `/submission/${submissionId}/filing-package`;
@@ -42,8 +42,8 @@ describe("Upload Component", () => {
 
     fireEvent.click(getByText(container, "Cancel Upload"));
 
-    await wait(() => {
-      expect(asFragment()).toMatchSnapshot();
-    });
+    await waitFor(() => {});
+
+    expect(asFragment()).toMatchSnapshot();
   });
 });

@@ -1,10 +1,10 @@
 import React from "react";
 import {
   render,
-  wait,
+  waitFor,
   getByText,
   getByRole,
-  fireEvent
+  fireEvent,
 } from "@testing-library/react";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
@@ -42,8 +42,8 @@ describe("CSOAccount Component", () => {
     mock.onPost(API_REQUEST).reply(201, {
       accounts: [
         { type: "CSO", identifier: "identifier" },
-        { type: "notCSO", identifier: "newIdentifier" }
-      ]
+        { type: "notCSO", identifier: "newIdentifier" },
+      ],
     });
 
     const { container } = render(
@@ -59,7 +59,7 @@ describe("CSOAccount Component", () => {
     expect(getByText(container, "Create CSO Account").disabled).toBeFalsy();
 
     fireEvent.click(getByText(container, "Create CSO Account"));
-    await wait(() => {});
+    await waitFor(() => {});
 
     expect(setCsoAccountStatus).toHaveBeenCalled();
     expect(sessionStorage.getItem("csoAccountId")).toEqual("identifier");
@@ -71,8 +71,8 @@ describe("CSOAccount Component", () => {
     mock.onPost(API_REQUEST).reply(201, {
       accounts: [
         { type: "notCSO", identifier: "identifier" },
-        { type: "notCSO", identifier: "newIdentifier" }
-      ]
+        { type: "notCSO", identifier: "newIdentifier" },
+      ],
     });
 
     render(
@@ -83,7 +83,7 @@ describe("CSOAccount Component", () => {
       />
     );
 
-    await wait(() => {});
+    await waitFor(() => {});
 
     expect(sessionStorage.getItem("csoAccountId")).toEqual("someId");
   });
@@ -105,7 +105,7 @@ describe("CSOAccount Component", () => {
     expect(getByText(container, "Create CSO Account").disabled).toBeFalsy();
 
     fireEvent.click(getByText(container, "Create CSO Account"));
-    await wait(() => {});
+    await waitFor(() => {});
 
     expect(window.open).toHaveBeenCalledWith(
       "error.com?status=400&message=There was a problem.",
