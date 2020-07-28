@@ -7,7 +7,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import queryString from "query-string";
-import Home from "./components/page/home/Home";
+import AuthenticationGuard from "./components/hoc/AuthenticationGuard";
 import Cancel from "./components/page/cancel/Cancel";
 import Error from "./components/page/error/Error";
 import Success from "./components/page/success/Success";
@@ -28,7 +28,7 @@ export default function App() {
       <Switch>
         <Redirect exact from="/" to="/efiling-demo" />
         <Route exact path="/efiling-demo">
-          <Home page={{ header }} />
+          <AuthenticationGuard page={{ header }} />
         </Route>
         <Route exact path="/efiling-demo/cancel">
           <Cancel page={{ header }} />

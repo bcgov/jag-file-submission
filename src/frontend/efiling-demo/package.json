@@ -15,6 +15,7 @@
     "filepond-plugin-image-exif-orientation": "^1.0.9",
     "filepond-plugin-image-preview": "^4.6.4",
     "history": "^5.0.0",
+    "keycloak-js": "^11.0.0",
     "prop-types": "^15.7.2",
     "query-string": "^6.11.1",
     "react": "^16.13.1",
@@ -76,11 +77,11 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^4.0.8",
+    "husky": "^4.2.5",
+    "jest-environment-jsdom-sixteen": "^1.0.3",
     "jest-sonar-reporter": "^2.0.0",
     "prettier": "2.0.5",
-    "pretty-quick": "^2.0.1",
-    "husky": "^4.2.5",
-    "jest-environment-jsdom-sixteen": "^1.0.3"
+    "pretty-quick": "^2.0.1"
   },
   "jest": {
     "watchPathIgnorePatterns": [
@@ -88,6 +89,8 @@
     ],
     "collectCoverageFrom": [
       "src/**/*.js",
+      "!src/*.js",
+      "!src/components/hoc/*.js",
       "!src/index.js",
       "!**/node_modules/**",
       "!**/vendor/**"

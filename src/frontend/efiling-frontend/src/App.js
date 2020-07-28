@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState } from "react";
 import { Switch, Route, Redirect, useHistory } from "react-router-dom";
-import Home from "./components/page/home/Home";
+import AuthenticationGuard from "./components/hoc/AuthenticationGuard";
 
 const mainButton = {
   label: "Cancel",
@@ -66,7 +66,7 @@ export default function App() {
       <Switch>
         <Redirect exact from="/" to="/efiling" />
         <Route exact path="/efiling">
-          <Home page={{ header, confirmationPopup }} />
+          <AuthenticationGuard page={{ header, confirmationPopup }} />
         </Route>
       </Switch>
     </div>

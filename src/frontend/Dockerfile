@@ -12,6 +12,7 @@ WORKDIR /${SERVICE_NAME}
 ENV PATH ./node_modules/.bin:$PATH
 
 ENV REACT_APP_API_BASE_URL=http://localhost:8080
+ENV REACT_APP_KEYCLOAK_URL=http://localhost:8081/auth
 
 # install dependencies
 RUN yarn install
