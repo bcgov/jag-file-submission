@@ -42,7 +42,6 @@ public class DriverClass {
                 case "ie":
                     WebDriverManager.iedriver().setup();
                     driver = new InternetExplorerDriver();
-                    break;
                 default:
                     log.info("URL value is not available in the properties file.");
             }
