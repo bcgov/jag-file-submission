@@ -89,6 +89,8 @@
     ],
     "collectCoverageFrom": [
       "src/**/*.js",
+      "!src/*.js",
+      "!src/components/hoc/*.js",
       "!src/index.js",
       "!**/node_modules/**",
       "!**/vendor/**"
