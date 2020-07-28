@@ -9,7 +9,7 @@ import PackageConfirmation from "./PackageConfirmation";
 
 export default {
   title: "PackageConfirmation",
-  component: PackageConfirmation
+  component: PackageConfirmation,
 };
 
 const submissionId = "abc123";
@@ -21,7 +21,7 @@ const documents = getDocumentsData();
 const courtData = getCourtData();
 const submissionFeeAmount = 25.5;
 
-const LoadData = props => {
+const LoadData = (props) => {
   const mock = new MockAdapter(axios);
   mock
     .onGet(apiRequest)
@@ -31,7 +31,7 @@ const LoadData = props => {
 
 export const ExistingAccount = () => (
   <LoadData>
-    {data => (
+    {(data) => (
       <PackageConfirmation
         packageConfirmation={data.packageConfirmation}
         csoAccountStatus={data.csoAccountStatus}
@@ -42,7 +42,7 @@ export const ExistingAccount = () => (
 
 export const NewAccount = () => (
   <LoadData>
-    {data => (
+    {(data) => (
       <PackageConfirmation
         packageConfirmation={data.packageConfirmation}
         csoAccountStatus={{ ...data.csoAccountStatus, isNew: true }}
@@ -53,7 +53,7 @@ export const NewAccount = () => (
 
 export const Mobile = () => (
   <LoadData>
-    {data => (
+    {(data) => (
       <PackageConfirmation
         packageConfirmation={data.packageConfirmation}
         csoAccountStatus={data.csoAccountStatus}
@@ -65,9 +65,9 @@ export const Mobile = () => (
 const mobileViewport = {
   parameters: {
     viewport: {
-      defaultViewport: "mobile2"
-    }
-  }
+      defaultViewport: "mobile2",
+    },
+  },
 };
 
 Mobile.story = mobileViewport;

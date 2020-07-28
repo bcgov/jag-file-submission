@@ -10,7 +10,7 @@ import CSOAccount from "./CSOAccount";
 
 export default {
   title: "CSOAccount",
-  component: CSOAccount
+  component: CSOAccount,
 };
 
 const confirmationPopup = getTestData();
@@ -20,17 +20,17 @@ const setCsoAccountStatus = action("setCso");
 const mock = new MockAdapter(axios);
 const API_REQUEST = "/csoAccount";
 
-const CreateAccount = props => {
+const CreateAccount = (props) => {
   mock.onPost(API_REQUEST).reply(201, "success");
 
   return props.children({
     confirmationPopup,
     applicantInfo,
-    setCsoAccountStatus
+    setCsoAccountStatus,
   });
 };
 
-const baseComponent = data => (
+const baseComponent = (data) => (
   <CSOAccount
     confirmationPopup={data.confirmationPopup}
     applicantInfo={data.applicantInfo}
@@ -39,7 +39,7 @@ const baseComponent = data => (
 );
 
 const defaultCreateAccount = (
-  <CreateAccount>{data => baseComponent(data)}</CreateAccount>
+  <CreateAccount>{(data) => baseComponent(data)}</CreateAccount>
 );
 
 export const Default = () => defaultCreateAccount;
@@ -49,9 +49,9 @@ export const Mobile = () => defaultCreateAccount;
 const mobileViewport = {
   parameters: {
     viewport: {
-      defaultViewport: "mobile2"
-    }
-  }
+      defaultViewport: "mobile2",
+    },
+  },
 };
 
 Mobile.story = mobileViewport;

@@ -8,9 +8,9 @@ const userDetails = {
   accounts: [
     {
       type: "CSO",
-      identifier: "123"
-    }
-  ]
+      identifier: "123",
+    },
+  ],
 };
 
 export function getUserDetails() {

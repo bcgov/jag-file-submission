@@ -3,21 +3,21 @@ export function translateApplicantInfo({
   firstName,
   middleName,
   lastName,
-  email
+  email,
 }) {
   const fullName = [firstName, middleName, lastName];
   return [
     {
       name: "BCeID:",
-      value: bceid
+      value: bceid,
     },
     {
       name: "Full Name:",
-      value: fullName.join(" ")
+      value: fullName.join(" "),
     },
     {
       name: "Email Address:",
-      value: email
-    }
+      value: email,
+    },
   ];
 }

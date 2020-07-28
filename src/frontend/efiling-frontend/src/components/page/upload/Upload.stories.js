@@ -5,7 +5,7 @@ import Upload from "./Upload";
 
 export default {
   title: "Upload",
-  component: Upload
+  component: Upload,
 };
 
 const confirmationPopup = getTestData();
@@ -19,9 +19,9 @@ export const Mobile = () => <Upload upload={upload} />;
 const mobileViewport = {
   parameters: {
     viewport: {
-      defaultViewport: "mobile2"
-    }
-  }
+      defaultViewport: "mobile2",
+    },
+  },
 };
 
 Mobile.story = mobileViewport;
