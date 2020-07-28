@@ -7,7 +7,7 @@ import ConfirmationPopup, {
   Sidecard,
   Alert,
   Table,
-  Callout
+  Callout,
 } from "shared-components";
 import { getSidecardData } from "../../../modules/sidecardData";
 import { propTypes } from "../../../types/propTypes";
@@ -20,24 +20,24 @@ const generateCourtDataTable = ({
   fileNumber,
   locationDescription,
   levelDescription,
-  classDescription
+  classDescription,
 }) => {
   return [
     {
       name: "Court File Number:",
       value: fileNumber,
-      isValueBold: true
+      isValueBold: true,
     },
     {
       name: "Location:",
       value: locationDescription,
-      isValueBold: true
+      isValueBold: true,
     },
     {
       name: "Level and Class:",
       value: `${levelDescription} ${classDescription}`,
-      isValueBold: true
-    }
+      isValueBold: true,
+    },
   ];
 };
 
@@ -49,11 +49,11 @@ registered to my account. Statutory fees will be processed when documents are fi
 const submitButton = {
   label: "Submit",
   onClick: () => console.log("submit click"),
-  styling: "normal-blue btn"
+  styling: "normal-blue btn",
 };
 
 export default function Payment({
-  payment: { confirmationPopup, submissionId, courtData, files, submissionFee }
+  payment: { confirmationPopup, submissionId, courtData, files, submissionFee },
 }) {
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
@@ -149,6 +149,6 @@ Payment.propTypes = {
     submissionId: PropTypes.string.isRequired,
     courtData: PropTypes.object.isRequired,
     files: PropTypes.array.isRequired,
-    submissionFee: PropTypes.number.isRequired
-  }).isRequired
+    submissionFee: PropTypes.number.isRequired,
+  }).isRequired,
 };

@@ -1,5 +1,5 @@
 import initStoryshots, {
-  Stories2SnapsConverter
+  Stories2SnapsConverter,
 } from "@storybook/addon-storyshots";
 import { render, waitFor } from "@testing-library/react";
 import { createSerializer } from "enzyme-to-json";
@@ -27,5 +27,5 @@ initStoryshots({
   snapshotSerializers: [createSerializer()],
   test: ({ story, context, done }) => {
     runTest(story, context).then(done);
-  }
+  },
 });

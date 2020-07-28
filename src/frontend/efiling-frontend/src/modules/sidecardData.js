@@ -18,11 +18,11 @@ const aboutCso = () => {
           Learn more about CSO
         </a>
         .
-      </p>
+      </p>,
     ],
     type: "bluegrey",
     isWide: true,
-    icon: <MdInfoOutline className="side-card-icon" />
+    icon: <MdInfoOutline className="side-card-icon" />,
   };
 };
 
@@ -44,11 +44,11 @@ const csoAccountDetails = () => {
           View your CSO account details
         </a>
         .
-      </p>
+      </p>,
     ],
     type: "bluegrey",
     isWide: true,
-    icon: <MdPerson className="side-card-icon" />
+    icon: <MdPerson className="side-card-icon" />,
   };
 };
 
@@ -69,11 +69,11 @@ const rushSubmission = () => {
           Request rush submission
         </a>
         .
-      </p>
+      </p>,
     ],
     type: "bluegrey",
     isWide: true,
-    icon: <MdTimer className="side-card-icon" />
+    icon: <MdTimer className="side-card-icon" />,
   };
 };
 
@@ -84,11 +84,11 @@ const amendments = () => {
       <p key="amendments">
         Please indicate document uploads that are amendments - changes or
         alterations to existing, previously submitted documents.
-      </p>
+      </p>,
     ],
     type: "bluegrey",
     isWide: true,
-    icon: <MdInfoOutline className="side-card-icon" />
+    icon: <MdInfoOutline className="side-card-icon" />,
   };
 };
 
@@ -99,11 +99,11 @@ const supremeCourtScheduling = () => {
       <p key="scs">
         Please indicate if your document upload has been approved for Supreme
         Court Scheduling...
-      </p>
+      </p>,
     ],
     type: "bluegrey",
     isWide: true,
-    icon: <MdInfoOutline className="side-card-icon" />
+    icon: <MdInfoOutline className="side-card-icon" />,
   };
 };
 
@@ -119,6 +119,6 @@ export function getSidecardData() {
     csoAccountDetails: csoAccountDetailsCard,
     rushSubmission: rushSubmissionCard,
     amendments: amendmentsCard,
-    supremeCourtScheduling: supremeCourtSchedulingCard
+    supremeCourtScheduling: supremeCourtSchedulingCard,
   };
 }

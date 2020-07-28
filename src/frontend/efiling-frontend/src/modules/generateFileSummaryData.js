@@ -2,10 +2,10 @@ import Dinero from "dinero.js";
 
 function calculateTotalStatFee(files) {
   let totalStatFee = Dinero({ amount: 0 });
-  files.forEach(file => {
+  files.forEach((file) => {
     totalStatFee = totalStatFee.add(
       Dinero({
-        amount: parseInt((file.statutoryFeeAmount * 100).toFixed(0), 10)
+        amount: parseInt((file.statutoryFeeAmount * 100).toFixed(0), 10),
       })
     );
   });
@@ -16,7 +16,7 @@ function calculateTotalStatFee(files) {
 function calculateTotalFee(totalStatFee, submissionFee) {
   const total = totalStatFee.add(
     Dinero({
-      amount: parseInt((submissionFee * 100).toFixed(0), 10)
+      amount: parseInt((submissionFee * 100).toFixed(0), 10),
     })
   );
 
@@ -28,20 +28,20 @@ function generateTableContent(numDocuments, totalStatFee, submissionFee) {
     {
       name: "Number of Documents in Package:",
       value: `${numDocuments}`,
-      isValueBold: true
+      isValueBold: true,
     },
     {
       name: "Statutory Fees:",
       value: totalStatFee.toFormat("$0,0.00"),
-      isValueBold: true
+      isValueBold: true,
     },
     {
       name: "Submission Fee:",
       value: Dinero({
-        amount: parseInt((submissionFee * 100).toFixed(0), 10)
+        amount: parseInt((submissionFee * 100).toFixed(0), 10),
       }).toFormat("$0,0.00"),
-      isValueBold: true
-    }
+      isValueBold: true,
+    },
   ];
 }
 
@@ -61,7 +61,7 @@ export function generateFileSummaryData(files, submissionFee, withTotal) {
       {
         name: "Total Fee:",
         value: totalOverallFee.toFormat("$0,0.00"),
-        isValueBold: true
+        isValueBold: true,
       }
     );
   }
