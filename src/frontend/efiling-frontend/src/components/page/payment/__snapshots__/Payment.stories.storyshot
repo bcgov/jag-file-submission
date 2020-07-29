@@ -67,7 +67,7 @@ exports[`Storyshots Payment Default 1`] = `
               class="bcgov-row-fees "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Number of Documents in Package:
               </div>
@@ -83,7 +83,7 @@ exports[`Storyshots Payment Default 1`] = `
               class="bcgov-row-fees "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Statutory Fees:
               </div>
@@ -99,7 +99,7 @@ exports[`Storyshots Payment Default 1`] = `
               class="bcgov-row-fees "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Submission Fee:
               </div>
@@ -115,7 +115,7 @@ exports[`Storyshots Payment Default 1`] = `
               class="bcgov-row-fees bcgov-empty-row"
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               />
               <div
                 class="bcgov-table-value bcgov-right-align"
@@ -125,7 +125,7 @@ exports[`Storyshots Payment Default 1`] = `
               class="bcgov-row-fees "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Total Fee:
               </div>
@@ -161,7 +161,7 @@ exports[`Storyshots Payment Default 1`] = `
               class="bcgov-row "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Court File Number:
               </div>
@@ -177,7 +177,7 @@ exports[`Storyshots Payment Default 1`] = `
               class="bcgov-row "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Location:
               </div>
@@ -193,7 +193,7 @@ exports[`Storyshots Payment Default 1`] = `
               class="bcgov-row "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Level and Class:
               </div>
@@ -592,7 +592,7 @@ exports[`Storyshots Payment Mobile 1`] = `
               class="bcgov-row-fees "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Number of Documents in Package:
               </div>
@@ -608,7 +608,7 @@ exports[`Storyshots Payment Mobile 1`] = `
               class="bcgov-row-fees "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Statutory Fees:
               </div>
@@ -624,7 +624,7 @@ exports[`Storyshots Payment Mobile 1`] = `
               class="bcgov-row-fees "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Submission Fee:
               </div>
@@ -640,7 +640,7 @@ exports[`Storyshots Payment Mobile 1`] = `
               class="bcgov-row-fees bcgov-empty-row"
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               />
               <div
                 class="bcgov-table-value bcgov-right-align"
@@ -650,7 +650,7 @@ exports[`Storyshots Payment Mobile 1`] = `
               class="bcgov-row-fees "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Total Fee:
               </div>
@@ -686,7 +686,7 @@ exports[`Storyshots Payment Mobile 1`] = `
               class="bcgov-row "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Court File Number:
               </div>
@@ -702,7 +702,7 @@ exports[`Storyshots Payment Mobile 1`] = `
               class="bcgov-row "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Location:
               </div>
@@ -718,7 +718,7 @@ exports[`Storyshots Payment Mobile 1`] = `
               class="bcgov-row "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Level and Class:
               </div>

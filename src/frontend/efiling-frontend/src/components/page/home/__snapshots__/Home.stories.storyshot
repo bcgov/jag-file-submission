@@ -97,7 +97,7 @@ exports[`Storyshots Home Account Exists 1`] = `
                     class="bcgov-row "
                   >
                     <div
-                      class="bcgov-vertical-middle "
+                      class="bcgov-vertical-middle bcgov-fill-width"
                     >
                       <div
                         style="width: 80%;"
@@ -125,7 +125,7 @@ exports[`Storyshots Home Account Exists 1`] = `
                             class="bcgov-row "
                           >
                             <div
-                              class="bcgov-vertical-middle "
+                              class="bcgov-fill-width"
                             >
                               Description:
                             </div>
@@ -141,7 +141,7 @@ exports[`Storyshots Home Account Exists 1`] = `
                             class="bcgov-row "
                           >
                             <div
-                              class="bcgov-vertical-middle "
+                              class="bcgov-fill-width"
                             >
                               Statutory Fee:
                             </div>
@@ -203,7 +203,7 @@ exports[`Storyshots Home Account Exists 1`] = `
                     class="bcgov-row "
                   >
                     <div
-                      class="bcgov-vertical-middle "
+                      class="bcgov-vertical-middle bcgov-fill-width"
                     >
                       <div
                         style="width: 80%;"
@@ -231,7 +231,7 @@ exports[`Storyshots Home Account Exists 1`] = `
                             class="bcgov-row "
                           >
                             <div
-                              class="bcgov-vertical-middle "
+                              class="bcgov-fill-width"
                             >
                               Description:
                             </div>
@@ -283,7 +283,7 @@ exports[`Storyshots Home Account Exists 1`] = `
                 class="bcgov-row "
               >
                 <div
-                  class="bcgov-vertical-middle "
+                  class="bcgov-fill-width"
                 >
                   Number of Documents in Package:
                 </div>
@@ -299,7 +299,7 @@ exports[`Storyshots Home Account Exists 1`] = `
                 class="bcgov-row "
               >
                 <div
-                  class="bcgov-vertical-middle "
+                  class="bcgov-fill-width"
                 >
                   Statutory Fees:
                 </div>
@@ -315,7 +315,7 @@ exports[`Storyshots Home Account Exists 1`] = `
                 class="bcgov-row "
               >
                 <div
-                  class="bcgov-vertical-middle "
+                  class="bcgov-fill-width"
                 >
                   Submission Fee:
                 </div>
@@ -711,7 +711,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
                     class="bcgov-row "
                   >
                     <div
-                      class="bcgov-vertical-middle "
+                      class="bcgov-vertical-middle bcgov-fill-width"
                     >
                       <div
                         style="width: 80%;"
@@ -739,7 +739,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
                             class="bcgov-row "
                           >
                             <div
-                              class="bcgov-vertical-middle "
+                              class="bcgov-fill-width"
                             >
                               Description:
                             </div>
@@ -755,7 +755,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
                             class="bcgov-row "
                           >
                             <div
-                              class="bcgov-vertical-middle "
+                              class="bcgov-fill-width"
                             >
                               Statutory Fee:
                             </div>
@@ -817,7 +817,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
                     class="bcgov-row "
                   >
                     <div
-                      class="bcgov-vertical-middle "
+                      class="bcgov-vertical-middle bcgov-fill-width"
                     >
                       <div
                         style="width: 80%;"
@@ -845,7 +845,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
                             class="bcgov-row "
                           >
                             <div
-                              class="bcgov-vertical-middle "
+                              class="bcgov-fill-width"
                             >
                               Description:
                             </div>
@@ -897,7 +897,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
                 class="bcgov-row "
               >
                 <div
-                  class="bcgov-vertical-middle "
+                  class="bcgov-fill-width"
                 >
                   Number of Documents in Package:
                 </div>
@@ -913,7 +913,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
                 class="bcgov-row "
               >
                 <div
-                  class="bcgov-vertical-middle "
+                  class="bcgov-fill-width"
                 >
                   Statutory Fees:
                 </div>
@@ -929,7 +929,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
                 class="bcgov-row "
               >
                 <div
-                  class="bcgov-vertical-middle "
+                  class="bcgov-fill-width"
                 >
                   Submission Fee:
                 </div>
@@ -1691,7 +1691,7 @@ exports[`Storyshots Home No Account Exists 1`] = `
                     class="bcgov-row "
                   >
                     <div
-                      class="bcgov-vertical-middle "
+                      class="bcgov-fill-width"
                     >
                       BCeID:
                     </div>
@@ -1705,7 +1705,7 @@ exports[`Storyshots Home No Account Exists 1`] = `
                     class="bcgov-row "
                   >
                     <div
-                      class="bcgov-vertical-middle "
+                      class="bcgov-fill-width"
                     >
                       Full Name:
                     </div>
@@ -1719,7 +1719,7 @@ exports[`Storyshots Home No Account Exists 1`] = `
                     class="bcgov-row "
                   >
                     <div
-                      class="bcgov-vertical-middle "
+                      class="bcgov-fill-width"
                     >
                       Email Address:
                     </div>
@@ -2757,7 +2757,7 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
                     class="bcgov-row "
                   >
                     <div
-                      class="bcgov-vertical-middle "
+                      class="bcgov-fill-width"
                     >
                       BCeID:
                     </div>
@@ -2771,7 +2771,7 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
                     class="bcgov-row "
                   >
                     <div
-                      class="bcgov-vertical-middle "
+                      class="bcgov-fill-width"
                     >
                       Full Name:
                     </div>
@@ -2785,7 +2785,7 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
                     class="bcgov-row "
                   >
                     <div
-                      class="bcgov-vertical-middle "
+                      class="bcgov-fill-width"
                     >
                       Email Address:
                     </div>

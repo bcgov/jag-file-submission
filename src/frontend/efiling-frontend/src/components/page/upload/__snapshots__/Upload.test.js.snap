@@ -281,7 +281,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
                   class="bcgov-row "
                 >
                   <div
-                    class="bcgov-vertical-middle "
+                    class="bcgov-vertical-middle bcgov-fill-width"
                   >
                     <div
                       style="width: 80%;"
@@ -309,7 +309,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
                           class="bcgov-row "
                         >
                           <div
-                            class="bcgov-vertical-middle "
+                            class="bcgov-fill-width"
                           >
                             Description:
                           </div>
@@ -325,7 +325,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
                           class="bcgov-row "
                         >
                           <div
-                            class="bcgov-vertical-middle "
+                            class="bcgov-fill-width"
                           >
                             Statutory Fee:
                           </div>
@@ -387,7 +387,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
                   class="bcgov-row "
                 >
                   <div
-                    class="bcgov-vertical-middle "
+                    class="bcgov-vertical-middle bcgov-fill-width"
                   >
                     <div
                       style="width: 80%;"
@@ -415,7 +415,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
                           class="bcgov-row "
                         >
                           <div
-                            class="bcgov-vertical-middle "
+                            class="bcgov-fill-width"
                           >
                             Description:
                           </div>
@@ -467,7 +467,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
               class="bcgov-row "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Number of Documents in Package:
               </div>
@@ -483,7 +483,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
               class="bcgov-row "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Statutory Fees:
               </div>
@@ -499,7 +499,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
               class="bcgov-row "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Submission Fee:
               </div>
@@ -780,7 +780,7 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
                   class="bcgov-row "
                 >
                   <div
-                    class="bcgov-vertical-middle "
+                    class="bcgov-fill-width"
                   >
                     <div
                       class="center-alignment fill-space"
@@ -894,7 +894,7 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
                   class="bcgov-row "
                 >
                   <div
-                    class="bcgov-vertical-middle "
+                    class="bcgov-fill-width"
                   >
                     <div
                       class="major-padding-left"
@@ -947,7 +947,7 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
                   class="bcgov-row "
                 >
                   <div
-                    class="bcgov-vertical-middle "
+                    class="bcgov-fill-width"
                   >
                     <div
                       class="major-padding-left"
