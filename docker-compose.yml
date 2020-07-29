@@ -16,6 +16,8 @@ services:
     environment:
       - REACT_APP_KEYCLOAK_REALM=SpringBootKeycloak
       - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-frontend
+      - REACT_APP_KEYCLOAK_URL=http://localhost:8081/auth
+      - REACT_APP_API_BASE_URL=http://localhost:8080
 
   #############################################################################################
   ###                                 EFILING DEMO                                          ###
@@ -33,6 +35,8 @@ services:
     environment:
       - REACT_APP_KEYCLOAK_REALM=github
       - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-demo
+      - REACT_APP_KEYCLOAK_URL=http://localhost:8081/auth
+      - REACT_APP_API_BASE_URL=http://localhost:8080
 
   #############################################################################################
   ###                           Efiling api backend app                                     ###
