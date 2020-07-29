@@ -6,8 +6,8 @@ info:
 servers:
   - url: "http://localhost:8080"
 tags:
-  - name: submission
-    description: Submission Api
+  - name: submissionHub
+    description: Submission Hub Api
 security:
   - bearerAuth: []
 paths:
@@ -16,7 +16,7 @@ paths:
       summary: Initial documents upload
       operationId: UploadSubmissionDocuments
       tags:
-        - submission
+        - submissionHub
       parameters:
         - $ref: "#/components/parameters/xAuthUserId"
       requestBody:
@@ -42,7 +42,7 @@ paths:
       summary: Generates a secure URL for e-filing submission
       operationId: GenerateUrl
       tags:
-        - submission
+        - submissionHub
       parameters:
         - $ref: "#/components/parameters/xAuthUserId"
         - $ref: "#/components/parameters/submissionId"

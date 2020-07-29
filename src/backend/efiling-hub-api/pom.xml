@@ -16,7 +16,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<default-package>ca.bc.gov.open.jag.efilinghubapi</default-package>
+		<default-package>ca.bc.gov.open.jag.efilinghub</default-package>
 	</properties>
 
 	<dependencies>
@@ -190,7 +190,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>ca.bc.gov.open.jag.efilingapi.EfilingApiApplication</mainClass>
+					<mainClass>ca.bc.gov.open.jag.efilingapi.EfilingHubApiApplication</mainClass>
 				</configuration>
 			</plugin>
 
@@ -242,7 +242,7 @@
 				<configuration>
 					<excludes>
 						<exclude>**/*/mappers/*Impl.java</exclude>
-						<exclude>**/*/efilinghubapi/api/**/*</exclude>
+						<exclude>**/*/efilinghub/api/**/*</exclude>
 						<exclude>org/openapitools/configuration/**/*</exclude>
 					</excludes>
 				</configuration>
