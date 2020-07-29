@@ -75,16 +75,19 @@ const generateDropdownJSX = () => {
 const generateTable = (file) => {
   return [
     {
+      key: file.name,
       name: generateFileJSX(file.name),
       value: generateDropdownJSX(),
     },
     {
+      key: `${file.name}-amendment`,
       name: (
         <div className="major-padding-left">Is this document an amendment?</div>
       ),
       value: generateRadioButtonJSX(file.name, "amendment"),
     },
     {
+      key: `${file.name}-supreme`,
       name: (
         <div className="major-padding-left">
           Is this document that needs to go to supreme court scheduling?
@@ -149,9 +152,7 @@ export default function Upload({
               <div key={file.name}>
                 <DisplayBox
                   styling="border-background"
-                  element={
-                    <Table key={file.name} elements={generateTable(file)} />
-                  }
+                  element={<Table elements={generateTable(file)} />}
                 />
                 <br />
               </div>
