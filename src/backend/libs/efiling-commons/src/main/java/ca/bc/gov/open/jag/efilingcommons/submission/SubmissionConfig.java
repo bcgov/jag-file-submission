@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingcommons.submission;
 import ca.bc.gov.open.jag.efilingcommons.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingcommons.soap.service.*;
 import ca.bc.gov.open.jag.efilingcommons.submission.mappers.SubmissionMapper;
+import ca.bc.gov.open.jag.efilingcommons.submission.mappers.SubmissionMapperImpl;
 import ca.bc.gov.open.jag.efilingcommons.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingcommons.submission.service.SubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingcommons.submission.service.SubmissionStore;

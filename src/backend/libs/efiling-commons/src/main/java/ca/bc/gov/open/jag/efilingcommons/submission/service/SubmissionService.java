@@ -1,11 +1,11 @@
-package ca.bc.gov.open.jag.efilingapi.submission.service;
+package ca.bc.gov.open.jag.efilingcommons.submission.service;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
-import ca.bc.gov.open.jag.efilingapi.api.model.SubmitFilingPackageRequest;
-import ca.bc.gov.open.jag.efilingapi.api.model.SubmitFilingPackageResponse;
-import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 
-import java.math.BigDecimal;
+import ca.bc.gov.open.jag.efilingcommons.model.api.GenerateUrlRequest;
+import ca.bc.gov.open.jag.efilingcommons.model.api.SubmitFilingPackageRequest;
+import ca.bc.gov.open.jag.efilingcommons.model.api.SubmitFilingPackageResponse;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.Submission;
+
 import java.util.UUID;
 
 public interface SubmissionService {

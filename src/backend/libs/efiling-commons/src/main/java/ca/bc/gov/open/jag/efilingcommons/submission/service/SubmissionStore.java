@@ -1,6 +1,6 @@
-package ca.bc.gov.open.jag.efilingapi.submission.service;
+package ca.bc.gov.open.jag.efilingcommons.submission.service;
 
-import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.Submission;
 
 import java.util.Optional;
 import java.util.UUID;

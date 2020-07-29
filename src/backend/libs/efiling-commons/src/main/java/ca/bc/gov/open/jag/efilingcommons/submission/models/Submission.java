@@ -1,9 +1,10 @@
-package ca.bc.gov.open.jag.efilingapi.submission.models;
+package ca.bc.gov.open.jag.efilingcommons.submission.models;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.ClientApplication;
-import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
-import ca.bc.gov.open.jag.efilingapi.api.model.Navigation;
+
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.api.ClientApplication;
+import ca.bc.gov.open.jag.efilingcommons.model.api.FilingPackage;
+import ca.bc.gov.open.jag.efilingcommons.model.api.Navigation;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -28,7 +29,7 @@ public class Submission {
 
     private AccountDetails accountDetails;
 
-    protected Submission(Submission.Builder builder) {
+    protected Submission(Builder builder) {
         this.id = builder.id;
         this.owner = builder.owner;
         this.filingPackage = builder.filingPackage;
@@ -38,8 +39,8 @@ public class Submission {
         this.expiryDate = builder.expiryDate;
     }
 
-    public static Submission.Builder builder() {
-        return new Submission.Builder();
+    public static Builder builder() {
+        return new Builder();
     }
 
     @JsonCreator

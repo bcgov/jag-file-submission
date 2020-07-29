@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingapi.submission.models;
+package ca.bc.gov.open.jag.efilingcommons.submission.models;
 
 public class SubmissionConstants {
 

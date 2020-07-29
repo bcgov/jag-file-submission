@@ -1,7 +1,8 @@
-package ca.bc.gov.open.jag.efilingapi.submission.mappers;
+package ca.bc.gov.open.jag.efilingcommons.submission.mappers;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlResponse;
-import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
+
+import ca.bc.gov.open.jag.efilingcommons.model.api.GenerateUrlResponse;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.Submission;
 import org.mapstruct.*;
 
 import java.text.MessageFormat;
