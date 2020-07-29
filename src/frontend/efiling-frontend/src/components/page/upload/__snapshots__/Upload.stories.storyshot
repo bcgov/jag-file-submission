@@ -13,6 +13,7 @@ exports[`Storyshots Upload Default 1`] = `
       </h1>
       <div
         class="dropzone-outer-box"
+        data-testid="dropdownzone"
         tabindex="0"
       >
         <div
@@ -26,7 +27,9 @@ exports[`Storyshots Upload Default 1`] = `
             type="file"
           />
           <span>
-            <h2>
+            <h2
+              class="text-center-alignment"
+            >
               Drag and drop or 
               <span
                 class="file-href"
@@ -231,6 +234,7 @@ exports[`Storyshots Upload Mobile 1`] = `
       </h1>
       <div
         class="dropzone-outer-box"
+        data-testid="dropdownzone"
         tabindex="0"
       >
         <div
@@ -244,7 +248,9 @@ exports[`Storyshots Upload Mobile 1`] = `
             type="file"
           />
           <span>
-            <h2>
+            <h2
+              class="text-center-alignment"
+            >
               Drag and drop or 
               <span
                 class="file-href"

@@ -60,7 +60,7 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
                   class="bcgov-row "
                 >
                   <div
-                    class="bcgov-vertical-middle "
+                    class="bcgov-vertical-middle bcgov-fill-width"
                   >
                     <div
                       style="width: 80%;"
@@ -88,7 +88,7 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
                           class="bcgov-row "
                         >
                           <div
-                            class="bcgov-vertical-middle bcgov-reduce-width"
+                            class="bcgov-fill-width"
                           >
                             Description:
                           </div>
@@ -104,7 +104,7 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
                           class="bcgov-row "
                         >
                           <div
-                            class="bcgov-vertical-middle bcgov-reduce-width"
+                            class="bcgov-fill-width"
                           >
                             Statutory Fee:
                           </div>
@@ -166,7 +166,7 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
                   class="bcgov-row "
                 >
                   <div
-                    class="bcgov-vertical-middle "
+                    class="bcgov-vertical-middle bcgov-fill-width"
                   >
                     <div
                       style="width: 80%;"
@@ -194,7 +194,7 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
                           class="bcgov-row "
                         >
                           <div
-                            class="bcgov-vertical-middle bcgov-reduce-width"
+                            class="bcgov-fill-width"
                           >
                             Description:
                           </div>
@@ -246,7 +246,7 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
               class="bcgov-row "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Number of Documents in Package:
               </div>
@@ -262,7 +262,7 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
               class="bcgov-row "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Statutory Fees:
               </div>
@@ -278,7 +278,7 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
               class="bcgov-row "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Submission Fee:
               </div>
@@ -581,7 +581,7 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
                   class="bcgov-row "
                 >
                   <div
-                    class="bcgov-vertical-middle "
+                    class="bcgov-vertical-middle bcgov-fill-width"
                   >
                     <div
                       style="width: 80%;"
@@ -609,7 +609,7 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
                           class="bcgov-row "
                         >
                           <div
-                            class="bcgov-vertical-middle bcgov-reduce-width"
+                            class="bcgov-fill-width"
                           >
                             Description:
                           </div>
@@ -625,7 +625,7 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
                           class="bcgov-row "
                         >
                           <div
-                            class="bcgov-vertical-middle bcgov-reduce-width"
+                            class="bcgov-fill-width"
                           >
                             Statutory Fee:
                           </div>
@@ -687,7 +687,7 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
                   class="bcgov-row "
                 >
                   <div
-                    class="bcgov-vertical-middle "
+                    class="bcgov-vertical-middle bcgov-fill-width"
                   >
                     <div
                       style="width: 80%;"
@@ -715,7 +715,7 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
                           class="bcgov-row "
                         >
                           <div
-                            class="bcgov-vertical-middle bcgov-reduce-width"
+                            class="bcgov-fill-width"
                           >
                             Description:
                           </div>
@@ -767,7 +767,7 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
               class="bcgov-row "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Number of Documents in Package:
               </div>
@@ -783,7 +783,7 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
               class="bcgov-row "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Statutory Fees:
               </div>
@@ -799,7 +799,7 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
               class="bcgov-row "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Submission Fee:
               </div>
@@ -1023,6 +1023,7 @@ exports[`PackageConfirmation Component On click of Upload them now text, it redi
       </h1>
       <div
         class="dropzone-outer-box"
+        data-testid="dropdownzone"
         tabindex="0"
       >
         <div
@@ -1036,7 +1037,9 @@ exports[`PackageConfirmation Component On click of Upload them now text, it redi
             type="file"
           />
           <span>
-            <h2>
+            <h2
+              class="text-center-alignment"
+            >
               Drag and drop or 
               <span
                 class="file-href"
@@ -1295,7 +1298,7 @@ exports[`PackageConfirmation Component On click of continue to payment button, i
               class="bcgov-row-fees "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Number of Documents in Package:
               </div>
@@ -1311,7 +1314,7 @@ exports[`PackageConfirmation Component On click of continue to payment button, i
               class="bcgov-row-fees "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Statutory Fees:
               </div>
@@ -1327,7 +1330,7 @@ exports[`PackageConfirmation Component On click of continue to payment button, i
               class="bcgov-row-fees "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Submission Fee:
               </div>
@@ -1343,7 +1346,7 @@ exports[`PackageConfirmation Component On click of continue to payment button, i
               class="bcgov-row-fees bcgov-empty-row"
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               />
               <div
                 class="bcgov-table-value bcgov-right-align"
@@ -1353,7 +1356,7 @@ exports[`PackageConfirmation Component On click of continue to payment button, i
               class="bcgov-row-fees "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Total Fee:
               </div>
@@ -1389,7 +1392,7 @@ exports[`PackageConfirmation Component On click of continue to payment button, i
               class="bcgov-row "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Court File Number:
               </div>
@@ -1405,7 +1408,7 @@ exports[`PackageConfirmation Component On click of continue to payment button, i
               class="bcgov-row "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Location:
               </div>
@@ -1421,7 +1424,7 @@ exports[`PackageConfirmation Component On click of continue to payment button, i
               class="bcgov-row "
             >
               <div
-                class="bcgov-vertical-middle "
+                class="bcgov-fill-width"
               >
                 Level and Class:
               </div>
@@ -1766,6 +1769,7 @@ exports[`PackageConfirmation Component On keydown of Upload them now text, it re
       </h1>
       <div
         class="dropzone-outer-box"
+        data-testid="dropdownzone"
         tabindex="0"
       >
         <div
@@ -1779,7 +1783,9 @@ exports[`PackageConfirmation Component On keydown of Upload them now text, it re
             type="file"
           />
           <span>
-            <h2>
+            <h2
+              class="text-center-alignment"
+            >
               Drag and drop or 
               <span
                 class="file-href"
