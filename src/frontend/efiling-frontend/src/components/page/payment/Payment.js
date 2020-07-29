@@ -1,15 +1,14 @@
 /* eslint-disable react/jsx-wrap-multilines */
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { MdCreditCard } from "react-icons/md";
 import ConfirmationPopup, {
   Button,
   Sidecard,
-  Alert,
   Table,
   Callout,
 } from "shared-components";
 import { getSidecardData } from "../../../modules/sidecardData";
+import { getCreditCardAlerts } from "../../../modules/creditCardAlerts";
 import { propTypes } from "../../../types/propTypes";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
 import { generateFileSummaryData } from "../../../modules/generateFileSummaryData";
@@ -58,6 +57,7 @@ export default function Payment({
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
   const rushSubmissionSidecard = getSidecardData().rushSubmission;
+  const existingCreditCardAlert = getCreditCardAlerts().existingCreditCard;
   const [paymentAgreed, setPaymentAgreed] = useState(false);
   const [showPackageConfirmation, setShowPackageConfirmation] = useState(false);
 
@@ -75,24 +75,7 @@ export default function Payment({
       <div className="content col-md-8">
         <h1>Payment</h1>
         {/* TODO: Fix credit card info and link to register card */}
-        <Alert
-          icon={<MdCreditCard size={32} />}
-          type="warning"
-          styling="warning-background no-padding-bottom"
-          element={
-            <p>
-              Your credit card, BLAH, will be charged.&nbsp;
-              <a
-                href="https://justice.gov.bc.ca/cso/about/index.do"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Register a new Credit Card
-              </a>
-              .
-            </p>
-          }
-        />
+        {existingCreditCardAlert}
         <br />
         <div className="half-width">
           <Table
