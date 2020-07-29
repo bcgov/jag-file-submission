@@ -38,16 +38,14 @@ const noCreditCard = () => {
             account.
           </span>
           <br />
-          <span>
-            <a
-              href="https://justice.gov.bc.ca/cso/about/index.do"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Register a card now
-            </a>
-            &nbsp;to continue.
-          </span>
+          <a
+            href="https://justice.gov.bc.ca/cso/about/index.do"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Register a card now
+          </a>
+          &nbsp;to continue.
         </p>
       }
     />
