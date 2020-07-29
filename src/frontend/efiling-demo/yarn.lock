@@ -8787,7 +8787,7 @@ jsx-ast-utils@^2.2.1, jsx-ast-utils@^2.2.3, jsx-ast-utils@^2.4.1:
     array-includes "^3.1.1"
     object.assign "^4.1.0"
 
-keycloak-js@^7.3.0:
+keycloak-js@^7.0.1:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/keycloak-js/-/keycloak-js-7.0.1.tgz#490971a2cf404bdbbee87804211f2b4f6561e858"
   integrity sha512-gefTlb6DjvqH2wTbXCs3o2d54Ot6lvFb0ynF4aU75ucUq9qQ1p1+lm+1OcRRC34nPCG16joPz2QNxNVXi8Bmng==
