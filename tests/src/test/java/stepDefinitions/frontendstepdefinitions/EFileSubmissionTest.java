@@ -1,6 +1,7 @@
 package stepDefinitions.frontendstepdefinitions;
 
 import ca.bc.gov.open.jagefilingapi.qa.config.ReadConfig;
+import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.AuthenticationPage;
 import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.EFileSubmissionPage;
 import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.LandingPage;
 import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.PackageConfirmationPage;
@@ -19,6 +20,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
 import java.util.List;
@@ -30,9 +33,11 @@ public class EFileSubmissionTest extends DriverClass {
      EFileSubmissionPage eFileSubmissionPage;
      PackageConfirmationPage packageConfirmationPage;
      private static final String EFILE_SUBMISSION_PAGE_TITLE = "E-File submission";
-    private static final String BASE_PATH = "user.dir";
+     private static final String BASE_PATH = "user.dir";
      private static final String PDF_PATH = "/src/test/java/testdatasource/test-pdf-document.pdf";
      private String filePath;
+     private String username;
+     private String password;
 
     @Before("@frontend")
     public void setUp() throws IOException {
@@ -57,9 +62,18 @@ public class EFileSubmissionTest extends DriverClass {
     public void userIsOnTheLandingPage() throws IOException {
         readConfig = new ReadConfig();
         String url = readConfig.getBaseUrl();
+        username = readConfig.getUsername();
+        password = readConfig.getPassword();
 
         driver.get(url);
         log.info("Landing page url is accessed successfully");
+
+        AuthenticationPage authenticationPage = new AuthenticationPage(driver);
+        authenticationPage.clickBceid();
+        authenticationPage.signInWithIdir(username, password);
+
+        WebDriverWait wait = new WebDriverWait(driver, 60);
+        wait.until(ExpectedConditions.titleIs("eFiling Demo Client"));
 
         landingPage = new LandingPage(driver);
 
@@ -72,6 +86,7 @@ public class EFileSubmissionTest extends DriverClass {
 
     @When("user enters a valid existing CSO account guid {string} and uploads a document")
     public void userEntersAValidExistingCsoAccountGuidAndUploadsADocument(String validExistingCSOGuid) throws IOException {
+        readConfig = new ReadConfig();
         landingPage = new LandingPage(driver);
 
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
@@ -84,6 +99,10 @@ public class EFileSubmissionTest extends DriverClass {
 
         landingPage.clickGenerateUrlButton();
         log.info("Pdf file is uploaded successfully.");
+
+        AuthenticationPage authenticationPage = new AuthenticationPage(driver);
+        authenticationPage.clickBceid();
+        authenticationPage.signInWithIdir(username, password);
     }
 
     @Then("eFile submission page is displayed and user clicks the cancel button")
@@ -166,6 +185,10 @@ public class EFileSubmissionTest extends DriverClass {
 
         landingPage.clickGenerateUrlButton();
         log.info("Pdf file is uploaded successfully.");
+
+        AuthenticationPage authenticationPage = new AuthenticationPage(driver);
+        authenticationPage.clickBceid();
+        authenticationPage.signInWithIdir(username, password);
     }
 
     @Then("eFile submission page with user agreement is displayed")
