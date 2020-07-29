@@ -47,8 +47,7 @@ public class DriverClass {
         public void  driverSetUp() throws IOException {
             initializeDriver();
 
-            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(90, TimeUnit.SECONDS);
             driver.manage().deleteAllCookies();
-            driver.manage().window().maximize();
     }
 }
