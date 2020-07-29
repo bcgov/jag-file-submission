@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import Dropzone, { useDropzone } from "react-dropzone";
+import Dropzone from "react-dropzone";
 import { MdDescription, MdDeleteForever } from "react-icons/md";
 import {
   Sidecard,
@@ -117,7 +117,7 @@ export default function Upload({
     <div className="page">
       <div className="content col-md-8">
         <h1>Document Upload</h1>
-        <Dropzone onDrop={(acceptedFiles) => setAcceptedFiles(acceptedFiles)}>
+        <Dropzone onDrop={setAcceptedFiles}>
           {({ getRootProps, getInputProps }) => (
             <div
               data-testid="dropdownzone"
