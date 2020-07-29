@@ -1,7 +1,7 @@
 package ca.bc.gov.open.jag.efiling.demo;
 
-import ca.bc.gov.open.jag.efilingcommons.service.*;
 import org.junit.jupiter.api.*;
+import ca.bc.gov.open.jag.efilingcommons.soap.service.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AutoConfigurationTest {

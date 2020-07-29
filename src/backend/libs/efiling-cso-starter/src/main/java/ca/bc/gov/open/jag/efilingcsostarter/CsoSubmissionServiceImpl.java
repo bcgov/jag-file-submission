@@ -3,11 +3,10 @@ package ca.bc.gov.open.jag.efilingcsostarter;
 import ca.bc.gov.ag.csows.filing.FilingFacadeBean;
 import ca.bc.gov.ag.csows.filing.FilingPackage;
 import ca.bc.gov.ag.csows.filing.NestedEjbException_Exception;
-import ca.bc.gov.ag.csows.services.Service;
 import ca.bc.gov.ag.csows.services.ServiceFacadeBean;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
+import ca.bc.gov.open.jag.efilingcommons.soap.service.EfilingSubmissionService;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.ServiceMapper;
 
 import java.math.BigDecimal;

@@ -9,7 +9,7 @@ import ca.bc.gov.ag.csows.services.ServiceFacadeBean;
 import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
-import ca.bc.gov.open.jag.efilingcommons.service.*;
+import ca.bc.gov.open.jag.efilingcommons.soap.service.*;
 import ca.bc.gov.open.jag.efilingcsostarter.*;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.AccountDetailsMapper;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.AccountDetailsMapperImpl;

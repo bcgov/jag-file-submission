@@ -9,7 +9,7 @@ import ca.bc.gov.open.jag.efilingcommons.exceptions.CSOHasMultipleAccountExcepti
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.CreateAccountRequest;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
+import ca.bc.gov.open.jag.efilingcommons.soap.service.EfilingAccountService;
 import ca.bceid.webservices.client.v9.*;
 import org.apache.commons.lang3.StringUtils;
 

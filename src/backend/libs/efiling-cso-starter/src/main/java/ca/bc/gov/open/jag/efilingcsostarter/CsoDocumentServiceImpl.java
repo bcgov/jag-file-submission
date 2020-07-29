@@ -5,7 +5,7 @@ import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
+import ca.bc.gov.open.jag.efilingcommons.soap.service.EfilingDocumentService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingcommons.service;
+package ca.bc.gov.open.jag.efilingcommons.soap.service;
 
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.CreateAccountRequest;

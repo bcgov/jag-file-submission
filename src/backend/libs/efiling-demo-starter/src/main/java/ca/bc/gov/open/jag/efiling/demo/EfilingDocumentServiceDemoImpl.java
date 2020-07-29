@@ -1,7 +1,7 @@
 package ca.bc.gov.open.jag.efiling.demo;
 
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
+import ca.bc.gov.open.jag.efilingcommons.soap.service.EfilingDocumentService;
 
 import java.math.BigDecimal;
 

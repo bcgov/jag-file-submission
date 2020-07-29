@@ -1,6 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.document;
 
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
+import ca.bc.gov.open.jag.efilingcommons.soap.service.EfilingDocumentService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

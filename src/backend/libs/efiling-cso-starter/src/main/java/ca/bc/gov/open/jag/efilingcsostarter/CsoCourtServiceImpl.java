@@ -5,7 +5,7 @@ import ca.bc.gov.ag.csows.ceis.Csows;
 
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
+import ca.bc.gov.open.jag.efilingcommons.soap.service.EfilingCourtService;
 import org.apache.commons.lang3.StringUtils;
 
 

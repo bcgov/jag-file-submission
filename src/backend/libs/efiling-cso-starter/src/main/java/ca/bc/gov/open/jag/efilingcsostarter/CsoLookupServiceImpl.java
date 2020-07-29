@@ -6,7 +6,7 @@ import ca.bc.gov.ag.csows.lookups.NestedEjbException_Exception;
 import ca.bc.gov.ag.csows.lookups.ServiceFee;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingLookupServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
+import ca.bc.gov.open.jag.efilingcommons.soap.service.EfilingLookupService;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.xml.datatype.DatatypeConfigurationException;
