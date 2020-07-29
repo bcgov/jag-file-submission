@@ -1,7 +1,6 @@
 package ca.bc.gov.open.jag.efilingcommons.model.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.Objects;
 
 public class Navigation   {
   @JsonProperty("success")
@@ -52,47 +51,5 @@ public class Navigation   {
     this.cancel = cancel;
   }
 
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Navigation navigation = (Navigation) o;
-    return Objects.equals(this.success, navigation.success) &&
-        Objects.equals(this.error, navigation.error) &&
-        Objects.equals(this.cancel, navigation.cancel);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(success, error, cancel);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Navigation {\n");
-    
-    sb.append("    success: ").append(toIndentedString(success)).append("\n");
-    sb.append("    error: ").append(toIndentedString(error)).append("\n");
-    sb.append("    cancel: ").append(toIndentedString(cancel)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
-  }
 }
 

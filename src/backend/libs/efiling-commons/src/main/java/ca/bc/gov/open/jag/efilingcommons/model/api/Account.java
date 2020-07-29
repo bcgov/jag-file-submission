@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-import java.util.Objects;
 
 public class Account   {
   /**
@@ -26,10 +25,6 @@ public class Account   {
       return value;
     }
 
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
 
     @JsonCreator
     public static TypeEnum fromValue(String value) {
@@ -67,7 +62,6 @@ public class Account   {
     return this;
   }
 
-
   public String getIdentifier() {
     return identifier;
   }
@@ -76,45 +70,5 @@ public class Account   {
     this.identifier = identifier;
   }
 
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Account account = (Account) o;
-    return Objects.equals(this.type, account.type) &&
-        Objects.equals(this.identifier, account.identifier);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(type, identifier);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Account {\n");
-    
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
-    sb.append("    identifier: ").append(toIndentedString(identifier)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
-  }
 }
 

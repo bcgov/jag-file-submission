@@ -101,53 +101,5 @@ public class CourtBase   {
     this.participatingClass = participatingClass;
   }
 
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    CourtBase courtBase = (CourtBase) o;
-    return Objects.equals(this.location, courtBase.location) &&
-        Objects.equals(this.level, courtBase.level) &&
-        Objects.equals(this.courtClass, courtBase.courtClass) &&
-        Objects.equals(this.division, courtBase.division) &&
-        Objects.equals(this.fileNumber, courtBase.fileNumber) &&
-        Objects.equals(this.participatingClass, courtBase.participatingClass);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(location, level, courtClass, division, fileNumber, participatingClass);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class CourtBase {\n");
-    
-    sb.append("    location: ").append(toIndentedString(location)).append("\n");
-    sb.append("    level: ").append(toIndentedString(level)).append("\n");
-    sb.append("    courtClass: ").append(toIndentedString(courtClass)).append("\n");
-    sb.append("    division: ").append(toIndentedString(division)).append("\n");
-    sb.append("    fileNumber: ").append(toIndentedString(fileNumber)).append("\n");
-    sb.append("    participatingClass: ").append(toIndentedString(participatingClass)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
-  }
 }
 

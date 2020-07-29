@@ -21,7 +21,6 @@ public class ClientApplication   {
     return this;
   }
 
-
   public String getDisplayName() {
     return displayName;
   }
@@ -45,44 +44,5 @@ public class ClientApplication   {
   }
 
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    ClientApplication clientApplication = (ClientApplication) o;
-    return Objects.equals(this.displayName, clientApplication.displayName) &&
-        Objects.equals(this.type, clientApplication.type);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(displayName, type);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class ClientApplication {\n");
-    
-    sb.append("    displayName: ").append(toIndentedString(displayName)).append("\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
-  }
 }
 

@@ -56,48 +56,5 @@ public class Court extends CourtBase  {
     this.classDescription = classDescription;
   }
 
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Court court = (Court) o;
-    return Objects.equals(this.locationDescription, court.locationDescription) &&
-        Objects.equals(this.levelDescription, court.levelDescription) &&
-        Objects.equals(this.classDescription, court.classDescription) &&
-        super.equals(o);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(locationDescription, levelDescription, classDescription, super.hashCode());
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Court {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-    sb.append("    locationDescription: ").append(toIndentedString(locationDescription)).append("\n");
-    sb.append("    levelDescription: ").append(toIndentedString(levelDescription)).append("\n");
-    sb.append("    classDescription: ").append(toIndentedString(classDescription)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
-  }
 }
 
