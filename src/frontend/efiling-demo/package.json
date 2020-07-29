@@ -15,7 +15,7 @@
     "filepond-plugin-image-exif-orientation": "^1.0.9",
     "filepond-plugin-image-preview": "^4.6.4",
     "history": "^5.0.0",
-    "keycloak-js": "^7.0.1",
+    "keycloak-js": "^11.0.0",
     "prop-types": "^15.7.2",
     "query-string": "^6.11.1",
     "react": "^16.13.1",
