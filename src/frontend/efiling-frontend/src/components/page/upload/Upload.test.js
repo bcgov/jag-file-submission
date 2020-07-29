@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "axios";
-import Dropzone from "react-dropzone";
 import MockAdapter from "axios-mock-adapter";
 import { render, fireEvent, getByText, waitFor } from "@testing-library/react";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
@@ -82,26 +81,16 @@ describe("Upload Component", () => {
       type: "application/json",
     });
     const data = mockData([file]);
-    const onDrop = jest.fn();
 
-    const ui = (
-      // <Dropzone onDragEnter={onDragEnter}>
-      //   {({ getRootProps, getInputProps }) => (
-      //     <div {...getRootProps()}>
-      //       <input {...getInputProps()} />
-      //     </div>
-      //   )}
-      // </Dropzone>
-      <Upload upload={upload} />
-    );
-    const { container } = render(ui);
-    const dropzone = container.querySelector('[data-testid="alan"]');
-
-    console.log(dropzone);
+    const ui = <Upload upload={upload} />;
+    const { container, asFragment } = render(ui);
+    const dropzone = container.querySelector('[data-testid="dropdownzone"]');
 
     dispatchEvt(dropzone, "drop", data);
+
+    await waitFor(() => {});
     await flushPromises(ui, container);
 
-    expect(onDrop).toHaveBeenCalled();
+    expect(asFragment()).toMatchSnapshot();
   });
 });

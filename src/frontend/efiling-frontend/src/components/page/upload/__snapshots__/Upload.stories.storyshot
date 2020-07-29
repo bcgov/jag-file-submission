@@ -13,6 +13,7 @@ exports[`Storyshots Upload Default 1`] = `
       </h1>
       <div
         class="dropzone-outer-box"
+        data-testid="dropdownzone"
         tabindex="0"
       >
         <div
@@ -233,6 +234,7 @@ exports[`Storyshots Upload Mobile 1`] = `
       </h1>
       <div
         class="dropzone-outer-box"
+        data-testid="dropdownzone"
         tabindex="0"
       >
         <div

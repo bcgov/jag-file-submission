@@ -60,7 +60,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
                   class="bcgov-row "
                 >
                   <div
-                    class="bcgov-vertical-middle bcgov-fill-width"
+                    class="bcgov-vertical-middle "
                   >
                     <div
                       style="width: 80%;"
@@ -88,7 +88,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
                           class="bcgov-row "
                         >
                           <div
-                            class="bcgov-fill-width"
+                            class="bcgov-vertical-middle "
                           >
                             Description:
                           </div>
@@ -104,7 +104,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
                           class="bcgov-row "
                         >
                           <div
-                            class="bcgov-fill-width"
+                            class="bcgov-vertical-middle "
                           >
                             Statutory Fee:
                           </div>
@@ -166,7 +166,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
                   class="bcgov-row "
                 >
                   <div
-                    class="bcgov-vertical-middle bcgov-fill-width"
+                    class="bcgov-vertical-middle "
                   >
                     <div
                       style="width: 80%;"
@@ -194,7 +194,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
                           class="bcgov-row "
                         >
                           <div
-                            class="bcgov-fill-width"
+                            class="bcgov-vertical-middle "
                           >
                             Description:
                           </div>
@@ -246,7 +246,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
               class="bcgov-row "
             >
               <div
-                class="bcgov-fill-width"
+                class="bcgov-vertical-middle "
               >
                 Number of Documents in Package:
               </div>
@@ -262,7 +262,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
               class="bcgov-row "
             >
               <div
-                class="bcgov-fill-width"
+                class="bcgov-vertical-middle "
               >
                 Statutory Fees:
               </div>
@@ -278,7 +278,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
               class="bcgov-row "
             >
               <div
-                class="bcgov-fill-width"
+                class="bcgov-vertical-middle "
               >
                 Submission Fee:
               </div>
@@ -549,7 +549,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
                   class="bcgov-row "
                 >
                   <div
-                    class="bcgov-vertical-middle bcgov-fill-width"
+                    class="bcgov-vertical-middle "
                   >
                     <div
                       style="width: 80%;"
@@ -577,7 +577,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
                           class="bcgov-row "
                         >
                           <div
-                            class="bcgov-fill-width"
+                            class="bcgov-vertical-middle "
                           >
                             Description:
                           </div>
@@ -593,7 +593,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
                           class="bcgov-row "
                         >
                           <div
-                            class="bcgov-fill-width"
+                            class="bcgov-vertical-middle "
                           >
                             Statutory Fee:
                           </div>
@@ -655,7 +655,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
                   class="bcgov-row "
                 >
                   <div
-                    class="bcgov-vertical-middle bcgov-fill-width"
+                    class="bcgov-vertical-middle "
                   >
                     <div
                       style="width: 80%;"
@@ -683,7 +683,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
                           class="bcgov-row "
                         >
                           <div
-                            class="bcgov-fill-width"
+                            class="bcgov-vertical-middle "
                           >
                             Description:
                           </div>
@@ -735,7 +735,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
               class="bcgov-row "
             >
               <div
-                class="bcgov-fill-width"
+                class="bcgov-vertical-middle "
               >
                 Number of Documents in Package:
               </div>
@@ -751,7 +751,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
               class="bcgov-row "
             >
               <div
-                class="bcgov-fill-width"
+                class="bcgov-vertical-middle "
               >
                 Statutory Fees:
               </div>
@@ -767,7 +767,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
               class="bcgov-row "
             >
               <div
-                class="bcgov-fill-width"
+                class="bcgov-vertical-middle "
               >
                 Submission Fee:
               </div>
@@ -1070,7 +1070,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
                   class="bcgov-row "
                 >
                   <div
-                    class="bcgov-vertical-middle bcgov-fill-width"
+                    class="bcgov-vertical-middle "
                   >
                     <div
                       style="width: 80%;"
@@ -1098,7 +1098,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
                           class="bcgov-row "
                         >
                           <div
-                            class="bcgov-fill-width"
+                            class="bcgov-vertical-middle "
                           >
                             Description:
                           </div>
@@ -1114,7 +1114,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
                           class="bcgov-row "
                         >
                           <div
-                            class="bcgov-fill-width"
+                            class="bcgov-vertical-middle "
                           >
                             Statutory Fee:
                           </div>
@@ -1176,7 +1176,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
                   class="bcgov-row "
                 >
                   <div
-                    class="bcgov-vertical-middle bcgov-fill-width"
+                    class="bcgov-vertical-middle "
                   >
                     <div
                       style="width: 80%;"
@@ -1204,7 +1204,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
                           class="bcgov-row "
                         >
                           <div
-                            class="bcgov-fill-width"
+                            class="bcgov-vertical-middle "
                           >
                             Description:
                           </div>
@@ -1256,7 +1256,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
               class="bcgov-row "
             >
               <div
-                class="bcgov-fill-width"
+                class="bcgov-vertical-middle "
               >
                 Number of Documents in Package:
               </div>
@@ -1272,7 +1272,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
               class="bcgov-row "
             >
               <div
-                class="bcgov-fill-width"
+                class="bcgov-vertical-middle "
               >
                 Statutory Fees:
               </div>
@@ -1288,7 +1288,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
               class="bcgov-row "
             >
               <div
-                class="bcgov-fill-width"
+                class="bcgov-vertical-middle "
               >
                 Submission Fee:
               </div>

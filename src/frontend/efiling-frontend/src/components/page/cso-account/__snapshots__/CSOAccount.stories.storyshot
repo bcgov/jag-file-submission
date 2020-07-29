@@ -88,7 +88,7 @@ exports[`Storyshots CSOAccount Default 1`] = `
                   class="bcgov-row "
                 >
                   <div
-                    class="bcgov-fill-width"
+                    class="bcgov-vertical-middle "
                   >
                     BCeID:
                   </div>
@@ -102,7 +102,7 @@ exports[`Storyshots CSOAccount Default 1`] = `
                   class="bcgov-row "
                 >
                   <div
-                    class="bcgov-fill-width"
+                    class="bcgov-vertical-middle "
                   >
                     Full Name:
                   </div>
@@ -116,7 +116,7 @@ exports[`Storyshots CSOAccount Default 1`] = `
                   class="bcgov-row "
                 >
                   <div
-                    class="bcgov-fill-width"
+                    class="bcgov-vertical-middle "
                   >
                     Email Address:
                   </div>
@@ -1029,7 +1029,7 @@ exports[`Storyshots CSOAccount Mobile 1`] = `
                   class="bcgov-row "
                 >
                   <div
-                    class="bcgov-fill-width"
+                    class="bcgov-vertical-middle "
                   >
                     BCeID:
                   </div>
@@ -1043,7 +1043,7 @@ exports[`Storyshots CSOAccount Mobile 1`] = `
                   class="bcgov-row "
                 >
                   <div
-                    class="bcgov-fill-width"
+                    class="bcgov-vertical-middle "
                   >
                     Full Name:
                   </div>
@@ -1057,7 +1057,7 @@ exports[`Storyshots CSOAccount Mobile 1`] = `
                   class="bcgov-row "
                 >
                   <div
-                    class="bcgov-fill-width"
+                    class="bcgov-vertical-middle "
                   >
                     Email Address:
                   </div>
