@@ -14,9 +14,9 @@ services:
     ports:
       - 3000:3000
     environment:
-      - REACT_APP_KEYCLOAK_REALM=SpringBootKeycloak
+      - REACT_APP_KEYCLOAK_REALM=${EFILING_FRONTEND_KEYCLOAK_REALM}
       - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-frontend
-      - REACT_APP_KEYCLOAK_URL=http://localhost:8081/auth
+      - REACT_APP_KEYCLOAK_URL=${EFILING_FRONTEND_KEYCLOAK_REALM}
       - REACT_APP_API_BASE_URL=http://localhost:8080
 
   #############################################################################################
@@ -33,9 +33,9 @@ services:
     ports:
       - 3001:3000
     environment:
-      - REACT_APP_KEYCLOAK_REALM=github
+      - REACT_APP_KEYCLOAK_REALM=${EFILING_DEMO_KEYCLOAK_REALM}
       - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-demo
-      - REACT_APP_KEYCLOAK_URL=http://localhost:8081/auth
+      - REACT_APP_KEYCLOAK_URL=${EFILING_DEMO_KEYCLOAK_URL}
       - REACT_APP_API_BASE_URL=http://localhost:8080
 
   #############################################################################################
