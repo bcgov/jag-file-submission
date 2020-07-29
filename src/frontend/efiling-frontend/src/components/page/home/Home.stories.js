@@ -8,6 +8,7 @@ import { getUserDetails } from "../../../modules/userDetails";
 import { getDocumentsData } from "../../../modules/documentTestData";
 import { getCourtData } from "../../../modules/courtTestData";
 import { getNavigationData } from "../../../modules/navigationTestData";
+import { generateJWTToken } from "../../../modules/authenticationHelper";
 
 import Home from "./Home";
 
@@ -33,9 +34,19 @@ const court = getCourtData();
 const submissionFeeAmount = 25.5;
 const userDetails = getUserDetails();
 
-sessionStorage.setItem("errorUrl", "error.com");
+const setRequiredStorage = () => {
+  sessionStorage.setItem("errorUrl", "error.com");
+  const token = generateJWTToken({
+    preferred_username: "username@bceid",
+    given_name: "User",
+    family_name: "Name",
+    email: "username@example.com",
+  });
+  localStorage.setItem("jwt", token);
+};
 
 const LoaderStateData = (props) => {
+  setRequiredStorage();
   const mock = new MockAdapter(axios);
   window.open = () => {};
   mock.onGet(apiRequest).reply(400, { message: "There was an error" });
@@ -43,6 +54,7 @@ const LoaderStateData = (props) => {
 };
 
 const AccountExistsStateData = (props) => {
+  setRequiredStorage();
   const mock = new MockAdapter(axios);
   mock.onGet(apiRequest).reply(200, { userDetails, navigation });
   mock
@@ -52,6 +64,7 @@ const AccountExistsStateData = (props) => {
 };
 
 const NoAccountExistsStateData = (props) => {
+  setRequiredStorage();
   const mock = new MockAdapter(axios);
   mock.onGet(apiRequest).reply(200, {
     userDetails: { ...userDetails, accounts: null },

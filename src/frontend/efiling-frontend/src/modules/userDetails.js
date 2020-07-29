@@ -1,9 +1,5 @@
 const userDetails = {
   universalId: "123",
-  firstName: "Bob",
-  middleName: "Norman",
-  lastName: "Ross",
-  email: "bob.ross@example.com",
   accounts: [
     {
       type: "CSO",

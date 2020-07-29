@@ -5,7 +5,9 @@ export function translateApplicantInfo({
   lastName,
   email,
 }) {
-  const fullName = [firstName, middleName, lastName];
+  let fullName = middleName
+    ? [firstName, middleName, lastName]
+    : [firstName, lastName];
   return [
     {
       name: "BCeID:",

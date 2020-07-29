@@ -1712,7 +1712,7 @@ exports[`Storyshots Home No Account Exists 1`] = `
                     <div
                       class="bcgov-table-value "
                     >
-                      Bob Norman Ross
+                      User Name
                     </div>
                   </div>
                   <div
@@ -1726,7 +1726,7 @@ exports[`Storyshots Home No Account Exists 1`] = `
                     <div
                       class="bcgov-table-value "
                     >
-                      bob.ross@example.com
+                      username@example.com
                     </div>
                   </div>
                 </div>
@@ -2778,7 +2778,7 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
                     <div
                       class="bcgov-table-value "
                     >
-                      Bob Norman Ross
+                      User Name
                     </div>
                   </div>
                   <div
@@ -2792,7 +2792,7 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
                     <div
                       class="bcgov-table-value "
                     >
-                      bob.ross@example.com
+                      username@example.com
                     </div>
                   </div>
                 </div>

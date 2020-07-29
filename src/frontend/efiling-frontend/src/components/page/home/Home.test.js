@@ -34,7 +34,12 @@ describe("Home", () => {
 
   window.open = jest.fn();
 
-  const token = generateJWTToken({ preferred_username: "username@bceid" });
+  const token = generateJWTToken({
+    preferred_username: "username@bceid",
+    given_name: "User",
+    family_name: "Name",
+    email: "username@example.com",
+  });
   localStorage.setItem("jwt", token);
 
   let mock;

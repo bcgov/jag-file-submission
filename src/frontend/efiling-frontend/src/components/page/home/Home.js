@@ -25,21 +25,21 @@ export const saveDataToSessionStorage = (
   sessionStorage.setItem("universalId", universalId);
 };
 
-const addUserInfo = ({ firstName, middleName, lastName, email }) => {
-  let username = getJWTData().preferred_username;
+const addUserInfo = () => {
+  const { preferred_username, given_name, family_name, email } = getJWTData();
+  let username = preferred_username;
   username = username.substring(0, username.indexOf("@"));
 
   return {
     bceid: username,
-    firstName,
-    middleName,
-    lastName,
+    firstName: given_name,
+    lastName: family_name,
     email,
   };
 };
 
-const setRequiredState = (userDetails, setApplicantInfo, setShowLoader) => {
-  const applicantInfo = addUserInfo(userDetails);
+const setRequiredState = (setApplicantInfo, setShowLoader) => {
+  const applicantInfo = addUserInfo();
 
   setApplicantInfo(applicantInfo);
   setShowLoader(false);
@@ -71,7 +71,7 @@ const checkCSOAccountStatus = (
         setCsoAccountStatus({ isNew: false, exists: true });
       }
 
-      setRequiredState(userDetails, setApplicantInfo, setShowLoader);
+      setRequiredState(setApplicantInfo, setShowLoader);
     })
     .catch((error) => {
       errorRedirect(sessionStorage.getItem("errorUrl"), error);
