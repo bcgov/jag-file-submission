@@ -14,7 +14,7 @@
         <appender name="http" class="com.splunk.logging.HttpEventCollectorLogbackAppender">
             <url>${SPLUNK_URL}</url>
             <token>${SPLUNK_TOKEN}</token>
-            <source>jag-efiling-api</source>
+            <source>jag-efiling-hub-api</source>
             <sourcetype>jag-efiling-access-logs</sourcetype>
             <middleware>HttpEventCollectorUnitTestMiddleware</middleware>
             <disableCertificateValidation>true</disableCertificateValidation>
