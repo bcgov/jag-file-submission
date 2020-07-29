@@ -1,0 +1,213 @@
+openapi: 3.0.0
+info:
+  version: 0.3.0
+  title: jag-efiling-hub-api
+  description: Efiling hub api
+servers:
+  - url: "http://localhost:8080"
+tags:
+  - name: submissionHub
+    description: Submission Hub Api
+security:
+  - bearerAuth: []
+paths:
+  "/submission/documents":
+    post:
+      summary: Initial documents upload
+      operationId: UploadSubmissionDocuments
+      tags:
+        - submissionHub
+      parameters:
+        - $ref: "#/components/parameters/xAuthUserId"
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        "200":
+          description: File successfully received
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadSubmissionDocumentsResponse"
+  "/submission/{id}/generateUrl":
+    post:
+      summary: Generates a secure URL for e-filing submission
+      operationId: GenerateUrl
+      tags:
+        - submissionHub
+      parameters:
+        - $ref: "#/components/parameters/xAuthUserId"
+        - $ref: "#/components/parameters/submissionId"
+      requestBody:
+        description: requested parameters to generate a url
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenerateUrlRequest"
+      responses:
+        "200":
+          description: File successfully received
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenerateUrlResponse"
+        "403":
+          description: Request does not meet the required criteria
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EfilingError"
+components:
+  securitySchemes:
+    bearerAuth: # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    xAuthUserId:
+      name: X-Auth-UserId
+      in: header
+      schema:
+        type: string
+        format: uuid
+      required: true
+      description: Authenticated user id
+    submissionId:
+      name: id
+      in: path
+      description: A submission id
+      required: true
+      schema:
+        type: string
+        format: uuid
+  schemas:
+    DocumentProperties:
+      type: object
+      description: Submission Metadata used to describe the submission that will be e-filled
+      required:
+        - type
+        - name
+      properties:
+        name:
+          type: string
+          description: the name of the document
+        type:
+          type: string
+          description: the submission type
+    EfilingError:
+      required:
+        - error
+        - message
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+    GenerateUrlRequest:
+      description: details about the required transaction
+      required:
+        - clientApplication
+        - navigation
+        - documentProperties
+      properties:
+        clientApplication:
+          $ref: "#/components/schemas/ClientApplication"
+        filingPackage:
+          $ref: "#/components/schemas/InitialPackage"
+        navigation:
+          $ref: "#/components/schemas/Navigation"
+    GenerateUrlResponse:
+      description: A temporary url for uploading submission
+      properties:
+        expiryDate:
+          type: integer
+          format: int64
+        efilingUrl:
+          type: string
+    Navigation:
+      required:
+        - success
+        - error
+        - cancel
+      properties:
+        success:
+          $ref: "#/components/schemas/Redirect"
+        error:
+          $ref: "#/components/schemas/Redirect"
+        cancel:
+          $ref: "#/components/schemas/Redirect"
+    InitialPackage:
+      type: object
+      description: A filing package can contain one or multiple documents that have or are being submitted electronically for new or existing court file.
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: "#/components/schemas/DocumentProperties"
+        court:
+          $ref: "#/components/schemas/CourtBase"
+    CourtBase:
+      type: object
+      description: "Court related information"
+      required:
+        - location
+        - level
+        - courtClass
+        - division
+      properties:
+        location:
+          type: string
+          description: the court location
+        level:
+          type: string
+          description: the court level
+        courtClass:
+          type: string
+          description: the court class
+        division:
+          type: string
+          description: the court division
+        fileNumber:
+          type: string
+          description: the file number if case already exists
+        participatingClass:
+          type: string
+    Redirect:
+      required:
+        - url
+      properties:
+        url:
+          type: string
+    ClientApplication:
+      type: object
+      required:
+        - displayName
+        - type
+      properties:
+        displayName:
+          type: string
+        type:
+          type: string
+          description: the client Court Services Online Application Code
+    UploadSubmissionDocumentsResponse:
+      description: represents upload document response
+      type: object
+      required:
+        - submissionId
+      properties:
+        submissionId:
+          type: string
+          format: uuid
+          description: a unique identifier for the submission
+        received:
+          type: number
+          description: the number of document received
