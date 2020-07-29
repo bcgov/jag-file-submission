@@ -142,8 +142,8 @@ objects:
         application: ${appName}
       name: ${appName}
       namespace: "${namespacePrefix}-tools"
-  - kind: "BuildConfig"
-    apiVersion: "v1"
+  - kind: BuildConfig
+    apiVersion: v1
     metadata:
       labels:
         application: ${appName}
@@ -195,10 +195,9 @@ objects:
             try {
                 timeout(time: 33, unit: 'MINUTES') {
                     node("${JENKINS_POD}") {
-
                         stage("Git Checkout") {
                             dir("${APP_NAME}") {
-                                git url: "//https://github.com/bcgov/jag-file-submission.git"
+                                git url: "https://github.com/bcgov/jag-file-submission.git"
                                 artifactPath = "/openshift/applications/deployments/${APP_NAME}-dc.yaml"
                                 artifactExists = fileExists artifactPath
                                 if (artifactExists){
@@ -220,7 +219,6 @@ objects:
                                             // IF EXISTS: TRIGGER BUILD
                                             sh 'oc start-build fla-springboot-backend -n qzaydf-tools --wait' 
                                             // TODO ELSE: IMPORT BC FROM GIT, PROCESS, APPLY
-                                            
                                         }
                                     }
                                 }
@@ -237,14 +235,13 @@ objects:
                         }
 
                         stage("Deploy ${APP_NAME}") {
-                                deploy("${DEPLOYMENT_CONFIG_PATH}", "${APP_NAME}", "${TOOLS_NAMESPACE}", "${DEV_NAMESPACE}", "${ROUTE_TYPE}", "dev")
-                            }
+                            deploy("${DEPLOYMENT_CONFIG_PATH}", "${APP_NAME}", "${TOOLS_NAMESPACE}", "${DEV_NAMESPACE}", "${ROUTE_TYPE}", "dev")
                         }
                     }
                 }
+
             } catch (err) {
                 echo "in catch block"
-
                 currentBuild.result = 'FAILURE'
                 env.ERR = "${err}"
                 node {
