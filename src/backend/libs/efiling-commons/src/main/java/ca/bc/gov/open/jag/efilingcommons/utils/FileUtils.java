@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingapi.utils;
+package ca.bc.gov.open.jag.efilingcommons.utils;
 
 import java.io.File;
 import java.net.URLConnection;
