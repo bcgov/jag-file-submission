@@ -17,9 +17,19 @@ jobs:
           chmod +x ./scripts/installChrome.sh
            ./scripts/installChrome.sh
 
-      # Build Docker and Run Tests
-      - name: build docker and run tests
-        run: docker-compose up -d efiling-frontend efiling-demo efiling-api redis && mvn verify -f tests/pom.xml
+      # Build Docker
+      - name: build docker
+        run: docker-compose up -d efiling-frontend efiling-demo efiling-api redis
+
+      # Wait for sometime
+      - name: Sleep for 30 seconds
+        uses: jakejarvis/wait-action@master
+        with:
+          time: "30s"
+
+      # Run Tests
+      - name: run tests
+        run: mvn verify -f tests/pom.xml
 
       # Upload Spark report for debugging purposes
       - name: Upload Spark report for debugging purposes
