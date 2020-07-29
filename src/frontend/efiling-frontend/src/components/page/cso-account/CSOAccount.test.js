@@ -11,6 +11,7 @@ import MockAdapter from "axios-mock-adapter";
 
 import { getTestData } from "../../../modules/confirmationPopupTestData";
 import { getApplicantInfo } from "../../../modules/applicantInfoTestData";
+import { generateJWTToken } from "../../../modules/authenticationHelper";
 
 import CSOAccount from "./CSOAccount";
 
@@ -23,6 +24,9 @@ describe("CSOAccount Component", () => {
 
   const mock = new MockAdapter(axios);
   const API_REQUEST = "/csoAccount";
+
+  const token = generateJWTToken({ preferred_username: "username@bceid" });
+  localStorage.setItem("jwt", token);
 
   test("Matches the snapshot", () => {
     const { asFragment } = render(

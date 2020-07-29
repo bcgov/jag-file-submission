@@ -10,5 +10,5 @@ export function getJWTData() {
 }
 
 export function generateJWTToken(payload) {
-  return jwt.sign(payload, "something");
+  return jwt.sign(payload, "secret");
 }

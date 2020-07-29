@@ -607,7 +607,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
                     <b />
                      is linked to your Basic BCeID account 
                     <b>
-                      blah2
+                      username
                     </b>
                      and will be used to file documents. 
                     <a
