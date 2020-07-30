@@ -15,7 +15,7 @@ public interface ServiceMapper {
     @Mapping(target = "entDtm", source = "entryDateTime")
     @Mapping(target = "entUserId", source = "clientId")
     @Mapping(target = "serviceId", source = "serviceId")
-    @Mapping(target = "serviceReceivedDateTime", source = "serviceReceivedDtm")
+    @Mapping(target = "serviceReceivedDtm", source = "serviceReceivedDateTime")
     @Mapping(target = "serviceReceivedDtmText", source = "serviceReceivedDtmText")
     @Mapping(target = "serviceSessionId", source = "serviceSessionId")
     @Mapping(target = "serviceSubtypeCd", source = "serviceSubtypeCd")
