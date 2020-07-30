@@ -58,7 +58,9 @@ public class UpdateServiceTest {
     @Test
     public void testWithPopulatedSubmissionId() throws NestedEjbException_Exception, DatatypeConfigurationException {
         Mockito.doNothing().when(serviceFacadeBean).updateService(any());
-        sut.updateService(TestHelpers.createUpdateEfilingService(TestHelpers.createBaseEfilingService()));
+
+        Assertions.
+        Assertions.assertDoesNotThrow(sut.updateService(TestHelpers.createUpdateEfilingService(TestHelpers.createBaseEfilingService())));
     }
     @DisplayName("Exception: with NestedEjbException_Exception should throw EfilingLookupServiceException")
     @Test

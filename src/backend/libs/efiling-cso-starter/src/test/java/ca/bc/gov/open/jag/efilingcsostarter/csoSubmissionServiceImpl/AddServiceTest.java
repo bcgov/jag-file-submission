@@ -57,7 +57,7 @@ public class AddServiceTest {
     @Test
     public void testWithPopulatedSubmissionId() throws NestedEjbException_Exception, DatatypeConfigurationException {
         Mockito.when(serviceFacadeBean.addService(any())).thenReturn(createService());
-        EfilingService actual = sut.addService(createEfilingService());
+        EfilingService actual = sut.addService(TestHelpers.createBaseEfilingService());
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountId());
         Assertions.assertEquals(BigDecimal.TEN, actual.getClientId());
         Assertions.assertEquals(TestHelpers.CLIENT_REFERENCE_TXT, actual.getClientReferenceTxt());
@@ -77,30 +77,9 @@ public class AddServiceTest {
     @Test
     public void whenNestedEjbException_ExceptionShouldThrowEfilingSubmissionServiceException() throws ca.bc.gov.ag.csows.filing.NestedEjbException_Exception, NestedEjbException_Exception {
         Mockito.when(serviceFacadeBean.addService(any())).thenThrow(new ca.bc.gov.ag.csows.services.NestedEjbException_Exception());
-        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.addService(createEfilingService()));
+        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.addService(TestHelpers.createBaseEfilingService()));
     }
-    private EfilingService createEfilingService() throws DatatypeConfigurationException {
-        return new EfilingService(
-                BigDecimal.TEN,
-                BigDecimal.TEN,
-                TestHelpers.CLIENT_REFERENCE_TXT,
-                TestHelpers.COURT_FILE_NUMBER,
-                TestHelpers.DOCUMENTS_PROCESSED,
-                TestHelpers.getXmlDate(TestHelpers.DATE),
-                "10",
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null);
-    }
+
     private Service createService() throws DatatypeConfigurationException {
         Service service = new Service();
         service.setAccountId(BigDecimal.TEN);
