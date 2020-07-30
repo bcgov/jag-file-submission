@@ -30,7 +30,6 @@ const KEYCLOAK = {
   realm,
   url,
   clientId,
-  kc_idp_hint: "idir",
 };
 
 /**
