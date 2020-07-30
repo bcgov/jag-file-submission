@@ -8,14 +8,23 @@ let url;
 let realm;
 let clientId;
 
-if (process.env.REACT_APP_KEYCLOAK_URL)
+if (window.REACT_APP_KEYCLOAK_URL) {
+  url = window.REACT_APP_KEYCLOAK_URL;
+} else if (process.env.REACT_APP_KEYCLOAK_URL) {
   url = process.env.REACT_APP_KEYCLOAK_URL;
+}
 
-if (process.env.REACT_APP_KEYCLOAK_REALM)
+if (window.REACT_APP_KEYCLOAK_REALM) {
+  realm = window.REACT_APP_KEYCLOAK_REALM;
+} else if (process.env.REACT_APP_KEYCLOAK_REALM) {
   realm = process.env.REACT_APP_KEYCLOAK_REALM;
+}
 
-if (process.env.REACT_APP_KEYCLOAK_CLIENT_ID)
+if (window.REACT_APP_KEYCLOAK_CLIENT_ID) {
+  clientId = window.REACT_APP_KEYCLOAK_CLIENT_ID;
+} else if (process.env.REACT_APP_KEYCLOAK_CLIENT_ID) {
   clientId = process.env.REACT_APP_KEYCLOAK_CLIENT_ID;
+}
 
 const KEYCLOAK = {
   realm,
