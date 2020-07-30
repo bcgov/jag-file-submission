@@ -29,11 +29,7 @@ jobs:
 
       # Run Tests
       - name: run tests
-        run: mvn verify -f tests/pom.xml
-        # Get credentials from repo secrets
-        env:
-          BCEID_USERNAME: ${{secrets.BCEID_USERNAME}}
-          BCEID_PASSWORD: ${{secrets.BCEID_PASSWORD}}
+        run: mvn verify -DBCEID_USERNAME=${{secrets.BCEID_USERNAME}} -DBCEID_PASSWORD=${{secrets.BCEID_PASSWORD}}  -f tests/pom.xml
 
       # Upload Spark report for debugging purposes
       - name: Upload Spark report for debugging purposes
