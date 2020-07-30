@@ -49,7 +49,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     @Override
     public void updateService(EfilingService service) {
         if (service == null) throw new IllegalArgumentException("Service cannot be null");
-        if (service.getTransactions() == null || service.getTransactions().size() == 0) throw new IllegalArgumentException("Service requires transactions");
+        if (service.getTransactions() == null || service.getTransactions().isEmpty()) throw new IllegalArgumentException("Service requires transactions");
         try {
             serviceFacadeBean.updateService(serviceMapper.toService(service));
         } catch (ca.bc.gov.ag.csows.services.NestedEjbException_Exception e) {
