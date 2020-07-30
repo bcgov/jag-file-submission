@@ -1,7 +1,9 @@
 package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 
+import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.Account;
+import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.api.model.GetSubmissionResponse;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
@@ -17,17 +19,20 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.KeycloakSecurityContext;
+import org.keycloak.representations.AccessToken;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -57,11 +62,33 @@ public class GetSubmissionTest {
     @Mock
     private DocumentStore documentStoreMock;
 
+    @Mock
+    private SecurityContext securityContextMock;
+
+    @Mock
+    private Authentication authenticationMock;
+
+    @Mock
+    private KeycloakPrincipal keycloakPrincipalMock;
+
+    @Mock
+    private KeycloakSecurityContext keycloakSecurityContextMock;
+
+    @Mock
+    private AccessToken tokenMock;
+
 
     @BeforeAll
     public void setUp() {
 
         MockitoAnnotations.initMocks(this);
+
+        Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(keycloakPrincipalMock);
+        Mockito.when(keycloakPrincipalMock.getKeycloakSecurityContext()).thenReturn(keycloakSecurityContextMock);
+        Mockito.when(keycloakSecurityContextMock.getToken()).thenReturn(tokenMock);
+
+        SecurityContextHolder.setContext(securityContextMock);
 
         NavigationProperties navigationProperties = new NavigationProperties();
         navigationProperties.setBaseUrl("http://localhost");
@@ -96,7 +123,12 @@ public class GetSubmissionTest {
     @Test
     @DisplayName("404: With null redis storage response return NotFound")
     public void withNullRedisStorageResponseReturnNotFound() {
-        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission(UUID.randomUUID(), TestHelpers.CASE_1);
+
+        Map<String, Object> otherClaims = new HashMap<>();
+        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
+        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission(TestHelpers.CASE_1);
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
     }
 
@@ -104,7 +136,11 @@ public class GetSubmissionTest {
     @DisplayName("200: With user having cso account and efiling role return submission details")
     public void withUserHavingCsoAccountShouldReturnUserDetailsAndAccount() {
 
-        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission(UUID.randomUUID(), TestHelpers.CASE_2);
+        Map<String, Object> otherClaims = new HashMap<>();
+        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
+        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission(TestHelpers.CASE_2);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertEquals(TestHelpers.CASE_2, actual.getBody().getUserDetails().getUniversalId());
         assertEquals(EMAIL + TestHelpers.CASE_2, actual.getBody().getUserDetails().getEmail());
@@ -124,7 +160,12 @@ public class GetSubmissionTest {
     @DisplayName("200: With user not having cso account")
     public void withUserHavingNoCsoAccountShouldReturnUserDetailsButNoAccount() {
 
-        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission(UUID.randomUUID(), TestHelpers.CASE_3);
+
+        Map<String, Object> otherClaims = new HashMap<>();
+        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
+        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission(TestHelpers.CASE_3);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertEquals(EMAIL, actual.getBody().getUserDetails().getEmail());
         assertEquals(FIRST_NAME, actual.getBody().getUserDetails().getFirstName());
@@ -134,6 +175,21 @@ public class GetSubmissionTest {
         assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigation().getSuccess().getUrl());
         assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigation().getCancel().getUrl());
         assertEquals(TestHelpers.ERROR_URL, actual.getBody().getNavigation().getError().getUrl());
+    }
+
+    @Test
+    @DisplayName("403: With user not having universal id claim")
+    public void withUserNotHavingUniversalIdShouldReturn403() {
+
+        Map<String, Object> otherClaims = new HashMap<>();
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
+        ResponseEntity actual = sut.getSubmission(TestHelpers.CASE_5);
+        assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
+        assertEquals("MISSING_UNIVERSAL_ID", ((EfilingError)actual.getBody()).getError());
+        assertEquals("universal-id claim missing in jwt token.", ((EfilingError)actual.getBody()).getMessage());
+
+
     }
 
     private List<ServiceFees> createFees() {
