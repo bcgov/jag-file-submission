@@ -4,27 +4,15 @@ import Keycloak from "keycloak-js";
 import Home from "../page/home/Home";
 import { propTypes } from "../../types/propTypes";
 
-let url;
-let realm;
-let clientId;
-
-if (window.REACT_APP_KEYCLOAK_URL) {
-  url = window.REACT_APP_KEYCLOAK_URL;
-} else if (process.env.REACT_APP_KEYCLOAK_URL) {
-  url = process.env.REACT_APP_KEYCLOAK_URL;
-}
-
-if (window.REACT_APP_KEYCLOAK_REALM) {
-  realm = window.REACT_APP_KEYCLOAK_REALM;
-} else if (process.env.REACT_APP_KEYCLOAK_REALM) {
-  realm = process.env.REACT_APP_KEYCLOAK_REALM;
-}
-
-if (window.REACT_APP_KEYCLOAK_CLIENT_ID) {
-  clientId = window.REACT_APP_KEYCLOAK_CLIENT_ID;
-} else if (process.env.REACT_APP_KEYCLOAK_CLIENT_ID) {
-  clientId = process.env.REACT_APP_KEYCLOAK_CLIENT_ID;
-}
+const url = window.REACT_APP_KEYCLOAK_URL
+  ? window.REACT_APP_KEYCLOAK_URL
+  : process.env.REACT_APP_KEYCLOAK_URL;
+const realm = window.REACT_APP_KEYCLOAK_REALM
+  ? window.REACT_APP_KEYCLOAK_REALM
+  : process.env.REACT_APP_KEYCLOAK_REALM;
+const clientId = window.REACT_APP_KEYCLOAK_CLIENT_ID
+  ? window.REACT_APP_KEYCLOAK_CLIENT_ID
+  : process.env.REACT_APP_KEYCLOAK_CLIENT_ID;
 
 const KEYCLOAK = {
   realm,
