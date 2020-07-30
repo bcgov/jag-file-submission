@@ -25,7 +25,9 @@ describe("CSOAccount Component", () => {
   const mock = new MockAdapter(axios);
   const API_REQUEST = "/csoAccount";
 
-  const token = generateJWTToken({ preferred_username: "username@bceid" });
+  const token = generateJWTToken({
+    preferred_username: "username@bceid",
+  });
   localStorage.setItem("jwt", token);
 
   test("Matches the snapshot", () => {
