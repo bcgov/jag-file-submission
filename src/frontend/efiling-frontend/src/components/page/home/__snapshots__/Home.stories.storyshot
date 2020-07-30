@@ -425,7 +425,7 @@ exports[`Storyshots Home Account Exists 1`] = `
                       </b>
                        is linked to your Basic BCeID account 
                       <b>
-                        blah2
+                        username
                       </b>
                        and will be used to file documents. 
                       <a
@@ -1039,7 +1039,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
                       </b>
                        is linked to your Basic BCeID account 
                       <b>
-                        blah2
+                        username
                       </b>
                        and will be used to file documents. 
                       <a
@@ -1698,7 +1698,7 @@ exports[`Storyshots Home No Account Exists 1`] = `
                     <div
                       class="bcgov-table-value "
                     >
-                      bobross42
+                      username
                     </div>
                   </div>
                   <div
@@ -1712,7 +1712,7 @@ exports[`Storyshots Home No Account Exists 1`] = `
                     <div
                       class="bcgov-table-value "
                     >
-                      Bob Norman Ross
+                      User Name
                     </div>
                   </div>
                   <div
@@ -1726,7 +1726,7 @@ exports[`Storyshots Home No Account Exists 1`] = `
                     <div
                       class="bcgov-table-value "
                     >
-                      bob.ross@example.com
+                      username@example.com
                     </div>
                   </div>
                 </div>
@@ -2764,7 +2764,7 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
                     <div
                       class="bcgov-table-value "
                     >
-                      bobross42
+                      username
                     </div>
                   </div>
                   <div
@@ -2778,7 +2778,7 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
                     <div
                       class="bcgov-table-value "
                     >
-                      Bob Norman Ross
+                      User Name
                     </div>
                   </div>
                   <div
@@ -2792,7 +2792,7 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
                     <div
                       class="bcgov-table-value "
                     >
-                      bob.ross@example.com
+                      username@example.com
                     </div>
                   </div>
                 </div>

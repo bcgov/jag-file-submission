@@ -388,7 +388,7 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
                     </b>
                      is linked to your Basic BCeID account 
                     <b>
-                      blah2
+                      username
                     </b>
                      and will be used to file documents. 
                     <a
@@ -909,7 +909,7 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
                     </b>
                      is linked to your Basic BCeID account 
                     <b>
-                      blah2
+                      username
                     </b>
                      and will be used to file documents. 
                     <a
@@ -1655,7 +1655,7 @@ registered to my account. Statutory fees will be processed when documents are fi
                     </b>
                      is linked to your Basic BCeID account 
                     <b>
-                      blah2
+                      username
                     </b>
                      and will be used to file documents. 
                     <a
