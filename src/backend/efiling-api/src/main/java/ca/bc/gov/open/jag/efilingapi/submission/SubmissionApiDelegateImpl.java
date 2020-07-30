@@ -269,7 +269,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         try {
             return Optional.of(UUID.fromString(
                     ((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-                            .getKeycloakSecurityContext().getToken().getOtherClaims().get(Keys.EFILING_SUBMISSION_ID).toString()));
+                            .getKeycloakSecurityContext().getToken().getOtherClaims().get(Keys.UNIVERSAL_ID_CLAIM_KEY).toString()));
         } catch (Exception e) {
             logger.error("Unable to extract universal Id from token", e);
             return Optional.empty();
