@@ -20,24 +20,25 @@ import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-public class EFileSubmissionTest extends DriverClass{
+public class EFileSubmissionTest extends DriverClass {
 
-     ReadConfig readConfig;
-     LandingPage landingPage;
-     EFileSubmissionPage eFileSubmissionPage;
-     PackageConfirmationPage packageConfirmationPage;
-     private static final String EFILE_SUBMISSION_PAGE_TITLE = "E-File submission";
+    ReadConfig readConfig;
+    LandingPage landingPage;
+    EFileSubmissionPage eFileSubmissionPage;
+    PackageConfirmationPage packageConfirmationPage;
+    private static final String EFILE_SUBMISSION_PAGE_TITLE = "E-File submission";
     private static final String EFILING_DEMO_CLIENT_PAGE_TITLE = "eFiling Demo Client";
-     private static final String BASE_PATH = "user.dir";
-     private static final String PDF_PATH = "/src/test/java/testdatasource/test-pdf-document.pdf";
-     private String filePath;
-     private String username;
-     private String password;
+    private static final String BASE_PATH = "user.dir";
+    private static final String PDF_PATH = "/src/test/java/testdatasource/test-pdf-document.pdf";
+    private String filePath;
+    private String username;
+    private String password;
 
     @Before("@frontend")
     public void setUp() throws IOException {
@@ -46,12 +47,12 @@ public class EFileSubmissionTest extends DriverClass{
     }
 
     @After("@frontend")
-    public void tearDown(Scenario scenario){
-        if(scenario.isFailed()) {
+    public void tearDown(Scenario scenario) {
+        if (scenario.isFailed()) {
             String testName = scenario.getName();
-                log.info(testName + "is Failed");
-                final byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-                scenario.attach(screenshot, "image/png", "Failed test");
+            log.info(testName + "is Failed");
+            final byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+            scenario.attach(screenshot, "image/png", "Failed test");
         }
         driver.close();
         driver.quit();
@@ -64,8 +65,8 @@ public class EFileSubmissionTest extends DriverClass{
         String url = readConfig.getBaseUrl();
 
         Map<String, String> env = System.getenv();
-        username= env.get("BCEID_USERNAME");
-        password = env.get("BCEID_PASSWORD");
+        username = System.getProperty("BCEID_USERNAME");
+        password = System.getProperty("BCEID_PASSWORD");
 
         System.out.println(username);
         System.out.println(password);
@@ -239,7 +240,7 @@ public class EFileSubmissionTest extends DriverClass{
         log.info("Generate Url button in eFiling frontend page is clicked");
 
         String expMsg = "An error occurred while eFiling your package. Please make sure you upload at least one file and try again.";
-        String actMsg =  landingPage.getErrorMessageText();
+        String actMsg = landingPage.getErrorMessageText();
         Assert.assertEquals(actMsg, expMsg);
 
         log.info("Expected message is verified");
