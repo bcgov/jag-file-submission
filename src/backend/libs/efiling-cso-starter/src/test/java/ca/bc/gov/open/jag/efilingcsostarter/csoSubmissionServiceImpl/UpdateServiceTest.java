@@ -10,6 +10,7 @@ import ca.bc.gov.open.jag.efilingcsostarter.CsoSubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingcsostarter.TestHelpers;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.ServiceMapperImpl;
 import org.junit.jupiter.api.*;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -57,14 +58,11 @@ public class UpdateServiceTest {
     @DisplayName("OK: addService called with any non-empty service")
     @Test
     public void testWithPopulatedSubmissionId() throws NestedEjbException_Exception, DatatypeConfigurationException {
+        EfilingService param = TestHelpers.createUpdateEfilingService(TestHelpers.createBaseEfilingService());
         Mockito.doNothing().when(serviceFacadeBean).updateService(any());
-
-        try {
-            sut.updateService(TestHelpers.createUpdateEfilingService(TestHelpers.createBaseEfilingService()));
-            Assertions.assertTrue(true);
-        } catch (Exception e) {
-            Assertions.fail();
-        }
+        sut.updateService(param);
+        Mockito.verify(serviceFacadeBean, Mockito.times(1))
+                .updateService(ArgumentMatchers.argThat(arg -> arg.getServiceId().equals(param.getServiceId())));
     }
     @DisplayName("Exception: with NestedEjbException_Exception should throw EfilingLookupServiceException")
     @Test
