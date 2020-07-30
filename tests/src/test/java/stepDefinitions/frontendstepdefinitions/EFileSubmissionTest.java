@@ -71,6 +71,7 @@ public class EFileSubmissionTest extends DriverClass {
         AuthenticationPage authenticationPage = new AuthenticationPage(driver);
         authenticationPage.clickBceid();
         authenticationPage.signInWithIdir(username, password);
+        log.info("user is authenticated before reaching eFiling demo client");
 
         WebDriverWait wait = new WebDriverWait(driver, 60);
         wait.until(ExpectedConditions.titleIs("eFiling Demo Client"));
@@ -103,6 +104,7 @@ public class EFileSubmissionTest extends DriverClass {
         AuthenticationPage authenticationPage = new AuthenticationPage(driver);
         authenticationPage.clickBceid();
         authenticationPage.signInWithIdir(username, password);
+        log.info("user is authenticated in eFiling demo client.");
     }
 
     @Then("eFile submission page is displayed and user clicks the cancel button")
@@ -189,6 +191,7 @@ public class EFileSubmissionTest extends DriverClass {
         AuthenticationPage authenticationPage = new AuthenticationPage(driver);
         authenticationPage.clickBceid();
         authenticationPage.signInWithIdir(username, password);
+        log.info("user is authenticated in eFiling demo client.");
     }
 
     @Then("eFile submission page with user agreement is displayed")
