@@ -2,11 +2,12 @@ const jwt = require("jsonwebtoken");
 
 export function getJWTData() {
   const token = localStorage.getItem("jwt");
-  if (!token) return false;
 
   // get the decoded payload and header
   const decoded = jwt.decode(token, { complete: true });
-  return decoded.payload;
+
+  if (decoded && decoded.payload) return decoded.payload;
+  return null;
 }
 
 export function generateJWTToken(payload) {

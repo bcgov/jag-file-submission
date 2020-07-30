@@ -25,7 +25,6 @@ const confirmationPopup = getTestData();
 const page = { header, confirmationPopup };
 
 const submissionId = "abc123";
-const temp = "temp";
 const apiRequest = `/submission/${submissionId}`;
 const getFilingPackagePath = `/submission/${submissionId}/filing-package`;
 const navigation = getNavigationData();
@@ -76,7 +75,7 @@ const NoAccountExistsStateData = (props) => {
 const homeComponent = (data) => (
   <MemoryRouter
     initialEntries={[
-      { search: `?submissionId=${submissionId}&temp=${temp}`, key: "testKey" },
+      { search: `?submissionId=${submissionId}`, key: "testKey" },
     ]}
   >
     <Home page={data.page} />

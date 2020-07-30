@@ -13,6 +13,7 @@ import axios from "axios";
 import { getSidecardData } from "../../../modules/sidecardData";
 import { propTypes } from "../../../types/propTypes";
 import { errorRedirect } from "../../../modules/errorRedirect";
+import { getJWTData } from "../../../modules/authenticationHelper";
 import { generateFileSummaryData } from "../../../modules/generateFileSummaryData";
 
 import "./PackageConfirmation.css";
@@ -24,7 +25,7 @@ const openFile = (file, submissionId) => {
     .get(`/submission/${submissionId}/document/${file.name}`, {
       responseType: "blob",
       headers: {
-        "X-Auth-UserId": sessionStorage.getItem("universalId"),
+        "X-Auth-UserId": getJWTData().universal_id,
       },
     })
     .then((response) => {
@@ -94,7 +95,7 @@ const getFilingPackageData = (
   axios
     .get(`/submission/${submissionId}/filing-package`, {
       headers: {
-        "X-Auth-UserId": sessionStorage.getItem("universalId"),
+        "X-Auth-UserId": getJWTData().universal_id,
       },
     })
     .then(({ data: { documents, court, submissionFeeAmount } }) => {
