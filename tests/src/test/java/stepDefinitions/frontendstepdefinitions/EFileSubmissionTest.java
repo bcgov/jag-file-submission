@@ -15,11 +15,9 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -62,8 +60,10 @@ public class EFileSubmissionTest extends DriverClass {
     public void userIsOnTheLandingPage() throws IOException {
         readConfig = new ReadConfig();
         String url = readConfig.getBaseUrl();
-        username = readConfig.getUsername();
-        password = readConfig.getPassword();
+        Dotenv dotenv = Dotenv.load();
+
+        username = dotenv.get("BCEID_USERNAME");
+        password = dotenv.get("BCEID_PASSWORD");
 
         driver.get(url);
         log.info("Landing page url is accessed successfully");
