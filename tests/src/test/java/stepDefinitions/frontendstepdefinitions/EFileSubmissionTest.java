@@ -23,8 +23,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
-public class EFileSubmissionTest extends DriverClass {
+public class EFileSubmissionTest extends DriverClass{
 
      ReadConfig readConfig;
      LandingPage landingPage;
@@ -61,10 +62,13 @@ public class EFileSubmissionTest extends DriverClass {
     public void userIsOnTheLandingPage() throws IOException {
         readConfig = new ReadConfig();
         String url = readConfig.getBaseUrl();
-        Dotenv dotenv = Dotenv.load();
 
-        username = dotenv.get("BCEID_USERNAME");
-        password = dotenv.get("BCEID_PASSWORD");
+        Map<String, String> env = System.getenv();
+        username= env.get("BCEID_USERNAME");
+        password = env.get("BCEID_PASSWORD");
+
+        System.out.println(username);
+        System.out.println(password);
 
         driver.get(url);
         log.info("Landing page url is accessed successfully");
