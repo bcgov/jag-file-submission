@@ -70,7 +70,7 @@ public class UpdateServiceTest {
     @Test
     public void whenNestedEjbException_ExceptionShouldThrowEfilingSubmissionServiceException() throws ca.bc.gov.ag.csows.filing.NestedEjbException_Exception, NestedEjbException_Exception {
         Mockito.doThrow(new ca.bc.gov.ag.csows.services.NestedEjbException_Exception()).when(serviceFacadeBean).updateService(any());
-        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.updateService(TestHelpers.createBaseEfilingService()));
+        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.updateService(TestHelpers.createUpdateEfilingService(TestHelpers.createBaseEfilingService())));
     }
 
 }
