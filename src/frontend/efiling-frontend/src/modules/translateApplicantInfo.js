@@ -1,13 +1,4 @@
-export function translateApplicantInfo({
-  bceid,
-  firstName,
-  middleName,
-  lastName,
-  email,
-}) {
-  const fullName = middleName
-    ? [firstName, middleName, lastName]
-    : [firstName, lastName];
+export function translateApplicantInfo({ bceid, name, email }) {
   return [
     {
       name: "BCeID:",
@@ -15,7 +6,7 @@ export function translateApplicantInfo({
     },
     {
       name: "Full Name:",
-      value: fullName.join(" "),
+      value: name,
     },
     {
       name: "Email Address:",

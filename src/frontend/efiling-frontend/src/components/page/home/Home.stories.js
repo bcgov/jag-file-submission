@@ -38,8 +38,7 @@ const setRequiredStorage = () => {
   sessionStorage.setItem("errorUrl", "error.com");
   const token = generateJWTToken({
     preferred_username: "username@bceid",
-    given_name: "User",
-    family_name: "Name",
+    name: "User Name",
     email: "username@example.com",
   });
   localStorage.setItem("jwt", token);

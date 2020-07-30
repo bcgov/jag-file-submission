@@ -29,9 +29,7 @@ export const propTypes = {
   }).isRequired,
   applicantInfo: PropTypes.shape({
     bceid: PropTypes.string.isRequired,
-    firstName: PropTypes.string.isRequired,
-    middleName: PropTypes.string,
-    lastName: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
   }).isRequired,
   setState: PropTypes.func.isRequired,
