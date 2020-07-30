@@ -32,12 +32,4 @@ public class ReadConfig {
         public String getBrowser() {
             return prop.getProperty("browser");
     }
-
-        public String getUsername() {
-            return prop.getProperty("username");
-        }
-
-        public String getPassword() {
-            return prop.getProperty("password");
-        }
 }

@@ -30,7 +30,7 @@ jobs:
       # Run Tests
       - name: run tests
         run: mvn verify -f tests/pom.xml
-        # Set credentials as secret of your repo
+        # Get credentials from repo secrets
         env:
           BCEID_USERNAME: ${{secrets.BCEID_USERNAME}}
           BCEID_PASSWORD: ${{secrets.BCEID_PASSWORD}}
