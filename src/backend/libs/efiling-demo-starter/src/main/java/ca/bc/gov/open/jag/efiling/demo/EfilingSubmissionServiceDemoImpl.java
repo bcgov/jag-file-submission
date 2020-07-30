@@ -34,4 +34,9 @@ public class EfilingSubmissionServiceDemoImpl implements EfilingSubmissionServic
         efilingService.setServiceTypeDesc("Service type description");
         return efilingService;
     }
+
+    @Override
+    public void updateService(EfilingService efilingService) {
+        //I do nothing
+    }
 }
