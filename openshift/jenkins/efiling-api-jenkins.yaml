@@ -142,8 +142,8 @@ objects:
         application: ${appName}
       name: ${appName}
       namespace: "${namespacePrefix}-tools"
-  - kind: BuildConfig
-    apiVersion: v1
+  - kind: "BuildConfig"
+    apiVersion: "v1"
     metadata:
       labels:
         application: ${appName}
@@ -235,13 +235,14 @@ objects:
                         }
 
                         stage("Deploy ${APP_NAME}") {
-                            deploy("${DEPLOYMENT_CONFIG_PATH}", "${APP_NAME}", "${TOOLS_NAMESPACE}", "${DEV_NAMESPACE}", "${ROUTE_TYPE}", "dev")
+                                deploy("${DEPLOYMENT_CONFIG_PATH}", "${APP_NAME}", "${TOOLS_NAMESPACE}", "${DEV_NAMESPACE}", "${ROUTE_TYPE}", "dev")
+                            }
                         }
                     }
                 }
-
             } catch (err) {
                 echo "in catch block"
+
                 currentBuild.result = 'FAILURE'
                 env.ERR = "${err}"
                 node {
