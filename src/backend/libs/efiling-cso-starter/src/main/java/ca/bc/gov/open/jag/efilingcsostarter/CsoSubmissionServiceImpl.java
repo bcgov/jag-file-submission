@@ -3,7 +3,6 @@ package ca.bc.gov.open.jag.efilingcsostarter;
 import ca.bc.gov.ag.csows.filing.FilingFacadeBean;
 import ca.bc.gov.ag.csows.filing.FilingPackage;
 import ca.bc.gov.ag.csows.filing.NestedEjbException_Exception;
-import ca.bc.gov.ag.csows.services.Service;
 import ca.bc.gov.ag.csows.services.ServiceFacadeBean;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
@@ -45,5 +44,16 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
             throw new EfilingSubmissionServiceException("Exception while creating service", e.getCause());
         }
 
+    }
+
+    @Override
+    public void updateService(EfilingService service) {
+        if (service == null) throw new IllegalArgumentException("Service cannot be null");
+        if (service.getTransactions() == null || service.getTransactions().isEmpty()) throw new IllegalArgumentException("Service requires transactions");
+        try {
+            serviceFacadeBean.updateService(serviceMapper.toService(service));
+        } catch (ca.bc.gov.ag.csows.services.NestedEjbException_Exception e) {
+            throw new EfilingSubmissionServiceException("Exception while creating service", e.getCause());
+        }
     }
 }

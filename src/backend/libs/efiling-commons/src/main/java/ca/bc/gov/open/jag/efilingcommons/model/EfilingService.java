@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigDecimal;
+import java.util.List;
 
 public class EfilingService {
     private BigDecimal accountId;
@@ -29,6 +30,7 @@ public class EfilingService {
     private XMLGregorianCalendar updateDateTime;
     private String updateUserId;
     private BigDecimal userSessionId;
+    private List<EfilingTransaction> transactions;
 
     public BigDecimal getAccountId() {
         return accountId;
@@ -173,6 +175,11 @@ public class EfilingService {
     public void setUserSessionId(BigDecimal userSessionId) {
         this.userSessionId = userSessionId;
     }
+
+    public List<EfilingTransaction> getTransactions() { return transactions; }
+
+    public void setTransactions(List<EfilingTransaction> transactions) { this.transactions = transactions; }
+
     @JsonCreator
     public EfilingService(@JsonProperty("accountId") BigDecimal accountId,
                           @JsonProperty("clientId") BigDecimal clientId,
@@ -191,7 +198,8 @@ public class EfilingService {
                           @JsonProperty("styleOfCause") String styleOfCause,
                           @JsonProperty("updateDateTime") XMLGregorianCalendar updateDateTime,
                           @JsonProperty("updateUserId") String updateUserId,
-                          @JsonProperty("userSessionId") BigDecimal userSessionId) {
+                          @JsonProperty("userSessionId") BigDecimal userSessionId,
+                          @JsonProperty("transactions") List<EfilingTransaction> transactions) {
         this.accountId = accountId;
         this.clientId = clientId;
         this.clientReferenceTxt = clientReferenceTxt;
@@ -210,6 +218,7 @@ public class EfilingService {
         this.updateDateTime = updateDateTime;
         this.updateUserId = updateUserId;
         this.userSessionId = userSessionId;
+        this.transactions = transactions;
     }
     public EfilingService() { }
 }

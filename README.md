@@ -12,7 +12,6 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
     ├── src/                                    # application source files
     │   ├── backend                             # backend applications
     │   │   ├── efiling-api                     # efiling api
-    │   │   ├── efiling-hub-api                 # efiling hub api
     │   │   ├── efiling-worker                  # file submission worker
     │   │   ├── libs                            # backend libraries
     │   │   |   ├── efiling-bom                 # pom Bill Of Materials
@@ -33,7 +32,6 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
 | ------------------- | -------------------------------------------- | -------------------------------------------------------- |
 | backend             | all server side services                     | [README](src/backend/README.md)                          |
 | efiling-api         | the main api for interating with the service | [README](src/backend/efiling-api/README.md)              |
-| efiling-hub-api     | the api for handling initial calls           | [README](src/backend/efiling-hub-api/README.md)          |
 | efiling-worker      | process submitted documents                  | [README](src/backend/efiling-worker/README.md)           |
 | efiling-cso-starter | soap client implementations                  | [README](src/backend/libs/efiling-cso-starter/README.md) |
 | efiling-worker      | process submitted documents                  | [README](src/backend/efiling-worker/README.md)           |

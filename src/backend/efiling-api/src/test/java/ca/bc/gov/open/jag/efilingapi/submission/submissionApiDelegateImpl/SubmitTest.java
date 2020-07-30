@@ -57,7 +57,7 @@ public class SubmitTest {
         result.setAcknowledge(LocalDate.parse("2020-01-01"));
         result.setTransactionId(BigDecimal.TEN);
         Mockito.when(submissionServiceMock.submitFilingPackage(any(), Mockito.eq(TestHelpers.CASE_1), any())).thenReturn(result);
-        Mockito.when(submissionServiceMock.submitFilingPackage(any(), Mockito.eq(TestHelpers.CASE_2), any())).thenThrow(new EfilingSubmissionServiceException("Nooooooo"));
+        Mockito.when(submissionServiceMock.submitFilingPackage(any(), Mockito.eq(TestHelpers.CASE_2), any())).thenThrow(new EfilingSubmissionServiceException("Nooooooo", new Throwable()));
         sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationPropertiesMock, submissionStoreMock, documentStoreMock);
 
     }
