@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from "react";
 import { MdInfoOutline, MdPerson, MdTimer } from "react-icons/md";
+import { getJWTData } from "./authenticationHelper";
 
 const aboutCso = () => {
   return {
@@ -27,13 +28,16 @@ const aboutCso = () => {
 };
 
 const csoAccountDetails = () => {
+  let username = getJWTData().preferred_username;
+  username = username.substring(0, username.indexOf("@"));
+
   return {
     heading: "Your CSO Account",
     content: [
       <p key="csoAccountDetails">
         CSO account <b>{sessionStorage.getItem("csoAccountId")}</b> is linked to
         your Basic BCeID account&nbsp;
-        <b>blah2</b>
+        <b>{username}</b>
         &nbsp;and will be used to file documents.&nbsp;
         {/* TODO: fix url and blahs */}
         <a

@@ -470,7 +470,7 @@ exports[`Home Component matches the snapshot when user cso account does not exis
                     <div
                       class="bcgov-table-value "
                     >
-                      bobross42
+                      username
                     </div>
                   </div>
                   <div
@@ -484,7 +484,7 @@ exports[`Home Component matches the snapshot when user cso account does not exis
                     <div
                       class="bcgov-table-value "
                     >
-                      Bob Norman Ross
+                      User Name
                     </div>
                   </div>
                   <div
@@ -498,7 +498,7 @@ exports[`Home Component matches the snapshot when user cso account does not exis
                     <div
                       class="bcgov-table-value "
                     >
-                      bob.ross@example.com
+                      username@example.com
                     </div>
                   </div>
                 </div>
@@ -1829,7 +1829,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                       </b>
                        is linked to your Basic BCeID account 
                       <b>
-                        blah2
+                        username
                       </b>
                        and will be used to file documents. 
                       <a

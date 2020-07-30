@@ -11,6 +11,7 @@ import {
 import { getTestData } from "../../../modules/confirmationPopupTestData";
 import { getDocumentsData } from "../../../modules/documentTestData";
 import { getCourtData } from "../../../modules/courtTestData";
+import { generateJWTToken } from "../../../modules/authenticationHelper";
 
 import Payment from "./Payment";
 
@@ -28,6 +29,9 @@ describe("Payment Component", () => {
     files,
     submissionFee,
   };
+
+  const token = generateJWTToken({ preferred_username: "username@bceid" });
+  localStorage.setItem("jwt", token);
 
   let mock;
   beforeEach(() => {

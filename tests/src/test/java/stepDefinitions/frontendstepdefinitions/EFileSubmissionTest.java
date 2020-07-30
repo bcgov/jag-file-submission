@@ -1,6 +1,7 @@
 package stepDefinitions.frontendstepdefinitions;
 
 import ca.bc.gov.open.jagefilingapi.qa.config.ReadConfig;
+import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.AuthenticationPage;
 import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.EFileSubmissionPage;
 import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.LandingPage;
 import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.PackageConfirmationPage;
@@ -14,11 +15,11 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
 import java.util.List;
@@ -30,9 +31,12 @@ public class EFileSubmissionTest extends DriverClass {
      EFileSubmissionPage eFileSubmissionPage;
      PackageConfirmationPage packageConfirmationPage;
      private static final String EFILE_SUBMISSION_PAGE_TITLE = "E-File submission";
-    private static final String BASE_PATH = "user.dir";
+    private static final String EFILING_DEMO_CLIENT_PAGE_TITLE = "eFiling Demo Client";
+     private static final String BASE_PATH = "user.dir";
      private static final String PDF_PATH = "/src/test/java/testdatasource/test-pdf-document.pdf";
      private String filePath;
+     private String username;
+     private String password;
 
     @Before("@frontend")
     public void setUp() throws IOException {
@@ -57,21 +61,33 @@ public class EFileSubmissionTest extends DriverClass {
     public void userIsOnTheLandingPage() throws IOException {
         readConfig = new ReadConfig();
         String url = readConfig.getBaseUrl();
+        Dotenv dotenv = Dotenv.load();
+
+        username = dotenv.get("BCEID_USERNAME");
+        password = dotenv.get("BCEID_PASSWORD");
 
         driver.get(url);
         log.info("Landing page url is accessed successfully");
 
+        AuthenticationPage authenticationPage = new AuthenticationPage(driver);
+        authenticationPage.clickBceid();
+        authenticationPage.signInWithIdir(username, password);
+        log.info("user is authenticated before reaching eFiling demo page");
+
+        WebDriverWait wait = new WebDriverWait(driver, 60);
+        wait.until(ExpectedConditions.titleIs(EFILING_DEMO_CLIENT_PAGE_TITLE));
+
         landingPage = new LandingPage(driver);
 
         String actualTitle = landingPage.verifyLandingPageTitle();
-        String expectedTitle = "eFiling Demo Client";
 
-        Assert.assertEquals(expectedTitle, actualTitle);
+        Assert.assertEquals(EFILING_DEMO_CLIENT_PAGE_TITLE, actualTitle);
         log.info("Landing page title is verified");
     }
 
     @When("user enters a valid existing CSO account guid {string} and uploads a document")
     public void userEntersAValidExistingCsoAccountGuidAndUploadsADocument(String validExistingCSOGuid) throws IOException {
+        readConfig = new ReadConfig();
         landingPage = new LandingPage(driver);
 
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
@@ -84,6 +100,11 @@ public class EFileSubmissionTest extends DriverClass {
 
         landingPage.clickGenerateUrlButton();
         log.info("Pdf file is uploaded successfully.");
+
+        AuthenticationPage authenticationPage = new AuthenticationPage(driver);
+        authenticationPage.clickBceid();
+        authenticationPage.signInWithIdir(username, password);
+        log.info("user is authenticated in eFiling demo page.");
     }
 
     @Then("eFile submission page is displayed and user clicks the cancel button")
@@ -129,9 +150,8 @@ public class EFileSubmissionTest extends DriverClass {
         log.info("Navigated to the landing page from cancel page");
 
         String actualTitle = landingPage.verifyLandingPageTitle();
-        String expectedTitle = "eFiling Demo Client";
 
-        Assert.assertEquals(expectedTitle, actualTitle);
+        Assert.assertEquals(EFILING_DEMO_CLIENT_PAGE_TITLE, actualTitle);
         log.info("Landing page title is verified");
     }
 
@@ -166,6 +186,11 @@ public class EFileSubmissionTest extends DriverClass {
 
         landingPage.clickGenerateUrlButton();
         log.info("Pdf file is uploaded successfully.");
+
+        AuthenticationPage authenticationPage = new AuthenticationPage(driver);
+        authenticationPage.clickBceid();
+        authenticationPage.signInWithIdir(username, password);
+        log.info("user is authenticated in eFiling demo page.");
     }
 
     @Then("eFile submission page with user agreement is displayed")
