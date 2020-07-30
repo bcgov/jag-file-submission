@@ -17,8 +17,6 @@ import { translateApplicantInfo } from "../../../modules/translateApplicantInfo"
 import { errorRedirect } from "../../../modules/errorRedirect";
 import { propTypes } from "../../../types/propTypes";
 
-const sideCard = getSidecardData().aboutCso;
-
 const content = getContent();
 
 export default function CSOAccount({
@@ -26,6 +24,7 @@ export default function CSOAccount({
   applicantInfo,
   setCsoAccountStatus,
 }) {
+  const sideCard = getSidecardData().aboutCso;
   const [termsAccepted, acceptTerms] = useState(false);
   const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
 

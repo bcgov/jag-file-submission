@@ -422,7 +422,7 @@ registered to my account. Statutory fees will be processed when documents are fi
                     <b />
                      is linked to your Basic BCeID account 
                     <b>
-                      blah2
+                      username
                     </b>
                      and will be used to file documents. 
                     <a
@@ -909,7 +909,7 @@ exports[`Payment Component On back click, it redirects back to the package confi
                     <b />
                      is linked to your Basic BCeID account 
                     <b>
-                      blah2
+                      username
                     </b>
                      and will be used to file documents. 
                     <a

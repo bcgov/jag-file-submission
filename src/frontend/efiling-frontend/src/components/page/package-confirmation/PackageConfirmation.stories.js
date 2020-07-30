@@ -4,6 +4,7 @@ import MockAdapter from "axios-mock-adapter";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
 import { getDocumentsData } from "../../../modules/documentTestData";
 import { getCourtData } from "../../../modules/courtTestData";
+import { generateJWTToken } from "../../../modules/authenticationHelper";
 
 import PackageConfirmation from "./PackageConfirmation";
 
@@ -20,6 +21,10 @@ const csoAccountStatus = { isNew: false };
 const documents = getDocumentsData();
 const courtData = getCourtData();
 const submissionFeeAmount = 25.5;
+
+sessionStorage.setItem("csoAccountId", "123");
+const token = generateJWTToken({ preferred_username: "username@bceid" });
+localStorage.setItem("jwt", token);
 
 const LoadData = (props) => {
   const mock = new MockAdapter(axios);

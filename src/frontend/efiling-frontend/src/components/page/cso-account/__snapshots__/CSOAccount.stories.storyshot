@@ -109,7 +109,7 @@ exports[`Storyshots CSOAccount Default 1`] = `
                   <div
                     class="bcgov-table-value "
                   >
-                    Bob  Ross
+                    Bob Ross
                   </div>
                 </div>
                 <div
@@ -1050,7 +1050,7 @@ exports[`Storyshots CSOAccount Mobile 1`] = `
                   <div
                     class="bcgov-table-value "
                   >
-                    Bob  Ross
+                    Bob Ross
                   </div>
                 </div>
                 <div

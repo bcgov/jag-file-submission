@@ -11,6 +11,7 @@ import { getUserDetails } from "../../../modules/userDetails";
 import { getDocumentsData } from "../../../modules/documentTestData";
 import { getNavigationData } from "../../../modules/navigationTestData";
 import { getCourtData } from "../../../modules/courtTestData";
+import { generateJWTToken } from "../../../modules/authenticationHelper";
 
 const header = {
   name: "eFiling Frontend",
@@ -32,6 +33,14 @@ describe("Home", () => {
   const userDetails = getUserDetails();
 
   window.open = jest.fn();
+
+  const token = generateJWTToken({
+    preferred_username: "username@bceid",
+    given_name: "User",
+    family_name: "Name",
+    email: "username@example.com",
+  });
+  localStorage.setItem("jwt", token);
 
   let mock;
   beforeEach(() => {

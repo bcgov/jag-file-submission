@@ -5,6 +5,7 @@ import { render, fireEvent, getByText, waitFor } from "@testing-library/react";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
 import { getDocumentsData } from "../../../modules/documentTestData";
 import { getCourtData } from "../../../modules/courtTestData";
+import { generateJWTToken } from "../../../modules/authenticationHelper";
 
 import Upload from "./Upload";
 
@@ -48,6 +49,9 @@ describe("Upload Component", () => {
     confirmationPopup,
     submissionId,
   };
+
+  const token = generateJWTToken({ preferred_username: "username@bceid" });
+  localStorage.setItem("jwt", token);
 
   const apiRequest = `/submission/${submissionId}/filing-package`;
   let mock;
