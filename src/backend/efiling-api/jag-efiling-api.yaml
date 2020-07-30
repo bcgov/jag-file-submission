@@ -44,7 +44,6 @@ paths:
       tags:
         - submission
       parameters:
-        - $ref: "#/components/parameters/xAuthUserId"
         - $ref: "#/components/parameters/submissionId"
       responses:
         "200":

@@ -14,6 +14,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.*;
 
+import org.keycloak.KeycloakPrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -23,12 +24,15 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.security.RolesAllowed;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -164,11 +168,17 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    public ResponseEntity<GetSubmissionResponse> getSubmission(UUID xAuthUserId, UUID id) {
+    @RolesAllowed("efiling-user")
+    public ResponseEntity<GetSubmissionResponse> getSubmission(UUID id) {
+
+        Optional<UUID> universalId = getUniversalIdFromContext();
+
+        if(!universalId.isPresent()) return new ResponseEntity(
+                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
 
         MDC.put(Keys.EFILING_SUBMISSION_ID, id.toString());
 
-        Optional<Submission> fromCacheSubmission = this.submissionStore.get(id, xAuthUserId);
+        Optional<Submission> fromCacheSubmission = this.submissionStore.get(id, universalId.get());
 
         if(!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
@@ -252,6 +262,18 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         response.setMessage(errorResponse.getErrorMessage());
         return response;
 
+    }
+
+    private Optional<UUID> getUniversalIdFromContext() {
+
+        try {
+            return Optional.of(UUID.fromString(
+                    ((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+                            .getKeycloakSecurityContext().getToken().getOtherClaims().get(Keys.EFILING_SUBMISSION_ID).toString()));
+        } catch (Exception e) {
+            logger.error("Unable to extract universal Id from token", e);
+            return Optional.empty();
+        }
     }
 
 }
