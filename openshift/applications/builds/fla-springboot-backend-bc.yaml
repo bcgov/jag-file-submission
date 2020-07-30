@@ -4,9 +4,9 @@ metadata:
   annotations:
     description: Defines how to build the application
   labels:
-    app: fla-springboot-backend
+    app: efiling-api
     template: master-build-pipeline
-  name: fla-springboot-backend
+  name: efiling-api
   namespace: qzaydf-tools
 spec:
   completionDeadlineSeconds: 1800
@@ -14,7 +14,7 @@ spec:
   output:
     to:
       kind: ImageStreamTag
-      name: "fla-springboot-backend:latest"
+      name: "efiling-api:latest"
   postCommit: {}
   resources:
     limits:
