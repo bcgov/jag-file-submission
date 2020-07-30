@@ -31,6 +31,7 @@ public class EFileSubmissionTest extends DriverClass {
      EFileSubmissionPage eFileSubmissionPage;
      PackageConfirmationPage packageConfirmationPage;
      private static final String EFILE_SUBMISSION_PAGE_TITLE = "E-File submission";
+    private static final String EFILING_DEMO_CLIENT_PAGE_TITLE = "eFiling Demo Client";
      private static final String BASE_PATH = "user.dir";
      private static final String PDF_PATH = "/src/test/java/testdatasource/test-pdf-document.pdf";
      private String filePath;
@@ -71,17 +72,16 @@ public class EFileSubmissionTest extends DriverClass {
         AuthenticationPage authenticationPage = new AuthenticationPage(driver);
         authenticationPage.clickBceid();
         authenticationPage.signInWithIdir(username, password);
-        log.info("user is authenticated before reaching eFiling demo client");
+        log.info("user is authenticated before reaching eFiling demo page");
 
         WebDriverWait wait = new WebDriverWait(driver, 60);
-        wait.until(ExpectedConditions.titleIs("eFiling Demo Client"));
+        wait.until(ExpectedConditions.titleIs(EFILING_DEMO_CLIENT_PAGE_TITLE));
 
         landingPage = new LandingPage(driver);
 
         String actualTitle = landingPage.verifyLandingPageTitle();
-        String expectedTitle = "eFiling Demo Client";
 
-        Assert.assertEquals(expectedTitle, actualTitle);
+        Assert.assertEquals(EFILING_DEMO_CLIENT_PAGE_TITLE, actualTitle);
         log.info("Landing page title is verified");
     }
 
@@ -150,9 +150,8 @@ public class EFileSubmissionTest extends DriverClass {
         log.info("Navigated to the landing page from cancel page");
 
         String actualTitle = landingPage.verifyLandingPageTitle();
-        String expectedTitle = "eFiling Demo Client";
 
-        Assert.assertEquals(expectedTitle, actualTitle);
+        Assert.assertEquals(EFILING_DEMO_CLIENT_PAGE_TITLE, actualTitle);
         log.info("Landing page title is verified");
     }
 
@@ -191,7 +190,7 @@ public class EFileSubmissionTest extends DriverClass {
         AuthenticationPage authenticationPage = new AuthenticationPage(driver);
         authenticationPage.clickBceid();
         authenticationPage.signInWithIdir(username, password);
-        log.info("user is authenticated in eFiling demo client.");
+        log.info("user is authenticated in eFiling demo page.");
     }
 
     @Then("eFile submission page with user agreement is displayed")
