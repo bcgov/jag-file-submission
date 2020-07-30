@@ -25,7 +25,7 @@ const openFile = (file, submissionId) => {
     .get(`/submission/${submissionId}/document/${file.name}`, {
       responseType: "blob",
       headers: {
-        "X-Auth-UserId": getJWTData().universal_id,
+        "X-Auth-UserId": getJWTData()["universal-id"],
       },
     })
     .then((response) => {
@@ -95,7 +95,7 @@ const getFilingPackageData = (
   axios
     .get(`/submission/${submissionId}/filing-package`, {
       headers: {
-        "X-Auth-UserId": getJWTData().universal_id,
+        "X-Auth-UserId": getJWTData()["universal-id"],
       },
     })
     .then(({ data: { documents, court, submissionFeeAmount } }) => {
