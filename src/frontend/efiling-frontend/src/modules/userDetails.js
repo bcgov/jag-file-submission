@@ -1,5 +1,4 @@
 const userDetails = {
-  universalId: "123",
   accounts: [
     {
       type: "CSO",

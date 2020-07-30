@@ -15,15 +15,10 @@ import { propTypes } from "../../../types/propTypes";
 
 import "../page.css";
 
-export const saveDataToSessionStorage = (
-  { cancel, success, error },
-  { universalId }
-) => {
+export const saveDataToSessionStorage = ({ cancel, success, error }) => {
   if (cancel.url) sessionStorage.setItem("cancelUrl", cancel.url);
   if (success.url) sessionStorage.setItem("successUrl", success.url);
   if (error.url) sessionStorage.setItem("errorUrl", error.url);
-
-  sessionStorage.setItem("universalId", universalId);
 };
 
 const addUserInfo = () => {
@@ -48,7 +43,7 @@ const setRequiredState = (setApplicantInfo, setShowLoader) => {
 // make call to submission/{id} to get the user and navigation details
 const checkCSOAccountStatus = (
   submissionId,
-  temp,
+  token,
   setCsoAccountStatus,
   setShowLoader,
   setApplicantInfo,
@@ -57,11 +52,11 @@ const checkCSOAccountStatus = (
   axios
     .get(`/submission/${submissionId}`, {
       headers: {
-        "X-Auth-UserId": temp,
+        Authorization: `Bearer ${token}`,
       },
     })
     .then(({ data: { userDetails, navigation } }) => {
-      saveDataToSessionStorage(navigation, userDetails);
+      saveDataToSessionStorage(navigation);
 
       if (userDetails.accounts) {
         const csoAccountIdentifier = userDetails.accounts.find(
@@ -93,11 +88,12 @@ export default function Home({ page: { header, confirmationPopup } }) {
   const [error, setError] = useState(false);
   const location = useLocation();
   const queryParams = queryString.parse(location.search);
+  const token = localStorage.getItem("jwt");
 
   useEffect(() => {
     checkCSOAccountStatus(
       queryParams.submissionId,
-      queryParams.temp,
+      token,
       setCsoAccountStatus,
       setShowLoader,
       setApplicantInfo,

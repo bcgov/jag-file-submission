@@ -23,7 +23,6 @@ const page = { header, confirmationPopup };
 
 describe("Home", () => {
   const submissionId = "abc123";
-  const temp = "temp";
   const apiRequest = `/submission/${submissionId}`;
   const getFilingPackagePath = `/submission/${submissionId}/filing-package`;
   const navigation = getNavigationData();
@@ -48,9 +47,7 @@ describe("Home", () => {
   });
 
   const component = (
-    <MemoryRouter
-      initialEntries={[`?submissionId=${submissionId}&temp=${temp}`]}
-    >
+    <MemoryRouter initialEntries={[`?submissionId=${submissionId}`]}>
       <Home page={page} />
     </MemoryRouter>
   );
@@ -115,28 +112,23 @@ describe("Home", () => {
     expect(sessionStorage.getItem("successUrl")).toBeFalsy();
     expect(sessionStorage.getItem("errorUrl")).toBeFalsy();
 
-    saveDataToSessionStorage(navigation, userDetails);
+    saveDataToSessionStorage(navigation);
 
     expect(sessionStorage.getItem("cancelUrl")).toEqual("cancelurl.com");
     expect(sessionStorage.getItem("successUrl")).toEqual("successurl.com");
     expect(sessionStorage.getItem("errorUrl")).toBeFalsy();
-    expect(sessionStorage.getItem("universalId")).toEqual("123");
 
     sessionStorage.clear();
 
-    saveDataToSessionStorage(
-      {
-        ...navigation,
-        cancel: { url: "" },
-        success: { url: "" },
-        error: { url: "error.com" },
-      },
-      userDetails
-    );
+    saveDataToSessionStorage({
+      ...navigation,
+      cancel: { url: "" },
+      success: { url: "" },
+      error: { url: "error.com" },
+    });
 
     expect(sessionStorage.getItem("cancelUrl")).toBeFalsy();
     expect(sessionStorage.getItem("successUrl")).toBeFalsy();
     expect(sessionStorage.getItem("errorUrl")).toEqual("error.com");
-    expect(sessionStorage.getItem("universalId")).toEqual("123");
   });
 });
