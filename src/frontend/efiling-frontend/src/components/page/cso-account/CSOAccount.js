@@ -40,7 +40,7 @@ export default function CSOAccount({
   const createCSOAccount = (applicantDetails) => {
     axios
       .post("/csoAccount", applicantDetails, {
-        headers: { "X-Auth-UserId": getJWTData().universal_id },
+        headers: { "X-Auth-UserId": getJWTData()["universal-id"] },
       })
       .then(({ data: { accounts } }) => {
         accounts.forEach((account) => {
