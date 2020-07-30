@@ -14,6 +14,15 @@ public interface ServiceMapper {
     @Mapping(target = "documentsProcessed", source = "documentsProcessed")
     @Mapping(target = "entDtm", source = "entryDateTime")
     @Mapping(target = "entUserId", source = "clientId")
+    @Mapping(target = "serviceId", source = "serviceId")
+    @Mapping(target = "serviceReceivedDateTime", source = "serviceReceivedDtm")
+    @Mapping(target = "serviceReceivedDtmText", source = "serviceReceivedDtmText")
+    @Mapping(target = "serviceSessionId", source = "serviceSessionId")
+    @Mapping(target = "serviceSubtypeCd", source = "serviceSubtypeCd")
+    @Mapping(target = "serviceTypeCd", source = "serviceTypeCd")
+    @Mapping(target = "serviceTypeDesc", source = "serviceTypeDesc")
+    @Mapping(target = "styleOfCause", source = "styleOfCause")
+    @Mapping(target = "transactions", source = "transactions")
     Service toService(EfilingService efilingService);
 
     @Mapping(target = "accountId", source = "accountId")

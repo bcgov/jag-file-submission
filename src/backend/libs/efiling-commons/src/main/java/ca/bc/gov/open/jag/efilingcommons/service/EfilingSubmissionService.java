@@ -9,4 +9,6 @@ public interface EfilingSubmissionService {
     BigDecimal submitFilingPackage(UUID submissionId);
 
     EfilingService addService(EfilingService efilingService);
+
+    void updateService(EfilingService efilingService);
 }
