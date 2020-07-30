@@ -1,7 +1,6 @@
 const applicantInfo = {
   bceid: "bobross42",
-  firstName: "Bob",
-  lastName: "Ross",
+  name: "Bob Ross",
   email: "bob.ross@example.com",
 };
 
