@@ -143,6 +143,11 @@
       <artifactId>jackson-databind-nullable</artifactId>
       <version>${org.openapitools.version}</version>
     </dependency>
+    <dependency>
+      <groupId>io.github.cdimascio</groupId>
+      <artifactId>java-dotenv</artifactId>
+      <version>5.2.1</version>
+    </dependency>
 
   </dependencies>
 
