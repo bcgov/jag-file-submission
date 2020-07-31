@@ -15,6 +15,14 @@ import { propTypes } from "../../../types/propTypes";
 
 import "../page.css";
 
+const setXTransactionIdHeader = (transactionId) => {
+  // Use interceptor to inject the transactionId to all requests
+  axios.interceptors.request.use((request) => {
+    request.headers["X-Transaction-Id"] = transactionId;
+    return request;
+  });
+};
+
 export const saveDataToSessionStorage = ({ cancel, success, error }) => {
   if (cancel.url) sessionStorage.setItem("cancelUrl", cancel.url);
   if (success.url) sessionStorage.setItem("successUrl", success.url);
@@ -89,6 +97,8 @@ export default function Home({ page: { header, confirmationPopup } }) {
   const location = useLocation();
   const queryParams = queryString.parse(location.search);
   const token = localStorage.getItem("jwt");
+
+  setXTransactionIdHeader(queryParams.transactionId);
 
   useEffect(() => {
     checkCSOAccountStatus(
