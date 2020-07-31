@@ -14,9 +14,9 @@ services:
     ports:
       - 3000:3000
     environment:
-      - REACT_APP_KEYCLOAK_REALM=${EFILING_FRONTEND_KEYCLOAK_REALM}
+      - REACT_APP_KEYCLOAK_REALM=${KEYCLOAK_REALM}
       - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-frontend
-      - REACT_APP_KEYCLOAK_URL=${EFILING_FRONTEND_KEYCLOAK_URL}
+      - REACT_APP_KEYCLOAK_URL=${KEYCLOAK_URL}
       - REACT_APP_API_BASE_URL=http://localhost:8080
 
   #############################################################################################
@@ -68,8 +68,8 @@ services:
       - BCEID_LOOKUP_USERNAME=${BCEID_LOOKUP_USERNAME}
       - BCEID_LOOKUP_PASSWORD=${BCEID_LOOKUP_PASSWORD}
       - BCEID_LOOKUP_URI=${BCEID_LOOKUP_URI}
-      - KEYCLOAK_AUTH_SERVER_URL=http://keycloak:8080/auth
-      - KEYCLOAK_REALM=SpringBootKeycloak
+      - KEYCLOAK_AUTH_SERVER_URL=${KEYCLOAK_URL}
+      - KEYCLOAK_REALM=${KEYCLOAK_REALM}
       - KEYCLOAK_RESOURCE=efiling-api
       - KEYCLOAK_CREDENTIALS_SECRET=${KEYCLOAK_CREDENTIALS_SECRET}
     networks:
