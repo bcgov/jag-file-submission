@@ -173,7 +173,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     @Override
     @RolesAllowed("efiling-user")
-    public ResponseEntity<GetSubmissionResponse> getSubmission(UUID xTransactionId, UUID submissionId) {
+    public ResponseEntity<GetSubmissionResponse> getSubmission(UUID submissionId, UUID xTransactionId) {
 
         Optional<UUID> universalId = getUniversalIdFromContext();
 
@@ -182,7 +182,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         MDC.put(Keys.EFILING_SUBMISSION_ID, submissionId.toString());
 
-        Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, universalId.get());
+        Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
 
         if(!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
