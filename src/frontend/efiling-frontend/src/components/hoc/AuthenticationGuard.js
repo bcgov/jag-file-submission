@@ -26,7 +26,7 @@ const KEYCLOAK = {
 const keycloak = Keycloak(KEYCLOAK);
 
 keycloak.onAuthSuccess = () => {
-  alert("Auth Success", keycloak.token);
+  console.log("Auth Success", keycloak.token);
 };
 
 function keycloakUpdateToken() {
