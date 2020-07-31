@@ -226,8 +226,8 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     @Override
     @RolesAllowed("efiling-user")
-    public ResponseEntity<FilingPackage> getSubmissionFilingPackage(UUID xAuthUserId, UUID submissionId) {
-        Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xAuthUserId);
+    public ResponseEntity<FilingPackage> getSubmissionFilingPackage(UUID xTransactionId, UUID submissionId) {
+        Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
 
         if(!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
@@ -237,12 +237,14 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     @Override
     @RolesAllowed("efiling-user")
-    public ResponseEntity<SubmitFilingPackageResponse> submit(UUID xAuthUserId, UUID submissionId, SubmitFilingPackageRequest submitFilingPackageRequest) {
+    public ResponseEntity<SubmitFilingPackageResponse> submit(UUID xTransactionId,
+                                                              UUID submissionId,
+                                                              SubmitFilingPackageRequest submitFilingPackageRequest) {
         ResponseEntity response;
         MDC.put(Keys.EFILING_SUBMISSION_ID, submissionId.toString());
         //TODO: this will get the submission details from the cache and build a submission object
         try {
-            SubmitFilingPackageResponse result = submissionService.submitFilingPackage(xAuthUserId, submissionId, submitFilingPackageRequest);
+            SubmitFilingPackageResponse result = submissionService.submitFilingPackage(xTransactionId, submissionId, submitFilingPackageRequest);
             response = ResponseEntity.ok(result);
         } catch (EfilingSubmissionServiceException e) {
             response = new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
