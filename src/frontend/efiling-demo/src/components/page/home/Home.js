@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
-import { Header, Footer, Input, Textarea, Button } from "shared-components";
+import { Header, Footer, Textarea, Button } from "shared-components";
 import { FilePond, registerPlugin } from "react-filepond";
 
 // Import FilePond styles
