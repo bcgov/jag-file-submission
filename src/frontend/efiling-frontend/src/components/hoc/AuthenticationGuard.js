@@ -25,23 +25,9 @@ const KEYCLOAK = {
 // Initialize client
 const keycloak = Keycloak(KEYCLOAK);
 
-keycloak.onAuthSuccess = () => {
-  console.log("auth success", keycloak.token);
-};
-
-function keycloakUpdateToken() {
-  console.log("in func");
-
-  // Try to get refresh tokens in the background
-  keycloak
-    .updateToken()
-    .success((refreshed) => {
-      console.log("KC refreshed token?:", refreshed);
-    })
-    .error((err) => {
-      console.log("KC refresh error:", err);
-    });
-}
+keycloak.onAuthSuccess = () => localStorage.setItem("jwt", keycloak.token);
+keycloak.onAuthRefreshSuccess = () =>
+  localStorage.setItem("jwt", keycloak.token);
 
 /**
  * @constant authenticationGuard - a higher order component that checks for user authorization and returns the wrapped component if the user is authenticated
@@ -59,8 +45,6 @@ export default function AuthenticationGuard({
       })
       .success(() => {
         keycloak.loadUserInfo().success();
-
-        localStorage.setItem("jwt", keycloak.token);
         setAuthedKeycloak(keycloak);
       });
   }
@@ -77,11 +61,27 @@ export default function AuthenticationGuard({
   );
 }
 
-// Function that will be called to refresh authorization
-const refreshAuthLogic = (failedRequest) => {
-  console.log("inside refresh");
-  keycloakUpdateToken();
+const updateToken = () => {
+  return new Promise((resolve, reject) => {
+    keycloak
+      .updateToken()
+      .success(() => {
+        resolve(keycloak.token);
+      })
+      .error(() => {
+        // TODO: redirect to error page
+        reject("Could not refresh token");
+      });
+  });
 };
+
+// Function that will be called to refresh authorization
+function refreshAuthLogic(failedRequest) {
+  return updateToken().then((res) => {
+    failedRequest.response.config.headers.Authorization = `Bearer ${res}`;
+    return Promise.resolve();
+  });
+}
 
 // Instantiate the interceptor (you can chain it as it returns the axios instance)
 createAuthRefreshInterceptor(axios, refreshAuthLogic);
