@@ -37,7 +37,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UploadSubmissionDocumentsResponse"
-  "/submission/{id}":
+  "/submission/{submissionId}":
     get:
       summary: Get user detail for a given submission
       operationId: GetSubmission
@@ -55,7 +55,7 @@ paths:
                 $ref: "#/components/schemas/GetSubmissionResponse"
         "404":
           description: Config not foun
-  "/submission/{id}/generateUrl":
+  "/submission/{submissionId}/generateUrl":
     post:
       summary: Generates a secure URL for e-filing submission
       operationId: GenerateUrl
@@ -84,14 +84,14 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EfilingError"
-  "/submission/{id}/submit-filing-package":
+  "/submission/{submissionId}/submit-filing-package":
     post:
       summary: Submit the filing package to cso
       operationId: Submit
       tags:
         - submission
       parameters:
-        - $ref: "#/components/parameters/xAuthUserId"
+        - $ref: "#/components/parameters/xTransactionId"
         - $ref: "#/components/parameters/submissionId"
       requestBody:
         description: filing submit parameters
@@ -113,14 +113,14 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EfilingError"
-  "/submission/{id}/filing-package":
+  "/submission/{submissionId}/filing-package":
     get:
       summary: Get filing package information
       operationId: GetSubmissionFilingPackage
       tags:
         - submission
       parameters:
-        - $ref: "#/components/parameters/xAuthUserId"
+        - $ref: "#/components/parameters/xTransactionId"
         - $ref: "#/components/parameters/submissionId"
       responses:
         "200":
@@ -131,14 +131,14 @@ paths:
                 $ref: "#/components/schemas/FilingPackage"
         "404":
           description: Filing Package Information not found
-  "/submission/{id}/document/{filename}":
+  "/submission/{submissionId}/document/{filename}":
     get:
       summary: Get document by name
       operationId: GetSubmissionDocument
       tags:
         - submission
       parameters:
-        - $ref: "#/components/parameters/xAuthUserId"
+        - $ref: "#/components/parameters/xTransactionId"
         - $ref: "#/components/parameters/submissionId"
         - name: filename
           in: path
@@ -164,7 +164,7 @@ paths:
       tags:
         - account
       parameters:
-        - $ref: "#/components/parameters/xAuthUserId"
+        - $ref: "#/components/parameters/xTransactionId"
       requestBody:
         description: cso account details
         required: true
@@ -186,14 +186,6 @@ components:
       scheme: bearer
       bearerFormat: JWT
   parameters:
-    xAuthUserId:
-      name: X-Auth-UserId
-      in: header
-      schema:
-        type: string
-        format: uuid
-      required: true
-      description: Authenticated user id
     xTransactionId:
       name: X-Transaction-Id
       in: header

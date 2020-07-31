@@ -1,14 +1,11 @@
 package ca.bc.gov.open.jag.efilingapi.submission.models;
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
-import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -29,9 +26,6 @@ public class SubmissionTest {
     @Test
     @DisplayName("CASE 1: testing constructor")
     public void testingConstructor() {
-        ServiceFees fee = new ServiceFees(BigDecimal.TEN, "DCFL");
-        AccountDetails accountDetails = new AccountDetails(UUID.randomUUID(), BigDecimal.TEN, BigDecimal.ONE, true, FIRST_NAME, LAST_NAME, MIDDLE_NAME, EMAIL);
-
 
         Submission actual = new Submission(
                 UUID.randomUUID(),
@@ -39,7 +33,6 @@ public class SubmissionTest {
                 TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()),
                 TestHelpers.createNavigation(CASE_1, CANCEL, ERROR),
                 TestHelpers.createClientApplication(DISPLAYNAME, TYPE),
-                accountDetails,
                 1);
 
 
@@ -48,13 +41,6 @@ public class SubmissionTest {
         Assertions.assertEquals(ERROR, actual.getNavigation().getError().getUrl());
         Assertions.assertEquals(CANCEL, actual.getNavigation().getCancel().getUrl());
         Assertions.assertEquals(CASE_1, actual.getNavigation().getSuccess().getUrl());
-        Assertions.assertNotNull(actual.getAccountDetails().getUniversalId());
-        Assertions.assertEquals(EMAIL, actual.getAccountDetails().getEmail());
-        Assertions.assertEquals(FIRST_NAME, actual.getAccountDetails().getFirstName());
-        Assertions.assertEquals(LAST_NAME, actual.getAccountDetails().getLastName());
-        Assertions.assertEquals(MIDDLE_NAME, actual.getAccountDetails().getMiddleName());
-        Assertions.assertEquals(BigDecimal.TEN, actual.getAccountDetails().getAccountId());
-        Assertions.assertEquals(BigDecimal.ONE, actual.getAccountDetails().getClientId());
         Assertions.assertEquals(TestHelpers.DIVISION, actual.getFilingPackage().getCourt().getDivision());
         Assertions.assertEquals(TestHelpers.FILENUMBER, actual.getFilingPackage().getCourt().getFileNumber());
         Assertions.assertEquals(TestHelpers.LEVEL, actual.getFilingPackage().getCourt().getLevel());

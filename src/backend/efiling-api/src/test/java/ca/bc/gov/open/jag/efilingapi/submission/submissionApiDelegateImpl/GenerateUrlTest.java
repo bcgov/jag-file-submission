@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
+import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlResponse;
@@ -8,7 +9,6 @@ import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
-import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
@@ -40,13 +40,15 @@ public class GenerateUrlTest {
     @Mock
     private SubmissionService submissionServiceMock;
 
-    private GenerateUrlResponseMapper generateUrlResponseMapperMock;
-
     @Mock
     private SubmissionStore submissionStoreMock;
 
     @Mock
     private DocumentStore documentStoreMock;
+
+    @Mock
+    private AccountService accountServiceMock;
+
 
     @BeforeAll
     public void setUp() {
@@ -88,10 +90,7 @@ public class GenerateUrlTest {
                 Mockito.eq(TestHelpers.CASE_5),
                 Mockito.any());
 
-        // Testing the mapper part of this test
-        generateUrlResponseMapperMock = new GenerateUrlResponseMapperImpl();
-
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, new GenerateUrlResponseMapperImpl(), navigationProperties, submissionStoreMock, documentStoreMock);
 
     }
 
