@@ -17,10 +17,9 @@ public interface GenerateUrlResponseMapper {
     @Named("submissionIdToUrl")
     static String submissionIdToUrl(Submission submission, @Context String baseUrl) {
         return MessageFormat.format(
-                "{0}?submissionId={1}&temp={2}",
+                "{0}?submissionId={1}",
                 baseUrl,
-                submission.getId(),
-                submission.getTransactionId());
+                submission.getId());
     }
 
 }
