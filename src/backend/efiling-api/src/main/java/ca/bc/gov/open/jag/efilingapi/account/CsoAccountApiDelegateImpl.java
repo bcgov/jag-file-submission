@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.account;
 
+import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.api.CsoAccountApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.Account;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
@@ -10,12 +11,16 @@ import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceExcepti
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.CreateAccountRequest;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
+import org.keycloak.KeycloakPrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.security.RolesAllowed;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -35,7 +40,8 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
 
 
     @Override
-    public ResponseEntity<UserDetails> createAccount(UUID xAuthUserId, UserDetails userDetails) {
+    @RolesAllowed("efiling-user")
+    public ResponseEntity<UserDetails> createAccount(UUID xTransactionId, UserDetails userDetails) {
 
         try {
 
@@ -43,7 +49,7 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
             
             AccountDetails accountDetails = efilingAccountService.createAccount(CreateAccountRequest
                     .builder()
-                    .universalId(xAuthUserId)
+                    .universalId(getUniversalIdFromContext().get())
                     .firstName(userDetails.getFirstName())
                     .lastName(userDetails.getLastName())
                     .middleName(userDetails.getMiddleName())
@@ -84,6 +90,18 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
         result.setLastName(accountDetails.getLastName());
         result.setMiddleName(accountDetails.getMiddleName());
         return result;
+    }
+
+    private Optional<UUID> getUniversalIdFromContext() {
+
+        try {
+            return Optional.of(UUID.fromString(
+                    ((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+                            .getKeycloakSecurityContext().getToken().getOtherClaims().get(Keys.UNIVERSAL_ID_CLAIM_KEY).toString()));
+        } catch (Exception e) {
+            logger.error("Unable to extract universal Id from token", e);
+            return Optional.empty();
+        }
     }
 
 }
