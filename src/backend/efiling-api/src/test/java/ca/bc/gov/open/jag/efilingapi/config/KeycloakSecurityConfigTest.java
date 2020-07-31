@@ -1,19 +1,10 @@
 package ca.bc.gov.open.jag.efilingapi.config;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.keycloak.adapters.KeycloakConfigResolver;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
-import org.springframework.security.config.annotation.ObjectPostProcessor;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
-
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
