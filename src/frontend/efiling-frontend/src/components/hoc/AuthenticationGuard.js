@@ -26,11 +26,11 @@ const KEYCLOAK = {
 const keycloak = Keycloak(KEYCLOAK);
 
 keycloak.onAuthSuccess = () => {
-  console.log("Auth Success", keycloak.token);
+  console.log("auth success", keycloak.token);
 };
 
 function keycloakUpdateToken() {
-  console.log("inside function");
+  console.log("in func");
 
   // Try to get refresh tokens in the background
   keycloak
