@@ -70,15 +70,16 @@ const updateToken = () => {
       })
       .error(() => {
         // TODO: redirect to error page
-        reject("Could not refresh token");
+        reject(new Error("Could not refresh token"));
       });
   });
 };
 
 // Function that will be called to refresh authorization
 function refreshAuthLogic(failedRequest) {
-  return updateToken().then((res) => {
-    failedRequest.response.config.headers.Authorization = `Bearer ${res}`;
+  return updateToken().then((token) => {
+    // eslint-disable-next-line no-param-reassign
+    failedRequest.response.config.headers.Authorization = `Bearer ${token}`;
     return Promise.resolve();
   });
 }
