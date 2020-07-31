@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-curly-newline */
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { Header, Footer, Input, Textarea, Button } from "shared-components";
 import { FilePond, registerPlugin } from "react-filepond";
@@ -54,13 +55,7 @@ const urlBody = {
   },
 };
 
-const input = {
-  label: "Account GUID",
-  id: "textInputId",
-  styling: "editable-white",
-  isRequired: true,
-  placeholder: "77da92db-0791-491e-8c58-1a969e67d2fa",
-};
+const transactionId = uuidv4();
 
 const generatePackageData = (files, filingPackage) => {
   const formData = new FormData();
@@ -91,12 +86,7 @@ const generatePackageData = (files, filingPackage) => {
   return { formData, updatedUrlBody };
 };
 
-export const eFilePackage = (
-  files,
-  accountGuid,
-  setErrorExists,
-  filingPackage
-) => {
+export const eFilePackage = (files, setErrorExists, filingPackage) => {
   if (!files || files.length === 0) return false;
 
   const { formData, updatedUrlBody } = generatePackageData(
@@ -109,17 +99,17 @@ export const eFilePackage = (
   axios
     .post("/submission/documents", formData, {
       headers: {
-        "X-Auth-UserId": accountGuid,
+        "X-Transaction-Id": transactionId,
         "Content-Type": "multipart/form-data",
       },
     })
     .then(({ data: { submissionId } }) => {
       axios
         .post(`/submission/${submissionId}/generateUrl`, updatedUrlBody, {
-          headers: { "X-Auth-UserId": accountGuid },
+          headers: { "X-Transaction-Id": transactionId },
         })
         .then(({ data: { efilingUrl } }) => {
-          window.open(efilingUrl, "_self");
+          window.open(`${efilingUrl}&transactionId=${transactionId}`, "_self");
         })
         .catch(() => setErrorExists(true));
     })
@@ -130,7 +120,6 @@ export const eFilePackage = (
 
 export default function Home({ page: { header } }) {
   const [errorExists, setErrorExists] = useState(false);
-  const [accountGuid, setAccountGuid] = useState(null);
   const [filingPackage, setFilingPackage] = useState(null);
   const [files, setFiles] = useState([]);
 
@@ -139,9 +128,6 @@ export default function Home({ page: { header } }) {
       <Header header={header} />
       <div className="page">
         <div className="content col-md-12">
-          <Input input={input} onChange={setAccountGuid} />
-          <br />
-          <br />
           <FilePond
             files={files}
             allowMultiple
@@ -158,12 +144,7 @@ export default function Home({ page: { header } }) {
           <br />
           <Button
             onClick={() => {
-              const result = eFilePackage(
-                files,
-                accountGuid,
-                setErrorExists,
-                filingPackage
-              );
+              const result = eFilePackage(files, setErrorExists, filingPackage);
               if (!result) setErrorExists(true);
             }}
             label="E-File my Package"
