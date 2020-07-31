@@ -13,10 +13,9 @@ import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMappe
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
+import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.*;
-
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
-import org.keycloak.KeycloakPrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -25,7 +24,6 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -175,7 +173,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @RolesAllowed("efiling-user")
     public ResponseEntity<GetSubmissionResponse> getSubmission(UUID submissionId, UUID xTransactionId) {
 
-        Optional<UUID> universalId = getUniversalIdFromContext();
+        Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
 
         if(!universalId.isPresent()) return new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
@@ -189,7 +187,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         GetSubmissionResponse response = new GetSubmissionResponse();
 
-        response.setUserDetails(buildUserDetails());
+        response.setUserDetails(buildUserDetails(universalId.get()));
 
         response.setNavigation(fromCacheSubmission.get().getNavigation());
 
@@ -199,11 +197,11 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     }
 
-    private UserDetails buildUserDetails() {
+    private UserDetails buildUserDetails(UUID universalId) {
 
         UserDetails userDetails = new UserDetails();
 
-        AccountDetails accountDetails = accountService.getCsoAccountDetails(getUniversalIdFromContext().get());
+        AccountDetails accountDetails = accountService.getCsoAccountDetails(universalId);
 
         if(accountDetails != null) {
 
@@ -261,18 +259,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         response.setMessage(errorResponse.getErrorMessage());
         return response;
 
-    }
-
-    private Optional<UUID> getUniversalIdFromContext() {
-
-        try {
-            return Optional.of(UUID.fromString(
-                    ((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-                            .getKeycloakSecurityContext().getToken().getOtherClaims().get(Keys.UNIVERSAL_ID_CLAIM_KEY).toString()));
-        } catch (Exception e) {
-            logger.error("Unable to extract universal Id from token", e);
-            return Optional.empty();
-        }
     }
 
 }

@@ -3,7 +3,6 @@ package ca.bc.gov.open.jag.efilingapi.submission.models;
 import ca.bc.gov.open.jag.efilingapi.api.model.ClientApplication;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.api.model.Navigation;
-import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -80,7 +79,6 @@ public class Submission {
         private FilingPackage filingPackage;
         private Navigation navigation;
         private ClientApplication clientApplication;
-        private AccountDetails accountDetails;
         private long expiryDate;
 
         public Builder id (UUID id) {

@@ -1,6 +1,5 @@
 package ca.bc.gov.open.jag.efilingapi.account;
 
-import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.api.CsoAccountApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.Account;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
@@ -8,16 +7,15 @@ import ca.bc.gov.open.jag.efilingapi.api.model.UserDetails;
 import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
+import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.CreateAccountRequest;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
-import org.keycloak.KeycloakPrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.security.RolesAllowed;
@@ -45,7 +43,7 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
     public ResponseEntity<UserDetails> createAccount(UUID xTransactionId, UserDetails userDetails) {
 
 
-        Optional<UUID> universalId = getUniversalIdFromContext();
+        Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
 
         if(!universalId.isPresent()) return new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
@@ -97,18 +95,6 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
         result.setLastName(accountDetails.getLastName());
         result.setMiddleName(accountDetails.getMiddleName());
         return result;
-    }
-
-    private Optional<UUID> getUniversalIdFromContext() {
-
-        try {
-            return Optional.of(UUID.fromString(
-                    ((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-                            .getKeycloakSecurityContext().getToken().getOtherClaims().get(Keys.UNIVERSAL_ID_CLAIM_KEY).toString()));
-        } catch (Exception e) {
-            logger.error("Unable to extract universal Id from token", e);
-            return Optional.empty();
-        }
     }
 
 }
