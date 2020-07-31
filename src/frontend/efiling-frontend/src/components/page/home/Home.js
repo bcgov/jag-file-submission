@@ -21,7 +21,7 @@ const setRequestHeaders = (transactionId) => {
   // Use interceptor to inject the transactionId to all requests
   axios.interceptors.request.use((request) => {
     request.headers["X-Transaction-Id"] = transactionId;
-    request.headers["Authorization"] = token;
+    request.headers["Authorization"] = `Bearer ${token}`;
     return request;
   });
 };
