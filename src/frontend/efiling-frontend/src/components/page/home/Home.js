@@ -16,10 +16,9 @@ import { propTypes } from "../../../types/propTypes";
 import "../page.css";
 
 const setRequestHeaders = (transactionId) => {
-  const token = localStorage.getItem("jwt");
-
   // Use interceptor to inject the transactionId to all requests
   axios.interceptors.request.use((request) => {
+    const token = localStorage.getItem("jwt");
     request.headers["X-Transaction-Id"] = transactionId;
     request.headers.Authorization = `Bearer ${token}`;
     return request;
