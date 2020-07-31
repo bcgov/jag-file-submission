@@ -32,7 +32,6 @@ describe("Home", () => {
       },
     },
   ];
-  const accountGuid = "guid";
   const submissionId = "123";
   const filingPackage = {
     documents: [files[0].file],
@@ -52,7 +51,7 @@ describe("Home", () => {
     mock.onPost("/submission/documents").reply(200, { submissionId });
     mock.onPost("/submission/generateUrl").reply(400);
 
-    eFilePackage(files, accountGuid, setErrorExists, filingPackage);
+    eFilePackage(files, setErrorExists, filingPackage);
 
     await waitFor(() => {});
 
@@ -62,7 +61,7 @@ describe("Home", () => {
   test("eFilePackage function displays an error message on page on failure of uploadDocuments call", async () => {
     mock.onPost("/submission/documents").reply(400);
 
-    eFilePackage(files, accountGuid, setErrorExists, filingPackage);
+    eFilePackage(files, setErrorExists, filingPackage);
 
     await waitFor(() => {});
 
@@ -77,12 +76,11 @@ describe("Home", () => {
       .onPost(`/submission/${submissionId}/generateUrl`)
       .reply(200, { efilingUrl });
 
-    eFilePackage(files, accountGuid, setErrorExists, filingPackage);
+    eFilePackage(files, setErrorExists, filingPackage);
 
     await waitFor(() => {});
 
     expect(window.open).toHaveBeenCalledTimes(1);
-    expect(window.open).toHaveBeenCalledWith(efilingUrl, "_self");
   });
 
   test("eFilePackage functions returns error when no files uploaded", async () => {
@@ -91,10 +89,6 @@ describe("Home", () => {
     const textbox = getAllByRole(container, "textbox");
 
     fireEvent.change(textbox[0], {
-      target: { value: "" },
-    });
-
-    fireEvent.change(textbox[1], {
       target: { value: JSON.stringify(filingPackage) },
     });
 
@@ -116,7 +110,7 @@ describe("Home", () => {
       documents: [{ name: "wrongname", type: "type" }],
     };
 
-    eFilePackage(files, accountGuid, setErrorExists, improperFilingPackage);
+    eFilePackage(files, setErrorExists, improperFilingPackage);
 
     expect(setErrorExists).toHaveBeenCalledWith(true);
   });

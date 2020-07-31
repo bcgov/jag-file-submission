@@ -690,41 +690,6 @@ exports[`Storyshots Home Default 1`] = `
     <div
       className="content col-md-12"
     >
-      <div>
-        <label
-          className="label"
-          htmlFor="textInputId"
-        >
-          <div
-            className="input-label"
-          >
-            Account GUID
-          </div>
-          <span
-            className="mandatory"
-            id="asterisk"
-          >
-            *
-          </span>
-           
-          <span
-            className="note"
-          />
-        </label>
-        <input
-          className="editable-white"
-          id="textInputId"
-          onChange={[Function]}
-          placeholder="77da92db-0791-491e-8c58-1a969e67d2fa"
-          type="text"
-        />
-        <br />
-        <span
-          className="error"
-        />
-      </div>
-      <br />
-      <br />
       <div
         className="filepond--wrapper"
       >
@@ -905,41 +870,6 @@ exports[`Storyshots Home Mobile 1`] = `
     <div
       className="content col-md-12"
     >
-      <div>
-        <label
-          className="label"
-          htmlFor="textInputId"
-        >
-          <div
-            className="input-label"
-          >
-            Account GUID
-          </div>
-          <span
-            className="mandatory"
-            id="asterisk"
-          >
-            *
-          </span>
-           
-          <span
-            className="note"
-          />
-        </label>
-        <input
-          className="editable-white"
-          id="textInputId"
-          onChange={[Function]}
-          placeholder="77da92db-0791-491e-8c58-1a969e67d2fa"
-          type="text"
-        />
-        <br />
-        <span
-          className="error"
-        />
-      </div>
-      <br />
-      <br />
       <div
         className="filepond--wrapper"
       >

@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission;
 
 import ca.bc.gov.open.jag.efilingapi.Keys;
+import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.SubmissionApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
@@ -12,9 +13,9 @@ import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMappe
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
+import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.*;
-
-import org.keycloak.KeycloakPrincipal;
+import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -23,16 +24,12 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.security.RolesAllowed;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -47,6 +44,8 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     private final SubmissionStore submissionStore;
 
+    private final AccountService accountService;
+
     private final GenerateUrlResponseMapper generateUrlResponseMapper;
 
     private final NavigationProperties navigationProperties;
@@ -56,10 +55,12 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     public SubmissionApiDelegateImpl(
             SubmissionService submissionService,
+            AccountService accountService,
             GenerateUrlResponseMapper generateUrlResponseMapper,
             NavigationProperties navigationProperties,
             SubmissionStore submissionStore, DocumentStore documentStore) {
         this.submissionService = submissionService;
+        this.accountService = accountService;
         this.generateUrlResponseMapper = generateUrlResponseMapper;
         this.navigationProperties = navigationProperties;
         this.submissionStore = submissionStore;
@@ -67,7 +68,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    public ResponseEntity<UploadSubmissionDocumentsResponse> uploadSubmissionDocuments(UUID xAuthUserId, List<MultipartFile> files) {
+    public ResponseEntity<UploadSubmissionDocumentsResponse> uploadSubmissionDocuments(UUID xTransactionId, List<MultipartFile> files) {
 
         if (files == null || files.isEmpty())
             return new ResponseEntity(
@@ -84,7 +85,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             for (MultipartFile file : files) {
                 Document document = Document
                         .builder()
-                        .owner(xAuthUserId)
+                        .transactionId(xTransactionId)
                         .submissionId(submissionId)
                         .fileName(file.getResource().getFilename())
                         .content(file.getBytes())
@@ -107,15 +108,18 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    public ResponseEntity<Resource> getSubmissionDocument(UUID xAuthUserId, UUID id, String filename) {
+    @RolesAllowed("efiling-user")
+    public ResponseEntity<Resource> getSubmissionDocument(UUID xTransactionId,
+                                                          UUID submissionId,
+                                                          String filename) {
 
 
-        MDC.put(Keys.EFILING_SUBMISSION_ID, id.toString());
+        MDC.put(Keys.EFILING_SUBMISSION_ID, submissionId.toString());
 
         Document document = Document
                 .builder()
-                .owner(xAuthUserId)
-                .submissionId(id)
+                .transactionId(xTransactionId)
+                .submissionId(submissionId)
                 .fileName(filename)
                 .create();
 
@@ -130,9 +134,9 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    public ResponseEntity<GenerateUrlResponse> generateUrl(UUID xAuthUserId, UUID id, GenerateUrlRequest generateUrlRequest) {
+    public ResponseEntity<GenerateUrlResponse> generateUrl(UUID xTransactionId, UUID submissionId, GenerateUrlRequest generateUrlRequest) {
 
-        MDC.put(Keys.EFILING_SUBMISSION_ID, id.toString());
+        MDC.put(Keys.EFILING_SUBMISSION_ID, submissionId.toString());
 
         logger.info("Generate Url Request Received");
 
@@ -141,7 +145,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         try {
             response = ResponseEntity.ok(
                     generateUrlResponseMapper.toGenerateUrlResponse(
-                            submissionService.generateFromRequest(xAuthUserId, id, generateUrlRequest),
+                            submissionService.generateFromRequest(xTransactionId, submissionId, generateUrlRequest),
                             navigationProperties.getBaseUrl()));
             logger.info("successfully generated return url.");
         }
@@ -169,23 +173,23 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     @Override
     @RolesAllowed("efiling-user")
-    public ResponseEntity<GetSubmissionResponse> getSubmission(UUID id) {
+    public ResponseEntity<GetSubmissionResponse> getSubmission(UUID submissionId, UUID xTransactionId) {
 
-        Optional<UUID> universalId = getUniversalIdFromContext();
+        Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
 
         if(!universalId.isPresent()) return new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
 
-        MDC.put(Keys.EFILING_SUBMISSION_ID, id.toString());
+        MDC.put(Keys.EFILING_SUBMISSION_ID, submissionId.toString());
 
-        Optional<Submission> fromCacheSubmission = this.submissionStore.get(id, universalId.get());
+        Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
 
         if(!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
 
         GetSubmissionResponse response = new GetSubmissionResponse();
 
-        response.setUserDetails(buildUserDetails(fromCacheSubmission.get()));
+        response.setUserDetails(buildUserDetails(universalId.get()));
 
         response.setNavigation(fromCacheSubmission.get().getNavigation());
 
@@ -195,32 +199,26 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     }
 
-    private UserDetails buildUserDetails(Submission submission) {
+    private UserDetails buildUserDetails(UUID universalId) {
 
         UserDetails userDetails = new UserDetails();
 
-        if(submission.getAccountDetails() != null) {
+        AccountDetails accountDetails = accountService.getCsoAccountDetails(universalId);
 
-            if(submission.getAccountDetails().isFileRolePresent()) {
+        if(accountDetails != null) {
+
+            if(accountDetails.isFileRolePresent()) {
                 Account account = new Account();
                 account.setType(Account.TypeEnum.CSO);
-                account.setIdentifier(submission.getAccountDetails().getAccountId().toString());
+                account.setIdentifier(accountDetails.getAccountId().toString());
                 userDetails.addAccountsItem(account);
             }
 
-            userDetails.setUniversalId(submission.getAccountDetails().getUniversalId());
-            userDetails.setFirstName(submission.getAccountDetails().getFirstName());
-            userDetails.setLastName(submission.getAccountDetails().getLastName());
-            userDetails.setMiddleName(submission.getAccountDetails().getMiddleName());
-            userDetails.setEmail(submission.getAccountDetails().getEmail());
-
-        } else {
-
-            // TODO: remove this
-            userDetails.setFirstName("firstName");
-            userDetails.setLastName("lastName");
-            userDetails.setMiddleName("middleName");
-            userDetails.setEmail("email");
+            userDetails.setUniversalId(accountDetails.getUniversalId());
+            userDetails.setFirstName(accountDetails.getFirstName());
+            userDetails.setLastName(accountDetails.getLastName());
+            userDetails.setMiddleName(accountDetails.getMiddleName());
+            userDetails.setEmail(accountDetails.getEmail());
 
         }
 
@@ -229,8 +227,9 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    public ResponseEntity<FilingPackage> getSubmissionFilingPackage(UUID xAuthUserId, UUID id) {
-        Optional<Submission> fromCacheSubmission = this.submissionStore.get(id, xAuthUserId);
+    @RolesAllowed("efiling-user")
+    public ResponseEntity<FilingPackage> getSubmissionFilingPackage(UUID xTransactionId, UUID submissionId) {
+        Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
 
         if(!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
@@ -240,12 +239,14 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     @Override
     @RolesAllowed("efiling-user")
-    public ResponseEntity<SubmitFilingPackageResponse> submit(UUID xAuthUserId, UUID id, SubmitFilingPackageRequest submitFilingPackageRequest) {
+    public ResponseEntity<SubmitFilingPackageResponse> submit(UUID xTransactionId,
+                                                              UUID submissionId,
+                                                              SubmitFilingPackageRequest submitFilingPackageRequest) {
         ResponseEntity response;
-        MDC.put(Keys.EFILING_SUBMISSION_ID, id.toString());
+        MDC.put(Keys.EFILING_SUBMISSION_ID, submissionId.toString());
         //TODO: this will get the submission details from the cache and build a submission object
         try {
-            SubmitFilingPackageResponse result = submissionService.submitFilingPackage(xAuthUserId, id, submitFilingPackageRequest);
+            SubmitFilingPackageResponse result = submissionService.submitFilingPackage(xTransactionId, submissionId, submitFilingPackageRequest);
             response = ResponseEntity.ok(result);
         } catch (EfilingSubmissionServiceException e) {
             response = new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -262,18 +263,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         response.setMessage(errorResponse.getErrorMessage());
         return response;
 
-    }
-
-    private Optional<UUID> getUniversalIdFromContext() {
-
-        try {
-            return Optional.of(UUID.fromString(
-                    ((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-                            .getKeycloakSecurityContext().getToken().getOtherClaims().get(Keys.UNIVERSAL_ID_CLAIM_KEY).toString()));
-        } catch (Exception e) {
-            logger.error("Unable to extract universal Id from token", e);
-            return Optional.empty();
-        }
     }
 
 }

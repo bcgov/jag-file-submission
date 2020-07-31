@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
+import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.SubmitFilingPackageRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.SubmitFilingPackageResponse;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
@@ -10,7 +11,6 @@ import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMappe
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import org.joda.time.LocalDate;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -48,6 +48,9 @@ public class SubmitTest {
     @Mock
     private DocumentStore documentStoreMock;
 
+    @Mock
+    private AccountService accountServiceMock;
+
 
     @BeforeAll
     public void setUp() {
@@ -58,7 +61,7 @@ public class SubmitTest {
         result.setTransactionId(BigDecimal.TEN);
         Mockito.when(submissionServiceMock.submitFilingPackage(any(), Mockito.eq(TestHelpers.CASE_1), any())).thenReturn(result);
         Mockito.when(submissionServiceMock.submitFilingPackage(any(), Mockito.eq(TestHelpers.CASE_2), any())).thenThrow(new EfilingSubmissionServiceException("Nooooooo", new Throwable()));
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationPropertiesMock, submissionStoreMock, documentStoreMock);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationPropertiesMock, submissionStoreMock, documentStoreMock);
 
     }
 

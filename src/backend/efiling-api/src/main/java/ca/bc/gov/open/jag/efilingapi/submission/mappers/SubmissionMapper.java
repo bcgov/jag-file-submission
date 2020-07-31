@@ -14,17 +14,16 @@ import java.util.UUID;
 public interface SubmissionMapper {
 
     @Mapping(source = "submissionId", target = "id")
-    @Mapping(source = "accountDetails.universalId", target = "owner")
+    @Mapping(source = "transactionId", target = "transactionId")
     @Mapping(source = "generateUrlRequest.navigation", target = "navigation")
     @Mapping(source = "generateUrlRequest.clientApplication", target = "clientApplication")
     @Mapping(source = "filingPackage", target = "filingPackage")
-    @Mapping(source = "accountDetails", target = "accountDetails")
     @Mapping(source = "expiryDate", target = "expiryDate")
     Submission toSubmission(
             UUID submissionId,
+            UUID transactionId,
             GenerateUrlRequest generateUrlRequest,
             FilingPackage filingPackage,
-            AccountDetails accountDetails,
             long expiryDate);
 
 }

@@ -6,13 +6,10 @@ import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.utils.FileUtils;
-import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
-import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
@@ -38,8 +35,6 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private final SubmissionMapper submissionMapper;
 
-    private final EfilingAccountService efilingAccountService;
-
     private final EfilingLookupService efilingLookupService;
 
     private final EfilingCourtService efilingCourtService;
@@ -52,13 +47,11 @@ public class SubmissionServiceImpl implements SubmissionService {
             SubmissionStore submissionStore,
             CacheProperties cacheProperties,
             SubmissionMapper submissionMapper,
-            EfilingAccountService efilingAccountService,
             EfilingLookupService efilingLookupService,
             EfilingCourtService efilingCourtService, EfilingSubmissionService efilingSubmissionService, DocumentStore documentStore) {
         this.submissionStore = submissionStore;
         this.cacheProperties = cacheProperties;
         this.submissionMapper = submissionMapper;
-        this.efilingAccountService = efilingAccountService;
         this.efilingLookupService = efilingLookupService;
         this.efilingCourtService = efilingCourtService;
         this.efilingSubmissionService = efilingSubmissionService;
@@ -66,24 +59,14 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     @Override
-    public Submission generateFromRequest(UUID authUserId, UUID submissionId, GenerateUrlRequest generateUrlRequest) {
-
-        logger.debug("Attempting to get user cso account information");
-        AccountDetails accountDetails = efilingAccountService.getAccountDetails(authUserId, "Individual");
-        logger.info("Successfully got cso account information");
-
-        if (accountDetails != null && accountDetails.getAccountId() != null && !accountDetails.isFileRolePresent()) {
-            throw new InvalidAccountStateException("Account does not have CSO FILE ROLE");
-        } else if (accountDetails == null) {
-            accountDetails = fakeFromBceId(authUserId);
-        }
+    public Submission generateFromRequest(UUID transactionId, UUID submissionId, GenerateUrlRequest generateUrlRequest) {
 
         Optional<Submission> cachedSubmission = submissionStore.put(
                 submissionMapper.toSubmission(
                         submissionId,
+                        transactionId,
                         generateUrlRequest,
                         toFilingPackage(generateUrlRequest),
-                        accountDetails,
                         getExpiryDate()));
 
         if(!cachedSubmission.isPresent())
@@ -100,19 +83,6 @@ public class SubmissionServiceImpl implements SubmissionService {
         result.setTransactionId(efilingSubmissionService.submitFilingPackage(submissionId));
         result.setAcknowledge(LocalDate.now());
         return result;
-    }
-
-    private AccountDetails fakeFromBceId(UUID authUserId) {
-
-        // TODO: implement account details service
-
-        logger.error("THIS IS FOR TESTING ONLY");
-
-        if(authUserId.equals(FAKE_ACCOUNT))
-            return new AccountDetails(authUserId, BigDecimal.ZERO, BigDecimal.ZERO, false, "Bob", "Ross", "Rob", "bross@paintit.com");
-
-        return null;
-
     }
 
     private FilingPackage toFilingPackage(GenerateUrlRequest request) {

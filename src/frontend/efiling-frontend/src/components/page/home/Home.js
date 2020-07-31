@@ -15,6 +15,17 @@ import { propTypes } from "../../../types/propTypes";
 
 import "../page.css";
 
+const setRequestHeaders = (transactionId) => {
+  const token = localStorage.getItem("jwt");
+
+  // Use interceptor to inject the transactionId to all requests
+  axios.interceptors.request.use((request) => {
+    request.headers["X-Transaction-Id"] = transactionId;
+    request.headers.Authorization = `Bearer ${token}`;
+    return request;
+  });
+};
+
 export const saveDataToSessionStorage = ({ cancel, success, error }) => {
   if (cancel.url) sessionStorage.setItem("cancelUrl", cancel.url);
   if (success.url) sessionStorage.setItem("successUrl", success.url);
@@ -43,18 +54,13 @@ const setRequiredState = (setApplicantInfo, setShowLoader) => {
 // make call to submission/{id} to get the user and navigation details
 const checkCSOAccountStatus = (
   submissionId,
-  token,
   setCsoAccountStatus,
   setShowLoader,
   setApplicantInfo,
   setError
 ) => {
   axios
-    .get(`/submission/${submissionId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    .get(`/submission/${submissionId}`)
     .then(({ data: { userDetails, navigation } }) => {
       saveDataToSessionStorage(navigation);
 
@@ -88,12 +94,12 @@ export default function Home({ page: { header, confirmationPopup } }) {
   const [error, setError] = useState(false);
   const location = useLocation();
   const queryParams = queryString.parse(location.search);
-  const token = localStorage.getItem("jwt");
+
+  setRequestHeaders(queryParams.transactionId);
 
   useEffect(() => {
     checkCSOAccountStatus(
       queryParams.submissionId,
-      token,
       setCsoAccountStatus,
       setShowLoader,
       setApplicantInfo,

@@ -7,7 +7,6 @@ import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStoreImpl;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
@@ -37,7 +36,6 @@ public class SubmissionConfig {
     @Bean
     public SubmissionService submissionService(SubmissionStore submissionStore,
                                                SubmissionMapper submissionMapper,
-                                               EfilingAccountService efilingAccountService,
                                                EfilingLookupService efilingLookupService,
                                                EfilingCourtService efilingCourtService,
                                                EfilingSubmissionService efilingSubmissionService,
@@ -46,7 +44,6 @@ public class SubmissionConfig {
         return new SubmissionServiceImpl(submissionStore,
                 cacheProperties,
                 submissionMapper,
-                efilingAccountService,
                 efilingLookupService,
                 efilingCourtService,
                 efilingSubmissionService,

@@ -4,8 +4,10 @@ import ca.bc.gov.open.jag.efilingapi.api.CsoAccountApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.Account;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.api.model.UserDetails;
+import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
+import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.CreateAccountRequest;
@@ -16,6 +18,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.security.RolesAllowed;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -35,7 +39,14 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
 
 
     @Override
-    public ResponseEntity<UserDetails> createAccount(UUID xAuthUserId, UserDetails userDetails) {
+    @RolesAllowed("efiling-user")
+    public ResponseEntity<UserDetails> createAccount(UUID xTransactionId, UserDetails userDetails) {
+
+
+        Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
+
+        if(!universalId.isPresent()) return new ResponseEntity(
+                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
 
         try {
 
@@ -43,7 +54,7 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
             
             AccountDetails accountDetails = efilingAccountService.createAccount(CreateAccountRequest
                     .builder()
-                    .universalId(xAuthUserId)
+                    .universalId(universalId.get())
                     .firstName(userDetails.getFirstName())
                     .lastName(userDetails.getLastName())
                     .middleName(userDetails.getMiddleName())

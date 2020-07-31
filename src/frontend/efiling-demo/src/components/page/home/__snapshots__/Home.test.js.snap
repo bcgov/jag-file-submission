@@ -45,41 +45,6 @@ exports[`Home Component matches the snapshot 1`] = `
       <div
         class="content col-md-12"
       >
-        <div>
-          <label
-            class="label"
-            for="textInputId"
-          >
-            <div
-              class="input-label"
-            >
-              Account GUID
-            </div>
-            <span
-              class="mandatory"
-              id="asterisk"
-            >
-              *
-            </span>
-             
-            <span
-              class="note"
-            />
-          </label>
-          <input
-            class="editable-white"
-            id="textInputId"
-            placeholder="77da92db-0791-491e-8c58-1a969e67d2fa"
-            type="text"
-            value=""
-          />
-          <br />
-          <span
-            class="error"
-          />
-        </div>
-        <br />
-        <br />
         <div
           class="filepond--wrapper"
         >

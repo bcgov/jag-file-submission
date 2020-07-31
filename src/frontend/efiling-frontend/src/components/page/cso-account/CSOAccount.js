@@ -15,7 +15,6 @@ import { getContent } from "../../../modules/csoAccountAgreementContent";
 import { getSidecardData } from "../../../modules/sidecardData";
 import { translateApplicantInfo } from "../../../modules/translateApplicantInfo";
 import { errorRedirect } from "../../../modules/errorRedirect";
-import { getJWTData } from "../../../modules/authenticationHelper";
 import { propTypes } from "../../../types/propTypes";
 
 const content = getContent();
@@ -39,9 +38,7 @@ export default function CSOAccount({
 
   const createCSOAccount = (applicantDetails) => {
     axios
-      .post("/csoAccount", applicantDetails, {
-        headers: { "X-Auth-UserId": getJWTData()["universal-id"] },
-      })
+      .post("/csoAccount", applicantDetails)
       .then(({ data: { accounts } }) => {
         accounts.forEach((account) => {
           if (account.type === "CSO") {
