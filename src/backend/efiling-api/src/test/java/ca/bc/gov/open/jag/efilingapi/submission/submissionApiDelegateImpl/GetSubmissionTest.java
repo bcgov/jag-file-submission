@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 
 import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
+import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.Account;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.api.model.GetSubmissionResponse;
@@ -12,9 +13,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMappe
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
-import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -77,6 +76,9 @@ public class GetSubmissionTest {
     @Mock
     private AccessToken tokenMock;
 
+    @Mock
+    private AccountService accountServiceMock;
+
 
     @BeforeAll
     public void setUp() {
@@ -94,16 +96,6 @@ public class GetSubmissionTest {
         navigationProperties.setBaseUrl("http://localhost");
         Submission submissionWithCsoAccount = Submission
                 .builder()
-                .accountDetails(
-                        AccountDetails
-                                .builder()
-                                .universalId(TestHelpers.CASE_2)
-                                .accountId(BigDecimal.TEN)
-                                .firstName(FIRST_NAME + TestHelpers.CASE_2)
-                                .lastName(LAST_NAME + TestHelpers.CASE_2)
-                                .middleName(MIDDLE_NAME + TestHelpers.CASE_2)
-                                .fileRolePresent(true)
-                                .email(EMAIL + TestHelpers.CASE_2).create())
                 .navigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
                 .create();
 
@@ -116,7 +108,7 @@ public class GetSubmissionTest {
 
         Mockito.when(submissionStoreMock.get(Mockito.eq(TestHelpers.CASE_3), Mockito.any())).thenReturn(Optional.of(submissionWithoutCsoAccount));
 
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock);
 
     }
 
@@ -128,7 +120,7 @@ public class GetSubmissionTest {
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission(TestHelpers.CASE_1);
+        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission(UUID.randomUUID(), TestHelpers.CASE_1);
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
     }
 
@@ -140,7 +132,7 @@ public class GetSubmissionTest {
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission(TestHelpers.CASE_2);
+        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission(UUID.randomUUID(), TestHelpers.CASE_2);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertEquals(TestHelpers.CASE_2, actual.getBody().getUserDetails().getUniversalId());
         assertEquals(EMAIL + TestHelpers.CASE_2, actual.getBody().getUserDetails().getEmail());
@@ -165,7 +157,7 @@ public class GetSubmissionTest {
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission(TestHelpers.CASE_3);
+        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission(UUID.randomUUID(), TestHelpers.CASE_3);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertEquals(EMAIL, actual.getBody().getUserDetails().getEmail());
         assertEquals(FIRST_NAME, actual.getBody().getUserDetails().getFirstName());
@@ -184,7 +176,7 @@ public class GetSubmissionTest {
         Map<String, Object> otherClaims = new HashMap<>();
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity actual = sut.getSubmission(TestHelpers.CASE_5);
+        ResponseEntity actual = sut.getSubmission(UUID.randomUUID(), TestHelpers.CASE_5);
         assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
         assertEquals("MISSING_UNIVERSAL_ID", ((EfilingError)actual.getBody()).getError());
         assertEquals("universal-id claim missing in jwt token.", ((EfilingError)actual.getBody()).getMessage());

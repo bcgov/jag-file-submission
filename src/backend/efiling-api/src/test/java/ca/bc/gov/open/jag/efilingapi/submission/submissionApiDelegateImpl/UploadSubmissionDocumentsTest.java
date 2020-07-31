@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 
+import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.api.model.UploadSubmissionDocumentsResponse;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
@@ -8,7 +9,6 @@ import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -36,18 +36,27 @@ public class UploadSubmissionDocumentsTest {
 
     @Mock
     private SubmissionService submissionServiceMock;
+
     @Mock
     private SubmissionStore submissionStoreMock;
+
     @Mock
     private GenerateUrlResponseMapper generateUrlResponseMapperMock;
+
     @Mock
     private NavigationProperties navigationProperties;
+
     @Mock
     private MultipartFile multipartFileMock;
+
     @Mock
     private DocumentStore documentStoreMock;
+
     @Mock
     private Resource resourceMock;
+
+    @Mock
+    private AccountService accountServiceMock;
 
     @BeforeAll
     public void setUp() throws IOException {
@@ -57,7 +66,7 @@ public class UploadSubmissionDocumentsTest {
         Mockito.when(multipartFileMock.getResource()).thenReturn(resourceMock);
         Mockito.when(multipartFileMock.getBytes()).thenThrow(new IOException("random"));
 
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock);
     }
 
     @Test
