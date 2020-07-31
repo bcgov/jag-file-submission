@@ -31,7 +31,6 @@ const openFile = (file, submissionId) => {
       window.open(fileUrl);
     })
     .catch((error) => {
-      console.log("erorr", error);
       errorRedirect(sessionStorage.getItem("errorUrl"), error);
     });
 };
