@@ -109,15 +109,17 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     @Override
     @RolesAllowed("efiling-user")
-    public ResponseEntity<Resource> getSubmissionDocument(UUID xAuthUserId, UUID id, String filename) {
+    public ResponseEntity<Resource> getSubmissionDocument(UUID xTransactionId,
+                                                          UUID submissionId,
+                                                          String filename) {
 
 
-        MDC.put(Keys.EFILING_SUBMISSION_ID, id.toString());
+        MDC.put(Keys.EFILING_SUBMISSION_ID, submissionId.toString());
 
         Document document = Document
                 .builder()
-                .transactionId(xAuthUserId)
-                .submissionId(id)
+                .transactionId(xTransactionId)
+                .submissionId(submissionId)
                 .fileName(filename)
                 .create();
 
