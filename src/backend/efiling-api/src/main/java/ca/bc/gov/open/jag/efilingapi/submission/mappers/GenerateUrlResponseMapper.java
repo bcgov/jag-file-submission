@@ -20,7 +20,7 @@ public interface GenerateUrlResponseMapper {
                 "{0}?submissionId={1}&temp={2}",
                 baseUrl,
                 submission.getId(),
-                submission.getOwner());
+                submission.getTransactionId());
     }
 
 }

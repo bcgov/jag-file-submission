@@ -67,7 +67,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    public ResponseEntity<UploadSubmissionDocumentsResponse> uploadSubmissionDocuments(UUID xAuthUserId, List<MultipartFile> files) {
+    public ResponseEntity<UploadSubmissionDocumentsResponse> uploadSubmissionDocuments(UUID xTransactionId, List<MultipartFile> files) {
 
         if (files == null || files.isEmpty())
             return new ResponseEntity(
@@ -84,7 +84,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             for (MultipartFile file : files) {
                 Document document = Document
                         .builder()
-                        .owner(xAuthUserId)
+                        .owner(xTransactionId)
                         .submissionId(submissionId)
                         .fileName(file.getResource().getFilename())
                         .content(file.getBytes())
@@ -130,9 +130,9 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    public ResponseEntity<GenerateUrlResponse> generateUrl(UUID xAuthUserId, UUID id, GenerateUrlRequest generateUrlRequest) {
+    public ResponseEntity<GenerateUrlResponse> generateUrl(UUID xTransactionId, UUID submissionId, GenerateUrlRequest generateUrlRequest) {
 
-        MDC.put(Keys.EFILING_SUBMISSION_ID, id.toString());
+        MDC.put(Keys.EFILING_SUBMISSION_ID, submissionId.toString());
 
         logger.info("Generate Url Request Received");
 
@@ -141,7 +141,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         try {
             response = ResponseEntity.ok(
                     generateUrlResponseMapper.toGenerateUrlResponse(
-                            submissionService.generateFromRequest(xAuthUserId, id, generateUrlRequest),
+                            submissionService.generateFromRequest(xTransactionId, submissionId, generateUrlRequest),
                             navigationProperties.getBaseUrl()));
             logger.info("successfully generated return url.");
         }
@@ -169,16 +169,16 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     @Override
     @RolesAllowed("efiling-user")
-    public ResponseEntity<GetSubmissionResponse> getSubmission(UUID id) {
+    public ResponseEntity<GetSubmissionResponse> getSubmission(UUID xTransactionId, UUID submissionId) {
 
         Optional<UUID> universalId = getUniversalIdFromContext();
 
         if(!universalId.isPresent()) return new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
 
-        MDC.put(Keys.EFILING_SUBMISSION_ID, id.toString());
+        MDC.put(Keys.EFILING_SUBMISSION_ID, submissionId.toString());
 
-        Optional<Submission> fromCacheSubmission = this.submissionStore.get(id, universalId.get());
+        Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, universalId.get());
 
         if(!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
@@ -229,8 +229,8 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    public ResponseEntity<FilingPackage> getSubmissionFilingPackage(UUID xAuthUserId, UUID id) {
-        Optional<Submission> fromCacheSubmission = this.submissionStore.get(id, xAuthUserId);
+    public ResponseEntity<FilingPackage> getSubmissionFilingPackage(UUID xAuthUserId, UUID submissionId) {
+        Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xAuthUserId);
 
         if(!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
@@ -240,12 +240,12 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     @Override
     @RolesAllowed("efiling-user")
-    public ResponseEntity<SubmitFilingPackageResponse> submit(UUID xAuthUserId, UUID id, SubmitFilingPackageRequest submitFilingPackageRequest) {
+    public ResponseEntity<SubmitFilingPackageResponse> submit(UUID xAuthUserId, UUID submissionId, SubmitFilingPackageRequest submitFilingPackageRequest) {
         ResponseEntity response;
-        MDC.put(Keys.EFILING_SUBMISSION_ID, id.toString());
+        MDC.put(Keys.EFILING_SUBMISSION_ID, submissionId.toString());
         //TODO: this will get the submission details from the cache and build a submission object
         try {
-            SubmitFilingPackageResponse result = submissionService.submitFilingPackage(xAuthUserId, id, submitFilingPackageRequest);
+            SubmitFilingPackageResponse result = submissionService.submitFilingPackage(xAuthUserId, submissionId, submitFilingPackageRequest);
             response = ResponseEntity.ok(result);
         } catch (EfilingSubmissionServiceException e) {
             response = new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);

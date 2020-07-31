@@ -66,24 +66,18 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     @Override
-    public Submission generateFromRequest(UUID authUserId, UUID submissionId, GenerateUrlRequest generateUrlRequest) {
-
-        logger.debug("Attempting to get user cso account information");
-        AccountDetails accountDetails = efilingAccountService.getAccountDetails(authUserId, "Individual");
-        logger.info("Successfully got cso account information");
-
-        if (accountDetails != null && accountDetails.getAccountId() != null && !accountDetails.isFileRolePresent()) {
-            throw new InvalidAccountStateException("Account does not have CSO FILE ROLE");
-        } else if (accountDetails == null) {
-            accountDetails = fakeFromBceId(authUserId);
-        }
+    public Submission generateFromRequest(UUID transactionId, UUID submissionId, GenerateUrlRequest generateUrlRequest) {
+//
+//        logger.debug("Attempting to get user cso account information");
+//        AccountDetails accountDetails = efilingAccountService.getAccountDetails(authUserId, "Individual");
+//        logger.info("Successfully got cso account information");
 
         Optional<Submission> cachedSubmission = submissionStore.put(
                 submissionMapper.toSubmission(
                         submissionId,
+                        transactionId,
                         generateUrlRequest,
                         toFilingPackage(generateUrlRequest),
-                        accountDetails,
                         getExpiryDate()));
 
         if(!cachedSubmission.isPresent())

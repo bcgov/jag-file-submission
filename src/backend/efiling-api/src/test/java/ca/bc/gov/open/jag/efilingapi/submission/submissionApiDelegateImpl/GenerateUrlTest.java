@@ -17,7 +17,6 @@ import ca.bc.gov.open.jag.efilingcommons.exceptions.CSOHasMultipleAccountExcepti
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -57,7 +56,7 @@ public class GenerateUrlTest {
         NavigationProperties navigationProperties = new NavigationProperties();
         navigationProperties.setBaseUrl("http://localhost");
 
-        Submission submission = Submission.builder().id(TestHelpers.CASE_1).owner(TestHelpers.CASE_2).expiryDate(10).create();
+        Submission submission = Submission.builder().id(TestHelpers.CASE_1).transactionId(TestHelpers.CASE_2).expiryDate(10).create();
 
         Mockito.when(submissionServiceMock.generateFromRequest(
                 Mockito.any(),

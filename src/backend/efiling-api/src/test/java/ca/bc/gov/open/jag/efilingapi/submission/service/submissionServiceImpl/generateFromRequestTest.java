@@ -213,7 +213,7 @@ public class generateFromRequestTest {
         Submission submissionCase1 = Submission
                 .builder()
                 .id(TestHelpers.CASE_1)
-                .owner(TestHelpers.CASE_1)
+                .transactionId(TestHelpers.CASE_1)
                 .accountDetails(accountDetails)
                 .navigation(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
