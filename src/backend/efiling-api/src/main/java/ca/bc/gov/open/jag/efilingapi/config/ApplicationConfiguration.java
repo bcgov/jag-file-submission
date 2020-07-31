@@ -10,19 +10,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ApplicationConfiguration {
 
-//    /**
-//     * Configures CORS for enabling javascript applications to connect.
-//     */
-//    @Bean
-//    public WebMvcConfigurer corsConfigurer() {
-//        return new WebMvcConfigurer() {
-//            @Override
-//            public void addCorsMappings(CorsRegistry registry) {
-//                registry.addMapping("/**").allowedMethods("*").allowedOrigins("*");
-//            }
-//        };
-//    }
-
     /**
      * Configures Jeager tracer.
      */
