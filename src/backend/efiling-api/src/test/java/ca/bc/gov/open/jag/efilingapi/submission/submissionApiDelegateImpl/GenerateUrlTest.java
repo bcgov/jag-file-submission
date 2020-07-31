@@ -107,7 +107,7 @@ public class GenerateUrlTest {
         ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(UUID.randomUUID(), TestHelpers.CASE_1, generateUrlRequest);
 
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
-        Assertions.assertEquals("http://localhost?submissionId=" + TestHelpers.CASE_1.toString() + "&temp=" + TestHelpers.CASE_2 , actual.getBody().getEfilingUrl());
+        Assertions.assertEquals("http://localhost?submissionId=" + TestHelpers.CASE_1.toString(), actual.getBody().getEfilingUrl());
         Assertions.assertNotNull(actual.getBody().getExpiryDate());
 
     }
