@@ -9,7 +9,6 @@ import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
-import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
@@ -128,19 +127,6 @@ public class generateFromRequestTest {
         request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList()));
 
         Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(TestHelpers.CASE_2, TestHelpers.CASE_2, request));
-
-    }
-
-    @Test
-    @DisplayName("Exception: with no file role should throw InvalidAccountStateException")
-    public void withNoFileRoleShouldThrowInvalidAccountStateException() {
-
-        GenerateUrlRequest request = new GenerateUrlRequest();
-        request.setClientApplication(TestHelpers.createClientApplication("app", "type"));
-        request.setNavigation(TestHelpers.createDefaultNavigation());
-        request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList()));
-
-        Assertions.assertThrows(InvalidAccountStateException.class, () -> sut.generateFromRequest(TestHelpers.CASE_3, TestHelpers.CASE_3, request));
 
     }
 

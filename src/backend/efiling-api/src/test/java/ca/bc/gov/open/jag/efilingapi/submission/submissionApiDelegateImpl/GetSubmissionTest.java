@@ -109,13 +109,14 @@ public class GetSubmissionTest {
 
         Mockito.when(submissionStoreMock.get(Mockito.eq(TestHelpers.CASE_3), Mockito.any())).thenReturn(Optional.of(submissionWithoutCsoAccount));
 
-        Mockito.when(accountServiceMock.getCsoAccountDetails(Mockito.any()))
+        Mockito.when(accountServiceMock.getCsoAccountDetails(Mockito.eq(TestHelpers.CASE_2)))
                 .thenReturn(AccountDetails
                         .builder()
                         .universalId(TestHelpers.CASE_2)
                         .email(EMAIL + TestHelpers.CASE_2)
                         .firstName(FIRST_NAME + TestHelpers.CASE_2)
-                        .accountId(BigDecimal.ONE)
+                        .accountId(BigDecimal.TEN)
+                        .fileRolePresent(true)
                         .create());
 
         sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock);
@@ -139,10 +140,10 @@ public class GetSubmissionTest {
     public void withUserHavingCsoAccountShouldReturnUserDetailsAndAccount() {
 
         Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
+        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_2);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission( TestHelpers.CASE_2, UUID.randomUUID());
+        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission( TestHelpers.CASE_2, TestHelpers.CASE_2);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertEquals(TestHelpers.CASE_2, actual.getBody().getUserDetails().getUniversalId());
         assertEquals(EMAIL + TestHelpers.CASE_2, actual.getBody().getUserDetails().getEmail());

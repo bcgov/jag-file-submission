@@ -5,6 +5,7 @@ import ca.bc.gov.open.jag.efilingapi.api.CsoAccountApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.Account;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.api.model.UserDetails;
+import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
@@ -43,13 +44,19 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
     @RolesAllowed("efiling-user")
     public ResponseEntity<UserDetails> createAccount(UUID xTransactionId, UserDetails userDetails) {
 
+
+        Optional<UUID> universalId = getUniversalIdFromContext();
+
+        if(!universalId.isPresent()) return new ResponseEntity(
+                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
+
         try {
 
             logger.debug("attempting to create a cso account");
             
             AccountDetails accountDetails = efilingAccountService.createAccount(CreateAccountRequest
                     .builder()
-                    .universalId(getUniversalIdFromContext().get())
+                    .universalId(universalId.get())
                     .firstName(userDetails.getFirstName())
                     .lastName(userDetails.getLastName())
                     .middleName(userDetails.getMiddleName())
