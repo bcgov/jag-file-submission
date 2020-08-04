@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -29,8 +30,8 @@ public class SubmissionTest {
 
         Submission actual = new Submission(
                 UUID.randomUUID(),
-                null,
-                null,
+                BigDecimal.TEN,
+                BigDecimal.TEN,
                 UUID.randomUUID(),
                 TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()),
                 TestHelpers.createNavigation(CASE_1, CANCEL, ERROR),
@@ -39,6 +40,8 @@ public class SubmissionTest {
 
 
         Assertions.assertEquals(TYPE, actual.getClientApplication().getType());
+        Assertions.assertEquals(BigDecimal.TEN, actual.getAccountId());
+        Assertions.assertEquals(BigDecimal.TEN, actual.getClientId());
         Assertions.assertEquals(DISPLAYNAME, actual.getClientApplication().getDisplayName());
         Assertions.assertEquals(ERROR, actual.getNavigation().getError().getUrl());
         Assertions.assertEquals(CANCEL, actual.getNavigation().getCancel().getUrl());

@@ -190,9 +190,11 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         if (fromCacheSubmission.get().getAccountId() == null || fromCacheSubmission.get().getClientId() == null) {
             AccountDetails accountDetails = accountService.getCsoAccountDetails(universalId.get());
-            fromCacheSubmission.get().setAccountId(accountDetails.getAccountId());
-            fromCacheSubmission.get().setClientId(accountDetails.getClientId());
-            this.submissionStore.put(fromCacheSubmission.get());
+            if (accountDetails != null) {
+                fromCacheSubmission.get().setAccountId(accountDetails.getAccountId());
+                fromCacheSubmission.get().setClientId(accountDetails.getClientId());
+                this.submissionStore.put(fromCacheSubmission.get());
+            }
         }
 
         GetSubmissionResponse response = new GetSubmissionResponse();

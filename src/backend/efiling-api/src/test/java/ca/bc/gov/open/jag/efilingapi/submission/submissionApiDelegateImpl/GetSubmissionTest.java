@@ -112,6 +112,7 @@ public class GetSubmissionTest {
         Mockito.when(accountServiceMock.getCsoAccountDetails(Mockito.eq(TestHelpers.CASE_2)))
                 .thenReturn(AccountDetails
                         .builder()
+                        .clientId(BigDecimal.TEN)
                         .universalId(TestHelpers.CASE_2)
                         .email(EMAIL + TestHelpers.CASE_2)
                         .firstName(FIRST_NAME + TestHelpers.CASE_2)
