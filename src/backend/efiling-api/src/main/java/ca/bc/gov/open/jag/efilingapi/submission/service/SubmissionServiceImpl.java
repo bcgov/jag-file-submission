@@ -9,11 +9,12 @@ import ca.bc.gov.open.jag.efilingapi.utils.FileUtils;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
-import org.joda.time.LocalDate;
+import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
@@ -77,11 +78,12 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     @Override
-    public SubmitFilingPackageResponse submitFilingPackage(UUID authUserId, UUID submissionId, SubmitFilingPackageRequest submitFilingPackageRequest) {
-        SubmitFilingPackageResponse result = new SubmitFilingPackageResponse();
-        //TODO: create a pull submitting model
-        result.setTransactionId(efilingSubmissionService.submitFilingPackage(submissionId));
-        result.setAcknowledge(LocalDate.now());
+    public CreateServiceResponse createSubmission(Submission submission) {
+
+        EfilingService service = toEfilingService(submission);
+        service = efilingSubmissionService.addService(service);
+        CreateServiceResponse result = new CreateServiceResponse();
+        result.setServiceId(service.getServiceId());
         return result;
     }
 
@@ -100,6 +102,17 @@ public class SubmissionServiceImpl implements SubmissionService {
                 .collect(Collectors.toList()));
         return filingPackage;
 
+    }
+
+    private EfilingService toEfilingService(Submission submission) {
+        EfilingService service = new EfilingService();
+        service.setClientId(submission.getClientId());
+        service.setAccountId(submission.getAccountId());
+        service.setCourtFileNumber(submission.getFilingPackage().getCourt().getFileNumber());
+        service.setServiceTypeCd(SubmissionConstants.SUBMISSION_FEE_TYPE);
+        service.setEntryUserId(submission.getClientId().toString());
+        service.setEntryDateTime(DateUtils.getCurrentXmlDate());
+        return service;
     }
 
     private Court populateCourtDetails(CourtBase courtBase) {

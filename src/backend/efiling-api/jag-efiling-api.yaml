@@ -84,10 +84,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EfilingError"
-  "/submission/{submissionId}/submit-filing-package":
+  "/submission/{submissionId}/service":
     post:
-      summary: Submit the filing package to cso
-      operationId: Submit
+      summary: Create service for payment processing
+      operationId: createService
       tags:
         - submission
       parameters:
@@ -99,14 +99,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SubmitFilingPackageRequest"
+              $ref: "#/components/schemas/CreateServiceRequest"
       responses:
-        "200":
-          description: Filing package succesfully submitted
+        "201":
+          description: Service created
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SubmitFilingPackageResponse"
+                $ref: "#/components/schemas/CreateServiceResponse"
         "403":
           description: Request does not meet the required criteria
           content:
@@ -426,25 +426,15 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Account"
-    SubmitFilingPackageRequest:
-      description: submit filing package
+    CreateServiceRequest:
+      description: create service request
       type: object
-      required:
-        - isRushOrder
-      properties:
-        isRushOrder:
-          type: boolean
-          description: the request is a rush order
-    SubmitFilingPackageResponse:
+    CreateServiceResponse:
       description: result of submit filing package
       type: object
       required:
-        - transactionId
-        - acknowledge
+        - serviceId
       properties:
-        transactionId:
+        serviceId:
           type: number
-          description: the transaction id returned from cso
-        acknowledge:
-          type: date
-          description: date transaction was returned
+          description: the service id returned from cso
