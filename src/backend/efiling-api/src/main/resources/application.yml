@@ -16,6 +16,7 @@ keycloak:
     secret: ${KEYCLOAK_CREDENTIALS_SECRET}
   use-resource-role-mappings: true
   bearer-only: true
+  ssl-required: ${KEYCLOAK_SSL_REQUIRED:external}
 jag:
   efiling:
     global:
