@@ -8,6 +8,7 @@ import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMapper;
+import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
@@ -23,6 +24,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -56,11 +58,14 @@ public class SubmitTest {
     public void setUp() {
 
         MockitoAnnotations.initMocks(this);
-        SubmitFilingPackageResponse result = new SubmitFilingPackageResponse();
-        result.setAcknowledge(LocalDate.parse("2020-01-01"));
-        result.setTransactionId(BigDecimal.TEN);
-        Mockito.when(submissionServiceMock.submitFilingPackage(any(), Mockito.eq(TestHelpers.CASE_1), any())).thenReturn(result);
-        Mockito.when(submissionServiceMock.submitFilingPackage(any(), Mockito.eq(TestHelpers.CASE_2), any())).thenThrow(new EfilingSubmissionServiceException("Nooooooo", new Throwable()));
+
+        Submission submissionExists = Submission
+                .builder()
+                .navigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
+                .create();
+
+        Mockito.when(submissionStoreMock.get(Mockito.eq(TestHelpers.CASE_1), Mockito.any())).thenReturn(Optional.of(submissionExists));
+
         sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationPropertiesMock, submissionStoreMock, documentStoreMock);
 
     }
@@ -69,7 +74,14 @@ public class SubmitTest {
     @DisplayName("200: With user having cso account and efiling role return submission details")
     public void withUserHavingValidRequestShouldReturnOk() {
 
-        ResponseEntity<SubmitFilingPackageResponse> actual = sut.submit(UUID.randomUUID(), TestHelpers.CASE_1, new SubmitFilingPackageRequest());
+        SubmitFilingPackageResponse result = new SubmitFilingPackageResponse();
+        result.setAcknowledge(LocalDate.parse("2020-01-01"));
+        result.setTransactionId(BigDecimal.TEN);
+        SubmitFilingPackageRequest request = new SubmitFilingPackageRequest();
+
+        Mockito.when(submissionServiceMock.createSubmission(Mockito.eq(request), any())).thenReturn(result);
+
+        ResponseEntity<SubmitFilingPackageResponse> actual = sut.submit(UUID.randomUUID(), TestHelpers.CASE_1, request);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertEquals(BigDecimal.TEN, actual.getBody().getTransactionId());
         assertEquals(1, actual.getBody().getAcknowledge().getDayOfMonth());
@@ -81,9 +93,17 @@ public class SubmitTest {
     @Test
     @DisplayName("500: With user having cso account and efiling role return submission details")
     public void withErrorInServiceShouldReturnInternalServiceError() {
-
-        ResponseEntity<SubmitFilingPackageResponse> actual = sut.submit(UUID.randomUUID(), TestHelpers.CASE_2, new SubmitFilingPackageRequest());
+        Mockito.when(submissionServiceMock.createSubmission(Mockito.eq(null), any())).thenThrow(new EfilingSubmissionServiceException("Nooooooo", new Throwable()));
+        ResponseEntity<SubmitFilingPackageResponse> actual = sut.submit(UUID.randomUUID(), TestHelpers.CASE_1, null);
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode());
+
+    }
+
+    @Test
+    @DisplayName("404: with submission request that does not exist 404 should be returned")
+    public void withSubmissionRequestThatDoesNotExist() {
+        ResponseEntity<SubmitFilingPackageResponse> actual = sut.submit(UUID.randomUUID(), TestHelpers.CASE_3, new SubmitFilingPackageRequest());
+        assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
 
     }
 }
