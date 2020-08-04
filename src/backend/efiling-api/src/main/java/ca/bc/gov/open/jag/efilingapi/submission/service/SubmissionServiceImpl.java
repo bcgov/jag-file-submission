@@ -9,6 +9,7 @@ import ca.bc.gov.open.jag.efilingapi.utils.FileUtils;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
@@ -77,9 +78,22 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     @Override
+    public SubmitFilingPackageResponse createSubmission(UUID authUserId, UUID submissionId, SubmitFilingPackageRequest submitFilingPackageRequest, Submission submission) {
+        //TODO: push files to the server
+        EfilingService service = toEfilingService(submission);
+        service = efilingSubmissionService.addService(service);
+        SubmitFilingPackageResponse result = new SubmitFilingPackageResponse();
+        result.setTransactionId(service.getServiceId());
+        result.setAcknowledge(LocalDate.now());
+        return result;
+    }
+
+    @Override
     public SubmitFilingPackageResponse submitFilingPackage(UUID authUserId, UUID submissionId, SubmitFilingPackageRequest submitFilingPackageRequest) {
         SubmitFilingPackageResponse result = new SubmitFilingPackageResponse();
-        //TODO: create a pull submitting model
+        //TODO: apply payments to service and call update
+        //TODO: call filing facade and submit the filing package
+        //TODO: call update service
         result.setTransactionId(efilingSubmissionService.submitFilingPackage(submissionId));
         result.setAcknowledge(LocalDate.now());
         return result;
@@ -100,6 +114,17 @@ public class SubmissionServiceImpl implements SubmissionService {
                 .collect(Collectors.toList()));
         return filingPackage;
 
+    }
+
+    private EfilingService toEfilingService(Submission submission) {
+        EfilingService service = new EfilingService();
+        //TODO: Need ids
+        service.setClientId(BigDecimal.TEN);
+        service.setAccountId(BigDecimal.TEN);
+        service.setCourtFileNumber(submission.getFilingPackage().getCourt().getFileNumber());
+        service.setServiceTypeCd(submission.getClientApplication().getType());
+        service.setEntryUserId(BigDecimal.TEN.toString());
+        return service;
     }
 
     private Court populateCourtDetails(CourtBase courtBase) {

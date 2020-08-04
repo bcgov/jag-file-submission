@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
+import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -26,6 +27,7 @@ public class TestHelpers {
     public static final String COURT_DESCRIPTION = "TESTCOURTDESC";
     public static final String LEVEL_DESCRIPTION = "TESTLEVELDESC";
     public static final String CLASS_DESCRIPTION = "TESTCLASSDESC";
+    public static final String DISPLAY_NAME = "DISPLAYNAME";
 
     public static final String SUCCESS_URL = "http://success";
     public static final String CANCEL_URL = "http://cancel";
@@ -104,5 +106,14 @@ public class TestHelpers {
         return createNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL);
     }
 
+    public static EfilingService createEfilingService() {
+        EfilingService service = new EfilingService();
+        service.setAccountId(BigDecimal.TEN);
+        service.setClientId(BigDecimal.TEN);
+        service.setCourtFileNumber(FILENUMBER);
+        service.setServiceId(BigDecimal.TEN);
+        return service;
+
+    }
 
 }

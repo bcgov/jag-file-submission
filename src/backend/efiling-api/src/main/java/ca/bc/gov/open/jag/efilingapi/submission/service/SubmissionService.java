@@ -12,6 +12,8 @@ public interface SubmissionService {
 
     Submission generateFromRequest(UUID transactionId, UUID submissionId, GenerateUrlRequest generateUrlRequest);
 
+    SubmitFilingPackageResponse createSubmission(UUID authUserId, UUID submissionId, SubmitFilingPackageRequest submitFilingPackageRequest, Submission submission);
+
     SubmitFilingPackageResponse submitFilingPackage(UUID authUserId, UUID submissionId, SubmitFilingPackageRequest submitFilingPackageRequest);
 
 }
