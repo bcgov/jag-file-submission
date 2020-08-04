@@ -82,7 +82,7 @@ public class CreateServiceTest {
     }
 
     @Test
-    @DisplayName("201: With user having cso account and efiling role return submission details")
+    @DisplayName("201: With valid request should return created and service id")
     public void withUserHavingValidRequestShouldReturnOk() {
 
         ResponseEntity<CreateServiceResponse> actual = sut.createService(UUID.randomUUID(), TestHelpers.CASE_1, null);
@@ -92,7 +92,7 @@ public class CreateServiceTest {
     }
 
     @Test
-    @DisplayName("500: With user having cso account and efiling role return submission details")
+    @DisplayName("500: with valid request but soap servie throws an exception return 500")
     public void withErrorInServiceShouldReturnInternalServiceError() {
 
         ResponseEntity<CreateServiceResponse> actual = sut.createService(UUID.randomUUID(), TestHelpers.CASE_2, null);
