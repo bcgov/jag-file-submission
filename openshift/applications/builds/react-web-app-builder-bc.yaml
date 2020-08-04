@@ -1,53 +1,68 @@
-apiVersion: build.openshift.io/v1
-kind: BuildConfig
+apiVersion: v1
+kind: Template
+labels:
+  template: search-api-template
+message: |-
+  A Jenkins server must be instantiated in this project to manage
+  the Pipeline BuildConfig created by this template. You will be able to log in to
+  it using your OpenShift user credentials.
 metadata:
-  labels:
-    application: modern-web-app
-  name: react-web-app-builder
-  namespace: qzaydf-tools
-spec:
-  failedBuildsHistoryLimit: 5
-  nodeSelector: null
-  output:
-    to:
-      kind: ImageStreamTag
-      name: "react-web-app-builder:latest"
-  postCommit: {}
-  resources:
-    limits:
-      cpu: "4"
-      memory: 4Gi
-    requests:
-      cpu: "1"
-      memory: 1Gi
-  runPolicy: Serial
-  source:
-    contextDir: src/frontend/efiling-frontend
-    git:
-      ref: master
-      uri: "https://github.com/bcgov/jag-file-submission"
-    type: Git
-  strategy:
-    sourceStrategy:
-      env:
-        - name: OUTPUT_DIR
-          value: build
-        - name: YARN_ENABLED
-          value: "true"
-      from:
-        kind: ImageStreamTag
-        name: "web-app-s2i-image:latest"
-      incremental: true
-    type: Source
-  successfulBuildsHistoryLimit: 5
-  triggers:
-    - github:
-        secret: LdiwSKDDNDx2M6OIKm1skedR36PLyrr2RCYqct24
-      type: GitHub
-    - type: ConfigChange
-    - imageChange:
-        lastTriggeredImageID: >-
-          nodeshift/centos7-s2i-web-app@sha256:7b806bbc6d66f9e84c6209791b601660acdd96c85fe0ebd27dfc2a1a349cabae
-      type: ImageChange
-status:
-  lastVersion: 0
+  annotations:
+    openshift.io/display-name: digitalforms-api template
+    description: |-
+      This is a template for digitalforms-api.
+    iconClass: icon-jenkins
+    tags: instant-app,jenkins
+  name: digitalforms-api-template
+parameters:
+  - description: The OpenShift Namespace prefix.
+    displayName: Namespace Prefix (Prefix for each namespace ie prefix-tools, prefix-dev etc)
+    name: namespacePrefix
+    required: true
+    value:
+objects:
+  - apiVersion: build.openshift.io/v1
+    kind: BuildConfig
+    metadata:
+      annotations:
+        description: Defines how to build the application
+      labels:
+        app: efiling-api
+        template: master-build-pipeline
+      name: efiling-api
+      namespace: ${namespacePrefix}-tools
+    spec:
+      completionDeadlineSeconds: 1800
+      nodeSelector: null
+      output:
+        to:
+          kind: ImageStreamTag
+          name: "efiling-api:latest"
+      postCommit: {}
+      resources:
+        limits:
+          cpu: "4"
+          memory: 4Gi
+        requests:
+          cpu: "1"
+          memory: 1Gi
+      runPolicy: Serial
+      source:
+        contextDir: src/backend/efiling-api
+        git:
+          ref: master
+          uri: "https://github.com/bcgov/jag-file-submission"
+        type: Git
+      strategy:
+        sourceStrategy:
+          env:
+            - name: MAVEN_MIRROR_URL
+              value: "http://nexus:8081/repository/fla-backend-group/"
+          from:
+            kind: ImageStreamTag
+            name: "java:8"
+            namespace: openshift
+        type: Source
+      triggers: []
+    status:
+      lastVersion: 0
