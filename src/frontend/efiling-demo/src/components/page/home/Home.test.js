@@ -36,6 +36,7 @@ describe("Home", () => {
   const filingPackage = {
     documents: [files[0].file],
   };
+  const token = "validJWT";
 
   beforeEach(() => {
     mock = new MockAdapter(axios);
@@ -51,7 +52,7 @@ describe("Home", () => {
     mock.onPost("/submission/documents").reply(200, { submissionId });
     mock.onPost("/submission/generateUrl").reply(400);
 
-    eFilePackage(files, setErrorExists, filingPackage);
+    eFilePackage(token, files, setErrorExists, filingPackage);
 
     await waitFor(() => {});
 
@@ -61,7 +62,7 @@ describe("Home", () => {
   test("eFilePackage function displays an error message on page on failure of uploadDocuments call", async () => {
     mock.onPost("/submission/documents").reply(400);
 
-    eFilePackage(files, setErrorExists, filingPackage);
+    eFilePackage(token, files, setErrorExists, filingPackage);
 
     await waitFor(() => {});
 
@@ -76,7 +77,7 @@ describe("Home", () => {
       .onPost(`/submission/${submissionId}/generateUrl`)
       .reply(200, { efilingUrl });
 
-    eFilePackage(files, setErrorExists, filingPackage);
+    eFilePackage(token, files, setErrorExists, filingPackage);
 
     await waitFor(() => {});
 
@@ -110,7 +111,7 @@ describe("Home", () => {
       documents: [{ name: "wrongname", type: "type" }],
     };
 
-    eFilePackage(files, setErrorExists, improperFilingPackage);
+    eFilePackage(token, files, setErrorExists, improperFilingPackage);
 
     expect(setErrorExists).toHaveBeenCalledWith(true);
   });
