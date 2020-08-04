@@ -36,7 +36,8 @@ export default function CSOAccount({
     }
   }, [termsAccepted]);
 
-  const createCSOAccount = (applicantDetails) => {
+  const createCSOAccount = ({ firstName, lastName, email }) => {
+    const applicantDetails = { firstName, lastName, email };
     axios
       .post("/csoAccount", applicantDetails)
       .then(({ data: { accounts } }) => {

@@ -34,6 +34,7 @@ export default function AuthenticationGuard({ page: { header } }) {
     await keycloak
       .init({
         onLoad: "login-required",
+        checkLoginIframe: false,
       })
       .success(() => {
         keycloak.loadUserInfo().success();

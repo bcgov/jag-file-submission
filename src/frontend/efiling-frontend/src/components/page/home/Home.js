@@ -32,12 +32,20 @@ export const saveDataToSessionStorage = ({ cancel, success, error }) => {
 };
 
 const addUserInfo = () => {
-  const { preferred_username, name, email } = getJWTData();
+  const {
+    preferred_username,
+    name,
+    email,
+    given_name,
+    family_name,
+  } = getJWTData();
   let username = preferred_username;
   username = username.substring(0, username.indexOf("@"));
 
   return {
     bceid: username,
+    firstName: given_name,
+    lastName: family_name,
     name,
     email,
   };
