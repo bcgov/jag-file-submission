@@ -29,6 +29,8 @@ public class SubmissionTest {
 
         Submission actual = new Submission(
                 UUID.randomUUID(),
+                null,
+                null,
                 UUID.randomUUID(),
                 TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()),
                 TestHelpers.createNavigation(CASE_1, CANCEL, ERROR),
