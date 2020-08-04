@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-curly-newline */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
@@ -28,7 +28,7 @@ const urlBody = {
   },
   filingPackage: {
     court: {
-      location: "string",
+      location: "1211",
       level: "P",
       courtClass: "F",
       division: "string",
@@ -53,6 +53,14 @@ const urlBody = {
       url: `${window.location.origin}/efiling-demo/cancel`,
     },
   },
+};
+
+const keycloakBaseUrl = window.REACT_APP_API_KEYCLOAK_URL
+  ? window.REACT_APP_API_KEYCLOAK_URL
+  : process.env.REACT_APP_API_KEYCLOAK_URL;
+
+const getToken = (setToken) => {
+  keycloakBaseUrl;
 };
 
 const transactionId = uuidv4();
@@ -121,7 +129,12 @@ export const eFilePackage = (files, setErrorExists, filingPackage) => {
 export default function Home({ page: { header } }) {
   const [errorExists, setErrorExists] = useState(false);
   const [filingPackage, setFilingPackage] = useState(null);
+  const [token, setToken] = useState(null);
   const [files, setFiles] = useState([]);
+
+  useEffect(() => {
+    getToken(setToken);
+  }, [token]);
 
   return (
     <main>
