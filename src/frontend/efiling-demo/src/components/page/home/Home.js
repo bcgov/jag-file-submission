@@ -61,6 +61,15 @@ const keycloakRealm = sessionStorage.getItem("demoKeycloakRealm");
 const keycloakClientSecret = sessionStorage.getItem("demoKeycloakClientSecret");
 const payloadString = `client_id=${keycloakClientId}&grant_type=client_credentials&client_secret=${keycloakClientSecret}`;
 
+const setRequestHeaders = (token, transactionId) => {
+  // Use interceptor to inject the transactionId and token to all requests
+  axios.interceptors.request.use((request) => {
+    request.headers["X-Transaction-Id"] = transactionId;
+    request.headers.Authorization = `Bearer ${token}`;
+    return request;
+  });
+};
+
 const getToken = (token, setToken, setErrorExists) => {
   if (token) return;
 
@@ -112,6 +121,7 @@ const generatePackageData = (files, filingPackage) => {
 };
 
 export const eFilePackage = (token, files, setErrorExists, filingPackage) => {
+  setRequestHeaders(token, transactionId);
   if (!files || files.length === 0) return false;
 
   const { formData, updatedUrlBody } = generatePackageData(
@@ -123,20 +133,11 @@ export const eFilePackage = (token, files, setErrorExists, filingPackage) => {
 
   axios
     .post("/submission/documents", formData, {
-      headers: {
-        "X-Transaction-Id": transactionId,
-        "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { "Content-Type": "multipart/form-data" },
     })
     .then(({ data: { submissionId } }) => {
       axios
-        .post(`/submission/${submissionId}/generateUrl`, updatedUrlBody, {
-          headers: {
-            "X-Transaction-Id": transactionId,
-            Authorization: `Bearer ${token}`,
-          },
-        })
+        .post(`/submission/${submissionId}/generateUrl`, updatedUrlBody)
         .then(({ data: { efilingUrl } }) => {
           window.open(`${efilingUrl}&transactionId=${transactionId}`, "_self");
         })
