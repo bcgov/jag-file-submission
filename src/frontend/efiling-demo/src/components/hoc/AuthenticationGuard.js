@@ -13,6 +13,17 @@ const realm = window.REACT_APP_KEYCLOAK_REALM
 const clientId = window.REACT_APP_KEYCLOAK_CLIENT_ID
   ? window.REACT_APP_KEYCLOAK_CLIENT_ID
   : process.env.REACT_APP_KEYCLOAK_CLIENT_ID;
+const demoSecret = window.REACT_APP_DEMO_CLIENT_SECRET
+  ? window.REACT_APP_DEMO_CLIENT_SECRET
+  : process.env.REACT_APP_DEMO_CLIENT_SECRET;
+const demoUrl = window.REACT_APP_DEMO_URL
+  ? window.REACT_APP_DEMO_URL
+  : process.env.REACT_APP_DEMO_URL;
+
+sessionStorage.setItem("demoKeycloakRealm", realm);
+sessionStorage.setItem("demoKeycloakUrl", demoUrl);
+sessionStorage.setItem("demoKeycloakClientId", clientId);
+sessionStorage.setItem("demoKeycloakClientSecret", demoSecret);
 
 const KEYCLOAK = {
   realm,

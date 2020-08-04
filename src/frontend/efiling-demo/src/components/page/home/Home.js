@@ -1,5 +1,5 @@
-/* eslint-disable react/jsx-curly-newline */
-import React, { useState } from "react";
+/* eslint-disable react/jsx-curly-newline, camelcase */
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
@@ -28,7 +28,7 @@ const urlBody = {
   },
   filingPackage: {
     court: {
-      location: "string",
+      location: "1211",
       level: "P",
       courtClass: "F",
       division: "string",
@@ -53,6 +53,40 @@ const urlBody = {
       url: `${window.location.origin}/efiling-demo/cancel`,
     },
   },
+};
+
+const keycloakClientId = sessionStorage.getItem("demoKeycloakClientId");
+const keycloakBaseUrl = sessionStorage.getItem("demoKeycloakUrl");
+const keycloakRealm = sessionStorage.getItem("demoKeycloakRealm");
+const keycloakClientSecret = sessionStorage.getItem("demoKeycloakClientSecret");
+const payloadString = `client_id=${keycloakClientId}&grant_type=client_credentials&client_secret=${keycloakClientSecret}`;
+
+const setRequestHeaders = (token, transactionId) => {
+  // Use interceptor to inject the transactionId and token to all requests
+  axios.interceptors.request.use((request) => {
+    request.headers["X-Transaction-Id"] = transactionId;
+    request.headers.Authorization = `Bearer ${token}`;
+    return request;
+  });
+};
+
+const getToken = (token, setToken, setErrorExists) => {
+  if (token) return;
+
+  axios
+    .post(
+      `${keycloakBaseUrl}/realms/${keycloakRealm}/protocol/openid-connect/token`,
+      payloadString,
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    )
+    .then(({ data: { access_token } }) => {
+      setToken(access_token);
+    })
+    .catch(() => setErrorExists(true));
 };
 
 const transactionId = uuidv4();
@@ -86,7 +120,8 @@ const generatePackageData = (files, filingPackage) => {
   return { formData, updatedUrlBody };
 };
 
-export const eFilePackage = (files, setErrorExists, filingPackage) => {
+export const eFilePackage = (token, files, setErrorExists, filingPackage) => {
+  setRequestHeaders(token, transactionId);
   if (!files || files.length === 0) return false;
 
   const { formData, updatedUrlBody } = generatePackageData(
@@ -98,16 +133,11 @@ export const eFilePackage = (files, setErrorExists, filingPackage) => {
 
   axios
     .post("/submission/documents", formData, {
-      headers: {
-        "X-Transaction-Id": transactionId,
-        "Content-Type": "multipart/form-data",
-      },
+      headers: { "Content-Type": "multipart/form-data" },
     })
     .then(({ data: { submissionId } }) => {
       axios
-        .post(`/submission/${submissionId}/generateUrl`, updatedUrlBody, {
-          headers: { "X-Transaction-Id": transactionId },
-        })
+        .post(`/submission/${submissionId}/generateUrl`, updatedUrlBody)
         .then(({ data: { efilingUrl } }) => {
           window.open(`${efilingUrl}&transactionId=${transactionId}`, "_self");
         })
@@ -121,7 +151,12 @@ export const eFilePackage = (files, setErrorExists, filingPackage) => {
 export default function Home({ page: { header } }) {
   const [errorExists, setErrorExists] = useState(false);
   const [filingPackage, setFilingPackage] = useState(null);
+  const [token, setToken] = useState(null);
   const [files, setFiles] = useState([]);
+
+  useEffect(() => {
+    getToken(token, setToken, setErrorExists);
+  }, [token]);
 
   return (
     <main>
@@ -144,7 +179,12 @@ export default function Home({ page: { header } }) {
           <br />
           <Button
             onClick={() => {
-              const result = eFilePackage(files, setErrorExists, filingPackage);
+              const result = eFilePackage(
+                token,
+                files,
+                setErrorExists,
+                filingPackage
+              );
               if (!result) setErrorExists(true);
             }}
             label="E-File my Package"
