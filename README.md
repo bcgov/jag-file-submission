@@ -12,7 +12,6 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
     ├── src/                                    # application source files
     │   ├── backend                             # backend applications
     │   │   ├── efiling-api                     # efiling api
-    │   │   ├── efiling-worker                  # file submission worker
     │   │   ├── libs                            # backend libraries
     │   │   |   ├── efiling-bom                 # pom Bill Of Materials
     │   │   |   ├── efiling-commons             # efiling soap client that submits packages to CSO
@@ -34,7 +33,6 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
 | efiling-api         | the main api for interating with the service | [README](src/backend/efiling-api/README.md)              |
 | efiling-worker      | process submitted documents                  | [README](src/backend/efiling-worker/README.md)           |
 | efiling-cso-starter | soap client implementations                  | [README](src/backend/libs/efiling-cso-starter/README.md) |
-| efiling-worker      | process submitted documents                  | [README](src/backend/efiling-worker/README.md)           |
 | frontend            | all client side applications                 | [README](src/frontend/README.md)                         |
 | efiling-frontend    | the frontend for uploading documents         | [README](src/frontend/efiling-frontend/README.md)        |
 | efiling-demo        | the frontend for demo application            | [README](src/frontend/efiling-demo/README.md)            |
