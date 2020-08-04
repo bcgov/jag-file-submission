@@ -55,12 +55,6 @@ const urlBody = {
   },
 };
 
-const keycloakClientId = sessionStorage.getItem("demoKeycloakClientId");
-const keycloakBaseUrl = sessionStorage.getItem("demoKeycloakUrl");
-const keycloakRealm = sessionStorage.getItem("demoKeycloakRealm");
-const keycloakClientSecret = sessionStorage.getItem("demoKeycloakClientSecret");
-const payloadString = `client_id=${keycloakClientId}&grant_type=client_credentials&client_secret=${keycloakClientSecret}`;
-
 const setRequestHeaders = (token, transactionId) => {
   // Use interceptor to inject the transactionId and token to all requests
   axios.interceptors.request.use((request) => {
@@ -70,8 +64,18 @@ const setRequestHeaders = (token, transactionId) => {
   });
 };
 
-const getToken = (token, setToken, setErrorExists) => {
+const getToken = (
+  token,
+  setToken,
+  setErrorExists,
+  keycloakClientId,
+  keycloakBaseUrl,
+  keycloakRealm,
+  keycloakClientSecret
+) => {
   if (token) return;
+
+  const payloadString = `client_id=${keycloakClientId}&grant_type=client_credentials&client_secret=${keycloakClientSecret}`;
 
   axios
     .post(
@@ -154,8 +158,23 @@ export default function Home({ page: { header } }) {
   const [token, setToken] = useState(null);
   const [files, setFiles] = useState([]);
 
+  const keycloakClientId = sessionStorage.getItem("demoKeycloakClientId");
+  const keycloakBaseUrl = sessionStorage.getItem("demoKeycloakUrl");
+  const keycloakRealm = sessionStorage.getItem("demoKeycloakRealm");
+  const keycloakClientSecret = sessionStorage.getItem(
+    "demoKeycloakClientSecret"
+  );
+
   useEffect(() => {
-    getToken(token, setToken, setErrorExists);
+    getToken(
+      token,
+      setToken,
+      setErrorExists,
+      keycloakClientId,
+      keycloakBaseUrl,
+      keycloakRealm,
+      keycloakClientSecret
+    );
   }, [token]);
 
   return (

@@ -1,6 +1,7 @@
 import React from "react";
 import { createMemoryHistory } from "history";
 import axios from "axios";
+import MockAdapter from "axios-mock-adapter";
 import {
   render,
   waitFor,
@@ -9,8 +10,6 @@ import {
   getAllByRole,
 } from "@testing-library/react";
 import Home, { eFilePackage } from "./Home";
-
-const MockAdapter = require("axios-mock-adapter");
 
 window.open = jest.fn();
 
@@ -37,13 +36,23 @@ describe("Home", () => {
     documents: [files[0].file],
   };
   const token = "validJWT";
+  sessionStorage.setItem("demoKeycloakUrl", "demokeycloakexample.com");
+  sessionStorage.setItem("demoKeycloakRealm", "demoRealm");
 
   beforeEach(() => {
     mock = new MockAdapter(axios);
   });
 
-  test("Component matches the snapshot", () => {
+  test("Component matches the snapshot", async () => {
+    mock
+      .onPost(
+        "demokeycloakexample.com/realms/demoRealm/protocol/openid-connect/token"
+      )
+      .reply(200, { access_token: "token" });
+
     const { asFragment } = render(<Home page={page} />);
+
+    await waitFor(() => {});
 
     expect(asFragment()).toMatchSnapshot();
   });
