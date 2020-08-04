@@ -108,22 +108,6 @@ services:
       - fisu-net
 
   #############################################################################################
-  ###                             RABBIT MQ SERVER                                          ###
-  #############################################################################################
-  rabbitmq:
-    image: rabbitmq:3.7.15-management
-    container_name: rabbitmq
-    hostname: rabbitmq
-    ports:
-      - 5672:5672
-      - 15672:15672
-    volumes:
-      - data-rabbit:/var/lib/rabbitmq/mnesia/rabbit@app-rabbitmq:cached
-    restart: always
-    networks:
-      - fisu-net
-
-  #############################################################################################
   ###                                        KEYCLOAK                                       ###
   #############################################################################################
 
@@ -162,7 +146,6 @@ services:
 
 volumes:
   data-redis:
-  data-rabbit:
 
 networks:
   fisu-net:
