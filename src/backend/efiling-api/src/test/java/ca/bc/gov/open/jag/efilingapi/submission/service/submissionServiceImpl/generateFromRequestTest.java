@@ -101,6 +101,8 @@ public class generateFromRequestTest {
         Assertions.assertEquals(TestHelpers.SUCCESS_URL, actual.getNavigation().getSuccess().getUrl());
         Assertions.assertEquals(10, actual.getExpiryDate());
         Assertions.assertNotNull(actual.getId());
+        Assertions.assertEquals(BigDecimal.TEN, actual.getAccountId());
+        Assertions.assertEquals(BigDecimal.TEN, actual.getClientId());
         Assertions.assertEquals(TestHelpers.DIVISION, actual.getFilingPackage().getCourt().getDivision());
         Assertions.assertEquals(TestHelpers.FILENUMBER, actual.getFilingPackage().getCourt().getFileNumber());
         Assertions.assertEquals(TestHelpers.LEVEL, actual.getFilingPackage().getCourt().getLevel());
@@ -141,6 +143,8 @@ public class generateFromRequestTest {
         Submission submissionCase1 = Submission
                 .builder()
                 .id(TestHelpers.CASE_1)
+                .accountId(BigDecimal.TEN)
+                .clientId(BigDecimal.TEN)
                 .transactionId(TestHelpers.CASE_1)
                 .navigation(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
