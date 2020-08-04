@@ -188,14 +188,9 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             return ResponseEntity.notFound().build();
 
 
-        if (fromCacheSubmission.get().getAccountId() == null || fromCacheSubmission.get().getClientId() == null) {
-            AccountDetails accountDetails = accountService.getCsoAccountDetails(universalId.get());
-            if (accountDetails != null) {
-                fromCacheSubmission.get().setAccountId(accountDetails.getAccountId());
-                fromCacheSubmission.get().setClientId(accountDetails.getClientId());
-                this.submissionStore.put(fromCacheSubmission.get());
-            }
-        }
+        if (fromCacheSubmission.get().getAccountId() == null || fromCacheSubmission.get().getClientId() == null)
+            setIdsInCachedSubmission(universalId.get(),fromCacheSubmission.get());
+
 
         GetSubmissionResponse response = new GetSubmissionResponse();
 
@@ -275,4 +270,12 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     }
 
+    private void setIdsInCachedSubmission(UUID universalId, Submission submission) {
+        AccountDetails accountDetails = accountService.getCsoAccountDetails(universalId);
+        if (accountDetails != null) {
+            submission.setAccountId(accountDetails.getAccountId());
+            submission.setClientId(accountDetails.getClientId());
+            this.submissionStore.put(submission);
+        }
+    }
 }
