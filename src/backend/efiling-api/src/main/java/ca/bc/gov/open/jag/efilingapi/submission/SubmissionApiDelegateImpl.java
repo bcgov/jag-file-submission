@@ -255,7 +255,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         MDC.put(Keys.EFILING_SUBMISSION_ID, submissionId.toString());
         try {
             CreateServiceResponse result = submissionService.createSubmission(fromCacheSubmission.get());
-            response = ResponseEntity.ok(result);
+            response = new ResponseEntity(result, HttpStatus.CREATED);
         } catch (EfilingSubmissionServiceException e) {
             response = new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
