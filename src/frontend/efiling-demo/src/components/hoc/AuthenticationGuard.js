@@ -33,14 +33,24 @@ export default function AuthenticationGuard({ page: { header } }) {
 
     await keycloak
       .init({
-        onLoad: "login-required",
+        // onLoad: "login-required",
       })
-      .success(() => {
-        keycloak.loadUserInfo().success();
+      .success((authenticated) => {
+        if (authenticated) {
+          keycloak.loadUserInfo().success();
 
-        localStorage.setItem("jwt", keycloak.token);
-        setAuthedKeycloak(keycloak);
+          localStorage.setItem("jwt", keycloak.token);
+          setAuthedKeycloak(keycloak);
+        } else {
+          keycloak.login({
+            idpHint: "idir",
+          });
+        }
       });
+
+    await keycloak.createLoginUrl({
+      idpHint: "idir",
+    });
   }
 
   useEffect(() => {
