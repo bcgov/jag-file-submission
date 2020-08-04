@@ -55,12 +55,29 @@ const urlBody = {
   },
 };
 
-const keycloakBaseUrl = window.REACT_APP_API_KEYCLOAK_URL
-  ? window.REACT_APP_API_KEYCLOAK_URL
-  : process.env.REACT_APP_API_KEYCLOAK_URL;
+const keycloakClientId = sessionStorage.getItem("demoKeycloakClientId");
+const keycloakBaseUrl = sessionStorage.getItem("demoKeycloakUrl");
+const keycloakRealm = sessionStorage.getItem("demoKeycloakRealm");
+const keycloakClientSecret = sessionStorage.getItem("demoKeycloakClientSecret");
+const payloadString = `client_id=${keycloakClientId}&grant_type=client_credentials&client_secret=${keycloakClientSecret}`;
 
-const getToken = (setToken) => {
-  keycloakBaseUrl;
+const getToken = (token, setToken, setErrorExists) => {
+  if (token) return;
+
+  axios
+    .post(
+      `${keycloakBaseUrl}/realms/${keycloakRealm}/protocol/openid-connect/token`,
+      payloadString,
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    )
+    .then(({ data: { access_token } }) => {
+      setToken(access_token);
+    })
+    .catch(() => setErrorExists(true));
 };
 
 const transactionId = uuidv4();
@@ -94,7 +111,7 @@ const generatePackageData = (files, filingPackage) => {
   return { formData, updatedUrlBody };
 };
 
-export const eFilePackage = (files, setErrorExists, filingPackage) => {
+export const eFilePackage = (token, files, setErrorExists, filingPackage) => {
   if (!files || files.length === 0) return false;
 
   const { formData, updatedUrlBody } = generatePackageData(
@@ -109,12 +126,16 @@ export const eFilePackage = (files, setErrorExists, filingPackage) => {
       headers: {
         "X-Transaction-Id": transactionId,
         "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
       },
     })
     .then(({ data: { submissionId } }) => {
       axios
         .post(`/submission/${submissionId}/generateUrl`, updatedUrlBody, {
-          headers: { "X-Transaction-Id": transactionId },
+          headers: {
+            "X-Transaction-Id": transactionId,
+            Authorization: `Bearer ${token}`,
+          },
         })
         .then(({ data: { efilingUrl } }) => {
           window.open(`${efilingUrl}&transactionId=${transactionId}`, "_self");
@@ -133,7 +154,7 @@ export default function Home({ page: { header } }) {
   const [files, setFiles] = useState([]);
 
   useEffect(() => {
-    getToken(setToken);
+    getToken(token, setToken, setErrorExists);
   }, [token]);
 
   return (
@@ -157,7 +178,12 @@ export default function Home({ page: { header } }) {
           <br />
           <Button
             onClick={() => {
-              const result = eFilePackage(files, setErrorExists, filingPackage);
+              const result = eFilePackage(
+                token,
+                files,
+                setErrorExists,
+                filingPackage
+              );
               if (!result) setErrorExists(true);
             }}
             label="E-File my Package"
