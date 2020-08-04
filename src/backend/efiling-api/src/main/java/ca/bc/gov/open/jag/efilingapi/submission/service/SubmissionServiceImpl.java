@@ -78,7 +78,7 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     @Override
-    public SubmitFilingPackageResponse createSubmission(UUID authUserId, UUID submissionId, SubmitFilingPackageRequest submitFilingPackageRequest, Submission submission) {
+    public SubmitFilingPackageResponse createSubmission(SubmitFilingPackageRequest submitFilingPackageRequest, Submission submission) {
         //TODO: push files to the server
         EfilingService service = toEfilingService(submission);
         service = efilingSubmissionService.addService(service);

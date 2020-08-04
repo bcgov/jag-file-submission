@@ -242,11 +242,15 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     public ResponseEntity<SubmitFilingPackageResponse> submit(UUID xTransactionId,
                                                               UUID submissionId,
                                                               SubmitFilingPackageRequest submitFilingPackageRequest) {
+        Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
+
+        if(!fromCacheSubmission.isPresent())
+            return ResponseEntity.notFound().build();
+
         ResponseEntity response;
         MDC.put(Keys.EFILING_SUBMISSION_ID, submissionId.toString());
-        //TODO: this will get the submission details from the cache and build a submission object
         try {
-            SubmitFilingPackageResponse result = submissionService.submitFilingPackage(xTransactionId, submissionId, submitFilingPackageRequest);
+            SubmitFilingPackageResponse result = submissionService.createSubmission(submitFilingPackageRequest, fromCacheSubmission.get());
             response = ResponseEntity.ok(result);
         } catch (EfilingSubmissionServiceException e) {
             response = new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);

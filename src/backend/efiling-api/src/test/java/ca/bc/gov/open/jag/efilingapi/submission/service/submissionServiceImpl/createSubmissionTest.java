@@ -62,7 +62,7 @@ public class createSubmissionTest {
     @DisplayName("OK: service is created")
     public void withValidSubmissionServiceIsCreated() {
 
-        SubmitFilingPackageResponse actual = sut.createSubmission(UUID.randomUUID(), TestHelpers.CASE_2, new SubmitFilingPackageRequest(), Submission
+        SubmitFilingPackageResponse actual = sut.createSubmission(new SubmitFilingPackageRequest(), Submission
                 .builder()
                 .id(TestHelpers.CASE_1)
                 .transactionId(TestHelpers.CASE_1)
