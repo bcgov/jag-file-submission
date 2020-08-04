@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.CreateServiceResponse;
+import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
@@ -95,16 +96,19 @@ public class CreateServiceTest {
     @DisplayName("500: with valid request but soap servie throws an exception return 500")
     public void withErrorInServiceShouldReturnInternalServiceError() {
 
-        ResponseEntity<CreateServiceResponse> actual = sut.createService(UUID.randomUUID(), TestHelpers.CASE_2, null);
+        ResponseEntity actual = sut.createService(UUID.randomUUID(), TestHelpers.CASE_2, null);
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode());
+        assertEquals("DOCUMENT_TYPE_ERROR", ((EfilingError)actual.getBody()).getError());
+        assertEquals("Error while retrieving documents", ((EfilingError)actual.getBody()).getMessage());
 
     }
 
     @Test
     @DisplayName("404: with submission request that does not exist 404 should be returned")
     public void withSubmissionRequestThatDoesNotExist() {
-        ResponseEntity<CreateServiceResponse> actual = sut.createService(UUID.randomUUID(), TestHelpers.CASE_3, null);
+        ResponseEntity actual = sut.createService(UUID.randomUUID(), TestHelpers.CASE_3, null);
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
+
 
     }
 }
