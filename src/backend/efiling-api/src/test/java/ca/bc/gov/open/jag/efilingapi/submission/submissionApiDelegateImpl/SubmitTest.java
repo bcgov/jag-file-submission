@@ -17,6 +17,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -33,6 +34,8 @@ import static org.mockito.ArgumentMatchers.any;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("SubmissionApiDelegateImpl test suite")
 public class SubmitTest {
+    private SubmitFilingPackageRequest errorRequest;
+    private SubmitFilingPackageRequest request;
     private SubmissionApiDelegateImpl sut;
 
     @Mock
@@ -66,6 +69,16 @@ public class SubmitTest {
 
         Mockito.when(submissionStoreMock.get(Mockito.eq(TestHelpers.CASE_1), Mockito.any())).thenReturn(Optional.of(submissionExists));
 
+        SubmitFilingPackageResponse result = new SubmitFilingPackageResponse();
+        result.setAcknowledge(LocalDate.parse("2020-01-01"));
+        result.setTransactionId(BigDecimal.TEN);
+
+        request = new SubmitFilingPackageRequest();
+        Mockito.when(submissionServiceMock.createSubmission(Mockito.refEq(request), any())).thenReturn(result);
+
+        errorRequest = new SubmitFilingPackageRequest();
+        Mockito.when(submissionServiceMock.createSubmission(Mockito.refEq(errorRequest), any())).thenThrow(new EfilingSubmissionServiceException("Nooooooo", new Throwable()));
+
         sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationPropertiesMock, submissionStoreMock, documentStoreMock);
 
     }
@@ -73,13 +86,6 @@ public class SubmitTest {
     @Test
     @DisplayName("200: With user having cso account and efiling role return submission details")
     public void withUserHavingValidRequestShouldReturnOk() {
-
-        SubmitFilingPackageResponse result = new SubmitFilingPackageResponse();
-        result.setAcknowledge(LocalDate.parse("2020-01-01"));
-        result.setTransactionId(BigDecimal.TEN);
-        SubmitFilingPackageRequest request = new SubmitFilingPackageRequest();
-
-        Mockito.when(submissionServiceMock.createSubmission(Mockito.eq(request), any())).thenReturn(result);
 
         ResponseEntity<SubmitFilingPackageResponse> actual = sut.submit(UUID.randomUUID(), TestHelpers.CASE_1, request);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
@@ -93,8 +99,8 @@ public class SubmitTest {
     @Test
     @DisplayName("500: With user having cso account and efiling role return submission details")
     public void withErrorInServiceShouldReturnInternalServiceError() {
-        Mockito.when(submissionServiceMock.createSubmission(Mockito.eq(null), any())).thenThrow(new EfilingSubmissionServiceException("Nooooooo", new Throwable()));
-        ResponseEntity<SubmitFilingPackageResponse> actual = sut.submit(UUID.randomUUID(), TestHelpers.CASE_1, null);
+
+        ResponseEntity<SubmitFilingPackageResponse> actual = sut.submit(UUID.randomUUID(), TestHelpers.CASE_1, errorRequest);
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode());
 
     }

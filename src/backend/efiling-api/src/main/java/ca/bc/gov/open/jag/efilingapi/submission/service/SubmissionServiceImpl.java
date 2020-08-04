@@ -14,6 +14,8 @@ import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
+import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -118,12 +120,12 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private EfilingService toEfilingService(Submission submission) {
         EfilingService service = new EfilingService();
-        //TODO: Need ids
-        service.setClientId(BigDecimal.TEN);
-        service.setAccountId(BigDecimal.TEN);
+        service.setClientId(submission.getClientId());
+        service.setAccountId(submission.getAccountId());
         service.setCourtFileNumber(submission.getFilingPackage().getCourt().getFileNumber());
         service.setServiceTypeCd(submission.getClientApplication().getType());
-        service.setEntryUserId(BigDecimal.TEN.toString());
+        service.setEntryUserId(submission.getClientId().toString());
+        service.setEntryDateTime(DateUtils.getXmlDate(DateTime.now().toDate()));
         return service;
     }
 

@@ -65,6 +65,8 @@ public class createSubmissionTest {
         SubmitFilingPackageResponse actual = sut.createSubmission(new SubmitFilingPackageRequest(), Submission
                 .builder()
                 .id(TestHelpers.CASE_1)
+                .clientId(BigDecimal.TEN)
+                .accountId(BigDecimal.TEN)
                 .transactionId(TestHelpers.CASE_1)
                 .navigation(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
