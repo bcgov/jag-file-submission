@@ -2,8 +2,7 @@ package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
-import ca.bc.gov.open.jag.efilingapi.api.model.SubmitFilingPackageRequest;
-import ca.bc.gov.open.jag.efilingapi.api.model.SubmitFilingPackageResponse;
+import ca.bc.gov.open.jag.efilingapi.api.model.CreateServiceResponse;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
@@ -12,12 +11,10 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
-import org.joda.time.LocalDate;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -29,13 +26,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("SubmissionApiDelegateImpl test suite")
-public class SubmitTest {
-    private SubmitFilingPackageRequest errorRequest;
-    private SubmitFilingPackageRequest request;
+public class CreateServiceTest {
     private SubmissionApiDelegateImpl sut;
 
     @Mock
@@ -69,30 +63,31 @@ public class SubmitTest {
 
         Mockito.when(submissionStoreMock.get(Mockito.eq(TestHelpers.CASE_1), Mockito.any())).thenReturn(Optional.of(submissionExists));
 
-        SubmitFilingPackageResponse result = new SubmitFilingPackageResponse();
-        result.setAcknowledge(LocalDate.parse("2020-01-01"));
-        result.setTransactionId(BigDecimal.TEN);
+        Submission submissionError = Submission
+                .builder()
+                .navigation(TestHelpers.createNavigation(null, null, null))
+                .create();
 
-        request = new SubmitFilingPackageRequest();
-        Mockito.when(submissionServiceMock.createSubmission(Mockito.refEq(request), any())).thenReturn(result);
+        Mockito.when(submissionStoreMock.get(Mockito.eq(TestHelpers.CASE_2), Mockito.any())).thenReturn(Optional.of(submissionError));
 
-        errorRequest = new SubmitFilingPackageRequest();
-        Mockito.when(submissionServiceMock.createSubmission(Mockito.refEq(errorRequest), any())).thenThrow(new EfilingSubmissionServiceException("Nooooooo", new Throwable()));
+        CreateServiceResponse result = new CreateServiceResponse();
+        result.setServiceId(BigDecimal.TEN);
+
+        Mockito.when(submissionServiceMock.createSubmission(Mockito.refEq(submissionExists))).thenReturn(result);
+
+        Mockito.when(submissionServiceMock.createSubmission(Mockito.refEq(submissionError))).thenThrow(new EfilingSubmissionServiceException("Nooooooo", new Throwable()));
 
         sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationPropertiesMock, submissionStoreMock, documentStoreMock);
 
     }
 
     @Test
-    @DisplayName("200: With user having cso account and efiling role return submission details")
+    @DisplayName("201: With user having cso account and efiling role return submission details")
     public void withUserHavingValidRequestShouldReturnOk() {
 
-        ResponseEntity<SubmitFilingPackageResponse> actual = sut.submit(UUID.randomUUID(), TestHelpers.CASE_1, request);
-        assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertEquals(BigDecimal.TEN, actual.getBody().getTransactionId());
-        assertEquals(1, actual.getBody().getAcknowledge().getDayOfMonth());
-        assertEquals(1, actual.getBody().getAcknowledge().getMonthOfYear());
-        assertEquals(2020, actual.getBody().getAcknowledge().getYear());
+        ResponseEntity<CreateServiceResponse> actual = sut.createService(UUID.randomUUID(), TestHelpers.CASE_1, null);
+        assertEquals(HttpStatus.CREATED, actual.getStatusCode());
+        assertEquals(BigDecimal.TEN, actual.getBody().getServiceId());
 
     }
 
@@ -100,7 +95,7 @@ public class SubmitTest {
     @DisplayName("500: With user having cso account and efiling role return submission details")
     public void withErrorInServiceShouldReturnInternalServiceError() {
 
-        ResponseEntity<SubmitFilingPackageResponse> actual = sut.submit(UUID.randomUUID(), TestHelpers.CASE_1, errorRequest);
+        ResponseEntity<CreateServiceResponse> actual = sut.createService(UUID.randomUUID(), TestHelpers.CASE_2, null);
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode());
 
     }
@@ -108,7 +103,7 @@ public class SubmitTest {
     @Test
     @DisplayName("404: with submission request that does not exist 404 should be returned")
     public void withSubmissionRequestThatDoesNotExist() {
-        ResponseEntity<SubmitFilingPackageResponse> actual = sut.submit(UUID.randomUUID(), TestHelpers.CASE_3, new SubmitFilingPackageRequest());
+        ResponseEntity<CreateServiceResponse> actual = sut.createService(UUID.randomUUID(), TestHelpers.CASE_3, null);
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
 
     }

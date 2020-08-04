@@ -15,8 +15,6 @@ import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
@@ -80,24 +78,12 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     @Override
-    public SubmitFilingPackageResponse createSubmission(SubmitFilingPackageRequest submitFilingPackageRequest, Submission submission) {
-        //TODO: push files to the server
+    public CreateServiceResponse createSubmission(Submission submission) {
+
         EfilingService service = toEfilingService(submission);
         service = efilingSubmissionService.addService(service);
-        SubmitFilingPackageResponse result = new SubmitFilingPackageResponse();
-        result.setTransactionId(service.getServiceId());
-        result.setAcknowledge(LocalDate.now());
-        return result;
-    }
-
-    @Override
-    public SubmitFilingPackageResponse submitFilingPackage(UUID authUserId, UUID submissionId, SubmitFilingPackageRequest submitFilingPackageRequest) {
-        SubmitFilingPackageResponse result = new SubmitFilingPackageResponse();
-        //TODO: apply payments to service and call update
-        //TODO: call filing facade and submit the filing package
-        //TODO: call update service
-        result.setTransactionId(efilingSubmissionService.submitFilingPackage(submissionId));
-        result.setAcknowledge(LocalDate.now());
+        CreateServiceResponse result = new CreateServiceResponse();
+        result.setServiceId(service.getServiceId());
         return result;
     }
 
@@ -123,9 +109,9 @@ public class SubmissionServiceImpl implements SubmissionService {
         service.setClientId(submission.getClientId());
         service.setAccountId(submission.getAccountId());
         service.setCourtFileNumber(submission.getFilingPackage().getCourt().getFileNumber());
-        service.setServiceTypeCd(submission.getClientApplication().getType());
+        service.setServiceTypeCd(SubmissionConstants.SUBMISSION_FEE_TYPE);
         service.setEntryUserId(submission.getClientId().toString());
-        service.setEntryDateTime(DateUtils.getXmlDate(DateTime.now().toDate()));
+        service.setEntryDateTime(DateUtils.getCurrentXmlDate());
         return service;
     }
 

@@ -1,8 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service.submissionServiceImpl;
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
-import ca.bc.gov.open.jag.efilingapi.api.model.SubmitFilingPackageRequest;
-import ca.bc.gov.open.jag.efilingapi.api.model.SubmitFilingPackageResponse;
+import ca.bc.gov.open.jag.efilingapi.api.model.CreateServiceResponse;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionServiceImpl;
@@ -20,8 +19,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -62,7 +59,7 @@ public class createSubmissionTest {
     @DisplayName("OK: service is created")
     public void withValidSubmissionServiceIsCreated() {
 
-        SubmitFilingPackageResponse actual = sut.createSubmission(new SubmitFilingPackageRequest(), Submission
+        CreateServiceResponse actual = sut.createSubmission(Submission
                 .builder()
                 .id(TestHelpers.CASE_1)
                 .clientId(BigDecimal.TEN)
@@ -73,10 +70,7 @@ public class createSubmissionTest {
                 .clientApplication(TestHelpers.createClientApplication(TestHelpers.DISPLAY_NAME, TestHelpers.TYPE))
                 .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
                 .create());
-        assertEquals(BigDecimal.TEN, actual.getTransactionId());
-        assertEquals(LocalDate.now().getDayOfMonth(), actual.getAcknowledge().getDayOfMonth());
-        assertEquals(LocalDate.now().getDayOfYear(), actual.getAcknowledge().getDayOfYear());
-        assertEquals(LocalDate.now().getYear(), actual.getAcknowledge().getYear());
+        assertEquals(BigDecimal.TEN, actual.getServiceId());
     }
 
 }
