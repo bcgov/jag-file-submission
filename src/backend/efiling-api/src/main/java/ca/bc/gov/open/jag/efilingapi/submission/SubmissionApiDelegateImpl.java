@@ -187,6 +187,14 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         if(!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
 
+
+        if (fromCacheSubmission.get().getAccountId() == null || fromCacheSubmission.get().getClientId() == null) {
+            AccountDetails accountDetails = accountService.getCsoAccountDetails(universalId.get());
+            fromCacheSubmission.get().setAccountId(accountDetails.getAccountId());
+            fromCacheSubmission.get().setClientId(accountDetails.getClientId());
+            this.submissionStore.put(fromCacheSubmission.get());
+        }
+
         GetSubmissionResponse response = new GetSubmissionResponse();
 
         response.setUserDetails(buildUserDetails(universalId.get()));
