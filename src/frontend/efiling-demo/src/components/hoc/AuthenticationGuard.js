@@ -14,6 +14,10 @@ const clientId = window.REACT_APP_KEYCLOAK_CLIENT_ID
   ? window.REACT_APP_KEYCLOAK_CLIENT_ID
   : process.env.REACT_APP_KEYCLOAK_CLIENT_ID;
 
+const defaultIdentityProvider = window.REACT_APP_DEFAULT_IDENTITY_PROVIDER
+  ? window.REACT_APP_DEFAULT_IDENTITY_PROVIDER
+  : process.env.REACT_APP_DEFAULT_IDENTITY_PROVIDER;
+
 const KEYCLOAK = {
   realm,
   url,
@@ -33,7 +37,6 @@ export default function AuthenticationGuard({ page: { header } }) {
 
     await keycloak
       .init({
-        onLoad: "login-required",
         checkLoginIframe: false,
       })
       .success((authenticated) => {
@@ -44,14 +47,10 @@ export default function AuthenticationGuard({ page: { header } }) {
           setAuthedKeycloak(keycloak);
         } else {
           keycloak.login({
-            idpHint: "idir",
+            idpHint: `${defaultIdentityProvider}`,
           });
         }
       });
-
-    await keycloak.createLoginUrl({
-      idpHint: "idir",
-    });
   }
 
   useEffect(() => {
