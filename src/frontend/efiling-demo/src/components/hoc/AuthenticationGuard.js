@@ -25,6 +25,10 @@ sessionStorage.setItem("demoKeycloakUrl", demoUrl);
 sessionStorage.setItem("demoKeycloakClientId", clientId);
 sessionStorage.setItem("demoKeycloakClientSecret", demoSecret);
 
+const defaultIdentityProvider = window.REACT_APP_DEFAULT_IDENTITY_PROVIDER
+  ? window.REACT_APP_DEFAULT_IDENTITY_PROVIDER
+  : process.env.REACT_APP_DEFAULT_IDENTITY_PROVIDER;
+
 const KEYCLOAK = {
   realm,
   url,
@@ -44,14 +48,19 @@ export default function AuthenticationGuard({ page: { header } }) {
 
     await keycloak
       .init({
-        onLoad: "login-required",
         checkLoginIframe: false,
       })
-      .success(() => {
-        keycloak.loadUserInfo().success();
+      .success((authenticated) => {
+        if (authenticated) {
+          keycloak.loadUserInfo().success();
 
-        localStorage.setItem("jwt", keycloak.token);
-        setAuthedKeycloak(keycloak);
+          localStorage.setItem("jwt", keycloak.token);
+          setAuthedKeycloak(keycloak);
+        } else {
+          keycloak.login({
+            idpHint: `${defaultIdentityProvider}`,
+          });
+        }
       });
   }
 
