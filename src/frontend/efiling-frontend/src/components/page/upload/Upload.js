@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import axios from "axios";
 import Dropzone from "react-dropzone";
 import { MdDescription, MdDeleteForever } from "react-icons/md";
 import {
@@ -18,11 +19,23 @@ import "./Upload.css";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
 
 const items = [
-  "Select document description",
-  "Affidavit",
-  "Affidavit of Attempted Service",
-  "Case Conference Brief",
+  { description: "Affidavit", type: "AFF" },
+  { description: "Affidavit Section 51", type: "AFJ" },
 ];
+
+const filesToUpload = {
+  documents: [],
+};
+
+const translateItems = (items) => {
+  const translatedItems = ["Select document description"];
+
+  items.forEach((item) => {
+    translatedItems.push(item.description);
+  });
+
+  return translatedItems;
+};
 
 const generateFileJSX = (fileName) => {
   return (
@@ -57,14 +70,20 @@ const generateRadioButtonJSX = (fileName, type) => {
   );
 };
 
-const generateDropdownJSX = () => {
+const generateDropdownJSX = (fileName) => {
   return (
     <>
       <div className="table-value top-spacing">
         <Dropdown
           label="Description:"
-          items={items}
-          onSelect={(val) => console.log(val)}
+          items={translateItems(items)}
+          onSelect={(val) => {
+            filesToUpload.documents.forEach((file) => {
+              if (file.name === fileName) {
+                file.type = items.find((item) => item.description === val).type;
+              }
+            });
+          }}
         />
       </div>
       <br />
@@ -73,11 +92,13 @@ const generateDropdownJSX = () => {
 };
 
 const generateTable = (file) => {
+  filesToUpload.documents.push({ name: file.name });
+
   return [
     {
       key: file.name,
       name: generateFileJSX(file.name),
-      value: generateDropdownJSX(),
+      value: generateDropdownJSX(file.name),
     },
     {
       key: `${file.name}-amendment`,
@@ -98,6 +119,38 @@ const generateTable = (file) => {
   ];
 };
 
+const generateFormData = (acceptedFiles) => {
+  const formData = new FormData();
+
+  for (let i = 0; i < acceptedFiles.length; i++) {
+    formData.append("files", acceptedFiles[i]);
+  }
+
+  return formData;
+};
+
+const uploadDocuments = (submissionId, acceptedFiles) => {
+  axios
+    .post(
+      `/submission/${submissionId}/documents`,
+      generateFormData(acceptedFiles),
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    )
+    .then(() => {
+      axios
+        .post(`/submission/${submissionId}/update-documents`, filesToUpload)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    })
+    .catch((err) => console.log(err));
+};
+
 export default function Upload({
   upload: { confirmationPopup, submissionId },
 }) {
@@ -106,6 +159,11 @@ export default function Upload({
     .supremeCourtScheduling;
   const [showPackageConfirmation, setShowPackageConfirmation] = useState(false);
   const [acceptedFiles, setAcceptedFiles] = useState([]);
+  const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
+
+  // useEffect(() => {
+  //   checkContinueBtnState(setContinueBtnEnabled);
+  // }, [continueBtnEnabled]);
 
   if (showPackageConfirmation) {
     return (
@@ -167,8 +225,9 @@ export default function Upload({
           />
           <Button
             label="Continue"
-            onClick={() => console.log("on continue")}
+            onClick={() => uploadDocuments(submissionId, acceptedFiles)}
             styling="normal-blue btn"
+            // disabled={!continueBtnEnabled}
           />
         </section>
       </div>
