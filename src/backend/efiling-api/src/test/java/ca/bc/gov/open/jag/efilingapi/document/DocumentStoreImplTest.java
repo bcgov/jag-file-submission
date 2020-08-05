@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.document;
 
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentType;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
@@ -8,6 +9,8 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("DocumentStoreImpl test suite")
@@ -15,6 +18,7 @@ public class DocumentStoreImplTest {
 
     private static final String DUMMY_CONTENT = "test";
     private static final String DESCRIPTION = "description";
+    private static final String TYPE = "TYPE";
     private DocumentStoreImpl sut;
 
     @Mock
@@ -29,6 +33,13 @@ public class DocumentStoreImplTest {
         Mockito
                 .when(efilingDocumentServiceMock.getDocumentDetails(Mockito.anyString(), Mockito.anyString(), Mockito.anyString()))
                 .thenReturn(docummentDetails);
+
+
+        List<DocumentType> documentTypes = Arrays.asList(new DocumentType(DESCRIPTION, TYPE));
+
+        Mockito
+                .when(efilingDocumentServiceMock.getDocumentTypes(Mockito.anyString(), Mockito.anyString()))
+                .thenReturn(documentTypes);
 
         sut = new DocumentStoreImpl(efilingDocumentServiceMock);
     }
@@ -60,5 +71,18 @@ public class DocumentStoreImplTest {
 
     }
 
+
+    @Test
+    @DisplayName("OK: get document types should cache result")
+    public void withCourtLevelCourtClassShouldReturnDocumentTypes() {
+
+
+        List<DocumentType> actual = sut.getDocumentTypes("courtLevel", "courtClass");
+
+        Assertions.assertEquals(1, actual.size());
+        Assertions.assertEquals(DESCRIPTION, actual.get(0).getDescription());
+        Assertions.assertEquals(TYPE, actual.get(0).getType());
+
+    }
 
 }

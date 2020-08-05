@@ -52,7 +52,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     private final DocumentStore documentStore;
 
-
     public SubmissionApiDelegateImpl(
             SubmissionService submissionService,
             AccountService accountService,
