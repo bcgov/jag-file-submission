@@ -90,13 +90,14 @@ public class SubmissionServiceImpl implements SubmissionService {
     @Override
     public Submission updateDocuments(Submission submission, UpdateDocumentRequest updateDocumentRequest) {
         submission.getFilingPackage().getDocuments()
-                .addAll(updateDocumentRequest.getDocuments()
-                .stream()
-                .map(documentProperties -> toDocument(
-                submission.getFilingPackage().getCourt().getLevel(),
-                submission.getFilingPackage().getCourt().getCourtClass(),
-                documentProperties))
-                .collect(Collectors.toList()));
+                .addAll(
+                        updateDocumentRequest.getDocuments()
+                        .stream()
+                        .map(documentProperties -> toDocument(
+                            submission.getFilingPackage().getCourt().getLevel(),
+                            submission.getFilingPackage().getCourt().getCourtClass(),
+                            documentProperties))
+                        .collect(Collectors.toList()));
         return submission;
     }
 

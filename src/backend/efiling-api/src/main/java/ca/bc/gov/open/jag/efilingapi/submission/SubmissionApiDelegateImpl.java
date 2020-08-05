@@ -96,7 +96,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @Override
     public ResponseEntity<UpdateDocumentResponse> updateDocumentProperties(UUID submissionId, UUID xTransactionId, UpdateDocumentRequest updateDocumentRequest) {
 
-        if (updateDocumentRequest.getDocuments().isEmpty())
+        if (updateDocumentRequest == null || updateDocumentRequest.getDocuments().isEmpty())
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_REQUIRED).create(),
                     HttpStatus.BAD_REQUEST);
@@ -112,7 +112,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             Submission submission = submissionService.updateDocuments(fromCacheSubmission.get(), updateDocumentRequest);
             submissionStore.put(submission);
             UpdateDocumentResponse updateDocumentResponse = new UpdateDocumentResponse();
-            updateDocumentResponse.getDocuments().addAll(submission.getFilingPackage().getDocuments());
+            updateDocumentResponse.setDocuments(submission.getFilingPackage().getDocuments());
             return ResponseEntity.ok(updateDocumentResponse);
         } catch (EfilingDocumentServiceException e) {
             logger.warn(e.getMessage(), e);
