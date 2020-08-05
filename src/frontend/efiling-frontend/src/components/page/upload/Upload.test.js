@@ -82,6 +82,16 @@ describe("Upload Component", () => {
   });
 
   test("invoke onDrop when drop event occurs", async () => {
+    mock
+      .onGet(`/lookup/documentTypes/${court.level}/${court.courtClass}`)
+      .reply(200, {
+        documentTypes: [
+          { type: "AFF", description: "Affidavit" },
+          { type: "AAS", description: "Affidavit of Attempted Service" },
+          { type: "CCB", description: "Case Conference Brief" },
+        ],
+      });
+
     const file = new File([JSON.stringify({ ping: true })], "ping.json", {
       type: "application/json",
     });
