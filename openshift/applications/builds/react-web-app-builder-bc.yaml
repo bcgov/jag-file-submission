@@ -24,20 +24,17 @@ objects:
   - apiVersion: build.openshift.io/v1
     kind: BuildConfig
     metadata:
-      annotations:
-        description: Defines how to build the application
       labels:
-        app: efiling-api
-        template: master-build-pipeline
-      name: efiling-api
-      namespace: ${namespacePrefix}-tools
+        application: modern-web-app
+      name: react-web-app-builder
+      namespace: qzaydf-tools
     spec:
-      completionDeadlineSeconds: 1800
+      failedBuildsHistoryLimit: 5
       nodeSelector: null
       output:
         to:
           kind: ImageStreamTag
-          name: "efiling-api:latest"
+          name: "react-web-app-builder:latest"
       postCommit: {}
       resources:
         limits:
@@ -48,7 +45,7 @@ objects:
           memory: 1Gi
       runPolicy: Serial
       source:
-        contextDir: src/backend/efiling-api
+        contextDir: src/frontend/efiling-frontend
         git:
           ref: master
           uri: "https://github.com/bcgov/jag-file-submission"
@@ -56,13 +53,24 @@ objects:
       strategy:
         sourceStrategy:
           env:
-            - name: MAVEN_MIRROR_URL
-              value: "http://nexus:8081/repository/fla-backend-group/"
+            - name: OUTPUT_DIR
+              value: build
+            - name: YARN_ENABLED
+              value: "true"
           from:
             kind: ImageStreamTag
-            name: "java:8"
-            namespace: openshift
+            name: "web-app-s2i-image:latest"
+          incremental: true
         type: Source
-      triggers: []
+      successfulBuildsHistoryLimit: 5
+      triggers:
+        - github:
+            secret: LdiwSKDDNDx2M6OIKm1skedR36PLyrr2RCYqct24
+          type: GitHub
+        - type: ConfigChange
+        - imageChange:
+            lastTriggeredImageID: >-
+              nodeshift/centos7-s2i-web-app@sha256:7b806bbc6d66f9e84c6209791b601660acdd96c85fe0ebd27dfc2a1a349cabae
+          type: ImageChange
     status:
       lastVersion: 0
