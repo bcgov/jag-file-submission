@@ -56,10 +56,10 @@ objects:
               name: "react-web-app-builder-test:latest"
             # TODO IMPLEMENT MOUNTS
             paths:
-            - destinationDir: .
-            sourcePath: /opt/app-root/output/robots.txt
-            - destinationDir: ./efiling
-            sourcePath: /opt/app-root/output/.
+            #- destinationDir: .
+            #sourcePath: /opt/app-root/output/robots.txt
+            #- destinationDir: ./efiling
+            #sourcePath: /opt/app-root/output/.
         type: Image
       strategy:
         sourceStrategy:
