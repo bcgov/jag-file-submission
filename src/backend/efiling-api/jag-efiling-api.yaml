@@ -79,24 +79,14 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                documents:
-                  type: array
-                  items:
-                    $ref: "#/components/schemas/DocumentProperties"
+              $ref: "#/components/schemas/UpdateDocumentRequest"
       responses:
         "200":
           description: Document properties updated
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  documents:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/Document"
+                $ref: "#/components/schemas/UpdateDocumentResponse"
         "404":
           description: Submission not found
   "/submission/{submissionId}":
@@ -488,6 +478,22 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Account"
+    UpdateDocumentRequest:
+      description: request body for update documents
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: "#/components/schemas/DocumentProperties"
+    UpdateDocumentResponse:
+      description: response body for update documents
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: "#/components/schemas/Document"
     CreateServiceRequest:
       description: create service request
       type: object
