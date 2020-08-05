@@ -66,6 +66,39 @@ paths:
                 $ref: "#/components/schemas/UploadSubmissionDocumentsResponse"
         "404":
           description: Submission not found
+  "/submission/{submissionId}/update-documents":
+    post:
+      summary: Additional documents properties
+      operationId: UpdateDocumentProperties
+      tags:
+        - submission
+      parameters:
+        - $ref: "#/components/parameters/submissionId"
+        - $ref: "#/components/parameters/xTransactionId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                documents:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/DocumentProperties"
+      responses:
+        "200":
+          description: Document properties updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  documents:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Document"
+        "404":
+          description: Submission not found
   "/submission/{submissionId}":
     get:
       summary: Get user detail for a given submission
