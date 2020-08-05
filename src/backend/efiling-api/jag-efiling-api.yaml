@@ -253,7 +253,7 @@ paths:
             type: string
       responses:
         "200":
-          description: List of documents types
+          description: List of document types
           content:
             application/json:
               schema:
