@@ -37,6 +37,35 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UploadSubmissionDocumentsResponse"
+  "/submission/{submissionId}/documents":
+    post:
+      summary: Additional documents upload
+      operationId: UploadAdditionalSubmissionDocuments
+      tags:
+        - submission
+      parameters:
+        - $ref: "#/components/parameters/submissionId"
+        - $ref: "#/components/parameters/xTransactionId"
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        "200":
+          description: File successfully received
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadSubmissionDocumentsResponse"
+        "404":
+          description: Submission not found
   "/submission/{submissionId}":
     get:
       summary: Get user detail for a given submission
