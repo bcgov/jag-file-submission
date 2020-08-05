@@ -134,7 +134,7 @@ export default function PackageConfirmation({
   }
 
   if (showUpload)
-    return <Upload upload={{ confirmationPopup, submissionId }} />;
+    return <Upload upload={{ confirmationPopup, submissionId, courtData }} />;
 
   return (
     <div className="page">

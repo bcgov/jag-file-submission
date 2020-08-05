@@ -3,8 +3,8 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { render, fireEvent, getByText, waitFor } from "@testing-library/react";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
-import { getDocumentsData } from "../../../modules/documentTestData";
 import { getCourtData } from "../../../modules/courtTestData";
+import { getDocumentsData } from "../../../modules/documentTestData";
 import { generateJWTToken } from "../../../modules/authenticationHelper";
 
 import Upload from "./Upload";
@@ -48,6 +48,7 @@ describe("Upload Component", () => {
   const upload = {
     confirmationPopup,
     submissionId,
+    courtData: court,
   };
 
   const token = generateJWTToken({ preferred_username: "username@bceid" });

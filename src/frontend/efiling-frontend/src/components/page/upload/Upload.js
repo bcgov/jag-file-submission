@@ -18,13 +18,15 @@ import { propTypes } from "../../../types/propTypes";
 import "./Upload.css";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
 
-const items = [
-  { description: "Affidavit", type: "AFF" },
-  { description: "Affidavit Section 51", type: "AFJ" },
-];
-
 const filesToUpload = {
   documents: [],
+};
+
+const generateDropdownItems = ({ level, courtClass }, setItems) => {
+  axios
+    .get(`/lookup/documentTypes/${level}/${courtClass}`)
+    .then(({ data: { documentTypes } }) => setItems(documentTypes))
+    .catch(() => window.open(sessionStorage.getItem("errorUrl"), "_self"));
 };
 
 const translateItems = (items) => {
@@ -70,7 +72,7 @@ const generateRadioButtonJSX = (fileName, type) => {
   );
 };
 
-const generateDropdownJSX = (fileName) => {
+const generateDropdownJSX = (items, fileName) => {
   return (
     <>
       <div className="table-value top-spacing">
@@ -91,14 +93,14 @@ const generateDropdownJSX = (fileName) => {
   );
 };
 
-const generateTable = (file) => {
+const generateTable = (items, file) => {
   filesToUpload.documents.push({ name: file.name });
 
   return [
     {
       key: file.name,
       name: generateFileJSX(file.name),
-      value: generateDropdownJSX(file.name),
+      value: generateDropdownJSX(items, file.name),
     },
     {
       key: `${file.name}-amendment`,
@@ -144,26 +146,24 @@ const uploadDocuments = (submissionId, acceptedFiles) => {
         .then((response) => {
           console.log(response);
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch(() => window.open(sessionStorage.getItem("errorUrl"), "_self"));
     })
-    .catch((err) => console.log(err));
+    .catch(() => window.open(sessionStorage.getItem("errorUrl"), "_self"));
 };
 
 export default function Upload({
-  upload: { confirmationPopup, submissionId },
+  upload: { confirmationPopup, submissionId, courtData },
 }) {
   const amendmentsSidecard = getSidecardData().amendments;
   const supremeCourtSchedulingSidecard = getSidecardData()
     .supremeCourtScheduling;
   const [showPackageConfirmation, setShowPackageConfirmation] = useState(false);
   const [acceptedFiles, setAcceptedFiles] = useState([]);
-  const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
+  const [items, setItems] = useState([]);
 
-  // useEffect(() => {
-  //   checkContinueBtnState(setContinueBtnEnabled);
-  // }, [continueBtnEnabled]);
+  useEffect(() => {
+    generateDropdownItems(courtData, setItems);
+  }, [items]);
 
   if (showPackageConfirmation) {
     return (
@@ -210,7 +210,7 @@ export default function Upload({
               <div key={file.name}>
                 <DisplayBox
                   styling="border-background"
-                  element={<Table elements={generateTable(file)} />}
+                  element={<Table elements={generateTable(items, file)} />}
                 />
                 <br />
               </div>
@@ -227,7 +227,6 @@ export default function Upload({
             label="Continue"
             onClick={() => uploadDocuments(submissionId, acceptedFiles)}
             styling="normal-blue btn"
-            // disabled={!continueBtnEnabled}
           />
         </section>
       </div>
@@ -243,5 +242,6 @@ Upload.propTypes = {
   upload: PropTypes.shape({
     confirmationPopup: propTypes.confirmationPopup,
     submissionId: PropTypes.string.isRequired,
+    courtData: PropTypes.object.isRequired,
   }).isRequired,
 };
