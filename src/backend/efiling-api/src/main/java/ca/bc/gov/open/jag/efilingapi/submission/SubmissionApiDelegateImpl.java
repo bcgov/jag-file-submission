@@ -71,41 +71,26 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @RolesAllowed("efiling-client")
     public ResponseEntity<UploadSubmissionDocumentsResponse> uploadSubmissionDocuments(UUID xTransactionId, List<MultipartFile> files) {
 
-        if (files == null || files.isEmpty())
-            return new ResponseEntity(
-                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_REQUIRED).create(),
-                    HttpStatus.BAD_REQUEST);
-
         UUID submissionId = UUID.randomUUID();
-
         MDC.put(Keys.EFILING_SUBMISSION_ID, submissionId.toString());
         logger.info("new request for efiling {}", submissionId);
 
-        try {
+        return storeDocuments(submissionId, xTransactionId, files);
+    }
 
-            for (MultipartFile file : files) {
-                Document document = Document
-                        .builder()
-                        .transactionId(xTransactionId)
-                        .submissionId(submissionId)
-                        .fileName(file.getResource().getFilename())
-                        .content(file.getBytes())
-                        .create();
+    @Override
+    @RolesAllowed("efiling-user")
+    public ResponseEntity<UploadSubmissionDocumentsResponse> uploadAdditionalSubmissionDocuments(UUID submissionId, UUID xTransactionId, List<MultipartFile> files) {
 
-                documentStore.put(document.getCompositeId(), document.getContent());
-            }
+        Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
 
-        } catch (IOException e) {
-            return new ResponseEntity(
-                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_STORAGE_FAILURE).create(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        if(!fromCacheSubmission.isPresent())
+            return ResponseEntity.notFound().build();
 
-        logger.info("{} stored in cache", files.size());
+        MDC.put(Keys.EFILING_SUBMISSION_ID, submissionId.toString());
+        logger.info("additional documents received {}", submissionId);
 
-        MDC.remove(Keys.EFILING_SUBMISSION_ID);
-
-        return ResponseEntity.ok(new UploadSubmissionDocumentsResponse().submissionId(submissionId).received(new BigDecimal(files.size())));
-
+        return storeDocuments(submissionId, xTransactionId, files);
     }
 
     @Override
@@ -282,5 +267,37 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             submission.setClientId(accountDetails.getClientId());
             this.submissionStore.put(submission);
         }
+    }
+
+    private ResponseEntity storeDocuments(UUID submissionId, UUID xTransactionId, List<MultipartFile> files) {
+        if (files == null || files.isEmpty())
+            return new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_REQUIRED).create(),
+                    HttpStatus.BAD_REQUEST);
+
+        try {
+
+            for (MultipartFile file : files) {
+                Document document = Document
+                        .builder()
+                        .transactionId(xTransactionId)
+                        .submissionId(submissionId)
+                        .fileName(file.getResource().getFilename())
+                        .content(file.getBytes())
+                        .create();
+
+                documentStore.put(document.getCompositeId(), document.getContent());
+            }
+
+        } catch (IOException e) {
+            return new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_STORAGE_FAILURE).create(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        logger.info("{} stored in cache", files.size());
+
+        MDC.remove(Keys.EFILING_SUBMISSION_ID);
+
+        return ResponseEntity.ok(new UploadSubmissionDocumentsResponse().submissionId(submissionId).received(new BigDecimal(files.size())));
     }
 }
