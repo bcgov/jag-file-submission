@@ -35,7 +35,6 @@ public class DocumentStoreImpl implements DocumentStore {
     }
 
     @Override
-    @Cacheable(cacheNames = "documentTypes", cacheManager = "documentTypesCacheManager", unless = "#result == null")
     public List<DocumentType> getDocumentTypes(String courtLevel, String courtClass) {
         return this.efilingDocumentService.getDocumentTypes(courtLevel, courtClass);
     }
