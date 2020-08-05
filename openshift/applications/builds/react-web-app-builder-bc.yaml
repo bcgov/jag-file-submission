@@ -26,7 +26,7 @@ objects:
     metadata:
       labels:
         application: modern-web-app
-      name: react-web-app-builder
+      name: react-web-app-builder-test
       namespace: qzaydf-tools
     spec:
       failedBuildsHistoryLimit: 5
