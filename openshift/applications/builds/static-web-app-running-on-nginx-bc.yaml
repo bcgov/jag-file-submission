@@ -29,54 +29,54 @@ objects:
         application: static-web-app-running-on-nginx-test
       name: static-web-app-running-on-nginx-test
       namespace: "${namespacePrefix}-tools"
-- apiVersion: build.openshift.io/v1
-  kind: BuildConfig
-  metadata:
-    labels:
-      application: modern-web-app
-      # TODO REMOVE TEST
-    name: static-web-app-running-on-nginx-test
-    namespace: qzaydf-tools
-  spec:
-    failedBuildsHistoryLimit: 5
-    nodeSelector: null
-    output:
-      to:
-        kind: ImageStreamTag
+  - apiVersion: build.openshift.io/v1
+    kind: BuildConfig
+    metadata:
+      labels:
+        application: modern-web-app
         # TODO REMOVE TEST
-        name: "static-web-app-running-on-nginx-test:latest"
-    postCommit: {}
-    resources: {}
-    runPolicy: Serial
-    source:
-      images:
-        - as: null
+      name: static-web-app-running-on-nginx-test
+      namespace: qzaydf-tools
+    spec:
+      failedBuildsHistoryLimit: 5
+      nodeSelector: null
+      output:
+        to:
+          kind: ImageStreamTag
+          # TODO REMOVE TEST
+          name: "static-web-app-running-on-nginx-test:latest"
+      postCommit: {}
+      resources: {}
+      runPolicy: Serial
+      source:
+        images:
+          - as: null
+            from:
+              kind: ImageStreamTag
+              name: "react-web-app-builder-test:latest"
+            # TODO IMPLEMENT MOUNTS
+            #paths:
+            #- destinationDir: .
+            #sourcePath: /opt/app-root/output/robots.txt
+            #- destinationDir: ./efiling
+            #sourcePath: /opt/app-root/output/.
+        type: Image
+      strategy:
+        sourceStrategy:
           from:
             kind: ImageStreamTag
-            name: "react-web-app-builder-test:latest"
-          # TODO IMPLEMENT MOUNTS
-          #paths:
-            #- destinationDir: .
-              #sourcePath: /opt/app-root/output/robots.txt
-            #- destinationDir: ./efiling
-              #sourcePath: /opt/app-root/output/.
-      type: Image
-    strategy:
-      sourceStrategy:
-        from:
-          kind: ImageStreamTag
-          name: "nginx-image-runtime:latest"
-        incremental: true
-      type: Source
-    successfulBuildsHistoryLimit: 5
-    triggers:
-      - github:
-          secret: LdiwSKDDNDx2M6OIKm1skedR36PLyrr2RCYqct24
-        type: GitHub
-      - type: ConfigChange
-      - imageChange:
-          lastTriggeredImageID: >-
-            centos/nginx-112-centos7@sha256:af171c38298e64664a9f999194480ce7e392858e773904df22f7585a1731ad0d
-        type: ImageChange
-  status:
-    lastVersion: 0
+            name: "nginx-image-runtime:latest"
+          incremental: true
+        type: Source
+      successfulBuildsHistoryLimit: 5
+      triggers:
+        - github:
+            secret: LdiwSKDDNDx2M6OIKm1skedR36PLyrr2RCYqct24
+          type: GitHub
+        - type: ConfigChange
+        - imageChange:
+            lastTriggeredImageID: >-
+              centos/nginx-112-centos7@sha256:af171c38298e64664a9f999194480ce7e392858e773904df22f7585a1731ad0d
+          type: ImageChange
+    status:
+      lastVersion: 0
