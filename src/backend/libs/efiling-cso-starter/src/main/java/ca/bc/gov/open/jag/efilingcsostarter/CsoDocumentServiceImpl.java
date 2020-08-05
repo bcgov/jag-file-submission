@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CsoDocumentServiceImpl implements EfilingDocumentService {
@@ -35,7 +36,7 @@ public class CsoDocumentServiceImpl implements EfilingDocumentService {
         if (StringUtils.isBlank(courtClass)) throw new IllegalArgumentException("courtClass level is required.");
         if (StringUtils.isBlank(documentType)) throw new IllegalArgumentException("documentType level is required.");
 
-        return getDocumentTypes(courtLevel, courtClass).stream()
+        return getSoapDocumentTypes(courtLevel, courtClass).stream()
                 .filter(doc -> doc.getDocumentTypeCd().equals(documentType))
                 .findFirst()
                 .map(doc -> new DocumentDetails(doc.getDocumentTypeDesc(), doc.getDefaultStatutoryFee()))
@@ -43,7 +44,15 @@ public class CsoDocumentServiceImpl implements EfilingDocumentService {
 
     }
 
-    private List<DocumentType> getDocumentTypes(String courtLevel, String courtClass) {
+    public List<ca.bc.gov.open.jag.efilingcommons.model.DocumentType> getDocumentTypes(String courtLevel, String courtClass) {
+        if (StringUtils.isBlank(courtLevel)) throw new IllegalArgumentException("courtLevel is required.");
+        if (StringUtils.isBlank(courtClass)) throw new IllegalArgumentException("courtClass level is required.");
+
+        return getSoapDocumentTypes(courtLevel, courtClass).stream()
+                .map(doc -> new ca.bc.gov.open.jag.efilingcommons.model.DocumentType(doc.getDocumentTypeDesc(), doc.getDocumentTypeCd())).collect(Collectors.toList());
+    }
+
+    private List<DocumentType> getSoapDocumentTypes(String courtLevel, String courtClass) {
 
         List<DocumentType> documentTypes = new ArrayList<>();
 
