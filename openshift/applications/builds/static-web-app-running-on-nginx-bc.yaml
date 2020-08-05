@@ -48,14 +48,14 @@ objects:
       postCommit: {}
       resources: {}
       runPolicy: Serial
-      source:
-        images:
-          - as: null
-            from:
-              kind: ImageStreamTag
-              name: "react-web-app-builder-test:latest"
+      #source:
+        #images:
+          #- as: null
+            #from:
+              #kind: ImageStreamTag
+              #name: "react-web-app-builder-test:latest"
             # TODO IMPLEMENT MOUNTS
-            paths:
+            #paths:
             #- destinationDir: .
             #sourcePath: /opt/app-root/output/robots.txt
             #- destinationDir: ./efiling
