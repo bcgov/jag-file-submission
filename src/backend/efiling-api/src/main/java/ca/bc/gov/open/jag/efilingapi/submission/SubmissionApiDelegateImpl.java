@@ -94,6 +94,36 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
+    public ResponseEntity<UpdateDocumentResponse> updateDocumentProperties(UUID submissionId, UUID xTransactionId, UpdateDocumentRequest updateDocumentRequest) {
+
+        if (updateDocumentRequest.getDocuments().isEmpty())
+            return new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_REQUIRED).create(),
+                    HttpStatus.BAD_REQUEST);
+
+        Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
+
+        if(!fromCacheSubmission.isPresent())
+            return ResponseEntity.notFound().build();
+
+        MDC.put(Keys.EFILING_SUBMISSION_ID, submissionId.toString());
+        logger.info("update documents received {}", submissionId);
+        try {
+            Submission submission = submissionService.updateDocuments(fromCacheSubmission.get(), updateDocumentRequest);
+            submissionStore.put(submission);
+            UpdateDocumentResponse updateDocumentResponse = new UpdateDocumentResponse();
+            updateDocumentResponse.getDocuments().addAll(submission.getFilingPackage().getDocuments());
+            return ResponseEntity.ok(updateDocumentResponse);
+        } catch (EfilingDocumentServiceException e) {
+            logger.warn(e.getMessage(), e);
+            return new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+
+        } finally {
+            MDC.remove(Keys.EFILING_SUBMISSION_ID);
+        }
+    }
+
+    @Override
     @RolesAllowed("efiling-user")
     public ResponseEntity<Resource> getSubmissionDocument(UUID xTransactionId,
                                                           UUID submissionId,
