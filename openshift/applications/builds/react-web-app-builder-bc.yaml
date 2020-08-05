@@ -64,9 +64,6 @@ objects:
         type: Source
       successfulBuildsHistoryLimit: 5
       triggers:
-        - github:
-            secret: LdiwSKDDNDx2M6OIKm1skedR36PLyrr2RCYqct24
-          type: GitHub
         - type: ConfigChange
         - imageChange:
             lastTriggeredImageID: >-
