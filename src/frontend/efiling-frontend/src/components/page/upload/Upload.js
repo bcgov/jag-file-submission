@@ -22,7 +22,9 @@ const filesToUpload = {
   documents: [],
 };
 
-const generateDropdownItems = ({ level, courtClass }, setItems) => {
+const generateDropdownItems = ({ level, courtClass }, setItems, items) => {
+  if (items.length > 0) return;
+
   axios
     .get(`/lookup/documentTypes/${level}/${courtClass}`)
     .then(({ data: { documentTypes } }) => setItems(documentTypes))
@@ -80,7 +82,8 @@ const generateDropdownJSX = (items, fileName) => {
           label="Description:"
           items={translateItems(items)}
           onSelect={(val) => {
-            filesToUpload.documents.forEach((file) => {
+            filesToUpload.documents.forEach((f) => {
+              const file = f;
               if (file.name === fileName) {
                 file.type = items.find((item) => item.description === val).type;
               }
@@ -124,7 +127,7 @@ const generateTable = (items, file) => {
 const generateFormData = (acceptedFiles) => {
   const formData = new FormData();
 
-  for (let i = 0; i < acceptedFiles.length; i++) {
+  for (let i = 0; i < acceptedFiles.length; i += 1) {
     formData.append("files", acceptedFiles[i]);
   }
 
@@ -162,7 +165,7 @@ export default function Upload({
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    generateDropdownItems(courtData, setItems);
+    generateDropdownItems(courtData, setItems, items);
   }, [items]);
 
   if (showPackageConfirmation) {
