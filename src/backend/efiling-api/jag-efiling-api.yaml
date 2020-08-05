@@ -231,6 +231,33 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserDetails"
+  "/lookup/documentTypes/{courtLevel}/{courtClass}":
+    get:
+      summary: Get document types
+      operationId: GetDocumentTypes
+      description: A list of document types
+      tags:
+        - lookup
+      parameters:
+        - name: courtLevel
+          in: path
+          description: court level
+          required: true
+          schema:
+            type: string
+        - name: courtClass
+          in: path
+          description: court calss
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of documents types
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DocumentTypes"
 components:
   securitySchemes:
     bearerAuth: # arbitrary name for the security scheme
@@ -435,6 +462,25 @@ components:
         type:
           type: string
           description: the client Court Services Online Application Code
+    DocumentType:
+      type: object
+      required:
+        - type
+        - description
+      properties:
+        type:
+          type: string
+          description: code value
+        description:
+          type: string
+          description: human readable value
+    DocumentTypes:
+      type: object
+      properties:
+        documentTypes:
+          type: array
+          items:
+            $ref: "#/components/schemas/DocumentType"
     UploadSubmissionDocumentsResponse:
       description: represents upload document response
       type: object
