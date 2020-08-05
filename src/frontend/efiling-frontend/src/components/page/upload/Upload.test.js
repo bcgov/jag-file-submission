@@ -59,6 +59,7 @@ describe("Upload Component", () => {
   beforeEach(() => {
     mock = new MockAdapter(axios);
     window.open = jest.fn();
+    sessionStorage.setItem("errorUrl", "errorexample.com");
   });
 
   test("Matches the snapshot", () => {
@@ -107,5 +108,17 @@ describe("Upload Component", () => {
     await flushPromises(ui, container);
 
     expect(asFragment()).toMatchSnapshot();
+  });
+
+  test("redirects to error page if fail to generate dropdown elements", async () => {
+    mock
+      .onGet(`/lookup/documentTypes/${court.level}/${court.courtClass}`)
+      .reply(400);
+
+    render(<Upload upload={upload} />);
+
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalledWith("errorexample.com", "_self");
   });
 });
