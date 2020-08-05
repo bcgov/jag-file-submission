@@ -21,6 +21,13 @@ parameters:
     required: true
     value:
 objects:
+  - apiVersion: v1
+    kind: ImageStream
+    metadata:
+      labels:
+        application: react-web-app-builder-test
+      name: react-web-app-builder-test
+      namespace: "${namespacePrefix}-tools"
   - apiVersion: build.openshift.io/v1
     kind: BuildConfig
     metadata:
@@ -34,7 +41,7 @@ objects:
       output:
         to:
           kind: ImageStreamTag
-          name: "react-web-app-builder:latest"
+          name: "react-web-app-builder-test:latest"
       postCommit: {}
       resources:
         limits:
