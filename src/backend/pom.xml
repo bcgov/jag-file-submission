@@ -22,6 +22,7 @@
 		<profile>
 			<id>all</id>
 			<modules>
+				<module>libs/efiling-bambora-api-client</module>
 				<module>libs/efiling-commons</module>
 				<module>libs/efiling-cso-starter</module>
 				<module>libs/efiling-bom</module>
@@ -32,6 +33,7 @@
 		<profile>
 			<id>libs</id>
 			<modules>
+				<module>libs/efiling-bambora-api-client</module>
 				<module>libs/efiling-bom</module>
 				<module>libs/efiling-commons</module>
 				<module>libs/efiling-cso-starter</module>

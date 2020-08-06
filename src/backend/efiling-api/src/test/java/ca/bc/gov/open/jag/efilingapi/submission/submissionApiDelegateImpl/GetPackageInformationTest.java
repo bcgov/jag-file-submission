@@ -2,6 +2,8 @@ package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
+import ca.bc.gov.open.jag.efilingapi.api.model.Document;
+import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
@@ -17,6 +19,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -52,7 +55,7 @@ public class GetPackageInformationTest {
 
         Submission submissionWithParentApplication = Submission
                 .builder()
-                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
+                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), createDocumentListWithNulls()))
                 .create();
 
         Mockito.when(submissionStoreMock.get(Mockito.eq(TestHelpers.CASE_1), Mockito.any())).thenReturn(Optional.of(submissionWithParentApplication));
@@ -73,6 +76,8 @@ public class GetPackageInformationTest {
         Assertions.assertEquals(TestHelpers.PROPERTYCLASS, actual.getBody().getCourt().getCourtClass());
         Assertions.assertEquals(TestHelpers.TYPE, actual.getBody().getDocuments().get(0).getType());
         Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getBody().getDocuments().get(0).getDescription());
+        Assertions.assertNull(actual.getBody().getDocuments().get(0).getIsAmendment());
+        Assertions.assertNull(actual.getBody().getDocuments().get(0).getIsSupremeCourtScheduling());
 
     }
     @Test
@@ -80,5 +85,11 @@ public class GetPackageInformationTest {
     public void withInCorrectIDReturnNotFound() {
         ResponseEntity<FilingPackage> actual = sut.getSubmissionFilingPackage(UUID.randomUUID(), TestHelpers.CASE_2);
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
+    }
+    private List<Document> createDocumentListWithNulls() {
+        List<Document> documents =  TestHelpers.createDocumentList();
+        documents.get(0).setIsAmendment(null);
+        documents.get(0).setIsSupremeCourtScheduling(null);
+        return documents;
     }
 }

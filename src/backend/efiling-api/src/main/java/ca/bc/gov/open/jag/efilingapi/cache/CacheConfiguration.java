@@ -157,7 +157,7 @@ public class CacheConfiguration {
         return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(jedisConnectionFactory)
                 .cacheDefaults(redisCacheConfiguration).build();
     }
-    
+
     @Bean(name = "documentDetailsSerializer")
     public Jackson2JsonRedisSerializer documentDetailsSerializer() {
         return new Jackson2JsonRedisSerializer(DocumentDetails.class);
