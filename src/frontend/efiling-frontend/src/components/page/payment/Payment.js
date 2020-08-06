@@ -95,7 +95,7 @@ export default function Payment({
           agreeCallout={() => setPaymentAgreed(!paymentAgreed)}
         />
         <br />
-        <section className="inline-block pt-2 two-buttons">
+        <section className="inline-block pt-2 buttons">
           <Button
             label="< Back"
             onClick={() => setShowPackageConfirmation(true)}

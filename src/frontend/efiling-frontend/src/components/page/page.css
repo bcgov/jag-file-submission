@@ -50,7 +50,7 @@ main {
   min-width: fit-content;
 }
 
-.two-buttons {
+.buttons {
   display: flex;
   justify-content: space-between;
   float: right;
