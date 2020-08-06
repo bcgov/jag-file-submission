@@ -94,7 +94,7 @@ export default function CSOAccount({
           confirmText="I accept the Service Agreement"
         />
 
-        <section className="non-printable buttons pt-4">
+        <section className="non-printable two-buttons pt-4">
           <ConfirmationPopup
             modal={confirmationPopup.modal}
             mainButton={confirmationPopup.mainButton}

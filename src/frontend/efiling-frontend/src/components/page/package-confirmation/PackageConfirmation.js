@@ -205,7 +205,7 @@ export default function PackageConfirmation({
           />
         </div>
         <br />
-        <section className="buttons pt-2">
+        <section className="two-buttons pt-2">
           <ConfirmationPopup
             modal={confirmationPopup.modal}
             mainButton={confirmationPopup.mainButton}

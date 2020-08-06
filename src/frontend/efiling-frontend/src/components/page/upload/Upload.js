@@ -18,7 +18,7 @@ import { propTypes } from "../../../types/propTypes";
 import "./Upload.css";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
 
-const filesToUpload = {
+let filesToUpload = {
   documents: [],
 };
 
@@ -41,19 +41,41 @@ const translateItems = (items) => {
   return translatedItems;
 };
 
-const generateFileJSX = (fileName) => {
+const removeUploadedFile = (fileName, acceptedFiles, setAcceptedFiles) => {
+  filesToUpload.documents = filesToUpload.documents.filter((doc) => {
+    return doc.name !== fileName;
+  });
+
+  setAcceptedFiles(acceptedFiles.filter((f) => f.name !== fileName));
+};
+
+const generateFileJSX = (fileName, acceptedFiles, setAcceptedFiles) => {
+  console.log(filesToUpload);
   return (
     <div className="center-alignment fill-space">
       <div style={{ color: "rgb(252, 186, 25)" }}>
         <MdDescription size={32} />
       </div>
       <span className="file-href minor-margin-left">{fileName}</span>
-      <MdDeleteForever className="minor-margin-left" size={32} />
+      <MdDeleteForever
+        className="minor-margin-left pointer"
+        size={32}
+        onClick={() =>
+          removeUploadedFile(fileName, acceptedFiles, setAcceptedFiles)
+        }
+      />
     </div>
   );
 };
 
 const generateRadioButtonJSX = (fileName, type) => {
+  let file;
+  filesToUpload.documents.forEach((f) => {
+    if (file.name === fileName) {
+      file = f;
+    }
+  });
+
   return (
     <div className="table-value">
       <div className="minor-margin-right">
@@ -61,14 +83,14 @@ const generateRadioButtonJSX = (fileName, type) => {
           id={`no-${type}-${fileName}`}
           name={`${type}-${fileName}`}
           label="No"
-          onSelect={(val) => console.log(val)}
+          onSelect={() => (file[type] = false)}
         />
       </div>
       <Radio
         id={`yes-${type}-${fileName}`}
         name={`${type}-${fileName}`}
         label="Yes"
-        onSelect={(val) => console.log(val)}
+        onSelect={() => (file[type] = true)}
       />
     </div>
   );
@@ -96,13 +118,15 @@ const generateDropdownJSX = (items, fileName) => {
   );
 };
 
-const generateTable = (items, file) => {
-  filesToUpload.documents.push({ name: file.name });
+const generateTable = (items, file, acceptedFiles, setAcceptedFiles) => {
+  if (!filesToUpload.documents.some((f) => f.name === file.name)) {
+    filesToUpload.documents.push({ name: file.name });
+  }
 
   return [
     {
       key: file.name,
-      name: generateFileJSX(file.name),
+      name: generateFileJSX(file.name, acceptedFiles, setAcceptedFiles),
       value: generateDropdownJSX(items, file.name),
     },
     {
@@ -110,7 +134,7 @@ const generateTable = (items, file) => {
       name: (
         <div className="major-padding-left">Is this document an amendment?</div>
       ),
-      value: generateRadioButtonJSX(file.name, "amendment"),
+      value: generateRadioButtonJSX(file.name, "isAmendment"),
     },
     {
       key: `${file.name}-supreme`,
@@ -119,7 +143,7 @@ const generateTable = (items, file) => {
           Is this document that needs to go to supreme court scheduling?
         </div>
       ),
-      value: generateRadioButtonJSX(file.name, "supreme"),
+      value: generateRadioButtonJSX(file.name, "isSupremeCourtScheduling"),
     },
   ];
 };
@@ -135,23 +159,24 @@ const generateFormData = (acceptedFiles) => {
 };
 
 const uploadDocuments = (submissionId, acceptedFiles) => {
-  axios
-    .post(
-      `/submission/${submissionId}/documents`,
-      generateFormData(acceptedFiles),
-      {
-        headers: { "Content-Type": "multipart/form-data" },
-      }
-    )
-    .then(() => {
-      axios
-        .post(`/submission/${submissionId}/update-documents`, filesToUpload)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch(() => window.open(sessionStorage.getItem("errorUrl"), "_self"));
-    })
-    .catch(() => window.open(sessionStorage.getItem("errorUrl"), "_self"));
+  console.log(filesToUpload);
+  // axios
+  //   .post(
+  //     `/submission/${submissionId}/documents`,
+  //     generateFormData(acceptedFiles),
+  //     {
+  //       headers: { "Content-Type": "multipart/form-data" },
+  //     }
+  //   )
+  //   .then(() => {
+  //     axios
+  //       .post(`/submission/${submissionId}/update-documents`, filesToUpload)
+  //       .then((response) => {
+  //         console.log(response);
+  //       })
+  //       .catch(() => window.open(sessionStorage.getItem("errorUrl"), "_self"));
+  //   })
+  //   .catch(() => window.open(sessionStorage.getItem("errorUrl"), "_self"));
 };
 
 export default function Upload({
@@ -181,7 +206,11 @@ export default function Upload({
     <div className="page">
       <div className="content col-md-8">
         <h1>Document Upload</h1>
-        <Dropzone onDrop={setAcceptedFiles}>
+        <Dropzone
+          onDrop={(droppedFile) =>
+            setAcceptedFiles(acceptedFiles.concat(droppedFile))
+          }
+        >
           {({ getRootProps, getInputProps }) => (
             <div
               data-testid="dropdownzone"
@@ -213,7 +242,16 @@ export default function Upload({
               <div key={file.name}>
                 <DisplayBox
                   styling="border-background"
-                  element={<Table elements={generateTable(items, file)} />}
+                  element={
+                    <Table
+                      elements={generateTable(
+                        items,
+                        file,
+                        acceptedFiles,
+                        setAcceptedFiles
+                      )}
+                    />
+                  }
                 />
                 <br />
               </div>

@@ -27,6 +27,10 @@ main {
   .page {
     flex-direction: column;
   }
+
+  .normal-blue {
+    max-width: 60%;
+  }
 }
 
 @media (min-width: 576px) {
@@ -44,4 +48,11 @@ main {
 .fit-table {
   width: 60%;
   min-width: fit-content;
+}
+
+.two-buttons {
+  display: flex;
+  justify-content: space-between;
+  float: right;
+  width: -webkit-fill-available;
 }

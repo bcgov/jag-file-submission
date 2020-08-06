@@ -23,6 +23,10 @@
   text-decoration: underline;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 .table-value {
   display: flex;
   margin-left: 50px;
