@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingapi.submission.service.submissionServiceImpl;
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.CreateServiceResponse;
+import ca.bc.gov.open.jag.efilingapi.api.model.SubmitResponse;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionServiceImpl;
@@ -50,7 +51,7 @@ public class createSubmissionTest {
     public void setUp(){
         MockitoAnnotations.initMocks(this);
         Mockito.when(efilingSubmissionServiceMock.addService(any())).thenReturn(TestHelpers.createEfilingService());
-        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, null, efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock);
+        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, null, null ,efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock);
 
     }
 
@@ -59,7 +60,7 @@ public class createSubmissionTest {
     @DisplayName("OK: service is created")
     public void withValidSubmissionServiceIsCreated() {
 
-        CreateServiceResponse actual = sut.createSubmission(Submission
+        SubmitResponse actual = sut.createSubmission(Submission
                 .builder()
                 .id(TestHelpers.CASE_1)
                 .clientId(BigDecimal.TEN)
@@ -70,7 +71,7 @@ public class createSubmissionTest {
                 .clientApplication(TestHelpers.createClientApplication(TestHelpers.DISPLAY_NAME, TestHelpers.TYPE))
                 .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
                 .create());
-        assertEquals(BigDecimal.TEN, actual.getServiceId());
+        assertEquals(BigDecimal.TEN, actual.getTransactionId());
     }
 
 }

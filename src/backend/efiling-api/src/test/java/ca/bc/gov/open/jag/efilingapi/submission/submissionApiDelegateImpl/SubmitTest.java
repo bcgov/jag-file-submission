@@ -4,6 +4,7 @@ import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.CreateServiceResponse;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
+import ca.bc.gov.open.jag.efilingapi.api.model.SubmitResponse;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
@@ -30,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("SubmissionApiDelegateImpl test suite")
-public class CreateServiceTest {
+public class SubmitTest {
     private SubmissionApiDelegateImpl sut;
 
     @Mock
@@ -71,8 +72,8 @@ public class CreateServiceTest {
 
         Mockito.when(submissionStoreMock.get(Mockito.eq(TestHelpers.CASE_2), Mockito.any())).thenReturn(Optional.of(submissionError));
 
-        CreateServiceResponse result = new CreateServiceResponse();
-        result.setServiceId(BigDecimal.TEN);
+        SubmitResponse result = new SubmitResponse();
+        result.setTransactionId(BigDecimal.TEN);
 
         Mockito.when(submissionServiceMock.createSubmission(Mockito.refEq(submissionExists))).thenReturn(result);
 
@@ -86,9 +87,9 @@ public class CreateServiceTest {
     @DisplayName("201: With valid request should return created and service id")
     public void withUserHavingValidRequestShouldReturnOk() {
 
-        ResponseEntity<CreateServiceResponse> actual = sut.createService(UUID.randomUUID(), TestHelpers.CASE_1, null);
+        ResponseEntity<SubmitResponse> actual = sut.submit(UUID.randomUUID(), TestHelpers.CASE_1, null);
         assertEquals(HttpStatus.CREATED, actual.getStatusCode());
-        assertEquals(BigDecimal.TEN, actual.getBody().getServiceId());
+        assertEquals(BigDecimal.TEN, actual.getBody().getTransactionId());
 
     }
 
@@ -96,7 +97,7 @@ public class CreateServiceTest {
     @DisplayName("500: with valid request but soap servie throws an exception return 500")
     public void withErrorInServiceShouldReturnInternalServiceError() {
 
-        ResponseEntity actual = sut.createService(UUID.randomUUID(), TestHelpers.CASE_2, null);
+        ResponseEntity actual = sut.submit(UUID.randomUUID(), TestHelpers.CASE_2, null);
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode());
         assertEquals("DOCUMENT_TYPE_ERROR", ((EfilingError)actual.getBody()).getError());
         assertEquals("Error while retrieving documents", ((EfilingError)actual.getBody()).getMessage());
@@ -106,7 +107,7 @@ public class CreateServiceTest {
     @Test
     @DisplayName("404: with submission request that does not exist 404 should be returned")
     public void withSubmissionRequestThatDoesNotExist() {
-        ResponseEntity actual = sut.createService(UUID.randomUUID(), TestHelpers.CASE_3, null);
+        ResponseEntity actual = sut.submit(UUID.randomUUID(), TestHelpers.CASE_3, null);
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
 
 

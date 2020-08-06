@@ -1,6 +1,8 @@
 package ca.bc.gov.open.jag.efilingapi.submission;
 
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
+import ca.bc.gov.open.jag.efilingapi.submission.mappers.EfilingFilingPackageMapper;
+import ca.bc.gov.open.jag.efilingapi.submission.mappers.EfilingFilingPackageMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
@@ -34,8 +36,15 @@ public class SubmissionConfig {
     }
 
     @Bean
+    public EfilingFilingPackageMapper efilingFilingPackageMapper() {
+        return new EfilingFilingPackageMapperImpl();
+    }
+
+
+    @Bean
     public SubmissionService submissionService(SubmissionStore submissionStore,
                                                SubmissionMapper submissionMapper,
+                                               EfilingFilingPackageMapper efilingFilingPackageMapper,
                                                EfilingLookupService efilingLookupService,
                                                EfilingCourtService efilingCourtService,
                                                EfilingSubmissionService efilingSubmissionService,
@@ -44,6 +53,7 @@ public class SubmissionConfig {
         return new SubmissionServiceImpl(submissionStore,
                 cacheProperties,
                 submissionMapper,
+                efilingFilingPackageMapper,
                 efilingLookupService,
                 efilingCourtService,
                 efilingSubmissionService,
