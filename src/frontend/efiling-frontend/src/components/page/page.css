@@ -28,8 +28,12 @@ main {
     flex-direction: column;
   }
 
+  .normal-white {
+    min-width: 0px;
+  }
+
   .normal-blue {
-    max-width: 60%;
+    min-width: 0px;
   }
 }
 
