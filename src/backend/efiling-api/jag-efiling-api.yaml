@@ -306,6 +306,12 @@ components:
         type:
           type: string
           description: the submission type
+        isAmendment:
+          type: boolean
+          description: is the document an amendment to another
+        isSupremeCourtScheduling:
+          type: boolean
+          description: supreme court scheduling required
     Document:
       required:
         - description

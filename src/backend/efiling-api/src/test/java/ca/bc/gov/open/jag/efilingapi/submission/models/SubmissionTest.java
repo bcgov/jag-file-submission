@@ -57,6 +57,8 @@ public class SubmissionTest {
         Assertions.assertEquals(TestHelpers.LEVEL_DESCRIPTION, actual.getFilingPackage().getCourt().getLevelDescription());
         Assertions.assertEquals(TestHelpers.TYPE, actual.getFilingPackage().getDocuments().get(0).getType());
         Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getFilingPackage().getDocuments().get(0).getDescription());
+        Assertions.assertEquals(true, actual.getFilingPackage().getDocuments().get(0).getIsAmendment());
+        Assertions.assertEquals(true, actual.getFilingPackage().getDocuments().get(0).getIsSupremeCourtScheduling());
     }
 
 }
