@@ -379,7 +379,7 @@ public class EfilingFilingPackage {
         this.updUserId = updUserId;
     }
 
-    private EfilingFilingPackage() {
+    public EfilingFilingPackage() {
 
     }
 }

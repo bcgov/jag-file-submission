@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efiling.demo;
 
+import ca.bc.gov.open.jag.efilingcommons.model.EfilingFilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 
@@ -9,11 +10,10 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.UUID;
 
 public class EfilingSubmissionServiceDemoImpl implements EfilingSubmissionService {
     @Override
-    public BigDecimal submitFilingPackage(UUID stuff) {
+    public BigDecimal submitFilingPackage(EfilingService service, EfilingFilingPackage filingPackage) {
         return BigDecimal.ONE;
     }
 
@@ -35,8 +35,4 @@ public class EfilingSubmissionServiceDemoImpl implements EfilingSubmissionServic
         return efilingService;
     }
 
-    @Override
-    public void updateService(EfilingService efilingService) {
-        //I do nothing
-    }
 }

@@ -9,19 +9,13 @@ import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoSubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingcsostarter.TestHelpers;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.ServiceMapperImpl;
-import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 
@@ -42,7 +36,7 @@ public class AddServiceTest {
 
         MockitoAnnotations.initMocks(this);
 
-        sut = new CsoSubmissionServiceImpl(filingFacadeBeanMock, serviceFacadeBean, new ServiceMapperImpl());
+        sut = new CsoSubmissionServiceImpl(filingFacadeBeanMock, serviceFacadeBean, new ServiceMapperImpl(), null);
 
     }
 
