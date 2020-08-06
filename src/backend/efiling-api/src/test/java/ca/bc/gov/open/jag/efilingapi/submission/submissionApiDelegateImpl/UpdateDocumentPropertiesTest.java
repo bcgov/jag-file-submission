@@ -79,6 +79,8 @@ public class UpdateDocumentPropertiesTest {
         DocumentProperties documentProperties = new DocumentProperties();
         documentProperties.setType(TestHelpers.TYPE);
         documentProperties.setName("test.txt");
+        documentProperties.setIsAmendment(true);
+        documentProperties.setIsSupremeCourtScheduling(true);
         updateDocumentRequest.addDocumentsItem(documentProperties);
 
         Mockito.when(submissionServiceMock.updateDocuments(any(), Mockito.refEq(updateDocumentRequest))).thenReturn(Submission
@@ -93,6 +95,8 @@ public class UpdateDocumentPropertiesTest {
         Assertions.assertEquals(1, actual.getBody().getDocuments().size());
         Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getBody().getDocuments().get(0).getDescription());
         Assertions.assertEquals(BigDecimal.TEN, actual.getBody().getDocuments().get(0).getStatutoryFeeAmount());
+        Assertions.assertEquals(true, actual.getBody().getDocuments().get(0).getIsSupremeCourtScheduling());
+        Assertions.assertEquals(true, actual.getBody().getDocuments().get(0).getIsAmendment());
     }
 
     @Test

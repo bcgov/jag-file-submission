@@ -98,6 +98,8 @@ public class TestHelpers {
         documentProperties.setName("random.txt");
         documentProperties.setType(TYPE);
         documentProperties.setMimeType("application/txt");
+        documentProperties.setIsSupremeCourtScheduling(true);
+        documentProperties.setIsAmendment(true);
 
         return Arrays.asList(documentProperties);
     }

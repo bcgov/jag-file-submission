@@ -155,6 +155,8 @@ public class SubmissionServiceImpl implements SubmissionService {
         document.setType(documentProperties.getType());
         document.setName(documentProperties.getName());
         document.setMimeType(FileUtils.guessContentTypeFromName(documentProperties.getName()));
+        document.setIsAmendment(documentProperties.getIsAmendment());
+        document.setIsSupremeCourtScheduling(documentProperties.getIsSupremeCourtScheduling());
 
         return document;
 

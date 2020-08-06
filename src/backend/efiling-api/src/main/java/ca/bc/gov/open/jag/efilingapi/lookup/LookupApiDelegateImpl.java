@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.stream.Collectors;
 @Service
 public class LookupApiDelegateImpl implements LookupApiDelegate {
@@ -26,6 +27,7 @@ public class LookupApiDelegateImpl implements LookupApiDelegate {
 
 
     @Override
+    @RolesAllowed("efiling-user")
     public ResponseEntity<DocumentTypes> getDocumentTypes(String courtLevel, String courtClass) {
 
         try {
