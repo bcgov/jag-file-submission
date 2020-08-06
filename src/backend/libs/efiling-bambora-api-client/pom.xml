@@ -107,7 +107,6 @@
 			<version>0.2.1</version>
 		</dependency>
 
-		<!--WAT-->
 		<dependency>
 			<groupId>com.google.code.findbugs</groupId>
 			<artifactId>jsr305</artifactId>
