@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission;
 
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
+import ca.bc.gov.open.jag.efilingapi.file.FileUploadService;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.EfilingFilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.EfilingFilingPackageMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
@@ -48,7 +49,8 @@ public class SubmissionConfig {
                                                EfilingLookupService efilingLookupService,
                                                EfilingCourtService efilingCourtService,
                                                EfilingSubmissionService efilingSubmissionService,
-                                               DocumentStore documentStore) {
+                                               DocumentStore documentStore,
+                                               FileUploadService fileUploadService) {
 
         return new SubmissionServiceImpl(submissionStore,
                 cacheProperties,
@@ -57,7 +59,8 @@ public class SubmissionConfig {
                 efilingLookupService,
                 efilingCourtService,
                 efilingSubmissionService,
-                documentStore);
+                documentStore,
+                fileUploadService);
     }
 
 }

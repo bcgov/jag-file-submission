@@ -1,8 +1,10 @@
 package ca.bc.gov.open.jag.efilingapi.file;
 
+import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingFileException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -15,6 +17,7 @@ import java.nio.file.StandardCopyOption;
 import java.text.MessageFormat;
 
 @Service
+@EnableConfigurationProperties(FileUploadProperites.class)
 public class FileUploadServiceImpl implements FileUploadService {
 
     Logger logger = LoggerFactory.getLogger(FileUploadServiceImpl.class);
