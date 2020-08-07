@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingapi.submission.service.submissionServiceImpl;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.SubmitResponse;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
+import ca.bc.gov.open.jag.efilingapi.file.FileUploadService;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.EfilingFilingPackageMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionServiceImpl;
@@ -47,11 +48,14 @@ public class createSubmissionTest {
     @Mock
     private EfilingSubmissionService efilingSubmissionServiceMock;
 
+    @Mock
+    private FileUploadService fileUploadServiceMock;
+
     @BeforeAll
     public void setUp(){
         MockitoAnnotations.initMocks(this);
         Mockito.when(efilingSubmissionServiceMock.submitFilingPackage(any(), any())).thenReturn(BigDecimal.TEN);
-        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, null, new EfilingFilingPackageMapperImpl(),efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock);
+        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, null, new EfilingFilingPackageMapperImpl(),efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock, fileUploadServiceMock);
 
     }
 
