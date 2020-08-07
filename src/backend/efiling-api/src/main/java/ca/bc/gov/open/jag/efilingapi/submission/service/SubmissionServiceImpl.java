@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -84,8 +85,16 @@ public class SubmissionServiceImpl implements SubmissionService {
     @Override
     public SubmitResponse createSubmission(Submission submission) {
 
-        EfilingService service = toEfilingService(submission);
-        EfilingFilingPackage filingPackage = null;
+        EfilingService service = efilingFilingPackageMapper.toEfilingService(submission);
+        service.setEntryDateTime(DateUtils.getCurrentXmlDate());
+
+        EfilingFilingPackage filingPackage = efilingFilingPackageMapper.toEfilingFilingPackage(submission);
+        filingPackage.setPackageControls(Arrays.asList(efilingFilingPackageMapper.toPackageAuthority(submission)));
+        filingPackage.setDocuments(submission.getFilingPackage().getDocuments().stream()
+                                        .map(document -> efilingFilingPackageMapper.toEfilingDocument(document))
+                                        .collect(Collectors.toList()));
+        filingPackage.setEntDtm(DateUtils.getCurrentXmlDate());
+
         SubmitResponse result = new SubmitResponse();
         result.transactionId(efilingSubmissionService.submitFilingPackage(service, filingPackage));
         return result;
@@ -93,6 +102,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     @Override
     public Submission updateDocuments(Submission submission, UpdateDocumentRequest updateDocumentRequest) {
+
         submission.getFilingPackage().getDocuments()
                 .addAll(
                         updateDocumentRequest.getDocuments()
@@ -120,17 +130,6 @@ public class SubmissionServiceImpl implements SubmissionService {
                 .collect(Collectors.toList()));
         return filingPackage;
 
-    }
-
-    private EfilingService toEfilingService(Submission submission) {
-        EfilingService service = new EfilingService();
-        service.setClientId(submission.getClientId());
-        service.setAccountId(submission.getAccountId());
-        service.setCourtFileNumber(submission.getFilingPackage().getCourt().getFileNumber());
-        service.setServiceTypeCd(SubmissionConstants.SUBMISSION_FEE_TYPE);
-        service.setEntryUserId(submission.getClientId().toString());
-        service.setEntryDateTime(DateUtils.getCurrentXmlDate());
-        return service;
     }
 
     private Court populateCourtDetails(CourtBase courtBase) {
