@@ -1,6 +1,5 @@
 package ca.bc.gov.open.jag.efilingapi.file;
 
-import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingFileException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,23 +16,22 @@ import java.nio.file.StandardCopyOption;
 import java.text.MessageFormat;
 
 @Service
-@EnableConfigurationProperties(FileUploadProperites.class)
+@EnableConfigurationProperties(FileUploadProperties.class)
 public class FileUploadServiceImpl implements FileUploadService {
 
     Logger logger = LoggerFactory.getLogger(FileUploadServiceImpl.class);
 
-    private final FileUploadProperites fileUploadProperites;
+    private final FileUploadProperties fileUploadProperties;
 
-    public FileUploadServiceImpl(FileUploadProperites fileUploadProperites) {
-        this.fileUploadProperites = fileUploadProperites;
+    public FileUploadServiceImpl(FileUploadProperties fileUploadProperties) {
+        this.fileUploadProperties = fileUploadProperties;
     }
 
     @Override
     public void upload(byte[] file, String fileName) {
-
         try {
             Path copyLocation = Paths
-                    .get(MessageFormat.format("{0}{1}{2}",fileUploadProperites.getLocation() , File.separator , StringUtils.cleanPath(fileName)));
+                    .get(MessageFormat.format("{0}{1}{2}", fileUploadProperties.getLocation() , File.separator , StringUtils.cleanPath(fileName)));
             Files.copy(new ByteArrayInputStream(file), copyLocation, StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception e) {
             logger.error("Error uploading file.", e);

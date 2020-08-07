@@ -6,12 +6,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class FileUploadConfig {
 
-    private final FileUploadProperites fileUploadProperites;
+    private final FileUploadProperties fileUploadProperties;
 
-    public FileUploadConfig(FileUploadProperites fileUploadProperites) {
-        this.fileUploadProperites = fileUploadProperites;
+    public FileUploadConfig(FileUploadProperties fileUploadProperties) {
+        this.fileUploadProperties = fileUploadProperties;
     }
 
     @Bean
-    public FileUploadService fileUploadService() { return new FileUploadServiceImpl(this.fileUploadProperites);  }
+    public FileUploadService fileUploadService() { return new FileUploadServiceImpl(this.fileUploadProperties);  }
 }

@@ -3,7 +3,7 @@ package ca.bc.gov.open.jag.efilingapi.file;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "jag.efiling.upload")
-public class FileUploadProperites {
+public class FileUploadProperties {
 
     private String location;
 
