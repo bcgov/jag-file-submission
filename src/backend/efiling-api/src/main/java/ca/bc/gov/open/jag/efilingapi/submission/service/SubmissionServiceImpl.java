@@ -19,7 +19,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -89,13 +91,15 @@ public class SubmissionServiceImpl implements SubmissionService {
     @Override
     public SubmitResponse createSubmission(Submission submission) {
 
+        uploadSubmissionDocuments(submission);
+
         EfilingService service = efilingFilingPackageMapper.toEfilingService(submission);
         service.setEntryDateTime(DateUtils.getCurrentXmlDate());
 
         EfilingFilingPackage filingPackage = efilingFilingPackageMapper.toEfilingFilingPackage(submission);
-        filingPackage.setPackageControls(Arrays.asList(efilingFilingPackageMapper.toPackageAuthority(submission)));
+        filingPackage.setPackageControls(Collections.singletonList(efilingFilingPackageMapper.toPackageAuthority(submission)));
         filingPackage.setDocuments(submission.getFilingPackage().getDocuments().stream()
-                                        .map(document -> efilingFilingPackageMapper.toEfilingDocument(document))
+                                        .map(efilingFilingPackageMapper::toEfilingDocument)
                                         .collect(Collectors.toList()));
         filingPackage.setEntDtm(DateUtils.getCurrentXmlDate());
 
@@ -174,6 +178,15 @@ public class SubmissionServiceImpl implements SubmissionService {
         request.getClientApplication().setType(SubmissionConstants.SUBMISSION_FEE_TYPE);
         ServiceFees fee = efilingLookupService.getServiceFee(SubmissionConstants.SUBMISSION_FEE_TYPE);
         return fee == null ? BigDecimal.ZERO : fee.getFeeAmount();
+
+    }
+
+    private void uploadSubmissionDocuments(Submission submission) {
+
+        submission.getFilingPackage().getDocuments().forEach(
+                document ->
+                        fileUploadService.upload(documentStore.get(MessageFormat.format("{0}_{1}_{2}",submission.getTransactionId(),submission.getId(),document.getName())), document.getName())
+        );
 
     }
 

@@ -55,6 +55,7 @@ public class createSubmissionTest {
     public void setUp(){
         MockitoAnnotations.initMocks(this);
         Mockito.when(efilingSubmissionServiceMock.submitFilingPackage(any(), any())).thenReturn(BigDecimal.TEN);
+        Mockito.doNothing().when(fileUploadServiceMock).upload(any(), any());
         sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, null, new EfilingFilingPackageMapperImpl(),efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock, fileUploadServiceMock);
 
     }
