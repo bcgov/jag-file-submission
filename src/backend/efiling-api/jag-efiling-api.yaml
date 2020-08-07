@@ -136,10 +136,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EfilingError"
-  "/submission/{submissionId}/service":
+  "/submission/{submissionId}/submit":
     post:
       summary: Create service for payment processing
-      operationId: createService
+      operationId: submit
       tags:
         - submission
       parameters:
@@ -151,14 +151,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateServiceRequest"
+              $ref: "#/components/schemas/SubmitRequest"
       responses:
         "201":
           description: Service created
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CreateServiceResponse"
+                $ref: "#/components/schemas/SubmitResponse"
         "403":
           description: Request does not meet the required criteria
           content:
@@ -546,15 +546,15 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Document"
-    CreateServiceRequest:
+    SubmitRequest:
       description: create service request
       type: object
-    CreateServiceResponse:
+    SubmitResponse:
       description: result of submit filing package
       type: object
       required:
-        - serviceId
+        - transactionId
       properties:
-        serviceId:
+        transactionId:
           type: number
-          description: the service id returned from cso
+          description: the transaction id returned from cso

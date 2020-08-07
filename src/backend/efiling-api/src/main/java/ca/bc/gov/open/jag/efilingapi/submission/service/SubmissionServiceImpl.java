@@ -2,15 +2,13 @@ package ca.bc.gov.open.jag.efilingapi.submission.service;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
+import ca.bc.gov.open.jag.efilingapi.submission.mappers.EfilingFilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.utils.FileUtils;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
-import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
-import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
+import ca.bc.gov.open.jag.efilingcommons.model.*;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
@@ -20,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -36,6 +35,8 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private final SubmissionMapper submissionMapper;
 
+    private final EfilingFilingPackageMapper efilingFilingPackageMapper;
+
     private final EfilingLookupService efilingLookupService;
 
     private final EfilingCourtService efilingCourtService;
@@ -48,11 +49,15 @@ public class SubmissionServiceImpl implements SubmissionService {
             SubmissionStore submissionStore,
             CacheProperties cacheProperties,
             SubmissionMapper submissionMapper,
+            EfilingFilingPackageMapper efilingFilingPackageMapper,
             EfilingLookupService efilingLookupService,
-            EfilingCourtService efilingCourtService, EfilingSubmissionService efilingSubmissionService, DocumentStore documentStore) {
+            EfilingCourtService efilingCourtService,
+            EfilingSubmissionService efilingSubmissionService,
+            DocumentStore documentStore) {
         this.submissionStore = submissionStore;
         this.cacheProperties = cacheProperties;
         this.submissionMapper = submissionMapper;
+        this.efilingFilingPackageMapper = efilingFilingPackageMapper;
         this.efilingLookupService = efilingLookupService;
         this.efilingCourtService = efilingCourtService;
         this.efilingSubmissionService = efilingSubmissionService;
@@ -78,17 +83,26 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     @Override
-    public CreateServiceResponse createSubmission(Submission submission) {
+    public SubmitResponse createSubmission(Submission submission) {
 
-        EfilingService service = toEfilingService(submission);
-        service = efilingSubmissionService.addService(service);
-        CreateServiceResponse result = new CreateServiceResponse();
-        result.setServiceId(service.getServiceId());
+        EfilingService service = efilingFilingPackageMapper.toEfilingService(submission);
+        service.setEntryDateTime(DateUtils.getCurrentXmlDate());
+
+        EfilingFilingPackage filingPackage = efilingFilingPackageMapper.toEfilingFilingPackage(submission);
+        filingPackage.setPackageControls(Arrays.asList(efilingFilingPackageMapper.toPackageAuthority(submission)));
+        filingPackage.setDocuments(submission.getFilingPackage().getDocuments().stream()
+                                        .map(document -> efilingFilingPackageMapper.toEfilingDocument(document))
+                                        .collect(Collectors.toList()));
+        filingPackage.setEntDtm(DateUtils.getCurrentXmlDate());
+
+        SubmitResponse result = new SubmitResponse();
+        result.transactionId(efilingSubmissionService.submitFilingPackage(service, filingPackage));
         return result;
     }
 
     @Override
     public Submission updateDocuments(Submission submission, UpdateDocumentRequest updateDocumentRequest) {
+
         submission.getFilingPackage().getDocuments()
                 .addAll(
                         updateDocumentRequest.getDocuments()
@@ -116,17 +130,6 @@ public class SubmissionServiceImpl implements SubmissionService {
                 .collect(Collectors.toList()));
         return filingPackage;
 
-    }
-
-    private EfilingService toEfilingService(Submission submission) {
-        EfilingService service = new EfilingService();
-        service.setClientId(submission.getClientId());
-        service.setAccountId(submission.getAccountId());
-        service.setCourtFileNumber(submission.getFilingPackage().getCourt().getFileNumber());
-        service.setServiceTypeCd(SubmissionConstants.SUBMISSION_FEE_TYPE);
-        service.setEntryUserId(submission.getClientId().toString());
-        service.setEntryDateTime(DateUtils.getCurrentXmlDate());
-        return service;
     }
 
     private Court populateCourtDetails(CourtBase courtBase) {
