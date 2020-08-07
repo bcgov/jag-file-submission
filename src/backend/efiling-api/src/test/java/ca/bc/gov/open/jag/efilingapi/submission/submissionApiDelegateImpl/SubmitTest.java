@@ -2,7 +2,6 @@ package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
-import ca.bc.gov.open.jag.efilingapi.api.model.CreateServiceResponse;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.api.model.SubmitResponse;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;

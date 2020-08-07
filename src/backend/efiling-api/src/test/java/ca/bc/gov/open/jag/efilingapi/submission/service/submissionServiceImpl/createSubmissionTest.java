@@ -1,7 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service.submissionServiceImpl;
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
-import ca.bc.gov.open.jag.efilingapi.api.model.CreateServiceResponse;
 import ca.bc.gov.open.jag.efilingapi.api.model.SubmitResponse;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.EfilingFilingPackageMapperImpl;
