@@ -32,7 +32,7 @@ const generateDropdownItems = ({ level, courtClass }, setItems, items) => {
 };
 
 const translateItems = (items) => {
-  const translatedItems = ["Select document description"];
+  const translatedItems = [];
 
   items.forEach((item) => {
     translatedItems.push(item.description);
@@ -41,16 +41,28 @@ const translateItems = (items) => {
   return translatedItems;
 };
 
-const removeUploadedFile = (fileName, acceptedFiles, setAcceptedFiles) => {
+const removeUploadedFile = (
+  fileName,
+  acceptedFiles,
+  setAcceptedFiles,
+  setContinueBtnEnabled,
+  checkValidityOfUploadedFiles
+) => {
   filesToUpload.documents = filesToUpload.documents.filter((doc) => {
     return doc.name !== fileName;
   });
 
   setAcceptedFiles(acceptedFiles.filter((f) => f.name !== fileName));
+  checkValidityOfUploadedFiles(setContinueBtnEnabled);
 };
 
-const generateFileJSX = (fileName, acceptedFiles, setAcceptedFiles) => {
-  console.log(filesToUpload);
+const generateFileJSX = (
+  fileName,
+  acceptedFiles,
+  setAcceptedFiles,
+  setContinueBtnEnabled,
+  checkValidityOfUploadedFiles
+) => {
   return (
     <div className="center-alignment fill-space">
       <div style={{ color: "rgb(252, 186, 25)" }}>
@@ -61,17 +73,23 @@ const generateFileJSX = (fileName, acceptedFiles, setAcceptedFiles) => {
         className="minor-margin-left pointer"
         size={32}
         onClick={() =>
-          removeUploadedFile(fileName, acceptedFiles, setAcceptedFiles)
+          removeUploadedFile(
+            fileName,
+            acceptedFiles,
+            setAcceptedFiles,
+            setContinueBtnEnabled,
+            checkValidityOfUploadedFiles
+          )
         }
       />
     </div>
   );
 };
 
-const generateRadioButtonJSX = (fileName, type) => {
+const generateRadioButtonJSX = (fileName, type, setContinueBtnEnabled) => {
   let file;
   filesToUpload.documents.forEach((f) => {
-    if (file.name === fileName) {
+    if (f.name === fileName) {
       file = f;
     }
   });
@@ -83,20 +101,26 @@ const generateRadioButtonJSX = (fileName, type) => {
           id={`no-${type}-${fileName}`}
           name={`${type}-${fileName}`}
           label="No"
-          onSelect={() => (file[type] = false)}
+          onSelect={() => {
+            file[type] = false;
+            checkValidityOfUploadedFiles(setContinueBtnEnabled);
+          }}
         />
       </div>
       <Radio
         id={`yes-${type}-${fileName}`}
         name={`${type}-${fileName}`}
         label="Yes"
-        onSelect={() => (file[type] = true)}
+        onSelect={() => {
+          file[type] = true;
+          checkValidityOfUploadedFiles(setContinueBtnEnabled);
+        }}
       />
     </div>
   );
 };
 
-const generateDropdownJSX = (items, fileName) => {
+const generateDropdownJSX = (items, fileName, setContinueBtnEnabled) => {
   return (
     <>
       <div className="table-value top-spacing">
@@ -110,6 +134,8 @@ const generateDropdownJSX = (items, fileName) => {
                 file.type = items.find((item) => item.description === val).type;
               }
             });
+
+            checkValidityOfUploadedFiles(setContinueBtnEnabled);
           }}
         />
       </div>
@@ -118,23 +144,48 @@ const generateDropdownJSX = (items, fileName) => {
   );
 };
 
-const generateTable = (items, file, acceptedFiles, setAcceptedFiles) => {
+const checkValidityOfUploadedFiles = (setContinueBtnEnabled) => {
+  const isValid = (currentValue) =>
+    currentValue.hasOwnProperty("isAmendment") &&
+    currentValue.hasOwnProperty("isSupremeCourtScheduling");
+
+  if (filesToUpload.documents.length === 0) setContinueBtnEnabled(false);
+  else if (filesToUpload.documents.every(isValid)) setContinueBtnEnabled(true);
+};
+
+const generateTable = (
+  items,
+  file,
+  acceptedFiles,
+  setAcceptedFiles,
+  setContinueBtnEnabled
+) => {
   if (!filesToUpload.documents.some((f) => f.name === file.name)) {
-    filesToUpload.documents.push({ name: file.name });
+    filesToUpload.documents.push({ name: file.name, type: "AFF" });
   }
 
   return [
     {
       key: file.name,
-      name: generateFileJSX(file.name, acceptedFiles, setAcceptedFiles),
-      value: generateDropdownJSX(items, file.name),
+      name: generateFileJSX(
+        file.name,
+        acceptedFiles,
+        setAcceptedFiles,
+        setContinueBtnEnabled,
+        checkValidityOfUploadedFiles
+      ),
+      value: generateDropdownJSX(items, file.name, setContinueBtnEnabled),
     },
     {
       key: `${file.name}-amendment`,
       name: (
         <div className="major-padding-left">Is this document an amendment?</div>
       ),
-      value: generateRadioButtonJSX(file.name, "isAmendment"),
+      value: generateRadioButtonJSX(
+        file.name,
+        "isAmendment",
+        setContinueBtnEnabled
+      ),
     },
     {
       key: `${file.name}-supreme`,
@@ -143,7 +194,11 @@ const generateTable = (items, file, acceptedFiles, setAcceptedFiles) => {
           Is this document that needs to go to supreme court scheduling?
         </div>
       ),
-      value: generateRadioButtonJSX(file.name, "isSupremeCourtScheduling"),
+      value: generateRadioButtonJSX(
+        file.name,
+        "isSupremeCourtScheduling",
+        setContinueBtnEnabled
+      ),
     },
   ];
 };
@@ -159,24 +214,23 @@ const generateFormData = (acceptedFiles) => {
 };
 
 const uploadDocuments = (submissionId, acceptedFiles) => {
-  console.log(filesToUpload);
-  // axios
-  //   .post(
-  //     `/submission/${submissionId}/documents`,
-  //     generateFormData(acceptedFiles),
-  //     {
-  //       headers: { "Content-Type": "multipart/form-data" },
-  //     }
-  //   )
-  //   .then(() => {
-  //     axios
-  //       .post(`/submission/${submissionId}/update-documents`, filesToUpload)
-  //       .then((response) => {
-  //         console.log(response);
-  //       })
-  //       .catch(() => window.open(sessionStorage.getItem("errorUrl"), "_self"));
-  //   })
-  //   .catch(() => window.open(sessionStorage.getItem("errorUrl"), "_self"));
+  axios
+    .post(
+      `/submission/${submissionId}/documents`,
+      generateFormData(acceptedFiles),
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    )
+    .then(() => {
+      axios
+        .post(`/submission/${submissionId}/update-documents`, filesToUpload)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch(() => window.open(sessionStorage.getItem("errorUrl"), "_self"));
+    })
+    .catch(() => window.open(sessionStorage.getItem("errorUrl"), "_self"));
 };
 
 export default function Upload({
@@ -188,6 +242,7 @@ export default function Upload({
   const [showPackageConfirmation, setShowPackageConfirmation] = useState(false);
   const [acceptedFiles, setAcceptedFiles] = useState([]);
   const [items, setItems] = useState([]);
+  const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
 
   useEffect(() => {
     generateDropdownItems(courtData, setItems, items);
@@ -248,7 +303,8 @@ export default function Upload({
                         items,
                         file,
                         acceptedFiles,
-                        setAcceptedFiles
+                        setAcceptedFiles,
+                        setContinueBtnEnabled
                       )}
                     />
                   }
@@ -268,6 +324,7 @@ export default function Upload({
             label="Continue"
             onClick={() => uploadDocuments(submissionId, acceptedFiles)}
             styling="normal-blue btn"
+            disabled={!continueBtnEnabled}
           />
         </section>
       </div>
