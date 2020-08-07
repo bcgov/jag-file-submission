@@ -57,6 +57,8 @@ jag:
           userName: ${CSO_BCEIDSERVICE_USERNAME}
           password: ${CSO_BCEIDSERVICE_PASSWORD}
           uri: ${CSO_BCEIDSERVICE_URI:http://localhost:8091}
+    upload:
+      location: ${UPLOAD_LOCATION}
 
 info:
   app:
