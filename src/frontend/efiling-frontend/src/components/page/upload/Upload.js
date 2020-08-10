@@ -22,7 +22,7 @@ const filesToUpload = {
   documents: [],
 };
 
-const checkValidityOfUploadedFiles = (setContinueBtnEnabled) => {
+const checkValidityOfUploadedFiles = () => {
   const isValid = (currentValue) =>
     Object.prototype.hasOwnProperty.call(currentValue, "isAmendment") &&
     Object.prototype.hasOwnProperty.call(
@@ -30,11 +30,12 @@ const checkValidityOfUploadedFiles = (setContinueBtnEnabled) => {
       "isSupremeCourtScheduling"
     );
 
-  if (filesToUpload.documents.length === 0) setContinueBtnEnabled(false);
-  else if (filesToUpload.documents.every(isValid)) setContinueBtnEnabled(true);
+  if (filesToUpload.documents.length === 0) return false;
+  if (filesToUpload.documents.every(isValid)) return true;
+  return false;
 };
 
-const generateDropdownItems = ({ level, courtClass }, setItems, items) => {
+const setDropdownItems = ({ level, courtClass }, setItems, items) => {
   if (items.length > 0) return;
 
   axios
@@ -64,7 +65,7 @@ const removeUploadedFile = (
   });
 
   setAcceptedFiles(acceptedFiles.filter((f) => f.name !== fileName));
-  checkValidityOfUploadedFiles(setContinueBtnEnabled);
+  setContinueBtnEnabled(checkValidityOfUploadedFiles());
 };
 
 const generateFileLink = (file) => {
@@ -134,7 +135,7 @@ const generateRadioButtonJSX = (fileName, type, setContinueBtnEnabled) => {
           label="No"
           onSelect={() => {
             file[type] = false;
-            checkValidityOfUploadedFiles(setContinueBtnEnabled);
+            setContinueBtnEnabled(checkValidityOfUploadedFiles());
           }}
         />
       </div>
@@ -144,7 +145,7 @@ const generateRadioButtonJSX = (fileName, type, setContinueBtnEnabled) => {
         label="Yes"
         onSelect={() => {
           file[type] = true;
-          checkValidityOfUploadedFiles(setContinueBtnEnabled);
+          setContinueBtnEnabled(checkValidityOfUploadedFiles());
         }}
       />
     </div>
@@ -166,7 +167,7 @@ const generateDropdownJSX = (items, fileName, setContinueBtnEnabled) => {
               }
             });
 
-            checkValidityOfUploadedFiles(setContinueBtnEnabled);
+            setContinueBtnEnabled(checkValidityOfUploadedFiles());
           }}
         />
       </div>
@@ -270,7 +271,7 @@ export default function Upload({
   const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
 
   useEffect(() => {
-    generateDropdownItems(courtData, setItems, items);
+    setDropdownItems(courtData, setItems, items);
   }, [items]);
 
   if (showPackageConfirmation) {
