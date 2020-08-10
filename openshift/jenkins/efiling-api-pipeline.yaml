@@ -17,7 +17,7 @@ spec:
     contextDir: src/backend
     git:
       ref: master
-      uri: 'https://github.com/bcgov/jag-file-submission'
+      uri: "https://github.com/bcgov/jag-file-submission"
     type: Git
   strategy:
     jenkinsPipelineStrategy:
@@ -26,15 +26,13 @@ spec:
           value: efiling-api
         - name: LIFECYCLE_WEBHOOK
         - name: GIT_SOURCE_URL
-          value: 'https://github.com/bcgov/jag-file-submission'
+          value: "https://github.com/bcgov/jag-file-submission"
         - name: GIT_SOURCE_REF
           value: master
-        - name: GIT_CREDENTIALS_ID
-          value: cjpybwYjEBI8vN2lYGAhYmywnpjFqANRRJarS5yf
         - name: GIT_CONTEXT_DIR
           value: src/backend
         - name: CHECKOUT_SRC
-          value: '${gitCheckoutRequired}'
+          value: "${gitCheckoutRequired}"
         - name: JENKINS_POD
           value: maven
         - name: TOOLS_NAMESPACE
@@ -111,7 +109,7 @@ spec:
   triggers:
     - type: ConfigChange
     - github:
-        secret: '${GITHUB_WEBHOOK_SECRET}'
+        secret: "${GITHUB_WEBHOOK_SECRET}"
       type: GitHub
 status:
   lastVersion: 0

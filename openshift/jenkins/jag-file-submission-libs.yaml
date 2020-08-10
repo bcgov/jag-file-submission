@@ -13,16 +13,16 @@ spec:
   postCommit: {}
   resources:
     limits:
-      cpu: '6'
+      cpu: "6"
       memory: 2Gi
     requests:
-      cpu: '4'
+      cpu: "4"
       memory: 1Gi
   runPolicy: Serial
   source:
     git:
       ref: master
-      uri: 'https://github.com/bcgov/jag-file-submission'
+      uri: "https://github.com/bcgov/jag-file-submission"
     type: Git
   strategy:
     jenkinsPipelineStrategy:
@@ -31,13 +31,12 @@ spec:
           value: jag-file-submission-libs
         - name: LIFECYCLE_WEBHOOK
         - name: GIT_SOURCE_URL
-          value: 'https://github.com/bcgov/jag-file-submission'
+          value: "https://github.com/bcgov/jag-file-submission"
         - name: GIT_SOURCE_REF
           value: master
-        - name: GIT_CREDENTIALS_ID
         - name: GIT_CONTEXT_DIR
         - name: CHECKOUT_SRC
-          value: '${gitCheckoutRequired}'
+          value: "${gitCheckoutRequired}"
         - name: JENKINS_POD
           value: maven
         - name: SONAR_TOKEN
@@ -45,7 +44,7 @@ spec:
         - name: SONAR_URL
         - name: SONAR_COMMAND
         - name: SONAR_ENABLED
-          value: 'false'
+          value: "false"
         - name: TOOLS_NAMESPACE
           value: qzaydf-tools
         - name: DEV_NAMESPACE
@@ -61,7 +60,7 @@ spec:
         - name: NEXUS_PROTOCOL
           value: http
         - name: NEXUS_URL
-          value: 'nexus:8081'
+          value: "nexus:8081"
         - name: NEXUS_SNAPSHOT_REPOSITORY
           value: fla-backend-snapshots
         - name: NEXUS_RELEASE_REPOSITORY
