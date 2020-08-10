@@ -67,14 +67,26 @@ describe("Upload Component", () => {
   let mock;
   beforeEach(() => {
     mock = new MockAdapter(axios);
+    mock
+      .onGet(`/lookup/documentTypes/${court.level}/${court.courtClass}`)
+      .reply(200, {
+        documentTypes: [
+          { type: "AFF", description: "Affidavit" },
+          { type: "AAS", description: "Affidavit of Attempted Service" },
+          { type: "CCB", description: "Case Conference Brief" },
+        ],
+      });
+
     window.open = jest.fn();
     global.URL.createObjectURL = jest.fn();
     global.URL.createObjectURL.mockReturnValueOnce("fileurl.com");
     sessionStorage.setItem("errorUrl", "errorexample.com");
   });
 
-  test("Matches the snapshot", () => {
+  test("Matches the snapshot", async () => {
     const { asFragment } = render(<Upload upload={upload} />);
+
+    await waitFor(() => {});
 
     expect(asFragment()).toMatchSnapshot();
   });
@@ -94,16 +106,6 @@ describe("Upload Component", () => {
   });
 
   test("invoke onDrop when drop event occurs", async () => {
-    mock
-      .onGet(`/lookup/documentTypes/${court.level}/${court.courtClass}`)
-      .reply(200, {
-        documentTypes: [
-          { type: "AFF", description: "Affidavit" },
-          { type: "AAS", description: "Affidavit of Attempted Service" },
-          { type: "CCB", description: "Case Conference Brief" },
-        ],
-      });
-
     const file = new File([JSON.stringify({ ping: true })], "ping.json", {
       type: "application/json",
     });
@@ -161,16 +163,6 @@ describe("Upload Component", () => {
   });
 
   test("successful document upload works as expected", async () => {
-    mock
-      .onGet(`/lookup/documentTypes/${court.level}/${court.courtClass}`)
-      .reply(200, {
-        documentTypes: [
-          { type: "AFF", description: "Affidavit" },
-          { type: "AAS", description: "Affidavit of Attempted Service" },
-          { type: "CCB", description: "Case Conference Brief" },
-        ],
-      });
-
     mock.onPost(`/submission/${submissionId}/documents`).reply(200);
 
     mock.onPost(`/submission/${submissionId}/update-documents`).reply(200);
@@ -252,16 +244,6 @@ describe("Upload Component", () => {
   });
 
   test("removing uploaded file works as expected", async () => {
-    mock
-      .onGet(`/lookup/documentTypes/${court.level}/${court.courtClass}`)
-      .reply(200, {
-        documentTypes: [
-          { type: "AFF", description: "Affidavit" },
-          { type: "AAS", description: "Affidavit of Attempted Service" },
-          { type: "CCB", description: "Case Conference Brief" },
-        ],
-      });
-
     const file = new File([JSON.stringify({ ping: true })], "ping.json", {
       type: "application/json",
     });
