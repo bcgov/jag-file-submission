@@ -73,3 +73,7 @@
 .minor-margin-right {
   margin-right: 5%;
 }
+
+.error {
+  color: #d8292f;
+}
