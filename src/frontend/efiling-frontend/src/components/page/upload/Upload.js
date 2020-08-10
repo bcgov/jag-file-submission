@@ -187,6 +187,7 @@ const generateTable = (
 ) => {
   if (!filesToUpload.documents.some((f) => f.name === file.name)) {
     filesToUpload.documents.push({ name: file.name, type: "AFF" });
+    setContinueBtnEnabled(checkValidityOfUploadedFiles());
   }
 
   return [
