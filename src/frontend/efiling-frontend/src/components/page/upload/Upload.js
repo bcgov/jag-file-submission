@@ -263,7 +263,7 @@ export const uploadDocuments = (
 const checkForDuplicateFiles = (droppedFiles, acceptedFiles) => {
   let isDuplicate = false;
 
-  for (let i = 0; i < acceptedFiles.length; i = i + 1) {
+  for (let i = 0; i < acceptedFiles.length; i += 1) {
     isDuplicate = droppedFiles.some((df) => df.name === acceptedFiles[i].name);
     if (isDuplicate) break;
   }
