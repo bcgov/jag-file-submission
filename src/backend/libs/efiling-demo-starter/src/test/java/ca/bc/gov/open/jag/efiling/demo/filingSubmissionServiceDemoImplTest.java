@@ -21,21 +21,4 @@ public class filingSubmissionServiceDemoImplTest {
         Assertions.assertEquals(BigDecimal.ONE, actual);
 
     }
-//    @DisplayName("CASE 2: Testing Demo addService")
-//    @Test
-//    public void testDemoLookupAddServiceTest() {
-//
-//        EfilingSubmissionServiceDemoImpl service = new EfilingSubmissionServiceDemoImpl();
-//
-//        EfilingService actual = service.addService(new EfilingService());
-//
-//        Assertions.assertEquals(BigDecimal.TEN, actual.getServiceId());
-//        Assertions.assertEquals(DateTime.now().getYear(), actual.getServiceReceivedDateTime().getYear());
-//        Assertions.assertEquals("Some recieved date message?", actual.getServiceReceivedDtmText());
-//        Assertions.assertEquals(BigDecimal.TEN, actual.getServiceSessionId());
-//        Assertions.assertEquals("subTypeCd", actual.getServiceSubtypeCd());
-//        Assertions.assertEquals("DCFL", actual.getServiceTypeCd());
-//        Assertions.assertEquals("Service type description", actual.getServiceTypeDesc());
-//
-//    }
 }
