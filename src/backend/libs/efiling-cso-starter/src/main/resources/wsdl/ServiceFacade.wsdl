@@ -215,6 +215,7 @@
                     <xs:element minOccurs="0" name="documentsProcessed" type="xs:string"/>
                     <xs:element minOccurs="0" name="entDtm" type="xs:dateTime"/>
                     <xs:element minOccurs="0" name="entUserId" type="xs:string"/>
+                    <xs:element minOccurs="0" name="feePaidYn" type="xs:string"/>
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="parameters" nillable="true" type="tns:parameterInstance"/>
                     <xs:element minOccurs="0" name="serviceId" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="serviceReceivedDtm" type="xs:dateTime"/>

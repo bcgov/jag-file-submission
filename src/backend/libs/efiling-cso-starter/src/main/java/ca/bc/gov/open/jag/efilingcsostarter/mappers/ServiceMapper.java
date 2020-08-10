@@ -7,6 +7,7 @@ import org.mapstruct.Mapping;
 
 @Mapper
 public interface ServiceMapper {
+
     @Mapping(target = "accountId", source = "accountId")
     @Mapping(target = "clientId", source = "clientId")
     @Mapping(target = "clientReferenceTxt", source = "clientReferenceTxt")
@@ -14,6 +15,8 @@ public interface ServiceMapper {
     @Mapping(target = "documentsProcessed", source = "documentsProcessed")
     @Mapping(target = "entDtm", source = "entryDateTime")
     @Mapping(target = "entUserId", source = "clientId")
+    @Mapping(target = "updDtm", source = "entryDateTime")
+    @Mapping(target = "updUserId", source = "clientId")
     @Mapping(target = "serviceId", source = "serviceId")
     @Mapping(target = "serviceReceivedDtm", source = "serviceReceivedDateTime")
     @Mapping(target = "serviceReceivedDtmText", source = "serviceReceivedDtmText")
@@ -23,6 +26,7 @@ public interface ServiceMapper {
     @Mapping(target = "serviceTypeDesc", source = "serviceTypeDesc")
     @Mapping(target = "styleOfCause", source = "styleOfCause")
     @Mapping(target = "transactions", source = "transactions")
+    @Mapping(target = "feePaidYn", constant = "false")
     Service toService(EfilingService efilingService);
 
     @Mapping(target = "accountId", source = "accountId")
