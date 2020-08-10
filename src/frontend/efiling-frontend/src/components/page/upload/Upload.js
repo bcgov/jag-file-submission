@@ -87,6 +87,7 @@ const generateFileJSX = (
         <MdDescription size={32} />
       </div>
       <span
+        data-testid={`file-link-${file.name}`}
         className="file-href minor-margin-left"
         onClick={() => window.open(fileLink)}
         onKeyDown={() => window.open(fileLink)}
@@ -96,6 +97,7 @@ const generateFileJSX = (
         {file.name}
       </span>
       <MdDeleteForever
+        data-testid="remove-icon"
         className="minor-margin-left pointer"
         size={32}
         onClick={() =>
@@ -251,9 +253,7 @@ export const uploadDocuments = (
     .then(() => {
       axios
         .post(`/submission/${submissionId}/update-documents`, filesToUpload)
-        .then(() => {
-          setShowPackageConfirmation(true);
-        })
+        .then(() => setShowPackageConfirmation(true))
         .catch(() => window.open(sessionStorage.getItem("errorUrl"), "_self"));
     })
     .catch(() => window.open(sessionStorage.getItem("errorUrl"), "_self"));
@@ -288,11 +288,9 @@ export default function Upload({
       <div className="content col-md-8">
         <h1>Document Upload</h1>
         <Dropzone
-          onDrop={(droppedFiles) => {
-            droppedFiles.forEach((df) =>
-              setAcceptedFiles(acceptedFiles.concat(df))
-            );
-          }}
+          onDrop={(droppedFiles) =>
+            setAcceptedFiles(acceptedFiles.concat(droppedFiles))
+          }
         >
           {({ getRootProps, getInputProps }) => (
             <div

@@ -1,7 +1,16 @@
 import React from "react";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-import { render, fireEvent, getByText, waitFor } from "@testing-library/react";
+import {
+  render,
+  fireEvent,
+  getByText,
+  waitFor,
+  getByTestId,
+  getAllByRole,
+  queryByText,
+  getAllByTestId,
+} from "@testing-library/react";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
 import { getCourtData } from "../../../modules/courtTestData";
 import { getDocumentsData } from "../../../modules/documentTestData";
@@ -109,6 +118,11 @@ describe("Upload Component", () => {
     await waitFor(() => {});
     await flushPromises(ui, container);
 
+    // test opening file link in new tab on keydown
+    const fileLink = getByTestId(container, "file-link-ping.json");
+    fireEvent.keyDown(fileLink);
+
+    expect(window.open).toHaveBeenCalledWith("fileurl.com");
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -144,5 +158,104 @@ describe("Upload Component", () => {
     await waitFor(() => {});
 
     expect(window.open).toHaveBeenCalledWith("errorexample.com", "_self");
+  });
+
+  test("successful document upload works as expected", async () => {
+    mock
+      .onGet(`/lookup/documentTypes/${court.level}/${court.courtClass}`)
+      .reply(200, {
+        documentTypes: [
+          { type: "AFF", description: "Affidavit" },
+          { type: "AAS", description: "Affidavit of Attempted Service" },
+          { type: "CCB", description: "Case Conference Brief" },
+        ],
+      });
+
+    mock.onPost(`/submission/${submissionId}/documents`).reply(200);
+
+    mock.onPost(`/submission/${submissionId}/update-documents`).reply(200);
+
+    const files = [];
+    const file1 = new File([JSON.stringify({ ping: true })], "ping.json", {
+      type: "application/json",
+    });
+    const file2 = new File([JSON.stringify({ ping: true })], "ping2.json", {
+      type: "application/json",
+    });
+
+    files.push(file1);
+    files.push(file2);
+
+    const data = mockData(files);
+    const ui = <Upload upload={upload} />;
+    const { container, asFragment } = render(ui);
+    const dropzone = container.querySelector('[data-testid="dropdownzone"]');
+
+    dispatchEvt(dropzone, "drop", data);
+
+    await waitFor(() => {});
+    await flushPromises(ui, container);
+
+    // test opening file link in new tab on click
+    const fileLink = getByTestId(container, "file-link-ping.json");
+    fireEvent.click(fileLink);
+
+    expect(window.open).toHaveBeenCalledWith("fileurl.com");
+
+    const radio = getAllByRole(container, "radio");
+    const button = getByText(container, "Continue");
+    const dropdown = getAllByTestId(container, "dropdown");
+
+    expect(button).toBeDisabled();
+
+    fireEvent.change(dropdown[0], {
+      target: { value: "Case Conference Brief" },
+    });
+    fireEvent.click(radio[0]);
+    fireEvent.click(radio[2]);
+    fireEvent.click(radio[5]);
+    fireEvent.click(radio[7]);
+
+    expect(button).not.toBeDisabled();
+
+    fireEvent.click(button);
+
+    await waitFor(() => {});
+
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  test("removing uploaded file works as expected", async () => {
+    mock
+      .onGet(`/lookup/documentTypes/${court.level}/${court.courtClass}`)
+      .reply(200, {
+        documentTypes: [
+          { type: "AFF", description: "Affidavit" },
+          { type: "AAS", description: "Affidavit of Attempted Service" },
+          { type: "CCB", description: "Case Conference Brief" },
+        ],
+      });
+
+    const file = new File([JSON.stringify({ ping: true })], "ping.json", {
+      type: "application/json",
+    });
+    const data = mockData([file]);
+
+    const ui = <Upload upload={upload} />;
+    const { container } = render(ui);
+    const dropzone = container.querySelector('[data-testid="dropdownzone"]');
+
+    dispatchEvt(dropzone, "drop", data);
+
+    await waitFor(() => {});
+    await flushPromises(ui, container);
+
+    expect(getByText(container, "ping.json")).toBeInTheDocument();
+
+    const removeIcon = getByTestId(container, "remove-icon");
+
+    fireEvent.click(removeIcon);
+
+    expect(queryByText(container, "ping.json")).not.toBeInTheDocument();
   });
 });
