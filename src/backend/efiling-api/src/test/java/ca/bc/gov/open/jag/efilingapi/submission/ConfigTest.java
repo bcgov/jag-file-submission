@@ -24,7 +24,7 @@ public class ConfigTest {
 
         MockitoAnnotations.initMocks(this);
 
-        sut = new SubmissionConfig(null);
+        sut = new SubmissionConfig(null, null);
     }
 
     @Test

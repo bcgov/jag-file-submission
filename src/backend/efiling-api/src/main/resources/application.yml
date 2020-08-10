@@ -57,7 +57,9 @@ jag:
           userName: ${CSO_BCEIDSERVICE_USERNAME}
           password: ${CSO_BCEIDSERVICE_PASSWORD}
           uri: ${CSO_BCEIDSERVICE_URI:http://localhost:8091}
-
+bambora:
+  basePath: ${BAMBORA_BASEPATH}
+  apiKey: ${BAMBORA_APIKEY}
 info:
   app:
     name: @project.name@
