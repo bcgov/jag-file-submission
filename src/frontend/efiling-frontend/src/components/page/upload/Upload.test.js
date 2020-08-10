@@ -59,6 +59,8 @@ describe("Upload Component", () => {
   beforeEach(() => {
     mock = new MockAdapter(axios);
     window.open = jest.fn();
+    global.URL.createObjectURL = jest.fn();
+    global.URL.createObjectURL.mockReturnValueOnce("fileurl.com");
     sessionStorage.setItem("errorUrl", "errorexample.com");
   });
 
