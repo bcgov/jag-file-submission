@@ -67,24 +67,36 @@ const removeUploadedFile = (
   checkValidityOfUploadedFiles(setContinueBtnEnabled);
 };
 
+const generateFileLink = (file) => {
+  const fileData = new Blob([file], { type: file.type });
+  return URL.createObjectURL(fileData);
+};
+
 const generateFileJSX = (
-  fileName,
+  file,
   acceptedFiles,
   setAcceptedFiles,
   setContinueBtnEnabled
 ) => {
+  const fileLink = generateFileLink(file);
+
   return (
     <div className="center-alignment fill-space">
       <div style={{ color: "rgb(252, 186, 25)" }}>
         <MdDescription size={32} />
       </div>
-      <span className="file-href minor-margin-left">{fileName}</span>
+      <span
+        className="file-href minor-margin-left"
+        onClick={() => window.open(fileLink)}
+      >
+        {file.name}
+      </span>
       <MdDeleteForever
         className="minor-margin-left pointer"
         size={32}
         onClick={() =>
           removeUploadedFile(
-            fileName,
+            file.name,
             acceptedFiles,
             setAcceptedFiles,
             setContinueBtnEnabled
@@ -175,7 +187,7 @@ const generateTable = (
     {
       key: file.name,
       name: generateFileJSX(
-        file.name,
+        file,
         acceptedFiles,
         setAcceptedFiles,
         setContinueBtnEnabled
@@ -219,7 +231,11 @@ const generateFormData = (acceptedFiles) => {
   return formData;
 };
 
-const uploadDocuments = (submissionId, acceptedFiles) => {
+const uploadDocuments = (
+  submissionId,
+  acceptedFiles,
+  setShowPackageConfirmation
+) => {
   axios
     .post(
       `/submission/${submissionId}/documents`,
@@ -231,8 +247,8 @@ const uploadDocuments = (submissionId, acceptedFiles) => {
     .then(() => {
       axios
         .post(`/submission/${submissionId}/update-documents`, filesToUpload)
-        .then((response) => {
-          console.log(response);
+        .then(() => {
+          setShowPackageConfirmation(true);
         })
         .catch(() => window.open(sessionStorage.getItem("errorUrl"), "_self"));
     })
@@ -268,9 +284,11 @@ export default function Upload({
       <div className="content col-md-8">
         <h1>Document Upload</h1>
         <Dropzone
-          onDrop={(droppedFile) =>
-            setAcceptedFiles(acceptedFiles.concat(droppedFile))
-          }
+          onDrop={(droppedFiles) => {
+            droppedFiles.forEach((df) =>
+              setAcceptedFiles(acceptedFiles.concat(df))
+            );
+          }}
         >
           {({ getRootProps, getInputProps }) => (
             <div
@@ -328,7 +346,13 @@ export default function Upload({
           />
           <Button
             label="Continue"
-            onClick={() => uploadDocuments(submissionId, acceptedFiles)}
+            onClick={() =>
+              uploadDocuments(
+                submissionId,
+                acceptedFiles,
+                setShowPackageConfirmation
+              )
+            }
             styling="normal-blue btn"
             disabled={!continueBtnEnabled}
           />
