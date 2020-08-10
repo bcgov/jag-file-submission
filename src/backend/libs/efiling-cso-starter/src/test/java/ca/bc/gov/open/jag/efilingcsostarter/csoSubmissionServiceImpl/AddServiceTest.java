@@ -9,19 +9,13 @@ import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoSubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingcsostarter.TestHelpers;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.ServiceMapperImpl;
-import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 
@@ -42,7 +36,7 @@ public class AddServiceTest {
 
         MockitoAnnotations.initMocks(this);
 
-        sut = new CsoSubmissionServiceImpl(filingFacadeBeanMock, serviceFacadeBean, new ServiceMapperImpl());
+        sut = new CsoSubmissionServiceImpl(filingFacadeBeanMock, serviceFacadeBean, new ServiceMapperImpl(), null);
 
     }
 
@@ -56,7 +50,7 @@ public class AddServiceTest {
     @DisplayName("OK: addService called with any non-empty service")
     @Test
     public void testWithPopulatedSubmissionId() throws NestedEjbException_Exception, DatatypeConfigurationException {
-        Mockito.when(serviceFacadeBean.addService(any())).thenReturn(createService());
+        Mockito.when(serviceFacadeBean.addService(any())).thenReturn(TestHelpers.createService());
         EfilingService actual = sut.addService(TestHelpers.createBaseEfilingService());
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountId());
         Assertions.assertEquals(BigDecimal.TEN, actual.getClientId());
@@ -80,22 +74,4 @@ public class AddServiceTest {
         Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.addService(TestHelpers.createBaseEfilingService()));
     }
 
-    private Service createService() throws DatatypeConfigurationException {
-        Service service = new Service();
-        service.setAccountId(BigDecimal.TEN);
-        service.setClientId(BigDecimal.TEN);
-        service.setClientReferenceTxt(TestHelpers.CLIENT_REFERENCE_TXT);
-        service.setCourtFileNo(TestHelpers.COURT_FILE_NUMBER);
-        service.setDocumentsProcessed(TestHelpers.DOCUMENTS_PROCESSED);
-        service.setEntDtm(TestHelpers.getXmlDate(TestHelpers.DATE));
-        service.setEntUserId("10");
-        service.setServiceId(BigDecimal.TEN);
-        service.setServiceReceivedDtm(TestHelpers.getXmlDate(TestHelpers.DATE));
-        service.setServiceReceivedDtmText(TestHelpers.SERVICE_RECEIVED_DTM_TEXT);
-        service.setServiceSessionId(BigDecimal.TEN);
-        service.setServiceSubtypeCd(TestHelpers.SERVICE_SUBTYPE_CD);
-        service.setServiceTypeCd(TestHelpers.SERVICE_TYPE_CD);
-        service.setServiceTypeDesc(TestHelpers.SERVICE_TYPE_DESC);
-        return service;
-    }
 }

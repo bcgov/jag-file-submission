@@ -261,7 +261,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     @Override
     @RolesAllowed("efiling-user")
-    public ResponseEntity<CreateServiceResponse> createService(UUID xTransactionId,
+    public ResponseEntity<SubmitResponse> submit(UUID xTransactionId,
                                                               UUID submissionId, Object body) {
         Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
 
@@ -270,7 +270,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         ResponseEntity response;
         MDC.put(Keys.EFILING_SUBMISSION_ID, submissionId.toString());
         try {
-            CreateServiceResponse result = submissionService.createSubmission(fromCacheSubmission.get());
+            SubmitResponse result = submissionService.createSubmission(fromCacheSubmission.get());
             response = new ResponseEntity(result, HttpStatus.CREATED);
         } catch (EfilingSubmissionServiceException e) {
             response = new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);

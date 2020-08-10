@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingcsostarter;
 
+import ca.bc.gov.ag.csows.services.Service;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingTransaction;
 import org.joda.time.DateTime;
@@ -120,5 +121,23 @@ public class TestHelpers {
                 getXmlDate(TestHelpers.DATE),
                 UPD_USER_ID
         );
+    }
+    public static Service createService() throws DatatypeConfigurationException {
+        Service service = new Service();
+        service.setAccountId(BigDecimal.TEN);
+        service.setClientId(BigDecimal.TEN);
+        service.setClientReferenceTxt(TestHelpers.CLIENT_REFERENCE_TXT);
+        service.setCourtFileNo(TestHelpers.COURT_FILE_NUMBER);
+        service.setDocumentsProcessed(TestHelpers.DOCUMENTS_PROCESSED);
+        service.setEntDtm(TestHelpers.getXmlDate(TestHelpers.DATE));
+        service.setEntUserId("10");
+        service.setServiceId(BigDecimal.TEN);
+        service.setServiceReceivedDtm(TestHelpers.getXmlDate(TestHelpers.DATE));
+        service.setServiceReceivedDtmText(TestHelpers.SERVICE_RECEIVED_DTM_TEXT);
+        service.setServiceSessionId(BigDecimal.TEN);
+        service.setServiceSubtypeCd(TestHelpers.SERVICE_SUBTYPE_CD);
+        service.setServiceTypeCd(TestHelpers.SERVICE_TYPE_CD);
+        service.setServiceTypeDesc(TestHelpers.SERVICE_TYPE_DESC);
+        return service;
     }
 }

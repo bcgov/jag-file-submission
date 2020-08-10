@@ -11,10 +11,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
 import ca.bc.gov.open.jag.efilingcommons.service.*;
 import ca.bc.gov.open.jag.efilingcsostarter.*;
-import ca.bc.gov.open.jag.efilingcsostarter.mappers.AccountDetailsMapper;
-import ca.bc.gov.open.jag.efilingcsostarter.mappers.AccountDetailsMapperImpl;
-import ca.bc.gov.open.jag.efilingcsostarter.mappers.ServiceMapper;
-import ca.bc.gov.open.jag.efilingcsostarter.mappers.ServiceMapperImpl;
+import ca.bc.gov.open.jag.efilingcsostarter.mappers.*;
 import ca.bceid.webservices.client.v9.BCeIDServiceSoap;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
@@ -75,6 +72,11 @@ public class AutoConfiguration {
     }
 
     @Bean
+    public FilingPackageMapper filingPackageMapper() {
+        return new FilingPackageMapperImpl();
+    }
+
+    @Bean
     @ConditionalOnMissingBean({EfilingAccountService.class})
     public EfilingAccountService efilingAccountService(AccountFacadeBean accountFacadeBean,
                                                        RoleRegistryPortType roleRegistryPortType,
@@ -106,7 +108,9 @@ public class AutoConfiguration {
     @ConditionalOnMissingBean({EfilingSubmissionService.class})
     public EfilingSubmissionService efilingSubmissionService(FilingFacadeBean filingFacadeBean,
                                                              ServiceFacadeBean serviceFacadeBean,
-                                                             ServiceMapper serviceMapper) { return new CsoSubmissionServiceImpl(filingFacadeBean, serviceFacadeBean, serviceMapper); }
+                                                             ServiceMapper serviceMapper,
+                                                             FilingPackageMapper filingPackageMapper
+    ) { return new CsoSubmissionServiceImpl(filingFacadeBean, serviceFacadeBean, serviceMapper, filingPackageMapper); }
 
 
     public <T> T getPort(Clients clients, Class<T> type) {
