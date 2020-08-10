@@ -40,4 +40,5 @@ public interface EfilingFilingPackageMapper {
     @Mapping(target = "serviceSubtypeCd", constant = SubmissionConstants.SUBMISSION_FEE_SUB_TYPE)
     @Mapping(target = "entryUserId", source = "clientId")
     EfilingService toEfilingService(Submission submission);
+
 }
