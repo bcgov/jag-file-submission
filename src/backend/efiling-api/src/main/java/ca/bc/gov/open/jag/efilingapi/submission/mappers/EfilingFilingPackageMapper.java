@@ -6,13 +6,10 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingDocument;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingFilingPackage;
-
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingPackageAuthority;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-
-import java.util.List;
 
 @Mapper
 public interface EfilingFilingPackageMapper {
@@ -39,8 +36,8 @@ public interface EfilingFilingPackageMapper {
     @Mapping(target = "clientId", source = "clientId")
     @Mapping(target = "accountId", source = "accountId")
     @Mapping(target = "courtFileNumber", source = "filingPackage.court.fileNumber")
-    @Mapping(target = "serviceTypeCd", defaultValue = SubmissionConstants.SUBMISSION_FEE_TYPE)
-    @Mapping(target = "serviceSubtypeCd", defaultValue = SubmissionConstants.SUBMISSION_FEE_SUB_TYPE)
+    @Mapping(target = "serviceTypeCd", constant = SubmissionConstants.SUBMISSION_FEE_TYPE)
+    @Mapping(target = "serviceSubtypeCd", constant = SubmissionConstants.SUBMISSION_FEE_SUB_TYPE)
     @Mapping(target = "entryUserId", source = "clientId")
     EfilingService toEfilingService(Submission submission);
 }
