@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/jsx-props-no-spreading, react/jsx-curly-newline */
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
@@ -18,8 +18,20 @@ import { propTypes } from "../../../types/propTypes";
 import "./Upload.css";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
 
-let filesToUpload = {
+const filesToUpload = {
   documents: [],
+};
+
+const checkValidityOfUploadedFiles = (setContinueBtnEnabled) => {
+  const isValid = (currentValue) =>
+    Object.prototype.hasOwnProperty.call(currentValue, "isAmendment") &&
+    Object.prototype.hasOwnProperty.call(
+      currentValue,
+      "isSupremeCourtScheduling"
+    );
+
+  if (filesToUpload.documents.length === 0) setContinueBtnEnabled(false);
+  else if (filesToUpload.documents.every(isValid)) setContinueBtnEnabled(true);
 };
 
 const generateDropdownItems = ({ level, courtClass }, setItems, items) => {
@@ -45,8 +57,7 @@ const removeUploadedFile = (
   fileName,
   acceptedFiles,
   setAcceptedFiles,
-  setContinueBtnEnabled,
-  checkValidityOfUploadedFiles
+  setContinueBtnEnabled
 ) => {
   filesToUpload.documents = filesToUpload.documents.filter((doc) => {
     return doc.name !== fileName;
@@ -60,8 +71,7 @@ const generateFileJSX = (
   fileName,
   acceptedFiles,
   setAcceptedFiles,
-  setContinueBtnEnabled,
-  checkValidityOfUploadedFiles
+  setContinueBtnEnabled
 ) => {
   return (
     <div className="center-alignment fill-space">
@@ -77,8 +87,7 @@ const generateFileJSX = (
             fileName,
             acceptedFiles,
             setAcceptedFiles,
-            setContinueBtnEnabled,
-            checkValidityOfUploadedFiles
+            setContinueBtnEnabled
           )
         }
       />
@@ -144,15 +153,6 @@ const generateDropdownJSX = (items, fileName, setContinueBtnEnabled) => {
   );
 };
 
-const checkValidityOfUploadedFiles = (setContinueBtnEnabled) => {
-  const isValid = (currentValue) =>
-    currentValue.hasOwnProperty("isAmendment") &&
-    currentValue.hasOwnProperty("isSupremeCourtScheduling");
-
-  if (filesToUpload.documents.length === 0) setContinueBtnEnabled(false);
-  else if (filesToUpload.documents.every(isValid)) setContinueBtnEnabled(true);
-};
-
 const generateTable = (
   items,
   file,
@@ -171,8 +171,7 @@ const generateTable = (
         file.name,
         acceptedFiles,
         setAcceptedFiles,
-        setContinueBtnEnabled,
-        checkValidityOfUploadedFiles
+        setContinueBtnEnabled
       ),
       value: generateDropdownJSX(items, file.name, setContinueBtnEnabled),
     },
