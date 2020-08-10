@@ -231,7 +231,7 @@ const generateFormData = (acceptedFiles) => {
   return formData;
 };
 
-const uploadDocuments = (
+export const uploadDocuments = (
   submissionId,
   acceptedFiles,
   setShowPackageConfirmation

@@ -7,7 +7,7 @@ import { getCourtData } from "../../../modules/courtTestData";
 import { getDocumentsData } from "../../../modules/documentTestData";
 import { generateJWTToken } from "../../../modules/authenticationHelper";
 
-import Upload from "./Upload";
+import Upload, { uploadDocuments } from "./Upload";
 
 function flushPromises(ui, container) {
   return new Promise((resolve) =>
@@ -118,6 +118,28 @@ describe("Upload Component", () => {
       .reply(400);
 
     render(<Upload upload={upload} />);
+
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalledWith("errorexample.com", "_self");
+  });
+
+  test("failed uploadDocuments call to /submission/submissionId/documents opens error page", async () => {
+    mock.onPost(`/submission/${submissionId}/documents`).reply(400);
+
+    uploadDocuments(submissionId, [], jest.fn());
+
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalledWith("errorexample.com", "_self");
+  });
+
+  test("failed uploadDocuments call to /submission/submissionId/update-documents opens error page", async () => {
+    mock.onPost(`/submission/${submissionId}/documents`).reply(200);
+
+    mock.onPost(`/submission/${submissionId}/update-documents`).reply(400);
+
+    uploadDocuments(submissionId, [], jest.fn());
 
     await waitFor(() => {});
 
