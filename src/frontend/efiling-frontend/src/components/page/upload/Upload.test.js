@@ -124,7 +124,7 @@ describe("Upload Component", () => {
     const fileLink = getByTestId(container, "file-link-ping.json");
     fireEvent.keyDown(fileLink);
 
-    expect(window.open).toHaveBeenCalledWith("fileurl.com");
+    expect(window.open).toHaveBeenCalled();
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -218,7 +218,7 @@ describe("Upload Component", () => {
     const fileLink = getByTestId(container, "file-link-ping.json");
     fireEvent.click(fileLink);
 
-    expect(window.open).toHaveBeenCalledWith("fileurl.com");
+    expect(window.open).toHaveBeenCalled();
 
     const radio = getAllByRole(container, "radio");
     const button = getByText(container, "Continue");
@@ -265,5 +265,57 @@ describe("Upload Component", () => {
     fireEvent.click(removeIcon);
 
     expect(queryByText(container, "ping.json")).not.toBeInTheDocument();
+  });
+
+  test("files with same name (duplicates) uploaded shows error message", async () => {
+    const ui = <Upload upload={upload} />;
+    const { container } = render(ui);
+    const dropzone = container.querySelector('[data-testid="dropdownzone"]');
+
+    const file = new File([JSON.stringify({ ping: true })], "ping.json", {
+      type: "application/json",
+    });
+    const data = mockData([file]);
+
+    dispatchEvt(dropzone, "drop", data);
+
+    await waitFor(() => {});
+    await flushPromises(ui, container);
+
+    expect(
+      queryByText(
+        container,
+        "You cannot upload multiple files with the same name."
+      )
+    ).not.toBeInTheDocument();
+
+    dispatchEvt(dropzone, "drop", data);
+
+    await waitFor(() => {});
+    await flushPromises(ui, container);
+
+    expect(
+      getByText(
+        container,
+        "You cannot upload multiple files with the same name."
+      )
+    ).toBeInTheDocument();
+
+    const newFile = new File([JSON.stringify({ ping: true })], "ping2.json", {
+      type: "application/json",
+    });
+    const newData = mockData([newFile]);
+
+    dispatchEvt(dropzone, "drop", newData);
+
+    await waitFor(() => {});
+    await flushPromises(ui, container);
+
+    expect(
+      queryByText(
+        container,
+        "You cannot upload multiple files with the same name."
+      )
+    ).not.toBeInTheDocument();
   });
 });
