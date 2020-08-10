@@ -95,13 +95,20 @@ const generateFileJSX = (
   );
 };
 
-const generateRadioButtonJSX = (fileName, type, setContinueBtnEnabled) => {
+const identifySelectedFile = (fileName) => {
   let file;
+
   filesToUpload.documents.forEach((f) => {
     if (f.name === fileName) {
       file = f;
     }
   });
+
+  return file;
+};
+
+const generateRadioButtonJSX = (fileName, type, setContinueBtnEnabled) => {
+  const file = identifySelectedFile(fileName);
 
   return (
     <div className="table-value">
