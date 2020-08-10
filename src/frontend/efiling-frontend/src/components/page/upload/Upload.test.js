@@ -175,6 +175,32 @@ describe("Upload Component", () => {
 
     mock.onPost(`/submission/${submissionId}/update-documents`).reply(200);
 
+    const updatedDocuments = [
+      ...documents,
+      {
+        name: "ping.json",
+        description: "file description ping",
+        type: "file type ping",
+        statutoryFeeAmount: 0,
+        isAmendment: true,
+        isSupremeCourtScheduling: true,
+      },
+      {
+        name: "ping2.json",
+        description: "file description ping2",
+        type: "file type ping2",
+        statutoryFeeAmount: 0,
+        isAmendment: true,
+        isSupremeCourtScheduling: true,
+      },
+    ];
+
+    mock.onGet(`/submission/${submissionId}/filing-package`).reply(200, {
+      documents: updatedDocuments,
+      court,
+      submissionFeeAmount,
+    });
+
     const files = [];
     const file1 = new File([JSON.stringify({ ping: true })], "ping.json", {
       type: "application/json",
