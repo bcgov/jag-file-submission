@@ -4,15 +4,21 @@ import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingFileException;
 import org.junit.jupiter.api.*;
 import org.mockito.MockitoAnnotations;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
+import java.text.MessageFormat;
 
 import static org.hamcrest.Matchers.any;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("FileUploadImplTest test suite")
 public class FileUploadImplTest {
-    private static final String LOCATION = "LOCATION";
+    private static final String LOCATION = FileSystems.getDefault()
+            .getPath("")
+            .toAbsolutePath()
+            .toString();
     FileUploadServiceImpl sut;
 
     @BeforeAll
@@ -26,10 +32,17 @@ public class FileUploadImplTest {
 
     @Test
     @DisplayName("OK: files are uploaded")
-    public void withByteArrayUploadFile() {
+    public void withByteArrayUploadFile() throws IOException {
+        File testFile = new File(MessageFormat.format("{0}/{1}", LOCATION, "test.txt"));
 
+        testFile.deleteOnExit();
 
-       // PowerMockito.doNothing().when(Files.copy()).copy();
+        sut.upload(new byte[]{}, "test.txt");
+
+        Assertions.assertTrue(testFile.exists());
+
+        testFile.delete();
+
     }
 
     @Test
