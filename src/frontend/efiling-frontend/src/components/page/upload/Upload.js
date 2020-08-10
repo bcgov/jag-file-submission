@@ -88,6 +88,9 @@ const generateFileJSX = (
       <span
         className="file-href minor-margin-left"
         onClick={() => window.open(fileLink)}
+        onKeyDown={() => window.open(fileLink)}
+        role="button"
+        tabIndex={0}
       >
         {file.name}
       </span>
