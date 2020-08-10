@@ -128,7 +128,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
                                                           UUID submissionId,
                                                           String filename) {
 
-
         MDC.put(Keys.EFILING_SUBMISSION_ID, submissionId.toString());
 
         Document document = Document
