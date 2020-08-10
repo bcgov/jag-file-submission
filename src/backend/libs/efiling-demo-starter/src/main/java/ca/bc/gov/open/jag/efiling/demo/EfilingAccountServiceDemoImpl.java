@@ -15,7 +15,7 @@ import java.util.UUID;
 public class EfilingAccountServiceDemoImpl implements EfilingAccountService {
 
     @Cacheable(cacheNames = "account", key = "#userGuid", unless="#result == null", cacheManager = "demoAccountCacheManager")
-    public AccountDetails getAccountDetails(UUID userGuid, String bceidAccountType) {
+    public AccountDetails getAccountDetails(UUID userGuid) {
         return null;
     }
 

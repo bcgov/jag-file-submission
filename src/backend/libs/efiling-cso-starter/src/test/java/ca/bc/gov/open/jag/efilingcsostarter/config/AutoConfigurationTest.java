@@ -34,13 +34,13 @@ public class AutoConfigurationTest {
 
         Assertions.assertNotNull(sut.accountFacadeBean());
         Assertions.assertNotNull(sut.roleRegistryPortType());
-        Assertions.assertNotNull(sut.bCeIDServiceSoap());
-        Assertions.assertEquals(CsoAccountServiceImpl.class, sut.efilingAccountService(null, null, null, null).getClass());
+        Assertions.assertEquals(CsoAccountServiceImpl.class, sut.efilingAccountService(null, null, null).getClass());
         Assertions.assertEquals(CsoDocumentServiceImpl.class, sut.efilingDocumentService(null).getClass());
         Assertions.assertEquals(CsoLookupServiceImpl.class, sut.efilingLookupService(null).getClass());
         Assertions.assertEquals(CsoCourtServiceImpl.class, sut.efilingCourtService(null).getClass());
         Assertions.assertEquals(CsoSubmissionServiceImpl.class, sut.efilingSubmissionService(null,null, null, null).getClass());
         Assertions.assertEquals(AccountDetailsMapperImpl.class, sut.accountDetailsMapper().getClass());
+
     }
 
 
@@ -62,13 +62,6 @@ public class AutoConfigurationTest {
         roleProperties.setUserName(USERNAME);
         roleProperties.setPassword(PASSWORD);
         soapClientProperties.add(roleProperties);
-
-        EfilingSoapClientProperties bceidProperties = new EfilingSoapClientProperties();
-        bceidProperties.setClient(Clients.BCEID);
-        bceidProperties.setUri(URI);
-        bceidProperties.setUserName(USERNAME);
-        bceidProperties.setPassword(PASSWORD);
-        soapClientProperties.add(bceidProperties);
 
         SoapProperties soapProperties = new SoapProperties();
         soapProperties.setClients(soapClientProperties);

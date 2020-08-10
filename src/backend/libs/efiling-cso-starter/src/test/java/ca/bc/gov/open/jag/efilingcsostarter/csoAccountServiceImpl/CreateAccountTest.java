@@ -6,23 +6,19 @@ import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.UserRole
 import ca.bc.gov.ag.csows.accounts.*;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.CreateAccountRequest;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoAccountServiceImpl;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoHelpers;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.AccountDetailsMapper;
-import ca.bc.gov.open.jag.efilingcommons.model.CreateAccountRequest;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.AccountDetailsMapperImpl;
-import ca.bceid.webservices.client.v9.BCeIDServiceSoap;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -54,9 +50,6 @@ public class CreateAccountTest {
     RoleRegistryPortType roleRegistryPortTypeMock;
 
     @Mock
-    BCeIDServiceSoap bCeIDServiceSoapMock;
-
-    @Mock
     AccountDetailsMapper accountDetailsMapperMock;
 
 
@@ -75,7 +68,7 @@ public class CreateAccountTest {
         UserRoles userRolesWithFileRole = new UserRoles();
         userRolesWithFileRole.getRoles().add(fileRole);
         Mockito.when(roleRegistryPortTypeMock.getRolesForIdentifier(DOMAIN, APPLICATION, CsoHelpers.formatUserGuid(UNIVERSAL_ID), IDENTIFIER_TYPE)).thenReturn(userRolesWithFileRole);
-        sut = new CsoAccountServiceImpl(accountFacadeBeanMock, roleRegistryPortTypeMock, bCeIDServiceSoapMock, accountDetailsMapperMock);
+        sut = new CsoAccountServiceImpl(accountFacadeBeanMock, roleRegistryPortTypeMock, accountDetailsMapperMock);
     }
 
     @Test
