@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efiling.demo;
 
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingFilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingPaymentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -13,7 +14,7 @@ import java.util.GregorianCalendar;
 
 public class EfilingSubmissionServiceDemoImpl implements EfilingSubmissionService {
     @Override
-    public BigDecimal submitFilingPackage(EfilingService service, EfilingFilingPackage filingPackage) {
+    public BigDecimal submitFilingPackage(EfilingService service, EfilingFilingPackage filingPackage, EfilingPaymentService efilingPaymentService) {
         return BigDecimal.ONE;
     }
 

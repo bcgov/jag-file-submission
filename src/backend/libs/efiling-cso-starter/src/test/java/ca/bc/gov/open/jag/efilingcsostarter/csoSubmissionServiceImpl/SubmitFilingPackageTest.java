@@ -46,14 +46,14 @@ public class SubmitFilingPackageTest {
     @Test
     public void testWithEmptyService() {
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(null, new EfilingFilingPackage()));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(null, new EfilingFilingPackage(), null));
     }
 
     @DisplayName("Exception: with null filingpackage should throw IllegalArgumentException")
     @Test
     public void testWithEmptyFilingPackage() {
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(new EfilingService(), null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(new EfilingService(), null, null));
     }
 
     @DisplayName("OK: submitFilingPackage called with any non-empty submissionId")
@@ -62,7 +62,7 @@ public class SubmitFilingPackageTest {
         Mockito.when(filingFacadeBeanMock.submitFiling(any())).thenReturn(BigDecimal.TEN);
         Mockito.when(serviceFacadeBean.addService(any())).thenReturn(TestHelpers.createService());
         Mockito.doNothing().when(serviceFacadeBean).updateService(any());
-        BigDecimal actual = sut.submitFilingPackage(TestHelpers.createBaseEfilingService(), new EfilingFilingPackage());
+        BigDecimal actual = sut.submitFilingPackage(TestHelpers.createBaseEfilingService(), new EfilingFilingPackage(), null);
         Assertions.assertEquals(BigDecimal.TEN, actual);
     }
     @DisplayName("Exception: with NestedEjbException_Exception should throw EfilingLookupServiceException")
@@ -70,13 +70,13 @@ public class SubmitFilingPackageTest {
     public void whenFilingFacadeNestedEjbException_ExceptionShouldThrowEfilingSubmissionServiceException() throws ca.bc.gov.ag.csows.filing.NestedEjbException_Exception, NestedEjbException_Exception, DatatypeConfigurationException {
         Mockito.when(serviceFacadeBean.addService(any())).thenReturn(TestHelpers.createService());
         Mockito.when(filingFacadeBeanMock.submitFiling(any())).thenThrow(new ca.bc.gov.ag.csows.filing.NestedEjbException_Exception());
-        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(new EfilingService(), new EfilingFilingPackage()));
+        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(new EfilingService(), new EfilingFilingPackage(), null));
     }
 
     @DisplayName("Exception: with NestedEjbException_Exception should throw EfilingLookupServiceException")
     @Test
     public void whenServiceFacadeNestedEjbException_ExceptionShouldThrowEfilingSubmissionServiceException() throws ca.bc.gov.ag.csows.filing.NestedEjbException_Exception, NestedEjbException_Exception, DatatypeConfigurationException {
         Mockito.when(serviceFacadeBean.addService(any())).thenThrow(new ca.bc.gov.ag.csows.services.NestedEjbException_Exception());
-        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(new EfilingService(), new EfilingFilingPackage()));
+        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(new EfilingService(), new EfilingFilingPackage(), null));
     }
 }
