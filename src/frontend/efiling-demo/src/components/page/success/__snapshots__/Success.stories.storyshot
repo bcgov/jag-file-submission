@@ -48,15 +48,13 @@ exports[`Storyshots Success Default 1`] = `
         <p>
           You have successfully completed your submission. Please click the button below to go back home.
         </p>
-        <div>
-          <button
-            class="normal-white btn"
-            data-test-id=""
-            type="button"
-          >
-            Return home
-          </button>
-        </div>
+        <button
+          class="bcgov-button normal-white btn"
+          data-test-id=""
+          type="button"
+        >
+          Return home
+        </button>
       </div>
     </div>
     <footer
@@ -198,15 +196,13 @@ exports[`Storyshots Success Mobile 1`] = `
         <p>
           You have successfully completed your submission. Please click the button below to go back home.
         </p>
-        <div>
-          <button
-            class="normal-white btn"
-            data-test-id=""
-            type="button"
-          >
-            Return home
-          </button>
-        </div>
+        <button
+          class="bcgov-button normal-white btn"
+          data-test-id=""
+          type="button"
+        >
+          Return home
+        </button>
       </div>
     </div>
     <footer
