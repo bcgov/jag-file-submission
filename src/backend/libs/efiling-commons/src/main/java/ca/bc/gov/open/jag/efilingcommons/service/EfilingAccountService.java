@@ -12,11 +12,10 @@ public interface EfilingAccountService {
 
     /**
      * Get the account details
-     * @param userGuid
-     * @param bceidAccountType
+     * @param universalId
      * @return
      */
-    AccountDetails getAccountDetails(UUID userGuid, String bceidAccountType);
+    AccountDetails getAccountDetails(UUID universalId);
 
     /**
      * Creates a new account

@@ -125,7 +125,6 @@
                                 <wsdlOption>
                                     <wsdl>${project.basedir}/src/main/resources/wsdl/AccountFacade.wsdl</wsdl>
                                     <wsdl>${project.basedir}/src/main/resources/wsdl/RoleRegistry.wsdl</wsdl>
-                                    <wsdl>${project.basedir}/src/main/resources/wsdl/BCeIDService.wsdl</wsdl>
                                     <extraargs>
                                         <extraarg>-client</extraarg>
                                         <extraarg>-autoNameResolution</extraarg>

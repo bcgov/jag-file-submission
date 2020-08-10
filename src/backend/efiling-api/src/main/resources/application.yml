@@ -53,11 +53,6 @@ jag:
           userName: ${CSO_SERVICEFACADE_USERNAME}
           password: ${CSO_SERVICEFACADE_PASSWORD}
           uri: ${CSO_SERVICEFACADE_URI:http://localhost:8091}
-        - client: BCEID
-          userName: ${CSO_BCEIDSERVICE_USERNAME}
-          password: ${CSO_BCEIDSERVICE_PASSWORD}
-          uri: ${CSO_BCEIDSERVICE_URI:http://localhost:8091}
-
 info:
   app:
     name: @project.name@

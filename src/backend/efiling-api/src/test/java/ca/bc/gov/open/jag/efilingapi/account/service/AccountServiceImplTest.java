@@ -29,7 +29,7 @@ public class AccountServiceImplTest {
                 .accountId(BigDecimal.TEN)
                 .create();
 
-        Mockito.when(efilingAccountServiceMock.getAccountDetails(Mockito.eq(TestHelpers.CASE_1), Mockito.anyString()))
+        Mockito.when(efilingAccountServiceMock.getAccountDetails(Mockito.eq(TestHelpers.CASE_1)))
                 .thenReturn(accountDetails);
 
         sut = new AccountServiceImpl(efilingAccountServiceMock);
