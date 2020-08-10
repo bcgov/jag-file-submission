@@ -53,24 +53,21 @@ exports[`Upload Component Matches the snapshot 1`] = `
       <section
         class="buttons pt-2"
       >
-        <div>
-          <button
-            class="normal-white btn"
-            data-test-id=""
-            type="button"
-          >
-            Cancel Upload
-          </button>
-        </div>
-        <div>
-          <button
-            class="normal-blue btn"
-            data-test-id=""
-            type="button"
-          >
-            Continue
-          </button>
-        </div>
+        <button
+          class="bcgov-button normal-white btn"
+          data-test-id=""
+          type="button"
+        >
+          Cancel Upload
+        </button>
+        <button
+          class="bcgov-button normal-blue btn"
+          data-test-id=""
+          disabled=""
+          type="button"
+        >
+          Continue
+        </button>
       </section>
     </div>
     <div
@@ -81,69 +78,61 @@ exports[`Upload Component Matches the snapshot 1`] = `
         style="position: relative;"
       >
         <div
-          class="row"
+          class="col-12 pt-2"
+          style="position: relative;"
         >
-          <div
-            class="col-12 pt-2"
-            style="position: relative;"
+          <p />
+          <section
+            class="bluegrey-container"
+            id="bluegrey-section"
           >
-            <p />
-            <section
-              class="bluegrey-container"
-              id="bluegrey-section"
+            <div
+              class="container-background bluegrey-heading"
             >
-              <div
-                class="container-background bluegrey-heading"
+              <h2
+                class="heading-style"
               >
-                <h2
-                  class="heading-style"
+                <div
+                  class="side-card-row"
                 >
                   <div
-                    class="row"
+                    class="round-icon-wrapper"
                   >
-                    <div
-                      class="side-card-row"
+                    <svg
+                      class="side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <div
-                        class="round-icon-wrapper"
-                      >
-                        <svg
-                          class="side-card-icon"
-                          fill="currentColor"
-                          height="1em"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
-                          />
-                        </svg>
-                      </div>
-                      <div
-                        class="side-card-title"
-                      >
-                        Amendments
-                      </div>
-                    </div>
+                      <path
+                        d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                      />
+                    </svg>
                   </div>
-                </h2>
-              </div>
-              <div
-                class="bluegrey-content"
+                  <div
+                    class="side-card-title"
+                  >
+                    Amendments
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bluegrey-content"
+            >
+              <span
+                class="content-style"
               >
-                <span
-                  class="content-style"
-                >
-                  <p>
-                    Please indicate document uploads that are amendments - changes or alterations to existing, previously submitted documents.
-                  </p>
-                </span>
-              </div>
-            </section>
-          </div>
+                <p>
+                  Please indicate document uploads that are amendments - changes or alterations to existing, previously submitted documents.
+                </p>
+              </span>
+            </div>
+          </section>
         </div>
       </div>
       <div
@@ -151,69 +140,61 @@ exports[`Upload Component Matches the snapshot 1`] = `
         style="position: relative;"
       >
         <div
-          class="row"
+          class="col-12 pt-2"
+          style="position: relative;"
         >
-          <div
-            class="col-12 pt-2"
-            style="position: relative;"
+          <p />
+          <section
+            class="bluegrey-container"
+            id="bluegrey-section"
           >
-            <p />
-            <section
-              class="bluegrey-container"
-              id="bluegrey-section"
+            <div
+              class="container-background bluegrey-heading"
             >
-              <div
-                class="container-background bluegrey-heading"
+              <h2
+                class="heading-style"
               >
-                <h2
-                  class="heading-style"
+                <div
+                  class="side-card-row"
                 >
                   <div
-                    class="row"
+                    class="round-icon-wrapper"
                   >
-                    <div
-                      class="side-card-row"
+                    <svg
+                      class="side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <div
-                        class="round-icon-wrapper"
-                      >
-                        <svg
-                          class="side-card-icon"
-                          fill="currentColor"
-                          height="1em"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
-                          />
-                        </svg>
-                      </div>
-                      <div
-                        class="side-card-title"
-                      >
-                        Supreme Court Scheduling
-                      </div>
-                    </div>
+                      <path
+                        d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                      />
+                    </svg>
                   </div>
-                </h2>
-              </div>
-              <div
-                class="bluegrey-content"
+                  <div
+                    class="side-card-title"
+                  >
+                    Supreme Court Scheduling
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bluegrey-content"
+            >
+              <span
+                class="content-style"
               >
-                <span
-                  class="content-style"
-                >
-                  <p>
-                    Please indicate if your document upload has been approved for Supreme Court Scheduling...
-                  </p>
-                </span>
-              </div>
-            </section>
-          </div>
+                <p>
+                  Please indicate if your document upload has been approved for Supreme Court Scheduling...
+                </p>
+              </span>
+            </div>
+          </section>
         </div>
       </div>
     </div>
@@ -399,6 +380,21 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
                       >
                         file name 2
                       </span>
+                      <svg
+                        class="push-margin-left pointer"
+                        fill="currentColor"
+                        height="32"
+                        size="32"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="32"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"
+                        />
+                      </svg>
                     </div>
                   </div>
                   <div
@@ -452,7 +448,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
       <h2>
         Summary
       </h2>
-      <br />
+      <p />
       <div
         class="near-half-width"
       >
@@ -518,24 +514,20 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
       <section
         class="buttons pt-2"
       >
-        <div>
-          <button
-            class="normal-white btn"
-            data-test-id="main-cancel-btn"
-            type="button"
-          >
-            Cancel
-          </button>
-        </div>
-        <div>
-          <button
-            class="normal-blue btn"
-            data-test-id="continue-btn"
-            type="button"
-          >
-            Continue to Payment
-          </button>
-        </div>
+        <button
+          class="bcgov-button normal-white btn"
+          data-test-id="main-cancel-btn"
+          type="button"
+        >
+          Cancel
+        </button>
+        <button
+          class="bcgov-button normal-blue btn"
+          data-test-id="continue-btn"
+          type="button"
+        >
+          Continue to Payment
+        </button>
       </section>
     </div>
     <div
@@ -546,83 +538,75 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
         style="position: relative;"
       >
         <div
-          class="row"
+          class="col-12 pt-2"
+          style="position: relative;"
         >
-          <div
-            class="col-12 pt-2"
-            style="position: relative;"
+          <p />
+          <section
+            class="bluegrey-container"
+            id="bluegrey-section"
           >
-            <p />
-            <section
-              class="bluegrey-container"
-              id="bluegrey-section"
+            <div
+              class="container-background bluegrey-heading"
             >
-              <div
-                class="container-background bluegrey-heading"
+              <h2
+                class="heading-style"
               >
-                <h2
-                  class="heading-style"
+                <div
+                  class="side-card-row"
                 >
                   <div
-                    class="row"
+                    class="round-icon-wrapper"
                   >
-                    <div
-                      class="side-card-row"
+                    <svg
+                      class="side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <div
-                        class="round-icon-wrapper"
-                      >
-                        <svg
-                          class="side-card-icon"
-                          fill="currentColor"
-                          height="1em"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-                          />
-                        </svg>
-                      </div>
-                      <div
-                        class="side-card-title"
-                      >
-                        Your CSO Account
-                      </div>
-                    </div>
+                      <path
+                        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                      />
+                    </svg>
                   </div>
-                </h2>
-              </div>
-              <div
-                class="bluegrey-content"
+                  <div
+                    class="side-card-title"
+                  >
+                    Your CSO Account
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bluegrey-content"
+            >
+              <span
+                class="content-style"
               >
-                <span
-                  class="content-style"
-                >
-                  <p>
-                    CSO account 
-                    <b />
-                     is linked to your Basic BCeID account 
-                    <b>
-                      username
-                    </b>
-                     and will be used to file documents. 
-                    <a
-                      href="https://justice.gov.bc.ca/cso/about/index.do"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      View your CSO account details
-                    </a>
-                    .
-                  </p>
-                </span>
-              </div>
-            </section>
-          </div>
+                <p>
+                  CSO account 
+                  <b />
+                   is linked to your Basic BCeID account 
+                  <b>
+                    username
+                  </b>
+                   and will be used to file documents. 
+                  <a
+                    href="https://justice.gov.bc.ca/cso/about/index.do"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    View your CSO account details
+                  </a>
+                  .
+                </p>
+              </span>
+            </div>
+          </section>
         </div>
       </div>
       <div
@@ -630,77 +614,69 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
         style="position: relative;"
       >
         <div
-          class="row"
+          class="col-12 pt-2"
+          style="position: relative;"
         >
-          <div
-            class="col-12 pt-2"
-            style="position: relative;"
+          <p />
+          <section
+            class="bluegrey-container"
+            id="bluegrey-section"
           >
-            <p />
-            <section
-              class="bluegrey-container"
-              id="bluegrey-section"
+            <div
+              class="container-background bluegrey-heading"
             >
-              <div
-                class="container-background bluegrey-heading"
+              <h2
+                class="heading-style"
               >
-                <h2
-                  class="heading-style"
+                <div
+                  class="side-card-row"
                 >
                   <div
-                    class="row"
+                    class="round-icon-wrapper"
                   >
-                    <div
-                      class="side-card-row"
+                    <svg
+                      class="side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <div
-                        class="round-icon-wrapper"
-                      >
-                        <svg
-                          class="side-card-icon"
-                          fill="currentColor"
-                          height="1em"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
-                          />
-                        </svg>
-                      </div>
-                      <div
-                        class="side-card-title"
-                      >
-                        About E-File Submission
-                      </div>
-                    </div>
+                      <path
+                        d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                      />
+                    </svg>
                   </div>
-                </h2>
-              </div>
-              <div
-                class="bluegrey-content"
+                  <div
+                    class="side-card-title"
+                  >
+                    About E-File Submission
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bluegrey-content"
+            >
+              <span
+                class="content-style"
               >
-                <span
-                  class="content-style"
-                >
-                  <p>
-                    E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
-                    <a
-                      href="https://justice.gov.bc.ca/cso/about/index.do"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      Learn more about CSO
-                    </a>
-                    .
-                  </p>
-                </span>
-              </div>
-            </section>
-          </div>
+                <p>
+                  E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
+                  <a
+                    href="https://justice.gov.bc.ca/cso/about/index.do"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    Learn more about CSO
+                  </a>
+                  .
+                </p>
+              </span>
+            </div>
+          </section>
         </div>
       </div>
     </div>
@@ -805,11 +781,15 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
                       </div>
                       <span
                         class="file-href minor-margin-left"
+                        data-testid="file-link-ping.json"
+                        role="button"
+                        tabindex="0"
                       >
                         ping.json
                       </span>
                       <svg
-                        class="minor-margin-left"
+                        class="minor-margin-left pointer"
+                        data-testid="remove-icon"
                         fill="currentColor"
                         height="32"
                         size="32"
@@ -864,11 +844,6 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
                             name="options"
                           >
                             <option
-                              value="Select document description"
-                            >
-                              Select document description
-                            </option>
-                            <option
                               value="Affidavit"
                             >
                               Affidavit
@@ -913,12 +888,12 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
                       >
                         <label
                           class="bcgov-radio"
-                          for="no-amendment-ping.json"
+                          for="no-isAmendment-ping.json"
                         >
                           No
                           <input
-                            id="no-amendment-ping.json"
-                            name="amendment-ping.json"
+                            id="no-isAmendment-ping.json"
+                            name="isAmendment-ping.json"
                             type="radio"
                           />
                           <span
@@ -928,12 +903,12 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
                       </div>
                       <label
                         class="bcgov-radio"
-                        for="yes-amendment-ping.json"
+                        for="yes-isAmendment-ping.json"
                       >
                         Yes
                         <input
-                          id="yes-amendment-ping.json"
-                          name="amendment-ping.json"
+                          id="yes-isAmendment-ping.json"
+                          name="isAmendment-ping.json"
                           type="radio"
                         />
                         <span
@@ -966,12 +941,12 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
                       >
                         <label
                           class="bcgov-radio"
-                          for="no-supreme-ping.json"
+                          for="no-isSupremeCourtScheduling-ping.json"
                         >
                           No
                           <input
-                            id="no-supreme-ping.json"
-                            name="supreme-ping.json"
+                            id="no-isSupremeCourtScheduling-ping.json"
+                            name="isSupremeCourtScheduling-ping.json"
                             type="radio"
                           />
                           <span
@@ -981,12 +956,12 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
                       </div>
                       <label
                         class="bcgov-radio"
-                        for="yes-supreme-ping.json"
+                        for="yes-isSupremeCourtScheduling-ping.json"
                       >
                         Yes
                         <input
-                          id="yes-supreme-ping.json"
-                          name="supreme-ping.json"
+                          id="yes-isSupremeCourtScheduling-ping.json"
+                          name="isSupremeCourtScheduling-ping.json"
                           type="radio"
                         />
                         <span
@@ -1005,24 +980,21 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
       <section
         class="buttons pt-2"
       >
-        <div>
-          <button
-            class="normal-white btn"
-            data-test-id=""
-            type="button"
-          >
-            Cancel Upload
-          </button>
-        </div>
-        <div>
-          <button
-            class="normal-blue btn"
-            data-test-id=""
-            type="button"
-          >
-            Continue
-          </button>
-        </div>
+        <button
+          class="bcgov-button normal-white btn"
+          data-test-id=""
+          type="button"
+        >
+          Cancel Upload
+        </button>
+        <button
+          class="bcgov-button normal-blue btn"
+          data-test-id=""
+          disabled=""
+          type="button"
+        >
+          Continue
+        </button>
       </section>
     </div>
     <div
@@ -1033,69 +1005,61 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
         style="position: relative;"
       >
         <div
-          class="row"
+          class="col-12 pt-2"
+          style="position: relative;"
         >
-          <div
-            class="col-12 pt-2"
-            style="position: relative;"
+          <p />
+          <section
+            class="bluegrey-container"
+            id="bluegrey-section"
           >
-            <p />
-            <section
-              class="bluegrey-container"
-              id="bluegrey-section"
+            <div
+              class="container-background bluegrey-heading"
             >
-              <div
-                class="container-background bluegrey-heading"
+              <h2
+                class="heading-style"
               >
-                <h2
-                  class="heading-style"
+                <div
+                  class="side-card-row"
                 >
                   <div
-                    class="row"
+                    class="round-icon-wrapper"
                   >
-                    <div
-                      class="side-card-row"
+                    <svg
+                      class="side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <div
-                        class="round-icon-wrapper"
-                      >
-                        <svg
-                          class="side-card-icon"
-                          fill="currentColor"
-                          height="1em"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
-                          />
-                        </svg>
-                      </div>
-                      <div
-                        class="side-card-title"
-                      >
-                        Amendments
-                      </div>
-                    </div>
+                      <path
+                        d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                      />
+                    </svg>
                   </div>
-                </h2>
-              </div>
-              <div
-                class="bluegrey-content"
+                  <div
+                    class="side-card-title"
+                  >
+                    Amendments
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bluegrey-content"
+            >
+              <span
+                class="content-style"
               >
-                <span
-                  class="content-style"
-                >
-                  <p>
-                    Please indicate document uploads that are amendments - changes or alterations to existing, previously submitted documents.
-                  </p>
-                </span>
-              </div>
-            </section>
-          </div>
+                <p>
+                  Please indicate document uploads that are amendments - changes or alterations to existing, previously submitted documents.
+                </p>
+              </span>
+            </div>
+          </section>
         </div>
       </div>
       <div
@@ -1103,69 +1067,753 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
         style="position: relative;"
       >
         <div
-          class="row"
+          class="col-12 pt-2"
+          style="position: relative;"
         >
-          <div
-            class="col-12 pt-2"
-            style="position: relative;"
+          <p />
+          <section
+            class="bluegrey-container"
+            id="bluegrey-section"
           >
-            <p />
-            <section
-              class="bluegrey-container"
-              id="bluegrey-section"
+            <div
+              class="container-background bluegrey-heading"
             >
-              <div
-                class="container-background bluegrey-heading"
+              <h2
+                class="heading-style"
               >
-                <h2
-                  class="heading-style"
+                <div
+                  class="side-card-row"
                 >
                   <div
-                    class="row"
+                    class="round-icon-wrapper"
+                  >
+                    <svg
+                      class="side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="side-card-title"
+                  >
+                    Supreme Court Scheduling
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bluegrey-content"
+            >
+              <span
+                class="content-style"
+              >
+                <p>
+                  Please indicate if your document upload has been approved for Supreme Court Scheduling...
+                </p>
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Upload Component successful document upload works as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="page"
+  >
+    <div
+      class="content col-md-8"
+    >
+      <h1>
+        Package Confirmation
+      </h1>
+      <span>
+        Review your package for accuracy and upload any additional or supporting documents.
+      </span>
+      <br />
+      <span>
+        If there are any errors in these documents, please Cancel this process and re-submit.
+      </span>
+      <br />
+      <br />
+      <div>
+        <div
+          class="display-box border-background display-file"
+        >
+          <div
+            class="display-icon"
+          >
+            <div
+              style="color: rgb(252, 186, 25);"
+            >
+              <svg
+                fill="currentColor"
+                height="32"
+                size="32"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+                />
+              </svg>
+            </div>
+          </div>
+          <div
+            class="display-right-element"
+          >
+            <div
+              class="bcgov-table "
+            >
+              <b />
+              <div
+                class="bcgov-table-body"
+              >
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-vertical-middle bcgov-fill-width"
                   >
                     <div
-                      class="side-card-row"
+                      style="width: 80%;"
                     >
-                      <div
-                        class="round-icon-wrapper"
+                      <span
+                        class="file-href"
+                        role="button"
+                        tabindex="0"
                       >
-                        <svg
-                          class="side-card-icon"
-                          fill="currentColor"
-                          height="1em"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
+                        file name 1
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    <div
+                      class="bcgov-table "
+                    >
+                      <b />
+                      <div
+                        class="bcgov-table-body"
+                      >
+                        <div
+                          class="bcgov-row "
                         >
-                          <path
-                            d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
-                          />
-                        </svg>
-                      </div>
-                      <div
-                        class="side-card-title"
-                      >
-                        Supreme Court Scheduling
+                          <div
+                            class="bcgov-fill-width"
+                          >
+                            Description:
+                          </div>
+                          <div
+                            class="bcgov-table-value "
+                          >
+                            <b>
+                              file description 1
+                            </b>
+                          </div>
+                        </div>
+                        <div
+                          class="bcgov-row "
+                        >
+                          <div
+                            class="bcgov-fill-width"
+                          >
+                            Statutory Fee:
+                          </div>
+                          <div
+                            class="bcgov-table-value "
+                          >
+                            <b>
+                              $40.00
+                            </b>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+      </div>
+      <div>
+        <div
+          class="display-box border-background display-file"
+        >
+          <div
+            class="display-icon"
+          >
+            <div
+              style="color: rgb(252, 186, 25);"
+            >
+              <svg
+                fill="currentColor"
+                height="32"
+                size="32"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+                />
+              </svg>
+            </div>
+          </div>
+          <div
+            class="display-right-element"
+          >
+            <div
+              class="bcgov-table "
+            >
+              <b />
+              <div
+                class="bcgov-table-body"
+              >
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-vertical-middle bcgov-fill-width"
+                  >
+                    <div
+                      style="width: 80%;"
+                    >
+                      <span
+                        class="file-href"
+                        role="button"
+                        tabindex="0"
+                      >
+                        file name 2
+                      </span>
+                      <svg
+                        class="push-margin-left pointer"
+                        fill="currentColor"
+                        height="32"
+                        size="32"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="32"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    <div
+                      class="bcgov-table "
+                    >
+                      <b />
+                      <div
+                        class="bcgov-table-body"
+                      >
+                        <div
+                          class="bcgov-row "
+                        >
+                          <div
+                            class="bcgov-fill-width"
+                          >
+                            Description:
+                          </div>
+                          <div
+                            class="bcgov-table-value "
+                          >
+                            <b>
+                              file description 2
+                            </b>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+      </div>
+      <div>
+        <div
+          class="display-box border-background display-file"
+        >
+          <div
+            class="display-icon"
+          >
+            <div
+              style="color: rgb(252, 186, 25);"
+            >
+              <svg
+                fill="currentColor"
+                height="32"
+                size="32"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+                />
+              </svg>
+            </div>
+          </div>
+          <div
+            class="display-right-element"
+          >
+            <div
+              class="bcgov-table "
+            >
+              <b />
+              <div
+                class="bcgov-table-body"
+              >
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-vertical-middle bcgov-fill-width"
+                  >
+                    <div
+                      style="width: 80%;"
+                    >
+                      <span
+                        class="file-href"
+                        role="button"
+                        tabindex="0"
+                      >
+                        ping.json
+                      </span>
+                      <svg
+                        class="push-margin-left pointer"
+                        fill="currentColor"
+                        height="32"
+                        size="32"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="32"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    <div
+                      class="bcgov-table "
+                    >
+                      <b />
+                      <div
+                        class="bcgov-table-body"
+                      >
+                        <div
+                          class="bcgov-row "
+                        >
+                          <div
+                            class="bcgov-fill-width"
+                          >
+                            Description:
+                          </div>
+                          <div
+                            class="bcgov-table-value "
+                          >
+                            <b>
+                              file description ping
+                            </b>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+      </div>
+      <div>
+        <div
+          class="display-box border-background display-file"
+        >
+          <div
+            class="display-icon"
+          >
+            <div
+              style="color: rgb(252, 186, 25);"
+            >
+              <svg
+                fill="currentColor"
+                height="32"
+                size="32"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+                />
+              </svg>
+            </div>
+          </div>
+          <div
+            class="display-right-element"
+          >
+            <div
+              class="bcgov-table "
+            >
+              <b />
+              <div
+                class="bcgov-table-body"
+              >
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-vertical-middle bcgov-fill-width"
+                  >
+                    <div
+                      style="width: 80%;"
+                    >
+                      <span
+                        class="file-href"
+                        role="button"
+                        tabindex="0"
+                      >
+                        ping2.json
+                      </span>
+                      <svg
+                        class="push-margin-left pointer"
+                        fill="currentColor"
+                        height="32"
+                        size="32"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="32"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    <div
+                      class="bcgov-table "
+                    >
+                      <b />
+                      <div
+                        class="bcgov-table-body"
+                      >
+                        <div
+                          class="bcgov-row "
+                        >
+                          <div
+                            class="bcgov-fill-width"
+                          >
+                            Description:
+                          </div>
+                          <div
+                            class="bcgov-table-value "
+                          >
+                            <b>
+                              file description ping2
+                            </b>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+      </div>
+      <h3>
+        Do you have additional documents to upload? 
+        <span
+          class="file-href"
+          role="button"
+          tabindex="0"
+        >
+          Upload them now.
+        </span>
+      </h3>
+      <br />
+      <br />
+      <h2>
+        Summary
+      </h2>
+      <p />
+      <div
+        class="near-half-width"
+      >
+        <div
+          class="bcgov-table "
+        >
+          <b />
+          <div
+            class="bcgov-table-body"
+          >
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Number of Documents in Package:
               </div>
               <div
-                class="bluegrey-content"
+                class="bcgov-table-value "
               >
-                <span
-                  class="content-style"
-                >
-                  <p>
-                    Please indicate if your document upload has been approved for Supreme Court Scheduling...
-                  </p>
-                </span>
+                <b>
+                  4
+                </b>
               </div>
-            </section>
+            </div>
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Statutory Fees:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  $40.00
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Submission Fee:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  $25.50
+                </b>
+              </div>
+            </div>
           </div>
+        </div>
+      </div>
+      <br />
+      <section
+        class="buttons pt-2"
+      >
+        <button
+          class="bcgov-button normal-white btn"
+          data-test-id="main-cancel-btn"
+          type="button"
+        >
+          Cancel
+        </button>
+        <button
+          class="bcgov-button normal-blue btn"
+          data-test-id="continue-btn"
+          type="button"
+        >
+          Continue to Payment
+        </button>
+      </section>
+    </div>
+    <div
+      class="sidecard"
+    >
+      <div
+        class="wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="col-12 pt-2"
+          style="position: relative;"
+        >
+          <p />
+          <section
+            class="bluegrey-container"
+            id="bluegrey-section"
+          >
+            <div
+              class="container-background bluegrey-heading"
+            >
+              <h2
+                class="heading-style"
+              >
+                <div
+                  class="side-card-row"
+                >
+                  <div
+                    class="round-icon-wrapper"
+                  >
+                    <svg
+                      class="side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="side-card-title"
+                  >
+                    Your CSO Account
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bluegrey-content"
+            >
+              <span
+                class="content-style"
+              >
+                <p>
+                  CSO account 
+                  <b />
+                   is linked to your Basic BCeID account 
+                  <b>
+                    username
+                  </b>
+                   and will be used to file documents. 
+                  <a
+                    href="https://justice.gov.bc.ca/cso/about/index.do"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    View your CSO account details
+                  </a>
+                  .
+                </p>
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div
+        class="wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="col-12 pt-2"
+          style="position: relative;"
+        >
+          <p />
+          <section
+            class="bluegrey-container"
+            id="bluegrey-section"
+          >
+            <div
+              class="container-background bluegrey-heading"
+            >
+              <h2
+                class="heading-style"
+              >
+                <div
+                  class="side-card-row"
+                >
+                  <div
+                    class="round-icon-wrapper"
+                  >
+                    <svg
+                      class="side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="side-card-title"
+                  >
+                    About E-File Submission
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bluegrey-content"
+            >
+              <span
+                class="content-style"
+              >
+                <p>
+                  E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
+                  <a
+                    href="https://justice.gov.bc.ca/cso/about/index.do"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    Learn more about CSO
+                  </a>
+                  .
+                </p>
+              </span>
+            </div>
+          </section>
         </div>
       </div>
     </div>
