@@ -40,6 +40,7 @@ public interface EfilingFilingPackageMapper {
     @Mapping(target = "accountId", source = "accountId")
     @Mapping(target = "courtFileNumber", source = "filingPackage.court.fileNumber")
     @Mapping(target = "serviceTypeCd", defaultValue = SubmissionConstants.SUBMISSION_FEE_TYPE)
+    @Mapping(target = "serviceSubtypeCd", defaultValue = SubmissionConstants.SUBMISSION_FEE_SUB_TYPE)
     @Mapping(target = "entryUserId", source = "clientId")
     EfilingService toEfilingService(Submission submission);
 }
