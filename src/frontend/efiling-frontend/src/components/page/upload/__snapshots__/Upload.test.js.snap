@@ -781,6 +781,8 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
                       </div>
                       <span
                         class="file-href minor-margin-left"
+                        role="button"
+                        tabindex="0"
                       >
                         ping.json
                       </span>
