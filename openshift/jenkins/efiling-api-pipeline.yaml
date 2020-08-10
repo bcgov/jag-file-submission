@@ -47,53 +47,55 @@ spec:
           value: private
       jenkinsfile: |
         try {
-            node("${JENKINS_POD}") {
+          node("${JENKINS_POD}") {
 
-                // Build Image
-                stage("Build ${APP_NAME}") {
-                    openshift.withCluster() {
-                        openshift.withProject() {
-                            sh 'oc start-build ${APP_NAME} -n ${TOOLS_NAMESPACE} --wait' 
-                        }
-                    }
-                }
+              // Build Image
+              stage("Build ${APP_NAME}") {
+                  openshift.withCluster() {
+                      openshift.withProject() {
+                          sh 'oc start-build ${APP_NAME} -n ${TOOLS_NAMESPACE} --wait' 
+                      }
+                  }
+              }
 
-                // Tag Image for Dev
-                stage('Promote to DEV') {
-                    openshift.withCluster() {
-                        sh "echo Tagging image for DEV"
-                        openshift.tag("${APP_NAME}:latest", "${APP_NAME}:dev")
-                    }
-                }
+              // Tag Image for Dev
+              stage('Promote to DEV') {
+                  openshift.withCluster() {
+                      openshift.withProject(){
+                          sh "echo Tagging image for DEV"
+                          sh 'oc tag ${APP_NAME}:latest ${APP_NAME}:dev'
+                      }
+                  }
+              }
 
-                stage("Deploy to DEV") {
-                    openshift.withCluster() {
-                        openshift.withProject() {
-                            sh 'echo Wait for Demo app to rollout completely.'
-                            sh 'oc rollout status -n ${DEV_NAMESPACE} dc/${APP_NAME} --watch'
-                        }
-                    }
-                }
-                
-                // Tag Image for Test
-                stage('Promote to TEST') {
-                    openshift.withCluster() {
-                        sh "echo Tagging image for TEST"
-                        openshift.tag("${APP_NAME}:latest", "${APP_NAME}:test")
-                    }
-                }
-                
-                stage("Deploy to TEST") {
-                    openshift.withCluster() {
-                        openshift.withProject() {
-                            sh 'echo Wait for Demo app to rollout completely.'
-                            sh 'oc rollout status -n ${TEST_NAMESPACE} dc/${APP_NAME} --watch'
-                        }
-                    }
-                }
-
-            }
-
+              stage("Deploy to DEV") {
+                  openshift.withCluster() {
+                      openshift.withProject() {
+                          sh 'echo Wait for Demo app to rollout completely.'
+                          sh 'oc rollout status -n ${DEV_NAMESPACE} dc/${APP_NAME} --watch'
+                      }
+                  }
+              }
+              
+              // Tag Image for Test
+              stage('Promote to TEST') {
+                  openshift.withCluster() {
+                      openshift.withProject() {
+                          sh "echo Tagging image for TEST"
+                          sh 'oc tag ${APP_NAME}:latest ${APP_NAME}:test'
+                      }
+                  }
+              }
+              
+              stage("Deploy to TEST") {
+                  openshift.withCluster() {
+                      openshift.withProject() {
+                          sh 'echo Wait for Demo app to rollout completely.'
+                          sh 'oc rollout status -n ${TEST_NAMESPACE} dc/${APP_NAME} --watch'
+                      }
+                  }
+              }
+          }
         } catch (err) {
             echo "in catch block"
             currentBuild.result = 'FAILURE'

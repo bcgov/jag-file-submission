@@ -68,23 +68,21 @@ spec:
         - name: NEXUS_CREDENTIAL_ID
           value: nexus-credentials
       jenkinsfile: |-
-        timeout(time: 25, unit: 'MINUTES') {
         try {
-           timeout(time: 20, unit: 'MINUTES') {
+            node {
+                stage("Initialize") {
+                    project = env.BUILD
+                }
+            }
 
-             node {
-               stage("Initialize") {
-                 project = env.BUILD
-               }
-             }
-
-             node('maven') {
+            node('maven') {
 
                 stage("Checkout") {
-                  git url: "${GIT_SOURCE_URL}", branch: "${GIT_SOURCE_REF}"
+                    git url: "${GIT_SOURCE_URL}", branch: "${GIT_SOURCE_REF}"
                 }
+
                 stage("Build JARs") {
-                  sh "mvn clean package -f./src/backend -P libs"
+                    sh "mvn clean package -f./src/backend -P libs"
                 }
 
                 stage('Push to Nexus'){
@@ -93,7 +91,7 @@ spec:
                     // Find built artifact under target folder
                     filesByGlob = findFiles(glob: "**/target/*.jar");
                     pomsByGlob = findFiles(glob: "**/target/*.pom");
-                    
+
                     echo "Found ${filesByGlob.length} JARS"
                     echo "Found ${filesByGlob.length} POMS"
                     for(file in filesByGlob){
@@ -115,14 +113,14 @@ spec:
                             pomPath = it.path.replace("target/${it.name}", "pom.xml")
                             pomExists = fileExists pomPath;
                             if(!pomExists){
-                              echo "POM Does not exist!!!"
+                                echo "POM Does not exist!!!"
                             }
                             artifactPom = readMavenPom file: pomPath;
                             echo "*** File: ${artifactPath}, group: ${artifactPom.groupId}, packaging: ${artifactPom.packaging}, version ${artifactPom.version}";
                             if (artifactPom.version.matches("(.*)SNAPSHOT")){
-                              artifactRepo = NEXUS_SNAPSHOT_REPOSITORY
+                                artifactRepo = NEXUS_SNAPSHOT_REPOSITORY
                             }else{
-                              artifactRepo = NEXUS_RELEASE_REPOSITORY
+                                artifactRepo = NEXUS_RELEASE_REPOSITORY
                             }
                             echo "VERSION!"
                             echo "${NEXUS_VERSION}"
@@ -136,15 +134,19 @@ spec:
                                 credentialsId: NEXUS_CREDENTIAL_ID,
                                 artifacts: [
                                     // Artifact generated such as .jar, .ear and .war files.
-                                    [artifactId: artifactPom.artifactId,
-                                    classifier: '',
-                                    file: artifactPath,
-                                    type: 'jar'],
+                                    [
+                                        artifactId: artifactPom.artifactId,
+                                        classifier: '',
+                                        file: artifactPath,
+                                        type: 'jar'
+                                    ],
                                     // Lets upload the pom.xml file for additional information for Transitive dependencies
-                                    [artifactId: artifactPom.artifactId,
-                                    classifier: '',
-                                    file: pomPath,
-                                    type: "pom"]
+                                    [
+                                        artifactId: artifactPom.artifactId,
+                                        classifier: '',
+                                        file: pomPath,
+                                        type: "pom"
+                                    ]
                                 ]
                             );
                         } else {
@@ -153,46 +155,30 @@ spec:
                     }
                     // Set the upload repo for parent pom
                     if (pom.version.matches("(.*)SNAPSHOT")){
-                      artifactRepo = NEXUS_SNAPSHOT_REPOSITORY
+                        artifactRepo = NEXUS_SNAPSHOT_REPOSITORY
                     }else{
-                      artifactRepo = NEXUS_RELEASE_REPOSITORY
+                        artifactRepo = NEXUS_RELEASE_REPOSITORY
                     }
-                    
-                    // Try the parent POM
-                    /*
-                    echo "*** File: ${pom}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}";
-                    echo "***UPLOADING Parent POM AT: ${pomPath}";
-                    nexusArtifactUploader(
-                        nexusVersion: NEXUS_VERSION,
-                        protocol: NEXUS_PROTOCOL,
-                        nexusUrl: NEXUS_URL,
-                        groupId: pom.groupId,
-                        version: pom.version,
-                        repository: artifactRepo,
-                        credentialsId: NEXUS_CREDENTIAL_ID,
-                        artifacts: [
-                            // Artifact generated such as .jar, .ear and .war files.
-                            [artifactId: pom.artifactId,
-                            classifier: '',
-                            file: "pom.xml",
-                            type: 'pom']
-                        ]
-                    );
-                    */
                 }
-              }
-           }
+
+                stage('Trigger API Pipeline to Build') {
+                    openshift.withCluster() {
+                        openshift.withProject() {
+                            sh 'oc start-build efiling-api-pipeline -n ${TOOLS_NAMESPACE}'
+                        }
+                    }
+                }
+            }
         } catch (err) {
-           echo "in catch block"
-          
-           currentBuild.result = 'FAILURE'
-           env.ERR = "${err}"
-           node {
-              sh "curl -XPOST '${LIFECYCLE_WEBHOOK}' -H 'Content-type: application/json' --data '{\"username\":\"The Pipe Lion\",\"icon_emoji\":\":lion_face:\",\"text\": \"${APP_NAME} Pipeline Failure - ${ERR}\"}'"
-           }
-           echo "Caught: ${err}"
-           throw err
-        }
+            echo "in catch block"
+            
+            currentBuild.result = 'FAILURE'
+            env.ERR = "${err}"
+            node {
+                sh "curl -XPOST '${LIFECYCLE_WEBHOOK}' -H 'Content-type: application/json' --data '{\"username\":\"The Pipe Lion\",\"icon_emoji\":\":lion_face:\",\"text\": \"${APP_NAME} Pipeline Failure - ${ERR}\"}'"
+            }
+            echo "Caught: ${err}"
+            throw err
         }
     type: JenkinsPipeline
   successfulBuildsHistoryLimit: 5

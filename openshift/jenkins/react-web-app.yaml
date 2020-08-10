@@ -1,7 +1,7 @@
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
-  creationTimestamp: '2020-07-21T15:37:30Z'
+  creationTimestamp: "2020-07-21T15:37:30Z"
   labels:
     application: react-web-app-demo-pipeline
     template: master-build-pipeline
@@ -17,7 +17,7 @@ spec:
   source:
     git:
       ref: master
-      uri: 'https://github.com/bcgov/jag-file-submission'
+      uri: "https://github.com/bcgov/jag-file-submission"
     type: Git
   strategy:
     jenkinsPipelineStrategy:
@@ -80,7 +80,7 @@ spec:
                         input message: 'Promote application to Test?'
                     }
                     sh 'echo Tagging Image with Test'
-                    sh 'oc tag ${NGINX_NAME}:latest ${NGINX_NAME:test'
+                    sh 'oc tag ${NGINX_NAME}:latest ${NGINX_NAME}:test'
                 }
                 
                 stage("Deploy to TEST") {
@@ -109,7 +109,7 @@ spec:
   triggers:
     - type: ConfigChange
     - github:
-        secret: '${GITHUB_WEBHOOK_SECRET}'
+        secret: "${GITHUB_WEBHOOK_SECRET}"
       type: GitHub
 status:
   lastVersion: 0
