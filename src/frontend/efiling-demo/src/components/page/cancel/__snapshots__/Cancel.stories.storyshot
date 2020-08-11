@@ -48,15 +48,13 @@ exports[`Storyshots Cancel Default 1`] = `
         <p>
           You have cancelled your submission. Please click the button below to go back home.
         </p>
-        <div>
-          <button
-            class="normal-white btn"
-            data-test-id="return-home-btn"
-            type="button"
-          >
-            Return home
-          </button>
-        </div>
+        <button
+          class="bcgov-button normal-white btn"
+          data-test-id="return-home-btn"
+          type="button"
+        >
+          Return home
+        </button>
       </div>
     </div>
     <footer
@@ -198,15 +196,13 @@ exports[`Storyshots Cancel Mobile 1`] = `
         <p>
           You have cancelled your submission. Please click the button below to go back home.
         </p>
-        <div>
-          <button
-            class="normal-white btn"
-            data-test-id="return-home-btn"
-            type="button"
-          >
-            Return home
-          </button>
-        </div>
+        <button
+          class="bcgov-button normal-white btn"
+          data-test-id="return-home-btn"
+          type="button"
+        >
+          Return home
+        </button>
       </div>
     </div>
     <footer

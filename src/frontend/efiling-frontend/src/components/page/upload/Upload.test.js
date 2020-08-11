@@ -1,13 +1,22 @@
 import React from "react";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-import { render, fireEvent, getByText, waitFor } from "@testing-library/react";
+import {
+  render,
+  fireEvent,
+  getByText,
+  waitFor,
+  getByTestId,
+  getAllByRole,
+  queryByText,
+  getAllByTestId,
+} from "@testing-library/react";
 import { getTestData } from "../../../modules/confirmationPopupTestData";
-import { getDocumentsData } from "../../../modules/documentTestData";
 import { getCourtData } from "../../../modules/courtTestData";
+import { getDocumentsData } from "../../../modules/documentTestData";
 import { generateJWTToken } from "../../../modules/authenticationHelper";
 
-import Upload from "./Upload";
+import Upload, { uploadDocuments } from "./Upload";
 
 function flushPromises(ui, container) {
   return new Promise((resolve) =>
@@ -48,6 +57,7 @@ describe("Upload Component", () => {
   const upload = {
     confirmationPopup,
     submissionId,
+    courtData: court,
   };
 
   const token = generateJWTToken({ preferred_username: "username@bceid" });
@@ -57,11 +67,26 @@ describe("Upload Component", () => {
   let mock;
   beforeEach(() => {
     mock = new MockAdapter(axios);
+    mock
+      .onGet(`/lookup/documentTypes/${court.level}/${court.courtClass}`)
+      .reply(200, {
+        documentTypes: [
+          { type: "AFF", description: "Affidavit" },
+          { type: "AAS", description: "Affidavit of Attempted Service" },
+          { type: "CCB", description: "Case Conference Brief" },
+        ],
+      });
+
     window.open = jest.fn();
+    global.URL.createObjectURL = jest.fn();
+    global.URL.createObjectURL.mockReturnValueOnce("fileurl.com");
+    sessionStorage.setItem("errorUrl", "errorexample.com");
   });
 
-  test("Matches the snapshot", () => {
+  test("Matches the snapshot", async () => {
     const { asFragment } = render(<Upload upload={upload} />);
+
+    await waitFor(() => {});
 
     expect(asFragment()).toMatchSnapshot();
   });
@@ -95,6 +120,202 @@ describe("Upload Component", () => {
     await waitFor(() => {});
     await flushPromises(ui, container);
 
+    // test opening file link in new tab on keydown
+    const fileLink = getByTestId(container, "file-link-ping.json");
+    fireEvent.keyDown(fileLink);
+
+    expect(window.open).toHaveBeenCalled();
     expect(asFragment()).toMatchSnapshot();
+  });
+
+  test("redirects to error page if fail to generate dropdown elements", async () => {
+    mock
+      .onGet(`/lookup/documentTypes/${court.level}/${court.courtClass}`)
+      .reply(400);
+
+    render(<Upload upload={upload} />);
+
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalledWith("errorexample.com", "_self");
+  });
+
+  test("failed uploadDocuments call to /submission/submissionId/documents opens error page", async () => {
+    mock.onPost(`/submission/${submissionId}/documents`).reply(400);
+
+    uploadDocuments(submissionId, [], jest.fn());
+
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalledWith("errorexample.com", "_self");
+  });
+
+  test("failed uploadDocuments call to /submission/submissionId/update-documents opens error page", async () => {
+    mock.onPost(`/submission/${submissionId}/documents`).reply(200);
+
+    mock.onPost(`/submission/${submissionId}/update-documents`).reply(400);
+
+    uploadDocuments(submissionId, [], jest.fn());
+
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalledWith("errorexample.com", "_self");
+  });
+
+  test("successful document upload works as expected", async () => {
+    mock.onPost(`/submission/${submissionId}/documents`).reply(200);
+
+    mock.onPost(`/submission/${submissionId}/update-documents`).reply(200);
+
+    const updatedDocuments = [
+      ...documents,
+      {
+        name: "ping.json",
+        description: "file description ping",
+        type: "file type ping",
+        statutoryFeeAmount: 0,
+        isAmendment: true,
+        isSupremeCourtScheduling: true,
+      },
+      {
+        name: "ping2.json",
+        description: "file description ping2",
+        type: "file type ping2",
+        statutoryFeeAmount: 0,
+        isAmendment: true,
+        isSupremeCourtScheduling: true,
+      },
+    ];
+
+    mock.onGet(`/submission/${submissionId}/filing-package`).reply(200, {
+      documents: updatedDocuments,
+      court,
+      submissionFeeAmount,
+    });
+
+    const files = [];
+    const file1 = new File([JSON.stringify({ ping: true })], "ping.json", {
+      type: "application/json",
+    });
+    const file2 = new File([JSON.stringify({ ping: true })], "ping2.json", {
+      type: "application/json",
+    });
+
+    files.push(file1);
+    files.push(file2);
+
+    const data = mockData(files);
+    const ui = <Upload upload={upload} />;
+    const { container, asFragment } = render(ui);
+    const dropzone = container.querySelector('[data-testid="dropdownzone"]');
+
+    dispatchEvt(dropzone, "drop", data);
+
+    await waitFor(() => {});
+    await flushPromises(ui, container);
+
+    // test opening file link in new tab on click
+    const fileLink = getByTestId(container, "file-link-ping.json");
+    fireEvent.click(fileLink);
+
+    expect(window.open).toHaveBeenCalled();
+
+    const radio = getAllByRole(container, "radio");
+    const button = getByText(container, "Continue");
+    const dropdown = getAllByTestId(container, "dropdown");
+
+    expect(button).toBeDisabled();
+
+    fireEvent.change(dropdown[0], {
+      target: { value: "Case Conference Brief" },
+    });
+    fireEvent.click(radio[0]);
+    fireEvent.click(radio[2]);
+    fireEvent.click(radio[5]);
+    fireEvent.click(radio[7]);
+
+    expect(button).not.toBeDisabled();
+
+    fireEvent.click(button);
+
+    await waitFor(() => {});
+
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  test("removing uploaded file works as expected", async () => {
+    const file = new File([JSON.stringify({ ping: true })], "ping.json", {
+      type: "application/json",
+    });
+    const data = mockData([file]);
+
+    const ui = <Upload upload={upload} />;
+    const { container } = render(ui);
+    const dropzone = container.querySelector('[data-testid="dropdownzone"]');
+
+    dispatchEvt(dropzone, "drop", data);
+
+    await waitFor(() => {});
+    await flushPromises(ui, container);
+
+    expect(getByText(container, "ping.json")).toBeInTheDocument();
+
+    const removeIcon = getByTestId(container, "remove-icon");
+
+    fireEvent.click(removeIcon);
+
+    expect(queryByText(container, "ping.json")).not.toBeInTheDocument();
+  });
+
+  test("files with same name (duplicates) uploaded shows error message", async () => {
+    const ui = <Upload upload={upload} />;
+    const { container } = render(ui);
+    const dropzone = container.querySelector('[data-testid="dropdownzone"]');
+
+    const file = new File([JSON.stringify({ ping: true })], "ping.json", {
+      type: "application/json",
+    });
+    const data = mockData([file]);
+
+    dispatchEvt(dropzone, "drop", data);
+
+    await waitFor(() => {});
+    await flushPromises(ui, container);
+
+    expect(
+      queryByText(
+        container,
+        "You cannot upload multiple files with the same name."
+      )
+    ).not.toBeInTheDocument();
+
+    dispatchEvt(dropzone, "drop", data);
+
+    await waitFor(() => {});
+    await flushPromises(ui, container);
+
+    expect(
+      getByText(
+        container,
+        "You cannot upload multiple files with the same name."
+      )
+    ).toBeInTheDocument();
+
+    const newFile = new File([JSON.stringify({ ping: true })], "ping2.json", {
+      type: "application/json",
+    });
+    const newData = mockData([newFile]);
+
+    dispatchEvt(dropzone, "drop", newData);
+
+    await waitFor(() => {});
+    await flushPromises(ui, container);
+
+    expect(
+      queryByText(
+        container,
+        "You cannot upload multiple files with the same name."
+      )
+    ).not.toBeInTheDocument();
   });
 });

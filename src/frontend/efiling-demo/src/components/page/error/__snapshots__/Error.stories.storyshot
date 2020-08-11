@@ -59,15 +59,13 @@ exports[`Storyshots Error Default 1`] = `
           </b>
         </p>
         <br />
-        <div>
-          <button
-            class="normal-white btn"
-            data-test-id=""
-            type="button"
-          >
-            Return home
-          </button>
-        </div>
+        <button
+          class="bcgov-button normal-white btn"
+          data-test-id=""
+          type="button"
+        >
+          Return home
+        </button>
       </div>
     </div>
     <footer
@@ -220,15 +218,13 @@ exports[`Storyshots Error Mobile 1`] = `
           </b>
         </p>
         <br />
-        <div>
-          <button
-            class="normal-white btn"
-            data-test-id=""
-            type="button"
-          >
-            Return home
-          </button>
-        </div>
+        <button
+          class="bcgov-button normal-white btn"
+          data-test-id=""
+          type="button"
+        >
+          Return home
+        </button>
       </div>
     </div>
     <footer

@@ -8,13 +8,12 @@ import ca.bc.gov.ag.csows.accounts.AccountFacade;
 import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
 import ca.bc.gov.ag.csows.accounts.ClientProfile;
 import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
-import ca.bc.gov.open.jag.efilingcsostarter.CsoAccountServiceImpl;
-import ca.bc.gov.open.jag.efilingcsostarter.CsoHelpers;
-import ca.bc.gov.open.jag.efilingcsostarter.mappers.AccountDetailsMapper;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.CSOHasMultipleAccountException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
-import ca.bceid.webservices.client.v9.*;
+import ca.bc.gov.open.jag.efilingcsostarter.CsoAccountServiceImpl;
+import ca.bc.gov.open.jag.efilingcsostarter.CsoHelpers;
+import ca.bc.gov.open.jag.efilingcsostarter.mappers.AccountDetailsMapper;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -24,8 +23,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import static org.mockito.ArgumentMatchers.any;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("Get Account Details Test Suite")
@@ -55,12 +52,6 @@ public class GetAccountDetailsTest {
     RoleRegistryPortType roleRegistryPortTypeMock;
 
     @Mock
-    BCeIDService bCeIDService;
-
-    @Mock
-    BCeIDServiceSoap bCeIDServiceSoapMock;
-
-    @Mock
     AccountDetailsMapper accountDetailsMapperMock;
 
     @BeforeEach
@@ -71,7 +62,7 @@ public class GetAccountDetailsTest {
         initRoleRegistryMocks();
         initBceIdAccountMocks();
 
-        sut = new CsoAccountServiceImpl(accountFacadeBeanMock, roleRegistryPortTypeMock, bCeIDServiceSoapMock, accountDetailsMapperMock);
+        sut = new CsoAccountServiceImpl(accountFacadeBeanMock, roleRegistryPortTypeMock, accountDetailsMapperMock);
     }
 
     private void initAccountFacadeMocks() throws NestedEjbException_Exception {
@@ -123,42 +114,15 @@ public class GetAccountDetailsTest {
 
     private void initBceIdAccountMocks() {
 
-        BCeIDAccountContact contact = new BCeIDAccountContact();
-        BCeIDString str = new BCeIDString();
-        str.setValue("email@email.com");
-        contact.setEmail(str);
-
-        BCeIDName name = new BCeIDName();
-        str.setValue("first");
-        name.setFirstname(str);
-        str.setValue("middle");
-        name.setMiddleName(str);
-        str.setValue("surname");
-        name.setSurname(str);
-
-        BCeIDIndividualIdentity identity = new BCeIDIndividualIdentity();
-        identity.setName(name);
-
-        BCeIDAccount bCeIDAccount = new BCeIDAccount();
-        bCeIDAccount.setContact(contact);
-        bCeIDAccount.setIndividualIdentity(identity);
-
-        AccountDetailResponse bCeIDResponse = new AccountDetailResponse();
-        bCeIDResponse.setCode(ResponseCode.SUCCESS);
-        bCeIDResponse.setAccount(bCeIDAccount);
-
-        Mockito.when(bCeIDService.getBCeIDServiceSoap()).thenReturn(bCeIDServiceSoapMock);
-        Mockito.when(bCeIDServiceSoapMock.getAccountDetail(any())).thenReturn(bCeIDResponse);
-
         AccountDetails accountDetailsWithNoCso = new AccountDetails(UUID.randomUUID(), BigDecimal.ZERO, BigDecimal.ZERO, false, "firstName", "lastName", "middleName","email");
-        Mockito.when(accountDetailsMapperMock.toAccountDetails(Mockito.any(), Mockito.any())).thenReturn(accountDetailsWithNoCso);
+        Mockito.when(accountDetailsMapperMock.toAccountDetails(Mockito.any())).thenReturn(accountDetailsWithNoCso);
     }
 
     @DisplayName("OK: getAccountDetails called with userGuid with file role")
     @Test
     public void testWithFileRoleEnabled() throws NestedEjbException_Exception {
 
-        AccountDetails details = sut.getAccountDetails(USER_GUID_WITH_FILE_ROLE, "");
+        AccountDetails details = sut.getAccountDetails(USER_GUID_WITH_FILE_ROLE);
         Assertions.assertNotEquals(null, details);
         Assertions.assertEquals(BigDecimal.TEN, details.getAccountId());
         Assertions.assertEquals(BigDecimal.TEN, details.getClientId());
@@ -173,7 +137,7 @@ public class GetAccountDetailsTest {
     @Test
     public void testWithFileRoleDisabled() throws NestedEjbException_Exception {
 
-        AccountDetails details = sut.getAccountDetails(USER_GUID_NO_ROLE, "");
+        AccountDetails details = sut.getAccountDetails(USER_GUID_NO_ROLE);
         Assertions.assertNotEquals(null, details);
         Assertions.assertEquals(BigDecimal.TEN, details.getAccountId());
         Assertions.assertEquals(BigDecimal.TEN, details.getClientId());
@@ -184,18 +148,12 @@ public class GetAccountDetailsTest {
 
     }
 
-    @DisplayName("OK: getAccountDetails called with a userGuid that does not have cso account")
+    @DisplayName("OK: getAccountDetails called with a userGuid that does not have cso account should return null")
     @Test
-    public void withNoCsoAccountShouldReturnBceidUser() throws NestedEjbException_Exception {
+    public void withNoCsoAccountShouldReturnNull() throws NestedEjbException_Exception {
 
-        AccountDetails details = sut.getAccountDetails(USER_GUID_WITH_NO_CSO, "Individual");
-        Assertions.assertNotEquals(null, details);
-        Assertions.assertEquals(BigDecimal.ZERO, details.getAccountId());
-        Assertions.assertEquals(BigDecimal.ZERO, details.getClientId());
-        Assertions.assertEquals(false, details.isFileRolePresent());
-        Assertions.assertEquals("firstName", details.getFirstName());
-        Assertions.assertEquals("lastName", details.getLastName());
-        Assertions.assertEquals("email", details.getEmail());
+        AccountDetails actual = sut.getAccountDetails(USER_GUID_WITH_NO_CSO);
+        Assertions.assertNull(actual);
     }
 
     @DisplayName("Exception: with NestedEjbException_Exception should throw EfilingAccountServiceException")
@@ -204,7 +162,7 @@ public class GetAccountDetailsTest {
 
 
         EfilingAccountServiceException actual = Assertions.assertThrows(EfilingAccountServiceException.class, () -> {
-            sut.getAccountDetails(USER_GUID_WITH_EJB_EXCEPTION, "Individual");
+            sut.getAccountDetails(USER_GUID_WITH_EJB_EXCEPTION);
         });
 
         Assertions.assertEquals(NestedEjbException_Exception.class, actual.getCause().getClass());
@@ -218,7 +176,7 @@ public class GetAccountDetailsTest {
 
 
         CSOHasMultipleAccountException actual = Assertions.assertThrows(CSOHasMultipleAccountException.class, () -> {
-            sut.getAccountDetails(USER_GUID_WITH_MULTI_PROFILE, "Individual");
+            sut.getAccountDetails(USER_GUID_WITH_MULTI_PROFILE);
         });
 
         Assertions.assertEquals("Client 10 has multiple CSO profiles", actual.getMessage());

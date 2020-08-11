@@ -7,8 +7,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
 import java.math.BigDecimal;
 
 public interface EfilingSubmissionService {
-    BigDecimal submitFilingPackage(EfilingService service, EfilingFilingPackage filingPackage, EfilingPaymentService payment);
 
-    EfilingService addService(EfilingService efilingService);
+    BigDecimal submitFilingPackage(EfilingService service, EfilingFilingPackage filingPackage, EfilingPaymentService payment);
 
 }

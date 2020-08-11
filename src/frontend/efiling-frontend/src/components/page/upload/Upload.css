@@ -23,6 +23,10 @@
   text-decoration: underline;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 .table-value {
   display: flex;
   margin-left: 50px;
@@ -68,4 +72,8 @@
 
 .minor-margin-right {
   margin-right: 5%;
+}
+
+.error {
+  color: #d8292f;
 }
