@@ -1,24 +1,23 @@
 package ca.bc.gov.open.jag.efilingcommons.model;
 
+import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigDecimal;
 import java.util.List;
 
 public class EfilingService {
+
     private BigDecimal accountId;
     private BigDecimal clientId;
     private String clientReferenceTxt;
     private String courtFileNumber;
     private String documentsProcessed;
-    @XmlSchemaType(name = "dateTime")
     private XMLGregorianCalendar entryDateTime;
     private String entryUserId;
     private BigDecimal serviceId;
-    @XmlSchemaType(name = "dateTime")
     private XMLGregorianCalendar serviceReceivedDateTime;
     private String serviceReceivedDtmText;
     private BigDecimal serviceSessionId;
@@ -26,11 +25,15 @@ public class EfilingService {
     private String serviceTypeCd;
     private String serviceTypeDesc;
     private String styleOfCause;
-    @XmlSchemaType(name = "dateTime")
     private XMLGregorianCalendar updateDateTime;
     private String updateUserId;
     private BigDecimal userSessionId;
     private List<EfilingTransaction> transactions;
+
+    public EfilingService() {
+        serviceReceivedDateTime = DateUtils.getCurrentXmlDate();
+        entryDateTime = DateUtils.getCurrentXmlDate();
+    }
 
     public BigDecimal getAccountId() {
         return accountId;
@@ -220,5 +223,5 @@ public class EfilingService {
         this.userSessionId = userSessionId;
         this.transactions = transactions;
     }
-    public EfilingService() { }
+
 }

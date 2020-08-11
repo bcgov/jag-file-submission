@@ -95,14 +95,12 @@ export default function Payment({
           agreeCallout={() => setPaymentAgreed(!paymentAgreed)}
         />
         <br />
-        <section className="inline-block pt-2">
+        <section className="inline-block pt-2 buttons">
           <Button
             label="< Back"
             onClick={() => setShowPackageConfirmation(true)}
             styling="normal-white btn"
           />
-        </section>
-        <section className="buttons pt-2">
           <ConfirmationPopup
             modal={confirmationPopup.modal}
             mainButton={confirmationPopup.mainButton}
