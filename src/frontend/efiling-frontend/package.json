@@ -61,7 +61,7 @@
     "@babel/preset-env": "^7.11.0",
     "@storybook/addon-actions": "^5.3.19",
     "@storybook/addon-links": "^5.3.19",
-    "@storybook/addon-storyshots": "^5.3.14",
+    "@storybook/addon-storyshots": "^6.0.2",
     "@storybook/addon-viewport": "^5.3.13",
     "@storybook/addons": "^5.3.19",
     "@storybook/preset-create-react-app": "^3.0.0",
