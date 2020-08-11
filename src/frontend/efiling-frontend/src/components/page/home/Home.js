@@ -15,13 +15,11 @@ import { propTypes } from "../../../types/propTypes";
 
 import "../page.css";
 
-const setRequestHeaders = () => {
+const setRequestHeaders = (transactionId) => {
   // Use interceptor to inject the transactionId to all requests
   axios.interceptors.request.use((request) => {
     const token = localStorage.getItem("jwt");
-    request.headers["X-Transaction-Id"] = sessionStorage.getItem(
-      "transactionId"
-    );
+    request.headers["X-Transaction-Id"] = transactionId;
     request.headers.Authorization = `Bearer ${token}`;
     return request;
   });
@@ -104,26 +102,21 @@ export default function Home({ page: { header, confirmationPopup } }) {
   const location = useLocation();
   const queryParams = queryString.parse(location.search);
 
-  if (queryParams.submissionId && queryParams.transactionId) {
-    sessionStorage.setItem("submissionId", queryParams.submissionId);
-    sessionStorage.setItem("transactionId", queryParams.transactionId);
-  }
-
-  setRequestHeaders();
+  setRequestHeaders(queryParams.transactionId);
 
   useEffect(() => {
     checkCSOAccountStatus(
-      sessionStorage.getItem("submissionId"),
+      queryParams.submissionId,
       setCsoAccountStatus,
       setShowLoader,
       setApplicantInfo,
       setError
     );
-  }, [sessionStorage.getItem("submissionId")]);
+  }, [queryParams.submissionId]);
 
   const packageConfirmation = {
     confirmationPopup,
-    submissionId: sessionStorage.getItem("submissionId"),
+    submissionId: queryParams.submissionId,
   };
 
   return (
