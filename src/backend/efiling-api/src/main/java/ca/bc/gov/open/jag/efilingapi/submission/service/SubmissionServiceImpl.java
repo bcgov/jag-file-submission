@@ -101,8 +101,8 @@ public class SubmissionServiceImpl implements SubmissionService {
         filingPackage.setEntDtm(DateUtils.getCurrentXmlDate());
 
         SubmitResponse result = new SubmitResponse();
-        result.transactionId(efilingSubmissionService.submitFilingPackage(service, filingPackage, (a) -> {
-            return bamboraPaymentAdapter.makePayment(a);
+        result.transactionId(efilingSubmissionService.submitFilingPackage(service, filingPackage, (efilingPayment) -> {
+            return bamboraPaymentAdapter.makePayment(efilingPayment);
         }));
         return result;
     }
