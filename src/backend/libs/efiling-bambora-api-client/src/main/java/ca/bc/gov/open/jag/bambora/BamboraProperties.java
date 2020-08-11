@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingapi.payment;
+package ca.bc.gov.open.jag.bambora;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

@@ -1,7 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.payment;
 
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.PaymentsApi;
-import ca.bc.gov.open.jag.efilingbamboraapiclient.api.handler.ApiClient;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.handler.ApiException;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.CardOnFile;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.PaymentRequest;
@@ -11,13 +10,11 @@ import ca.bc.gov.open.jag.efilingcommons.model.EfilingPayment;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingTransaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
 @Service
-@EnableConfigurationProperties(BamboraProperties.class)
 public class BamboraPaymentAdapter {
 
     Logger logger = LoggerFactory.getLogger(BamboraPaymentAdapter.class);
