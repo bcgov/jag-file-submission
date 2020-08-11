@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 @Mapper
 public interface FinancialTransactionMapper {
 
-    @Mapping(target = "userSessionId", source = "serviceSession.userSessionId")
-    @Mapping(target = "serviceSessionId", source = "serviceSession.serviceSessionId")
+    @Mapping(target = "approvalCd", source = "approvalCd")
+    @Mapping(target = "ecommerceTransactionId", source = "ecommerceTransactionId")
     FinancialTransaction toTransaction(EfilingTransaction efilingTransaction);
 }
