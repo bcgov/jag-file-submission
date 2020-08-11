@@ -22,17 +22,13 @@ public class BamboraPaymentAdapter {
 
     Logger logger = LoggerFactory.getLogger(BamboraPaymentAdapter.class);
 
-    private final BamboraProperties bamboraProperties;
+    private final PaymentsApi paymentsApi;
 
-    public BamboraPaymentAdapter(BamboraProperties bamboraProperties) {
-        this.bamboraProperties = bamboraProperties;
+    public BamboraPaymentAdapter(PaymentsApi paymentsApi) {
+        this.paymentsApi = paymentsApi;
     }
 
     public EfilingTransaction makePayment(EfilingPayment efilingPayment) {
-        ApiClient apiClient = new ApiClient();
-        apiClient.setBasePath(bamboraProperties.getBasePath());
-        apiClient.setApiKey(bamboraProperties.getApiKey());
-        PaymentsApi paymentsApi = new PaymentsApi(apiClient);
 
         PaymentRequest paymentRequest = new PaymentRequest();
         paymentRequest.amount(efilingPayment.getPaymentAmount().doubleValue());

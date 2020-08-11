@@ -1,73 +1,73 @@
 package ca.bc.gov.open.jag.efilingapi.payment;
 
+import ca.bc.gov.open.jag.efilingbamboraapiclient.api.PaymentsApi;
+import ca.bc.gov.open.jag.efilingbamboraapiclient.api.handler.ApiException;
+import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.PaymentResponse;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
+import ca.bc.gov.open.jag.efilingcommons.model.EfilingPayment;
+import ca.bc.gov.open.jag.efilingcommons.model.EfilingTransaction;
 import org.junit.jupiter.api.*;
-import okhttp3.mockwebserver.MockResponse;
-import okhttp3.mockwebserver.MockWebServer;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+
+import static org.mockito.ArgumentMatchers.any;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("BamboraPaymentAdapter")
 public class BamboraPaymentAdapterTest {
-    private static final String APIKEY = "APIKEY";
-    public static MockWebServer mockBackEnd;
 
 
-    private BamboraProperties bamboraProperties;
+    @Mock
+    PaymentsApi paymentsApiMock;
 
     BamboraPaymentAdapter sut;
 
-    @BeforeAll
-    static void setUp() throws IOException {
-        mockBackEnd = new MockWebServer();
-        mockBackEnd.start();
-
-
-    }
-
-    @AfterAll
-    static void tearDown() throws IOException {
-        mockBackEnd.shutdown();
-    }
-
     @BeforeEach
     void initialize() {
-        bamboraProperties = new BamboraProperties();
-        bamboraProperties.setBasePath(String.format("http://localhost:%s",
-                mockBackEnd.getPort()));
-        bamboraProperties.setApiKey(APIKEY);
+        MockitoAnnotations.initMocks(this);
 
-        sut = new BamboraPaymentAdapter(bamboraProperties);
+        sut = new BamboraPaymentAdapter(paymentsApiMock);
     }
 
     @Test
     @DisplayName("Test Approved")
-    public void withValidRequestPaymentIsApproved() {
-        MockResponse mockResponse = new MockResponse();
-        mockResponse.setBody("{\"test\":\"test\"}");
-        mockResponse.addHeader("content-type: application/json;");
-        mockResponse.setResponseCode(200);
-        mockBackEnd.enqueue(mockResponse);
+    public void withValidRequestPaymentIsApproved() throws ApiException {
+        Mockito.when(paymentsApiMock.makePayment(any())).thenReturn(createPaymentResponse(123,1));
+
+        EfilingPayment payment = new EfilingPayment(BigDecimal.TEN, BigDecimal.TEN);
+
+        EfilingTransaction efilingTransaction = sut.makePayment(payment);
+        Assertions.assertEquals("Approved", efilingTransaction.getApprovalCd());
+        Assertions.assertEquals(BigDecimal.valueOf(123), efilingTransaction.getEcommerceTransactionId());
     }
 
     @Test
     @DisplayName("Test Failed")
-    public void withValidRequestPaymentIsFailed() {
-        MockResponse mockResponse = new MockResponse();
-        mockResponse.setBody("{\"test\":\"test\"}");
-        mockResponse.addHeader("content-type: application/json;");
-        mockResponse.setResponseCode(200);
-        mockBackEnd.enqueue(mockResponse);
+    public void withValidRequestPaymentIsFailed() throws ApiException {
+        Mockito.when(paymentsApiMock.makePayment(any())).thenReturn(createPaymentResponse(123,2));
+        EfilingPayment payment = new EfilingPayment(BigDecimal.TEN, BigDecimal.TEN);
+
+        EfilingTransaction efilingTransaction = sut.makePayment(payment);
+        Assertions.assertEquals("Failed", efilingTransaction.getApprovalCd());
+        Assertions.assertEquals(BigDecimal.valueOf(123), efilingTransaction.getEcommerceTransactionId());
     }
 
     @Test
     @DisplayName("Test Exception")
-    public void withInValidRequestException() {
-        MockResponse mockResponse = new MockResponse();
-        mockResponse.setBody("{\"test\":\"test\"}");
-        mockResponse.addHeader("content-type: application/json;");
-        mockResponse.setResponseCode(500);
-        mockBackEnd.enqueue(mockResponse);
-    }
+    public void withInValidRequestException() throws ApiException {
+        Mockito.when(paymentsApiMock.makePayment(any())).thenThrow(ApiException.class);
+        EfilingPayment payment = new EfilingPayment(BigDecimal.TEN, BigDecimal.TEN);
 
+        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.makePayment(payment));
+    }
+    private PaymentResponse createPaymentResponse(int messageId, int approved) {
+        PaymentResponse paymentResponse = new PaymentResponse();
+        paymentResponse.setApproved(approved);
+        paymentResponse.setMessageId(messageId);
+        return paymentResponse;
+    }
 }

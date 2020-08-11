@@ -25,9 +25,8 @@ public class SubmissionConfig {
 
     private BamboraPaymentAdapter bamboraPaymentAdapter;
 
-    public SubmissionConfig(CacheProperties cacheProperties, BamboraProperties bamboraProperties) {
+    public SubmissionConfig(CacheProperties cacheProperties) {
         this.cacheProperties = cacheProperties;
-        this.bamboraPaymentAdapter = new BamboraPaymentAdapter(bamboraProperties);
     }
 
     @Bean
