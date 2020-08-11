@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-wrap-multilines */
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import axios from "axios";
 import ConfirmationPopup, {
   Button,
   Sidecard,
@@ -9,12 +10,18 @@ import ConfirmationPopup, {
 } from "shared-components";
 import { getSidecardData } from "../../../modules/sidecardData";
 import { getCreditCardAlerts } from "../../../modules/creditCardAlerts";
+import { errorRedirect } from "../../../modules/errorRedirect";
 import { propTypes } from "../../../types/propTypes";
 import { onBackButtonEvent } from "../../../modules/handleBackEvent";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
 import { generateFileSummaryData } from "../../../modules/generateFileSummaryData";
 
 import "./Payment.css";
+
+const calloutText = `I have reviewed the information and the documents in this filing
+package and am prepared to submit them for filing. I agree that all
+fees for this filing package may be charged to the credit card
+registered to my account. Statutory fees will be processed when documents are filed.`;
 
 const generateCourtDataTable = ({
   fileNumber,
@@ -41,15 +48,11 @@ const generateCourtDataTable = ({
   ];
 };
 
-const calloutText = `I have reviewed the information and the documents in this filing
-package and am prepared to submit them for filing. I agree that all
-fees for this filing package may be charged to the credit card
-registered to my account. Statutory fees will be processed when documents are filed.`;
-
-const submitButton = {
-  label: "Submit",
-  onClick: () => console.log("submit click"),
-  styling: "normal-blue btn",
+const submitPackage = (submissionId) => {
+  axios
+    .post(`/submission/${submissionId}/submit`, {})
+    .then(() => window.open(sessionStorage.getItem("successUrl"), "_self"))
+    .catch((err) => errorRedirect(sessionStorage.getItem("errorUrl"), err));
 };
 
 export default function Payment({
@@ -107,18 +110,20 @@ export default function Payment({
             onClick={() => setShowPackageConfirmation(true)}
             styling="normal-white btn"
           />
-          <ConfirmationPopup
-            modal={confirmationPopup.modal}
-            mainButton={confirmationPopup.mainButton}
-            confirmButton={confirmationPopup.confirmButton}
-            cancelButton={confirmationPopup.cancelButton}
-          />
-          <Button
-            label={submitButton.label}
-            onClick={submitButton.onClick}
-            styling={submitButton.styling}
-            disabled={!paymentAgreed}
-          />
+          <div className="button-container">
+            <ConfirmationPopup
+              modal={confirmationPopup.modal}
+              mainButton={confirmationPopup.mainButton}
+              confirmButton={confirmationPopup.confirmButton}
+              cancelButton={confirmationPopup.cancelButton}
+            />
+            <Button
+              label="Submit"
+              onClick={() => submitPackage(submissionId)}
+              styling="normal-blue btn"
+              disabled={!paymentAgreed}
+            />
+          </div>
         </section>
       </div>
       <div className="sidecard">

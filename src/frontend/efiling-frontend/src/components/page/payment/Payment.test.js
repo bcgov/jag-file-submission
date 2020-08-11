@@ -36,6 +36,7 @@ describe("Payment Component", () => {
   let mock;
   beforeEach(() => {
     mock = new MockAdapter(axios);
+    window.open = jest.fn();
   });
 
   test("Matches the snapshot", () => {
@@ -68,5 +69,42 @@ describe("Payment Component", () => {
     await waitFor(() => {});
 
     expect(asFragment()).toMatchSnapshot();
+  });
+
+  test("Submit on success redirects to success page", async () => {
+    sessionStorage.setItem("successUrl", "success.com");
+
+    mock
+      .onPost(`/submission/${submissionId}/submit`)
+      .reply(200, { transactionId: 1 });
+
+    const { container } = render(<Payment payment={payment} />);
+
+    fireEvent.click(getByRole(container, "checkbox"));
+    fireEvent.click(getByText(container, "Submit"));
+
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalledWith("success.com", "_self");
+  });
+
+  test("Submit on error redirects to error page", async () => {
+    sessionStorage.setItem("errorUrl", "error.com");
+
+    mock
+      .onPost(`/submission/${submissionId}/submit`)
+      .reply(400, { message: "There was an error." });
+
+    const { container } = render(<Payment payment={payment} />);
+
+    fireEvent.click(getByRole(container, "checkbox"));
+    fireEvent.click(getByText(container, "Submit"));
+
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalledWith(
+      "error.com?status=400&message=There was an error.",
+      "_self"
+    );
   });
 });

@@ -66,6 +66,12 @@
         </dependency>
 
         <dependency>
+            <groupId>ca.bc.gov.open.jag</groupId>
+            <artifactId>efiling-bambora-api-client</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
         </dependency>
@@ -160,8 +166,6 @@
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-spring-boot-starter</artifactId>
         </dependency>
-
-
     </dependencies>
 
     <dependencyManagement>

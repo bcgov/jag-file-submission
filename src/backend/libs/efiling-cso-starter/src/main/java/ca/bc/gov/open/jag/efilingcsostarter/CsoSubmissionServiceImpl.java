@@ -7,6 +7,7 @@ import ca.bc.gov.ag.csows.services.*;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingFilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingPaymentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.FilingPackageMapper;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.ServiceMapper;
@@ -27,7 +28,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     }
 
     @Override
-    public BigDecimal submitFilingPackage(EfilingService service, EfilingFilingPackage filingPackage) {
+    public BigDecimal submitFilingPackage(EfilingService service, EfilingFilingPackage filingPackage, EfilingPaymentService paymentService) {
 
         if(service == null) throw new IllegalArgumentException("Service is required.");
         if(filingPackage == null) throw new IllegalArgumentException("FilingPackage is required.");
