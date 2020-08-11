@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-import { createMemoryHistory } from "history";
 import {
   render,
   fireEvent,
