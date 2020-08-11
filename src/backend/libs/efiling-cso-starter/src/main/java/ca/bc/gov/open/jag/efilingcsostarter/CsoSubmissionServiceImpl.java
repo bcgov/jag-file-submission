@@ -6,7 +6,9 @@ import ca.bc.gov.ag.csows.filing.NestedEjbException_Exception;
 import ca.bc.gov.ag.csows.services.*;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingFilingPackage;
+import ca.bc.gov.open.jag.efilingcommons.model.EfilingPayment;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
+import ca.bc.gov.open.jag.efilingcommons.model.EfilingTransaction;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingPaymentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.FilingPackageMapper;
@@ -39,6 +41,8 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         Service createdService = createEfilingService(service, serviceSession);
 
         //TODO: make payments to bambora
+        EfilingPayment efilingPayment = new EfilingPayment(service.getClientId(), BigDecimal.TEN);
+        EfilingTransaction payment = paymentService.makePayment(efilingPayment);
         updatePaymentForService(createdService, true, new FinancialTransaction());
 
         BigDecimal filingResult = filePackage(service, filingPackage);
