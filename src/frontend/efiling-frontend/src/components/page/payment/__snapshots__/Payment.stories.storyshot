@@ -248,21 +248,25 @@ registered to my account. Statutory fees will be processed when documents are fi
         >
           &lt; Back
         </button>
-        <button
-          class="bcgov-button normal-white btn"
-          data-test-id="main-cancel-btn"
-          type="button"
+        <div
+          class="button-container"
         >
-          Cancel
-        </button>
-        <button
-          class="bcgov-button normal-blue btn"
-          data-test-id=""
-          disabled=""
-          type="button"
-        >
-          Submit
-        </button>
+          <button
+            class="bcgov-button normal-white btn"
+            data-test-id="main-cancel-btn"
+            type="button"
+          >
+            Cancel
+          </button>
+          <button
+            class="bcgov-button normal-blue btn"
+            data-test-id=""
+            disabled=""
+            type="button"
+          >
+            Submit
+          </button>
+        </div>
       </section>
     </div>
     <div
@@ -739,21 +743,25 @@ registered to my account. Statutory fees will be processed when documents are fi
         >
           &lt; Back
         </button>
-        <button
-          class="bcgov-button normal-white btn"
-          data-test-id="main-cancel-btn"
-          type="button"
+        <div
+          class="button-container"
         >
-          Cancel
-        </button>
-        <button
-          class="bcgov-button normal-blue btn"
-          data-test-id=""
-          disabled=""
-          type="button"
-        >
-          Submit
-        </button>
+          <button
+            class="bcgov-button normal-white btn"
+            data-test-id="main-cancel-btn"
+            type="button"
+          >
+            Cancel
+          </button>
+          <button
+            class="bcgov-button normal-blue btn"
+            data-test-id=""
+            disabled=""
+            type="button"
+          >
+            Submit
+          </button>
+        </div>
       </section>
     </div>
     <div
