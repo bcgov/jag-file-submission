@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useLayoutEffect, useEffect } from "react";
 import PropTypes from "prop-types";
 import { MdDescription, MdCheckBox, MdDeleteForever } from "react-icons/md";
 import ConfirmationPopup, {
@@ -13,6 +13,7 @@ import axios from "axios";
 import { getSidecardData } from "../../../modules/sidecardData";
 import { propTypes } from "../../../types/propTypes";
 import { errorRedirect } from "../../../modules/errorRedirect";
+import { onBackButtonEvent } from "../../../modules/handleBackEvent";
 import { generateFileSummaryData } from "../../../modules/generateFileSummaryData";
 
 import "./PackageConfirmation.css";
@@ -111,6 +112,21 @@ export default function PackageConfirmation({
   const [showUpload, setShowUpload] = useState(false);
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
+
+  const resetState = () => {
+    setShowUpload(false);
+    setShowPayment(false);
+  };
+
+  useEffect(() => {
+    if (!sessionStorage.getItem("listenerExists")) {
+      sessionStorage.setItem("currentPage", "packageConfirmation");
+      window.addEventListener("popstate", (e) =>
+        onBackButtonEvent(e, resetState)
+      );
+      sessionStorage.setItem("listenerExists", true);
+    }
+  }, []);
 
   useEffect(() => {
     getFilingPackageData(
