@@ -24,6 +24,7 @@
         <org.apache.cxf.version>3.3.7</org.apache.cxf.version>
         <com.fasterxml.jackson.core.version>2.11.2</com.fasterxml.jackson.core.version>
         <javax.xml.bind.version>2.3.1</javax.xml.bind.version>
+        <org.glassfish.jersey.inject.version>2.28</org.glassfish.jersey.inject.version>
     </properties>
 
     <repositories>
@@ -141,7 +142,11 @@
                 <artifactId>jackson-annotations</artifactId>
                 <version>${com.fasterxml.jackson.core.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.glassfish.jersey.inject</groupId>
+                <artifactId>jersey-hk2</artifactId>
+                <version>${org.glassfish.jersey.inject.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
