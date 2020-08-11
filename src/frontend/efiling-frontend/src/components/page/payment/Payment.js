@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-wrap-multilines */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import ConfirmationPopup, {
@@ -63,6 +63,11 @@ export default function Payment({
   const existingCreditCardAlert = getCreditCardAlerts().existingCreditCard;
   const [paymentAgreed, setPaymentAgreed] = useState(false);
   const [showPackageConfirmation, setShowPackageConfirmation] = useState(false);
+
+  useEffect(() => {
+    sessionStorage.setItem("currentPage", "payment");
+    window.history.pushState(null, null, window.location.href);
+  }, []);
 
   if (showPackageConfirmation) {
     return (
