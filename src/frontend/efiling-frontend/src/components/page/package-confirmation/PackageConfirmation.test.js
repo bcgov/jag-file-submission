@@ -72,7 +72,7 @@ describe("PackageConfirmation Component", () => {
   test("When call to retrieve filing package fails, redirects to error page of client app", async () => {
     sessionStorage.setItem("errorUrl", "error.com");
 
-    mock.onGet(apiRequest).reply(400);
+    mock.onGet(apiRequest).reply(400, { message: "There was an error." });
 
     render(
       <PackageConfirmation
@@ -83,7 +83,10 @@ describe("PackageConfirmation Component", () => {
 
     await waitFor(() => {});
 
-    expect(window.open).toHaveBeenCalledWith("error.com", "_self");
+    expect(window.open).toHaveBeenCalledWith(
+      "error.com?status=400&message=There was an error.",
+      "_self"
+    );
   });
 
   test("On click of continue to payment button, it redirects to the payment page", async () => {
