@@ -16,6 +16,7 @@ public class AccountDetails {
     private String email;
     private String middleName;
     private boolean fileRolePresent;
+    private boolean cardRegistered;
 
     protected AccountDetails(AccountDetails.Builder builder) {
 
@@ -27,6 +28,7 @@ public class AccountDetails {
         this.email = builder.email;
         this.middleName = builder.middleName;
         this.fileRolePresent = builder.fileRolePresent;
+        this.cardRegistered = builder.cardRegistered;
 
     }
 
@@ -44,7 +46,8 @@ public class AccountDetails {
             @JsonProperty("firstName") String firstName,
             @JsonProperty("lastName") String lastName,
             @JsonProperty("middleName") String middleName,
-            @JsonProperty("email") String email) {
+            @JsonProperty("email") String email,
+            @JsonProperty("cardRegistered") Boolean cardRegistered) {
         this.universalId = universalId;
         this.accountId = accountId;
         this.clientId = clientId;
@@ -53,6 +56,7 @@ public class AccountDetails {
         this.email = email;
         this.middleName = middleName;
         this.fileRolePresent = fileRolePresent;
+        this.cardRegistered = cardRegistered;
     }
 
     public UUID getUniversalId() {
@@ -87,6 +91,8 @@ public class AccountDetails {
         return fileRolePresent;
     }
 
+    public boolean isCardRegistered() { return cardRegistered; }
+
     public static class Builder {
 
         private UUID universalId;
@@ -97,6 +103,8 @@ public class AccountDetails {
         private String email;
         private String middleName;
         private boolean fileRolePresent;
+        private boolean cardRegistered;
+
 
         public Builder universalId(UUID universalId) {
             this.universalId = universalId;
@@ -135,6 +143,11 @@ public class AccountDetails {
 
         public Builder fileRolePresent(boolean fileRolePresent) {
             this.fileRolePresent = fileRolePresent;
+            return this;
+        }
+
+        public Builder cardRegistered(boolean cardRegistered) {
+            this.cardRegistered = cardRegistered;
             return this;
         }
 

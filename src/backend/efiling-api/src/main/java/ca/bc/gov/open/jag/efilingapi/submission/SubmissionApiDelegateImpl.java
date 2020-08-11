@@ -235,10 +235,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             }
 
             userDetails.setUniversalId(accountDetails.getUniversalId());
-            userDetails.setFirstName(accountDetails.getFirstName());
-            userDetails.setLastName(accountDetails.getLastName());
-            userDetails.setMiddleName(accountDetails.getMiddleName());
-            userDetails.setEmail(accountDetails.getEmail());
+            userDetails.setCardRegistered(accountDetails.isCardRegistered());
 
         }
 
