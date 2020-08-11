@@ -187,6 +187,7 @@ const generateTable = (
 ) => {
   if (!filesToUpload.documents.some((f) => f.name === file.name)) {
     filesToUpload.documents.push({ name: file.name, type: "AFF" });
+    setContinueBtnEnabled(checkValidityOfUploadedFiles());
   }
 
   return [
@@ -259,6 +260,17 @@ export const uploadDocuments = (
     .catch(() => window.open(sessionStorage.getItem("errorUrl"), "_self"));
 };
 
+const checkForDuplicateFiles = (droppedFiles, acceptedFiles) => {
+  let isDuplicate = false;
+
+  for (let i = 0; i < acceptedFiles.length; i += 1) {
+    isDuplicate = droppedFiles.some((df) => df.name === acceptedFiles[i].name);
+    if (isDuplicate) break;
+  }
+
+  return isDuplicate;
+};
+
 export default function Upload({
   upload: { confirmationPopup, submissionId, courtData },
 }) {
@@ -269,6 +281,7 @@ export default function Upload({
   const [acceptedFiles, setAcceptedFiles] = useState([]);
   const [items, setItems] = useState([]);
   const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     setDropdownItems(courtData, setItems, items);
@@ -288,9 +301,19 @@ export default function Upload({
       <div className="content col-md-8">
         <h1>Document Upload</h1>
         <Dropzone
-          onDrop={(droppedFiles) =>
-            setAcceptedFiles(acceptedFiles.concat(droppedFiles))
-          }
+          onDrop={(droppedFiles) => {
+            const hasDuplicates = checkForDuplicateFiles(
+              droppedFiles,
+              acceptedFiles
+            );
+            if (!hasDuplicates) {
+              setAcceptedFiles(acceptedFiles.concat(droppedFiles));
+              setErrorMessage(null);
+            } else
+              setErrorMessage(
+                "You cannot upload multiple files with the same name."
+              );
+          }}
         >
           {({ getRootProps, getInputProps }) => (
             <div
@@ -340,6 +363,7 @@ export default function Upload({
             ))}
           </>
         )}
+        {errorMessage && <p className="error">{errorMessage}</p>}
         <section className="buttons pt-2">
           <Button
             label="Cancel Upload"
