@@ -73,7 +73,7 @@ public class SubmitFilingPackageTest {
     @DisplayName("Exception: with null clientId should throw IllegalArgumentException")
     @Test
     public void testWithEmptyClientId() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(new EfilingService(), new EfilingFilingPackage()));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(new EfilingService(), new EfilingFilingPackage(), null));
     }
 
     @DisplayName("OK: submitFilingPackage called with any non-empty submissionId")
@@ -95,7 +95,7 @@ public class SubmitFilingPackageTest {
         EfilingService efilingService = new EfilingService();
         efilingService.setClientId(BigDecimal.TEN);
 
-        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(new EfilingService(), new EfilingFilingPackage(), null));
+        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(efilingService, new EfilingFilingPackage(), null));
 
     }
 
@@ -115,7 +115,7 @@ public class SubmitFilingPackageTest {
         Mockito.doThrow(new NestedEjbException_Exception()).when(serviceFacadeBean).createServiceSession(Mockito.any(), Mockito.anyString());
         EfilingService efilingService = new EfilingService();
         efilingService.setClientId(BigDecimal.TEN);
-        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(efilingService, new EfilingFilingPackage()));
+        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(efilingService, new EfilingFilingPackage(), null));
     }
 
     @DisplayName("Exception: with NestedEjbException_Exception when getting user session should throw EfilingLookupServiceException")
@@ -124,7 +124,7 @@ public class SubmitFilingPackageTest {
         Mockito.doThrow(new NestedEjbException_Exception()).when(serviceFacadeBean).createUserSession(Mockito.anyString());
         EfilingService efilingService = new EfilingService();
         efilingService.setClientId(BigDecimal.TEN);
-        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(efilingService, new EfilingFilingPackage()));
+        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(efilingService, new EfilingFilingPackage(), null));
     }
 
 
@@ -137,7 +137,7 @@ public class SubmitFilingPackageTest {
         Mockito.when(serviceFacadeBean.addService(Mockito.any())).thenReturn(service);
         EfilingService efilingService = new EfilingService();
         efilingService.setClientId(BigDecimal.TEN);
-        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(efilingService, new EfilingFilingPackage()));
+        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(efilingService, new EfilingFilingPackage(), null));
       
     }
 
