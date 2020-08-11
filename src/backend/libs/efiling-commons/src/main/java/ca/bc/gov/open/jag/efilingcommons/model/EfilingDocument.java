@@ -1,10 +1,8 @@
 package ca.bc.gov.open.jag.efilingcommons.model;
 
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigDecimal;
-import java.util.List;
 
 public class EfilingDocument {
     private Boolean amendsAnotherDocumentYn;

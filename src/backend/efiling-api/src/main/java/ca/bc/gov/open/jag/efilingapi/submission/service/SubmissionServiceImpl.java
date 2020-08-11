@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingapi.submission.service;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
+import ca.bc.gov.open.jag.efilingapi.payment.BamboraPaymentAdapter;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.EfilingFilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
@@ -45,6 +46,8 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private final DocumentStore documentStore;
 
+    private final BamboraPaymentAdapter bamboraPaymentAdapter;
+
     public SubmissionServiceImpl(
             SubmissionStore submissionStore,
             CacheProperties cacheProperties,
@@ -53,7 +56,8 @@ public class SubmissionServiceImpl implements SubmissionService {
             EfilingLookupService efilingLookupService,
             EfilingCourtService efilingCourtService,
             EfilingSubmissionService efilingSubmissionService,
-            DocumentStore documentStore) {
+            DocumentStore documentStore,
+            BamboraPaymentAdapter bamboraPaymentAdapter) {
         this.submissionStore = submissionStore;
         this.cacheProperties = cacheProperties;
         this.submissionMapper = submissionMapper;
@@ -62,6 +66,7 @@ public class SubmissionServiceImpl implements SubmissionService {
         this.efilingCourtService = efilingCourtService;
         this.efilingSubmissionService = efilingSubmissionService;
         this.documentStore = documentStore;
+        this.bamboraPaymentAdapter = bamboraPaymentAdapter;
     }
 
     @Override
@@ -96,7 +101,9 @@ public class SubmissionServiceImpl implements SubmissionService {
         filingPackage.setEntDtm(DateUtils.getCurrentXmlDate());
 
         SubmitResponse result = new SubmitResponse();
-        result.transactionId(efilingSubmissionService.submitFilingPackage(service, filingPackage));
+        result.transactionId(efilingSubmissionService.submitFilingPackage(service, filingPackage, (efilingPayment) -> {
+            return bamboraPaymentAdapter.makePayment(efilingPayment);
+        }));
         return result;
     }
 

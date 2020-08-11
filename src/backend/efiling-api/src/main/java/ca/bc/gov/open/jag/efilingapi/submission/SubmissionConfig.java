@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission;
 
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
+import ca.bc.gov.open.jag.efilingapi.payment.BamboraPaymentAdapter;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.EfilingFilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.EfilingFilingPackageMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
@@ -40,7 +41,6 @@ public class SubmissionConfig {
         return new EfilingFilingPackageMapperImpl();
     }
 
-
     @Bean
     public SubmissionService submissionService(SubmissionStore submissionStore,
                                                SubmissionMapper submissionMapper,
@@ -48,7 +48,8 @@ public class SubmissionConfig {
                                                EfilingLookupService efilingLookupService,
                                                EfilingCourtService efilingCourtService,
                                                EfilingSubmissionService efilingSubmissionService,
-                                               DocumentStore documentStore) {
+                                               DocumentStore documentStore,
+                                               BamboraPaymentAdapter bamboraPaymentAdapter) {
 
         return new SubmissionServiceImpl(submissionStore,
                 cacheProperties,
@@ -57,7 +58,8 @@ public class SubmissionConfig {
                 efilingLookupService,
                 efilingCourtService,
                 efilingSubmissionService,
-                documentStore);
+                documentStore,
+                bamboraPaymentAdapter);
     }
 
 }
