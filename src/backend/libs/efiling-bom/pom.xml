@@ -148,6 +148,7 @@
                 <version>${org.glassfish.jersey.inject.version}</version>
             </dependency>
 
+
         </dependencies>
     </dependencyManagement>
 
