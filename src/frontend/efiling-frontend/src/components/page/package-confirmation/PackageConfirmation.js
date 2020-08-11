@@ -97,7 +97,7 @@ const getFilingPackageData = (
       setSubmissionFee(submissionFeeAmount);
       setFiles(documents);
     })
-    .catch(() => window.open(sessionStorage.getItem("errorUrl"), "_self"));
+    .catch((error) => errorRedirect(sessionStorage.getItem("errorUrl"), error));
 };
 
 export default function PackageConfirmation({
