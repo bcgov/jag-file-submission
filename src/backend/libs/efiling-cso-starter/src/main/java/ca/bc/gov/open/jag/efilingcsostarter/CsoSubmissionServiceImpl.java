@@ -3,10 +3,7 @@ package ca.bc.gov.open.jag.efilingcsostarter;
 import ca.bc.gov.ag.csows.filing.FilingFacadeBean;
 import ca.bc.gov.ag.csows.filing.FilingPackage;
 import ca.bc.gov.ag.csows.filing.NestedEjbException_Exception;
-import ca.bc.gov.ag.csows.services.Service;
-import ca.bc.gov.ag.csows.services.ServiceFacadeBean;
-import ca.bc.gov.ag.csows.services.ServiceSession;
-import ca.bc.gov.ag.csows.services.UserSession;
+import ca.bc.gov.ag.csows.services.*;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingFilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
@@ -31,42 +28,69 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
     @Override
     public BigDecimal submitFilingPackage(EfilingService service, EfilingFilingPackage filingPackage) {
+
         if(service == null) throw new IllegalArgumentException("Service is required.");
         if(filingPackage == null) throw new IllegalArgumentException("FilingPackage is required.");
         if(service.getClientId() == null) throw new IllegalArgumentException("Service id is required.");
 
-        //TODO: add required information for the filing package
+        ServiceSession serviceSession = getServiceSession(service.getClientId().toString());
+
+        Service createdService = createEfilingService(service, serviceSession);
+
+        //TODO: make payments to bambora
+        updatePaymentForService(createdService, true, new FinancialTransaction());
+
+        BigDecimal filingResult = filePackage(service, filingPackage);
+
+        //TODO: do we add something to the next update
+        updateServiceComplete(createdService);
+
+        return filingResult;
+
+    }
+
+    private ServiceSession getServiceSession(String clientId)  {
         try {
-
-            //Add service
-            ServiceSession serviceSession = getServiceSession(service.getClientId().toString());
-
-            Service serviceObject = serviceMapper.toService(service, serviceSession, false);
-            EfilingService addedService = serviceMapper.toEfilingService(serviceFacadeBean.addService(serviceObject));
-            //TODO: make payments to bambora
-            //Update service with payments
-            serviceFacadeBean.updateService(serviceMapper.toService(addedService, serviceSession, true));
-            //Submit filing package
-            FilingPackage csoFilingPackage = filingPackageMapper.toFilingPackage(filingPackage);
-            csoFilingPackage.setServiceId(addedService.getServiceId());
-            BigDecimal filingResult = filingFacadeBean.submitFiling(csoFilingPackage);
-            //TODO: do we add something to the next update
-            //Update service after filing submission
-            serviceFacadeBean.updateService(serviceMapper.toService(addedService, serviceSession, true));
-            return filingResult;
-        } catch (NestedEjbException_Exception e) {
-            throw new EfilingSubmissionServiceException("Exception while submitting filing", e.getCause());
-        }  catch (ca.bc.gov.ag.csows.services.NestedEjbException_Exception e) {
-            throw new EfilingSubmissionServiceException("Exception while creating service", e.getCause());
+            UserSession userSession = serviceFacadeBean.createUserSession(clientId);
+            return serviceFacadeBean.createServiceSession(userSession, "request");
+        } catch (ca.bc.gov.ag.csows.services.NestedEjbException_Exception e) {
+            throw new EfilingSubmissionServiceException("Exception while getting user session", e.getCause());
         }
     }
 
-    private ServiceSession getServiceSession(String clientId) throws ca.bc.gov.ag.csows.services.NestedEjbException_Exception {
+    private Service createEfilingService(EfilingService service, ServiceSession serviceSession) {
+        Service serviceToCreate = serviceMapper.toService(service, serviceSession);
+        try {
+            return serviceFacadeBean.addService(serviceToCreate);
+        } catch (ca.bc.gov.ag.csows.services.NestedEjbException_Exception e) {
+            throw new EfilingSubmissionServiceException("Exception while creating efiling service", e.getCause());
+        }
+    }
 
-        // get a user session
-        UserSession userSession = serviceFacadeBean.createUserSession(clientId);
-        return serviceFacadeBean.createServiceSession(userSession, "request");
+    private void updatePaymentForService(Service service, Boolean feePaid, FinancialTransaction financialTransaction) {
 
+        service.setFeePaidYn(String.valueOf(feePaid));
+        service.getTransactions().add(financialTransaction);
+
+        try {
+            serviceFacadeBean.updateService(service);
+        } catch (ca.bc.gov.ag.csows.services.NestedEjbException_Exception e) {
+            throw new EfilingSubmissionServiceException("Exception while updating payment on service", e.getCause());
+        }
+
+    }
+
+    private BigDecimal filePackage(EfilingService service, EfilingFilingPackage filingPackage) {
+        FilingPackage csoFilingPackage = filingPackageMapper.toFilingPackage(filingPackage, service.getServiceId());
+        try {
+            return filingFacadeBean.submitFiling(csoFilingPackage);
+        } catch (NestedEjbException_Exception e) {
+            throw new EfilingSubmissionServiceException("Exception while filing package", e.getCause());
+        }
+    }
+
+    private void updateServiceComplete(Service service) {
+        // TODO implement update service
     }
 
 }

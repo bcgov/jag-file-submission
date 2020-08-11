@@ -24,25 +24,9 @@ public interface ServiceMapper {
     @Mapping(target = "serviceTypeDesc", source = "efilingService.serviceTypeDesc")
     @Mapping(target = "styleOfCause", source = "efilingService.styleOfCause")
     @Mapping(target = "transactions", source = "efilingService.transactions")
-    @Mapping(target = "feePaidYn", constant = "feePaid")
+    @Mapping(target = "feePaidYn", constant = "false")
     @Mapping(target = "userSessionId", source = "serviceSession.userSessionId")
     @Mapping(target = "serviceSessionId", source = "serviceSession.serviceSessionId")
-    Service toService(EfilingService efilingService, ServiceSession serviceSession, Boolean feePaid);
+    Service toService(EfilingService efilingService, ServiceSession serviceSession);
 
-    @Mapping(target = "accountId", source = "accountId")
-    @Mapping(target = "clientId", source = "clientId")
-    @Mapping(target = "clientReferenceTxt", source = "clientReferenceTxt")
-    @Mapping(target = "courtFileNumber", source = "courtFileNo")
-    @Mapping(target = "documentsProcessed", source = "documentsProcessed")
-    @Mapping(target = "entryDateTime", source = "entDtm")
-    @Mapping(target = "entryUserId", source = "entUserId")
-    @Mapping(target = "serviceId", source = "serviceId")
-    @Mapping(target = "serviceReceivedDateTime", source = "serviceReceivedDtm")
-    @Mapping(target = "serviceReceivedDtmText", source = "serviceReceivedDtmText")
-    @Mapping(target = "serviceSessionId", source = "serviceSessionId")
-    @Mapping(target = "serviceSubtypeCd", source = "serviceSubtypeCd")
-    @Mapping(target = "serviceTypeCd", source = "serviceTypeCd")
-    @Mapping(target = "serviceTypeDesc", source = "serviceTypeDesc")
-    @Mapping(target = "styleOfCause", source = "styleOfCause")
-    EfilingService toEfilingService(Service service);
 }
