@@ -5,6 +5,8 @@ import ca.bc.gov.ag.csows.services.*;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingFilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
+import ca.bc.gov.open.jag.efilingcommons.model.EfilingTransaction;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingPaymentService;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoSubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingcsostarter.TestHelpers;
@@ -34,6 +36,9 @@ public class SubmitFilingPackageTest {
 
     @Mock
     ServiceFacadeBean serviceFacadeBean;
+
+    @Mock
+    EfilingPaymentService efilingPaymentServiceMock;
 
     @BeforeEach
     public void init() throws NestedEjbException_Exception {
@@ -81,8 +86,9 @@ public class SubmitFilingPackageTest {
     public void testWithPopulatedSubmissionId() throws DatatypeConfigurationException, ca.bc.gov.ag.csows.filing.NestedEjbException_Exception, NestedEjbException_Exception {
         Mockito.when(filingFacadeBeanMock.submitFiling(any())).thenReturn(BigDecimal.TEN);
         Mockito.when(serviceFacadeBean.addService(any())).thenReturn(TestHelpers.createService());
+        Mockito.when(efilingPaymentServiceMock.makePayment(any())).thenReturn(createTransaction());
         Mockito.doNothing().when(serviceFacadeBean).updateService(any());
-        BigDecimal actual = sut.submitFilingPackage(TestHelpers.createBaseEfilingService(), new EfilingFilingPackage(), null);
+        BigDecimal actual = sut.submitFilingPackage(TestHelpers.createBaseEfilingService(), new EfilingFilingPackage(), efilingPaymentServiceMock);
         Assertions.assertEquals(BigDecimal.TEN, actual);
     }
 
@@ -91,11 +97,11 @@ public class SubmitFilingPackageTest {
     public void whenFilingFacadeNestedEjbException_ExceptionShouldThrowEfilingSubmissionServiceException() throws NestedEjbException_Exception, DatatypeConfigurationException, ca.bc.gov.ag.csows.filing.NestedEjbException_Exception {
         Mockito.when(serviceFacadeBean.addService(any())).thenReturn(TestHelpers.createService());
         Mockito.when(filingFacadeBeanMock.submitFiling(any())).thenThrow(new ca.bc.gov.ag.csows.filing.NestedEjbException_Exception());
-
+        Mockito.when(efilingPaymentServiceMock.makePayment(any())).thenReturn(createTransaction());
         EfilingService efilingService = new EfilingService();
         efilingService.setClientId(BigDecimal.TEN);
 
-        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(efilingService, new EfilingFilingPackage(), null));
+        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(efilingService, new EfilingFilingPackage(), efilingPaymentServiceMock));
 
     }
 
@@ -137,9 +143,14 @@ public class SubmitFilingPackageTest {
         Mockito.when(serviceFacadeBean.addService(Mockito.any())).thenReturn(service);
         EfilingService efilingService = new EfilingService();
         efilingService.setClientId(BigDecimal.TEN);
-        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(efilingService, new EfilingFilingPackage(), null));
+        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(efilingService, new EfilingFilingPackage(), efilingPaymentServiceMock));
       
     }
-
+    private EfilingTransaction createTransaction() {
+        EfilingTransaction efilingTransaction = new EfilingTransaction();
+        efilingTransaction.setApprovalCd("Approved");
+        efilingTransaction.setEcommerceTransactionId(BigDecimal.TEN);
+        return efilingTransaction;
+    }
 
 }
