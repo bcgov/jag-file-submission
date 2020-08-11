@@ -25,6 +25,10 @@
         <com.fasterxml.jackson.core.version>2.11.2</com.fasterxml.jackson.core.version>
         <javax.xml.bind.version>2.3.1</javax.xml.bind.version>
         <org.glassfish.jersey.inject.version>2.28</org.glassfish.jersey.inject.version>
+        <com.brsanthu.version>2.2</com.brsanthu.version>
+        <org.threeten.version>1.4.4</org.threeten.version>
+        <com.github.joschi.jackson.version>2.10.0</com.github.joschi.jackson.version>
+        <com.google.code.findbugs.version>3.0.2</com.google.code.findbugs.version>
     </properties>
 
     <repositories>
@@ -146,6 +150,44 @@
                 <groupId>org.glassfish.jersey.inject</groupId>
                 <artifactId>jersey-hk2</artifactId>
                 <version>${org.glassfish.jersey.inject.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.brsanthu</groupId>
+                <artifactId>migbase64</artifactId>
+                <version>${com.brsanthu.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${io.springfox.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${io.springfox.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.threeten</groupId>
+                <artifactId>threetenbp</artifactId>
+                <version>${org.threeten.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.joschi.jackson</groupId>
+                <artifactId>jackson-datatype-threetenbp</artifactId>
+                <version>${com.github.joschi.jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openapitools</groupId>
+                <artifactId>jackson-databind-nullable</artifactId>
+                <version>${org.openapitools.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.code.findbugs</groupId>
+                <artifactId>jsr305</artifactId>
+                <version>${com.google.code.findbugs.version}</version>
             </dependency>
 
         </dependencies>
