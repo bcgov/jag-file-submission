@@ -12,7 +12,6 @@ import { getSidecardData } from "../../../modules/sidecardData";
 import { getCreditCardAlerts } from "../../../modules/creditCardAlerts";
 import { errorRedirect } from "../../../modules/errorRedirect";
 import { propTypes } from "../../../types/propTypes";
-import { onBackButtonEvent } from "../../../modules/handleBackEvent";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
 import { generateFileSummaryData } from "../../../modules/generateFileSummaryData";
 
