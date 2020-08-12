@@ -39,7 +39,7 @@ public class BamboraPaymentAdapterTest {
     public void withValidRequestPaymentIsApproved() throws ApiException {
         Mockito.when(paymentsApiMock.makePayment(any())).thenReturn(createPaymentResponse(123,1));
 
-        EfilingPayment payment = new EfilingPayment(BigDecimal.TEN, BigDecimal.TEN);
+        EfilingPayment payment = new EfilingPayment(BigDecimal.TEN, BigDecimal.TEN, "Test");
 
         EfilingTransaction efilingTransaction = sut.makePayment(payment);
         Assertions.assertEquals("Approved", efilingTransaction.getApprovalCd());
@@ -50,7 +50,7 @@ public class BamboraPaymentAdapterTest {
     @DisplayName("Test Failed")
     public void withValidRequestPaymentIsFailed() throws ApiException {
         Mockito.when(paymentsApiMock.makePayment(any())).thenReturn(createPaymentResponse(123,2));
-        EfilingPayment payment = new EfilingPayment(BigDecimal.TEN, BigDecimal.TEN);
+        EfilingPayment payment = new EfilingPayment(BigDecimal.TEN, BigDecimal.TEN, "Test");
 
         EfilingTransaction efilingTransaction = sut.makePayment(payment);
         Assertions.assertEquals("Failed", efilingTransaction.getApprovalCd());
@@ -65,7 +65,7 @@ public class BamboraPaymentAdapterTest {
     @DisplayName("Test Exception")
     public void withInValidRequestException() throws ApiException {
         Mockito.when(paymentsApiMock.makePayment(any())).thenThrow(ApiException.class);
-        EfilingPayment payment = new EfilingPayment(BigDecimal.TEN, BigDecimal.TEN);
+        EfilingPayment payment = new EfilingPayment(BigDecimal.TEN, BigDecimal.TEN, "Test");
 
         Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.makePayment(payment));
     }
