@@ -18,7 +18,7 @@ public class AutoConfiguration {
     public ApiClient apiClient(BamboraProperties bamboraProperties)  {
 
         ApiClient apiClient = new ApiClient();
-        apiClient.setApiKey(MessageFormat.format("Passcode {0}", bamboraProperties.getPasscode()));
+        apiClient.setApiKey(MessageFormat.format("Passcode {0}", bamboraProperties.getEncodedKey()));
         return apiClient;
 
     }

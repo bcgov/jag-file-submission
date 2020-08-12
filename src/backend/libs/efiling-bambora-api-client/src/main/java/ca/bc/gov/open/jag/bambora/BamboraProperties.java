@@ -26,7 +26,7 @@ public class BamboraProperties {
         this.merchantId = merchantId;
     }
 
-    public String getPasscode() {
+    public String getEncodedKey() {
        String apiKey = MessageFormat.format("{0}:{1}", this.merchantId,this.apiPasscode);
        return Base64.getEncoder().encodeToString(apiKey.getBytes());
     }

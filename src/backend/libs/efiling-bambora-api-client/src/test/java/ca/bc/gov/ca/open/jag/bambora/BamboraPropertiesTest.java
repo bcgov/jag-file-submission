@@ -31,7 +31,7 @@ public class BamboraPropertiesTest {
         bamboraProperties.setMerchantId(MERCHANT_ID);
         bamboraProperties.setApiPasscode(PASSCODE);
 
-        String result = new String(Base64.getDecoder().decode(bamboraProperties.getPasscode()));
+        String result = new String(Base64.getDecoder().decode(bamboraProperties.getEncodedKey()));
         Assertions.assertEquals(MessageFormat.format("{0}:{1}", MERCHANT_ID, PASSCODE), result);
     }
 }
