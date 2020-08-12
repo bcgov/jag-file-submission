@@ -43,7 +43,10 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
         Service createdService = createEfilingService(service, serviceSession);
 
-        updatePaymentForService(createdService, true, createPayment(paymentService, createdService, service.getSubmissionFeeAmount()));
+        updatePaymentForService(
+                createdService,
+                true,
+                createPayment(paymentService, createdService, service.getSubmissionFeeAmount()));
 
         BigDecimal filingResult = filePackage(service, filingPackage);
 
@@ -51,6 +54,16 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         updateServiceComplete(createdService);
 
         return filingResult;
+
+    }
+
+    private String generateInvoiceNumber(String data) {
+
+        try {
+            return serviceFacadeBean.getNextInvoiceNumber(data);
+        } catch (ca.bc.gov.ag.csows.services.NestedEjbException_Exception e) {
+            throw new EfilingSubmissionServiceException("Exception while generating next invoice number", e.getCause());
+        }
 
     }
 
@@ -88,7 +101,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
     private FinancialTransaction createPayment(EfilingPaymentService paymentService, Service service, BigDecimal submissionFeeAmount) {
 
-        EfilingPayment efilingPayment = new EfilingPayment(service.getClientId(), submissionFeeAmount);
+        EfilingPayment efilingPayment = new EfilingPayment(service.getClientId(), submissionFeeAmount, generateInvoiceNumber("hello"));
         EfilingTransaction payment = paymentService.makePayment(efilingPayment);
         return financialTransactionMapper.toTransaction(payment, service);
 
