@@ -11,7 +11,7 @@ import { getUserDetails } from "../../../modules/test-data/userDetailsTestData";
 import { getDocumentsData } from "../../../modules/test-data/documentTestData";
 import { getNavigationData } from "../../../modules/test-data/navigationTestData";
 import { getCourtData } from "../../../modules/test-data/courtTestData";
-import { generateJWTToken } from "../../../modules/helpers/authenticationHelper";
+import { generateJWTToken } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 
 const header = {
   name: "eFiling Frontend",

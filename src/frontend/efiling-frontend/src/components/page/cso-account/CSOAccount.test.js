@@ -11,7 +11,7 @@ import MockAdapter from "axios-mock-adapter";
 
 import { getTestData } from "../../../modules/test-data/confirmationPopupTestData";
 import { getApplicantInfo } from "../../../modules/test-data/applicantInfoTestData";
-import { generateJWTToken } from "../../../modules/helpers/authenticationHelper";
+import { generateJWTToken } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 
 import CSOAccount from "./CSOAccount";
 
