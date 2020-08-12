@@ -6,8 +6,8 @@ const existingCreditCard = () => {
   return (
     <Alert
       icon={<MdCreditCard size={32} />}
-      type="warning"
-      styling="warning-background no-padding-bottom"
+      type="success"
+      styling="success-background no-padding-bottom"
       element={
         <p>
           <span>
