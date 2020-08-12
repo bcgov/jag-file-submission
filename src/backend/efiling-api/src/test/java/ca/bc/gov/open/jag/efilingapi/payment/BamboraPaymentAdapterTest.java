@@ -22,6 +22,7 @@ public class BamboraPaymentAdapterTest {
 
 
     private static final String AUTH_CODE = "ACODE";
+    private static final String ORDER_NUMBER = "TEST";
     @Mock
     PaymentsApi paymentsApiMock;
 
@@ -44,13 +45,18 @@ public class BamboraPaymentAdapterTest {
         EfilingTransaction efilingTransaction = sut.makePayment(payment);
         Assertions.assertEquals("Approved", efilingTransaction.getApprovalCd());
         Assertions.assertEquals(BigDecimal.valueOf(123), efilingTransaction.getEcommerceTransactionId());
+        Assertions.assertEquals(BigDecimal.valueOf(10.00), efilingTransaction.getTransactionAmt());
+        Assertions.assertEquals(AUTH_CODE, efilingTransaction.getResponseCd());
+        Assertions.assertEquals(ORDER_NUMBER, efilingTransaction.getInvoiceNo());
+        Assertions.assertNotNull(efilingTransaction.getEntDtm());
+        Assertions.assertNotNull(efilingTransaction.getTransactonDtm());
     }
 
     @Test
     @DisplayName("Test Failed")
     public void withValidRequestPaymentIsFailed() throws ApiException {
         Mockito.when(paymentsApiMock.makePayment(any())).thenReturn(createPaymentResponse(123,2));
-        EfilingPayment payment = new EfilingPayment(BigDecimal.TEN, BigDecimal.TEN, "Test");
+        EfilingPayment payment = new EfilingPayment(BigDecimal.TEN, BigDecimal.TEN, ORDER_NUMBER);
 
         EfilingTransaction efilingTransaction = sut.makePayment(payment);
         Assertions.assertEquals("Failed", efilingTransaction.getApprovalCd());
@@ -65,7 +71,7 @@ public class BamboraPaymentAdapterTest {
     @DisplayName("Test Exception")
     public void withInValidRequestException() throws ApiException {
         Mockito.when(paymentsApiMock.makePayment(any())).thenThrow(ApiException.class);
-        EfilingPayment payment = new EfilingPayment(BigDecimal.TEN, BigDecimal.TEN, "Test");
+        EfilingPayment payment = new EfilingPayment(BigDecimal.TEN, BigDecimal.TEN, ORDER_NUMBER);
 
         Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.makePayment(payment));
     }
@@ -75,6 +81,7 @@ public class BamboraPaymentAdapterTest {
         paymentResponse.setMessageId(messageId);
         paymentResponse.setAmount(10.00);
         paymentResponse.setAuthCode(AUTH_CODE);
+        paymentResponse.setOrderNumber(ORDER_NUMBER);
         return paymentResponse;
     }
 }
