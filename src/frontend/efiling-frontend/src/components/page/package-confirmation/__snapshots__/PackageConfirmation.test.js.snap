@@ -1214,13 +1214,13 @@ exports[`PackageConfirmation Component On click of continue to payment button, i
         Payment
       </h1>
       <div
-        class="display-box warning-background no-padding-bottom"
+        class="display-box error-background no-padding-bottom"
       >
         <div
           class="display-icon"
         >
           <div
-            style="color: rgb(252, 186, 25);"
+            style="color: rgb(216, 41, 47);"
           >
             <svg
               fill="currentColor"
@@ -1242,15 +1242,18 @@ exports[`PackageConfirmation Component On click of continue to payment button, i
           class="display-right-element"
         >
           <p>
-            Your credit card, BLAH, will be charged. 
+            <span>
+              You do not have a valid Credit Card registered with your CSO account.
+            </span>
+            <br />
             <a
               href="https://justice.gov.bc.ca/cso/about/index.do"
               rel="noopener noreferrer"
               target="_blank"
             >
-              Register a new Credit Card
+              Register a Credit Card now
             </a>
-            .
+             to continue.
           </p>
         </div>
       </div>

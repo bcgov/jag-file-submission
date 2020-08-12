@@ -40,15 +40,17 @@ exports[`Storyshots Payment Default 1`] = `
           class="display-right-element"
         >
           <p>
-            Your credit card, BLAH, will be charged. 
+            <span>
+              You have a valid Credit Card registered with your CSO account.
+            </span>
+            <br />
             <a
               href="https://justice.gov.bc.ca/cso/about/index.do"
               rel="noopener noreferrer"
               target="_blank"
             >
-              Register a new Credit Card
+              Register a new Credit Card.
             </a>
-            .
           </p>
         </div>
       </div>
@@ -535,15 +537,17 @@ exports[`Storyshots Payment Mobile 1`] = `
           class="display-right-element"
         >
           <p>
-            Your credit card, BLAH, will be charged. 
+            <span>
+              You have a valid Credit Card registered with your CSO account.
+            </span>
+            <br />
             <a
               href="https://justice.gov.bc.ca/cso/about/index.do"
               rel="noopener noreferrer"
               target="_blank"
             >
-              Register a new Credit Card
+              Register a new Credit Card.
             </a>
-            .
           </p>
         </div>
       </div>
