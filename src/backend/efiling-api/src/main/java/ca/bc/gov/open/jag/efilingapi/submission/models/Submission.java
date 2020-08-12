@@ -22,6 +22,8 @@ public class Submission {
 
     private BigDecimal clientId;
 
+    private String internalClientNumber;
+
     private long expiryDate;
 
     private Navigation navigation;
@@ -34,6 +36,7 @@ public class Submission {
         this.id = builder.id;
         this.accountId = builder.accountId;
         this.clientId = builder.clientId;
+        this.internalClientNumber = builder.internalClientNumber;
         this.transactionId = builder.transactionId;
         this.filingPackage = builder.filingPackage;
         this.navigation = builder.navigation;
@@ -50,6 +53,7 @@ public class Submission {
             @JsonProperty("id") UUID id,
             @JsonProperty("accountId") BigDecimal accountId,
             @JsonProperty("clientId") BigDecimal clientId,
+            @JsonProperty("internalClientNumber") String internalClientNumber,
             @JsonProperty("owner") UUID transactionId,
             @JsonProperty("package") FilingPackage filingPackage,
             @JsonProperty("navigation") Navigation navigation,
@@ -58,6 +62,7 @@ public class Submission {
         this.id = id;
         this.accountId = accountId;
         this.clientId = clientId;
+        this.internalClientNumber = internalClientNumber;
         this.transactionId = transactionId;
         this.filingPackage = filingPackage;
         this.navigation = navigation;
@@ -89,6 +94,10 @@ public class Submission {
 
     public BigDecimal getClientId() {  return clientId; }
 
+    public void setInternalClientNumber(String internalClientNumber) { this.internalClientNumber = internalClientNumber; }
+
+    public String getInternalClientNumber() { return internalClientNumber; }
+
     public void setClientId(BigDecimal clientId) { this.clientId = clientId;  }
 
     public static class Builder {
@@ -96,6 +105,7 @@ public class Submission {
         private UUID id;
         private BigDecimal accountId;
         private BigDecimal clientId;
+        private String internalClientNumber;
         private UUID transactionId;
         private FilingPackage filingPackage;
         private Navigation navigation;
@@ -114,6 +124,12 @@ public class Submission {
             this.clientId = clientId;
             return this;
         }
+
+        public Builder internalClientNumber (String internalClientNumber) {
+            this.internalClientNumber = internalClientNumber;
+            return this;
+        }
+
         public Builder transactionId(UUID owner) {
             this.transactionId = owner;
             return this;

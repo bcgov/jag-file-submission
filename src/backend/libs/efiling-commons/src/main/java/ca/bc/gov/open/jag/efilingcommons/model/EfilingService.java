@@ -29,6 +29,7 @@ public class EfilingService {
     private String updateUserId;
     private BigDecimal userSessionId;
     private BigDecimal submissionFeeAmount;
+    private String internalClientNumber;
     private List<EfilingTransaction> transactions;
 
     public EfilingService() {
@@ -188,6 +189,10 @@ public class EfilingService {
 
     public void setTransactions(List<EfilingTransaction> transactions) { this.transactions = transactions; }
 
+    public String getInternalClientNumber() { return internalClientNumber; }
+
+    public void setInternalClientNumber(String internalClientNumber) { this.internalClientNumber = internalClientNumber; }
+
     @JsonCreator
     public EfilingService(@JsonProperty("accountId") BigDecimal accountId,
                           @JsonProperty("clientId") BigDecimal clientId,
@@ -208,6 +213,7 @@ public class EfilingService {
                           @JsonProperty("updateUserId") String updateUserId,
                           @JsonProperty("userSessionId") BigDecimal userSessionId,
                           @JsonProperty("submissionFeeAmount") BigDecimal submissionFeeAmount,
+                          @JsonProperty("internalClientNumber") String internalClientNumber,
                           @JsonProperty("transactions") List<EfilingTransaction> transactions) {
         this.accountId = accountId;
         this.clientId = clientId;
@@ -228,6 +234,7 @@ public class EfilingService {
         this.updateUserId = updateUserId;
         this.userSessionId = userSessionId;
         this.submissionFeeAmount = submissionFeeAmount;
+        this.internalClientNumber = internalClientNumber;
         this.transactions = transactions;
     }
 

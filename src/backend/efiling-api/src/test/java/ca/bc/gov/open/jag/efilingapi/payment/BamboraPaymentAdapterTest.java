@@ -22,6 +22,7 @@ public class BamboraPaymentAdapterTest {
 
     private static final String AUTH_CODE = "ACODE";
     private static final String ORDER_NUMBER = "TEST";
+    private static final String INTERNAL_CLIENT_NUMBER = "INTERNALCLIENT";
     @Mock
     PaymentsApi paymentsApiMock;
 
@@ -39,7 +40,7 @@ public class BamboraPaymentAdapterTest {
     public void withValidRequestPaymentIsApproved() throws ApiException {
         Mockito.when(paymentsApiMock.makePayment(any())).thenReturn(createPaymentResponse(123,1));
 
-        EfilingPayment payment = new EfilingPayment(BigDecimal.TEN, BigDecimal.TEN, "Test");
+        EfilingPayment payment = new EfilingPayment(BigDecimal.TEN, BigDecimal.TEN, ORDER_NUMBER, INTERNAL_CLIENT_NUMBER);
 
         EfilingTransaction efilingTransaction = sut.makePayment(payment);
         Assertions.assertEquals("Approved", efilingTransaction.getApprovalCd());
@@ -55,7 +56,7 @@ public class BamboraPaymentAdapterTest {
     @DisplayName("Test Failed")
     public void withValidRequestPaymentIsFailed() throws ApiException {
         Mockito.when(paymentsApiMock.makePayment(any())).thenReturn(createPaymentResponse(123,2));
-        EfilingPayment payment = new EfilingPayment(BigDecimal.TEN, BigDecimal.TEN, ORDER_NUMBER);
+        EfilingPayment payment = new EfilingPayment(BigDecimal.TEN, BigDecimal.TEN, ORDER_NUMBER, INTERNAL_CLIENT_NUMBER);
 
         EfilingTransaction efilingTransaction = sut.makePayment(payment);
         Assertions.assertEquals("Failed", efilingTransaction.getApprovalCd());
@@ -71,7 +72,7 @@ public class BamboraPaymentAdapterTest {
     @DisplayName("Test Exception")
     public void withInValidRequestException() throws ApiException {
         Mockito.when(paymentsApiMock.makePayment(any())).thenThrow(ApiException.class);
-        EfilingPayment payment = new EfilingPayment(BigDecimal.TEN, BigDecimal.TEN, ORDER_NUMBER);
+        EfilingPayment payment = new EfilingPayment(BigDecimal.TEN, BigDecimal.TEN, ORDER_NUMBER, INTERNAL_CLIENT_NUMBER);
 
         Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.makePayment(payment));
     }

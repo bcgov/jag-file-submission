@@ -5,6 +5,7 @@ import ca.bc.gov.open.jag.efilingbamboraapiclient.api.handler.ApiException;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.CardOnFile;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.PaymentRequest;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.PaymentResponse;
+import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.ProfilePurchase;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingPayment;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingTransaction;
@@ -31,9 +32,12 @@ public class BamboraPaymentAdapter {
         PaymentRequest paymentRequest = new PaymentRequest();
         paymentRequest.amount(efilingPayment.getPaymentAmount().doubleValue());
         paymentRequest.setOrderNumber(efilingPayment.getInvoiceNumber());
-        CardOnFile cardOnFile = new CardOnFile();
-        cardOnFile.setSeriesId(efilingPayment.getClientId());
-        paymentRequest.cardOnFile(cardOnFile);
+
+        ProfilePurchase profilePurchase = new ProfilePurchase();
+        profilePurchase.setCustomerCode(efilingPayment.getInternalClientNumber());
+        profilePurchase.setCardId(1);
+        paymentRequest.setPaymentProfile(profilePurchase);
+
 
         EfilingTransaction result = new EfilingTransaction();
 

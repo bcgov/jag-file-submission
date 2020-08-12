@@ -11,6 +11,7 @@ public class AccountDetails {
     private UUID universalId;
     private BigDecimal accountId;
     private BigDecimal clientId;
+    private String internalClientNumber;
     private String firstName;
     private String lastName;
     private String email;
@@ -29,6 +30,7 @@ public class AccountDetails {
         this.middleName = builder.middleName;
         this.fileRolePresent = builder.fileRolePresent;
         this.cardRegistered = builder.cardRegistered;
+        this.internalClientNumber = builder.internalClientNumber;
 
     }
 
@@ -42,6 +44,7 @@ public class AccountDetails {
             @JsonProperty("universalId") UUID universalId,
             @JsonProperty("accountId") BigDecimal accountId,
             @JsonProperty("clientId") BigDecimal clientId,
+            @JsonProperty("internalClientNumber") String internalClientNumber,
             @JsonProperty("fileRolePresent") boolean fileRolePresent,
             @JsonProperty("firstName") String firstName,
             @JsonProperty("lastName") String lastName,
@@ -51,6 +54,7 @@ public class AccountDetails {
         this.universalId = universalId;
         this.accountId = accountId;
         this.clientId = clientId;
+        this.internalClientNumber = internalClientNumber;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -70,6 +74,8 @@ public class AccountDetails {
     public BigDecimal getClientId() {
         return clientId;
     }
+
+    public String getInternalClientNumber() { return internalClientNumber; }
 
     public String getFirstName() {
         return firstName;
@@ -98,6 +104,7 @@ public class AccountDetails {
         private UUID universalId;
         private BigDecimal accountId;
         private BigDecimal clientId;
+        private String internalClientNumber;
         private String firstName;
         private String lastName;
         private String email;
@@ -118,6 +125,11 @@ public class AccountDetails {
 
         public Builder clientId(BigDecimal clientId) {
             this.clientId = clientId;
+            return this;
+        }
+
+        public Builder internalClientNumber(String internalClientNumber) {
+            this.internalClientNumber = internalClientNumber;
             return this;
         }
 

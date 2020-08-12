@@ -44,6 +44,7 @@ public class TestHelpers {
     private static final String TRANSACTION_SUBTYPE_CD = "transactionSubtypeCd";
     private static final String TRANSACTION_TYPE_CD = "transactionTypeCd";
     private static final String UPD_USER_ID = "updUserId";
+    private static final String INTERNAL_CLIENT_NUMBER = "INTERNAL_NUM";
 
     private TestHelpers() {
 
@@ -76,6 +77,7 @@ public class TestHelpers {
                 null,
                 null,
                 BigDecimal.TEN,
+                INTERNAL_CLIENT_NUMBER,
                 null);
     }
     public static EfilingService createUpdateEfilingService(EfilingService service) throws DatatypeConfigurationException {
