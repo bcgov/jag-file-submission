@@ -13,6 +13,7 @@ import {
   Radio,
 } from "shared-components";
 import { getSidecardData } from "../../../modules/sidecardData";
+import { errorRedirect } from "../../../modules/errorRedirect";
 import { propTypes } from "../../../types/propTypes";
 
 import "./Upload.css";
@@ -41,7 +42,7 @@ const setDropdownItems = ({ level, courtClass }, setItems, items) => {
   axios
     .get(`/lookup/documentTypes/${level}/${courtClass}`)
     .then(({ data: { documentTypes } }) => setItems(documentTypes))
-    .catch(() => window.open(sessionStorage.getItem("errorUrl"), "_self"));
+    .catch((error) => errorRedirect(sessionStorage.getItem("errorUrl"), error));
 };
 
 const translateItems = (items) => {
@@ -255,9 +256,11 @@ export const uploadDocuments = (
       axios
         .post(`/submission/${submissionId}/update-documents`, filesToUpload)
         .then(() => setShowPackageConfirmation(true))
-        .catch(() => window.open(sessionStorage.getItem("errorUrl"), "_self"));
+        .catch((error) =>
+          errorRedirect(sessionStorage.getItem("errorUrl"), error)
+        );
     })
-    .catch(() => window.open(sessionStorage.getItem("errorUrl"), "_self"));
+    .catch((err) => errorRedirect(sessionStorage.getItem("errorUrl"), err));
 };
 
 const checkForDuplicateFiles = (droppedFiles, acceptedFiles) => {
