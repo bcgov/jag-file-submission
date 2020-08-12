@@ -50,7 +50,10 @@ const generateCourtDataTable = ({
 const submitPackage = (submissionId) => {
   axios
     .post(`/submission/${submissionId}/submit`, {})
-    .then(() => window.open(sessionStorage.getItem("successUrl"), "_self"))
+    .then(() => {
+      sessionStorage.setItem("validExit", true);
+      window.open(sessionStorage.getItem("successUrl"), "_self");
+    })
     .catch((err) => errorRedirect(sessionStorage.getItem("errorUrl"), err));
 };
 

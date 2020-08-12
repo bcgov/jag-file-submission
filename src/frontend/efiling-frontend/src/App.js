@@ -41,6 +41,7 @@ export default function App() {
   );
 
   const handleConfirm = () => {
+    sessionStorage.setItem("validExit", true);
     const cancelUrl = sessionStorage.getItem("cancelUrl");
 
     if (cancelUrl) {

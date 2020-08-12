@@ -131,35 +131,48 @@ describe("Upload Component", () => {
   test("redirects to error page if fail to generate dropdown elements", async () => {
     mock
       .onGet(`/lookup/documentTypes/${court.level}/${court.courtClass}`)
-      .reply(400);
+      .reply(400, { message: "There was an error." });
 
     render(<Upload upload={upload} />);
 
     await waitFor(() => {});
 
-    expect(window.open).toHaveBeenCalledWith("errorexample.com", "_self");
+    expect(window.open).toHaveBeenCalledWith(
+      "errorexample.com?status=400&message=There was an error.",
+      "_self"
+    );
   });
 
   test("failed uploadDocuments call to /submission/submissionId/documents opens error page", async () => {
-    mock.onPost(`/submission/${submissionId}/documents`).reply(400);
+    mock
+      .onPost(`/submission/${submissionId}/documents`)
+      .reply(400, { message: "There was an error." });
 
     uploadDocuments(submissionId, [], jest.fn());
 
     await waitFor(() => {});
 
-    expect(window.open).toHaveBeenCalledWith("errorexample.com", "_self");
+    expect(window.open).toHaveBeenCalledWith(
+      "errorexample.com?status=400&message=There was an error.",
+      "_self"
+    );
   });
 
   test("failed uploadDocuments call to /submission/submissionId/update-documents opens error page", async () => {
     mock.onPost(`/submission/${submissionId}/documents`).reply(200);
 
-    mock.onPost(`/submission/${submissionId}/update-documents`).reply(400);
+    mock
+      .onPost(`/submission/${submissionId}/update-documents`)
+      .reply(400, { message: "There was an error." });
 
     uploadDocuments(submissionId, [], jest.fn());
 
     await waitFor(() => {});
 
-    expect(window.open).toHaveBeenCalledWith("errorexample.com", "_self");
+    expect(window.open).toHaveBeenCalledWith(
+      "errorexample.com?status=400&message=There was an error.",
+      "_self"
+    );
   });
 
   test("successful document upload works as expected", async () => {
