@@ -12,13 +12,13 @@ exports[`Storyshots Payment Default 1`] = `
         Payment
       </h1>
       <div
-        class="display-box warning-background no-padding-bottom"
+        class="display-box success-background no-padding-bottom"
       >
         <div
           class="display-icon"
         >
           <div
-            style="color: rgb(252, 186, 25);"
+            style="color: rgb(46, 133, 64);"
           >
             <svg
               fill="currentColor"
@@ -509,13 +509,13 @@ exports[`Storyshots Payment Mobile 1`] = `
         Payment
       </h1>
       <div
-        class="display-box warning-background no-padding-bottom"
+        class="display-box success-background no-padding-bottom"
       >
         <div
           class="display-icon"
         >
           <div
-            style="color: rgb(252, 186, 25);"
+            style="color: rgb(46, 133, 64);"
           >
             <svg
               fill="currentColor"
