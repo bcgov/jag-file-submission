@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "09486029-781e-4c24-9cc1-5cf906212746",
+    "_postman_id": "ed2a46ba-92ae-48e3-853d-d12e65e6bf08",
     "name": "jag-efiling-api Copy",
     "description": "Efiling api",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -15,25 +15,28 @@
             {
               "name": "Get user detail for a given submission",
               "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{user-jwt}}",
+                      "type": "string"
+                    }
+                  ]
+                },
                 "method": "GET",
                 "header": [
                   {
-                    "key": "X-Auth-UserId",
-                    "value": "{{x-Auth-UserId}}",
+                    "key": "X-Transaction-Id",
+                    "value": "{{X-Transaction-Id}}",
                     "description": "(Required) Authenticated user id"
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/submission/:id",
+                  "raw": "{{baseUrl}}/submission/{{submissionId}}",
                   "host": ["{{baseUrl}}"],
-                  "path": ["submission", ":id"],
-                  "variable": [
-                    {
-                      "key": "id",
-                      "value": "{{submissionId}}",
-                      "description": "(Required) A submission id"
-                    }
-                  ]
+                  "path": ["submission", "{{submissionId}}"]
                 }
               },
               "response": [
@@ -110,11 +113,21 @@
             {
               "name": "Generates a secure URL for e-filing submission",
               "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{jwt}}",
+                      "type": "string"
+                    }
+                  ]
+                },
                 "method": "POST",
                 "header": [
                   {
-                    "key": "X-Auth-UserId",
-                    "value": "{{x-Auth-UserId}}",
+                    "key": "X-Transaction-Id",
+                    "value": "{{X-Transaction-Id}}",
                     "description": "(Required) Authenticated user id"
                   },
                   {
@@ -124,7 +137,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"navigation\": {\n        \"success\": {\n            \"url\": \"http//somewhere.com\"\n        },\n        \"error\": {\n            \"url\": \"http//somewhere.com\"\n        },\n        \"cancel\": {\n            \"url\": \"http//somewhere.com\"\n        }\n    },\n    \"clientApplication\": {\n        \"displayName\": \"my app\",\n        \"type\": \"DCFL\"\n    },\n    \"filingPackage\": {\n        \"court\": {\n        \"location\": \"1211\",\n        \"level\": \"P\",\n        \"courtClass\": \"F\",\n        \"division\": \"<division>\",\n        \"fileNumber\": \"<fileNumber>\",\n        \"participatingClass\": \"<participatingClass>\"\n    },\n    \"submissionFeeAmount\": 7.00,\n    \"documents\": [\n        {\n            \"name\": \"WAA-doc\",\n            \"type\": \"WNC\",\n            \"description\": \"Without Notice Application Checklist\",\n            \"statutoryFeeAmount\": 0\n        },\n        {\n            \"name\": \"WNC-doc\",\n            \"type\": \"WRT\",\n            \"description\": \"Writ of Summons\",\n            \"statutoryFeeAmount\": null\n        },\n        {\n            \"name\": \"WNC-doc\",\n            \"type\": \"WRT\",\n            \"description\": \"Writ of Summons\",\n            \"statutoryFeeAmount\": null\n        },\n        {\n            \"name\": \"WNC-doc\",\n            \"type\": \"WRT\",\n            \"description\": \"Writ of Summons\",\n            \"statutoryFeeAmount\": null\n        },\n        {\n            \"name\": \"WNC-doc\",\n            \"type\": \"WRT\",\n            \"description\": \"Writ of Summons\",\n            \"statutoryFeeAmount\": null\n        },\n        {\n            \"name\": \"WNC-doc\",\n            \"type\": \"WRT\",\n            \"description\": \"Writ of Summons\",\n            \"statutoryFeeAmount\": null\n        },\n        {\n            \"name\": \"WNC-doc\",\n            \"type\": \"WRT\",\n            \"description\": \"Writ of Summons\",\n            \"statutoryFeeAmount\": null\n        },\n        {\n            \"name\": \"WNC-doc\",\n            \"type\": \"WRT\",\n            \"description\": \"Writ of Summons\",\n            \"statutoryFeeAmount\": null\n        },\n        {\n            \"name\": \"WNC-doc\",\n            \"type\": \"WAW\",\n            \"description\": \"Warrant for Witness\",\n            \"statutoryFeeAmount\": 0\n        },\n        {\n            \"name\": \"WNC-doc\",\n            \"type\": \"WRT\",\n            \"description\": \"Writ of Summons\",\n            \"statutoryFeeAmount\": null\n        },\n        {\n            \"name\": \"WNC-doc\",\n            \"type\": \"WRT\",\n            \"description\": \"Writ of Summons\",\n            \"statutoryFeeAmount\": null\n        },\n        {\n            \"name\": \"WNC-doc\",\n            \"type\": \"WAE\",\n            \"description\": \"Warrant of Execution\",\n            \"statutoryFeeAmount\": 0\n        },\n        {\n            \"name\": \"WNC-doc\",\n            \"type\": \"WEX\",\n            \"description\": \"Warrant of Execution \",\n            \"statutoryFeeAmount\": 0\n        },\n        {\n            \"name\": \"WNC-doc\",\n            \"type\": \"WAA\",\n            \"description\": \"Warrant to Arrest\",\n            \"statutoryFeeAmount\": 0\n        },\n        {\n            \"name\": \"WNC-doc\",\n            \"type\": \"WCT\",\n            \"description\": \"Written Consent\",\n            \"statutoryFeeAmount\": 0\n        },\n        {\n            \"name\": \"WNC-doc\",\n            \"type\": \"WAG\",\n            \"description\": \"Written Agreement \",\n            \"statutoryFeeAmount\": 0\n        }\n    ]\n    }\n}"
+                  "raw": "{\n    \"navigation\": {\n        \"success\": {\n            \"url\": \"http//somewhere.com\"\n        },\n        \"error\": {\n            \"url\": \"http//somewhere.com\"\n        },\n        \"cancel\": {\n            \"url\": \"http//somewhere.com\"\n        }\n    },\n    \"clientApplication\": {\n        \"displayName\": \"my app\",\n        \"type\": \"DCFL\"\n    },\n    \"filingPackage\": {\n        \"court\": {\n        \"location\": \"1211\",\n        \"level\": \"P\",\n        \"courtClass\": \"F\"\n    },\n    \"submissionFeeAmount\": 7.00,\n    \"documents\": [\n        {\n            \"name\": \"time.ps1\",\n            \"type\": \"WNC\",\n            \"description\": \"Without Notice Application Checklist\",\n            \"statutoryFeeAmount\": 0\n        }\n    ]\n    }\n}"
                 },
                 "url": {
                   "raw": "{{baseUrl}}/submission/:id/generateUrl",
@@ -221,11 +234,21 @@
             {
               "name": "update document list",
               "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{user-jwt}}",
+                      "type": "string"
+                    }
+                  ]
+                },
                 "method": "POST",
                 "header": [
                   {
-                    "key": "X-Auth-UserId",
-                    "value": "{{x-Auth-UserId}}",
+                    "key": "X-Transaction-Id",
+                    "value": "{{X-Transaction-Id}}",
                     "description": "(Required) Authenticated user id"
                   },
                   {
@@ -337,7 +360,7 @@
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "{{jwt}}",
+                      "value": "{{user-jwt}}",
                       "type": "string"
                     }
                   ]
@@ -346,8 +369,8 @@
                 "header": [
                   {
                     "description": "(Required) Authenticated user id",
-                    "key": "X-Auth-UserId",
-                    "value": "{{x-Auth-UserId}}"
+                    "key": "X-Transaction-Id",
+                    "value": "{{X-Transaction-Id}}"
                   },
                   {
                     "key": "Content-Type",
@@ -359,16 +382,9 @@
                   "raw": "{\n \n}"
                 },
                 "url": {
-                  "raw": "{{baseUrl}}/submission/:id/submit",
+                  "raw": "{{baseUrl}}/submission/{{submissionId}}/submit",
                   "host": ["{{baseUrl}}"],
-                  "path": ["submission", ":id", "submit"],
-                  "variable": [
-                    {
-                      "key": "id",
-                      "value": "{{submissionId}}",
-                      "description": "(Required) A submission id"
-                    }
-                  ]
+                  "path": ["submission", "{{submissionId}}", "submit"]
                 }
               },
               "response": [
@@ -453,11 +469,21 @@
             {
               "name": "Get filing package information",
               "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{user-jwt}}",
+                      "type": "string"
+                    }
+                  ]
+                },
                 "method": "GET",
                 "header": [
                   {
-                    "key": "X-Auth-UserId",
-                    "value": "{{x-Auth-UserId}}",
+                    "key": "X-Transaction-Id",
+                    "value": "{{X-Transaction-Id}}",
                     "description": "(Required) Authenticated user id"
                   }
                 ],
@@ -475,40 +501,6 @@
                 }
               },
               "response": [
-                {
-                  "name": "Filing Package Information not found",
-                  "originalRequest": {
-                    "method": "GET",
-                    "header": [
-                      {
-                        "key": "X-Auth-UserId",
-                        "value": "<uuid>",
-                        "description": "(Required) Authenticated user id"
-                      }
-                    ],
-                    "url": {
-                      "raw": "{{baseUrl}}/submission/:id/filing-package",
-                      "host": ["{{baseUrl}}"],
-                      "path": ["submission", ":id", "filing-package"],
-                      "variable": [
-                        {
-                          "key": "id"
-                        }
-                      ]
-                    }
-                  },
-                  "status": "Not Found",
-                  "code": 404,
-                  "_postman_previewlanguage": "text",
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "text/plain"
-                    }
-                  ],
-                  "cookie": [],
-                  "body": ""
-                },
                 {
                   "name": "Filing Package Information found",
                   "originalRequest": {
@@ -542,12 +534,56 @@
                   ],
                   "cookie": [],
                   "body": "{\n \"court\": {\n  \"location\": \"<string>\",\n  \"level\": \"<string>\",\n  \"class\": \"<string>\",\n  \"division\": \"<string>\",\n  \"fileNumber\": \"<string>\",\n  \"participatingClass\": \"<string>\"\n },\n \"documents\": [\n  {\n   \"type\": \"<string>\",\n   \"name\": \"<string>\",\n   \"description\": \"<string>\"\n  },\n  {\n   \"type\": \"<string>\",\n   \"name\": \"<string>\",\n   \"description\": \"<string>\"\n  }\n ]\n}"
+                },
+                {
+                  "name": "Filing Package Information not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "X-Auth-UserId",
+                        "value": "<uuid>",
+                        "description": "(Required) Authenticated user id"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/submission/:id/filing-package",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["submission", ":id", "filing-package"],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/plain"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": ""
                 }
               ]
             },
             {
               "name": "Get document by name",
               "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{user-jwt}}",
+                      "type": "string"
+                    }
+                  ]
+                },
                 "method": "GET",
                 "header": [
                   {
@@ -575,43 +611,6 @@
                 }
               },
               "response": [
-                {
-                  "name": "Document not found",
-                  "originalRequest": {
-                    "method": "GET",
-                    "header": [
-                      {
-                        "key": "X-Auth-UserId",
-                        "value": "<uuid>",
-                        "description": "(Required) Authenticated user id"
-                      }
-                    ],
-                    "url": {
-                      "raw": "{{baseUrl}}/submission/:id/document/:filename",
-                      "host": ["{{baseUrl}}"],
-                      "path": ["submission", ":id", "document", ":filename"],
-                      "variable": [
-                        {
-                          "key": "id"
-                        },
-                        {
-                          "key": "filename"
-                        }
-                      ]
-                    }
-                  },
-                  "status": "Not Found",
-                  "code": 404,
-                  "_postman_previewlanguage": "text",
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "text/plain"
-                    }
-                  ],
-                  "cookie": [],
-                  "body": ""
-                },
                 {
                   "name": "Filing Package Information found",
                   "originalRequest": {
@@ -648,6 +647,43 @@
                   ],
                   "cookie": [],
                   "body": "ea"
+                },
+                {
+                  "name": "Document not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "X-Auth-UserId",
+                        "value": "<uuid>",
+                        "description": "(Required) Authenticated user id"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/submission/:id/document/:filename",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["submission", ":id", "document", ":filename"],
+                      "variable": [
+                        {
+                          "key": "id"
+                        },
+                        {
+                          "key": "filename"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/plain"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": ""
                 }
               ]
             }
@@ -661,7 +697,7 @@
             {
               "listen": "test",
               "script": {
-                "id": "69778774-96bf-4519-a33f-8890a3a2d31a",
+                "id": "7926eee3-136d-4448-9646-bb490ab7f889",
                 "exec": [
                   "pm.test(\"submissionId\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
@@ -673,11 +709,21 @@
             }
           ],
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "POST",
             "header": [
               {
-                "key": "X-Auth-UserId",
-                "value": "{{x-Auth-UserId}}",
+                "key": "X-Transaction-Id",
+                "value": "{{X-Transaction-Id}}",
                 "description": "(Required) Authenticated user id"
               },
               {
@@ -691,7 +737,7 @@
                 {
                   "key": "files",
                   "type": "file",
-                  "src": []
+                  "src": "/C:/Users/177226/Desktop/test.txt"
                 }
               ]
             },
@@ -828,8 +874,24 @@
     {
       "name": "get document types",
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{user-jwt}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "GET",
-        "header": [],
+        "header": [
+          {
+            "key": "X-Transaction-Id",
+            "value": "{{X-Transaction-Id}}",
+            "type": "text"
+          }
+        ],
         "url": {
           "raw": "{{baseUrl}}/lookup/documentTypes/P/F",
           "host": ["{{baseUrl}}"],
@@ -844,7 +906,7 @@
         {
           "listen": "test",
           "script": {
-            "id": "a6d42c18-cacb-4356-9c0c-8665e3d257b3",
+            "id": "3af91130-03c7-49a5-93ae-18f3c6ceb6a8",
             "exec": [
               "pm.test(\"Get jwt\", function () {\r",
               "    var jsonData = pm.response.json();\r",
@@ -872,22 +934,12 @@
           "urlencoded": [
             {
               "key": "client_id",
-              "value": "efiling-api",
-              "type": "text"
-            },
-            {
-              "key": "username",
-              "value": "test",
-              "type": "text"
-            },
-            {
-              "key": "password",
-              "value": "test",
+              "value": "efiling-demo",
               "type": "text"
             },
             {
               "key": "grant_type",
-              "value": "password",
+              "value": "client_credentials",
               "type": "text"
             },
             {
@@ -898,18 +950,8 @@
           ]
         },
         "url": {
-          "raw": "http://localhost:8081/auth/realms/SpringBootKeycloak/protocol/openid-connect/token",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8081",
-          "path": [
-            "auth",
-            "realms",
-            "SpringBootKeycloak",
-            "protocol",
-            "openid-connect",
-            "token"
-          ]
+          "raw": "{{keycloak-token-endpoint}}",
+          "host": ["{{keycloak-token-endpoint}}"]
         }
       },
       "response": []
@@ -920,7 +962,7 @@
         {
           "listen": "test",
           "script": {
-            "id": "15a49903-8ee1-4941-b8e0-6759810a022f",
+            "id": "d1e7bfdd-2353-4db0-ba46-a13a5445342e",
             "exec": [
               "pm.test(\"Get jwt\", function () {\r",
               "    var jsonData = pm.response.json();\r",
