@@ -30,6 +30,7 @@ describe("Payment Component", () => {
     submissionFee,
   };
 
+  sessionStorage.setItem("cardRegistered", true);
   const token = generateJWTToken({ preferred_username: "username@bceid" });
   localStorage.setItem("jwt", token);
 
@@ -53,6 +54,10 @@ describe("Payment Component", () => {
     fireEvent.click(getByRole(container, "checkbox"));
 
     expect(getByText(container, "Submit").disabled).toBeFalsy();
+
+    fireEvent.click(getByRole(container, "checkbox"));
+
+    expect(getByText(container, "Submit").disabled).toBeTruthy();
   });
 
   test("On back click, it redirects back to the package confirmation page", async () => {

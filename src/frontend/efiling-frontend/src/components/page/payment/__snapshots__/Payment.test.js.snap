@@ -12,13 +12,13 @@ exports[`Payment Component Matches the snapshot 1`] = `
         Payment
       </h1>
       <div
-        class="display-box error-background no-padding-bottom"
+        class="display-box success-background no-padding-bottom"
       >
         <div
           class="display-icon"
         >
           <div
-            style="color: rgb(216, 41, 47);"
+            style="color: rgb(46, 133, 64);"
           >
             <svg
               fill="currentColor"
@@ -41,7 +41,7 @@ exports[`Payment Component Matches the snapshot 1`] = `
         >
           <p>
             <span>
-              You do not have a valid Credit Card registered with your CSO account.
+              You have a valid Credit Card registered with your CSO account.
             </span>
             <br />
             <a
@@ -49,9 +49,8 @@ exports[`Payment Component Matches the snapshot 1`] = `
               rel="noopener noreferrer"
               target="_blank"
             >
-              Register a Credit Card now
+              Register a new Credit Card.
             </a>
-             to continue.
           </p>
         </div>
       </div>

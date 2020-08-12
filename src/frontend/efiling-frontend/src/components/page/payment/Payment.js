@@ -57,22 +57,34 @@ const submitPackage = (submissionId) => {
     .catch((err) => errorRedirect(sessionStorage.getItem("errorUrl"), err));
 };
 
+const checkSubmitEnabled = (paymentAgreed, setSubmitBtnEnabled) => {
+  const isEnabled =
+    paymentAgreed && sessionStorage.getItem("cardRegistered") === "true";
+  setSubmitBtnEnabled(isEnabled);
+};
+
 export default function Payment({
   payment: { confirmationPopup, submissionId, courtData, files, submissionFee },
 }) {
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
   const rushSubmissionSidecard = getSidecardData().rushSubmission;
-  const creditCardAlert = sessionStorage.getItem("cardRegistered")
-    ? getCreditCardAlerts().existingCreditCard
-    : getCreditCardAlerts().noCreditCard;
+  const creditCardAlert =
+    sessionStorage.getItem("cardRegistered") === "true"
+      ? getCreditCardAlerts().existingCreditCard
+      : getCreditCardAlerts().noCreditCard;
   const [paymentAgreed, setPaymentAgreed] = useState(false);
+  const [submitBtnEnabled, setSubmitBtnEnabled] = useState(false);
   const [showPackageConfirmation, setShowPackageConfirmation] = useState(false);
 
   useEffect(() => {
     sessionStorage.setItem("currentPage", "payment");
     window.history.pushState(null, null, window.location.href);
   }, []);
+
+  useEffect(() => {
+    checkSubmitEnabled(paymentAgreed, setSubmitBtnEnabled);
+  }, [paymentAgreed]);
 
   if (showPackageConfirmation) {
     return (
@@ -124,7 +136,7 @@ export default function Payment({
               label="Submit"
               onClick={() => submitPackage(submissionId)}
               styling="normal-blue btn"
-              disabled={!paymentAgreed}
+              disabled={!submitBtnEnabled}
             />
           </div>
         </section>
