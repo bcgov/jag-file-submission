@@ -10,11 +10,11 @@ import ConfirmationPopup, {
 } from "shared-components";
 import Dinero from "dinero.js";
 import axios from "axios";
-import { getSidecardData } from "../../../modules/sidecardData";
+import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import { propTypes } from "../../../types/propTypes";
-import { errorRedirect } from "../../../modules/errorRedirect";
-import { onBackButtonEvent } from "../../../modules/handleBackEvent";
-import { generateFileSummaryData } from "../../../modules/generateFileSummaryData";
+import { errorRedirect } from "../../../modules/helpers/errorRedirect";
+import { onBackButtonEvent } from "../../../modules/helpers/handleBackEvent";
+import { generateFileSummaryData } from "../../../modules/helpers/generateFileSummaryData";
 
 import "./PackageConfirmation.css";
 import Payment from "../payment/Payment";

@@ -2,10 +2,10 @@ import React from "react";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { render, waitFor, fireEvent, getByText } from "@testing-library/react";
-import { getTestData } from "../../../modules/confirmationPopupTestData";
-import { getDocumentsData } from "../../../modules/documentTestData";
-import { getCourtData } from "../../../modules/courtTestData";
-import { generateJWTToken } from "../../../modules/authenticationHelper";
+import { getTestData } from "../../../modules/test-data/confirmationPopupTestData";
+import { getDocumentsData } from "../../../modules/test-data/documentTestData";
+import { getCourtData } from "../../../modules/test-data/courtTestData";
+import { generateJWTToken } from "../../../modules/helpers/authenticationHelper";
 
 import PackageConfirmation from "./PackageConfirmation";
 
