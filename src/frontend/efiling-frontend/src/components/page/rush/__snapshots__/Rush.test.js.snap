@@ -1,0 +1,327 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Rush Component Matches the snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="page"
+  >
+    <div
+      class="content col-md-8"
+    >
+      <h1>
+        Request Rush/Urgent Submission
+      </h1>
+      <p>
+        You must provide a reason and contact information for your request for rush/urgent submission to be considered. My reason for requesting urgent (rush) filing is:
+      </p>
+      <label
+        class="bcgov-radio"
+        for="rule-85"
+      >
+        The attached application is made under Rule 8-5 (1) SCR.
+        <input
+          id="rule-85"
+          name="rush-reason"
+          type="radio"
+        />
+        <span
+          class="bcgov-dot"
+        />
+      </label>
+      <label
+        class="bcgov-radio"
+        for="court-directed"
+      >
+        The court directed that the order be processed on an urgent basis.
+        <input
+          id="court-directed"
+          name="rush-reason"
+          type="radio"
+        />
+        <span
+          class="bcgov-dot"
+        />
+      </label>
+      <label
+        class="bcgov-radio"
+        for="other"
+      >
+        Other (please explain).
+        <input
+          id="other"
+          name="rush-reason"
+          type="radio"
+        />
+        <span
+          class="bcgov-dot"
+        />
+      </label>
+      <div
+        class="bcgov-callout"
+      >
+        <p>
+          Please provide the date of when the direction was made,
+the name of the Judge who made the direction along with any additional details
+you feel are necessary.
+        </p>
+      </div>
+      <div
+        class="text-label"
+      >
+        <label
+          for="detailed-reason"
+        >
+          Clear and detailed reason(s)
+        </label>
+      </div>
+      <textarea
+        class="text-input"
+        cols="60"
+        id="detailed-reason"
+        rows="8"
+      />
+      <p>
+        I understand the registry has the discretion to reject this request.
+      </p>
+      <div
+        class="form-parent"
+      >
+        <div
+          class="form-child"
+        >
+          <div>
+            <label
+              class="label"
+              for="lastName"
+            >
+              <div
+                class="input-label"
+              >
+                Last Name
+              </div>
+              <span
+                class="mandatory"
+                id="asterisk"
+              >
+                *
+              </span>
+               
+              <span
+                class="note"
+              />
+            </label>
+            <input
+              class="editable-white"
+              id="lastName"
+              type="text"
+              value=""
+            />
+            <br />
+            <span
+              class="error"
+            />
+          </div>
+        </div>
+        <div
+          class="form-child"
+        >
+          <div>
+            <label
+              class="label"
+              for="org"
+            >
+              <div
+                class="input-label"
+              >
+                Organization
+              </div>
+               
+              <span
+                class="note"
+              />
+            </label>
+            <input
+              class="editable-white"
+              id="org"
+              type="text"
+              value=""
+            />
+            <br />
+            <span
+              class="error"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="form-parent"
+      >
+        <div
+          class="form-child"
+        >
+          <div>
+            <label
+              class="label"
+              for="firstName"
+            >
+              <div
+                class="input-label"
+              >
+                First Name
+              </div>
+              <span
+                class="mandatory"
+                id="asterisk"
+              >
+                *
+              </span>
+               
+              <span
+                class="note"
+              />
+            </label>
+            <input
+              class="editable-white"
+              id="firstName"
+              type="text"
+              value=""
+            />
+            <br />
+            <span
+              class="error"
+            />
+          </div>
+        </div>
+        <div
+          class="form-child"
+        >
+          <div>
+            <label
+              class="label"
+              for="country"
+            >
+              <div
+                class="input-label"
+              >
+                Contact Country
+              </div>
+               
+              <span
+                class="note"
+              />
+            </label>
+            <input
+              class="editable-white"
+              id="country"
+              type="text"
+              value=""
+            />
+            <br />
+            <span
+              class="error"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="form-parent"
+      >
+        <div
+          class="form-child"
+        >
+          <div>
+            <label
+              class="label"
+              for="phoneNumber"
+            >
+              <div
+                class="input-label"
+              >
+                Phone Number
+              </div>
+              <span
+                class="mandatory"
+                id="asterisk"
+              >
+                *
+              </span>
+               
+              <span
+                class="note"
+              />
+            </label>
+            <input
+              class="editable-white"
+              id="phoneNumber"
+              type="text"
+              value=""
+            />
+            <br />
+            <span
+              class="error"
+            />
+          </div>
+        </div>
+      </div>
+      <br />
+      <div
+        class="dropzone-outer"
+        data-testid="dropdownzone"
+        tabindex="0"
+      >
+        <div
+          class="dropzone-inner-box"
+        >
+          <input
+            autocomplete="off"
+            multiple=""
+            style="display: none;"
+            tabindex="-1"
+            type="file"
+          />
+          <span>
+            <h2
+              class="text-center-alignment"
+            >
+              Drag and drop or 
+              <span
+                class="file-href"
+              >
+                choose documents
+              </span>
+            </h2>
+            <div>
+              <span>
+                to upload supporting documents from counsel that explain the reasons for an urgent/rush order.
+              </span>
+              <br />
+              <span>
+                Please note that documents uploaded on this screen will not be processed into your eFile.
+              </span>
+            </div>
+          </span>
+        </div>
+      </div>
+      <br />
+      <section
+        class="buttons pt-2"
+      >
+        <button
+          class="bcgov-button normal-white btn"
+          data-test-id=""
+          type="button"
+        >
+          Cancel Request
+        </button>
+        <button
+          class="bcgov-button normal-blue btn"
+          data-test-id=""
+          type="button"
+        >
+          Submit Request
+        </button>
+      </section>
+    </div>
+  </div>
+</DocumentFragment>
+`;

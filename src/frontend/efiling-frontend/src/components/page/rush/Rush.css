@@ -1,0 +1,16 @@
+.form-parent {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 15px;
+}
+
+.form-child {
+  width: 45%;
+}
+
+.dropzone-outer {
+  border: 1px dashed #707070;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+}
