@@ -121,9 +121,9 @@ export default function PackageConfirmation({
   useEffect(() => {
     if (!sessionStorage.getItem("listenerExists")) {
       sessionStorage.setItem("currentPage", "packageConfirmation");
-      window.addEventListener("popstate", (e) =>
-        onBackButtonEvent(e, resetState)
-      );
+      window.addEventListener("popstate", (e) => {
+        onBackButtonEvent(e, resetState);
+      });
       sessionStorage.setItem("listenerExists", true);
     }
   }, []);

@@ -14,7 +14,7 @@ import {
 import { getTestData } from "../../../modules/test-data/confirmationPopupTestData";
 import { getCourtData } from "../../../modules/test-data/courtTestData";
 import { getDocumentsData } from "../../../modules/test-data/documentTestData";
-import { generateJWTToken } from "../../../modules/helpers/authenticationHelper";
+import { generateJWTToken } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 
 import Upload, { uploadDocuments } from "./Upload";
 

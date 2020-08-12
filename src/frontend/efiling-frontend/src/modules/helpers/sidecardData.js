@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from "react";
 import { MdInfoOutline, MdPerson, MdTimer } from "react-icons/md";
-import { getJWTData } from "./authenticationHelper";
+import { getJWTData } from "./authentication-helper/authenticationHelper";
 
 const aboutCso = () => {
   return {

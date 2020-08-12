@@ -8,7 +8,7 @@ import { MdCancel } from "react-icons/md";
 
 import { Header, Footer, Loader, Alert } from "shared-components";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
-import { getJWTData } from "../../../modules/helpers/authenticationHelper";
+import { getJWTData } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
 import CSOAccount from "../cso-account/CSOAccount";
 import { propTypes } from "../../../types/propTypes";

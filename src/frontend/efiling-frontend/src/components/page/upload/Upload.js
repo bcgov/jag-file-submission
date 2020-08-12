@@ -31,8 +31,11 @@ const checkValidityOfUploadedFiles = () => {
       "isSupremeCourtScheduling"
     );
 
-  if (filesToUpload.documents.length === 0) return false;
-  if (filesToUpload.documents.every(isValid)) return true;
+  if (
+    filesToUpload.documents.length > 0 &&
+    filesToUpload.documents.every(isValid)
+  )
+    return true;
   return false;
 };
 

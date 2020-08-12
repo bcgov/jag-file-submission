@@ -8,7 +8,7 @@ import { getUserDetails } from "../../../modules/test-data/userDetailsTestData";
 import { getDocumentsData } from "../../../modules/test-data/documentTestData";
 import { getCourtData } from "../../../modules/test-data/courtTestData";
 import { getNavigationData } from "../../../modules/test-data/navigationTestData";
-import { generateJWTToken } from "../../../modules/helpers/authenticationHelper";
+import { generateJWTToken } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 
 import Home from "./Home";
 
