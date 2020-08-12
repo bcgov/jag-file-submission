@@ -54,7 +54,8 @@ You should use environment variables to configure the jag efiling api
 | KEYCLOAK_REALM                 | String  | The keycloak realm name                      | not set by default             |
 | KEYCLOAK_RESOURCE              | String  | The keycloak resource name                   | not set by default             |
 | KEYCLOAK_CREDENTIALS_SECRET    | String  | The keycloak Credentials Secrets             | not set by default             |
-| BAMBORA_APIKEY                 | String  | API key for bambora auth                     | not set by default             |
+| BAMBORA_APIPASSCODE            | String  | API passcode for bambora auth                | not set by default             |
+| BAMBORA_MERCHANTID             | String  | merchant id for bambora auth                 | not set by default             |
 
 ## Backend Folder Structure
 
