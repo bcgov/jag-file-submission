@@ -1,4 +1,5 @@
 const userDetails = {
+  cardRegistered: true,
   accounts: [
     {
       type: "CSO",

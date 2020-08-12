@@ -63,7 +63,9 @@ export default function Payment({
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
   const rushSubmissionSidecard = getSidecardData().rushSubmission;
-  const existingCreditCardAlert = getCreditCardAlerts().existingCreditCard;
+  const creditCardAlert = sessionStorage.getItem("cardRegistered")
+    ? getCreditCardAlerts().existingCreditCard
+    : getCreditCardAlerts().noCreditCard;
   const [paymentAgreed, setPaymentAgreed] = useState(false);
   const [showPackageConfirmation, setShowPackageConfirmation] = useState(false);
 
@@ -85,8 +87,7 @@ export default function Payment({
     <div className="page">
       <div className="content col-md-8">
         <h1>Payment</h1>
-        {/* TODO: Fix credit card info and link to register card */}
-        {existingCreditCardAlert}
+        {creditCardAlert}
         <br />
         <div className="half-width">
           <Table
