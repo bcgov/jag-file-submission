@@ -11,7 +11,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -65,6 +64,7 @@ public class BamboraPaymentAdapterTest {
         Assertions.assertEquals(AUTH_CODE, efilingTransaction.getResponseCd());
         Assertions.assertNotNull(efilingTransaction.getEntDtm());
         Assertions.assertNotNull(efilingTransaction.getTransactonDtm());
+
     }
 
     @Test
