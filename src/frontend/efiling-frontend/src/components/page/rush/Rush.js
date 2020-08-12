@@ -142,7 +142,7 @@ export default function Rush() {
         <section className="buttons pt-2">
           <Button
             label="Cancel Request"
-            onClick={() => setShowPayment(true)}
+            onClick={() => console.log("show payment")}
             styling="normal-white btn"
           />
           <Button
