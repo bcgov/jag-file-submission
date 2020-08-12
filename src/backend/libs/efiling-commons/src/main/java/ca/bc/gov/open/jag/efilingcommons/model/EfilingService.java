@@ -28,12 +28,17 @@ public class EfilingService {
     private XMLGregorianCalendar updateDateTime;
     private String updateUserId;
     private BigDecimal userSessionId;
+    private BigDecimal submissionFeeAmount;
     private List<EfilingTransaction> transactions;
 
     public EfilingService() {
         serviceReceivedDateTime = DateUtils.getCurrentXmlDate();
         entryDateTime = DateUtils.getCurrentXmlDate();
     }
+
+    public BigDecimal getSubmissionFeeAmount() { return submissionFeeAmount; }
+
+    public void setSubmissionFeeAmount(BigDecimal submissionFeeAmount) {  this.submissionFeeAmount = submissionFeeAmount; }
 
     public BigDecimal getAccountId() {
         return accountId;
@@ -202,6 +207,7 @@ public class EfilingService {
                           @JsonProperty("updateDateTime") XMLGregorianCalendar updateDateTime,
                           @JsonProperty("updateUserId") String updateUserId,
                           @JsonProperty("userSessionId") BigDecimal userSessionId,
+                          @JsonProperty("submissionFeeAmount") BigDecimal submissionFeeAmount,
                           @JsonProperty("transactions") List<EfilingTransaction> transactions) {
         this.accountId = accountId;
         this.clientId = clientId;
@@ -221,6 +227,7 @@ public class EfilingService {
         this.updateDateTime = updateDateTime;
         this.updateUserId = updateUserId;
         this.userSessionId = userSessionId;
+        this.submissionFeeAmount = submissionFeeAmount;
         this.transactions = transactions;
     }
 

@@ -75,6 +75,7 @@ public class TestHelpers {
                 null,
                 null,
                 null,
+                BigDecimal.TEN,
                 null);
     }
     public static EfilingService createUpdateEfilingService(EfilingService service) throws DatatypeConfigurationException {

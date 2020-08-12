@@ -21,6 +21,7 @@ import static org.mockito.ArgumentMatchers.any;
 public class BamboraPaymentAdapterTest {
 
 
+    private static final String AUTH_CODE = "ACODE";
     @Mock
     PaymentsApi paymentsApiMock;
 
@@ -54,6 +55,10 @@ public class BamboraPaymentAdapterTest {
         EfilingTransaction efilingTransaction = sut.makePayment(payment);
         Assertions.assertEquals("Failed", efilingTransaction.getApprovalCd());
         Assertions.assertEquals(BigDecimal.valueOf(123), efilingTransaction.getEcommerceTransactionId());
+        Assertions.assertEquals(BigDecimal.valueOf(10.00), efilingTransaction.getTransactionAmt());
+        Assertions.assertEquals(AUTH_CODE, efilingTransaction.getResponseCd());
+        Assertions.assertNotNull(efilingTransaction.getEntDtm());
+        Assertions.assertNotNull(efilingTransaction.getTransactonDtm());
     }
 
     @Test
@@ -68,6 +73,8 @@ public class BamboraPaymentAdapterTest {
         PaymentResponse paymentResponse = new PaymentResponse();
         paymentResponse.setApproved(approved);
         paymentResponse.setMessageId(messageId);
+        paymentResponse.setAmount(10.00);
+        paymentResponse.setAuthCode(AUTH_CODE);
         return paymentResponse;
     }
 }
