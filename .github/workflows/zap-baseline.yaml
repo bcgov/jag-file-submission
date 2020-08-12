@@ -17,3 +17,4 @@ jobs:
           target: 'http://react-web-app-demo-qzaydf-dev.pathfinder.gov.bc.ca/efiling-demo'
           rules_file_name: '.zap/rules.tsv'
           cmd_options: '-a'
+          fail_action: true
