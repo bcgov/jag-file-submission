@@ -1709,17 +1709,17 @@
     regenerator-runtime "^0.13.3"
     ts-dedent "^1.1.1"
 
-"@storybook/addon-viewport@^6.0.2":
-  version "6.0.2"
-  resolved "https://registry.yarnpkg.com/@storybook/addon-viewport/-/addon-viewport-6.0.2.tgz#4dea6cf06310afe6260b60aee16a845fec0beef2"
-  integrity sha512-iaDGk9pkaEvyxP7cQNkKMaiAi+u24ceTLuILrCkIe3lwHzJ0Tadse851otKkb8Qjmr9vRZtFbNGaPPiICkFUtQ==
+"@storybook/addon-viewport@^6.0.5":
+  version "6.0.5"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-viewport/-/addon-viewport-6.0.5.tgz#2c29deb8a04d590f236c7ea01db23569a3eebb27"
+  integrity sha512-nIiN9o6Yv/NjcuCBewwo344C2qKVZ9Bru94XYMjgChOdAsfUOqskP5eLvrud3re5IpDqEv2nkCo5jRhp4T/miA==
   dependencies:
-    "@storybook/addons" "6.0.2"
-    "@storybook/api" "6.0.2"
-    "@storybook/client-logger" "6.0.2"
-    "@storybook/components" "6.0.2"
-    "@storybook/core-events" "6.0.2"
-    "@storybook/theming" "6.0.2"
+    "@storybook/addons" "6.0.5"
+    "@storybook/api" "6.0.5"
+    "@storybook/client-logger" "6.0.5"
+    "@storybook/components" "6.0.5"
+    "@storybook/core-events" "6.0.5"
+    "@storybook/theming" "6.0.5"
     core-js "^3.0.1"
     global "^4.3.2"
     memoizerific "^1.11.3"
@@ -2000,6 +2000,34 @@
     "@storybook/client-logger" "6.0.2"
     "@storybook/csf" "0.0.1"
     "@storybook/theming" "6.0.2"
+    "@types/overlayscrollbars" "^1.9.0"
+    "@types/react-color" "^3.0.1"
+    "@types/react-syntax-highlighter" "11.0.4"
+    core-js "^3.0.1"
+    fast-deep-equal "^3.1.1"
+    global "^4.3.2"
+    lodash "^4.17.15"
+    markdown-to-jsx "^6.11.4"
+    memoizerific "^1.11.3"
+    overlayscrollbars "^1.10.2"
+    polished "^3.4.4"
+    popper.js "^1.14.7"
+    react "^16.8.3"
+    react-color "^2.17.0"
+    react-dom "^16.8.3"
+    react-popper-tooltip "^2.11.0"
+    react-syntax-highlighter "^12.2.1"
+    react-textarea-autosize "^8.1.1"
+    ts-dedent "^1.1.1"
+
+"@storybook/components@6.0.5":
+  version "6.0.5"
+  resolved "https://registry.yarnpkg.com/@storybook/components/-/components-6.0.5.tgz#34d139efde75ebb5add9f1f273bd06ce82a92204"
+  integrity sha512-NJNBIKesDMN7nZS5STpDY3c3FYAgN1Qq1X5FE60yxXUCFTRjgQmsN8WWl71PB0BJaR6IB1Jvvg/q+vLILB6u4A==
+  dependencies:
+    "@storybook/client-logger" "6.0.5"
+    "@storybook/csf" "0.0.1"
+    "@storybook/theming" "6.0.5"
     "@types/overlayscrollbars" "^1.9.0"
     "@types/react-color" "^3.0.1"
     "@types/react-syntax-highlighter" "11.0.4"
