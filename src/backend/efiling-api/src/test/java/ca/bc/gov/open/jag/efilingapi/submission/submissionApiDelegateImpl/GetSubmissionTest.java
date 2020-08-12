@@ -118,6 +118,7 @@ public class GetSubmissionTest {
                         .firstName(FIRST_NAME + TestHelpers.CASE_2)
                         .accountId(BigDecimal.TEN)
                         .fileRolePresent(true)
+                        .cardRegistered(true)
                         .create());
 
         sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock);
