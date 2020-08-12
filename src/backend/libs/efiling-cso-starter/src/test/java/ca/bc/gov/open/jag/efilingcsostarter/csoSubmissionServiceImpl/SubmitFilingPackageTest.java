@@ -11,6 +11,7 @@ import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoSubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingcsostarter.TestHelpers;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.FilingPackageMapperImpl;
+import ca.bc.gov.open.jag.efilingcsostarter.mappers.FinancialTransactionMapperImpl;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.ServiceMapperImpl;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
@@ -57,7 +58,7 @@ public class SubmitFilingPackageTest {
         Mockito.doReturn(serviceSession).when(serviceFacadeBean)
                 .createServiceSession(ArgumentMatchers.argThat(x -> x.getUserSessionId().equals(userSession.getUserSessionId())), Mockito.anyString());
 
-        sut = new CsoSubmissionServiceImpl(filingFacadeBeanMock, serviceFacadeBean, new ServiceMapperImpl(), new FilingPackageMapperImpl());
+        sut = new CsoSubmissionServiceImpl(filingFacadeBeanMock, serviceFacadeBean, new ServiceMapperImpl(), new FilingPackageMapperImpl(), new FinancialTransactionMapperImpl());
 
     }
 

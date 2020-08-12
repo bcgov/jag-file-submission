@@ -73,6 +73,10 @@ public class AutoConfiguration {
     }
 
     @Bean
+    public FinancialTransactionMapper financialTransactionMapper() { return new FinancialTransactionMapperImpl(); }
+
+
+    @Bean
     @ConditionalOnMissingBean({EfilingAccountService.class})
     public EfilingAccountService efilingAccountService(AccountFacadeBean accountFacadeBean,
                                                        RoleRegistryPortType roleRegistryPortType,
@@ -103,8 +107,9 @@ public class AutoConfiguration {
     public EfilingSubmissionService efilingSubmissionService(FilingFacadeBean filingFacadeBean,
                                                              ServiceFacadeBean serviceFacadeBean,
                                                              ServiceMapper serviceMapper,
-                                                             FilingPackageMapper filingPackageMapper
-    ) { return new CsoSubmissionServiceImpl(filingFacadeBean, serviceFacadeBean, serviceMapper, filingPackageMapper); }
+                                                             FilingPackageMapper filingPackageMapper,
+                                                             FinancialTransactionMapper financialTransactionMapper
+    ) { return new CsoSubmissionServiceImpl(filingFacadeBean, serviceFacadeBean, serviceMapper, filingPackageMapper, financialTransactionMapper); }
 
 
     public <T> T getPort(Clients clients, Class<T> type) {

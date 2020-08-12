@@ -12,6 +12,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.EfilingTransaction;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingPaymentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.FilingPackageMapper;
+import ca.bc.gov.open.jag.efilingcsostarter.mappers.FinancialTransactionMapper;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.ServiceMapper;
 
 import java.math.BigDecimal;
@@ -21,12 +22,14 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     private final ServiceFacadeBean serviceFacadeBean;
     private final ServiceMapper serviceMapper;
     private final FilingPackageMapper filingPackageMapper;
+    private final FinancialTransactionMapper financialTransactionMapper;
 
-    public CsoSubmissionServiceImpl(FilingFacadeBean filingFacadeBean, ServiceFacadeBean serviceFacadeBean, ServiceMapper serviceMapper, FilingPackageMapper filingPackageMapper) {
+    public CsoSubmissionServiceImpl(FilingFacadeBean filingFacadeBean, ServiceFacadeBean serviceFacadeBean, ServiceMapper serviceMapper, FilingPackageMapper filingPackageMapper, FinancialTransactionMapper financialTransactionMapper) {
         this.filingFacadeBean = filingFacadeBean;
         this.serviceFacadeBean = serviceFacadeBean;
         this.serviceMapper = serviceMapper;
         this.filingPackageMapper = filingPackageMapper;
+        this.financialTransactionMapper = financialTransactionMapper;
     }
 
     @Override
@@ -40,10 +43,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
         Service createdService = createEfilingService(service, serviceSession);
 
-        //TODO: make payments to bambora
-        EfilingPayment efilingPayment = new EfilingPayment(service.getClientId(), BigDecimal.TEN);
-        EfilingTransaction payment = paymentService.makePayment(efilingPayment);
-        updatePaymentForService(createdService, true, new FinancialTransaction());
+        updatePaymentForService(createdService, true, createPayment(paymentService, createdService));
 
         BigDecimal filingResult = filePackage(service, filingPackage);
 
@@ -83,6 +83,12 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
             throw new EfilingSubmissionServiceException("Exception while updating payment on service", e.getCause());
         }
 
+    }
+
+    private FinancialTransaction createPayment(EfilingPaymentService paymentService, Service service) {
+        EfilingPayment efilingPayment = new EfilingPayment(service.getClientId(), BigDecimal.TEN);
+        EfilingTransaction payment = paymentService.makePayment(efilingPayment);
+        return financialTransactionMapper.toTransaction(payment);
     }
 
     private BigDecimal filePackage(EfilingService service, EfilingFilingPackage filingPackage) {
