@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable react/jsx-props-no-spreading */
+import React from "react";
 import Dropzone from "react-dropzone";
 import { Radio, Callout, Button, Input, Textarea } from "shared-components";
 
@@ -17,9 +18,6 @@ const generateInputField = (input, onChange) => {
 };
 
 export default function Rush() {
-  const [rushReason, setRushReason] = useState(null);
-  const [showPayment, setShowPayment] = useState(false);
-  const [acceptedFiles, setAcceptedFiles] = useState([]);
   const input = {
     isReadOnly: false,
     styling: "editable-white",
@@ -39,19 +37,19 @@ export default function Rush() {
           id="rule-85"
           name="rush-reason"
           label="The attached application is made under Rule 8-5 (1) SCR."
-          onSelect={(val) => setRushReason(val)}
+          onSelect={(val) => console.log(val)}
         />
         <Radio
           id="court-directed"
           name="rush-reason"
           label="The court directed that the order be processed on an urgent basis."
-          onSelect={(val) => setRushReason(val)}
+          onSelect={(val) => console.log(val)}
         />
         <Radio
           id="other"
           name="rush-reason"
           label="Other (please explain)."
-          onSelect={(val) => setRushReason(val)}
+          onSelect={(val) => console.log(val)}
         />
         <Callout text={calloutText} />
         <Textarea
@@ -111,11 +109,7 @@ export default function Rush() {
           )}
         </div>
         <br />
-        <Dropzone
-          onDrop={(droppedFiles) =>
-            setAcceptedFiles(acceptedFiles.concat(droppedFiles))
-          }
-        >
+        <Dropzone onDrop={(droppedFiles) => console.log(droppedFiles)}>
           {({ getRootProps, getInputProps }) => (
             <div
               data-testid="dropdownzone"

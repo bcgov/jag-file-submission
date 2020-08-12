@@ -14,3 +14,12 @@
   display: flex;
   justify-content: center;
 }
+
+@media (max-width: 576px) {
+  .dropzone-outer {
+    border: 1px dashed #707070;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+  }
+}
