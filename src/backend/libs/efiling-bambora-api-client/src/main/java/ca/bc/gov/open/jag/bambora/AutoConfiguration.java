@@ -7,6 +7,9 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.text.MessageFormat;
+import java.util.Base64;
+
 @Configuration
 @EnableConfigurationProperties(BamboraProperties.class)
 public class AutoConfiguration {
@@ -14,9 +17,11 @@ public class AutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(ApiClient.class)
     public ApiClient apiClient(BamboraProperties bamboraProperties)  {
+
         ApiClient apiClient = new ApiClient();
-        apiClient.setApiKey(bamboraProperties.getApiKey());
+        apiClient.setApiKey(MessageFormat.format("Passcode {0}", bamboraProperties.getPasscode()));
         return apiClient;
+
     }
 
     @Bean

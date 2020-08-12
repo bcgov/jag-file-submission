@@ -53,9 +53,10 @@ jag:
           userName: ${CSO_SERVICEFACADE_USERNAME}
           password: ${CSO_SERVICEFACADE_PASSWORD}
           uri: ${CSO_SERVICEFACADE_URI:http://localhost:8091}
- 
+
 bambora:
-  apiKey: ${BAMBORA_APIKEY}
+  apiPasscode: ${BAMBORA_APIPASSCODE}
+  merchantId: ${BAMBORA_MERCHANTID}
 
 info:
   app:
