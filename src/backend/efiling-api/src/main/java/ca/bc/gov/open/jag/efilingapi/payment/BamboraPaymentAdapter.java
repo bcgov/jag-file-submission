@@ -33,6 +33,8 @@ public class BamboraPaymentAdapter {
         paymentRequest.amount(efilingPayment.getPaymentAmount().doubleValue());
         paymentRequest.setOrderNumber(efilingPayment.getInvoiceNumber());
 
+        paymentRequest.setPaymentMethod(PaymentRequest.PaymentMethodEnum.PAYMENT_PROFILE);
+
         ProfilePurchase profilePurchase = new ProfilePurchase();
         profilePurchase.setCustomerCode(efilingPayment.getInternalClientNumber());
         profilePurchase.setCardId(1);
