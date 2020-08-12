@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.text.MessageFormat;
-import java.util.Base64;
 
 @Configuration
 @EnableConfigurationProperties(BamboraProperties.class)
