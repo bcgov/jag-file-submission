@@ -6,12 +6,12 @@ import { render, waitFor } from "@testing-library/react";
 import MockAdapter from "axios-mock-adapter";
 
 import Home, { saveDataToSessionStorage } from "./Home";
-import { getTestData } from "../../../modules/confirmationPopupTestData";
-import { getUserDetails } from "../../../modules/userDetails";
-import { getDocumentsData } from "../../../modules/documentTestData";
-import { getNavigationData } from "../../../modules/navigationTestData";
-import { getCourtData } from "../../../modules/courtTestData";
-import { generateJWTToken } from "../../../modules/authenticationHelper";
+import { getTestData } from "../../../modules/test-data/confirmationPopupTestData";
+import { getUserDetails } from "../../../modules/test-data/userDetailsTestData";
+import { getDocumentsData } from "../../../modules/test-data/documentTestData";
+import { getNavigationData } from "../../../modules/test-data/navigationTestData";
+import { getCourtData } from "../../../modules/test-data/courtTestData";
+import { generateJWTToken } from "../../../modules/helpers/authenticationHelper";
 
 const header = {
   name: "eFiling Frontend",

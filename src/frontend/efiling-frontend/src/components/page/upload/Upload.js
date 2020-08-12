@@ -12,8 +12,8 @@ import {
   Dropdown,
   Radio,
 } from "shared-components";
-import { getSidecardData } from "../../../modules/sidecardData";
-import { errorRedirect } from "../../../modules/errorRedirect";
+import { getSidecardData } from "../../../modules/helpers/sidecardData";
+import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { propTypes } from "../../../types/propTypes";
 
 import "./Upload.css";

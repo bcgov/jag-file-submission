@@ -7,8 +7,8 @@ import axios from "axios";
 import { MdCancel } from "react-icons/md";
 
 import { Header, Footer, Loader, Alert } from "shared-components";
-import { errorRedirect } from "../../../modules/errorRedirect";
-import { getJWTData } from "../../../modules/authenticationHelper";
+import { errorRedirect } from "../../../modules/helpers/errorRedirect";
+import { getJWTData } from "../../../modules/helpers/authenticationHelper";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
 import CSOAccount from "../cso-account/CSOAccount";
 import { propTypes } from "../../../types/propTypes";

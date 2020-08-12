@@ -96,8 +96,8 @@
       "!src/index.js",
       "!**/node_modules/**",
       "!**/vendor/**",
-      "!src/modules/confirmationPopupTestData.js",
-      "!src/modules/handleBackEvent.js"
+      "!src/modules/test-data/confirmationPopupTestData.js",
+      "!src/modules/helpers/handleBackEvent.js"
     ],
     "transform": {
       "^.+\\.[t|j]sx?$": "babel-jest"

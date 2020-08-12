@@ -11,10 +11,10 @@ import ConfirmationPopup, {
   Alert,
   Sidecard,
 } from "shared-components";
-import { getContent } from "../../../modules/csoAccountAgreementContent";
-import { getSidecardData } from "../../../modules/sidecardData";
-import { translateApplicantInfo } from "../../../modules/translateApplicantInfo";
-import { errorRedirect } from "../../../modules/errorRedirect";
+import { getContent } from "../../../modules/helpers/csoAccountAgreementContent";
+import { getSidecardData } from "../../../modules/helpers/sidecardData";
+import { translateApplicantInfo } from "../../../modules/helpers/translateApplicantInfo";
+import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { propTypes } from "../../../types/propTypes";
 
 const content = getContent();

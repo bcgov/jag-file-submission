@@ -3,8 +3,8 @@ import { action } from "@storybook/addon-actions";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 
-import { getTestData } from "../../../modules/confirmationPopupTestData";
-import { getApplicantInfo } from "../../../modules/applicantInfoTestData";
+import { getTestData } from "../../../modules/test-data/confirmationPopupTestData";
+import { getApplicantInfo } from "../../../modules/test-data/applicantInfoTestData";
 
 import CSOAccount from "./CSOAccount";
 

@@ -1,6 +1,6 @@
 import React from "react";
-import { getTestData } from "../../../modules/confirmationPopupTestData";
-import { getCourtData } from "../../../modules/courtTestData";
+import { getTestData } from "../../../modules/test-data/confirmationPopupTestData";
+import { getCourtData } from "../../../modules/test-data/courtTestData";
 
 import Upload from "./Upload";
 

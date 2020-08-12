@@ -8,12 +8,12 @@ import ConfirmationPopup, {
   Table,
   Callout,
 } from "shared-components";
-import { getSidecardData } from "../../../modules/sidecardData";
-import { getCreditCardAlerts } from "../../../modules/creditCardAlerts";
-import { errorRedirect } from "../../../modules/errorRedirect";
+import { getSidecardData } from "../../../modules/helpers/sidecardData";
+import { getCreditCardAlerts } from "../../../modules/helpers/creditCardAlerts";
+import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { propTypes } from "../../../types/propTypes";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
-import { generateFileSummaryData } from "../../../modules/generateFileSummaryData";
+import { generateFileSummaryData } from "../../../modules/helpers/generateFileSummaryData";
 
 import "./Payment.css";
 

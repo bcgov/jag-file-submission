@@ -3,12 +3,12 @@ import { MemoryRouter } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-import { getTestData } from "../../../modules/confirmationPopupTestData";
-import { getUserDetails } from "../../../modules/userDetails";
-import { getDocumentsData } from "../../../modules/documentTestData";
-import { getCourtData } from "../../../modules/courtTestData";
-import { getNavigationData } from "../../../modules/navigationTestData";
-import { generateJWTToken } from "../../../modules/authenticationHelper";
+import { getTestData } from "../../../modules/test-data/confirmationPopupTestData";
+import { getUserDetails } from "../../../modules/test-data/userDetailsTestData";
+import { getDocumentsData } from "../../../modules/test-data/documentTestData";
+import { getCourtData } from "../../../modules/test-data/courtTestData";
+import { getNavigationData } from "../../../modules/test-data/navigationTestData";
+import { generateJWTToken } from "../../../modules/helpers/authenticationHelper";
 
 import Home from "./Home";
 
