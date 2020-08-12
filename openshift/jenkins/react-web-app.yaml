@@ -34,6 +34,8 @@ spec:
         - name: TEST_NAMESPACE
           value: qzaydf-test
         - name: LIFECYCLE_WEBHOOK
+        - name: WEB_TOKEN
+          value: CHANGE_ME
       jenkinsfile: |-
         try {
             
@@ -73,6 +75,16 @@ spec:
                             sh 'oc rollout status -n ${DEV_NAMESPACE} dc/${APP_NAME} --watch'
                         }
                     }
+                }
+                
+                stage("Trigger Zap Baseline Git Action") {
+                  sh  '''
+                      curl \
+                      -X POST \
+                      -H "Authorization: token ${WEB_TOKEN}" \
+                      https://api.github.com/repos/bcgov/jag-file-submission/actions/workflows/zap-baseline.yaml/dispatches \
+                      -d '{"ref":"master"}'
+                      '''
                 }
                 
                 stage("Promotion gate TEST") {
