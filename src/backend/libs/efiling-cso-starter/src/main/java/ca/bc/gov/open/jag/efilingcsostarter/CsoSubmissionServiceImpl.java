@@ -74,6 +74,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
     private void updatePaymentForService(Service service, Boolean feePaid, FinancialTransaction financialTransaction) {
 
+
         service.setFeePaidYn(String.valueOf(feePaid));
         service.getTransactions().add(financialTransaction);
 
@@ -88,7 +89,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     private FinancialTransaction createPayment(EfilingPaymentService paymentService, Service service) {
         EfilingPayment efilingPayment = new EfilingPayment(service.getClientId(), BigDecimal.TEN);
         EfilingTransaction payment = paymentService.makePayment(efilingPayment);
-        return financialTransactionMapper.toTransaction(payment);
+        return financialTransactionMapper.toTransaction(payment, service);
     }
 
     private BigDecimal filePackage(EfilingService service, EfilingFilingPackage filingPackage) {

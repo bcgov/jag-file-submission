@@ -8,6 +8,7 @@ import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.PaymentResponse;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingPayment;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingTransaction;
+import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,10 @@ public class BamboraPaymentAdapter {
         try {
             PaymentResponse response = paymentsApi.makePayment(paymentRequest);
             result.setEcommerceTransactionId(BigDecimal.valueOf(response.getMessageId()));
+            result.setEntDtm(DateUtils.getCurrentXmlDate());
+            result.setTransactonDtm(DateUtils.getCurrentXmlDate());
+            result.setTransactionAmt(BigDecimal.valueOf(response.getAmount()));
+            result.setResponseCd(response.getAuthCode());
             //Reference: https://dev.na.bambora.com/docs/references/payment_APIs/payment_profile_response_codes/
             //TODO: what are the appropriate codes
             if (response.getApproved() == 1) {
