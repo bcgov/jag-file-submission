@@ -18,7 +18,7 @@ public interface AccountDetailsMapper {
     @Mapping(target = "email", source = "clientProfile.account.accountManager.emailTxt")
     @Mapping(target = "fileRolePresent", source = "fileRolePresent")
     @Mapping(target = "universalId", source = "universalId")
-    @Mapping(target = "cardRegistered", source = "clientProfile.account.registeredCreditCardYnBoolean")
+    @Mapping(target = "cardRegistered", source = "clientProfile.client.registeredCreditCardYnBoolean")
     AccountDetails toAccountDetails(UUID universalId, ClientProfile clientProfile, Boolean fileRolePresent);
 
     @Mapping(target = "accountId", defaultValue = "0")
