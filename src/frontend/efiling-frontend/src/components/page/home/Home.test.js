@@ -112,15 +112,16 @@ describe("Home", () => {
     expect(sessionStorage.getItem("successUrl")).toBeFalsy();
     expect(sessionStorage.getItem("errorUrl")).toBeFalsy();
 
-    saveDataToSessionStorage(navigation);
+    saveDataToSessionStorage(userDetails.cardRegistered, navigation);
 
     expect(sessionStorage.getItem("cancelUrl")).toEqual("cancelurl.com");
     expect(sessionStorage.getItem("successUrl")).toEqual("successurl.com");
     expect(sessionStorage.getItem("errorUrl")).toBeFalsy();
+    expect(sessionStorage.getItem("cardRegistered")).toEqual("true");
 
     sessionStorage.clear();
 
-    saveDataToSessionStorage({
+    saveDataToSessionStorage(userDetails.cardRegistered, {
       ...navigation,
       cancel: { url: "" },
       success: { url: "" },
@@ -130,5 +131,6 @@ describe("Home", () => {
     expect(sessionStorage.getItem("cancelUrl")).toBeFalsy();
     expect(sessionStorage.getItem("successUrl")).toBeFalsy();
     expect(sessionStorage.getItem("errorUrl")).toEqual("error.com");
+    expect(sessionStorage.getItem("cardRegistered")).toEqual("true");
   });
 });
