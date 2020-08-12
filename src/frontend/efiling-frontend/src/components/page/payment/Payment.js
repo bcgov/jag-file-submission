@@ -60,9 +60,7 @@ const submitPackage = (submissionId) => {
 const checkSubmitEnabled = (paymentAgreed, setSubmitBtnEnabled) => {
   if (paymentAgreed && sessionStorage.getItem("cardRegistered") === "true") {
     setSubmitBtnEnabled(true);
-  } else if (!paymentAgreed) {
-    setSubmitBtnEnabled(false);
-  }
+  } else setSubmitBtnEnabled(false);
 };
 
 export default function Payment({
