@@ -43,7 +43,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
         Service createdService = createEfilingService(service, serviceSession);
 
-        updatePaymentForService(createdService, true, createPayment(paymentService, createdService));
+        updatePaymentForService(createdService, true, createPayment(paymentService, createdService, service.getSubmissionFeeAmount()));
 
         BigDecimal filingResult = filePackage(service, filingPackage);
 
@@ -86,10 +86,12 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
     }
 
-    private FinancialTransaction createPayment(EfilingPaymentService paymentService, Service service) {
-        EfilingPayment efilingPayment = new EfilingPayment(service.getClientId(), BigDecimal.TEN);
+    private FinancialTransaction createPayment(EfilingPaymentService paymentService, Service service, BigDecimal submissionFeeAmount) {
+
+        EfilingPayment efilingPayment = new EfilingPayment(service.getClientId(), submissionFeeAmount);
         EfilingTransaction payment = paymentService.makePayment(efilingPayment);
         return financialTransactionMapper.toTransaction(payment, service);
+
     }
 
     private BigDecimal filePackage(EfilingService service, EfilingFilingPackage filingPackage) {
