@@ -284,6 +284,11 @@ export default function Upload({
   const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
+    sessionStorage.setItem("currentPage", "upload");
+    window.history.pushState(null, null, window.location.href);
+  }, []);
+
+  useEffect(() => {
     setDropdownItems(courtData, setItems, items);
   }, [items]);
 
