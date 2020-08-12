@@ -15,6 +15,7 @@ public interface FinancialTransactionMapper {
     @Mapping(target = "transactionAmt", source = "efilingTransaction.transactionAmt")
     @Mapping(target = "transactonDtm", source = "efilingTransaction.transactonDtm")
     @Mapping(target = "responseCd", source = "efilingTransaction.responseCd")
+    @Mapping(target = "invoiceNo", source = "efilingTransaction.invoiceNo")
     @Mapping(target = "entDtm", source = "efilingTransaction.entDtm")
     @Mapping(target = "entUserId", source = "service.entUserId")
     @Mapping(target = "serviceId", source = "service.serviceId")

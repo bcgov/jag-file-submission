@@ -30,6 +30,7 @@ public class BamboraPaymentAdapter {
 
         PaymentRequest paymentRequest = new PaymentRequest();
         paymentRequest.amount(efilingPayment.getPaymentAmount().doubleValue());
+        paymentRequest.setOrderNumber(efilingPayment.getInvoiceNumber());
         CardOnFile cardOnFile = new CardOnFile();
         cardOnFile.setSeriesId(efilingPayment.getClientId());
         paymentRequest.cardOnFile(cardOnFile);
@@ -43,6 +44,7 @@ public class BamboraPaymentAdapter {
             result.setTransactonDtm(DateUtils.getCurrentXmlDate());
             result.setTransactionAmt(BigDecimal.valueOf(response.getAmount()));
             result.setResponseCd(response.getAuthCode());
+            result.setInvoiceNo(response.getOrderNumber());
             //Reference: https://dev.na.bambora.com/docs/references/payment_APIs/payment_profile_response_codes/
             //TODO: what are the appropriate codes
             if (response.getApproved() == 1) {
