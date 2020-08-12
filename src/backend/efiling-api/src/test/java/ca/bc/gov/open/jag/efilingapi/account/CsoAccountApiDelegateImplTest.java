@@ -2,9 +2,9 @@ package ca.bc.gov.open.jag.efilingapi.account;
 
 import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
-import ca.bc.gov.open.jag.efilingapi.api.model.Account;
+import ca.bc.gov.open.jag.efilingapi.api.model.CreateCsoAccountRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
-import ca.bc.gov.open.jag.efilingapi.api.model.UserDetails;
+import ca.bc.gov.open.jag.efilingapi.api.model.UserFullDetails;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
@@ -25,7 +25,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -97,16 +96,12 @@ public class CsoAccountApiDelegateImplTest {
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_1);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        UserDetails userDetails = new UserDetails();
-        userDetails.setLastName(LAST_NAME);
-        userDetails.setMiddleName(MIDDLE_NAME);
-        userDetails.setEmail(EMAIL);
-        userDetails.setFirstName(FIRST_NAME);
-        Account account = new Account();
-        account.setType(Account.TypeEnum.BCEID);
-        account.setIdentifier(UUID.randomUUID().toString());
-        userDetails.addAccountsItem(account);
-        ResponseEntity<UserDetails> actual = sut.createAccount(TestHelpers.CASE_1, userDetails);
+        CreateCsoAccountRequest request = new CreateCsoAccountRequest();
+        request.setLastName(LAST_NAME);
+        request.setMiddleName(MIDDLE_NAME);
+        request.setEmail(EMAIL);
+        request.setFirstName(FIRST_NAME);
+        ResponseEntity<UserFullDetails> actual = sut.createAccount(TestHelpers.CASE_1, request);
 
         Assertions.assertEquals(HttpStatus.CREATED, actual.getStatusCode());
         Assertions.assertEquals(TestHelpers.CASE_1, actual.getBody().getUniversalId());
@@ -124,16 +119,12 @@ public class CsoAccountApiDelegateImplTest {
         Map<String, Object> otherClaims = new HashMap<>();
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        UserDetails userDetails = new UserDetails();
-        userDetails.setLastName(LAST_NAME);
-        userDetails.setMiddleName(MIDDLE_NAME);
-        userDetails.setEmail(EMAIL);
-        userDetails.setFirstName(FIRST_NAME);
-        Account account = new Account();
-        account.setType(Account.TypeEnum.BCEID);
-        account.setIdentifier(UUID.randomUUID().toString());
-        userDetails.addAccountsItem(account);
-        ResponseEntity actual = sut.createAccount(TestHelpers.CASE_1, userDetails);
+        CreateCsoAccountRequest request = new CreateCsoAccountRequest();
+        request.setLastName(LAST_NAME);
+        request.setMiddleName(MIDDLE_NAME);
+        request.setEmail(EMAIL);
+        request.setFirstName(FIRST_NAME);
+        ResponseEntity actual = sut.createAccount(TestHelpers.CASE_1, request);
 
         assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
         assertEquals("MISSING_UNIVERSAL_ID", ((EfilingError)actual.getBody()).getError());
@@ -151,16 +142,12 @@ public class CsoAccountApiDelegateImplTest {
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_2);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        UserDetails userDetails = new UserDetails();
-        userDetails.setLastName(LAST_NAME);
-        userDetails.setMiddleName(MIDDLE_NAME);
-        userDetails.setEmail(EMAIL);
-        userDetails.setFirstName(FIRST_NAME);
-        Account account = new Account();
-        account.setType(Account.TypeEnum.BCEID);
-        account.setIdentifier(UUID.randomUUID().toString());
-        userDetails.addAccountsItem(account);
-        ResponseEntity actual = sut.createAccount(TestHelpers.CASE_2, userDetails);
+        CreateCsoAccountRequest request = new CreateCsoAccountRequest();
+        request.setLastName(LAST_NAME);
+        request.setMiddleName(MIDDLE_NAME);
+        request.setEmail(EMAIL);
+        request.setFirstName(FIRST_NAME);
+        ResponseEntity actual = sut.createAccount(TestHelpers.CASE_2, request);
 
         Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode());
 

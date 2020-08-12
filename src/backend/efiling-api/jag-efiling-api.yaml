@@ -223,14 +223,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UserDetails"
+              $ref: "#/components/schemas/CreateCsoAccountRequest"
       responses:
         "201":
           description: Account Created
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserDetails"
+                $ref: "#/components/schemas/UserFullDetails"
   "/lookup/documentTypes/{courtLevel}/{courtClass}":
     get:
       summary: Get document types
@@ -505,15 +505,29 @@ components:
       type: object
       required:
         - universalId
-        - firstName
-        - lastName
-        - middleName
-        - email
+        - cardRegistered
       properties:
         universalId:
           type: string
           format: uuid
           description: the user universal identifier
+        cardRegistered:
+          type: boolean
+          description: if the user has a card on file or not
+        accounts:
+          type: array
+          items:
+            $ref: "#/components/schemas/Account"
+    UserFullDetails:
+      description: represents a user submitting a filing package with full details
+      allOf:
+        - $ref: "#/components/schemas/UserDetails"
+      required:
+        - firstName
+        - lastName
+        - middleName
+        - email
+      properties:
         firstName:
           type: string
           description: the user first name
@@ -526,10 +540,26 @@ components:
         email:
           type: string
           description: the user email address
-        accounts:
-          type: array
-          items:
-            $ref: "#/components/schemas/Account"
+    CreateCsoAccountRequest:
+      description: represents a request to create a user
+      required:
+        - firstName
+        - lastName
+        - middleName
+        - email
+      properties:
+        firstName:
+          type: string
+          description: the user first name
+        lastName:
+          type: string
+          description: the user last name
+        middleName:
+          type: string
+          description: the user middle name
+        email:
+          type: string
+          description: the user email address
     UpdateDocumentRequest:
       description: request body for update documents
       type: object
