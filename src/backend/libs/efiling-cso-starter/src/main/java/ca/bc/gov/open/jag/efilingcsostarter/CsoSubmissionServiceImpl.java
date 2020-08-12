@@ -18,6 +18,7 @@ import ca.bc.gov.open.jag.efilingcsostarter.mappers.ServiceMapper;
 import java.math.BigDecimal;
 
 public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
+
     private final FilingFacadeBean filingFacadeBean;
     private final ServiceFacadeBean serviceFacadeBean;
     private final ServiceMapper serviceMapper;
@@ -87,7 +88,6 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
     private void updatePaymentForService(Service service, Boolean feePaid, FinancialTransaction financialTransaction) {
 
-
         service.setFeePaidYn(String.valueOf(feePaid));
         service.getTransactions().add(financialTransaction);
 
@@ -101,7 +101,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
     private FinancialTransaction createPayment(EfilingPaymentService paymentService, Service service, BigDecimal submissionFeeAmount) {
 
-        EfilingPayment efilingPayment = new EfilingPayment(service.getClientId(), submissionFeeAmount, generateInvoiceNumber("hello"));
+        EfilingPayment efilingPayment = new EfilingPayment(service.getClientId(), submissionFeeAmount, generateInvoiceNumber(Keys.INVOICE_PREFIX));
         EfilingTransaction payment = paymentService.makePayment(efilingPayment);
         return financialTransactionMapper.toTransaction(payment, service);
 
