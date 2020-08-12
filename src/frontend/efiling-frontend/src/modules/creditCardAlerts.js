@@ -10,15 +10,17 @@ const existingCreditCard = () => {
       styling="warning-background no-padding-bottom"
       element={
         <p>
-          Your credit card, BLAH, will be charged.&nbsp;
+          <span>
+            You have a valid Credit Card registered with your CSO account.
+          </span>
+          <br />
           <a
             href="https://justice.gov.bc.ca/cso/about/index.do"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Register a new Credit Card
+            Register a new Credit Card.
           </a>
-          .
         </p>
       }
     />
@@ -43,7 +45,7 @@ const noCreditCard = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Register a card now
+            Register a Credit Card now
           </a>
           &nbsp;to continue.
         </p>
