@@ -39,7 +39,7 @@ const csoAccountDetails = () => {
         your Basic BCeID account&nbsp;
         <b>{username}</b>
         &nbsp;and will be used to file documents.&nbsp;
-        {/* TODO: fix url and blahs */}
+        {/* TODO: fix url */}
         <a
           href="https://justice.gov.bc.ca/cso/about/index.do"
           target="_blank"
