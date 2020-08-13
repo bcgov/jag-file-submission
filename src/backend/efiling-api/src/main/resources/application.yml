@@ -64,7 +64,8 @@ bcgov:
     port: ${SFTP_PORT:22}
     username: ${SFTP_USERNAME:admin}
     password: ${SFTP_PASSWORD:admin}
-    allowUnknownKeys: true
+    knownHostsFileName: ${SFTP_KNOWNHOSTS}
+    allowUnknownKeys: ${SFTP_ALLOWUNKNOWN:true}
 
 info:
   app:
