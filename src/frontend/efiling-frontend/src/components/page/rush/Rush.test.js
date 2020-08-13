@@ -23,7 +23,12 @@ describe("Rush Component", () => {
     submissionFee,
   };
 
-  const token = generateJWTToken({ preferred_username: "username@bceid" });
+  const token = generateJWTToken({
+    preferred_username: "username@bceid",
+    realm_access: {
+      roles: ["rush_flag"],
+    },
+  });
   localStorage.setItem("jwt", token);
 
   test("Matches the snapshot", () => {
