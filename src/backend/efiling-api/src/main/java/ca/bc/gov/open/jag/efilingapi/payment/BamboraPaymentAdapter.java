@@ -2,10 +2,7 @@ package ca.bc.gov.open.jag.efilingapi.payment;
 
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.PaymentsApi;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.handler.ApiException;
-import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.Custom;
-import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.PaymentRequest;
-import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.PaymentResponse;
-import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.ProfilePurchase;
+import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.*;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingPayment;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingTransaction;
@@ -14,7 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
+import java.util.HashMap;
 
 @Service
 public class BamboraPaymentAdapter {
@@ -34,13 +33,22 @@ public class BamboraPaymentAdapter {
 
     public EfilingTransaction makePayment(EfilingPayment efilingPayment) {
 
+        HashMap<CardPurchaseResponse.CardTypeEnum, String> types = new HashMap<>();
+
+        types.put(CardPurchaseResponse.CardTypeEnum.AM,"AX");
+        types.put(CardPurchaseResponse.CardTypeEnum.NN,"NN");
+        types.put(CardPurchaseResponse.CardTypeEnum.MC,"M");
+        types.put(CardPurchaseResponse.CardTypeEnum.VI,"VI");
+        types.put(CardPurchaseResponse.CardTypeEnum.DI,"DI");
+        types.put(CardPurchaseResponse.CardTypeEnum.JB,"JB");
+
         EfilingTransaction result = new EfilingTransaction();
 
         try {
 
             PaymentRequest payload = buildPaymentRequest(efilingPayment);
             PaymentResponse response = paymentsApi.makePayment(payload);
-            result.setEcommerceTransactionId(BigDecimal.valueOf(response.getMessageId()));
+            result.setEcommerceTransactionId(new BigDecimal(response.getId()));
             result.setEntDtm(DateUtils.getCurrentXmlDate());
             result.setInvoiceNo(response.getOrderNumber());
             result.setTransactonDtm(DateUtils.getCurrentXmlDate());
@@ -50,12 +58,13 @@ public class BamboraPaymentAdapter {
             result.setTransactionTypeCd("12");
             result.setReferenceMessageTxt(response.getMessage());
             result.setTransactionSubtypeCd("BNST");
-            //result.setProcessDt(response.getCreated());
+            result.setCreditCardTypeCd(types.get(response.getCard().getCardType()));
+            result.setProcessDt(DateUtils.getXmlDate(response.getCreated()));
 
 
             return result;
 
-        } catch (ApiException e) {
+        } catch (ApiException | DatatypeConfigurationException e) {
 
             logger.error("Bambora payment exception", e);
             throw new EfilingSubmissionServiceException("Bambora payment exception", e.getCause());
