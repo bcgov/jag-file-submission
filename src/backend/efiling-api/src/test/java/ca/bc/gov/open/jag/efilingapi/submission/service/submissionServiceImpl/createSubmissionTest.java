@@ -12,6 +12,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.EfilingTransaction;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
+import ca.bc.gov.open.sftp.starter.SftpService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -52,12 +53,17 @@ public class createSubmissionTest {
     @Mock
     private BamboraPaymentAdapter bamboraPaymentAdapterMock;
 
+    @Mock
+    private SftpService sftpServiceMock;
+
     @BeforeAll
     public void setUp(){
         MockitoAnnotations.initMocks(this);
         Mockito.when(efilingSubmissionServiceMock.submitFilingPackage(any(), any(), any())).thenReturn(BigDecimal.TEN);
         Mockito.when(bamboraPaymentAdapterMock.makePayment(any())).thenReturn(new EfilingTransaction());
-        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, null, new EfilingFilingPackageMapperImpl(),efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock, bamboraPaymentAdapterMock, sftpService);
+        Mockito.when(documentStoreMock.get(any(), any())).thenReturn(new byte[]());
+        Mockito.doNothing().when(sftpServiceMock).put(any(), any());
+        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, null, new EfilingFilingPackageMapperImpl(),efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock, bamboraPaymentAdapterMock, sftpServiceMock);
 
     }
 
@@ -74,6 +80,7 @@ public class createSubmissionTest {
                 .transactionId(TestHelpers.CASE_1)
                 .navigation(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
+
                 .clientApplication(TestHelpers.createClientApplication(TestHelpers.DISPLAY_NAME, TestHelpers.TYPE))
                 .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
                 .create());
