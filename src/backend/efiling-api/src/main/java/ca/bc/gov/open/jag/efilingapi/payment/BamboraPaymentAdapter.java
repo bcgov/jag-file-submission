@@ -22,11 +22,6 @@ public class BamboraPaymentAdapter {
 
     private final PaymentsApi paymentsApi;
 
-    private static final String COURT_SERVICES = "COURT SERVICES";
-    private static final int CARD_ID = 1;
-    private static final String DECLINED = "DEC";
-    private static final String APPROVED = "APP";
-
     public BamboraPaymentAdapter(PaymentsApi paymentsApi) {
         this.paymentsApi = paymentsApi;
     }
@@ -53,14 +48,14 @@ public class BamboraPaymentAdapter {
             result.setInvoiceNo(response.getOrderNumber());
             result.setTransactonDtm(DateUtils.getCurrentXmlDate());
             result.setTransactionAmt(BigDecimal.valueOf(response.getAmount()));
-            result.setTransactionStateCd(response.getApproved() == CARD_ID ? APPROVED : DECLINED);
+            result.setTransactionStateCd(response.getApproved() == PaymentConstants.BAMBORA_APPROVAL_RESPONSE
+                    ? PaymentConstants.TRANSACTION_STATE_APPROVED : PaymentConstants.TRANSACTION_STATE_DECLINED);
             result.setApprovalCd(response.getAuthCode());
-            result.setTransactionTypeCd("12");
+            result.setTransactionTypeCd(PaymentConstants.TRANSACTION_TYPE_CD);
             result.setReferenceMessageTxt(response.getMessage());
-            result.setTransactionSubtypeCd("BNST");
+            result.setTransactionSubtypeCd(PaymentConstants.TRANSACTION_SUB_TYPE_CD);
             result.setCreditCardTypeCd(types.get(response.getCard().getCardType()));
             result.setProcessDt(DateUtils.getXmlDate(response.getCreated()));
-
 
             return result;
 
@@ -83,13 +78,13 @@ public class BamboraPaymentAdapter {
 
         Custom customReference = new Custom();
         customReference.setRef1(efilingPayment.getInternalClientNumber());
-        customReference.setRef2(COURT_SERVICES);
+        customReference.setRef2(PaymentConstants.COURT_SERVICES);
         customReference.setRef3(efilingPayment.getServiceId().toString());
         paymentRequest.setCustom(customReference);
 
         ProfilePurchase profilePurchase = new ProfilePurchase();
         profilePurchase.setCustomerCode(efilingPayment.getInternalClientNumber());
-        profilePurchase.setCardId(CARD_ID);
+        profilePurchase.setCardId(PaymentConstants.CARD_ID);
         profilePurchase.setComplete(true);
         paymentRequest.setPaymentProfile(profilePurchase);
         return paymentRequest;
