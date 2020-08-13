@@ -12,6 +12,7 @@ import Rush from "../rush/Rush";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import { getCreditCardAlerts } from "../../../modules/helpers/creditCardAlerts";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
+import { getJWTData } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 import { propTypes } from "../../../types/propTypes";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
 import { generateFileSummaryData } from "../../../modules/helpers/generateFileSummaryData";
@@ -67,14 +68,17 @@ const checkSubmitEnabled = (paymentAgreed, setSubmitBtnEnabled) => {
 export default function Payment({
   payment: { confirmationPopup, submissionId, courtData, files, submissionFee },
 }) {
+  const rushFlagExists = getJWTData().realm_access.roles.includes("rush_flag");
   const creditCardAlert =
     sessionStorage.getItem("cardRegistered") === "true"
       ? getCreditCardAlerts().existingCreditCard
       : getCreditCardAlerts().noCreditCard;
+
   const [paymentAgreed, setPaymentAgreed] = useState(false);
   const [submitBtnEnabled, setSubmitBtnEnabled] = useState(false);
   const [showPackageConfirmation, setShowPackageConfirmation] = useState(false);
   const [showRush, setShowRush] = useState(false);
+
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
   const rushSubmissionSidecard = getSidecardData(() => setShowRush(true))
@@ -159,7 +163,7 @@ export default function Payment({
         </section>
       </div>
       <div className="sidecard">
-        <Sidecard sideCard={rushSubmissionSidecard} />
+        {rushFlagExists && <Sidecard sideCard={rushSubmissionSidecard} />}
         <Sidecard sideCard={csoAccountDetailsSidecard} />
         <Sidecard sideCard={aboutCsoSidecard} />
       </div>

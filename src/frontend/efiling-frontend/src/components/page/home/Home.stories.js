@@ -39,6 +39,9 @@ const setRequiredStorage = () => {
     preferred_username: "username@bceid",
     name: "User Name",
     email: "username@example.com",
+    realm_access: {
+      roles: ["rush_flag"],
+    },
   });
   localStorage.setItem("jwt", token);
 };
