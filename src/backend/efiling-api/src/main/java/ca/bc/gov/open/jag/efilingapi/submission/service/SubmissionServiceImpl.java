@@ -190,7 +190,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private void redisStoreToSftpStore(byte[] inFile, String fileName, Submission submission) {
 
-        String newFileName = MessageFormat.format("upload/fh_{0}_{1}_{2}", submission.getId(), submission.getTransactionId(), fileName);
+        String newFileName = MessageFormat.format("fh_{0}_{1}_{2}", submission.getId(), submission.getTransactionId(), fileName);
 
         sftpService.put(new ByteArrayInputStream(inFile), newFileName);
 
