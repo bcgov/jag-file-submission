@@ -1,7 +1,14 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from "react";
+import React, { useState } from "react";
 import Dropzone from "react-dropzone";
-import { Radio, Callout, Button, Input, Textarea } from "shared-components";
+import {
+  Radio,
+  Callout,
+  Button,
+  Input,
+  Textarea,
+  DatePick,
+} from "shared-components";
 
 import "./Rush.css";
 
@@ -23,6 +30,8 @@ export default function Rush() {
     styling: "editable-white",
     isRequired: true,
   };
+
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   return (
     <div className="page">
@@ -52,6 +61,12 @@ export default function Rush() {
           onSelect={(val) => console.log(val)}
         />
         <Callout text={calloutText} />
+        <DatePick
+          label="Date"
+          isRequired
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+        />
         <Textarea
           id="detailed-reason"
           label="Clear and detailed reason(s)"
