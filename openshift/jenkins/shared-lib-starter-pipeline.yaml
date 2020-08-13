@@ -30,11 +30,6 @@ parameters:
   description: The remote URL of the repository with your application source code, support https and ssh
   required: true
   value:
-- name: gitUrl
-  displayName: Git Remote URL
-  description: The remote URL of the repository with your application source code, support https and ssh
-  required: true
-  value:
 - name: gitRef
   displayName: Git Branch
   description: The target branch of your git repository
