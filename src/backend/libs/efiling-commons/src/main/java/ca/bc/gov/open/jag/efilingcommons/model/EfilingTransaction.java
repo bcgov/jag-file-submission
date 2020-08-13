@@ -1,44 +1,56 @@
 package ca.bc.gov.open.jag.efilingcommons.model;
 
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.datatype.XMLGregorianCalendar;
+import org.joda.time.DateTime;
+
 import java.math.BigDecimal;
 
 public class EfilingTransaction {
+
     private String approvalCd;
-    private String bcOnlineAccountNo;
-    private String bcOnlineFeeCodeTxt;
-    private String bcOnlineResponseTypeTxt;
-    private String bcOnlineReturnCd;
-    private String bcOnlineReturnMessageTxt;
-    private String bcOnlineSequenceTxt;
-    private BigDecimal bcOnlineServiceFeeAmt;
-    private String bcOnlineTransactionTypeCd;
     private String creditCardTypeCd;
     private BigDecimal ecommerceTransactionId;
-    @XmlSchemaType(name = "dateTime")
-    private XMLGregorianCalendar entDtm;
+    private DateTime entDtm;
     private String entUserId;
     private String internalClientNo;
     private String invoiceNo;
-    private BigDecimal isoResponseCd;
-    @XmlSchemaType(name = "dateTime")
-    private XMLGregorianCalendar processDt;
-    private BigDecimal receiptReferenceNo;
+    private DateTime processDt;
     private String referenceMessageTxt;
-    private String responseCd;
     private BigDecimal serviceId;
-    private String sessionKeyNo;
-    private String terminalIdentifierNo;
     private BigDecimal transactionAmt;
     private String transactionStateCd;
-    private String transactionSubtypeCd;
-    private String transactionTypeCd;
-    @XmlSchemaType(name = "dateTime")
-    private XMLGregorianCalendar transactonDtm;
-    @XmlSchemaType(name = "dateTime")
-    private XMLGregorianCalendar updDtm;
-    private String updUserId;
+    private DateTime transactonDtm;
+
+    public EfilingTransaction(String approvalCd,
+                              String creditCardTypeCd,
+                              BigDecimal ecommerceTransactionId,
+                              DateTime entDtm,
+                              String entUserId,
+                              String internalClientNo,
+                              String invoiceNo,
+                              DateTime processDt,
+                              String referenceMessageTxt,
+                              BigDecimal serviceId,
+                              BigDecimal transactionAmt,
+                              String transactionStateCd,
+                              DateTime transactonDtm) {
+        this.approvalCd = approvalCd;
+        this.creditCardTypeCd = creditCardTypeCd;
+        this.ecommerceTransactionId = ecommerceTransactionId;
+        this.entDtm = entDtm;
+        this.entUserId = entUserId;
+        this.internalClientNo = internalClientNo;
+        this.invoiceNo = invoiceNo;
+        this.processDt = processDt;
+        this.referenceMessageTxt = referenceMessageTxt;
+        this.serviceId = serviceId;
+        this.transactionAmt = transactionAmt;
+        this.transactionStateCd = transactionStateCd;
+        this.transactonDtm = transactonDtm;
+    }
+
+    public EfilingTransaction() {
+
+    }
 
 
     public String getApprovalCd() {
@@ -47,70 +59,6 @@ public class EfilingTransaction {
 
     public void setApprovalCd(String approvalCd) {
         this.approvalCd = approvalCd;
-    }
-
-    public String getBcOnlineAccountNo() {
-        return bcOnlineAccountNo;
-    }
-
-    public void setBcOnlineAccountNo(String bcOnlineAccountNo) {
-        this.bcOnlineAccountNo = bcOnlineAccountNo;
-    }
-
-    public String getBcOnlineFeeCodeTxt() {
-        return bcOnlineFeeCodeTxt;
-    }
-
-    public void setBcOnlineFeeCodeTxt(String bcOnlineFeeCodeTxt) {
-        this.bcOnlineFeeCodeTxt = bcOnlineFeeCodeTxt;
-    }
-
-    public String getBcOnlineResponseTypeTxt() {
-        return bcOnlineResponseTypeTxt;
-    }
-
-    public void setBcOnlineResponseTypeTxt(String bcOnlineResponseTypeTxt) {
-        this.bcOnlineResponseTypeTxt = bcOnlineResponseTypeTxt;
-    }
-
-    public String getBcOnlineReturnCd() {
-        return bcOnlineReturnCd;
-    }
-
-    public void setBcOnlineReturnCd(String bcOnlineReturnCd) {
-        this.bcOnlineReturnCd = bcOnlineReturnCd;
-    }
-
-    public String getBcOnlineReturnMessageTxt() {
-        return bcOnlineReturnMessageTxt;
-    }
-
-    public void setBcOnlineReturnMessageTxt(String bcOnlineReturnMessageTxt) {
-        this.bcOnlineReturnMessageTxt = bcOnlineReturnMessageTxt;
-    }
-
-    public String getBcOnlineSequenceTxt() {
-        return bcOnlineSequenceTxt;
-    }
-
-    public void setBcOnlineSequenceTxt(String bcOnlineSequenceTxt) {
-        this.bcOnlineSequenceTxt = bcOnlineSequenceTxt;
-    }
-
-    public BigDecimal getBcOnlineServiceFeeAmt() {
-        return bcOnlineServiceFeeAmt;
-    }
-
-    public void setBcOnlineServiceFeeAmt(BigDecimal bcOnlineServiceFeeAmt) {
-        this.bcOnlineServiceFeeAmt = bcOnlineServiceFeeAmt;
-    }
-
-    public String getBcOnlineTransactionTypeCd() {
-        return bcOnlineTransactionTypeCd;
-    }
-
-    public void setBcOnlineTransactionTypeCd(String bcOnlineTransactionTypeCd) {
-        this.bcOnlineTransactionTypeCd = bcOnlineTransactionTypeCd;
     }
 
     public String getCreditCardTypeCd() {
@@ -125,15 +73,11 @@ public class EfilingTransaction {
         return ecommerceTransactionId;
     }
 
-    public void setEcommerceTransactionId(BigDecimal ecommerceTransactionId) {
-        this.ecommerceTransactionId = ecommerceTransactionId;
-    }
+    public void setEcommerceTransactionId(BigDecimal ecommerceTransactionId) { this.ecommerceTransactionId = ecommerceTransactionId; }
 
-    public XMLGregorianCalendar getEntDtm() {
-        return entDtm;
-    }
+    public DateTime getEntDtm() { return entDtm; }
 
-    public void setEntDtm(XMLGregorianCalendar entDtm) {
+    public void setEntDtm(DateTime entDtm) {
         this.entDtm = entDtm;
     }
 
@@ -161,28 +105,12 @@ public class EfilingTransaction {
         this.invoiceNo = invoiceNo;
     }
 
-    public BigDecimal getIsoResponseCd() {
-        return isoResponseCd;
-    }
-
-    public void setIsoResponseCd(BigDecimal isoResponseCd) {
-        this.isoResponseCd = isoResponseCd;
-    }
-
-    public XMLGregorianCalendar getProcessDt() {
+    public DateTime getProcessDt() {
         return processDt;
     }
 
-    public void setProcessDt(XMLGregorianCalendar processDt) {
+    public void setProcessDt(DateTime processDt) {
         this.processDt = processDt;
-    }
-
-    public BigDecimal getReceiptReferenceNo() {
-        return receiptReferenceNo;
-    }
-
-    public void setReceiptReferenceNo(BigDecimal receiptReferenceNo) {
-        this.receiptReferenceNo = receiptReferenceNo;
     }
 
     public String getReferenceMessageTxt() {
@@ -193,36 +121,12 @@ public class EfilingTransaction {
         this.referenceMessageTxt = referenceMessageTxt;
     }
 
-    public String getResponseCd() {
-        return responseCd;
-    }
-
-    public void setResponseCd(String responseCd) {
-        this.responseCd = responseCd;
-    }
-
     public BigDecimal getServiceId() {
         return serviceId;
     }
 
     public void setServiceId(BigDecimal serviceId) {
         this.serviceId = serviceId;
-    }
-
-    public String getSessionKeyNo() {
-        return sessionKeyNo;
-    }
-
-    public void setSessionKeyNo(String sessionKeyNo) {
-        this.sessionKeyNo = sessionKeyNo;
-    }
-
-    public String getTerminalIdentifierNo() {
-        return terminalIdentifierNo;
-    }
-
-    public void setTerminalIdentifierNo(String terminalIdentifierNo) {
-        this.terminalIdentifierNo = terminalIdentifierNo;
     }
 
     public BigDecimal getTransactionAmt() {
@@ -241,109 +145,12 @@ public class EfilingTransaction {
         this.transactionStateCd = transactionStateCd;
     }
 
-    public String getTransactionSubtypeCd() {
-        return transactionSubtypeCd;
-    }
-
-    public void setTransactionSubtypeCd(String transactionSubtypeCd) {
-        this.transactionSubtypeCd = transactionSubtypeCd;
-    }
-
-    public String getTransactionTypeCd() {
-        return transactionTypeCd;
-    }
-
-    public void setTransactionTypeCd(String transactionTypeCd) {
-        this.transactionTypeCd = transactionTypeCd;
-    }
-
-    public XMLGregorianCalendar getTransactonDtm() {
+    public DateTime getTransactonDtm() {
         return transactonDtm;
     }
 
-    public void setTransactonDtm(XMLGregorianCalendar transactonDtm) {
+    public void setTransactonDtm(DateTime transactonDtm) {
         this.transactonDtm = transactonDtm;
     }
 
-    public XMLGregorianCalendar getUpdDtm() {
-        return updDtm;
-    }
-
-    public void setUpdDtm(XMLGregorianCalendar updDtm) {
-        this.updDtm = updDtm;
-    }
-
-    public String getUpdUserId() {
-        return updUserId;
-    }
-
-    public void setUpdUserId(String updUserId) {
-        this.updUserId = updUserId;
-    }
-
-    public EfilingTransaction(String approvalCd,
-                              String bcOnlineAccountNo,
-                              String bcOnlineFeeCodeTxt,
-                              String bcOnlineResponseTypeTxt,
-                              String bcOnlineReturnCd,
-                              String bcOnlineReturnMessageTxt,
-                              String bcOnlineSequenceTxt,
-                              BigDecimal bcOnlineServiceFeeAmt,
-                              String bcOnlineTransactionTypeCd,
-                              String creditCardTypeCd,
-                              BigDecimal ecommerceTransactionId,
-                              XMLGregorianCalendar entDtm,
-                              String entUserId,
-                              String internalClientNo,
-                              String invoiceNo,
-                              BigDecimal isoResponseCd,
-                              XMLGregorianCalendar processDt,
-                              BigDecimal receiptReferenceNo,
-                              String referenceMessageTxt,
-                              String responseCd,
-                              BigDecimal serviceId,
-                              String sessionKeyNo,
-                              String terminalIdentifierNo,
-                              BigDecimal transactionAmt,
-                              String transactionStateCd,
-                              String transactionSubtypeCd,
-                              String transactionTypeCd,
-                              XMLGregorianCalendar transactonDtm,
-                              XMLGregorianCalendar updDtm,
-                              String updUserId) {
-        this.approvalCd = approvalCd;
-        this.bcOnlineAccountNo = bcOnlineAccountNo;
-        this.bcOnlineFeeCodeTxt = bcOnlineFeeCodeTxt;
-        this.bcOnlineResponseTypeTxt = bcOnlineResponseTypeTxt;
-        this.bcOnlineReturnCd = bcOnlineReturnCd;
-        this.bcOnlineReturnMessageTxt = bcOnlineReturnMessageTxt;
-        this.bcOnlineSequenceTxt = bcOnlineSequenceTxt;
-        this.bcOnlineServiceFeeAmt = bcOnlineServiceFeeAmt;
-        this.bcOnlineTransactionTypeCd = bcOnlineTransactionTypeCd;
-        this.creditCardTypeCd = creditCardTypeCd;
-        this.ecommerceTransactionId = ecommerceTransactionId;
-        this.entDtm = entDtm;
-        this.entUserId = entUserId;
-        this.internalClientNo = internalClientNo;
-        this.invoiceNo = invoiceNo;
-        this.isoResponseCd = isoResponseCd;
-        this.processDt = processDt;
-        this.receiptReferenceNo = receiptReferenceNo;
-        this.referenceMessageTxt = referenceMessageTxt;
-        this.responseCd = responseCd;
-        this.serviceId = serviceId;
-        this.sessionKeyNo = sessionKeyNo;
-        this.terminalIdentifierNo = terminalIdentifierNo;
-        this.transactionAmt = transactionAmt;
-        this.transactionStateCd = transactionStateCd;
-        this.transactionSubtypeCd = transactionSubtypeCd;
-        this.transactionTypeCd = transactionTypeCd;
-        this.transactonDtm = transactonDtm;
-        this.updDtm = updDtm;
-        this.updUserId = updUserId;
-    }
-
-    public EfilingTransaction() {
-
-    }
 }

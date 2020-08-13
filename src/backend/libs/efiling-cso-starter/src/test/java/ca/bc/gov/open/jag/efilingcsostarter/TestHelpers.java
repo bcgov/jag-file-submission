@@ -19,6 +19,7 @@ public class TestHelpers {
     public static final String CLIENT_REFERENCE_TXT = "CLIENTREFERENCETXT";
     public static final String COURT_FILE_NUMBER = "COURTFILENUMBER";
     public static final String DOCUMENTS_PROCESSED = "DOCUMENTPROCESSED";
+    public static final DateTime DATE_TIME = DateTime.parse("2018-05-05T11:50:55");
     public static final Date DATE = DateTime.parse("2018-05-05T11:50:55").toDate();
     public static final String SERVICE_RECEIVED_DTM_TEXT = "SERVICERECIEVEDTXT";
     public static final String SERVICE_SUBTYPE_CD = "SUBTYPE";
@@ -92,39 +93,22 @@ public class TestHelpers {
         return service;
     }
     public static EfilingTransaction createEfilingTransaction() throws DatatypeConfigurationException {
-        return new EfilingTransaction(
-                APPROVAL_CD,
-                BC_ONLINE_ACCOUNT_NO,
-                BC_ONLINE_FEE_CODE_TXT,
-                BC_ONLINE_RESPONSE_TYPE_TXT,
-                BC_ONLINE_RETURN_CD,
-                BC_ONLINE_RETURN_MESSAGE_TXT,
-                BC_ONLINE_SEQUENCE_TXT,
-                BigDecimal.TEN,
-                BC_ONLINE_TRANSACTION_TYPE_CD,
+
+        return new EfilingTransaction(APPROVAL_CD,
                 CREDIT_CARD_TYPE_CD,
                 BigDecimal.TEN,
-                getXmlDate(TestHelpers.DATE),
+                TestHelpers.DATE_TIME,
                 ENT_USER_ID,
                 INTERNAL_CLIENT_NO,
                 INVOICE_NO,
-                BigDecimal.TEN,
-                getXmlDate(TestHelpers.DATE),
-                BigDecimal.TEN,
+                TestHelpers.DATE_TIME,
                 REFERENCE_MESSAGE_TXT,
-                RESPONSE_CD,
                 BigDecimal.TEN,
-                SESSION_KEY_NO,
-                TERMINAL_IDENTIFIER_NO,
                 BigDecimal.TEN,
                 TRANSACTION_STATE_CD,
-                TRANSACTION_SUBTYPE_CD,
-                TRANSACTION_TYPE_CD,
-                getXmlDate(TestHelpers.DATE),
-                getXmlDate(TestHelpers.DATE),
-                UPD_USER_ID
-        );
+                TestHelpers.DATE_TIME);
     }
+
     public static Service createService() throws DatatypeConfigurationException {
         Service service = new Service();
         service.setAccountId(BigDecimal.TEN);
