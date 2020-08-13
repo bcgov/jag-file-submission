@@ -11,6 +11,7 @@ import ConfirmationPopup, {
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import { getCreditCardAlerts } from "../../../modules/helpers/creditCardAlerts";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
+import { getJWTData } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 import { propTypes } from "../../../types/propTypes";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
 import { generateFileSummaryData } from "../../../modules/helpers/generateFileSummaryData";
@@ -76,6 +77,7 @@ export default function Payment({
   const [paymentAgreed, setPaymentAgreed] = useState(false);
   const [submitBtnEnabled, setSubmitBtnEnabled] = useState(false);
   const [showPackageConfirmation, setShowPackageConfirmation] = useState(false);
+  const rushFlagExists = getJWTData().realm_access.roles.includes("rush_flag");
 
   useEffect(() => {
     sessionStorage.setItem("currentPage", "payment");
@@ -142,7 +144,7 @@ export default function Payment({
         </section>
       </div>
       <div className="sidecard">
-        <Sidecard sideCard={rushSubmissionSidecard} />
+        {rushFlagExists && <Sidecard sideCard={rushSubmissionSidecard} />}
         <Sidecard sideCard={csoAccountDetailsSidecard} />
         <Sidecard sideCard={aboutCsoSidecard} />
       </div>
