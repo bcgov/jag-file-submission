@@ -1,0 +1,231 @@
+apiVersion: v1
+kind: Template
+labels:
+  template: shared-lib-starter-pipeline
+message: |-
+    A Jenkins server must be instantiated in this project to manage
+    the Pipeline BuildConfig created by this template.  You will be able to log in to
+    it using your OpenShift user credentials.
+metadata:
+  annotations:
+    openshift.io/display-name: CHANGE LATER
+    description: |-
+      This is a template pipeline for a project with shared libraries to be pushed to Nexus
+    iconClass: icon-jenkins
+    tags: instant-app,jenkins
+  name: pipeline-build-template
+parameters:
+- description: The name assigned to all of the frontend objects defined in this template.
+  displayName: Name
+  name: appName
+  required: true
+  value: 
+- description: The OpenShift Namespace prefix where the ImageStreams reside.
+  displayName: Namespace Prefix (Prefix for each namespace ie prefix-tools, prefix-dev etc)
+  name: namespacePrefix
+  required: true
+  value:
+- name: gitUrl
+  displayName: Git Remote URL
+  description: The remote URL of the repository with your application source code, support https and ssh
+  required: true
+  value:
+- name: gitUrl
+  displayName: Git Remote URL
+  description: The remote URL of the repository with your application source code, support https and ssh
+  required: true
+  value:
+- name: gitRef
+  displayName: Git Branch
+  description: The target branch of your git repository
+  required: true
+  value:
+- name: gitContextDir
+  displayName: Git Context Directory
+  description: Where your POM file is
+  required: true
+  value:
+- name: mavenProfile
+  displayName: Maven Project
+  description: What Maven Profile do you use to build the project
+  required: true
+  value:
+
+objects:
+- apiVersion: build.openshift.io/v1
+    kind: BuildConfig
+    metadata:
+    labels:
+        application: ${appName}
+        template: master-build-pipeline
+    name: ${appName}
+    namespace: ${namespacePrefix}-tools
+    spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources:
+        limits:
+        cpu: '6'
+        memory: 2Gi
+        requests:
+        cpu: '4'
+        memory: 1Gi
+    runPolicy: Serial
+    source:
+        git:
+        ref: ${gitRef}
+        uri: ${gitUrl}
+        type: Git
+    strategy:
+        jenkinsPipelineStrategy:
+        env:
+            - name: APP_NAME
+              value: ${appName}
+            - name: LIFECYCLE_WEBHOOK
+            - name: GIT_SOURCE_URL
+              value: ${gitUrl}
+            - name: GIT_SOURCE_REF
+              value: ${gitRef}
+            - name: GIT_CREDENTIALS_ID
+            - name: GIT_CONTEXT_DIR
+              value: ${gitContextDir}
+            - name: CHECKOUT_SRC
+              value: '${gitCheckoutRequired}'
+            - name: JENKINS_POD
+              value: maven'
+            - name: TOOLS_NAMESPACE
+              value: ${namespacePrefix}-tools
+            - name: DEV_NAMESPACE
+              value: ${namespacePrefix}-dev
+            - name: TEST_NAMESPACE
+              value: ${namespacePrefix}-test
+            - name: PROD_NAMESPACE
+              value: ${namespacePrefix}-prod
+            - name: NEXUS_VERSION
+              value: nexus3
+            - name: NEXUS_PROTOCOL
+              value: http
+            - name: NEXUS_URL
+              value: 'nexus:8081'
+            - name: NEXUS_SNAPSHOT_REPOSITORY
+              value: fla-backend-snapshots
+            - name: NEXUS_RELEASE_REPOSITORY
+              value: fla-backend-releases
+            - name: NEXUS_CREDENTIAL_ID
+              value: nexus-credentials
+        jenkinsfile: 
+            try {
+                node {
+                    stage("Initialize") {
+                        project = env.BUILD
+                    }
+                }
+
+                node('maven') {
+
+                    stage("Checkout") {
+                        git url: "${GIT_SOURCE_URL}", branch: "${GIT_SOURCE_REF}"
+                    }
+
+                    stage("Build JARs") {
+                        sh "mvn clean package -f.${gitContextDir} -P ${mavenProfile}"
+                    }
+
+                    stage('Push to Nexus'){
+                        // Read POM xml file using 'readMavenPom' step , this step 'readMavenPom' is included in: https://plugins.jenkins.io/pipeline-utility-steps
+                        pom = readMavenPom file: ".${gitContextDir}/pom.xml";
+                        // Find built artifact under target folder
+                        filesByGlob = findFiles(glob: "**/target/*.jar");
+                        pomsByGlob = findFiles(glob: "**/target/*.pom");
+
+                        echo "Found ${filesByGlob.length} JARS"
+                        echo "Found ${filesByGlob.length} POMS"
+                        for(file in filesByGlob){
+                            // Print some info from the artifact found
+                            echo "${file.name} ${file.path} ${file.directory} ${file.length} ${file.lastModified}"
+                        }
+                        for(file in pomsByGlob){
+                            // Print some info from the artifact found
+                            echo "${file.name} ${file.path} ${file.directory} ${file.length} ${file.lastModified}"
+                        }
+                        // Promote all the JARS
+                        filesByGlob.each {
+                            echo "${it.name} ${it.path} ${it.directory} ${it.length} ${it.lastModified}"
+                            // Extract the path from the File found
+                            artifactPath = it.path;
+                            // Assign to a boolean response verifying If the artifact name exists
+                            artifactExists = fileExists artifactPath;
+                            if(artifactExists) {
+                                pomPath = it.path.replace("target/${it.name}", "pom.xml")
+                                pomExists = fileExists pomPath;
+                                if(!pomExists){
+                                    echo "POM Does not exist!!!"
+                                }
+                                artifactPom = readMavenPom file: pomPath;
+                                echo "*** File: ${artifactPath}, group: ${artifactPom.groupId}, packaging: ${artifactPom.packaging}, version ${artifactPom.version}";
+                                if (artifactPom.version.matches("(.*)SNAPSHOT")){
+                                    artifactRepo = NEXUS_SNAPSHOT_REPOSITORY
+                                }else{
+                                    artifactRepo = NEXUS_RELEASE_REPOSITORY
+                                }
+                                echo "VERSION!"
+                                echo "${NEXUS_VERSION}"
+                                nexusArtifactUploader(
+                                    nexusVersion: NEXUS_VERSION,
+                                    protocol: NEXUS_PROTOCOL,
+                                    nexusUrl: NEXUS_URL,
+                                    groupId: artifactPom.groupId,
+                                    version: artifactPom.version,
+                                    repository: artifactRepo,
+                                    credentialsId: NEXUS_CREDENTIAL_ID,
+                                    artifacts: [
+                                        // Artifact generated such as .jar, .ear and .war files.
+                                        [
+                                            artifactId: artifactPom.artifactId,
+                                            classifier: '',
+                                            file: artifactPath,
+                                            type: 'jar'
+                                        ],
+                                        // Lets upload the pom.xml file for additional information for Transitive dependencies
+                                        [
+                                            artifactId: artifactPom.artifactId,
+                                            classifier: '',
+                                            file: pomPath,
+                                            type: "pom"
+                                        ]
+                                    ]
+                                );
+                            } else {
+                                error "*** File: ${artifactPath}, could not be found";
+                            }
+                        }
+                        // Set the upload repo for parent pom
+                        if (pom.version.matches("(.*)SNAPSHOT")){
+                            artifactRepo = NEXUS_SNAPSHOT_REPOSITORY
+                        }else{
+                            artifactRepo = NEXUS_RELEASE_REPOSITORY
+                        }
+                    }
+                }
+            } catch (err) {
+                echo "in catch block"
+                
+                currentBuild.result = 'FAILURE'
+                env.ERR = "${err}"
+                node {
+                    sh "curl -XPOST '${LIFECYCLE_WEBHOOK}' -H 'Content-type: application/json' --data '{\"username\":\"The Pipe Lion\",\"icon_emoji\":\":lion_face:\",\"text\": \"${APP_NAME} Pipeline Failure - ${ERR}\"}'"
+                }
+                echo "Caught: ${err}"
+                throw err
+            }
+        type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+        - type: ConfigChange
+        - github:
+            secret: 4xF3AnBUQi
+        type: GitHub
+    status:
+    lastVersion: 0 
