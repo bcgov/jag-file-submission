@@ -144,6 +144,17 @@ services:
     networks:
       - fisu-net
 
+  #############################################################################################
+  ###                             SFTP SERVER                                               ###
+  #############################################################################################
+  sftp:
+    image: atmoz/sftp
+    ports:
+      - "22:22"
+    command: admin:admin:::upload
+    networks:
+      - fisu-net
+
 volumes:
   data-redis:
 

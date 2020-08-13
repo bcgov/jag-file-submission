@@ -53,7 +53,7 @@ public class updateDocumentsTest {
 
         Mockito.when(documentStoreMock.getDocumentDetails(any(), any(), any())).thenReturn(documentDetails);
 
-        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, new SubmissionMapperImpl(), null, efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock, null);
+        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, new SubmissionMapperImpl(), null, efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock, null, sftpService);
 
     }
 

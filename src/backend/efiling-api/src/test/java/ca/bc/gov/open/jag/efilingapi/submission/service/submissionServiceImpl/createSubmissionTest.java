@@ -57,7 +57,7 @@ public class createSubmissionTest {
         MockitoAnnotations.initMocks(this);
         Mockito.when(efilingSubmissionServiceMock.submitFilingPackage(any(), any(), any())).thenReturn(BigDecimal.TEN);
         Mockito.when(bamboraPaymentAdapterMock.makePayment(any())).thenReturn(new EfilingTransaction());
-        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, null, new EfilingFilingPackageMapperImpl(),efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock, bamboraPaymentAdapterMock);
+        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, null, new EfilingFilingPackageMapperImpl(),efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock, bamboraPaymentAdapterMock, sftpService);
 
     }
 

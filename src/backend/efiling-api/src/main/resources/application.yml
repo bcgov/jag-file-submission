@@ -58,6 +58,13 @@ bambora:
   apiPasscode: ${BAMBORA_APIPASSCODE}
   merchantId: ${BAMBORA_MERCHANTID}
 
+bcgov:
+  sftp:
+    host: ${SFTP_HOST:http://localhost}
+    port: ${SFTP_PORT:22}
+    username: ${SFTP_USERNAME:admin}
+    password: ${SFTP_PASSWORD:admin}
+
 info:
   app:
     name: @project.name@
