@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import Dropzone from "react-dropzone";
 import {
   Radio,
@@ -9,6 +10,7 @@ import {
   Textarea,
   DatePick,
 } from "shared-components";
+import Payment from "../payment/Payment";
 
 import "./Rush.css";
 
@@ -24,7 +26,7 @@ const generateInputField = (input, onChange) => {
   );
 };
 
-export default function Rush() {
+export default function Rush({ payment }) {
   const input = {
     isReadOnly: false,
     styling: "editable-white",
@@ -32,6 +34,11 @@ export default function Rush() {
   };
 
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [showPayment, setShowPayment] = useState(false);
+
+  if (showPayment) {
+    return <Payment payment={payment} />;
+  }
 
   return (
     <div className="page">
@@ -159,7 +166,7 @@ export default function Rush() {
         <section className="buttons pt-2">
           <Button
             label="Cancel Request"
-            onClick={() => console.log("show payment")}
+            onClick={() => setShowPayment(true)}
             styling="normal-white btn"
           />
           <Button
@@ -172,3 +179,7 @@ export default function Rush() {
     </div>
   );
 }
+
+Rush.propTypes = {
+  payment: PropTypes.object.isRequired,
+};
