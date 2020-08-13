@@ -88,6 +88,7 @@ public class BamboraPaymentAdapterTest {
 
         Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.makePayment(payment));
     }
+
     private PaymentResponse createPaymentResponse(int messageId, int approved) {
 
         PaymentResponse paymentResponse = new PaymentResponse();
