@@ -2,8 +2,8 @@ package ca.bc.gov.open.jag.efilingapi.payment;
 
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.PaymentsApi;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.handler.ApiException;
-import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.Card;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.CardPurchaseResponse;
+import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.Custom;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.PaymentResponse;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingPayment;
@@ -42,6 +42,7 @@ public class BamboraPaymentAdapterTest {
     @Test
     @DisplayName("Test Approved")
     public void withValidRequestPaymentIsApproved() throws ApiException {
+
         Mockito.when(paymentsApiMock.makePayment(any())).thenReturn(createPaymentResponse(123,1));
 
         EfilingPayment payment = new EfilingPayment(BigDecimal.TEN, BigDecimal.TEN, ORDER_NUMBER, INTERNAL_CLIENT_NUMBER);
@@ -53,9 +54,7 @@ public class BamboraPaymentAdapterTest {
         Assertions.assertEquals(BigDecimal.valueOf(10.00), efilingTransaction.getTransactionAmt());
         Assertions.assertEquals(ORDER_NUMBER, efilingTransaction.getInvoiceNo());
         Assertions.assertEquals("AX", efilingTransaction.getCreditCardTypeCd());
-        Assertions.assertEquals(PaymentConstants.TRANSACTION_TYPE_CD, efilingTransaction.getTransactionTypeCd());
         Assertions.assertEquals(MESSAGE, efilingTransaction.getReferenceMessageTxt());
-        Assertions.assertEquals(PaymentConstants.TRANSACTION_SUB_TYPE_CD, efilingTransaction.getTransactionSubtypeCd());
         Assertions.assertNotNull(efilingTransaction.getEntDtm());
         Assertions.assertNotNull(efilingTransaction.getTransactonDtm());
         Assertions.assertNotNull(efilingTransaction.getProcessDt());
@@ -74,9 +73,7 @@ public class BamboraPaymentAdapterTest {
         Assertions.assertEquals(BigDecimal.valueOf(1), efilingTransaction.getEcommerceTransactionId());
         Assertions.assertEquals(BigDecimal.valueOf(10.00), efilingTransaction.getTransactionAmt());
         Assertions.assertEquals("AX", efilingTransaction.getCreditCardTypeCd());
-        Assertions.assertEquals(PaymentConstants.TRANSACTION_TYPE_CD, efilingTransaction.getTransactionTypeCd());
         Assertions.assertEquals(MESSAGE, efilingTransaction.getReferenceMessageTxt());
-        Assertions.assertEquals(PaymentConstants.TRANSACTION_SUB_TYPE_CD, efilingTransaction.getTransactionSubtypeCd());
         Assertions.assertNotNull(efilingTransaction.getEntDtm());
         Assertions.assertNotNull(efilingTransaction.getTransactonDtm());
         Assertions.assertNotNull(efilingTransaction.getProcessDt());
@@ -92,6 +89,7 @@ public class BamboraPaymentAdapterTest {
         Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.makePayment(payment));
     }
     private PaymentResponse createPaymentResponse(int messageId, int approved) {
+
         PaymentResponse paymentResponse = new PaymentResponse();
         paymentResponse.setId("1");
         paymentResponse.setApproved(approved);
@@ -104,6 +102,11 @@ public class BamboraPaymentAdapterTest {
         card.setCardType(CardPurchaseResponse.CardTypeEnum.AM);
         paymentResponse.setCard(card);
         paymentResponse.setCreated(DateTime.now());
+
+        Custom custom = new Custom();
+
+        paymentResponse.setCustom(custom);
         return paymentResponse;
+
     }
 }
