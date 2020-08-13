@@ -117,4 +117,20 @@ describe("Payment Component", () => {
       "_self"
     );
   });
+
+  test("Click on request rush submission opens rush submission page", async () => {
+    mock.onGet(apiRequest).reply(200, {
+      documents: files,
+      court: courtData,
+      submissionFeeAmount: submissionFee,
+    });
+
+    const { container, asFragment } = render(<Payment payment={payment} />);
+
+    fireEvent.click(getByText(container, "Request rush submission"));
+
+    await waitFor(() => {});
+
+    expect(asFragment()).toMatchSnapshot();
+  });
 });

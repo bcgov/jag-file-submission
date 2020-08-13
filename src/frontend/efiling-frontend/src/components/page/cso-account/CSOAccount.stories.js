@@ -46,12 +46,8 @@ export const Default = () => defaultCreateAccount;
 
 export const Mobile = () => defaultCreateAccount;
 
-const mobileViewport = {
-  parameters: {
-    viewport: {
-      defaultViewport: "mobile2",
-    },
+Mobile.parameters = {
+  viewport: {
+    defaultViewport: "mobile2",
   },
 };
-
-Mobile.story = mobileViewport;

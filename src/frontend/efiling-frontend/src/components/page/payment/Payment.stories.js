@@ -30,12 +30,8 @@ export const Default = () => <Payment payment={payment} />;
 
 export const Mobile = () => <Payment payment={payment} />;
 
-const mobileViewport = {
-  parameters: {
-    viewport: {
-      defaultViewport: "mobile2",
-    },
+Mobile.parameters = {
+  viewport: {
+    defaultViewport: "mobile2",
   },
 };
-
-Mobile.story = mobileViewport;

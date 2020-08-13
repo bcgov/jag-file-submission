@@ -8,6 +8,7 @@ import ConfirmationPopup, {
   Table,
   Callout,
 } from "shared-components";
+import Rush from "../rush/Rush";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import { getCreditCardAlerts } from "../../../modules/helpers/creditCardAlerts";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
@@ -67,18 +68,21 @@ const checkSubmitEnabled = (paymentAgreed, setSubmitBtnEnabled) => {
 export default function Payment({
   payment: { confirmationPopup, submissionId, courtData, files, submissionFee },
 }) {
-  console.log(getJWTData());
-  const aboutCsoSidecard = getSidecardData().aboutCso;
-  const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
-  const rushSubmissionSidecard = getSidecardData().rushSubmission;
+  const rushFlagExists = getJWTData().realm_access.roles.includes("rush_flag");
   const creditCardAlert =
     sessionStorage.getItem("cardRegistered") === "true"
       ? getCreditCardAlerts().existingCreditCard
       : getCreditCardAlerts().noCreditCard;
+
   const [paymentAgreed, setPaymentAgreed] = useState(false);
   const [submitBtnEnabled, setSubmitBtnEnabled] = useState(false);
   const [showPackageConfirmation, setShowPackageConfirmation] = useState(false);
-  const rushFlagExists = getJWTData().realm_access.roles.includes("rush_flag");
+  const [showRush, setShowRush] = useState(false);
+
+  const aboutCsoSidecard = getSidecardData().aboutCso;
+  const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
+  const rushSubmissionSidecard = getSidecardData(() => setShowRush(true))
+    .rushSubmission;
 
   useEffect(() => {
     sessionStorage.setItem("currentPage", "payment");
@@ -94,6 +98,20 @@ export default function Payment({
       <PackageConfirmation
         packageConfirmation={{ confirmationPopup, submissionId }}
         csoAccountStatus={{ isNew: false }}
+      />
+    );
+  }
+
+  if (showRush) {
+    return (
+      <Rush
+        payment={{
+          confirmationPopup,
+          submissionId,
+          courtData,
+          files,
+          submissionFee,
+        }}
       />
     );
   }

@@ -56,7 +56,7 @@ const csoAccountDetails = () => {
   };
 };
 
-const rushSubmission = () => {
+const rushSubmission = (onClick) => {
   return {
     heading: "Rush/Urgent Submission",
     content: [
@@ -64,14 +64,15 @@ const rushSubmission = () => {
         If you wish to request that this package be submitted on an urgent
         (rush) basis, you must provide a reason for your request to be
         considered.&nbsp;
-        {/* TODO: fix url and blahs */}
-        <a
-          href="https://justice.gov.bc.ca/cso/about/index.do"
-          target="_blank"
-          rel="noopener noreferrer"
+        <span
+          onKeyDown={onClick}
+          role="button"
+          tabIndex={0}
+          className="file-href"
+          onClick={onClick}
         >
           Request rush submission
-        </a>
+        </span>
         .
       </p>,
     ],
@@ -111,10 +112,10 @@ const supremeCourtScheduling = () => {
   };
 };
 
-export function getSidecardData() {
+export function getSidecardData(onClick) {
   const aboutCsoCard = aboutCso();
   const csoAccountDetailsCard = csoAccountDetails();
-  const rushSubmissionCard = rushSubmission();
+  const rushSubmissionCard = rushSubmission(onClick);
   const amendmentsCard = amendments();
   const supremeCourtSchedulingCard = supremeCourtScheduling();
 

@@ -112,14 +112,12 @@ export const NoAccountExists = () => noAccountExistsComponent;
 
 export const NoAccountExistsMobile = () => noAccountExistsComponent;
 
-const mobileViewport = {
-  parameters: {
-    viewport: {
-      defaultViewport: "mobile2",
-    },
+const parameters = {
+  viewport: {
+    defaultViewport: "mobile2",
   },
 };
 
-ErrorMobile.story = mobileViewport;
-AccountExistsMobile.story = mobileViewport;
-NoAccountExistsMobile.story = mobileViewport;
+ErrorMobile.parameters = parameters;
+AccountExistsMobile.parameters = parameters;
+NoAccountExistsMobile.parameters = parameters;
