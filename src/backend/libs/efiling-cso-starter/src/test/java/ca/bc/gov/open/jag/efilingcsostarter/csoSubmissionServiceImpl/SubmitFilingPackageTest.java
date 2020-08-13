@@ -22,7 +22,6 @@ import org.mockito.MockitoAnnotations;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
-import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 
@@ -30,7 +29,6 @@ import static org.mockito.ArgumentMatchers.any;
 @DisplayName("Efiling Submission Test")
 public class SubmitFilingPackageTest {
 
-    private static final UUID CASE_1 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fe");
     private static final String INTERNAL_CLIENT_NUMBER = "internalClientNumber";
     private static final String CARD_TYPE_CD = "V";
     private static final String REFERENCE_MESSAGE_TXT = "message";
@@ -38,7 +36,6 @@ public class SubmitFilingPackageTest {
     private static final String APPROVAL_CD = "APP";
     private static final String INVOICE_NO = "1234";
     private static final String USER_ID = "userId";
-    private static final String SERVICE_ID = "12345";
     private static final BigDecimal SERVICE_ID1 = new BigDecimal(5);
     private static final BigDecimal TRANSACTION_AMT = new BigDecimal(2);
     private static final DateTime TRANSACTON_DTM = DateTime.now();
