@@ -330,13 +330,13 @@ registered to my account. Statutory fees will be processed when documents are fi
               >
                 <p>
                   If you wish to request that this package be submitted on an urgent (rush) basis, you must provide a reason for your request to be considered. 
-                  <a
-                    href="https://justice.gov.bc.ca/cso/about/index.do"
-                    rel="noopener noreferrer"
-                    target="_blank"
+                  <span
+                    class="file-href"
+                    role="button"
+                    tabindex="0"
                   >
                     Request rush submission
-                  </a>
+                  </span>
                   .
                 </p>
               </span>
@@ -827,13 +827,13 @@ registered to my account. Statutory fees will be processed when documents are fi
               >
                 <p>
                   If you wish to request that this package be submitted on an urgent (rush) basis, you must provide a reason for your request to be considered. 
-                  <a
-                    href="https://justice.gov.bc.ca/cso/about/index.do"
-                    rel="noopener noreferrer"
-                    target="_blank"
+                  <span
+                    class="file-href"
+                    role="button"
+                    tabindex="0"
                   >
                     Request rush submission
-                  </a>
+                  </span>
                   .
                 </p>
               </span>

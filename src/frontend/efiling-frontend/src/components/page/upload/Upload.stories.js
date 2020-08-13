@@ -18,12 +18,8 @@ export const Default = () => <Upload upload={upload} />;
 
 export const Mobile = () => <Upload upload={upload} />;
 
-const mobileViewport = {
-  parameters: {
-    viewport: {
-      defaultViewport: "mobile2",
-    },
+Mobile.parameters = {
+  viewport: {
+    defaultViewport: "mobile2",
   },
 };
-
-Mobile.story = mobileViewport;
