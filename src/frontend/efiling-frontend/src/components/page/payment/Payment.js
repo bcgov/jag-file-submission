@@ -67,6 +67,7 @@ const checkSubmitEnabled = (paymentAgreed, setSubmitBtnEnabled) => {
 export default function Payment({
   payment: { confirmationPopup, submissionId, courtData, files, submissionFee },
 }) {
+  console.log(getJWTData());
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
   const rushSubmissionSidecard = getSidecardData().rushSubmission;
