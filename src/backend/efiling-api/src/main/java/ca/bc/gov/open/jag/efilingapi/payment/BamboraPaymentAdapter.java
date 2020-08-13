@@ -27,16 +27,6 @@ public class BamboraPaymentAdapter {
     }
 
     public EfilingTransaction makePayment(EfilingPayment efilingPayment) {
-
-        HashMap<CardPurchaseResponse.CardTypeEnum, String> types = new HashMap<>();
-
-        types.put(CardPurchaseResponse.CardTypeEnum.AM,"AX");
-        types.put(CardPurchaseResponse.CardTypeEnum.NN,"NN");
-        types.put(CardPurchaseResponse.CardTypeEnum.MC,"M");
-        types.put(CardPurchaseResponse.CardTypeEnum.VI,"VI");
-        types.put(CardPurchaseResponse.CardTypeEnum.DI,"DI");
-        types.put(CardPurchaseResponse.CardTypeEnum.JB,"JB");
-
         EfilingTransaction result = new EfilingTransaction();
 
         try {
@@ -54,7 +44,7 @@ public class BamboraPaymentAdapter {
             result.setTransactionTypeCd(PaymentConstants.TRANSACTION_TYPE_CD);
             result.setReferenceMessageTxt(response.getMessage());
             result.setTransactionSubtypeCd(PaymentConstants.TRANSACTION_SUB_TYPE_CD);
-            result.setCreditCardTypeCd(types.get(response.getCard().getCardType()));
+            result.setCreditCardTypeCd(PaymentConstants.CARD_TYPES.get(response.getCard().getCardType()));
             result.setProcessDt(DateUtils.getXmlDate(response.getCreated()));
 
             return result;
