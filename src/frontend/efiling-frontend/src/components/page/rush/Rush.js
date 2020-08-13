@@ -67,8 +67,10 @@ export default function Rush() {
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}
         />
+        <br />
         <Textarea
           id="detailed-reason"
+          isRequired
           label="Clear and detailed reason(s)"
           onChange={(val) => console.log(val)}
         />
