@@ -55,13 +55,14 @@ exports[`Storyshots Home Default 1`] = `
         </div>
         <br />
         <div
-          class="text-label"
+          class="input-label"
         >
           <label
             for="1"
           >
             Provide filing package JSON data:
           </label>
+           
         </div>
         <textarea
           class="text-input"
@@ -228,13 +229,14 @@ exports[`Storyshots Home Mobile 1`] = `
         </div>
         <br />
         <div
-          class="text-label"
+          class="input-label"
         >
           <label
             for="1"
           >
             Provide filing package JSON data:
           </label>
+           
         </div>
         <textarea
           class="text-input"

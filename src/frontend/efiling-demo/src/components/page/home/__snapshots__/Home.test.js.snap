@@ -55,13 +55,14 @@ exports[`Home Component matches the snapshot 1`] = `
         </div>
         <br />
         <div
-          class="text-label"
+          class="input-label"
         >
           <label
             for="1"
           >
             Provide filing package JSON data:
           </label>
+           
         </div>
         <textarea
           class="text-input"
