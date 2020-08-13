@@ -31,9 +31,9 @@ public class BamboraPaymentAdapter {
         HashMap<CardPurchaseResponse.CardTypeEnum, String> types = new HashMap<>();
 
         types.put(CardPurchaseResponse.CardTypeEnum.AM,"AX");
-        //This seems to have been consolidated
-        types.put(CardPurchaseResponse.CardTypeEnum.NN_VI,"NN'VI");
+        types.put(CardPurchaseResponse.CardTypeEnum.NN,"NN");
         types.put(CardPurchaseResponse.CardTypeEnum.MC,"M");
+        types.put(CardPurchaseResponse.CardTypeEnum.VI,"VI");
         types.put(CardPurchaseResponse.CardTypeEnum.DI,"DI");
         types.put(CardPurchaseResponse.CardTypeEnum.JB,"JB");
 
