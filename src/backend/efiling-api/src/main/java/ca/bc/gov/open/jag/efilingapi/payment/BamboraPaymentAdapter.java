@@ -19,13 +19,14 @@ import java.math.BigDecimal;
 @Service
 public class BamboraPaymentAdapter {
 
-    public static final String COURT_SERVICES = "COURT SERVICES";
-    public static final int CARD_ID = 1;
-    public static final String DECLINED = "DEC";
-    public static final String APPROVED = "APP";
     Logger logger = LoggerFactory.getLogger(BamboraPaymentAdapter.class);
 
     private final PaymentsApi paymentsApi;
+
+    private static final String COURT_SERVICES = "COURT SERVICES";
+    private static final int CARD_ID = 1;
+    private static final String DECLINED = "DEC";
+    private static final String APPROVED = "APP";
 
     public BamboraPaymentAdapter(PaymentsApi paymentsApi) {
         this.paymentsApi = paymentsApi;
@@ -37,20 +38,28 @@ public class BamboraPaymentAdapter {
 
         try {
 
-            PaymentResponse response = paymentsApi.makePayment(buildPaymentRequest(efilingPayment));
+            PaymentRequest payload = buildPaymentRequest(efilingPayment);
+            PaymentResponse response = paymentsApi.makePayment(payload);
             result.setEcommerceTransactionId(BigDecimal.valueOf(response.getMessageId()));
             result.setEntDtm(DateUtils.getCurrentXmlDate());
+            result.setInvoiceNo(response.getOrderNumber());
             result.setTransactonDtm(DateUtils.getCurrentXmlDate());
             result.setTransactionAmt(BigDecimal.valueOf(response.getAmount()));
-            result.setResponseCd(response.getAuthCode());
-            result.setInvoiceNo(response.getOrderNumber());
-            result.setApprovalCd(response.getApproved() == CARD_ID ? APPROVED : DECLINED);
+            result.setTransactionStateCd(response.getApproved() == CARD_ID ? APPROVED : DECLINED);
+            result.setApprovalCd(response.getAuthCode());
+            result.setTransactionTypeCd("12");
+            result.setReferenceMessageTxt(response.getMessage());
+            result.setTransactionSubtypeCd("BNST");
+            //result.setProcessDt(response.getCreated());
+
 
             return result;
 
         } catch (ApiException e) {
+
             logger.error("Bambora payment exception", e);
             throw new EfilingSubmissionServiceException("Bambora payment exception", e.getCause());
+
         }
 
     }

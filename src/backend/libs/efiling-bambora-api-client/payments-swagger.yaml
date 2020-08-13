@@ -1489,17 +1489,6 @@ definitions:
       payment_method:
         type: string
         description: "Payment method"
-        enum:
-          [
-            "card",
-            "token",
-            "payment_profile",
-            "cash",
-            "cheque",
-            "interac",
-            "apple_pay",
-            "android_pay",
-          ]
       custom:
         $ref: "#/definitions/Custom"
       card:
