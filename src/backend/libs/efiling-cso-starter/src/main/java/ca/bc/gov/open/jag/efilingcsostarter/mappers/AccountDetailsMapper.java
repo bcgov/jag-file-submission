@@ -12,6 +12,7 @@ public interface AccountDetailsMapper {
 
     @Mapping(target = "accountId", source = "clientProfile.accountId")
     @Mapping(target = "clientId", source = "clientProfile.clientId")
+    @Mapping(target = "internalClientNumber", source = "clientProfile.client.internalClientNo")
     @Mapping(target = "firstName", source = "clientProfile.account.accountManager.givenNm")
     @Mapping(target = "lastName", source = "clientProfile.account.accountManager.surnameNm")
     @Mapping(target = "middleName", source = "clientProfile.account.accountManager.middleNm")

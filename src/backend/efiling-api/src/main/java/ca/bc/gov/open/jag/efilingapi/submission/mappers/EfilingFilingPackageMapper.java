@@ -35,6 +35,7 @@ public interface EfilingFilingPackageMapper {
 
     @Mapping(target = "clientId", source = "clientId")
     @Mapping(target = "accountId", source = "accountId")
+    @Mapping(target = "internalClientNumber", source = "internalClientNumber")
     @Mapping(target = "courtFileNumber", source = "filingPackage.court.fileNumber")
     @Mapping(target = "serviceTypeCd", constant = SubmissionConstants.SUBMISSION_FEE_TYPE)
     @Mapping(target = "serviceSubtypeCd", constant = SubmissionConstants.SUBMISSION_FEE_SUB_TYPE)

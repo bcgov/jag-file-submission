@@ -18,6 +18,7 @@ import ca.bc.gov.open.jag.efilingcsostarter.mappers.ServiceMapper;
 import java.math.BigDecimal;
 
 public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
+
     private final FilingFacadeBean filingFacadeBean;
     private final ServiceFacadeBean serviceFacadeBean;
     private final ServiceMapper serviceMapper;
@@ -43,7 +44,10 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
         Service createdService = createEfilingService(service, serviceSession);
 
-        updatePaymentForService(createdService, true, createPayment(paymentService, createdService, service.getSubmissionFeeAmount()));
+        updatePaymentForService(
+                createdService,
+                true,
+                createPayment(paymentService, createdService, service.getSubmissionFeeAmount(), service.getInternalClientNumber()));
 
         BigDecimal filingResult = filePackage(service, filingPackage);
 
@@ -51,6 +55,16 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         updateServiceComplete(createdService);
 
         return filingResult;
+
+    }
+
+    private String generateInvoiceNumber(String data) {
+
+        try {
+            return serviceFacadeBean.getNextInvoiceNumber(data);
+        } catch (ca.bc.gov.ag.csows.services.NestedEjbException_Exception e) {
+            throw new EfilingSubmissionServiceException("Exception while generating next invoice number", e.getCause());
+        }
 
     }
 
@@ -74,7 +88,6 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
     private void updatePaymentForService(Service service, Boolean feePaid, FinancialTransaction financialTransaction) {
 
-
         service.setFeePaidYn(String.valueOf(feePaid));
         service.getTransactions().add(financialTransaction);
 
@@ -86,9 +99,9 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
     }
 
-    private FinancialTransaction createPayment(EfilingPaymentService paymentService, Service service, BigDecimal submissionFeeAmount) {
+    private FinancialTransaction createPayment(EfilingPaymentService paymentService, Service service, BigDecimal submissionFeeAmount, String internalClientNumber) {
 
-        EfilingPayment efilingPayment = new EfilingPayment(service.getClientId(), submissionFeeAmount);
+        EfilingPayment efilingPayment = new EfilingPayment(service.getServiceId(), submissionFeeAmount, generateInvoiceNumber(Keys.INVOICE_PREFIX), internalClientNumber);
         EfilingTransaction payment = paymentService.makePayment(efilingPayment);
         return financialTransactionMapper.toTransaction(payment, service);
 

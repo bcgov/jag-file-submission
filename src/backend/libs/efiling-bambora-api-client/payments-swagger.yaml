@@ -1489,17 +1489,6 @@ definitions:
       payment_method:
         type: string
         description: "Payment method"
-        enum:
-          [
-            "card",
-            "token",
-            "payment_profile",
-            "cash",
-            "cheque",
-            "interac",
-            "apple_pay",
-            "android_pay",
-          ]
       custom:
         $ref: "#/definitions/Custom"
       card:
@@ -1525,7 +1514,7 @@ definitions:
         type: string
         maxLength: 2
         description: "The type of card used in the transaction. AM = American Express, DI = Diners, JB = JCB, MC = MasterCard, NN = Discover, VI = Visa"
-        enum: ["AM", "DI", "JB", "MC", "NN'VI"]
+        enum: ["AM", "DI", "JB", "MC", "NN", "VI"]
       last_four:
         type: string
         maxLength: 4
@@ -1992,7 +1981,7 @@ definitions:
         type: string
         maxLength: 2
         description: "The type of card associated with the profile. AM = American Express, DI = Diners, JB = JCB, MC = MasterCard, NN = Discover, VI = Visa"
-        enum: ["AM", "DI", "JB", "MC", "NN'VI"]
+        enum: ["AM", "DI", "JB", "MC", "NN", "VI"]
   ProfileGetCards:
     properties:
       code:

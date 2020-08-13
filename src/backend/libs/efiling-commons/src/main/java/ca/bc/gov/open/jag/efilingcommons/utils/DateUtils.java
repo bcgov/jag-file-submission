@@ -12,6 +12,12 @@ public class DateUtils {
 
     private DateUtils() {}
 
+    public static XMLGregorianCalendar getXmlDate(DateTime dateTime) throws DatatypeConfigurationException {
+        GregorianCalendar entryDate = new GregorianCalendar();
+        entryDate.setTime(dateTime.toDate());
+        return DatatypeFactory.newInstance().newXMLGregorianCalendar(entryDate);
+    }
+
     public static XMLGregorianCalendar getXmlDate(Date date) throws DatatypeConfigurationException {
         GregorianCalendar entryDate = new GregorianCalendar();
         entryDate.setTime(date);

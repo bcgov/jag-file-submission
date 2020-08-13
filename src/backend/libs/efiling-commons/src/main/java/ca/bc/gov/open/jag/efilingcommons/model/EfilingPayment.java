@@ -3,19 +3,30 @@ package ca.bc.gov.open.jag.efilingcommons.model;
 import java.math.BigDecimal;
 
 public class EfilingPayment {
-    private BigDecimal clientId;
-    private BigDecimal paymentAmount;
 
-    public BigDecimal getClientId() {
-        return clientId;
+    private BigDecimal serviceId;
+    private BigDecimal paymentAmount;
+    private String invoiceNumber;
+    private String internalClientNumber;
+
+    public EfilingPayment(BigDecimal serviceId, BigDecimal paymentAmount, String invoiceNumber, String internalClientNumber) {
+
+        this.serviceId = serviceId;
+        this.paymentAmount = paymentAmount;
+        this.invoiceNumber = invoiceNumber;
+        this.internalClientNumber = internalClientNumber;
+
+    }
+
+    public BigDecimal getServiceId() {
+        return serviceId;
     }
 
     public BigDecimal getPaymentAmount() {
         return paymentAmount;
     }
 
-    public EfilingPayment(BigDecimal clientId, BigDecimal paymentAmount) {
-        this.clientId = clientId;
-        this.paymentAmount = paymentAmount;
-    }
+    public String getInvoiceNumber() { return invoiceNumber; }
+
+    public String getInternalClientNumber() { return internalClientNumber; }
 }

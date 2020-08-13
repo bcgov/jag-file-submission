@@ -290,6 +290,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         if (accountDetails != null) {
             submission.setAccountId(accountDetails.getAccountId());
             submission.setClientId(accountDetails.getClientId());
+            submission.setInternalClientNumber(accountDetails.getInternalClientNumber());
             this.submissionStore.put(submission);
         }
     }

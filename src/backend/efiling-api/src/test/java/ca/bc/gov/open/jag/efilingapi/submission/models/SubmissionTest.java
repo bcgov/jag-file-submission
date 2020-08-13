@@ -23,6 +23,7 @@ public class SubmissionTest {
     private static final String MIDDLE_NAME = "middleName";
     private static final String EMAIL = "email";
     private static final String DISPLAYNAME = "DISPLAYNAME";
+    private static final String INTERNAL_CLIENT_NUMBER = "INTERNALCLIENT";
 
     @Test
     @DisplayName("CASE 1: testing constructor")
@@ -32,6 +33,7 @@ public class SubmissionTest {
                 UUID.randomUUID(),
                 BigDecimal.TEN,
                 BigDecimal.TEN,
+                INTERNAL_CLIENT_NUMBER,
                 UUID.randomUUID(),
                 TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()),
                 TestHelpers.createNavigation(CASE_1, CANCEL, ERROR),
@@ -42,6 +44,7 @@ public class SubmissionTest {
         Assertions.assertEquals(TYPE, actual.getClientApplication().getType());
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountId());
         Assertions.assertEquals(BigDecimal.TEN, actual.getClientId());
+        Assertions.assertEquals(INTERNAL_CLIENT_NUMBER, actual.getInternalClientNumber());
         Assertions.assertEquals(DISPLAYNAME, actual.getClientApplication().getDisplayName());
         Assertions.assertEquals(ERROR, actual.getNavigation().getError().getUrl());
         Assertions.assertEquals(CANCEL, actual.getNavigation().getCancel().getUrl());

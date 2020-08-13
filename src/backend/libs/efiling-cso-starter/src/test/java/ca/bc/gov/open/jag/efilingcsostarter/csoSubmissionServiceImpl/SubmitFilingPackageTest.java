@@ -13,6 +13,7 @@ import ca.bc.gov.open.jag.efilingcsostarter.TestHelpers;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.FilingPackageMapperImpl;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.FinancialTransactionMapperImpl;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.ServiceMapperImpl;
+import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
@@ -21,7 +22,6 @@ import org.mockito.MockitoAnnotations;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
-import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 
@@ -29,17 +29,29 @@ import static org.mockito.ArgumentMatchers.any;
 @DisplayName("Efiling Submission Test")
 public class SubmitFilingPackageTest {
 
-    public static final UUID CASE_1 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fe");
+    private static final String INTERNAL_CLIENT_NUMBER = "internalClientNumber";
+    private static final String CARD_TYPE_CD = "V";
+    private static final String REFERENCE_MESSAGE_TXT = "message";
+    private static final String TRANSACTION_STATE_CD = "12";
+    private static final String APPROVAL_CD = "APP";
+    private static final String INVOICE_NO = "1234";
+    private static final String USER_ID = "userId";
+    private static final BigDecimal SERVICE_ID1 = new BigDecimal(5);
+    private static final BigDecimal TRANSACTION_AMT = new BigDecimal(2);
+    private static final DateTime TRANSACTON_DTM = DateTime.now();
+    private static final DateTime PROCESS_DT = DateTime.now();
+    private static final DateTime ENT_DTM = DateTime.now();
+    private static final String APPROVED = "Approved";
     CsoSubmissionServiceImpl sut;
 
     @Mock
-    FilingFacadeBean filingFacadeBeanMock;
+    private FilingFacadeBean filingFacadeBeanMock;
 
     @Mock
-    ServiceFacadeBean serviceFacadeBean;
+    private ServiceFacadeBean serviceFacadeBean;
 
     @Mock
-    EfilingPaymentService efilingPaymentServiceMock;
+    private EfilingPaymentService efilingPaymentServiceMock;
 
     @BeforeEach
     public void init() throws NestedEjbException_Exception {
@@ -159,8 +171,20 @@ public class SubmitFilingPackageTest {
     }
     private EfilingTransaction createTransaction() {
         EfilingTransaction efilingTransaction = new EfilingTransaction();
-        efilingTransaction.setApprovalCd("Approved");
+        efilingTransaction.setApprovalCd(APPROVED);
         efilingTransaction.setEcommerceTransactionId(BigDecimal.TEN);
+        efilingTransaction.setInternalClientNo(INTERNAL_CLIENT_NUMBER);
+        efilingTransaction.setCreditCardTypeCd(CARD_TYPE_CD);
+        efilingTransaction.setReferenceMessageTxt(REFERENCE_MESSAGE_TXT);
+        efilingTransaction.setTransactionStateCd(TRANSACTION_STATE_CD);
+        efilingTransaction.setApprovalCd(APPROVAL_CD);
+        efilingTransaction.setEntDtm(ENT_DTM);
+        efilingTransaction.setInvoiceNo(INVOICE_NO);
+        efilingTransaction.setProcessDt(PROCESS_DT);
+        efilingTransaction.setTransactionAmt(TRANSACTION_AMT);
+        efilingTransaction.setTransactonDtm(TRANSACTON_DTM);
+        efilingTransaction.setEntUserId(USER_ID);
+        efilingTransaction.setServiceId(SERVICE_ID1);
         return efilingTransaction;
     }
 
