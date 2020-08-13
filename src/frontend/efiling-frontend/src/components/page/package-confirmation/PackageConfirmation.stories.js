@@ -23,7 +23,14 @@ const courtData = getCourtData();
 const submissionFeeAmount = 25.5;
 
 sessionStorage.setItem("csoAccountId", "123");
-const token = generateJWTToken({ preferred_username: "username@bceid" });
+const token = generateJWTToken({
+  preferred_username: "username@bceid",
+  name: "User Name",
+  email: "username@example.com",
+  realm_access: {
+    roles: ["rush_flag"],
+  },
+});
 localStorage.setItem("jwt", token);
 
 const LoadData = (props) => {
