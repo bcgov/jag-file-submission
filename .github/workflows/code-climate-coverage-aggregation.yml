@@ -215,7 +215,7 @@ jobs:
                   projectRel="${BASH_REMATCH[1]}"
                   echo "analyzing project: " $projectRel
                   projectName="${projectRel//\//-}"
-                  JACOCO_SOURCE_PATH=${{ github.workspace }}/jag-file-submission/src/backend/$projectRel/src/main/java ./cc-test-reporter format-coverage ${{github.workspace}}/src/backend/$projectRel/target/site/jacoco/jacoco.xml --input-type jacoco --output coverage/$projectName-codeclimate.json;
+                  JACOCO_SOURCE_PATH=${{ github.workspace }}/jag-file-submission/src/backend/$projectRel/src/main/java ./cc-test-reporter format-coverage ${{github.workspace}}/jag-file-submission/src/backend/$projectRel/target/site/jacoco/jacoco.xml --input-type jacoco --output coverage/$projectName-codeclimate.json;
                   echo "coverage generated: coverage/$projectName-codeclimate.json;"
               else
                   echo $file does not match
