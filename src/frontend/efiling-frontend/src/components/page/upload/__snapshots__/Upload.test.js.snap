@@ -589,11 +589,11 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
               >
                 <p>
                   CSO account 
-                  <b />
+                  <strong />
                    is linked to your Basic BCeID account 
-                  <b>
+                  <strong>
                     username
-                  </b>
+                  </strong>
                    and will be used to file documents. 
                   <a
                     href="https://justice.gov.bc.ca/cso/about/index.do"
@@ -1726,11 +1726,11 @@ exports[`Upload Component successful document upload works as expected 1`] = `
               >
                 <p>
                   CSO account 
-                  <b />
+                  <strong />
                    is linked to your Basic BCeID account 
-                  <b>
+                  <strong>
                     username
-                  </b>
+                  </strong>
                    and will be used to file documents. 
                   <a
                     href="https://justice.gov.bc.ca/cso/about/index.do"

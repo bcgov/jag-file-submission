@@ -9,7 +9,9 @@ import {
   Input,
   Textarea,
   DatePick,
+  Sidecard,
 } from "shared-components";
+import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import Payment from "../payment/Payment";
 
 import "./Rush.css";
@@ -32,6 +34,8 @@ export default function Rush({ payment }) {
     styling: "editable-white",
     isRequired: true,
   };
+  const aboutCsoSidecard = getSidecardData().aboutCso;
+  const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
 
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showPayment, setShowPayment] = useState(false);
@@ -175,6 +179,10 @@ export default function Rush({ payment }) {
             styling="normal-blue btn"
           />
         </section>
+      </div>
+      <div className="sidecard">
+        <Sidecard sideCard={csoAccountDetailsSidecard} />
+        <Sidecard sideCard={aboutCsoSidecard} />
       </div>
     </div>
   );

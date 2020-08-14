@@ -424,13 +424,13 @@ exports[`Storyshots Home Account Exists 1`] = `
                 >
                   <p>
                     CSO account 
-                    <b>
+                    <strong>
                       123
-                    </b>
+                    </strong>
                      is linked to your Basic BCeID account 
-                    <b>
+                    <strong>
                       username
-                    </b>
+                    </strong>
                      and will be used to file documents. 
                     <a
                       href="https://justice.gov.bc.ca/cso/about/index.do"
@@ -1033,13 +1033,13 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
                 >
                   <p>
                     CSO account 
-                    <b>
+                    <strong>
                       123
-                    </b>
+                    </strong>
                      is linked to your Basic BCeID account 
-                    <b>
+                    <strong>
                       username
-                    </b>
+                    </strong>
                      and will be used to file documents. 
                     <a
                       href="https://justice.gov.bc.ca/cso/about/index.do"
