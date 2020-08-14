@@ -27,7 +27,7 @@
     "react-scripts": "3.4.3",
     "react-test-renderer": "^16.12.0",
     "regenerator-runtime": "^0.13.7",
-    "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/0.5.2/shared-components-0.5.2.tgz"
+    "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/0.5.3/shared-components-0.5.3.tgz"
   },
   "scripts": {
     "start": "react-scripts start",
