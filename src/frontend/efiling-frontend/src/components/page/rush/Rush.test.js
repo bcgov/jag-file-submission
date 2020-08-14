@@ -36,11 +36,7 @@ describe("Rush Component", () => {
     const currentDate = new Date("2019-05-14T11:01:58.135Z");
     realDate = Date;
     global.Date = class extends Date {
-      constructor(date) {
-        if (date) {
-          return super(date);
-        }
-
+      constructor() {
         return currentDate;
       }
     };
