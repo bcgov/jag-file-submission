@@ -223,7 +223,7 @@ jobs:
       # List all formatted files in coverage directory
       - name: WHERE AM I - FORMATTED?
         run: |
-          ls ${{ github.workspace }}/coverage	          echo "WORKSPACE"
+          ls ${{ github.workspace }}/coverage
         if: ${{ env.ACTION_DEBUG }}
 
       # Count of all total coverage files available
