@@ -137,6 +137,7 @@ jobs:
       - name: Checkout File Submission Repository
         uses: actions/checkout@v2
         with: 
+          repository: bcgov/jag-file-submission
           path: jag-file-submission
       
       - name: Checkout Spring SFTP Starter Repository
@@ -148,9 +149,13 @@ jobs:
       - name: WHERE AM I?
         run : |
           ls
+          echo CD SPRING BOOT STARTERS
           cd spring-boot-starters
+          echo LIST
           ls
+          echo CD SRC
           cd src
+          echo LIST
           ls
       
       - name: Build Spring SFTP Starter
