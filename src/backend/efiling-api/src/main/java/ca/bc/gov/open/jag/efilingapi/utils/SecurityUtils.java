@@ -24,4 +24,16 @@ public class SecurityUtils {
         }
     }
 
+    public static String getClientId() {
+        try {
+
+                    Object whatever = ((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+                            .getKeycloakSecurityContext();
+                    return "yo";
+        } catch (Exception e) {
+
+            return "yo2";
+        }
+    }
+
 }

@@ -71,10 +71,27 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     public ResponseEntity<UploadSubmissionDocumentsResponse> uploadSubmissionDocuments(UUID xTransactionId, List<MultipartFile> files) {
 
         UUID submissionId = UUID.randomUUID();
-        MDC.put(Keys.EFILING_SUBMISSION_ID, submissionId.toString());
+
+        setClientMDC(submissionId, xTransactionId);
+
         logger.info("new request for efiling {}", submissionId);
 
+        clearClientMDC();
+
         return storeDocuments(submissionId, xTransactionId, files);
+
+    }
+
+    private void setClientMDC(UUID submissionId, UUID transactionId) {
+        MDC.put(Keys.MDC_EFILING_CLIENT_ID, SecurityUtils.getClientId());
+        MDC.put(Keys.MDC_EFILING_SUBMISSION_ID, submissionId.toString());
+        MDC.put(Keys.MDC_EFILING_TRANSACTION_ID, transactionId.toString());
+    }
+
+    private void clearClientMDC() {
+        MDC.remove(Keys.MDC_EFILING_CLIENT_ID);
+        MDC.remove(Keys.MDC_EFILING_SUBMISSION_ID);
+        MDC.remove(Keys.MDC_EFILING_TRANSACTION_ID);
     }
 
     @Override
@@ -86,10 +103,14 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         if(!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
 
-        MDC.put(Keys.EFILING_SUBMISSION_ID, submissionId.toString());
+        MDC.put(Keys.MDC_EFILING_SUBMISSION_ID, submissionId.toString());
         logger.info("additional documents received {}", submissionId);
 
-        return storeDocuments(submissionId, xTransactionId, files);
+        ResponseEntity responseEntity = storeDocuments(submissionId, xTransactionId, files);
+
+        clearClientMDC();
+
+        return responseEntity;
     }
 
     @Override
@@ -105,7 +126,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         if(!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
 
-        MDC.put(Keys.EFILING_SUBMISSION_ID, submissionId.toString());
+        MDC.put(Keys.MDC_EFILING_SUBMISSION_ID, submissionId.toString());
         logger.info("update documents received {}", submissionId);
         try {
             Submission submission = submissionService.updateDocuments(fromCacheSubmission.get(), updateDocumentRequest);
@@ -118,7 +139,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             return new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
 
         } finally {
-            MDC.remove(Keys.EFILING_SUBMISSION_ID);
+            MDC.remove(Keys.MDC_EFILING_SUBMISSION_ID);
         }
     }
 
@@ -128,7 +149,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
                                                           UUID submissionId,
                                                           String filename) {
 
-        MDC.put(Keys.EFILING_SUBMISSION_ID, submissionId.toString());
+        MDC.put(Keys.MDC_EFILING_SUBMISSION_ID, submissionId.toString());
 
         Document document = Document
                 .builder()
@@ -141,7 +162,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         if(bytes == null) return ResponseEntity.notFound().build();
 
-        MDC.remove(Keys.EFILING_SUBMISSION_ID);
+        MDC.remove(Keys.MDC_EFILING_SUBMISSION_ID);
 
         return ResponseEntity.ok(new ByteArrayResource(bytes));
 
@@ -151,7 +172,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @RolesAllowed("efiling-client")
     public ResponseEntity<GenerateUrlResponse> generateUrl(UUID xTransactionId, UUID submissionId, GenerateUrlRequest generateUrlRequest) {
 
-        MDC.put(Keys.EFILING_SUBMISSION_ID, submissionId.toString());
+        MDC.put(Keys.MDC_EFILING_SUBMISSION_ID, submissionId.toString());
 
         logger.info("Generate Url Request Received");
 
@@ -180,7 +201,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             response =  new ResponseEntity(buildEfilingError(ErrorResponse.CACHE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        MDC.remove(Keys.EFILING_SUBMISSION_ID);
+        MDC.remove(Keys.MDC_EFILING_SUBMISSION_ID);
 
         return response;
 
@@ -195,7 +216,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         if(!universalId.isPresent()) return new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
 
-        MDC.put(Keys.EFILING_SUBMISSION_ID, submissionId.toString());
+        MDC.put(Keys.MDC_EFILING_SUBMISSION_ID, submissionId.toString());
 
         Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
 
@@ -213,7 +234,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         response.setNavigation(fromCacheSubmission.get().getNavigation());
 
-        MDC.remove(Keys.EFILING_SUBMISSION_ID);
+        MDC.remove(Keys.MDC_EFILING_SUBMISSION_ID);
 
         return ResponseEntity.ok(response);
 
@@ -264,14 +285,14 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         if(!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
         ResponseEntity response;
-        MDC.put(Keys.EFILING_SUBMISSION_ID, submissionId.toString());
+        MDC.put(Keys.MDC_EFILING_SUBMISSION_ID, submissionId.toString());
         try {
             SubmitResponse result = submissionService.createSubmission(fromCacheSubmission.get());
             response = new ResponseEntity(result, HttpStatus.CREATED);
         } catch (EfilingSubmissionServiceException e) {
             response = new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        MDC.remove(Keys.EFILING_SUBMISSION_ID);
+        MDC.remove(Keys.MDC_EFILING_SUBMISSION_ID);
 
         return response;
     }
@@ -322,7 +343,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         logger.info("{} stored in cache", files.size());
 
-        MDC.remove(Keys.EFILING_SUBMISSION_ID);
+        MDC.remove(Keys.MDC_EFILING_SUBMISSION_ID);
 
         return ResponseEntity.ok(new UploadSubmissionDocumentsResponse().submissionId(submissionId).received(new BigDecimal(files.size())));
     }
