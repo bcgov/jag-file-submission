@@ -143,7 +143,7 @@ jobs:
       - name: Checkout Spring SFTP Starter Repository
         uses: actions/checkout@v2
         with: 
-          repostiory: bcgov/spring-boot-starters
+          repository: bcgov/spring-boot-starters
           path: spring-boot-starters
       
       - name: WHERE AM I?
