@@ -145,8 +145,11 @@ jobs:
           repostiory: bcgov/spring-boot-starters
           path: spring-boot-starters
       
+      - name: WHERE AM I?
+        run : ls
+      
       - name: Build Spring SFTP Starter
-        run: mvn -B verify -P all --file spring-boot-starters/src/backend/pom.xml
+        run: mvn -B verify -P all --file spring-boot-starters/src/pom.xml
       
       # Get Code Climate binary
       - name: Download Code Climate Binary
