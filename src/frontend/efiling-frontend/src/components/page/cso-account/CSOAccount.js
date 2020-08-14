@@ -27,6 +27,7 @@ export default function CSOAccount({
   const sideCard = getSidecardData().aboutCso;
   const [termsAccepted, acceptTerms] = useState(false);
   const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
 
   useEffect(() => {
     if (termsAccepted) {
@@ -37,6 +38,9 @@ export default function CSOAccount({
   }, [termsAccepted]);
 
   const createCSOAccount = ({ firstName, lastName, email }) => {
+    setShowLoader(true);
+    setContinueBtnEnabled(false);
+
     const applicantDetails = { firstName, lastName, email };
     axios
       .post("/csoAccount", applicantDetails)
@@ -51,12 +55,6 @@ export default function CSOAccount({
       .catch((error) => {
         errorRedirect(sessionStorage.getItem("errorUrl"), error);
       });
-  };
-
-  const continueButton = {
-    label: "Create CSO Account",
-    styling: "normal-blue btn",
-    onClick: () => createCSOAccount(applicantInfo),
   };
 
   const icon = (
@@ -102,11 +100,12 @@ export default function CSOAccount({
             cancelButton={confirmationPopup.cancelButton}
           />
           <Button
-            label={continueButton.label}
+            label="Create CSO Account"
             testId="create-cso-btn"
-            onClick={continueButton.onClick}
-            styling={continueButton.styling}
+            onClick={() => createCSOAccount(applicantInfo)}
+            styling="normal-blue btn"
             disabled={!continueBtnEnabled}
+            hasLoader={showLoader}
           />
         </section>
       </div>

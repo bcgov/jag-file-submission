@@ -49,7 +49,10 @@ const generateCourtDataTable = ({
   ];
 };
 
-const submitPackage = (submissionId) => {
+const submitPackage = (submissionId, setSubmitBtnEnabled, setShowLoader) => {
+  setShowLoader(true);
+  setSubmitBtnEnabled(false);
+
   axios
     .post(`/submission/${submissionId}/submit`, {})
     .then(() => {
@@ -78,6 +81,7 @@ export default function Payment({
   const [submitBtnEnabled, setSubmitBtnEnabled] = useState(false);
   const [showPackageConfirmation, setShowPackageConfirmation] = useState(false);
   const [showRush, setShowRush] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
 
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
@@ -155,9 +159,12 @@ export default function Payment({
             />
             <Button
               label="Submit"
-              onClick={() => submitPackage(submissionId)}
+              onClick={() => {
+                submitPackage(submissionId, setSubmitBtnEnabled, setShowLoader);
+              }}
               styling="normal-blue btn"
               disabled={!submitBtnEnabled}
+              hasLoader={showLoader}
             />
           </div>
         </section>
