@@ -235,14 +235,14 @@ jobs:
 
       # Sum the coverage reports
       - name: Summing the coverage reports generated
-        run: ./cc-test-reporter sum-coverage coverage/*-codeclimate.json -p ${{ env.FILE_COUNTER }} -o coverage/total-codeclimate.json
+        run: ./cc-test-reporter sum-coverage ./jag-file-submission/coverage/*-codeclimate.json -p ${{ env.FILE_COUNTER }} -o coverage/total-codeclimate.json
 
       # Upload JSON for debugging purposes
       - name: Upload JSON for debugging purposes
         uses: actions/upload-artifact@v2
         with:
           name: summed-java-coverage-report
-          path: coverage/total-codeclimate.json
+          path: ./jag-file-submission/coverage/total-codeclimate.json
 
   aggregation:
     name: Aggregate Spring Boot and Javascript reports
