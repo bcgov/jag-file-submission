@@ -1,7 +1,10 @@
 package ca.bc.gov.open.jag.efilingapi.account;
 
 import ca.bc.gov.open.jag.efilingapi.api.CsoAccountApiDelegate;
-import ca.bc.gov.open.jag.efilingapi.api.model.*;
+import ca.bc.gov.open.jag.efilingapi.api.model.Account;
+import ca.bc.gov.open.jag.efilingapi.api.model.CreateCsoAccountRequest;
+import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
+import ca.bc.gov.open.jag.efilingapi.api.model.UserFullDetails;
 import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
@@ -39,8 +42,7 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
     @Override
     @RolesAllowed("efiling-user")
     public ResponseEntity<UserFullDetails> createAccount(UUID xTransactionId, CreateCsoAccountRequest createAccountRequest) {
-
-
+        
         Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
 
         if(!universalId.isPresent()) return new ResponseEntity(
