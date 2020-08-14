@@ -9,7 +9,8 @@ import java.util.UUID;
 
 public class SecurityUtils {
 
-    private SecurityUtils() {}
+    private SecurityUtils() {
+    }
 
     public static Optional<UUID> getUniversalIdFromContext() {
 
@@ -26,13 +27,10 @@ public class SecurityUtils {
 
     public static String getClientId() {
         try {
-
-                    Object whatever = ((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-                            .getKeycloakSecurityContext();
-                    return "yo";
+            return ((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+                    .getKeycloakSecurityContext().getToken().getIssuedFor();
         } catch (Exception e) {
-
-            return "yo2";
+            return "unknown";
         }
     }
 
