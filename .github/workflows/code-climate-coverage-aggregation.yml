@@ -140,17 +140,12 @@ jobs:
           path: spring-boot-starters
           ref: v0.1.1
 
+      # TODO REMOVE AFTER SFTP IS IN MAVEN CENTRAL
       - name: Build Spring SFTP Starter
         run: mvn install -P all --file ./spring-boot-starters/src/pom.xml
-
-      - name: WHAT's up
-        run: ls
-
+        
       - name: Checkout File Submission Repository
         uses: actions/checkout@v2
-
-      - name: WHAT's up 2
-        run: ls
 
       # Get Code Climate binary
       - name: Download Code Climate Binary
