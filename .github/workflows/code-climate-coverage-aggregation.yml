@@ -200,15 +200,6 @@ jobs:
       - name: Build with Maven
         run: mvn -B verify -P all --file src/backend/pom.xml
 
-      - name: where am I?
-        run: | 
-          echo "before format?"
-          pwd
-          echo "below"
-          ls ..
-          echo "current"
-          ls
-
       # Formatting the BACKEND coverage reports generated (dynamically)
       - name: Format BACKEND coverage reports
         run: |
@@ -232,12 +223,8 @@ jobs:
       # List all formatted files in coverage directory
       - name: WHERE AM I - FORMATTED?
         run: |
-          echo "WORKSPACE"
-          ls ${{ github.workspace }}
-          echo "JAG FILE SUBMISSION"
-          ls ${{ github.workspace }}/jag-file-submission
-          echo "COVERAGE?"
-          #ls ${{ github.workspace }}/jag-file-submission/coverage
+          ls ${{ github.workspace }}/coverage	          echo "WORKSPACE"
+        if: ${{ env.ACTION_DEBUG }}
 
       # Count of all total coverage files available
       - name: Count files present
