@@ -147,7 +147,7 @@ jobs:
           path: spring-boot-starters
       
       - name: Build Spring SFTP Starter
-        run: mvn -B verify -P all --file ./spring-boot-starters/src/pom.xml
+        run: mvn install -P all --file ./spring-boot-starters/src/pom.xml
       
       - name: Copy SFTP Starter JAR into efiling-api target
         run: |
