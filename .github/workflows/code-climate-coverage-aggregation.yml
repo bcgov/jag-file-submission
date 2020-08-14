@@ -200,6 +200,11 @@ jobs:
       - name: Build with Maven
         run: mvn -B verify -P all --file src/backend/pom.xml
 
+      - name: where am I?
+        run: | 
+          echo "before format?"
+          ls
+
       # Formatting the BACKEND coverage reports generated (dynamically)
       - name: Format BACKEND coverage reports
         run: |
