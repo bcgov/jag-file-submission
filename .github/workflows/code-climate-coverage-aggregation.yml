@@ -205,7 +205,7 @@ jobs:
       # Formatting the BACKEND coverage reports generated (dynamically)
       - name: Format BACKEND coverage reports
         run: |
-          projectRelRegex="^\.\/src\/backend\/(.*)\/target\/site\/jacoco\/jacoco\.xml$"
+          projectRelRegex="^\.\jag-file-submission/src\/backend\/(.*)\/target\/site\/jacoco\/jacoco\.xml$"
           for file in $(find . -name "jacoco.xml")
           do
               echo $file
