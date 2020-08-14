@@ -133,27 +133,22 @@ jobs:
       ACTION_DEBUG: true
 
     steps:
-      
       - name: Checkout File Submission Repository
         uses: actions/checkout@v2
-        with: 
+        with:
           repository: bcgov/jag-file-submission
           path: jag-file-submission
-      
+
       - name: Checkout Spring SFTP Starter Repository
         uses: actions/checkout@v2
-        with: 
+        with:
           repository: bcgov/spring-boot-starters
           path: spring-boot-starters
-      
+          ref: v0.1.1
+
       - name: Build Spring SFTP Starter
         run: mvn install -P all --file ./spring-boot-starters/src/pom.xml
-      
-      - name: Copy SFTP Starter JAR into efiling-api target
-        run: |
-          mkdir ./jag-file-submission/src/backend/efiling-api/target
-          cp ${{ github.workspace }}/spring-boot-starters/src/spring-sftp-starter/target/spring-sftp-starter-0.1.1.jar ./jag-file-submission/src/backend/efiling-api/target
-      
+
       # Get Code Climate binary
       - name: Download Code Climate Binary
         run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
@@ -230,7 +225,7 @@ jobs:
           echo "JAG FILE SUBMISSION"
           ls ${{ github.workspace }}/jag-file-submission
           echo "COVERAGE?"
-          #ls ${{ github.workspace }}/jag-file-submission/coverage     
+          #ls ${{ github.workspace }}/jag-file-submission/coverage
 
       # Count of all total coverage files available
       - name: Count files present
