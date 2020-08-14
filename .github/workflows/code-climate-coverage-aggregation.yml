@@ -223,10 +223,10 @@ jobs:
           done
 
       # List all formatted files in coverage directory
-      - name: WHERE AM I - FORMATTED?
-        run: |
-          ls ${{ github.workspace }}/jag-file-submission/coverage
-        if: ${{ env.ACTION_DEBUG }}
+      #- name: WHERE AM I - FORMATTED?
+        #run: |
+          #ls ${{ github.workspace }}/jag-file-submission/coverage
+        #if: ${{ env.ACTION_DEBUG }}
 
       # Count of all total coverage files available
       - name: Count files present
