@@ -37,11 +37,7 @@ export default function CSOAccount({
     }
   }, [termsAccepted]);
 
-  const createCSOAccount = (
-    { firstName, lastName, email },
-    setShowLoader,
-    setContinueBtnEnabled
-  ) => {
+  const createCSOAccount = ({ firstName, lastName, email }) => {
     setShowLoader(true);
     setContinueBtnEnabled(false);
 
@@ -106,13 +102,7 @@ export default function CSOAccount({
           <Button
             label="Create CSO Account"
             testId="create-cso-btn"
-            onClick={() =>
-              createCSOAccount(
-                applicantInfo,
-                setShowLoader,
-                setContinueBtnEnabled
-              )
-            }
+            onClick={() => createCSOAccount(applicantInfo)}
             styling="normal-blue btn"
             disabled={!continueBtnEnabled}
             hasLoader={showLoader}
