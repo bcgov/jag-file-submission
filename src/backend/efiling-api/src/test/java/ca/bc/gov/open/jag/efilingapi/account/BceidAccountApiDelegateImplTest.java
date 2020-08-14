@@ -20,7 +20,7 @@ public class BceidAccountApiDelegateImplTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("200: should return bceid account")
     public void withAccountShouldReturnAccount() {
 
         ResponseEntity<BceidAccount> actual = sut.getBceidAccount(UUID.randomUUID());

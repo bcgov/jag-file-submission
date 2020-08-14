@@ -4,11 +4,13 @@ import ca.bc.gov.open.jag.efilingapi.api.BceidAccountApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.BceidAccount;
 import org.springframework.http.ResponseEntity;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.UUID;
 
 public class BceidAccountApiDelagateImpl implements BceidAccountApiDelegate {
 
     @Override
+    @RolesAllowed("efiling-user")
     public ResponseEntity<BceidAccount> getBceidAccount(UUID xTransactionId) {
 
         BceidAccount result = new BceidAccount();
