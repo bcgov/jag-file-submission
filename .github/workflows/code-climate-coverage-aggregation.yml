@@ -195,12 +195,12 @@ jobs:
 
       # Run Maven Verify to generate all jacoco reports
       - name: Build with Maven
-        run: mvn -B verify -P all --file jag-file-submission/src/backend/pom.xml
+        run: mvn -B verify -P all --file src/backend/pom.xml
 
       # Formatting the BACKEND coverage reports generated (dynamically)
       - name: Format BACKEND coverage reports
         run: |
-          projectRelRegex="^\.\jag-file-submission/src\/backend\/(.*)\/target\/site\/jacoco\/jacoco\.xml$"
+          projectRelRegex="^\.\/src\/backend\/(.*)\/target\/site\/jacoco\/jacoco\.xml$"
           for file in $(find . -name "jacoco.xml")
           do
               echo $file
@@ -210,7 +210,7 @@ jobs:
                   projectRel="${BASH_REMATCH[1]}"
                   echo "analyzing project: " $projectRel
                   projectName="${projectRel//\//-}"
-                  JACOCO_SOURCE_PATH=${{ github.workspace }}/jag-file-submission/src/backend/$projectRel/src/main/java ./cc-test-reporter format-coverage ${{github.workspace}}/jag-file-submission/src/backend/$projectRel/target/site/jacoco/jacoco.xml --input-type jacoco --output coverage/$projectName-codeclimate.json;
+                  JACOCO_SOURCE_PATH=${{ github.workspace }}/src/backend/$projectRel/src/main/java ./cc-test-reporter format-coverage ${{github.workspace}}/src/backend/$projectRel/target/site/jacoco/jacoco.xml --input-type jacoco --output coverage/$projectName-codeclimate.json;
                   echo "coverage generated: coverage/$projectName-codeclimate.json;"
               else
                   echo $file does not match
@@ -234,14 +234,14 @@ jobs:
 
       # Sum the coverage reports
       - name: Summing the coverage reports generated
-        run: ./cc-test-reporter sum-coverage ./jag-file-submission/coverage/*-codeclimate.json -p ${{ env.FILE_COUNTER }} -o coverage/total-codeclimate.json
+        run: ./cc-test-reporter sum-coverage coverage/*-codeclimate.json -p ${{ env.FILE_COUNTER }} -o coverage/total-codeclimate.json
 
       # Upload JSON for debugging purposes
       - name: Upload JSON for debugging purposes
         uses: actions/upload-artifact@v2
         with:
           name: summed-java-coverage-report
-          path: ./jag-file-submission/coverage/total-codeclimate.json
+          path: coverage/total-codeclimate.json
 
   aggregation:
     name: Aggregate Spring Boot and Javascript reports
