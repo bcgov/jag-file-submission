@@ -203,6 +203,10 @@ jobs:
       - name: where am I?
         run: | 
           echo "before format?"
+          pwd
+          echo "below"
+          ls ..
+          echo "current"
           ls
 
       # Formatting the BACKEND coverage reports generated (dynamically)
