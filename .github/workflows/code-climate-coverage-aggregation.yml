@@ -146,7 +146,12 @@ jobs:
           path: spring-boot-starters
       
       - name: WHERE AM I?
-        run : ls
+        run : |
+          ls
+          cd spring-boot-starters
+          ls
+          cd src
+          ls
       
       - name: Build Spring SFTP Starter
         run: mvn -B verify -P all --file ./spring-boot-starters/src/pom.xml
