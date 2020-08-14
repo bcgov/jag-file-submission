@@ -14,6 +14,19 @@ const submissionId = "abc123";
 const courtData = getCourtData();
 const files = getDocumentsData();
 const submissionFee = 25.5;
+let realDate;
+const currentDate = new Date("2019-05-14T11:01:58.135Z");
+
+realDate = Date;
+global.Date = class extends Date {
+  constructor(date) {
+    if (date) {
+      return super(date);
+    }
+
+    return currentDate;
+  }
+};
 
 const payment = {
   confirmationPopup,

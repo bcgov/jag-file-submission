@@ -9,6 +9,7 @@ import { generateJWTToken } from "../../../modules/helpers/authentication-helper
 import Rush from "./Rush";
 
 describe("Rush Component", () => {
+  let realDate;
   const confirmationPopup = getTestData();
   const submissionId = "abc123";
   const courtData = getCourtData();
@@ -32,9 +33,23 @@ describe("Rush Component", () => {
   localStorage.setItem("jwt", token);
 
   test("Matches the snapshot", () => {
+    const currentDate = new Date("2019-05-14T11:01:58.135Z");
+    realDate = Date;
+    global.Date = class extends Date {
+      constructor(date) {
+        if (date) {
+          return super(date);
+        }
+
+        return currentDate;
+      }
+    };
+
     const { asFragment } = render(<Rush payment={payment} />);
 
     expect(asFragment()).toMatchSnapshot();
+
+    global.Date = realDate;
   });
 
   test("Clicking on cancel request takes user back to payment page", () => {
