@@ -135,9 +135,6 @@ jobs:
     steps:
       - name: Checkout File Submission Repository
         uses: actions/checkout@v2
-        with:
-          repository: bcgov/jag-file-submission
-          path: jag-file-submission
 
       - name: Checkout Spring SFTP Starter Repository
         uses: actions/checkout@v2
