@@ -149,7 +149,7 @@ jobs:
         run : ls
       
       - name: Build Spring SFTP Starter
-        run: mvn -B verify -P all --file spring-boot-starters/src/pom.xml
+        run: mvn -B verify -P all --file ./spring-boot-starters/src/pom.xml
       
       # Get Code Climate binary
       - name: Download Code Climate Binary
