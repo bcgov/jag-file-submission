@@ -22,7 +22,7 @@ jag:
     global:
       demo: ${DEMO_MODE:false}
     navigation:
-      baseUrl: ${NAVIGATION_BASE_URL:https://httpbin.org/}
+      baseUrl: ${NAVIGATION_BASE_URL:http://localhost:3000/efiling}
     soap:
       clients:
         - client: ACCOUNT
@@ -57,6 +57,16 @@ jag:
 bambora:
   apiPasscode: ${BAMBORA_APIPASSCODE}
   merchantId: ${BAMBORA_MERCHANTID}
+
+bcgov:
+  sftp:
+    host: ${SFTP_HOST:localhost}
+    port: ${SFTP_PORT:22}
+    username: ${SFTP_USERNAME:admin}
+    password: ${SFTP_PASSWORD:admin}
+    remoteLocation: ${SFTP_REMOTELOCATION}
+    knownHostsFileName: ${SFTP_KNOWNHOSTS}
+    allowUnknownKeys: ${SFTP_ALLOWUNKNOWN:true}
 
 info:
   app:

@@ -14,11 +14,14 @@ import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
+import ca.bc.gov.open.sftp.starter.SftpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 
+import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
@@ -27,8 +30,6 @@ import java.util.stream.Collectors;
 public class SubmissionServiceImpl implements SubmissionService {
 
     Logger logger = LoggerFactory.getLogger(SubmissionServiceImpl.class);
-
-    public static final UUID FAKE_ACCOUNT = UUID.fromString("88da92db-0791-491e-8c58-1a969e67d2fb");
 
     private final SubmissionStore submissionStore;
 
@@ -48,6 +49,8 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private final BamboraPaymentAdapter bamboraPaymentAdapter;
 
+    private final SftpService sftpService;
+
     public SubmissionServiceImpl(
             SubmissionStore submissionStore,
             CacheProperties cacheProperties,
@@ -57,7 +60,7 @@ public class SubmissionServiceImpl implements SubmissionService {
             EfilingCourtService efilingCourtService,
             EfilingSubmissionService efilingSubmissionService,
             DocumentStore documentStore,
-            BamboraPaymentAdapter bamboraPaymentAdapter) {
+            BamboraPaymentAdapter bamboraPaymentAdapter, SftpService sftpService) {
         this.submissionStore = submissionStore;
         this.cacheProperties = cacheProperties;
         this.submissionMapper = submissionMapper;
@@ -67,6 +70,7 @@ public class SubmissionServiceImpl implements SubmissionService {
         this.efilingSubmissionService = efilingSubmissionService;
         this.documentStore = documentStore;
         this.bamboraPaymentAdapter = bamboraPaymentAdapter;
+        this.sftpService = sftpService;
     }
 
     @Override
@@ -89,6 +93,8 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     @Override
     public SubmitResponse createSubmission(Submission submission) {
+
+        uploadFiles(submission);
 
         EfilingService service = efilingFilingPackageMapper.toEfilingService(submission);
         service.setEntryDateTime(DateUtils.getCurrentXmlDate());
@@ -169,6 +175,20 @@ public class SubmissionServiceImpl implements SubmissionService {
         document.setIsSupremeCourtScheduling(documentProperties.getIsSupremeCourtScheduling());
 
         return document;
+
+    }
+
+    private void uploadFiles(Submission submission) {
+        submission.getFilingPackage().getDocuments().forEach(
+                document -> redisStoreToSftpStore(documentStore.get(MessageFormat.format("{0}_{1}_{2}",submission.getTransactionId(),submission.getId(),document.getName())), document.getName(), submission));
+
+    }
+
+    private void redisStoreToSftpStore(byte[] inFile, String fileName, Submission submission) {
+
+        String newFileName = MessageFormat.format("fh_{0}_{1}_{2}", submission.getId(), submission.getTransactionId(), fileName);
+
+        sftpService.put(new ByteArrayInputStream(inFile), newFileName);
 
     }
 

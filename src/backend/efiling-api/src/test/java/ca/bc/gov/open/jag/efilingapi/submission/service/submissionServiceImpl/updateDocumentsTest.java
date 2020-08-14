@@ -11,6 +11,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
+import ca.bc.gov.open.sftp.starter.SftpService;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -44,6 +45,7 @@ public class updateDocumentsTest {
     @Mock
     private EfilingSubmissionService efilingSubmissionServiceMock;
 
+
     @BeforeAll
     public void setUp() {
 
@@ -53,7 +55,7 @@ public class updateDocumentsTest {
 
         Mockito.when(documentStoreMock.getDocumentDetails(any(), any(), any())).thenReturn(documentDetails);
 
-        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, new SubmissionMapperImpl(), null, efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock, null);
+        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, new SubmissionMapperImpl(), null, efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock, null, null);
 
     }
 

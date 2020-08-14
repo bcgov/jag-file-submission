@@ -13,6 +13,7 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
     │   ├── backend                             # backend applications
     │   │   ├── efiling-api                     # efiling api
     │   │   ├── libs                            # backend libraries
+    │   │   |   ├── efiling-bambora-api-client  # bamabora swagger for client generation
     │   │   |   ├── efiling-bom                 # pom Bill Of Materials
     │   │   |   ├── efiling-commons             # efiling soap client that submits packages to CSO
     │   │   |   ├── efiling-cso-starter         # efiling soap client that contains all soap implementations
@@ -61,6 +62,12 @@ Click on the Credentials tab
 Set the password and set Temporary OFF
 
 Click Reset Password
+
+Create your known hosts for sftp upload. In command prompt navigate to /users/<YOURNAME>/.ssh/ and run command:
+
+```
+ssh-keyscan -p 22 localhost  >> known_hosts
+```
 
 If you want to integrate with the CSO application change the `MVN_PROFILE` to `default`
 

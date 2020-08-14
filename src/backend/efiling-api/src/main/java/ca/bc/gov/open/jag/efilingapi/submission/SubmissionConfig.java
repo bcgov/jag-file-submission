@@ -13,6 +13,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStoreImpl;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
+import ca.bc.gov.open.sftp.starter.SftpService;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,6 +42,7 @@ public class SubmissionConfig {
         return new EfilingFilingPackageMapperImpl();
     }
 
+
     @Bean
     public SubmissionService submissionService(SubmissionStore submissionStore,
                                                SubmissionMapper submissionMapper,
@@ -49,7 +51,8 @@ public class SubmissionConfig {
                                                EfilingCourtService efilingCourtService,
                                                EfilingSubmissionService efilingSubmissionService,
                                                DocumentStore documentStore,
-                                               BamboraPaymentAdapter bamboraPaymentAdapter) {
+                                               BamboraPaymentAdapter bamboraPaymentAdapter,
+                                               SftpService sftpService) {
 
         return new SubmissionServiceImpl(submissionStore,
                 cacheProperties,
@@ -59,7 +62,8 @@ public class SubmissionConfig {
                 efilingCourtService,
                 efilingSubmissionService,
                 documentStore,
-                bamboraPaymentAdapter);
+                bamboraPaymentAdapter,
+                sftpService);
     }
 
 }
