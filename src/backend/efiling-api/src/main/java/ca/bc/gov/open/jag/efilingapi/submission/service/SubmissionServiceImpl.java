@@ -19,9 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 
-import javax.validation.constraints.NotNull;
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -32,8 +30,6 @@ import java.util.stream.Collectors;
 public class SubmissionServiceImpl implements SubmissionService {
 
     Logger logger = LoggerFactory.getLogger(SubmissionServiceImpl.class);
-
-    public static final UUID FAKE_ACCOUNT = UUID.fromString("88da92db-0791-491e-8c58-1a969e67d2fb");
 
     private final SubmissionStore submissionStore;
 
