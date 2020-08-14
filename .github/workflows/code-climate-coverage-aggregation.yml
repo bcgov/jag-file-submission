@@ -146,20 +146,13 @@ jobs:
           repository: bcgov/spring-boot-starters
           path: spring-boot-starters
       
-      - name: WHERE AM I?
-        run : |
-          ls
-          echo CD SPRING BOOT STARTERS
-          cd spring-boot-starters
-          echo LIST
-          ls
-          echo CD SRC
-          cd src
-          echo LIST
-          ls
-      
       - name: Build Spring SFTP Starter
         run: mvn -B verify -P all --file ./spring-boot-starters/src/pom.xml
+      
+      - name: Copy SFTP Starter JAR into efiling-api target
+        run: |
+          mkdir ./jag-file-submission/src/backend/efiling-api/target
+          cp ${{ github.workspace }}/spring-boot-starters/src/spring-sftp-starter/target/spring-sftp-starter-0.1.1.jar ./jag-file-submission/src/backend/efiling-api/target
       
       # Get Code Climate binary
       - name: Download Code Climate Binary
