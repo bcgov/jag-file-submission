@@ -133,8 +133,21 @@ jobs:
       ACTION_DEBUG: true
 
     steps:
-      - uses: actions/checkout@v2
-
+      
+      - name: Checkout File Submission Repository
+        uses: actions/checkout@v2
+        with: 
+          path: jag-file-submission
+      
+      - name: Checkout Spring SFTP Starter Repository
+        uses: actions/checkout@v2
+        with: 
+          repostiory: bcgov/spring-boot-starters
+          path: spring-boot-starters
+      
+      - name: Build Spring SFTP Starter
+        run: mvn -B verify -P all --file spring-boot-starters/src/backend/pom.xml
+      
       # Get Code Climate binary
       - name: Download Code Climate Binary
         run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
@@ -181,7 +194,7 @@ jobs:
 
       # Run Maven Verify to generate all jacoco reports
       - name: Build with Maven
-        run: mvn -B verify -P all --file src/backend/pom.xml
+        run: mvn -B verify -P all --file jag-file-submission/src/backend/pom.xml
 
       # Formatting the BACKEND coverage reports generated (dynamically)
       - name: Format BACKEND coverage reports
@@ -196,7 +209,7 @@ jobs:
                   projectRel="${BASH_REMATCH[1]}"
                   echo "analyzing project: " $projectRel
                   projectName="${projectRel//\//-}"
-                  JACOCO_SOURCE_PATH=${{ github.workspace }}/src/backend/$projectRel/src/main/java ./cc-test-reporter format-coverage ${{github.workspace}}/src/backend/$projectRel/target/site/jacoco/jacoco.xml --input-type jacoco --output coverage/$projectName-codeclimate.json;
+                  JACOCO_SOURCE_PATH=${{ github.workspace }}/jag-file-submission/src/backend/$projectRel/src/main/java ./cc-test-reporter format-coverage ${{github.workspace}}/src/backend/$projectRel/target/site/jacoco/jacoco.xml --input-type jacoco --output coverage/$projectName-codeclimate.json;
                   echo "coverage generated: coverage/$projectName-codeclimate.json;"
               else
                   echo $file does not match
