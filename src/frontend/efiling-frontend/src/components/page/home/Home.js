@@ -35,28 +35,22 @@ export const saveDataToSessionStorage = (
   sessionStorage.setItem("cardRegistered", cardRegistered);
 };
 
-const addUserInfo = () => {
-  const {
-    preferred_username,
-    name,
-    email,
-    given_name,
-    family_name,
-  } = getJWTData();
+const addUserInfo = (firstName, middleName, lastName) => {
+  const { preferred_username, email } = getJWTData();
   let username = preferred_username;
   username = username.substring(0, username.indexOf("@"));
 
-  return {
-    bceid: username,
-    firstName: given_name,
-    lastName: family_name,
-    name,
-    email,
-  };
+  return { bceid: username, email, firstName, middleName, lastName };
 };
 
-const setRequiredState = (setApplicantInfo, setShowLoader) => {
-  const applicantInfo = addUserInfo();
+const setRequiredState = (
+  firstName,
+  middleName,
+  lastName,
+  setApplicantInfo,
+  setShowLoader
+) => {
+  const applicantInfo = addUserInfo(firstName, middleName, lastName);
 
   setApplicantInfo(applicantInfo);
   setShowLoader(false);
@@ -81,9 +75,20 @@ const checkCSOAccountStatus = (
         ).identifier;
         sessionStorage.setItem("csoAccountId", csoAccountIdentifier);
         setCsoAccountStatus({ isNew: false, exists: true });
+      } else {
+        axios
+          .get("/bceidAccount")
+          .then(({ data: { firstName, middleName, lastName } }) => {
+            setRequiredState(
+              firstName,
+              middleName,
+              lastName,
+              setApplicantInfo,
+              setShowLoader
+            );
+          })
+          .catch((err) => console.log(err));
       }
-
-      setRequiredState(setApplicantInfo, setShowLoader);
     })
     .catch((error) => {
       errorRedirect(sessionStorage.getItem("errorUrl"), error);
