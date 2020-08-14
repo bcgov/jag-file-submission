@@ -108,7 +108,7 @@ you feel are necessary.
             <input
               class=""
               type="text"
-              value="08/13/2020"
+              value="08/14/2020"
             />
           </div>
         </div>
@@ -437,13 +437,13 @@ you feel are necessary.
               >
                 <p>
                   CSO account 
-                  <b>
+                  <strong>
                     123
-                  </b>
+                  </strong>
                    is linked to your Basic BCeID account 
-                  <b>
+                  <strong>
                     username
-                  </b>
+                  </strong>
                    and will be used to file documents. 
                   <a
                     href="https://justice.gov.bc.ca/cso/about/index.do"
@@ -642,7 +642,7 @@ you feel are necessary.
             <input
               class=""
               type="text"
-              value="08/13/2020"
+              value="08/14/2020"
             />
           </div>
         </div>
@@ -971,13 +971,13 @@ you feel are necessary.
               >
                 <p>
                   CSO account 
-                  <b>
+                  <strong>
                     123
-                  </b>
+                  </strong>
                    is linked to your Basic BCeID account 
-                  <b>
+                  <strong>
                     username
-                  </b>
+                  </strong>
                    and will be used to file documents. 
                   <a
                     href="https://justice.gov.bc.ca/cso/about/index.do"
