@@ -1,5 +1,6 @@
 * [Home](/)
-* [Getting started](gettingStarted.md)
+* [Getting started - Development](gettingStarted.md)
+* [Getting started - Onboarding](onboarding.md)
 * [Error Handling](errorHandling.md)
 * [Data](data.md)
 * [Integration](integration.md)
