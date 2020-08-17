@@ -21,3 +21,13 @@ Example body: client_id=${keycloakClientId}&grant_type=client_credentials&client
 - client_secret : Provided to the user by the admin after the keycloak client request has been fufilled
 
 Once the request for the keycloak token has been completed successfully, the user can begin to interface with the Efiling Hub [API](https://editor.swagger.io/?url=https://raw.githubusercontent.com/bcgov/jag-file-submission/master/src/backend/efiling-api/jag-efiling-api.yaml) and Frontend Applications. The two API endpoints that a parent application will interface with are the `/submission/documents` and `/submission/${submissionId}/generateUrl`.
+
+The following is a sample curl command for generating a token from any keycloak environment:
+
+``` bash
+curl --location --request POST 'https://[keycloak auth endpoint]/auth/realms/[keycloak-realm]/protocol/openid-connect/token' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'client_id=[your client id]' \
+--data-urlencode 'grant_type=client_credentials' \
+--data-urlencode 'client_secret=[your client secret]'
+```
