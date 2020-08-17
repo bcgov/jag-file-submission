@@ -1702,7 +1702,7 @@ exports[`Storyshots Home No Account Exists 1`] = `
                     <div
                       class="bcgov-table-value "
                     >
-                      User Name
+                      User Middle Name
                     </div>
                   </div>
                   <div
@@ -2756,7 +2756,7 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
                     <div
                       class="bcgov-table-value "
                     >
-                      User Name
+                      User Middle Name
                     </div>
                   </div>
                   <div

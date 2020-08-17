@@ -231,6 +231,24 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserFullDetails"
+  "/bceidAccount":
+    get:
+      summary: Get a BCeID account
+      operationId: GetBceidAccount
+      description: Retrieve BCeID user account information
+      tags:
+        - account
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+      responses:
+        "200":
+          description: Account Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BceidAccount"
+        "404":
+          description: Account not found
   "/lookup/documentTypes/{courtLevel}/{courtClass}":
     get:
       summary: Get document types
@@ -293,6 +311,16 @@ components:
         identifier:
           type: string
           description: the account identifier
+    BceidAccount:
+      type: object
+      description: BCeID account details
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        middleName:
+          type: string
     DocumentProperties:
       type: object
       description: Submission Metadata used to describe the submission that will be e-filled
