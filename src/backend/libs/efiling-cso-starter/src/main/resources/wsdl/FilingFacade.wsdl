@@ -1,6 +1,8 @@
 <wsdl:definitions name="FilingFacade" targetNamespace="http://filing.csows.ag.gov.bc.ca/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://filing.csows.ag.gov.bc.ca/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <wsdl:types>
         <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://filing.csows.ag.gov.bc.ca/" xmlns:tns="http://filing.csows.ag.gov.bc.ca/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+            <xs:element name="calculateSubmittedDate" type="tns:calculateSubmittedDate"/>
+            <xs:element name="calculateSubmittedDateResponse" type="tns:calculateSubmittedDateResponse"/>
             <xs:element name="courtesyCorrection" type="tns:courtesyCorrection"/>
             <xs:element name="courtesyCorrectionResponse" type="tns:courtesyCorrectionResponse"/>
             <xs:element name="findCeisPartiesByFileNumber" type="tns:findCeisPartiesByFileNumber"/>
@@ -114,6 +116,7 @@
                     <xs:element minOccurs="0" name="documentId" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="documentSubtypeCd" type="xs:string"/>
                     <xs:element minOccurs="0" name="documentTypeCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="documentTypeDsc" type="xs:string"/>
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="elements" nillable="true" type="tns:civilDocumentElement"/>
                     <xs:element minOccurs="0" name="entDtm" type="xs:dateTime"/>
                     <xs:element minOccurs="0" name="entUserId" type="xs:string"/>
@@ -125,6 +128,7 @@
                     <xs:element minOccurs="0" name="fileServer" type="xs:string"/>
                     <xs:element minOccurs="0" name="filingBodyCd" type="xs:string"/>
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="issues" nillable="true" type="tns:issue"/>
+                    <xs:element minOccurs="0" name="jsonObject" type="xs:string"/>
                     <xs:element minOccurs="0" name="largeFileTimeMilliSecs" type="xs:string"/>
                     <xs:element minOccurs="0" name="largeFileYn" type="xs:string"/>
                     <xs:element minOccurs="0" name="mediationStepYn" type="xs:boolean"/>
@@ -609,6 +613,17 @@
                     <xs:element minOccurs="0" name="return" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
+            <xs:complexType name="calculateSubmittedDate">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="calculateSubmittedDateResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:dateTime"/>
+                </xs:sequence>
+            </xs:complexType>
             <xs:complexType name="removePackageParties">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
@@ -893,6 +908,9 @@
     <wsdl:message name="putDocumentAsync">
         <wsdl:part element="tns:putDocumentAsync" name="parameters"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="calculateSubmittedDate">
+        <wsdl:part element="tns:calculateSubmittedDate" name="parameters"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="removePackageParties">
         <wsdl:part element="tns:removePackageParties" name="parameters"></wsdl:part>
     </wsdl:message>
@@ -910,6 +928,9 @@
     </wsdl:message>
     <wsdl:message name="removePackagePartiesResponse">
         <wsdl:part element="tns:removePackagePartiesResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="calculateSubmittedDateResponse">
+        <wsdl:part element="tns:calculateSubmittedDateResponse" name="parameters"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="getActiveSuppDocImage">
         <wsdl:part element="tns:getActiveSuppDocImage" name="parameters"></wsdl:part>
@@ -1058,6 +1079,11 @@
         <wsdl:operation name="putDocumentAsync">
             <wsdl:input message="tns:putDocumentAsync" name="putDocumentAsync"></wsdl:input>
             <wsdl:output message="tns:putDocumentAsyncResponse" name="putDocumentAsyncResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="calculateSubmittedDate">
+            <wsdl:input message="tns:calculateSubmittedDate" name="calculateSubmittedDate"></wsdl:input>
+            <wsdl:output message="tns:calculateSubmittedDateResponse" name="calculateSubmittedDateResponse"></wsdl:output>
             <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="removePackageParties">
@@ -1247,6 +1273,18 @@
                 <soap:body use="literal"/>
             </wsdl:input>
             <wsdl:output name="putDocumentAsyncResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="calculateSubmittedDate">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="calculateSubmittedDate">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="calculateSubmittedDateResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
             <wsdl:fault name="NestedEjbException">

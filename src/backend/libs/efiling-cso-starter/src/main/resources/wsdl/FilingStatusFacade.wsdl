@@ -133,6 +133,7 @@
                     <xs:element minOccurs="0" name="documentTypeDesc" type="xs:string"/>
                     <xs:element minOccurs="0" name="initiatingYn" type="xs:boolean"/>
                     <xs:element minOccurs="0" name="orderDocumentYn" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="rushRequiredYn" type="xs:boolean"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="getPackageId">
