@@ -235,7 +235,7 @@ paths:
     get:
       summary: Get a BCeID account
       operationId: GetBceidAccount
-      description: Retrive bceid user account information
+      description: Retrieve BCeID user account information
       tags:
         - account
       parameters:
