@@ -21,6 +21,9 @@ public interface EfilingFilingPackageMapper {
     @Mapping(target = "feeExemptYn", constant = "false")
     @Mapping(target = "ldcxCourtClassCd", source = "filingPackage.court.courtClass")
     @Mapping(target = "ldcxCourtLevelCd", source = "filingPackage.court.level")
+    @Mapping(target = "submittedToAgenId", source = "filingPackage.court.location")
+    @Mapping(target = "submittedByAccountId", source = "accountId")
+    @Mapping(target = "submittedByClientId", source = "clientId")
     EfilingFilingPackage toEfilingFilingPackage(Submission submission);
 
     @Mapping(target = "amendsAnotherDocumentYn", source = "isAmendment")
