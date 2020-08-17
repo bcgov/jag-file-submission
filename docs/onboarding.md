@@ -2,8 +2,8 @@
 
 ## Request Keycloak Client
 
-- contact admin against repo for client creation
-- provide secret and URL to requestor (KEY MUST BE KEPT PRIVATE)
+- create github issue (link to issue) for keycloak client creation (TBD)
+- on completetion of github issue, the user will be provided a *client_id*, *realm*, *client_secret*. All of which are required to be kept secured at all times.
 
 ## Request Keycloak Token
 
@@ -20,4 +20,4 @@ Example body: client_id=${keycloakClientId}&grant_type=client_credentials&client
 - grant_type : value will always be `client_credentials`
 - client_secret : Provided to the user by the admin after the keycloak client request has been fufilled
 
-Once the request for the keycloak token has been completed successfully, the user can begin to interface with the Efiling Hub [API](https://editor.swagger.io/?url=https://raw.githubusercontent.com/bcgov/jag-file-submission/master/src/backend/efiling-api/jag-efiling-api.yaml) and Frontend Applications 
+Once the request for the keycloak token has been completed successfully, the user can begin to interface with the Efiling Hub [API](https://editor.swagger.io/?url=https://raw.githubusercontent.com/bcgov/jag-file-submission/master/src/backend/efiling-api/jag-efiling-api.yaml) and Frontend Applications. The two API endpoints that a parent application will interface with are the `/submission/documents` and `/submission/${submissionId}/generateUrl`.
