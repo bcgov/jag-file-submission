@@ -87,12 +87,13 @@ const checkCSOAccountStatus = (
               setShowLoader
             );
           })
-          .catch((err) => console.log(err));
+          .catch((err) =>
+            errorRedirect(sessionStorage.getItem("errorUrl"), err)
+          );
       }
     })
     .catch((error) => {
       errorRedirect(sessionStorage.getItem("errorUrl"), error);
-
       setError(true);
     })
     .finally(() => {
