@@ -19,11 +19,15 @@ public interface EfilingFilingPackageMapper {
     @Mapping(target = "existingCourtFileYn", constant = "false")
     @Mapping(target = "processingCompleteYn", constant = "false")
     @Mapping(target = "feeExemptYn", constant = "false")
+    @Mapping(target = "cfcsaYn", constant = "false")
+    @Mapping(target = "automatedProcessYn", constant = "false")
+    @Mapping(target = "notificationRequiredYn", constant = "false")
     @Mapping(target = "ldcxCourtClassCd", source = "filingPackage.court.courtClass")
     @Mapping(target = "ldcxCourtLevelCd", source = "filingPackage.court.level")
     @Mapping(target = "submittedToAgenId", source = "filingPackage.court.location")
     @Mapping(target = "submittedByAccountId", source = "accountId")
     @Mapping(target = "submittedByClientId", source = "clientId")
+    @Mapping(target = "ldcxCourtDivisionCd", source = "filingPackage.court.division")
     EfilingFilingPackage toEfilingFilingPackage(Submission submission);
 
     @Mapping(target = "amendsAnotherDocumentYn", source = "isAmendment")
