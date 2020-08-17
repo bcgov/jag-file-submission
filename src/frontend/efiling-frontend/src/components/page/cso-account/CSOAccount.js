@@ -28,6 +28,8 @@ export default function CSOAccount({
   const [termsAccepted, acceptTerms] = useState(false);
   const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
 
+  console.log(applicantInfo);
+
   useEffect(() => {
     if (termsAccepted) {
       setContinueBtnEnabled(true);

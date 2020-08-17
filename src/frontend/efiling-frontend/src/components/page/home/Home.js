@@ -144,13 +144,16 @@ export default function Home({ page: { header, confirmationPopup } }) {
           </div>
         </div>
       )}
-      {!showLoader && !error && !csoAccountStatus.exists && (
-        <CSOAccount
-          confirmationPopup={confirmationPopup}
-          applicantInfo={applicantInfo}
-          setCsoAccountStatus={setCsoAccountStatus}
-        />
-      )}
+      {!showLoader &&
+        !error &&
+        !csoAccountStatus.exists &&
+        JSON.stringify(applicantInfo) !== "{}" && (
+          <CSOAccount
+            confirmationPopup={confirmationPopup}
+            applicantInfo={applicantInfo}
+            setCsoAccountStatus={setCsoAccountStatus}
+          />
+        )}
       {!showLoader && !error && csoAccountStatus.exists && (
         <PackageConfirmation
           packageConfirmation={packageConfirmation}
