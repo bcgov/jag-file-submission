@@ -15,7 +15,7 @@ public class BceidAccountApiDelegateImplTest {
     @BeforeAll
     public void setup() {
 
-        sut = new BceidAccountApiDelagateImpl();
+        sut = new BceidAccountApiDelagateImpl(bCeIDAccountService, bceidAccountMapper);
 
     }
 

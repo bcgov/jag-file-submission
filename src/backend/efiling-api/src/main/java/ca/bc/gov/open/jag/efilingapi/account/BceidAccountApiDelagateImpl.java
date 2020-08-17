@@ -1,27 +1,49 @@
 package ca.bc.gov.open.jag.efilingapi.account;
 
+import ca.bc.gov.open.bceid.starter.account.BCeIDAccountService;
+import ca.bc.gov.open.bceid.starter.account.GetAccountRequest;
+import ca.bc.gov.open.bceid.starter.account.models.IndividualIdentity;
+import ca.bc.gov.open.jag.efilingapi.account.service.BceidAccountMapper;
 import ca.bc.gov.open.jag.efilingapi.api.BceidAccountApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.BceidAccount;
+import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.security.RolesAllowed;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class BceidAccountApiDelagateImpl implements BceidAccountApiDelegate {
 
+
+    private final BCeIDAccountService bCeIDAccountService;
+    private final BceidAccountMapper bceidAccountMapper;
+
+    public BceidAccountApiDelagateImpl(BCeIDAccountService bCeIDAccountService, BceidAccountMapper bceidAccountMapper) {
+        this.bCeIDAccountService = bCeIDAccountService;
+        this.bceidAccountMapper = bceidAccountMapper;
+    }
+
+
     @Override
     @RolesAllowed("efiling-user")
     public ResponseEntity<BceidAccount> getBceidAccount(UUID xTransactionId) {
 
-        BceidAccount result = new BceidAccount();
+        Optional<UUID> userId = SecurityUtils.getUniversalIdFromContext();
 
-        result.setFirstName("Bob");
-        result.setMiddleName("Alan");
-        result.setLastName("Ross");
+        if(!userId.isPresent())
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
 
-        return ResponseEntity.ok(result);
+        Optional<IndividualIdentity> individualIdentity = bCeIDAccountService.getIndividualIdentity(
+                GetAccountRequest.IndividualSelfRequest(userId.get().toString().replace("-", "").toLowerCase()));
+
+        if(!individualIdentity.isPresent())
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+
+        return ResponseEntity.ok(bceidAccountMapper.toBceidAccount(individualIdentity.get()));
 
     }
 }

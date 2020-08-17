@@ -29,6 +29,7 @@
         <org.threeten.version>1.4.4</org.threeten.version>
         <com.github.joschi.jackson.version>2.10.0</com.github.joschi.jackson.version>
         <com.google.code.findbugs.version>3.0.2</com.google.code.findbugs.version>
+        <ca.bc.gov.open.version>0.1.2</ca.bc.gov.open.version>
     </properties>
 
     <repositories>
@@ -188,6 +189,18 @@
                 <groupId>com.google.code.findbugs</groupId>
                 <artifactId>jsr305</artifactId>
                 <version>${com.google.code.findbugs.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ca.bc.gov.open</groupId>
+                <artifactId>spring-sftp-starter</artifactId>
+                <version>${ca.bc.gov.open.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ca.bc.gov.open</groupId>
+                <artifactId>spring-bceid-starter</artifactId>
+                <version>${ca.bc.gov.open.version}</version>
             </dependency>
 
         </dependencies>
