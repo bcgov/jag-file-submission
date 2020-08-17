@@ -22,7 +22,8 @@ public class MdcUtils {
     }
 
     public static void setUserMDC(UUID submissionId, UUID transactionId) {
-        MDC.put(Keys.MDC_EFILING_UNIVERSAL_ID, SecurityUtils.getUniversalIdFromContext().isPresent() ? SecurityUtils.getUniversalIdFromContext().get().toString() : "UNKNOWN");
+        MDC.put(Keys.MDC_EFILING_UNIVERSAL_ID,
+                SecurityUtils.getUniversalIdFromContext().isPresent() ? SecurityUtils.getUniversalIdFromContext().get().toString() : "");
         MDC.put(Keys.MDC_EFILING_SUBMISSION_ID, submissionId.toString());
         MDC.put(Keys.MDC_EFILING_TRANSACTION_ID, transactionId.toString());
     }
@@ -32,6 +33,5 @@ public class MdcUtils {
         MDC.remove(Keys.MDC_EFILING_SUBMISSION_ID);
         MDC.remove(Keys.MDC_EFILING_TRANSACTION_ID);
     }
-
 
 }

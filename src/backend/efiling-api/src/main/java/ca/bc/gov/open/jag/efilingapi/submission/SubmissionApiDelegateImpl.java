@@ -239,7 +239,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         UserDetails userDetails = buildUserDetails(universalId.get());
 
-        if(userDetails.getAccounts().isEmpty()) logger.info("User does not have a CSO account");
+        if(userDetails.getAccounts() == null || userDetails.getAccounts().isEmpty()) logger.info("User does not have a CSO account");
 
         response.setUserDetails(userDetails);
 
