@@ -1642,17 +1642,17 @@
   dependencies:
     type-detect "4.0.8"
 
-"@storybook/addon-actions@^6.0.7":
-  version "6.0.7"
-  resolved "https://registry.yarnpkg.com/@storybook/addon-actions/-/addon-actions-6.0.7.tgz#ff179693a6615252b0e491565c816fbb7c51bce7"
-  integrity sha512-nv/raWGZr/0/b6aPKNb/hfsMr5CTMuQStctGXh4LwZOlMgDKDzIeBBVJ6hjb5i2yXcVgwrvKz1o3pN1t/K+h2Q==
+"@storybook/addon-actions@^6.0.12":
+  version "6.0.12"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-actions/-/addon-actions-6.0.12.tgz#ccee062a5836cac57b9b1ea2ba1b66c7b1df0863"
+  integrity sha512-Qs54RCIKXoBo3lYbAevrDHnKm6BMIxN+WNkVrBfxCvlgk+jxaSvyjoU/UkfVAmZWDuPLcKNmONIK0HoQS9xhtQ==
   dependencies:
-    "@storybook/addons" "6.0.7"
-    "@storybook/api" "6.0.7"
-    "@storybook/client-api" "6.0.7"
-    "@storybook/components" "6.0.7"
-    "@storybook/core-events" "6.0.7"
-    "@storybook/theming" "6.0.7"
+    "@storybook/addons" "6.0.12"
+    "@storybook/api" "6.0.12"
+    "@storybook/client-api" "6.0.12"
+    "@storybook/components" "6.0.12"
+    "@storybook/core-events" "6.0.12"
+    "@storybook/theming" "6.0.12"
     core-js "^3.0.1"
     fast-deep-equal "^3.1.1"
     global "^4.3.2"
@@ -1706,17 +1706,17 @@
     regenerator-runtime "^0.13.3"
     ts-dedent "^1.1.1"
 
-"@storybook/addon-viewport@^6.0.7":
-  version "6.0.7"
-  resolved "https://registry.yarnpkg.com/@storybook/addon-viewport/-/addon-viewport-6.0.7.tgz#f4967485bd6541bc192fac63e66e398f1e3a9945"
-  integrity sha512-fn7+n7CoHhKojZhok7TTus1nkWrVbWXvS6hVXwALrDFB2JmfGbtX09fnCg86AU7qcm2NPERFLuctdR7bufQIfg==
+"@storybook/addon-viewport@^6.0.12":
+  version "6.0.12"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-viewport/-/addon-viewport-6.0.12.tgz#7a1c456c40f15fc093aa929618754940fc5d5cce"
+  integrity sha512-P9DEi2LRgYYSiJGqNc10JwLAXWQWdW9a8MhUX4PFZtgLq6Aao+c2fxFkCsRbotSy321v8xLvVDKXnKQshIhf0Q==
   dependencies:
-    "@storybook/addons" "6.0.7"
-    "@storybook/api" "6.0.7"
-    "@storybook/client-logger" "6.0.7"
-    "@storybook/components" "6.0.7"
-    "@storybook/core-events" "6.0.7"
-    "@storybook/theming" "6.0.7"
+    "@storybook/addons" "6.0.12"
+    "@storybook/api" "6.0.12"
+    "@storybook/client-logger" "6.0.12"
+    "@storybook/components" "6.0.12"
+    "@storybook/core-events" "6.0.12"
+    "@storybook/theming" "6.0.12"
     core-js "^3.0.1"
     global "^4.3.2"
     memoizerific "^1.11.3"
@@ -2228,16 +2228,16 @@
     react-docgen-typescript-plugin "^0.5.0"
     semver "^7.3.2"
 
-"@storybook/react@^6.0.7":
-  version "6.0.7"
-  resolved "https://registry.yarnpkg.com/@storybook/react/-/react-6.0.7.tgz#e9fbd21aefce9b7df1197fb17a2338a3578eebd4"
-  integrity sha512-aU0C8vs8VvkVLjAz5vAf3Nh6fKGq4P6/8hqbppvVd+bjKnH4WppsqsJhD2a/NrvTnRD35Z9myKqyDQP8aRSysQ==
+"@storybook/react@^6.0.12":
+  version "6.0.12"
+  resolved "https://registry.yarnpkg.com/@storybook/react/-/react-6.0.12.tgz#1d9fc4384a77df52fd209d492e0a65a840bc1a53"
+  integrity sha512-5GSEyEXtiAYY7U8nb5jcG73tY2RI9/VRkyzjArBfvOL3sAiWf1Nrs4p33jIndrBtoopnulAsPtJLVCT2ZpsufQ==
   dependencies:
     "@babel/preset-flow" "^7.0.0"
     "@babel/preset-react" "^7.0.0"
-    "@storybook/addons" "6.0.7"
-    "@storybook/core" "6.0.7"
-    "@storybook/node-logger" "6.0.7"
+    "@storybook/addons" "6.0.12"
+    "@storybook/core" "6.0.12"
+    "@storybook/node-logger" "6.0.12"
     "@storybook/semver" "^7.3.2"
     "@svgr/webpack" "^5.4.0"
     "@types/webpack-env" "^1.15.2"
