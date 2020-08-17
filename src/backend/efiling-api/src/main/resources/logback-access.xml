@@ -15,7 +15,7 @@
             <url>${SPLUNK_URL}</url>
             <token>${SPLUNK_TOKEN}</token>
             <source>jag-efiling-api</source>
-            <sourcetype>jag-efiling-logs</sourcetype>
+            <sourcetype>jag-efiling-access-logs</sourcetype>
             <middleware>HttpEventCollectorUnitTestMiddleware</middleware>
             <disableCertificateValidation>true</disableCertificateValidation>
             <batch_size_count>1</batch_size_count>
