@@ -138,12 +138,12 @@ jobs:
         with:
           repository: bcgov/spring-boot-starters
           path: spring-boot-starters
-          ref: v0.1.1
+          ref: v0.1.2
 
       # TODO REMOVE AFTER SFTP IS IN MAVEN CENTRAL
       - name: Build Spring SFTP Starter
         run: mvn install -P all --file ./spring-boot-starters/src/pom.xml
-        
+
       - name: Checkout File Submission Repository
         uses: actions/checkout@v2
 
