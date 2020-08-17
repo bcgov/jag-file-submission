@@ -313,7 +313,7 @@ components:
           description: the account identifier
     BceidAccount:
       type: object
-      description: bceid account details
+      description: BCeID account details
       properties:
         firstName:
           type: string
