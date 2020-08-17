@@ -42,6 +42,6 @@ public interface FilingPackageMapper {
     @Mapping(target = "submittedByClientId", source = "efilingFilingPackage.submittedByClientId")
     @Mapping(target = "submittedToAgenId", source = "efilingFilingPackage.submittedToAgenId")
     @Mapping(target = "submitterCommentTxt", source = "efilingFilingPackage.submitterCommentTxt")
-    @Mapping(target = "serviceId", source = "efilingFilingPackage.serviceId")
+    @Mapping(target = "serviceId", source = "serviceId")
     FilingPackage toFilingPackage(EfilingFilingPackage efilingFilingPackage, BigDecimal serviceId);
 }

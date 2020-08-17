@@ -49,7 +49,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
                 true,
                 createPayment(paymentService, createdService, service.getSubmissionFeeAmount(), service.getInternalClientNumber()));
 
-        BigDecimal filingResult = filePackage(service, filingPackage);
+        BigDecimal filingResult = filePackage(createdService, filingPackage);
 
         //TODO: do we add something to the next update
         updateServiceComplete(createdService);
@@ -107,7 +107,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
     }
 
-    private BigDecimal filePackage(EfilingService service, EfilingFilingPackage filingPackage) {
+    private BigDecimal filePackage(Service service, EfilingFilingPackage filingPackage) {
         FilingPackage csoFilingPackage = filingPackageMapper.toFilingPackage(filingPackage, service.getServiceId());
         try {
             return filingFacadeBean.submitFiling(csoFilingPackage);
