@@ -35,7 +35,6 @@ describe("Home", () => {
 
   const token = generateJWTToken({
     preferred_username: "username@bceid",
-    name: "User Name",
     email: "username@example.com",
   });
   localStorage.setItem("jwt", token);
@@ -70,6 +69,12 @@ describe("Home", () => {
     mock.onGet(apiRequest).reply(200, {
       userDetails: { ...userDetails, accounts: null },
       navigation,
+    });
+
+    mock.onGet("/bceidAccount").reply(200, {
+      firstName: "User",
+      lastName: "Name",
+      middleName: null,
     });
 
     const { asFragment } = render(component);
@@ -132,5 +137,27 @@ describe("Home", () => {
     expect(sessionStorage.getItem("successUrl")).toBeFalsy();
     expect(sessionStorage.getItem("errorUrl")).toEqual("error.com");
     expect(sessionStorage.getItem("cardRegistered")).toEqual("true");
+  });
+
+  test("Redirects to error page when lookup to bceid call fails", async () => {
+    sessionStorage.setItem("errorUrl", "error.com");
+
+    mock.onGet(apiRequest).reply(200, {
+      userDetails: { ...userDetails, accounts: null },
+      navigation,
+    });
+
+    mock.onGet("/bceidAccount").reply(400, {
+      message: "There was an error",
+    });
+
+    render(component);
+
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalledWith(
+      "error.com?status=400&message=There was an error.",
+      "_self"
+    );
   });
 });

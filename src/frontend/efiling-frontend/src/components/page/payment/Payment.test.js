@@ -16,6 +16,7 @@ import { generateJWTToken } from "../../../modules/helpers/authentication-helper
 import Payment from "./Payment";
 
 describe("Payment Component", () => {
+  let realDate;
   const confirmationPopup = getTestData();
   const submissionId = "abc123";
   const apiRequest = `/submission/${submissionId}/filing-package`;
@@ -119,6 +120,14 @@ describe("Payment Component", () => {
   });
 
   test("Click on request rush submission opens rush submission page", async () => {
+    const currentDate = new Date("2019-05-14T11:01:58.135Z");
+    realDate = Date;
+    global.Date = class extends Date {
+      constructor() {
+        return currentDate;
+      }
+    };
+
     mock.onGet(apiRequest).reply(200, {
       documents: files,
       court: courtData,
@@ -132,5 +141,7 @@ describe("Payment Component", () => {
     await waitFor(() => {});
 
     expect(asFragment()).toMatchSnapshot();
+
+    global.Date = realDate;
   });
 });

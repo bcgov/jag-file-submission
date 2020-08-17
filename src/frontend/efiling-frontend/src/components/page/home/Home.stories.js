@@ -37,7 +37,6 @@ const setRequiredStorage = () => {
   sessionStorage.setItem("errorUrl", "error.com");
   const token = generateJWTToken({
     preferred_username: "username@bceid",
-    name: "User Name",
     email: "username@example.com",
     realm_access: {
       roles: ["rush_flag"],
@@ -70,6 +69,11 @@ const NoAccountExistsStateData = (props) => {
   mock.onGet(apiRequest).reply(200, {
     userDetails: { ...userDetails, accounts: null },
     navigation,
+  });
+  mock.onGet("/bceidAccount").reply(200, {
+    firstName: "User",
+    lastName: "Name",
+    middleName: "Middle",
   });
   return props.children({ page });
 };
