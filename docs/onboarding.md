@@ -4,7 +4,7 @@
 
 Create Github [issue]() to begin the onboarding process to our application.
 
-On completion of github issue, the user will be provided a keycloak *client_id*, *realm*, *client_secret*. All of which are required to be kept secured at all times.
+On completetion of github issue, the user will be provided [OpenId Connect](https://openid.net/connect/) information such  as *client_id*, *realm*, *client_secret*. All of which are required to be kept secured at all times.
 
 ## Request Keycloak Token
 
