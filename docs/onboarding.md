@@ -2,8 +2,9 @@
 
 ## Request Keycloak Client
 
-Create github issue (link to issue) for keycloak client creation (TBD)
-- on completion of github issue, the user will be provided a *client_id*, *realm*, *client_secret*. All of which are required to be kept secured at all times.
+Create Github [issue]() to begin the onboarding process to our application.
+
+On completion of github issue, the user will be provided a keycloak *client_id*, *realm*, *client_secret*. All of which are required to be kept secured at all times.
 
 ## Request Keycloak Token
 
