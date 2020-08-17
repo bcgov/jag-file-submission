@@ -38,7 +38,7 @@ public class BceidAccountApiDelagateImpl implements BceidAccountApiDelegate {
             return new ResponseEntity(HttpStatus.FORBIDDEN);
 
         Optional<IndividualIdentity> individualIdentity = bCeIDAccountService.getIndividualIdentity(
-                GetAccountRequest.IndividualSelfRequest(userId.get().toString().replace("-", "").toLowerCase()));
+                GetAccountRequest.IndividualSelfRequest(userId.get().toString().replace("-", "").toUpperCase()));
 
         if(!individualIdentity.isPresent())
             return new ResponseEntity(HttpStatus.NOT_FOUND);
