@@ -100,29 +100,19 @@ public class GetCourtDescriptionTest {
 
     }
 
-    @DisplayName("Ok: with valid string and existing location return description")
+    @DisplayName("Exception: with missing level throw exception")
     @Test
     public void withValidStringAndMissingLevelReturnDescriptions() {
 
-        CourtDetails result = sut.getCourtDescription(AGEN_AGENCY_IDENTIFIER_CD, COURT_LEVEL, CLASSCD_1);
-
-        Assertions.assertEquals(AGEN_AGENCY_NM, result.getCourtDescription());
-        Assertions.assertEquals(BigDecimal.TEN, result.getCourtId());
-        Assertions.assertEquals(CLASS_1, result.getClassDescription());
-        Assertions.assertEquals("Unknown Level", result.getLevelDescription());
+        Assertions.assertThrows(EfilingCourtServiceException.class, () ->  sut.getCourtDescription(AGEN_AGENCY_IDENTIFIER_CD, COURT_LEVEL, CLASSCD_1));
 
     }
 
-    @DisplayName("Ok: with valid string and existing location return description")
+    @DisplayName("Exception: with missing class throw exception")
     @Test
     public void withValidStringAndMissingClassReturnDescriptions() {
 
-        CourtDetails result = sut.getCourtDescription(AGEN_AGENCY_IDENTIFIER_CD, LEVELCD_1, COURT_CLASS);
-
-        Assertions.assertEquals(AGEN_AGENCY_NM, result.getCourtDescription());
-        Assertions.assertEquals(BigDecimal.TEN, result.getCourtId());
-        Assertions.assertEquals("Unknown Class", result.getClassDescription());
-        Assertions.assertEquals(LEVEL_1, result.getLevelDescription());
+        Assertions.assertThrows(EfilingCourtServiceException.class, () ->  sut.getCourtDescription(AGEN_AGENCY_IDENTIFIER_CD, LEVELCD_1, COURT_CLASS));
 
     }
 

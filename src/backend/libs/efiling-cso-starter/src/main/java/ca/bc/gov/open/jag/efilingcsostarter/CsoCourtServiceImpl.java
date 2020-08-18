@@ -40,16 +40,16 @@ public class CsoCourtServiceImpl implements EfilingCourtService {
                 .filter(court -> court.getLevelCd().equals(courtLevel))
                 .findFirst()
                 .map(court -> court.getLevelDsc())
-                .orElse("Unknown Level");
+                .orElseThrow(() -> new EfilingCourtServiceException("Level not found"));
     }
 
     private String getClassDescription(String courtClass) {
-        CsoCourtClassArr classes = csows.getCourtClasses(courtClass);
+        CsoCourtClassArr classes = csows.getCourtClasses(null);
         return classes.getArray().stream()
                 .filter(court -> court.getClassCd().equals(courtClass))
                 .findFirst()
                 .map(court -> court.getClassDsc())
-                .orElse("Unknown Class");
+                .orElseThrow(() -> new EfilingCourtServiceException("Class not found"));
     }
 
 }
