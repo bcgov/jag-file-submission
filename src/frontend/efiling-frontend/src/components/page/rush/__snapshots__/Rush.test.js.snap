@@ -216,9 +216,7 @@ exports[`Rush Component Clicking on cancel request takes user back to payment pa
       >
         <p>
           I have reviewed the information and the documents in this filing
-package and am prepared to submit them for filing. I agree that all
-fees for this filing package may be charged to the credit card
-registered to my account. Statutory fees will be processed when documents are filed.
+package and am prepared to submit them for filing. I agree that all fees for this filing package may be charged to the credit card registered to my account. Statutory fees will be processed when documents are filed.
         </p>
         <label
           for="agreeCallout"
