@@ -19,7 +19,7 @@ public class TestHelpers {
     public static final String DIVISION = "DIVISION";
     public static final String FILENUMBER = "FILENUMBER";
     public static final String LEVEL = "LEVEL";
-    public static final String LOCATION = "LOCATION";
+    public static final String LOCATION = "1211";
     public static final String PARTICIPATIONCLASS = "PARTICIPATIONCLASS";
     public static final String PROPERTYCLASS = "PROPERTYCLASS";
     public static final String DESCRIPTION = "DESCRIPTION";
@@ -77,6 +77,7 @@ public class TestHelpers {
         court.setLocation(LOCATION);
         court.setParticipatingClass(PARTICIPATIONCLASS);
         court.setCourtClass(PROPERTYCLASS);
+        court.setAgencyId(BigDecimal.TEN);
         court.setLevelDescription(LEVEL_DESCRIPTION);
         court.setClassDescription(CLASS_DESCRIPTION);
         court.setLocationDescription(COURT_DESCRIPTION);

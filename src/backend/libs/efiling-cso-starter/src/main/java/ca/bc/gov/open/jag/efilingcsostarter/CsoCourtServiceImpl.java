@@ -29,4 +29,5 @@ public class CsoCourtServiceImpl implements EfilingCourtService {
                 .map(court -> new CourtDetails(court.getAgenId(), court.getAgenAgencyNm(), "TBD", "TBD"))
                 .orElseThrow(() -> new EfilingCourtServiceException("Court not found"));
     }
+
 }

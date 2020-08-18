@@ -105,7 +105,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                                         .map(document -> efilingFilingPackageMapper.toEfilingDocument(document))
                                         .collect(Collectors.toList()));
         filingPackage.setEntDtm(DateUtils.getCurrentXmlDate());
-
+        filingPackage.setSubmitDtm(DateUtils.getCurrentXmlDate());
         SubmitResponse result = new SubmitResponse();
         result.transactionId(efilingSubmissionService.submitFilingPackage(service, filingPackage, (efilingPayment) -> {
             return bamboraPaymentAdapter.makePayment(efilingPayment);
@@ -154,6 +154,7 @@ public class SubmissionServiceImpl implements SubmissionService {
         court.setDivision(courtBase.getDivision());
         court.setFileNumber(courtBase.getFileNumber());
 
+        court.setAgencyId(courtDetails.getCourtId());
         court.setLocationDescription(courtDetails.getCourtDescription());
         court.setClassDescription(courtDetails.getClassDescription());
         court.setLevelDescription(courtDetails.getLevelDescription());
