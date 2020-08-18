@@ -49,6 +49,8 @@ public class GenerateUrlTest {
     @Mock
     private AccountService accountServiceMock;
 
+    private UUID transactionId = UUID.randomUUID();
+
 
     @BeforeAll
     public void setUp() {
@@ -58,7 +60,7 @@ public class GenerateUrlTest {
         NavigationProperties navigationProperties = new NavigationProperties();
         navigationProperties.setBaseUrl("http://localhost");
 
-        Submission submission = Submission.builder().id(TestHelpers.CASE_1).transactionId(TestHelpers.CASE_2).expiryDate(10).create();
+        Submission submission = Submission.builder().id(TestHelpers.CASE_1).transactionId(transactionId).expiryDate(10).create();
 
         Mockito.when(submissionServiceMock.generateFromRequest(
                 Mockito.any(),
@@ -104,10 +106,10 @@ public class GenerateUrlTest {
         generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
-        ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(UUID.randomUUID(), TestHelpers.CASE_1, generateUrlRequest);
+        ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(transactionId, TestHelpers.CASE_1, generateUrlRequest);
 
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
-        Assertions.assertEquals("http://localhost?submissionId=" + TestHelpers.CASE_1.toString(), actual.getBody().getEfilingUrl());
+        Assertions.assertEquals("http://localhost?submissionId=" + TestHelpers.CASE_1.toString() + "&transactionId="  + transactionId, actual.getBody().getEfilingUrl());
         Assertions.assertNotNull(actual.getBody().getExpiryDate());
 
     }
