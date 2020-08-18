@@ -43,7 +43,8 @@ public interface EfilingFilingPackageMapper {
     @Mapping(target = "milestones", source = "milestones")
     @Mapping(target = "payments", source = "payments")
     @Mapping(target = "statuses", source = "statuses")
-    EfilingDocument toEfilingDocument(Document document, Submission submission,
+    @Mapping(target = "packageSeqNo", source = "index")
+    EfilingDocument toEfilingDocument(Document document, Submission submission, Integer index,
                                       String serverName, List<EfilingDocumentMilestone> milestones,
                                       List<EfilingDocumentPayment> payments, List<EfilingDocumentStatus> statuses);
 
@@ -51,18 +52,21 @@ public interface EfilingFilingPackageMapper {
     @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
     @Mapping(target = "milestoneDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
     @Mapping(target = "milestoneTypeCd",  constant = "ASUB")
+    @Mapping(target = "milestoneSeqNo",  constant = "1")
     EfilingDocumentMilestone toEfilingDocumentMilestone(Document document, Submission submission);
 
     @Mapping(target = "entUserId", source = "submission.clientId")
     @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
     @Mapping(target = "paymentStatusCd",  constant = "WAT")
     @Mapping(target = "statutoryFeeAmt",  source = "document.statutoryFeeAmount")
+    @Mapping(target = "paymentSeqNo",  constant = "1")
     EfilingDocumentPayment toEfilingDocumentPayment(Document document, Submission submission);
 
     @Mapping(target = "entUserId", source = "submission.clientId")
     @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
     @Mapping(target = "statusDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
     @Mapping(target = "documentStatusTypeCd",  constant = SubmissionConstants.SUBMISSION_DOCUMENT_STATUS_TYPE_CD)
+    @Mapping(target = "documentStatusSeqNo",  constant = "1")
     EfilingDocumentStatus toEfilingDocumentStatus(Document document, Submission submission);
 
     @Mapping(target = "clientId", source = "clientId")
