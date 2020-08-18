@@ -13,7 +13,6 @@ import org.mapstruct.Mapping;
 
 @Mapper
 public interface EfilingFilingPackageMapper {
-    @Mapping(target = "applicationCd", source = "clientApplication.type")
     @Mapping(target = "courtFileNo", source = "filingPackage.court.fileNumber")
     @Mapping(target = "entUserId", source = "clientId")
     @Mapping(target = "existingCourtFileYn", constant = "false")
@@ -39,6 +38,7 @@ public interface EfilingFilingPackageMapper {
     @Mapping(target = "clientId", source = "clientId")
     @Mapping(target = "accountId", source = "accountId")
     @Mapping(target = "entUserId", source = "clientId")
+    @Mapping(target = "privilegeCd", constant = "UPDT")
     EfilingPackageAuthority toPackageAuthority(Submission submission);
 
     @Mapping(target = "clientId", source = "clientId")
