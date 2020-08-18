@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigDecimal;
 
-public class EfilingDocumentStatuses {
+public class EfilingDocumentStatus {
     private BigDecimal documentStatusSeqNo;
     private String documentStatusTypeCd;
     private XMLGregorianCalendar entDtm;
@@ -51,11 +51,15 @@ public class EfilingDocumentStatuses {
         this.statusDtm = statusDtm;
     }
 
-    public EfilingDocumentStatuses(BigDecimal documentStatusSeqNo, String documentStatusTypeCd, XMLGregorianCalendar entDtm, String entUserId, XMLGregorianCalendar statusDtm) {
+    public EfilingDocumentStatus(BigDecimal documentStatusSeqNo, String documentStatusTypeCd, XMLGregorianCalendar entDtm, String entUserId, XMLGregorianCalendar statusDtm) {
         this.documentStatusSeqNo = documentStatusSeqNo;
         this.documentStatusTypeCd = documentStatusTypeCd;
         this.entDtm = entDtm;
         this.entUserId = entUserId;
         this.statusDtm = statusDtm;
+    }
+
+    public EfilingDocumentStatus() {
+
     }
 }

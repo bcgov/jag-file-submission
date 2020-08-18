@@ -10,4 +10,5 @@ public class SubmissionConstants {
     public static final String SUBMISSION_FEE_SUB_TYPE = "FSVC";
     public static final String SUBMISSION_UPLOAD_STATE_CD = "CMPL";
     public static final String SUBMISSION_PRIVILEGE_CD = "UPDT";
+    public static final String SUBMISSION_DOCUMENT_STATUS_TYPE_CD = "SUB";
 }

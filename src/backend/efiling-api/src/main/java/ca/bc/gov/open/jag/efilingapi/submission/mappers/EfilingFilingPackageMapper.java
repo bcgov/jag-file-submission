@@ -4,12 +4,11 @@ package ca.bc.gov.open.jag.efilingapi.submission.mappers;
 import ca.bc.gov.open.jag.efilingapi.api.model.Document;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
-import ca.bc.gov.open.jag.efilingcommons.model.EfilingDocument;
-import ca.bc.gov.open.jag.efilingcommons.model.EfilingFilingPackage;
-import ca.bc.gov.open.jag.efilingcommons.model.EfilingPackageAuthority;
-import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
+import ca.bc.gov.open.jag.efilingcommons.model.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+
+import java.util.List;
 
 @Mapper
 public interface EfilingFilingPackageMapper {
@@ -35,12 +34,36 @@ public interface EfilingFilingPackageMapper {
     @Mapping(target = "documentSubtypeCd", constant = "ODOC" )
     @Mapping(target = "documentTypeCd", source = "document.type")
     @Mapping(target = "entUserId", source = "submission.clientId")
+    @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
     //TODO this is the constructed file name
     @Mapping(target = "filePath", source = "document.name")
     //TODO this will be pulled from the config
     @Mapping(target = "fileServer", source = "serverName")
     @Mapping(target = "uploadStateCd", constant = SubmissionConstants.SUBMISSION_UPLOAD_STATE_CD)
-    EfilingDocument toEfilingDocument(Document document, Submission submission, String serverName);
+    @Mapping(target = "milestones", source = "milestones")
+    @Mapping(target = "payments", source = "payments")
+    @Mapping(target = "statuses", source = "statuses")
+    EfilingDocument toEfilingDocument(Document document, Submission submission,
+                                      String serverName, List<EfilingDocumentMilestone> milestones,
+                                      List<EfilingDocumentPayment> payments, List<EfilingDocumentStatus> statuses);
+
+    @Mapping(target = "entUserId", source = "submission.clientId")
+    @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
+    @Mapping(target = "milestoneDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
+    @Mapping(target = "milestoneTypeCd",  constant = "ASUB")
+    EfilingDocumentMilestone toEfilingDocumentMilestone(Document document, Submission submission);
+
+    @Mapping(target = "entUserId", source = "submission.clientId")
+    @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
+    @Mapping(target = "paymentStatusCd",  constant = "WAT")
+    @Mapping(target = "statutoryFeeAmt",  source = "document.statutoryFeeAmount")
+    EfilingDocumentPayment toEfilingDocumentPayment(Document document, Submission submission);
+
+    @Mapping(target = "entUserId", source = "submission.clientId")
+    @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
+    @Mapping(target = "statusDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
+    @Mapping(target = "documentStatusTypeCd",  constant = SubmissionConstants.SUBMISSION_DOCUMENT_STATUS_TYPE_CD)
+    EfilingDocumentStatus toEfilingDocumentStatus(Document document, Submission submission);
 
     @Mapping(target = "clientId", source = "clientId")
     @Mapping(target = "accountId", source = "accountId")

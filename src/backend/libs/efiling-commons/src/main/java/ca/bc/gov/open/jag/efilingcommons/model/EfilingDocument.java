@@ -44,7 +44,7 @@ public class EfilingDocument {
     private Boolean xmlValidYn;
     private List<EfilingDocumentMilestone> milestones;
     private List<EfilingDocumentPayment> payments;
-    private List<EfilingDocumentStatuses> statuses;
+    private List<EfilingDocumentStatus> statuses;
 
     public Boolean getAmendsAnotherDocumentYn() {
         return amendsAnotherDocumentYn;
@@ -318,15 +318,15 @@ public class EfilingDocument {
         this.payments = payments;
     }
 
-    public List<EfilingDocumentStatuses> getStatuses() {
+    public List<EfilingDocumentStatus> getStatuses() {
         return statuses;
     }
 
-    public void setStatuses(List<EfilingDocumentStatuses> statuses) {
+    public void setStatuses(List<EfilingDocumentStatus> statuses) {
         this.statuses = statuses;
     }
 
-    public EfilingDocument(Boolean amendsAnotherDocumentYn, XMLGregorianCalendar appearanceDt, XMLGregorianCalendar appearanceTm, BigDecimal appearnceAgenId, BigDecimal bailiffId, String clientFileNameTxt, String conferenceRequestTypeCd, String documentDescriptionTxt, BigDecimal documentId, String documentSubtypeCd, String documentTypeCd, XMLGregorianCalendar entDtm, String entUserId, BigDecimal estimatedToHearDocHrsQty, BigDecimal estimatedToHearDocMinsQty, String expertWitnessCallModeCd, Boolean feeExemptYn, String filePath, String fileServer, String filingBodyCd, String largeFileTimeMilliSecs, String largeFileYn, Boolean mediationStepYn, BigDecimal packageId, BigDecimal packageSeqNo, XMLGregorianCalendar updDtm, String updUserId, String uploadStateCd, String uploadedToApplicationCd, Boolean xmlDataCompleteYn, Boolean xmlDocumentInstanceYn, Boolean xmlValidYn, List<EfilingDocumentMilestone> milestones, List<EfilingDocumentPayment> payments, List<EfilingDocumentStatuses> statuses) {
+    public EfilingDocument(Boolean amendsAnotherDocumentYn, XMLGregorianCalendar appearanceDt, XMLGregorianCalendar appearanceTm, BigDecimal appearnceAgenId, BigDecimal bailiffId, String clientFileNameTxt, String conferenceRequestTypeCd, String documentDescriptionTxt, BigDecimal documentId, String documentSubtypeCd, String documentTypeCd, XMLGregorianCalendar entDtm, String entUserId, BigDecimal estimatedToHearDocHrsQty, BigDecimal estimatedToHearDocMinsQty, String expertWitnessCallModeCd, Boolean feeExemptYn, String filePath, String fileServer, String filingBodyCd, String largeFileTimeMilliSecs, String largeFileYn, Boolean mediationStepYn, BigDecimal packageId, BigDecimal packageSeqNo, XMLGregorianCalendar updDtm, String updUserId, String uploadStateCd, String uploadedToApplicationCd, Boolean xmlDataCompleteYn, Boolean xmlDocumentInstanceYn, Boolean xmlValidYn, List<EfilingDocumentMilestone> milestones, List<EfilingDocumentPayment> payments, List<EfilingDocumentStatus> statuses) {
         this.amendsAnotherDocumentYn = amendsAnotherDocumentYn;
         this.appearanceDt = appearanceDt;
         this.appearanceTm = appearanceTm;
