@@ -58,4 +58,8 @@ public class EfilingDocumentPayment {
         this.paymentStatusCd = paymentStatusCd;
         this.statutoryFeeAmt = statutoryFeeAmt;
     }
+
+    public EfilingDocumentPayment() {
+
+    }
 }

@@ -102,7 +102,10 @@ public class SubmissionServiceImpl implements SubmissionService {
         EfilingFilingPackage filingPackage = efilingFilingPackageMapper.toEfilingFilingPackage(submission);
         filingPackage.setPackageControls(Arrays.asList(efilingFilingPackageMapper.toPackageAuthority(submission)));
         filingPackage.setDocuments(submission.getFilingPackage().getDocuments().stream()
-                                        .map(document -> efilingFilingPackageMapper.toEfilingDocument(document, submission))
+                                        .map(document -> efilingFilingPackageMapper.toEfilingDocument(document, submission,
+                                                "cure.bcgov", Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentMilestone(document, submission)),
+                                                Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentPayment(document, submission)),
+                                                Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentStatus(document, submission))))
                                         .collect(Collectors.toList()));
         filingPackage.setEntDtm(DateUtils.getCurrentXmlDate());
         filingPackage.setSubmitDtm(DateUtils.getCurrentXmlDate());
