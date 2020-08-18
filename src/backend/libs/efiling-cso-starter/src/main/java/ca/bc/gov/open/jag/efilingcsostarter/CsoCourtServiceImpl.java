@@ -1,6 +1,8 @@
 package ca.bc.gov.open.jag.efilingcsostarter;
 
 import ca.bc.gov.ag.csows.ceis.CsoAgencyArr;
+import ca.bc.gov.ag.csows.ceis.CsoCourtClassArr;
+import ca.bc.gov.ag.csows.ceis.CsoCourtLevelArr;
 import ca.bc.gov.ag.csows.ceis.Csows;
 
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtServiceException;
@@ -18,15 +20,35 @@ public class CsoCourtServiceImpl implements EfilingCourtService {
     }
 
     @Override
-    public CourtDetails getCourtDescription(String agencyIdentifierCd) {
+    public CourtDetails getCourtDescription(String agencyIdentifierCd, String courtLevel, String courtClass) {
         if (StringUtils.isBlank(agencyIdentifierCd)) throw new IllegalArgumentException("Agency identifier is required");
+        if (StringUtils.isBlank(courtLevel)) throw new IllegalArgumentException("Level identifier is required");
+        if (StringUtils.isBlank(courtClass)) throw new IllegalArgumentException("Class identifier is required");
 
         CsoAgencyArr csoAgencyArr = csows.getCourtLocations();
-        //TODO: Class description and level description will new to be retrieved in this call
+
         return csoAgencyArr.getArray().stream()
                 .filter(court -> court.getAgenAgencyIdentifierCd().equals(agencyIdentifierCd))
                 .findFirst()
-                .map(court -> new CourtDetails(court.getAgenId(), court.getAgenAgencyNm(), "TBD", "TBD"))
+                .map(court -> new CourtDetails(court.getAgenId(), court.getAgenAgencyNm(), getClassDescription(courtClass), getCourLevelDescription(courtLevel)))
                 .orElseThrow(() -> new EfilingCourtServiceException("Court not found"));
+    }
+
+    private String getCourLevelDescription(String courtLevel) {
+        CsoCourtLevelArr levels = csows.getCourtLevels();
+        return levels.getArray().stream()
+                .filter(court -> court.getLevelCd().equals(courtLevel))
+                .findFirst()
+                .map(court -> court.getLevelDsc())
+                .orElse("Unknown Level");
+    }
+
+    private String getClassDescription(String courtClass) {
+        CsoCourtClassArr classes = csows.getCourtClasses(courtClass);
+        return classes.getArray().stream()
+                .filter(court -> court.getClassCd().equals(courtClass))
+                .findFirst()
+                .map(court -> court.getClassDsc())
+                .orElse("Unknown Class");
     }
 }
