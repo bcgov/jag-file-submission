@@ -220,7 +220,7 @@ export default function PackageConfirmation({
         <p />
         <div className="near-half-width">
           <Table
-            elements={generateFileSummaryData(files, submissionFee, false)}
+            elements={generateFileSummaryData(files, submissionFee, false).data}
           />
         </div>
         <br />
