@@ -21,6 +21,9 @@ public class GetCourtDescriptionTest {
     private static final String AGEN_AGENCY_IDENTIFIER_CD = "FOUND";
     private static final String AGEN_AGENCY_IDENTIFIER_CD1 = "OTHER";
     private static final String AGEN_AGENCY_NM1 = "OTHERAGENCY";
+    private static final String COURT_LEVEL = "LEVEL";
+    private static final String COURT_CLASS = "CLASS";
+    private static final String AGENCY = "AGENCY";
     @Mock
     Csows csowsMock;
 
@@ -52,14 +55,28 @@ public class GetCourtDescriptionTest {
     @Test
     public void withNullParameterThrowsIllegalArgument() {
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getCourtDescription(null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getCourtDescription(null, COURT_LEVEL, COURT_CLASS));
+
+    }
+    @DisplayName("Exception: with null parameter throws Illegal Argument exception")
+    @Test
+    public void withNullLevelParameterThrowsIllegalArgument() {
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getCourtDescription(AGENCY, null, COURT_CLASS));
+
+    }
+    @DisplayName("Exception: with null parameter throws Illegal Argument exception")
+    @Test
+    public void withNullClassParameterThrowsIllegalArgument() {
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getCourtDescription(AGENCY, COURT_LEVEL, null));
 
     }
     @DisplayName("Ok: with valid string and existing location return description")
     @Test
     public void withValidStringAndExistingLocationReturnDescription() {
 
-        CourtDetails result = sut.getCourtDescription(AGEN_AGENCY_IDENTIFIER_CD);
+        CourtDetails result = sut.getCourtDescription(AGEN_AGENCY_IDENTIFIER_CD, COURT_LEVEL, COURT_CLASS);
 
         Assertions.assertEquals(AGEN_AGENCY_NM, result.getCourtDescription());
         Assertions.assertEquals(BigDecimal.TEN, result.getCourtId());

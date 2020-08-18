@@ -147,7 +147,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private Court populateCourtDetails(CourtBase courtBase) {
         Court court = new Court();
-        CourtDetails courtDetails = efilingCourtService.getCourtDescription(courtBase.getLocation());
+        CourtDetails courtDetails = efilingCourtService.getCourtDescription(courtBase.getLocation(), courtBase.getLevel(), courtBase.getCourtClass());
         court.setLocation(courtBase.getLocation());
         court.setLevel(courtBase.getLevel());
         court.setCourtClass(courtBase.getCourtClass());
