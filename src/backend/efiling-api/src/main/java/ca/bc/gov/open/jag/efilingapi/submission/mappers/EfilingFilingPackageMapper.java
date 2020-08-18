@@ -38,14 +38,14 @@ public interface EfilingFilingPackageMapper {
     //TODO this is the constructed file name
     @Mapping(target = "filePath", source = "document.name")
     //TODO this will be pulled from the config
-    @Mapping(target = "fileServer", constant = "cure.bcgov")
-    @Mapping(target = "uploadStateCd", constant = "CMPL")
-    EfilingDocument toEfilingDocument(Document document, Submission submission);
+    @Mapping(target = "fileServer", source = "serverName")
+    @Mapping(target = "uploadStateCd", constant = SubmissionConstants.SUBMISSION_UPLOAD_STATE_CD)
+    EfilingDocument toEfilingDocument(Document document, Submission submission, String serverName);
 
     @Mapping(target = "clientId", source = "clientId")
     @Mapping(target = "accountId", source = "accountId")
     @Mapping(target = "entUserId", source = "clientId")
-    @Mapping(target = "privilegeCd", constant = "UPDT")
+    @Mapping(target = "privilegeCd", constant = SubmissionConstants.SUBMISSION_PRIVILEGE_CD)
     EfilingPackageAuthority toPackageAuthority(Submission submission);
 
     @Mapping(target = "clientId", source = "clientId")
