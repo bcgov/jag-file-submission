@@ -109,6 +109,8 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
     private BigDecimal filePackage(Service service, EfilingFilingPackage filingPackage) {
         FilingPackage csoFilingPackage = filingPackageMapper.toFilingPackage(filingPackage, service.getServiceId());
+
+
         try {
             return filingFacadeBean.submitFiling(csoFilingPackage);
         } catch (NestedEjbException_Exception e) {
