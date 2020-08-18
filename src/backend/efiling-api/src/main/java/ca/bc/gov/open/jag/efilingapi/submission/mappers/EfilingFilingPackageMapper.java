@@ -29,11 +29,18 @@ public interface EfilingFilingPackageMapper {
     @Mapping(target = "ldcxCourtDivisionCd", source = "filingPackage.court.division")
     EfilingFilingPackage toEfilingFilingPackage(Submission submission);
 
-    @Mapping(target = "amendsAnotherDocumentYn", source = "isAmendment")
-    @Mapping(target = "clientFileNameTxt", source = "name")
-    @Mapping(target = "documentDescriptionTxt", source = "description")
-    @Mapping(target = "documentTypeCd", source = "type")
-    EfilingDocument toEfilingDocument(Document document);
+    @Mapping(target = "amendsAnotherDocumentYn", source = "document.isAmendment")
+    @Mapping(target = "clientFileNameTxt", source = "document.name")
+    @Mapping(target = "documentDescriptionTxt", source = "document.description")
+    @Mapping(target = "documentSubtypeCd", constant = "ODOC" )
+    @Mapping(target = "documentTypeCd", source = "document.type")
+    @Mapping(target = "entUserId", source = "submission.clientId")
+    //TODO this is the constructed file name
+    @Mapping(target = "filePath", source = "document.name")
+    //TODO this will be pulled from the config
+    @Mapping(target = "fileServer", constant = "cure.bcgov")
+    @Mapping(target = "uploadStateCd", constant = "CMPL")
+    EfilingDocument toEfilingDocument(Document document, Submission submission);
 
     @Mapping(target = "clientId", source = "clientId")
     @Mapping(target = "accountId", source = "accountId")
