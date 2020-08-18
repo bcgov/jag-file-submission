@@ -28,7 +28,7 @@ public interface EfilingFilingPackageMapper {
     @Mapping(target = "ldcxCourtDivisionCd", source = "filingPackage.court.division")
     EfilingFilingPackage toEfilingFilingPackage(Submission submission);
 
-    @Mapping(target = "amendsAnotherDocumentYn", source = "document.isAmendment")
+    @Mapping(target = "amendsAnotherDocumentYn", source = "document.isAmendment", defaultValue = "false")
     @Mapping(target = "clientFileNameTxt", source = "document.name")
     @Mapping(target = "documentDescriptionTxt", source = "document.description")
     @Mapping(target = "documentSubtypeCd", constant = "ODOC" )
@@ -68,6 +68,7 @@ public interface EfilingFilingPackageMapper {
     @Mapping(target = "clientId", source = "clientId")
     @Mapping(target = "accountId", source = "accountId")
     @Mapping(target = "entUserId", source = "clientId")
+    @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
     @Mapping(target = "privilegeCd", constant = SubmissionConstants.SUBMISSION_PRIVILEGE_CD)
     EfilingPackageAuthority toPackageAuthority(Submission submission);
 
