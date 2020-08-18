@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class EfilingCourtServiceDemoImplTest {
+    private static final String SOMEVALUE = "SOMEVALUE";
     EfilingCourtServiceDemoImpl sut;
 
     @BeforeAll
@@ -18,7 +19,7 @@ public class EfilingCourtServiceDemoImplTest {
     @DisplayName("OK: with empty cache should return null")
     public void withEmptyCacheShouldReturnNull() {
 
-        CourtDetails actual = sut.getCourtDescription("SOMEVALUE");
+        CourtDetails actual = sut.getCourtDescription(SOMEVALUE, SOMEVALUE, SOMEVALUE);
         Assertions.assertEquals("Imma Court", actual.getCourtDescription());
         Assertions.assertEquals("Imma Level", actual.getLevelDescription());
         Assertions.assertEquals("Imma Class", actual.getClassDescription());
