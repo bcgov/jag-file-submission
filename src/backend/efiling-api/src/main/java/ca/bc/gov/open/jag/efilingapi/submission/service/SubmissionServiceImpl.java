@@ -154,6 +154,7 @@ public class SubmissionServiceImpl implements SubmissionService {
         court.setDivision(courtBase.getDivision());
         court.setFileNumber(courtBase.getFileNumber());
 
+        court.setAgencyId(courtDetails.getCourtId());
         court.setLocationDescription(courtDetails.getCourtDescription());
         court.setClassDescription(courtDetails.getClassDescription());
         court.setLevelDescription(courtDetails.getLevelDescription());

@@ -77,6 +77,7 @@ public class TestHelpers {
         court.setLocation(LOCATION);
         court.setParticipatingClass(PARTICIPATIONCLASS);
         court.setCourtClass(PROPERTYCLASS);
+        court.setAgencyId(BigDecimal.TEN);
         court.setLevelDescription(LEVEL_DESCRIPTION);
         court.setClassDescription(CLASS_DESCRIPTION);
         court.setLocationDescription(COURT_DESCRIPTION);

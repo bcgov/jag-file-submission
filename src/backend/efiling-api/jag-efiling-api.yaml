@@ -470,6 +470,9 @@ components:
       required:
         - locationDescription
       properties:
+        agencyId:
+          type: number
+          description: the agancy identifier
         locationDescription:
           type: string
           description: the court location description
