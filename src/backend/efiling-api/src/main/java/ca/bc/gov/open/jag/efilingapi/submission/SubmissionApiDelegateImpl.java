@@ -17,6 +17,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingapi.utils.MdcUtils;
 import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
+import ca.bc.gov.open.jag.efilingapi.utils.TikaAnalysis;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.*;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import org.slf4j.Logger;
@@ -31,6 +32,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.security.RolesAllowed;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
@@ -70,14 +72,17 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @RolesAllowed("efiling-client")
     public ResponseEntity<UploadSubmissionDocumentsResponse> uploadSubmissionDocuments(UUID xTransactionId, List<MultipartFile> files) {
 
-        for (MultipartFile file: files) {
+        for (MultipartFile file : files) {
             try {
-                clamAvService.scan(file.getInputStream());
+                clamAvService.scan(new ByteArrayInputStream(file.getBytes()));
             } catch (VirusDetectedException e) {
                 return new ResponseEntity(HttpStatus.BAD_GATEWAY);
             } catch (IOException e) {
                 return new ResponseEntity(HttpStatus.GATEWAY_TIMEOUT);
             }
+
+            if (!TikaAnalysis.isPdf(file))
+                return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
         UUID submissionId = UUID.randomUUID();
@@ -98,9 +103,10 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     @Override
     @RolesAllowed("efiling-user")
-    public ResponseEntity<UploadSubmissionDocumentsResponse> uploadAdditionalSubmissionDocuments(UUID submissionId, UUID xTransactionId, List<MultipartFile> files) {
+    public ResponseEntity<UploadSubmissionDocumentsResponse> uploadAdditionalSubmissionDocuments(UUID
+                                                                                                         submissionId, UUID xTransactionId, List<MultipartFile> files) {
 
-        for (MultipartFile file: files) {
+        for (MultipartFile file : files) {
             try {
                 clamAvService.scan(file.getInputStream());
             } catch (VirusDetectedException e) {
@@ -108,11 +114,15 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             } catch (IOException e) {
                 return new ResponseEntity(HttpStatus.GATEWAY_TIMEOUT);
             }
+
+            if (!TikaAnalysis.isPdf(file))
+                return new ResponseEntity(HttpStatus.BAD_REQUEST);
+
         }
 
         Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
 
-        if(!fromCacheSubmission.isPresent())
+        if (!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
 
         MdcUtils.setUserMDC(submissionId, xTransactionId);
@@ -130,7 +140,8 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     @Override
     @RolesAllowed("efiling-user")
-    public ResponseEntity<UpdateDocumentResponse> updateDocumentProperties(UUID submissionId, UUID xTransactionId, UpdateDocumentRequest updateDocumentRequest) {
+    public ResponseEntity<UpdateDocumentResponse> updateDocumentProperties(UUID submissionId, UUID
+            xTransactionId, UpdateDocumentRequest updateDocumentRequest) {
 
         MdcUtils.setUserMDC(submissionId, xTransactionId);
 
@@ -143,7 +154,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
 
-        if(!fromCacheSubmission.isPresent())
+        if (!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
 
 
@@ -182,7 +193,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         byte[] bytes = documentStore.get(document.getCompositeId());
 
-        if(bytes == null) return ResponseEntity.notFound().build();
+        if (bytes == null) return ResponseEntity.notFound().build();
 
         logger.info("successfully retrieved document for transaction [{0}]", xTransactionId);
 
@@ -194,7 +205,8 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     @Override
     @RolesAllowed("efiling-client")
-    public ResponseEntity<GenerateUrlResponse> generateUrl(UUID xTransactionId, UUID submissionId, GenerateUrlRequest generateUrlRequest) {
+    public ResponseEntity<GenerateUrlResponse> generateUrl(UUID xTransactionId, UUID
+            submissionId, GenerateUrlRequest generateUrlRequest) {
 
         MdcUtils.setClientMDC(xTransactionId, submissionId);
 
@@ -208,21 +220,18 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
                             submissionService.generateFromRequest(xTransactionId, submissionId, generateUrlRequest),
                             navigationProperties.getBaseUrl()));
             logger.info("successfully generated return url.");
-        }
-        catch (CSOHasMultipleAccountException e)   {
+        } catch (CSOHasMultipleAccountException e) {
             logger.warn(e.getMessage(), e);
-            response =  new ResponseEntity(buildEfilingError(ErrorResponse.ACCOUNTEXCEPTION), HttpStatus.BAD_REQUEST);
-        }
-        catch (InvalidAccountStateException e) {
+            response = new ResponseEntity(buildEfilingError(ErrorResponse.ACCOUNTEXCEPTION), HttpStatus.BAD_REQUEST);
+        } catch (InvalidAccountStateException e) {
             logger.warn(e.getMessage(), e);
-            response =  new ResponseEntity(buildEfilingError(ErrorResponse.INVALIDROLE), HttpStatus.FORBIDDEN);
+            response = new ResponseEntity(buildEfilingError(ErrorResponse.INVALIDROLE), HttpStatus.FORBIDDEN);
         } catch (EfilingDocumentServiceException e) {
             logger.warn(e.getMessage(), e);
-            response =  new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        catch (StoreException e) {
+            response = new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (StoreException e) {
             logger.warn(e.getMessage(), e);
-            response =  new ResponseEntity(buildEfilingError(ErrorResponse.CACHE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+            response = new ResponseEntity(buildEfilingError(ErrorResponse.CACHE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         MdcUtils.clearClientMDC();
@@ -237,7 +246,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
 
-        if(!universalId.isPresent()) return new ResponseEntity(
+        if (!universalId.isPresent()) return new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
 
         MdcUtils.setUserMDC(submissionId, xTransactionId);
@@ -246,19 +255,20 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
 
-        if(!fromCacheSubmission.isPresent())
+        if (!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
 
 
         if (fromCacheSubmission.get().getAccountId() == null || fromCacheSubmission.get().getClientId() == null)
-            setIdsInCachedSubmission(universalId.get(),fromCacheSubmission.get());
+            setIdsInCachedSubmission(universalId.get(), fromCacheSubmission.get());
 
 
         GetSubmissionResponse response = new GetSubmissionResponse();
 
         UserDetails userDetails = buildUserDetails(universalId.get());
 
-        if(userDetails.getAccounts() == null || userDetails.getAccounts().isEmpty()) logger.info("User does not have a CSO account");
+        if (userDetails.getAccounts() == null || userDetails.getAccounts().isEmpty())
+            logger.info("User does not have a CSO account");
 
         response.setUserDetails(userDetails);
 
@@ -278,9 +288,9 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         AccountDetails accountDetails = accountService.getCsoAccountDetails(universalId);
 
-        if(accountDetails != null) {
+        if (accountDetails != null) {
 
-            if(accountDetails.isFileRolePresent()) {
+            if (accountDetails.isFileRolePresent()) {
                 Account account = new Account();
                 account.setType(Account.TypeEnum.CSO);
                 account.setIdentifier(accountDetails.getAccountId().toString());
@@ -306,7 +316,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
 
-        if(!fromCacheSubmission.isPresent())
+        if (!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
 
         logger.info("successfully retrieved submission filing package for transactionId [{0}]", xTransactionId);
@@ -320,7 +330,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @Override
     @RolesAllowed("efiling-user")
     public ResponseEntity<SubmitResponse> submit(UUID xTransactionId,
-                                                              UUID submissionId, Object body) {
+                                                 UUID submissionId, Object body) {
 
         MdcUtils.setUserMDC(submissionId, xTransactionId);
 
@@ -328,7 +338,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
 
-        if(!fromCacheSubmission.isPresent())
+        if (!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
         ResponseEntity response;
         MDC.put(Keys.MDC_EFILING_SUBMISSION_ID, submissionId.toString());
