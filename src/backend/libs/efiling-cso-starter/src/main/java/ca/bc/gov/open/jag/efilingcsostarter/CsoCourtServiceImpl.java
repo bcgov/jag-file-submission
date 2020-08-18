@@ -30,7 +30,4 @@ public class CsoCourtServiceImpl implements EfilingCourtService {
                 .orElseThrow(() -> new EfilingCourtServiceException("Court not found"));
     }
 
-    private String getCourLevelDescription() {
-        return "";
-    }
 }
