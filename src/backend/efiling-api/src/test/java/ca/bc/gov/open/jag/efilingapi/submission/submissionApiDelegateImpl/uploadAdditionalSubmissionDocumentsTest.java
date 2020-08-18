@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 
+import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
@@ -60,6 +61,9 @@ public class uploadAdditionalSubmissionDocumentsTest {
     @Mock
     private AccountService accountServiceMock;
 
+    @Mock
+    private ClamAvService clamAvServiceMock;
+
     @BeforeAll
     public void setUp() throws IOException {
         MockitoAnnotations.initMocks(this);
@@ -75,7 +79,7 @@ public class uploadAdditionalSubmissionDocumentsTest {
 
         Mockito.when(submissionStoreMock.get(Mockito.eq(TestHelpers.CASE_1), Mockito.any())).thenReturn(Optional.of(submission));
 
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock);
     }
 
     @Test

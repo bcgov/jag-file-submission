@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 
+import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
@@ -34,7 +35,6 @@ public class GenerateUrlTest {
     private static final String TYPE = "type";
     private static final String DISPLAYNAME = "DISPLAYNAME";
 
-
     private SubmissionApiDelegateImpl sut;
 
     @Mock
@@ -49,6 +49,8 @@ public class GenerateUrlTest {
     @Mock
     private AccountService accountServiceMock;
 
+    @Mock
+    private ClamAvService clamAvServiceMock;
     private UUID transactionId = UUID.randomUUID();
 
 
@@ -92,7 +94,7 @@ public class GenerateUrlTest {
                 Mockito.eq(TestHelpers.CASE_5),
                 Mockito.any());
 
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, new GenerateUrlResponseMapperImpl(), navigationProperties, submissionStoreMock, documentStoreMock);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, new GenerateUrlResponseMapperImpl(), navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock);
 
     }
 

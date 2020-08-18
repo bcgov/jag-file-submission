@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 
+import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
@@ -35,6 +36,9 @@ public class GetSubmissionDocumentTest {
     @Mock
     private AccountService accountServiceMock;
 
+    @Mock
+    private ClamAvService clamAvServiceMock;
+
 
     @BeforeAll
     public void setUp() {
@@ -46,7 +50,7 @@ public class GetSubmissionDocumentTest {
 
         Mockito.when(documentStoreMock.get(Mockito.endsWith("test.txt"))).thenReturn(CONTENT.getBytes());
 
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, new GenerateUrlResponseMapperImpl(), navigationProperties, submissionStoreMock, documentStoreMock);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, new GenerateUrlResponseMapperImpl(), navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock);
 
     }
 

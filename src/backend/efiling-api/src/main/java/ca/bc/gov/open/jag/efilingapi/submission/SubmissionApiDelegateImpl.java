@@ -1,5 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission;
 
+import ca.bc.gov.open.clamav.starter.ClamAvService;
+import ca.bc.gov.open.clamav.starter.VirusDetectedException;
 import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.SubmissionApiDelegate;
@@ -42,34 +44,41 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     Logger logger = LoggerFactory.getLogger(SubmissionApiDelegateImpl.class);
 
     private final SubmissionService submissionService;
-
     private final SubmissionStore submissionStore;
-
     private final AccountService accountService;
-
     private final GenerateUrlResponseMapper generateUrlResponseMapper;
-
     private final NavigationProperties navigationProperties;
-
     private final DocumentStore documentStore;
+    private final ClamAvService clamAvService;
 
     public SubmissionApiDelegateImpl(
             SubmissionService submissionService,
             AccountService accountService,
             GenerateUrlResponseMapper generateUrlResponseMapper,
             NavigationProperties navigationProperties,
-            SubmissionStore submissionStore, DocumentStore documentStore) {
+            SubmissionStore submissionStore, DocumentStore documentStore, ClamAvService clamAvService) {
         this.submissionService = submissionService;
         this.accountService = accountService;
         this.generateUrlResponseMapper = generateUrlResponseMapper;
         this.navigationProperties = navigationProperties;
         this.submissionStore = submissionStore;
         this.documentStore = documentStore;
+        this.clamAvService = clamAvService;
     }
 
     @Override
     @RolesAllowed("efiling-client")
     public ResponseEntity<UploadSubmissionDocumentsResponse> uploadSubmissionDocuments(UUID xTransactionId, List<MultipartFile> files) {
+
+        for (MultipartFile file: files) {
+            try {
+                clamAvService.scan(file.getInputStream());
+            } catch (VirusDetectedException e) {
+                return new ResponseEntity(HttpStatus.BAD_GATEWAY);
+            } catch (IOException e) {
+                return new ResponseEntity(HttpStatus.GATEWAY_TIMEOUT);
+            }
+        }
 
         UUID submissionId = UUID.randomUUID();
 
@@ -90,6 +99,16 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @Override
     @RolesAllowed("efiling-user")
     public ResponseEntity<UploadSubmissionDocumentsResponse> uploadAdditionalSubmissionDocuments(UUID submissionId, UUID xTransactionId, List<MultipartFile> files) {
+
+        for (MultipartFile file: files) {
+            try {
+                clamAvService.scan(file.getInputStream());
+            } catch (VirusDetectedException e) {
+                return new ResponseEntity(HttpStatus.BAD_GATEWAY);
+            } catch (IOException e) {
+                return new ResponseEntity(HttpStatus.GATEWAY_TIMEOUT);
+            }
+        }
 
         Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
 

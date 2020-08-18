@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 
+import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
@@ -19,10 +20,8 @@ import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -56,6 +55,9 @@ public class UpdateDocumentPropertiesTest {
     @Mock
     private AccountService accountServiceMock;
 
+    @Mock
+    private ClamAvService clamAvServiceMock;
+
     @BeforeAll
     public void setUp() throws IOException {
         MockitoAnnotations.initMocks(this);
@@ -69,7 +71,7 @@ public class UpdateDocumentPropertiesTest {
         Mockito.when(submissionStoreMock.get(Mockito.eq(TestHelpers.CASE_1), any())).thenReturn(Optional.of(submission));
 
 
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock);
     }
 
     @Test
