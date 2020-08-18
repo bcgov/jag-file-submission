@@ -66,5 +66,8 @@ export function generateFileSummaryData(files, submissionFee, withTotal) {
     );
   }
 
-  return result;
+  return {
+    data: result,
+    totalFee: totalOverallFee.getAmount(),
+  };
 }

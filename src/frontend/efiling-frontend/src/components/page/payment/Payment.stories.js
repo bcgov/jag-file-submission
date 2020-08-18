@@ -17,6 +17,16 @@ const submissionId = "abc123";
 const courtData = getCourtData();
 const files = getDocumentsData();
 const submissionFee = 25.5;
+const noFeeFile = [
+  {
+    name: "file name 1",
+    description: "file description 1",
+    type: "file type",
+    statutoryFeeAmount: 0,
+    isAmendment: null,
+    isSupremeCourtScheduling: null,
+  },
+];
 
 const payment = {
   confirmationPopup,
@@ -26,7 +36,11 @@ const payment = {
   submissionFee,
 };
 
-export const Default = () => <Payment payment={payment} />;
+export const WithFees = () => <Payment payment={payment} />;
+
+export const WithoutFees = () => (
+  <Payment payment={{ ...payment, submissionFee: 0, files: noFeeFile }} />
+);
 
 export const Mobile = () => <Payment payment={payment} />;
 

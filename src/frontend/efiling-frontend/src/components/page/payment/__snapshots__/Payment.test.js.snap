@@ -747,9 +747,7 @@ exports[`Payment Component Matches the snapshot 1`] = `
       >
         <p>
           I have reviewed the information and the documents in this filing
-package and am prepared to submit them for filing. I agree that all
-fees for this filing package may be charged to the credit card
-registered to my account. Statutory fees will be processed when documents are filed.
+package and am prepared to submit them for filing. I agree that all fees for this filing package may be charged to the credit card registered to my account. Statutory fees will be processed when documents are filed.
         </p>
         <label
           for="agreeCallout"
