@@ -143,7 +143,7 @@ export const eFilePackage = (token, files, setErrorExists, filingPackage) => {
       axios
         .post(`/submission/${submissionId}/generateUrl`, updatedUrlBody)
         .then(({ data: { efilingUrl } }) => {
-          window.open(`${efilingUrl}&transactionId=${transactionId}`, "_self");
+          window.open(`${efilingUrl}`, "_self");
         })
         .catch(() => setErrorExists(true));
     })
