@@ -24,7 +24,7 @@ public interface EfilingFilingPackageMapper {
     @Mapping(target = "notificationRequiredYn", constant = "false")
     @Mapping(target = "ldcxCourtClassCd", source = "filingPackage.court.courtClass")
     @Mapping(target = "ldcxCourtLevelCd", source = "filingPackage.court.level")
-    @Mapping(target = "submittedToAgenId", constant = "filingPackage.court.agencyId")
+    @Mapping(target = "submittedToAgenId", source = "filingPackage.court.agencyId")
     @Mapping(target = "submittedByAccountId", source = "accountId")
     @Mapping(target = "submittedByClientId", source = "clientId")
     @Mapping(target = "ldcxCourtDivisionCd", source = "filingPackage.court.division")
