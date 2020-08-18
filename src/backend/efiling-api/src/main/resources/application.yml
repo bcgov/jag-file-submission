@@ -67,6 +67,12 @@ bcgov:
     remoteLocation: ${SFTP_REMOTELOCATION}
     knownHostsFileName: ${SFTP_KNOWNHOSTS}
     allowUnknownKeys: ${SFTP_ALLOWUNKNOWN:true}
+  bceid:
+    service:
+      uri: ${BCEID_SERVICE_URI}
+      username: ${BCEID_SERVICE_USERNAME}
+      password: ${BCEID_SERVICE_PASSWORD}
+      onlineServiceId: ${BCEID_SERVICE_ONLINE_SERVICE_ID}
 
 info:
   app:
