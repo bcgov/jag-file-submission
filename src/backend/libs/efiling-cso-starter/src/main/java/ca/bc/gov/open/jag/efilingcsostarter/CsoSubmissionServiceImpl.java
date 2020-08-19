@@ -114,10 +114,13 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     private BigDecimal filePackage(Service service, EfilingFilingPackage filingPackage) {
 
         // TODO: replace in the mapper when submission is a common object
-        filingPackage.getDocuments().stream().forEach(efilingDocument -> {
-            efilingDocument.setFileServer(csoProperties.getFileServerHost());
-            efilingDocument.setPackageSeqNo(new BigDecimal(1));
-        });
+
+        if(filingPackage.getDocuments() != null && !filingPackage.getDocuments().isEmpty()) {
+            filingPackage.getDocuments().stream().forEach(efilingDocument -> {
+                efilingDocument.setFileServer(csoProperties.getFileServerHost());
+                efilingDocument.setPackageSeqNo(new BigDecimal(1));
+            });
+        }
 
         FilingPackage csoFilingPackage = filingPackageMapper.toFilingPackage(filingPackage, service.getServiceId());
 
