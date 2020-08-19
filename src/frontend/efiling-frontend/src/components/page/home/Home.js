@@ -1,8 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import queryString from "query-string";
-import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { MdCancel } from "react-icons/md";
 
@@ -101,7 +99,9 @@ const checkCSOAccountStatus = (
     });
 };
 
-export default function Home({ page: { header, confirmationPopup } }) {
+export default function Home({
+  page: { header, confirmationPopup, submissionId, transactionId },
+}) {
   const [showLoader, setShowLoader] = useState(true);
   const [csoAccountStatus, setCsoAccountStatus] = useState({
     exists: false,
@@ -109,24 +109,22 @@ export default function Home({ page: { header, confirmationPopup } }) {
   });
   const [applicantInfo, setApplicantInfo] = useState({});
   const [error, setError] = useState(false);
-  const location = useLocation();
-  const queryParams = queryString.parse(location.search);
 
-  setRequestHeaders(queryParams.transactionId);
+  setRequestHeaders(transactionId);
 
   useEffect(() => {
     checkCSOAccountStatus(
-      queryParams.submissionId,
+      submissionId,
       setCsoAccountStatus,
       setShowLoader,
       setApplicantInfo,
       setError
     );
-  }, [queryParams.submissionId]);
+  }, [submissionId]);
 
   const packageConfirmation = {
     confirmationPopup,
-    submissionId: queryParams.submissionId,
+    submissionId,
   };
 
   return (
@@ -170,5 +168,7 @@ Home.propTypes = {
   page: PropTypes.shape({
     header: propTypes.header,
     confirmationPopup: propTypes.confirmationPopup,
+    submissionId: PropTypes.string.isRequired,
+    transactionId: PropTypes.string.isRequired,
   }).isRequired,
 };

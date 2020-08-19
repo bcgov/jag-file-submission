@@ -1,5 +1,4 @@
 import React from "react";
-import { MemoryRouter } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
@@ -22,9 +21,10 @@ const header = {
   history: createMemoryHistory(),
 };
 const confirmationPopup = getTestData();
-const page = { header, confirmationPopup };
-
 const submissionId = "abc123";
+const transactionId = "trans123";
+const page = { header, confirmationPopup, submissionId, transactionId };
+
 const apiRequest = `/submission/${submissionId}`;
 const getFilingPackagePath = `/submission/${submissionId}/filing-package`;
 const navigation = getNavigationData();
@@ -78,15 +78,7 @@ const NoAccountExistsStateData = (props) => {
   return props.children({ page });
 };
 
-const homeComponent = (data) => (
-  <MemoryRouter
-    initialEntries={[
-      { search: `?submissionId=${submissionId}`, key: "testKey" },
-    ]}
-  >
-    <Home page={data.page} />
-  </MemoryRouter>
-);
+const homeComponent = (data) => <Home page={data.page} />;
 
 const loaderComponent = (
   <LoaderStateData>{(data) => homeComponent(data)}</LoaderStateData>

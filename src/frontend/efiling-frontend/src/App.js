@@ -1,5 +1,8 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState } from "react";
+import axios from "axios";
+import queryString from "query-string";
+import { useLocation } from "react-router-dom";
 import { Switch, Route, Redirect, useHistory } from "react-router-dom";
 import AuthenticationGuard from "./components/hoc/AuthenticationGuard";
 
@@ -19,13 +22,17 @@ const cancelButton = {
 };
 
 export default function App() {
+  const location = useLocation();
+  const queryParams = queryString.parse(location.search);
+  const submissionId = queryParams.submissionId;
+  const transactionId = queryParams.transactionId;
+
   const header = {
     name: "E-File Submission",
     history: useHistory(),
   };
 
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -45,7 +52,10 @@ export default function App() {
     const cancelUrl = sessionStorage.getItem("cancelUrl");
 
     if (cancelUrl) {
-      window.open(cancelUrl, "_self");
+      axios
+        .delete(`submission/${submissionId}`)
+        .then(() => window.open(cancelUrl, "_self"))
+        .catch(() => window.open(cancelUrl, "_self"));
     }
   };
 
@@ -67,7 +77,9 @@ export default function App() {
       <Switch>
         <Redirect exact from="/" to="/efiling" />
         <Route exact path="/efiling">
-          <AuthenticationGuard page={{ header, confirmationPopup }} />
+          <AuthenticationGuard
+            page={{ header, confirmationPopup, submissionId, transactionId }}
+          />
         </Route>
       </Switch>
     </div>
