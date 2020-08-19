@@ -20,6 +20,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -75,10 +77,12 @@ public class UploadSubmissionDocumentsTest {
 
     @Test
     @DisplayName("200: with files should return ok")
-    public void withFilesShouldReturnOk() {
+    public void withFilesShouldReturnOk() throws IOException {
+
+        File file = new File("src/test/resources/test.pdf");
 
         List<MultipartFile> files = new ArrayList<>();
-        MultipartFile multipartFile = new MockMultipartFile("test.txt", "test".getBytes());
+        MultipartFile multipartFile = new MockMultipartFile("test.pdf", new FileInputStream(file));
         files.add(multipartFile);
         files.add(multipartFile);
         ResponseEntity<UploadSubmissionDocumentsResponse> actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), files);
