@@ -28,7 +28,7 @@ public class DocumentStoreImplTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        DocumentDetails docummentDetails = new DocumentDetails(DESCRIPTION, BigDecimal.TEN);
+        DocumentDetails docummentDetails = new DocumentDetails(DESCRIPTION, BigDecimal.TEN, true);
 
         Mockito
                 .when(efilingDocumentServiceMock.getDocumentDetails(Mockito.anyString(), Mockito.anyString(), Mockito.anyString()))

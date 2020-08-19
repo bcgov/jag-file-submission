@@ -5,6 +5,7 @@ import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
+import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
@@ -51,7 +52,7 @@ public class updateDocumentsTest {
 
         MockitoAnnotations.initMocks(this);
 
-        DocumentDetails documentDetails = new DocumentDetails(TestHelpers.DESCRIPTION, BigDecimal.TEN);
+        DocumentDetails documentDetails = new DocumentDetails(TestHelpers.DESCRIPTION, BigDecimal.TEN, false);
 
         Mockito.when(documentStoreMock.getDocumentDetails(any(), any(), any())).thenReturn(documentDetails);
 
@@ -78,7 +79,9 @@ public class updateDocumentsTest {
         Assertions.assertEquals(2, actual.getFilingPackage().getDocuments().size());
         Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getFilingPackage().getDocuments().get(0).getDescription());
         Assertions.assertEquals(BigDecimal.TEN, actual.getFilingPackage().getDocuments().get(0).getStatutoryFeeAmount());
+        Assertions.assertEquals(SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD, actual.getFilingPackage().getDocuments().get(0).getSubType());
         Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getFilingPackage().getDocuments().get(1).getDescription());
         Assertions.assertEquals(BigDecimal.TEN, actual.getFilingPackage().getDocuments().get(1).getStatutoryFeeAmount());
+        Assertions.assertEquals(SubmissionConstants.SUBMISSION_ODOC_DOCUMENT_SUB_TYPE_CD, actual.getFilingPackage().getDocuments().get(1).getSubType());
     }
 }

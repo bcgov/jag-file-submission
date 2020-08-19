@@ -39,7 +39,7 @@ public class CsoDocumentServiceImpl implements EfilingDocumentService {
         return getSoapDocumentTypes(courtLevel, courtClass).stream()
                 .filter(doc -> doc.getDocumentTypeCd().equals(documentType))
                 .findFirst()
-                .map(doc -> new DocumentDetails(doc.getDocumentTypeDesc(), doc.getDefaultStatutoryFee()))
+                .map(doc -> new DocumentDetails(doc.getDocumentTypeDesc(), doc.getDefaultStatutoryFee(), doc.isOrderDocumentYn()))
                 .orElseThrow(() -> new EfilingDocumentServiceException("Document type does not exists"));
 
     }
