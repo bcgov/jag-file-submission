@@ -299,9 +299,16 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
 
     @Override
+    public ResponseEntity<Void> deleteSubmission(UUID submissionId, UUID xTransactionId) {
+
+        submissionStore.evict(submissionId, xTransactionId);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+
+    }
+
+    @Override
     @RolesAllowed("efiling-user")
-    public ResponseEntity<SubmitResponse> submit(UUID xTransactionId,
-                                                              UUID submissionId, Object body) {
+    public ResponseEntity<SubmitResponse> submit(UUID xTransactionId, UUID submissionId, Object body) {
 
         MdcUtils.setUserMDC(submissionId, xTransactionId);
 
