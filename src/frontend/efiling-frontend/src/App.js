@@ -2,8 +2,13 @@
 import React, { useState } from "react";
 import axios from "axios";
 import queryString from "query-string";
-import { useLocation } from "react-router-dom";
-import { Switch, Route, Redirect, useHistory } from "react-router-dom";
+import {
+  Switch,
+  Route,
+  Redirect,
+  useHistory,
+  useLocation,
+} from "react-router-dom";
 import AuthenticationGuard from "./components/hoc/AuthenticationGuard";
 
 const mainButton = {
@@ -24,8 +29,7 @@ const cancelButton = {
 export default function App() {
   const location = useLocation();
   const queryParams = queryString.parse(location.search);
-  const submissionId = queryParams.submissionId;
-  const transactionId = queryParams.transactionId;
+  const { submissionId, transactionId } = queryParams;
 
   const header = {
     name: "E-File Submission",
