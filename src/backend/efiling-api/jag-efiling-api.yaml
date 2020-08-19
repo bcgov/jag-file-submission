@@ -334,6 +334,9 @@ components:
         type:
           type: string
           description: the submission type
+        subType:
+          type: string
+          description: sub type value
         isAmendment:
           type: boolean
           description: is the document an amendment to another

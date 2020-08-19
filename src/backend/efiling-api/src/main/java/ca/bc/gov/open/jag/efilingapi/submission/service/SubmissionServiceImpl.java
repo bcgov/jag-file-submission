@@ -27,6 +27,8 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+
+
 public class SubmissionServiceImpl implements SubmissionService {
 
     Logger logger = LoggerFactory.getLogger(SubmissionServiceImpl.class);
@@ -102,7 +104,10 @@ public class SubmissionServiceImpl implements SubmissionService {
         EfilingFilingPackage filingPackage = efilingFilingPackageMapper.toEfilingFilingPackage(submission);
         filingPackage.setPackageControls(Arrays.asList(efilingFilingPackageMapper.toPackageAuthority(submission)));
         filingPackage.setDocuments(submission.getFilingPackage().getDocuments().stream()
-                                        .map(document -> efilingFilingPackageMapper.toEfilingDocument(document))
+                                        .map(document -> efilingFilingPackageMapper.toEfilingDocument(document, submission, submission.getFilingPackage().getDocuments().indexOf(document),
+                                                "cure.bcgov", Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentMilestone(document, submission)),
+                                                Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentPayment(document, submission)),
+                                                Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentStatus(document, submission))))
                                         .collect(Collectors.toList()));
         filingPackage.setEntDtm(DateUtils.getCurrentXmlDate());
         filingPackage.setSubmitDtm(DateUtils.getCurrentXmlDate());
@@ -174,6 +179,7 @@ public class SubmissionServiceImpl implements SubmissionService {
         document.setMimeType(FileUtils.guessContentTypeFromName(documentProperties.getName()));
         document.setIsAmendment(documentProperties.getIsAmendment());
         document.setIsSupremeCourtScheduling(documentProperties.getIsSupremeCourtScheduling());
+        document.setSubType(details.getOrderDocument() ? SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD : SubmissionConstants.SUBMISSION_ODOC_DOCUMENT_SUB_TYPE_CD);
 
         return document;
 
