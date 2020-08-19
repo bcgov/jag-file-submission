@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission.models;
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
+import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,10 +32,16 @@ public class SubmissionTest {
 
         Submission actual = new Submission(
                 UUID.randomUUID(),
-                BigDecimal.TEN,
-                BigDecimal.TEN,
-                INTERNAL_CLIENT_NUMBER,
                 UUID.randomUUID(),
+                AccountDetails.builder()
+                        .clientId(BigDecimal.TEN)
+                        .accountId(BigDecimal.TEN)
+                        .internalClientNumber(INTERNAL_CLIENT_NUMBER)
+                        .email(EMAIL)
+                        .middleName(MIDDLE_NAME)
+                        .lastName(LAST_NAME)
+                        .firstName(FIRST_NAME)
+                        .create(),
                 TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()),
                 TestHelpers.createNavigation(CASE_1, CANCEL, ERROR),
                 TestHelpers.createClientApplication(DISPLAYNAME, TYPE),
@@ -42,10 +49,14 @@ public class SubmissionTest {
 
 
         Assertions.assertEquals(TYPE, actual.getClientApplication().getType());
-        Assertions.assertEquals(BigDecimal.TEN, actual.getAccountId());
-        Assertions.assertEquals(BigDecimal.TEN, actual.getClientId());
-        Assertions.assertEquals(INTERNAL_CLIENT_NUMBER, actual.getInternalClientNumber());
+        Assertions.assertEquals(BigDecimal.TEN, actual.getAccountDetails().getAccountId());
+        Assertions.assertEquals(BigDecimal.TEN, actual.getAccountDetails().getClientId());
+        Assertions.assertEquals(INTERNAL_CLIENT_NUMBER, actual.getAccountDetails().getInternalClientNumber());
         Assertions.assertEquals(DISPLAYNAME, actual.getClientApplication().getDisplayName());
+        Assertions.assertEquals(EMAIL, actual.getAccountDetails().getEmail());
+        Assertions.assertEquals(FIRST_NAME, actual.getAccountDetails().getFirstName());
+        Assertions.assertEquals(MIDDLE_NAME, actual.getAccountDetails().getMiddleName());
+        Assertions.assertEquals(LAST_NAME, actual.getAccountDetails().getLastName());
         Assertions.assertEquals(ERROR, actual.getNavigation().getError().getUrl());
         Assertions.assertEquals(CANCEL, actual.getNavigation().getCancel().getUrl());
         Assertions.assertEquals(CASE_1, actual.getNavigation().getSuccess().getUrl());
