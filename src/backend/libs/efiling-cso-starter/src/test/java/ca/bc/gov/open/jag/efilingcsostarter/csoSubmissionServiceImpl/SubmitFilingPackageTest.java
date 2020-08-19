@@ -10,6 +10,7 @@ import ca.bc.gov.open.jag.efilingcommons.service.EfilingPaymentService;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoSubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingcsostarter.TestHelpers;
+import ca.bc.gov.open.jag.efilingcsostarter.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.FilingPackageMapperImpl;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.FinancialTransactionMapperImpl;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.ServiceMapperImpl;
@@ -53,10 +54,15 @@ public class SubmitFilingPackageTest {
     @Mock
     private EfilingPaymentService efilingPaymentServiceMock;
 
+    @Mock
+    private CsoProperties csoPropertiesMock;
+
     @BeforeEach
     public void init() throws NestedEjbException_Exception {
 
         MockitoAnnotations.initMocks(this);
+
+        Mockito.when(csoPropertiesMock.getFileServerHost()).thenReturn("localhost");
 
         UserSession userSession = new UserSession();
         userSession.setStartDtm(DateUtils.getCurrentXmlDate());
@@ -70,7 +76,7 @@ public class SubmitFilingPackageTest {
         Mockito.doReturn(serviceSession).when(serviceFacadeBean)
                 .createServiceSession(ArgumentMatchers.argThat(x -> x.getUserSessionId().equals(userSession.getUserSessionId())), Mockito.anyString());
 
-        sut = new CsoSubmissionServiceImpl(filingFacadeBeanMock, serviceFacadeBean, new ServiceMapperImpl(), new FilingPackageMapperImpl(), new FinancialTransactionMapperImpl(), csoProperties);
+        sut = new CsoSubmissionServiceImpl(filingFacadeBeanMock, serviceFacadeBean, new ServiceMapperImpl(), new FilingPackageMapperImpl(), new FinancialTransactionMapperImpl(), csoPropertiesMock);
 
     }
 
