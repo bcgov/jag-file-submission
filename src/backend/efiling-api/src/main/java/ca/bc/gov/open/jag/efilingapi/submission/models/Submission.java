@@ -19,12 +19,6 @@ public class Submission {
 
     private UUID transactionId;
 
-    private BigDecimal accountId;
-
-    private BigDecimal clientId;
-
-    private String internalClientNumber;
-
     private long expiryDate;
 
     private AccountDetails accountDetails;
