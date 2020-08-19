@@ -59,7 +59,7 @@ public class AutoConfiguration {
                         .otherMiddleName("Hey").create();
                 IndividualIdentity individualIdentity = new IndividualIdentity(name, DateTime.now(), address, address);
 
-                return Optional.empty();
+                return Optional.of(individualIdentity);
             }
         };
     }
