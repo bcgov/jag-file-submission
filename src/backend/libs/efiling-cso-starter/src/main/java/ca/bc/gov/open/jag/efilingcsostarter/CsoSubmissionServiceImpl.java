@@ -11,6 +11,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingTransaction;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingPaymentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
+import ca.bc.gov.open.jag.efilingcsostarter.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.FilingPackageMapper;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.FinancialTransactionMapper;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.ServiceMapper;
@@ -24,13 +25,16 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     private final ServiceMapper serviceMapper;
     private final FilingPackageMapper filingPackageMapper;
     private final FinancialTransactionMapper financialTransactionMapper;
+    private final CsoProperties csoProperties;
 
-    public CsoSubmissionServiceImpl(FilingFacadeBean filingFacadeBean, ServiceFacadeBean serviceFacadeBean, ServiceMapper serviceMapper, FilingPackageMapper filingPackageMapper, FinancialTransactionMapper financialTransactionMapper) {
+
+    public CsoSubmissionServiceImpl(FilingFacadeBean filingFacadeBean, ServiceFacadeBean serviceFacadeBean, ServiceMapper serviceMapper, FilingPackageMapper filingPackageMapper, FinancialTransactionMapper financialTransactionMapper, CsoProperties csoProperties) {
         this.filingFacadeBean = filingFacadeBean;
         this.serviceFacadeBean = serviceFacadeBean;
         this.serviceMapper = serviceMapper;
         this.filingPackageMapper = filingPackageMapper;
         this.financialTransactionMapper = financialTransactionMapper;
+        this.csoProperties = csoProperties;
     }
 
     @Override
@@ -108,14 +112,21 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     }
 
     private BigDecimal filePackage(Service service, EfilingFilingPackage filingPackage) {
-        FilingPackage csoFilingPackage = filingPackageMapper.toFilingPackage(filingPackage, service.getServiceId());
 
+        // TODO: replace in the mapper when submission is a common object
+        filingPackage.getDocuments().stream().forEach(efilingDocument -> {
+            efilingDocument.setFileServer(csoProperties.getFileServerHost());
+            efilingDocument.setPackageSeqNo(new BigDecimal(1));
+        });
+
+        FilingPackage csoFilingPackage = filingPackageMapper.toFilingPackage(filingPackage, service.getServiceId());
 
         try {
             return filingFacadeBean.submitFiling(csoFilingPackage);
         } catch (NestedEjbException_Exception e) {
             throw new EfilingSubmissionServiceException("Exception while filing package", e.getCause());
         }
+
     }
 
     private void updateServiceComplete(Service service) {

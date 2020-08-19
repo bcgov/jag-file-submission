@@ -24,7 +24,7 @@ public class AutoConfigurationTest {
 
     @BeforeAll
     public void setup() {
-        sut = new AutoConfiguration(initSoapProperties());
+        sut = new AutoConfiguration(initSoapProperties(), csoProperties);
     }
 
     @Test
