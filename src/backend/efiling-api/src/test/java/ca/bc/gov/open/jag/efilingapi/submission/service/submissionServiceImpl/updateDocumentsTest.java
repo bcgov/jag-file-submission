@@ -79,7 +79,7 @@ public class updateDocumentsTest {
         Assertions.assertEquals(2, actual.getFilingPackage().getDocuments().size());
         Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getFilingPackage().getDocuments().get(0).getDescription());
         Assertions.assertEquals(BigDecimal.TEN, actual.getFilingPackage().getDocuments().get(0).getStatutoryFeeAmount());
-        Assertions.assertEquals(SubmissionConstants.SUBMISSION_ODOC_DOCUMENT_SUB_TYPE_CD, actual.getFilingPackage().getDocuments().get(0).getSubType());
+        Assertions.assertEquals(SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD, actual.getFilingPackage().getDocuments().get(0).getSubType());
         Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getFilingPackage().getDocuments().get(1).getDescription());
         Assertions.assertEquals(BigDecimal.TEN, actual.getFilingPackage().getDocuments().get(1).getStatutoryFeeAmount());
         Assertions.assertEquals(SubmissionConstants.SUBMISSION_ODOC_DOCUMENT_SUB_TYPE_CD, actual.getFilingPackage().getDocuments().get(1).getSubType());
