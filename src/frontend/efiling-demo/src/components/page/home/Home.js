@@ -157,6 +157,8 @@ export default function Home({ page: { header } }) {
   const [filingPackage, setFilingPackage] = useState(null);
   const [token, setToken] = useState(null);
   const [files, setFiles] = useState([]);
+  const [submitBtnEnabled, setSubmitBtnEnabled] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
 
   const keycloakClientId = sessionStorage.getItem("demoKeycloakClientId");
   const keycloakBaseUrl = sessionStorage.getItem("demoKeycloakUrl");
@@ -164,6 +166,20 @@ export default function Home({ page: { header } }) {
   const keycloakClientSecret = sessionStorage.getItem(
     "demoKeycloakClientSecret"
   );
+
+  const checkSubmitEnabled = () => {
+    if (
+      files.length > 0 &&
+      filingPackage &&
+      JSON.stringify(filingPackage) !== "{}"
+    ) {
+      setSubmitBtnEnabled(true);
+    }
+  };
+
+  useEffect(() => {
+    checkSubmitEnabled();
+  }, [files, filingPackage]);
 
   useEffect(() => {
     getToken(
@@ -198,17 +214,15 @@ export default function Home({ page: { header } }) {
           <br />
           <Button
             onClick={() => {
-              const result = eFilePackage(
-                token,
-                files,
-                setErrorExists,
-                filingPackage
-              );
-              if (!result) setErrorExists(true);
+              setShowLoader(true);
+              setSubmitBtnEnabled(false);
+              eFilePackage(token, files, setErrorExists, filingPackage);
             }}
             label="E-File my Package"
             styling="normal-blue btn"
             testId="generate-url-btn"
+            hasLoader={showLoader}
+            disabled={!submitBtnEnabled}
           />
           <br />
           <br />
