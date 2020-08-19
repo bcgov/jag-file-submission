@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 
 @Mapper
 public interface FilingPackageMapper {
+
     @Mapping(target = "applicationCd", source = "efilingFilingPackage.applicationCd")
     @Mapping(target = "applicationReferenceGuid", source = "efilingFilingPackage.applicationReferenceGuid")
     @Mapping(target = "autoProcessEndDtm", source = "efilingFilingPackage.autoProcessEndDtm")

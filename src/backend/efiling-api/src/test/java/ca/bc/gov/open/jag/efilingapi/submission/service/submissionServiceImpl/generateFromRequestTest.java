@@ -7,6 +7,7 @@ import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
+import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
@@ -116,6 +117,7 @@ public class generateFromRequestTest {
         Assertions.assertEquals(TestHelpers.LEVEL_DESCRIPTION, actual.getFilingPackage().getCourt().getLevelDescription());
         Assertions.assertEquals(TestHelpers.CLASS_DESCRIPTION, actual.getFilingPackage().getCourt().getClassDescription());
         Assertions.assertEquals(BigDecimal.TEN, actual.getFilingPackage().getDocuments().get(0).getStatutoryFeeAmount());
+        Assertions.assertEquals(SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD, actual.getFilingPackage().getDocuments().get(0).getSubType());
         Assertions.assertEquals("application/txt", actual.getFilingPackage().getDocuments().get(0).getMimeType());
 
     }
@@ -139,7 +141,7 @@ public class generateFromRequestTest {
         AccountDetails accountDetails = getAccountDetails(true, TestHelpers.CASE_1.toString());
 
         Mockito.when(documentStoreMock.getDocumentDetails(any(), any(), any()))
-                .thenReturn(new DocumentDetails(TestHelpers.DESCRIPTION, BigDecimal.TEN));
+                .thenReturn(new DocumentDetails(TestHelpers.DESCRIPTION, BigDecimal.TEN, true));
 
         Submission submissionCase1 = Submission
                 .builder()

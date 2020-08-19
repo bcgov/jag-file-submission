@@ -40,6 +40,7 @@ public class GetDocumentDetailsTest {
         documentType.setDocumentTypeCd(DOCUMENT_TYPE_CD);
         documentType.setDocumentTypeDesc(DESCRIPTION);
         documentType.setDefaultStatutoryFee(BigDecimal.TEN);
+        documentType.setOrderDocumentYn(true);
 
         Mockito.when(filingStatusFacadeBean.getDocumentTypes(Mockito.eq(COURT_LEVEL),any())).thenReturn(Arrays.asList(documentType));
         Mockito.when(filingStatusFacadeBean.getDocumentTypes(Mockito.eq(NODOC),any())).thenReturn(new ArrayList<>());
@@ -55,6 +56,7 @@ public class GetDocumentDetailsTest {
         DocumentDetails result = sut.getDocumentDetails(COURT_LEVEL, COURT_CLASS, DOCUMENT_TYPE_CD);
         Assertions.assertEquals(DESCRIPTION, result.getDescription());
         Assertions.assertEquals(BigDecimal.TEN, result.getStatutoryFeeAmount());
+        Assertions.assertTrue(result.getOrderDocument());
     }
 
     @DisplayName("Exception: when not finding document should throw exception")

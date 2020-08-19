@@ -22,14 +22,16 @@ import ca.bc.gov.ag.csows.lookups.LookupFacadeBean;
 
 
 @Configuration
-@EnableConfigurationProperties(SoapProperties.class)
+@EnableConfigurationProperties({SoapProperties.class, CsoProperties.class})
 public class AutoConfiguration {
 
     private final SoapProperties soapProperties;
 
+    private final CsoProperties csoProperties;
 
-    public AutoConfiguration(SoapProperties soapProperties) {
+    public AutoConfiguration(SoapProperties soapProperties, CsoProperties csoProperties) {
         this.soapProperties = soapProperties;
+        this.csoProperties = csoProperties;
     }
 
     @Bean
@@ -109,7 +111,7 @@ public class AutoConfiguration {
                                                              ServiceMapper serviceMapper,
                                                              FilingPackageMapper filingPackageMapper,
                                                              FinancialTransactionMapper financialTransactionMapper
-    ) { return new CsoSubmissionServiceImpl(filingFacadeBean, serviceFacadeBean, serviceMapper, filingPackageMapper, financialTransactionMapper); }
+    ) { return new CsoSubmissionServiceImpl(filingFacadeBean, serviceFacadeBean, serviceMapper, filingPackageMapper, financialTransactionMapper, csoProperties); }
 
 
     public <T> T getPort(Clients clients, Class<T> type) {
