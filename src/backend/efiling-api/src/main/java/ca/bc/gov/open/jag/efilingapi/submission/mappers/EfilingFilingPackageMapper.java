@@ -12,6 +12,8 @@ import java.util.List;
 
 @Mapper
 public interface EfilingFilingPackageMapper {
+
+    @Mapping(target = "applicationCd", source = "clientApplication.type")
     @Mapping(target = "courtFileNo", source = "filingPackage.court.fileNumber")
     @Mapping(target = "entUserId", source = "clientId")
     @Mapping(target = "existingCourtFileYn", constant = "false")
@@ -31,7 +33,7 @@ public interface EfilingFilingPackageMapper {
     @Mapping(target = "amendsAnotherDocumentYn", source = "document.isAmendment", defaultValue = "false")
     @Mapping(target = "clientFileNameTxt", source = "document.name")
     @Mapping(target = "documentDescriptionTxt", source = "document.description")
-    @Mapping(target = "documentSubtypeCd", constant = "document.subType" )
+    @Mapping(target = "documentSubtypeCd", constant = "ODOC" )
     @Mapping(target = "documentTypeCd", source = "document.type")
     @Mapping(target = "entUserId", source = "submission.clientId")
     @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
@@ -53,7 +55,7 @@ public interface EfilingFilingPackageMapper {
 
     @Mapping(target = "entUserId", source = "submission.clientId")
     @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
-    @Mapping(target = "paymentStatusCd",  constant = "WAT")
+    @Mapping(target = "paymentStatusCd",  constant = SubmissionConstants.PAYMENT_STATUS_CD)
     @Mapping(target = "statutoryFeeAmt",  source = "document.statutoryFeeAmount")
     @Mapping(target = "paymentSeqNo",  constant = "1")
     EfilingDocumentPayment toEfilingDocumentPayment(Document document, Submission submission);
