@@ -71,7 +71,6 @@ public class DocumentStoreImplTest {
 
     }
 
-
     @Test
     @DisplayName("OK: get document types should cache result")
     public void withCourtLevelCourtClassShouldReturnDocumentTypes() {
