@@ -26,6 +26,7 @@ public class EfilingDocumentServiceDemoImplTest {
 
         Assertions.assertEquals("This is a doc", actual.getDescription());
         Assertions.assertEquals(BigDecimal.valueOf(7), actual.getStatutoryFeeAmount());
+        Assertions.assertTrue(actual.getOrderDocument());
     }
     @DisplayName("CASE 2: Testing Demo getDocumentTypes")
     @Test

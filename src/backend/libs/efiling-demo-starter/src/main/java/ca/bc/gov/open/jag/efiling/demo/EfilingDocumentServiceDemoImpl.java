@@ -11,7 +11,7 @@ import java.util.List;
 public class EfilingDocumentServiceDemoImpl implements EfilingDocumentService {
     @Override
     public DocumentDetails getDocumentDetails(String courtLevel, String courtClass, String documentType) {
-        return new DocumentDetails("This is a doc", BigDecimal.valueOf(7));
+        return new DocumentDetails("This is a doc", BigDecimal.valueOf(7), true);
     }
 
     @Override
