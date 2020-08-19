@@ -90,14 +90,14 @@ paths:
         "404":
           description: Submission not found
   "/submission/{submissionId}":
+    parameters:
+      - $ref: "#/components/parameters/submissionId"
+      - $ref: "#/components/parameters/xTransactionId"
     get:
       summary: Get user detail for a given submission
       operationId: GetSubmission
       tags:
         - submission
-      parameters:
-        - $ref: "#/components/parameters/submissionId"
-        - $ref: "#/components/parameters/xTransactionId"
       responses:
         "200":
           description: Config found
@@ -106,7 +106,15 @@ paths:
               schema:
                 $ref: "#/components/schemas/GetSubmissionResponse"
         "404":
-          description: Config not foun
+          description: Config not found
+    delete:
+      summary: Delete a submission by id
+      operationId: DeleteSubmission
+      tags:
+        - submission
+      responses:
+        "200":
+          description: submission deleted
   "/submission/{submissionId}/generateUrl":
     post:
       summary: Generates a secure URL for e-filing submission
