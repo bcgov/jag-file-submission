@@ -12,6 +12,8 @@ import java.util.List;
 
 @Mapper
 public interface EfilingFilingPackageMapper {
+
+    @Mapping(target = "applicationCd", source = "clientApplication.type")
     @Mapping(target = "courtFileNo", source = "filingPackage.court.fileNumber")
     @Mapping(target = "entUserId", source = "clientId")
     @Mapping(target = "existingCourtFileYn", constant = "false")
