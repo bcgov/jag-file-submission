@@ -107,4 +107,8 @@ public class EfilingIdentificationDetails {
         this.surnameNm = surnameNm;
         this.thirdGivenNm = thirdGivenNm;
     }
+
+    public EfilingIdentificationDetails() {
+
+    }
 }

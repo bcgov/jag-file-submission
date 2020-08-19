@@ -102,7 +102,7 @@ public class SubmissionServiceImpl implements SubmissionService {
         EfilingService service = efilingFilingPackageMapper.toEfilingService(submission);
         service.setEntryDateTime(DateUtils.getCurrentXmlDate());
 
-        EfilingFilingPackage filingPackage = efilingFilingPackageMapper.toEfilingFilingPackage(submission);
+        EfilingFilingPackage filingPackage = efilingFilingPackageMapper.toEfilingFilingPackage(submission, Arrays.asList(efilingFilingPackageMapper.toEfilingParties(submission)));
         filingPackage.setPackageControls(Arrays.asList(efilingFilingPackageMapper.toPackageAuthority(submission)));
         filingPackage.setDocuments(submission.getFilingPackage().getDocuments().stream()
                                         .map(document -> efilingFilingPackageMapper.toEfilingDocument(document, submission,
