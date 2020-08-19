@@ -55,7 +55,7 @@ public interface EfilingFilingPackageMapper {
 
     @Mapping(target = "entUserId", source = "submission.clientId")
     @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
-    @Mapping(target = "paymentStatusCd",  constant = "WAT")
+    @Mapping(target = "paymentStatusCd",  constant = SubmissionConstants.PAYMENT_STATUS_CD)
     @Mapping(target = "statutoryFeeAmt",  source = "document.statutoryFeeAmount")
     @Mapping(target = "paymentSeqNo",  constant = "1")
     EfilingDocumentPayment toEfilingDocumentPayment(Document document, Submission submission);

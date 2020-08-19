@@ -13,4 +13,5 @@ public class SubmissionConstants {
     public static final String SUBMISSION_DOCUMENT_STATUS_TYPE_CD = "SUB";
     public static final String SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD = "ORDR";
     public static final String SUBMISSION_ODOC_DOCUMENT_SUB_TYPE_CD = "ODOC";
+    public static final String  PAYMENT_STATUS_CD = "NREQ";
 }
