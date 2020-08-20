@@ -38,14 +38,14 @@ public interface EfilingFilingPackageMapper {
     @Mapping(target = "entUserId", source = "submission.accountDetails.clientId")
     @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
     //TODO this is the constructed file name
-    @Mapping(target = "filePath", source = "document.name")
+    @Mapping(target = "filePath", source = "filePath")
     @Mapping(target = "uploadStateCd", constant = SubmissionConstants.SUBMISSION_UPLOAD_STATE_CD)
     @Mapping(target = "milestones", source = "milestones")
     @Mapping(target = "payments", source = "payments")
     @Mapping(target = "statuses", source = "statuses")
     @Mapping(target = "xmlDocumentInstanceYn", constant = SubmissionConstants.XML_DOCUMENT_INSTANCE_YN)
     EfilingDocument toEfilingDocument(Document document, Submission submission, List<EfilingDocumentMilestone> milestones,
-                                      List<EfilingDocumentPayment> payments, List<EfilingDocumentStatus> statuses);
+                                      List<EfilingDocumentPayment> payments, List<EfilingDocumentStatus> statuses, String filePath);
 
     @Mapping(target = "entUserId", source = "submission.accountDetails.clientId")
     @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
