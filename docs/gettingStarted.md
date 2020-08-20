@@ -92,7 +92,7 @@ The `navigation` object represents a list of possible returns to your applicatio
 
 the `clientAppplication` object represents how your application is labelled in **efiling hub**
 
-the `filingPackage` object represents the court information about the submited package
+the `filingPackage` object represents the court information about the submited package along with the document(s) info
 
 the `documents` array represents the previously uploaded document
 
