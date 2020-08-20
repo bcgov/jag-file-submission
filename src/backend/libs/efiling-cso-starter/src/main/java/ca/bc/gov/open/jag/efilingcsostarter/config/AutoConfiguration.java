@@ -5,6 +5,7 @@ import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
 import ca.bc.gov.ag.csows.ceis.Csows;
 import ca.bc.gov.ag.csows.filing.FilingFacadeBean;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
+import ca.bc.gov.ag.csows.lookups.LookupFacadeBean;
 import ca.bc.gov.ag.csows.services.ServiceFacadeBean;
 import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
@@ -13,12 +14,13 @@ import ca.bc.gov.open.jag.efilingcommons.service.*;
 import ca.bc.gov.open.jag.efilingcsostarter.*;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.*;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.cxf.ext.logging.LoggingInInterceptor;
+import org.apache.cxf.ext.logging.LoggingOutInterceptor;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ca.bc.gov.ag.csows.lookups.LookupFacadeBean;
 
 
 @Configuration
@@ -123,6 +125,16 @@ public class AutoConfiguration {
             jaxWsProxyFactoryBean.setUsername(efilingSoapClientProperties.getUserName());
         if(StringUtils.isNotBlank(efilingSoapClientProperties.getPassword()))
             jaxWsProxyFactoryBean.setPassword(efilingSoapClientProperties.getPassword());
+
+        if(csoProperties.isDebugEnabled()) {
+            LoggingInInterceptor loggingInInterceptor = new LoggingInInterceptor();
+            loggingInInterceptor.setPrettyLogging(true);
+            LoggingOutInterceptor loggingOutInterceptor = new LoggingOutInterceptor();
+            loggingOutInterceptor.setPrettyLogging(true);
+            jaxWsProxyFactoryBean.getOutInterceptors().add(0, loggingOutInterceptor);
+            jaxWsProxyFactoryBean.getInInterceptors().add(0, loggingInInterceptor);
+        }
+
         return type.cast(jaxWsProxyFactoryBean.create());
     }
 
