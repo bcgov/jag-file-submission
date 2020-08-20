@@ -16,4 +16,5 @@ public class SubmissionConstants {
     public static final String SUBMISSION_PARTY_TYPE_CD = "IND";
     public static final String SUBMISSION_ROLE_TYPE_CD = "CLA";
     public static final String SUBMISSION_NAME_TYPE_CD = "CUR";
+    public static final String  PAYMENT_STATUS_CD = "NREQ";
 }

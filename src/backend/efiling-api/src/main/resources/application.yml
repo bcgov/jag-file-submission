@@ -70,6 +70,7 @@ bcgov:
     remoteLocation: ${SFTP_REMOTELOCATION}
     knownHostsFileName: ${SFTP_KNOWNHOSTS}
     allowUnknownKeys: ${SFTP_ALLOWUNKNOWN:true}
+    sshPrivateKey: ${SFTP_PRIVATE_KEY}
   bceid:
     service:
       uri: ${BCEID_SERVICE_URI}
