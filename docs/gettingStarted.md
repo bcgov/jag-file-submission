@@ -6,14 +6,20 @@ Ready for integrating your application with bcgov efiling service and allow your
 
 This guide will provide you with all information you need to get started.
 
+Request a profile
+
+> Follow the following instructions in [Getting started - Onboarding](onboarding.md)
+
+Get a token
+
 ## Test accounts
 
 Use the following accounts to test the application
 
-| Account Guid | Description |
-| --- | --- |
-| 77da92db-0791-491e-8c58-1a969e67d2fa | Vivian Brown has a linked CSO account and file role |
-| 77da92db-0791-491e-8c58-1a969e67d2fb | Lynda Ridge has a linked CSO account but no file role |
+| Account Guid                         | Description                                                    |
+| ------------------------------------ | -------------------------------------------------------------- |
+| 77da92db-0791-491e-8c58-1a969e67d2fa | Vivian Brown has a linked CSO account and file role            |
+| 77da92db-0791-491e-8c58-1a969e67d2fb | Lynda Ridge has a linked CSO account but no file role          |
 | 88da92db-0791-491e-8c58-1a969e67d2fb | Bob Ross doesn't have a CSO account but he has a bceid profile |
 
 ## Api Documentation
