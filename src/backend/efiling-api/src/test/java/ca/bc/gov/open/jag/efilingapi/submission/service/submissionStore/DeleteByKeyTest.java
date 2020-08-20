@@ -1,11 +1,9 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service.submissionStore;
 
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStoreImpl;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
 
 import java.util.UUID;
 
@@ -15,6 +13,10 @@ public class DeleteByKeyTest {
     @InjectMocks
     private SubmissionStoreImpl sut;
 
+    @BeforeAll
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+    }
 
     @Test
     @DisplayName("OK: evict should do nothing")
