@@ -11,6 +11,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingTransaction;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingPaymentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
+import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsostarter.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.FilingPackageMapper;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.FinancialTransactionMapper;
@@ -133,7 +134,12 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     }
 
     private void updateServiceComplete(Service service) {
-        // TODO implement update service
+        service.setServiceReceivedDtm(DateUtils.getCurrentXmlDate());
+        try {
+            serviceFacadeBean.updateService(service);
+        } catch (ca.bc.gov.ag.csows.services.NestedEjbException_Exception e) {
+            throw new EfilingSubmissionServiceException("Exception while updating payment on service", e.getCause());
+        }
     }
 
 }
