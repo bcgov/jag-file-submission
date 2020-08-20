@@ -10,7 +10,100 @@ Request a profile
 
 > Follow the following instructions in [Getting started - Onboarding](onboarding.md)
 
-Get a token
+Get a oauth token from our Keycloak Server using the following curl
+
+```bash
+curl --location --request POST 'url' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'client_id=[your client id]' \
+--data-urlencode 'grant_type=client_credentials' \
+--data-urlencode 'client_secret=[your client secret]'
+```
+
+> the secret should be kept safe and not expose to the public
+
+Start by uploading document(s) to the efiling api
+
+```bash
+curl --location --request POST 'http://fla-nginx-proxy-qzaydf-dev.pathfinder.gov.bc.ca/api/submission/documents' \
+--header 'X-Transaction-Id: ca09e538-d34e-11ea-87d0-0242ac130003' \
+--header 'Content-Type: multipart/form-data' \
+--header 'Authorization: Bearer [your bearer token]' \
+--form 'files=test.pdf'
+```
+
+the response includes a submission id that you will use to generate a redirect url
+
+```json
+{
+  "submissionId": "5e9492cf-e87e-48b5-ba55-0c198d8edde5",
+  "received": 1
+}
+```
+
+Then generate a unique url to redirect the users
+
+```bash
+curl --location --request POST 'http://fla-nginx-proxy-qzaydf-dev.pathfinder.gov.bc.ca/api/submission/5e9492cf-e87e-48b5-ba55-0c198d8edde5/generateUrl' \
+--header 'X-Transaction-Id: ca09e538-d34e-11ea-87d0-0242ac130003' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer [your bearer token]' \
+--data-raw 'the json payload bellow'
+```
+
+payload:
+
+```json
+{
+  "navigation": {
+    "success": {
+      "url": "http//somewhere.com"
+    },
+    "error": {
+      "url": "http//somewhere.com"
+    },
+    "cancel": {
+      "url": "http//somewhere.com"
+    }
+  },
+  "clientApplication": {
+    "displayName": "your application name"
+  },
+  "filingPackage": {
+    "court": {
+      "location": "XXXX",
+      "level": "X",
+      "courtClass": "X",
+      "division": "X"
+    },
+    "documents": [
+      {
+        "name": "test.pdf",
+        "type": "XXX"
+      }
+    ]
+  }
+}
+```
+
+The `navigation` object represents a list of possible returns to your application based on the status of the document e-filing
+
+the `clientAppplication` object represents how your application is labelled in e-filing-hub
+
+the `filingPackage` object represents the court information about the submited package
+
+the `documents` array represents the previously uploaded document
+
+on submission you will receive the following response:
+
+```json
+{
+  "expiryDate": 1597944879789,
+  "efilingUrl": "a link where the user should be redirected"
+}
+```
+
+Redirect the user to `efilingUrl` and we will handle the rest for you.
 
 ## Test accounts
 
