@@ -12,7 +12,7 @@ This guide will provide you with all information you need to get started.
 
 ### Start Integrating
 
-Get a oauth token from our Keycloak Server using the following curl
+Get an oauth token from our Keycloak Server using the following curl
 
 ```bash
 curl --location --request POST 'url' \
