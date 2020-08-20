@@ -11,6 +11,7 @@ import org.mockito.MockitoAnnotations;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("DocumentStoreImpl test suite")
@@ -57,6 +58,12 @@ public class DocumentStoreImplTest {
     @DisplayName("OK: get document by Id should return null")
     public void withoutCacheShouldReturnNull() {
         Assertions.assertNull(sut.get("id"));
+    }
+
+    @Test
+    @DisplayName("OK: evict should do a thing")
+    public void withoutCacheNotThrowException() {
+        Assertions.assertDoesNotThrow(() -> sut.evict("COMPOSITEID"));
     }
 
     @Test

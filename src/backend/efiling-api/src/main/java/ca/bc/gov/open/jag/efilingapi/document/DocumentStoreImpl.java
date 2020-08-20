@@ -30,6 +30,12 @@ public class DocumentStoreImpl implements DocumentStore {
     }
 
     @Override
+    @Cacheable(cacheNames = "document", key = "#compositeId", cacheManager = "documentCacheManager")
+    public void evict(String compositeId) {
+        //This implements Redis delete no code required
+    }
+
+    @Override
     @Cacheable(cacheNames = "documentDetails", cacheManager = "documentDetailsCacheManager", unless = "#result == null")
     public DocumentDetails getDocumentDetails(String courtLevel, String courtClass, String documentType) {
         return this.efilingDocumentService.getDocumentDetails(courtLevel, courtClass, documentType);

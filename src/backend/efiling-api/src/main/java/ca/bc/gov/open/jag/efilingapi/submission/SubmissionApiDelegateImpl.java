@@ -31,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.security.RolesAllowed;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -303,6 +304,19 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @Override
     public ResponseEntity<Void> deleteSubmission(UUID submissionId, UUID xTransactionId) {
 
+        Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
+        if(!fromCacheSubmission.isPresent())
+            return ResponseEntity.notFound().build();
+        //Remove documents from cache
+        fromCacheSubmission.get().getFilingPackage().getDocuments().forEach(
+                document -> documentStore.evict(
+                        Document
+                                .builder()
+                                .transactionId(xTransactionId)
+                                .submissionId(submissionId)
+                                .create().getCompositeId()));
+
+        //Remove submission from cahce
         submissionStore.evict(submissionId, xTransactionId);
         return new ResponseEntity<Void>(HttpStatus.OK);
 
