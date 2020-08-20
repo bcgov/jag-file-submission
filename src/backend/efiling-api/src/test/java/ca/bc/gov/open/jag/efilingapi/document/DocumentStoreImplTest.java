@@ -61,7 +61,7 @@ public class DocumentStoreImplTest {
     }
 
     @Test
-    @DisplayName("OK: evict should do a thing")
+    @DisplayName("OK: evict should delete submission")
     public void withoutCacheNotThrowException() {
         Assertions.assertDoesNotThrow(() -> sut.evict("COMPOSITEID"));
     }
