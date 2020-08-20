@@ -29,7 +29,7 @@ public class SubmissionStoreImpl implements SubmissionStore {
     @Override
     @CacheEvict(cacheNames = "submission", key = "{ #submissionId, #transactionId }", cacheManager = "submissionCacheManager")
     public void evict(UUID submissionId, UUID transactionId) {
-
+        //This implements Redis delete no code required
     }
 
 }
