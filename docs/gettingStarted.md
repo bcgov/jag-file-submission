@@ -22,7 +22,7 @@ curl --location --request POST 'url' \
 --data-urlencode 'client_secret=[your client secret]'
 ```
 
-> the secret should be kept safe and not expose to the public
+> the secret should be kept safe and not exposed to the public
 
 Start by uploading document(s) to the efiling api
 
