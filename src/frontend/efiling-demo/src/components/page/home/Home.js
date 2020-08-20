@@ -1,24 +1,14 @@
-/* eslint-disable react/jsx-curly-newline, camelcase */
+/* eslint-disable react/jsx-curly-newline, camelcase, react/jsx-props-no-spreading */
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import Dropzone from "react-dropzone";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { Header, Footer, Textarea, Button } from "shared-components";
-import { FilePond, registerPlugin } from "react-filepond";
-
-// Import FilePond styles
-import "filepond/dist/filepond.min.css";
-
-// Import the Image EXIF Orientation and Image Preview plugins
-import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
-import FilePondPluginImagePreview from "filepond-plugin-image-preview";
-import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 
 import { propTypes } from "../../../types/propTypes";
 import "../page.css";
-
-// Register the plugins
-registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
+import "./Home.css";
 
 // Note: Some of these values are temporarily hard-coded
 const urlBody = {
@@ -100,15 +90,15 @@ const generatePackageData = (files, filingPackage) => {
   const documentData = [];
 
   for (let i = 0; i < files.length; i += 1) {
-    formData.append("files", files[i].file);
+    formData.append("files", files[i]);
 
     const document = filingPackage.documents.find(
-      (doc) => doc.name === files[i].file.name
+      (doc) => doc.name === files[i].name
     );
     if (!document || !document.type) return {};
 
     documentData.push({
-      name: files[i].file.name,
+      name: files[i].name,
       type: document.type,
     });
   }
@@ -124,9 +114,8 @@ const generatePackageData = (files, filingPackage) => {
   return { formData, updatedUrlBody };
 };
 
-export const eFilePackage = (token, files, setErrorExists, filingPackage) => {
+const eFilePackage = (token, files, setErrorExists, filingPackage) => {
   setRequestHeaders(token, transactionId);
-  if (!files || files.length === 0) return false;
 
   const { formData, updatedUrlBody } = generatePackageData(
     files,
@@ -198,12 +187,36 @@ export default function Home({ page: { header } }) {
       <Header header={header} />
       <div className="page">
         <div className="content col-md-12">
-          <FilePond
-            files={files}
-            allowMultiple
-            onupdatefiles={setFiles}
-            labelIdle='Drag and Drop your files or <span class="filepond--label-action">Browse</span>'
-          />
+          <Dropzone
+            onDrop={(droppedFiles) => setFiles(files.concat(droppedFiles))}
+          >
+            {({ getRootProps, getInputProps }) => (
+              <div
+                data-testid="dropdownzone"
+                {...getRootProps({ className: "dropzone-outer-box" })}
+              >
+                <div className="dropzone-inner-box">
+                  <input {...getInputProps()} />
+                  <span>
+                    <h2 className="text-center-alignment">
+                      Drag and drop or&nbsp;
+                      <span className="file-href">choose documents</span>
+                    </h2>
+                  </span>
+                </div>
+              </div>
+            )}
+          </Dropzone>
+          <br />
+          {files.length > 0 && (
+            <>
+              <h2>Uploaded Files</h2>
+              <br />
+              {files.map((file) => (
+                <p key={file.name}>{file.name}</p>
+              ))}
+            </>
+          )}
           <br />
           <Textarea
             id="1"
@@ -216,7 +229,13 @@ export default function Home({ page: { header } }) {
             onClick={() => {
               setShowLoader(true);
               setSubmitBtnEnabled(false);
-              eFilePackage(token, files, setErrorExists, filingPackage);
+              const result = eFilePackage(
+                token,
+                files,
+                setErrorExists,
+                filingPackage
+              );
+              if (!result) setErrorExists(true);
             }}
             label="E-File my Package"
             styling="normal-blue btn"
