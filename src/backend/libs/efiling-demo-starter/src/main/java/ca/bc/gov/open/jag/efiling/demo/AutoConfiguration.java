@@ -1,7 +1,13 @@
 package ca.bc.gov.open.jag.efiling.demo;
 
+import ca.bc.gov.open.bceid.starter.account.BCeIDAccountService;
+import ca.bc.gov.open.bceid.starter.account.GetAccountRequest;
+import ca.bc.gov.open.bceid.starter.account.models.Address;
+import ca.bc.gov.open.bceid.starter.account.models.IndividualIdentity;
+import ca.bc.gov.open.bceid.starter.account.models.Name;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.*;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +18,8 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
+
+import java.util.Optional;
 
 @Configuration
 @ComponentScan
@@ -36,6 +44,25 @@ public class AutoConfiguration {
     @Bean
     public EfilingSubmissionService efilingSubmissionService() { return new EfilingSubmissionServiceDemoImpl(); }
 
+    @Bean
+    public BCeIDAccountService bCeIDAccountService() {
+
+        return new BCeIDAccountService() {
+            @Override
+            public Optional<IndividualIdentity> getIndividualIdentity(GetAccountRequest getAccountRequest) {
+
+                Address address = Address.builder().city("the city of paint").create();
+                Name name = Name.builder()
+                        .firstName("Bob")
+                        .middleName("Alan")
+                        .surname("Ross")
+                        .otherMiddleName("Hey").create();
+                IndividualIdentity individualIdentity = new IndividualIdentity(name, DateTime.now(), address, address);
+
+                return Optional.of(individualIdentity);
+            }
+        };
+    }
 
     /**
      * Configures the cache manager for demo accounts

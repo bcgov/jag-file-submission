@@ -38,7 +38,7 @@ keycloak.onAuthRefreshSuccess = () =>
  */
 
 export default function AuthenticationGuard({
-  page: { header, confirmationPopup },
+  page: { header, confirmationPopup, submissionId, transactionId },
 }) {
   const [authedKeycloak, setAuthedKeycloak] = useState(null);
 
@@ -67,7 +67,11 @@ export default function AuthenticationGuard({
 
   return (
     <>
-      {authedKeycloak && <Home page={{ header, confirmationPopup }} />}
+      {authedKeycloak && (
+        <Home
+          page={{ header, confirmationPopup, submissionId, transactionId }}
+        />
+      )}
       {!authedKeycloak && null}
     </>
   );
@@ -103,5 +107,7 @@ AuthenticationGuard.propTypes = {
   page: PropTypes.shape({
     header: propTypes.header,
     confirmationPopup: propTypes.confirmationPopup,
+    submissionId: PropTypes.string.isRequired,
+    transactionId: PropTypes.string.isRequired,
   }).isRequired,
 };

@@ -11,6 +11,7 @@ import org.mockito.MockitoAnnotations;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("DocumentStoreImpl test suite")
@@ -60,6 +61,12 @@ public class DocumentStoreImplTest {
     }
 
     @Test
+    @DisplayName("OK: evict should delete submission")
+    public void withoutCacheNotThrowException() {
+        Assertions.assertDoesNotThrow(() -> sut.evict("COMPOSITEID"));
+    }
+
+    @Test
     @DisplayName("OK: get document details should cache result")
     public void withCourtLevelCourtClassDocumentTypeShouldReturnDocumentDetails() {
 
@@ -70,7 +77,6 @@ public class DocumentStoreImplTest {
         Assertions.assertEquals(BigDecimal.TEN, actual.getStatutoryFeeAmount());
 
     }
-
 
     @Test
     @DisplayName("OK: get document types should cache result")

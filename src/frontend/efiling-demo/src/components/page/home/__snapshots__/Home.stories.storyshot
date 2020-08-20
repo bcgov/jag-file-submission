@@ -46,13 +46,35 @@ exports[`Storyshots Home Default 1`] = `
         class="content col-md-12"
       >
         <div
-          class="filepond--wrapper"
+          class="dropzone-outer-box"
+          data-testid="dropdownzone"
+          tabindex="0"
         >
-          <input
-            multiple=""
-            type="file"
-          />
+          <div
+            class="dropzone-inner-box"
+          >
+            <input
+              autocomplete="off"
+              multiple=""
+              style="display: none;"
+              tabindex="-1"
+              type="file"
+            />
+            <span>
+              <h2
+                class="text-center-alignment"
+              >
+                Drag and drop or 
+                <span
+                  class="file-href"
+                >
+                  choose documents
+                </span>
+              </h2>
+            </span>
+          </div>
         </div>
+        <br />
         <br />
         <div
           class="input-label"
@@ -75,6 +97,7 @@ exports[`Storyshots Home Default 1`] = `
         <button
           class="bcgov-button normal-blue btn"
           data-test-id="generate-url-btn"
+          disabled=""
           type="button"
         >
           E-File my Package
@@ -220,13 +243,35 @@ exports[`Storyshots Home Mobile 1`] = `
         class="content col-md-12"
       >
         <div
-          class="filepond--wrapper"
+          class="dropzone-outer-box"
+          data-testid="dropdownzone"
+          tabindex="0"
         >
-          <input
-            multiple=""
-            type="file"
-          />
+          <div
+            class="dropzone-inner-box"
+          >
+            <input
+              autocomplete="off"
+              multiple=""
+              style="display: none;"
+              tabindex="-1"
+              type="file"
+            />
+            <span>
+              <h2
+                class="text-center-alignment"
+              >
+                Drag and drop or 
+                <span
+                  class="file-href"
+                >
+                  choose documents
+                </span>
+              </h2>
+            </span>
+          </div>
         </div>
+        <br />
         <br />
         <div
           class="input-label"
@@ -249,6 +294,7 @@ exports[`Storyshots Home Mobile 1`] = `
         <button
           class="bcgov-button normal-blue btn"
           data-test-id="generate-url-btn"
+          disabled=""
           type="button"
         >
           E-File my Package

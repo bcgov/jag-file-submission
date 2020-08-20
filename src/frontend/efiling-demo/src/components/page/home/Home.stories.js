@@ -43,10 +43,8 @@ export const Mobile = () => (
   <LoadData>{(data) => homeComponent(data)}</LoadData>
 );
 
-Mobile.story = {
-  parameters: {
-    viewport: {
-      defaultViewport: "mobile2",
-    },
+Mobile.parameters = {
+  viewport: {
+    defaultViewport: "mobile2",
   },
 };
