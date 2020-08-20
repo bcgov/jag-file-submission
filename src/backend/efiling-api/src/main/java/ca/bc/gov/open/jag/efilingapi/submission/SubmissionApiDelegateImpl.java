@@ -185,6 +185,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         ResponseEntity response;
 
         try {
+            generateUrlRequest.getClientApplication().setType(SecurityUtils.getApplicationCode());
             response = ResponseEntity.ok(
                     generateUrlResponseMapper.toGenerateUrlResponse(
                             submissionService.generateFromRequest(xTransactionId, submissionId, generateUrlRequest),
