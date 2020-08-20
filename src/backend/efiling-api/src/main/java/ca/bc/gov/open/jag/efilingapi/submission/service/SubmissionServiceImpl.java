@@ -108,7 +108,8 @@ public class SubmissionServiceImpl implements SubmissionService {
                                         .map(document -> efilingFilingPackageMapper.toEfilingDocument(document, submission,
                                                 Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentMilestone(document, submission)),
                                                 Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentPayment(document, submission)),
-                                                Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentStatus(document, submission))))
+                                                Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentStatus(document, submission)),
+                                                MessageFormat.format("fh_{0}_{1}_{2}", submission.getId(), submission.getTransactionId(), document.getName())))
                                         .collect(Collectors.toList()));
         filingPackage.setEntDtm(DateUtils.getCurrentXmlDate());
         filingPackage.setSubmitDtm(DateUtils.getCurrentXmlDate());
