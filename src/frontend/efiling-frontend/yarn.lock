@@ -1753,7 +1753,7 @@
     global "^4.3.2"
     regenerator-runtime "^0.13.3"
 
-"@storybook/addons@6.0.16", "@storybook/addons@^6.0.2":
+"@storybook/addons@^6.0.16":
   version "6.0.16"
   resolved "https://registry.yarnpkg.com/@storybook/addons/-/addons-6.0.16.tgz#a20a219bd5b1474ad02b92e79a74652898a684d9"
   integrity sha512-jGMaOJYTM2yZeX1tI6whEn+4xpI1aAybZBrc+OD21CcGoQrbF/jplZMq7xKI0Y6vOMguuTGulpUNCezD3LbBjA==
