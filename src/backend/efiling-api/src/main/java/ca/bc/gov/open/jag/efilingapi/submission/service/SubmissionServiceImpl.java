@@ -22,6 +22,7 @@ import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
@@ -199,13 +200,19 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         sftpService.put(new ByteArrayInputStream(inFile), newFileName);
 
+        // TODO: remove this is temp because of the SFTP rsync process
+        try {
+            Thread.sleep(Duration.ofSeconds(1).toMillis());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private BigDecimal getSubmissionFeeAmount() {
         // TODO: fix with the mapper ApplicationCode to ServiceTypeCode
         ServiceFees fee = efilingLookupService.getServiceFee(SubmissionConstants.SUBMISSION_FEE_TYPE);
         return fee == null ? BigDecimal.ZERO : fee.getFeeAmount();
-
     }
 
     private long getExpiryDate() {
