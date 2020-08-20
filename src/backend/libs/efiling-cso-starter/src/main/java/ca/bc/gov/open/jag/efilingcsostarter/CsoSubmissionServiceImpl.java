@@ -119,7 +119,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         if(filingPackage.getDocuments() != null && !filingPackage.getDocuments().isEmpty()) {
             filingPackage.getDocuments().stream().forEach(efilingDocument -> {
                 efilingDocument.setFileServer(csoProperties.getFileServerHost());
-                efilingDocument.setPackageSeqNo(new BigDecimal(1));
+                efilingDocument.setPackageSeqNo(new BigDecimal(filingPackage.getDocuments().indexOf(efilingDocument)));
             });
         }
 
