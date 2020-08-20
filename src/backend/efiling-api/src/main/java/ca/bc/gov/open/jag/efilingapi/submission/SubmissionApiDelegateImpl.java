@@ -308,17 +308,18 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         if(!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
         //Remove documents from cache
-        fromCacheSubmission.get().getFilingPackage().getDocuments().forEach(
-                document -> documentStore.evict(
-                        Document
-                                .builder()
-                                .transactionId(xTransactionId)
-                                .submissionId(submissionId)
-                                .create().getCompositeId()));
+        if (fromCacheSubmission.get().getFilingPackage() != null && fromCacheSubmission.get().getFilingPackage().getDocuments() != null)
+            fromCacheSubmission.get().getFilingPackage().getDocuments().forEach(
+                    document -> documentStore.evict(
+                            Document
+                                    .builder()
+                                    .transactionId(xTransactionId)
+                                    .submissionId(submissionId)
+                                    .create().getCompositeId()));
 
         //Remove submission from cahce
         submissionStore.evict(submissionId, xTransactionId);
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
 
     }
 
