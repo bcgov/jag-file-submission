@@ -6,9 +6,11 @@ Ready for integrating your application with bcgov efiling service and allow your
 
 This guide will provide you with all information you need to get started.
 
-Request a profile
+### Request a profile
 
 > Follow the following instructions in [Getting started - Onboarding](onboarding.md)
+
+### Start Integrating
 
 Get a oauth token from our Keycloak Server using the following curl
 
