@@ -90,10 +90,6 @@ public class GenerateUrlTest {
 
         SecurityContextHolder.setContext(securityContextMock);
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.CSO_APPLICATION_CODE, CODE);
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
-
         NavigationProperties navigationProperties = new NavigationProperties();
         navigationProperties.setBaseUrl("http://localhost");
 
@@ -139,6 +135,10 @@ public class GenerateUrlTest {
     public void withValidRequestShouldGenerateUrl() {
 
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
+
+        Map<String, Object> otherClaims = new HashMap<>();
+        otherClaims.put(Keys.CSO_APPLICATION_CODE, CODE);
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
         generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
