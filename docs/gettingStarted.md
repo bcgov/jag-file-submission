@@ -24,7 +24,7 @@ curl --location --request POST 'url' \
 
 > the secret should be kept safe and not exposed to the public
 
-Start by uploading document(s) to the efiling api
+Start by uploading document(s) to the **efiling hub** api
 
 ```bash
 curl --location --request POST 'http://fla-nginx-proxy-qzaydf-dev.pathfinder.gov.bc.ca/api/submission/documents' \
@@ -43,7 +43,7 @@ the response includes a submission id that you will use to generate a redirect u
 }
 ```
 
-Then generate a unique url to redirect the users to the efiling hub
+Then generate a unique url to redirect the users to the **efiling hub**
 
 ```bash
 curl --location --request POST 'http://fla-nginx-proxy-qzaydf-dev.pathfinder.gov.bc.ca/api/submission/5e9492cf-e87e-48b5-ba55-0c198d8edde5/generateUrl' \
@@ -90,7 +90,7 @@ payload:
 
 The `navigation` object represents a list of possible returns to your application based on the status of the document e-filing
 
-the `clientAppplication` object represents how your application is labelled in efiling hub
+the `clientAppplication` object represents how your application is labelled in **efiling hub**
 
 the `filingPackage` object represents the court information about the submited package
 
@@ -107,20 +107,6 @@ on submission you will receive the following response:
 
 Redirect the user to `efilingUrl` and we will handle the rest for you.
 
-## Test accounts
-
-Use the following accounts to test the application
-
-| Account Guid                         | Description                                                    |
-| ------------------------------------ | -------------------------------------------------------------- |
-| 77da92db-0791-491e-8c58-1a969e67d2fa | Vivian Brown has a linked CSO account and file role            |
-| 77da92db-0791-491e-8c58-1a969e67d2fb | Lynda Ridge has a linked CSO account but no file role          |
-| 88da92db-0791-491e-8c58-1a969e67d2fb | Bob Ross doesn't have a CSO account but he has a bceid profile |
-
 ## Api Documentation
 
 E-filing-api is documented using [openapi](http://editor.swagger.io/?url=https://raw.githubusercontent.com/bcgov/jag-file-submission/master/src/backend/efiling-api/jag-efiling-api.yaml) and we have a [postman collection](https://raw.githubusercontent.com/bcgov/jag-file-submission/master/src/backend/jag-efiling-api/src/test/jag-efiling-api.postman_collection.json) that you can use to test the e-filing-api
-
-## Diagram flow
-
-<div style="width: 640px; height: 480px; margin: 10px; position: relative;"><iframe allowfullscreen frameborder="0" style="width:640px; height:480px" src="https://app.lucidchart.com/documents/embeddedchart/fb8a218a-99b6-4285-a653-93a6271f6de8" id="wLo6x541WcTP"></iframe></div>
