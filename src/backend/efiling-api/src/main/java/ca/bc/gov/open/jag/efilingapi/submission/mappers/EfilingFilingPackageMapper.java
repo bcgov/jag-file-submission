@@ -32,7 +32,6 @@ public interface EfilingFilingPackageMapper {
 
     @Mapping(target = "amendsAnotherDocumentYn", source = "document.isAmendment", defaultValue = "false")
     @Mapping(target = "clientFileNameTxt", source = "document.name")
-    @Mapping(target = "documentDescriptionTxt", source = "document.description")
     @Mapping(target = "documentSubtypeCd", constant = "ODOC" )
     @Mapping(target = "documentTypeCd", source = "document.type")
     @Mapping(target = "entUserId", source = "submission.clientId")
