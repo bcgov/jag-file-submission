@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingapi;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
+import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
 
 import java.math.BigDecimal;
@@ -106,6 +107,7 @@ public class TestHelpers {
 
         return Arrays.asList(documentProperties);
     }
+
 
     public static Navigation createDefaultNavigation() {
         return createNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL);

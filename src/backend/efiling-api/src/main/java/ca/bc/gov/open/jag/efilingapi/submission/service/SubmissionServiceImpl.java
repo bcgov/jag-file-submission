@@ -102,7 +102,7 @@ public class SubmissionServiceImpl implements SubmissionService {
         EfilingService service = efilingFilingPackageMapper.toEfilingService(submission);
         service.setEntryDateTime(DateUtils.getCurrentXmlDate());
 
-        EfilingFilingPackage filingPackage = efilingFilingPackageMapper.toEfilingFilingPackage(submission);
+        EfilingFilingPackage filingPackage = efilingFilingPackageMapper.toEfilingFilingPackage(submission, Arrays.asList(efilingFilingPackageMapper.toEfilingParties(submission)));
         filingPackage.setPackageControls(Arrays.asList(efilingFilingPackageMapper.toPackageAuthority(submission)));
         filingPackage.setDocuments(submission.getFilingPackage().getDocuments().stream()
                                         .map(document -> efilingFilingPackageMapper.toEfilingDocument(document, submission,
@@ -138,7 +138,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         FilingPackage filingPackage = new FilingPackage();
         filingPackage.setCourt(populateCourtDetails(request.getFilingPackage().getCourt()));
-        filingPackage.setSubmissionFeeAmount(getSubmissionFeeAmount(request));
+        filingPackage.setSubmissionFeeAmount(getSubmissionFeeAmount());
         filingPackage.setDocuments(request.getFilingPackage()
                 .getDocuments()
                 .stream()
@@ -200,9 +200,8 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     }
 
-    private BigDecimal getSubmissionFeeAmount(GenerateUrlRequest request) {
-
-        request.getClientApplication().setType(SubmissionConstants.SUBMISSION_FEE_TYPE);
+    private BigDecimal getSubmissionFeeAmount() {
+        // TODO: fix with the mapper ApplicationCode to ServiceTypeCode
         ServiceFees fee = efilingLookupService.getServiceFee(SubmissionConstants.SUBMISSION_FEE_TYPE);
         return fee == null ? BigDecimal.ZERO : fee.getFeeAmount();
 
