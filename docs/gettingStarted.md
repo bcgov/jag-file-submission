@@ -90,7 +90,7 @@ payload:
 
 The `navigation` object represents a list of possible returns to your application based on the status of the document e-filing
 
-the `clientAppplication` object represents how your application is labelled in e-filing-hub
+the `clientAppplication` object represents how your application is labelled in efiling hub
 
 the `filingPackage` object represents the court information about the submited package
 
