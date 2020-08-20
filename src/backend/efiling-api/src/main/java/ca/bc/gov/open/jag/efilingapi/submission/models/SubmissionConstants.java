@@ -2,6 +2,8 @@ package ca.bc.gov.open.jag.efilingapi.submission.models;
 
 public class SubmissionConstants {
 
+
+
     private SubmissionConstants() {
 
     }
@@ -17,4 +19,6 @@ public class SubmissionConstants {
     public static final String SUBMISSION_ROLE_TYPE_CD = "CLA";
     public static final String SUBMISSION_NAME_TYPE_CD = "CUR";
     public static final String  PAYMENT_STATUS_CD = "NREQ";
+    public static final String XML_DOCUMENT_INSTANCE_YN = "false";
+
 }

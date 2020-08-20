@@ -43,6 +43,7 @@ public interface EfilingFilingPackageMapper {
     @Mapping(target = "milestones", source = "milestones")
     @Mapping(target = "payments", source = "payments")
     @Mapping(target = "statuses", source = "statuses")
+    @Mapping(target = "xmlDocumentInstanceYn", constant = SubmissionConstants.XML_DOCUMENT_INSTANCE_YN)
     EfilingDocument toEfilingDocument(Document document, Submission submission, List<EfilingDocumentMilestone> milestones,
                                       List<EfilingDocumentPayment> payments, List<EfilingDocumentStatus> statuses);
 
@@ -78,11 +79,11 @@ public interface EfilingFilingPackageMapper {
     @Mapping(target = "roleTypeCd", constant = SubmissionConstants.SUBMISSION_ROLE_TYPE_CD)
     @Mapping(target = "current.entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
     @Mapping(target = "current.entUserId", source = "accountDetails.clientId")
-    @Mapping(target = "current.firstGivenNm", source = "accountDetails.firstName")
+    @Mapping(target = "current.firstGivenNm", source = "accountDetails.firstName", defaultValue = "Bob")
     @Mapping(target = "current.identificationDetailSeqNo", constant = "1")
     @Mapping(target = "current.nameTypeCd", constant = SubmissionConstants.SUBMISSION_NAME_TYPE_CD)
-    @Mapping(target = "current.secondGivenNm", source = "accountDetails.middleName")
-    @Mapping(target = "current.surnameNm", source = "accountDetails.lastName")
+    @Mapping(target = "current.secondGivenNm", source = "accountDetails.middleName", defaultValue = "Alan")
+    @Mapping(target = "current.surnameNm", source = "accountDetails.lastName", defaultValue = "Ross")
     @Mapping(target = "entUserId", source = "accountDetails.clientId")
     @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
     EfilingParties toEfilingParties(Submission submission);
