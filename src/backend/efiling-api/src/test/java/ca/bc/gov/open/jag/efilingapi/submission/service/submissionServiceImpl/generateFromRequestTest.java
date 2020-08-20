@@ -39,6 +39,7 @@ public class generateFromRequestTest {
     private static final String LAST_NAME = "case1_lastName";
     private static final String FIRST_NAME = "case1_firstName";
     private static final String EMAIL = "case1_email";
+    private static final String INTERNAL_CLIENT_NUMBER = "INTERNALCLIENT";
 
     private SubmissionServiceImpl sut;
 
@@ -102,8 +103,13 @@ public class generateFromRequestTest {
         Assertions.assertEquals(TestHelpers.SUCCESS_URL, actual.getNavigation().getSuccess().getUrl());
         Assertions.assertEquals(10, actual.getExpiryDate());
         Assertions.assertNotNull(actual.getId());
-        Assertions.assertEquals(BigDecimal.TEN, actual.getAccountId());
-        Assertions.assertEquals(BigDecimal.TEN, actual.getClientId());
+        Assertions.assertEquals(BigDecimal.TEN, actual.getAccountDetails().getAccountId());
+        Assertions.assertEquals(BigDecimal.TEN, actual.getAccountDetails().getClientId());
+        Assertions.assertEquals(INTERNAL_CLIENT_NUMBER, actual.getAccountDetails().getInternalClientNumber());
+        Assertions.assertEquals(EMAIL, actual.getAccountDetails().getEmail());
+        Assertions.assertEquals(FIRST_NAME, actual.getAccountDetails().getFirstName());
+        Assertions.assertEquals(MIDDLE_NAME, actual.getAccountDetails().getMiddleName());
+        Assertions.assertEquals(LAST_NAME, actual.getAccountDetails().getLastName());
         Assertions.assertEquals(TestHelpers.DIVISION, actual.getFilingPackage().getCourt().getDivision());
         Assertions.assertEquals(TestHelpers.FILENUMBER, actual.getFilingPackage().getCourt().getFileNumber());
         Assertions.assertEquals(TestHelpers.LEVEL, actual.getFilingPackage().getCourt().getLevel());
@@ -146,8 +152,15 @@ public class generateFromRequestTest {
         Submission submissionCase1 = Submission
                 .builder()
                 .id(TestHelpers.CASE_1)
-                .accountId(BigDecimal.TEN)
-                .clientId(BigDecimal.TEN)
+                .accountDetails(AccountDetails.builder()
+                    .clientId(BigDecimal.TEN)
+                    .accountId(BigDecimal.TEN)
+                    .internalClientNumber(INTERNAL_CLIENT_NUMBER)
+                    .email(EMAIL)
+                    .middleName(MIDDLE_NAME)
+                    .lastName(LAST_NAME)
+                    .firstName(FIRST_NAME)
+                    .create())
                 .transactionId(TestHelpers.CASE_1)
                 .navigation(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)

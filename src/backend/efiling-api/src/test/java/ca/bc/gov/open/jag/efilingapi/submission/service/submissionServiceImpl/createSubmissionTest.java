@@ -8,6 +8,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.mappers.EfilingFilingPackageMapp
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
+import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingTransaction;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
@@ -23,6 +24,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -75,8 +77,11 @@ public class createSubmissionTest {
         SubmitResponse actual = sut.createSubmission(Submission
                 .builder()
                 .id(TestHelpers.CASE_1)
-                .clientId(BigDecimal.TEN)
-                .accountId(BigDecimal.TEN)
+                .accountDetails(AccountDetails.builder()
+                        .clientId(BigDecimal.TEN)
+                        .accountId(BigDecimal.TEN)
+                        .internalClientNumber("123")
+                        .create())
                 .transactionId(TestHelpers.CASE_1)
                 .navigation(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)

@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingapi.submission.models;
 import ca.bc.gov.open.jag.efilingapi.api.model.ClientApplication;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.api.model.Navigation;
+import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -18,13 +19,9 @@ public class Submission {
 
     private UUID transactionId;
 
-    private BigDecimal accountId;
-
-    private BigDecimal clientId;
-
-    private String internalClientNumber;
-
     private long expiryDate;
+
+    private AccountDetails accountDetails;
 
     private Navigation navigation;
 
@@ -34,10 +31,8 @@ public class Submission {
 
     protected Submission(Submission.Builder builder) {
         this.id = builder.id;
-        this.accountId = builder.accountId;
-        this.clientId = builder.clientId;
-        this.internalClientNumber = builder.internalClientNumber;
         this.transactionId = builder.transactionId;
+        this.accountDetails = builder.accountDetails;
         this.filingPackage = builder.filingPackage;
         this.navigation = builder.navigation;
         this.clientApplication = builder.clientApplication;
@@ -51,19 +46,15 @@ public class Submission {
     @JsonCreator
     public Submission(
             @JsonProperty("id") UUID id,
-            @JsonProperty("accountId") BigDecimal accountId,
-            @JsonProperty("clientId") BigDecimal clientId,
-            @JsonProperty("internalClientNumber") String internalClientNumber,
             @JsonProperty("owner") UUID transactionId,
+            @JsonProperty("accountDetails") AccountDetails accountDetails,
             @JsonProperty("package") FilingPackage filingPackage,
             @JsonProperty("navigation") Navigation navigation,
             @JsonProperty("clientApplication") ClientApplication clientApplication,
             @JsonProperty("expiryDate") long expiryDate) {
         this.id = id;
-        this.accountId = accountId;
-        this.clientId = clientId;
-        this.internalClientNumber = internalClientNumber;
         this.transactionId = transactionId;
+        this.accountDetails = accountDetails;
         this.filingPackage = filingPackage;
         this.navigation = navigation;
         this.clientApplication = clientApplication;
@@ -88,25 +79,19 @@ public class Submission {
         return expiryDate;
     }
 
-    public BigDecimal getAccountId() { return accountId; }
+    public AccountDetails getAccountDetails() {
+        return accountDetails;
+    }
 
-    public void setAccountId(BigDecimal accountId) {  this.accountId = accountId;  }
-
-    public BigDecimal getClientId() {  return clientId; }
-
-    public void setInternalClientNumber(String internalClientNumber) { this.internalClientNumber = internalClientNumber; }
-
-    public String getInternalClientNumber() { return internalClientNumber; }
-
-    public void setClientId(BigDecimal clientId) { this.clientId = clientId;  }
+    public void setAccountDetails(AccountDetails accountDetails) {
+        this.accountDetails = accountDetails;
+    }
 
     public static class Builder {
 
         private UUID id;
-        private BigDecimal accountId;
-        private BigDecimal clientId;
-        private String internalClientNumber;
         private UUID transactionId;
+        private AccountDetails accountDetails;
         private FilingPackage filingPackage;
         private Navigation navigation;
         private ClientApplication clientApplication;
@@ -116,17 +101,9 @@ public class Submission {
             this.id = id;
             return this;
         }
-        public Builder accountId (BigDecimal accountId) {
-            this.accountId = accountId;
-            return this;
-        }
-        public Builder clientId (BigDecimal clientId) {
-            this.clientId = clientId;
-            return this;
-        }
 
-        public Builder internalClientNumber (String internalClientNumber) {
-            this.internalClientNumber = internalClientNumber;
+        public Builder accountDetails (AccountDetails accountDetails) {
+            this.accountDetails = accountDetails;
             return this;
         }
 
