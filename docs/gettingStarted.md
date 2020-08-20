@@ -43,7 +43,7 @@ the response includes a submission id that you will use to generate a redirect u
 }
 ```
 
-Then generate a unique url to redirect the users
+Then generate a unique url to redirect the users to the efiling hub
 
 ```bash
 curl --location --request POST 'http://fla-nginx-proxy-qzaydf-dev.pathfinder.gov.bc.ca/api/submission/5e9492cf-e87e-48b5-ba55-0c198d8edde5/generateUrl' \
