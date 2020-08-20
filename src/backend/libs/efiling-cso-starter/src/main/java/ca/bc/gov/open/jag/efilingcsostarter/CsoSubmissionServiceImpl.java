@@ -117,10 +117,10 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         // TODO: replace in the mapper when submission is a common object
 
         if(filingPackage.getDocuments() != null && !filingPackage.getDocuments().isEmpty()) {
-            filingPackage.getDocuments().stream().forEach(efilingDocument -> {
-                efilingDocument.setFileServer(csoProperties.getFileServerHost());
-                efilingDocument.setPackageSeqNo(new BigDecimal(1));
-            });
+            for(int i = 0; i < filingPackage.getDocuments().size(); i++) {
+                filingPackage.getDocuments().get(i).setFileServer(csoProperties.getFileServerHost());
+                filingPackage.getDocuments().get(i).setPackageSeqNo(new BigDecimal(i + 1));
+            }
         }
 
         FilingPackage csoFilingPackage = filingPackageMapper.toFilingPackage(filingPackage, service.getServiceId());
