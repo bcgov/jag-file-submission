@@ -138,7 +138,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         FilingPackage filingPackage = new FilingPackage();
         filingPackage.setCourt(populateCourtDetails(request.getFilingPackage().getCourt()));
-        filingPackage.setSubmissionFeeAmount(getSubmissionFeeAmount(request));
+        filingPackage.setSubmissionFeeAmount(getSubmissionFeeAmount());
         filingPackage.setDocuments(request.getFilingPackage()
                 .getDocuments()
                 .stream()
@@ -200,7 +200,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     }
 
-    private BigDecimal getSubmissionFeeAmount(GenerateUrlRequest request) {
+    private BigDecimal getSubmissionFeeAmount() {
         // TODO: fix with the mapper ApplicationCode to ServiceTypeCode
         ServiceFees fee = efilingLookupService.getServiceFee(SubmissionConstants.SUBMISSION_FEE_TYPE);
         return fee == null ? BigDecimal.ZERO : fee.getFeeAmount();
