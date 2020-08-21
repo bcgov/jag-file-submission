@@ -5,6 +5,7 @@ import Dropzone from "react-dropzone";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { Header, Footer, Textarea, Button } from "shared-components";
+import { getJWTData } from "../../../modules/authentication-helper/authenticationHelper";
 
 import { propTypes } from "../../../types/propTypes";
 import "../page.css";
@@ -49,6 +50,7 @@ const setRequestHeaders = (token, transactionId) => {
   // Use interceptor to inject the transactionId and token to all requests
   axios.interceptors.request.use((request) => {
     request.headers["X-Transaction-Id"] = transactionId;
+    request.headers["X-User-Id"] = getJWTData()["universal-id"];
     request.headers.Authorization = `Bearer ${token}`;
     return request;
   });
