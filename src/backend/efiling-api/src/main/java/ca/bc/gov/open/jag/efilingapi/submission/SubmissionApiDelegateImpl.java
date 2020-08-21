@@ -69,7 +69,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     @Override
     @RolesAllowed("efiling-client")
-    public ResponseEntity<UploadSubmissionDocumentsResponse> uploadSubmissionDocuments(UUID xTransactionId, List<MultipartFile> files) {
+    public ResponseEntity<UploadSubmissionDocumentsResponse> uploadSubmissionDocuments(UUID xTransactionId, UUID xUserId,  List<MultipartFile> files) {
 
         UUID submissionId = UUID.randomUUID();
 
@@ -175,7 +175,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     @Override
     @RolesAllowed("efiling-client")
-    public ResponseEntity<GenerateUrlResponse> generateUrl(UUID xTransactionId, UUID submissionId, GenerateUrlRequest generateUrlRequest) {
+    public ResponseEntity<GenerateUrlResponse> generateUrl(UUID xTransactionId, UUID xUserId,  UUID submissionId, GenerateUrlRequest generateUrlRequest) {
 
         MdcUtils.setClientMDC(xTransactionId, submissionId);
 

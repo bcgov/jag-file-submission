@@ -77,7 +77,7 @@ public class UploadSubmissionDocumentsTest {
         MultipartFile multipartFile = new MockMultipartFile("test.txt", "test".getBytes());
         files.add(multipartFile);
         files.add(multipartFile);
-        ResponseEntity<UploadSubmissionDocumentsResponse> actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), files);
+        ResponseEntity<UploadSubmissionDocumentsResponse> actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), UUID.randomUUID(), files);
 
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
         Assertions.assertNotNull(actual.getBody().getSubmissionId());
@@ -89,7 +89,7 @@ public class UploadSubmissionDocumentsTest {
     public void withEmptyFilesShouldReturnBadRequest() {
 
         List<MultipartFile> files = new ArrayList<>();
-        ResponseEntity actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), files);
+        ResponseEntity actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), UUID.randomUUID(), files);
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
         Assertions.assertEquals(DOCUMENT_REQUIRED.getErrorCode(), ((EfilingError)actual.getBody()).getError());
@@ -101,7 +101,7 @@ public class UploadSubmissionDocumentsTest {
     @DisplayName("400: with null files should return bad request")
     public void withNullFilesShouldReturnBadRequest() {
 
-        ResponseEntity actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), null);
+        ResponseEntity actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), UUID.randomUUID(), null);
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
         Assertions.assertEquals(DOCUMENT_REQUIRED.getErrorCode(), ((EfilingError)actual.getBody()).getError());
@@ -114,7 +114,7 @@ public class UploadSubmissionDocumentsTest {
 
         List<MultipartFile> files = new ArrayList<>();
         files.add(multipartFileMock);
-        ResponseEntity actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), files);
+        ResponseEntity actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), UUID.randomUUID(), files);
 
         Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode());
         Assertions.assertEquals(DOCUMENT_STORAGE_FAILURE.getErrorCode(), ((EfilingError)actual.getBody()).getError());
