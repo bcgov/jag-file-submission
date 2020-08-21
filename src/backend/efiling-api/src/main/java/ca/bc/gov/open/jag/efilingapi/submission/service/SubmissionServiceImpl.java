@@ -190,15 +190,25 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private void uploadFiles(Submission submission) {
         submission.getFilingPackage().getDocuments().forEach(
-                document -> redisStoreToSftpStore(documentStore.get(MessageFormat.format("{0}_{1}_{2}",submission.getTransactionId(),submission.getId(),document.getName())), document.getName(), submission));
+                document ->
+                        redisStoreToSftpStore(document.getName(), submission));
 
     }
 
-    private void redisStoreToSftpStore(byte[] inFile, String fileName, Submission submission) {
+    private void redisStoreToSftpStore(String fileName, Submission submission) {
 
-        String newFileName = MessageFormat.format("fh_{0}_{1}_{2}", submission.getId(), submission.getTransactionId(), fileName);
+        String compositeFileName = ca.bc.gov.open.jag.efilingapi.document.Document
+                .builder()
+                .transactionId(submission.getTransactionId())
+                .submissionId(submission.getId())
+                .fileName(fileName)
+                .create().getCompositeId();
 
-        sftpService.put(new ByteArrayInputStream(inFile), newFileName);
+
+        sftpService.put(new ByteArrayInputStream(documentStore.get(compositeFileName)), MessageFormat.format("fh_{0}", compositeFileName));
+
+        //Delete file from cache
+        documentStore.evict(compositeFileName);
 
         // TODO: remove this is temp because of the SFTP rsync process
         try {
