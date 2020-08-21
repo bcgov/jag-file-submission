@@ -80,7 +80,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         Optional<UUID> actualUserId = SecurityUtils.stringToUUID(xUserId);
 
         if (!actualUserId.isPresent())
-            new ResponseEntity(
+            return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
                     HttpStatus.FORBIDDEN);
 
@@ -107,7 +107,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         logger.info("attempting to upload new document for transaction [{}]", submissionId);
 
-        ResponseEntity responseEntity = storeDocuments(submissionId, xTransactionId, SecurityUtils.getUniversalIdFromContext().get() , files);
+        ResponseEntity responseEntity = storeDocuments(submissionId, xTransactionId, fromCacheSubmission.get().getUniversalId() , files);
 
         logger.info("successfully uploaded new document for transaction [{}]", submissionId);
 
@@ -191,7 +191,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         Optional<UUID> actualUserId = SecurityUtils.stringToUUID(xUserId);
 
         if (!actualUserId.isPresent())
-            new ResponseEntity(
+            return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
                     HttpStatus.FORBIDDEN);
 
