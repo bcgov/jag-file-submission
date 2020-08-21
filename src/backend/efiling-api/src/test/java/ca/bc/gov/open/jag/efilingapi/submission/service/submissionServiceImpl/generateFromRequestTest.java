@@ -96,7 +96,7 @@ public class generateFromRequestTest {
         request.setNavigation(TestHelpers.createDefaultNavigation());
         request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList()));
 
-        Submission actual = sut.generateFromRequest(TestHelpers.CASE_1, TestHelpers.CASE_1, request);
+        Submission actual = sut.generateFromRequest(TestHelpers.CASE_1, TestHelpers.CASE_1, TestHelpers.CASE_1, request);
 
         Assertions.assertEquals(TestHelpers.ERROR_URL, actual.getNavigation().getError().getUrl());
         Assertions.assertEquals(TestHelpers.CANCEL_URL, actual.getNavigation().getCancel().getUrl());
@@ -137,7 +137,7 @@ public class generateFromRequestTest {
         request.setNavigation(TestHelpers.createDefaultNavigation());
         request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList()));
 
-        Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(TestHelpers.CASE_2, TestHelpers.CASE_2, request));
+        Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(TestHelpers.CASE_2, TestHelpers.CASE_2, TestHelpers.CASE_2, request));
 
     }
 

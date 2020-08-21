@@ -98,6 +98,7 @@ public class GenerateUrlTest {
         Mockito.when(submissionServiceMock.generateFromRequest(
                 Mockito.any(),
                 Mockito.eq(TestHelpers.CASE_1),
+                Mockito.any(),
                 Mockito.any()))
                 .thenReturn(submission);
 
@@ -105,24 +106,28 @@ public class GenerateUrlTest {
                 .when(submissionServiceMock).generateFromRequest(
                 Mockito.any(),
                 Mockito.eq(TestHelpers.CASE_2),
+                Mockito.any(),
                 Mockito.any());
 
         Mockito.doThrow(new InvalidAccountStateException("InvalidAccountStateException message"))
                 .when(submissionServiceMock).generateFromRequest(
                 Mockito.any(),
                 Mockito.eq(TestHelpers.CASE_3),
+                Mockito.any(),
                 Mockito.any());
 
         Mockito.doThrow(new StoreException("StoreException message"))
                 .when(submissionServiceMock).generateFromRequest(
                 Mockito.any(),
                 Mockito.eq(TestHelpers.CASE_4),
+                Mockito.any(),
                 Mockito.any());
 
         Mockito.doThrow(new EfilingDocumentServiceException("EfilingDocumentServiceException message"))
                 .when(submissionServiceMock).generateFromRequest(
                 Mockito.any(),
                 Mockito.eq(TestHelpers.CASE_5),
+                Mockito.any(),
                 Mockito.any());
 
         sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, new GenerateUrlResponseMapperImpl(), navigationProperties, submissionStoreMock, documentStoreMock);
