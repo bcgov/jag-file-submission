@@ -118,4 +118,33 @@ describe("CSOAccount Component", () => {
       "_self"
     );
   });
+
+  test("Clicking cancel opens confirmation popup and clicking confirm takes user back to client app", async () => {
+    const setShow = jest.fn();
+
+    const newConfirmationPopup = {
+      ...confirmationPopup,
+      mainButton: {
+        onClick: setShow,
+        label: "Click to open confirmation popup",
+        styling: "normal-blue btn",
+      },
+    };
+
+    const { container } = render(
+      <CSOAccount
+        confirmationPopup={newConfirmationPopup}
+        applicantInfo={applicantInfo}
+        setCsoAccountStatus={setCsoAccountStatus}
+      />
+    );
+
+    await waitFor(() => {});
+
+    fireEvent.click(getByText(container, "Click to open confirmation popup"));
+
+    await waitFor(() => {});
+
+    expect(setShow).toHaveBeenCalled();
+  });
 });

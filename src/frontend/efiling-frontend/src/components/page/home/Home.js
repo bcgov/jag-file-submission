@@ -13,6 +13,21 @@ import { propTypes } from "../../../types/propTypes";
 
 import "../page.css";
 
+const mainButton = {
+  label: "Cancel",
+  styling: "normal-white btn",
+};
+
+const confirmButton = {
+  label: "Yes, cancel E-File Submission",
+  styling: "normal-blue btn consistent-width",
+};
+
+const cancelButton = {
+  label: "No, resume E-File Submission",
+  styling: "normal-white btn consistent-width",
+};
+
 const setRequestHeaders = (transactionId) => {
   // Use interceptor to inject the transactionId to all requests
   axios.interceptors.request.use((request) => {
@@ -60,12 +75,18 @@ const checkCSOAccountStatus = (
   setCsoAccountStatus,
   setShowLoader,
   setApplicantInfo,
-  setError
+  setError,
+  setClientApplicationName
 ) => {
   axios
     .get(`/submission/${submissionId}`)
-    .then(({ data: { userDetails, navigation } }) => {
-      saveDataToSessionStorage(userDetails.cardRegistered, navigation);
+    .then(({ data: { userDetails, navigation, clientApplication } }) => {
+      setClientApplicationName(clientApplication.displayName);
+      saveDataToSessionStorage(
+        userDetails.cardRegistered,
+        navigation,
+        clientApplication
+      );
 
       if (userDetails.accounts) {
         const csoAccountIdentifier = userDetails.accounts.find(
@@ -100,7 +121,7 @@ const checkCSOAccountStatus = (
 };
 
 export default function Home({
-  page: { header, confirmationPopup, submissionId, transactionId },
+  page: { header, submissionId, transactionId },
 }) {
   const [showLoader, setShowLoader] = useState(true);
   const [csoAccountStatus, setCsoAccountStatus] = useState({
@@ -109,6 +130,44 @@ export default function Home({
   });
   const [applicantInfo, setApplicantInfo] = useState({});
   const [error, setError] = useState(false);
+  const [show, setShow] = useState(false);
+  const [clientApplicationName, setClientApplicationName] = useState("");
+
+  const body = () => (
+    <>
+      <p>Your files will not be submitted.</p>
+      <p>
+        You will be returned to:
+        <br />
+        <b>{clientApplicationName}</b> website
+      </p>
+    </>
+  );
+
+  const handleConfirm = () => {
+    sessionStorage.setItem("validExit", true);
+    const cancelUrl = sessionStorage.getItem("cancelUrl");
+
+    if (cancelUrl) {
+      axios
+        .delete(`submission/${submissionId}`)
+        .then(() => window.open(cancelUrl, "_self"))
+        .catch(() => window.open(cancelUrl, "_self"));
+    }
+  };
+
+  const modal = {
+    show,
+    title: "Cancel E-File Submission?",
+    body,
+  };
+
+  const confirmationPopup = {
+    modal,
+    mainButton: { ...mainButton, onClick: () => setShow(true) },
+    confirmButton: { ...confirmButton, onClick: handleConfirm },
+    cancelButton: { ...cancelButton, onClick: () => setShow(false) },
+  };
 
   setRequestHeaders(transactionId);
 
@@ -118,7 +177,8 @@ export default function Home({
       setCsoAccountStatus,
       setShowLoader,
       setApplicantInfo,
-      setError
+      setError,
+      setClientApplicationName
     );
   }, [submissionId]);
 
@@ -167,7 +227,6 @@ export default function Home({
 Home.propTypes = {
   page: PropTypes.shape({
     header: propTypes.header,
-    confirmationPopup: propTypes.confirmationPopup,
     submissionId: PropTypes.string.isRequired,
     transactionId: PropTypes.string.isRequired,
   }).isRequired,

@@ -38,7 +38,7 @@ keycloak.onAuthRefreshSuccess = () =>
  */
 
 export default function AuthenticationGuard({
-  page: { header, confirmationPopup, submissionId, transactionId },
+  page: { header, submissionId, transactionId },
 }) {
   const [authedKeycloak, setAuthedKeycloak] = useState(null);
 
@@ -68,9 +68,7 @@ export default function AuthenticationGuard({
   return (
     <>
       {authedKeycloak && (
-        <Home
-          page={{ header, confirmationPopup, submissionId, transactionId }}
-        />
+        <Home page={{ header, submissionId, transactionId }} />
       )}
       {!authedKeycloak && null}
     </>
@@ -106,7 +104,6 @@ createAuthRefreshInterceptor(axios, refreshAuthLogic);
 AuthenticationGuard.propTypes = {
   page: PropTypes.shape({
     header: propTypes.header,
-    confirmationPopup: propTypes.confirmationPopup,
     submissionId: PropTypes.string.isRequired,
     transactionId: PropTypes.string.isRequired,
   }).isRequired,

@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-one-expression-per-line */
-import React, { useState } from "react";
-import axios from "axios";
+import React from "react";
 import queryString from "query-string";
 import {
   Switch,
@@ -10,21 +9,6 @@ import {
   useLocation,
 } from "react-router-dom";
 import AuthenticationGuard from "./components/hoc/AuthenticationGuard";
-
-const mainButton = {
-  label: "Cancel",
-  styling: "normal-white btn",
-};
-
-const confirmButton = {
-  label: "Yes, cancel E-File Submission",
-  styling: "normal-blue btn consistent-width",
-};
-
-const cancelButton = {
-  label: "No, resume E-File Submission",
-  styling: "normal-white btn consistent-width",
-};
 
 export default function App() {
   const location = useLocation();
@@ -36,54 +20,12 @@ export default function App() {
     history: useHistory(),
   };
 
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  const body = () => (
-    <>
-      <p>Your files will not be submitted.</p>
-      <p>
-        You will be returned to:
-        <br />
-        <b>Family Law Protection Order</b> website
-      </p>
-    </>
-  );
-
-  const handleConfirm = () => {
-    sessionStorage.setItem("validExit", true);
-    const cancelUrl = sessionStorage.getItem("cancelUrl");
-
-    if (cancelUrl) {
-      axios
-        .delete(`submission/${submissionId}`)
-        .then(() => window.open(cancelUrl, "_self"))
-        .catch(() => window.open(cancelUrl, "_self"));
-    }
-  };
-
-  const modal = {
-    show,
-    title: "Cancel E-File Submission?",
-    body,
-  };
-
-  const confirmationPopup = {
-    modal,
-    mainButton: { ...mainButton, onClick: handleShow },
-    confirmButton: { ...confirmButton, onClick: handleConfirm },
-    cancelButton: { ...cancelButton, onClick: handleClose },
-  };
-
   return (
     <div>
       <Switch>
         <Redirect exact from="/" to="/efiling" />
         <Route exact path="/efiling">
-          <AuthenticationGuard
-            page={{ header, confirmationPopup, submissionId, transactionId }}
-          />
+          <AuthenticationGuard page={{ header, submissionId, transactionId }} />
         </Route>
       </Switch>
     </div>
