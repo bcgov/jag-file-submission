@@ -67,7 +67,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         this.documentStore = documentStore;
     }
 
-     @Override
+    @Override
     @RolesAllowed("efiling-client")
     public ResponseEntity<UploadSubmissionDocumentsResponse> uploadSubmissionDocuments(UUID xTransactionId, String xUserId, List<MultipartFile> files) {
 
