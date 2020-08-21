@@ -114,7 +114,14 @@ const generatePackageData = (files, filingPackage) => {
   return { formData, updatedUrlBody };
 };
 
-const eFilePackage = (token, files, setErrorExists, filingPackage) => {
+const eFilePackage = (
+  token,
+  files,
+  setErrorExists,
+  filingPackage,
+  setSubmitBtnEnabled,
+  setShowLoader
+) => {
   setRequestHeaders(token, transactionId);
 
   const { formData, updatedUrlBody } = generatePackageData(
@@ -134,9 +141,17 @@ const eFilePackage = (token, files, setErrorExists, filingPackage) => {
         .then(({ data: { efilingUrl } }) => {
           window.open(`${efilingUrl}`, "_self");
         })
-        .catch(() => setErrorExists(true));
+        .catch(() => {
+          setErrorExists(true);
+          setSubmitBtnEnabled(true);
+          setShowLoader(false);
+        });
     })
-    .catch(() => setErrorExists(true));
+    .catch(() => {
+      setErrorExists(true);
+      setSubmitBtnEnabled(true);
+      setShowLoader(false);
+    });
 
   return true;
 };
@@ -146,7 +161,7 @@ export default function Home({ page: { header } }) {
   const [filingPackage, setFilingPackage] = useState(null);
   const [token, setToken] = useState(null);
   const [files, setFiles] = useState([]);
-  const [submitBtnEnabled, setSubmitBtnEnabled] = useState(false);
+  const [submitBtnEnabled, setSubmitBtnEnabled] = useState(true);
   const [showLoader, setShowLoader] = useState(false);
 
   const keycloakClientId = sessionStorage.getItem("demoKeycloakClientId");
@@ -155,20 +170,6 @@ export default function Home({ page: { header } }) {
   const keycloakClientSecret = sessionStorage.getItem(
     "demoKeycloakClientSecret"
   );
-
-  const checkSubmitEnabled = () => {
-    if (
-      files.length > 0 &&
-      filingPackage &&
-      JSON.stringify(filingPackage) !== "{}"
-    ) {
-      setSubmitBtnEnabled(true);
-    }
-  };
-
-  useEffect(() => {
-    checkSubmitEnabled();
-  }, [files, filingPackage]);
 
   useEffect(() => {
     getToken(
@@ -233,9 +234,15 @@ export default function Home({ page: { header } }) {
                 token,
                 files,
                 setErrorExists,
-                filingPackage
+                filingPackage,
+                setSubmitBtnEnabled,
+                setShowLoader
               );
-              if (!result) setErrorExists(true);
+              if (!result) {
+                setErrorExists(true);
+                setSubmitBtnEnabled(true);
+                setShowLoader(false);
+              }
             }}
             label="E-File my Package"
             styling="normal-blue btn"
