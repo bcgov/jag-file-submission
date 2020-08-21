@@ -31,7 +31,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.security.RolesAllowed;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -151,7 +150,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
                                                           UUID submissionId,
                                                           String filename) {
 
-        logger.info("getSubmission document for transaction [{0}]", xTransactionId);
+        logger.info("getSubmission document for transaction [{}]", xTransactionId);
 
         MdcUtils.setUserMDC(submissionId, xTransactionId);
 
@@ -166,7 +165,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         if(bytes == null) return ResponseEntity.notFound().build();
 
-        logger.info("successfully retrieved document for transaction [{0}]", xTransactionId);
+        logger.info("successfully retrieved document for transaction [{}]", xTransactionId);
 
         MdcUtils.clearUserMDC();
 
@@ -225,7 +224,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         MdcUtils.setUserMDC(submissionId, xTransactionId);
 
-        logger.info("attempting to get Submission for transactionId [{0}]", xTransactionId);
+        logger.info("attempting to get Submission for transactionId [{}]", xTransactionId);
 
         Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
 
@@ -249,7 +248,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         response.setNavigation(fromCacheSubmission.get().getNavigation());
 
-        logger.info("Successfully retrieved submission for transactionId [{0}]", xTransactionId);
+        logger.info("Successfully retrieved submission for transactionId [{}]", xTransactionId);
 
         MdcUtils.clearUserMDC();
 
@@ -287,14 +286,14 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         MdcUtils.setUserMDC(submissionId, xTransactionId);
 
-        logger.info("attempting to get Submission Filing Package for transactionId [{0}]", xTransactionId);
+        logger.info("attempting to get Submission Filing Package for transactionId [{}]", xTransactionId);
 
         Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
 
         if(!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
 
-        logger.info("successfully retrieved submission filing package for transactionId [{0}]", xTransactionId);
+        logger.info("successfully retrieved submission filing package for transactionId [{}]", xTransactionId);
 
         MdcUtils.clearUserMDC();
 
@@ -316,9 +315,10 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
                                     .builder()
                                     .transactionId(xTransactionId)
                                     .submissionId(submissionId)
+                                    .fileName(document.getName())
                                     .create().getCompositeId()));
 
-        //Remove submission from cahce
+        //Remove submission from cache
         submissionStore.evict(submissionId, xTransactionId);
         return new ResponseEntity<>(HttpStatus.OK);
 
@@ -330,7 +330,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         MdcUtils.setUserMDC(submissionId, xTransactionId);
 
-        logger.info("attempting to submit efiling package for transaction [{0}]", xTransactionId);
+        logger.info("attempting to submit efiling package for transaction [{}]", xTransactionId);
 
         Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
 
@@ -345,7 +345,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             response = new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        logger.info("successfully submited efiling package for transaction [{0}]", xTransactionId);
+        logger.info("successfully submited efiling package for transaction [{}]", xTransactionId);
 
         MdcUtils.clearUserMDC();
 
