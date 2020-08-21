@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 import Dropzone from "react-dropzone";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
-import { getJWTData } from "../../../modules/authentication-helper/authenticationHelper";
 import { Header, Footer, Textarea, Button } from "shared-components";
+import { getJWTData } from "../../../modules/authentication-helper/authenticationHelper";
 
 import { propTypes } from "../../../types/propTypes";
 import "../page.css";
