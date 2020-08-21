@@ -82,7 +82,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         if (!actualUserId.isPresent())
             new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
-                    HttpStatus.BAD_REQUEST);
+                    HttpStatus.FORBIDDEN);
 
         ResponseEntity response = storeDocuments(submissionId, xTransactionId, actualUserId.get(), files);
 
@@ -193,7 +193,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         if (!actualUserId.isPresent())
             new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
-                    HttpStatus.BAD_REQUEST);
+                    HttpStatus.FORBIDDEN);
 
         ResponseEntity response;
 
@@ -318,11 +318,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @Override
     public ResponseEntity<Void> deleteSubmission(UUID submissionId, UUID xTransactionId) {
 
-        Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
-
-        if(!universalId.isPresent()) return new ResponseEntity(
-                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
-
         Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
         if(!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
@@ -332,7 +327,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
                     document -> documentStore.evict(
                             Document
                                     .builder()
-                                    .userId(universalId.get())
+                                    .userId(fromCacheSubmission.get().getUniversalId())
                                     .submissionId(submissionId)
                                     .fileName(document.getName())
                                     .create().getCompositeId()));

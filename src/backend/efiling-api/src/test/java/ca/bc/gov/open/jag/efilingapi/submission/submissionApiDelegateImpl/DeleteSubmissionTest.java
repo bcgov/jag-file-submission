@@ -49,6 +49,7 @@ public class DeleteSubmissionTest {
 
         Submission submission = Submission
                 .builder()
+                .universalId(UUID.randomUUID())
                 .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), createDocumentList()))
                 .create();
 

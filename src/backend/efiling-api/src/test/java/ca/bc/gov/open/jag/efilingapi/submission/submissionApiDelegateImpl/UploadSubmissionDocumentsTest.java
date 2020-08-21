@@ -25,8 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static ca.bc.gov.open.jag.efilingapi.error.ErrorResponse.DOCUMENT_REQUIRED;
-import static ca.bc.gov.open.jag.efilingapi.error.ErrorResponse.DOCUMENT_STORAGE_FAILURE;
+import static ca.bc.gov.open.jag.efilingapi.error.ErrorResponse.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("Upload Submission Documents Test Suite")
@@ -121,4 +120,16 @@ public class UploadSubmissionDocumentsTest {
         Assertions.assertEquals(DOCUMENT_STORAGE_FAILURE.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
     }
 
+    @Test
+    @DisplayName("403: with invalid userId then return forbidden 403")
+    public void withInvalidUserIDThenReturnForbidden() {
+
+        List<MultipartFile> files = new ArrayList<>();
+        files.add(multipartFileMock);
+        ResponseEntity actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), "BADUUID", files);
+
+        Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
+        Assertions.assertEquals(INVALIDUNIVERSAL.getErrorCode(), ((EfilingError)actual.getBody()).getError());
+        Assertions.assertEquals(INVALIDUNIVERSAL.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
+    }
 }

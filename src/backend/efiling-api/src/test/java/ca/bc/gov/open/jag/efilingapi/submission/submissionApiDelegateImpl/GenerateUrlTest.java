@@ -32,9 +32,9 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+
+import static ca.bc.gov.open.jag.efilingapi.error.ErrorResponse.INVALIDUNIVERSAL;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("SubmissionApiDelegateImpl test suite")
@@ -225,4 +225,16 @@ public class GenerateUrlTest {
         Assertions.assertEquals(ErrorResponse.DOCUMENT_TYPE_ERROR.getErrorMessage(), actualError.getMessage());
     }
 
+    @Test
+    @DisplayName("403: with invalid userId then return forbidden 403")
+    public void withInvalidUserIDThenReturnForbidden() {
+
+
+        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), "BADUUID", UUID.randomUUID(), null);
+
+        Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
+        Assertions.assertEquals(INVALIDUNIVERSAL.getErrorCode(), ((EfilingError)actual.getBody()).getError());
+        Assertions.assertEquals(INVALIDUNIVERSAL.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
+    }
 }
+
