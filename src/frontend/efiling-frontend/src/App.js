@@ -40,17 +40,6 @@ export default function App() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const body = () => (
-    <>
-      <p>Your files will not be submitted.</p>
-      <p>
-        You will be returned to:
-        <br />
-        <b>Family Law Protection Order</b> website
-      </p>
-    </>
-  );
-
   const handleConfirm = () => {
     sessionStorage.setItem("validExit", true);
     const cancelUrl = sessionStorage.getItem("cancelUrl");
@@ -66,7 +55,6 @@ export default function App() {
   const modal = {
     show,
     title: "Cancel E-File Submission?",
-    body,
   };
 
   const confirmationPopup = {

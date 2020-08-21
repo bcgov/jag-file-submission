@@ -29,6 +29,7 @@ describe("Home", () => {
   const court = getCourtData();
   const submissionFeeAmount = 25.5;
   const userDetails = getUserDetails();
+  const clientApplication = { displayName: "client app" };
 
   window.open = jest.fn();
 
@@ -47,7 +48,9 @@ describe("Home", () => {
   const component = <Home page={page} />;
 
   test("Component matches the snapshot when user cso account exists", async () => {
-    mock.onGet(apiRequest).reply(200, { userDetails, navigation });
+    mock
+      .onGet(apiRequest)
+      .reply(200, { userDetails, navigation, clientApplication });
     mock
       .onGet(getFilingPackagePath)
       .reply(200, { documents, court, submissionFeeAmount });
@@ -64,6 +67,7 @@ describe("Home", () => {
     mock.onGet(apiRequest).reply(200, {
       userDetails: { ...userDetails, accounts: null },
       navigation,
+      clientApplication,
     });
 
     mock.onGet("/bceidAccount").reply(200, {
@@ -140,6 +144,7 @@ describe("Home", () => {
     mock.onGet(apiRequest).reply(200, {
       userDetails: { ...userDetails, accounts: null },
       navigation,
+      clientApplication,
     });
 
     mock.onGet("/bceidAccount").reply(400, {
@@ -160,6 +165,7 @@ describe("Home", () => {
     mock.onGet(apiRequest).reply(200, {
       userDetails: { ...userDetails, accounts: null },
       navigation,
+      clientApplication,
     });
 
     mock.onGet("/bceidAccount").reply(200, {

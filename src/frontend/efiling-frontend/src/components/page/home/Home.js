@@ -60,11 +60,13 @@ const checkCSOAccountStatus = (
   setCsoAccountStatus,
   setShowLoader,
   setApplicantInfo,
+  setClientApplicationName,
   setError
 ) => {
   axios
     .get(`/submission/${submissionId}`)
-    .then(({ data: { userDetails, navigation } }) => {
+    .then(({ data: { userDetails, navigation, clientApplication } }) => {
+      setClientApplicationName(clientApplication.displayName);
       saveDataToSessionStorage(userDetails.cardRegistered, navigation);
 
       if (userDetails.accounts) {
@@ -109,6 +111,7 @@ export default function Home({
   });
   const [applicantInfo, setApplicantInfo] = useState({});
   const [error, setError] = useState(false);
+  const [clientApplicationName, setClientApplicationName] = useState("");
 
   setRequestHeaders(transactionId);
 
@@ -118,12 +121,25 @@ export default function Home({
       setCsoAccountStatus,
       setShowLoader,
       setApplicantInfo,
+      setClientApplicationName,
       setError
     );
   }, [submissionId]);
 
+  const body = () => (
+    <>
+      <p>Your files will not be submitted.</p>
+      <p>
+        You will be returned to:
+        <br />
+        <b>{clientApplicationName}</b> website
+      </p>
+    </>
+  );
+  const updatedModal = { ...confirmationPopup.modal, body };
+
   const packageConfirmation = {
-    confirmationPopup,
+    confirmationPopup: { ...confirmationPopup, modal: updatedModal },
     submissionId,
   };
 
@@ -148,7 +164,7 @@ export default function Home({
         !csoAccountStatus.exists &&
         JSON.stringify(applicantInfo) !== "{}" && (
           <CSOAccount
-            confirmationPopup={confirmationPopup}
+            confirmationPopup={{ ...confirmationPopup, modal: updatedModal }}
             applicantInfo={applicantInfo}
             setCsoAccountStatus={setCsoAccountStatus}
           />
