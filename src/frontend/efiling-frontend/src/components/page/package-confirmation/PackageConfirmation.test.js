@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import FileSaver from "file-saver";
 import MockAdapter from "axios-mock-adapter";
 import { render, waitFor, fireEvent, getByText } from "@testing-library/react";
 import { getTestData } from "../../../modules/test-data/confirmationPopupTestData";
@@ -34,6 +35,8 @@ describe("PackageConfirmation Component", () => {
     },
   });
   localStorage.setItem("jwt", token);
+
+  FileSaver.saveAs = jest.fn();
 
   let mock;
   beforeEach(() => {
@@ -152,7 +155,7 @@ describe("PackageConfirmation Component", () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  test("Successfully opens the file in new window when get document call succeeds (on click)", async () => {
+  test("Successfully downloads the file when get document call succeeds (on click)", async () => {
     const blob = new Blob(["foo", "bar"]);
 
     global.URL.createObjectURL = jest.fn();
@@ -178,10 +181,10 @@ describe("PackageConfirmation Component", () => {
 
     await waitFor(() => {});
 
-    expect(window.open).toHaveBeenCalledWith("fileurl.com");
+    expect(FileSaver.saveAs).toHaveBeenCalled();
   });
 
-  test("Successfully opens the file in new window when get document call succeeds (on keydown)", async () => {
+  test("Successfully downloads the file when get document call succeeds (on keydown)", async () => {
     const blob = new Blob(["foo", "bar"]);
 
     global.URL.createObjectURL = jest.fn();
@@ -207,7 +210,7 @@ describe("PackageConfirmation Component", () => {
 
     await waitFor(() => {});
 
-    expect(window.open).toHaveBeenCalledWith("fileurl.com");
+    expect(FileSaver.saveAs).toHaveBeenCalled();
   });
 
   test("Fails to open the file in new window when get document call fails", async () => {
