@@ -143,7 +143,7 @@ public class GenerateUrlTest {
         generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
-        ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(transactionId, UUID.randomUUID(), TestHelpers.CASE_1, generateUrlRequest);
+        ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(transactionId, UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_1, generateUrlRequest);
 
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
         Assertions.assertEquals("http://localhost?submissionId=" + TestHelpers.CASE_1.toString() + "&transactionId="  + transactionId, actual.getBody().getEfilingUrl());
@@ -160,7 +160,7 @@ public class GenerateUrlTest {
         generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
-        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID(), TestHelpers.CASE_2, generateUrlRequest);
+        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_2, generateUrlRequest);
 
         EfilingError actualError = (EfilingError) actual.getBody();
 
@@ -177,7 +177,7 @@ public class GenerateUrlTest {
         generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
-        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID(), TestHelpers.CASE_3, generateUrlRequest);
+        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_3, generateUrlRequest);
 
         EfilingError actualError = (EfilingError) actual.getBody();
 
@@ -194,7 +194,7 @@ public class GenerateUrlTest {
         generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
-        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID(), TestHelpers.CASE_4, generateUrlRequest);
+        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_4, generateUrlRequest);
 
         EfilingError actualError = (EfilingError) actual.getBody();
 
@@ -211,7 +211,7 @@ public class GenerateUrlTest {
         generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
-        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID(), TestHelpers.CASE_5, generateUrlRequest);
+        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_5, generateUrlRequest);
 
         EfilingError actualError = (EfilingError) actual.getBody();
 

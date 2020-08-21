@@ -306,7 +306,7 @@ components:
       in: header
       schema:
         type: string
-        format: uuid
+        format: string
       required: true
       description: A unique BCEID Id passed to initial calls
     submissionId:

@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingapi.error;
 public enum ErrorResponse {
 
     INVALIDROLE("User does not have a valid role for this request."),
+    INVALIDUNIVERSAL("Invalid universal id."),
     ACCOUNTEXCEPTION("Client has multiple CSO profiles."),
     DOCUMENT_TYPE_ERROR("Error while retrieving documents"),
     DOCUMENT_REQUIRED("At least one document is required."),

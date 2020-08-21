@@ -12,6 +12,8 @@ public class Document {
 
     private UUID transactionId;
 
+    private UUID userId;
+
     private String fileName;
 
     private byte[] content;
@@ -21,6 +23,7 @@ public class Document {
         this.fileName = builder.fileName;
         this.content = builder.content;
         this.transactionId = builder.transactionId;
+        this.userId = builder.userId;
     }
 
     public static Builder builder() {
@@ -32,13 +35,14 @@ public class Document {
     }
 
     public String getCompositeId() {
-        return MessageFormat.format("{0}_{1}_{2}", transactionId, submissionId, fileName);
+        return MessageFormat.format("{0}_{1}_{2}", userId, submissionId, fileName);
     }
 
     public static class Builder {
 
         private UUID submissionId;
         private UUID transactionId;
+        private UUID userId;
         private String fileName;
         private byte[] content;
 
@@ -60,6 +64,11 @@ public class Document {
 
         public Builder transactionId(UUID owner) {
             this.transactionId = owner;
+            return this;
+        }
+
+        public Builder userId(UUID user) {
+            this.userId = user;
             return this;
         }
 
