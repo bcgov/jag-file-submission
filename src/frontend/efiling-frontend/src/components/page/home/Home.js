@@ -1,4 +1,4 @@
-/* eslint-disable camelcase */
+/* eslint-disable camelcase, react/jsx-one-expression-per-line */
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
@@ -132,7 +132,7 @@ export default function Home({
       <p>
         You will be returned to:
         <br />
-        <b>{clientApplicationName}</b>&nbsp; website
+        <b>{clientApplicationName}</b> website
       </p>
     </>
   );
