@@ -308,7 +308,7 @@ components:
         type: string
         format: string
       required: true
-      description: A unique BCEID Id passed to initial calls
+      description: A unique BCeID universal id passed to initial calls
     submissionId:
       name: submissionId
       in: path
