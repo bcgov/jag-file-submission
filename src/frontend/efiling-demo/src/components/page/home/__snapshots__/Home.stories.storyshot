@@ -97,7 +97,6 @@ exports[`Storyshots Home Default 1`] = `
         <button
           class="bcgov-button normal-blue btn"
           data-test-id="generate-url-btn"
-          disabled=""
           type="button"
         >
           E-File my Package
@@ -294,7 +293,6 @@ exports[`Storyshots Home Mobile 1`] = `
         <button
           class="bcgov-button normal-blue btn"
           data-test-id="generate-url-btn"
-          disabled=""
           type="button"
         >
           E-File my Package

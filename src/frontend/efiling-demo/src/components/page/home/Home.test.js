@@ -129,17 +129,13 @@ describe("Home", () => {
 
     const button = getByText(container, "E-File my Package");
 
-    expect(button).toBeDisabled();
-
     const textbox = getAllByRole(container, "textbox");
 
     fireEvent.change(textbox[0], {
       target: { value: JSON.stringify(filingPackage) },
     });
 
-    expect(button).not.toBeDisabled();
-
-    fireEvent.click(getByText(container, "E-File my Package"));
+    fireEvent.click(button);
 
     await waitFor(() => {});
 
@@ -170,17 +166,13 @@ describe("Home", () => {
 
     const button = getByText(container, "E-File my Package");
 
-    expect(button).toBeDisabled();
-
     const textbox = getAllByRole(container, "textbox");
 
     fireEvent.change(textbox[0], {
       target: { value: JSON.stringify(filingPackage) },
     });
 
-    expect(button).not.toBeDisabled();
-
-    fireEvent.click(getByText(container, "E-File my Package"));
+    fireEvent.click(button);
 
     await waitFor(() => {});
 
@@ -213,17 +205,13 @@ describe("Home", () => {
 
     const button = getByText(container, "E-File my Package");
 
-    expect(button).toBeDisabled();
-
     const textbox = getAllByRole(container, "textbox");
 
     fireEvent.change(textbox[0], {
       target: { value: JSON.stringify(filingPackage) },
     });
 
-    expect(button).not.toBeDisabled();
-
-    fireEvent.click(getByText(container, "E-File my Package"));
+    fireEvent.click(button);
 
     await waitFor(() => {});
 
@@ -260,17 +248,13 @@ describe("Home", () => {
 
     const button = getByText(container, "E-File my Package");
 
-    expect(button).toBeDisabled();
-
     const textbox = getAllByRole(container, "textbox");
 
     fireEvent.change(textbox[0], {
       target: { value: JSON.stringify(filingPackage) },
     });
 
-    expect(button).not.toBeDisabled();
-
-    fireEvent.click(getByText(container, "E-File my Package"));
+    fireEvent.click(button);
 
     await waitFor(() => {});
 
