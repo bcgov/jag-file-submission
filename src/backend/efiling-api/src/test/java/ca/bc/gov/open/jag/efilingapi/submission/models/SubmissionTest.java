@@ -33,6 +33,7 @@ public class SubmissionTest {
         Submission actual = new Submission(
                 UUID.randomUUID(),
                 UUID.randomUUID(),
+                UUID.randomUUID(),
                 AccountDetails.builder()
                         .clientId(BigDecimal.TEN)
                         .accountId(BigDecimal.TEN)

@@ -69,7 +69,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     @Override
     @RolesAllowed("efiling-client")
-    public ResponseEntity<UploadSubmissionDocumentsResponse> uploadSubmissionDocuments(UUID xTransactionId, List<MultipartFile> files) {
+    public ResponseEntity<UploadSubmissionDocumentsResponse> uploadSubmissionDocuments(UUID xTransactionId, String xUserId, List<MultipartFile> files) {
 
         UUID submissionId = UUID.randomUUID();
 
@@ -77,7 +77,14 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         logger.info("attempting to upload original document [{}]", submissionId);
 
-        ResponseEntity response = storeDocuments(submissionId, xTransactionId, files);
+        Optional<UUID> actualUserId = SecurityUtils.stringToUUID(xUserId);
+
+        if (!actualUserId.isPresent())
+            return new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
+                    HttpStatus.FORBIDDEN);
+
+        ResponseEntity response = storeDocuments(submissionId, xTransactionId, actualUserId.get(), files);
 
         logger.info("successfully uploaded original document [{}]", submissionId);
 
@@ -100,7 +107,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         logger.info("attempting to upload new document for transaction [{}]", submissionId);
 
-        ResponseEntity responseEntity = storeDocuments(submissionId, xTransactionId, files);
+        ResponseEntity responseEntity = storeDocuments(submissionId, xTransactionId, fromCacheSubmission.get().getUniversalId(), files);
 
         logger.info("successfully uploaded new document for transaction [{}]", submissionId);
 
@@ -175,11 +182,18 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     @Override
     @RolesAllowed("efiling-client")
-    public ResponseEntity<GenerateUrlResponse> generateUrl(UUID xTransactionId, UUID submissionId, GenerateUrlRequest generateUrlRequest) {
+    public ResponseEntity<GenerateUrlResponse> generateUrl(UUID xTransactionId, String xUserId, UUID submissionId, GenerateUrlRequest generateUrlRequest) {
 
         MdcUtils.setClientMDC(xTransactionId, submissionId);
 
         logger.info("Attempting to generate Url Request Received");
+
+        Optional<UUID> actualUserId = SecurityUtils.stringToUUID(xUserId);
+
+        if (!actualUserId.isPresent())
+            return new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
+                    HttpStatus.FORBIDDEN);
 
         ResponseEntity response;
 
@@ -187,7 +201,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             generateUrlRequest.getClientApplication().setType(SecurityUtils.getApplicationCode());
             response = ResponseEntity.ok(
                     generateUrlResponseMapper.toGenerateUrlResponse(
-                            submissionService.generateFromRequest(xTransactionId, submissionId, generateUrlRequest),
+                            submissionService.generateFromRequest(xTransactionId, submissionId, actualUserId.get(), generateUrlRequest),
                             navigationProperties.getBaseUrl()));
             logger.info("successfully generated return url.");
         }
@@ -313,7 +327,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
                     document -> documentStore.evict(
                             Document
                                     .builder()
-                                    .transactionId(xTransactionId)
+                                    .userId(fromCacheSubmission.get().getUniversalId())
                                     .submissionId(submissionId)
                                     .fileName(document.getName())
                                     .create().getCompositeId()));
@@ -369,7 +383,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         }
     }
 
-    private ResponseEntity storeDocuments(UUID submissionId, UUID xTransactionId, List<MultipartFile> files) {
+    private ResponseEntity storeDocuments(UUID submissionId, UUID xTransactionId, UUID xUserId, List<MultipartFile> files) {
 
         if (files == null || files.isEmpty())
             return new ResponseEntity(
@@ -381,6 +395,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             for (MultipartFile file : files) {
                 Document document = Document
                         .builder()
+                        .userId(xUserId)
                         .transactionId(xTransactionId)
                         .submissionId(submissionId)
                         .fileName(file.getResource().getFilename())

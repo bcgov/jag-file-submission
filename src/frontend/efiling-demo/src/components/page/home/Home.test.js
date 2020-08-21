@@ -10,6 +10,7 @@ import {
   getAllByRole,
 } from "@testing-library/react";
 import Home from "./Home";
+import { generateJWTToken } from "../../../modules/authentication-helper/authenticationHelper";
 
 const header = {
   name: "eFiling Demo Client",
@@ -62,9 +63,14 @@ describe("Home", () => {
   const filingPackage = {
     documents: [files[0].file],
   };
-  const token = "validJWT";
+
   sessionStorage.setItem("demoKeycloakUrl", "demokeycloakexample.com");
   sessionStorage.setItem("demoKeycloakRealm", "demoRealm");
+
+  const token = generateJWTToken({
+    "universal-id": "123",
+  });
+  localStorage.setItem("jwt", token);
 
   const file = new File([JSON.stringify({ ping: true })], "ping.json", {
     type: "application/json",

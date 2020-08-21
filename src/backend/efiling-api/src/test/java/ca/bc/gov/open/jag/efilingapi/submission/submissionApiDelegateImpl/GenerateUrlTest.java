@@ -32,9 +32,9 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+
+import static ca.bc.gov.open.jag.efilingapi.error.ErrorResponse.INVALIDUNIVERSAL;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("SubmissionApiDelegateImpl test suite")
@@ -98,6 +98,7 @@ public class GenerateUrlTest {
         Mockito.when(submissionServiceMock.generateFromRequest(
                 Mockito.any(),
                 Mockito.eq(TestHelpers.CASE_1),
+                Mockito.any(),
                 Mockito.any()))
                 .thenReturn(submission);
 
@@ -105,24 +106,28 @@ public class GenerateUrlTest {
                 .when(submissionServiceMock).generateFromRequest(
                 Mockito.any(),
                 Mockito.eq(TestHelpers.CASE_2),
+                Mockito.any(),
                 Mockito.any());
 
         Mockito.doThrow(new InvalidAccountStateException("InvalidAccountStateException message"))
                 .when(submissionServiceMock).generateFromRequest(
                 Mockito.any(),
                 Mockito.eq(TestHelpers.CASE_3),
+                Mockito.any(),
                 Mockito.any());
 
         Mockito.doThrow(new StoreException("StoreException message"))
                 .when(submissionServiceMock).generateFromRequest(
                 Mockito.any(),
                 Mockito.eq(TestHelpers.CASE_4),
+                Mockito.any(),
                 Mockito.any());
 
         Mockito.doThrow(new EfilingDocumentServiceException("EfilingDocumentServiceException message"))
                 .when(submissionServiceMock).generateFromRequest(
                 Mockito.any(),
                 Mockito.eq(TestHelpers.CASE_5),
+                Mockito.any(),
                 Mockito.any());
 
         sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, new GenerateUrlResponseMapperImpl(), navigationProperties, submissionStoreMock, documentStoreMock);
@@ -143,7 +148,7 @@ public class GenerateUrlTest {
         generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
-        ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(transactionId, TestHelpers.CASE_1, generateUrlRequest);
+        ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(transactionId, UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_1, generateUrlRequest);
 
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
         Assertions.assertEquals("http://localhost?submissionId=" + TestHelpers.CASE_1.toString() + "&transactionId="  + transactionId, actual.getBody().getEfilingUrl());
@@ -160,7 +165,7 @@ public class GenerateUrlTest {
         generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
-        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), TestHelpers.CASE_2, generateUrlRequest);
+        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_2, generateUrlRequest);
 
         EfilingError actualError = (EfilingError) actual.getBody();
 
@@ -177,7 +182,7 @@ public class GenerateUrlTest {
         generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
-        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), TestHelpers.CASE_3, generateUrlRequest);
+        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_3, generateUrlRequest);
 
         EfilingError actualError = (EfilingError) actual.getBody();
 
@@ -194,7 +199,7 @@ public class GenerateUrlTest {
         generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
-        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), TestHelpers.CASE_4, generateUrlRequest);
+        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_4, generateUrlRequest);
 
         EfilingError actualError = (EfilingError) actual.getBody();
 
@@ -211,7 +216,7 @@ public class GenerateUrlTest {
         generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
-        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), TestHelpers.CASE_5, generateUrlRequest);
+        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_5, generateUrlRequest);
 
         EfilingError actualError = (EfilingError) actual.getBody();
 
@@ -220,4 +225,16 @@ public class GenerateUrlTest {
         Assertions.assertEquals(ErrorResponse.DOCUMENT_TYPE_ERROR.getErrorMessage(), actualError.getMessage());
     }
 
+    @Test
+    @DisplayName("403: with invalid userId then return forbidden 403")
+    public void withInvalidUserIDThenReturnForbidden() {
+
+
+        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), "BADUUID", UUID.randomUUID(), null);
+
+        Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
+        Assertions.assertEquals(INVALIDUNIVERSAL.getErrorCode(), ((EfilingError)actual.getBody()).getError());
+        Assertions.assertEquals(INVALIDUNIVERSAL.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
+    }
 }
+

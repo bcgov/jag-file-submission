@@ -13,12 +13,14 @@ import java.util.UUID;
 public interface SubmissionMapper {
 
     @Mapping(source = "submissionId", target = "id")
+    @Mapping(source = "universalId", target = "universalId")
     @Mapping(source = "transactionId", target = "transactionId")
     @Mapping(source = "generateUrlRequest.navigation", target = "navigation")
     @Mapping(source = "generateUrlRequest.clientApplication", target = "clientApplication")
     @Mapping(source = "filingPackage", target = "filingPackage")
     @Mapping(source = "expiryDate", target = "expiryDate")
     Submission toSubmission(
+            UUID universalId,
             UUID submissionId,
             UUID transactionId,
             GenerateUrlRequest generateUrlRequest,

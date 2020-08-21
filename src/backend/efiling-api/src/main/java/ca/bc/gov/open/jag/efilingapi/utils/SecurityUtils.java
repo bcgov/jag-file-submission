@@ -15,11 +15,8 @@ public class SecurityUtils {
     public static Optional<UUID> getUniversalIdFromContext() {
 
         try {
-            return Optional.of(UUID.fromString(
-                    ((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-                            .getKeycloakSecurityContext().getToken().getOtherClaims().get(Keys.UNIVERSAL_ID_CLAIM_KEY).toString().replaceFirst(
-                            "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)", "$1-$2-$3-$4-$5"
-                    )));
+            return stringToUUID(((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+                            .getKeycloakSecurityContext().getToken().getOtherClaims().get(Keys.UNIVERSAL_ID_CLAIM_KEY).toString());
         } catch (Exception e) {
             return Optional.empty();
         }
@@ -43,4 +40,13 @@ public class SecurityUtils {
         }
     }
 
+    public static Optional<UUID> stringToUUID(String id) {
+        try {
+            return Optional.of(UUID.fromString(id.replaceFirst(
+                    "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)", "$1-$2-$3-$4-$5"
+            )));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
 }
