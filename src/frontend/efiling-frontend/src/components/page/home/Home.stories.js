@@ -2,7 +2,6 @@ import React from "react";
 import { createMemoryHistory } from "history";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-import { getTestData } from "../../../modules/test-data/confirmationPopupTestData";
 import { getUserDetails } from "../../../modules/test-data/userDetailsTestData";
 import { getDocumentsData } from "../../../modules/test-data/documentTestData";
 import { getCourtData } from "../../../modules/test-data/courtTestData";
@@ -20,10 +19,9 @@ const header = {
   name: "E-File Submission",
   history: createMemoryHistory(),
 };
-const confirmationPopup = getTestData();
 const submissionId = "abc123";
 const transactionId = "trans123";
-const page = { header, confirmationPopup, submissionId, transactionId };
+const page = { header, submissionId, transactionId };
 
 const apiRequest = `/submission/${submissionId}`;
 const getFilingPackagePath = `/submission/${submissionId}/filing-package`;
@@ -32,6 +30,7 @@ const documents = getDocumentsData();
 const court = getCourtData();
 const submissionFeeAmount = 25.5;
 const userDetails = getUserDetails();
+const clientApplication = { displayName: "client app" };
 
 const setRequiredStorage = () => {
   sessionStorage.setItem("errorUrl", "error.com");
@@ -56,7 +55,9 @@ const LoaderStateData = (props) => {
 const AccountExistsStateData = (props) => {
   setRequiredStorage();
   const mock = new MockAdapter(axios);
-  mock.onGet(apiRequest).reply(200, { userDetails, navigation });
+  mock
+    .onGet(apiRequest)
+    .reply(200, { userDetails, navigation, clientApplication });
   mock
     .onGet(getFilingPackagePath)
     .reply(200, { documents, court, submissionFeeAmount });
@@ -69,6 +70,7 @@ const NoAccountExistsStateData = (props) => {
   mock.onGet(apiRequest).reply(200, {
     userDetails: { ...userDetails, accounts: null },
     navigation,
+    clientApplication,
   });
   mock.onGet("/bceidAccount").reply(200, {
     firstName: "User",

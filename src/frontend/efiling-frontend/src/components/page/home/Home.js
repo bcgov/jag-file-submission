@@ -28,6 +28,18 @@ const cancelButton = {
   styling: "normal-white btn consistent-width",
 };
 
+const handleConfirm = (submissionId) => {
+  sessionStorage.setItem("validExit", true);
+  const cancelUrl = sessionStorage.getItem("cancelUrl");
+
+  if (cancelUrl) {
+    axios
+      .delete(`submission/${submissionId}`)
+      .then(() => window.open(cancelUrl, "_self"))
+      .catch(() => window.open(cancelUrl, "_self"));
+  }
+};
+
 const setRequestHeaders = (transactionId) => {
   // Use interceptor to inject the transactionId to all requests
   axios.interceptors.request.use((request) => {
@@ -82,11 +94,7 @@ const checkCSOAccountStatus = (
     .get(`/submission/${submissionId}`)
     .then(({ data: { userDetails, navigation, clientApplication } }) => {
       setClientApplicationName(clientApplication.displayName);
-      saveDataToSessionStorage(
-        userDetails.cardRegistered,
-        navigation,
-        clientApplication
-      );
+      saveDataToSessionStorage(userDetails.cardRegistered, navigation);
 
       if (userDetails.accounts) {
         const csoAccountIdentifier = userDetails.accounts.find(
@@ -144,18 +152,6 @@ export default function Home({
     </>
   );
 
-  const handleConfirm = () => {
-    sessionStorage.setItem("validExit", true);
-    const cancelUrl = sessionStorage.getItem("cancelUrl");
-
-    if (cancelUrl) {
-      axios
-        .delete(`submission/${submissionId}`)
-        .then(() => window.open(cancelUrl, "_self"))
-        .catch(() => window.open(cancelUrl, "_self"));
-    }
-  };
-
   const modal = {
     show,
     title: "Cancel E-File Submission?",
@@ -165,7 +161,10 @@ export default function Home({
   const confirmationPopup = {
     modal,
     mainButton: { ...mainButton, onClick: () => setShow(true) },
-    confirmButton: { ...confirmButton, onClick: handleConfirm },
+    confirmButton: {
+      ...confirmButton,
+      onClick: () => handleConfirm(submissionId),
+    },
     cancelButton: { ...cancelButton, onClick: () => setShow(false) },
   };
 
