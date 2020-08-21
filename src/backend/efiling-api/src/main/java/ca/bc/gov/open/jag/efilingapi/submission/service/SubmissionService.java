@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface SubmissionService {
 
-    Submission generateFromRequest(UUID transactionId, UUID submissionId, GenerateUrlRequest generateUrlRequest);
+    Submission generateFromRequest(UUID transactionId, UUID submissionId, UUID universalId, GenerateUrlRequest generateUrlRequest);
 
     SubmitResponse createSubmission(Submission submission);
 

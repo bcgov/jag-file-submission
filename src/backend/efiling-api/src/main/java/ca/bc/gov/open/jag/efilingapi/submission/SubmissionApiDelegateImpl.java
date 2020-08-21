@@ -188,13 +188,20 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         logger.info("Attempting to generate Url Request Received");
 
+        Optional<UUID> actualUserId = SecurityUtils.stringToUUID(xUserId);
+
+        if (!actualUserId.isPresent())
+            new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
+                    HttpStatus.BAD_REQUEST);
+
         ResponseEntity response;
 
         try {
             generateUrlRequest.getClientApplication().setType(SecurityUtils.getApplicationCode());
             response = ResponseEntity.ok(
                     generateUrlResponseMapper.toGenerateUrlResponse(
-                            submissionService.generateFromRequest(xTransactionId, submissionId, generateUrlRequest),
+                            submissionService.generateFromRequest(xTransactionId, submissionId, actualUserId.get(), generateUrlRequest),
                             navigationProperties.getBaseUrl()));
             logger.info("successfully generated return url.");
         }
@@ -311,6 +318,11 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @Override
     public ResponseEntity<Void> deleteSubmission(UUID submissionId, UUID xTransactionId) {
 
+        Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
+
+        if(!universalId.isPresent()) return new ResponseEntity(
+                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
+
         Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
         if(!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
@@ -320,7 +332,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
                     document -> documentStore.evict(
                             Document
                                     .builder()
-                                    .transactionId(xTransactionId)
+                                    .userId(universalId.get())
                                     .submissionId(submissionId)
                                     .fileName(document.getName())
                                     .create().getCompositeId()));
@@ -388,6 +400,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             for (MultipartFile file : files) {
                 Document document = Document
                         .builder()
+                        .userId(xUserId)
                         .transactionId(xTransactionId)
                         .submissionId(submissionId)
                         .fileName(file.getResource().getFilename())

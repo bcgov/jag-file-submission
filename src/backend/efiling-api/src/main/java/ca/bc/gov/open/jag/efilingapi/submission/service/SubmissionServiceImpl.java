@@ -78,10 +78,11 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     @Override
-    public Submission generateFromRequest(UUID transactionId, UUID submissionId, GenerateUrlRequest generateUrlRequest) {
+    public Submission generateFromRequest(UUID transactionId, UUID submissionId, UUID universalId, GenerateUrlRequest generateUrlRequest) {
 
         Optional<Submission> cachedSubmission = submissionStore.put(
                 submissionMapper.toSubmission(
+                        universalId,
                         submissionId,
                         transactionId,
                         generateUrlRequest,
@@ -110,7 +111,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                                                 Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentMilestone(document, submission)),
                                                 Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentPayment(document, submission)),
                                                 Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentStatus(document, submission)),
-                                                MessageFormat.format("fh_{0}_{1}_{2}", submission.getId(), submission.getTransactionId(), document.getName())))
+                                                MessageFormat.format("fh_{0}_{1}_{2}", submission.getId(), submission.getUniversalId(), document.getName())))
                                         .collect(Collectors.toList()));
         filingPackage.setEntDtm(DateUtils.getCurrentXmlDate());
         filingPackage.setSubmitDtm(DateUtils.getCurrentXmlDate());
@@ -199,6 +200,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         String compositeFileName = ca.bc.gov.open.jag.efilingapi.document.Document
                 .builder()
+                .userId(submission.getUniversalId())
                 .transactionId(submission.getTransactionId())
                 .submissionId(submission.getId())
                 .fileName(fileName)

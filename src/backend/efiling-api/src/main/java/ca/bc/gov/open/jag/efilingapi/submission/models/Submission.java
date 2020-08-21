@@ -7,7 +7,6 @@ import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 /**
@@ -18,6 +17,8 @@ public class Submission {
     private UUID id;
 
     private UUID transactionId;
+
+    private UUID universalId;
 
     private long expiryDate;
 
@@ -37,6 +38,7 @@ public class Submission {
         this.navigation = builder.navigation;
         this.clientApplication = builder.clientApplication;
         this.expiryDate = builder.expiryDate;
+        this.universalId = builder.universalId;
     }
 
     public static Submission.Builder builder() {
@@ -47,6 +49,7 @@ public class Submission {
     public Submission(
             @JsonProperty("id") UUID id,
             @JsonProperty("owner") UUID transactionId,
+            @JsonProperty("bcdeid") UUID universalId,
             @JsonProperty("accountDetails") AccountDetails accountDetails,
             @JsonProperty("package") FilingPackage filingPackage,
             @JsonProperty("navigation") Navigation navigation,
@@ -54,6 +57,7 @@ public class Submission {
             @JsonProperty("expiryDate") long expiryDate) {
         this.id = id;
         this.transactionId = transactionId;
+        this.universalId = universalId;
         this.accountDetails = accountDetails;
         this.filingPackage = filingPackage;
         this.navigation = navigation;
@@ -64,6 +68,8 @@ public class Submission {
     public UUID getId() { return id; }
 
     public UUID getTransactionId() { return transactionId; }
+
+    public UUID getUniversalId() { return universalId; }
 
     public FilingPackage getFilingPackage() {
         return filingPackage;
@@ -91,6 +97,7 @@ public class Submission {
 
         private UUID id;
         private UUID transactionId;
+        private UUID universalId;
         private AccountDetails accountDetails;
         private FilingPackage filingPackage;
         private Navigation navigation;
@@ -109,6 +116,11 @@ public class Submission {
 
         public Builder transactionId(UUID owner) {
             this.transactionId = owner;
+            return this;
+        }
+
+        public Builder universalId(UUID universalId) {
+            this.universalId = universalId;
             return this;
         }
 
