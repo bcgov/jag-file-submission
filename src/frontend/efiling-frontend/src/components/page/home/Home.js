@@ -132,7 +132,7 @@ export default function Home({
       <p>
         You will be returned to:
         <br />
-        <b>{clientApplicationName}</b> website
+        <b>{clientApplicationName}</b>&nbsp; website
       </p>
     </>
   );
