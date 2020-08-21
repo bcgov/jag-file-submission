@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState } from "react";
 import axios from "axios";
 import queryString from "query-string";
