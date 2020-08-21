@@ -49,7 +49,7 @@ public class Submission {
     public Submission(
             @JsonProperty("id") UUID id,
             @JsonProperty("owner") UUID transactionId,
-            @JsonProperty("bcdeid") UUID universalId,
+            @JsonProperty("bceid") UUID universalId,
             @JsonProperty("accountDetails") AccountDetails accountDetails,
             @JsonProperty("package") FilingPackage filingPackage,
             @JsonProperty("navigation") Navigation navigation,
