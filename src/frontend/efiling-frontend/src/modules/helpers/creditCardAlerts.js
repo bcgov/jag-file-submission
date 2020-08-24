@@ -1,6 +1,21 @@
 import React from "react";
+import axios from "axios";
 import { MdCreditCard } from "react-icons/md";
 import { Alert } from "shared-components";
+
+const registerCard = () => {
+  axios
+    .post("https://run.mocky.io/v3/fe75e1f6-5129-446e-a02f-267e4c1fb519")
+    .then((res) => {
+      console.log(res);
+      sessionStorage.setItem("validExit", true);
+      sessionStorage.setItem("isBamboraRedirect", true);
+      window.open(res.data.bamboraUrl, "_self");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 const existingCreditCard = () => {
   return (
@@ -14,13 +29,14 @@ const existingCreditCard = () => {
             You have a valid Credit Card registered with your CSO account.
           </span>
           <br />
-          <a
-            href="https://justice.gov.bc.ca/cso/about/index.do"
+          <span
+            onClick={() => registerCard()}
+            className="file-href"
             target="_blank"
             rel="noopener noreferrer"
           >
             Register a new Credit Card.
-          </a>
+          </span>
         </p>
       }
     />
@@ -40,13 +56,14 @@ const noCreditCard = () => {
             account.
           </span>
           <br />
-          <a
-            href="https://justice.gov.bc.ca/cso/about/index.do"
+          <span
+            onClick={() => registerCard()}
+            className="file-href"
             target="_blank"
             rel="noopener noreferrer"
           >
             Register a Credit Card now
-          </a>
+          </span>
           &nbsp;to continue.
         </p>
       }
