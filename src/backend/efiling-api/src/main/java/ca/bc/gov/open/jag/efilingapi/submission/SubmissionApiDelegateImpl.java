@@ -359,7 +359,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             response = new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        logger.info("successfully submited efiling package for transaction [{}]", xTransactionId);
+        logger.info("successfully submitted efiling package for transaction [{}]", xTransactionId);
 
         MdcUtils.clearUserMDC();
 
