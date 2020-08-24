@@ -1,23 +1,15 @@
-/* eslint-disable react/jsx-curly-newline */
-import React, { useState } from "react";
+/* eslint-disable react/jsx-curly-newline, camelcase, react/jsx-props-no-spreading */
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import Dropzone from "react-dropzone";
+import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
-import { Header, Footer, Input, Textarea, Button } from "shared-components";
-import { FilePond, registerPlugin } from "react-filepond";
-
-// Import FilePond styles
-import "filepond/dist/filepond.min.css";
-
-// Import the Image EXIF Orientation and Image Preview plugins
-import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
-import FilePondPluginImagePreview from "filepond-plugin-image-preview";
-import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+import { Header, Footer, Textarea, Button } from "shared-components";
+import { getJWTData } from "../../../modules/authentication-helper/authenticationHelper";
 
 import { propTypes } from "../../../types/propTypes";
 import "../page.css";
-
-// Register the plugins
-registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
+import "./Home.css";
 
 // Note: Some of these values are temporarily hard-coded
 const urlBody = {
@@ -27,7 +19,7 @@ const urlBody = {
   },
   filingPackage: {
     court: {
-      location: "string",
+      location: "1211",
       level: "P",
       courtClass: "F",
       division: "string",
@@ -54,28 +46,61 @@ const urlBody = {
   },
 };
 
-const input = {
-  label: "Account GUID",
-  id: "textInputId",
-  styling: "editable-white",
-  isRequired: true,
-  placeholder: "77da92db-0791-491e-8c58-1a969e67d2fa",
+const setRequestHeaders = (token, transactionId) => {
+  // Use interceptor to inject the transactionId and token to all requests
+  axios.interceptors.request.use((request) => {
+    request.headers["X-Transaction-Id"] = transactionId;
+    request.headers["X-User-Id"] = getJWTData()["universal-id"];
+    request.headers.Authorization = `Bearer ${token}`;
+    return request;
+  });
 };
+
+const getToken = (
+  token,
+  setToken,
+  setErrorExists,
+  keycloakClientId,
+  keycloakBaseUrl,
+  keycloakRealm,
+  keycloakClientSecret
+) => {
+  if (token) return;
+
+  const payloadString = `client_id=${keycloakClientId}&grant_type=client_credentials&client_secret=${keycloakClientSecret}`;
+
+  axios
+    .post(
+      `${keycloakBaseUrl}/realms/${keycloakRealm}/protocol/openid-connect/token`,
+      payloadString,
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    )
+    .then(({ data: { access_token } }) => {
+      setToken(access_token);
+    })
+    .catch(() => setErrorExists(true));
+};
+
+const transactionId = uuidv4();
 
 const generatePackageData = (files, filingPackage) => {
   const formData = new FormData();
   const documentData = [];
 
   for (let i = 0; i < files.length; i += 1) {
-    formData.append("files", files[i].file);
+    formData.append("files", files[i]);
 
     const document = filingPackage.documents.find(
-      (doc) => doc.name === files[i].file.name
+      (doc) => doc.name === files[i].name
     );
     if (!document || !document.type) return {};
 
     documentData.push({
-      name: files[i].file.name,
+      name: files[i].name,
       type: document.type,
     });
   }
@@ -91,13 +116,15 @@ const generatePackageData = (files, filingPackage) => {
   return { formData, updatedUrlBody };
 };
 
-export const eFilePackage = (
+const eFilePackage = (
+  token,
   files,
-  accountGuid,
   setErrorExists,
-  filingPackage
+  filingPackage,
+  setSubmitBtnEnabled,
+  setShowLoader
 ) => {
-  if (!files || files.length === 0) return false;
+  setRequestHeaders(token, transactionId);
 
   const { formData, updatedUrlBody } = generatePackageData(
     files,
@@ -108,46 +135,91 @@ export const eFilePackage = (
 
   axios
     .post("/submission/documents", formData, {
-      headers: {
-        "X-Auth-UserId": accountGuid,
-        "Content-Type": "multipart/form-data",
-      },
+      headers: { "Content-Type": "multipart/form-data" },
     })
     .then(({ data: { submissionId } }) => {
       axios
-        .post(`/submission/${submissionId}/generateUrl`, updatedUrlBody, {
-          headers: { "X-Auth-UserId": accountGuid },
-        })
+        .post(`/submission/${submissionId}/generateUrl`, updatedUrlBody)
         .then(({ data: { efilingUrl } }) => {
-          window.open(efilingUrl, "_self");
+          window.open(`${efilingUrl}`, "_self");
         })
-        .catch(() => setErrorExists(true));
+        .catch(() => {
+          setErrorExists(true);
+          setSubmitBtnEnabled(true);
+          setShowLoader(false);
+        });
     })
-    .catch(() => setErrorExists(true));
+    .catch(() => {
+      setErrorExists(true);
+      setSubmitBtnEnabled(true);
+      setShowLoader(false);
+    });
 
   return true;
 };
 
 export default function Home({ page: { header } }) {
   const [errorExists, setErrorExists] = useState(false);
-  const [accountGuid, setAccountGuid] = useState(null);
   const [filingPackage, setFilingPackage] = useState(null);
+  const [token, setToken] = useState(null);
   const [files, setFiles] = useState([]);
+  const [submitBtnEnabled, setSubmitBtnEnabled] = useState(true);
+  const [showLoader, setShowLoader] = useState(false);
+
+  const keycloakClientId = sessionStorage.getItem("demoKeycloakClientId");
+  const keycloakBaseUrl = sessionStorage.getItem("demoKeycloakUrl");
+  const keycloakRealm = sessionStorage.getItem("demoKeycloakRealm");
+  const keycloakClientSecret = sessionStorage.getItem(
+    "demoKeycloakClientSecret"
+  );
+
+  useEffect(() => {
+    getToken(
+      token,
+      setToken,
+      setErrorExists,
+      keycloakClientId,
+      keycloakBaseUrl,
+      keycloakRealm,
+      keycloakClientSecret
+    );
+  }, [token]);
 
   return (
     <main>
       <Header header={header} />
       <div className="page">
         <div className="content col-md-12">
-          <Input input={input} onChange={setAccountGuid} />
+          <Dropzone
+            onDrop={(droppedFiles) => setFiles(files.concat(droppedFiles))}
+          >
+            {({ getRootProps, getInputProps }) => (
+              <div
+                data-testid="dropdownzone"
+                {...getRootProps({ className: "dropzone-outer-box" })}
+              >
+                <div className="dropzone-inner-box">
+                  <input {...getInputProps()} />
+                  <span>
+                    <h2 className="text-center-alignment">
+                      Drag and drop or&nbsp;
+                      <span className="file-href">choose documents</span>
+                    </h2>
+                  </span>
+                </div>
+              </div>
+            )}
+          </Dropzone>
           <br />
-          <br />
-          <FilePond
-            files={files}
-            allowMultiple
-            onupdatefiles={setFiles}
-            labelIdle='Drag and Drop your files or <span class="filepond--label-action">Browse</span>'
-          />
+          {files.length > 0 && (
+            <>
+              <h2>Uploaded Files</h2>
+              <br />
+              {files.map((file) => (
+                <p key={file.name}>{file.name}</p>
+              ))}
+            </>
+          )}
           <br />
           <Textarea
             id="1"
@@ -158,17 +230,27 @@ export default function Home({ page: { header } }) {
           <br />
           <Button
             onClick={() => {
+              setShowLoader(true);
+              setSubmitBtnEnabled(false);
               const result = eFilePackage(
+                token,
                 files,
-                accountGuid,
                 setErrorExists,
-                filingPackage
+                filingPackage,
+                setSubmitBtnEnabled,
+                setShowLoader
               );
-              if (!result) setErrorExists(true);
+              if (!result) {
+                setErrorExists(true);
+                setSubmitBtnEnabled(true);
+                setShowLoader(false);
+              }
             }}
             label="E-File my Package"
             styling="normal-blue btn"
             testId="generate-url-btn"
+            hasLoader={showLoader}
+            disabled={!submitBtnEnabled}
           />
           <br />
           <br />

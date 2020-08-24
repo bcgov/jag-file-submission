@@ -2,10 +2,13 @@ package ca.bc.gov.open.jag.efilingapi.account;
 
 import ca.bc.gov.open.jag.efilingapi.api.CsoAccountApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.Account;
+import ca.bc.gov.open.jag.efilingapi.api.model.CreateCsoAccountRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
-import ca.bc.gov.open.jag.efilingapi.api.model.UserDetails;
+import ca.bc.gov.open.jag.efilingapi.api.model.UserFullDetails;
+import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
+import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.CreateAccountRequest;
@@ -16,6 +19,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.security.RolesAllowed;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -35,7 +40,13 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
 
 
     @Override
-    public ResponseEntity<UserDetails> createAccount(UUID xAuthUserId, UserDetails userDetails) {
+    @RolesAllowed("efiling-user")
+    public ResponseEntity<UserFullDetails> createAccount(UUID xTransactionId, CreateCsoAccountRequest createAccountRequest) {
+        
+        Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
+
+        if(!universalId.isPresent()) return new ResponseEntity(
+                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
 
         try {
 
@@ -43,16 +54,16 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
             
             AccountDetails accountDetails = efilingAccountService.createAccount(CreateAccountRequest
                     .builder()
-                    .universalId(xAuthUserId)
-                    .firstName(userDetails.getFirstName())
-                    .lastName(userDetails.getLastName())
-                    .middleName(userDetails.getMiddleName())
-                    .email(userDetails.getEmail())
+                    .universalId(universalId.get())
+                    .firstName(createAccountRequest.getFirstName())
+                    .lastName(createAccountRequest.getLastName())
+                    .middleName(createAccountRequest.getMiddleName())
+                    .email(createAccountRequest.getEmail())
                     .create());
 
             logger.info("Account successfully created");
-            
-            UserDetails result = totUserDetails(accountDetails);
+
+            UserFullDetails result = totUserDetails(accountDetails);
 
             return new ResponseEntity<>(result, HttpStatus.CREATED);
 
@@ -69,11 +80,11 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
 
     }
 
-    private UserDetails totUserDetails(AccountDetails accountDetails) {
+    private UserFullDetails totUserDetails(AccountDetails accountDetails) {
 
         // TODO: replace with mapstruct
 
-        UserDetails result = new UserDetails();
+        UserFullDetails result = new UserFullDetails();
         result.setUniversalId(accountDetails.getUniversalId());
         Account csoAccount = new Account();
         csoAccount.setType(Account.TypeEnum.CSO);

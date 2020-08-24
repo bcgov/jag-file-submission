@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission;
 
 import ca.bc.gov.open.jag.efilingapi.Keys;
+import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.SubmissionApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
@@ -12,9 +13,10 @@ import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMappe
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
+import ca.bc.gov.open.jag.efilingapi.utils.MdcUtils;
+import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.*;
-
-import org.keycloak.KeycloakPrincipal;
+import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -23,16 +25,12 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.security.RolesAllowed;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -47,19 +45,22 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     private final SubmissionStore submissionStore;
 
+    private final AccountService accountService;
+
     private final GenerateUrlResponseMapper generateUrlResponseMapper;
 
     private final NavigationProperties navigationProperties;
 
     private final DocumentStore documentStore;
 
-
     public SubmissionApiDelegateImpl(
             SubmissionService submissionService,
+            AccountService accountService,
             GenerateUrlResponseMapper generateUrlResponseMapper,
             NavigationProperties navigationProperties,
             SubmissionStore submissionStore, DocumentStore documentStore) {
         this.submissionService = submissionService;
+        this.accountService = accountService;
         this.generateUrlResponseMapper = generateUrlResponseMapper;
         this.navigationProperties = navigationProperties;
         this.submissionStore = submissionStore;
@@ -67,55 +68,103 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    public ResponseEntity<UploadSubmissionDocumentsResponse> uploadSubmissionDocuments(UUID xAuthUserId, List<MultipartFile> files) {
-
-        if (files == null || files.isEmpty())
-            return new ResponseEntity(
-                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_REQUIRED).create(),
-                    HttpStatus.BAD_REQUEST);
+    @RolesAllowed("efiling-client")
+    public ResponseEntity<UploadSubmissionDocumentsResponse> uploadSubmissionDocuments(UUID xTransactionId, String xUserId, List<MultipartFile> files) {
 
         UUID submissionId = UUID.randomUUID();
 
-        MDC.put(Keys.EFILING_SUBMISSION_ID, submissionId.toString());
-        logger.info("new request for efiling {}", submissionId);
+        MdcUtils.setClientMDC(submissionId, xTransactionId);
 
-        try {
+        logger.info("attempting to upload original document [{}]", submissionId);
 
-            for (MultipartFile file : files) {
-                Document document = Document
-                        .builder()
-                        .owner(xAuthUserId)
-                        .submissionId(submissionId)
-                        .fileName(file.getResource().getFilename())
-                        .content(file.getBytes())
-                        .create();
+        Optional<UUID> actualUserId = SecurityUtils.stringToUUID(xUserId);
 
-                documentStore.put(document.getCompositeId(), document.getContent());
-            }
-
-        } catch (IOException e) {
+        if (!actualUserId.isPresent())
             return new ResponseEntity(
-                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_STORAGE_FAILURE).create(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
+                    HttpStatus.FORBIDDEN);
 
-        logger.info("{} stored in cache", files.size());
+        ResponseEntity response = storeDocuments(submissionId, xTransactionId, actualUserId.get(), files);
 
-        MDC.remove(Keys.EFILING_SUBMISSION_ID);
+        logger.info("successfully uploaded original document [{}]", submissionId);
 
-        return ResponseEntity.ok(new UploadSubmissionDocumentsResponse().submissionId(submissionId).received(new BigDecimal(files.size())));
+        MdcUtils.clearClientMDC();
+
+        return response;
 
     }
 
     @Override
-    public ResponseEntity<Resource> getSubmissionDocument(UUID xAuthUserId, UUID id, String filename) {
+    @RolesAllowed("efiling-user")
+    public ResponseEntity<UploadSubmissionDocumentsResponse> uploadAdditionalSubmissionDocuments(UUID submissionId, UUID xTransactionId, List<MultipartFile> files) {
+
+        Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
+
+        if(!fromCacheSubmission.isPresent())
+            return ResponseEntity.notFound().build();
+
+        MdcUtils.setUserMDC(submissionId, xTransactionId);
+
+        logger.info("attempting to upload new document for transaction [{}]", submissionId);
+
+        ResponseEntity responseEntity = storeDocuments(submissionId, xTransactionId, fromCacheSubmission.get().getUniversalId(), files);
+
+        logger.info("successfully uploaded new document for transaction [{}]", submissionId);
+
+        MdcUtils.clearUserMDC();
+
+        return responseEntity;
+    }
+
+    @Override
+    @RolesAllowed("efiling-user")
+    public ResponseEntity<UpdateDocumentResponse> updateDocumentProperties(UUID submissionId, UUID xTransactionId, UpdateDocumentRequest updateDocumentRequest) {
+
+        MdcUtils.setUserMDC(submissionId, xTransactionId);
+
+        logger.info("attempting to add new document for transaction [{}]", submissionId);
+
+        if (updateDocumentRequest == null || updateDocumentRequest.getDocuments().isEmpty())
+            return new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_REQUIRED).create(),
+                    HttpStatus.BAD_REQUEST);
+
+        Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
+
+        if(!fromCacheSubmission.isPresent())
+            return ResponseEntity.notFound().build();
 
 
-        MDC.put(Keys.EFILING_SUBMISSION_ID, id.toString());
+        try {
+            Submission submission = submissionService.updateDocuments(fromCacheSubmission.get(), updateDocumentRequest);
+            submissionStore.put(submission);
+            UpdateDocumentResponse updateDocumentResponse = new UpdateDocumentResponse();
+            updateDocumentResponse.setDocuments(submission.getFilingPackage().getDocuments());
+            logger.info("successfully added new document for transaction [{}]", submissionId);
+            return ResponseEntity.ok(updateDocumentResponse);
+        } catch (EfilingDocumentServiceException e) {
+            logger.warn(e.getMessage(), e);
+            return new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+
+        } finally {
+            MdcUtils.clearUserMDC();
+        }
+    }
+
+    @Override
+    @RolesAllowed("efiling-user")
+    public ResponseEntity<Resource> getSubmissionDocument(UUID xTransactionId,
+                                                          UUID submissionId,
+                                                          String filename) {
+
+        logger.info("getSubmission document for transaction [{}]", xTransactionId);
+
+        MdcUtils.setUserMDC(submissionId, xTransactionId);
 
         Document document = Document
                 .builder()
-                .owner(xAuthUserId)
-                .submissionId(id)
+                .transactionId(xTransactionId)
+                .submissionId(submissionId)
                 .fileName(filename)
                 .create();
 
@@ -123,25 +172,36 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         if(bytes == null) return ResponseEntity.notFound().build();
 
-        MDC.remove(Keys.EFILING_SUBMISSION_ID);
+        logger.info("successfully retrieved document for transaction [{}]", xTransactionId);
+
+        MdcUtils.clearUserMDC();
 
         return ResponseEntity.ok(new ByteArrayResource(bytes));
 
     }
 
     @Override
-    public ResponseEntity<GenerateUrlResponse> generateUrl(UUID xAuthUserId, UUID id, GenerateUrlRequest generateUrlRequest) {
+    @RolesAllowed("efiling-client")
+    public ResponseEntity<GenerateUrlResponse> generateUrl(UUID xTransactionId, String xUserId, UUID submissionId, GenerateUrlRequest generateUrlRequest) {
 
-        MDC.put(Keys.EFILING_SUBMISSION_ID, id.toString());
+        MdcUtils.setClientMDC(xTransactionId, submissionId);
 
-        logger.info("Generate Url Request Received");
+        logger.info("Attempting to generate Url Request Received");
+
+        Optional<UUID> actualUserId = SecurityUtils.stringToUUID(xUserId);
+
+        if (!actualUserId.isPresent())
+            return new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
+                    HttpStatus.FORBIDDEN);
 
         ResponseEntity response;
 
         try {
+            generateUrlRequest.getClientApplication().setType(SecurityUtils.getApplicationCode());
             response = ResponseEntity.ok(
                     generateUrlResponseMapper.toGenerateUrlResponse(
-                            submissionService.generateFromRequest(xAuthUserId, id, generateUrlRequest),
+                            submissionService.generateFromRequest(xTransactionId, submissionId, actualUserId.get(), generateUrlRequest),
                             navigationProperties.getBaseUrl()));
             logger.info("successfully generated return url.");
         }
@@ -161,7 +221,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             response =  new ResponseEntity(buildEfilingError(ErrorResponse.CACHE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        MDC.remove(Keys.EFILING_SUBMISSION_ID);
+        MdcUtils.clearClientMDC();
 
         return response;
 
@@ -169,58 +229,64 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     @Override
     @RolesAllowed("efiling-user")
-    public ResponseEntity<GetSubmissionResponse> getSubmission(UUID id) {
+    public ResponseEntity<GetSubmissionResponse> getSubmission(UUID submissionId, UUID xTransactionId) {
 
-        Optional<UUID> universalId = getUniversalIdFromContext();
+        Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
 
         if(!universalId.isPresent()) return new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
 
-        MDC.put(Keys.EFILING_SUBMISSION_ID, id.toString());
+        MdcUtils.setUserMDC(submissionId, xTransactionId);
 
-        Optional<Submission> fromCacheSubmission = this.submissionStore.get(id, universalId.get());
+        logger.info("attempting to get Submission for transactionId [{}]", xTransactionId);
+
+        Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
 
         if(!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
 
+
+        if (fromCacheSubmission.get().getAccountDetails() == null ||
+            fromCacheSubmission.get().getAccountDetails().getAccountId() == null ||
+            fromCacheSubmission.get().getAccountDetails().getClientId() == null)
+            setIdsInCachedSubmission(universalId.get(),fromCacheSubmission.get());
+
+
         GetSubmissionResponse response = new GetSubmissionResponse();
 
-        response.setUserDetails(buildUserDetails(fromCacheSubmission.get()));
+        UserDetails userDetails = buildUserDetails(universalId.get());
+
+        if(userDetails.getAccounts() == null || userDetails.getAccounts().isEmpty()) logger.info("User does not have a CSO account");
+
+        response.setUserDetails(userDetails);
 
         response.setNavigation(fromCacheSubmission.get().getNavigation());
 
-        MDC.remove(Keys.EFILING_SUBMISSION_ID);
+        logger.info("Successfully retrieved submission for transactionId [{}]", xTransactionId);
+
+        MdcUtils.clearUserMDC();
 
         return ResponseEntity.ok(response);
 
     }
 
-    private UserDetails buildUserDetails(Submission submission) {
+    private UserDetails buildUserDetails(UUID universalId) {
 
         UserDetails userDetails = new UserDetails();
 
-        if(submission.getAccountDetails() != null) {
+        AccountDetails accountDetails = accountService.getCsoAccountDetails(universalId);
 
-            if(submission.getAccountDetails().isFileRolePresent()) {
+        if(accountDetails != null) {
+
+            if(accountDetails.isFileRolePresent()) {
                 Account account = new Account();
                 account.setType(Account.TypeEnum.CSO);
-                account.setIdentifier(submission.getAccountDetails().getAccountId().toString());
+                account.setIdentifier(accountDetails.getAccountId().toString());
                 userDetails.addAccountsItem(account);
             }
 
-            userDetails.setUniversalId(submission.getAccountDetails().getUniversalId());
-            userDetails.setFirstName(submission.getAccountDetails().getFirstName());
-            userDetails.setLastName(submission.getAccountDetails().getLastName());
-            userDetails.setMiddleName(submission.getAccountDetails().getMiddleName());
-            userDetails.setEmail(submission.getAccountDetails().getEmail());
-
-        } else {
-
-            // TODO: remove this
-            userDetails.setFirstName("firstName");
-            userDetails.setLastName("lastName");
-            userDetails.setMiddleName("middleName");
-            userDetails.setEmail("email");
+            userDetails.setUniversalId(accountDetails.getUniversalId());
+            userDetails.setCardRegistered(accountDetails.isCardRegistered());
 
         }
 
@@ -229,28 +295,73 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    public ResponseEntity<FilingPackage> getSubmissionFilingPackage(UUID xAuthUserId, UUID id) {
-        Optional<Submission> fromCacheSubmission = this.submissionStore.get(id, xAuthUserId);
+    @RolesAllowed("efiling-user")
+    public ResponseEntity<FilingPackage> getSubmissionFilingPackage(UUID xTransactionId, UUID submissionId) {
+
+        MdcUtils.setUserMDC(submissionId, xTransactionId);
+
+        logger.info("attempting to get Submission Filing Package for transactionId [{}]", xTransactionId);
+
+        Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
 
         if(!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
 
+        logger.info("successfully retrieved submission filing package for transactionId [{}]", xTransactionId);
+
+        MdcUtils.clearUserMDC();
+
         return ResponseEntity.ok(fromCacheSubmission.get().getFilingPackage());
+    }
+
+
+    @Override
+    public ResponseEntity<Void> deleteSubmission(UUID submissionId, UUID xTransactionId) {
+
+        Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
+        if(!fromCacheSubmission.isPresent())
+            return ResponseEntity.notFound().build();
+        //Remove documents from cache
+        if (fromCacheSubmission.get().getFilingPackage() != null && fromCacheSubmission.get().getFilingPackage().getDocuments() != null)
+            fromCacheSubmission.get().getFilingPackage().getDocuments().forEach(
+                    document -> documentStore.evict(
+                            Document
+                                    .builder()
+                                    .userId(fromCacheSubmission.get().getUniversalId())
+                                    .submissionId(submissionId)
+                                    .fileName(document.getName())
+                                    .create().getCompositeId()));
+
+        //Remove submission from cache
+        submissionStore.evict(submissionId, xTransactionId);
+        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
     @Override
     @RolesAllowed("efiling-user")
-    public ResponseEntity<SubmitFilingPackageResponse> submit(UUID xAuthUserId, UUID id, SubmitFilingPackageRequest submitFilingPackageRequest) {
+    public ResponseEntity<SubmitResponse> submit(UUID xTransactionId, UUID submissionId, Object body) {
+
+        MdcUtils.setUserMDC(submissionId, xTransactionId);
+
+        logger.info("attempting to submit efiling package for transaction [{}]", xTransactionId);
+
+        Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
+
+        if(!fromCacheSubmission.isPresent())
+            return ResponseEntity.notFound().build();
         ResponseEntity response;
-        MDC.put(Keys.EFILING_SUBMISSION_ID, id.toString());
-        //TODO: this will get the submission details from the cache and build a submission object
+        MDC.put(Keys.MDC_EFILING_SUBMISSION_ID, submissionId.toString());
         try {
-            SubmitFilingPackageResponse result = submissionService.submitFilingPackage(xAuthUserId, id, submitFilingPackageRequest);
-            response = ResponseEntity.ok(result);
+            SubmitResponse result = submissionService.createSubmission(fromCacheSubmission.get());
+            response = new ResponseEntity(result, HttpStatus.CREATED);
         } catch (EfilingSubmissionServiceException e) {
             response = new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        MDC.remove(Keys.EFILING_SUBMISSION_ID);
+
+        logger.info("successfully submited efiling package for transaction [{}]", xTransactionId);
+
+        MdcUtils.clearUserMDC();
 
         return response;
     }
@@ -264,16 +375,44 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     }
 
-    private Optional<UUID> getUniversalIdFromContext() {
+    private void setIdsInCachedSubmission(UUID universalId, Submission submission) {
+        AccountDetails accountDetails = accountService.getCsoAccountDetails(universalId);
+        if (accountDetails != null) {
+            submission.setAccountDetails(accountDetails);
+            this.submissionStore.put(submission);
+        }
+    }
+
+    private ResponseEntity storeDocuments(UUID submissionId, UUID xTransactionId, UUID xUserId, List<MultipartFile> files) {
+
+        if (files == null || files.isEmpty())
+            return new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_REQUIRED).create(),
+                    HttpStatus.BAD_REQUEST);
 
         try {
-            return Optional.of(UUID.fromString(
-                    ((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-                            .getKeycloakSecurityContext().getToken().getOtherClaims().get(Keys.UNIVERSAL_ID_CLAIM_KEY).toString()));
-        } catch (Exception e) {
-            logger.error("Unable to extract universal Id from token", e);
-            return Optional.empty();
+
+            for (MultipartFile file : files) {
+                Document document = Document
+                        .builder()
+                        .userId(xUserId)
+                        .transactionId(xTransactionId)
+                        .submissionId(submissionId)
+                        .fileName(file.getResource().getFilename())
+                        .content(file.getBytes())
+                        .create();
+
+                documentStore.put(document.getCompositeId(), document.getContent());
+            }
+
+        } catch (IOException e) {
+            return new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_STORAGE_FAILURE).create(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
+        logger.info("{} stored in cache", files.size());
+
+        return ResponseEntity.ok(new UploadSubmissionDocumentsResponse().submissionId(submissionId).received(new BigDecimal(files.size())));
     }
 
 }

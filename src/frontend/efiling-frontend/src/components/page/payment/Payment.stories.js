@@ -1,7 +1,7 @@
 import React from "react";
-import { getDocumentsData } from "../../../modules/documentTestData";
-import { getTestData } from "../../../modules/confirmationPopupTestData";
-import { getCourtData } from "../../../modules/courtTestData";
+import { getDocumentsData } from "../../../modules/test-data/documentTestData";
+import { getTestData } from "../../../modules/test-data/confirmationPopupTestData";
+import { getCourtData } from "../../../modules/test-data/courtTestData";
 
 import Payment from "./Payment";
 
@@ -17,6 +17,16 @@ const submissionId = "abc123";
 const courtData = getCourtData();
 const files = getDocumentsData();
 const submissionFee = 25.5;
+const noFeeFile = [
+  {
+    name: "file name 1",
+    description: "file description 1",
+    type: "file type",
+    statutoryFeeAmount: 0,
+    isAmendment: null,
+    isSupremeCourtScheduling: null,
+  },
+];
 
 const payment = {
   confirmationPopup,
@@ -26,16 +36,16 @@ const payment = {
   submissionFee,
 };
 
-export const Default = () => <Payment payment={payment} />;
+export const WithFees = () => <Payment payment={payment} />;
+
+export const WithoutFees = () => (
+  <Payment payment={{ ...payment, submissionFee: 0, files: noFeeFile }} />
+);
 
 export const Mobile = () => <Payment payment={payment} />;
 
-const mobileViewport = {
-  parameters: {
-    viewport: {
-      defaultViewport: "mobile2",
-    },
+Mobile.parameters = {
+  viewport: {
+    defaultViewport: "mobile2",
   },
 };
-
-Mobile.story = mobileViewport;

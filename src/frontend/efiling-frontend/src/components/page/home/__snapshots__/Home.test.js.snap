@@ -1209,25 +1209,21 @@ exports[`Home Component matches the snapshot when user cso account does not exis
         <section
           class="non-printable buttons pt-4"
         >
-          <div>
-            <button
-              class="normal-white btn"
-              data-test-id="main-cancel-btn"
-              type="button"
-            >
-              Cancel
-            </button>
-          </div>
-          <div>
-            <button
-              class="normal-blue btn"
-              data-test-id="create-cso-btn"
-              disabled=""
-              type="button"
-            >
-              Create CSO Account
-            </button>
-          </div>
+          <button
+            class="bcgov-button normal-white btn"
+            data-test-id="main-cancel-btn"
+            type="button"
+          >
+            Cancel
+          </button>
+          <button
+            class="bcgov-button normal-blue btn"
+            data-test-id="create-cso-btn"
+            disabled=""
+            type="button"
+          >
+            Create CSO Account
+          </button>
         </section>
       </div>
       <div
@@ -1238,77 +1234,69 @@ exports[`Home Component matches the snapshot when user cso account does not exis
           style="position: relative;"
         >
           <div
-            class="row"
+            class="col-12 pt-2"
+            style="position: relative;"
           >
-            <div
-              class="col-12 pt-2"
-              style="position: relative;"
+            <p />
+            <section
+              class="bluegrey-container"
+              id="bluegrey-section"
             >
-              <p />
-              <section
-                class="bluegrey-container"
-                id="bluegrey-section"
+              <div
+                class="container-background bluegrey-heading"
               >
-                <div
-                  class="container-background bluegrey-heading"
+                <h2
+                  class="heading-style"
                 >
-                  <h2
-                    class="heading-style"
+                  <div
+                    class="side-card-row"
                   >
                     <div
-                      class="row"
+                      class="round-icon-wrapper"
                     >
-                      <div
-                        class="side-card-row"
+                      <svg
+                        class="side-card-icon"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        <div
-                          class="round-icon-wrapper"
-                        >
-                          <svg
-                            class="side-card-icon"
-                            fill="currentColor"
-                            height="1em"
-                            stroke="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 24 24"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
-                            />
-                          </svg>
-                        </div>
-                        <div
-                          class="side-card-title"
-                        >
-                          About E-File Submission
-                        </div>
-                      </div>
+                        <path
+                          d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                        />
+                      </svg>
                     </div>
-                  </h2>
-                </div>
-                <div
-                  class="bluegrey-content"
+                    <div
+                      class="side-card-title"
+                    >
+                      About E-File Submission
+                    </div>
+                  </div>
+                </h2>
+              </div>
+              <div
+                class="bluegrey-content"
+              >
+                <span
+                  class="content-style"
                 >
-                  <span
-                    class="content-style"
-                  >
-                    <p>
-                      E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
-                      <a
-                        href="https://justice.gov.bc.ca/cso/about/index.do"
-                        rel="noopener noreferrer"
-                        target="_blank"
-                      >
-                        Learn more about CSO
-                      </a>
-                      .
-                    </p>
-                  </span>
-                </div>
-              </section>
-            </div>
+                  <p>
+                    E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
+                    <a
+                      href="https://justice.gov.bc.ca/cso/about/index.do"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      Learn more about CSO
+                    </a>
+                    .
+                  </p>
+                </span>
+              </div>
+            </section>
           </div>
         </div>
       </div>
@@ -1619,6 +1607,21 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                         >
                           file name 2
                         </span>
+                        <svg
+                          class="push-margin-left pointer"
+                          fill="currentColor"
+                          height="32"
+                          size="32"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="32"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"
+                          />
+                        </svg>
                       </div>
                     </div>
                     <div
@@ -1672,7 +1675,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
         <h2>
           Summary
         </h2>
-        <br />
+        <p />
         <div
           class="near-half-width"
         >
@@ -1738,24 +1741,20 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
         <section
           class="buttons pt-2"
         >
-          <div>
-            <button
-              class="normal-white btn"
-              data-test-id="main-cancel-btn"
-              type="button"
-            >
-              Cancel
-            </button>
-          </div>
-          <div>
-            <button
-              class="normal-blue btn"
-              data-test-id="continue-btn"
-              type="button"
-            >
-              Continue to Payment
-            </button>
-          </div>
+          <button
+            class="bcgov-button normal-white btn"
+            data-test-id="main-cancel-btn"
+            type="button"
+          >
+            Cancel
+          </button>
+          <button
+            class="bcgov-button normal-blue btn"
+            data-test-id="continue-btn"
+            type="button"
+          >
+            Continue to Payment
+          </button>
         </section>
       </div>
       <div
@@ -1766,85 +1765,77 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
           style="position: relative;"
         >
           <div
-            class="row"
+            class="col-12 pt-2"
+            style="position: relative;"
           >
-            <div
-              class="col-12 pt-2"
-              style="position: relative;"
+            <p />
+            <section
+              class="bluegrey-container"
+              id="bluegrey-section"
             >
-              <p />
-              <section
-                class="bluegrey-container"
-                id="bluegrey-section"
+              <div
+                class="container-background bluegrey-heading"
               >
-                <div
-                  class="container-background bluegrey-heading"
+                <h2
+                  class="heading-style"
                 >
-                  <h2
-                    class="heading-style"
+                  <div
+                    class="side-card-row"
                   >
                     <div
-                      class="row"
+                      class="round-icon-wrapper"
                     >
-                      <div
-                        class="side-card-row"
+                      <svg
+                        class="side-card-icon"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        <div
-                          class="round-icon-wrapper"
-                        >
-                          <svg
-                            class="side-card-icon"
-                            fill="currentColor"
-                            height="1em"
-                            stroke="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 24 24"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-                            />
-                          </svg>
-                        </div>
-                        <div
-                          class="side-card-title"
-                        >
-                          Your CSO Account
-                        </div>
-                      </div>
+                        <path
+                          d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                        />
+                      </svg>
                     </div>
-                  </h2>
-                </div>
-                <div
-                  class="bluegrey-content"
+                    <div
+                      class="side-card-title"
+                    >
+                      Your CSO Account
+                    </div>
+                  </div>
+                </h2>
+              </div>
+              <div
+                class="bluegrey-content"
+              >
+                <span
+                  class="content-style"
                 >
-                  <span
-                    class="content-style"
-                  >
-                    <p>
-                      CSO account 
-                      <b>
-                        123
-                      </b>
-                       is linked to your Basic BCeID account 
-                      <b>
-                        username
-                      </b>
-                       and will be used to file documents. 
-                      <a
-                        href="https://justice.gov.bc.ca/cso/about/index.do"
-                        rel="noopener noreferrer"
-                        target="_blank"
-                      >
-                        View your CSO account details
-                      </a>
-                      .
-                    </p>
-                  </span>
-                </div>
-              </section>
-            </div>
+                  <p>
+                    CSO account 
+                    <strong>
+                      123
+                    </strong>
+                     is linked to your Basic BCeID account 
+                    <strong>
+                      username
+                    </strong>
+                     and will be used to file documents. 
+                    <a
+                      href="https://justice.gov.bc.ca/cso/about/index.do"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      View your CSO account details
+                    </a>
+                    .
+                  </p>
+                </span>
+              </div>
+            </section>
           </div>
         </div>
         <div
@@ -1852,77 +1843,69 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
           style="position: relative;"
         >
           <div
-            class="row"
+            class="col-12 pt-2"
+            style="position: relative;"
           >
-            <div
-              class="col-12 pt-2"
-              style="position: relative;"
+            <p />
+            <section
+              class="bluegrey-container"
+              id="bluegrey-section"
             >
-              <p />
-              <section
-                class="bluegrey-container"
-                id="bluegrey-section"
+              <div
+                class="container-background bluegrey-heading"
               >
-                <div
-                  class="container-background bluegrey-heading"
+                <h2
+                  class="heading-style"
                 >
-                  <h2
-                    class="heading-style"
+                  <div
+                    class="side-card-row"
                   >
                     <div
-                      class="row"
+                      class="round-icon-wrapper"
                     >
-                      <div
-                        class="side-card-row"
+                      <svg
+                        class="side-card-icon"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        <div
-                          class="round-icon-wrapper"
-                        >
-                          <svg
-                            class="side-card-icon"
-                            fill="currentColor"
-                            height="1em"
-                            stroke="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 24 24"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
-                            />
-                          </svg>
-                        </div>
-                        <div
-                          class="side-card-title"
-                        >
-                          About E-File Submission
-                        </div>
-                      </div>
+                        <path
+                          d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                        />
+                      </svg>
                     </div>
-                  </h2>
-                </div>
-                <div
-                  class="bluegrey-content"
+                    <div
+                      class="side-card-title"
+                    >
+                      About E-File Submission
+                    </div>
+                  </div>
+                </h2>
+              </div>
+              <div
+                class="bluegrey-content"
+              >
+                <span
+                  class="content-style"
                 >
-                  <span
-                    class="content-style"
-                  >
-                    <p>
-                      E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
-                      <a
-                        href="https://justice.gov.bc.ca/cso/about/index.do"
-                        rel="noopener noreferrer"
-                        target="_blank"
-                      >
-                        Learn more about CSO
-                      </a>
-                      .
-                    </p>
-                  </span>
-                </div>
-              </section>
-            </div>
+                  <p>
+                    E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
+                    <a
+                      href="https://justice.gov.bc.ca/cso/about/index.do"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      Learn more about CSO
+                    </a>
+                    .
+                  </p>
+                </span>
+              </div>
+            </section>
           </div>
         </div>
       </div>

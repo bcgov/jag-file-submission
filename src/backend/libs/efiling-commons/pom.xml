@@ -48,10 +48,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -59,7 +55,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>2.3.2.RELEASE</version>
+                <version>2.3.3.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

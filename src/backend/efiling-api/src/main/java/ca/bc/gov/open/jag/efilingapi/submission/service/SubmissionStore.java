@@ -12,6 +12,8 @@ public interface SubmissionStore {
 
     Optional<Submission> put(Submission submission);
 
-    Optional<Submission> get(UUID submissionId, UUID owner);
+    Optional<Submission> get(UUID submissionId, UUID transactionId);
+
+    void evict(UUID submissionId, UUID transactionId);
 
 }

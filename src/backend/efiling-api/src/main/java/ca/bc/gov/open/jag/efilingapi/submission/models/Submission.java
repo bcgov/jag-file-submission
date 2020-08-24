@@ -16,9 +16,13 @@ public class Submission {
 
     private UUID id;
 
-    private UUID owner;
+    private UUID transactionId;
+
+    private UUID universalId;
 
     private long expiryDate;
+
+    private AccountDetails accountDetails;
 
     private Navigation navigation;
 
@@ -26,16 +30,15 @@ public class Submission {
 
     private FilingPackage filingPackage;
 
-    private AccountDetails accountDetails;
-
     protected Submission(Submission.Builder builder) {
         this.id = builder.id;
-        this.owner = builder.owner;
+        this.transactionId = builder.transactionId;
+        this.accountDetails = builder.accountDetails;
         this.filingPackage = builder.filingPackage;
         this.navigation = builder.navigation;
         this.clientApplication = builder.clientApplication;
-        this.accountDetails = builder.accountDetails;
         this.expiryDate = builder.expiryDate;
+        this.universalId = builder.universalId;
     }
 
     public static Submission.Builder builder() {
@@ -45,24 +48,28 @@ public class Submission {
     @JsonCreator
     public Submission(
             @JsonProperty("id") UUID id,
-            @JsonProperty("owner") UUID owner,
+            @JsonProperty("owner") UUID transactionId,
+            @JsonProperty("bceid") UUID universalId,
+            @JsonProperty("accountDetails") AccountDetails accountDetails,
             @JsonProperty("package") FilingPackage filingPackage,
             @JsonProperty("navigation") Navigation navigation,
             @JsonProperty("clientApplication") ClientApplication clientApplication,
-            @JsonProperty("accountDetails") AccountDetails accountDetails,
             @JsonProperty("expiryDate") long expiryDate) {
         this.id = id;
-        this.owner = owner;
+        this.transactionId = transactionId;
+        this.universalId = universalId;
+        this.accountDetails = accountDetails;
         this.filingPackage = filingPackage;
         this.navigation = navigation;
         this.clientApplication = clientApplication;
-        this.accountDetails = accountDetails;
         this.expiryDate = expiryDate;
     }
 
     public UUID getId() { return id; }
 
-    public UUID getOwner() { return owner; }
+    public UUID getTransactionId() { return transactionId; }
+
+    public UUID getUniversalId() { return universalId; }
 
     public FilingPackage getFilingPackage() {
         return filingPackage;
@@ -74,30 +81,46 @@ public class Submission {
 
     public ClientApplication getClientApplication() { return clientApplication; }
 
+    public long getExpiryDate() {
+        return expiryDate;
+    }
+
     public AccountDetails getAccountDetails() {
         return accountDetails;
     }
 
-    public long getExpiryDate() {
-        return expiryDate;
+    public void setAccountDetails(AccountDetails accountDetails) {
+        this.accountDetails = accountDetails;
     }
 
     public static class Builder {
 
         private UUID id;
-        private UUID owner;
+        private UUID transactionId;
+        private UUID universalId;
+        private AccountDetails accountDetails;
         private FilingPackage filingPackage;
         private Navigation navigation;
         private ClientApplication clientApplication;
-        private AccountDetails accountDetails;
         private long expiryDate;
 
         public Builder id (UUID id) {
             this.id = id;
             return this;
         }
-        public Builder owner(UUID owner) {
-            this.owner = owner;
+
+        public Builder accountDetails (AccountDetails accountDetails) {
+            this.accountDetails = accountDetails;
+            return this;
+        }
+
+        public Builder transactionId(UUID owner) {
+            this.transactionId = owner;
+            return this;
+        }
+
+        public Builder universalId(UUID universalId) {
+            this.universalId = universalId;
             return this;
         }
 
@@ -116,11 +139,6 @@ public class Submission {
             return this;
         }
 
-        public Builder accountDetails(AccountDetails accountDetails) {
-            this.accountDetails = accountDetails;
-            return this;
-        }
-
         public Builder expiryDate(long expiryDate) {
             this.expiryDate = expiryDate;
             return this;
@@ -130,6 +148,5 @@ public class Submission {
             return new Submission(this);
         }
     }
-
 
 }

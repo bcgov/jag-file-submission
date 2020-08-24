@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 public class EfilingCourtServiceDemoImpl implements EfilingCourtService {
     @Override
-    public CourtDetails getCourtDescription(String agencyIdentifierCd) {
+    public CourtDetails getCourtDescription(String agencyIdentifierCd, String courtLevel, String courtClass) {
         return new CourtDetails(BigDecimal.TEN, "Imma Court", "Imma Class", "Imma Level");
     }
 }

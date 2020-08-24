@@ -23,7 +23,7 @@ public class EfilingAccountServiceDemoImplTest {
     @DisplayName("OK: with empty cache should return null")
     public void withEmptyCacheShouldReturnNull() {
 
-        AccountDetails actual = sut.getAccountDetails(ACCOUNT_ID, "");
+        AccountDetails actual = sut.getAccountDetails(ACCOUNT_ID);
         Assertions.assertNull(actual);
 
     }

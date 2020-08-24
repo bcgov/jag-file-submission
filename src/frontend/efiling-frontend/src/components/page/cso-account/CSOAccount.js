@@ -11,11 +11,10 @@ import ConfirmationPopup, {
   Alert,
   Sidecard,
 } from "shared-components";
-import { getContent } from "../../../modules/csoAccountAgreementContent";
-import { getSidecardData } from "../../../modules/sidecardData";
-import { translateApplicantInfo } from "../../../modules/translateApplicantInfo";
-import { errorRedirect } from "../../../modules/errorRedirect";
-import { getJWTData } from "../../../modules/authenticationHelper";
+import { getContent } from "../../../modules/helpers/csoAccountAgreementContent";
+import { getSidecardData } from "../../../modules/helpers/sidecardData";
+import { translateApplicantInfo } from "../../../modules/helpers/translateApplicantInfo";
+import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { propTypes } from "../../../types/propTypes";
 
 const content = getContent();
@@ -28,6 +27,7 @@ export default function CSOAccount({
   const sideCard = getSidecardData().aboutCso;
   const [termsAccepted, acceptTerms] = useState(false);
   const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
 
   useEffect(() => {
     if (termsAccepted) {
@@ -37,11 +37,13 @@ export default function CSOAccount({
     }
   }, [termsAccepted]);
 
-  const createCSOAccount = (applicantDetails) => {
+  const createCSOAccount = ({ firstName, lastName, email }) => {
+    setShowLoader(true);
+    setContinueBtnEnabled(false);
+
+    const applicantDetails = { firstName, lastName, email };
     axios
-      .post("/csoAccount", applicantDetails, {
-        headers: { "X-Auth-UserId": getJWTData()["universal-id"] },
-      })
+      .post("/csoAccount", applicantDetails)
       .then(({ data: { accounts } }) => {
         accounts.forEach((account) => {
           if (account.type === "CSO") {
@@ -53,12 +55,6 @@ export default function CSOAccount({
       .catch((error) => {
         errorRedirect(sessionStorage.getItem("errorUrl"), error);
       });
-  };
-
-  const continueButton = {
-    label: "Create CSO Account",
-    styling: "normal-blue btn",
-    onClick: () => createCSOAccount(applicantInfo),
   };
 
   const icon = (
@@ -104,11 +100,12 @@ export default function CSOAccount({
             cancelButton={confirmationPopup.cancelButton}
           />
           <Button
-            label={continueButton.label}
+            label="Create CSO Account"
             testId="create-cso-btn"
-            onClick={continueButton.onClick}
-            styling={continueButton.styling}
+            onClick={() => createCSOAccount(applicantInfo)}
+            styling="normal-blue btn"
             disabled={!continueBtnEnabled}
+            hasLoader={showLoader}
           />
         </section>
       </div>

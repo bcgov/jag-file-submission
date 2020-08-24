@@ -9,9 +9,9 @@ import {
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 
-import { getTestData } from "../../../modules/confirmationPopupTestData";
-import { getApplicantInfo } from "../../../modules/applicantInfoTestData";
-import { generateJWTToken } from "../../../modules/authenticationHelper";
+import { getTestData } from "../../../modules/test-data/confirmationPopupTestData";
+import { getApplicantInfo } from "../../../modules/test-data/applicantInfoTestData";
+import { generateJWTToken } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 
 import CSOAccount from "./CSOAccount";
 

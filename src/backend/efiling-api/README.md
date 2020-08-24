@@ -50,13 +50,19 @@ You should use environment variables to configure the jag efiling api
 | CSO_SERVICEFACADE_USERNAME     | String  | service facade username                      | not set by default             |
 | CSO_SERVICEFACADE_PASSWORD     | String  | service facade password                      | not set by default             |
 | CSO_SERVICEFACADE_URI          | String  | service facade URI                           | not set by default             |
-| CSO_BCEIDSERVICE_USERNAME      | String  | bceid lookup username                        | not set by default             |
-| CSO_BCEIDSERVICE_PASSWORD      | String  | bceid lookup password                        | not set by default             |
-| CSO_BCEIDSERVICE_URI           | String  | bceid lookup URI                             | not set by default             |
 | KEYCLOAK_AUTH_SERVER_URL       | String  | The keycloak auth server URL                 | not set by default             |
 | KEYCLOAK_REALM                 | String  | The keycloak realm name                      | not set by default             |
 | KEYCLOAK_RESOURCE              | String  | The keycloak resource name                   | not set by default             |
 | KEYCLOAK_CREDENTIALS_SECRET    | String  | The keycloak Credentials Secrets             | not set by default             |
+| BAMBORA_APIPASSCODE            | String  | API passcode for bambora auth                | not set by default             |
+| BAMBORA_MERCHANTID             | String  | merchant id for bambora auth                 | not set by default             |
+| SFTP_HOST                      | String  | sftp host                                    | defaulted to `localhost`       |
+| SFTP_PORT                      | Integer | sftp port                                    | defaulted to `22`              |
+| SFTP_USERNAME                  | String  | sftp username                                | Defaulted to `admin`           |
+| SFTP_PASSWORD                  | String  | sftp password                                | Defaulted to `admin`           |
+| SFTP_REMOTELOCATION            | String  | remote directory                             | not set by default             |
+| SFTP_KNOWNHOSTS                | String  | location of known hosts file                 | not set by default             |
+| SFTP_ALLOWUNKNOWN              | Boolean | allow unkown hosts                           | not set by default             |
 
 ## Backend Folder Structure
 

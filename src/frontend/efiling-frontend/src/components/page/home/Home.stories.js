@@ -1,14 +1,13 @@
 import React from "react";
-import { MemoryRouter } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-import { getTestData } from "../../../modules/confirmationPopupTestData";
-import { getUserDetails } from "../../../modules/userDetails";
-import { getDocumentsData } from "../../../modules/documentTestData";
-import { getCourtData } from "../../../modules/courtTestData";
-import { getNavigationData } from "../../../modules/navigationTestData";
-import { generateJWTToken } from "../../../modules/authenticationHelper";
+import { getTestData } from "../../../modules/test-data/confirmationPopupTestData";
+import { getUserDetails } from "../../../modules/test-data/userDetailsTestData";
+import { getDocumentsData } from "../../../modules/test-data/documentTestData";
+import { getCourtData } from "../../../modules/test-data/courtTestData";
+import { getNavigationData } from "../../../modules/test-data/navigationTestData";
+import { generateJWTToken } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 
 import Home from "./Home";
 
@@ -22,9 +21,10 @@ const header = {
   history: createMemoryHistory(),
 };
 const confirmationPopup = getTestData();
-const page = { header, confirmationPopup };
-
 const submissionId = "abc123";
+const transactionId = "trans123";
+const page = { header, confirmationPopup, submissionId, transactionId };
+
 const apiRequest = `/submission/${submissionId}`;
 const getFilingPackagePath = `/submission/${submissionId}/filing-package`;
 const navigation = getNavigationData();
@@ -37,8 +37,10 @@ const setRequiredStorage = () => {
   sessionStorage.setItem("errorUrl", "error.com");
   const token = generateJWTToken({
     preferred_username: "username@bceid",
-    name: "User Name",
     email: "username@example.com",
+    realm_access: {
+      roles: ["rush_flag"],
+    },
   });
   localStorage.setItem("jwt", token);
 };
@@ -68,18 +70,15 @@ const NoAccountExistsStateData = (props) => {
     userDetails: { ...userDetails, accounts: null },
     navigation,
   });
+  mock.onGet("/bceidAccount").reply(200, {
+    firstName: "User",
+    lastName: "Name",
+    middleName: "Middle",
+  });
   return props.children({ page });
 };
 
-const homeComponent = (data) => (
-  <MemoryRouter
-    initialEntries={[
-      { search: `?submissionId=${submissionId}`, key: "testKey" },
-    ]}
-  >
-    <Home page={data.page} />
-  </MemoryRouter>
-);
+const homeComponent = (data) => <Home page={data.page} />;
 
 const loaderComponent = (
   <LoaderStateData>{(data) => homeComponent(data)}</LoaderStateData>
@@ -109,14 +108,12 @@ export const NoAccountExists = () => noAccountExistsComponent;
 
 export const NoAccountExistsMobile = () => noAccountExistsComponent;
 
-const mobileViewport = {
-  parameters: {
-    viewport: {
-      defaultViewport: "mobile2",
-    },
+const parameters = {
+  viewport: {
+    defaultViewport: "mobile2",
   },
 };
 
-ErrorMobile.story = mobileViewport;
-AccountExistsMobile.story = mobileViewport;
-NoAccountExistsMobile.story = mobileViewport;
+ErrorMobile.parameters = parameters;
+AccountExistsMobile.parameters = parameters;
+NoAccountExistsMobile.parameters = parameters;

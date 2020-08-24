@@ -13,6 +13,21 @@ const realm = window.REACT_APP_KEYCLOAK_REALM
 const clientId = window.REACT_APP_KEYCLOAK_CLIENT_ID
   ? window.REACT_APP_KEYCLOAK_CLIENT_ID
   : process.env.REACT_APP_KEYCLOAK_CLIENT_ID;
+const demoSecret = window.REACT_APP_DEMO_CLIENT_SECRET
+  ? window.REACT_APP_DEMO_CLIENT_SECRET
+  : process.env.REACT_APP_DEMO_CLIENT_SECRET;
+const demoUrl = window.REACT_APP_DEMO_URL
+  ? window.REACT_APP_DEMO_URL
+  : process.env.REACT_APP_DEMO_URL;
+
+sessionStorage.setItem("demoKeycloakRealm", realm);
+sessionStorage.setItem("demoKeycloakUrl", demoUrl);
+sessionStorage.setItem("demoKeycloakClientId", clientId);
+sessionStorage.setItem("demoKeycloakClientSecret", demoSecret);
+
+const defaultIdentityProvider = window.REACT_APP_DEFAULT_IDENTITY_PROVIDER
+  ? window.REACT_APP_DEFAULT_IDENTITY_PROVIDER
+  : process.env.REACT_APP_DEFAULT_IDENTITY_PROVIDER;
 
 const KEYCLOAK = {
   realm,
@@ -33,13 +48,19 @@ export default function AuthenticationGuard({ page: { header } }) {
 
     await keycloak
       .init({
-        onLoad: "login-required",
+        checkLoginIframe: false,
       })
-      .success(() => {
-        keycloak.loadUserInfo().success();
+      .success((authenticated) => {
+        if (authenticated) {
+          keycloak.loadUserInfo().success();
 
-        localStorage.setItem("jwt", keycloak.token);
-        setAuthedKeycloak(keycloak);
+          localStorage.setItem("jwt", keycloak.token);
+          setAuthedKeycloak(keycloak);
+        } else {
+          keycloak.login({
+            idpHint: `${defaultIdentityProvider}`,
+          });
+        }
       });
   }
 

@@ -1,19 +1,26 @@
 /* eslint-disable react/jsx-wrap-multilines */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import axios from "axios";
 import ConfirmationPopup, {
   Button,
   Sidecard,
   Table,
   Callout,
 } from "shared-components";
-import { getSidecardData } from "../../../modules/sidecardData";
-import { getCreditCardAlerts } from "../../../modules/creditCardAlerts";
+import Rush from "../rush/Rush";
+import { getSidecardData } from "../../../modules/helpers/sidecardData";
+import { getCreditCardAlerts } from "../../../modules/helpers/creditCardAlerts";
+import { errorRedirect } from "../../../modules/helpers/errorRedirect";
+import { getJWTData } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 import { propTypes } from "../../../types/propTypes";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
-import { generateFileSummaryData } from "../../../modules/generateFileSummaryData";
+import { generateFileSummaryData } from "../../../modules/helpers/generateFileSummaryData";
 
 import "./Payment.css";
+
+const baseCalloutText = `I have reviewed the information and the documents in this filing
+package and am prepared to submit them for filing.`;
 
 const generateCourtDataTable = ({
   fileNumber,
@@ -40,26 +47,59 @@ const generateCourtDataTable = ({
   ];
 };
 
-const calloutText = `I have reviewed the information and the documents in this filing
-package and am prepared to submit them for filing. I agree that all
-fees for this filing package may be charged to the credit card
-registered to my account. Statutory fees will be processed when documents are filed.`;
+const submitPackage = (submissionId, setSubmitBtnEnabled, setShowLoader) => {
+  setShowLoader(true);
+  setSubmitBtnEnabled(false);
 
-const submitButton = {
-  label: "Submit",
-  onClick: () => console.log("submit click"),
-  styling: "normal-blue btn",
+  axios
+    .post(`/submission/${submissionId}/submit`, {})
+    .then(() => {
+      sessionStorage.setItem("validExit", true);
+      window.open(sessionStorage.getItem("successUrl"), "_self");
+    })
+    .catch((err) => errorRedirect(sessionStorage.getItem("errorUrl"), err));
+};
+
+const checkSubmitEnabled = (paymentAgreed, setSubmitBtnEnabled) => {
+  const isEnabled =
+    paymentAgreed && sessionStorage.getItem("cardRegistered") === "true";
+  setSubmitBtnEnabled(isEnabled);
 };
 
 export default function Payment({
   payment: { confirmationPopup, submissionId, courtData, files, submissionFee },
 }) {
+  const rushFlagExists = getJWTData().realm_access.roles.includes("rush_flag");
+  const creditCardAlert =
+    sessionStorage.getItem("cardRegistered") === "true"
+      ? getCreditCardAlerts().existingCreditCard
+      : getCreditCardAlerts().noCreditCard;
+
+  const [paymentAgreed, setPaymentAgreed] = useState(false);
+  const [submitBtnEnabled, setSubmitBtnEnabled] = useState(false);
+  const [showPackageConfirmation, setShowPackageConfirmation] = useState(false);
+  const [showRush, setShowRush] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
+
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
-  const rushSubmissionSidecard = getSidecardData().rushSubmission;
-  const existingCreditCardAlert = getCreditCardAlerts().existingCreditCard;
-  const [paymentAgreed, setPaymentAgreed] = useState(false);
-  const [showPackageConfirmation, setShowPackageConfirmation] = useState(false);
+  const rushSubmissionSidecard = getSidecardData(() => setShowRush(true))
+    .rushSubmission;
+
+  const fileSummary = generateFileSummaryData(files, submissionFee, true);
+  const calloutText =
+    fileSummary.totalFee > 0
+      ? `${baseCalloutText} I agree that all fees for this filing package may be charged to the credit card registered to my account. Statutory fees will be processed when documents are filed.`
+      : baseCalloutText;
+
+  useEffect(() => {
+    sessionStorage.setItem("currentPage", "payment");
+    window.history.pushState(null, null, window.location.href);
+  }, []);
+
+  useEffect(() => {
+    checkSubmitEnabled(paymentAgreed, setSubmitBtnEnabled);
+  }, [paymentAgreed]);
 
   if (showPackageConfirmation) {
     return (
@@ -70,18 +110,28 @@ export default function Payment({
     );
   }
 
+  if (showRush) {
+    return (
+      <Rush
+        payment={{
+          confirmationPopup,
+          submissionId,
+          courtData,
+          files,
+          submissionFee,
+        }}
+      />
+    );
+  }
+
   return (
     <div className="page">
       <div className="content col-md-8">
         <h1>Payment</h1>
-        {/* TODO: Fix credit card info and link to register card */}
-        {existingCreditCardAlert}
+        {creditCardAlert}
         <br />
         <div className="half-width">
-          <Table
-            isFeesData
-            elements={generateFileSummaryData(files, submissionFee, true)}
-          />
+          <Table isFeesData elements={fileSummary.data} />
         </div>
         <br />
         <h1>Package Submission Details</h1>
@@ -95,30 +145,33 @@ export default function Payment({
           agreeCallout={() => setPaymentAgreed(!paymentAgreed)}
         />
         <br />
-        <section className="inline-block pt-2">
+        <section className="inline-block pt-2 buttons">
           <Button
             label="< Back"
             onClick={() => setShowPackageConfirmation(true)}
             styling="normal-white btn"
           />
-        </section>
-        <section className="buttons pt-2">
-          <ConfirmationPopup
-            modal={confirmationPopup.modal}
-            mainButton={confirmationPopup.mainButton}
-            confirmButton={confirmationPopup.confirmButton}
-            cancelButton={confirmationPopup.cancelButton}
-          />
-          <Button
-            label={submitButton.label}
-            onClick={submitButton.onClick}
-            styling={submitButton.styling}
-            disabled={!paymentAgreed}
-          />
+          <div className="button-container">
+            <ConfirmationPopup
+              modal={confirmationPopup.modal}
+              mainButton={confirmationPopup.mainButton}
+              confirmButton={confirmationPopup.confirmButton}
+              cancelButton={confirmationPopup.cancelButton}
+            />
+            <Button
+              label="Submit"
+              onClick={() => {
+                submitPackage(submissionId, setSubmitBtnEnabled, setShowLoader);
+              }}
+              styling="normal-blue btn"
+              disabled={!submitBtnEnabled}
+              hasLoader={showLoader}
+            />
+          </div>
         </section>
       </div>
       <div className="sidecard">
-        <Sidecard sideCard={rushSubmissionSidecard} />
+        {rushFlagExists && <Sidecard sideCard={rushSubmissionSidecard} />}
         <Sidecard sideCard={csoAccountDetailsSidecard} />
         <Sidecard sideCard={aboutCsoSidecard} />
       </div>

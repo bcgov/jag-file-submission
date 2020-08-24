@@ -6,8 +6,26 @@ FROM maven:3.6.3-jdk-8 as build
 ARG MVN_PROFILE
 ARG SERVICE_NAME
 ARG SKIP_TESTS=false
+ARG STARTERS_V
 
 ENV SERVICE_NAME=${SERVICE_NAME}
+ENV STARTERS_V=${STARTERS_V}
+
+
+RUN apt-get update       
+RUN apt-get install -y git
+
+WORKDIR /libs
+
+RUN git clone https://github.com/bcgov/spring-boot-starters.git
+
+WORKDIR /libs/spring-boot-starters
+
+RUN git checkout $STARTERS_V
+
+RUN mvn install -P all -f src/pom.xml
+
+WORKDIR /
 
 COPY . .
 

@@ -8,14 +8,15 @@ import {
   getByRole,
   waitFor,
 } from "@testing-library/react";
-import { getTestData } from "../../../modules/confirmationPopupTestData";
-import { getDocumentsData } from "../../../modules/documentTestData";
-import { getCourtData } from "../../../modules/courtTestData";
-import { generateJWTToken } from "../../../modules/authenticationHelper";
+import { getTestData } from "../../../modules/test-data/confirmationPopupTestData";
+import { getDocumentsData } from "../../../modules/test-data/documentTestData";
+import { getCourtData } from "../../../modules/test-data/courtTestData";
+import { generateJWTToken } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 
 import Payment from "./Payment";
 
 describe("Payment Component", () => {
+  let realDate;
   const confirmationPopup = getTestData();
   const submissionId = "abc123";
   const apiRequest = `/submission/${submissionId}/filing-package`;
@@ -30,12 +31,19 @@ describe("Payment Component", () => {
     submissionFee,
   };
 
-  const token = generateJWTToken({ preferred_username: "username@bceid" });
+  sessionStorage.setItem("cardRegistered", true);
+  const token = generateJWTToken({
+    preferred_username: "username@bceid",
+    realm_access: {
+      roles: ["rush_flag"],
+    },
+  });
   localStorage.setItem("jwt", token);
 
   let mock;
   beforeEach(() => {
     mock = new MockAdapter(axios);
+    window.open = jest.fn();
   });
 
   test("Matches the snapshot", () => {
@@ -52,6 +60,10 @@ describe("Payment Component", () => {
     fireEvent.click(getByRole(container, "checkbox"));
 
     expect(getByText(container, "Submit").disabled).toBeFalsy();
+
+    fireEvent.click(getByRole(container, "checkbox"));
+
+    expect(getByText(container, "Submit").disabled).toBeTruthy();
   });
 
   test("On back click, it redirects back to the package confirmation page", async () => {
@@ -68,5 +80,68 @@ describe("Payment Component", () => {
     await waitFor(() => {});
 
     expect(asFragment()).toMatchSnapshot();
+  });
+
+  test("Submit on success redirects to success page", async () => {
+    sessionStorage.setItem("successUrl", "success.com");
+
+    mock
+      .onPost(`/submission/${submissionId}/submit`)
+      .reply(200, { transactionId: 1 });
+
+    const { container } = render(<Payment payment={payment} />);
+
+    fireEvent.click(getByRole(container, "checkbox"));
+    fireEvent.click(getByText(container, "Submit"));
+
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalledWith("success.com", "_self");
+  });
+
+  test("Submit on error redirects to error page", async () => {
+    sessionStorage.setItem("errorUrl", "error.com");
+
+    mock
+      .onPost(`/submission/${submissionId}/submit`)
+      .reply(400, { message: "There was an error." });
+
+    const { container } = render(<Payment payment={payment} />);
+
+    fireEvent.click(getByRole(container, "checkbox"));
+    fireEvent.click(getByText(container, "Submit"));
+
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalledWith(
+      "error.com?status=400&message=There was an error.",
+      "_self"
+    );
+  });
+
+  test("Click on request rush submission opens rush submission page", async () => {
+    const currentDate = new Date("2019-05-14T11:01:58.135Z");
+    realDate = Date;
+    global.Date = class extends Date {
+      constructor() {
+        return currentDate;
+      }
+    };
+
+    mock.onGet(apiRequest).reply(200, {
+      documents: files,
+      court: courtData,
+      submissionFeeAmount: submissionFee,
+    });
+
+    const { container, asFragment } = render(<Payment payment={payment} />);
+
+    fireEvent.click(getByText(container, "Request rush submission"));
+
+    await waitFor(() => {});
+
+    expect(asFragment()).toMatchSnapshot();
+
+    global.Date = realDate;
   });
 });

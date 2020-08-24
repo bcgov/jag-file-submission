@@ -1,6 +1,9 @@
 package ca.bc.gov.open.jag.efilingapi;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
+import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
+import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -18,7 +21,7 @@ public class TestHelpers {
     public static final String DIVISION = "DIVISION";
     public static final String FILENUMBER = "FILENUMBER";
     public static final String LEVEL = "LEVEL";
-    public static final String LOCATION = "LOCATION";
+    public static final String LOCATION = "1211";
     public static final String PARTICIPATIONCLASS = "PARTICIPATIONCLASS";
     public static final String PROPERTYCLASS = "PROPERTYCLASS";
     public static final String DESCRIPTION = "DESCRIPTION";
@@ -26,6 +29,7 @@ public class TestHelpers {
     public static final String COURT_DESCRIPTION = "TESTCOURTDESC";
     public static final String LEVEL_DESCRIPTION = "TESTLEVELDESC";
     public static final String CLASS_DESCRIPTION = "TESTCLASSDESC";
+    public static final String DISPLAY_NAME = "DISPLAYNAME";
 
     public static final String SUCCESS_URL = "http://success";
     public static final String CANCEL_URL = "http://cancel";
@@ -75,6 +79,7 @@ public class TestHelpers {
         court.setLocation(LOCATION);
         court.setParticipatingClass(PARTICIPATIONCLASS);
         court.setCourtClass(PROPERTYCLASS);
+        court.setAgencyId(BigDecimal.TEN);
         court.setLevelDescription(LEVEL_DESCRIPTION);
         court.setClassDescription(CLASS_DESCRIPTION);
         court.setLocationDescription(COURT_DESCRIPTION);
@@ -95,14 +100,27 @@ public class TestHelpers {
         documentProperties.setStatutoryFeeAmount(BigDecimal.TEN);
         documentProperties.setName("random.txt");
         documentProperties.setType(TYPE);
+        documentProperties.setSubType(SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD);
         documentProperties.setMimeType("application/txt");
+        documentProperties.setIsSupremeCourtScheduling(true);
+        documentProperties.setIsAmendment(true);
 
         return Arrays.asList(documentProperties);
     }
+
 
     public static Navigation createDefaultNavigation() {
         return createNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL);
     }
 
+    public static EfilingService createEfilingService() {
+        EfilingService service = new EfilingService();
+        service.setAccountId(BigDecimal.TEN);
+        service.setClientId(BigDecimal.TEN);
+        service.setCourtFileNumber(FILENUMBER);
+        service.setServiceId(BigDecimal.TEN);
+        return service;
+
+    }
 
 }

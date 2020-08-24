@@ -45,58 +45,46 @@ exports[`Home Component matches the snapshot 1`] = `
       <div
         class="content col-md-12"
       >
-        <div>
-          <label
-            class="label"
-            for="textInputId"
-          >
-            <div
-              class="input-label"
-            >
-              Account GUID
-            </div>
-            <span
-              class="mandatory"
-              id="asterisk"
-            >
-              *
-            </span>
-             
-            <span
-              class="note"
-            />
-          </label>
-          <input
-            class="editable-white"
-            id="textInputId"
-            placeholder="77da92db-0791-491e-8c58-1a969e67d2fa"
-            type="text"
-            value=""
-          />
-          <br />
-          <span
-            class="error"
-          />
-        </div>
-        <br />
-        <br />
         <div
-          class="filepond--wrapper"
+          class="dropzone-outer-box"
+          data-testid="dropdownzone"
+          tabindex="0"
         >
-          <input
-            multiple=""
-            type="file"
-          />
+          <div
+            class="dropzone-inner-box"
+          >
+            <input
+              autocomplete="off"
+              multiple=""
+              style="display: none;"
+              tabindex="-1"
+              type="file"
+            />
+            <span>
+              <h2
+                class="text-center-alignment"
+              >
+                Drag and drop or 
+                <span
+                  class="file-href"
+                >
+                  choose documents
+                </span>
+              </h2>
+            </span>
+          </div>
         </div>
         <br />
+        <br />
         <div
-          class="text-label"
+          class="input-label"
         >
           <label
             for="1"
           >
             Provide filing package JSON data:
           </label>
+           
         </div>
         <textarea
           class="text-input"
@@ -106,15 +94,13 @@ exports[`Home Component matches the snapshot 1`] = `
         />
         <br />
         <br />
-        <div>
-          <button
-            class="normal-blue btn"
-            data-test-id="generate-url-btn"
-            type="button"
-          >
-            E-File my Package
-          </button>
-        </div>
+        <button
+          class="bcgov-button normal-blue btn"
+          data-test-id="generate-url-btn"
+          type="button"
+        >
+          E-File my Package
+        </button>
         <br />
         <br />
       </div>

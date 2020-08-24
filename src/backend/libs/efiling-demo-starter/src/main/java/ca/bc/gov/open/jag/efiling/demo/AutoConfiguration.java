@@ -36,7 +36,6 @@ public class AutoConfiguration {
     @Bean
     public EfilingSubmissionService efilingSubmissionService() { return new EfilingSubmissionServiceDemoImpl(); }
 
-
     /**
      * Configures the cache manager for demo accounts
      * @param jedisConnectionFactory A jedisConnectionFactory

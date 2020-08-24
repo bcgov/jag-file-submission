@@ -1,12 +1,12 @@
 package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 
+import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
-import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMapper;
+import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -26,13 +26,14 @@ public class GetSubmissionDocumentTest {
     @Mock
     private SubmissionService submissionServiceMock;
 
-    private GenerateUrlResponseMapper generateUrlResponseMapperMock;
-
     @Mock
     private SubmissionStore submissionStoreMock;
 
     @Mock
     private DocumentStore documentStoreMock;
+
+    @Mock
+    private AccountService accountServiceMock;
 
 
     @BeforeAll
@@ -45,7 +46,7 @@ public class GetSubmissionDocumentTest {
 
         Mockito.when(documentStoreMock.get(Mockito.endsWith("test.txt"))).thenReturn(CONTENT.getBytes());
 
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, new GenerateUrlResponseMapperImpl(), navigationProperties, submissionStoreMock, documentStoreMock);
 
     }
 

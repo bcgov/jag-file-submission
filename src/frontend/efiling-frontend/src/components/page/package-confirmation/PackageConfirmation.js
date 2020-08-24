@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { MdDescription, MdCheckBox } from "react-icons/md";
+import { MdDescription, MdCheckBox, MdDeleteForever } from "react-icons/md";
 import ConfirmationPopup, {
   Alert,
   Button,
@@ -8,32 +8,29 @@ import ConfirmationPopup, {
   DisplayBox,
   Table,
 } from "shared-components";
+import FileSaver from "file-saver";
 import Dinero from "dinero.js";
 import axios from "axios";
-import { getSidecardData } from "../../../modules/sidecardData";
+import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import { propTypes } from "../../../types/propTypes";
-import { errorRedirect } from "../../../modules/errorRedirect";
-import { getJWTData } from "../../../modules/authenticationHelper";
-import { generateFileSummaryData } from "../../../modules/generateFileSummaryData";
+import { errorRedirect } from "../../../modules/helpers/errorRedirect";
+import { onBackButtonEvent } from "../../../modules/helpers/handleBackEvent";
+import { generateFileSummaryData } from "../../../modules/helpers/generateFileSummaryData";
 
 import "./PackageConfirmation.css";
 import Payment from "../payment/Payment";
 import Upload from "../upload/Upload";
 
-const openFile = (file, submissionId) => {
+const downloadFile = (file, submissionId) => {
   axios
     .get(`/submission/${submissionId}/document/${file.name}`, {
       responseType: "blob",
-      headers: {
-        "X-Auth-UserId": getJWTData()["universal-id"],
-      },
     })
     .then((response) => {
-      // TODO: do not use hard coded type
       const fileData = new Blob([response.data], { type: file.mimeType });
       const fileUrl = URL.createObjectURL(fileData);
 
-      window.open(fileUrl);
+      FileSaver.saveAs(fileUrl, file.name);
     })
     .catch((error) => {
       errorRedirect(sessionStorage.getItem("errorUrl"), error);
@@ -46,14 +43,17 @@ const generateTable = (file, data, submissionId) => {
       name: (
         <div style={{ width: "80%" }}>
           <span
-            onKeyDown={() => openFile(file, submissionId)}
+            onKeyDown={() => downloadFile(file, submissionId)}
             role="button"
             tabIndex={0}
             className="file-href"
-            onClick={() => openFile(file, submissionId)}
+            onClick={() => downloadFile(file, submissionId)}
           >
             {file.name}
           </span>
+          {file.isAmendment != null && (
+            <MdDeleteForever size={32} className="push-margin-left pointer" />
+          )}
         </div>
       ),
       value: <Table elements={data} />,
@@ -93,17 +93,13 @@ const getFilingPackageData = (
   if (files.length > 0) return;
 
   axios
-    .get(`/submission/${submissionId}/filing-package`, {
-      headers: {
-        "X-Auth-UserId": getJWTData()["universal-id"],
-      },
-    })
+    .get(`/submission/${submissionId}/filing-package`)
     .then(({ data: { documents, court, submissionFeeAmount } }) => {
       setCourtData(court);
       setSubmissionFee(submissionFeeAmount);
       setFiles(documents);
     })
-    .catch(() => window.open(sessionStorage.getItem("errorUrl"), "_self"));
+    .catch((error) => errorRedirect(sessionStorage.getItem("errorUrl"), error));
 };
 
 export default function PackageConfirmation({
@@ -117,6 +113,21 @@ export default function PackageConfirmation({
   const [showUpload, setShowUpload] = useState(false);
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
+
+  const resetState = () => {
+    setShowUpload(false);
+    setShowPayment(false);
+  };
+
+  useEffect(() => {
+    if (!sessionStorage.getItem("listenerExists")) {
+      sessionStorage.setItem("currentPage", "packageConfirmation");
+      window.addEventListener("popstate", (e) =>
+        onBackButtonEvent(e, resetState)
+      );
+      sessionStorage.setItem("listenerExists", true);
+    }
+  }, []);
 
   useEffect(() => {
     getFilingPackageData(
@@ -143,7 +154,7 @@ export default function PackageConfirmation({
   }
 
   if (showUpload)
-    return <Upload upload={{ confirmationPopup, submissionId }} />;
+    return <Upload upload={{ confirmationPopup, submissionId, courtData }} />;
 
   return (
     <div className="page">
@@ -207,10 +218,10 @@ export default function PackageConfirmation({
         <br />
         <br />
         <h2>Summary</h2>
-        <br />
+        <p />
         <div className="near-half-width">
           <Table
-            elements={generateFileSummaryData(files, submissionFee, false)}
+            elements={generateFileSummaryData(files, submissionFee, false).data}
           />
         </div>
         <br />

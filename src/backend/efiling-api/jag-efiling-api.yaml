@@ -18,7 +18,8 @@ paths:
       tags:
         - submission
       parameters:
-        - $ref: "#/components/parameters/xAuthUserId"
+        - $ref: "#/components/parameters/xTransactionId"
+        - $ref: "#/components/parameters/xUserId"
       requestBody:
         content:
           multipart/form-data:
@@ -37,14 +38,67 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UploadSubmissionDocumentsResponse"
-  "/submission/{id}":
+  "/submission/{submissionId}/documents":
+    post:
+      summary: Additional documents upload
+      operationId: UploadAdditionalSubmissionDocuments
+      tags:
+        - submission
+      parameters:
+        - $ref: "#/components/parameters/submissionId"
+        - $ref: "#/components/parameters/xTransactionId"
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        "200":
+          description: File successfully received
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadSubmissionDocumentsResponse"
+        "404":
+          description: Submission not found
+  "/submission/{submissionId}/update-documents":
+    post:
+      summary: Additional documents properties
+      operationId: UpdateDocumentProperties
+      tags:
+        - submission
+      parameters:
+        - $ref: "#/components/parameters/submissionId"
+        - $ref: "#/components/parameters/xTransactionId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateDocumentRequest"
+      responses:
+        "200":
+          description: Document properties updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateDocumentResponse"
+        "404":
+          description: Submission not found
+  "/submission/{submissionId}":
+    parameters:
+      - $ref: "#/components/parameters/submissionId"
+      - $ref: "#/components/parameters/xTransactionId"
     get:
       summary: Get user detail for a given submission
       operationId: GetSubmission
       tags:
         - submission
-      parameters:
-        - $ref: "#/components/parameters/submissionId"
       responses:
         "200":
           description: Config found
@@ -53,15 +107,24 @@ paths:
               schema:
                 $ref: "#/components/schemas/GetSubmissionResponse"
         "404":
-          description: Config not foun
-  "/submission/{id}/generateUrl":
+          description: Config not found
+    delete:
+      summary: Delete a submission by id
+      operationId: DeleteSubmission
+      tags:
+        - submission
+      responses:
+        "200":
+          description: submission deleted
+  "/submission/{submissionId}/generateUrl":
     post:
       summary: Generates a secure URL for e-filing submission
       operationId: GenerateUrl
       tags:
         - submission
       parameters:
-        - $ref: "#/components/parameters/xAuthUserId"
+        - $ref: "#/components/parameters/xTransactionId"
+        - $ref: "#/components/parameters/xUserId"
         - $ref: "#/components/parameters/submissionId"
       requestBody:
         description: requested parameters to generate a url
@@ -83,14 +146,14 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EfilingError"
-  "/submission/{id}/submit-filing-package":
+  "/submission/{submissionId}/submit":
     post:
-      summary: Submit the filing package to cso
-      operationId: Submit
+      summary: Create service for payment processing
+      operationId: submit
       tags:
         - submission
       parameters:
-        - $ref: "#/components/parameters/xAuthUserId"
+        - $ref: "#/components/parameters/xTransactionId"
         - $ref: "#/components/parameters/submissionId"
       requestBody:
         description: filing submit parameters
@@ -98,28 +161,28 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SubmitFilingPackageRequest"
+              $ref: "#/components/schemas/SubmitRequest"
       responses:
-        "200":
-          description: Filing package succesfully submitted
+        "201":
+          description: Service created
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SubmitFilingPackageResponse"
+                $ref: "#/components/schemas/SubmitResponse"
         "403":
           description: Request does not meet the required criteria
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/EfilingError"
-  "/submission/{id}/filing-package":
+  "/submission/{submissionId}/filing-package":
     get:
       summary: Get filing package information
       operationId: GetSubmissionFilingPackage
       tags:
         - submission
       parameters:
-        - $ref: "#/components/parameters/xAuthUserId"
+        - $ref: "#/components/parameters/xTransactionId"
         - $ref: "#/components/parameters/submissionId"
       responses:
         "200":
@@ -130,14 +193,14 @@ paths:
                 $ref: "#/components/schemas/FilingPackage"
         "404":
           description: Filing Package Information not found
-  "/submission/{id}/document/{filename}":
+  "/submission/{submissionId}/document/{filename}":
     get:
       summary: Get document by name
       operationId: GetSubmissionDocument
       tags:
         - submission
       parameters:
-        - $ref: "#/components/parameters/xAuthUserId"
+        - $ref: "#/components/parameters/xTransactionId"
         - $ref: "#/components/parameters/submissionId"
         - name: filename
           in: path
@@ -163,21 +226,66 @@ paths:
       tags:
         - account
       parameters:
-        - $ref: "#/components/parameters/xAuthUserId"
+        - $ref: "#/components/parameters/xTransactionId"
       requestBody:
         description: cso account details
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UserDetails"
+              $ref: "#/components/schemas/CreateCsoAccountRequest"
       responses:
         "201":
           description: Account Created
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserDetails"
+                $ref: "#/components/schemas/UserFullDetails"
+  "/bceidAccount":
+    get:
+      summary: Get a BCeID account
+      operationId: GetBceidAccount
+      description: Retrieve BCeID user account information
+      tags:
+        - account
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+      responses:
+        "200":
+          description: Account Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BceidAccount"
+        "404":
+          description: Account not found
+  "/lookup/documentTypes/{courtLevel}/{courtClass}":
+    get:
+      summary: Get document types
+      operationId: GetDocumentTypes
+      description: A list of document types
+      tags:
+        - lookup
+      parameters:
+        - name: courtLevel
+          in: path
+          description: court level
+          required: true
+          schema:
+            type: string
+        - name: courtClass
+          in: path
+          description: court class
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of document types
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DocumentTypes"
 components:
   securitySchemes:
     bearerAuth: # arbitrary name for the security scheme
@@ -185,16 +293,24 @@ components:
       scheme: bearer
       bearerFormat: JWT
   parameters:
-    xAuthUserId:
-      name: X-Auth-UserId
+    xTransactionId:
+      name: X-Transaction-Id
       in: header
       schema:
         type: string
         format: uuid
       required: true
-      description: Authenticated user id
+      description: A unique Transaction Id generated by FilingHub clients
+    xUserId:
+      name: X-User-Id
+      in: header
+      schema:
+        type: string
+        format: string
+      required: true
+      description: A unique BCeID universal id passed to initial calls
     submissionId:
-      name: id
+      name: submissionId
       in: path
       description: A submission id
       required: true
@@ -213,6 +329,16 @@ components:
         identifier:
           type: string
           description: the account identifier
+    BceidAccount:
+      type: object
+      description: BCeID account details
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        middleName:
+          type: string
     DocumentProperties:
       type: object
       description: Submission Metadata used to describe the submission that will be e-filled
@@ -226,6 +352,15 @@ components:
         type:
           type: string
           description: the submission type
+        subType:
+          type: string
+          description: sub type value
+        isAmendment:
+          type: boolean
+          description: is the document an amendment to another
+        isSupremeCourtScheduling:
+          type: boolean
+          description: supreme court scheduling required
     Document:
       required:
         - description
@@ -356,6 +491,9 @@ components:
       required:
         - locationDescription
       properties:
+        agencyId:
+          type: number
+          description: the agancy identifier
         locationDescription:
           type: string
           description: the court location description
@@ -382,6 +520,25 @@ components:
         type:
           type: string
           description: the client Court Services Online Application Code
+    DocumentType:
+      type: object
+      required:
+        - type
+        - description
+      properties:
+        type:
+          type: string
+          description: code value
+        description:
+          type: string
+          description: human readable value
+    DocumentTypes:
+      type: object
+      properties:
+        documentTypes:
+          type: array
+          items:
+            $ref: "#/components/schemas/DocumentType"
     UploadSubmissionDocumentsResponse:
       description: represents upload document response
       type: object
@@ -400,15 +557,29 @@ components:
       type: object
       required:
         - universalId
-        - firstName
-        - lastName
-        - middleName
-        - email
+        - cardRegistered
       properties:
         universalId:
           type: string
           format: uuid
           description: the user universal identifier
+        cardRegistered:
+          type: boolean
+          description: if the user has a card on file or not
+        accounts:
+          type: array
+          items:
+            $ref: "#/components/schemas/Account"
+    UserFullDetails:
+      description: represents a user submitting a filing package with full details
+      allOf:
+        - $ref: "#/components/schemas/UserDetails"
+      required:
+        - firstName
+        - lastName
+        - middleName
+        - email
+      properties:
         firstName:
           type: string
           description: the user first name
@@ -421,29 +592,51 @@ components:
         email:
           type: string
           description: the user email address
-        accounts:
+    CreateCsoAccountRequest:
+      description: represents a request to create a user
+      required:
+        - firstName
+        - lastName
+        - middleName
+        - email
+      properties:
+        firstName:
+          type: string
+          description: the user first name
+        lastName:
+          type: string
+          description: the user last name
+        middleName:
+          type: string
+          description: the user middle name
+        email:
+          type: string
+          description: the user email address
+    UpdateDocumentRequest:
+      description: request body for update documents
+      type: object
+      properties:
+        documents:
           type: array
           items:
-            $ref: "#/components/schemas/Account"
-    SubmitFilingPackageRequest:
-      description: submit filing package
+            $ref: "#/components/schemas/DocumentProperties"
+    UpdateDocumentResponse:
+      description: response body for update documents
       type: object
-      required:
-        - isRushOrder
       properties:
-        isRushOrder:
-          type: boolean
-          description: the request is a rush order
-    SubmitFilingPackageResponse:
+        documents:
+          type: array
+          items:
+            $ref: "#/components/schemas/Document"
+    SubmitRequest:
+      description: create service request
+      type: object
+    SubmitResponse:
       description: result of submit filing package
       type: object
       required:
         - transactionId
-        - acknowledge
       properties:
         transactionId:
           type: number
           description: the transaction id returned from cso
-        acknowledge:
-          type: date
-          description: date transaction was returned

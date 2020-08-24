@@ -2,35 +2,37 @@ package ca.bc.gov.open.jag.efilingapi.submission.service;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
+import ca.bc.gov.open.jag.efilingapi.payment.BamboraPaymentAdapter;
+import ca.bc.gov.open.jag.efilingapi.submission.mappers.EfilingFilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.utils.FileUtils;
-import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
-import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
+import ca.bc.gov.open.jag.efilingcommons.model.*;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
-import org.joda.time.LocalDate;
+import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
+import ca.bc.gov.open.sftp.starter.SftpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 
+import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
+import java.text.MessageFormat;
+import java.time.Duration;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+
+
 public class SubmissionServiceImpl implements SubmissionService {
 
     Logger logger = LoggerFactory.getLogger(SubmissionServiceImpl.class);
-
-    public static final UUID FAKE_ACCOUNT = UUID.fromString("88da92db-0791-491e-8c58-1a969e67d2fb");
 
     private final SubmissionStore submissionStore;
 
@@ -38,7 +40,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private final SubmissionMapper submissionMapper;
 
-    private final EfilingAccountService efilingAccountService;
+    private final EfilingFilingPackageMapper efilingFilingPackageMapper;
 
     private final EfilingLookupService efilingLookupService;
 
@@ -48,42 +50,43 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private final DocumentStore documentStore;
 
+    private final BamboraPaymentAdapter bamboraPaymentAdapter;
+
+    private final SftpService sftpService;
+
     public SubmissionServiceImpl(
             SubmissionStore submissionStore,
             CacheProperties cacheProperties,
             SubmissionMapper submissionMapper,
-            EfilingAccountService efilingAccountService,
+            EfilingFilingPackageMapper efilingFilingPackageMapper,
             EfilingLookupService efilingLookupService,
-            EfilingCourtService efilingCourtService, EfilingSubmissionService efilingSubmissionService, DocumentStore documentStore) {
+            EfilingCourtService efilingCourtService,
+            EfilingSubmissionService efilingSubmissionService,
+            DocumentStore documentStore,
+            BamboraPaymentAdapter bamboraPaymentAdapter,
+            SftpService sftpService) {
         this.submissionStore = submissionStore;
         this.cacheProperties = cacheProperties;
         this.submissionMapper = submissionMapper;
-        this.efilingAccountService = efilingAccountService;
+        this.efilingFilingPackageMapper = efilingFilingPackageMapper;
         this.efilingLookupService = efilingLookupService;
         this.efilingCourtService = efilingCourtService;
         this.efilingSubmissionService = efilingSubmissionService;
         this.documentStore = documentStore;
+        this.bamboraPaymentAdapter = bamboraPaymentAdapter;
+        this.sftpService = sftpService;
     }
 
     @Override
-    public Submission generateFromRequest(UUID authUserId, UUID submissionId, GenerateUrlRequest generateUrlRequest) {
-
-        logger.debug("Attempting to get user cso account information");
-        AccountDetails accountDetails = efilingAccountService.getAccountDetails(authUserId, "Individual");
-        logger.info("Successfully got cso account information");
-
-        if (accountDetails != null && accountDetails.getAccountId() != null && !accountDetails.isFileRolePresent()) {
-            throw new InvalidAccountStateException("Account does not have CSO FILE ROLE");
-        } else if (accountDetails == null) {
-            accountDetails = fakeFromBceId(authUserId);
-        }
+    public Submission generateFromRequest(UUID transactionId, UUID submissionId, UUID universalId, GenerateUrlRequest generateUrlRequest) {
 
         Optional<Submission> cachedSubmission = submissionStore.put(
                 submissionMapper.toSubmission(
+                        universalId,
                         submissionId,
+                        transactionId,
                         generateUrlRequest,
                         toFilingPackage(generateUrlRequest),
-                        accountDetails,
                         getExpiryDate()));
 
         if(!cachedSubmission.isPresent())
@@ -94,32 +97,51 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     @Override
-    public SubmitFilingPackageResponse submitFilingPackage(UUID authUserId, UUID submissionId, SubmitFilingPackageRequest submitFilingPackageRequest) {
-        SubmitFilingPackageResponse result = new SubmitFilingPackageResponse();
-        //TODO: create a pull submitting model
-        result.setTransactionId(efilingSubmissionService.submitFilingPackage(submissionId));
-        result.setAcknowledge(LocalDate.now());
+    public SubmitResponse createSubmission(Submission submission) {
+
+        uploadFiles(submission);
+
+        EfilingService service = efilingFilingPackageMapper.toEfilingService(submission);
+        service.setEntryDateTime(DateUtils.getCurrentXmlDate());
+
+        EfilingFilingPackage filingPackage = efilingFilingPackageMapper.toEfilingFilingPackage(submission, Arrays.asList(efilingFilingPackageMapper.toEfilingParties(submission)));
+        filingPackage.setPackageControls(Arrays.asList(efilingFilingPackageMapper.toPackageAuthority(submission)));
+        filingPackage.setDocuments(submission.getFilingPackage().getDocuments().stream()
+                                        .map(document -> efilingFilingPackageMapper.toEfilingDocument(document, submission,
+                                                Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentMilestone(document, submission)),
+                                                Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentPayment(document, submission)),
+                                                Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentStatus(document, submission)),
+                                                MessageFormat.format("fh_{0}_{1}_{2}", submission.getId(), submission.getUniversalId(), document.getName())))
+                                        .collect(Collectors.toList()));
+        filingPackage.setEntDtm(DateUtils.getCurrentXmlDate());
+        filingPackage.setSubmitDtm(DateUtils.getCurrentXmlDate());
+        SubmitResponse result = new SubmitResponse();
+        result.transactionId(efilingSubmissionService.submitFilingPackage(service, filingPackage, (efilingPayment) -> {
+            return bamboraPaymentAdapter.makePayment(efilingPayment);
+        }));
         return result;
     }
 
-    private AccountDetails fakeFromBceId(UUID authUserId) {
+    @Override
+    public Submission updateDocuments(Submission submission, UpdateDocumentRequest updateDocumentRequest) {
 
-        // TODO: implement account details service
-
-        logger.error("THIS IS FOR TESTING ONLY");
-
-        if(authUserId.equals(FAKE_ACCOUNT))
-            return new AccountDetails(authUserId, BigDecimal.ZERO, BigDecimal.ZERO, false, "Bob", "Ross", "Rob", "bross@paintit.com");
-
-        return null;
-
+        submission.getFilingPackage().getDocuments()
+                .addAll(
+                        updateDocumentRequest.getDocuments()
+                        .stream()
+                        .map(documentProperties -> toDocument(
+                            submission.getFilingPackage().getCourt().getLevel(),
+                            submission.getFilingPackage().getCourt().getCourtClass(),
+                            documentProperties))
+                        .collect(Collectors.toList()));
+        return submission;
     }
 
     private FilingPackage toFilingPackage(GenerateUrlRequest request) {
 
         FilingPackage filingPackage = new FilingPackage();
         filingPackage.setCourt(populateCourtDetails(request.getFilingPackage().getCourt()));
-        filingPackage.setSubmissionFeeAmount(getSubmissionFeeAmount(request));
+        filingPackage.setSubmissionFeeAmount(getSubmissionFeeAmount());
         filingPackage.setDocuments(request.getFilingPackage()
                 .getDocuments()
                 .stream()
@@ -134,13 +156,14 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private Court populateCourtDetails(CourtBase courtBase) {
         Court court = new Court();
-        CourtDetails courtDetails = efilingCourtService.getCourtDescription(courtBase.getLocation());
+        CourtDetails courtDetails = efilingCourtService.getCourtDescription(courtBase.getLocation(), courtBase.getLevel(), courtBase.getCourtClass());
         court.setLocation(courtBase.getLocation());
         court.setLevel(courtBase.getLevel());
         court.setCourtClass(courtBase.getCourtClass());
         court.setDivision(courtBase.getDivision());
         court.setFileNumber(courtBase.getFileNumber());
 
+        court.setAgencyId(courtDetails.getCourtId());
         court.setLocationDescription(courtDetails.getCourtDescription());
         court.setClassDescription(courtDetails.getClassDescription());
         court.setLevelDescription(courtDetails.getLevelDescription());
@@ -158,17 +181,50 @@ public class SubmissionServiceImpl implements SubmissionService {
         document.setType(documentProperties.getType());
         document.setName(documentProperties.getName());
         document.setMimeType(FileUtils.guessContentTypeFromName(documentProperties.getName()));
+        document.setIsAmendment(documentProperties.getIsAmendment());
+        document.setIsSupremeCourtScheduling(documentProperties.getIsSupremeCourtScheduling());
+        document.setSubType(details.getOrderDocument() ? SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD : SubmissionConstants.SUBMISSION_ODOC_DOCUMENT_SUB_TYPE_CD);
 
         return document;
 
     }
 
-    private BigDecimal getSubmissionFeeAmount(GenerateUrlRequest request) {
+    private void uploadFiles(Submission submission) {
+        submission.getFilingPackage().getDocuments().forEach(
+                document ->
+                        redisStoreToSftpStore(document.getName(), submission));
 
-        request.getClientApplication().setType(SubmissionConstants.SUBMISSION_FEE_TYPE);
+    }
+
+    private void redisStoreToSftpStore(String fileName, Submission submission) {
+
+        String compositeFileName = ca.bc.gov.open.jag.efilingapi.document.Document
+                .builder()
+                .userId(submission.getUniversalId())
+                .transactionId(submission.getTransactionId())
+                .submissionId(submission.getId())
+                .fileName(fileName)
+                .create().getCompositeId();
+
+
+        sftpService.put(new ByteArrayInputStream(documentStore.get(compositeFileName)), MessageFormat.format("fh_{0}", compositeFileName));
+
+        //Delete file from cache
+        documentStore.evict(compositeFileName);
+
+        // TODO: remove this is temp because of the SFTP rsync process
+        try {
+            Thread.sleep(Duration.ofSeconds(1).toMillis());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private BigDecimal getSubmissionFeeAmount() {
+        // TODO: fix with the mapper ApplicationCode to ServiceTypeCode
         ServiceFees fee = efilingLookupService.getServiceFee(SubmissionConstants.SUBMISSION_FEE_TYPE);
         return fee == null ? BigDecimal.ZERO : fee.getFeeAmount();
-
     }
 
     private long getExpiryDate() {

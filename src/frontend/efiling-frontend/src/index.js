@@ -9,11 +9,23 @@ import "@bcgov/bootstrap-theme/dist/css/bootstrap-theme.min.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
-if (window.REACT_APP_API_BASE_URL) {
-  axios.defaults.baseURL = window.REACT_APP_API_BASE_URL;
-} else if (process.env.REACT_APP_API_BASE_URL) {
-  axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
-}
+axios.defaults.baseURL = window.REACT_APP_API_BASE_URL
+  ? window.REACT_APP_API_BASE_URL
+  : process.env.REACT_APP_API_BASE_URL;
+
+// prevent user from leaving site and losing saved data
+window.addEventListener("beforeunload", (e) => {
+  if (sessionStorage.getItem("validExit")) return false;
+
+  const confirmationMessage = "";
+  (e || window.event).returnValue = confirmationMessage;
+  return confirmationMessage;
+});
+
+window.addEventListener("unload", () => {
+  sessionStorage.removeItem("listenerExists");
+  sessionStorage.removeItem("validExit");
+});
 
 ReactDOM.render(
   <BrowserRouter>

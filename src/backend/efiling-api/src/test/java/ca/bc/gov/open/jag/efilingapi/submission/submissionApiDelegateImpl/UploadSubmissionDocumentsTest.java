@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 
+import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.api.model.UploadSubmissionDocumentsResponse;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
@@ -8,7 +9,6 @@ import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -25,8 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static ca.bc.gov.open.jag.efilingapi.error.ErrorResponse.DOCUMENT_REQUIRED;
-import static ca.bc.gov.open.jag.efilingapi.error.ErrorResponse.DOCUMENT_STORAGE_FAILURE;
+import static ca.bc.gov.open.jag.efilingapi.error.ErrorResponse.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("Upload Submission Documents Test Suite")
@@ -36,18 +35,27 @@ public class UploadSubmissionDocumentsTest {
 
     @Mock
     private SubmissionService submissionServiceMock;
+
     @Mock
     private SubmissionStore submissionStoreMock;
+
     @Mock
     private GenerateUrlResponseMapper generateUrlResponseMapperMock;
+
     @Mock
     private NavigationProperties navigationProperties;
+
     @Mock
     private MultipartFile multipartFileMock;
+
     @Mock
     private DocumentStore documentStoreMock;
+
     @Mock
     private Resource resourceMock;
+
+    @Mock
+    private AccountService accountServiceMock;
 
     @BeforeAll
     public void setUp() throws IOException {
@@ -57,7 +65,7 @@ public class UploadSubmissionDocumentsTest {
         Mockito.when(multipartFileMock.getResource()).thenReturn(resourceMock);
         Mockito.when(multipartFileMock.getBytes()).thenThrow(new IOException("random"));
 
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock);
     }
 
     @Test
@@ -68,7 +76,7 @@ public class UploadSubmissionDocumentsTest {
         MultipartFile multipartFile = new MockMultipartFile("test.txt", "test".getBytes());
         files.add(multipartFile);
         files.add(multipartFile);
-        ResponseEntity<UploadSubmissionDocumentsResponse> actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), files);
+        ResponseEntity<UploadSubmissionDocumentsResponse> actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), files);
 
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
         Assertions.assertNotNull(actual.getBody().getSubmissionId());
@@ -80,7 +88,7 @@ public class UploadSubmissionDocumentsTest {
     public void withEmptyFilesShouldReturnBadRequest() {
 
         List<MultipartFile> files = new ArrayList<>();
-        ResponseEntity actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), files);
+        ResponseEntity actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), files);
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
         Assertions.assertEquals(DOCUMENT_REQUIRED.getErrorCode(), ((EfilingError)actual.getBody()).getError());
@@ -92,7 +100,7 @@ public class UploadSubmissionDocumentsTest {
     @DisplayName("400: with null files should return bad request")
     public void withNullFilesShouldReturnBadRequest() {
 
-        ResponseEntity actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), null);
+        ResponseEntity actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), null);
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
         Assertions.assertEquals(DOCUMENT_REQUIRED.getErrorCode(), ((EfilingError)actual.getBody()).getError());
@@ -105,11 +113,23 @@ public class UploadSubmissionDocumentsTest {
 
         List<MultipartFile> files = new ArrayList<>();
         files.add(multipartFileMock);
-        ResponseEntity actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), files);
+        ResponseEntity actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), files);
 
         Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode());
         Assertions.assertEquals(DOCUMENT_STORAGE_FAILURE.getErrorCode(), ((EfilingError)actual.getBody()).getError());
         Assertions.assertEquals(DOCUMENT_STORAGE_FAILURE.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
     }
 
+    @Test
+    @DisplayName("403: with invalid userId then return forbidden 403")
+    public void withInvalidUserIDThenReturnForbidden() {
+
+        List<MultipartFile> files = new ArrayList<>();
+        files.add(multipartFileMock);
+        ResponseEntity actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), "BADUUID", files);
+
+        Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
+        Assertions.assertEquals(INVALIDUNIVERSAL.getErrorCode(), ((EfilingError)actual.getBody()).getError());
+        Assertions.assertEquals(INVALIDUNIVERSAL.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
+    }
 }

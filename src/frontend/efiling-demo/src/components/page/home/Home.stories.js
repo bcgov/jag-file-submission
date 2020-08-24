@@ -1,5 +1,7 @@
 import React from "react";
 import { createMemoryHistory } from "history";
+import axios from "axios";
+import MockAdapter from "axios-mock-adapter";
 
 import Home from "./Home";
 
@@ -15,14 +17,34 @@ const header = {
 
 const page = { header };
 
-export const Default = () => <Home page={page} />;
+const setRequiredStorage = () => {
+  sessionStorage.setItem("demoKeycloakUrl", "demokeycloakexample.com");
+  sessionStorage.setItem("demoKeycloakRealm", "demoRealm");
+};
 
-export const Mobile = () => <Home page={page} />;
+const LoadData = (props) => {
+  setRequiredStorage();
+  const mock = new MockAdapter(axios);
+  mock
+    .onPost(
+      "demokeycloakexample.com/realms/demoRealm/protocol/openid-connect/token"
+    )
+    .reply(200, { access_token: "token" });
+  return props.children({ page });
+};
 
-Mobile.story = {
-  parameters: {
-    viewport: {
-      defaultViewport: "mobile2",
-    },
+const homeComponent = (data) => <Home page={data.page} />;
+
+export const Default = () => (
+  <LoadData>{(data) => homeComponent(data)}</LoadData>
+);
+
+export const Mobile = () => (
+  <LoadData>{(data) => homeComponent(data)}</LoadData>
+);
+
+Mobile.parameters = {
+  viewport: {
+    defaultViewport: "mobile2",
   },
 };

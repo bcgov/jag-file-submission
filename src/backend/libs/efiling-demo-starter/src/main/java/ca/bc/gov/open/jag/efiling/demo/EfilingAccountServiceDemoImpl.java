@@ -15,7 +15,7 @@ import java.util.UUID;
 public class EfilingAccountServiceDemoImpl implements EfilingAccountService {
 
     @Cacheable(cacheNames = "account", key = "#userGuid", unless="#result == null", cacheManager = "demoAccountCacheManager")
-    public AccountDetails getAccountDetails(UUID userGuid, String bceidAccountType) {
+    public AccountDetails getAccountDetails(UUID userGuid) {
         return null;
     }
 
@@ -31,6 +31,7 @@ public class EfilingAccountServiceDemoImpl implements EfilingAccountService {
                 .lastName(createAccountRequest.getLastName())
                 .middleName(createAccountRequest.getMiddleName())
                 .fileRolePresent(createAccountRequest.getUniversalId() != Keys.ACCOUNT_WITHOUT_EFILING_ROLE)
+                .cardRegistered(true)
                 .create();
 
         return accountDetails;

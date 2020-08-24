@@ -16,12 +16,13 @@ keycloak:
     secret: ${KEYCLOAK_CREDENTIALS_SECRET}
   use-resource-role-mappings: true
   bearer-only: true
+  ssl-required: ${KEYCLOAK_SSL_REQUIRED:external}
 jag:
   efiling:
     global:
       demo: ${DEMO_MODE:false}
     navigation:
-      baseUrl: ${NAVIGATION_BASE_URL:https://httpbin.org/}
+      baseUrl: ${NAVIGATION_BASE_URL:http://localhost:3000/efiling}
     soap:
       clients:
         - client: ACCOUNT
@@ -52,10 +53,31 @@ jag:
           userName: ${CSO_SERVICEFACADE_USERNAME}
           password: ${CSO_SERVICEFACADE_PASSWORD}
           uri: ${CSO_SERVICEFACADE_URI:http://localhost:8091}
-        - client: BCEID
-          userName: ${CSO_BCEIDSERVICE_USERNAME}
-          password: ${CSO_BCEIDSERVICE_PASSWORD}
-          uri: ${CSO_BCEIDSERVICE_URI:http://localhost:8091}
+
+cso:
+  fileServerHost: ${CSO_FILE_SERVER_HOST}
+  debugEnabled: ${CSO_DEBUG_ENABLED:false}
+
+bambora:
+  apiPasscode: ${BAMBORA_APIPASSCODE}
+  merchantId: ${BAMBORA_MERCHANTID}
+
+bcgov:
+  sftp:
+    host: ${SFTP_HOST:localhost}
+    port: ${SFTP_PORT:22}
+    username: ${SFTP_USERNAME:admin}
+    password: ${SFTP_PASSWORD:admin}
+    remoteLocation: ${SFTP_REMOTELOCATION}
+    knownHostsFileName: ${SFTP_KNOWNHOSTS}
+    allowUnknownKeys: ${SFTP_ALLOWUNKNOWN:true}
+    sshPrivateKey: ${SFTP_PRIVATE_KEY}
+  bceid:
+    service:
+      uri: ${BCEID_SERVICE_URI}
+      username: ${BCEID_SERVICE_USERNAME}
+      password: ${BCEID_SERVICE_PASSWORD}
+      onlineServiceId: ${BCEID_SERVICE_ONLINE_SERVICE_ID}
 
 info:
   app:

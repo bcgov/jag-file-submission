@@ -834,25 +834,21 @@ exports[`CSOAccount Component Matches the snapshot 1`] = `
       <section
         class="non-printable buttons pt-4"
       >
-        <div>
-          <button
-            class="normal-white btn"
-            data-test-id="main-cancel-btn"
-            type="button"
-          >
-            Cancel
-          </button>
-        </div>
-        <div>
-          <button
-            class="normal-blue btn"
-            data-test-id="create-cso-btn"
-            disabled=""
-            type="button"
-          >
-            Create CSO Account
-          </button>
-        </div>
+        <button
+          class="bcgov-button normal-white btn"
+          data-test-id="main-cancel-btn"
+          type="button"
+        >
+          Cancel
+        </button>
+        <button
+          class="bcgov-button normal-blue btn"
+          data-test-id="create-cso-btn"
+          disabled=""
+          type="button"
+        >
+          Create CSO Account
+        </button>
       </section>
     </div>
     <div
@@ -863,77 +859,69 @@ exports[`CSOAccount Component Matches the snapshot 1`] = `
         style="position: relative;"
       >
         <div
-          class="row"
+          class="col-12 pt-2"
+          style="position: relative;"
         >
-          <div
-            class="col-12 pt-2"
-            style="position: relative;"
+          <p />
+          <section
+            class="bluegrey-container"
+            id="bluegrey-section"
           >
-            <p />
-            <section
-              class="bluegrey-container"
-              id="bluegrey-section"
+            <div
+              class="container-background bluegrey-heading"
             >
-              <div
-                class="container-background bluegrey-heading"
+              <h2
+                class="heading-style"
               >
-                <h2
-                  class="heading-style"
+                <div
+                  class="side-card-row"
                 >
                   <div
-                    class="row"
+                    class="round-icon-wrapper"
                   >
-                    <div
-                      class="side-card-row"
+                    <svg
+                      class="side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <div
-                        class="round-icon-wrapper"
-                      >
-                        <svg
-                          class="side-card-icon"
-                          fill="currentColor"
-                          height="1em"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
-                          />
-                        </svg>
-                      </div>
-                      <div
-                        class="side-card-title"
-                      >
-                        About E-File Submission
-                      </div>
-                    </div>
+                      <path
+                        d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                      />
+                    </svg>
                   </div>
-                </h2>
-              </div>
-              <div
-                class="bluegrey-content"
+                  <div
+                    class="side-card-title"
+                  >
+                    About E-File Submission
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bluegrey-content"
+            >
+              <span
+                class="content-style"
               >
-                <span
-                  class="content-style"
-                >
-                  <p>
-                    E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
-                    <a
-                      href="https://justice.gov.bc.ca/cso/about/index.do"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      Learn more about CSO
-                    </a>
-                    .
-                  </p>
-                </span>
-              </div>
-            </section>
-          </div>
+                <p>
+                  E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
+                  <a
+                    href="https://justice.gov.bc.ca/cso/about/index.do"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    Learn more about CSO
+                  </a>
+                  .
+                </p>
+              </span>
+            </div>
+          </section>
         </div>
       </div>
     </div>

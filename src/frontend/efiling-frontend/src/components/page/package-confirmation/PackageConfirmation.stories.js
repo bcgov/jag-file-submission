@@ -1,10 +1,10 @@
 import React from "react";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-import { getTestData } from "../../../modules/confirmationPopupTestData";
-import { getDocumentsData } from "../../../modules/documentTestData";
-import { getCourtData } from "../../../modules/courtTestData";
-import { generateJWTToken } from "../../../modules/authenticationHelper";
+import { getTestData } from "../../../modules/test-data/confirmationPopupTestData";
+import { getDocumentsData } from "../../../modules/test-data/documentTestData";
+import { getCourtData } from "../../../modules/test-data/courtTestData";
+import { generateJWTToken } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 
 import PackageConfirmation from "./PackageConfirmation";
 
@@ -23,7 +23,14 @@ const courtData = getCourtData();
 const submissionFeeAmount = 25.5;
 
 sessionStorage.setItem("csoAccountId", "123");
-const token = generateJWTToken({ preferred_username: "username@bceid" });
+const token = generateJWTToken({
+  preferred_username: "username@bceid",
+  name: "User Name",
+  email: "username@example.com",
+  realm_access: {
+    roles: ["rush_flag"],
+  },
+});
 localStorage.setItem("jwt", token);
 
 const LoadData = (props) => {
@@ -67,12 +74,8 @@ export const Mobile = () => (
   </LoadData>
 );
 
-const mobileViewport = {
-  parameters: {
-    viewport: {
-      defaultViewport: "mobile2",
-    },
+Mobile.parameters = {
+  viewport: {
+    defaultViewport: "mobile2",
   },
 };
-
-Mobile.story = mobileViewport;

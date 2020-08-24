@@ -1,16 +1,19 @@
 package ca.bc.gov.open.jag.efilingapi.submission;
 
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
+import ca.bc.gov.open.jag.efilingapi.payment.BamboraPaymentAdapter;
+import ca.bc.gov.open.jag.efilingapi.submission.mappers.EfilingFilingPackageMapper;
+import ca.bc.gov.open.jag.efilingapi.submission.mappers.EfilingFilingPackageMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStoreImpl;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
+import ca.bc.gov.open.sftp.starter.SftpService;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,22 +38,32 @@ public class SubmissionConfig {
     }
 
     @Bean
+    public EfilingFilingPackageMapper efilingFilingPackageMapper() {
+        return new EfilingFilingPackageMapperImpl();
+    }
+
+
+    @Bean
     public SubmissionService submissionService(SubmissionStore submissionStore,
                                                SubmissionMapper submissionMapper,
-                                               EfilingAccountService efilingAccountService,
+                                               EfilingFilingPackageMapper efilingFilingPackageMapper,
                                                EfilingLookupService efilingLookupService,
                                                EfilingCourtService efilingCourtService,
                                                EfilingSubmissionService efilingSubmissionService,
-                                               DocumentStore documentStore) {
+                                               DocumentStore documentStore,
+                                               BamboraPaymentAdapter bamboraPaymentAdapter,
+                                               SftpService sftpService) {
 
         return new SubmissionServiceImpl(submissionStore,
                 cacheProperties,
                 submissionMapper,
-                efilingAccountService,
+                efilingFilingPackageMapper,
                 efilingLookupService,
                 efilingCourtService,
                 efilingSubmissionService,
-                documentStore);
+                documentStore,
+                bamboraPaymentAdapter,
+                sftpService);
     }
 
 }

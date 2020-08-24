@@ -1,23 +1,23 @@
 package ca.bc.gov.open.jag.efilingcommons.model;
 
+import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigDecimal;
+import java.util.List;
 
 public class EfilingService {
+
     private BigDecimal accountId;
     private BigDecimal clientId;
     private String clientReferenceTxt;
     private String courtFileNumber;
     private String documentsProcessed;
-    @XmlSchemaType(name = "dateTime")
     private XMLGregorianCalendar entryDateTime;
     private String entryUserId;
     private BigDecimal serviceId;
-    @XmlSchemaType(name = "dateTime")
     private XMLGregorianCalendar serviceReceivedDateTime;
     private String serviceReceivedDtmText;
     private BigDecimal serviceSessionId;
@@ -25,10 +25,21 @@ public class EfilingService {
     private String serviceTypeCd;
     private String serviceTypeDesc;
     private String styleOfCause;
-    @XmlSchemaType(name = "dateTime")
     private XMLGregorianCalendar updateDateTime;
     private String updateUserId;
     private BigDecimal userSessionId;
+    private BigDecimal submissionFeeAmount;
+    private String internalClientNumber;
+    private List<EfilingTransaction> transactions;
+
+    public EfilingService() {
+        serviceReceivedDateTime = DateUtils.getCurrentXmlDate();
+        entryDateTime = DateUtils.getCurrentXmlDate();
+    }
+
+    public BigDecimal getSubmissionFeeAmount() { return submissionFeeAmount; }
+
+    public void setSubmissionFeeAmount(BigDecimal submissionFeeAmount) {  this.submissionFeeAmount = submissionFeeAmount; }
 
     public BigDecimal getAccountId() {
         return accountId;
@@ -173,6 +184,15 @@ public class EfilingService {
     public void setUserSessionId(BigDecimal userSessionId) {
         this.userSessionId = userSessionId;
     }
+
+    public List<EfilingTransaction> getTransactions() { return transactions; }
+
+    public void setTransactions(List<EfilingTransaction> transactions) { this.transactions = transactions; }
+
+    public String getInternalClientNumber() { return internalClientNumber; }
+
+    public void setInternalClientNumber(String internalClientNumber) { this.internalClientNumber = internalClientNumber; }
+
     @JsonCreator
     public EfilingService(@JsonProperty("accountId") BigDecimal accountId,
                           @JsonProperty("clientId") BigDecimal clientId,
@@ -191,7 +211,10 @@ public class EfilingService {
                           @JsonProperty("styleOfCause") String styleOfCause,
                           @JsonProperty("updateDateTime") XMLGregorianCalendar updateDateTime,
                           @JsonProperty("updateUserId") String updateUserId,
-                          @JsonProperty("userSessionId") BigDecimal userSessionId) {
+                          @JsonProperty("userSessionId") BigDecimal userSessionId,
+                          @JsonProperty("submissionFeeAmount") BigDecimal submissionFeeAmount,
+                          @JsonProperty("internalClientNumber") String internalClientNumber,
+                          @JsonProperty("transactions") List<EfilingTransaction> transactions) {
         this.accountId = accountId;
         this.clientId = clientId;
         this.clientReferenceTxt = clientReferenceTxt;
@@ -210,6 +233,9 @@ public class EfilingService {
         this.updateDateTime = updateDateTime;
         this.updateUserId = updateUserId;
         this.userSessionId = userSessionId;
+        this.submissionFeeAmount = submissionFeeAmount;
+        this.internalClientNumber = internalClientNumber;
+        this.transactions = transactions;
     }
-    public EfilingService() { }
+
 }

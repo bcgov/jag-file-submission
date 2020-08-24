@@ -11,11 +11,13 @@ public class AccountDetails {
     private UUID universalId;
     private BigDecimal accountId;
     private BigDecimal clientId;
+    private String internalClientNumber;
     private String firstName;
     private String lastName;
     private String email;
     private String middleName;
     private boolean fileRolePresent;
+    private boolean cardRegistered;
 
     protected AccountDetails(AccountDetails.Builder builder) {
 
@@ -27,6 +29,8 @@ public class AccountDetails {
         this.email = builder.email;
         this.middleName = builder.middleName;
         this.fileRolePresent = builder.fileRolePresent;
+        this.cardRegistered = builder.cardRegistered;
+        this.internalClientNumber = builder.internalClientNumber;
 
     }
 
@@ -40,19 +44,23 @@ public class AccountDetails {
             @JsonProperty("universalId") UUID universalId,
             @JsonProperty("accountId") BigDecimal accountId,
             @JsonProperty("clientId") BigDecimal clientId,
+            @JsonProperty("internalClientNumber") String internalClientNumber,
             @JsonProperty("fileRolePresent") boolean fileRolePresent,
             @JsonProperty("firstName") String firstName,
             @JsonProperty("lastName") String lastName,
             @JsonProperty("middleName") String middleName,
-            @JsonProperty("email") String email) {
+            @JsonProperty("email") String email,
+            @JsonProperty("cardRegistered") Boolean cardRegistered) {
         this.universalId = universalId;
         this.accountId = accountId;
         this.clientId = clientId;
+        this.internalClientNumber = internalClientNumber;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.middleName = middleName;
         this.fileRolePresent = fileRolePresent;
+        this.cardRegistered = cardRegistered;
     }
 
     public UUID getUniversalId() {
@@ -66,6 +74,8 @@ public class AccountDetails {
     public BigDecimal getClientId() {
         return clientId;
     }
+
+    public String getInternalClientNumber() { return internalClientNumber; }
 
     public String getFirstName() {
         return firstName;
@@ -87,16 +97,21 @@ public class AccountDetails {
         return fileRolePresent;
     }
 
+    public boolean isCardRegistered() { return cardRegistered; }
+
     public static class Builder {
 
         private UUID universalId;
         private BigDecimal accountId;
         private BigDecimal clientId;
+        private String internalClientNumber;
         private String firstName;
         private String lastName;
         private String email;
         private String middleName;
         private boolean fileRolePresent;
+        private boolean cardRegistered;
+
 
         public Builder universalId(UUID universalId) {
             this.universalId = universalId;
@@ -110,6 +125,11 @@ public class AccountDetails {
 
         public Builder clientId(BigDecimal clientId) {
             this.clientId = clientId;
+            return this;
+        }
+
+        public Builder internalClientNumber(String internalClientNumber) {
+            this.internalClientNumber = internalClientNumber;
             return this;
         }
 
@@ -135,6 +155,11 @@ public class AccountDetails {
 
         public Builder fileRolePresent(boolean fileRolePresent) {
             this.fileRolePresent = fileRolePresent;
+            return this;
+        }
+
+        public Builder cardRegistered(boolean cardRegistered) {
+            this.cardRegistered = cardRegistered;
             return this;
         }
 

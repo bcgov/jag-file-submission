@@ -14,9 +14,9 @@ services:
     ports:
       - 3000:3000
     environment:
-      - REACT_APP_KEYCLOAK_REALM=${EFILING_FRONTEND_KEYCLOAK_REALM}
+      - REACT_APP_KEYCLOAK_REALM=${KEYCLOAK_REALM}
       - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-frontend
-      - REACT_APP_KEYCLOAK_URL=${EFILING_FRONTEND_KEYCLOAK_URL}
+      - REACT_APP_KEYCLOAK_URL=${KEYCLOAK_URL}
       - REACT_APP_API_BASE_URL=http://localhost:8080
 
   #############################################################################################
@@ -48,6 +48,7 @@ services:
         - SERVICE_NAME=efiling-api
         - MVN_PROFILE=${MVN_PROFILE:-demo}
         - SKIP_TESTS=true
+        - STARTERS_V=v0.1.5
     ports:
       - "8080:8080"
     environment:
@@ -68,8 +69,8 @@ services:
       - BCEID_LOOKUP_USERNAME=${BCEID_LOOKUP_USERNAME}
       - BCEID_LOOKUP_PASSWORD=${BCEID_LOOKUP_PASSWORD}
       - BCEID_LOOKUP_URI=${BCEID_LOOKUP_URI}
-      - KEYCLOAK_AUTH_SERVER_URL=http://keycloak:8080/auth
-      - KEYCLOAK_REALM=SpringBootKeycloak
+      - KEYCLOAK_AUTH_SERVER_URL=${KEYCLOAK_URL}
+      - KEYCLOAK_REALM=${KEYCLOAK_REALM}
       - KEYCLOAK_RESOURCE=efiling-api
       - KEYCLOAK_CREDENTIALS_SECRET=${KEYCLOAK_CREDENTIALS_SECRET}
     networks:
@@ -104,22 +105,6 @@ services:
       - REDIS_PASSWORD=admin
     ports:
       - "8082:8081"
-    networks:
-      - fisu-net
-
-  #############################################################################################
-  ###                             RABBIT MQ SERVER                                          ###
-  #############################################################################################
-  rabbitmq:
-    image: rabbitmq:3.7.15-management
-    container_name: rabbitmq
-    hostname: rabbitmq
-    ports:
-      - 5672:5672
-      - 15672:15672
-    volumes:
-      - data-rabbit:/var/lib/rabbitmq/mnesia/rabbit@app-rabbitmq:cached
-    restart: always
     networks:
       - fisu-net
 
@@ -160,9 +145,19 @@ services:
     networks:
       - fisu-net
 
+  #############################################################################################
+  ###                             SFTP SERVER                                               ###
+  #############################################################################################
+  sftp:
+    image: atmoz/sftp
+    ports:
+      - "22:22"
+    command: admin:admin:::upload
+    networks:
+      - fisu-net
+
 volumes:
   data-redis:
-  data-rabbit:
 
 networks:
   fisu-net:
