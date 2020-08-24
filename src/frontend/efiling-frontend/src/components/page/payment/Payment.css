@@ -7,14 +7,12 @@
 }
 
 .button-container {
-  width: 30%;
   justify-content: space-between;
   display: flex;
 }
 
 @media (max-width: 576px) {
   .button-container {
-    width: 50%;
     justify-content: space-between;
     display: flex;
   }
