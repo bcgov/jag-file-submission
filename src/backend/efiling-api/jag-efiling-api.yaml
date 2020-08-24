@@ -419,6 +419,8 @@ components:
           $ref: "#/components/schemas/UserDetails"
         navigation:
           $ref: "#/components/schemas/Navigation"
+        clientApplication:
+          $ref: "#/components/schemas/ClientApplication"
     Navigation:
       required:
         - success

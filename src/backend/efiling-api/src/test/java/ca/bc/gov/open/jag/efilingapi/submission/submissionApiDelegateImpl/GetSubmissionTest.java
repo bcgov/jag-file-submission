@@ -98,6 +98,7 @@ public class GetSubmissionTest {
         Submission submissionWithCsoAccount = Submission
                 .builder()
                 .navigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
+                .clientApplication(TestHelpers.createClientApplication(TestHelpers.DESCRIPTION, TestHelpers.TYPE))
                 .create();
 
         Mockito.when(submissionStoreMock.get(Mockito.eq(TestHelpers.CASE_2), Mockito.any())).thenReturn(Optional.of(submissionWithCsoAccount));
@@ -168,6 +169,8 @@ public class GetSubmissionTest {
         assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigation().getSuccess().getUrl());
         assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigation().getCancel().getUrl());
         assertEquals(TestHelpers.ERROR_URL, actual.getBody().getNavigation().getError().getUrl());
+        assertEquals(TestHelpers.TYPE, actual.getBody().getClientApplication().getType());
+        assertEquals(TestHelpers.DESCRIPTION, actual.getBody().getClientApplication().getDisplayName());
 
     }
 
