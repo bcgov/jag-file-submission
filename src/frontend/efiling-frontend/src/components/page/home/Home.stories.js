@@ -32,6 +32,7 @@ const documents = getDocumentsData();
 const court = getCourtData();
 const submissionFeeAmount = 25.5;
 const userDetails = getUserDetails();
+const clientApplication = { displayName: "client app" };
 
 const setRequiredStorage = () => {
   sessionStorage.setItem("errorUrl", "error.com");
@@ -56,7 +57,9 @@ const LoaderStateData = (props) => {
 const AccountExistsStateData = (props) => {
   setRequiredStorage();
   const mock = new MockAdapter(axios);
-  mock.onGet(apiRequest).reply(200, { userDetails, navigation });
+  mock
+    .onGet(apiRequest)
+    .reply(200, { userDetails, navigation, clientApplication });
   mock
     .onGet(getFilingPackagePath)
     .reply(200, { documents, court, submissionFeeAmount });
@@ -69,6 +72,7 @@ const NoAccountExistsStateData = (props) => {
   mock.onGet(apiRequest).reply(200, {
     userDetails: { ...userDetails, accounts: null },
     navigation,
+    clientApplication,
   });
   mock.onGet("/bceidAccount").reply(200, {
     firstName: "User",
