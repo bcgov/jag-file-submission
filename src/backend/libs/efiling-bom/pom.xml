@@ -208,6 +208,12 @@
                 <version>${ca.bc.gov.open.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>ca.bc.gov.open</groupId>
+                <artifactId>bambora-payment-starter</artifactId>
+                <version>${ca.bc.gov.open.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
