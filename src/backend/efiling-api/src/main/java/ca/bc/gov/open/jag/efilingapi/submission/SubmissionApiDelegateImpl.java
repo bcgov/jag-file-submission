@@ -288,7 +288,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             }
 
             userDetails.setUniversalId(accountDetails.getUniversalId());
-            userDetails.setCardRegistered(accountDetails.isCardRegistered());
+            userDetails.setClientId(accountDetails.getClientId());
 
         }
 
