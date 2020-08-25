@@ -10,6 +10,7 @@ public class BamboraProperties {
     private String apiPasscode;
     private String merchantId;
 
+
     public String getApiPasscode() {
         return apiPasscode;
     }
