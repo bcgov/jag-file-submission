@@ -1682,15 +1682,15 @@
     regenerator-runtime "^0.13.3"
     ts-dedent "^1.1.1"
 
-"@storybook/addon-storyshots@^6.0.13":
-  version "6.0.16"
-  resolved "https://registry.yarnpkg.com/@storybook/addon-storyshots/-/addon-storyshots-6.0.16.tgz#e912273966d4c7cba1a9053d6a76e8856e3b834f"
-  integrity sha512-wQhM6pnjUCLTr/6BMXTptGeqiMPnnTrvLeaRwG1cDChGK/qs3YqTsa2QqLXQ17IvNUDTHLUNQlYk5af+HrCGhg==
+"@storybook/addon-storyshots@^6.0.18":
+  version "6.0.18"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-storyshots/-/addon-storyshots-6.0.18.tgz#578234134d4e5905b9816f42ed363c3745321933"
+  integrity sha512-avOI4HL7ZyyI+4BanaEzQEhSXcyeKrZ2Q6e2DundOds1GlVRFQD6Gwp2tywH1Q1hnt/W3xWeOGmqFKYlDtNMfQ==
   dependencies:
     "@jest/transform" "^26.0.0"
-    "@storybook/addons" "6.0.16"
-    "@storybook/client-api" "6.0.16"
-    "@storybook/core" "6.0.16"
+    "@storybook/addons" "6.0.18"
+    "@storybook/client-api" "6.0.18"
+    "@storybook/core" "6.0.18"
     "@types/glob" "^7.1.1"
     "@types/jest" "^25.1.1"
     "@types/jest-specific-snapshot" "^0.5.3"
