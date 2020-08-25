@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,6 +31,16 @@ public class AccountConfigTest {
 
                 @Override
                 public AccountDetails createAccount(CreateAccountRequest createAccountRequest) {
+                    return null;
+                }
+
+                @Override
+                public void updateClient(BigDecimal clientId) {
+
+                }
+
+                @Override
+                public String getOrderNumber() {
                     return null;
                 }
             };
