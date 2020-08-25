@@ -56,7 +56,6 @@ public class GenerateUrlRequestBuilders {
         JsonPath jsonPath = new JsonPath(response.asString());
 
         String accessToken = jsonPath.get("access_token");
-        System.out.println(accessToken);
 
         File pdfFile = new File(UPLOAD_FILE_PATH + FILE_NAME_PATH);
 
