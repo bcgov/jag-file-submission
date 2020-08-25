@@ -10,7 +10,8 @@ public enum ErrorResponse {
     DOCUMENT_STORAGE_FAILURE("An unknown error happened while storing documents."),
     CREATE_ACCOUNT_EXCEPTION("Error Creating CSO account."),
     CACHE_ERROR("Cache related error."),
-    MISSING_UNIVERSAL_ID("universal-id claim missing in jwt token.");
+    MISSING_UNIVERSAL_ID("universal-id claim missing in jwt token."),
+    URL_GENERATION_FAILURE("failed to generate bambora card update url.");
 
     private final String errorMessage;
 

@@ -286,6 +286,29 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DocumentTypes"
+  "/payment/generate-update-card":
+    post:
+      summary: Update card on bambora
+      operationId: UpdateCreditCard
+      description: For expired credit card get url to update
+      tags:
+        - payment
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+      requestBody:
+        description: card update params
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenerateCardUrlRequest"
+      responses:
+        "200":
+          description: Card url generated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenerateCardUrlResponse"
 components:
   securitySchemes:
     bearerAuth: # arbitrary name for the security scheme
@@ -419,6 +442,8 @@ components:
           $ref: "#/components/schemas/UserDetails"
         navigation:
           $ref: "#/components/schemas/Navigation"
+        clientApplication:
+          $ref: "#/components/schemas/ClientApplication"
     Navigation:
       required:
         - success
@@ -640,3 +665,25 @@ components:
         transactionId:
           type: number
           description: the transaction id returned from cso
+    GenerateCardUrlRequest:
+      description: create service request
+      type: object
+      required:
+        - clientId
+        - redirectUrl
+      properties:
+        clientId:
+          type: number
+          description: client id for request to bambora
+        redirectUrl:
+          type: string
+          description: url bambora return from
+    GenerateCardUrlResponse:
+      description: result generate url
+      type: object
+      required:
+        - bamboraUrl
+      properties:
+        bamboraUrl:
+          type: string
+          description: redirect url
