@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jagefilingapi.qa.backendutils;
 
 import ca.bc.gov.open.jagefilingapi.qa.config.ReadConfig;
+import ca.bc.gov.open.jagefilingapi.qa.requestbuilders.GenerateUrlRequestBuilders;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.RequestLoggingFilter;

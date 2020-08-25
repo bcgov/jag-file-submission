@@ -12,14 +12,14 @@ public class GenerateUrlPayload {
 
     private static final String DIVISION = "division";
     private static final String FILENUMBER = "file number";
-    private static final String LEVEL = "level";
-    private static final String LOCATION = "location";
+    private static final String LEVEL = "P";
+    private static final String LOCATION = "1211";
     private static final String PARTICIPATIONCLASS = "class";
-    private static final String PROPERTYCLASS = "property class";
-    private static final String DESCRIPTION = "description";
-    private static final String APPTYPE = "Client application type";
-    private static final String DOCTYPE = "Document type";
-    private static final String DISPLAYNAME = "Display name";
+    private static final String COURT_CLASS = "F";
+    private static final String DESCRIPTION = "Without Notice Application Checklist";
+    private static final String APPTYPE = "DCFL";
+    private static final String DOCTYPE = "WNC";
+    private static final String DISPLAYNAME = "my app";
 
     public static final String SUCCESS_URL = "http://success.com";
     public static final String CANCEL_URL = "http://cancel.com";
@@ -40,9 +40,10 @@ public class GenerateUrlPayload {
     public GenerateUrlRequest generateUrlRequestPayload(){
         generateUrlRequest = new GenerateUrlRequest();
 
+        generateUrlRequest.setNavigation(generateNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL));
         generateUrlRequest.setClientApplication(generateClientApplication(DISPLAYNAME, APPTYPE));
         generateUrlRequest.setFilingPackage(generateInitialPackage(generateCourt(), generateDocumentPropertiesList()));
-        generateUrlRequest.setNavigation(generateNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL));
+
 
         return generateUrlRequest;
     }
@@ -85,21 +86,21 @@ public class GenerateUrlPayload {
 
     public static Court generateCourt() {
         Court court = new Court();
-        court.setDivision(DIVISION);
-        court.setFileNumber(FILENUMBER);
+       /* court.setDivision(DIVISION);
+        court.setFileNumber(FILENUMBER);*/
         court.setLevel(LEVEL);
         court.setLocation(LOCATION);
-        court.setParticipatingClass(PARTICIPATIONCLASS);
-        court.setCourtClass(PROPERTYCLASS);
-        court.setLevelDescription(LEVEL_DESCRIPTION);
+       /* court.setParticipatingClass(PARTICIPATIONCLASS);*/
+        court.setCourtClass(COURT_CLASS);
+    /*    court.setLevelDescription(LEVEL_DESCRIPTION);
         court.setClassDescription(CLASS_DESCRIPTION);
-        court.setLocationDescription(COURT_DESCRIPTION);
+        court.setLocationDescription(COURT_DESCRIPTION);*/
         return court;
     }
 
     public static List<DocumentProperties> generateDocumentPropertiesList() {
         DocumentProperties documentProperties = new DocumentProperties();
-        documentProperties.setName("random.txt");
+        documentProperties.setName("time.ps1");
         documentProperties.setType(DOCTYPE);
 
         return Arrays.asList(documentProperties);
@@ -109,7 +110,7 @@ public class GenerateUrlPayload {
         Document documentProperties = new Document();
         documentProperties.setDescription(DESCRIPTION);
         documentProperties.setStatutoryFeeAmount(BigDecimal.TEN);
-        documentProperties.setName("random.txt");
+        documentProperties.setName("time.ps1");
         documentProperties.setType(DOCTYPE);
 
         return Arrays.asList(documentProperties);

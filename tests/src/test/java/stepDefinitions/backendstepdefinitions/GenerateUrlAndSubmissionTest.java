@@ -42,19 +42,34 @@ public class GenerateUrlAndSubmissionTest {
     private String email;
     private String validExistingCSOGuid;
     private String nonExistingCSOGuid;
+    private String accessToken;
     private GenerateUrlPayload payloadData;
     private static final String CONTENT_TYPE = "application/json";
-    private static final String X_AUTH_USER_ID = "X-Auth-UserId";
+    private static final String X_TRANSACTION_ID = "X-Transaction-Id";
+    private static final String X_USER_ID = "X-User-Id";
     private static final String ERROR = "error";
     private static final String MESSAGE = "message";
     private static final String SUBMISSION_ID = "submissionId";
+
     public Logger log = LogManager.getLogger(GenerateUrlAndSubmissionTest.class);
+
+    @Given("bearer token is available")
+    public void bearerTokenIsAvailable() throws IOException {
+      /*  generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
+
+        response = generateUrlRequestBuilders.getBearerToken();
+        jsonPath = new JsonPath(response.asString());
+
+        accessToken = jsonPath.get("access_token");
+        System.out.println(accessToken);*/
+
+    }
 
     @Given("POST http request is made to {string} with valid existing CSO account guid and a single image file")
     public void postHttpRequestIsMadeToWithValidExistingCsoAccountGuidAndASingleImageFile(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
 
-        response = generateUrlRequestBuilders.validRequestWithSingleDocument(resource);
+       response = generateUrlRequestBuilders.validRequestWithSingleDocument(resource);
     }
 
     @When("status code is {int} and content type is verified")
@@ -109,10 +124,18 @@ public class GenerateUrlAndSubmissionTest {
         APIResources resourceGet = APIResources.valueOf(resource);
 
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
+        String validUserid = JsonDataReader.getCsoAccountGuid().getValidUserid();
 
-        RequestSpecification request = given()
+        response = generateUrlRequestBuilders.getBearerToken();
+        JsonPath jsonPath = new JsonPath(response.asString());
+
+        String accessToken = jsonPath.get("access_token");
+        System.out.println(accessToken);
+
+        RequestSpecification request = given().auth().preemptive().oauth2(accessToken)
                 .spec(TestUtil.requestSpecification())
-                .header(X_AUTH_USER_ID, validExistingCSOGuid)
+                .header(X_TRANSACTION_ID, validExistingCSOGuid)
+                .header(X_USER_ID,validUserid )
                 .body(payloadData.validGenerateUrlPayload());
         response = request.when().post(resourceGet.getResource() + submissionId + "/generateUrl")
                 .then()
@@ -150,7 +173,7 @@ public class GenerateUrlAndSubmissionTest {
 
         RequestSpecification request = given()
                 .spec(TestUtil.requestSpecification())
-                .header(X_AUTH_USER_ID, validExistingCSOGuid);
+                .header(X_TRANSACTION_ID, validExistingCSOGuid);
         response = request.when().get(resourceGet.getResource() + submissionId)
                 .then()
                 .spec(TestUtil.responseSpecification())
@@ -194,7 +217,7 @@ public class GenerateUrlAndSubmissionTest {
         APIResources resourceGet = APIResources.valueOf(resource);
 
         RequestSpecification request = given().spec(TestUtil.requestSpecification())
-                .header(X_AUTH_USER_ID, validExistingCSOGuid);
+                .header(X_TRANSACTION_ID, validExistingCSOGuid);
 
         response = request.when().get(resourceGet.getResource() + submissionId + "/filing-package")
                 .then()
@@ -253,7 +276,7 @@ public class GenerateUrlAndSubmissionTest {
         APIResources resourceGet = APIResources.valueOf(resource);
 
         RequestSpecification request = given().spec(TestUtil.requestSpecification())
-                .header(X_AUTH_USER_ID, validExistingCSOGuid);
+                .header(X_TRANSACTION_ID, validExistingCSOGuid);
 
         response = request.when().get(resourceGet.getResource() + submissionId + "/document" + "/backend.png")
                 .then()
@@ -290,7 +313,7 @@ public class GenerateUrlAndSubmissionTest {
 
         RequestSpecification request = given()
                 .spec(TestUtil.requestSpecification())
-                .header(X_AUTH_USER_ID, nonExistingCSOGuid)
+                .header(X_TRANSACTION_ID, nonExistingCSOGuid)
                 .body(payloadData.validGenerateUrlPayload());
         response = request.when().post(resourceGet.getResource() + submissionId + "/generateUrl")
                 .then()
@@ -328,7 +351,7 @@ public class GenerateUrlAndSubmissionTest {
 
         RequestSpecification request = given()
                 .spec(TestUtil.requestSpecification())
-                .header(X_AUTH_USER_ID, nonExistingCSOGuid);
+                .header(X_TRANSACTION_ID, nonExistingCSOGuid);
         response = request.when().get(resourceGet.getResource() + submissionId)
                 .then()
                 .spec(TestUtil.responseSpecification())
@@ -361,7 +384,7 @@ public class GenerateUrlAndSubmissionTest {
         APIResources resourceGet = APIResources.valueOf(resource);
 
         RequestSpecification request = given().spec(TestUtil.requestSpecification())
-                .header(X_AUTH_USER_ID, nonExistingCSOGuid);
+                .header(X_TRANSACTION_ID, nonExistingCSOGuid);
 
         response = request.when().get(resourceGet.getResource() + submissionId + "/filing-package")
                 .then()
@@ -374,7 +397,7 @@ public class GenerateUrlAndSubmissionTest {
         APIResources resourceGet = APIResources.valueOf(resource);
 
         RequestSpecification request = given().spec(TestUtil.requestSpecification())
-                .header(X_AUTH_USER_ID, nonExistingCSOGuid);
+                .header(X_TRANSACTION_ID, nonExistingCSOGuid);
 
         response = request.when().get(resourceGet.getResource() + submissionId + "/document" + "/backend.png")
                 .then()
