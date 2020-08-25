@@ -25,7 +25,7 @@ public class PaymentApiDelegateImpl implements PaymentApiDelegate {
     }
 
     @Override
-    //@RolesAllowed("efiling-user")
+    @RolesAllowed("efiling-user")
     public ResponseEntity<GenerateCardUrlResponse> updateCreditCard(UUID xTransactionId, GenerateCardUrlRequest generateCardUrlRequest) {
 
         GenerateCardUrlResponse generateCardUrlResponse = new GenerateCardUrlResponse();
