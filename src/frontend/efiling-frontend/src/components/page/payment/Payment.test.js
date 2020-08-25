@@ -31,7 +31,7 @@ describe("Payment Component", () => {
     submissionFee,
   };
 
-  sessionStorage.setItem("cardRegistered", true);
+  sessionStorage.setItem("clientId", 1);
   const token = generateJWTToken({
     preferred_username: "username@bceid",
     realm_access: {

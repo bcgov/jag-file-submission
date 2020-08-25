@@ -4,17 +4,22 @@ import { MdCreditCard } from "react-icons/md";
 import { Alert } from "shared-components";
 
 const registerCard = () => {
+  const data = {
+    clientId:
+      sessionStorage.getItem(clientId) === "null"
+        ? null
+        : Number(sessionStorage.getItem(clientId)),
+    redirectUrl: sessionStorage.getItem("bamboraRedirectUrl"),
+  };
+
   axios
-    .post("https://run.mocky.io/v3/fe75e1f6-5129-446e-a02f-267e4c1fb519")
-    .then((res) => {
-      console.log(res);
+    .post("/payment/generate-update-card", data)
+    .then(({ data: { bamboraUrl } }) => {
       sessionStorage.setItem("validExit", true);
       sessionStorage.setItem("isBamboraRedirect", true);
-      window.open(res.data.bamboraUrl, "_self");
+      window.open(bamboraUrl, "_self");
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    .catch((error) => errorRedirect(sessionStorage.getItem("errorUrl"), error));
 };
 
 const existingCreditCard = () => {
