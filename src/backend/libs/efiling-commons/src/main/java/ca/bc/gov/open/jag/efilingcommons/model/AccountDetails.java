@@ -99,6 +99,10 @@ public class AccountDetails {
 
     public boolean isCardRegistered() { return cardRegistered; }
 
+    public void setClientId(BigDecimal clientId) {
+        this.clientId = clientId;
+    }
+
     public static class Builder {
 
         private UUID universalId;
