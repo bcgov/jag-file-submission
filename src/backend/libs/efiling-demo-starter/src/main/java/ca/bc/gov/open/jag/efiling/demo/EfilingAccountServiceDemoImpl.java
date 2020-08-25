@@ -38,4 +38,14 @@ public class EfilingAccountServiceDemoImpl implements EfilingAccountService {
 
     }
 
+    @Override
+    public void updateClient(BigDecimal clientId) {
+        //Void not doing a thing in demo mode
+    }
+
+    @Override
+    public String getOrderNumber() {
+        return "1234";
+    }
+
 }

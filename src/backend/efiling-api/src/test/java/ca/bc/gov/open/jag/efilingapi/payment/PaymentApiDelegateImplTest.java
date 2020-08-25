@@ -5,6 +5,7 @@ import ca.bc.gov.open.bambora.payment.starter.managment.BamboraCardService;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateCardUrlRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateCardUrlResponse;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import com.sun.jndi.toolkit.url.Uri;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
@@ -31,6 +32,9 @@ public class PaymentApiDelegateImplTest {
     @Mock
     BamboraCardService bamboraCardServiceMock;
 
+    @Mock
+    EfilingAccountService efilingAccountServiceMock;
+
     @BeforeAll
     public void setUp() throws MalformedURLException {
         MockitoAnnotations.initMocks(this);
@@ -41,7 +45,7 @@ public class PaymentApiDelegateImplTest {
         Mockito.doThrow(BamboraException.class).when(bamboraCardServiceMock).setupRecurringPayment(
                 ArgumentMatchers.argThat(request -> request.getEndUserId().equals(BigDecimal.ONE.toString())));
 
-        sut = new PaymentApiDelegateImpl(bamboraCardServiceMock);
+        sut = new PaymentApiDelegateImpl(bamboraCardServiceMock, efilingAccountServiceMock);
     }
 
     @Test

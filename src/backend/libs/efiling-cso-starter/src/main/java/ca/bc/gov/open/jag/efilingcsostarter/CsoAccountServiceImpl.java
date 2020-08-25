@@ -4,6 +4,7 @@ import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.Register
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RoleRegistryPortType;
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.UserRoles;
 import ca.bc.gov.ag.csows.accounts.*;
+import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.AccountDetailsMapper;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.CSOHasMultipleAccountException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
@@ -15,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.WebServiceException;
+import java.math.BigDecimal;
 import java.util.*;
 
 public class CsoAccountServiceImpl implements EfilingAccountService {
@@ -71,6 +73,34 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         }
 
         return accountDetails;
+    }
+
+    @Override
+    public void updateClient(BigDecimal clientId) {
+
+        if (clientId == null) throw new IllegalArgumentException("client identifier is required");
+
+        Client client = new Client();
+        client.setClientId(clientId);
+        client.setRegisteredCreditCardYnBoolean(true);
+        client.setUpdDtm(DateUtils.getCurrentXmlDate());
+        client.setUpdUserId(clientId.toString());
+
+        try {
+            accountFacadeBean.updateClient(client);
+        } catch (NestedEjbException_Exception e) {
+            throw new EfilingAccountServiceException("Exception while updating client", e);
+        }
+
+    }
+
+    @Override
+    public String getOrderNumber() {
+        try {
+            return accountFacadeBean.getNextOrderNumber().toString();
+        } catch (NestedEjbException_Exception e) {
+            throw new EfilingAccountServiceException("Exception while fetching next order number", e);
+        }
     }
 
     private AccountDetails getCsoDetails(UUID universalId)  {

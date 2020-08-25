@@ -38,4 +38,11 @@ public class EfilingAccountServiceDemoImplTest {
 
     }
 
+    @Test
+    @DisplayName("OK: should return order number as string")
+    public void shouldReturnOrderNumber() {
+        String actual = sut.getOrderNumber();
+        Assertions.assertEquals("1234", actual);
+    }
+
 }
