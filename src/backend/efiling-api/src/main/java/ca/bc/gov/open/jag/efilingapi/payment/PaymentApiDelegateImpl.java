@@ -8,13 +8,14 @@ import ca.bc.gov.open.jag.efilingapi.api.model.GenerateCardUrlRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateCardUrlResponse;
 import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
-import com.sun.jndi.toolkit.url.Uri;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.security.RolesAllowed;
 import java.util.UUID;
 
+@Service
 public class PaymentApiDelegateImpl implements PaymentApiDelegate {
 
     private final BamboraCardService bamboraCardService;
@@ -24,7 +25,7 @@ public class PaymentApiDelegateImpl implements PaymentApiDelegate {
     }
 
     @Override
-    @RolesAllowed("efiling-user")
+    //@RolesAllowed("efiling-user")
     public ResponseEntity<GenerateCardUrlResponse> updateCreditCard(UUID xTransactionId, GenerateCardUrlRequest generateCardUrlRequest) {
 
         GenerateCardUrlResponse generateCardUrlResponse = new GenerateCardUrlResponse();
