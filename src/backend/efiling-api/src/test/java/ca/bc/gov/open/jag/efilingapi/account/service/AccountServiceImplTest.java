@@ -4,11 +4,14 @@ import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import org.junit.jupiter.api.*;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
+
+import static org.mockito.ArgumentMatchers.any;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("AccountServiceImpl test suite")
@@ -32,6 +35,9 @@ public class AccountServiceImplTest {
         Mockito.when(efilingAccountServiceMock.getAccountDetails(Mockito.eq(TestHelpers.CASE_1)))
                 .thenReturn(accountDetails);
 
+        Mockito.doNothing().when(efilingAccountServiceMock).updateClient(any());
+
+
         sut = new AccountServiceImpl(efilingAccountServiceMock);
     }
 
@@ -44,5 +50,13 @@ public class AccountServiceImplTest {
 
     }
 
+    @Test
+    @DisplayName("OK: execute method")
+    public void withClientIdShouldExecuteMethod() {
+
+        sut.updateClient(BigDecimal.TEN);
+        Mockito.verify(efilingAccountServiceMock,Mockito.times(1)).updateClient(any());
+
+    }
 
 }

@@ -368,6 +368,34 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         return response;
     }
 
+    @Override
+    public ResponseEntity<Object> updateClientDetails(UUID xTransactionId, UUID submissionId, ClientUpdateRequest clientUpdateRequest) {
+
+        MdcUtils.setUserMDC(submissionId, xTransactionId);
+
+        logger.info("attempting to update cso client details package for transaction [{}]", xTransactionId);
+
+        Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
+
+        if(!fromCacheSubmission.isPresent())
+            return ResponseEntity.notFound().build();
+
+        ResponseEntity response;
+        try {
+            accountService.updateClient(clientUpdateRequest.getClientId());
+
+            fromCacheSubmission.get().getAccountDetails().setClientId(clientUpdateRequest.getClientId());
+
+            response = ResponseEntity.ok(null);
+        } catch (EfilingAccountServiceException e) {
+            logger.warn(e.getMessage(), e);
+            response = new ResponseEntity(buildEfilingError(ErrorResponse.UPDATE_CLIENT_EXCEPTION), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        MdcUtils.clearUserMDC();
+
+        return response;
+    }
+
     public EfilingError buildEfilingError(ErrorResponse errorResponse) {
 
         EfilingError response = new EfilingError();
