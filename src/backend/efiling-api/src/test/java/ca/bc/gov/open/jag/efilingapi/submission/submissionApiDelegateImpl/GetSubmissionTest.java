@@ -162,7 +162,7 @@ public class GetSubmissionTest {
         ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission( TestHelpers.CASE_2, TestHelpers.CASE_2);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertEquals(TestHelpers.CASE_2, actual.getBody().getUserDetails().getUniversalId());
-        assertEquals(true, actual.getBody().getUserDetails().getCardRegistered());
+        assertEquals(BigDecimal.TEN, actual.getBody().getUserDetails().getClientId());
         assertEquals(1, actual.getBody().getUserDetails().getAccounts().size());
         assertEquals(Account.TypeEnum.CSO, actual.getBody().getUserDetails().getAccounts().stream().findFirst().get().getType());
         assertEquals("10", actual.getBody().getUserDetails().getAccounts().stream().findFirst().get().getIdentifier());
@@ -185,7 +185,7 @@ public class GetSubmissionTest {
 
         ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission(TestHelpers.CASE_3, UUID.randomUUID());
         assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertNull(actual.getBody().getUserDetails().getCardRegistered());
+        assertNull(actual.getBody().getUserDetails().getClientId());
         assertNull(actual.getBody().getUserDetails().getAccounts());
         assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigation().getSuccess().getUrl());
         assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigation().getCancel().getUrl());
@@ -203,7 +203,7 @@ public class GetSubmissionTest {
 
         ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission(TestHelpers.CASE_4, UUID.randomUUID());
         assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertNull(actual.getBody().getUserDetails().getCardRegistered());
+        assertNull(actual.getBody().getUserDetails().getClientId());
         assertNull(actual.getBody().getUserDetails().getAccounts());
         assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigation().getSuccess().getUrl());
         assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigation().getCancel().getUrl());

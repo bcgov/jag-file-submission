@@ -582,15 +582,15 @@ components:
       type: object
       required:
         - universalId
-        - cardRegistered
+        - clientId
       properties:
         universalId:
           type: string
           format: uuid
           description: the user universal identifier
-        cardRegistered:
-          type: boolean
-          description: if the user has a card on file or not
+        clientId:
+          type: number
+          description: bambora id is client has a registered card
         accounts:
           type: array
           items:
