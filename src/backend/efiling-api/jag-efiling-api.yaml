@@ -590,7 +590,7 @@ components:
           description: the user universal identifier
         clientId:
           type: number
-          description: bambora id is client has a registered card
+          description: bambora id if client has a registered card
         accounts:
           type: array
           items:
