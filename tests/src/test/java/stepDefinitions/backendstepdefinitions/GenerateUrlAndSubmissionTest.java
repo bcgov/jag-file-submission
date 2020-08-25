@@ -50,6 +50,7 @@ public class GenerateUrlAndSubmissionTest {
     private static final String ERROR = "error";
     private static final String MESSAGE = "message";
     private static final String SUBMISSION_ID = "submissionId";
+    private static final String TRANSACTION_ID = "transactionId";
 
     public Logger log = LogManager.getLogger(GenerateUrlAndSubmissionTest.class);
 
@@ -130,7 +131,6 @@ public class GenerateUrlAndSubmissionTest {
         JsonPath jsonPath = new JsonPath(response.asString());
 
         String accessToken = jsonPath.get("access_token");
-        System.out.println(accessToken);
 
         RequestSpecification request = given().auth().preemptive().oauth2(accessToken)
                 .spec(TestUtil.requestSpecification())
@@ -144,8 +144,9 @@ public class GenerateUrlAndSubmissionTest {
     }
 
     @Then("verify expiry date and eFiling url are returned with the CSO account guid and submission id")
-    public void verifyExpiryDateAndEfilingUrlAreReturnedWithTheCsoAccountGuidAndSubmissionId() throws URISyntaxException {
+    public void verifyExpiryDateAndEfilingUrlAreReturnedWithTheCsoAccountGuidAndSubmissionId() throws URISyntaxException, IOException {
         jsonPath = new JsonPath(response.asString());
+        validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
         String respUrl = jsonPath.get("efilingUrl");
         Long expiryDate = jsonPath.get("expiryDate");
@@ -157,7 +158,7 @@ public class GenerateUrlAndSubmissionTest {
         for (NameValuePair param : params) {
             if (param.getName().equals(SUBMISSION_ID)) {
                 respSubId = param.getValue();
-            } else if (param.getName().equals("temp")) {
+            } else if (param.getName().equals(TRANSACTION_ID)) {
                 respTemp = param.getValue();
             }
         }
