@@ -5,6 +5,8 @@ public class CsoAccountGuid {
     private String validExistingCSOGuid;
     private String invalidNoFilingRoleGuid;
     private String nonExistingCSOGuid;
+    private String validUserid;
+    private String clientSecret;
 
     public String getValidExistingCSOGuid() {
         return validExistingCSOGuid;
@@ -28,5 +30,13 @@ public class CsoAccountGuid {
 
     public void setNonExistingCSOGuid(String nonExistingCSOGuid) {
         this.nonExistingCSOGuid = nonExistingCSOGuid;
+    }
+
+    public String getValidUserid() {
+        return validUserid;
+    }
+
+    public String getClientSecret() {
+        return clientSecret;
     }
 }

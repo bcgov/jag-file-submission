@@ -35,7 +35,7 @@ public class EFileSubmissionTest extends DriverClass {
     private static final String EFILE_SUBMISSION_PAGE_TITLE = "E-File submission";
     private static final String EFILING_DEMO_CLIENT_PAGE_TITLE = "eFiling Demo Client";
     private static final String BASE_PATH = "user.dir";
-    private static final String PDF_PATH = "/src/test/java/testdatasource/test-pdf-document.pdf";
+    private static final String PDF_PATH = "/src/test/java/testdatasource/test-document.pdf";
     private String filePath;
     private String username;
     private String password;
