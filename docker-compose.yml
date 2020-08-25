@@ -98,7 +98,7 @@ services:
       - BAMBORA_HASHKEY=${BAMBORA_HASHKEY}
       - BAMBORA_PROFILE_SERVICE_VERSION=${BAMBORA_PROFILE_SERVICE_VERSION}
       - BAMBORA_URL_EXPIRY=10
-      - REDIS_HOST=localhost
+      - REDIS_HOST=redis
       - REDIS_PORT=6379
       - REDIS_PASSWORD=admin
       - NAVIGATION_BASE_URL=http://localhost:3000/efiling
