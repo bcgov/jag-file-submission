@@ -171,9 +171,16 @@ public class GenerateUrlAndSubmissionTest {
     public void idIsSubmittedWithGetHttpRequest(String resource) throws IOException {
         APIResources resourceGet = APIResources.valueOf(resource);
 
-        RequestSpecification request = given()
+        response = generateUrlRequestBuilders.getBearerToken();
+        JsonPath jsonPath = new JsonPath(response.asString());
+
+        String accessToken = jsonPath.get("access_token");
+        System.out.println(accessToken);
+
+        RequestSpecification request = given().auth().preemptive().oauth2(accessToken)
                 .spec(TestUtil.requestSpecification())
                 .header(X_TRANSACTION_ID, validExistingCSOGuid);
+
         response = request.when().get(resourceGet.getResource() + submissionId)
                 .then()
                 .spec(TestUtil.responseSpecification())
@@ -184,20 +191,26 @@ public class GenerateUrlAndSubmissionTest {
     public void verifyUniversalIdUserDetailsAccountTypeAndIdentifierValuesAreReturnedAndNotEmpty() {
         jsonPath = new JsonPath(response.asString());
 
-        universalId = jsonPath.get("userDetails.universalId");
-        firstName = jsonPath.get("userDetails.firstName");
-        lastName = jsonPath.get("userDetails.lastName");
+        String universalId = jsonPath.get("userDetails.universalId");
+        boolean cardRegistered = jsonPath.get("userDetails.cardRegistered");
+
+        String displayName = jsonPath.get("clientApplication.displayName");
+        String clientAppType = jsonPath.get("clientApplication.type");
+      /*  lastName = jsonPath.get("userDetails.lastName");
         middleName = jsonPath.get("userDetails.middleName");
-        email = jsonPath.get("userDetails.email");
+        email = jsonPath.get("userDetails.email");*/
 
         List<String> type = jsonPath.get("userDetails.accounts.type");
         List<String> identifier = jsonPath.get("userDetails.accounts.identifier");
 
         assertThat(universalId, is(equalToIgnoringCase(validExistingCSOGuid)));
-        assertThat(firstName, is(not(emptyString())));
+        assertTrue(cardRegistered);
+        assertThat(displayName, is(not(emptyString())));
+        assertThat(clientAppType, is(not(emptyString())));
+        /*assertThat(firstName, is(not(emptyString())));
         assertThat(lastName, is(not(emptyString())));
         assertThat(middleName, is(not(emptyString())));
-        assertThat(email, is(not(emptyString())));
+        assertThat(email, is(not(emptyString())));*/
         log.info("Names and email objects from the valid CSO account submission response does not have empty values");
 
         assertFalse(type.isEmpty());
@@ -235,12 +248,19 @@ public class GenerateUrlAndSubmissionTest {
         String division = jsonPath.get("court.division");
         String fileNumber = jsonPath.get("court.fileNumber");
         String participatingClass = jsonPath.get("court.participatingClass");
+        String agencyId = jsonPath.get("court.agencyId");
+        String locationDescription = jsonPath.get("court.locationDescription");
+        String levelDescription = jsonPath.get("court.levelDescription");
         int submissionFeeAmount = jsonPath.get("submissionFeeAmount");
 
         List<String> name = jsonPath.get("documents.name");
-        List<String> description = jsonPath.get("documents.description");
         List<String> type = jsonPath.get("documents.type");
+        List<String> subType = jsonPath.get("documents.subType");
+        List<String> isAmendment = jsonPath.get("documents.isAmendment");
+        List<String> isSupremeCourtScheduling = jsonPath.get("documents.isSupremeCourtScheduling");
+        List<String> description = jsonPath.get("documents.description");
         List<String> statutoryFeeAmount = jsonPath.get("documents.statutoryFeeAmount");
+        List<String> mimeType = jsonPath.get("documents.mimeType");
 
         assertThat(location, is(not(emptyString())));
         assertThat(level, is(not(emptyString())));
@@ -248,12 +268,19 @@ public class GenerateUrlAndSubmissionTest {
         assertThat(division, is(not(emptyString())));
         assertThat(fileNumber, is(not(emptyString())));
         assertThat(participatingClass, is(not(emptyString())));
+        assertThat(agencyId, is(not(emptyString())));
+        assertThat(locationDescription, is(not(emptyString())));
+        assertThat(levelDescription, is(not(emptyString())));
         assertEquals(7, submissionFeeAmount);
         log.info("Court fee and document details response have valid values");
 
-        assertFalse(type.isEmpty());
         assertFalse(name.isEmpty());
+        assertFalse(type.isEmpty());
+        assertFalse(subType.isEmpty());
+        assertFalse(isAmendment.isEmpty());
+        assertFalse(isSupremeCourtScheduling.isEmpty());
         assertFalse(description.isEmpty());
+        assertFalse(mimeType.isEmpty());
         assertNotNull(statutoryFeeAmount);
         log.info("Account type, description and name objects from the valid CSO account submission response have valid values");
     }
