@@ -2,13 +2,14 @@ import React from "react";
 import axios from "axios";
 import { MdCreditCard } from "react-icons/md";
 import { Alert } from "shared-components";
+import { errorRedirect } from "./errorRedirect";
 
 const registerCard = () => {
   const data = {
     clientId:
-      sessionStorage.getItem(clientId) === "null"
+      sessionStorage.getItem("clientId") === "null"
         ? null
-        : Number(sessionStorage.getItem(clientId)),
+        : Number(sessionStorage.getItem("clientId")),
     redirectUrl: sessionStorage.getItem("bamboraRedirectUrl"),
   };
 
@@ -36,9 +37,10 @@ const existingCreditCard = () => {
           <br />
           <span
             onClick={() => registerCard()}
+            onKeyDown={() => registerCard()}
             className="file-href"
-            target="_blank"
-            rel="noopener noreferrer"
+            role="button"
+            tabIndex={0}
           >
             Register a new Credit Card.
           </span>
@@ -63,9 +65,10 @@ const noCreditCard = () => {
           <br />
           <span
             onClick={() => registerCard()}
+            onKeyDown={() => registerCard()}
             className="file-href"
-            target="_blank"
-            rel="noopener noreferrer"
+            role="button"
+            tabIndex={0}
           >
             Register a Credit Card now
           </span>
