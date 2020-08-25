@@ -4,6 +4,7 @@ import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.Register
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RoleRegistryPortType;
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.UserRoles;
 import ca.bc.gov.ag.csows.accounts.*;
+import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.AccountDetailsMapper;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.CSOHasMultipleAccountException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
@@ -77,6 +78,20 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
     @Override
     public void updateClient(BigDecimal clientId) {
 
+        if (clientId == null) throw new IllegalArgumentException("client identifier is required");
+
+        Client client = new Client();
+        client.setClientId(clientId);
+        client.setRegisteredCreditCardYnBoolean(true);
+        client.setUpdDtm(DateUtils.getCurrentXmlDate());
+        client.setUpdUserId(clientId.toString());
+
+        try {
+            accountFacadeBean.updateClient(client);
+        } catch (NestedEjbException_Exception e) {
+            throw new EfilingAccountServiceException("Exception while updating client", e);
+        }
+
     }
 
     @Override
@@ -84,7 +99,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         try {
             return accountFacadeBean.getNextOrderNumber().toString();
         } catch (NestedEjbException_Exception e) {
-            throw new EfilingAccountServiceException("Exception while fetching account details", e);
+            throw new EfilingAccountServiceException("Exception while fetching next order number", e);
         }
     }
 
