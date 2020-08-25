@@ -290,7 +290,7 @@ paths:
     post:
       summary: Update card on bambora
       operationId: UpdateCreditCard
-      description: For expired credit get url to update
+      description: For expired credit card get url to update
       tags:
         - payment
       parameters:
