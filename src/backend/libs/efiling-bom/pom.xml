@@ -21,7 +21,7 @@
         <org.springdoc.version>1.4.4</org.springdoc.version>
         <com.splunk.logging.version>1.8.0</com.splunk.logging.version>
         <org.openapitools.version>0.2.1</org.openapitools.version>
-        <org.apache.cxf.version>3.3.7</org.apache.cxf.version>
+        <org.apache.cxf.version>3.4.0</org.apache.cxf.version>
         <com.fasterxml.jackson.core.version>2.11.2</com.fasterxml.jackson.core.version>
         <javax.xml.bind.version>2.3.1</javax.xml.bind.version>
         <org.glassfish.jersey.inject.version>2.31</org.glassfish.jersey.inject.version>
