@@ -1,5 +1,5 @@
 const userDetails = {
-  clientId: 1,
+  cardRegistered: true,
   accounts: [
     {
       type: "CSO",

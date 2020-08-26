@@ -1,27 +1,6 @@
 import React from "react";
-import axios from "axios";
 import { MdCreditCard } from "react-icons/md";
 import { Alert } from "shared-components";
-import { errorRedirect } from "./errorRedirect";
-
-const registerCard = () => {
-  const data = {
-    clientId:
-      sessionStorage.getItem("clientId") === "null"
-        ? null
-        : Number(sessionStorage.getItem("clientId")),
-    redirectUrl: sessionStorage.getItem("bamboraRedirectUrl"),
-  };
-
-  axios
-    .post("/payment/generate-update-card", data)
-    .then(({ data: { bamboraUrl } }) => {
-      sessionStorage.setItem("validExit", true);
-      sessionStorage.setItem("isBamboraRedirect", true);
-      window.open(bamboraUrl, "_self");
-    })
-    .catch((error) => errorRedirect(sessionStorage.getItem("errorUrl"), error));
-};
 
 const existingCreditCard = () => {
   return (
@@ -35,15 +14,13 @@ const existingCreditCard = () => {
             You have a valid Credit Card registered with your CSO account.
           </span>
           <br />
-          <span
-            onClick={() => registerCard()}
-            onKeyDown={() => registerCard()}
-            className="file-href"
-            role="button"
-            tabIndex={0}
+          <a
+            href="https://justice.gov.bc.ca/cso/about/index.do"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Register a new Credit Card.
-          </span>
+          </a>
         </p>
       }
     />
@@ -63,15 +40,13 @@ const noCreditCard = () => {
             account.
           </span>
           <br />
-          <span
-            onClick={() => registerCard()}
-            onKeyDown={() => registerCard()}
-            className="file-href"
-            role="button"
-            tabIndex={0}
+          <a
+            href="https://justice.gov.bc.ca/cso/about/index.do"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Register a Credit Card now
-          </span>
+          </a>
           &nbsp;to continue.
         </p>
       }

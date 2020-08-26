@@ -88,8 +88,7 @@ const getFilingPackageData = (
   setFiles,
   files,
   setCourtData,
-  setSubmissionFee,
-  setShowPayment
+  setSubmissionFee
 ) => {
   if (files.length > 0) return;
 
@@ -99,8 +98,6 @@ const getFilingPackageData = (
       setCourtData(court);
       setSubmissionFee(submissionFeeAmount);
       setFiles(documents);
-      if (sessionStorage.getItem("isBamboraRedirect") === "true")
-        setShowPayment(true);
     })
     .catch((error) => errorRedirect(sessionStorage.getItem("errorUrl"), error));
 };
@@ -138,8 +135,7 @@ export default function PackageConfirmation({
       setFiles,
       files,
       setCourtData,
-      setSubmissionFee,
-      setShowPayment
+      setSubmissionFee
     );
   }, [files, submissionId]);
 
