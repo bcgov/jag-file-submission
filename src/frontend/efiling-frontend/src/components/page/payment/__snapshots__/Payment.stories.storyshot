@@ -44,13 +44,13 @@ exports[`Storyshots Payment Mobile 1`] = `
               You have a valid Credit Card registered with your CSO account.
             </span>
             <br />
-            <a
-              href="https://justice.gov.bc.ca/cso/about/index.do"
-              rel="noopener noreferrer"
-              target="_blank"
+            <span
+              class="file-href"
+              role="button"
+              tabindex="0"
             >
               Register a new Credit Card.
-            </a>
+            </span>
           </p>
         </div>
       </div>
@@ -539,13 +539,13 @@ exports[`Storyshots Payment With Fees 1`] = `
               You have a valid Credit Card registered with your CSO account.
             </span>
             <br />
-            <a
-              href="https://justice.gov.bc.ca/cso/about/index.do"
-              rel="noopener noreferrer"
-              target="_blank"
+            <span
+              class="file-href"
+              role="button"
+              tabindex="0"
             >
               Register a new Credit Card.
-            </a>
+            </span>
           </p>
         </div>
       </div>
@@ -1034,13 +1034,13 @@ exports[`Storyshots Payment Without Fees 1`] = `
               You have a valid Credit Card registered with your CSO account.
             </span>
             <br />
-            <a
-              href="https://justice.gov.bc.ca/cso/about/index.do"
-              rel="noopener noreferrer"
-              target="_blank"
+            <span
+              class="file-href"
+              role="button"
+              tabindex="0"
             >
               Register a new Credit Card.
-            </a>
+            </span>
           </p>
         </div>
       </div>

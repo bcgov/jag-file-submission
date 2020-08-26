@@ -62,7 +62,7 @@ const submitPackage = (submissionId, setSubmitBtnEnabled, setShowLoader) => {
 
 const checkSubmitEnabled = (paymentAgreed, setSubmitBtnEnabled) => {
   const isEnabled =
-    paymentAgreed && sessionStorage.getItem("cardRegistered") === "true";
+    paymentAgreed && sessionStorage.getItem("internalClientNumber") !== "null";
   setSubmitBtnEnabled(isEnabled);
 };
 
@@ -71,7 +71,7 @@ export default function Payment({
 }) {
   const rushFlagExists = getJWTData().realm_access.roles.includes("rush_flag");
   const creditCardAlert =
-    sessionStorage.getItem("cardRegistered") === "true"
+    sessionStorage.getItem("internalClientNumber") !== "null"
       ? getCreditCardAlerts().existingCreditCard
       : getCreditCardAlerts().noCreditCard;
 
@@ -148,7 +148,10 @@ export default function Payment({
         <section className="pt-2 buttons">
           <Button
             label="< Back"
-            onClick={() => setShowPackageConfirmation(true)}
+            onClick={() => {
+              sessionStorage.removeItem("isBamboraRedirect");
+              setShowPackageConfirmation(true);
+            }}
             styling="normal-white btn"
           />
           <div className="button-container">
