@@ -56,7 +56,6 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
         BigDecimal filingResult = filePackage(createdService, filingPackage);
 
-        //TODO: do we add something to the next update
         updateServiceComplete(createdService);
 
         return filingResult;

@@ -39,6 +39,7 @@ public class EfilingDocument {
     private String updUserId;
     private String uploadStateCd;
     private String uploadedToApplicationCd;
+    private String jsonObject;
     private Boolean xmlDataCompleteYn;
     private Boolean xmlDocumentInstanceYn;
     private Boolean xmlValidYn;
@@ -326,7 +327,15 @@ public class EfilingDocument {
         this.statuses = statuses;
     }
 
-    public EfilingDocument(Boolean amendsAnotherDocumentYn, XMLGregorianCalendar appearanceDt, XMLGregorianCalendar appearanceTm, BigDecimal appearnceAgenId, BigDecimal bailiffId, String clientFileNameTxt, String conferenceRequestTypeCd, String documentDescriptionTxt, BigDecimal documentId, String documentSubtypeCd, String documentTypeCd, XMLGregorianCalendar entDtm, String entUserId, BigDecimal estimatedToHearDocHrsQty, BigDecimal estimatedToHearDocMinsQty, String expertWitnessCallModeCd, Boolean feeExemptYn, String filePath, String fileServer, String filingBodyCd, String largeFileTimeMilliSecs, String largeFileYn, Boolean mediationStepYn, BigDecimal packageId, BigDecimal packageSeqNo, XMLGregorianCalendar updDtm, String updUserId, String uploadStateCd, String uploadedToApplicationCd, Boolean xmlDataCompleteYn, Boolean xmlDocumentInstanceYn, Boolean xmlValidYn, List<EfilingDocumentMilestone> milestones, List<EfilingDocumentPayment> payments, List<EfilingDocumentStatus> statuses) {
+    public String getJsonObject() {
+        return jsonObject;
+    }
+
+    public void setJsonObject(String jsonObject) {
+        this.jsonObject = jsonObject;
+    }
+
+    public EfilingDocument(Boolean amendsAnotherDocumentYn, XMLGregorianCalendar appearanceDt, XMLGregorianCalendar appearanceTm, BigDecimal appearnceAgenId, BigDecimal bailiffId, String clientFileNameTxt, String conferenceRequestTypeCd, String documentDescriptionTxt, BigDecimal documentId, String documentSubtypeCd, String documentTypeCd, XMLGregorianCalendar entDtm, String entUserId, BigDecimal estimatedToHearDocHrsQty, BigDecimal estimatedToHearDocMinsQty, String expertWitnessCallModeCd, Boolean feeExemptYn, String filePath, String fileServer, String filingBodyCd, String largeFileTimeMilliSecs, String largeFileYn, Boolean mediationStepYn, BigDecimal packageId, BigDecimal packageSeqNo, XMLGregorianCalendar updDtm, String updUserId, String uploadStateCd, String uploadedToApplicationCd, Boolean xmlDataCompleteYn, Boolean xmlDocumentInstanceYn, Boolean xmlValidYn, List<EfilingDocumentMilestone> milestones, List<EfilingDocumentPayment> payments, List<EfilingDocumentStatus> statuses, String jsonObject) {
         this.amendsAnotherDocumentYn = amendsAnotherDocumentYn;
         this.appearanceDt = appearanceDt;
         this.appearanceTm = appearanceTm;
@@ -362,6 +371,7 @@ public class EfilingDocument {
         this.milestones = milestones;
         this.payments = payments;
         this.statuses = statuses;
+        this.jsonObject = jsonObject;
     }
 
     public EfilingDocument() {

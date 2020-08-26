@@ -4,6 +4,7 @@ import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
+import com.google.gson.JsonObject;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -104,7 +105,7 @@ public class TestHelpers {
         documentProperties.setMimeType("application/txt");
         documentProperties.setIsSupremeCourtScheduling(true);
         documentProperties.setIsAmendment(true);
-
+        documentProperties.setData(new JsonObject());
         return Arrays.asList(documentProperties);
     }
 
