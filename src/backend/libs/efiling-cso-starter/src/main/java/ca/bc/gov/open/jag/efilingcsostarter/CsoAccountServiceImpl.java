@@ -79,7 +79,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
     public void updateClient(AccountDetails accountDetails) {
         if (accountDetails == null) throw new IllegalArgumentException("account details required");
         if (accountDetails.getClientId() == null) throw new IllegalArgumentException("client id is required");
-        if (StringUtils.isBlank(accountDetails.getInternalClientNumber())) throw new IllegalArgumentException("client identifier is required");
+        if (StringUtils.isBlank(accountDetails.getInternalClientNumber())) throw new IllegalArgumentException("internal client number is required");
 
         Client client = new Client();
         client.setInternalClientNo(accountDetails.getInternalClientNumber());
