@@ -7,9 +7,9 @@ import { errorRedirect } from "./errorRedirect";
 const registerCard = () => {
   const data = {
     clientId:
-      sessionStorage.getItem("clientId") === "null"
+      sessionStorage.getItem("internalClientNumber") === "null"
         ? null
-        : Number(sessionStorage.getItem("clientId")),
+        : sessionStorage.getItem("internalClientNumber"),
     redirectUrl: sessionStorage.getItem("bamboraRedirectUrl"),
   };
 
