@@ -19,7 +19,7 @@ public class UpdateClientTest {
 
     private static final String INTERNAL_CLIENT_NUMBER = "123";
     private static final String FAIL_INTERNAL_CLIENT_NUMBER = "1234";
-    private static final String INTERNAL_CLIENT_NUMBER1 = "NOTNULL";
+    
     CsoAccountServiceImpl sut;
 
     @Mock
@@ -91,7 +91,7 @@ public class UpdateClientTest {
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             sut.updateClient(AccountDetails.builder()
-                    .internalClientNumber(INTERNAL_CLIENT_NUMBER1)
+                    .internalClientNumber(INTERNAL_CLIENT_NUMBER)
                     .create());
         });
 
