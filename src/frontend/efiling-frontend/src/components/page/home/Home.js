@@ -24,13 +24,13 @@ const setRequestHeaders = (transactionId) => {
 };
 
 export const saveDataToSessionStorage = (
-  clientId,
+  cardRegistered,
   { cancel, success, error }
 ) => {
   if (cancel.url) sessionStorage.setItem("cancelUrl", cancel.url);
   if (success.url) sessionStorage.setItem("successUrl", success.url);
   if (error.url) sessionStorage.setItem("errorUrl", error.url);
-  sessionStorage.setItem("clientId", 1);
+  sessionStorage.setItem("cardRegistered", cardRegistered);
 };
 
 const addUserInfo = (firstName, middleName, lastName) => {
@@ -67,7 +67,7 @@ const checkCSOAccountStatus = (
     .get(`/submission/${submissionId}`)
     .then(({ data: { userDetails, navigation, clientApplication } }) => {
       setClientApplicationName(clientApplication.displayName);
-      saveDataToSessionStorage(userDetails.clientId, navigation);
+      saveDataToSessionStorage(userDetails.cardRegistered, navigation);
 
       if (userDetails.accounts) {
         const csoAccountIdentifier = userDetails.accounts.find(

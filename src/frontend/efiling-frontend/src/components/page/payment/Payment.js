@@ -62,7 +62,7 @@ const submitPackage = (submissionId, setSubmitBtnEnabled, setShowLoader) => {
 
 const checkSubmitEnabled = (paymentAgreed, setSubmitBtnEnabled) => {
   const isEnabled =
-    paymentAgreed && sessionStorage.getItem("clientId") !== "null";
+    paymentAgreed && sessionStorage.getItem("cardRegistered") === "true";
   setSubmitBtnEnabled(isEnabled);
 };
 
@@ -71,7 +71,7 @@ export default function Payment({
 }) {
   const rushFlagExists = getJWTData().realm_access.roles.includes("rush_flag");
   const creditCardAlert =
-    sessionStorage.getItem("clientId") !== "null"
+    sessionStorage.getItem("cardRegistered") === "true"
       ? getCreditCardAlerts().existingCreditCard
       : getCreditCardAlerts().noCreditCard;
 

@@ -28,14 +28,7 @@ const cancelButton = {
 export default function App() {
   const location = useLocation();
   const queryParams = queryString.parse(location.search);
-  const { submissionId, transactionId, isBambora } = queryParams;
-
-  if (!isBambora) sessionStorage.removeItem("isBamboraRedirect");
-
-  if (submissionId && transactionId) {
-    sessionStorage.setItem("submissionId", submissionId);
-    sessionStorage.setItem("transactionId", transactionId);
-  }
+  const { submissionId, transactionId } = queryParams;
 
   const header = {
     name: "E-File Submission",
@@ -76,12 +69,7 @@ export default function App() {
         <Redirect exact from="/" to="/efiling" />
         <Route exact path="/efiling">
           <AuthenticationGuard
-            page={{
-              header,
-              confirmationPopup,
-              submissionId: sessionStorage.getItem("submissionId"),
-              transactionId: sessionStorage.getItem("transactionId"),
-            }}
+            page={{ header, confirmationPopup, submissionId, transactionId }}
           />
         </Route>
       </Switch>

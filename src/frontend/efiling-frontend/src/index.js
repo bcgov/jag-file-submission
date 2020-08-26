@@ -13,12 +13,6 @@ axios.defaults.baseURL = window.REACT_APP_API_BASE_URL
   ? window.REACT_APP_API_BASE_URL
   : process.env.REACT_APP_API_BASE_URL;
 
-const bamboraRedirectUrl = window.REACT_APP_BAMBORA_REDIRECT_URL
-  ? window.REACT_APP_BAMBORA_REDIRECT_URL
-  : process.env.REACT_APP_BAMBORA_REDIRECT_URL;
-
-sessionStorage.setItem("bamboraRedirectUrl", bamboraRedirectUrl);
-
 // prevent user from leaving site and losing saved data
 window.addEventListener("beforeunload", (e) => {
   if (sessionStorage.getItem("validExit")) return false;

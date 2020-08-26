@@ -115,16 +115,16 @@ describe("Home", () => {
     expect(sessionStorage.getItem("successUrl")).toBeFalsy();
     expect(sessionStorage.getItem("errorUrl")).toBeFalsy();
 
-    saveDataToSessionStorage(userDetails.clientId, navigation);
+    saveDataToSessionStorage(userDetails.cardRegistered, navigation);
 
     expect(sessionStorage.getItem("cancelUrl")).toEqual("cancelurl.com");
     expect(sessionStorage.getItem("successUrl")).toEqual("successurl.com");
     expect(sessionStorage.getItem("errorUrl")).toBeFalsy();
-    expect(sessionStorage.getItem("clientId")).toEqual("1");
+    expect(sessionStorage.getItem("cardRegistered")).toEqual("true");
 
     sessionStorage.clear();
 
-    saveDataToSessionStorage(userDetails.clientId, {
+    saveDataToSessionStorage(userDetails.cardRegistered, {
       ...navigation,
       cancel: { url: "" },
       success: { url: "" },
@@ -134,7 +134,7 @@ describe("Home", () => {
     expect(sessionStorage.getItem("cancelUrl")).toBeFalsy();
     expect(sessionStorage.getItem("successUrl")).toBeFalsy();
     expect(sessionStorage.getItem("errorUrl")).toEqual("error.com");
-    expect(sessionStorage.getItem("clientId")).toEqual("1");
+    expect(sessionStorage.getItem("cardRegistered")).toEqual("true");
   });
 
   test("Redirects to error page when lookup to bceid call fails", async () => {
