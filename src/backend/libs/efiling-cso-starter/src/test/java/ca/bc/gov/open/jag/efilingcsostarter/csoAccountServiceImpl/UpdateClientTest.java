@@ -19,6 +19,7 @@ public class UpdateClientTest {
 
     private static final String INTERNAL_CLIENT_NUMBER = "123";
     private static final String FAIL_INTERNAL_CLIENT_NUMBER = "1234";
+    private static final String INTERNAL_CLIENT_NUMBER1 = "NOTNULL";
     CsoAccountServiceImpl sut;
 
     @Mock
@@ -72,13 +73,39 @@ public class UpdateClientTest {
 
     }
 
+    @DisplayName("Exception: with null account should throw IllegalArgumentException")
+    @Test
+    public void withNullAccountReturnIllegalArgumentException() {
+
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            sut.updateClient(null);
+        });
+
+    }
+
     @DisplayName("Exception: with null client id should throw IllegalArgumentException")
     @Test
     public void withNullClientIdReturnIllegalArgumentException() {
 
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            sut.updateClient(null);
+            sut.updateClient(AccountDetails.builder()
+                    .internalClientNumber(INTERNAL_CLIENT_NUMBER1)
+                    .create());
+        });
+
+    }
+
+    @DisplayName("Exception: with null client number should throw IllegalArgumentException")
+    @Test
+    public void withNullClientNumberReturnIllegalArgumentException() {
+
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            sut.updateClient(AccountDetails.builder()
+                    .clientId(BigDecimal.TEN)
+                    .create());
         });
 
     }
