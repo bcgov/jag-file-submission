@@ -39,7 +39,7 @@ public class PaymentApiDelegateImpl implements PaymentApiDelegate {
                     .orderNumber(MessageFormat.format("C{0}", efilingAccountService.getOrderNumber()))
                     .echoData("customerCode")
                     .redirectURL(generateCardUrlRequest.getRedirectUrl())
-                    .endUserId(generateCardUrlRequest.getClientId().toString())
+                    .endUserId(generateCardUrlRequest.getInternalClientNumber())
                     .create()).toString());
             return ResponseEntity.ok(generateCardUrlResponse);
         } catch (BamboraException e) {

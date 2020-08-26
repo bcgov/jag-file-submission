@@ -175,6 +175,35 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EfilingError"
+  "/submission/{submissionId}/set-cso-bambora-relation":
+    post:
+      summary: Apply bambora id and card registered to cso
+      operationId: updateClientDetails
+      tags:
+        - submission
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+        - $ref: "#/components/parameters/submissionId"
+      requestBody:
+        description: update client details parameters
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClientUpdateRequest"
+      responses:
+        "200":
+          description: Client updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientUpdateResponse"
+        "403":
+          description: Request does not meet the required criteria
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EfilingError"
   "/submission/{submissionId}/filing-package":
     get:
       summary: Get filing package information
@@ -582,15 +611,15 @@ components:
       type: object
       required:
         - universalId
-        - cardRegistered
+        - internalClientNumber
       properties:
         universalId:
           type: string
           format: uuid
           description: the user universal identifier
-        cardRegistered:
-          type: boolean
-          description: if the user has a card on file or not
+        internalClientNumber:
+          type: string
+          description: bambora id if client has a registered card
         accounts:
           type: array
           items:
@@ -669,11 +698,11 @@ components:
       description: create service request
       type: object
       required:
-        - clientId
+        - internalClientNumber
         - redirectUrl
       properties:
-        clientId:
-          type: number
+        internalClientNumber:
+          type: string
           description: client id for request to bambora
         redirectUrl:
           type: string
@@ -687,3 +716,15 @@ components:
         bamboraUrl:
           type: string
           description: redirect url
+    ClientUpdateRequest:
+      description: update client details
+      type: object
+      required:
+        - internalClientNumber
+      properties:
+        internalClientNumber:
+          type: string
+          description: internal client number for request to bambora
+    ClientUpdateResponse:
+      description: update client details
+      type: object

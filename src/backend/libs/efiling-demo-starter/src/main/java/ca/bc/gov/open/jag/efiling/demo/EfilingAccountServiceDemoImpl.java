@@ -39,7 +39,7 @@ public class EfilingAccountServiceDemoImpl implements EfilingAccountService {
     }
 
     @Override
-    public void updateClient(BigDecimal clientId) {
+    public void updateClient(AccountDetails accountDetails) {
         //Void not doing a thing in demo mode
     }
 
