@@ -413,6 +413,9 @@ components:
         isSupremeCourtScheduling:
           type: boolean
           description: supreme court scheduling required
+        data:
+          type: object
+          description: store additional details
     Document:
       required:
         - description
