@@ -276,4 +276,23 @@ describe("PackageConfirmation Component", () => {
     // assert here what was being done in callback
     expect(getByText(container, "Package Confirmation")).toBeInTheDocument();
   });
+
+  test("take user directly to payment page when coming from bambora redirect", async () => {
+    sessionStorage.setItem("isBamboraRedirect", true);
+
+    mock
+      .onGet(apiRequest)
+      .reply(200, { documents, court, submissionFeeAmount });
+
+    const { asFragment } = render(
+      <PackageConfirmation
+        packageConfirmation={packageConfirmation}
+        csoAccountStatus={csoAccountStatus}
+      />
+    );
+
+    await waitFor(() => {});
+
+    expect(asFragment()).toMatchSnapshot();
+  });
 });
