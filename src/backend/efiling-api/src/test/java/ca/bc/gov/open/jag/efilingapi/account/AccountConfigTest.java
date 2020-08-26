@@ -35,7 +35,7 @@ public class AccountConfigTest {
                 }
 
                 @Override
-                public void updateClient(String internalClientNumber) {
+                public void updateClient(AccountDetails accountDetails) {
 
                 }
 

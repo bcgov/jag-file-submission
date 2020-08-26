@@ -3,12 +3,15 @@ package ca.bc.gov.open.jag.efilingcsostarter.csoAccountServiceImpl;
 import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
 import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
+import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoAccountServiceImpl;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+
+import java.math.BigDecimal;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("UpdateClient")
@@ -45,7 +48,11 @@ public class UpdateClientTest {
     @Test
     public void testWithClientNumberUpdateClientExecuted() throws NestedEjbException_Exception {
 
-        sut.updateClient(INTERNAL_CLIENT_NUMBER);
+        sut.updateClient(AccountDetails.builder()
+                .internalClientNumber(INTERNAL_CLIENT_NUMBER)
+                .cardRegistered(true)
+                .clientId(BigDecimal.TEN)
+                .create());
 
         Mockito.verify(accountFacadeBeanMock,Mockito.times(1)).updateClient(ArgumentMatchers.argThat(x -> x.getInternalClientNo().equals(INTERNAL_CLIENT_NUMBER)));
     }
@@ -56,7 +63,11 @@ public class UpdateClientTest {
 
 
         Assertions.assertThrows(EfilingAccountServiceException.class, () -> {
-            sut.updateClient(FAIL_INTERNAL_CLIENT_NUMBER);
+            sut.updateClient(AccountDetails.builder()
+                    .internalClientNumber(FAIL_INTERNAL_CLIENT_NUMBER)
+                    .cardRegistered(true)
+                    .clientId(BigDecimal.TEN)
+                    .create());
         });
 
     }

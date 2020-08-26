@@ -382,7 +382,11 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         ResponseEntity response;
         try {
-            accountService.updateClient(clientUpdateRequest.getInternalClientNumber());
+            accountService.updateClient(AccountDetails.builder()
+                    .internalClientNumber(clientUpdateRequest.getInternalClientNumber())
+                    .clientId(fromCacheSubmission.get().getAccountDetails().getClientId())
+                    .cardRegistered(true)
+                    .create());
 
             fromCacheSubmission.get().getAccountDetails().setInternalClientNumber(clientUpdateRequest.getInternalClientNumber());
 

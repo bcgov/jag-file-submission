@@ -25,7 +25,7 @@ public interface EfilingAccountService {
      */
     AccountDetails createAccount(CreateAccountRequest createAccountRequest);
 
-    void updateClient(String internalClientNumber);
+    void updateClient(AccountDetails accountDetails);
 
     String getOrderNumber();
 

@@ -19,8 +19,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void updateClient(String internalClientNumber) {
-        efilingAccountService.updateClient(internalClientNumber);
+    public void updateClient(AccountDetails accountDetails) {
+        efilingAccountService.updateClient(accountDetails);
     }
 
 }

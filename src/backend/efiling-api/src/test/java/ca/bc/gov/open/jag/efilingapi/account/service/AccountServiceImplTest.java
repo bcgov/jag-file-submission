@@ -54,7 +54,11 @@ public class AccountServiceImplTest {
     @DisplayName("OK: execute method")
     public void withClientIdShouldExecuteMethod() {
 
-        sut.updateClient("123");
+        sut.updateClient(AccountDetails.builder()
+                .internalClientNumber("123")
+                .cardRegistered(true)
+                .clientId(BigDecimal.TEN)
+                .create());
         Mockito.verify(efilingAccountServiceMock,Mockito.times(1)).updateClient(any());
 
     }
