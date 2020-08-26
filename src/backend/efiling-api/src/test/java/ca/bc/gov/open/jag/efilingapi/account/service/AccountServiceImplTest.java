@@ -54,7 +54,7 @@ public class AccountServiceImplTest {
     @DisplayName("OK: execute method")
     public void withClientIdShouldExecuteMethod() {
 
-        sut.updateClient(BigDecimal.TEN);
+        sut.updateClient("123");
         Mockito.verify(efilingAccountServiceMock,Mockito.times(1)).updateClient(any());
 
     }

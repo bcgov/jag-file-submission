@@ -76,15 +76,16 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
     }
 
     @Override
-    public void updateClient(BigDecimal clientId) {
+    public void updateClient(String internalClientNumber) {
 
-        if (clientId == null) throw new IllegalArgumentException("client identifier is required");
+        if (StringUtils.isBlank(internalClientNumber)) throw new IllegalArgumentException("client identifier is required");
 
         Client client = new Client();
-        client.setClientId(clientId);
+        client.setInternalClientNo(internalClientNumber);
+        client.setClientId(BigDecimal.TEN);
         client.setRegisteredCreditCardYnBoolean(true);
         client.setUpdDtm(DateUtils.getCurrentXmlDate());
-        client.setUpdUserId(clientId.toString());
+        client.setUpdUserId(BigDecimal.TEN.toString());
 
         try {
             accountFacadeBean.updateClient(client);

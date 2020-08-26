@@ -35,7 +35,7 @@ public class AccountConfigTest {
                 }
 
                 @Override
-                public void updateClient(BigDecimal clientId) {
+                public void updateClient(String internalClientNumber) {
 
                 }
 

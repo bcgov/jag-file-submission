@@ -3,7 +3,6 @@ package ca.bc.gov.open.jag.efilingapi.account.service;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 public class AccountServiceImpl implements AccountService {
@@ -20,8 +19,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void updateClient(BigDecimal clientId) {
-        efilingAccountService.updateClient(clientId);
+    public void updateClient(String internalClientNumber) {
+        efilingAccountService.updateClient(internalClientNumber);
     }
 
 }

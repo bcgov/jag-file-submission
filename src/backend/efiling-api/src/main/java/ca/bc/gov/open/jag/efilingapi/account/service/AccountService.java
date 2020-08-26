@@ -9,6 +9,6 @@ public interface AccountService {
 
     AccountDetails getCsoAccountDetails(UUID universalId);
 
-    void updateClient(BigDecimal clientId);
+    void updateClient(String internalClientNumber);
 
 }

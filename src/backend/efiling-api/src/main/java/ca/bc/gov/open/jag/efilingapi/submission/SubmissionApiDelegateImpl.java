@@ -288,7 +288,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             }
 
             userDetails.setUniversalId(accountDetails.getUniversalId());
-            userDetails.setClientId(accountDetails.getClientId());
+            userDetails.setInternalClientNumber(accountDetails.getInternalClientNumber());
 
         }
 
@@ -382,9 +382,9 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         ResponseEntity response;
         try {
-            accountService.updateClient(clientUpdateRequest.getClientId());
+            accountService.updateClient(clientUpdateRequest.getInternalClientNumber());
 
-            fromCacheSubmission.get().getAccountDetails().setClientId(clientUpdateRequest.getClientId());
+            fromCacheSubmission.get().getAccountDetails().setInternalClientNumber(clientUpdateRequest.getInternalClientNumber());
 
             response = ResponseEntity.ok(null);
         } catch (EfilingAccountServiceException e) {

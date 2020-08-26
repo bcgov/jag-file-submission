@@ -611,14 +611,14 @@ components:
       type: object
       required:
         - universalId
-        - clientId
+        - internalClientNumber
       properties:
         universalId:
           type: string
           format: uuid
           description: the user universal identifier
-        clientId:
-          type: number
+        internalClientNumber:
+          type: string
           description: bambora id if client has a registered card
         accounts:
           type: array
@@ -698,11 +698,11 @@ components:
       description: create service request
       type: object
       required:
-        - clientId
+        - internalClientNumber
         - redirectUrl
       properties:
-        clientId:
-          type: number
+        internalClientNumber:
+          type: string
           description: client id for request to bambora
         redirectUrl:
           type: string
@@ -720,11 +720,11 @@ components:
       description: update client details
       type: object
       required:
-        - clientId
+        - internalClientNumber
       properties:
-        clientId:
-          type: number
-          description: client id for request to bambora
+        internalClientNumber:
+          type: string
+          description: internal client number for request to bambora
     ClientUpdateResponse:
       description: update client details
       type: object

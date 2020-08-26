@@ -99,8 +99,8 @@ public class AccountDetails {
 
     public boolean isCardRegistered() { return cardRegistered; }
 
-    public void setClientId(BigDecimal clientId) {
-        this.clientId = clientId;
+    public void setInternalClientNumber(String internalClientNumber) {
+        this.internalClientNumber = internalClientNumber;
     }
 
     public static class Builder {

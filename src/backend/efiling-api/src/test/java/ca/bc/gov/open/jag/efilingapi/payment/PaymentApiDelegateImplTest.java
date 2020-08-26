@@ -27,6 +27,8 @@ public class PaymentApiDelegateImplTest {
 
     private static final String REDIRECT_URL = "SOMEURL";
     private static final String REDIRECTED_URL = "http:\\www.google.com\bambora";
+    private static final String INTERNAL_CLIENT_NUMBER = "123";
+    private static final String FAIL_INTERNAL_CLIENT_NUMBER = "1234";
     private PaymentApiDelegateImpl sut;
 
     @Mock
@@ -40,10 +42,10 @@ public class PaymentApiDelegateImplTest {
         MockitoAnnotations.initMocks(this);
 
         Mockito.doReturn(new Uri(REDIRECTED_URL)).when(bamboraCardServiceMock).setupRecurringPayment(
-                ArgumentMatchers.argThat(request -> request.getEndUserId().equals(BigDecimal.TEN.toString())));
+                ArgumentMatchers.argThat(request -> request.getEndUserId().equals(INTERNAL_CLIENT_NUMBER)));
 
         Mockito.doThrow(BamboraException.class).when(bamboraCardServiceMock).setupRecurringPayment(
-                ArgumentMatchers.argThat(request -> request.getEndUserId().equals(BigDecimal.ONE.toString())));
+                ArgumentMatchers.argThat(request -> request.getEndUserId().equals(FAIL_INTERNAL_CLIENT_NUMBER)));
 
         sut = new PaymentApiDelegateImpl(bamboraCardServiceMock, efilingAccountServiceMock);
     }
@@ -52,7 +54,7 @@ public class PaymentApiDelegateImplTest {
     @DisplayName("200: ok url was generated")
     public void withCorrectVariableReturnGeneratedUrl() {
         GenerateCardUrlRequest request = new GenerateCardUrlRequest();
-        request.setClientId(BigDecimal.TEN);
+        request.setInternalClientNumber(INTERNAL_CLIENT_NUMBER);
         request.setRedirectUrl(REDIRECT_URL);
         ResponseEntity<GenerateCardUrlResponse> actual = sut.updateCreditCard(UUID.randomUUID(),request);
 
@@ -64,7 +66,7 @@ public class PaymentApiDelegateImplTest {
     @DisplayName("500: exception was thrown")
     public void withBamboraThorwsException() {
         GenerateCardUrlRequest request = new GenerateCardUrlRequest();
-        request.setClientId(BigDecimal.ONE);
+        request.setInternalClientNumber(FAIL_INTERNAL_CLIENT_NUMBER);
         request.setRedirectUrl(REDIRECT_URL);
         ResponseEntity actual = sut.updateCreditCard(UUID.randomUUID(),request);
 
