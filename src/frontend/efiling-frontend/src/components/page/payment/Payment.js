@@ -148,7 +148,10 @@ export default function Payment({
         <section className="pt-2 buttons">
           <Button
             label="< Back"
-            onClick={() => setShowPackageConfirmation(true)}
+            onClick={() => {
+              sessionStorage.removeItem("isBamboraRedirect");
+              setShowPackageConfirmation(true);
+            }}
             styling="normal-white btn"
           />
           <div className="button-container">

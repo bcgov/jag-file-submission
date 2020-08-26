@@ -28,9 +28,17 @@ const cancelButton = {
 export default function App() {
   const location = useLocation();
   const queryParams = queryString.parse(location.search);
-  const { submissionId, transactionId, trnApproved } = queryParams;
+  const {
+    submissionId,
+    transactionId,
+    trnApproved,
+    responseCode,
+  } = queryParams;
 
-  if (!trnApproved) sessionStorage.removeItem("isBamboraRedirect");
+  if (responseCode === "19") sessionStorage.setItem("bamboraErrorExists", true);
+
+  if (typeof trnApproved === "undefined")
+    sessionStorage.removeItem("isBamboraRedirect");
 
   if (submissionId && transactionId) {
     sessionStorage.setItem("submissionId", submissionId);
@@ -48,6 +56,7 @@ export default function App() {
 
   const handleConfirm = () => {
     sessionStorage.setItem("validExit", true);
+    sessionStorage.removeItem("isBamboraRedirect");
     const cancelUrl = sessionStorage.getItem("cancelUrl");
 
     if (cancelUrl) {

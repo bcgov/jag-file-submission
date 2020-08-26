@@ -59,6 +59,9 @@ const noCreditCard = () => {
       element={
         <p>
           <span>
+            {sessionStorage.getItem("bamboraErrorExists") === "true" && (
+              <strong>Credit Card validation failed.&nbsp;</strong>
+            )}
             You do not have a valid Credit Card registered with your CSO
             account.
           </span>
