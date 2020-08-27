@@ -22,8 +22,8 @@ const urlBody = {
       location: "1211",
       level: "P",
       courtClass: "F",
-      division: "string",
-      fileNumber: "string",
+      division: "I",
+      fileNumber: "1234",
       participatingClass: "string",
     },
     documents: [
