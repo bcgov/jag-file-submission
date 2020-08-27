@@ -72,26 +72,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @RolesAllowed("efiling-client")
     public ResponseEntity<UploadSubmissionDocumentsResponse> uploadSubmissionDocuments(UUID xTransactionId, List<MultipartFile> files) {
 
-        if (files == null || files.isEmpty())
-            return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_REQUIRED).create(),
-                    HttpStatus.BAD_REQUEST);
-
-        for (MultipartFile file : files) {
-            try {
-                clamAvService.scan(new ByteArrayInputStream(file.getBytes()));
-            } catch (VirusDetectedException e) {
-                return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_STORAGE_FAILURE).create(),
-                        HttpStatus.BAD_GATEWAY);
-            } catch (IOException e) {
-                return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_STORAGE_FAILURE).create(),
-                        HttpStatus.GATEWAY_TIMEOUT);
-            }
-
-            if (!TikaAnalysis.isPdf(file))
-                return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.FILE_TYPE_ERROR).create(),
-                        HttpStatus.BAD_REQUEST);
-        }
-
         UUID submissionId = UUID.randomUUID();
 
         MdcUtils.setClientMDC(submissionId, xTransactionId);
@@ -116,26 +96,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         if (!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
-
-        if (files == null || files.isEmpty())
-            return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_REQUIRED).create(),
-                    HttpStatus.BAD_REQUEST);
-
-        for (MultipartFile file : files) {
-            try {
-                clamAvService.scan(new ByteArrayInputStream(file.getBytes()));
-            } catch (VirusDetectedException e) {
-                return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_STORAGE_FAILURE).create(),
-                        HttpStatus.BAD_GATEWAY);
-            } catch (IOException e) {
-                return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_STORAGE_FAILURE).create(),
-                        HttpStatus.GATEWAY_TIMEOUT);
-            }
-
-            if (!TikaAnalysis.isPdf(file))
-                return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.FILE_TYPE_ERROR).create(),
-                        HttpStatus.BAD_REQUEST);
-        }
 
         MdcUtils.setUserMDC(submissionId, xTransactionId);
 
@@ -393,6 +353,22 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_REQUIRED).create(),
                     HttpStatus.BAD_REQUEST);
+
+        for (MultipartFile file : files) {
+            try {
+                clamAvService.scan(new ByteArrayInputStream(file.getBytes()));
+            } catch (VirusDetectedException e) {
+                return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_STORAGE_FAILURE).create(),
+                        HttpStatus.BAD_GATEWAY);
+            } catch (IOException e) {
+                return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_STORAGE_FAILURE).create(),
+                        HttpStatus.GATEWAY_TIMEOUT);
+            }
+
+            if (!TikaAnalysis.isPdf(file))
+                return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.FILE_TYPE_ERROR).create(),
+                        HttpStatus.BAD_REQUEST);
+        }
 
         try {
 
