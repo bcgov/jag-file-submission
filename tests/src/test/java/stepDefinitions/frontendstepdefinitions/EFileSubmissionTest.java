@@ -15,16 +15,13 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 public class EFileSubmissionTest extends DriverClass {
 
@@ -64,7 +61,6 @@ public class EFileSubmissionTest extends DriverClass {
         readConfig = new ReadConfig();
         String url = readConfig.getBaseUrl();
 
-        Map<String, String> env = System.getenv();
         username = System.getProperty("BCEID_USERNAME");
         password = System.getProperty("BCEID_PASSWORD");
 
@@ -72,10 +68,11 @@ public class EFileSubmissionTest extends DriverClass {
         System.out.println(password);
 
         driver.get(url);
+        System.out.println(url);
         log.info("Landing page url is accessed successfully");
 
         AuthenticationPage authenticationPage = new AuthenticationPage(driver);
-        authenticationPage.clickBceid();
+       // authenticationPage.clickBceid();
         authenticationPage.signInWithIdir(username, password);
         log.info("user is authenticated before reaching eFiling demo page");
 
@@ -95,19 +92,19 @@ public class EFileSubmissionTest extends DriverClass {
         readConfig = new ReadConfig();
         landingPage = new LandingPage(driver);
 
-        validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
-        landingPage.enterAccountGuid(validExistingCSOGuid);
+        //validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
+        //landingPage.enterAccountGuid(validExistingCSOGuid);
 
         filePath = System.getProperty(BASE_PATH) + PDF_PATH;
         landingPage.chooseFileToUpload(filePath);
 
         landingPage.enterJsonData();
 
-        landingPage.clickGenerateUrlButton();
+        landingPage.clickEfilePackageButton();
         log.info("Pdf file is uploaded successfully.");
 
         AuthenticationPage authenticationPage = new AuthenticationPage(driver);
-        authenticationPage.clickBceid();
+       // authenticationPage.clickBceid();
         authenticationPage.signInWithIdir(username, password);
         log.info("user is authenticated in eFiling demo page.");
     }
@@ -123,6 +120,10 @@ public class EFileSubmissionTest extends DriverClass {
 
         boolean continuePaymentBtnIsDisplayed = packageConfirmationPage.verifyContinuePaymentBtnIsDisplayed();
         Assert.assertTrue(continuePaymentBtnIsDisplayed);
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        String token = js.executeScript("return window.localStorage.getItem('jwt');").toString();
+        System.out.println(token);
 
         packageConfirmationPage.clickContinuePaymentBtn();
 
@@ -189,7 +190,7 @@ public class EFileSubmissionTest extends DriverClass {
 
         landingPage.enterJsonData();
 
-        landingPage.clickGenerateUrlButton();
+        landingPage.clickEfilePackageButton();
         log.info("Pdf file is uploaded successfully.");
 
         AuthenticationPage authenticationPage = new AuthenticationPage(driver);
@@ -236,7 +237,7 @@ public class EFileSubmissionTest extends DriverClass {
     public void errorMessageIsDisplayed() {
         landingPage = new LandingPage(driver);
 
-        landingPage.clickGenerateUrlButton();
+        landingPage.clickEfilePackageButton();
         log.info("Generate Url button in eFiling frontend page is clicked");
 
         String expMsg = "An error occurred while eFiling your package. Please make sure you upload at least one file and try again.";
