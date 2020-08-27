@@ -62,7 +62,7 @@ public class UpdateDocumentPropertiesTest {
 
         Submission submission = Submission
                 .builder()
-                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
+                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList(), TestHelpers.createPartyList()))
                 .navigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
                 .create();
 
@@ -85,7 +85,7 @@ public class UpdateDocumentPropertiesTest {
 
         Mockito.when(submissionServiceMock.updateDocuments(any(), Mockito.refEq(updateDocumentRequest))).thenReturn(Submission
                 .builder()
-                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
+                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList(), TestHelpers.createPartyList()))
                 .navigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
                 .create());
 

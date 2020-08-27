@@ -514,6 +514,10 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Document"
+        parties:
+          type: array
+          items:
+            $ref: "#/components/schemas/Party"
     CourtBase:
       type: object
       description: "Court related information"
@@ -649,6 +653,32 @@ components:
         email:
           type: string
           description: the user email address
+    Party:
+      description: party related to filing package
+      required:
+        - partyId
+      properties:
+        partyId:
+          type: number
+          description: primary key
+        partyTypeCd:
+          type: string
+          description: party type code
+        roleTypeCd:
+          type: string
+          description: role type code
+        firstName:
+          type: string
+          description: first name
+        middleName:
+          type: string
+          description: middle name
+        lastName:
+          type: string
+          description: last name
+        nameTypeCd:
+          type: string
+          description: name type code
     CreateCsoAccountRequest:
       description: represents a request to create a user
       required:
