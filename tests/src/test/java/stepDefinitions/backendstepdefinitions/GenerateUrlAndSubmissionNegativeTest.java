@@ -88,8 +88,8 @@ public class GenerateUrlAndSubmissionNegativeTest extends DriverClass {
         String error = jsonPath.get(ERROR);
         String message = jsonPath.get(MESSAGE);
 
-        assertEquals("INVALIDROLE", error);
-        assertEquals("User does not have a valid role for this request.", message);
+        assertEquals("Unsupported Media Type", error);
+        assertEquals("", message);
     }
 
     @Given("POST http request is made to {string} with incorrect path")

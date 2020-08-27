@@ -54,7 +54,7 @@ public class TestUtil {
     }
 
     public static ResponseSpecification errorResponseSpecification() {
-        return new ResponseSpecBuilder().expectStatusCode(403).expectContentType(ContentType.JSON).build();
+        return new ResponseSpecBuilder().expectStatusCode(415).expectContentType(ContentType.JSON).build();
     }
 
     public static ResponseSpecification withoutIdResponseSpecification() {
