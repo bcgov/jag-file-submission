@@ -71,7 +71,7 @@ public class updateDocumentsTest {
 
         Submission submission = Submission
                 .builder()
-                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), new ArrayList<Document>(TestHelpers.createDocumentList())))
+                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), new ArrayList<Document>(TestHelpers.createDocumentList()), TestHelpers.createPartyList()))
                 .navigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
                 .create();
         Submission actual = sut.updateDocuments(submission, updateDocumentRequest);
@@ -83,5 +83,6 @@ public class updateDocumentsTest {
         Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getFilingPackage().getDocuments().get(1).getDescription());
         Assertions.assertEquals(BigDecimal.TEN, actual.getFilingPackage().getDocuments().get(1).getStatutoryFeeAmount());
         Assertions.assertEquals(SubmissionConstants.SUBMISSION_ODOC_DOCUMENT_SUB_TYPE_CD, actual.getFilingPackage().getDocuments().get(1).getSubType());
+
     }
 }

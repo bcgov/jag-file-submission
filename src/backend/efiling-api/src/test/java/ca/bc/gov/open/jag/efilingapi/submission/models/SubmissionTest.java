@@ -43,7 +43,7 @@ public class SubmissionTest {
                         .lastName(LAST_NAME)
                         .firstName(FIRST_NAME)
                         .create(),
-                TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()),
+                TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList(), TestHelpers.createPartyList()),
                 TestHelpers.createNavigation(CASE_1, CANCEL, ERROR),
                 TestHelpers.createClientApplication(DISPLAYNAME, TYPE),
                 1);

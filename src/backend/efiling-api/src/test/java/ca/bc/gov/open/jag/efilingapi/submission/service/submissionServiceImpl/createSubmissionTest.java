@@ -85,9 +85,8 @@ public class createSubmissionTest {
                 .transactionId(TestHelpers.CASE_1)
                 .navigation(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
-
                 .clientApplication(TestHelpers.createClientApplication(TestHelpers.DISPLAY_NAME, TestHelpers.TYPE))
-                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
+                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList(), TestHelpers.createPartyList()))
                 .create());
         assertEquals(BigDecimal.TEN, actual.getTransactionId());
     }
