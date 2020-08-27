@@ -90,7 +90,6 @@ public class UploadSubmissionDocumentsTest {
 
         Mockito.doNothing().when(clamAvServiceMock).scan(any());
 
-        ResponseEntity<UploadSubmissionDocumentsResponse> actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), files);
         ResponseEntity<UploadSubmissionDocumentsResponse> actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), files);
 
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
@@ -111,7 +110,7 @@ public class UploadSubmissionDocumentsTest {
 
         Mockito.doNothing().when(clamAvServiceMock).scan(any());
 
-        ResponseEntity actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), files);
+        ResponseEntity actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), files);
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
         Assertions.assertEquals(FILE_TYPE_ERROR.getErrorCode(), ((EfilingError)actual.getBody()).getError());
@@ -170,7 +169,7 @@ public class UploadSubmissionDocumentsTest {
 
         Mockito.doThrow(VirusDetectedException.class).when(clamAvServiceMock).scan(any());
 
-        ResponseEntity actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), files);
+        ResponseEntity actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), files);
 
         Assertions.assertEquals(HttpStatus.BAD_GATEWAY, actual.getStatusCode());
         Assertions.assertEquals(DOCUMENT_STORAGE_FAILURE.getErrorCode(), ((EfilingError)actual.getBody()).getError());

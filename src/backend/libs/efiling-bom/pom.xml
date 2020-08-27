@@ -30,7 +30,7 @@
         <org.threeten.version>1.4.4</org.threeten.version>
         <com.github.joschi.jackson.version>2.10.0</com.github.joschi.jackson.version>
         <com.google.code.findbugs.version>3.0.2</com.google.code.findbugs.version>
-        <ca.bc.gov.open.version>0.1.7</ca.bc.gov.open.version>
+        <ca.bc.gov.open.version>0.1.8</ca.bc.gov.open.version>
     </properties>
 
     <repositories>
