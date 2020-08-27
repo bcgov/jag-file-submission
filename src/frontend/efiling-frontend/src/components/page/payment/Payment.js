@@ -29,8 +29,10 @@ const setBamboraCSORelation = (submissionId) => {
 
   axios
     .post(`/submission/${submissionId}/set-cso-bambora-relation`, data)
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err));
+    .then(() =>
+      sessionStorage.setItem("internalClientNumber", data.internalClientNumber)
+    )
+    .catch((err) => errorRedirect(sessionStorage.getItem("errorUrl"), err));
 };
 
 const generateCourtDataTable = ({
@@ -73,9 +75,7 @@ const submitPackage = (submissionId, setSubmitBtnEnabled, setShowLoader) => {
 
 const checkSubmitEnabled = (paymentAgreed, setSubmitBtnEnabled) => {
   const isEnabled =
-    paymentAgreed &&
-    (sessionStorage.getItem("internalClientNumber") !== "null" ||
-      sessionStorage.getItem("bamboraSuccess"));
+    paymentAgreed && sessionStorage.getItem("internalClientNumber") !== "null";
   setSubmitBtnEnabled(isEnabled);
 };
 
