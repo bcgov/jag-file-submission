@@ -109,7 +109,7 @@ public class uploadAdditionalSubmissionDocumentsTest {
 
     @Test
     @DisplayName("400: with non pdf files should return bad request")
-    public void withNonPdfFilesShouldReturnOk() throws IOException, VirusDetectedException {
+    public void withNonPdfFilesShouldReturnBadRequest() throws IOException, VirusDetectedException {
 
         File file = new File("src/test/resources/test.txt");
 
