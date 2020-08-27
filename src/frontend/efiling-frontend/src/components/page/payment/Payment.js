@@ -108,14 +108,12 @@ export default function Payment({
       : baseCalloutText;
 
   useEffect(() => {
-    console.log("hey man", sessionStorage.getItem("internalClientNumber"));
-    if (sessionStorage.getItem("bamboraSuccess")) {
+    if (sessionStorage.getItem("bamboraSuccess"))
       setBamboraCSORelation(submissionId);
-    }
 
     sessionStorage.setItem("currentPage", "payment");
     window.history.pushState(null, null, window.location.href);
-  }, []);
+  }, [submissionId]);
 
   useEffect(() => {
     checkSubmitEnabled(paymentAgreed, setSubmitBtnEnabled);
