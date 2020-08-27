@@ -32,6 +32,16 @@ const urlBody = {
         type: "AFF",
       },
     ],
+    parties: [
+      {
+        partyTypeCd: "IND",
+        roleTypeCd: "CLA",
+        firstName: "Bob",
+        middleName: "Alan",
+        lastName: "Ross",
+        nameTypeCd: "CUR",
+      },
+    ],
   },
   navigation: {
     success: {
