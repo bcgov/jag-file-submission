@@ -43,9 +43,7 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     private static final String X_USER_ID = "X-User-Id";
     private static final String SUBMISSION_ID = "submissionId";
     private static final String TRANSACTION_ID = "transactionId";
-    private static final String BASE_PATH = "user.dir";
-    private static final String PDF_PATH = "/src/test/java/testdatasource/test-document.pdf";
-    private static String userToken;
+    private String userToken;
 
     public Logger log = LogManager.getLogger(GenerateUrlAndSubmissionTest.class);
 
@@ -93,7 +91,7 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
         String validUserid = JsonDataReader.getCsoAccountGuid().getValidUserId();
 
         response = generateUrlRequestBuilders.getBearerToken();
-        JsonPath jsonPath = new JsonPath(response.asString());
+        jsonPath = new JsonPath(response.asString());
 
         String accessToken = jsonPath.get("access_token");
 

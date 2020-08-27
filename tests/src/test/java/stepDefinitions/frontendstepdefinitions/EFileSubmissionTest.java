@@ -64,11 +64,7 @@ public class EFileSubmissionTest extends DriverClass {
         username = System.getProperty("BCEID_USERNAME");
         password = System.getProperty("BCEID_PASSWORD");
 
-        System.out.println(username);
-        System.out.println(password);
-
         driver.get(url);
-        System.out.println(url);
         log.info("Landing page url is accessed successfully");
 
         AuthenticationPage authenticationPage = new AuthenticationPage(driver);
@@ -121,12 +117,7 @@ public class EFileSubmissionTest extends DriverClass {
         boolean continuePaymentBtnIsDisplayed = packageConfirmationPage.verifyContinuePaymentBtnIsDisplayed();
         Assert.assertTrue(continuePaymentBtnIsDisplayed);
 
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        String token = js.executeScript("return window.localStorage.getItem('jwt');").toString();
-        System.out.println(token);
-
         packageConfirmationPage.clickContinuePaymentBtn();
-
         eFileSubmissionPage.clickCancelButton();
     }
 

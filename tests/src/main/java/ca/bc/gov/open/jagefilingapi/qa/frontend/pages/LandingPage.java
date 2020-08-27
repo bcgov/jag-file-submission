@@ -72,9 +72,6 @@ public class LandingPage {
 
     public void chooseFileToUpload(String file) {
         chooseFile.sendKeys(file);
-   /*     WebDriverWait wait = new WebDriverWait(driver, 30);
-        wait.until(ExpectedConditions.visibilityOf(selectedFile));*/
-
     }
 
     public void enterJsonData() {
