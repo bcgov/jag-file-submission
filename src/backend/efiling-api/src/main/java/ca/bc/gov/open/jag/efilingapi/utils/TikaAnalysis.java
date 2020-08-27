@@ -12,6 +12,8 @@ import java.io.IOException;
 
 public class TikaAnalysis {
 
+    private TikaAnalysis() { }
+
     public static Boolean isPdf(MultipartFile multipartFile) {
 
         Detector detector = new DefaultDetector();
