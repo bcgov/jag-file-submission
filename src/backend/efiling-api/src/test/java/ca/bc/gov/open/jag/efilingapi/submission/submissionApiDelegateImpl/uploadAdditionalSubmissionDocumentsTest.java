@@ -88,7 +88,7 @@ public class uploadAdditionalSubmissionDocumentsTest {
 
     @Test
     @DisplayName("200: with files should return ok")
-    public void withFilesShouldReturnOk() throws IOException, VirusDetectedException {
+    public void withPdfFilesShouldReturnOk() throws IOException, VirusDetectedException {
 
         File file = new File("src/test/resources/test.pdf");
 
