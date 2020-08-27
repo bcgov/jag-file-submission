@@ -31,13 +31,16 @@ export default function App() {
   const {
     submissionId,
     transactionId,
-    trnApproved,
     responseCode,
+    customerCode,
   } = queryParams;
 
-  if (responseCode === "19") sessionStorage.setItem("bamboraErrorExists", true);
+  if (responseCode === "19" || responseCode === "17")
+    sessionStorage.setItem("bamboraErrorExists", true);
+  if (responseCode === "1")
+    sessionStorage.setItem("bamboraSuccess", customerCode);
 
-  if (typeof trnApproved === "undefined")
+  if (typeof customerCode === "undefined")
     sessionStorage.removeItem("isBamboraRedirect");
 
   if (submissionId && transactionId) {

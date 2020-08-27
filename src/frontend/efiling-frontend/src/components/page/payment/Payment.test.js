@@ -221,4 +221,39 @@ describe("Payment Component", () => {
 
     global.Date = realDate;
   });
+
+  test("when coming from a successful bambora card registration, and a successful call to set-bambora-cso, set the internal client number", async () => {
+    sessionStorage.setItem("internalClientNumber", null);
+    sessionStorage.setItem("bamboraSuccess", "1234");
+
+    mock
+      .onPost(`/submission/${submissionId}/set-cso-bambora-relation`)
+      .reply(200);
+
+    render(<Payment payment={payment} />);
+
+    await waitFor(() => {});
+
+    expect(sessionStorage.getItem("internalClientNumber")).toEqual("1234");
+  });
+
+  test("when coming from a successful bambora card registration, and a failed call to set-bambora-cso, redirects to error page", async () => {
+    sessionStorage.setItem("internalClientNumber", null);
+    sessionStorage.setItem("bamboraSuccess", "1234");
+
+    mock
+      .onPost(`/submission/${submissionId}/set-cso-bambora-relation`)
+      .reply(400, {
+        message: "There was an error.",
+      });
+
+    render(<Payment payment={payment} />);
+
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalledWith(
+      "error.com?status=400&message=There was an error.",
+      "_self"
+    );
+  });
 });

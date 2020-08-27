@@ -22,6 +22,19 @@ import "./Payment.css";
 const baseCalloutText = `I have reviewed the information and the documents in this filing
 package and am prepared to submit them for filing.`;
 
+const setBamboraCSORelation = (submissionId) => {
+  const data = {
+    internalClientNumber: sessionStorage.getItem("bamboraSuccess"),
+  };
+
+  axios
+    .post(`/submission/${submissionId}/set-cso-bambora-relation`, data)
+    .then(() =>
+      sessionStorage.setItem("internalClientNumber", data.internalClientNumber)
+    )
+    .catch((err) => errorRedirect(sessionStorage.getItem("errorUrl"), err));
+};
+
 const generateCourtDataTable = ({
   fileNumber,
   locationDescription,
@@ -71,7 +84,8 @@ export default function Payment({
 }) {
   const rushFlagExists = getJWTData().realm_access.roles.includes("rush_flag");
   const creditCardAlert =
-    sessionStorage.getItem("internalClientNumber") !== "null"
+    sessionStorage.getItem("internalClientNumber") !== "null" ||
+    sessionStorage.getItem("bamboraSuccess")
       ? getCreditCardAlerts().existingCreditCard
       : getCreditCardAlerts().noCreditCard;
 
@@ -93,9 +107,12 @@ export default function Payment({
       : baseCalloutText;
 
   useEffect(() => {
+    if (sessionStorage.getItem("bamboraSuccess"))
+      setBamboraCSORelation(submissionId);
+
     sessionStorage.setItem("currentPage", "payment");
     window.history.pushState(null, null, window.location.href);
-  }, []);
+  }, [submissionId]);
 
   useEffect(() => {
     checkSubmitEnabled(paymentAgreed, setSubmitBtnEnabled);
