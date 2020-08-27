@@ -51,7 +51,7 @@ public class EFileSubmissionPage {
     }
 
     public void clickCancelButton() {
-        wait = new WebDriverWait(driver, 30);
+        wait = new WebDriverWait(driver, 60);
         wait.until(ExpectedConditions.visibilityOf(cancelButton));
 
         Actions actions = new Actions(driver);

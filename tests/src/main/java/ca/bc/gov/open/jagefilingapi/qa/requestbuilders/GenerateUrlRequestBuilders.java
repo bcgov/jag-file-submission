@@ -62,7 +62,7 @@ public class GenerateUrlRequestBuilders {
         request = RestAssured.given().auth().preemptive().oauth2(accessToken).spec(TestUtil.submitDocumentsRequestSpecification())
                 .header(X_TRANSACTION_ID,validExistingCSOGuid)
                 .header(X_USER_ID,validUserid )
-                .multiPart(FILES, pdfFile);
+                .multiPart(FILES,pdfFile);
 
         return request.when().post(resourceAPI.getResource()).then()
                 .spec(TestUtil.validDocumentResponseSpecification())
@@ -74,18 +74,21 @@ public class GenerateUrlRequestBuilders {
 
         APIResources resourceAPI = APIResources.valueOf(resourceValue);
         String validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
+        String validUserid = JsonDataReader.getCsoAccountGuid().getValidUserid();
 
-        File pngFile = new File(UPLOAD_FILE_PATH + "/backend.png");
-        File textFile = new File(UPLOAD_FILE_PATH + "/test-document.txt");
-        File pdfFile = new File(UPLOAD_FILE_PATH + "/test-pdf-document.pdf");
-        File jpgFile = new File(UPLOAD_FILE_PATH + "/workflow-automation.jpeg");
+        Response response = getBearerToken();
+        JsonPath jsonPath = new JsonPath(response.asString());
 
-        request = RestAssured.given().spec(TestUtil.submitDocumentsRequestSpecification())
+        String accessToken = jsonPath.get("access_token");
+
+        File firstPdfFile = new File(UPLOAD_FILE_PATH + FILE_NAME_PATH);
+        File secondPdfFile = new File(UPLOAD_FILE_PATH + "/test-document-2.pdf");
+
+        request = RestAssured.given().auth().preemptive().oauth2(accessToken).spec(TestUtil.submitDocumentsRequestSpecification())
                 .header(X_TRANSACTION_ID,validExistingCSOGuid)
-                .multiPart(FILES,  pngFile)
-                .multiPart(FILES,  textFile)
-                .multiPart(FILES,  pdfFile)
-                .multiPart(FILES,  jpgFile);
+                .header(X_USER_ID,validUserid )
+                .multiPart(FILES,firstPdfFile)
+                .multiPart(FILES,secondPdfFile);
 
         return request.when().post(resourceAPI.getResource()).then()
                 .spec(TestUtil.validDocumentResponseSpecification())
@@ -114,12 +117,19 @@ public class GenerateUrlRequestBuilders {
 
         APIResources resourceAPI = APIResources.valueOf(resourceValue);
         String nonExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getNonExistingCSOGuid();
+        String validUserid = JsonDataReader.getCsoAccountGuid().getValidUserid();
 
-        File pngFile = new File(UPLOAD_FILE_PATH + FILE_NAME_PATH);
+        Response response = getBearerToken();
+        JsonPath jsonPath = new JsonPath(response.asString());
 
-        request = RestAssured.given().spec(TestUtil.submitDocumentsRequestSpecification())
+        String accessToken = jsonPath.get("access_token");
+
+        File pdfFile = new File(UPLOAD_FILE_PATH + FILE_NAME_PATH);
+
+        request = RestAssured.given().auth().preemptive().oauth2(accessToken).spec(TestUtil.submitDocumentsRequestSpecification())
                 .header(X_TRANSACTION_ID,nonExistingCSOGuid)
-                .multiPart(FILES,  pngFile);
+                .header(X_USER_ID,validUserid )
+                .multiPart(FILES, pdfFile);
 
         return request.when().post(resourceAPI.getResource()).then()
                 .spec(TestUtil.validDocumentResponseSpecification())

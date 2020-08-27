@@ -28,7 +28,7 @@ public class LandingPage {
     @FindBy(xpath = "//*[@id='root']/div/main/div/div/span[1]")
     WebElement getErrorText;
 
-    @FindBy(xpath = "//*[starts-with(@id,'filepond--browser')]")
+    @FindBy(xpath = "//*[@id='root']/div/main/div/div/div[1]/div/input")
     WebElement chooseFile;
 
     @FindBy(xpath = "//*[starts-with(@id,'filepond--item')]")
@@ -62,7 +62,7 @@ public class LandingPage {
          guidInputForm.sendKeys(guid);
     }
 
-    public void clickGenerateUrlButton() {
+    public void clickEfilePackageButton() {
         generateUrlButton.click();
     }
 
@@ -72,27 +72,27 @@ public class LandingPage {
 
     public void chooseFileToUpload(String file) {
         chooseFile.sendKeys(file);
-        WebDriverWait wait = new WebDriverWait(driver, 30);
-        wait.until(ExpectedConditions.visibilityOf(selectedFile));
-
+   /*     WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.visibilityOf(selectedFile));*/
 
     }
 
     public void enterJsonData() {
         String json  = "{\n" +
                 "    \"court\": {\n" +
-                "        \"location\": \"string\",\n" +
+                "        \"location\": \"1211\",\n" +
                 "        \"level\": \"P\",\n" +
-                "        \"class\": \"F\",\n" +
-                "        \"division\": \"string\",\n" +
-                "        \"fileNumber\": \"string\",\n" +
+                "        \"courtClass\": \"F\",\n" +
+                "        \"division\": \"I\",\n" +
+                "        \"fileNumber\": \"1234\",\n" +
                 "        \"participatingClass\": \"string\"\n" +
                 "    },\n" +
                 "    \"documents\": [{\n" +
-                "        \"name\": \"test-pdf-document.pdf\",\n" +
+                "        \"name\": \"test-document.pdf\",\n" +
                 "        \"type\": \"AFF\"\n" +
                 "    }]\n" +
                 "}";
+
         textInput.sendKeys(json);
 
     }
