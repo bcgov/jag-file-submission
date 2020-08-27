@@ -29,10 +29,7 @@ const setBamboraCSORelation = (submissionId) => {
 
   axios
     .post(`/submission/${submissionId}/set-cso-bambora-relation`, data)
-    .then((res) => {
-      sessionStorage.removeItem("bamboraSuccess");
-      console.log(res);
-    })
+    .then((res) => console.log(res))
     .catch((err) => console.log(err));
 };
 
@@ -76,7 +73,9 @@ const submitPackage = (submissionId, setSubmitBtnEnabled, setShowLoader) => {
 
 const checkSubmitEnabled = (paymentAgreed, setSubmitBtnEnabled) => {
   const isEnabled =
-    paymentAgreed && sessionStorage.getItem("internalClientNumber") !== "null";
+    paymentAgreed &&
+    (sessionStorage.getItem("internalClientNumber") !== "null" ||
+      sessionStorage.getItem("bamboraSuccess"));
   setSubmitBtnEnabled(isEnabled);
 };
 
