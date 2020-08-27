@@ -8,6 +8,7 @@ public enum ErrorResponse {
     DOCUMENT_TYPE_ERROR("Error while retrieving documents"),
     DOCUMENT_REQUIRED("At least one document is required."),
     DOCUMENT_STORAGE_FAILURE("An unknown error happened while storing documents."),
+    FILE_TYPE_ERROR("File is not a PDF"),
     CREATE_ACCOUNT_EXCEPTION("Error Creating CSO account."),
     UPDATE_CLIENT_EXCEPTION("Error Updating CSO client account."),
     CACHE_ERROR("Cache related error."),
