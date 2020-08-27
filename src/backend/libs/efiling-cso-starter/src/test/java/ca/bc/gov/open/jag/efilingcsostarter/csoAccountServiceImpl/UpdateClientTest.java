@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingcsostarter.csoAccountServiceImpl;
 
 import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
+import ca.bc.gov.ag.csows.accounts.Client;
 import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
@@ -36,6 +37,12 @@ public class UpdateClientTest {
     }
 
     private void initAccountFacadeMocks() throws NestedEjbException_Exception {
+
+        Client client = new Client();
+        client.setClientId(BigDecimal.TEN);
+
+        Mockito.doReturn(client).when(accountFacadeBeanMock)
+                .getClient(Mockito.eq(BigDecimal.TEN));
 
         Mockito.doReturn(null).when(accountFacadeBeanMock)
                 .updateClient(ArgumentMatchers.argThat(x -> x.getInternalClientNo().equals(INTERNAL_CLIENT_NUMBER)));
