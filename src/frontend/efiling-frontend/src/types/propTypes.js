@@ -9,7 +9,7 @@ export const propTypes = {
     modal: PropTypes.shape({
       show: PropTypes.bool.isRequired,
       title: PropTypes.string.isRequired,
-      body: PropTypes.func.isRequired,
+      body: PropTypes.func,
     }).isRequired,
     mainButton: PropTypes.shape({
       label: PropTypes.string.isRequired,

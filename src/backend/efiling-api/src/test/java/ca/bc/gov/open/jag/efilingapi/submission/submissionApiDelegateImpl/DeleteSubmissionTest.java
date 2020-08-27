@@ -50,7 +50,7 @@ public class DeleteSubmissionTest {
         Submission submission = Submission
                 .builder()
                 .universalId(UUID.randomUUID())
-                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), createDocumentList()))
+                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), createDocumentList(), TestHelpers.createPartyList()))
                 .create();
 
         Mockito.when(submissionStoreMock.get(Mockito.eq(TestHelpers.CASE_1), Mockito.any())).thenReturn(Optional.of(submission));

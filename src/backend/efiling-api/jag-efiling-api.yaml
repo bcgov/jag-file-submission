@@ -175,6 +175,35 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EfilingError"
+  "/submission/{submissionId}/set-cso-bambora-relation":
+    post:
+      summary: Apply bambora id and card registered to cso
+      operationId: updateClientDetails
+      tags:
+        - submission
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+        - $ref: "#/components/parameters/submissionId"
+      requestBody:
+        description: update client details parameters
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClientUpdateRequest"
+      responses:
+        "200":
+          description: Client updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientUpdateResponse"
+        "403":
+          description: Request does not meet the required criteria
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EfilingError"
   "/submission/{submissionId}/filing-package":
     get:
       summary: Get filing package information
@@ -384,6 +413,9 @@ components:
         isSupremeCourtScheduling:
           type: boolean
           description: supreme court scheduling required
+        data:
+          type: object
+          description: store additional details
     Document:
       required:
         - description
@@ -482,6 +514,10 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Document"
+        parties:
+          type: array
+          items:
+            $ref: "#/components/schemas/Party"
     CourtBase:
       type: object
       description: "Court related information"
@@ -582,15 +618,15 @@ components:
       type: object
       required:
         - universalId
-        - cardRegistered
+        - internalClientNumber
       properties:
         universalId:
           type: string
           format: uuid
           description: the user universal identifier
-        cardRegistered:
-          type: boolean
-          description: if the user has a card on file or not
+        internalClientNumber:
+          type: string
+          description: bambora id if client has a registered card
         accounts:
           type: array
           items:
@@ -617,6 +653,32 @@ components:
         email:
           type: string
           description: the user email address
+    Party:
+      description: party related to filing package
+      required:
+        - partyId
+      properties:
+        partyId:
+          type: number
+          description: primary key
+        partyTypeCd:
+          type: string
+          description: party type code
+        roleTypeCd:
+          type: string
+          description: role type code
+        firstName:
+          type: string
+          description: first name
+        middleName:
+          type: string
+          description: middle name
+        lastName:
+          type: string
+          description: last name
+        nameTypeCd:
+          type: string
+          description: name type code
     CreateCsoAccountRequest:
       description: represents a request to create a user
       required:
@@ -669,11 +731,11 @@ components:
       description: create service request
       type: object
       required:
-        - clientId
+        - internalClientNumber
         - redirectUrl
       properties:
-        clientId:
-          type: number
+        internalClientNumber:
+          type: string
           description: client id for request to bambora
         redirectUrl:
           type: string
@@ -687,3 +749,15 @@ components:
         bamboraUrl:
           type: string
           description: redirect url
+    ClientUpdateRequest:
+      description: update client details
+      type: object
+      required:
+        - internalClientNumber
+      properties:
+        internalClientNumber:
+          type: string
+          description: internal client number for request to bambora
+    ClientUpdateResponse:
+      description: update client details
+      type: object

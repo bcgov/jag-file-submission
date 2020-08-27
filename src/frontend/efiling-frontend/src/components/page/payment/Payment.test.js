@@ -31,7 +31,6 @@ describe("Payment Component", () => {
     submissionFee,
   };
 
-  sessionStorage.setItem("cardRegistered", true);
   const token = generateJWTToken({
     preferred_username: "username@bceid",
     realm_access: {
@@ -44,12 +43,90 @@ describe("Payment Component", () => {
   beforeEach(() => {
     mock = new MockAdapter(axios);
     window.open = jest.fn();
+    sessionStorage.setItem("internalClientNumber", "ABC123");
+    sessionStorage.setItem("bamboraRedirectUrl", "efilinghub.com");
+
+    mock
+      .onPost("/payment/generate-update-card")
+      .reply(200, { bamboraUrl: "bambora.com" });
   });
 
-  test("Matches the snapshot", () => {
+  test("Matches the snapshot with existing credit card", () => {
     const { asFragment } = render(<Payment payment={payment} />);
 
     expect(asFragment()).toMatchSnapshot();
+  });
+
+  test("Matches the snapshot with no credit card", () => {
+    sessionStorage.setItem("internalClientNumber", null);
+
+    const { asFragment } = render(<Payment payment={payment} />);
+
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  test("Click on register a credit card when no card exists takes user to bambora when call succeeds", async () => {
+    sessionStorage.setItem("internalClientNumber", null);
+
+    const { container } = render(<Payment payment={payment} />);
+
+    fireEvent.click(getByText(container, "Register a Credit Card now"));
+
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalledWith("bambora.com", "_self");
+  });
+
+  test("Keydown on register a credit card when no card exists and bambora error exists takes user to bambora when call succeeds", async () => {
+    sessionStorage.setItem("internalClientNumber", null);
+    sessionStorage.setItem("bamboraErrorExists", true);
+
+    const { container } = render(<Payment payment={payment} />);
+
+    fireEvent.keyDown(getByText(container, "Register a Credit Card now"));
+
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalledWith("bambora.com", "_self");
+  });
+
+  test("Click on register a credit card when card exists takes user to bambora when call succeeds", async () => {
+    const { container } = render(<Payment payment={payment} />);
+
+    fireEvent.click(getByText(container, "Register a new Credit Card."));
+
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalledWith("bambora.com", "_self");
+  });
+
+  test("Keydown on register a credit card when card exists takes user to bambora when call succeeds", async () => {
+    const { container } = render(<Payment payment={payment} />);
+
+    fireEvent.keyDown(getByText(container, "Register a new Credit Card."));
+
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalledWith("bambora.com", "_self");
+  });
+
+  test("Click on register a credit card takes user to error page when call fails", async () => {
+    sessionStorage.setItem("errorUrl", "error.com");
+
+    mock
+      .onPost("/payment/generate-update-card")
+      .reply(400, { message: "There was an error." });
+
+    const { container } = render(<Payment payment={payment} />);
+
+    fireEvent.keyDown(getByText(container, "Register a new Credit Card."));
+
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalledWith(
+      "error.com?status=400&message=There was an error.",
+      "_self"
+    );
   });
 
   test("Agreeing to conditions toggles button disabled state", () => {
@@ -143,5 +220,40 @@ describe("Payment Component", () => {
     expect(asFragment()).toMatchSnapshot();
 
     global.Date = realDate;
+  });
+
+  test("when coming from a successful bambora card registration, and a successful call to set-bambora-cso, set the internal client number", async () => {
+    sessionStorage.setItem("internalClientNumber", null);
+    sessionStorage.setItem("bamboraSuccess", "1234");
+
+    mock
+      .onPost(`/submission/${submissionId}/set-cso-bambora-relation`)
+      .reply(200);
+
+    render(<Payment payment={payment} />);
+
+    await waitFor(() => {});
+
+    expect(sessionStorage.getItem("internalClientNumber")).toEqual("1234");
+  });
+
+  test("when coming from a successful bambora card registration, and a failed call to set-bambora-cso, redirects to error page", async () => {
+    sessionStorage.setItem("internalClientNumber", null);
+    sessionStorage.setItem("bamboraSuccess", "1234");
+
+    mock
+      .onPost(`/submission/${submissionId}/set-cso-bambora-relation`)
+      .reply(400, {
+        message: "There was an error.",
+      });
+
+    render(<Payment payment={payment} />);
+
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalledWith(
+      "error.com?status=400&message=There was an error.",
+      "_self"
+    );
   });
 });

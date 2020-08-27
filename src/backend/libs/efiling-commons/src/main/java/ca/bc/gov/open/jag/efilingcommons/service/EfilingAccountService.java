@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingcommons.service;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.CreateAccountRequest;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 /**
@@ -23,5 +24,9 @@ public interface EfilingAccountService {
      * @return
      */
     AccountDetails createAccount(CreateAccountRequest createAccountRequest);
+
+    void updateClient(AccountDetails accountDetails);
+
+    String getOrderNumber();
 
 }

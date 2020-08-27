@@ -183,7 +183,13 @@ export default function Home({ page: { header } }) {
       keycloakRealm,
       keycloakClientSecret
     );
-  }, [token]);
+  }, [
+    token,
+    keycloakBaseUrl,
+    keycloakClientId,
+    keycloakClientSecret,
+    keycloakRealm,
+  ]);
 
   return (
     <main>

@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingapi.submission.mappers;
 
 
 import ca.bc.gov.open.jag.efilingapi.api.model.Document;
+import ca.bc.gov.open.jag.efilingapi.api.model.Party;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingcommons.model.*;
@@ -43,6 +44,7 @@ public interface EfilingFilingPackageMapper {
     @Mapping(target = "milestones", source = "milestones")
     @Mapping(target = "payments", source = "payments")
     @Mapping(target = "statuses", source = "statuses")
+    @Mapping(target = "jsonObject", expression = "java(java.lang.String.valueOf(document.getData()))")
     @Mapping(target = "xmlDocumentInstanceYn", constant = SubmissionConstants.XML_DOCUMENT_INSTANCE_YN)
     EfilingDocument toEfilingDocument(Document document, Submission submission, List<EfilingDocumentMilestone> milestones,
                                       List<EfilingDocumentPayment> payments, List<EfilingDocumentStatus> statuses, String filePath);
@@ -75,18 +77,19 @@ public interface EfilingFilingPackageMapper {
     @Mapping(target = "privilegeCd", constant = SubmissionConstants.SUBMISSION_PRIVILEGE_CD)
     EfilingPackageAuthority toPackageAuthority(Submission submission);
 
-    @Mapping(target = "partyTypeCd", constant = SubmissionConstants.SUBMISSION_PARTY_TYPE_CD)
-    @Mapping(target = "roleTypeCd", constant = SubmissionConstants.SUBMISSION_ROLE_TYPE_CD)
+    @Mapping(target = "partyTypeCd", source = "party.partyTypeCd", defaultValue = SubmissionConstants.SUBMISSION_PARTY_TYPE_CD)
+    @Mapping(target = "roleTypeCd", source = "party.roleTypeCd", defaultValue = SubmissionConstants.SUBMISSION_ROLE_TYPE_CD)
+    @Mapping(target = "partyId", source = "party.partyId")
     @Mapping(target = "current.entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
-    @Mapping(target = "current.entUserId", source = "accountDetails.clientId")
-    @Mapping(target = "current.firstGivenNm", source = "accountDetails.firstName", defaultValue = "Bob")
-    @Mapping(target = "current.identificationDetailSeqNo", constant = "1")
-    @Mapping(target = "current.nameTypeCd", constant = SubmissionConstants.SUBMISSION_NAME_TYPE_CD)
-    @Mapping(target = "current.secondGivenNm", source = "accountDetails.middleName", defaultValue = "Alan")
-    @Mapping(target = "current.surnameNm", source = "accountDetails.lastName", defaultValue = "Ross")
-    @Mapping(target = "entUserId", source = "accountDetails.clientId")
+    @Mapping(target = "current.entUserId", source = "submission.accountDetails.clientId")
+    @Mapping(target = "current.firstGivenNm", source = "party.firstName", defaultValue = "Bob")
+    @Mapping(target = "current.identificationDetailSeqNo", source = "sequenceNumber")
+    @Mapping(target = "current.nameTypeCd", source= "party.nameTypeCd", defaultValue = SubmissionConstants.SUBMISSION_NAME_TYPE_CD)
+    @Mapping(target = "current.secondGivenNm", source = "party.middleName", defaultValue = "Alan")
+    @Mapping(target = "current.surnameNm", source = "party.lastName", defaultValue = "Ross")
+    @Mapping(target = "entUserId", source = "submission.accountDetails.clientId")
     @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
-    EfilingParties toEfilingParties(Submission submission);
+    EfilingParties toEfilingParties(Submission submission, Party party, String sequenceNumber);
 
     @Mapping(target = "clientId", source = "accountDetails.clientId")
     @Mapping(target = "accountId", source = "accountDetails.accountId")

@@ -296,7 +296,7 @@ export default function Upload({
 
   useEffect(() => {
     setDropdownItems(courtData, setItems, items);
-  }, [items]);
+  }, [items, courtData]);
 
   if (showPackageConfirmation) {
     return (

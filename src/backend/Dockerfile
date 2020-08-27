@@ -11,6 +11,9 @@ ARG STARTERS_V
 ENV SERVICE_NAME=${SERVICE_NAME}
 ENV STARTERS_V=${STARTERS_V}
 
+RUN mkdir /root/.ssh
+RUN chmod 0700 /root/.ssh 
+RUN ssh-keyscan -t rsa localhost >> ~/.ssh/known_hosts
 
 RUN apt-get update       
 RUN apt-get install -y git

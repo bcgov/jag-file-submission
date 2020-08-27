@@ -1,6 +1,27 @@
 import React from "react";
+import axios from "axios";
 import { MdCreditCard } from "react-icons/md";
 import { Alert } from "shared-components";
+import { errorRedirect } from "./errorRedirect";
+
+const registerCard = () => {
+  const data = {
+    clientId:
+      sessionStorage.getItem("internalClientNumber") === "null"
+        ? null
+        : sessionStorage.getItem("internalClientNumber"),
+    redirectUrl: sessionStorage.getItem("bamboraRedirectUrl"),
+  };
+
+  axios
+    .post("/payment/generate-update-card", data)
+    .then(({ data: { bamboraUrl } }) => {
+      sessionStorage.setItem("validExit", true);
+      sessionStorage.setItem("isBamboraRedirect", true);
+      window.open(bamboraUrl, "_self");
+    })
+    .catch((error) => errorRedirect(sessionStorage.getItem("errorUrl"), error));
+};
 
 const existingCreditCard = () => {
   return (
@@ -14,13 +35,15 @@ const existingCreditCard = () => {
             You have a valid Credit Card registered with your CSO account.
           </span>
           <br />
-          <a
-            href="https://justice.gov.bc.ca/cso/about/index.do"
-            target="_blank"
-            rel="noopener noreferrer"
+          <span
+            onClick={() => registerCard()}
+            onKeyDown={() => registerCard()}
+            className="file-href"
+            role="button"
+            tabIndex={0}
           >
             Register a new Credit Card.
-          </a>
+          </span>
         </p>
       }
     />
@@ -36,17 +59,22 @@ const noCreditCard = () => {
       element={
         <p>
           <span>
+            {sessionStorage.getItem("bamboraErrorExists") === "true" && (
+              <strong>Credit Card validation failed.&nbsp;</strong>
+            )}
             You do not have a valid Credit Card registered with your CSO
             account.
           </span>
           <br />
-          <a
-            href="https://justice.gov.bc.ca/cso/about/index.do"
-            target="_blank"
-            rel="noopener noreferrer"
+          <span
+            onClick={() => registerCard()}
+            onKeyDown={() => registerCard()}
+            className="file-href"
+            role="button"
+            tabIndex={0}
           >
             Register a Credit Card now
-          </a>
+          </span>
           &nbsp;to continue.
         </p>
       }
