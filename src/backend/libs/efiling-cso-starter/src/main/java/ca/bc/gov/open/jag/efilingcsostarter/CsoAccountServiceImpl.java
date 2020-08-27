@@ -81,14 +81,14 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         if (accountDetails.getClientId() == null) throw new IllegalArgumentException("client id is required");
         if (StringUtils.isBlank(accountDetails.getInternalClientNumber())) throw new IllegalArgumentException("internal client number is required");
 
-        Client client = new Client();
-        client.setInternalClientNo(accountDetails.getInternalClientNumber());
-        client.setClientId(accountDetails.getClientId());
-        client.setRegisteredCreditCardYnBoolean(accountDetails.isCardRegistered());
-        client.setUpdDtm(DateUtils.getCurrentXmlDate());
-        client.setUpdUserId(accountDetails.getClientId().toString());
-
         try {
+            Client client = accountFacadeBean.getClient(accountDetails.getClientId());
+
+            client.setInternalClientNo(accountDetails.getInternalClientNumber());
+            client.setRegisteredCreditCardYnBoolean(accountDetails.isCardRegistered());
+            client.setUpdDtm(DateUtils.getCurrentXmlDate());
+            client.setUpdUserId(accountDetails.getClientId().toString());
+
             accountFacadeBean.updateClient(client);
         } catch (NestedEjbException_Exception e) {
             throw new EfilingAccountServiceException("Exception while updating client", e);
