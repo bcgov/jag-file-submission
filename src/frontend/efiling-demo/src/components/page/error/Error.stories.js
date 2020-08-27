@@ -22,10 +22,8 @@ export const Default = () => <Error page={page} />;
 
 export const Mobile = () => <Error page={page} />;
 
-Mobile.story = {
-  parameters: {
-    viewport: {
-      defaultViewport: "mobile2",
-    },
+Mobile.parameters = {
+  viewport: {
+    defaultViewport: "mobile2",
   },
 };

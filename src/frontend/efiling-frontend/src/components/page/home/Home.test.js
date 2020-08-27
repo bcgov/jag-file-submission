@@ -1,8 +1,7 @@
 import React from "react";
 import { createMemoryHistory } from "history";
-import { MemoryRouter } from "react-router-dom";
 import axios from "axios";
-import { render, waitFor } from "@testing-library/react";
+import { render, waitFor, fireEvent, getByText } from "@testing-library/react";
 import MockAdapter from "axios-mock-adapter";
 
 import Home, { saveDataToSessionStorage } from "./Home";
@@ -17,12 +16,12 @@ const header = {
   name: "eFiling Frontend",
   history: createMemoryHistory(),
 };
-
 const confirmationPopup = getTestData();
-const page = { header, confirmationPopup };
+const submissionId = "abc123";
+const transactionId = "trans123";
+const page = { header, confirmationPopup, submissionId, transactionId };
 
 describe("Home", () => {
-  const submissionId = "abc123";
   const apiRequest = `/submission/${submissionId}`;
   const getFilingPackagePath = `/submission/${submissionId}/filing-package`;
   const navigation = getNavigationData();
@@ -30,6 +29,7 @@ describe("Home", () => {
   const court = getCourtData();
   const submissionFeeAmount = 25.5;
   const userDetails = getUserDetails();
+  const clientApplication = { displayName: "client app" };
 
   window.open = jest.fn();
 
@@ -42,17 +42,20 @@ describe("Home", () => {
   let mock;
   beforeEach(() => {
     mock = new MockAdapter(axios);
+    mock.onGet(apiRequest).reply(200, {
+      userDetails: { ...userDetails, accounts: null },
+      navigation,
+      clientApplication,
+    });
     sessionStorage.clear();
   });
 
-  const component = (
-    <MemoryRouter initialEntries={[`?submissionId=${submissionId}`]}>
-      <Home page={page} />
-    </MemoryRouter>
-  );
+  const component = <Home page={page} />;
 
   test("Component matches the snapshot when user cso account exists", async () => {
-    mock.onGet(apiRequest).reply(200, { userDetails, navigation });
+    mock
+      .onGet(apiRequest)
+      .reply(200, { userDetails, navigation, clientApplication });
     mock
       .onGet(getFilingPackagePath)
       .reply(200, { documents, court, submissionFeeAmount });
@@ -66,11 +69,6 @@ describe("Home", () => {
   });
 
   test("Component matches the snapshot when user cso account does not exist", async () => {
-    mock.onGet(apiRequest).reply(200, {
-      userDetails: { ...userDetails, accounts: null },
-      navigation,
-    });
-
     mock.onGet("/bceidAccount").reply(200, {
       firstName: "User",
       lastName: "Name",
@@ -117,16 +115,16 @@ describe("Home", () => {
     expect(sessionStorage.getItem("successUrl")).toBeFalsy();
     expect(sessionStorage.getItem("errorUrl")).toBeFalsy();
 
-    saveDataToSessionStorage(userDetails.cardRegistered, navigation);
+    saveDataToSessionStorage(userDetails.internalClientNumber, navigation);
 
     expect(sessionStorage.getItem("cancelUrl")).toEqual("cancelurl.com");
     expect(sessionStorage.getItem("successUrl")).toEqual("successurl.com");
     expect(sessionStorage.getItem("errorUrl")).toBeFalsy();
-    expect(sessionStorage.getItem("cardRegistered")).toEqual("true");
+    expect(sessionStorage.getItem("internalClientNumber")).toEqual("ABC123");
 
     sessionStorage.clear();
 
-    saveDataToSessionStorage(userDetails.cardRegistered, {
+    saveDataToSessionStorage(userDetails.internalClientNumber, {
       ...navigation,
       cancel: { url: "" },
       success: { url: "" },
@@ -136,16 +134,11 @@ describe("Home", () => {
     expect(sessionStorage.getItem("cancelUrl")).toBeFalsy();
     expect(sessionStorage.getItem("successUrl")).toBeFalsy();
     expect(sessionStorage.getItem("errorUrl")).toEqual("error.com");
-    expect(sessionStorage.getItem("cardRegistered")).toEqual("true");
+    expect(sessionStorage.getItem("internalClientNumber")).toEqual("ABC123");
   });
 
   test("Redirects to error page when lookup to bceid call fails", async () => {
     sessionStorage.setItem("errorUrl", "error.com");
-
-    mock.onGet(apiRequest).reply(200, {
-      userDetails: { ...userDetails, accounts: null },
-      navigation,
-    });
 
     mock.onGet("/bceidAccount").reply(400, {
       message: "There was an error",
@@ -159,5 +152,36 @@ describe("Home", () => {
       "error.com?status=400&message=There was an error.",
       "_self"
     );
+  });
+
+  test("clicking cancel opens confirmation popup and clicking confirm takes user back to client app", async () => {
+    mock.onGet("/bceidAccount").reply(200, {
+      firstName: "User",
+      lastName: "Name",
+      middleName: null,
+    });
+
+    const setShow = jest.fn();
+
+    const newConfirmationPopup = {
+      ...confirmationPopup,
+      mainButton: {
+        onClick: setShow,
+        label: "Click to open confirmation popup",
+        styling: "normal-blue btn",
+      },
+    };
+
+    const { container } = render(
+      <Home page={{ ...page, confirmationPopup: newConfirmationPopup }} />
+    );
+
+    await waitFor(() => {});
+
+    fireEvent.click(getByText(container, "Click to open confirmation popup"));
+
+    await waitFor(() => {});
+
+    expect(setShow).toHaveBeenCalled();
   });
 });

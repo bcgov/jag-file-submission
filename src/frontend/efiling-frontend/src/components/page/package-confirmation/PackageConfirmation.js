@@ -8,6 +8,7 @@ import ConfirmationPopup, {
   DisplayBox,
   Table,
 } from "shared-components";
+import FileSaver from "file-saver";
 import Dinero from "dinero.js";
 import axios from "axios";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
@@ -20,7 +21,7 @@ import "./PackageConfirmation.css";
 import Payment from "../payment/Payment";
 import Upload from "../upload/Upload";
 
-const openFile = (file, submissionId) => {
+const downloadFile = (file, submissionId) => {
   axios
     .get(`/submission/${submissionId}/document/${file.name}`, {
       responseType: "blob",
@@ -29,7 +30,7 @@ const openFile = (file, submissionId) => {
       const fileData = new Blob([response.data], { type: file.mimeType });
       const fileUrl = URL.createObjectURL(fileData);
 
-      window.open(fileUrl);
+      FileSaver.saveAs(fileUrl, file.name);
     })
     .catch((error) => {
       errorRedirect(sessionStorage.getItem("errorUrl"), error);
@@ -42,11 +43,11 @@ const generateTable = (file, data, submissionId) => {
       name: (
         <div style={{ width: "80%" }}>
           <span
-            onKeyDown={() => openFile(file, submissionId)}
+            onKeyDown={() => downloadFile(file, submissionId)}
             role="button"
             tabIndex={0}
             className="file-href"
-            onClick={() => openFile(file, submissionId)}
+            onClick={() => downloadFile(file, submissionId)}
           >
             {file.name}
           </span>
@@ -87,7 +88,8 @@ const getFilingPackageData = (
   setFiles,
   files,
   setCourtData,
-  setSubmissionFee
+  setSubmissionFee,
+  setShowPayment
 ) => {
   if (files.length > 0) return;
 
@@ -97,6 +99,8 @@ const getFilingPackageData = (
       setCourtData(court);
       setSubmissionFee(submissionFeeAmount);
       setFiles(documents);
+      if (sessionStorage.getItem("isBamboraRedirect") === "true")
+        setShowPayment(true);
     })
     .catch((error) => errorRedirect(sessionStorage.getItem("errorUrl"), error));
 };
@@ -134,7 +138,8 @@ export default function PackageConfirmation({
       setFiles,
       files,
       setCourtData,
-      setSubmissionFee
+      setSubmissionFee,
+      setShowPayment
     );
   }, [files, submissionId]);
 

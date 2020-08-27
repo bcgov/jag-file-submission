@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.payment;
 
+import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.PaymentsApi;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.handler.ApiException;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.Custom;
@@ -12,6 +13,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.EfilingTransaction;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -39,8 +41,14 @@ public class BamboraPaymentAdapter {
             result.setInvoiceNo(response.getOrderNumber());
             result.setTransactonDtm(DateTime.now());
             result.setTransactionAmt(BigDecimal.valueOf(response.getAmount()));
-            result.setTransactionStateCd(response.getApproved() == PaymentConstants.BAMBORA_APPROVAL_RESPONSE
-                    ? PaymentConstants.TRANSACTION_STATE_APPROVED : PaymentConstants.TRANSACTION_STATE_DECLINED);
+            if (response.getApproved() == PaymentConstants.BAMBORA_APPROVAL_RESPONSE) {
+                MDC.put(Keys.MDC_EFILING_SUBMISSION_FEE, response.getAmount().toString());
+                logger.info("Successful payment of [{}]", response.getAmount());
+                MDC.remove(Keys.MDC_EFILING_SUBMISSION_FEE);
+                result.setTransactionStateCd(PaymentConstants.TRANSACTION_STATE_APPROVED);
+            } else {
+                result.setTransactionStateCd(PaymentConstants.TRANSACTION_STATE_DECLINED);
+            }
             result.setApprovalCd(response.getAuthCode());
             result.setReferenceMessageTxt(response.getMessage());
             result.setCreditCardTypeCd(PaymentConstants.CARD_TYPES.get(response.getCard().getCardType()));

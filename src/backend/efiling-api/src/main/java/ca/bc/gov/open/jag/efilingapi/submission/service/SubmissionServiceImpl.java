@@ -22,6 +22,7 @@ import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
@@ -77,10 +78,11 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     @Override
-    public Submission generateFromRequest(UUID transactionId, UUID submissionId, GenerateUrlRequest generateUrlRequest) {
+    public Submission generateFromRequest(UUID transactionId, UUID submissionId, UUID universalId, GenerateUrlRequest generateUrlRequest) {
 
         Optional<Submission> cachedSubmission = submissionStore.put(
                 submissionMapper.toSubmission(
+                        universalId,
                         submissionId,
                         transactionId,
                         generateUrlRequest,
@@ -102,13 +104,17 @@ public class SubmissionServiceImpl implements SubmissionService {
         EfilingService service = efilingFilingPackageMapper.toEfilingService(submission);
         service.setEntryDateTime(DateUtils.getCurrentXmlDate());
 
-        EfilingFilingPackage filingPackage = efilingFilingPackageMapper.toEfilingFilingPackage(submission);
+        EfilingFilingPackage filingPackage = efilingFilingPackageMapper.toEfilingFilingPackage(submission,
+                submission.getFilingPackage().getParties().stream()
+                    .map(party -> efilingFilingPackageMapper.toEfilingParties(submission, party, String.valueOf(submission.getFilingPackage().getParties().indexOf(party))))
+                    .collect(Collectors.toList()));
         filingPackage.setPackageControls(Arrays.asList(efilingFilingPackageMapper.toPackageAuthority(submission)));
         filingPackage.setDocuments(submission.getFilingPackage().getDocuments().stream()
                                         .map(document -> efilingFilingPackageMapper.toEfilingDocument(document, submission,
                                                 Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentMilestone(document, submission)),
                                                 Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentPayment(document, submission)),
-                                                Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentStatus(document, submission))))
+                                                Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentStatus(document, submission)),
+                                                MessageFormat.format("fh_{0}_{1}_{2}", submission.getId(), submission.getUniversalId(), document.getName())))
                                         .collect(Collectors.toList()));
         filingPackage.setEntDtm(DateUtils.getCurrentXmlDate());
         filingPackage.setSubmitDtm(DateUtils.getCurrentXmlDate());
@@ -138,7 +144,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         FilingPackage filingPackage = new FilingPackage();
         filingPackage.setCourt(populateCourtDetails(request.getFilingPackage().getCourt()));
-        filingPackage.setSubmissionFeeAmount(getSubmissionFeeAmount(request));
+        filingPackage.setSubmissionFeeAmount(getSubmissionFeeAmount());
         filingPackage.setDocuments(request.getFilingPackage()
                 .getDocuments()
                 .stream()
@@ -188,24 +194,40 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private void uploadFiles(Submission submission) {
         submission.getFilingPackage().getDocuments().forEach(
-                document -> redisStoreToSftpStore(documentStore.get(MessageFormat.format("{0}_{1}_{2}",submission.getTransactionId(),submission.getId(),document.getName())), document.getName(), submission));
+                document ->
+                        redisStoreToSftpStore(document.getName(), submission));
 
     }
 
-    private void redisStoreToSftpStore(byte[] inFile, String fileName, Submission submission) {
+    private void redisStoreToSftpStore(String fileName, Submission submission) {
 
-        String newFileName = MessageFormat.format("fh_{0}_{1}_{2}", submission.getId(), submission.getTransactionId(), fileName);
+        String compositeFileName = ca.bc.gov.open.jag.efilingapi.document.Document
+                .builder()
+                .userId(submission.getUniversalId())
+                .transactionId(submission.getTransactionId())
+                .submissionId(submission.getId())
+                .fileName(fileName)
+                .create().getCompositeId();
 
-        sftpService.put(new ByteArrayInputStream(inFile), newFileName);
+
+        sftpService.put(new ByteArrayInputStream(documentStore.get(compositeFileName)), MessageFormat.format("fh_{0}", compositeFileName));
+
+        //Delete file from cache
+        documentStore.evict(compositeFileName);
+
+        // TODO: remove this is temp because of the SFTP rsync process
+        try {
+            Thread.sleep(Duration.ofSeconds(1).toMillis());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
-    private BigDecimal getSubmissionFeeAmount(GenerateUrlRequest request) {
-
-        request.getClientApplication().setType(SubmissionConstants.SUBMISSION_FEE_TYPE);
+    private BigDecimal getSubmissionFeeAmount() {
+        // TODO: fix with the mapper ApplicationCode to ServiceTypeCode
         ServiceFees fee = efilingLookupService.getServiceFee(SubmissionConstants.SUBMISSION_FEE_TYPE);
         return fee == null ? BigDecimal.ZERO : fee.getFeeAmount();
-
     }
 
     private long getExpiryDate() {

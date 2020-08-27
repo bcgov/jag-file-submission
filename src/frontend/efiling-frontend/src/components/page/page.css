@@ -23,6 +23,10 @@ main {
   width: 100%;
 }
 
+.normal-blue {
+  margin-left: 1rem;
+}
+
 @media (max-width: 576px) {
   .page {
     flex-direction: column;
@@ -34,6 +38,7 @@ main {
 
   .normal-blue {
     min-width: 0px;
+    margin-left: 0.6rem;
   }
 }
 
@@ -59,4 +64,8 @@ main {
   justify-content: space-between;
   float: right;
   width: -webkit-fill-available;
+}
+
+.bcgov-button {
+  min-width: 0;
 }

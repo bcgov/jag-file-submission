@@ -18,4 +18,9 @@ public class AccountServiceImpl implements AccountService {
         return efilingAccountService.getAccountDetails(universalId);
     }
 
+    @Override
+    public void updateClient(AccountDetails accountDetails) {
+        efilingAccountService.updateClient(accountDetails);
+    }
+
 }

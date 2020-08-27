@@ -19,10 +19,8 @@ export const Default = () => <Cancel page={page} />;
 
 export const Mobile = () => <Cancel page={page} />;
 
-Mobile.story = {
-  parameters: {
-    viewport: {
-      defaultViewport: "mobile2",
-    },
+Mobile.parameters = {
+  viewport: {
+    defaultViewport: "mobile2",
   },
 };

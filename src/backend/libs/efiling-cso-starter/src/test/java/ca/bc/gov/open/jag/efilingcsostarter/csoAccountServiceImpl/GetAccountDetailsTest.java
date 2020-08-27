@@ -185,8 +185,4 @@ public class GetAccountDetailsTest {
         Assertions.assertEquals("Client 10 has multiple CSO profiles", actual.getMessage());
 
     }
-
-
-
-
 }

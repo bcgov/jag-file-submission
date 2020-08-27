@@ -39,6 +39,7 @@ public class generateFromRequestTest {
     private static final String LAST_NAME = "case1_lastName";
     private static final String FIRST_NAME = "case1_firstName";
     private static final String EMAIL = "case1_email";
+    private static final String INTERNAL_CLIENT_NUMBER = "INTERNALCLIENT";
 
     private SubmissionServiceImpl sut;
 
@@ -95,15 +96,20 @@ public class generateFromRequestTest {
         request.setNavigation(TestHelpers.createDefaultNavigation());
         request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList()));
 
-        Submission actual = sut.generateFromRequest(TestHelpers.CASE_1, TestHelpers.CASE_1, request);
+        Submission actual = sut.generateFromRequest(TestHelpers.CASE_1, TestHelpers.CASE_1, TestHelpers.CASE_1, request);
 
         Assertions.assertEquals(TestHelpers.ERROR_URL, actual.getNavigation().getError().getUrl());
         Assertions.assertEquals(TestHelpers.CANCEL_URL, actual.getNavigation().getCancel().getUrl());
         Assertions.assertEquals(TestHelpers.SUCCESS_URL, actual.getNavigation().getSuccess().getUrl());
         Assertions.assertEquals(10, actual.getExpiryDate());
         Assertions.assertNotNull(actual.getId());
-        Assertions.assertEquals(BigDecimal.TEN, actual.getAccountId());
-        Assertions.assertEquals(BigDecimal.TEN, actual.getClientId());
+        Assertions.assertEquals(BigDecimal.TEN, actual.getAccountDetails().getAccountId());
+        Assertions.assertEquals(BigDecimal.TEN, actual.getAccountDetails().getClientId());
+        Assertions.assertEquals(INTERNAL_CLIENT_NUMBER, actual.getAccountDetails().getInternalClientNumber());
+        Assertions.assertEquals(EMAIL, actual.getAccountDetails().getEmail());
+        Assertions.assertEquals(FIRST_NAME, actual.getAccountDetails().getFirstName());
+        Assertions.assertEquals(MIDDLE_NAME, actual.getAccountDetails().getMiddleName());
+        Assertions.assertEquals(LAST_NAME, actual.getAccountDetails().getLastName());
         Assertions.assertEquals(TestHelpers.DIVISION, actual.getFilingPackage().getCourt().getDivision());
         Assertions.assertEquals(TestHelpers.FILENUMBER, actual.getFilingPackage().getCourt().getFileNumber());
         Assertions.assertEquals(TestHelpers.LEVEL, actual.getFilingPackage().getCourt().getLevel());
@@ -119,6 +125,22 @@ public class generateFromRequestTest {
         Assertions.assertEquals(BigDecimal.TEN, actual.getFilingPackage().getDocuments().get(0).getStatutoryFeeAmount());
         Assertions.assertEquals(SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD, actual.getFilingPackage().getDocuments().get(0).getSubType());
         Assertions.assertEquals("application/txt", actual.getFilingPackage().getDocuments().get(0).getMimeType());
+        Assertions.assertEquals(2, actual.getFilingPackage().getParties().size());
+        Assertions.assertEquals(BigDecimal.ONE, actual.getFilingPackage().getParties().get(0).getPartyId());
+        Assertions.assertEquals(TestHelpers.FIRST_NAME, actual.getFilingPackage().getParties().get(0).getFirstName());
+        Assertions.assertEquals(TestHelpers.MIDDLE_NAME, actual.getFilingPackage().getParties().get(0).getMiddleName());
+        Assertions.assertEquals(TestHelpers.LAST_NAME, actual.getFilingPackage().getParties().get(0).getLastName());
+        Assertions.assertEquals(TestHelpers.NAME_TYPE_CD, actual.getFilingPackage().getParties().get(0).getNameTypeCd());
+        Assertions.assertEquals(TestHelpers.PARTY_TYPE_CD, actual.getFilingPackage().getParties().get(0).getPartyTypeCd());
+        Assertions.assertEquals(TestHelpers.ROLE_TYPE_CD, actual.getFilingPackage().getParties().get(0).getRoleTypeCd());
+
+        Assertions.assertEquals(BigDecimal.TEN, actual.getFilingPackage().getParties().get(1).getPartyId());
+        Assertions.assertEquals(TestHelpers.FIRST_NAME, actual.getFilingPackage().getParties().get(1).getFirstName());
+        Assertions.assertEquals(TestHelpers.MIDDLE_NAME, actual.getFilingPackage().getParties().get(1).getMiddleName());
+        Assertions.assertEquals(TestHelpers.LAST_NAME, actual.getFilingPackage().getParties().get(1).getLastName());
+        Assertions.assertEquals(TestHelpers.NAME_TYPE_CD, actual.getFilingPackage().getParties().get(1).getNameTypeCd());
+        Assertions.assertEquals(TestHelpers.PARTY_TYPE_CD, actual.getFilingPackage().getParties().get(1).getPartyTypeCd());
+        Assertions.assertEquals(TestHelpers.ROLE_TYPE_CD, actual.getFilingPackage().getParties().get(1).getRoleTypeCd());
 
     }
 
@@ -131,7 +153,7 @@ public class generateFromRequestTest {
         request.setNavigation(TestHelpers.createDefaultNavigation());
         request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList()));
 
-        Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(TestHelpers.CASE_2, TestHelpers.CASE_2, request));
+        Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(TestHelpers.CASE_2, TestHelpers.CASE_2, TestHelpers.CASE_2, request));
 
     }
 
@@ -146,12 +168,19 @@ public class generateFromRequestTest {
         Submission submissionCase1 = Submission
                 .builder()
                 .id(TestHelpers.CASE_1)
-                .accountId(BigDecimal.TEN)
-                .clientId(BigDecimal.TEN)
+                .accountDetails(AccountDetails.builder()
+                    .clientId(BigDecimal.TEN)
+                    .accountId(BigDecimal.TEN)
+                    .internalClientNumber(INTERNAL_CLIENT_NUMBER)
+                    .email(EMAIL)
+                    .middleName(MIDDLE_NAME)
+                    .lastName(LAST_NAME)
+                    .firstName(FIRST_NAME)
+                    .create())
                 .transactionId(TestHelpers.CASE_1)
                 .navigation(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
-                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList()))
+                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList(), TestHelpers.createPartyList()))
                 .create();
 
         Mockito

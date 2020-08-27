@@ -4,6 +4,7 @@ import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.Register
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RoleRegistryPortType;
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.UserRoles;
 import ca.bc.gov.ag.csows.accounts.*;
+import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.AccountDetailsMapper;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.CSOHasMultipleAccountException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
@@ -15,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.WebServiceException;
+import java.math.BigDecimal;
 import java.util.*;
 
 public class CsoAccountServiceImpl implements EfilingAccountService {
@@ -71,6 +73,36 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         }
 
         return accountDetails;
+    }
+
+    @Override
+    public void updateClient(AccountDetails accountDetails) {
+        if (accountDetails == null) throw new IllegalArgumentException("account details required");
+        if (accountDetails.getClientId() == null) throw new IllegalArgumentException("client id is required");
+        if (StringUtils.isBlank(accountDetails.getInternalClientNumber())) throw new IllegalArgumentException("internal client number is required");
+
+        Client client = new Client();
+        client.setInternalClientNo(accountDetails.getInternalClientNumber());
+        client.setClientId(accountDetails.getClientId());
+        client.setRegisteredCreditCardYnBoolean(accountDetails.isCardRegistered());
+        client.setUpdDtm(DateUtils.getCurrentXmlDate());
+        client.setUpdUserId(accountDetails.getClientId().toString());
+
+        try {
+            accountFacadeBean.updateClient(client);
+        } catch (NestedEjbException_Exception e) {
+            throw new EfilingAccountServiceException("Exception while updating client", e);
+        }
+
+    }
+
+    @Override
+    public String getOrderNumber() {
+        try {
+            return accountFacadeBean.getNextOrderNumber().toString();
+        } catch (NestedEjbException_Exception e) {
+            throw new EfilingAccountServiceException("Exception while fetching next order number", e);
+        }
     }
 
     private AccountDetails getCsoDetails(UUID universalId)  {

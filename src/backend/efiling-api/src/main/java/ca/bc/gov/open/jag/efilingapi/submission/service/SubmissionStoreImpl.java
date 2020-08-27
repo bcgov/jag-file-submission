@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service;
 
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 
@@ -23,6 +24,12 @@ public class SubmissionStoreImpl implements SubmissionStore {
     @Cacheable(cacheNames = "submission", key = "{ #submissionId, #transactionId }", cacheManager = "submissionCacheManager", unless="#result == null")
     public Optional<Submission> get(UUID submissionId, UUID transactionId) {
         return Optional.empty();
+    }
+
+    @Override
+    @CacheEvict(cacheNames = "submission", key = "{ #submissionId, #transactionId }", cacheManager = "submissionCacheManager")
+    public void evict(UUID submissionId, UUID transactionId) {
+        //This implements Redis delete no code required
     }
 
 }

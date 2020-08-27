@@ -1,8 +1,6 @@
-/* eslint-disable camelcase */
+/* eslint-disable camelcase, react/jsx-one-expression-per-line */
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import queryString from "query-string";
-import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { MdCancel } from "react-icons/md";
 
@@ -26,13 +24,13 @@ const setRequestHeaders = (transactionId) => {
 };
 
 export const saveDataToSessionStorage = (
-  cardRegistered,
+  internalClientNumber,
   { cancel, success, error }
 ) => {
   if (cancel.url) sessionStorage.setItem("cancelUrl", cancel.url);
   if (success.url) sessionStorage.setItem("successUrl", success.url);
   if (error.url) sessionStorage.setItem("errorUrl", error.url);
-  sessionStorage.setItem("cardRegistered", cardRegistered);
+  sessionStorage.setItem("internalClientNumber", internalClientNumber);
 };
 
 const addUserInfo = (firstName, middleName, lastName) => {
@@ -62,12 +60,14 @@ const checkCSOAccountStatus = (
   setCsoAccountStatus,
   setShowLoader,
   setApplicantInfo,
+  setClientApplicationName,
   setError
 ) => {
   axios
     .get(`/submission/${submissionId}`)
-    .then(({ data: { userDetails, navigation } }) => {
-      saveDataToSessionStorage(userDetails.cardRegistered, navigation);
+    .then(({ data: { userDetails, navigation, clientApplication } }) => {
+      setClientApplicationName(clientApplication.displayName);
+      saveDataToSessionStorage(userDetails.internalClientNumber, navigation);
 
       if (userDetails.accounts) {
         const csoAccountIdentifier = userDetails.accounts.find(
@@ -101,7 +101,9 @@ const checkCSOAccountStatus = (
     });
 };
 
-export default function Home({ page: { header, confirmationPopup } }) {
+export default function Home({
+  page: { header, confirmationPopup, submissionId, transactionId },
+}) {
   const [showLoader, setShowLoader] = useState(true);
   const [csoAccountStatus, setCsoAccountStatus] = useState({
     exists: false,
@@ -109,24 +111,36 @@ export default function Home({ page: { header, confirmationPopup } }) {
   });
   const [applicantInfo, setApplicantInfo] = useState({});
   const [error, setError] = useState(false);
-  const location = useLocation();
-  const queryParams = queryString.parse(location.search);
+  const [clientApplicationName, setClientApplicationName] = useState("");
 
-  setRequestHeaders(queryParams.transactionId);
+  setRequestHeaders(transactionId);
 
   useEffect(() => {
     checkCSOAccountStatus(
-      queryParams.submissionId,
+      submissionId,
       setCsoAccountStatus,
       setShowLoader,
       setApplicantInfo,
+      setClientApplicationName,
       setError
     );
-  }, [queryParams.submissionId]);
+  }, [submissionId]);
+
+  const body = () => (
+    <>
+      <p>Your files will not be submitted.</p>
+      <p>
+        You will be returned to:
+        <br />
+        <b>{clientApplicationName}</b> website
+      </p>
+    </>
+  );
+  const updatedModal = { ...confirmationPopup.modal, body };
 
   const packageConfirmation = {
-    confirmationPopup,
-    submissionId: queryParams.submissionId,
+    confirmationPopup: { ...confirmationPopup, modal: updatedModal },
+    submissionId,
   };
 
   return (
@@ -150,7 +164,7 @@ export default function Home({ page: { header, confirmationPopup } }) {
         !csoAccountStatus.exists &&
         JSON.stringify(applicantInfo) !== "{}" && (
           <CSOAccount
-            confirmationPopup={confirmationPopup}
+            confirmationPopup={{ ...confirmationPopup, modal: updatedModal }}
             applicantInfo={applicantInfo}
             setCsoAccountStatus={setCsoAccountStatus}
           />
@@ -170,5 +184,7 @@ Home.propTypes = {
   page: PropTypes.shape({
     header: propTypes.header,
     confirmationPopup: propTypes.confirmationPopup,
+    submissionId: PropTypes.string.isRequired,
+    transactionId: PropTypes.string.isRequired,
   }).isRequired,
 };

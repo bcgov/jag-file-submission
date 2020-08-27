@@ -11,6 +11,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingTransaction;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingPaymentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
+import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsostarter.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.FilingPackageMapper;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.FinancialTransactionMapper;
@@ -55,7 +56,6 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
         BigDecimal filingResult = filePackage(createdService, filingPackage);
 
-        //TODO: do we add something to the next update
         updateServiceComplete(createdService);
 
         return filingResult;
@@ -116,10 +116,10 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         // TODO: replace in the mapper when submission is a common object
 
         if(filingPackage.getDocuments() != null && !filingPackage.getDocuments().isEmpty()) {
-            filingPackage.getDocuments().stream().forEach(efilingDocument -> {
-                efilingDocument.setFileServer(csoProperties.getFileServerHost());
-                efilingDocument.setPackageSeqNo(new BigDecimal(1));
-            });
+            for(int i = 0; i < filingPackage.getDocuments().size(); i++) {
+                filingPackage.getDocuments().get(i).setFileServer(csoProperties.getFileServerHost());
+                filingPackage.getDocuments().get(i).setPackageSeqNo(new BigDecimal(i + 1));
+            }
         }
 
         FilingPackage csoFilingPackage = filingPackageMapper.toFilingPackage(filingPackage, service.getServiceId());
@@ -133,7 +133,12 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     }
 
     private void updateServiceComplete(Service service) {
-        // TODO implement update service
+        service.setServiceReceivedDtm(DateUtils.getCurrentXmlDate());
+        try {
+            serviceFacadeBean.updateService(service);
+        } catch (ca.bc.gov.ag.csows.services.NestedEjbException_Exception e) {
+            throw new EfilingSubmissionServiceException("Exception while updating payment on service", e.getCause());
+        }
     }
 
 }

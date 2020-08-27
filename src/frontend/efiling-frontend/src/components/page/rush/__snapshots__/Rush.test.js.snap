@@ -12,13 +12,13 @@ exports[`Rush Component Clicking on cancel request takes user back to payment pa
         Payment
       </h1>
       <div
-        class="display-box error-background no-padding-bottom"
+        class="display-box success-background no-padding-bottom"
       >
         <div
           class="display-icon"
         >
           <div
-            style="color: rgb(216, 41, 47);"
+            style="color: rgb(46, 133, 64);"
           >
             <svg
               fill="currentColor"
@@ -41,17 +41,16 @@ exports[`Rush Component Clicking on cancel request takes user back to payment pa
         >
           <p>
             <span>
-              You do not have a valid Credit Card registered with your CSO account.
+              You have a valid Credit Card registered with your CSO account.
             </span>
             <br />
-            <a
-              href="https://justice.gov.bc.ca/cso/about/index.do"
-              rel="noopener noreferrer"
-              target="_blank"
+            <span
+              class="file-href"
+              role="button"
+              tabindex="0"
             >
-              Register a Credit Card now
-            </a>
-             to continue.
+              Register a new Credit Card.
+            </span>
           </p>
         </div>
       </div>
@@ -240,7 +239,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
       </div>
       <br />
       <section
-        class="inline-block pt-2 buttons"
+        class="pt-2 buttons"
       >
         <button
           class="bcgov-button normal-white btn"

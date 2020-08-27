@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 
+import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
@@ -19,14 +20,22 @@ import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceExcept
 import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import org.junit.jupiter.api.*;
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.KeycloakSecurityContext;
+import org.keycloak.representations.AccessToken;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.validation.Valid;
-import java.util.UUID;
+import java.util.*;
+
+import static ca.bc.gov.open.jag.efilingapi.error.ErrorResponse.INVALIDUNIVERSAL;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("SubmissionApiDelegateImpl test suite")
@@ -34,6 +43,7 @@ public class GenerateUrlTest {
 
     private static final String TYPE = "type";
     private static final String DISPLAYNAME = "DISPLAYNAME";
+    private static final String CODE = "CODE";
 
     private SubmissionApiDelegateImpl sut;
 
@@ -50,6 +60,22 @@ public class GenerateUrlTest {
     private AccountService accountServiceMock;
 
     @Mock
+    private SecurityContext securityContextMock;
+
+    @Mock
+    private Authentication authenticationMock;
+
+    @Mock
+    private KeycloakPrincipal keycloakPrincipalMock;
+
+    @Mock
+    private KeycloakSecurityContext keycloakSecurityContextMock;
+
+    @Mock
+    private AccessToken tokenMock;
+
+
+    @Mock
     private ClamAvService clamAvServiceMock;
     private UUID transactionId = UUID.randomUUID();
 
@@ -59,6 +85,13 @@ public class GenerateUrlTest {
 
         MockitoAnnotations.initMocks(this);
 
+        Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(keycloakPrincipalMock);
+        Mockito.when(keycloakPrincipalMock.getKeycloakSecurityContext()).thenReturn(keycloakSecurityContextMock);
+        Mockito.when(keycloakSecurityContextMock.getToken()).thenReturn(tokenMock);
+
+        SecurityContextHolder.setContext(securityContextMock);
+
         NavigationProperties navigationProperties = new NavigationProperties();
         navigationProperties.setBaseUrl("http://localhost");
 
@@ -67,6 +100,7 @@ public class GenerateUrlTest {
         Mockito.when(submissionServiceMock.generateFromRequest(
                 Mockito.any(),
                 Mockito.eq(TestHelpers.CASE_1),
+                Mockito.any(),
                 Mockito.any()))
                 .thenReturn(submission);
 
@@ -74,24 +108,28 @@ public class GenerateUrlTest {
                 .when(submissionServiceMock).generateFromRequest(
                 Mockito.any(),
                 Mockito.eq(TestHelpers.CASE_2),
+                Mockito.any(),
                 Mockito.any());
 
         Mockito.doThrow(new InvalidAccountStateException("InvalidAccountStateException message"))
                 .when(submissionServiceMock).generateFromRequest(
                 Mockito.any(),
                 Mockito.eq(TestHelpers.CASE_3),
+                Mockito.any(),
                 Mockito.any());
 
         Mockito.doThrow(new StoreException("StoreException message"))
                 .when(submissionServiceMock).generateFromRequest(
                 Mockito.any(),
                 Mockito.eq(TestHelpers.CASE_4),
+                Mockito.any(),
                 Mockito.any());
 
         Mockito.doThrow(new EfilingDocumentServiceException("EfilingDocumentServiceException message"))
                 .when(submissionServiceMock).generateFromRequest(
                 Mockito.any(),
                 Mockito.eq(TestHelpers.CASE_5),
+                Mockito.any(),
                 Mockito.any());
 
         sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, new GenerateUrlResponseMapperImpl(), navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock);
@@ -105,10 +143,14 @@ public class GenerateUrlTest {
 
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
+        Map<String, Object> otherClaims = new HashMap<>();
+        otherClaims.put(Keys.CSO_APPLICATION_CODE, CODE);
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
         generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
-        ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(transactionId, TestHelpers.CASE_1, generateUrlRequest);
+        ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(transactionId, UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_1, generateUrlRequest);
 
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
         Assertions.assertEquals("http://localhost?submissionId=" + TestHelpers.CASE_1.toString() + "&transactionId="  + transactionId, actual.getBody().getEfilingUrl());
@@ -125,7 +167,7 @@ public class GenerateUrlTest {
         generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
-        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), TestHelpers.CASE_2, generateUrlRequest);
+        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_2, generateUrlRequest);
 
         EfilingError actualError = (EfilingError) actual.getBody();
 
@@ -142,7 +184,7 @@ public class GenerateUrlTest {
         generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
-        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), TestHelpers.CASE_3, generateUrlRequest);
+        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_3, generateUrlRequest);
 
         EfilingError actualError = (EfilingError) actual.getBody();
 
@@ -159,7 +201,7 @@ public class GenerateUrlTest {
         generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
-        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), TestHelpers.CASE_4, generateUrlRequest);
+        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_4, generateUrlRequest);
 
         EfilingError actualError = (EfilingError) actual.getBody();
 
@@ -176,7 +218,7 @@ public class GenerateUrlTest {
         generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
-        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), TestHelpers.CASE_5, generateUrlRequest);
+        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_5, generateUrlRequest);
 
         EfilingError actualError = (EfilingError) actual.getBody();
 
@@ -185,4 +227,16 @@ public class GenerateUrlTest {
         Assertions.assertEquals(ErrorResponse.DOCUMENT_TYPE_ERROR.getErrorMessage(), actualError.getMessage());
     }
 
+    @Test
+    @DisplayName("403: with invalid userId then return forbidden 403")
+    public void withInvalidUserIDThenReturnForbidden() {
+
+
+        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), "BADUUID", UUID.randomUUID(), null);
+
+        Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
+        Assertions.assertEquals(INVALIDUNIVERSAL.getErrorCode(), ((EfilingError)actual.getBody()).getError());
+        Assertions.assertEquals(INVALIDUNIVERSAL.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
+    }
 }
+

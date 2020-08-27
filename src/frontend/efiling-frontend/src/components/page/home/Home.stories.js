@@ -1,5 +1,4 @@
 import React from "react";
-import { MemoryRouter } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
@@ -22,9 +21,10 @@ const header = {
   history: createMemoryHistory(),
 };
 const confirmationPopup = getTestData();
-const page = { header, confirmationPopup };
-
 const submissionId = "abc123";
+const transactionId = "trans123";
+const page = { header, confirmationPopup, submissionId, transactionId };
+
 const apiRequest = `/submission/${submissionId}`;
 const getFilingPackagePath = `/submission/${submissionId}/filing-package`;
 const navigation = getNavigationData();
@@ -32,6 +32,7 @@ const documents = getDocumentsData();
 const court = getCourtData();
 const submissionFeeAmount = 25.5;
 const userDetails = getUserDetails();
+const clientApplication = { displayName: "client app" };
 
 const setRequiredStorage = () => {
   sessionStorage.setItem("errorUrl", "error.com");
@@ -56,7 +57,9 @@ const LoaderStateData = (props) => {
 const AccountExistsStateData = (props) => {
   setRequiredStorage();
   const mock = new MockAdapter(axios);
-  mock.onGet(apiRequest).reply(200, { userDetails, navigation });
+  mock
+    .onGet(apiRequest)
+    .reply(200, { userDetails, navigation, clientApplication });
   mock
     .onGet(getFilingPackagePath)
     .reply(200, { documents, court, submissionFeeAmount });
@@ -69,6 +72,7 @@ const NoAccountExistsStateData = (props) => {
   mock.onGet(apiRequest).reply(200, {
     userDetails: { ...userDetails, accounts: null },
     navigation,
+    clientApplication,
   });
   mock.onGet("/bceidAccount").reply(200, {
     firstName: "User",
@@ -78,15 +82,7 @@ const NoAccountExistsStateData = (props) => {
   return props.children({ page });
 };
 
-const homeComponent = (data) => (
-  <MemoryRouter
-    initialEntries={[
-      { search: `?submissionId=${submissionId}`, key: "testKey" },
-    ]}
-  >
-    <Home page={data.page} />
-  </MemoryRouter>
-);
+const homeComponent = (data) => <Home page={data.page} />;
 
 const loaderComponent = (
   <LoaderStateData>{(data) => homeComponent(data)}</LoaderStateData>

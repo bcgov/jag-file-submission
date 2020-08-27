@@ -89,4 +89,7 @@ public class EfilingParties {
         this.roleTypeCd = roleTypeCd;
         this.roleTypeDesc = roleTypeDesc;
     }
+    public EfilingParties() {
+
+    }
 }

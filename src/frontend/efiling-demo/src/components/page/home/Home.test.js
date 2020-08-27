@@ -9,9 +9,8 @@ import {
   fireEvent,
   getAllByRole,
 } from "@testing-library/react";
-import Home, { eFilePackage } from "./Home";
-
-window.open = jest.fn();
+import Home from "./Home";
+import { generateJWTToken } from "../../../modules/authentication-helper/authenticationHelper";
 
 const header = {
   name: "eFiling Demo Client",
@@ -20,27 +19,68 @@ const header = {
 
 const page = { header };
 
+function flushPromises(ui, container) {
+  return new Promise((resolve) =>
+    setImmediate(() => {
+      render(ui, { container });
+      resolve(container);
+    })
+  );
+}
+
+function dispatchEvt(node, type, data) {
+  const event = new Event(type, { bubbles: true });
+  Object.assign(event, data);
+  fireEvent(node, event);
+}
+
+function mockData(files) {
+  return {
+    dataTransfer: {
+      files,
+      items: files.map((file) => ({
+        kind: "file",
+        type: file.type,
+        getAsFile: () => file,
+      })),
+      types: ["Files"],
+    },
+  };
+}
+
 describe("Home", () => {
   let mock;
-  const setErrorExists = jest.fn();
   const files = [
     {
       file: {
-        name: "filename",
-        type: "filetype",
+        name: "ping.json",
+        type: "json",
       },
     },
   ];
   const submissionId = "123";
+  const efilingUrl = "example.com";
   const filingPackage = {
     documents: [files[0].file],
   };
-  const token = "validJWT";
+
   sessionStorage.setItem("demoKeycloakUrl", "demokeycloakexample.com");
   sessionStorage.setItem("demoKeycloakRealm", "demoRealm");
 
+  const token = generateJWTToken({
+    "universal-id": "123",
+  });
+  localStorage.setItem("jwt", token);
+
+  const file = new File([JSON.stringify({ ping: true })], "ping.json", {
+    type: "application/json",
+  });
+  const data = mockData([file]);
+  const ui = <Home page={page} />;
+
   beforeEach(() => {
     mock = new MockAdapter(axios);
+    window.open = jest.fn();
   });
 
   test("Component matches the snapshot", async () => {
@@ -48,53 +88,52 @@ describe("Home", () => {
       .onPost(
         "demokeycloakexample.com/realms/demoRealm/protocol/openid-connect/token"
       )
-      .reply(200, { access_token: "token" });
+      .reply(200, { access_token: token });
 
-    const { asFragment } = render(<Home page={page} />);
+    const { asFragment } = render(ui);
 
     await waitFor(() => {});
 
     expect(asFragment()).toMatchSnapshot();
   });
 
-  test("eFilePackage function displays an error message on page on failure of generateUrl call", async () => {
+  test("when post to keycloak token endpoint fails, sets error", async () => {
+    mock
+      .onPost(
+        "demokeycloakexample.com/realms/demoRealm/protocol/openid-connect/token"
+      )
+      .reply(400);
+
+    const { container } = render(ui);
+
+    await waitFor(() => {});
+
+    const error = getByText(
+      container,
+      "An error occurred while eFiling your package. Please make sure you upload at least one file and try again."
+    );
+
+    expect(error).toBeInTheDocument();
+  });
+
+  test("displays an error message on page on failure of generateUrl call", async () => {
+    mock
+      .onPost(
+        "demokeycloakexample.com/realms/demoRealm/protocol/openid-connect/token"
+      )
+      .reply(200, { access_token: token });
     mock.onPost("/submission/documents").reply(200, { submissionId });
     mock.onPost("/submission/generateUrl").reply(400);
 
-    eFilePackage(token, files, setErrorExists, filingPackage);
+    const { container } = render(ui);
+    const dropzone = container.querySelector('[data-testid="dropdownzone"]');
+
+    dispatchEvt(dropzone, "drop", data);
 
     await waitFor(() => {});
+    await flushPromises(ui, container);
 
-    expect(setErrorExists).toHaveBeenCalledWith(true);
-  });
-
-  test("eFilePackage function displays an error message on page on failure of uploadDocuments call", async () => {
-    mock.onPost("/submission/documents").reply(400);
-
-    eFilePackage(token, files, setErrorExists, filingPackage);
-
-    await waitFor(() => {});
-
-    expect(setErrorExists).toHaveBeenCalledWith(true);
-  });
-
-  test("eFilePackage function generates the proper documentData for the updated url body and redirects to frontend app on success", async () => {
-    const efilingUrl = "example.com";
-
-    mock.onPost("/submission/documents").reply(200, { submissionId });
-    mock
-      .onPost(`/submission/${submissionId}/generateUrl`)
-      .reply(200, { efilingUrl });
-
-    eFilePackage(token, files, setErrorExists, filingPackage);
-
-    await waitFor(() => {});
-
-    expect(window.open).toHaveBeenCalledTimes(1);
-  });
-
-  test("eFilePackage functions returns error when no files uploaded", async () => {
-    const { container } = render(<Home page={page} />);
+    const button = getByText(container, "E-File my Package");
 
     const textbox = getAllByRole(container, "textbox");
 
@@ -102,26 +141,134 @@ describe("Home", () => {
       target: { value: JSON.stringify(filingPackage) },
     });
 
-    fireEvent.click(getByText(container, "E-File my Package"));
+    fireEvent.click(button);
 
     await waitFor(() => {});
 
-    expect(
-      getByText(
-        container,
-        "An error occurred while eFiling your package. Please make sure you upload at least one file and try again."
-      )
-    ).toBeInTheDocument();
-    expect(setErrorExists).toHaveBeenCalledWith(true);
+    const error = getByText(
+      container,
+      "An error occurred while eFiling your package. Please make sure you upload at least one file and try again."
+    );
+
+    expect(error).toBeInTheDocument();
   });
 
-  test("eFilePackage does not make axios call when no formdata present (due to incorrect filingPackage data)", () => {
-    const improperFilingPackage = {
-      documents: [{ name: "wrongname", type: "type" }],
-    };
+  test("displays an error message on page on failure of upload documents call", async () => {
+    mock
+      .onPost(
+        "demokeycloakexample.com/realms/demoRealm/protocol/openid-connect/token"
+      )
+      .reply(200, { access_token: token });
+    mock.onPost("/submission/documents").reply(400);
+    mock.onPost("/submission/generateUrl").reply(200, { efilingUrl });
 
-    eFilePackage(token, files, setErrorExists, improperFilingPackage);
+    const { container } = render(ui);
+    const dropzone = container.querySelector('[data-testid="dropdownzone"]');
 
-    expect(setErrorExists).toHaveBeenCalledWith(true);
+    dispatchEvt(dropzone, "drop", data);
+
+    await waitFor(() => {});
+    await flushPromises(ui, container);
+
+    const button = getByText(container, "E-File my Package");
+
+    const textbox = getAllByRole(container, "textbox");
+
+    fireEvent.change(textbox[0], {
+      target: { value: JSON.stringify(filingPackage) },
+    });
+
+    fireEvent.click(button);
+
+    await waitFor(() => {});
+
+    const error = getByText(
+      container,
+      "An error occurred while eFiling your package. Please make sure you upload at least one file and try again."
+    );
+
+    expect(error).toBeInTheDocument();
+  });
+
+  test("invoke onDrop when drop event occurs and efile successfully", async () => {
+    mock
+      .onPost(
+        "demokeycloakexample.com/realms/demoRealm/protocol/openid-connect/token"
+      )
+      .reply(200, { access_token: token });
+    mock.onPost("/submission/documents").reply(200, { submissionId });
+    mock
+      .onPost(`/submission/${submissionId}/generateUrl`)
+      .reply(200, { efilingUrl });
+
+    const { container } = render(ui);
+    const dropzone = container.querySelector('[data-testid="dropdownzone"]');
+
+    dispatchEvt(dropzone, "drop", data);
+
+    await waitFor(() => {});
+    await flushPromises(ui, container);
+
+    const button = getByText(container, "E-File my Package");
+
+    const textbox = getAllByRole(container, "textbox");
+
+    fireEvent.change(textbox[0], {
+      target: { value: JSON.stringify(filingPackage) },
+    });
+
+    fireEvent.click(button);
+
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalledWith("example.com", "_self");
+  });
+
+  test("uploading document with incorrect name matching filing package sets error", async () => {
+    mock
+      .onPost(
+        "demokeycloakexample.com/realms/demoRealm/protocol/openid-connect/token"
+      )
+      .reply(200, { access_token: token });
+    mock.onPost("/submission/documents").reply(200, { submissionId });
+    mock
+      .onPost(`/submission/${submissionId}/generateUrl`)
+      .reply(200, { efilingUrl });
+
+    const wrongFile = new File(
+      [JSON.stringify({ ping: true })],
+      "wrongping.json",
+      {
+        type: "application/json",
+      }
+    );
+    const wrongData = mockData([wrongFile]);
+
+    const { container } = render(ui);
+    const dropzone = container.querySelector('[data-testid="dropdownzone"]');
+
+    dispatchEvt(dropzone, "drop", wrongData);
+
+    await waitFor(() => {});
+    await flushPromises(ui, container);
+
+    const button = getByText(container, "E-File my Package");
+
+    const textbox = getAllByRole(container, "textbox");
+
+    fireEvent.change(textbox[0], {
+      target: { value: JSON.stringify(filingPackage) },
+    });
+
+    fireEvent.click(button);
+
+    await waitFor(() => {});
+
+    const error = getByText(
+      container,
+      "An error occurred while eFiling your package. Please make sure you upload at least one file and try again."
+    );
+
+    expect(error).toBeInTheDocument();
   });
 });

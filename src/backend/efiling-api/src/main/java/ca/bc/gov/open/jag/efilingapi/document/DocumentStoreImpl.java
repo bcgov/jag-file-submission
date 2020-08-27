@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingapi.document;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentType;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 
@@ -26,6 +27,12 @@ public class DocumentStoreImpl implements DocumentStore {
     @Cacheable(cacheNames = "document", key = "#compositeId", cacheManager = "documentCacheManager", unless = "#result == null")
     public byte[] get(String compositeId) {
         return null;
+    }
+
+    @Override
+    @Cacheable(cacheNames = "document", key = "#compositeId", cacheManager = "documentCacheManager")
+    public void evict(String compositeId) {
+        //This implements Redis delete no code required
     }
 
     @Override

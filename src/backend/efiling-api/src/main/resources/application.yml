@@ -56,11 +56,15 @@ jag:
 
 cso:
   fileServerHost: ${CSO_FILE_SERVER_HOST}
+  debugEnabled: ${CSO_DEBUG_ENABLED:false}
 
 bambora:
   apiPasscode: ${BAMBORA_APIPASSCODE}
   merchantId: ${BAMBORA_MERCHANTID}
-
+  hostedProfileUrl: ${BAMBORA_PROFILE_URL}
+  hostedProfileServiceVersion: ${BAMBORA_PROFILE_SERVICE_VERSION}
+  hashKey: ${BAMBORA_HASHKEY}
+  minutesToExpiry: ${BAMBORA_URL_EXPIRY}
 bcgov:
   sftp:
     host: ${SFTP_HOST:localhost}
@@ -70,6 +74,7 @@ bcgov:
     remoteLocation: ${SFTP_REMOTELOCATION}
     knownHostsFileName: ${SFTP_KNOWNHOSTS}
     allowUnknownKeys: ${SFTP_ALLOWUNKNOWN:true}
+    sshPrivateKey: ${SFTP_PRIVATE_KEY}
   bceid:
     service:
       uri: ${BCEID_SERVICE_URI}

@@ -1,6 +1,13 @@
-/* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState } from "react";
-import { Switch, Route, Redirect, useHistory } from "react-router-dom";
+import axios from "axios";
+import queryString from "query-string";
+import {
+  Switch,
+  Route,
+  Redirect,
+  useHistory,
+  useLocation,
+} from "react-router-dom";
 import AuthenticationGuard from "./components/hoc/AuthenticationGuard";
 
 const mainButton = {
@@ -19,40 +26,50 @@ const cancelButton = {
 };
 
 export default function App() {
+  const location = useLocation();
+  const queryParams = queryString.parse(location.search);
+  const {
+    submissionId,
+    transactionId,
+    trnApproved,
+    responseCode,
+  } = queryParams;
+
+  if (responseCode === "19") sessionStorage.setItem("bamboraErrorExists", true);
+
+  if (typeof trnApproved === "undefined")
+    sessionStorage.removeItem("isBamboraRedirect");
+
+  if (submissionId && transactionId) {
+    sessionStorage.setItem("submissionId", submissionId);
+    sessionStorage.setItem("transactionId", transactionId);
+  }
+
   const header = {
     name: "E-File Submission",
     history: useHistory(),
   };
 
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const body = () => (
-    <>
-      <p>Your files will not be submitted.</p>
-      <p>
-        You will be returned to:
-        <br />
-        <b>Family Law Protection Order</b> website
-      </p>
-    </>
-  );
-
   const handleConfirm = () => {
     sessionStorage.setItem("validExit", true);
+    sessionStorage.removeItem("isBamboraRedirect");
     const cancelUrl = sessionStorage.getItem("cancelUrl");
 
     if (cancelUrl) {
-      window.open(cancelUrl, "_self");
+      axios
+        .delete(`submission/${submissionId}`)
+        .then(() => window.open(cancelUrl, "_self"))
+        .catch(() => window.open(cancelUrl, "_self"));
     }
   };
 
   const modal = {
     show,
     title: "Cancel E-File Submission?",
-    body,
   };
 
   const confirmationPopup = {
@@ -67,7 +84,14 @@ export default function App() {
       <Switch>
         <Redirect exact from="/" to="/efiling" />
         <Route exact path="/efiling">
-          <AuthenticationGuard page={{ header, confirmationPopup }} />
+          <AuthenticationGuard
+            page={{
+              header,
+              confirmationPopup,
+              submissionId: sessionStorage.getItem("submissionId"),
+              transactionId: sessionStorage.getItem("transactionId"),
+            }}
+          />
         </Route>
       </Switch>
     </div>

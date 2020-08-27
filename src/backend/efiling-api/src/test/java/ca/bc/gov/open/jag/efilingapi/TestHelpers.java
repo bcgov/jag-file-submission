@@ -2,7 +2,9 @@ package ca.bc.gov.open.jag.efilingapi;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
+import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
+import com.google.gson.JsonObject;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -34,6 +36,13 @@ public class TestHelpers {
     public static final String CANCEL_URL = "http://cancel";
     public static final String ERROR_URL = "http://error";
 
+    public static final String FIRST_NAME = "FIRSTNAME";
+    public static final String MIDDLE_NAME = "MIDDLENAME";
+    public static final String LAST_NAME = "LASTNAME";
+    public static final String NAME_TYPE_CD = "NAMECD";
+    public static final String PARTY_TYPE_CD = "PARTYCD";
+    public static final String ROLE_TYPE_CD = "ROLECD";
+
     public static InitialPackage createInitalPackage(Court court, List<DocumentProperties> documentProperties) {
         InitialPackage initialPackage = new InitialPackage();
         initialPackage.setCourt(court);
@@ -41,12 +50,14 @@ public class TestHelpers {
         return initialPackage;
     }
 
-    public static FilingPackage createPackage(Court court, List<Document> documents) {
+    public static FilingPackage createPackage(Court court, List<Document> documents, List<Party> parties) {
         FilingPackage modelPackage = new FilingPackage();
         modelPackage.setCourt(court);
         modelPackage.setDocuments(documents);
+        modelPackage.setParties(parties);
         return modelPackage;
     }
+
 
     public static Navigation createNavigation(String success, String cancel, String error) {
         Navigation navigation = new Navigation();
@@ -103,8 +114,31 @@ public class TestHelpers {
         documentProperties.setMimeType("application/txt");
         documentProperties.setIsSupremeCourtScheduling(true);
         documentProperties.setIsAmendment(true);
-
+        documentProperties.setData(new JsonObject());
         return Arrays.asList(documentProperties);
+    }
+
+    public static List<Party> createPartyList() {
+
+        Party partyOne = new Party();
+        partyOne.setFirstName(FIRST_NAME);
+        partyOne.setMiddleName(MIDDLE_NAME);
+        partyOne.setLastName(LAST_NAME);
+        partyOne.setNameTypeCd(NAME_TYPE_CD);
+        partyOne.setPartyTypeCd(PARTY_TYPE_CD);
+        partyOne.setRoleTypeCd(ROLE_TYPE_CD);
+        partyOne.setPartyId(BigDecimal.ONE);
+
+        Party partyTwo = new Party();
+        partyTwo.setFirstName(FIRST_NAME);
+        partyTwo.setMiddleName(MIDDLE_NAME);
+        partyTwo.setLastName(LAST_NAME);
+        partyTwo.setNameTypeCd(NAME_TYPE_CD);
+        partyTwo.setPartyTypeCd(PARTY_TYPE_CD);
+        partyTwo.setRoleTypeCd(ROLE_TYPE_CD);
+        partyTwo.setPartyId(BigDecimal.TEN);
+
+        return Arrays.asList(partyOne, partyTwo);
     }
 
     public static Navigation createDefaultNavigation() {
