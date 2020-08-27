@@ -22,14 +22,24 @@ const urlBody = {
       location: "1211",
       level: "P",
       courtClass: "F",
-      division: "string",
-      fileNumber: "string",
+      division: "I",
+      fileNumber: "1234",
       participatingClass: "string",
     },
     documents: [
       {
         name: "string",
         type: "AFF",
+      },
+    ],
+    parties: [
+      {
+        partyTypeCd: "IND",
+        roleTypeCd: "CLA",
+        firstName: "Bob",
+        middleName: "Alan",
+        lastName: "Ross",
+        nameTypeCd: "CUR",
       },
     ],
   },

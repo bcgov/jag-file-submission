@@ -655,8 +655,6 @@ components:
           description: the user email address
     Party:
       description: party related to filing package
-      required:
-        - partyId
       properties:
         partyId:
           type: number
