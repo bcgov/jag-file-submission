@@ -35,6 +35,7 @@ public class GenerateUrlRequestBuilders extends DriverClass {
     private static final String CLIENT_SECRET = "client_secret";
     private static final String BASE_PATH = "user.dir";
     private static final String PDF_PATH = "/src/test/java/testdatasource/test-document.pdf";
+    private static final String ACCESS_TOKEN = "access_token";
 
     private GenerateUrlPayload payloadData;
 
@@ -63,7 +64,7 @@ public class GenerateUrlRequestBuilders extends DriverClass {
         Response response = getBearerToken();
         JsonPath jsonPath = new JsonPath(response.asString());
 
-        String accessToken = jsonPath.get("access_token");
+        String accessToken = jsonPath.get(ACCESS_TOKEN);
 
         File pdfFile = new File(UPLOAD_FILE_PATH + FILE_NAME_PATH);
 
@@ -87,7 +88,7 @@ public class GenerateUrlRequestBuilders extends DriverClass {
         Response response = getBearerToken();
         JsonPath jsonPath = new JsonPath(response.asString());
 
-        String accessToken = jsonPath.get("access_token");
+        String accessToken = jsonPath.get(ACCESS_TOKEN);
 
         File firstPdfFile = new File(UPLOAD_FILE_PATH + FILE_NAME_PATH);
         File secondPdfFile = new File(UPLOAD_FILE_PATH + "/test-document-2.pdf");
@@ -114,7 +115,7 @@ public class GenerateUrlRequestBuilders extends DriverClass {
         Response response = getBearerToken();
         JsonPath jsonPath = new JsonPath(response.asString());
 
-        String accessToken = jsonPath.get("access_token");
+        String accessToken = jsonPath.get(ACCESS_TOKEN);
         File pngFile = new File(UPLOAD_FILE_PATH + "/test-image-document.png");
 
         request = RestAssured.given().auth().preemptive().oauth2(accessToken)
@@ -138,7 +139,7 @@ public class GenerateUrlRequestBuilders extends DriverClass {
         Response response = getBearerToken();
         JsonPath jsonPath = new JsonPath(response.asString());
 
-        String accessToken = jsonPath.get("access_token");
+        String accessToken = jsonPath.get(ACCESS_TOKEN);
 
         File pdfFile = new File(UPLOAD_FILE_PATH + FILE_NAME_PATH);
 
@@ -162,7 +163,7 @@ public class GenerateUrlRequestBuilders extends DriverClass {
         Response response = getBearerToken();
         JsonPath jsonPath = new JsonPath(response.asString());
 
-        String accessToken = jsonPath.get("access_token");
+        String accessToken = jsonPath.get(ACCESS_TOKEN);
         File pdfFile = new File(UPLOAD_FILE_PATH + FILE_NAME_PATH);
 
         request = given().auth().preemptive().oauth2(accessToken)

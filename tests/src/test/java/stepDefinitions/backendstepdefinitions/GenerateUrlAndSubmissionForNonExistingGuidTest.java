@@ -42,7 +42,7 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
     private static final String X_USER_ID = "X-User-Id";
     private static final String SUBMISSION_ID = "submissionId";
     private static final String TRANSACTION_ID = "transactionId";
-    private static String userToken;
+    private String userToken;
 
     public Logger log = LogManager.getLogger(GenerateUrlAndSubmissionForNonExistingGuidTest.class);
 
@@ -82,7 +82,7 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
 
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.getBearerToken();
-        JsonPath jsonPath = new JsonPath(response.asString());
+        jsonPath = new JsonPath(response.asString());
         String accessToken = jsonPath.get("access_token");
 
         RequestSpecification request = given().auth().preemptive().oauth2(accessToken)
@@ -137,7 +137,7 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
     }
 
     @Then("verify universal id, account type and identifier values are returned")
-    public void verifyUniversalIdAccountTypeAndIdentifierValuesAreReturned() throws IOException {
+    public void verifyUniversalIdAccountTypeAndIdentifierValuesAreReturned() {
         jsonPath = new JsonPath(response.asString());
 
         String universalId = jsonPath.get("userDetails.universalId");
