@@ -1,5 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 
+import ca.bc.gov.open.clamav.starter.ClamAvService;
+import ca.bc.gov.open.clamav.starter.VirusDetectedException;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
@@ -21,6 +23,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -28,8 +32,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static ca.bc.gov.open.jag.efilingapi.error.ErrorResponse.DOCUMENT_REQUIRED;
-import static ca.bc.gov.open.jag.efilingapi.error.ErrorResponse.DOCUMENT_STORAGE_FAILURE;
+import static ca.bc.gov.open.jag.efilingapi.error.ErrorResponse.*;
+import static ca.bc.gov.open.jag.efilingapi.error.ErrorResponse.FILE_TYPE_ERROR;
+import static org.mockito.ArgumentMatchers.any;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("Upload Additional Submission Documents Test Suite")
@@ -60,6 +65,9 @@ public class uploadAdditionalSubmissionDocumentsTest {
     @Mock
     private AccountService accountServiceMock;
 
+    @Mock
+    private ClamAvService clamAvServiceMock;
+
     @BeforeAll
     public void setUp() throws IOException {
         MockitoAnnotations.initMocks(this);
@@ -75,22 +83,49 @@ public class uploadAdditionalSubmissionDocumentsTest {
 
         Mockito.when(submissionStoreMock.get(Mockito.eq(TestHelpers.CASE_1), Mockito.any())).thenReturn(Optional.of(submission));
 
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock);
     }
 
     @Test
-    @DisplayName("200: with files should return ok")
-    public void withFilesShouldReturnOk() {
+    @DisplayName("200: with pdf files should return ok")
+    public void withPdfFilesShouldReturnOk() throws IOException, VirusDetectedException {
+
+        File file = new File("src/test/resources/test.pdf");
 
         List<MultipartFile> files = new ArrayList<>();
-        MultipartFile multipartFile = new MockMultipartFile("test.txt", "test".getBytes());
+        MultipartFile multipartFile = new MockMultipartFile("test.pdf", new FileInputStream(file));
+
         files.add(multipartFile);
         files.add(multipartFile);
+
+        Mockito.doNothing().when(clamAvServiceMock).scan(any());
+
         ResponseEntity<UploadSubmissionDocumentsResponse> actual = sut.uploadAdditionalSubmissionDocuments(TestHelpers.CASE_1, UUID.randomUUID(), files);
 
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
         Assertions.assertEquals(TestHelpers.CASE_1, actual.getBody().getSubmissionId());
         Assertions.assertEquals(new BigDecimal(2), actual.getBody().getReceived());
+    }
+
+    @Test
+    @DisplayName("400: with non pdf files should return bad request")
+    public void withNonPdfFilesShouldReturnBadRequest() throws IOException, VirusDetectedException {
+
+        File file = new File("src/test/resources/test.txt");
+
+        List<MultipartFile> files = new ArrayList<>();
+        MultipartFile multipartFile = new MockMultipartFile("test.txt", new FileInputStream(file));
+        files.add(multipartFile);
+        files.add(multipartFile);
+
+        Mockito.doNothing().when(clamAvServiceMock).scan(any());
+
+        ResponseEntity actual = sut.uploadAdditionalSubmissionDocuments(TestHelpers.CASE_1, UUID.randomUUID(), files);
+
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
+        Assertions.assertEquals(FILE_TYPE_ERROR.getErrorCode(), ((EfilingError)actual.getBody()).getError());
+        Assertions.assertEquals(FILE_TYPE_ERROR.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
+
     }
 
     @Test
@@ -118,8 +153,18 @@ public class uploadAdditionalSubmissionDocumentsTest {
     }
 
     @Test
+    @DisplayName("404: with no submission present should return not found")
+    public void withNoSubmissionReturnNotFound() {
+
+        ResponseEntity actual = sut.uploadAdditionalSubmissionDocuments(TestHelpers.CASE_2, UUID.randomUUID(), null);
+
+        Assertions.assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
+
+    }
+
+    @Test
     @DisplayName("500: with ioException should return 500")
-    public void withIoExceptionShouldReturnInternalServer() {
+    public void withIoExceptionShouldReturnInternalServerError() {
 
         List<MultipartFile> files = new ArrayList<>();
         files.add(multipartFileMock);
@@ -131,12 +176,22 @@ public class uploadAdditionalSubmissionDocumentsTest {
     }
 
     @Test
-    @DisplayName("404: with no submission present should return not found")
-    public void withNoSubmissionReturnNotFound() {
+    @DisplayName("502: with ioException should return 502")
+    public void withScanFailureShouldReturnBadGateway() throws VirusDetectedException, IOException {
 
-        ResponseEntity actual = sut.uploadAdditionalSubmissionDocuments(TestHelpers.CASE_2, UUID.randomUUID(), null);
+        File file = new File("src/test/resources/test.pdf");
 
-        Assertions.assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
+        List<MultipartFile> files = new ArrayList<>();
+        MultipartFile multipartFile = new MockMultipartFile("test.pdf", new FileInputStream(file));
+        files.add(multipartFile);
+        files.add(multipartFile);
 
+        Mockito.doThrow(VirusDetectedException.class).when(clamAvServiceMock).scan(any());
+
+        ResponseEntity actual = sut.uploadAdditionalSubmissionDocuments(TestHelpers.CASE_1, UUID.randomUUID(), files);
+
+        Assertions.assertEquals(HttpStatus.BAD_GATEWAY, actual.getStatusCode());
+        Assertions.assertEquals(DOCUMENT_STORAGE_FAILURE.getErrorCode(), ((EfilingError)actual.getBody()).getError());
+        Assertions.assertEquals(DOCUMENT_STORAGE_FAILURE.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
     }
 }

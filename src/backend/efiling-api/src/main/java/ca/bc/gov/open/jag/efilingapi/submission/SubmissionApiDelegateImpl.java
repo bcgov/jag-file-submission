@@ -1,5 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission;
 
+import ca.bc.gov.open.clamav.starter.ClamAvService;
+import ca.bc.gov.open.clamav.starter.VirusDetectedException;
 import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.SubmissionApiDelegate;
@@ -15,6 +17,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingapi.utils.MdcUtils;
 import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
+import ca.bc.gov.open.jag.efilingapi.utils.TikaAnalysis;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.*;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import org.slf4j.Logger;
@@ -29,6 +32,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.security.RolesAllowed;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
@@ -42,29 +46,26 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     Logger logger = LoggerFactory.getLogger(SubmissionApiDelegateImpl.class);
 
     private final SubmissionService submissionService;
-
     private final SubmissionStore submissionStore;
-
     private final AccountService accountService;
-
     private final GenerateUrlResponseMapper generateUrlResponseMapper;
-
     private final NavigationProperties navigationProperties;
-
     private final DocumentStore documentStore;
+    private final ClamAvService clamAvService;
 
     public SubmissionApiDelegateImpl(
             SubmissionService submissionService,
             AccountService accountService,
             GenerateUrlResponseMapper generateUrlResponseMapper,
             NavigationProperties navigationProperties,
-            SubmissionStore submissionStore, DocumentStore documentStore) {
+            SubmissionStore submissionStore, DocumentStore documentStore, ClamAvService clamAvService) {
         this.submissionService = submissionService;
         this.accountService = accountService;
         this.generateUrlResponseMapper = generateUrlResponseMapper;
         this.navigationProperties = navigationProperties;
         this.submissionStore = submissionStore;
         this.documentStore = documentStore;
+        this.clamAvService = clamAvService;
     }
 
     @Override
@@ -100,7 +101,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
 
-        if(!fromCacheSubmission.isPresent())
+        if (!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
 
         MdcUtils.setUserMDC(submissionId, xTransactionId);
@@ -118,7 +119,8 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     @Override
     @RolesAllowed("efiling-user")
-    public ResponseEntity<UpdateDocumentResponse> updateDocumentProperties(UUID submissionId, UUID xTransactionId, UpdateDocumentRequest updateDocumentRequest) {
+    public ResponseEntity<UpdateDocumentResponse> updateDocumentProperties(UUID submissionId, UUID
+            xTransactionId, UpdateDocumentRequest updateDocumentRequest) {
 
         MdcUtils.setUserMDC(submissionId, xTransactionId);
 
@@ -131,7 +133,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
 
-        if(!fromCacheSubmission.isPresent())
+        if (!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
 
 
@@ -170,7 +172,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         byte[] bytes = documentStore.get(document.getCompositeId());
 
-        if(bytes == null) return ResponseEntity.notFound().build();
+        if (bytes == null) return ResponseEntity.notFound().build();
 
         logger.info("successfully retrieved document for transaction [{}]", xTransactionId);
 
@@ -204,21 +206,18 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
                             submissionService.generateFromRequest(xTransactionId, submissionId, actualUserId.get(), generateUrlRequest),
                             navigationProperties.getBaseUrl()));
             logger.info("successfully generated return url.");
-        }
-        catch (CSOHasMultipleAccountException e)   {
+        } catch (CSOHasMultipleAccountException e) {
             logger.warn(e.getMessage(), e);
-            response =  new ResponseEntity(buildEfilingError(ErrorResponse.ACCOUNTEXCEPTION), HttpStatus.BAD_REQUEST);
-        }
-        catch (InvalidAccountStateException e) {
+            response = new ResponseEntity(buildEfilingError(ErrorResponse.ACCOUNTEXCEPTION), HttpStatus.BAD_REQUEST);
+        } catch (InvalidAccountStateException e) {
             logger.warn(e.getMessage(), e);
-            response =  new ResponseEntity(buildEfilingError(ErrorResponse.INVALIDROLE), HttpStatus.FORBIDDEN);
+            response = new ResponseEntity(buildEfilingError(ErrorResponse.INVALIDROLE), HttpStatus.FORBIDDEN);
         } catch (EfilingDocumentServiceException e) {
             logger.warn(e.getMessage(), e);
-            response =  new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        catch (StoreException e) {
+            response = new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (StoreException e) {
             logger.warn(e.getMessage(), e);
-            response =  new ResponseEntity(buildEfilingError(ErrorResponse.CACHE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+            response = new ResponseEntity(buildEfilingError(ErrorResponse.CACHE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         MdcUtils.clearClientMDC();
@@ -233,7 +232,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
 
-        if(!universalId.isPresent()) return new ResponseEntity(
+        if (!universalId.isPresent()) return new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
 
         MdcUtils.setUserMDC(submissionId, xTransactionId);
@@ -242,7 +241,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
 
-        if(!fromCacheSubmission.isPresent())
+        if (!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
 
 
@@ -256,7 +255,8 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         UserDetails userDetails = buildUserDetails(universalId.get());
 
-        if(userDetails.getAccounts() == null || userDetails.getAccounts().isEmpty()) logger.info("User does not have a CSO account");
+        if (userDetails.getAccounts() == null || userDetails.getAccounts().isEmpty())
+            logger.info("User does not have a CSO account");
 
         response.setUserDetails(userDetails);
 
@@ -278,9 +278,9 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         AccountDetails accountDetails = accountService.getCsoAccountDetails(universalId);
 
-        if(accountDetails != null) {
+        if (accountDetails != null) {
 
-            if(accountDetails.isFileRolePresent()) {
+            if (accountDetails.isFileRolePresent()) {
                 Account account = new Account();
                 account.setType(Account.TypeEnum.CSO);
                 account.setIdentifier(accountDetails.getAccountId().toString());
@@ -306,7 +306,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
 
-        if(!fromCacheSubmission.isPresent())
+        if (!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
 
         logger.info("successfully retrieved submission filing package for transactionId [{}]", xTransactionId);
@@ -350,7 +350,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionId, xTransactionId);
 
-        if(!fromCacheSubmission.isPresent())
+        if (!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
         ResponseEntity response;
         MDC.put(Keys.MDC_EFILING_SUBMISSION_ID, submissionId.toString());
@@ -426,6 +426,19 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         try {
 
+
+            for (MultipartFile file : files) {
+                try {
+                    clamAvService.scan(new ByteArrayInputStream(file.getBytes()));
+                } catch (VirusDetectedException e) {
+                    return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_STORAGE_FAILURE).create(),
+                            HttpStatus.BAD_GATEWAY);
+                }
+
+                if (!TikaAnalysis.isPdf(file))
+                    return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.FILE_TYPE_ERROR).create(),
+                            HttpStatus.BAD_REQUEST);
+            }
             for (MultipartFile file : files) {
                 Document document = Document
                         .builder()
