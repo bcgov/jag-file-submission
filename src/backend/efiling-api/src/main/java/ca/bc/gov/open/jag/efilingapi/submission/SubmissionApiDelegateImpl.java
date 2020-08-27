@@ -424,24 +424,21 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_REQUIRED).create(),
                     HttpStatus.BAD_REQUEST);
 
-        for (MultipartFile file : files) {
-            try {
-                clamAvService.scan(new ByteArrayInputStream(file.getBytes()));
-            } catch (VirusDetectedException e) {
-                return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_STORAGE_FAILURE).create(),
-                        HttpStatus.BAD_GATEWAY);
-            } catch (IOException e) {
-                return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_STORAGE_FAILURE).create(),
-                        HttpStatus.GATEWAY_TIMEOUT);
-            }
-
-            if (!TikaAnalysis.isPdf(file))
-                return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.FILE_TYPE_ERROR).create(),
-                        HttpStatus.BAD_REQUEST);
-        }
-
         try {
 
+
+            for (MultipartFile file : files) {
+                try {
+                    clamAvService.scan(new ByteArrayInputStream(file.getBytes()));
+                } catch (VirusDetectedException e) {
+                    return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_STORAGE_FAILURE).create(),
+                            HttpStatus.BAD_GATEWAY);
+                }
+
+                if (!TikaAnalysis.isPdf(file))
+                    return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.FILE_TYPE_ERROR).create(),
+                            HttpStatus.BAD_REQUEST);
+            }
             for (MultipartFile file : files) {
                 Document document = Document
                         .builder()

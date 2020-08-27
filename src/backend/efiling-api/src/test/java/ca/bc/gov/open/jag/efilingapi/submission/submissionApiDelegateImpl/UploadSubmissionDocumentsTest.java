@@ -144,14 +144,14 @@ public class UploadSubmissionDocumentsTest {
     }
 
     @Test
-    @DisplayName("504: with ioException should return 504")
-    public void withIoExceptionShouldReturnGatewayTimeout() {
+    @DisplayName("500: with ioException should return 500")
+    public void withIoExceptionShouldReturnInternalServerError() {
 
         List<MultipartFile> files = new ArrayList<>();
         files.add(multipartFileMock);
         ResponseEntity actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), files);
 
-        Assertions.assertEquals(HttpStatus.GATEWAY_TIMEOUT, actual.getStatusCode());
+        Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode());
         Assertions.assertEquals(DOCUMENT_STORAGE_FAILURE.getErrorCode(), ((EfilingError)actual.getBody()).getError());
         Assertions.assertEquals(DOCUMENT_STORAGE_FAILURE.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
     }
