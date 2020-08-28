@@ -3606,10 +3606,10 @@ axe-core@^3.5.4:
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-3.5.5.tgz#84315073b53fa3c0c51676c588d59da09a192227"
   integrity sha512-5P0QZ6J5xGikH780pghEdbEKijCTrruK9KxtPZCFWUpef0f6GipO+xEZ5GKCb020mmqgbiNO6TcA55CriL784Q==
 
-axios-auth-refresh@^2.2.8:
-  version "2.2.8"
-  resolved "https://registry.yarnpkg.com/axios-auth-refresh/-/axios-auth-refresh-2.2.8.tgz#de420b6b5d6efdb4ad3666e44c38960a9b08f382"
-  integrity sha512-WR59uCgO9VppC9VQU6vtszrAHnF3RtylkGltOGldfB4Rw+my0j9WdJuvRzMwiwTh+LmG/SQWzgeCfFYf8N4FIA==
+axios-auth-refresh@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/axios-auth-refresh/-/axios-auth-refresh-3.0.0.tgz#dd8c8a8458250c554c9b00c6b2cf571397c8eec6"
+  integrity sha512-0XJnJY711f7opdT+b/au/xw1g4MYrjntXB8Oy5l48plbzOWLjUtJ+m8CtiNLgN3MAvGFJ/Q1NtQ7WKf2euKu6g==
 
 axios-mock-adapter@^1.18.1:
   version "1.18.2"
