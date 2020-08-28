@@ -23,9 +23,7 @@ import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -104,8 +102,12 @@ public class SubmissionServiceImpl implements SubmissionService {
         EfilingService service = efilingFilingPackageMapper.toEfilingService(submission);
         service.setEntryDateTime(DateUtils.getCurrentXmlDate());
 
+        List<Party> parties = new ArrayList();
+        if (submission.getFilingPackage().getParties() != null)
+            parties.addAll(submission.getFilingPackage().getParties());
+
         EfilingFilingPackage filingPackage = efilingFilingPackageMapper.toEfilingFilingPackage(submission,
-                submission.getFilingPackage().getParties().stream()
+                parties.stream()
                     .map(party -> efilingFilingPackageMapper.toEfilingParties(submission, party, String.valueOf(submission.getFilingPackage().getParties().indexOf(party))))
                     .collect(Collectors.toList()));
         filingPackage.setPackageControls(Arrays.asList(efilingFilingPackageMapper.toPackageAuthority(submission)));
