@@ -163,7 +163,7 @@ public class generateFromRequestTest {
         AccountDetails accountDetails = getAccountDetails(true, TestHelpers.CASE_1.toString());
 
         Mockito.when(documentStoreMock.getDocumentDetails(any(), any(), any()))
-                .thenReturn(new DocumentDetails(TestHelpers.DESCRIPTION, BigDecimal.TEN, true));
+                .thenReturn(new DocumentDetails(TestHelpers.DESCRIPTION, BigDecimal.TEN, true, true));
 
         Submission submissionCase1 = Submission
                 .builder()

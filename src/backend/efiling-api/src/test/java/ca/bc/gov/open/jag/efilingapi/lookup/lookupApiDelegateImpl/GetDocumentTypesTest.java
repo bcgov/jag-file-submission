@@ -35,7 +35,7 @@ public class GetDocumentTypesTest {
     @BeforeAll
     public void setUp() throws IOException {
         MockitoAnnotations.initMocks(this);
-        List<DocumentType> documentTypes = Arrays.asList(new DocumentType(TestHelpers.DESCRIPTION, TestHelpers.TYPE));
+        List<DocumentType> documentTypes = Arrays.asList(new DocumentType(TestHelpers.DESCRIPTION, TestHelpers.TYPE, true));
 
         Mockito.when(documentStoreMock.getDocumentTypes(LEVEL, CLASS)).thenReturn(documentTypes);
         Mockito.when(documentStoreMock.getDocumentTypes(BAD, BAD)).thenThrow(new EfilingDocumentServiceException("NOOOOOOO"));
