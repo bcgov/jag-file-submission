@@ -605,6 +605,10 @@ components:
         - clientId
         - accountId
         - internalClientNumber
+        - firstName
+        - lastName
+        - middleName
+        - email
         - fileRolePresent
       properties:
         clientId:
@@ -616,6 +620,18 @@ components:
         internalClientNumber:
           type: string
           description: the user cso internal client number
+        firstName:
+          type: string
+          description: the user cso first name
+        lastName:
+          type: string
+          description: the user cso last name
+        middleName:
+          type: string
+          description: the user cso middle name
+        email:
+          type: string
+          description: the user cso email
         fileRolePresent:
           type: boolean
           description: if the user as file role
