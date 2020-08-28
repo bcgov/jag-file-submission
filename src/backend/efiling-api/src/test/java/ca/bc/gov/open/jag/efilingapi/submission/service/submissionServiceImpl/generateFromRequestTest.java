@@ -155,7 +155,7 @@ public class generateFromRequestTest {
         request.setNavigation(TestHelpers.createDefaultNavigation());
 
         InitialPackage filingPackage = TestHelpers.createInitalPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList());
-        filingPackage.getCourt().setLocation("TEST2");
+        filingPackage.getCourt().setLevel("TEST2");
         request.setFilingPackage(filingPackage);
 
         Submission actual = sut.generateFromRequest(TestHelpers.CASE_1, TestHelpers.CASE_1, TestHelpers.CASE_1, request);
@@ -256,9 +256,6 @@ public class generateFromRequestTest {
     private void configureCase2() {
 
         AccountDetails accountDetails = getAccountDetails(true, TestHelpers.CASE_2.toString());
-
-        Mockito.when(documentStoreMock.getDocumentDetails(any(), any(), any()))
-                .thenReturn(new DocumentDetails(TestHelpers.DESCRIPTION, BigDecimal.TEN, true, true));
 
         Mockito
                 .doReturn(Optional.empty())
