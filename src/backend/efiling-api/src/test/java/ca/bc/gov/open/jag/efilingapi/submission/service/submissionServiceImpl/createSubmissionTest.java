@@ -24,10 +24,10 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class createSubmissionTest {
@@ -61,7 +61,7 @@ public class createSubmissionTest {
     @BeforeAll
     public void setUp(){
         MockitoAnnotations.initMocks(this);
-        Mockito.when(efilingSubmissionServiceMock.submitFilingPackage(any(), any(), any())).thenReturn(BigDecimal.TEN);
+        Mockito.when(efilingSubmissionServiceMock.submitFilingPackage(any(), any(), anyBoolean(), any())).thenReturn(BigDecimal.TEN);
         Mockito.when(bamboraPaymentAdapterMock.makePayment(any())).thenReturn(new EfilingTransaction());
         Mockito.when(documentStoreMock.get(any())).thenReturn(new byte[]{});
         Mockito.doNothing().when(sftpServiceMock).put(any(), any());
