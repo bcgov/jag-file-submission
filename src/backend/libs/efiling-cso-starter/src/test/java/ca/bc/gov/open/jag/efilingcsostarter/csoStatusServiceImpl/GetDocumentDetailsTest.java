@@ -6,6 +6,7 @@ import ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoDocumentServiceImpl;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
+import org.apache.neethi.Assertion;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -41,6 +42,7 @@ public class GetDocumentDetailsTest {
         documentType.setDocumentTypeDesc(DESCRIPTION);
         documentType.setDefaultStatutoryFee(BigDecimal.TEN);
         documentType.setOrderDocumentYn(true);
+        documentType.setRushRequiredYn(true);
 
         Mockito.when(filingStatusFacadeBean.getDocumentTypes(Mockito.eq(COURT_LEVEL),any())).thenReturn(Arrays.asList(documentType));
         Mockito.when(filingStatusFacadeBean.getDocumentTypes(Mockito.eq(NODOC),any())).thenReturn(new ArrayList<>());
@@ -57,6 +59,7 @@ public class GetDocumentDetailsTest {
         Assertions.assertEquals(DESCRIPTION, result.getDescription());
         Assertions.assertEquals(BigDecimal.TEN, result.getStatutoryFeeAmount());
         Assertions.assertTrue(result.getOrderDocument());
+        Assertions.assertTrue(result.isRushRequired());
     }
 
     @DisplayName("Exception: when not finding document should throw exception")

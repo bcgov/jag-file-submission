@@ -8,6 +8,8 @@ public class DocumentType {
 
     private String type;
 
+    private Boolean rushRequired;
+
     public String getDescription() { return description; }
 
     public void setDescription(String description) {  this.description = description; }
@@ -16,9 +18,16 @@ public class DocumentType {
 
     public void setType(String type) {  this.type = type;  }
 
+    public Boolean isRushRequired() { return rushRequired; }
+
+    public void setRushRequired(Boolean rushRequired) { this.rushRequired = rushRequired; }
+
     @JsonCreator
-    public DocumentType(@JsonProperty("description") String description, @JsonProperty("type") String type) {
+    public DocumentType(@JsonProperty("description") String description,
+                        @JsonProperty("type") String type,
+                        @JsonProperty("rushRequired") Boolean rushRequired) {
         this.description = description;
         this.type = type;
+        this.rushRequired = rushRequired;
     }
 }
