@@ -45,7 +45,8 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         nonExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getNonExistingCSOGuid();
 
-        response = generateUrlRequestBuilders.requestWithSinglePdfDocument(resource, nonExistingCSOGuid, FILE_NAME_PATH );
+        response = generateUrlRequestBuilders.requestWithSinglePdfDocument(resource, nonExistingCSOGuid, FILE_NAME_PATH,
+                                                                                null, null);
     }
 
     @When("status code is {int} and content type are verified")

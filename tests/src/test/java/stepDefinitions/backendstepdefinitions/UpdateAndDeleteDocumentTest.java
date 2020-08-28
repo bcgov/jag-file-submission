@@ -18,6 +18,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.not;
@@ -37,6 +38,9 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
     private static final String FIRST_FILE_NAME_PATH = "/test-document.pdf";
     private static final String SECOND_FILE_NAME_PATH = "/test-document-2.pdf";
     private static final String DOCUMENT_PATH_PARAM = "/document";
+    private static final String DOCUMENTS_PATH_PARAM = "/documents";
+    private static final String UPDATE_DOCUMENTS_PATH_PARAM = "/update-documents";
+
 
     public Logger log = LogManager.getLogger(UpdateAndDeleteDocumentTest.class);
 
@@ -45,10 +49,11 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
-        response = generateUrlRequestBuilders.requestWithSinglePdfDocument(resource,validExistingCSOGuid, FIRST_FILE_NAME_PATH );
+        response = generateUrlRequestBuilders.requestWithSinglePdfDocument(resource,validExistingCSOGuid, FIRST_FILE_NAME_PATH,
+                                                                            null, null);
     }
 
-    @When("validate status code is {int} and content type")
+    @When("validated status code is {int} and content type")
     public void validateStatusCodeIsAndContentType(Integer statusCode) {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
 
@@ -138,7 +143,8 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
-        response = generateUrlRequestBuilders.requestWithSinglePdfDocument(resource,validExistingCSOGuid, SECOND_FILE_NAME_PATH );
+        response = generateUrlRequestBuilders.requestWithSinglePdfDocument(resource,validExistingCSOGuid, SECOND_FILE_NAME_PATH,
+                                                                            submissionId, DOCUMENTS_PATH_PARAM);
     }
 
     @And("verify navigation urls are returned")
@@ -157,14 +163,38 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
     @Given("{string} id with filename is submitted with GET http request")
     public void idWithFilenameIsSubmittedWithGETHttpRequest(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
-        response = generateUrlRequestBuilders.requestToGetDocumentUsingFileName(resource,validExistingCSOGuid,
-                submissionId, DOCUMENT_PATH_PARAM, SECOND_FILE_NAME_PATH);
+        response = generateUrlRequestBuilders.requestToUpdateDocumentProperties(resource,validExistingCSOGuid,
+                submissionId, DOCUMENT_PATH_PARAM);
     }
 
-    @Then("validate status code is {int} and content type is not json")
+    @Then("validated status code is {int} and content type is not json")
     public void verifyStatusCodeIsAndContentTypeIsNotJson(Integer int1) {
         assertEquals(200, response.getStatusCode());
         assertEquals("application/octet-stream", response.getContentType());
+    }
+
+    @Given("{string} id with payload is submitted to upload the document properties")
+    public void idWithPayloadIsSubmittedToUploadTheDocumentProperties(String resource) throws IOException {
+        generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
+        response = generateUrlRequestBuilders.requestToUpdateDocumentProperties(resource,validExistingCSOGuid,
+                                                                                    submissionId, UPDATE_DOCUMENTS_PATH_PARAM);
+    }
+
+    @Then("verify document properties are updated")
+    public void verifyDocumentPropertiesAreUpdated() {
+        jsonPath = new JsonPath(response.asString());
+
+        assertFalse(jsonPath.get("documents.name").toString().isEmpty());
+        assertFalse(jsonPath.get("documents.type").toString().isEmpty());
+        assertFalse(jsonPath.get("documents.subType").toString().isEmpty());
+        assertFalse(jsonPath.get("documents.isAmendment").toString().isEmpty());
+        assertFalse(jsonPath.get("documents.isSupremeCourtScheduling").toString().isEmpty());
+        assertFalse(jsonPath.get("documents.data").toString().isEmpty());
+        assertFalse(jsonPath.get("documents.description").toString().isEmpty());
+        assertFalse(jsonPath.get("documents.statutoryFeeAmount").toString().isEmpty());
+        assertFalse(jsonPath.get("documents.mimeType").toString().isEmpty());
+        log.info("Document properties are updated");
+
     }
 
     @Given("{string} id is submitted with DELETE http request")

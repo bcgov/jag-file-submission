@@ -49,7 +49,8 @@ public class GenerateUrlRequestBuilders {
                 .extract().response();
     }
 
-    public Response requestWithSinglePdfDocument(String resourceValue, String accountGuid, String fileNamePath) throws IOException {
+    public Response requestWithSinglePdfDocument(String resourceValue, String accountGuid, String fileNamePath,
+                                                 @Nullable String submissionId, @Nullable String pathParam) throws IOException {
 
         payloadData = new GenerateUrlPayload();
         APIResources resourceAPI = APIResources.valueOf(resourceValue);
@@ -60,7 +61,7 @@ public class GenerateUrlRequestBuilders {
 
         String accessToken = jsonPath.get(ACCESS_TOKEN);
 
-        File pdfFile = new File(UPLOAD_FILE_PATH + fileNamePath);
+        File pdfFile = new File(UPLOAD_FILE_PATH + fileNamePath + submissionId + pathParam);
 
         request = RestAssured.given().auth().preemptive().oauth2(accessToken)
                 .spec(TestUtil.submitDocumentsRequestSpecification())
@@ -267,7 +268,8 @@ public class GenerateUrlRequestBuilders {
                 .extract().response();
     }
 
-    public Response requestToUpdateDocuments(String resource, String accountGuid, String submissionId, String pathParam) throws IOException {
+    public Response requestToUpdateDocumentProperties(String resource, String accountGuid, String submissionId, String pathParam) throws IOException {
+        payloadData = new GenerateUrlPayload();
         APIResources resourceGet = APIResources.valueOf(resource);
         FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
 
@@ -275,7 +277,8 @@ public class GenerateUrlRequestBuilders {
 
         request = given().auth().preemptive().oauth2(userToken)
                 .spec(TestUtil.requestSpecification())
-                .header(X_TRANSACTION_ID, accountGuid);
+                .header(X_TRANSACTION_ID, accountGuid)
+                .body(payloadData.generateUpdateDocumentsPayload());
 
         return request.when().get(resourceGet.getResource() + submissionId + pathParam)
                 .then()

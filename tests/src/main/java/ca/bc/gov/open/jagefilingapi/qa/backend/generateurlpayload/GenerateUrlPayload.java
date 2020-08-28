@@ -17,6 +17,10 @@ public class GenerateUrlPayload {
     private static final String APPTYPE = "DCFL";
     private static final String DOCTYPE = "WNC";
     private static final String DISPLAYNAME = "my app";
+    private static final String SUB_TYPE = "sub";
+    private static final boolean IS_AMENDMENT = true;
+    private static final boolean IS_SUPREME_COURT_SCHEDULING = true;
+    private static final String DATA = "data";
 
     public static final String SUCCESS_URL = "http://success.com";
     public static final String CANCEL_URL = "http://cancel.com";
@@ -39,6 +43,19 @@ public class GenerateUrlPayload {
         generateUrlRequest.setFilingPackage(generateInitialPackage(generateCourt(), generateDocumentPropertiesList()));
 
         return generateUrlRequest;
+    }
+
+    public GenerateUrlRequest generateUpdateDocumentsPayload() {
+        generateUrlRequest = new GenerateUrlRequest();
+
+        generateUrlRequest.setFilingPackage(generateInitialPackage(generateDocumentPropertiesList()));
+        return generateUrlRequest;
+    }
+
+    public static InitialPackage generateInitialPackage( List<DocumentProperties> documentProperties) {
+        InitialPackage initialPackage = new InitialPackage();
+        initialPackage.setDocuments(documentProperties);
+        return initialPackage;
     }
 
     public static InitialPackage generateInitialPackage(Court court, List<DocumentProperties> documentProperties) {
@@ -89,6 +106,10 @@ public class GenerateUrlPayload {
         DocumentProperties documentProperties = new DocumentProperties();
         documentProperties.setName("time.ps1");
         documentProperties.setType(DOCTYPE);
+        documentProperties.setSubType(SUB_TYPE);
+        documentProperties.setIsAmendment(IS_AMENDMENT);
+        documentProperties.setIsSupremeCourtScheduling(IS_SUPREME_COURT_SCHEDULING);
+        documentProperties.setData(DATA);
 
         return Arrays.asList(documentProperties);
     }
