@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingapi.submission.service.submissionServiceImpl;
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
+import ca.bc.gov.open.jag.efilingapi.api.model.InitialPackage;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapperImpl;
@@ -91,10 +92,71 @@ public class generateFromRequestTest {
     @Test
     @DisplayName("OK: with valid account should return submission")
     public void withValidAccountShouldReturnSubmission() {
+
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setClientApplication(TestHelpers.createClientApplication("app", "app"));
         request.setNavigation(TestHelpers.createDefaultNavigation());
         request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList()));
+
+        Submission actual = sut.generateFromRequest(TestHelpers.CASE_1, TestHelpers.CASE_1, TestHelpers.CASE_1, request);
+
+        Assertions.assertEquals(TestHelpers.ERROR_URL, actual.getNavigation().getError().getUrl());
+        Assertions.assertEquals(TestHelpers.CANCEL_URL, actual.getNavigation().getCancel().getUrl());
+        Assertions.assertEquals(TestHelpers.SUCCESS_URL, actual.getNavigation().getSuccess().getUrl());
+        Assertions.assertEquals(10, actual.getExpiryDate());
+        Assertions.assertNotNull(actual.getId());
+        Assertions.assertEquals(BigDecimal.TEN, actual.getAccountDetails().getAccountId());
+        Assertions.assertEquals(BigDecimal.TEN, actual.getAccountDetails().getClientId());
+        Assertions.assertEquals(INTERNAL_CLIENT_NUMBER, actual.getAccountDetails().getInternalClientNumber());
+        Assertions.assertEquals(EMAIL, actual.getAccountDetails().getEmail());
+        Assertions.assertEquals(FIRST_NAME, actual.getAccountDetails().getFirstName());
+        Assertions.assertEquals(MIDDLE_NAME, actual.getAccountDetails().getMiddleName());
+        Assertions.assertEquals(LAST_NAME, actual.getAccountDetails().getLastName());
+        Assertions.assertEquals(TestHelpers.DIVISION, actual.getFilingPackage().getCourt().getDivision());
+        Assertions.assertEquals(TestHelpers.FILENUMBER, actual.getFilingPackage().getCourt().getFileNumber());
+        Assertions.assertEquals(TestHelpers.LEVEL, actual.getFilingPackage().getCourt().getLevel());
+        Assertions.assertEquals(TestHelpers.LOCATION, actual.getFilingPackage().getCourt().getLocation());
+        Assertions.assertEquals(TestHelpers.PARTICIPATIONCLASS, actual.getFilingPackage().getCourt().getParticipatingClass());
+        Assertions.assertEquals(TestHelpers.PROPERTYCLASS, actual.getFilingPackage().getCourt().getCourtClass());
+        Assertions.assertEquals(TestHelpers.TYPE, actual.getFilingPackage().getDocuments().get(0).getType());
+        Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getFilingPackage().getDocuments().get(0).getDescription());
+        Assertions.assertEquals(BigDecimal.TEN, actual.getFilingPackage().getCourt().getAgencyId());
+        Assertions.assertEquals(TestHelpers.COURT_DESCRIPTION, actual.getFilingPackage().getCourt().getLocationDescription());
+        Assertions.assertEquals(TestHelpers.LEVEL_DESCRIPTION, actual.getFilingPackage().getCourt().getLevelDescription());
+        Assertions.assertEquals(TestHelpers.CLASS_DESCRIPTION, actual.getFilingPackage().getCourt().getClassDescription());
+        Assertions.assertEquals(BigDecimal.TEN, actual.getFilingPackage().getDocuments().get(0).getStatutoryFeeAmount());
+        Assertions.assertEquals(SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD, actual.getFilingPackage().getDocuments().get(0).getSubType());
+        Assertions.assertEquals("application/txt", actual.getFilingPackage().getDocuments().get(0).getMimeType());
+        Assertions.assertEquals(2, actual.getFilingPackage().getParties().size());
+        Assertions.assertEquals(BigDecimal.ONE, actual.getFilingPackage().getParties().get(0).getPartyId());
+        Assertions.assertEquals(TestHelpers.FIRST_NAME, actual.getFilingPackage().getParties().get(0).getFirstName());
+        Assertions.assertEquals(TestHelpers.MIDDLE_NAME, actual.getFilingPackage().getParties().get(0).getMiddleName());
+        Assertions.assertEquals(TestHelpers.LAST_NAME, actual.getFilingPackage().getParties().get(0).getLastName());
+        Assertions.assertEquals(TestHelpers.NAME_TYPE_CD, actual.getFilingPackage().getParties().get(0).getNameTypeCd());
+        Assertions.assertEquals(TestHelpers.PARTY_TYPE_CD, actual.getFilingPackage().getParties().get(0).getPartyTypeCd());
+        Assertions.assertEquals(TestHelpers.ROLE_TYPE_CD, actual.getFilingPackage().getParties().get(0).getRoleTypeCd());
+
+        Assertions.assertEquals(BigDecimal.TEN, actual.getFilingPackage().getParties().get(1).getPartyId());
+        Assertions.assertEquals(TestHelpers.FIRST_NAME, actual.getFilingPackage().getParties().get(1).getFirstName());
+        Assertions.assertEquals(TestHelpers.MIDDLE_NAME, actual.getFilingPackage().getParties().get(1).getMiddleName());
+        Assertions.assertEquals(TestHelpers.LAST_NAME, actual.getFilingPackage().getParties().get(1).getLastName());
+        Assertions.assertEquals(TestHelpers.NAME_TYPE_CD, actual.getFilingPackage().getParties().get(1).getNameTypeCd());
+        Assertions.assertEquals(TestHelpers.PARTY_TYPE_CD, actual.getFilingPackage().getParties().get(1).getPartyTypeCd());
+        Assertions.assertEquals(TestHelpers.ROLE_TYPE_CD, actual.getFilingPackage().getParties().get(1).getRoleTypeCd());
+
+    }
+
+    @Test
+    @DisplayName("OK: with valid account no rushed should return submission")
+    public void withValidAccountNoRushedShouldReturnSubmission() {
+
+        GenerateUrlRequest request = new GenerateUrlRequest();
+        request.setClientApplication(TestHelpers.createClientApplication("app", "app"));
+        request.setNavigation(TestHelpers.createDefaultNavigation());
+
+        InitialPackage filingPackage = TestHelpers.createInitalPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList());
+        filingPackage.getCourt().setLocation("TEST2");
+        request.setFilingPackage(filingPackage);
 
         Submission actual = sut.generateFromRequest(TestHelpers.CASE_1, TestHelpers.CASE_1, TestHelpers.CASE_1, request);
 
@@ -159,11 +221,13 @@ public class generateFromRequestTest {
 
     private void configureCase1(ServiceFees fee) {
 
-
         AccountDetails accountDetails = getAccountDetails(true, TestHelpers.CASE_1.toString());
 
-        Mockito.when(documentStoreMock.getDocumentDetails(any(), any(), any()))
+        Mockito.when(documentStoreMock.getDocumentDetails(Mockito.eq("LEVEL"), any(), any()))
                 .thenReturn(new DocumentDetails(TestHelpers.DESCRIPTION, BigDecimal.TEN, true, true));
+
+        Mockito.when(documentStoreMock.getDocumentDetails(Mockito.eq("TEST2"), any(), any()))
+                .thenReturn(new DocumentDetails(TestHelpers.DESCRIPTION, BigDecimal.TEN, true, false));
 
         Submission submissionCase1 = Submission
                 .builder()
@@ -191,8 +255,10 @@ public class generateFromRequestTest {
 
     private void configureCase2() {
 
-
         AccountDetails accountDetails = getAccountDetails(true, TestHelpers.CASE_2.toString());
+
+        Mockito.when(documentStoreMock.getDocumentDetails(any(), any(), any()))
+                .thenReturn(new DocumentDetails(TestHelpers.DESCRIPTION, BigDecimal.TEN, true, true));
 
         Mockito
                 .doReturn(Optional.empty())
