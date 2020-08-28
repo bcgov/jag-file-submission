@@ -39,7 +39,7 @@ public class CsoDocumentServiceImpl implements EfilingDocumentService {
         return getSoapDocumentTypes(courtLevel, courtClass).stream()
                 .filter(doc -> doc.getDocumentTypeCd().equals(documentType))
                 .findFirst()
-                .map(doc -> new DocumentDetails(doc.getDocumentTypeDesc(), doc.getDefaultStatutoryFee(), doc.isOrderDocumentYn()))
+                .map(doc -> new DocumentDetails(doc.getDocumentTypeDesc(), doc.getDefaultStatutoryFee(), doc.isOrderDocumentYn(), doc.isRushRequiredYn()))
                 .orElseThrow(() -> new EfilingDocumentServiceException("Document type does not exists"));
 
     }
@@ -49,7 +49,7 @@ public class CsoDocumentServiceImpl implements EfilingDocumentService {
         if (StringUtils.isBlank(courtClass)) throw new IllegalArgumentException("courtClass level is required.");
 
         return getSoapDocumentTypes(courtLevel, courtClass).stream()
-                .map(doc -> new ca.bc.gov.open.jag.efilingcommons.model.DocumentType(doc.getDocumentTypeDesc(), doc.getDocumentTypeCd())).collect(Collectors.toList());
+                .map(doc -> new ca.bc.gov.open.jag.efilingcommons.model.DocumentType(doc.getDocumentTypeDesc(), doc.getDocumentTypeCd(), doc.isRushRequiredYn())).collect(Collectors.toList());
     }
 
     private List<DocumentType> getSoapDocumentTypes(String courtLevel, String courtClass) {
