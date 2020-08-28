@@ -11,9 +11,7 @@ import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoSubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingcsostarter.TestHelpers;
 import ca.bc.gov.open.jag.efilingcsostarter.config.CsoProperties;
-import ca.bc.gov.open.jag.efilingcsostarter.mappers.FilingPackageMapperImpl;
-import ca.bc.gov.open.jag.efilingcsostarter.mappers.FinancialTransactionMapperImpl;
-import ca.bc.gov.open.jag.efilingcsostarter.mappers.ServiceMapperImpl;
+import ca.bc.gov.open.jag.efilingcsostarter.mappers.*;
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
@@ -76,28 +74,29 @@ public class SubmitFilingPackageTest {
         Mockito.doReturn(serviceSession).when(serviceFacadeBean)
                 .createServiceSession(ArgumentMatchers.argThat(x -> x.getUserSessionId().equals(userSession.getUserSessionId())), Mockito.anyString());
 
-        sut = new CsoSubmissionServiceImpl(filingFacadeBeanMock, serviceFacadeBean, new ServiceMapperImpl(), new FilingPackageMapperImpl(), new FinancialTransactionMapperImpl(), csoPropertiesMock);
+        ProcessRequestMapper processRequestMapper = new ProcessRequestMapperImpl();
+        sut = new CsoSubmissionServiceImpl(filingFacadeBeanMock, serviceFacadeBean, new ServiceMapperImpl(), new FilingPackageMapperImpl(), new FinancialTransactionMapperImpl(), csoPropertiesMock, processRequestMapper);
 
     }
 
     @DisplayName("Exception: with null service should throw IllegalArgumentException")
     @Test
     public void testWithEmptyService() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(null, new EfilingFilingPackage(), null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(null, new EfilingFilingPackage(), false,null));
     }
 
     @DisplayName("Exception: with null filingpackage should throw IllegalArgumentException")
     @Test
     public void testWithEmptyFilingPackage() {
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(new EfilingService(), null, null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(new EfilingService(), null, false,null));
     }
 
 
     @DisplayName("Exception: with null clientId should throw IllegalArgumentException")
     @Test
     public void testWithEmptyClientId() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(new EfilingService(), new EfilingFilingPackage(), null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(new EfilingService(), new EfilingFilingPackage(), false,null));
     }
 
     @DisplayName("OK: submitFilingPackage called with any non-empty submissionId")
@@ -107,7 +106,18 @@ public class SubmitFilingPackageTest {
         Mockito.when(serviceFacadeBean.addService(any())).thenReturn(TestHelpers.createService());
         Mockito.when(efilingPaymentServiceMock.makePayment(any())).thenReturn(createTransaction());
         Mockito.doNothing().when(serviceFacadeBean).updateService(any());
-        BigDecimal actual = sut.submitFilingPackage(TestHelpers.createBaseEfilingService(), new EfilingFilingPackage(), efilingPaymentServiceMock);
+        BigDecimal actual = sut.submitFilingPackage(TestHelpers.createBaseEfilingService(), new EfilingFilingPackage(),false, efilingPaymentServiceMock);
+        Assertions.assertEquals(BigDecimal.TEN, actual);
+    }
+
+    @DisplayName("OK: submitFilingPackage called with rushed Processing")
+    @Test
+    public void testWithRushedProcessing() throws DatatypeConfigurationException, ca.bc.gov.ag.csows.filing.NestedEjbException_Exception, NestedEjbException_Exception {
+        Mockito.when(filingFacadeBeanMock.submitFiling(any())).thenReturn(BigDecimal.TEN);
+        Mockito.when(serviceFacadeBean.addService(any())).thenReturn(TestHelpers.createService());
+        Mockito.when(efilingPaymentServiceMock.makePayment(any())).thenReturn(createTransaction());
+        Mockito.doNothing().when(serviceFacadeBean).updateService(any());
+        BigDecimal actual = sut.submitFilingPackage(TestHelpers.createBaseEfilingService(), new EfilingFilingPackage(),true, efilingPaymentServiceMock);
         Assertions.assertEquals(BigDecimal.TEN, actual);
     }
 
@@ -117,7 +127,7 @@ public class SubmitFilingPackageTest {
         Mockito.when(filingFacadeBeanMock.submitFiling(any())).thenReturn(BigDecimal.TEN);
         Mockito.when(serviceFacadeBean.addService(any())).thenReturn(TestHelpers.createService());
         Mockito.when(efilingPaymentServiceMock.makePayment(any())).thenThrow(new EfilingSubmissionServiceException("Bad Bambora", new Throwable()));
-        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(TestHelpers.createBaseEfilingService(), new EfilingFilingPackage(), efilingPaymentServiceMock));
+        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(TestHelpers.createBaseEfilingService(), new EfilingFilingPackage(), false, efilingPaymentServiceMock));
     }
 
 
@@ -130,7 +140,7 @@ public class SubmitFilingPackageTest {
         EfilingService efilingService = new EfilingService();
         efilingService.setClientId(BigDecimal.TEN);
 
-        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(efilingService, new EfilingFilingPackage(), efilingPaymentServiceMock));
+        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(efilingService, new EfilingFilingPackage(), false, efilingPaymentServiceMock));
 
     }
 
@@ -140,7 +150,7 @@ public class SubmitFilingPackageTest {
         Mockito.when(serviceFacadeBean.addService(any())).thenThrow(new NestedEjbException_Exception());
         EfilingService efilingService = new EfilingService();
         efilingService.setClientId(BigDecimal.TEN);
-        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(efilingService, new EfilingFilingPackage(), null));
+        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(efilingService, new EfilingFilingPackage(), false, null));
     }
     
     
@@ -150,7 +160,7 @@ public class SubmitFilingPackageTest {
         Mockito.doThrow(new NestedEjbException_Exception()).when(serviceFacadeBean).createServiceSession(Mockito.any(), Mockito.anyString());
         EfilingService efilingService = new EfilingService();
         efilingService.setClientId(BigDecimal.TEN);
-        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(efilingService, new EfilingFilingPackage(), null));
+        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(efilingService, new EfilingFilingPackage(), false, null));
     }
 
     @DisplayName("Exception: with NestedEjbException_Exception when getting user session should throw EfilingLookupServiceException")
@@ -159,7 +169,7 @@ public class SubmitFilingPackageTest {
         Mockito.doThrow(new NestedEjbException_Exception()).when(serviceFacadeBean).createUserSession(Mockito.anyString());
         EfilingService efilingService = new EfilingService();
         efilingService.setClientId(BigDecimal.TEN);
-        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(efilingService, new EfilingFilingPackage(), null));
+        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(efilingService, new EfilingFilingPackage(), false, null));
     }
 
 
@@ -172,9 +182,11 @@ public class SubmitFilingPackageTest {
         Mockito.when(serviceFacadeBean.addService(Mockito.any())).thenReturn(service);
         EfilingService efilingService = new EfilingService();
         efilingService.setClientId(BigDecimal.TEN);
-        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(efilingService, new EfilingFilingPackage(), efilingPaymentServiceMock));
+        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(efilingService, new EfilingFilingPackage(), false, efilingPaymentServiceMock));
       
     }
+
+
     private EfilingTransaction createTransaction() {
         EfilingTransaction efilingTransaction = new EfilingTransaction();
         efilingTransaction.setApprovalCd(APPROVED);

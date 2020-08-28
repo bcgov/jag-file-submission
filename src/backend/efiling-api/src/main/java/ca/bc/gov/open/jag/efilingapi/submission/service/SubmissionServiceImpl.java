@@ -85,13 +85,23 @@ public class SubmissionServiceImpl implements SubmissionService {
                         transactionId,
                         generateUrlRequest,
                         toFilingPackage(generateUrlRequest),
-                        getExpiryDate()));
+                        getExpiryDate(),
+                        isRushedSubmission(generateUrlRequest)));
 
         if(!cachedSubmission.isPresent())
             throw new StoreException("exception while storing submission object");
 
         return cachedSubmission.get();
 
+    }
+
+    private boolean isRushedSubmission(GenerateUrlRequest generateUrlRequest) {
+
+        for(DocumentProperties documentProperties: generateUrlRequest.getFilingPackage().getDocuments()) {
+            DocumentDetails documentDetails = documentStore.getDocumentDetails(generateUrlRequest.getFilingPackage().getCourt().getLevel(), generateUrlRequest.getFilingPackage().getCourt().getCourtClass(), documentProperties.getType());
+            if(documentDetails.isRushRequired()) return true;
+        }
+        return false;
     }
 
     @Override
@@ -121,7 +131,7 @@ public class SubmissionServiceImpl implements SubmissionService {
         filingPackage.setEntDtm(DateUtils.getCurrentXmlDate());
         filingPackage.setSubmitDtm(DateUtils.getCurrentXmlDate());
         SubmitResponse result = new SubmitResponse();
-        result.transactionId(efilingSubmissionService.submitFilingPackage(service, filingPackage, (efilingPayment) -> {
+        result.transactionId(efilingSubmissionService.submitFilingPackage(service, filingPackage, submission.isRushedSubmission(), (efilingPayment) -> {
             return bamboraPaymentAdapter.makePayment(efilingPayment);
         }));
         return result;

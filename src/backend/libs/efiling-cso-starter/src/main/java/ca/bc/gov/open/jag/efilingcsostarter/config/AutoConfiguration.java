@@ -113,7 +113,9 @@ public class AutoConfiguration {
                                                              ServiceMapper serviceMapper,
                                                              FilingPackageMapper filingPackageMapper,
                                                              FinancialTransactionMapper financialTransactionMapper
-    ) { return new CsoSubmissionServiceImpl(filingFacadeBean, serviceFacadeBean, serviceMapper, filingPackageMapper, financialTransactionMapper, csoProperties); }
+    ) {
+        ProcessRequestMapper processRequestMapper = new ProcessRequestMapperImpl();
+        return new CsoSubmissionServiceImpl(filingFacadeBean, serviceFacadeBean, serviceMapper, filingPackageMapper, financialTransactionMapper, csoProperties, processRequestMapper); }
 
 
     public <T> T getPort(Clients clients, Class<T> type) {
