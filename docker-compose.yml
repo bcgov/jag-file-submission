@@ -37,6 +37,9 @@ services:
       - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-demo
       - REACT_APP_KEYCLOAK_URL=${EFILING_DEMO_KEYCLOAK_URL}
       - REACT_APP_API_BASE_URL=http://localhost:8080
+      - REACT_APP_DEMO_CLIENT_SECRET=${KEYCLOAK_CREDENTIALS_SECRET}
+      - REACT_APP_DEMO_URL=${KEYCLOAK_URL}
+      - REACT_APP_DEFAULT_IDENTITY_PROVIDER=bceid;
 
   #############################################################################################
   ###                           Efiling api backend app                                     ###
