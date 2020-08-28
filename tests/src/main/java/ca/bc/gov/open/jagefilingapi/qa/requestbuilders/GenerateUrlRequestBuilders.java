@@ -4,24 +4,21 @@ import ca.bc.gov.open.jagefilingapi.qa.backend.generateurlpayload.GenerateUrlPay
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.APIResources;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.config.ReadConfig;
-import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.AuthenticationPage;
-import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.LandingPage;
-import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.PackageConfirmationPage;
-import ca.bc.gov.open.jagefilingapi.qa.frontendutils.DriverClass;
+import ca.bc.gov.open.jagefilingapi.qa.frontendutils.FrontendTestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.junit.Assert;
-import org.openqa.selenium.JavascriptExecutor;
+
+import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 
 import static io.restassured.RestAssured.given;
 
 
-public class GenerateUrlRequestBuilders extends DriverClass {
+public class GenerateUrlRequestBuilders {
 
     private RequestSpecification request;
     private static final String X_TRANSACTION_ID = "X-Transaction-Id";
@@ -33,11 +30,9 @@ public class GenerateUrlRequestBuilders extends DriverClass {
     private static final String CLIENT_ID = "client_id";
     private static final String GRANT_TYPE = "grant_type";
     private static final String CLIENT_SECRET = "client_secret";
-    private static final String BASE_PATH = "user.dir";
-    private static final String PDF_PATH = "/src/test/java/testdatasource/test-document.pdf";
     private static final String ACCESS_TOKEN = "access_token";
-
     private GenerateUrlPayload payloadData;
+    public String userToken;
 
     public Response getBearerToken() throws IOException {
         ReadConfig readConfig = new ReadConfig();
@@ -50,15 +45,14 @@ public class GenerateUrlRequestBuilders extends DriverClass {
                 .formParam(CLIENT_SECRET, validUserid);
 
         return request.when().post(resourceAPI).then()
-                .spec(TestUtil.validDocumentResponseSpecification())
+                .spec(TestUtil.validResponseSpecification())
                 .extract().response();
     }
 
-    public Response validRequestWithSingleDocument(String resourceValue) throws IOException {
-        payloadData = new GenerateUrlPayload();
+    public Response requestWithSinglePdfDocument(String resourceValue, String accountGuid, String fileNamePath) throws IOException {
 
+        payloadData = new GenerateUrlPayload();
         APIResources resourceAPI = APIResources.valueOf(resourceValue);
-        String validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
         String validUserid = JsonDataReader.getCsoAccountGuid().getValidUserId();
 
         Response response = getBearerToken();
@@ -66,16 +60,16 @@ public class GenerateUrlRequestBuilders extends DriverClass {
 
         String accessToken = jsonPath.get(ACCESS_TOKEN);
 
-        File pdfFile = new File(UPLOAD_FILE_PATH + FILE_NAME_PATH);
+        File pdfFile = new File(UPLOAD_FILE_PATH + fileNamePath);
 
         request = RestAssured.given().auth().preemptive().oauth2(accessToken)
                 .spec(TestUtil.submitDocumentsRequestSpecification())
-                .header(X_TRANSACTION_ID, validExistingCSOGuid)
+                .header(X_TRANSACTION_ID, accountGuid)
                 .header(X_USER_ID, validUserid)
                 .multiPart(FILES, pdfFile);
 
         return request.when().post(resourceAPI.getResource()).then()
-                .spec(TestUtil.validDocumentResponseSpecification())
+                .spec(TestUtil.validResponseSpecification())
                 .extract().response();
     }
 
@@ -102,7 +96,58 @@ public class GenerateUrlRequestBuilders extends DriverClass {
                 .multiPart(FILES, secondPdfFile);
 
         return request.when().post(resourceAPI.getResource()).then()
-                .spec(TestUtil.validDocumentResponseSpecification())
+                .spec(TestUtil.validResponseSpecification())
+                .extract().response();
+    }
+
+    public Response requestToGetSubmissionAndDocuments(String resource, String accountGuid, String submissionId,
+                                                       @Nullable String filePathParam, @Nullable String pathParam) throws IOException {
+        APIResources resourceGet = APIResources.valueOf(resource);
+        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
+
+        userToken = frontendTestUtil.getUserJwtToken();
+
+        request = given().auth().preemptive().oauth2(userToken)
+                .spec(TestUtil.requestSpecification())
+                .header(X_TRANSACTION_ID, accountGuid);
+
+        return request.when().get(resourceGet.getResource() + submissionId + filePathParam + pathParam)
+                .then()
+                .spec(TestUtil.validResponseSpecification())
+                .extract().response();
+    }
+
+    public Response requestToGetFilingPackage(String resource, String accountGuid,
+                                              String submissionId, String filePathParam) throws IOException {
+        APIResources resourceGet = APIResources.valueOf(resource);
+        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
+
+        userToken = frontendTestUtil.getUserJwtToken();
+
+        request = given().auth().preemptive().oauth2(userToken)
+                .spec(TestUtil.requestSpecification())
+                .header(X_TRANSACTION_ID, accountGuid);
+
+        return request.when().get(resourceGet.getResource() + submissionId + filePathParam)
+                .then()
+                .spec(TestUtil.validResponseSpecification())
+                .extract().response();
+    }
+
+    public Response requestToGetDocumentUsingFileName(String resource, String accountGuid,
+                                              String submissionId, String pathParam, String fileName) throws IOException {
+        APIResources resourceGet = APIResources.valueOf(resource);
+        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
+
+        userToken = frontendTestUtil.getUserJwtToken();
+
+        request = given().auth().preemptive().oauth2(userToken)
+                .spec(TestUtil.requestSpecification())
+                .header(X_TRANSACTION_ID, accountGuid);
+
+        return request.when().get(resourceGet.getResource() + submissionId + pathParam + fileName)
+                .then()
+               // .spec(TestUtil.validResponseSpecification())
                 .extract().response();
     }
 
@@ -130,7 +175,8 @@ public class GenerateUrlRequestBuilders extends DriverClass {
                 .extract().response();
     }
 
-    public Response postRequestWithPayload(String resourceValue, String accountGuid, String submissionId, String pathParam) throws IOException {
+    public Response postRequestWithPayload(String resourceValue, String accountGuid,
+                                           String submissionId, String pathParam) throws IOException {
         payloadData = new GenerateUrlPayload();
         APIResources resourceGet = APIResources.valueOf(resourceValue);
         String validUserid = JsonDataReader.getCsoAccountGuid().getValidUserId();
@@ -148,36 +194,9 @@ public class GenerateUrlRequestBuilders extends DriverClass {
 
        return request.when().post(resourceGet.getResource() + submissionId + pathParam)
                 .then()
-                .spec(TestUtil.responseSpecification())
+                .spec(TestUtil.validResponseSpecification())
                 .extract().response();
     }
-
-    public Response requestWithNonExistingCSOAccountGuid(String resourceValue) throws IOException {
-        payloadData = new GenerateUrlPayload();
-
-        APIResources resourceAPI = APIResources.valueOf(resourceValue);
-        String nonExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getNonExistingCSOGuid();
-        String validUserid = JsonDataReader.getCsoAccountGuid().getValidUserId();
-
-        Response response = getBearerToken();
-        JsonPath jsonPath = new JsonPath(response.asString());
-
-        String accessToken = jsonPath.get(ACCESS_TOKEN);
-
-        File pdfFile = new File(UPLOAD_FILE_PATH + FILE_NAME_PATH);
-
-        request = RestAssured.given().auth().preemptive().oauth2(accessToken)
-                .spec(TestUtil.submitDocumentsRequestSpecification())
-                .header(X_TRANSACTION_ID, nonExistingCSOGuid)
-                .header(X_USER_ID, validUserid)
-                .multiPart(FILES, pdfFile);
-
-        return request.when().post(resourceAPI.getResource()).then()
-                .spec(TestUtil.validDocumentResponseSpecification())
-                .extract().response();
-    }
-
-
 
     public Response requestWithInvalidCSOAccountGuid(String resourceValue) throws IOException {
         payloadData = new GenerateUrlPayload();
@@ -248,46 +267,35 @@ public class GenerateUrlRequestBuilders extends DriverClass {
                 .extract().response();
     }
 
-    public String getUserJwtToken() throws IOException {
-        ReadConfig readConfig = new ReadConfig();
+    public Response requestToUpdateDocuments(String resource, String accountGuid, String submissionId, String pathParam) throws IOException {
+        APIResources resourceGet = APIResources.valueOf(resource);
+        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
 
-        driverSetUp();
-        String url = readConfig.getBaseUrl();
+        userToken = frontendTestUtil.getUserJwtToken();
 
-        String username = System.getProperty("BCEID_USERNAME");
-        String password = System.getProperty("BCEID_PASSWORD");
+        request = given().auth().preemptive().oauth2(userToken)
+                .spec(TestUtil.requestSpecification())
+                .header(X_TRANSACTION_ID, accountGuid);
 
-        driver.get(url);
-        log.info("Landing page url is accessed successfully");
+        return request.when().get(resourceGet.getResource() + submissionId + pathParam)
+                .then()
+                .spec(TestUtil.validResponseSpecification())
+                .extract().response();
+    }
 
-        // ** Leaving this step for demo mode **
-        // authenticationPage.clickBceid();
-        AuthenticationPage authenticationPage = new AuthenticationPage(driver);
-        authenticationPage.signInWithIdir(username, password);
-        log.info("user is authenticated before reaching eFiling demo page");
+    public Response requestToDeleteDocuments(String resource, String accountGuid, String submissionId) throws IOException {
+        APIResources resourceGet = APIResources.valueOf(resource);
+        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
 
-        // ** Leaving this step for demo mode **
-        //validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
-        //landingPage.enterAccountGuid(validExistingCSOGuid);
-        LandingPage landingPage = new LandingPage(driver);
-        String filePath = System.getProperty(BASE_PATH) + PDF_PATH;
-        landingPage.chooseFileToUpload(filePath);
-        landingPage.enterJsonData();
-        landingPage.clickEfilePackageButton();
-        log.info("Pdf file is uploaded successfully.");
+        userToken = frontendTestUtil.getUserJwtToken();
 
-        // ** Leaving this step for demo mode **
-        // authenticationPage.clickBceid();
-        authenticationPage.signInWithIdir(username, password);
-        log.info("user is authenticated in eFiling demo page.");
+        request = given().auth().preemptive().oauth2(userToken)
+                .spec(TestUtil.requestSpecification())
+                .header(X_TRANSACTION_ID, accountGuid);
 
-        PackageConfirmationPage packageConfirmationPage = new PackageConfirmationPage(driver);
-        boolean continuePaymentBtnIsDisplayed = packageConfirmationPage.verifyContinuePaymentBtnIsDisplayed();
-        Assert.assertTrue(continuePaymentBtnIsDisplayed);
-
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        String userToken = js.executeScript("return window.localStorage.getItem('jwt');").toString();
-        driver.quit();
-        return userToken;
+        return request.when().delete(resourceGet.getResource() + submissionId)
+                .then()
+                .spec(TestUtil.validResponseSpecification())
+                .extract().response();
     }
 }

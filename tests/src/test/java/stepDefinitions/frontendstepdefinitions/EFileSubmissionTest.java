@@ -106,7 +106,7 @@ public class EFileSubmissionTest extends DriverClass {
     }
 
     @Then("eFile submission page is displayed and user clicks the cancel button")
-    public void eFileSubmissionPageIsDisplayedAncUserClicksTheCancelButton() {
+    public void eFileSubmissionPageIsDisplayedAncUserClicksTheCancelButton() throws IOException {
         eFileSubmissionPage = new EFileSubmissionPage(driver);
         packageConfirmationPage = new PackageConfirmationPage(driver);
 

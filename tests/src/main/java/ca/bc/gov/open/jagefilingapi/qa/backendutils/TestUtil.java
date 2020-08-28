@@ -1,7 +1,6 @@
 package ca.bc.gov.open.jagefilingapi.qa.backendutils;
 
 import ca.bc.gov.open.jagefilingapi.qa.config.ReadConfig;
-import ca.bc.gov.open.jagefilingapi.qa.requestbuilders.GenerateUrlRequestBuilders;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.RequestLoggingFilter;
@@ -13,7 +12,6 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
-
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -52,20 +50,12 @@ public class TestUtil {
                 .build();
     }
 
-    public static ResponseSpecification validDocumentResponseSpecification() {
-        return new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON).build();
-    }
-
-    public static ResponseSpecification responseSpecification() {
+    public static ResponseSpecification validResponseSpecification() {
         return new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON).build();
     }
 
     public static ResponseSpecification errorResponseSpecification() {
         return new ResponseSpecBuilder().expectStatusCode(415).expectContentType(ContentType.JSON).build();
-    }
-
-    public static ResponseSpecification withoutIdResponseSpecification() {
-        return new ResponseSpecBuilder().expectStatusCode(405).expectContentType(ContentType.JSON).build();
     }
 
     public static ResponseSpecification createCsoAccountResponseSpecification() {
@@ -78,10 +68,6 @@ public class TestUtil {
 
     public static ResponseSpecification createCsoAccountIncorrectPathErrorResponseSpecification() {
         return new ResponseSpecBuilder().expectStatusCode(404).expectContentType(ContentType.JSON).build();
-    }
-
-    public static ResponseSpecification documentValidResponseSpecification() {
-        return new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.fromContentType("application/octet-stream")).build();
     }
 
     public static String getJsonPath(Response response, String key) {

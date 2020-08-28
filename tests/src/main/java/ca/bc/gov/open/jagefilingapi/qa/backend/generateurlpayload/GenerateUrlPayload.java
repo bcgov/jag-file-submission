@@ -38,7 +38,6 @@ public class GenerateUrlPayload {
         generateUrlRequest.setClientApplication(generateClientApplication(DISPLAYNAME, APPTYPE));
         generateUrlRequest.setFilingPackage(generateInitialPackage(generateCourt(), generateDocumentPropertiesList()));
 
-
         return generateUrlRequest;
     }
 

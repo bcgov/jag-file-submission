@@ -2,7 +2,8 @@ Feature: When user with non existing guid uploads the documents, id is authentic
   navigation urls are generated and user, submission package details can be retrieved
 
   @backend
-  Scenario: Verify if a single document is uploaded, url is generated and package information can be retrieved for requests made with non existing valid CSO account
+  Scenario: Verify if a single document is uploaded, url is generated and package information can be retrieved for
+  requests made with non existing valid CSO account
     ## Call to upload the document ##
     Given POST http request is made to "DOCUMENT_SUBMISSION" with non existing CSO account guid and a single pdf file
     When status code is 200 and content type are verified

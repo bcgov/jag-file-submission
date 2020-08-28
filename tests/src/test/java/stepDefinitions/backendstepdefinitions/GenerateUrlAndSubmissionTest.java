@@ -1,6 +1,5 @@
 package stepDefinitions.backendstepdefinitions;
 
-import ca.bc.gov.open.jagefilingapi.qa.backendutils.APIResources;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.DriverClass;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
@@ -11,7 +10,6 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,7 +17,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyString;
@@ -34,19 +31,21 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     private JsonPath jsonPath;
     private String validExistingCSOGuid;
     private static final String CONTENT_TYPE = "application/json";
-    private static final String X_TRANSACTION_ID = "X-Transaction-Id";
     private static final String SUBMISSION_ID = "submissionId";
     private static final String TRANSACTION_ID = "transactionId";
-    private static final String PATH_PARAM = "/generateUrl";
-    private String userToken;
+    private static final String GENERATE_URL_PATH_PARAM = "/generateUrl";
+    private static final String FILE_NAME_PATH = "/test-document.pdf";
+    private static final String FILING_PACKAGE_PATH_PARAM = "/filing-package";
+    private static final String DOCUMENT_PATH_PARAM = "/document";
 
     public Logger log = LogManager.getLogger(GenerateUrlAndSubmissionTest.class);
 
     @Given("POST http request is made to {string} with valid existing CSO account guid and a single pdf file")
     public void postHttpRequestIsMadeToWithValidExistingCsoAccountGuidAndASinglePdfFile(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
+        validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
-        response = generateUrlRequestBuilders.validRequestWithSingleDocument(resource);
+        response = generateUrlRequestBuilders.requestWithSinglePdfDocument(resource,validExistingCSOGuid, FILE_NAME_PATH );
     }
 
     @When("status code is {int} and content type is verified")
@@ -63,6 +62,7 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
 
         submissionId = TestUtil.getJsonPath(response, SUBMISSION_ID);
         int receivedCount = jsonPath.get("received");
+        System.out.println(receivedCount);
 
         switch (receivedCount) {
             case 1:
@@ -80,10 +80,9 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     @Given("POST http request is made to {string} with client application, court details and navigation urls")
     public void POSTHttpRequestIsMadeToWithClientApplicationCourtDetailsAndNavigationUrls(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
-
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
-        response = generateUrlRequestBuilders.postRequestWithPayload(resource,validExistingCSOGuid, submissionId, PATH_PARAM );
+        response = generateUrlRequestBuilders.postRequestWithPayload(resource,validExistingCSOGuid, submissionId, GENERATE_URL_PATH_PARAM);
     }
 
     @Then("verify expiry date and eFiling url are returned with the CSO account guid and submission id")
@@ -103,19 +102,9 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
 
     @Given("{string} id is submitted with GET http request")
     public void idIsSubmittedWithGetHttpRequest(String resource) throws IOException {
-        APIResources resourceGet = APIResources.valueOf(resource);
-
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
-        userToken = generateUrlRequestBuilders.getUserJwtToken();
-
-        RequestSpecification request = given().auth().preemptive().oauth2(userToken)
-                .spec(TestUtil.requestSpecification())
-                .header(X_TRANSACTION_ID, validExistingCSOGuid);
-
-        response = request.when().get(resourceGet.getResource() + submissionId)
-                .then()
-                .spec(TestUtil.responseSpecification())
-                .extract().response();
+        response = generateUrlRequestBuilders.requestToGetSubmissionAndDocuments(resource, validExistingCSOGuid, submissionId,
+                                                                                    null, null);
     }
 
     @Then("verify universal id, user details, account type and identifier values are returned and not empty")
@@ -141,22 +130,15 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
 
     @Given("{string} id with filing package path is submitted with GET http request")
     public void idWithFilingPackagePathIsSubmittedWithGETHttpRequest(String resource) throws IOException {
-        APIResources resourceGet = APIResources.valueOf(resource);
-
-        RequestSpecification request = given().auth().preemptive().oauth2(userToken).spec(TestUtil.requestSpecification())
-                .header(X_TRANSACTION_ID, validExistingCSOGuid);
-
-        response = request.when().get(resourceGet.getResource() + submissionId + "/filing-package")
-                .then()
-                .spec(TestUtil.responseSpecification())
-                .extract().response();
+        generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
+        response = generateUrlRequestBuilders.requestToGetFilingPackage(resource,validExistingCSOGuid,
+                                                                submissionId, FILING_PACKAGE_PATH_PARAM );
     }
 
     @Then("verify court details and document details are returned and not empty")
     public void verifyCourtDetailsAndDocumentDetailsAreReturnedAndNotEmpty() {
         jsonPath = new JsonPath(response.asString());
         float submissionFeeAmount = jsonPath.get("submissionFeeAmount");
-
 
         assertThat(jsonPath.get("court.location"), is(not(emptyString())));
         assertThat(jsonPath.get("court.level"), is(not(emptyString())));
@@ -196,15 +178,9 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
 
     @Given("{string} id with filename path is submitted with GET http request")
     public void idWithFilenamePathIsSubmittedWithGETHttpRequest(String resource) throws IOException {
-        APIResources resourceGet = APIResources.valueOf(resource);
-
-        RequestSpecification request = given().auth().preemptive().oauth2(userToken).spec(TestUtil.requestSpecification())
-                .header(X_TRANSACTION_ID, validExistingCSOGuid);
-
-        response = request.when().get(resourceGet.getResource() + submissionId + "/document" + "/test-document.pdf")
-                .then()
-               // .spec(TestUtil.documentValidResponseSpecification())
-                .extract().response();
+        generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
+        response = generateUrlRequestBuilders.requestToGetDocumentUsingFileName(resource,validExistingCSOGuid,
+                                                                    submissionId, DOCUMENT_PATH_PARAM, FILE_NAME_PATH);
     }
 
     @Then("Verify status code is {int} and content type is not json")
@@ -216,7 +192,6 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     @Given("POST http request is made to {string} with valid existing CSO account guid and multiple file")
     public void POSTHttpRequestIsMadeToWithValidExistingCSOAccountGuidAndMultipleFile(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
-
         response = generateUrlRequestBuilders.validRequestWithMultipleDocuments(resource);
     }
 }
