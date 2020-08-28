@@ -19,7 +19,7 @@ jobs:
 
       # Build Docker
       - name: build docker
-        run: docker-compose up -d -e KEYCLOAK_CREDENTIALS_SECRET=${{secrets.KEYCLOAK_CREDENTIALS_SECRET}} -e KEYCLOAK_REALM=${{secrets.KEYCLOAK_REALM}} -e KEYCLOAK_URL=${{secrets.KEYCLOAK_URL}} -e EFILING_DEMO_KEYCLOAK_REALM=${{secrets.EFILING_DEMO_KEYCLOAK_REALM}} -e EFILING_DEMO_KEYCLOAK_URL=${{secrets.EFILING_DEMO_KEYCLOAK_URL}}  efiling-frontend efiling-demo efiling-api redis
+        run: KEYCLOAK_CREDENTIALS_SECRET=${{secrets.KEYCLOAK_CREDENTIALS_SECRET}} KEYCLOAK_REALM=${{secrets.KEYCLOAK_REALM}} KEYCLOAK_URL=${{secrets.KEYCLOAK_URL}} EFILING_DEMO_KEYCLOAK_REALM=${{secrets.EFILING_DEMO_KEYCLOAK_REALM}} EFILING_DEMO_KEYCLOAK_URL=${{secrets.EFILING_DEMO_KEYCLOAK_URL}} docker-compose up -d efiling-frontend efiling-demo efiling-api redis sftp
 
       # Wait for sometime
       - name: Sleep for 30 seconds
