@@ -15,7 +15,6 @@ import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsostarter.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.FilingPackageMapper;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.FinancialTransactionMapper;
-import ca.bc.gov.open.jag.efilingcsostarter.mappers.ProcessRequestMapper;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.ServiceMapper;
 
 import java.math.BigDecimal;
@@ -28,17 +27,20 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     private final FilingPackageMapper filingPackageMapper;
     private final FinancialTransactionMapper financialTransactionMapper;
     private final CsoProperties csoProperties;
-    private final ProcessRequestMapper processRequestMapper;
 
 
-    public CsoSubmissionServiceImpl(FilingFacadeBean filingFacadeBean, ServiceFacadeBean serviceFacadeBean, ServiceMapper serviceMapper, FilingPackageMapper filingPackageMapper, FinancialTransactionMapper financialTransactionMapper, CsoProperties csoProperties, ProcessRequestMapper processRequestMapper) {
+    public CsoSubmissionServiceImpl(FilingFacadeBean filingFacadeBean,
+                                    ServiceFacadeBean serviceFacadeBean,
+                                    ServiceMapper serviceMapper,
+                                    FilingPackageMapper filingPackageMapper,
+                                    FinancialTransactionMapper financialTransactionMapper,
+                                    CsoProperties csoProperties) {
         this.filingFacadeBean = filingFacadeBean;
         this.serviceFacadeBean = serviceFacadeBean;
         this.serviceMapper = serviceMapper;
         this.filingPackageMapper = filingPackageMapper;
         this.financialTransactionMapper = financialTransactionMapper;
         this.csoProperties = csoProperties;
-        this.processRequestMapper = processRequestMapper;
     }
 
     @Override

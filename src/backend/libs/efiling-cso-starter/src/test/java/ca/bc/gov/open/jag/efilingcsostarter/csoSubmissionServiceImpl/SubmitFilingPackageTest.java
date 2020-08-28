@@ -74,8 +74,7 @@ public class SubmitFilingPackageTest {
         Mockito.doReturn(serviceSession).when(serviceFacadeBean)
                 .createServiceSession(ArgumentMatchers.argThat(x -> x.getUserSessionId().equals(userSession.getUserSessionId())), Mockito.anyString());
 
-        ProcessRequestMapper processRequestMapper = new ProcessRequestMapperImpl();
-        sut = new CsoSubmissionServiceImpl(filingFacadeBeanMock, serviceFacadeBean, new ServiceMapperImpl(), new FilingPackageMapperImpl(), new FinancialTransactionMapperImpl(), csoPropertiesMock, processRequestMapper);
+        sut = new CsoSubmissionServiceImpl(filingFacadeBeanMock, serviceFacadeBean, new ServiceMapperImpl(), new FilingPackageMapperImpl(), new FinancialTransactionMapperImpl(), csoPropertiesMock);
 
     }
 
