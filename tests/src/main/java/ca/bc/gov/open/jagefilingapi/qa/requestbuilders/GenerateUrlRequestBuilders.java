@@ -68,7 +68,8 @@ public class GenerateUrlRequestBuilders extends DriverClass {
 
         File pdfFile = new File(UPLOAD_FILE_PATH + FILE_NAME_PATH);
 
-        request = RestAssured.given().auth().preemptive().oauth2(accessToken).spec(TestUtil.submitDocumentsRequestSpecification())
+        request = RestAssured.given().auth().preemptive().oauth2(accessToken)
+                .spec(TestUtil.submitDocumentsRequestSpecification())
                 .header(X_TRANSACTION_ID, validExistingCSOGuid)
                 .header(X_USER_ID, validUserid)
                 .multiPart(FILES, pdfFile);
@@ -129,6 +130,28 @@ public class GenerateUrlRequestBuilders extends DriverClass {
                 .extract().response();
     }
 
+    public Response postRequestWithPayload(String resourceValue, String accountGuid, String submissionId, String pathParam) throws IOException {
+        payloadData = new GenerateUrlPayload();
+        APIResources resourceGet = APIResources.valueOf(resourceValue);
+        String validUserid = JsonDataReader.getCsoAccountGuid().getValidUserId();
+
+        Response response = getBearerToken();
+        JsonPath jsonPath = new JsonPath(response.asString());
+
+        String accessToken = jsonPath.get(ACCESS_TOKEN);
+
+         request = given().auth().preemptive().oauth2(accessToken)
+                .spec(TestUtil.requestSpecification())
+                .header(X_TRANSACTION_ID, accountGuid)
+                .header(X_USER_ID,validUserid )
+                .body(payloadData.validGenerateUrlPayload());
+
+       return request.when().post(resourceGet.getResource() + submissionId + pathParam)
+                .then()
+                .spec(TestUtil.responseSpecification())
+                .extract().response();
+    }
+
     public Response requestWithNonExistingCSOAccountGuid(String resourceValue) throws IOException {
         payloadData = new GenerateUrlPayload();
 
@@ -153,6 +176,8 @@ public class GenerateUrlRequestBuilders extends DriverClass {
                 .spec(TestUtil.validDocumentResponseSpecification())
                 .extract().response();
     }
+
+
 
     public Response requestWithInvalidCSOAccountGuid(String resourceValue) throws IOException {
         payloadData = new GenerateUrlPayload();

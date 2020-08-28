@@ -1,6 +1,5 @@
 package stepDefinitions.backendstepdefinitions;
 
-import ca.bc.gov.open.jagefilingapi.qa.backend.generateurlpayload.GenerateUrlPayload;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.APIResources;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.DriverClass;
@@ -13,21 +12,18 @@ import io.cucumber.java.en.When;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.emptyString;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.*;
 
 public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass {
@@ -39,9 +35,9 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
     private String nonExistingCSOGuid;
     private static final String CONTENT_TYPE = "application/json";
     private static final String X_TRANSACTION_ID = "X-Transaction-Id";
-    private static final String X_USER_ID = "X-User-Id";
     private static final String SUBMISSION_ID = "submissionId";
     private static final String TRANSACTION_ID = "transactionId";
+    private static final String PATH_PARAM = "/generateUrl";
     private String userToken;
 
     public Logger log = LogManager.getLogger(GenerateUrlAndSubmissionForNonExistingGuidTest.class);
@@ -74,48 +70,27 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
 
     @Given("POST http request is made to {string} with client application, court details and navigation urls with non existing guid")
     public void POSTHttpRequestIsMadeToWithClientApplicationCourtDetailsAndNavigationUrlsWithNonExistingGuid(String resource) throws IOException {
-        GenerateUrlPayload payloadData = new GenerateUrlPayload();
-        APIResources resourceGet = APIResources.valueOf(resource);
-
-        nonExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getNonExistingCSOGuid();
-        String validUserid = JsonDataReader.getCsoAccountGuid().getValidUserId();
-
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
-        response = generateUrlRequestBuilders.getBearerToken();
-        jsonPath = new JsonPath(response.asString());
-        String accessToken = jsonPath.get("access_token");
+        nonExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getNonExistingCSOGuid();
 
-        RequestSpecification request = given().auth().preemptive().oauth2(accessToken)
-                .spec(TestUtil.requestSpecification())
-                .header(X_TRANSACTION_ID, nonExistingCSOGuid)
-                .header(X_USER_ID,validUserid )
-                .body(payloadData.validGenerateUrlPayload());
-        response = request.when().post(resourceGet.getResource() + submissionId + "/generateUrl")
-                .then()
-                .spec(TestUtil.responseSpecification())
-                .extract().response();
+        response = generateUrlRequestBuilders.postRequestWithPayload(resource,nonExistingCSOGuid, submissionId, PATH_PARAM );
+
     }
 
     @Then("verify expiry date and eFiling url are returned with non existing CSO account guid and submission id")
     public void verifyExpiryDateAndEFilingUrlAreReturnedWithNonExistingCSOAccountGuidAndSubmissionId() throws URISyntaxException {
+
         jsonPath = new JsonPath(response.asString());
 
         String respUrl = jsonPath.get("efilingUrl");
         Long expiryDate = jsonPath.get("expiryDate");
 
-        List<NameValuePair> params = URLEncodedUtils.parse(new URI(respUrl), StandardCharsets.UTF_8);
-        String respSubId = null;
-        String respTransId = null;
+        generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
+        List<String> respId = TestUtil.getSubmissionAndTransId(respUrl, SUBMISSION_ID, TRANSACTION_ID);
 
-        for (NameValuePair param : params) {
-            if (param.getName().equals(SUBMISSION_ID)) {
-                respSubId = param.getValue();
-            } else if (param.getName().equals(TRANSACTION_ID)) {
-                respTransId = param.getValue();
-            }
-        }
-        assertEquals(submissionId, respSubId);
-        assertEquals(nonExistingCSOGuid, respTransId);
+
+        assertEquals(submissionId, respId.get(0));
+        assertEquals(nonExistingCSOGuid, respId.get(1));
         assertNotNull(expiryDate);
     }
 
@@ -174,46 +149,28 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
     public void verifyCourtDetailsAndDocumentDetailsAreReturned() {
         jsonPath = new JsonPath(response.asString());
 
-        String location = jsonPath.get("court.location");
-        String level = jsonPath.get("court.level");
-        String courtClass = jsonPath.get("court.class");
-        String division = jsonPath.get("court.division");
-        String fileNumber = jsonPath.get("court.fileNumber");
-        String participatingClass = jsonPath.get("court.participatingClass");
-        String locationDescription = jsonPath.get("court.locationDescription");
-        String levelDescription = jsonPath.get("court.levelDescription");
         float submissionFeeAmount = jsonPath.get("submissionFeeAmount");
-        String parties = jsonPath.get("parties");
 
-        List<String> name = jsonPath.get("documents.name");
-        List<String> type = jsonPath.get("documents.type");
-        List<String> subType = jsonPath.get("documents.subType");
-        List<String> isAmendment = jsonPath.get("documents.isAmendment");
-        List<String> isSupremeCourtScheduling = jsonPath.get("documents.isSupremeCourtScheduling");
-        List<String> description = jsonPath.get("documents.description");
-        List<String> statutoryFeeAmount = jsonPath.get("documents.statutoryFeeAmount");
-        List<String> mimeType = jsonPath.get("documents.mimeType");
-
-        assertThat(location, is(not(emptyString())));
-        assertThat(level, is(not(emptyString())));
-        assertThat(courtClass, is(not(emptyString())));
-        assertThat(division, is(not(emptyString())));
-        assertThat(fileNumber, is(not(emptyString())));
-        assertThat(participatingClass, is(not(emptyString())));
-        assertThat(locationDescription, is(not(emptyString())));
-        assertThat(levelDescription, is(not(emptyString())));
-        assertThat(parties, is(not(emptyString())));
+        assertThat(jsonPath.get("court.location"), is(not(emptyString())));
+        assertThat(jsonPath.get("court.level"), is(not(emptyString())));
+        assertThat(jsonPath.get("court.class"), is(not(emptyString())));
+        assertThat(jsonPath.get("court.division"), is(not(emptyString())));
+        assertThat(jsonPath.get("court.fileNumber"), is(not(emptyString())));
+        assertThat(jsonPath.get("court.participatingClass"), is(not(emptyString())));
+        assertThat(jsonPath.get("court.locationDescription"), is(not(emptyString())));
+        assertThat(jsonPath.get("court.levelDescription"), is(not(emptyString())));
+        assertThat(jsonPath.get("parties"), is(not(emptyString())));
         assertEquals(7.00, submissionFeeAmount, 0);
         log.info("Court fee and document details response have valid values");
 
-        assertFalse(name.isEmpty());
-        assertFalse(type.isEmpty());
-        assertFalse(subType.isEmpty());
-        assertFalse(isAmendment.isEmpty());
-        assertFalse(isSupremeCourtScheduling.isEmpty());
-        assertFalse(description.isEmpty());
-        assertFalse(mimeType.isEmpty());
-        assertNotNull(statutoryFeeAmount);
+        assertFalse(jsonPath.get("documents.name").toString().isEmpty());
+        assertFalse(jsonPath.get("documents.type").toString().isEmpty());
+        assertFalse(jsonPath.get("documents.subType").toString().isEmpty());
+        assertFalse(jsonPath.get("documents.isAmendment").toString().isEmpty());
+        assertFalse(jsonPath.get("documents.isSupremeCourtScheduling").toString().isEmpty());
+        assertFalse(jsonPath.get("documents.description").toString().isEmpty());
+        assertFalse(jsonPath.get("documents.statutoryFeeAmount").toString().isEmpty());
+        assertNotNull(jsonPath.get("documents.statutoryFeeAmount"));
         log.info("Account type, description and name objects from the valid CSO account submission response have valid values");
     }
 
