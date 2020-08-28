@@ -1,98 +1,799 @@
-server:
-  port: ${SERVER_PORT:8080}
-spring:
-  redis:
-    host: ${REDIS_HOST:localhost}
-    port: ${REDIS_PORT:6379}
-    password: ${REDIS_PASSWORD:admin}
-  cache:
-    redis:
-      time-to-live: ${CACHE_TTL:600000}
-keycloak:
-  auth-server-url: ${KEYCLOAK_AUTH_SERVER_URL}
-  realm: ${KEYCLOAK_REALM}
-  resource: ${KEYCLOAK_RESOURCE}
-  credentials:
-    secret: ${KEYCLOAK_CREDENTIALS_SECRET}
-  use-resource-role-mappings: true
-  bearer-only: true
-  ssl-required: ${KEYCLOAK_SSL_REQUIRED:external}
-jag:
-  efiling:
-    global:
-      demo: ${DEMO_MODE:false}
-    navigation:
-      baseUrl: ${NAVIGATION_BASE_URL:http://localhost:3000/efiling}
-    soap:
-      clients:
-        - client: ACCOUNT
-          userName: ${CSO_ACCOUNTFACADE_USERNAME}
-          password: ${CSO_ACCOUNTFACADE_PASSWORD}
-          uri: ${CSO_ACCOUNTFACADE_URI:http://localhost:8091}
-        - client: ROLE
-          userName: ${CSO_ROLEREGISTRY_USERNAME}
-          password: ${CSO_ROLEREGISTRY_PASSWORD}
-          uri: ${CSO_ROLEREGISTRY_URI:http://localhost:8091}
-        - client: LOOKUP
-          userName: ${CSO_LOOKUPFACADE_USERNAME}
-          password: ${CSO_LOOKUPFACADE_PASSWORD}
-          uri: ${CSO_LOOKUPFACADE_URI:http://localhost:8091}
-        - client: STATUS
-          userName: ${CSO_FILINGSTATSFACADE_USERNAME}
-          password: ${CSO_FILINGSTATSFACADE_PASSWORD}
-          uri: ${CSO_FILINGSTATSFACADE_URI:http://localhost:8091}
-        - client: CSOWS
-          userName: ${CSOWS_USERNAME}
-          password: ${CSOWS_PASSWORD}
-          uri: ${CSOWS_URI:http://localhost:8091}
-        - client: FILING
-          userName: ${CSO_FILINGFACADE_USERNAME}
-          password: ${CSO_FILINGFACADE_PASSWORD}
-          uri: ${CSO_FILINGFACADE_URI:http://localhost:8091}
-        - client: SERVICE
-          userName: ${CSO_SERVICEFACADE_USERNAME}
-          password: ${CSO_SERVICEFACADE_PASSWORD}
-          uri: ${CSO_SERVICEFACADE_URI:http://localhost:8091}
-
-cso:
-  fileServerHost: ${CSO_FILE_SERVER_HOST}
-  debugEnabled: ${CSO_DEBUG_ENABLED:false}
-
-bambora:
-  apiPasscode: ${BAMBORA_APIPASSCODE}
-  merchantId: ${BAMBORA_MERCHANTID}
-  hostedProfileUrl: ${BAMBORA_PROFILE_URL}
-  hostedProfileServiceVersion: ${BAMBORA_PROFILE_SERVICE_VERSION}
-  hashKey: ${BAMBORA_HASHKEY}
-  minutesToExpiry: ${BAMBORA_URL_EXPIRY}
-bcgov:
-  sftp:
-    host: ${SFTP_HOST:localhost}
-    port: ${SFTP_PORT:22}
-    username: ${SFTP_USERNAME:admin}
-    password: ${SFTP_PASSWORD:admin}
-    remoteLocation: ${SFTP_REMOTELOCATION}
-    knownHostsFileName: ${SFTP_KNOWNHOSTS}
-    allowUnknownKeys: ${SFTP_ALLOWUNKNOWN:true}
-    sshPrivateKey: ${SFTP_PRIVATE_KEY}
-  bceid:
-    service:
-      uri: ${BCEID_SERVICE_URI}
-      username: ${BCEID_SERVICE_USERNAME}
-      password: ${BCEID_SERVICE_PASSWORD}
-      onlineServiceId: ${BCEID_SERVICE_ONLINE_SERVICE_ID}
-
-  clamav:
-    host: ${CLAMAV_HOST:localhost}
-    port: ${CLAMAV_PORT:3310}
+openapi: 3.0.0
 info:
-  app:
-    name: @project.name@
-    description: @project.description@
-    version: @project.version@
-opentracing:
-  jaeger:
-    service-name: efilingApi
-    enabled: TRUE
-    udp-sender:
-      host: localhost
+  version: 0.3.0
+  title: jag-efiling-api
+  description: Efiling api
+servers:
+  - url: "http://localhost:8080"
+tags:
+  - name: submission
+    description: Submission Api
+security:
+  - bearerAuth: []
+paths:
+  "/submission/documents":
+    post:
+      summary: Initial documents upload
+      operationId: UploadSubmissionDocuments
+      tags:
+        - submission
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+        - $ref: "#/components/parameters/xUserId"
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        "200":
+          description: File successfully received
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadSubmissionDocumentsResponse"
+  "/submission/{submissionId}/documents":
+    post:
+      summary: Additional documents upload
+      operationId: UploadAdditionalSubmissionDocuments
+      tags:
+        - submission
+      parameters:
+        - $ref: "#/components/parameters/submissionId"
+        - $ref: "#/components/parameters/xTransactionId"
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        "200":
+          description: File successfully received
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadSubmissionDocumentsResponse"
+        "404":
+          description: Submission not found
+  "/submission/{submissionId}/update-documents":
+    post:
+      summary: Additional documents properties
+      operationId: UpdateDocumentProperties
+      tags:
+        - submission
+      parameters:
+        - $ref: "#/components/parameters/submissionId"
+        - $ref: "#/components/parameters/xTransactionId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateDocumentRequest"
+      responses:
+        "200":
+          description: Document properties updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateDocumentResponse"
+        "404":
+          description: Submission not found
+  "/submission/{submissionId}":
+    parameters:
+      - $ref: "#/components/parameters/submissionId"
+      - $ref: "#/components/parameters/xTransactionId"
+    get:
+      summary: Get user detail for a given submission
+      operationId: GetSubmission
+      tags:
+        - submission
+      responses:
+        "200":
+          description: Config found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetSubmissionResponse"
+        "404":
+          description: Config not found
+    delete:
+      summary: Delete a submission by id
+      operationId: DeleteSubmission
+      tags:
+        - submission
+      responses:
+        "200":
+          description: submission deleted
+  "/submission/{submissionId}/generateUrl":
+    post:
+      summary: Generates a secure URL for e-filing submission
+      operationId: GenerateUrl
+      tags:
+        - submission
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+        - $ref: "#/components/parameters/xUserId"
+        - $ref: "#/components/parameters/submissionId"
+      requestBody:
+        description: requested parameters to generate a url
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenerateUrlRequest"
+      responses:
+        "200":
+          description: File successfully received
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenerateUrlResponse"
+        "403":
+          description: Request does not meet the required criteria
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EfilingError"
+  "/submission/{submissionId}/submit":
+    post:
+      summary: Create service for payment processing
+      operationId: submit
+      tags:
+        - submission
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+        - $ref: "#/components/parameters/submissionId"
+      requestBody:
+        description: filing submit parameters
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubmitRequest"
+      responses:
+        "201":
+          description: Service created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SubmitResponse"
+        "403":
+          description: Request does not meet the required criteria
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EfilingError"
+  "/submission/{submissionId}/set-cso-bambora-relation":
+    post:
+      summary: Apply bambora id and card registered to cso
+      operationId: updateClientDetails
+      tags:
+        - submission
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+        - $ref: "#/components/parameters/submissionId"
+      requestBody:
+        description: update client details parameters
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClientUpdateRequest"
+      responses:
+        "200":
+          description: Client updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientUpdateResponse"
+        "403":
+          description: Request does not meet the required criteria
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EfilingError"
+  "/submission/{submissionId}/filing-package":
+    get:
+      summary: Get filing package information
+      operationId: GetSubmissionFilingPackage
+      tags:
+        - submission
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+        - $ref: "#/components/parameters/submissionId"
+      responses:
+        "200":
+          description: Filing Package Information found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FilingPackage"
+        "404":
+          description: Filing Package Information not found
+  "/submission/{submissionId}/document/{filename}":
+    get:
+      summary: Get document by name
+      operationId: GetSubmissionDocument
+      tags:
+        - submission
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+        - $ref: "#/components/parameters/submissionId"
+        - name: filename
+          in: path
+          description: A document name
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Filing Package Information found
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: Document not found
+  "/csoAccount":
+    post:
+      summary: Create a CSO account
+      operationId: CreateAccount
+      description: In order to create an account, an item with type BCEID is required in the accounts field.
+      tags:
+        - account
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+      requestBody:
+        description: cso account details
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCsoAccountRequest"
+      responses:
+        "201":
+          description: Account Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserFullDetails"
+    get:
+      summary: Get user CSO account
+      operationId: GetCsoAccount
+      description: Get a user cso account.
+      tags:
+        - account
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+      responses:
+        "200":
+          description: A CSO Account
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CsoAccount"
+        "404":
+          description: Cso Account not found
+  "/bceidAccount":
+    get:
+      summary: Get a BCeID account
+      operationId: GetBceidAccount
+      description: Retrieve BCeID user account information
+      tags:
+        - account
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+      responses:
+        "200":
+          description: Account Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BceidAccount"
+        "404":
+          description: Account not found
+  "/lookup/documentTypes/{courtLevel}/{courtClass}":
+    get:
+      summary: Get document types
+      operationId: GetDocumentTypes
+      description: A list of document types
+      tags:
+        - lookup
+      parameters:
+        - name: courtLevel
+          in: path
+          description: court level
+          required: true
+          schema:
+            type: string
+        - name: courtClass
+          in: path
+          description: court class
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of document types
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DocumentTypes"
+  "/payment/generate-update-card":
+    post:
+      summary: Update card on bambora
+      operationId: UpdateCreditCard
+      description: For expired credit card get url to update
+      tags:
+        - payment
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+      requestBody:
+        description: card update params
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenerateCardUrlRequest"
+      responses:
+        "200":
+          description: Card url generated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenerateCardUrlResponse"
+components:
+  securitySchemes:
+    bearerAuth: # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    xTransactionId:
+      name: X-Transaction-Id
+      in: header
+      schema:
+        type: string
+        format: uuid
+      required: true
+      description: A unique Transaction Id generated by FilingHub clients
+    xUserId:
+      name: X-User-Id
+      in: header
+      schema:
+        type: string
+        format: string
+      required: true
+      description: A unique BCeID universal id passed to initial calls
+    submissionId:
+      name: submissionId
+      in: path
+      description: A submission id
+      required: true
+      schema:
+        type: string
+        format: uuid
+  schemas:
+    Account:
+      type: object
+      description: represents a user account
+      properties:
+        type:
+          type: string
+          enum: [BCEID, CSO]
+          description: the account type
+        identifier:
+          type: string
+          description: the account identifier
+    BceidAccount:
+      type: object
+      description: BCeID account details
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        middleName:
+          type: string
+    DocumentProperties:
+      type: object
+      description: Submission Metadata used to describe the submission that will be e-filled
+      required:
+        - type
+        - name
+      properties:
+        name:
+          type: string
+          description: the name of the document
+        type:
+          type: string
+          description: the submission type
+        subType:
+          type: string
+          description: sub type value
+        isAmendment:
+          type: boolean
+          description: is the document an amendment to another
+        isSupremeCourtScheduling:
+          type: boolean
+          description: supreme court scheduling required
+        data:
+          type: object
+          description: store additional details
+    Document:
+      required:
+        - description
+        - statutoryFeeAmount
+      type: object
+      description: A Efiling Document
+      allOf:
+        - $ref: "#/components/schemas/DocumentProperties"
+      properties:
+        description:
+          type: string
+          description: the description of the document
+        statutoryFeeAmount:
+          type: number
+          description: statutory fee amount
+        mimeType:
+          type: string
+          description: File mime type
+    EfilingError:
+      required:
+        - error
+        - message
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+    GenerateUrlRequest:
+      description: details about the required transaction
+      required:
+        - clientApplication
+        - navigation
+        - documentProperties
+      properties:
+        clientApplication:
+          $ref: "#/components/schemas/ClientApplication"
+        filingPackage:
+          $ref: "#/components/schemas/InitialPackage"
+        navigation:
+          $ref: "#/components/schemas/Navigation"
+    GenerateUrlResponse:
+      description: A temporary url for uploading submission
+      properties:
+        expiryDate:
+          type: integer
+          format: int64
+        efilingUrl:
+          type: string
+    GetSubmissionResponse:
+      type: object
+      required:
+        - userDetails
+        - navigation
+      properties:
+        userDetails:
+          $ref: "#/components/schemas/UserDetails"
+        navigation:
+          $ref: "#/components/schemas/Navigation"
+        clientApplication:
+          $ref: "#/components/schemas/ClientApplication"
+    Navigation:
+      required:
+        - success
+        - error
+        - cancel
+      properties:
+        success:
+          $ref: "#/components/schemas/Redirect"
+        error:
+          $ref: "#/components/schemas/Redirect"
+        cancel:
+          $ref: "#/components/schemas/Redirect"
+    InitialPackage:
+      type: object
+      description: A filing package can contain one or multiple documents that have or are being submitted electronically for new or existing court file.
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: "#/components/schemas/DocumentProperties"
+        court:
+          $ref: "#/components/schemas/CourtBase"
+    FilingPackage:
+      type: object
+      description: A filing package can contain one or multiple documents that have or are being submitted electronically for new or existing court file.
+      required:
+        - submissionFeeAmount
+        - documents
+      properties:
+        submissionFeeAmount:
+          type: number
+          description: Package submission fee.
+        court:
+          $ref: "#/components/schemas/Court"
+        documents:
+          type: array
+          items:
+            $ref: "#/components/schemas/Document"
+        parties:
+          type: array
+          items:
+            $ref: "#/components/schemas/Party"
+    CourtBase:
+      type: object
+      description: "Court related information"
+      required:
+        - location
+        - level
+        - courtClass
+        - division
+      properties:
+        location:
+          type: string
+          description: the court location
+        level:
+          type: string
+          description: the court level
+        courtClass:
+          type: string
+          description: the court class
+        division:
+          type: string
+          description: the court division
+        fileNumber:
+          type: string
+          description: the file number if case already exists
+        participatingClass:
+          type: string
+    Court:
+      type: object
+      description: "Court related information"
+      allOf:
+        - $ref: "#/components/schemas/CourtBase"
+      required:
+        - locationDescription
+      properties:
+        agencyId:
+          type: number
+          description: the agancy identifier
+        locationDescription:
+          type: string
+          description: the court location description
+        levelDescription:
+          type: string
+          description: the court location description
+        classDescription:
+          type: string
+          description: the court location description
+    Redirect:
+      required:
+        - url
+      properties:
+        url:
+          type: string
+    ClientApplication:
+      type: object
+      required:
+        - displayName
+        - type
+      properties:
+        displayName:
+          type: string
+        type:
+          type: string
+          description: the client Court Services Online Application Code
+    CsoAccount:
+      type: object
+      description: a CsoAccount
+      required:
+        - clientId
+        - accountId
+        - internalClientNumber
+        - fileRolePresent
+      properties:
+        clientId:
+          type: string
+          description: the user cso clientId
+        accountId:
+          type: string
+          description: the user cso accountId
+        internalClientNumber:
+          type: string
+          description: the user cso internal client number
+        fileRolePresent:
+          type: boolean
+          description: if the user as file role
+    DocumentType:
+      type: object
+      required:
+        - type
+        - description
+      properties:
+        type:
+          type: string
+          description: code value
+        description:
+          type: string
+          description: human readable value
+    DocumentTypes:
+      type: object
+      properties:
+        documentTypes:
+          type: array
+          items:
+            $ref: "#/components/schemas/DocumentType"
+    UploadSubmissionDocumentsResponse:
+      description: represents upload document response
+      type: object
+      required:
+        - submissionId
+      properties:
+        submissionId:
+          type: string
+          format: uuid
+          description: a unique identifier for the submission
+        received:
+          type: number
+          description: the number of document received
+    UserDetails:
+      description: represents a user submitting a filing package
+      type: object
+      required:
+        - universalId
+        - internalClientNumber
+      properties:
+        universalId:
+          type: string
+          format: uuid
+          description: the user universal identifier
+        internalClientNumber:
+          type: string
+          description: bambora id if client has a registered card
+        accounts:
+          type: array
+          items:
+            $ref: "#/components/schemas/Account"
+    UserFullDetails:
+      description: represents a user submitting a filing package with full details
+      allOf:
+        - $ref: "#/components/schemas/UserDetails"
+      required:
+        - firstName
+        - lastName
+        - middleName
+        - email
+      properties:
+        firstName:
+          type: string
+          description: the user first name
+        lastName:
+          type: string
+          description: the user last name
+        middleName:
+          type: string
+          description: the user middle name
+        email:
+          type: string
+          description: the user email address
+    Party:
+      description: party related to filing package
+      properties:
+        partyId:
+          type: number
+          description: primary key
+        partyTypeCd:
+          type: string
+          description: party type code
+        roleTypeCd:
+          type: string
+          description: role type code
+        firstName:
+          type: string
+          description: first name
+        middleName:
+          type: string
+          description: middle name
+        lastName:
+          type: string
+          description: last name
+        nameTypeCd:
+          type: string
+          description: name type code
+    CreateCsoAccountRequest:
+      description: represents a request to create a user
+      required:
+        - firstName
+        - lastName
+        - middleName
+        - email
+      properties:
+        firstName:
+          type: string
+          description: the user first name
+        lastName:
+          type: string
+          description: the user last name
+        middleName:
+          type: string
+          description: the user middle name
+        email:
+          type: string
+          description: the user email address
+    UpdateDocumentRequest:
+      description: request body for update documents
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: "#/components/schemas/DocumentProperties"
+    UpdateDocumentResponse:
+      description: response body for update documents
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: "#/components/schemas/Document"
+    SubmitRequest:
+      description: create service request
+      type: object
+    SubmitResponse:
+      description: result of submit filing package
+      type: object
+      required:
+        - transactionId
+      properties:
+        transactionId:
+          type: number
+          description: the transaction id returned from cso
+    GenerateCardUrlRequest:
+      description: create service request
+      type: object
+      required:
+        - internalClientNumber
+        - redirectUrl
+      properties:
+        internalClientNumber:
+          type: string
+          description: client id for request to bambora
+        redirectUrl:
+          type: string
+          description: url bambora return from
+    GenerateCardUrlResponse:
+      description: result generate url
+      type: object
+      required:
+        - bamboraUrl
+      properties:
+        bamboraUrl:
+          type: string
+          description: redirect url
+    ClientUpdateRequest:
+      description: update client details
+      type: object
+      required:
+        - internalClientNumber
+      properties:
+        internalClientNumber:
+          type: string
+          description: internal client number for request to bambora
+    ClientUpdateResponse:
+      description: update client details
+      type: object
