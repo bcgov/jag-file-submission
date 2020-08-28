@@ -30,6 +30,8 @@ public class Submission {
 
     private FilingPackage filingPackage;
 
+    private boolean rushedSubmission;
+
     protected Submission(Submission.Builder builder) {
         this.id = builder.id;
         this.transactionId = builder.transactionId;
@@ -39,6 +41,7 @@ public class Submission {
         this.clientApplication = builder.clientApplication;
         this.expiryDate = builder.expiryDate;
         this.universalId = builder.universalId;
+        this.rushedSubmission = builder.rushedSubmission;
     }
 
     public static Submission.Builder builder() {
@@ -54,7 +57,8 @@ public class Submission {
             @JsonProperty("package") FilingPackage filingPackage,
             @JsonProperty("navigation") Navigation navigation,
             @JsonProperty("clientApplication") ClientApplication clientApplication,
-            @JsonProperty("expiryDate") long expiryDate) {
+            @JsonProperty("expiryDate") long expiryDate,
+            @JsonProperty("rushedSubmission") boolean rushedSubmission) {
         this.id = id;
         this.transactionId = transactionId;
         this.universalId = universalId;
@@ -63,6 +67,7 @@ public class Submission {
         this.navigation = navigation;
         this.clientApplication = clientApplication;
         this.expiryDate = expiryDate;
+        this.rushedSubmission = rushedSubmission;
     }
 
     public UUID getId() { return id; }
@@ -89,6 +94,8 @@ public class Submission {
         return accountDetails;
     }
 
+    public boolean isRushedSubmission() { return rushedSubmission; }
+
     public void setAccountDetails(AccountDetails accountDetails) {
         this.accountDetails = accountDetails;
     }
@@ -103,6 +110,7 @@ public class Submission {
         private Navigation navigation;
         private ClientApplication clientApplication;
         private long expiryDate;
+        private boolean rushedSubmission;
 
         public Builder id (UUID id) {
             this.id = id;
@@ -141,6 +149,11 @@ public class Submission {
 
         public Builder expiryDate(long expiryDate) {
             this.expiryDate = expiryDate;
+            return this;
+        }
+
+        public Builder rushedSubmission(boolean rushedSubmission) {
+            this.rushedSubmission = rushedSubmission;
             return this;
         }
 

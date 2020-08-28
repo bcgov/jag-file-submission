@@ -1,8 +1,8 @@
 package ca.bc.gov.open.jag.efilingcsostarter;
 
-import ca.bc.gov.ag.csows.filing.FilingFacadeBean;
-import ca.bc.gov.ag.csows.filing.FilingPackage;
 import ca.bc.gov.ag.csows.filing.NestedEjbException_Exception;
+import ca.bc.gov.ag.csows.filing.ProcessItemStatus;
+import ca.bc.gov.ag.csows.filing.*;
 import ca.bc.gov.ag.csows.services.*;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingFilingPackage;
@@ -29,7 +29,12 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     private final CsoProperties csoProperties;
 
 
-    public CsoSubmissionServiceImpl(FilingFacadeBean filingFacadeBean, ServiceFacadeBean serviceFacadeBean, ServiceMapper serviceMapper, FilingPackageMapper filingPackageMapper, FinancialTransactionMapper financialTransactionMapper, CsoProperties csoProperties) {
+    public CsoSubmissionServiceImpl(FilingFacadeBean filingFacadeBean,
+                                    ServiceFacadeBean serviceFacadeBean,
+                                    ServiceMapper serviceMapper,
+                                    FilingPackageMapper filingPackageMapper,
+                                    FinancialTransactionMapper financialTransactionMapper,
+                                    CsoProperties csoProperties) {
         this.filingFacadeBean = filingFacadeBean;
         this.serviceFacadeBean = serviceFacadeBean;
         this.serviceMapper = serviceMapper;
@@ -39,7 +44,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     }
 
     @Override
-    public BigDecimal submitFilingPackage(EfilingService service, EfilingFilingPackage filingPackage, EfilingPaymentService paymentService) {
+    public BigDecimal submitFilingPackage(EfilingService service, EfilingFilingPackage filingPackage, boolean isRushedProcessing, EfilingPaymentService paymentService) {
 
         if(service == null) throw new IllegalArgumentException("Service is required.");
         if(filingPackage == null) throw new IllegalArgumentException("FilingPackage is required.");
@@ -54,12 +59,45 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
                 true,
                 createPayment(paymentService, createdService, service.getSubmissionFeeAmount(), service.getInternalClientNumber()));
 
-        BigDecimal filingResult = filePackage(createdService, filingPackage);
+        BigDecimal filingResult = filePackage(createdService, filingPackage, isRushedProcessing);
 
         updateServiceComplete(createdService);
 
         return filingResult;
 
+    }
+
+    private RushOrderRequest buildRushedOrderRequest(EfilingFilingPackage filingPackage) {
+        RushOrderRequest processRequest = new RushOrderRequest();
+        processRequest.setEntDtm(DateUtils.getCurrentXmlDate());
+        processRequest.setEntUserId(filingPackage.getEntUserId());
+        processRequest.setRequestDt(DateUtils.getCurrentXmlDate());
+        RushOrderRequestItem rushOrderRequestItem = new RushOrderRequestItem();
+        rushOrderRequestItem.setEntDtm(DateUtils.getCurrentXmlDate());
+        rushOrderRequestItem.setEntUserId(filingPackage.getEntUserId());
+        rushOrderRequestItem.setProcessReasonCd(Keys.RUSH_PROCESS_REASON_CD);
+        rushOrderRequestItem.getItemStatuses().add(getProcessItemStatusRequest(filingPackage));
+        rushOrderRequestItem.getItemStatuses().add(getProcessItemStatusApproved(filingPackage));
+        processRequest.setItem(rushOrderRequestItem);
+        return processRequest;
+    }
+
+    private ProcessItemStatus getProcessItemStatusRequest(EfilingFilingPackage filingPackage) {
+        return getProcessItemStatus(filingPackage,  Keys.REQUEST_PROCESS_STATUS_CD);
+    }
+
+    private ProcessItemStatus getProcessItemStatusApproved(EfilingFilingPackage filingPackage) {
+        return getProcessItemStatus(filingPackage,  Keys.APPROVED_PROCESS_STATUS_CD);
+    }
+
+    private ProcessItemStatus getProcessItemStatus(EfilingFilingPackage filingPackage, String proccessStatusCd) {
+        ProcessItemStatus processItemStatus = new ProcessItemStatus();
+        processItemStatus.setAccountId(filingPackage.getSubmittedByClientId());
+        processItemStatus.setClientId(filingPackage.getSubmittedByClientId());
+        processItemStatus.setEntDtm(DateUtils.getCurrentXmlDate());
+        processItemStatus.setEntUserId(filingPackage.getEntUserId());
+        processItemStatus.setProcessStatusCd(proccessStatusCd);
+        return processItemStatus;
     }
 
     private String generateInvoiceNumber(String data) {
@@ -111,7 +149,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
     }
 
-    private BigDecimal filePackage(Service service, EfilingFilingPackage filingPackage) {
+    private BigDecimal filePackage(Service service, EfilingFilingPackage filingPackage, boolean isRushedProcessing) {
 
         // TODO: replace in the mapper when submission is a common object
 
@@ -123,6 +161,10 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         }
 
         FilingPackage csoFilingPackage = filingPackageMapper.toFilingPackage(filingPackage, service.getServiceId());
+
+        if(isRushedProcessing) {
+            csoFilingPackage.setProcRequest(buildRushedOrderRequest(filingPackage));
+        }
 
         try {
             return filingFacadeBean.submitFiling(csoFilingPackage);
