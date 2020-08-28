@@ -21,4 +21,7 @@ public class AccountConfig {
         return new BceidAccountMapperImpl();
     }
 
+    @Bean
+    public CsoAccountMapper csoAccountMapper() { return new CsoAccountMapperImpl(); }
+
 }

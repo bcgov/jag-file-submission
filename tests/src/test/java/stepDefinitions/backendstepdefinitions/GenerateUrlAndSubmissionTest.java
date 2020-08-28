@@ -80,6 +80,7 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     @Given("POST http request is made to {string} with client application, court details and navigation urls")
     public void POSTHttpRequestIsMadeToWithClientApplicationCourtDetailsAndNavigationUrls(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
+
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
         response = generateUrlRequestBuilders.postRequestWithPayload(resource,validExistingCSOGuid, submissionId, PATH_PARAM );

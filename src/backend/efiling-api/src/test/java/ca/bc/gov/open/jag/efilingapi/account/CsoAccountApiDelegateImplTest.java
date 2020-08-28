@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingapi.account;
 import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.CreateCsoAccountRequest;
+import ca.bc.gov.open.jag.efilingapi.api.model.CsoAccount;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.api.model.UserFullDetails;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
@@ -56,21 +57,34 @@ public class CsoAccountApiDelegateImplTest {
     @Mock
     private AccessToken tokenMock;
 
-    @BeforeAll
+    @BeforeEach
     public void setUp() {
 
         MockitoAnnotations.initMocks(this);
+
+        AccountDetails accountDetails = AccountDetails.builder()
+                .fileRolePresent(true)
+                .accountId(BigDecimal.ONE)
+                .universalId(TestHelpers.CASE_1)
+                .lastName(LAST_NAME)
+                .firstName(FIRST_NAME)
+                .middleName(MIDDLE_NAME)
+                .email(EMAIL).create();
+
         Mockito
-                .doReturn(AccountDetails.builder()
-                        .fileRolePresent(true)
-                        .accountId(BigDecimal.ONE)
-                        .universalId(TestHelpers.CASE_1)
-                        .lastName(LAST_NAME)
-                        .firstName(FIRST_NAME)
-                        .middleName(MIDDLE_NAME)
-                        .email(EMAIL).create())
+                .doReturn(accountDetails)
                 .when(efilingAccountServiceMock)
                 .createAccount(ArgumentMatchers.argThat(x -> x.getUniversalId().equals(TestHelpers.CASE_1)));
+
+        Mockito
+                .doReturn(accountDetails)
+                .when(efilingAccountServiceMock)
+                .getAccountDetails(Mockito.eq(TestHelpers.CASE_1));
+
+        Mockito
+                .doReturn(null)
+                .when(efilingAccountServiceMock)
+                .getAccountDetails(Mockito.eq(TestHelpers.CASE_2));
 
         Mockito
                 .doThrow(new EfilingAccountServiceException("random"))
@@ -84,7 +98,10 @@ public class CsoAccountApiDelegateImplTest {
 
         SecurityContextHolder.setContext(securityContextMock);
 
-        sut = new CsoAccountApiDelegateImpl(efilingAccountServiceMock);
+        // Testing mapper in this test
+        CsoAccountMapper csoAccountMapper = new CsoAccountMapperImpl();
+
+        sut = new CsoAccountApiDelegateImpl(efilingAccountServiceMock, csoAccountMapper);
     }
 
 
@@ -130,7 +147,6 @@ public class CsoAccountApiDelegateImplTest {
         assertEquals("MISSING_UNIVERSAL_ID", ((EfilingError)actual.getBody()).getError());
         assertEquals("universal-id claim missing in jwt token.", ((EfilingError)actual.getBody()).getMessage());
 
-
     }
 
 
@@ -152,5 +168,48 @@ public class CsoAccountApiDelegateImplTest {
         Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode());
 
     }
+
+    @Test
+    @DisplayName("200: should return a cso account")
+    public void withExistingAccountShouldReturnAccount() {
+
+        Map<String, Object> otherClaims = new HashMap<>();
+        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_1);
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
+        ResponseEntity<CsoAccount> actual = sut.getCsoAccount(TestHelpers.CASE_1);
+
+        Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
+        Assertions.assertEquals(LAST_NAME, actual.getBody().getLastName());
+        Assertions.assertEquals(MIDDLE_NAME, actual.getBody().getMiddleName());
+        Assertions.assertEquals(EMAIL, actual.getBody().getEmail());
+        Assertions.assertEquals(FIRST_NAME, actual.getBody().getFirstName());
+
+    }
+
+    @Test
+    @DisplayName("404: with account not found should return not found")
+    public void withNoAccountShouldReturnNotFound() {
+
+        Map<String, Object> otherClaims = new HashMap<>();
+        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_2);
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
+        ResponseEntity<CsoAccount> actual = sut.getCsoAccount(TestHelpers.CASE_1);
+
+        Assertions.assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
+
+    }
+
+    @Test
+    @DisplayName("403: when getting account universal id is missing should return 403")
+    public void getAccountWithUserNotHavingUniversalIdShouldReturn403() {
+
+        ResponseEntity<CsoAccount> actual = sut.getCsoAccount(TestHelpers.CASE_3);
+
+        Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
+
+    }
+
 
 }
