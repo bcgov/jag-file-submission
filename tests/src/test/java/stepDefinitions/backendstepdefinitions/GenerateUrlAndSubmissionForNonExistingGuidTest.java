@@ -26,13 +26,13 @@ import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.*;
 
-public class GenerateUrlAndSubmissionTest extends DriverClass {
+public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass {
 
     private Response response;
     private GenerateUrlRequestBuilders generateUrlRequestBuilders;
     private String submissionId;
     private JsonPath jsonPath;
-    private String validExistingCSOGuid;
+    private String nonExistingCSOGuid;
     private static final String CONTENT_TYPE = "application/json";
     private static final String X_TRANSACTION_ID = "X-Transaction-Id";
     private static final String SUBMISSION_ID = "submissionId";
@@ -40,86 +40,79 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     private static final String PATH_PARAM = "/generateUrl";
     private String userToken;
 
-    public Logger log = LogManager.getLogger(GenerateUrlAndSubmissionTest.class);
+    public Logger log = LogManager.getLogger(GenerateUrlAndSubmissionForNonExistingGuidTest.class);
 
-    @Given("POST http request is made to {string} with valid existing CSO account guid and a single pdf file")
-    public void postHttpRequestIsMadeToWithValidExistingCsoAccountGuidAndASinglePdfFile(String resource) throws IOException {
+    @Given("POST http request is made to {string} with non existing CSO account guid and a single pdf file")
+    public void postHttpRequestIsMadeToWithNonExistingCSOAccountGuidAndASinglePdfFile(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
 
-        response = generateUrlRequestBuilders.validRequestWithSingleDocument(resource);
+        response = generateUrlRequestBuilders.requestWithNonExistingCSOAccountGuid(resource);
     }
 
-    @When("status code is {int} and content type is verified")
-    public void statusCodeIsAndContentTypeIsVerified(Integer statusCode) {
+    @When("status code is {int} and content type are verified")
+    public void statusCodeIsAndContentTypeAreVerified(Integer statusCode) {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
 
         assertEquals(200, response.getStatusCode());
         assertEquals(CONTENT_TYPE, response.getContentType());
     }
 
-    @Then("verify submission id and document count is received")
-    public void verifySubmissionIdAndDocumentCountIsReceived() {
+    @Then("verify submission id and document count are received")
+    public void verifySubmissionIdAndDocumentCountAreReceived() {
         jsonPath = new JsonPath(response.asString());
 
         submissionId = TestUtil.getJsonPath(response, SUBMISSION_ID);
         int receivedCount = jsonPath.get("received");
 
-        switch (receivedCount) {
-            case 1:
-                assertEquals(1, receivedCount);
-                break;
-            case 2:
-                assertEquals(2, receivedCount);
-                break;
-            default:
-                log.info("Document count did not match.");
-        }
+        assertEquals(1, receivedCount);
         assertNotNull(submissionId);
     }
 
-    @Given("POST http request is made to {string} with client application, court details and navigation urls")
-    public void POSTHttpRequestIsMadeToWithClientApplicationCourtDetailsAndNavigationUrls(String resource) throws IOException {
+    @Given("POST http request is made to {string} with client application, court details and navigation urls with non existing guid")
+    public void POSTHttpRequestIsMadeToWithClientApplicationCourtDetailsAndNavigationUrlsWithNonExistingGuid(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
+        nonExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getNonExistingCSOGuid();
 
-        validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
+        response = generateUrlRequestBuilders.postRequestWithPayload(resource,nonExistingCSOGuid, submissionId, PATH_PARAM );
 
-        response = generateUrlRequestBuilders.postRequestWithPayload(resource,validExistingCSOGuid, submissionId, PATH_PARAM );
     }
 
-    @Then("verify expiry date and eFiling url are returned with the CSO account guid and submission id")
-    public void verifyExpiryDateAndEfilingUrlAreReturnedWithTheCsoAccountGuidAndSubmissionId() throws URISyntaxException, IOException {
+    @Then("verify expiry date and eFiling url are returned with non existing CSO account guid and submission id")
+    public void verifyExpiryDateAndEFilingUrlAreReturnedWithNonExistingCSOAccountGuidAndSubmissionId() throws URISyntaxException {
+
         jsonPath = new JsonPath(response.asString());
-        validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
         String respUrl = jsonPath.get("efilingUrl");
         Long expiryDate = jsonPath.get("expiryDate");
 
+        generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         List<String> respId = TestUtil.getSubmissionAndTransId(respUrl, SUBMISSION_ID, TRANSACTION_ID);
 
+
         assertEquals(submissionId, respId.get(0));
-        assertEquals(validExistingCSOGuid, respId.get(1));
+        assertEquals(nonExistingCSOGuid, respId.get(1));
         assertNotNull(expiryDate);
     }
 
-    @Given("{string} id is submitted with GET http request")
-    public void idIsSubmittedWithGetHttpRequest(String resource) throws IOException {
+    @Given("{string} id is submitted with non existing CSO account GET http request")
+    public void idIsSubmittedWithNonExistingCsoAccountGetHttpRequest(String resource) throws IOException {
         APIResources resourceGet = APIResources.valueOf(resource);
+        nonExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getNonExistingCSOGuid();
 
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         userToken = generateUrlRequestBuilders.getUserJwtToken();
 
         RequestSpecification request = given().auth().preemptive().oauth2(userToken)
                 .spec(TestUtil.requestSpecification())
-                .header(X_TRANSACTION_ID, validExistingCSOGuid);
-
+                .header(X_TRANSACTION_ID, nonExistingCSOGuid);
         response = request.when().get(resourceGet.getResource() + submissionId)
                 .then()
                 .spec(TestUtil.responseSpecification())
                 .extract().response();
     }
 
-    @Then("verify universal id, user details, account type and identifier values are returned and not empty")
-    public void verifyUniversalIdUserDetailsAccountTypeAndIdentifierValuesAreReturnedAndNotEmpty() {
+    @Then("verify universal id, account type and identifier values are returned")
+    public void verifyUniversalIdAccountTypeAndIdentifierValuesAreReturned() {
         jsonPath = new JsonPath(response.asString());
 
         String universalId = jsonPath.get("userDetails.universalId");
@@ -132,31 +125,31 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
         assertThat(universalId, is(not(emptyString())));
         assertThat(displayName, is(not(emptyString())));
         assertThat(clientAppType, is(not(emptyString())));
-        log.info("Names and email objects from the valid CSO account submission response have valid values");
+        log.info("Universal id, display name and type for non existing CSO account submission response have valid values");
 
         assertFalse(type.isEmpty());
         assertFalse(identifier.isEmpty());
         log.info("Account type and identifier objects from the valid CSO account submission response have valid values");
     }
 
-    @Given("{string} id with filing package path is submitted with GET http request")
-    public void idWithFilingPackagePathIsSubmittedWithGETHttpRequest(String resource) throws IOException {
-        APIResources resourceGet = APIResources.valueOf(resource);
+    @And("verify success, error and cancel navigation urls are also returned")
+    public void verifySuccessErrorAndCancelNavigationUrlsAreReturned() {
+        jsonPath = new JsonPath(response.asString());
 
-        RequestSpecification request = given().auth().preemptive().oauth2(userToken).spec(TestUtil.requestSpecification())
-                .header(X_TRANSACTION_ID, validExistingCSOGuid);
+        String successUrl = jsonPath.get("navigation.success.url");
+        String errorUrl = jsonPath.get("navigation.error.url");
+        String cancelUrl = jsonPath.get("navigation.cancel.url");
 
-        response = request.when().get(resourceGet.getResource() + submissionId + "/filing-package")
-                .then()
-                .spec(TestUtil.responseSpecification())
-                .extract().response();
+        assertNotNull(successUrl);
+        assertNotNull(errorUrl);
+        assertNotNull(cancelUrl);
     }
 
-    @Then("verify court details and document details are returned and not empty")
-    public void verifyCourtDetailsAndDocumentDetailsAreReturnedAndNotEmpty() {
+    @Then("verify court details and document details are returned")
+    public void verifyCourtDetailsAndDocumentDetailsAreReturned() {
         jsonPath = new JsonPath(response.asString());
-        float submissionFeeAmount = jsonPath.get("submissionFeeAmount");
 
+        float submissionFeeAmount = jsonPath.get("submissionFeeAmount");
 
         assertThat(jsonPath.get("court.location"), is(not(emptyString())));
         assertThat(jsonPath.get("court.level"), is(not(emptyString())));
@@ -181,42 +174,32 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
         log.info("Account type, description and name objects from the valid CSO account submission response have valid values");
     }
 
-    @And("verify success, error and cancel navigation urls are returned")
-    public void verifySuccessErrorAndCancelNavigationUrlsAreReturned() {
-        jsonPath = new JsonPath(response.asString());
+    @Given("{string} id with filing package path is submitted with non existing CSO account GET http request")
+    public void idWithFilingPackagePathIsSubmittedWithNonExistingCSOAccountGETHttpRequest(String resource) throws IOException {
+        APIResources resourceGet = APIResources.valueOf(resource);
 
-        String successUrl = jsonPath.get("navigation.success.url");
-        String errorUrl = jsonPath.get("navigation.error.url");
-        String cancelUrl = jsonPath.get("navigation.cancel.url");
+        generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
 
-        assertNotNull(successUrl);
-        assertNotNull(errorUrl);
-        assertNotNull(cancelUrl);
+        RequestSpecification request = given().auth().preemptive().oauth2(userToken)
+                .spec(TestUtil.requestSpecification())
+                .header(X_TRANSACTION_ID, nonExistingCSOGuid);
+
+        response = request.when().get(resourceGet.getResource() + submissionId + "/filing-package")
+                .then()
+                .spec(TestUtil.responseSpecification())
+                .extract().response();
     }
 
-    @Given("{string} id with filename path is submitted with GET http request")
-    public void idWithFilenamePathIsSubmittedWithGETHttpRequest(String resource) throws IOException {
+    @Given("{string} id with filename path is submitted with non existing CSO account GET http request")
+    public void idWithFilenamePathIsSubmittedWithNonExistingCSOAccountGETHttpRequest(String resource) throws IOException {
         APIResources resourceGet = APIResources.valueOf(resource);
 
         RequestSpecification request = given().auth().preemptive().oauth2(userToken).spec(TestUtil.requestSpecification())
-                .header(X_TRANSACTION_ID, validExistingCSOGuid);
+                .header(X_TRANSACTION_ID, nonExistingCSOGuid);
 
         response = request.when().get(resourceGet.getResource() + submissionId + "/document" + "/test-document.pdf")
                 .then()
                // .spec(TestUtil.documentValidResponseSpecification())
                 .extract().response();
-    }
-
-    @Then("Verify status code is {int} and content type is not json")
-    public void verifyStatusCodeIsAndContentTypeIsNotJson(Integer int1) {
-        assertEquals(200, response.getStatusCode());
-        assertEquals("application/octet-stream", response.getContentType());
-    }
-
-    @Given("POST http request is made to {string} with valid existing CSO account guid and multiple file")
-    public void POSTHttpRequestIsMadeToWithValidExistingCSOAccountGuidAndMultipleFile(String resource) throws IOException {
-        generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
-
-        response = generateUrlRequestBuilders.validRequestWithMultipleDocuments(resource);
     }
 }

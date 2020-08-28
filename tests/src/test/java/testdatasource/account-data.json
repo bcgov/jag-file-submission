@@ -1,7 +1,10 @@
 [
   {
-    "validExistingCSOGuid": "77da92db-0791-491e-8c58-1a969e67d2fa",
+    "validExistingCSOGuid": "",
     "invalidNoFilingRoleGuid": "77da92db-0791-491e-8c58-1a969e67d2fb",
-    "nonExistingCSOGuid": "88da92db-0791-491e-8c58-1a969e67d2fb"
+    "nonExistingCSOGuid": "88da92db-0791-491e-8c58-1a969e67d2fb",
+    "validUserId": "",
+    "inValidUserId": "A02F2D0F367E4575BC782A414DC9369D",
+    "clientSecret": ""
   }
 ]

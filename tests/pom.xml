@@ -148,7 +148,18 @@
       <artifactId>java-dotenv</artifactId>
       <version>5.2.1</version>
     </dependency>
-
+      <dependency>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+          <version>4.13</version>
+          <scope>compile</scope>
+      </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13</version>
+      <scope>compile</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -176,6 +187,10 @@
           <includes>
             <include>**/*CucumberTest*.java</include>
           </includes>
+          <systemPropertyVariables>
+            <BCEID_USERNAME>${BCEID_USERNAME}</BCEID_USERNAME>
+            <BCEID_PASSWORD>${BCEID_PASSWORD}</BCEID_PASSWORD>
+        </systemPropertyVariables>
         </configuration>
       </plugin>
 
@@ -206,7 +221,6 @@
           </execution>
         </executions>
       </plugin>
-
 
     </plugins>
   </build>
