@@ -88,7 +88,7 @@ public class LandingPage {
                 "        \"name\": \"test-document.pdf\",\n" +
                 "        \"type\": \"AFF\"\n" +
                 "    }],\n" +
-                "        \"parties\": [{\n" +
+                "    \"parties\": [{\n" +
                 "        \"partyTypeCd\": \"IND\",\n" +
                 "        \"roleTypeCd\": \"CLA\"\n" +
                 "        \"firstName\": \"efile\",\n" +
@@ -96,7 +96,7 @@ public class LandingPage {
                 "        \"lastName\": \"qa\",\n" +
                 "        \"nameTypeCd\": \"CUR\"\n" +
                 "    }]\n" +
-                "}";
+                "}\n";
 
         textInput.sendKeys(json);
 
