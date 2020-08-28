@@ -1,10 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.account;
 
 import ca.bc.gov.open.jag.efilingapi.api.CsoAccountApiDelegate;
-import ca.bc.gov.open.jag.efilingapi.api.model.Account;
-import ca.bc.gov.open.jag.efilingapi.api.model.CreateCsoAccountRequest;
-import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
-import ca.bc.gov.open.jag.efilingapi.api.model.UserFullDetails;
+import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
@@ -32,10 +29,12 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
     Logger logger = LoggerFactory.getLogger(SubmissionApiDelegateImpl.class);
 
     private final EfilingAccountService efilingAccountService;
+    private final CsoAccountMapper csoAccountMapper;
 
 
-    public CsoAccountApiDelegateImpl(EfilingAccountService efilingAccountService) {
+    public CsoAccountApiDelegateImpl(EfilingAccountService efilingAccountService, CsoAccountMapper csoAccountMapper) {
         this.efilingAccountService = efilingAccountService;
+        this.csoAccountMapper = csoAccountMapper;
     }
 
 
@@ -77,6 +76,22 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
             return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
 
         }
+
+    }
+
+    @Override
+    @RolesAllowed("efiling-user")
+    public ResponseEntity<CsoAccount> getCsoAccount(UUID xTransactionId) {
+
+        Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
+
+        if(!universalId.isPresent()) return new ResponseEntity(HttpStatus.FORBIDDEN);
+
+        AccountDetails accountDetails = efilingAccountService.getAccountDetails(universalId.get());
+
+        if(accountDetails == null) return new ResponseEntity(HttpStatus.NOT_FOUND);
+
+        return ResponseEntity.ok(csoAccountMapper.toCsoAccount(accountDetails));
 
     }
 

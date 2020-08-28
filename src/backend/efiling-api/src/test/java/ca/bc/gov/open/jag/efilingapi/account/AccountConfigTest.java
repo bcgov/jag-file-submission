@@ -4,13 +4,13 @@ import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.CreateAccountRequest;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -58,6 +58,10 @@ public class AccountConfigTest {
 
         context.run(it -> {
             assertThat(it).hasSingleBean(AccountService.class);
+            assertThat(it).hasSingleBean(CsoAccountMapper.class);
+
+            Assertions.assertEquals(CsoAccountMapperImpl.class, it.getBean(CsoAccountMapper.class).getClass());
+
         });
 
     }

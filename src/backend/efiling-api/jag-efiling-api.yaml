@@ -270,6 +270,23 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserFullDetails"
+    get:
+      summary: Get user CSO account
+      operationId: GetCsoAccount
+      description: Get a user cso account.
+      tags:
+        - account
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+      responses:
+        "200":
+          description: A CSO Account
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CsoAccount"
+        "404":
+          description: Cso Account not found
   "/bceidAccount":
     get:
       summary: Get a BCeID account
@@ -581,6 +598,43 @@ components:
         type:
           type: string
           description: the client Court Services Online Application Code
+    CsoAccount:
+      type: object
+      description: a CsoAccount
+      required:
+        - clientId
+        - accountId
+        - internalClientNumber
+        - firstName
+        - lastName
+        - middleName
+        - email
+        - fileRolePresent
+      properties:
+        clientId:
+          type: string
+          description: the user cso clientId
+        accountId:
+          type: string
+          description: the user cso accountId
+        internalClientNumber:
+          type: string
+          description: the user cso internal client number
+        firstName:
+          type: string
+          description: the user cso first name
+        lastName:
+          type: string
+          description: the user cso last name
+        middleName:
+          type: string
+          description: the user cso middle name
+        email:
+          type: string
+          description: the user cso email
+        fileRolePresent:
+          type: boolean
+          description: if the user as file role
     DocumentType:
       type: object
       required:
