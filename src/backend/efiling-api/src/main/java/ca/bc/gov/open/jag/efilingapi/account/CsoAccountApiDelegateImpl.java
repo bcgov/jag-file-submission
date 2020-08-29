@@ -105,10 +105,6 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
         csoAccount.setType(Account.TypeEnum.CSO);
         csoAccount.setIdentifier(accountDetails.getAccountId().toString());
         result.addAccountsItem(csoAccount);
-        result.setEmail(accountDetails.getEmail());
-        result.setFirstName(accountDetails.getFirstName());
-        result.setLastName(accountDetails.getLastName());
-        result.setMiddleName(accountDetails.getMiddleName());
         return result;
     }
 

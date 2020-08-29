@@ -135,8 +135,6 @@ public class GetSubmissionTest {
                         .clientId(BigDecimal.TEN)
                         .internalClientNumber(INTERNAL_CLIENT_NUMBER)
                         .universalId(TestHelpers.CASE_2)
-                        .email(EMAIL + TestHelpers.CASE_2)
-                        .firstName(FIRST_NAME + TestHelpers.CASE_2)
                         .accountId(BigDecimal.TEN)
                         .fileRolePresent(true)
                         .cardRegistered(true)

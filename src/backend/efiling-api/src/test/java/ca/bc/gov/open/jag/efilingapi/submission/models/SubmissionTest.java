@@ -38,10 +38,6 @@ public class SubmissionTest {
                         .clientId(BigDecimal.TEN)
                         .accountId(BigDecimal.TEN)
                         .internalClientNumber(INTERNAL_CLIENT_NUMBER)
-                        .email(EMAIL)
-                        .middleName(MIDDLE_NAME)
-                        .lastName(LAST_NAME)
-                        .firstName(FIRST_NAME)
                         .create(),
                 TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList(), TestHelpers.createPartyList()),
                 TestHelpers.createNavigation(CASE_1, CANCEL, ERROR),
@@ -54,10 +50,6 @@ public class SubmissionTest {
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountDetails().getClientId());
         Assertions.assertEquals(INTERNAL_CLIENT_NUMBER, actual.getAccountDetails().getInternalClientNumber());
         Assertions.assertEquals(DISPLAYNAME, actual.getClientApplication().getDisplayName());
-        Assertions.assertEquals(EMAIL, actual.getAccountDetails().getEmail());
-        Assertions.assertEquals(FIRST_NAME, actual.getAccountDetails().getFirstName());
-        Assertions.assertEquals(MIDDLE_NAME, actual.getAccountDetails().getMiddleName());
-        Assertions.assertEquals(LAST_NAME, actual.getAccountDetails().getLastName());
         Assertions.assertEquals(ERROR, actual.getNavigation().getError().getUrl());
         Assertions.assertEquals(CANCEL, actual.getNavigation().getCancel().getUrl());
         Assertions.assertEquals(CASE_1, actual.getNavigation().getSuccess().getUrl());

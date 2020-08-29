@@ -129,9 +129,6 @@ public class GetAccountDetailsTest {
         Assertions.assertEquals(BigDecimal.TEN, details.getClientId());
         Assertions.assertEquals(INTERNAL_CLIENT_NUMBER, details.getInternalClientNumber());
         Assertions.assertEquals(true, details.isFileRolePresent());
-        Assertions.assertEquals("firstName", details.getFirstName());
-        Assertions.assertEquals("lastName", details.getLastName());
-        Assertions.assertEquals("email", details.getEmail());
 
     }
 
@@ -145,9 +142,6 @@ public class GetAccountDetailsTest {
         Assertions.assertEquals(BigDecimal.TEN, details.getClientId());
         Assertions.assertEquals(INTERNAL_CLIENT_NUMBER, details.getInternalClientNumber());
         Assertions.assertEquals(false, details.isFileRolePresent());
-        Assertions.assertEquals("firstName", details.getFirstName());
-        Assertions.assertEquals("lastName", details.getLastName());
-        Assertions.assertEquals("email", details.getEmail());
 
     }
 

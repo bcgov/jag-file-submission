@@ -65,11 +65,7 @@ public class CsoAccountApiDelegateImplTest {
         AccountDetails accountDetails = AccountDetails.builder()
                 .fileRolePresent(true)
                 .accountId(BigDecimal.ONE)
-                .universalId(TestHelpers.CASE_1)
-                .lastName(LAST_NAME)
-                .firstName(FIRST_NAME)
-                .middleName(MIDDLE_NAME)
-                .email(EMAIL).create();
+                .universalId(TestHelpers.CASE_1).create();
 
         Mockito
                 .doReturn(accountDetails)
@@ -180,10 +176,6 @@ public class CsoAccountApiDelegateImplTest {
         ResponseEntity<CsoAccount> actual = sut.getCsoAccount(TestHelpers.CASE_1);
 
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
-        Assertions.assertEquals(LAST_NAME, actual.getBody().getLastName());
-        Assertions.assertEquals(MIDDLE_NAME, actual.getBody().getMiddleName());
-        Assertions.assertEquals(EMAIL, actual.getBody().getEmail());
-        Assertions.assertEquals(FIRST_NAME, actual.getBody().getFirstName());
 
     }
 
