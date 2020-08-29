@@ -96,7 +96,7 @@ public class generateFromRequestTest {
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setClientApplication(TestHelpers.createClientApplication("app", "app"));
         request.setNavigation(TestHelpers.createDefaultNavigation());
-        request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList()));
+        request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList()));
 
         Submission actual = sut.generateFromRequest(TestHelpers.CASE_1, TestHelpers.CASE_1, TestHelpers.CASE_1, request);
 
@@ -154,7 +154,7 @@ public class generateFromRequestTest {
         request.setClientApplication(TestHelpers.createClientApplication("app", "app"));
         request.setNavigation(TestHelpers.createDefaultNavigation());
 
-        InitialPackage filingPackage = TestHelpers.createInitalPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList());
+        InitialPackage filingPackage = TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList());
         filingPackage.getCourt().setLevel("TEST2");
         request.setFilingPackage(filingPackage);
 
@@ -213,7 +213,7 @@ public class generateFromRequestTest {
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setClientApplication(TestHelpers.createClientApplication("app", "type"));
         request.setNavigation(TestHelpers.createDefaultNavigation());
-        request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList()));
+        request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList()));
 
         Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(TestHelpers.CASE_2, TestHelpers.CASE_2, TestHelpers.CASE_2, request));
 

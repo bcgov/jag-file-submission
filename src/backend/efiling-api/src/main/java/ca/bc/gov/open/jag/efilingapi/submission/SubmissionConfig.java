@@ -40,7 +40,7 @@ public class SubmissionConfig {
     }
 
     @Bean
-    public FilingPackageMapper filingPackageMapper() { return new FilingPackageMapperImpl(); }
+    public FilingPackageMapper filingPackageApiMapper() { return new FilingPackageMapperImpl(); }
 
     @Bean
     public SubmissionService submissionService(SubmissionStore submissionStore,

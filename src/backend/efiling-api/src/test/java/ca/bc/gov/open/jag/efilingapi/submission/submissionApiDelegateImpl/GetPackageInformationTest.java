@@ -3,15 +3,19 @@ package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
-import ca.bc.gov.open.jag.efilingapi.api.model.Document;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
+import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapper;
+import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMapper;
+import ca.bc.gov.open.jag.efilingapi.submission.models.Document;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
+import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
+import com.google.gson.JsonObject;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -19,6 +23,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -63,6 +69,7 @@ public class GetPackageInformationTest {
 
         Mockito.when(submissionStoreMock.get(Mockito.eq(TestHelpers.CASE_1), Mockito.any())).thenReturn(Optional.of(submissionWithParentApplication));
 
+        FilingPackageMapper filingPackageMapper = new FilingPackageMapperImpl();
         sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper);
     }
 
@@ -90,9 +97,15 @@ public class GetPackageInformationTest {
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
     }
     private List<Document> createDocumentListWithNulls() {
-        List<Document> documents =  TestHelpers.createDocumentList();
-        documents.get(0).setIsAmendment(null);
-        documents.get(0).setIsSupremeCourtScheduling(null);
-        return documents;
+        return Arrays.asList(ca.bc.gov.open.jag.efilingapi.submission.models.Document.builder()
+                .description("description")
+                .statutoryFeeAmount(BigDecimal.TEN)
+                .name("random.txt")
+                .type("type")
+                .subType(SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD)
+                .mimeType("application/txt")
+                .isSupremeCourtScheduling(null)
+                .isAmendment(null)
+                .data(new JsonObject()).create());
     }
 }

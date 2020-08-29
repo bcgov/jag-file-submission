@@ -49,7 +49,7 @@ public class TestHelpers {
         return initialPackage;
     }
 
-    public static FilingPackage createPackage(Court court, List<Document> documents, List<Party> parties) {
+    public static FilingPackage createApiPackage(Court court, List<Document> documents, List<Party> parties) {
         FilingPackage modelPackage = new FilingPackage();
         modelPackage.setCourt(court);
         modelPackage.setDocuments(documents);
@@ -80,7 +80,7 @@ public class TestHelpers {
         return clientApplication;
     }
 
-    public static Court createCourt() {
+    public static Court createApiCourt() {
         Court court = new Court();
         court.setDivision(DIVISION);
         court.setFileNumber(FILENUMBER);
@@ -95,14 +95,14 @@ public class TestHelpers {
         return court;
     }
 
-    public static List<DocumentProperties> createDocumentPropertiesList() {
+    public static List<DocumentProperties> createApiDocumentPropertiesList() {
         DocumentProperties documentProperties = new DocumentProperties();
         documentProperties.setName("random.txt");
         documentProperties.setType(TYPE);
         return Arrays.asList(documentProperties);
     }
 
-    public static List<Document> createDocumentList() {
+    public static List<Document> createApiDocumentList() {
         Document documentProperties = new Document();
         documentProperties.setDescription(DESCRIPTION);
         documentProperties.setStatutoryFeeAmount(BigDecimal.TEN);
@@ -116,7 +116,7 @@ public class TestHelpers {
         return Arrays.asList(documentProperties);
     }
 
-    public static List<Party> createPartyList() {
+    public static List<Party> createApiPartyList() {
 
         Party partyOne = new Party();
         partyOne.setFirstName(FIRST_NAME);
@@ -136,6 +136,75 @@ public class TestHelpers {
         partyTwo.setRoleTypeCd(ROLE_TYPE_CD);
         partyTwo.setPartyId(BigDecimal.TEN);
 
+        return Arrays.asList(partyOne, partyTwo);
+    }
+
+    public static ca.bc.gov.open.jag.efilingapi.submission.models.Court createCourt() {
+        return ca.bc.gov.open.jag.efilingapi.submission.models.Court.builder()
+                .division(DIVISION)
+                .fileNumber(FILENUMBER)
+                .level(LEVEL)
+                .location(LOCATION)
+                .participatingClass(PARTICIPATIONCLASS)
+                .courtClass(PROPERTYCLASS)
+                .agencyId(BigDecimal.TEN)
+                .levelDescription(LEVEL_DESCRIPTION)
+                .classDescription(CLASS_DESCRIPTION)
+                .locationDescription(COURT_DESCRIPTION).create();
+    }
+
+    public static ca.bc.gov.open.jag.efilingapi.submission.models.FilingPackage createPackage(
+            ca.bc.gov.open.jag.efilingapi.submission.models.Court court,
+            List<ca.bc.gov.open.jag.efilingapi.submission.models.Document> documents,
+            List<ca.bc.gov.open.jag.efilingapi.submission.models.Party> parties) {
+        return ca.bc.gov.open.jag.efilingapi.submission.models.FilingPackage.builder()
+                .court(court)
+                .documents(documents)
+                .parties(parties)
+                .create();
+    }
+
+    public static List<DocumentProperties> createDocumentPropertiesList() {
+        DocumentProperties documentProperties = new DocumentProperties();
+        documentProperties.setName("random.txt");
+        documentProperties.setType(TYPE);
+        return Arrays.asList(documentProperties);
+    }
+
+    public static List<ca.bc.gov.open.jag.efilingapi.submission.models.Document> createDocumentList() {
+        return Arrays.asList(ca.bc.gov.open.jag.efilingapi.submission.models.Document.builder()
+                .description(DESCRIPTION)
+                .statutoryFeeAmount(BigDecimal.TEN)
+                .name("random.txt")
+                .type(TYPE)
+                .subType(SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD)
+                .mimeType("application/txt")
+                .isSupremeCourtScheduling(true)
+                .isAmendment(true)
+                .data(new JsonObject()).create());
+    }
+
+    public static List<ca.bc.gov.open.jag.efilingapi.submission.models.Party> createPartyList() {
+
+        ca.bc.gov.open.jag.efilingapi.submission.models.Party partyOne = ca.bc.gov.open.jag.efilingapi.submission.models.Party.builder()
+                .firstName(FIRST_NAME)
+                .middleName(MIDDLE_NAME)
+                .lastName(LAST_NAME)
+                .nameTypeCd(NAME_TYPE_CD)
+                .partyTypeCd(PARTY_TYPE_CD)
+                .roleTypeCd(ROLE_TYPE_CD)
+                .partyId(BigDecimal.ONE)
+                .create();
+
+        ca.bc.gov.open.jag.efilingapi.submission.models.Party partyTwo = ca.bc.gov.open.jag.efilingapi.submission.models.Party.builder()
+                .firstName(FIRST_NAME)
+                .middleName(MIDDLE_NAME)
+                .lastName(LAST_NAME)
+                .nameTypeCd(NAME_TYPE_CD)
+                .partyTypeCd(PARTY_TYPE_CD)
+                .roleTypeCd(ROLE_TYPE_CD)
+                .partyId(BigDecimal.ONE)
+                .create();
         return Arrays.asList(partyOne, partyTwo);
     }
 
