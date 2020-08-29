@@ -87,8 +87,17 @@ public class LandingPage {
                 "    \"documents\": [{\n" +
                 "        \"name\": \"test-document.pdf\",\n" +
                 "        \"type\": \"AFF\"\n" +
+                "    }],\n" +
+                "    \"parties\": [{\n" +
+                "        \"partyTypeCd\": \"IND\",\n" +
+                "        \"roleTypeCd\": \"CLA\"\n" +
+                "        \"firstName\": \"efile\",\n" +
+                "        \"middleName\": \"test\"\n" +
+                "        \"lastName\": \"qa\",\n" +
+                "        \"nameTypeCd\": \"CUR\"\n" +
                 "    }]\n" +
-                "}";
+                "}\n";
+
 
         textInput.sendKeys(json);
 
