@@ -13,6 +13,8 @@ public class DocumentDetails {
 
     private Boolean isOrderDocument;
 
+    private Boolean rushRequired;
+
     public String getDescription() { return description; }
 
     public void setDescription(String description) {  this.description = description; }
@@ -25,12 +27,22 @@ public class DocumentDetails {
 
     public void setOrderDocument(Boolean orderDocument) {  isOrderDocument = orderDocument;  }
 
+    public Boolean isRushRequired() {
+        return rushRequired;
+    }
+
+    public void setRushRequired(Boolean rushRequired) {
+        this.rushRequired = rushRequired;
+    }
+
     @JsonCreator
     public DocumentDetails(@JsonProperty("description") String description,
                            @JsonProperty("statutoryFeeAmount") BigDecimal statutoryFeeAmount,
-                           @JsonProperty("isOrderDocument") boolean isOrderDocument ) {
+                           @JsonProperty("isOrderDocument") boolean isOrderDocument,
+                           @JsonProperty("rushRequired") boolean rushRequired) {
         this.description = description;
         this.statutoryFeeAmount = statutoryFeeAmount;
         this.isOrderDocument = isOrderDocument;
+        this.rushRequired = rushRequired;
     }
 }

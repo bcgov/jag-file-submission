@@ -46,7 +46,7 @@ public class SubmissionTest {
                 TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList(), TestHelpers.createPartyList()),
                 TestHelpers.createNavigation(CASE_1, CANCEL, ERROR),
                 TestHelpers.createClientApplication(DISPLAYNAME, TYPE),
-                1);
+                1, true);
 
 
         Assertions.assertEquals(TYPE, actual.getClientApplication().getType());
@@ -74,6 +74,7 @@ public class SubmissionTest {
         Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getFilingPackage().getDocuments().get(0).getDescription());
         Assertions.assertEquals(true, actual.getFilingPackage().getDocuments().get(0).getIsAmendment());
         Assertions.assertEquals(true, actual.getFilingPackage().getDocuments().get(0).getIsSupremeCourtScheduling());
+        Assertions.assertEquals(true, actual.isRushedSubmission());
     }
 
 }

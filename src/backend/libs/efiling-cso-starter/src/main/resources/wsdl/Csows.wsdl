@@ -678,6 +678,8 @@
                     <xs:element minOccurs="0" name="fileSeqNo" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="filingDt" type="xs:dateTime"/>
                     <xs:element minOccurs="0" name="initiatingDocYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="isRequestableYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="isViewableYn" type="xs:string"/>
                     <xs:element minOccurs="0" name="noSubmittedOrder" type="xs:string"/>
                     <xs:element minOccurs="0" name="objectGuid" type="xs:string"/>
                 </xs:sequence>

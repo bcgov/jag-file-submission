@@ -102,7 +102,7 @@ services:
       - REDIS_PASSWORD=admin
       - NAVIGATION_BASE_URL=http://localhost:3000/efiling
       - NAVIGATION_EXPIRYTIME=10
-      
+
     networks:
       - fisu-net
 
@@ -164,7 +164,7 @@ services:
       - fisu-net
 
   #############################################################################################
-  ###                                        NGINX                                       ###
+  ###                                        NGINX                                          ###
   #############################################################################################
   nginx:
     image: nginx:latest
@@ -183,6 +183,16 @@ services:
     ports:
       - "22:22"
     command: admin:admin:::upload
+    networks:
+      - fisu-net
+
+  #############################################################################################
+  ###                             CLAMAV                                                    ###
+  #############################################################################################
+  clamav:
+    image: mk0x/docker-clamav
+    ports:
+      - "3310:3310"
     networks:
       - fisu-net
 

@@ -52,7 +52,7 @@ public class updateDocumentsTest {
 
         MockitoAnnotations.initMocks(this);
 
-        DocumentDetails documentDetails = new DocumentDetails(TestHelpers.DESCRIPTION, BigDecimal.TEN, false);
+        DocumentDetails documentDetails = new DocumentDetails(TestHelpers.DESCRIPTION, BigDecimal.TEN, false, true);
 
         Mockito.when(documentStoreMock.getDocumentDetails(any(), any(), any())).thenReturn(documentDetails);
 

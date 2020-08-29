@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 public class EfilingSubmissionServiceDemoImpl implements EfilingSubmissionService {
 
     @Override
-    public BigDecimal submitFilingPackage(EfilingService service, EfilingFilingPackage filingPackage, EfilingPaymentService efilingPaymentService) {
+    public BigDecimal submitFilingPackage(EfilingService service, EfilingFilingPackage filingPackage, boolean isRushedProcessing,  EfilingPaymentService efilingPaymentService) {
         return BigDecimal.ONE;
     }
 

@@ -2,7 +2,6 @@ package ca.bc.gov.open.jag.efilingapi;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
-import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
 import com.google.gson.JsonObject;
 
@@ -100,7 +99,6 @@ public class TestHelpers {
         DocumentProperties documentProperties = new DocumentProperties();
         documentProperties.setName("random.txt");
         documentProperties.setType(TYPE);
-
         return Arrays.asList(documentProperties);
     }
 

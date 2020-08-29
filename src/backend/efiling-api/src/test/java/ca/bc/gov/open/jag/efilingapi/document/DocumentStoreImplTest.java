@@ -29,14 +29,14 @@ public class DocumentStoreImplTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        DocumentDetails docummentDetails = new DocumentDetails(DESCRIPTION, BigDecimal.TEN, true);
+        DocumentDetails docummentDetails = new DocumentDetails(DESCRIPTION, BigDecimal.TEN, true, true);
 
         Mockito
                 .when(efilingDocumentServiceMock.getDocumentDetails(Mockito.anyString(), Mockito.anyString(), Mockito.anyString()))
                 .thenReturn(docummentDetails);
 
 
-        List<DocumentType> documentTypes = Arrays.asList(new DocumentType(DESCRIPTION, TYPE));
+        List<DocumentType> documentTypes = Arrays.asList(new DocumentType(DESCRIPTION, TYPE, true));
 
         Mockito
                 .when(efilingDocumentServiceMock.getDocumentTypes(Mockito.anyString(), Mockito.anyString()))
