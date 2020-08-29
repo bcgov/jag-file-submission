@@ -11,6 +11,7 @@ import ca.bc.gov.open.jag.efilingapi.document.Document;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
+import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
@@ -52,13 +53,14 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     private final NavigationProperties navigationProperties;
     private final DocumentStore documentStore;
     private final ClamAvService clamAvService;
+    private final FilingPackageMapper filingPackageMapper;
 
     public SubmissionApiDelegateImpl(
             SubmissionService submissionService,
             AccountService accountService,
             GenerateUrlResponseMapper generateUrlResponseMapper,
             NavigationProperties navigationProperties,
-            SubmissionStore submissionStore, DocumentStore documentStore, ClamAvService clamAvService) {
+            SubmissionStore submissionStore, DocumentStore documentStore, ClamAvService clamAvService, FilingPackageMapper filingPackageMapper) {
         this.submissionService = submissionService;
         this.accountService = accountService;
         this.generateUrlResponseMapper = generateUrlResponseMapper;
@@ -66,6 +68,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         this.submissionStore = submissionStore;
         this.documentStore = documentStore;
         this.clamAvService = clamAvService;
+        this.filingPackageMapper = filingPackageMapper;
     }
 
     @Override
@@ -136,14 +139,14 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         if (!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
 
-
         try {
             Submission submission = submissionService.updateDocuments(fromCacheSubmission.get(), updateDocumentRequest);
-            submissionStore.put(submission);
             UpdateDocumentResponse updateDocumentResponse = new UpdateDocumentResponse();
-            updateDocumentResponse.setDocuments(submission.getFilingPackage().getDocuments());
+            FilingPackage filingPackage = filingPackageMapper.toApiFilingPackage(submission.getFilingPackage());
+            updateDocumentResponse.setDocuments(filingPackage.getDocuments());
             logger.info("successfully added new document for transaction [{}]", submissionId);
             return ResponseEntity.ok(updateDocumentResponse);
+
         } catch (EfilingDocumentServiceException e) {
             logger.warn(e.getMessage(), e);
             return new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -313,7 +316,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         MdcUtils.clearUserMDC();
 
-        return ResponseEntity.ok(fromCacheSubmission.get().getFilingPackage());
+        return ResponseEntity.ok(filingPackageMapper.toApiFilingPackage(fromCacheSubmission.get().getFilingPackage()));
     }
 
 

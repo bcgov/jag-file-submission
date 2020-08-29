@@ -81,7 +81,7 @@ public class SubmitTest {
 
         Mockito.when(submissionServiceMock.createSubmission(Mockito.refEq(submissionError))).thenThrow(new EfilingSubmissionServiceException("Nooooooo", new Throwable()));
 
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationPropertiesMock, submissionStoreMock, documentStoreMock, clamAvServiceMock);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationPropertiesMock, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper);
 
     }
 

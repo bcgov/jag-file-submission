@@ -464,8 +464,8 @@ components:
       description: details about the required transaction
       required:
         - clientApplication
+        - filingPackage
         - navigation
-        - documentProperties
       properties:
         clientApplication:
           $ref: "#/components/schemas/ClientApplication"
@@ -508,6 +508,10 @@ components:
     InitialPackage:
       type: object
       description: A filing package can contain one or multiple documents that have or are being submitted electronically for new or existing court file.
+      required:
+        - documents
+        - court
+        - parties
       properties:
         documents:
           type: array
@@ -515,6 +519,10 @@ components:
             $ref: "#/components/schemas/DocumentProperties"
         court:
           $ref: "#/components/schemas/CourtBase"
+        parties:
+          type: array
+          items:
+            $ref: "#/components/schemas/Party"
     FilingPackage:
       type: object
       description: A filing package can contain one or multiple documents that have or are being submitted electronically for new or existing court file.

@@ -71,7 +71,7 @@ public class UpdateDocumentPropertiesTest {
         Mockito.when(submissionStoreMock.get(Mockito.eq(TestHelpers.CASE_1), any())).thenReturn(Optional.of(submission));
 
 
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper);
     }
 
     @Test

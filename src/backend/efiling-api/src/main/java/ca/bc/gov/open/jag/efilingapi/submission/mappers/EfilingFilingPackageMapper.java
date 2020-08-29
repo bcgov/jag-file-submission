@@ -1,8 +1,8 @@
 package ca.bc.gov.open.jag.efilingapi.submission.mappers;
 
 
-import ca.bc.gov.open.jag.efilingapi.api.model.Document;
-import ca.bc.gov.open.jag.efilingapi.api.model.Party;
+import ca.bc.gov.open.jag.efilingapi.submission.models.Document;
+import ca.bc.gov.open.jag.efilingapi.submission.models.Party;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingcommons.model.*;

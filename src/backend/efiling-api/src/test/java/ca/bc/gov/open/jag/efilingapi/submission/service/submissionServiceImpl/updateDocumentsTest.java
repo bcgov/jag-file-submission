@@ -71,7 +71,7 @@ public class updateDocumentsTest {
 
         Submission submission = Submission
                 .builder()
-                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), new ArrayList<Document>(TestHelpers.createDocumentList()), TestHelpers.createPartyList()))
+                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList(), TestHelpers.createPartyList()))
                 .navigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
                 .create();
         Submission actual = sut.updateDocuments(submission, updateDocumentRequest);

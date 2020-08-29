@@ -57,7 +57,7 @@ public class DeleteSubmissionTest {
 
 
         NavigationProperties navigationProperties = new NavigationProperties();
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, new GenerateUrlResponseMapperImpl(), navigationProperties, submissionStoreMock, documentStoreMock, null);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, new GenerateUrlResponseMapperImpl(), navigationProperties, submissionStoreMock, documentStoreMock, null, filingPackageMapper);
 
     }
 
