@@ -38,6 +38,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UploadSubmissionDocumentsResponse"
+  "/submission/{submissionId}":
+    parameters:
+      - $ref: "#/components/parameters/submissionId"
+      - $ref: "#/components/parameters/xTransactionId"
+    delete:
+      summary: Delete a submission by id
+      operationId: DeleteSubmission
+      tags:
+        - submission
+      responses:
+        "200":
+          description: submission deleted
   "/submission/{submissionId}/documents":
     post:
       summary: Additional documents upload
@@ -95,8 +107,8 @@ paths:
       - $ref: "#/components/parameters/submissionId"
       - $ref: "#/components/parameters/xTransactionId"
     get:
-      summary: Get submission configuration information
-      operationId: GetSubmissionConfig
+      summary: Get user detail for a given submission
+      operationId: GetSubmission
       tags:
         - submission
       responses:
@@ -108,14 +120,6 @@ paths:
                 $ref: "#/components/schemas/GetSubmissionConfigResponse"
         "404":
           description: Config not found
-    delete:
-      summary: Delete a submission by id
-      operationId: DeleteSubmission
-      tags:
-        - submission
-      responses:
-        "200":
-          description: submission deleted
   "/submission/{submissionId}/generateUrl":
     post:
       summary: Generates a secure URL for e-filing submission
