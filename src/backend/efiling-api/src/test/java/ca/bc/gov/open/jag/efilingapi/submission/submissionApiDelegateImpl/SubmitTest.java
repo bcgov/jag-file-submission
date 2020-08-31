@@ -117,10 +117,10 @@ public class SubmitTest {
         result.setTransactionId(BigDecimal.TEN);
 
         Mockito
-                .when(submissionServiceMock.createSubmission(Mockito.refEq(submissionExists)))
+                .when(submissionServiceMock.createSubmission(Mockito.refEq(submissionExists), Mockito.any()))
                 .thenReturn(result);
 
-        Mockito.when(submissionServiceMock.createSubmission(Mockito.refEq(submissionError))).thenThrow(new EfilingSubmissionServiceException("Nooooooo", new Throwable()));
+        Mockito.when(submissionServiceMock.createSubmission(Mockito.refEq(submissionError), Mockito.any())).thenThrow(new EfilingSubmissionServiceException("Nooooooo", new Throwable()));
 
         FilingPackageMapper filingPackageMapper = new FilingPackageMapperImpl();
         sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationPropertiesMock, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper);
