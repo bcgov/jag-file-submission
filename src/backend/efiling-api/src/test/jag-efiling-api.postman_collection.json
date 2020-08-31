@@ -41,7 +41,7 @@
               },
               "response": [
                 {
-                  "name": "Config not foun",
+                  "name": "Config not found",
                   "originalRequest": {
                     "method": "GET",
                     "header": [
