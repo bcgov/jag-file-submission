@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingapi.submission.service;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.payment.BamboraPaymentAdapter;
+import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.EfilingFilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Court;
@@ -75,13 +76,13 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     @Override
-    public Submission generateFromRequest(UUID transactionId, UUID submissionId, UUID universalId, GenerateUrlRequest generateUrlRequest) {
+    public Submission generateFromRequest(SubmissionKey submissionKey, GenerateUrlRequest generateUrlRequest) {
 
         Optional<Submission> cachedSubmission = submissionStore.put(
                 submissionMapper.toSubmission(
-                        universalId,
-                        submissionId,
-                        transactionId,
+                        submissionKey.getUniversalId(),
+                        submissionKey.getSubmissionId(),
+                        submissionKey.getTransactionId(),
                         generateUrlRequest,
                         toFilingPackage(generateUrlRequest),
                         getExpiryDate(),

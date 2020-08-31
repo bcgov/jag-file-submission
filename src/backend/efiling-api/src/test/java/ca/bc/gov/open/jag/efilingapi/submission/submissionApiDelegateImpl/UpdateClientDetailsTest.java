@@ -74,7 +74,7 @@ public class UpdateClientDetailsTest {
                         .create())
                 .create();
 
-        Mockito.when(submissionStoreMock.get(Mockito.eq(TestHelpers.CASE_2), Mockito.any())).thenReturn(Optional.of(submissionWithCsoAccount));
+        Mockito.when(submissionStoreMock.get(ArgumentMatchers.argThat(x -> x.getSubmissionId().equals(TestHelpers.CASE_2)))).thenReturn(Optional.of(submissionWithCsoAccount));
 
         Mockito.doNothing().when(accountServiceMock).updateClient(
                 ArgumentMatchers.argThat(x -> x.getInternalClientNumber().equals(INTERNAL_CLIENT_NUMBER))

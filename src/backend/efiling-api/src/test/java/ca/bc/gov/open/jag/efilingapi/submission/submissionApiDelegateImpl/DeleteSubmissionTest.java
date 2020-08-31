@@ -12,6 +12,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import org.junit.jupiter.api.*;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -47,7 +48,7 @@ public class DeleteSubmissionTest {
         MockitoAnnotations.initMocks(this);
 
         Mockito.doNothing().when(documentStoreMock).evict(Mockito.any());
-        Mockito.doNothing().when(submissionStoreMock).evict(Mockito.any(), Mockito.any());
+        Mockito.doNothing().when(submissionStoreMock).evict(Mockito.any());
 
         Submission submission = Submission
                 .builder()
@@ -55,7 +56,7 @@ public class DeleteSubmissionTest {
                 .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), createDocumentList(), TestHelpers.createPartyList()))
                 .create();
 
-        Mockito.when(submissionStoreMock.get(Mockito.eq(TestHelpers.CASE_1), Mockito.any())).thenReturn(Optional.of(submission));
+        Mockito.when(submissionStoreMock.get(ArgumentMatchers.argThat(x -> x.getSubmissionId().equals(TestHelpers.CASE_1)))).thenReturn(Optional.of(submission));
 
 
         NavigationProperties navigationProperties = new NavigationProperties();
