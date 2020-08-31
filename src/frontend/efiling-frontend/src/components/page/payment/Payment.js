@@ -28,9 +28,9 @@ const setBamboraCSORelation = (submissionId) => {
   };
 
   axios
-    .post(`/submission/${submissionId}/set-cso-bambora-relation`, data)
-    .then(() =>
-      sessionStorage.setItem("internalClientNumber", data.internalClientNumber)
+    .put("/csoAccount", data)
+    .then(({ data: { internalClientNumber } }) =>
+      sessionStorage.setItem("internalClientNumber", internalClientNumber)
     )
     .catch((err) => errorRedirect(sessionStorage.getItem("errorUrl"), err));
 };
