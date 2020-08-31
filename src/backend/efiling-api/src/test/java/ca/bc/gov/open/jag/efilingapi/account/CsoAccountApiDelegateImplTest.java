@@ -5,7 +5,6 @@ import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.CreateCsoAccountRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.CsoAccount;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
-import ca.bc.gov.open.jag.efilingapi.api.model.UserFullDetails;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
@@ -26,6 +25,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -33,10 +33,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DisplayName("CsoAccountApiDelegateImpl Test Suite")
 public class CsoAccountApiDelegateImplTest {
 
-    public static final String LAST_NAME = "lastName";
-    public static final String MIDDLE_NAME = "middleName";
-    public static final String EMAIL = "email@email.com";
-    public static final String FIRST_NAME = "firstName";
+    private static final String LAST_NAME = "lastName";
+    private static final String MIDDLE_NAME = "middleName";
+    private static final String EMAIL = "email@email.com";
+    private static final String FIRST_NAME = "firstName";
+    private static final String INTERNAL_CLIENT_NUMBER = "123456";
+
     private CsoAccountApiDelegateImpl sut;
 
     @Mock
@@ -65,6 +67,10 @@ public class CsoAccountApiDelegateImplTest {
         AccountDetails accountDetails = AccountDetails.builder()
                 .fileRolePresent(true)
                 .accountId(BigDecimal.ONE)
+                .clientId(BigDecimal.TEN)
+                .cardRegistered(true)
+                .universalId(UUID.randomUUID())
+                .internalClientNumber(INTERNAL_CLIENT_NUMBER)
                 .universalId(TestHelpers.CASE_1).create();
 
         Mockito
@@ -114,14 +120,13 @@ public class CsoAccountApiDelegateImplTest {
         request.setMiddleName(MIDDLE_NAME);
         request.setEmail(EMAIL);
         request.setFirstName(FIRST_NAME);
-        ResponseEntity<UserFullDetails> actual = sut.createAccount(TestHelpers.CASE_1, request);
+        ResponseEntity<CsoAccount> actual = sut.createAccount(TestHelpers.CASE_1, request);
 
         Assertions.assertEquals(HttpStatus.CREATED, actual.getStatusCode());
-        Assertions.assertEquals(TestHelpers.CASE_1, actual.getBody().getUniversalId());
-        Assertions.assertEquals(LAST_NAME, actual.getBody().getLastName());
-        Assertions.assertEquals(MIDDLE_NAME, actual.getBody().getMiddleName());
-        Assertions.assertEquals(EMAIL, actual.getBody().getEmail());
-        Assertions.assertEquals(FIRST_NAME, actual.getBody().getFirstName());
+        Assertions.assertEquals("1", actual.getBody().getAccountId());
+        Assertions.assertEquals("10", actual.getBody().getClientId());
+        Assertions.assertEquals(true, actual.getBody().getFileRolePresent());
+        Assertions.assertEquals(INTERNAL_CLIENT_NUMBER, actual.getBody().getInternalClientNumber());
 
     }
 

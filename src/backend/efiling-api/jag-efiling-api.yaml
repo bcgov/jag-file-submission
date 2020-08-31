@@ -269,7 +269,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserFullDetails"
+                $ref: "#/components/schemas/CsoAccount"
     get:
       summary: Get user CSO account
       operationId: GetCsoAccount
@@ -677,28 +677,6 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Account"
-    UserFullDetails:
-      description: represents a user submitting a filing package with full details
-      allOf:
-        - $ref: "#/components/schemas/UserDetails"
-      required:
-        - firstName
-        - lastName
-        - middleName
-        - email
-      properties:
-        firstName:
-          type: string
-          description: the user first name
-        lastName:
-          type: string
-          description: the user last name
-        middleName:
-          type: string
-          description: the user middle name
-        email:
-          type: string
-          description: the user email address
     Party:
       description: party related to filing package
       properties:

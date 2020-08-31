@@ -40,7 +40,7 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
 
     @Override
     @RolesAllowed("efiling-user")
-    public ResponseEntity<UserFullDetails> createAccount(UUID xTransactionId, CreateCsoAccountRequest createAccountRequest) {
+    public ResponseEntity<CsoAccount> createAccount(UUID xTransactionId, CreateCsoAccountRequest createAccountRequest) {
         
         Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
 
@@ -62,9 +62,7 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
 
             logger.info("Account successfully created");
 
-            UserFullDetails result = totUserDetails(accountDetails);
-
-            return new ResponseEntity<>(result, HttpStatus.CREATED);
+            return new ResponseEntity<>(csoAccountMapper.toCsoAccount(accountDetails), HttpStatus.CREATED);
 
         } catch (EfilingAccountServiceException e) {
 
@@ -93,19 +91,6 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
 
         return ResponseEntity.ok(csoAccountMapper.toCsoAccount(accountDetails));
 
-    }
-
-    private UserFullDetails totUserDetails(AccountDetails accountDetails) {
-
-        // TODO: replace with mapstruct
-
-        UserFullDetails result = new UserFullDetails();
-        result.setUniversalId(accountDetails.getUniversalId());
-        Account csoAccount = new Account();
-        csoAccount.setType(Account.TypeEnum.CSO);
-        csoAccount.setIdentifier(accountDetails.getAccountId().toString());
-        result.addAccountsItem(csoAccount);
-        return result;
     }
 
 }
