@@ -857,7 +857,7 @@
               "host": ["{{baseUrl}}"],
               "path": ["csoAccount"]
             },
-            "description": "In order to create an account, an item with type BCEID is required in the accounts field."
+            "description": "In order to create an account, an item with type BCeID is required in the accounts field."
           },
           "response": [
             {
