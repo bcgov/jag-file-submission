@@ -21,7 +21,7 @@ import static org.mockito.ArgumentMatchers.any;
 public class AccountServiceImplTest {
 
     private static final String INTERNAL_CLIENT_NUMBER = "123456";
-    private static final Object FAIL_INTERNAL_CLIENT_NUMBER = "234567";
+    private static final String FAIL_INTERNAL_CLIENT_NUMBER = "234567";
 
     private AccountServiceImpl sut;
 
