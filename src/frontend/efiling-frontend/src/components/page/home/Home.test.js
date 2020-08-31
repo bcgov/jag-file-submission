@@ -52,12 +52,10 @@ describe("Home", () => {
   const component = <Home page={page} />;
 
   test("Component matches the snapshot when user cso account exists", async () => {
-    mock
-      .onGet("/csoAccount")
-      .reply(200, {
-        clientId: userDetails.clientId,
-        internalClientNumber: userDetails.internalClientNumber,
-      });
+    mock.onGet("/csoAccount").reply(200, {
+      clientId: userDetails.clientId,
+      internalClientNumber: userDetails.internalClientNumber,
+    });
     mock
       .onGet(getFilingPackagePath)
       .reply(200, { documents, court, submissionFeeAmount });
@@ -157,12 +155,10 @@ describe("Home", () => {
   });
 
   test("clicking cancel opens confirmation popup and clicking confirm takes user back to client app", async () => {
-    mock
-      .onGet("csoAccount")
-      .reply(200, {
-        clientId: userDetails.clientId,
-        internalClientNumber: userDetails.internalClientNumber,
-      });
+    mock.onGet("csoAccount").reply(200, {
+      clientId: userDetails.clientId,
+      internalClientNumber: userDetails.internalClientNumber,
+    });
     mock.onGet("/bceidAccount").reply(200, {
       firstName: "User",
       lastName: "Name",

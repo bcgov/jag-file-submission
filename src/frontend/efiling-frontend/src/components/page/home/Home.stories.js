@@ -58,12 +58,10 @@ const AccountExistsStateData = (props) => {
   setRequiredStorage();
   const mock = new MockAdapter(axios);
   mock.onGet(apiRequest).reply(200, { navigation, clientApplication });
-  mock
-    .onGet("csoAccount")
-    .reply(200, {
-      clientId: userDetails.clientId,
-      internalClientNumber: userDetails.internalClientNumber,
-    });
+  mock.onGet("csoAccount").reply(200, {
+    clientId: userDetails.clientId,
+    internalClientNumber: userDetails.internalClientNumber,
+  });
   mock
     .onGet(getFilingPackagePath)
     .reply(200, { documents, court, submissionFeeAmount });
