@@ -24,18 +24,4 @@ public interface ServiceMapper {
     @Mapping(target = "serviceSessionId", source = "serviceSession.serviceSessionId")
     Service  toCreateService(FilingPackage filingPackage, AccountDetails accountDetails, ServiceSession serviceSession);
 
-
-    @Mapping(target = "accountId", source = "accountDetails.accountId")
-    @Mapping(target = "clientId", source = "accountDetails.clientId")
-    @Mapping(target = "entDtm", qualifiedByName= {"DateMapper", "toCurrentDateTime"})
-    @Mapping(target = "courtFileNo", source = "filingPackage.court.fileNumber")
-    @Mapping(target = "entUserId", source = "accountDetails.clientId")
-    @Mapping(target = "serviceReceivedDtm", qualifiedByName= {"DateMapper", "toCurrentDateTime"})
-    @Mapping(target = "serviceSubtypeCd", constant = Keys.SERVICE_SUBTYPE_CD)
-    @Mapping(target = "serviceTypeCd", constant = Keys.SERVICE_TYPE_CD)
-    @Mapping(target = "feePaidYn", constant = "false")
-    @Mapping(target = "userSessionId", source = "serviceSession.userSessionId")
-    @Mapping(target = "serviceSessionId", source = "serviceSession.serviceSessionId")
-    Service  toCreateService(FilingPackage filingPackage, AccountDetails accountDetails, ServiceSession serviceSession);
-
 }
