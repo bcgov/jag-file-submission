@@ -98,10 +98,10 @@ public class GetPackageInformationTest {
     }
     private List<Document> createDocumentListWithNulls() {
         return Arrays.asList(ca.bc.gov.open.jag.efilingapi.submission.models.Document.builder()
-                .description("description")
+                .description(TestHelpers.DESCRIPTION)
                 .statutoryFeeAmount(BigDecimal.TEN)
                 .name("random.txt")
-                .type("type")
+                .type(TestHelpers.TYPE)
                 .subType(SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD)
                 .mimeType("application/txt")
                 .isSupremeCourtScheduling(null)
