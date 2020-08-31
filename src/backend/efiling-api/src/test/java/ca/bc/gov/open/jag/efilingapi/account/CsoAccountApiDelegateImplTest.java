@@ -227,6 +227,22 @@ public class CsoAccountApiDelegateImplTest {
     public void updateAccountWithUserHavingCsoAccountShouldReturnUserDetailsAndAccount() {
 
         Map<String, Object> otherClaims = new HashMap<>();
+        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_1);
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
+        CsoAccountUpdateRequest clientUpdateRequest = new CsoAccountUpdateRequest();
+        clientUpdateRequest.setInternalClientNumber(INTERNAL_CLIENT_NUMBER);
+
+        ResponseEntity<CsoAccount> actual = sut.updateCsoAccount(TestHelpers.CASE_1, clientUpdateRequest);
+        assertEquals(HttpStatus.OK, actual.getStatusCode());
+
+    }
+
+    @Test
+    @DisplayName("403: With user not having cso account should return forbidden")
+    public void updateAccountWithUserHavingNoCsoAccountShouldReturnForbidden() {
+
+        Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
@@ -234,7 +250,7 @@ public class CsoAccountApiDelegateImplTest {
         clientUpdateRequest.setInternalClientNumber(INTERNAL_CLIENT_NUMBER);
 
         ResponseEntity<CsoAccount> actual = sut.updateCsoAccount(TestHelpers.CASE_2, clientUpdateRequest);
-        assertEquals(HttpStatus.OK, actual.getStatusCode());
+        assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
 
     }
 
@@ -243,7 +259,7 @@ public class CsoAccountApiDelegateImplTest {
     public void updateAccountWithExceptionShouldReturn500() {
 
         Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
+        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_1);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
         CsoAccountUpdateRequest clientUpdateRequest = new CsoAccountUpdateRequest();
