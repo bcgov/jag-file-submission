@@ -175,7 +175,7 @@ public class CacheConfiguration {
 
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
                 .disableCachingNullValues()
-                .entryTtl(Duration.ofHours(24))
+                .entryTtl(Duration.ofMinutes(15))
                 .serializeValuesWith(RedisSerializationContext
                         .SerializationPair.fromSerializer(accountDetailsSerializer));;
 
