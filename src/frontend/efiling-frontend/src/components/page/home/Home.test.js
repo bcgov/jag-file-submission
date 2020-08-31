@@ -154,6 +154,23 @@ describe("Home", () => {
     );
   });
 
+  test("Redirects back to client app when GET csoAccount call gets non 404 error response", async () => {
+    sessionStorage.setItem("errorUrl", "error.com");
+
+    mock.onGet("csoAccount").reply(500, {
+      message: "There was an error",
+    });
+
+    render(component);
+
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalledWith(
+      "error.com?status=400&message=There was an error.",
+      "_self"
+    );
+  });
+
   test("clicking cancel opens confirmation popup and clicking confirm takes user back to client app", async () => {
     mock.onGet("csoAccount").reply(200, {
       clientId: userDetails.clientId,

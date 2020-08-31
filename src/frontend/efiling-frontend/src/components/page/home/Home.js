@@ -72,21 +72,25 @@ const checkCSOAccountStatus = (
           sessionStorage.setItem("csoAccountId", clientId);
           setCsoAccountStatus({ isNew: false, exists: true });
         })
-        .catch(() => {
-          axios
-            .get("/bceidAccount")
-            .then(({ data: { firstName, middleName, lastName } }) => {
-              setRequiredState(
-                firstName,
-                middleName,
-                lastName,
-                setApplicantInfo,
-                setShowLoader
+        .catch((err) => {
+          if (err.response.status !== 404)
+            errorRedirect(sessionStorage.getItem("errorUrl"), err);
+          else {
+            axios
+              .get("/bceidAccount")
+              .then(({ data: { firstName, middleName, lastName } }) => {
+                setRequiredState(
+                  firstName,
+                  middleName,
+                  lastName,
+                  setApplicantInfo,
+                  setShowLoader
+                );
+              })
+              .catch((err) =>
+                errorRedirect(sessionStorage.getItem("errorUrl"), err)
               );
-            })
-            .catch((err) =>
-              errorRedirect(sessionStorage.getItem("errorUrl"), err)
-            );
+          }
         });
     })
     .catch((error) => {
