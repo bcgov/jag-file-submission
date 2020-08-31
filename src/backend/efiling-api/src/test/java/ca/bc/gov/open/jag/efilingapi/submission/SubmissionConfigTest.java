@@ -147,6 +147,5 @@ public class SubmissionConfigTest {
             return null;
         }
     }
-
-
+    
 }
