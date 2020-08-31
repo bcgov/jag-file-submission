@@ -15,7 +15,7 @@ public class SubmissionStoreImpl implements SubmissionStore {
 
 
     @Override
-    @CachePut(cacheNames = "submission", key = "{ #submission.id, #submission.transactionId }", cacheManager = "submissionCacheManager")
+    @CachePut(cacheNames = "submission", key = "{ #submission.universalId,  #submission.id, #submission.transactionId }", cacheManager = "submissionCacheManager")
     public Optional<Submission> put(Submission submission) {
         return Optional.of(submission);
     }
@@ -27,7 +27,7 @@ public class SubmissionStoreImpl implements SubmissionStore {
     }
 
     @Override
-    @CacheEvict(cacheNames = "submission", key = "{ #submissionKey.universalId, #SubmissionKey.submissionId, #SubmissionKey.transactionId }", cacheManager = "submissionCacheManager")
+    @CacheEvict(cacheNames = "submission", key = "{ #submissionKey.universalId, #submissionKey.submissionId, #submissionKey.transactionId }", cacheManager = "submissionCacheManager")
     public void evict(SubmissionKey submissionKey) {
         //This implements Redis delete no code required
     }
