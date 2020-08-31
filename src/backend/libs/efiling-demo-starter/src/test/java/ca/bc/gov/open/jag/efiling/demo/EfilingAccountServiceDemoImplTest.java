@@ -34,8 +34,6 @@ public class EfilingAccountServiceDemoImplTest {
 
          AccountDetails actual = sut.createAccount(CreateAccountRequest.builder().universalId(ACCOUNT_ID).firstName(FIRST_NAME).create());
          Assertions.assertEquals(ACCOUNT_ID, actual.getUniversalId());
-         Assertions.assertEquals(FIRST_NAME, actual.getFirstName());
-
     }
 
     @Test

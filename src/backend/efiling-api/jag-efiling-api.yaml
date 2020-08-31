@@ -38,6 +38,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UploadSubmissionDocumentsResponse"
+  "/submission/{submissionId}":
+    parameters:
+      - $ref: "#/components/parameters/submissionId"
+      - $ref: "#/components/parameters/xTransactionId"
+    delete:
+      summary: Delete a submission by id
+      operationId: DeleteSubmission
+      tags:
+        - submission
+      responses:
+        "200":
+          description: submission deleted
   "/submission/{submissionId}/documents":
     post:
       summary: Additional documents upload
@@ -90,13 +102,13 @@ paths:
                 $ref: "#/components/schemas/UpdateDocumentResponse"
         "404":
           description: Submission not found
-  "/submission/{submissionId}":
+  "/submission/{submissionId}/config":
     parameters:
       - $ref: "#/components/parameters/submissionId"
       - $ref: "#/components/parameters/xTransactionId"
     get:
-      summary: Get user detail for a given submission
-      operationId: GetSubmission
+      summary: Get configuration for a given submission
+      operationId: GetSubmissionConfig
       tags:
         - submission
       responses:
@@ -105,17 +117,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GetSubmissionResponse"
+                $ref: "#/components/schemas/GetSubmissionConfigResponse"
         "404":
           description: Config not found
-    delete:
-      summary: Delete a submission by id
-      operationId: DeleteSubmission
-      tags:
-        - submission
-      responses:
-        "200":
-          description: submission deleted
   "/submission/{submissionId}/generateUrl":
     post:
       summary: Generates a secure URL for e-filing submission
@@ -269,7 +273,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserFullDetails"
+                $ref: "#/components/schemas/CsoAccount"
     get:
       summary: Get user CSO account
       operationId: GetCsoAccount
@@ -387,17 +391,6 @@ components:
         type: string
         format: uuid
   schemas:
-    Account:
-      type: object
-      description: represents a user account
-      properties:
-        type:
-          type: string
-          enum: [BCEID, CSO]
-          description: the account type
-        identifier:
-          type: string
-          description: the account identifier
     BceidAccount:
       type: object
       description: BCeID account details
@@ -464,8 +457,8 @@ components:
       description: details about the required transaction
       required:
         - clientApplication
+        - filingPackage
         - navigation
-        - documentProperties
       properties:
         clientApplication:
           $ref: "#/components/schemas/ClientApplication"
@@ -481,14 +474,12 @@ components:
           format: int64
         efilingUrl:
           type: string
-    GetSubmissionResponse:
+    GetSubmissionConfigResponse:
       type: object
       required:
-        - userDetails
         - navigation
+        - clientApplication
       properties:
-        userDetails:
-          $ref: "#/components/schemas/UserDetails"
         navigation:
           $ref: "#/components/schemas/Navigation"
         clientApplication:
@@ -508,6 +499,10 @@ components:
     InitialPackage:
       type: object
       description: A filing package can contain one or multiple documents that have or are being submitted electronically for new or existing court file.
+      required:
+        - documents
+        - court
+        - parties
       properties:
         documents:
           type: array
@@ -515,6 +510,10 @@ components:
             $ref: "#/components/schemas/DocumentProperties"
         court:
           $ref: "#/components/schemas/CourtBase"
+        parties:
+          type: array
+          items:
+            $ref: "#/components/schemas/Party"
     FilingPackage:
       type: object
       description: A filing package can contain one or multiple documents that have or are being submitted electronically for new or existing court file.
@@ -605,10 +604,6 @@ components:
         - clientId
         - accountId
         - internalClientNumber
-        - firstName
-        - lastName
-        - middleName
-        - email
         - fileRolePresent
       properties:
         clientId:
@@ -620,18 +615,6 @@ components:
         internalClientNumber:
           type: string
           description: the user cso internal client number
-        firstName:
-          type: string
-          description: the user cso first name
-        lastName:
-          type: string
-          description: the user cso last name
-        middleName:
-          type: string
-          description: the user cso middle name
-        email:
-          type: string
-          description: the user cso email
         fileRolePresent:
           type: boolean
           description: if the user as file role
@@ -667,46 +650,6 @@ components:
         received:
           type: number
           description: the number of document received
-    UserDetails:
-      description: represents a user submitting a filing package
-      type: object
-      required:
-        - universalId
-        - internalClientNumber
-      properties:
-        universalId:
-          type: string
-          format: uuid
-          description: the user universal identifier
-        internalClientNumber:
-          type: string
-          description: bambora id if client has a registered card
-        accounts:
-          type: array
-          items:
-            $ref: "#/components/schemas/Account"
-    UserFullDetails:
-      description: represents a user submitting a filing package with full details
-      allOf:
-        - $ref: "#/components/schemas/UserDetails"
-      required:
-        - firstName
-        - lastName
-        - middleName
-        - email
-      properties:
-        firstName:
-          type: string
-          description: the user first name
-        lastName:
-          type: string
-          description: the user last name
-        middleName:
-          type: string
-          description: the user middle name
-        email:
-          type: string
-          description: the user email address
     Party:
       description: party related to filing package
       properties:

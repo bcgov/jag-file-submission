@@ -2,18 +2,18 @@ package ca.bc.gov.open.jag.efilingapi.account;
 
 import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
+import ca.bc.gov.open.jag.efilingapi.account.mappers.CsoAccountMapper;
+import ca.bc.gov.open.jag.efilingapi.account.mappers.CsoAccountMapperImpl;
+import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.CreateCsoAccountRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.CsoAccount;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
-import ca.bc.gov.open.jag.efilingapi.api.model.UserFullDetails;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import org.junit.jupiter.api.*;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
 import org.keycloak.representations.AccessToken;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -26,6 +26,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -33,14 +34,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DisplayName("CsoAccountApiDelegateImpl Test Suite")
 public class CsoAccountApiDelegateImplTest {
 
-    public static final String LAST_NAME = "lastName";
-    public static final String MIDDLE_NAME = "middleName";
-    public static final String EMAIL = "email@email.com";
-    public static final String FIRST_NAME = "firstName";
+    private static final String LAST_NAME = "lastName";
+    private static final String MIDDLE_NAME = "middleName";
+    private static final String EMAIL = "email@email.com";
+    private static final String FIRST_NAME = "firstName";
+    private static final String INTERNAL_CLIENT_NUMBER = "123456";
+
     private CsoAccountApiDelegateImpl sut;
 
     @Mock
-    private EfilingAccountService efilingAccountServiceMock;
+    private AccountService accountServiceMock;
 
     @Mock
     private SecurityContext securityContextMock;
@@ -65,31 +68,31 @@ public class CsoAccountApiDelegateImplTest {
         AccountDetails accountDetails = AccountDetails.builder()
                 .fileRolePresent(true)
                 .accountId(BigDecimal.ONE)
-                .universalId(TestHelpers.CASE_1)
-                .lastName(LAST_NAME)
-                .firstName(FIRST_NAME)
-                .middleName(MIDDLE_NAME)
-                .email(EMAIL).create();
+                .clientId(BigDecimal.TEN)
+                .cardRegistered(true)
+                .universalId(UUID.randomUUID())
+                .internalClientNumber(INTERNAL_CLIENT_NUMBER)
+                .universalId(TestHelpers.CASE_1).create();
 
         Mockito
                 .doReturn(accountDetails)
-                .when(efilingAccountServiceMock)
-                .createAccount(ArgumentMatchers.argThat(x -> x.getUniversalId().equals(TestHelpers.CASE_1)));
+                .when(accountServiceMock)
+                .createAccount(Mockito.eq(TestHelpers.CASE_1), Mockito.any());
 
         Mockito
                 .doReturn(accountDetails)
-                .when(efilingAccountServiceMock)
-                .getAccountDetails(Mockito.eq(TestHelpers.CASE_1));
+                .when(accountServiceMock)
+                .getCsoAccountDetails(Mockito.eq(TestHelpers.CASE_1));
 
         Mockito
                 .doReturn(null)
-                .when(efilingAccountServiceMock)
-                .getAccountDetails(Mockito.eq(TestHelpers.CASE_2));
+                .when(accountServiceMock)
+                .getCsoAccountDetails(Mockito.eq(TestHelpers.CASE_2));
 
         Mockito
                 .doThrow(new EfilingAccountServiceException("random"))
-                .when(efilingAccountServiceMock)
-                .createAccount(ArgumentMatchers.argThat(x -> x.getUniversalId().equals(TestHelpers.CASE_2)));
+                .when(accountServiceMock)
+                .createAccount(Mockito.eq(TestHelpers.CASE_2), Mockito.any());
 
         Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);
         Mockito.when(authenticationMock.getPrincipal()).thenReturn(keycloakPrincipalMock);
@@ -101,7 +104,7 @@ public class CsoAccountApiDelegateImplTest {
         // Testing mapper in this test
         CsoAccountMapper csoAccountMapper = new CsoAccountMapperImpl();
 
-        sut = new CsoAccountApiDelegateImpl(efilingAccountServiceMock, csoAccountMapper);
+        sut = new CsoAccountApiDelegateImpl(accountServiceMock, csoAccountMapper);
     }
 
 
@@ -118,14 +121,13 @@ public class CsoAccountApiDelegateImplTest {
         request.setMiddleName(MIDDLE_NAME);
         request.setEmail(EMAIL);
         request.setFirstName(FIRST_NAME);
-        ResponseEntity<UserFullDetails> actual = sut.createAccount(TestHelpers.CASE_1, request);
+        ResponseEntity<CsoAccount> actual = sut.createAccount(TestHelpers.CASE_1, request);
 
         Assertions.assertEquals(HttpStatus.CREATED, actual.getStatusCode());
-        Assertions.assertEquals(TestHelpers.CASE_1, actual.getBody().getUniversalId());
-        Assertions.assertEquals(LAST_NAME, actual.getBody().getLastName());
-        Assertions.assertEquals(MIDDLE_NAME, actual.getBody().getMiddleName());
-        Assertions.assertEquals(EMAIL, actual.getBody().getEmail());
-        Assertions.assertEquals(FIRST_NAME, actual.getBody().getFirstName());
+        Assertions.assertEquals("1", actual.getBody().getAccountId());
+        Assertions.assertEquals("10", actual.getBody().getClientId());
+        Assertions.assertEquals(true, actual.getBody().getFileRolePresent());
+        Assertions.assertEquals(INTERNAL_CLIENT_NUMBER, actual.getBody().getInternalClientNumber());
 
     }
 
@@ -180,10 +182,6 @@ public class CsoAccountApiDelegateImplTest {
         ResponseEntity<CsoAccount> actual = sut.getCsoAccount(TestHelpers.CASE_1);
 
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
-        Assertions.assertEquals(LAST_NAME, actual.getBody().getLastName());
-        Assertions.assertEquals(MIDDLE_NAME, actual.getBody().getMiddleName());
-        Assertions.assertEquals(EMAIL, actual.getBody().getEmail());
-        Assertions.assertEquals(FIRST_NAME, actual.getBody().getFirstName());
 
     }
 

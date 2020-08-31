@@ -83,11 +83,6 @@ public class CreateAccountTest {
     @DisplayName("Success account created")
     public void withValidAccountRequestAccountCreated() {
         AccountDetails result = sut.createAccount(createAccountRequest());
-
-        Assertions.assertEquals(FIRST_NAME, result.getFirstName());
-        Assertions.assertEquals(LAST_NAME, result.getLastName());
-        Assertions.assertEquals(MIDDLE_NAME, result.getMiddleName());
-        Assertions.assertEquals(EMAIL, result.getEmail());
         Assertions.assertEquals(UNIVERSAL_ID, result.getUniversalId());
         Assertions.assertTrue(result.isFileRolePresent());
         Assertions.assertEquals(BigDecimal.TEN, result.getAccountId());

@@ -25,7 +25,7 @@ const submissionId = "abc123";
 const transactionId = "trans123";
 const page = { header, confirmationPopup, submissionId, transactionId };
 
-const apiRequest = `/submission/${submissionId}`;
+const apiRequest = `/submission/${submissionId}/config`;
 const getFilingPackagePath = `/submission/${submissionId}/filing-package`;
 const navigation = getNavigationData();
 const documents = getDocumentsData();
@@ -57,9 +57,11 @@ const LoaderStateData = (props) => {
 const AccountExistsStateData = (props) => {
   setRequiredStorage();
   const mock = new MockAdapter(axios);
-  mock
-    .onGet(apiRequest)
-    .reply(200, { userDetails, navigation, clientApplication });
+  mock.onGet(apiRequest).reply(200, { navigation, clientApplication });
+  mock.onGet("csoAccount").reply(200, {
+    clientId: userDetails.clientId,
+    internalClientNumber: userDetails.internalClientNumber,
+  });
   mock
     .onGet(getFilingPackagePath)
     .reply(200, { documents, court, submissionFeeAmount });
@@ -70,10 +72,10 @@ const NoAccountExistsStateData = (props) => {
   setRequiredStorage();
   const mock = new MockAdapter(axios);
   mock.onGet(apiRequest).reply(200, {
-    userDetails: { ...userDetails, accounts: null },
     navigation,
     clientApplication,
   });
+  mock.onGet("csoAccount").reply(404);
   mock.onGet("/bceidAccount").reply(200, {
     firstName: "User",
     lastName: "Name",

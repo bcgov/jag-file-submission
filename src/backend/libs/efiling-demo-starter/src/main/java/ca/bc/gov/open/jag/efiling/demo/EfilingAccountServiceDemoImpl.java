@@ -26,10 +26,6 @@ public class EfilingAccountServiceDemoImpl implements EfilingAccountService {
                 .universalId(createAccountRequest.getUniversalId())
                 .accountId(BigDecimal.ONE)
                 .clientId(BigDecimal.ONE)
-                .email(createAccountRequest.getEmail())
-                .firstName(createAccountRequest.getFirstName())
-                .lastName(createAccountRequest.getLastName())
-                .middleName(createAccountRequest.getMiddleName())
                 .fileRolePresent(createAccountRequest.getUniversalId() != Keys.ACCOUNT_WITHOUT_EFILING_ROLE)
                 .cardRegistered(true)
                 .create();

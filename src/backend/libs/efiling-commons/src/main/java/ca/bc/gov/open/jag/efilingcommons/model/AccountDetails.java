@@ -12,10 +12,6 @@ public class AccountDetails {
     private BigDecimal accountId;
     private BigDecimal clientId;
     private String internalClientNumber;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String middleName;
     private boolean fileRolePresent;
     private boolean cardRegistered;
 
@@ -24,10 +20,6 @@ public class AccountDetails {
         this.universalId = builder.universalId;
         this.accountId = builder.accountId;
         this.clientId = builder.clientId;
-        this.firstName = builder.firstName;
-        this.lastName = builder.lastName;
-        this.email = builder.email;
-        this.middleName = builder.middleName;
         this.fileRolePresent = builder.fileRolePresent;
         this.cardRegistered = builder.cardRegistered;
         this.internalClientNumber = builder.internalClientNumber;
@@ -55,10 +47,6 @@ public class AccountDetails {
         this.accountId = accountId;
         this.clientId = clientId;
         this.internalClientNumber = internalClientNumber;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.middleName = middleName;
         this.fileRolePresent = fileRolePresent;
         this.cardRegistered = cardRegistered;
     }
@@ -77,22 +65,6 @@ public class AccountDetails {
 
     public String getInternalClientNumber() { return internalClientNumber; }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getMiddleName() {
-        return middleName;
-    }
-
     public boolean isFileRolePresent() {
         return fileRolePresent;
     }
@@ -109,10 +81,6 @@ public class AccountDetails {
         private BigDecimal accountId;
         private BigDecimal clientId;
         private String internalClientNumber;
-        private String firstName;
-        private String lastName;
-        private String email;
-        private String middleName;
         private boolean fileRolePresent;
         private boolean cardRegistered;
 
@@ -134,26 +102,6 @@ public class AccountDetails {
 
         public Builder internalClientNumber(String internalClientNumber) {
             this.internalClientNumber = internalClientNumber;
-            return this;
-        }
-
-        public Builder firstName(String firstName) {
-            this.firstName = firstName;
-            return this;
-        }
-
-        public Builder lastName(String lastName) {
-            this.lastName = lastName;
-            return this;
-        }
-
-        public Builder email(String email) {
-            this.email = email;
-            return this;
-        }
-
-        public Builder middleName(String middleName) {
-            this.middleName = middleName;
             return this;
         }
 

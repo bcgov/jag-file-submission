@@ -1,7 +1,8 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service.submissionServiceImpl;
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
-import ca.bc.gov.open.jag.efilingapi.api.model.*;
+import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
+import ca.bc.gov.open.jag.efilingapi.api.model.UpdateDocumentRequest;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
@@ -12,7 +13,6 @@ import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
-import ca.bc.gov.open.sftp.starter.SftpService;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -20,7 +20,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 
 import static org.mockito.ArgumentMatchers.any;
 
@@ -69,11 +68,7 @@ public class updateDocumentsTest {
         documentProperties.setName("test.txt");
         updateDocumentRequest.addDocumentsItem(documentProperties);
 
-        Submission submission = Submission
-                .builder()
-                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), new ArrayList<Document>(TestHelpers.createDocumentList()), TestHelpers.createPartyList()))
-                .navigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
-                .create();
+        Submission submission = TestHelpers.buildSubmission();
         Submission actual = sut.updateDocuments(submission, updateDocumentRequest);
 
         Assertions.assertEquals(2, actual.getFilingPackage().getDocuments().size());

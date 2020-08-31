@@ -3,8 +3,10 @@ package ca.bc.gov.open.jag.efilingapi.submission.service;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.payment.BamboraPaymentAdapter;
+import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.EfilingFilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
+import ca.bc.gov.open.jag.efilingapi.submission.models.Court;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.utils.FileUtils;
@@ -25,8 +27,6 @@ import java.text.MessageFormat;
 import java.time.Duration;
 import java.util.*;
 import java.util.stream.Collectors;
-
-
 
 public class SubmissionServiceImpl implements SubmissionService {
 
@@ -76,19 +76,19 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     @Override
-    public Submission generateFromRequest(UUID transactionId, UUID submissionId, UUID universalId, GenerateUrlRequest generateUrlRequest) {
+    public Submission generateFromRequest(SubmissionKey submissionKey, GenerateUrlRequest generateUrlRequest) {
 
         Optional<Submission> cachedSubmission = submissionStore.put(
                 submissionMapper.toSubmission(
-                        universalId,
-                        submissionId,
-                        transactionId,
+                        submissionKey.getUniversalId(),
+                        submissionKey.getSubmissionId(),
+                        submissionKey.getTransactionId(),
                         generateUrlRequest,
                         toFilingPackage(generateUrlRequest),
                         getExpiryDate(),
                         isRushedSubmission(generateUrlRequest)));
 
-        if(!cachedSubmission.isPresent())
+        if (!cachedSubmission.isPresent())
             throw new StoreException("exception while storing submission object");
 
         return cachedSubmission.get();
@@ -97,9 +97,9 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private boolean isRushedSubmission(GenerateUrlRequest generateUrlRequest) {
 
-        for(DocumentProperties documentProperties: generateUrlRequest.getFilingPackage().getDocuments()) {
+        for (DocumentProperties documentProperties : generateUrlRequest.getFilingPackage().getDocuments()) {
             DocumentDetails documentDetails = documentStore.getDocumentDetails(generateUrlRequest.getFilingPackage().getCourt().getLevel(), generateUrlRequest.getFilingPackage().getCourt().getCourtClass(), documentProperties.getType());
-            if(documentDetails.isRushRequired()) return true;
+            if (documentDetails.isRushRequired()) return true;
         }
         return false;
     }
@@ -112,95 +112,102 @@ public class SubmissionServiceImpl implements SubmissionService {
         EfilingService service = efilingFilingPackageMapper.toEfilingService(submission);
         service.setEntryDateTime(DateUtils.getCurrentXmlDate());
 
-        List<Party> parties = new ArrayList();
+        List<ca.bc.gov.open.jag.efilingapi.submission.models.Party> parties = new ArrayList();
         if (submission.getFilingPackage().getParties() != null)
             parties.addAll(submission.getFilingPackage().getParties());
 
         EfilingFilingPackage filingPackage = efilingFilingPackageMapper.toEfilingFilingPackage(submission,
                 parties.stream()
-                    .map(party -> efilingFilingPackageMapper.toEfilingParties(submission, party, String.valueOf(submission.getFilingPackage().getParties().indexOf(party))))
-                    .collect(Collectors.toList()));
+                        .map(party -> efilingFilingPackageMapper.toEfilingParties(submission, party, String.valueOf(submission.getFilingPackage().getParties().indexOf(party))))
+                        .collect(Collectors.toList()));
         filingPackage.setPackageControls(Arrays.asList(efilingFilingPackageMapper.toPackageAuthority(submission)));
         filingPackage.setDocuments(submission.getFilingPackage().getDocuments().stream()
-                                        .map(document -> efilingFilingPackageMapper.toEfilingDocument(document, submission,
-                                                Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentMilestone(document, submission)),
-                                                Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentPayment(document, submission)),
-                                                Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentStatus(document, submission)),
-                                                MessageFormat.format("fh_{0}_{1}_{2}", submission.getId(), submission.getUniversalId(), document.getName())))
-                                        .collect(Collectors.toList()));
+                .map(document -> efilingFilingPackageMapper.toEfilingDocument(document, submission,
+                        Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentMilestone(document, submission)),
+                        Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentPayment(document, submission)),
+                        Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentStatus(document, submission)),
+                        MessageFormat.format("fh_{0}_{1}_{2}", submission.getId(), submission.getUniversalId(), document.getName())))
+                .collect(Collectors.toList()));
         filingPackage.setEntDtm(DateUtils.getCurrentXmlDate());
         filingPackage.setSubmitDtm(DateUtils.getCurrentXmlDate());
         SubmitResponse result = new SubmitResponse();
-        result.transactionId(efilingSubmissionService.submitFilingPackage(service, filingPackage, submission.isRushedSubmission(), (efilingPayment) -> {
-            return bamboraPaymentAdapter.makePayment(efilingPayment);
-        }));
+        result.transactionId(
+                efilingSubmissionService
+                        .submitFilingPackage(
+                                service,
+                                filingPackage,
+                                submission.isRushedSubmission(),
+                                efilingPayment -> bamboraPaymentAdapter.makePayment(efilingPayment)));
         return result;
     }
 
     @Override
     public Submission updateDocuments(Submission submission, UpdateDocumentRequest updateDocumentRequest) {
 
-        submission.getFilingPackage().getDocuments()
-                .addAll(
-                        updateDocumentRequest.getDocuments()
-                        .stream()
-                        .map(documentProperties -> toDocument(
-                            submission.getFilingPackage().getCourt().getLevel(),
-                            submission.getFilingPackage().getCourt().getCourtClass(),
-                            documentProperties))
-                        .collect(Collectors.toList()));
+
+
+
+        updateDocumentRequest.getDocuments().stream().forEach(documentProperties -> {
+            submission.getFilingPackage().addDocument(toDocument(
+                    submission.getFilingPackage().getCourt().getLevel(),
+                    submission.getFilingPackage().getCourt().getCourtClass(),
+                    documentProperties));
+        });
+
+        submissionStore.put(submission);
+
         return submission;
     }
 
-    private FilingPackage toFilingPackage(GenerateUrlRequest request) {
+    private ca.bc.gov.open.jag.efilingapi.submission.models.FilingPackage toFilingPackage(GenerateUrlRequest request) {
 
-        FilingPackage filingPackage = new FilingPackage();
-        filingPackage.setCourt(populateCourtDetails(request.getFilingPackage().getCourt()));
-        filingPackage.setSubmissionFeeAmount(getSubmissionFeeAmount());
-        filingPackage.setDocuments(request.getFilingPackage()
+        return ca.bc.gov.open.jag.efilingapi.submission.models.FilingPackage.builder()
+                        .court(populateCourtDetails(request.getFilingPackage().getCourt()))
+        .submissionFeeAmount(getSubmissionFeeAmount())
+                .documents(request.getFilingPackage()
                 .getDocuments()
                 .stream()
                 .map(documentProperties -> toDocument(
                         request.getFilingPackage().getCourt().getLevel(),
                         request.getFilingPackage().getCourt().getCourtClass(),
                         documentProperties))
-                .collect(Collectors.toList()));
-        return filingPackage;
+                .collect(Collectors.toList())).create();
 
     }
 
     private Court populateCourtDetails(CourtBase courtBase) {
-        Court court = new Court();
-        CourtDetails courtDetails = efilingCourtService.getCourtDescription(courtBase.getLocation(), courtBase.getLevel(), courtBase.getCourtClass());
-        court.setLocation(courtBase.getLocation());
-        court.setLevel(courtBase.getLevel());
-        court.setCourtClass(courtBase.getCourtClass());
-        court.setDivision(courtBase.getDivision());
-        court.setFileNumber(courtBase.getFileNumber());
 
-        court.setAgencyId(courtDetails.getCourtId());
-        court.setLocationDescription(courtDetails.getCourtDescription());
-        court.setClassDescription(courtDetails.getClassDescription());
-        court.setLevelDescription(courtDetails.getLevelDescription());
-        return court;
+        CourtDetails courtDetails = efilingCourtService.getCourtDescription(courtBase.getLocation(), courtBase.getLevel(), courtBase.getCourtClass());
+
+        return Court
+                .builder()
+                .location(courtBase.getLocation())
+                .level(courtBase.getLevel())
+                .courtClass(courtBase.getCourtClass())
+                .division(courtBase.getDivision())
+                .fileNumber(courtBase.getFileNumber())
+                .agencyId(courtDetails.getCourtId())
+                .locationDescription(courtDetails.getCourtDescription())
+                .classDescription(courtDetails.getClassDescription())
+                .levelDescription(courtDetails.getLevelDescription())
+                .create();
     }
 
-    private Document toDocument(String courtLevel, String courtClass, DocumentProperties documentProperties) {
-
-        Document document = new Document();
+    private ca.bc.gov.open.jag.efilingapi.submission.models.Document toDocument(String courtLevel, String courtClass, DocumentProperties documentProperties) {
 
         DocumentDetails details = documentStore.getDocumentDetails(courtLevel, courtClass, documentProperties.getType());
 
-        document.setDescription(details.getDescription());
-        document.setStatutoryFeeAmount(details.getStatutoryFeeAmount());
-        document.setType(documentProperties.getType());
-        document.setName(documentProperties.getName());
-        document.setMimeType(FileUtils.guessContentTypeFromName(documentProperties.getName()));
-        document.setIsAmendment(documentProperties.getIsAmendment());
-        document.setIsSupremeCourtScheduling(documentProperties.getIsSupremeCourtScheduling());
-        document.setSubType(details.getOrderDocument() ? SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD : SubmissionConstants.SUBMISSION_ODOC_DOCUMENT_SUB_TYPE_CD);
-
-        return document;
+        return
+                ca.bc.gov.open.jag.efilingapi.submission.models.Document.builder()
+                        .description(details.getDescription())
+                        .statutoryFeeAmount(details.getStatutoryFeeAmount())
+                        .type(documentProperties.getType())
+                        .name(documentProperties.getName())
+                        .mimeType(FileUtils.guessContentTypeFromName(documentProperties.getName()))
+                        .isAmendment(documentProperties.getIsAmendment())
+                        .isSupremeCourtScheduling(documentProperties.getIsSupremeCourtScheduling())
+                        .subType(details.getOrderDocument() ? SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD : SubmissionConstants.SUBMISSION_ODOC_DOCUMENT_SUB_TYPE_CD)
+                        .create();
 
     }
 
