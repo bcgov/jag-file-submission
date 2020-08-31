@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 
+import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
@@ -12,17 +13,26 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import org.junit.jupiter.api.*;
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.KeycloakSecurityContext;
+import org.keycloak.representations.AccessToken;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
 import static ca.bc.gov.open.jag.efilingapi.TestHelpers.createDocumentList;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class DeleteSubmissionTest {
@@ -41,14 +51,36 @@ public class DeleteSubmissionTest {
     @Mock
     private AccountService accountServiceMock;
 
+    @Mock
+    private SecurityContext securityContextMock;
 
-    @BeforeAll
+    @Mock
+    private Authentication authenticationMock;
+
+    @Mock
+    private KeycloakPrincipal keycloakPrincipalMock;
+
+    @Mock
+    private KeycloakSecurityContext keycloakSecurityContextMock;
+
+    @Mock
+    private AccessToken tokenMock;
+
+
+    @BeforeEach
     public void setUp() {
 
         MockitoAnnotations.initMocks(this);
 
         Mockito.doNothing().when(documentStoreMock).evict(Mockito.any());
         Mockito.doNothing().when(submissionStoreMock).evict(Mockito.any());
+
+        Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(keycloakPrincipalMock);
+        Mockito.when(keycloakPrincipalMock.getKeycloakSecurityContext()).thenReturn(keycloakSecurityContextMock);
+        Mockito.when(keycloakSecurityContextMock.getToken()).thenReturn(tokenMock);
+
+        SecurityContextHolder.setContext(securityContextMock);
 
         Submission submission = Submission
                 .builder()
@@ -69,6 +101,10 @@ public class DeleteSubmissionTest {
     @DisplayName("200: should delete from submission")
     public void withSubmissionIdAndTransactionIdShouldDeleteSubmission() {
 
+        Map<String, Object> otherClaims = new HashMap<>();
+        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
         ResponseEntity actual = sut.deleteSubmission(TestHelpers.CASE_1, UUID.randomUUID());
 
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
@@ -79,9 +115,27 @@ public class DeleteSubmissionTest {
     @DisplayName("404: without submission should return not found")
     public void withoutSubmissionShouldDeleteSubmission() {
 
+        Map<String, Object> otherClaims = new HashMap<>();
+        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
         ResponseEntity actual = sut.deleteSubmission(TestHelpers.CASE_2, UUID.randomUUID());
 
         Assertions.assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
+
+    }
+
+    @Test
+    @DisplayName("403: with no universal id is forbidden")
+    public void withUserNotHavingUniversalIdShouldReturn403() {
+
+        Map<String, Object> otherClaims = new HashMap<>();
+        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY,null);
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
+        ResponseEntity actual = sut.deleteSubmission(TestHelpers.CASE_2, UUID.randomUUID());
+
+        assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
 
     }
 

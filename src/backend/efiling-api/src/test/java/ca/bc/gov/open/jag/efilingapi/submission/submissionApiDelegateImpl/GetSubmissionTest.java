@@ -108,7 +108,10 @@ public class GetSubmissionTest {
                 .clientApplication(TestHelpers.createClientApplication(TestHelpers.DESCRIPTION, TestHelpers.TYPE))
                 .create();
 
-        Mockito.when(submissionStoreMock.get(ArgumentMatchers.argThat(x -> x.getSubmissionId().equals(TestHelpers.CASE_2)))).thenReturn(Optional.of(submissionWithCsoAccount));
+        Mockito
+                .doReturn(Optional.of(submissionWithCsoAccount))
+                .when(submissionStoreMock)
+                .get(ArgumentMatchers.argThat(x -> x.getSubmissionId().equals(TestHelpers.CASE_2)));
 
         Submission submissionWithoutCsoAccount = Submission
                 .builder()
@@ -120,14 +123,15 @@ public class GetSubmissionTest {
                 .navigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
                 .create();
 
-        Mockito.when(submissionStoreMock.get(ArgumentMatchers.argThat(x -> x.getSubmissionId().equals(TestHelpers.CASE_3)))).thenReturn(Optional.of(submissionWithoutCsoAccount));
+        Mockito
+                .doReturn(Optional.of(submissionWithoutCsoAccount))
+                .when(submissionStoreMock)
+                .get(ArgumentMatchers.argThat(x -> x.getSubmissionId().equals(TestHelpers.CASE_3)));
 
-        Submission submissionWithoutAccountDetails = Submission
-                .builder()
-                .navigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
-                .create();
-
-        Mockito.when(submissionStoreMock.get(ArgumentMatchers.argThat(x -> x.getSubmissionId().equals(TestHelpers.CASE_4)))).thenReturn(Optional.of(submissionWithoutCsoAccount));
+        Mockito
+                .doReturn(Optional.of(submissionWithoutCsoAccount))
+                .when(submissionStoreMock)
+                .get(ArgumentMatchers.argThat(x -> x.getSubmissionId().equals(TestHelpers.CASE_4)));
 
 
         Mockito.when(accountServiceMock.getCsoAccountDetails(Mockito.eq(TestHelpers.CASE_2)))
