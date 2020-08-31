@@ -64,11 +64,7 @@ public class UpdateDocumentPropertiesTest {
     public void setUp() throws IOException {
         MockitoAnnotations.initMocks(this);
 
-        Submission submission = Submission
-                .builder()
-                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList(), TestHelpers.createPartyList()))
-                .navigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
-                .create();
+        Submission submission = TestHelpers.buildSubmission();
 
         Mockito.when(submissionStoreMock.get(Mockito.eq(TestHelpers.CASE_1), any())).thenReturn(Optional.of(submission));
 

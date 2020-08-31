@@ -1,11 +1,12 @@
 package ca.bc.gov.open.jag.efilingapi;
 
+
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
-import ca.bc.gov.open.jag.efilingapi.submission.models.Document;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Court;
+import ca.bc.gov.open.jag.efilingapi.submission.models.Document;
 import ca.bc.gov.open.jag.efilingapi.submission.models.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Party;
-import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
+import ca.bc.gov.open.jag.efilingapi.submission.models.*;
 import com.google.gson.JsonObject;
 
 import java.math.BigDecimal;
@@ -101,6 +102,14 @@ public class TestHelpers {
                 .levelDescription(LEVEL_DESCRIPTION)
                 .classDescription(CLASS_DESCRIPTION)
                 .locationDescription(COURT_DESCRIPTION).create();
+    }
+
+    public static Submission buildSubmission() {
+        return Submission
+                .builder()
+                .filingPackage(createPackage(createCourt(), createDocumentList(), createPartyList()))
+                .navigation(createNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL))
+                .create();
     }
 
     public static FilingPackage createPackage(
