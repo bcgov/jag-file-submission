@@ -107,8 +107,8 @@ paths:
       - $ref: "#/components/parameters/submissionId"
       - $ref: "#/components/parameters/xTransactionId"
     get:
-      summary: Get user detail for a given submission
-      operationId: GetSubmission
+      summary: Get configuration for a given submission
+      operationId: GetSubmissionConfig
       tags:
         - submission
       responses:
