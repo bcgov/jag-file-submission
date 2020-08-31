@@ -114,7 +114,7 @@ public class SubmissionServiceImpl implements SubmissionService {
     @Override
     public SubmitResponse createSubmission(Submission submission, AccountDetails accountDetails) {
 
-        uploadFiles(submission);
+   //     uploadFiles(submission);
 
         List<Party> parties = new ArrayList();
         if (submission.getFilingPackage().getParties() != null)
