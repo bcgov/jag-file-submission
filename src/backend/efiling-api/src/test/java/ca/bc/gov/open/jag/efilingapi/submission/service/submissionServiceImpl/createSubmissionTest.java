@@ -63,7 +63,7 @@ public class createSubmissionTest {
     @BeforeAll
     public void setUp(){
         MockitoAnnotations.initMocks(this);
-        Mockito.when(efilingSubmissionServiceMock.submitFilingPackage(any(), any(), any(), any(), anyBoolean(), any())).thenReturn(BigDecimal.TEN);
+        Mockito.when(efilingSubmissionServiceMock.submitFilingPackage(any(), any(), any(), anyBoolean(), any())).thenReturn(BigDecimal.TEN);
         Mockito.when(bamboraPaymentAdapterMock.makePayment(any())).thenReturn(new EfilingTransaction());
         Mockito.when(documentStoreMock.get(any())).thenReturn(new byte[]{});
         Mockito.doNothing().when(sftpServiceMock).put(any(), any());
