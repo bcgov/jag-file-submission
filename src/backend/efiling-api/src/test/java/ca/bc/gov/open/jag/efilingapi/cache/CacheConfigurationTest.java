@@ -27,7 +27,7 @@ public class CacheConfigurationTest {
 
     @Test
     @DisplayName("submissionCacheManager test")
-    public void testSubmissionCacheManater() {
+    public void testSubmissionCacheManager() {
         context.run(it -> {
             assertThat(it).hasBean("submissionCacheManager");
             assertThat(it).hasBean("submissionSerializer");
@@ -40,7 +40,7 @@ public class CacheConfigurationTest {
 
     @Test
     @DisplayName("documentCacheManager test")
-    public void testDocumentCacheManater() {
+    public void testDocumentCacheManager() {
         context.run(it -> {
             assertThat(it).hasBean("documentCacheManager");
             RedisCacheManager actualCacheManager = ((RedisCacheManager)it.getBean("documentCacheManager"));
@@ -51,7 +51,7 @@ public class CacheConfigurationTest {
 
     @Test
     @DisplayName("documentDetailsCacheManager test")
-    public void testDocumentDetailsCacheManater() {
+    public void testDocumentDetailsCacheManager() {
         context.run(it -> {
             assertThat(it).hasBean("documentDetailsCacheManager");
             assertThat(it).hasBean("documentDetailsSerializer");
