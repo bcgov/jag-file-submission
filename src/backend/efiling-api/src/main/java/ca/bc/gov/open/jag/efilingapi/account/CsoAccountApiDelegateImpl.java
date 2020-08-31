@@ -1,15 +1,17 @@
 package ca.bc.gov.open.jag.efilingapi.account;
 
+import ca.bc.gov.open.jag.efilingapi.account.mappers.CsoAccountMapper;
+import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.CsoAccountApiDelegate;
-import ca.bc.gov.open.jag.efilingapi.api.model.*;
+import ca.bc.gov.open.jag.efilingapi.api.model.CreateCsoAccountRequest;
+import ca.bc.gov.open.jag.efilingapi.api.model.CsoAccount;
+import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.CreateAccountRequest;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -28,12 +30,12 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
 
     Logger logger = LoggerFactory.getLogger(SubmissionApiDelegateImpl.class);
 
-    private final EfilingAccountService efilingAccountService;
+    private final AccountService accountService;
     private final CsoAccountMapper csoAccountMapper;
 
 
-    public CsoAccountApiDelegateImpl(EfilingAccountService efilingAccountService, CsoAccountMapper csoAccountMapper) {
-        this.efilingAccountService = efilingAccountService;
+    public CsoAccountApiDelegateImpl(AccountService accountService, CsoAccountMapper csoAccountMapper) {
+        this.accountService = accountService;
         this.csoAccountMapper = csoAccountMapper;
     }
 
@@ -51,14 +53,7 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
 
             logger.debug("attempting to create a cso account");
             
-            AccountDetails accountDetails = efilingAccountService.createAccount(CreateAccountRequest
-                    .builder()
-                    .universalId(universalId.get())
-                    .firstName(createAccountRequest.getFirstName())
-                    .lastName(createAccountRequest.getLastName())
-                    .middleName(createAccountRequest.getMiddleName())
-                    .email(createAccountRequest.getEmail())
-                    .create());
+            AccountDetails accountDetails = accountService.createAccount(universalId.get(), createAccountRequest);
 
             logger.info("Account successfully created");
 
@@ -85,7 +80,7 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
 
         if(!universalId.isPresent()) return new ResponseEntity(HttpStatus.FORBIDDEN);
 
-        AccountDetails accountDetails = efilingAccountService.getAccountDetails(universalId.get());
+        AccountDetails accountDetails = accountService.getCsoAccountDetails(universalId.get());
 
         if(accountDetails == null) return new ResponseEntity(HttpStatus.NOT_FOUND);
 

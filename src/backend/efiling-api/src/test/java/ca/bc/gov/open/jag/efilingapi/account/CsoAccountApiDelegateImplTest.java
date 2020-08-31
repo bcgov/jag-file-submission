@@ -2,17 +2,18 @@ package ca.bc.gov.open.jag.efilingapi.account;
 
 import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
+import ca.bc.gov.open.jag.efilingapi.account.mappers.CsoAccountMapper;
+import ca.bc.gov.open.jag.efilingapi.account.mappers.CsoAccountMapperImpl;
+import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.CreateCsoAccountRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.CsoAccount;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import org.junit.jupiter.api.*;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
 import org.keycloak.representations.AccessToken;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -42,7 +43,7 @@ public class CsoAccountApiDelegateImplTest {
     private CsoAccountApiDelegateImpl sut;
 
     @Mock
-    private EfilingAccountService efilingAccountServiceMock;
+    private AccountService accountServiceMock;
 
     @Mock
     private SecurityContext securityContextMock;
@@ -75,23 +76,23 @@ public class CsoAccountApiDelegateImplTest {
 
         Mockito
                 .doReturn(accountDetails)
-                .when(efilingAccountServiceMock)
-                .createAccount(ArgumentMatchers.argThat(x -> x.getUniversalId().equals(TestHelpers.CASE_1)));
+                .when(accountServiceMock)
+                .createAccount(Mockito.eq(TestHelpers.CASE_1), Mockito.any());
 
         Mockito
                 .doReturn(accountDetails)
-                .when(efilingAccountServiceMock)
-                .getAccountDetails(Mockito.eq(TestHelpers.CASE_1));
+                .when(accountServiceMock)
+                .getCsoAccountDetails(Mockito.eq(TestHelpers.CASE_1));
 
         Mockito
                 .doReturn(null)
-                .when(efilingAccountServiceMock)
-                .getAccountDetails(Mockito.eq(TestHelpers.CASE_2));
+                .when(accountServiceMock)
+                .getCsoAccountDetails(Mockito.eq(TestHelpers.CASE_2));
 
         Mockito
                 .doThrow(new EfilingAccountServiceException("random"))
-                .when(efilingAccountServiceMock)
-                .createAccount(ArgumentMatchers.argThat(x -> x.getUniversalId().equals(TestHelpers.CASE_2)));
+                .when(accountServiceMock)
+                .createAccount(Mockito.eq(TestHelpers.CASE_2), Mockito.any());
 
         Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);
         Mockito.when(authenticationMock.getPrincipal()).thenReturn(keycloakPrincipalMock);
@@ -103,7 +104,7 @@ public class CsoAccountApiDelegateImplTest {
         // Testing mapper in this test
         CsoAccountMapper csoAccountMapper = new CsoAccountMapperImpl();
 
-        sut = new CsoAccountApiDelegateImpl(efilingAccountServiceMock, csoAccountMapper);
+        sut = new CsoAccountApiDelegateImpl(accountServiceMock, csoAccountMapper);
     }
 
 
