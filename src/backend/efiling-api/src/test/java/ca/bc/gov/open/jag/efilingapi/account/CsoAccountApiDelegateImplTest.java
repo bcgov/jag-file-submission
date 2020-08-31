@@ -7,13 +7,16 @@ import ca.bc.gov.open.jag.efilingapi.account.mappers.CsoAccountMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.CreateCsoAccountRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.CsoAccount;
+import ca.bc.gov.open.jag.efilingapi.api.model.CsoAccountUpdateRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
+import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import org.junit.jupiter.api.*;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
 import org.keycloak.representations.AccessToken;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -39,6 +42,7 @@ public class CsoAccountApiDelegateImplTest {
     private static final String EMAIL = "email@email.com";
     private static final String FIRST_NAME = "firstName";
     private static final String INTERNAL_CLIENT_NUMBER = "123456";
+    private static final String FAIL_INTERNAL_CLIENT_NUMBER = "23456";
 
     private CsoAccountApiDelegateImpl sut;
 
@@ -94,6 +98,15 @@ public class CsoAccountApiDelegateImplTest {
                 .when(accountServiceMock)
                 .createAccount(Mockito.eq(TestHelpers.CASE_2), Mockito.any());
 
+
+        Mockito.doNothing().when(accountServiceMock).updateClient(
+                ArgumentMatchers.argThat(x -> x.getInternalClientNumber().equals(INTERNAL_CLIENT_NUMBER))
+        );
+
+        Mockito.doThrow(EfilingAccountServiceException.class).when(accountServiceMock).updateClient(
+                ArgumentMatchers.argThat(x -> x.getInternalClientNumber().equals(FAIL_INTERNAL_CLIENT_NUMBER))
+        );
+
         Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);
         Mockito.when(authenticationMock.getPrincipal()).thenReturn(keycloakPrincipalMock);
         Mockito.when(keycloakPrincipalMock.getKeycloakSecurityContext()).thenReturn(keycloakSecurityContextMock);
@@ -133,7 +146,7 @@ public class CsoAccountApiDelegateImplTest {
 
     @Test
     @DisplayName("403: when universal id is missing should return 403")
-    public void withUserNotHavingUniversalIdShouldReturn403() {
+    public void createAccountWithUserNotHavingUniversalIdShouldReturn403() {
 
         Map<String, Object> otherClaims = new HashMap<>();
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
@@ -154,7 +167,7 @@ public class CsoAccountApiDelegateImplTest {
 
     @Test
     @DisplayName("500: when exception should return 500")
-    public void whenEfilingAccountServiceExceptionShouldReturn500() {
+    public void createAccountWhenEfilingAccountServiceExceptionShouldReturn500() {
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_2);
@@ -173,7 +186,7 @@ public class CsoAccountApiDelegateImplTest {
 
     @Test
     @DisplayName("200: should return a cso account")
-    public void withExistingAccountShouldReturnAccount() {
+    public void getAccountWithExistingAccountShouldReturnAccount() {
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_1);
@@ -187,7 +200,7 @@ public class CsoAccountApiDelegateImplTest {
 
     @Test
     @DisplayName("404: with account not found should return not found")
-    public void withNoAccountShouldReturnNotFound() {
+    public void getAccountWithNoAccountShouldReturnNotFound() {
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_2);
@@ -206,6 +219,56 @@ public class CsoAccountApiDelegateImplTest {
         ResponseEntity<CsoAccount> actual = sut.getCsoAccount(TestHelpers.CASE_3);
 
         Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
+
+    }
+
+    @Test
+    @DisplayName("200: With user having cso account and efiling role return submission details")
+    public void updateAccountWithUserHavingCsoAccountShouldReturnUserDetailsAndAccount() {
+
+        Map<String, Object> otherClaims = new HashMap<>();
+        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
+        CsoAccountUpdateRequest clientUpdateRequest = new CsoAccountUpdateRequest();
+        clientUpdateRequest.setInternalClientNumber(INTERNAL_CLIENT_NUMBER);
+
+        ResponseEntity<CsoAccount> actual = sut.updateCsoAccount(TestHelpers.CASE_2, clientUpdateRequest);
+        assertEquals(HttpStatus.OK, actual.getStatusCode());
+
+    }
+
+    @Test
+    @DisplayName("500: with exception in soap service throw 500")
+    public void updateAccountWithExceptionShouldReturn500() {
+
+        Map<String, Object> otherClaims = new HashMap<>();
+        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
+        CsoAccountUpdateRequest clientUpdateRequest = new CsoAccountUpdateRequest();
+        clientUpdateRequest.setInternalClientNumber(FAIL_INTERNAL_CLIENT_NUMBER);
+
+        ResponseEntity actual = sut.updateCsoAccount(TestHelpers.CASE_2, clientUpdateRequest);
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode());
+        assertEquals(ErrorResponse.UPDATE_CLIENT_EXCEPTION.getErrorCode(), ((EfilingError)actual.getBody()).getError());
+        assertEquals(ErrorResponse.UPDATE_CLIENT_EXCEPTION.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
+
+    }
+
+    @Test
+    @DisplayName("403: with no universal id is forbidden")
+    public void updateAccountWithUserNotHavingUniversalIdShouldReturn403() {
+
+        Map<String, Object> otherClaims = new HashMap<>();
+        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, null);
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
+        CsoAccountUpdateRequest clientUpdateRequest = new CsoAccountUpdateRequest();
+        clientUpdateRequest.setInternalClientNumber(INTERNAL_CLIENT_NUMBER);
+
+        ResponseEntity actual = sut.updateCsoAccount(TestHelpers.CASE_2, clientUpdateRequest);
+        assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
 
     }
 
