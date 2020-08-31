@@ -1,8 +1,8 @@
 package ca.bc.gov.open.jag.efilingapi.submission.mappers;
 
 
-import ca.bc.gov.open.jag.efilingapi.submission.models.Document;
-import ca.bc.gov.open.jag.efilingapi.submission.models.Party;
+import ca.bc.gov.open.jag.efilingcommons.model.Document;
+import ca.bc.gov.open.jag.efilingcommons.model.Party;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingcommons.model.*;
@@ -90,15 +90,5 @@ public interface EfilingFilingPackageMapper {
     @Mapping(target = "entUserId", source = "submission.accountDetails.clientId")
     @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
     EfilingParties toEfilingParties(Submission submission, Party party, String sequenceNumber);
-
-    @Mapping(target = "clientId", source = "accountDetails.clientId")
-    @Mapping(target = "accountId", source = "accountDetails.accountId")
-    @Mapping(target = "internalClientNumber", source = "accountDetails.internalClientNumber")
-    @Mapping(target = "courtFileNumber", source = "filingPackage.court.fileNumber")
-    @Mapping(target = "serviceTypeCd", constant = SubmissionConstants.SUBMISSION_FEE_TYPE)
-    @Mapping(target = "serviceSubtypeCd", constant = SubmissionConstants.SUBMISSION_FEE_SUB_TYPE)
-    @Mapping(target = "entryUserId", source = "accountDetails.clientId")
-    @Mapping(target = "submissionFeeAmount", source = "filingPackage.submissionFeeAmount")
-    EfilingService toEfilingService(Submission submission);
 
 }

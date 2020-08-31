@@ -11,7 +11,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMapper;
-import ca.bc.gov.open.jag.efilingapi.submission.models.Document;
+import ca.bc.gov.open.jag.efilingcommons.model.Document;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
@@ -148,7 +148,7 @@ public class GetPackageInformationTest {
 
 
     private List<Document> createDocumentListWithNulls() {
-        return Arrays.asList(ca.bc.gov.open.jag.efilingapi.submission.models.Document.builder()
+        return Arrays.asList(Document.builder()
                 .description(TestHelpers.DESCRIPTION)
                 .statutoryFeeAmount(BigDecimal.TEN)
                 .name("random.txt")

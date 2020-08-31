@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("Demo Efiling Submission Client Test Suite")
-public class filingSubmissionServiceDemoImplTest {
+public class EfilingSubmissionServiceDemoImplTest {
     @DisplayName("CASE 1: Testing Demo submitFilingPackage")
     @Test
     public void testDemoLookupFilingPackageServiceTest() {

@@ -2,10 +2,10 @@ package ca.bc.gov.open.jag.efilingapi;
 
 
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
-import ca.bc.gov.open.jag.efilingapi.submission.models.Court;
-import ca.bc.gov.open.jag.efilingapi.submission.models.Document;
-import ca.bc.gov.open.jag.efilingapi.submission.models.FilingPackage;
-import ca.bc.gov.open.jag.efilingapi.submission.models.Party;
+import ca.bc.gov.open.jag.efilingcommons.model.Court;
+import ca.bc.gov.open.jag.efilingcommons.model.Document;
+import ca.bc.gov.open.jag.efilingcommons.model.FilingPackage;
+import ca.bc.gov.open.jag.efilingcommons.model.Party;
 import ca.bc.gov.open.jag.efilingapi.submission.models.*;
 import com.google.gson.JsonObject;
 

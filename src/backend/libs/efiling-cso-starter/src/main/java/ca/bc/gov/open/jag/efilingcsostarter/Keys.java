@@ -6,6 +6,8 @@ public class Keys {
 
     private Keys() {}
 
+
+
     public static String INVOICE_PREFIX = "15";
     public static final String TRANSACTION_STATE_DECLINED = "DEC";
     public static final String TRANSACTION_STATE_APPROVED = "APP";
@@ -14,6 +16,8 @@ public class Keys {
     public static final String RUSH_PROCESS_REASON_CD = "PRO";
     public static final String REQUEST_PROCESS_STATUS_CD = "RQST";
     public static final String APPROVED_PROCESS_STATUS_CD = "APP";
+    public static final String SERVICE_SUBTYPE_CD = "FSVC";
+    public static final String SERVICE_TYPE_CD = "DCFL";
 
 
 }
