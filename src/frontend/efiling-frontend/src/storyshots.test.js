@@ -7,6 +7,8 @@ import { createSerializer } from "enzyme-to-json";
 const converter = new Stories2SnapsConverter();
 
 const runTest = async (story, context) => {
+  sessionStorage.setItem("csoBaseUrl", "https://dev.justice.gov.bc.ca/cso");
+
   const filename = converter.getSnapshotFileName(context);
 
   if (!filename) {
