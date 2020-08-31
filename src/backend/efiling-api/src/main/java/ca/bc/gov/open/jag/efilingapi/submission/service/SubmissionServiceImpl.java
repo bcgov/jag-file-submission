@@ -144,7 +144,6 @@ public class SubmissionServiceImpl implements SubmissionService {
                         .submitFilingPackage(
                                 accountDetails,
                                 submission.getFilingPackage(),
-                                service,
                                 filingPackage,
                                 submission.isRushedSubmission(),
                                 efilingPayment -> bamboraPaymentAdapter.makePayment(efilingPayment)));

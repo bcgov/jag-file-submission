@@ -84,7 +84,6 @@ public class SubmitFilingPackageTest {
         Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(
                 null,
                 null,
-                null,
                 new EfilingFilingPackage(),
                 false,
                 null));
@@ -97,30 +96,23 @@ public class SubmitFilingPackageTest {
         Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(
                 null,
                 FilingPackage.builder().create(),
-                null,
                 new EfilingFilingPackage(),
                 false,
                 null));
-    }
-
-    @DisplayName("Exception: with null service should throw IllegalArgumentException")
-    @Test
-    public void testWithEmptyService() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(AccountDetails.builder().create(), FilingPackage.builder().create(), null, new EfilingFilingPackage(), false,null));
     }
 
     @DisplayName("Exception: with null filingpackage should throw IllegalArgumentException")
     @Test
     public void testWithEmptyFilingPackage() {
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(AccountDetails.builder().create(), FilingPackage.builder().create(), new EfilingService(), null, false,null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(AccountDetails.builder().create(), FilingPackage.builder().create(), null, false,null));
     }
 
 
     @DisplayName("Exception: with null clientId should throw IllegalArgumentException")
     @Test
     public void testWithEmptyClientId() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(AccountDetails.builder().create(), FilingPackage.builder().create(), new EfilingService(), new EfilingFilingPackage(), false,null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(AccountDetails.builder().create(), FilingPackage.builder().create(), new EfilingFilingPackage(), false,null));
     }
 
     @DisplayName("OK: submitFilingPackage called with any non-empty submissionId")
@@ -135,7 +127,6 @@ public class SubmitFilingPackageTest {
 
         BigDecimal actual = sut.submitFilingPackage(accountDetails,
                 FilingPackage.builder().create(),
-                TestHelpers.createBaseEfilingService(),
                 new EfilingFilingPackage(),
                 false,
                 efilingPaymentServiceMock);
@@ -154,7 +145,6 @@ public class SubmitFilingPackageTest {
 
         BigDecimal actual = sut.submitFilingPackage(accountDetails,
                 FilingPackage.builder().create(),
-                TestHelpers.createBaseEfilingService(),
                 new EfilingFilingPackage(),
                 true,
                 efilingPaymentServiceMock);
@@ -173,7 +163,6 @@ public class SubmitFilingPackageTest {
         Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(
                 accountDetails,
                 FilingPackage.builder().create(),
-                TestHelpers.createBaseEfilingService(),
                 new EfilingFilingPackage(),
                 false,
                 efilingPaymentServiceMock));
@@ -183,6 +172,7 @@ public class SubmitFilingPackageTest {
     @DisplayName("Exception: with NestedEjbException_Exception should throw EfilingLookupServiceException")
     @Test
     public void whenFilingFacadeNestedEjbException_ExceptionShouldThrowEfilingSubmissionServiceException() throws NestedEjbException_Exception, DatatypeConfigurationException, ca.bc.gov.ag.csows.filing.NestedEjbException_Exception {
+
         Mockito.when(serviceFacadeBean.addService(any())).thenReturn(TestHelpers.createService());
         Mockito.when(filingFacadeBeanMock.submitFiling(any())).thenThrow(new ca.bc.gov.ag.csows.filing.NestedEjbException_Exception());
         Mockito.when(efilingPaymentServiceMock.makePayment(any())).thenReturn(createTransaction());
@@ -194,7 +184,6 @@ public class SubmitFilingPackageTest {
         Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(
                 accountDetails,
                 FilingPackage.builder().create(),
-                efilingService,
                 new EfilingFilingPackage(),
                 false,
                 efilingPaymentServiceMock));
@@ -208,9 +197,7 @@ public class SubmitFilingPackageTest {
 
         AccountDetails accountDetails = getAccountDetails();
 
-        EfilingService efilingService = new EfilingService();
-        efilingService.setClientId(BigDecimal.TEN);
-        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(accountDetails, FilingPackage.builder().create(), efilingService, new EfilingFilingPackage(), false, null));
+        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(accountDetails, FilingPackage.builder().create(), new EfilingFilingPackage(), false, null));
     }
 
     private AccountDetails getAccountDetails() {
@@ -229,22 +216,25 @@ public class SubmitFilingPackageTest {
     @DisplayName("Exception: with NestedEjbException_Exception when getting user session should throw EfilingLookupServiceException")
     @Test
     public void whenCreateServiceSessionThrowsNestedEjbException_Exception() throws NestedEjbException_Exception {
+
         Mockito.doThrow(new NestedEjbException_Exception()).when(serviceFacadeBean).createServiceSession(Mockito.any(), Mockito.anyString());
-        EfilingService efilingService = new EfilingService();
-        efilingService.setClientId(BigDecimal.TEN);
 
-
-
-        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(getAccountDetails(), FilingPackage.builder().create(), efilingService, new EfilingFilingPackage(), false, null));
+        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(
+                getAccountDetails(),
+                FilingPackage.builder().create(),
+                new EfilingFilingPackage(),
+                false,
+                null));
     }
 
     @DisplayName("Exception: with NestedEjbException_Exception when getting user session should throw EfilingLookupServiceException")
     @Test
     public void whenCreateUserSessionThrowsNestedEjbException_Exception() throws NestedEjbException_Exception {
         Mockito.doThrow(new NestedEjbException_Exception()).when(serviceFacadeBean).createUserSession(Mockito.anyString());
-        EfilingService efilingService = new EfilingService();
-        efilingService.setClientId(BigDecimal.TEN);
-        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(getAccountDetails(), FilingPackage.builder().create(), efilingService, new EfilingFilingPackage(), false, null));
+        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(
+                getAccountDetails(),
+                FilingPackage.builder().create(),
+                new EfilingFilingPackage(), false, null));
     }
 
 
@@ -255,12 +245,15 @@ public class SubmitFilingPackageTest {
         Mockito.doThrow(new NestedEjbException_Exception()).when(serviceFacadeBean).updateService(ArgumentMatchers.argThat(service -> service.getFeePaidYn().equals(String.valueOf(true))));
         Service service = new Service();
         Mockito.when(serviceFacadeBean.addService(Mockito.any())).thenReturn(service);
-        EfilingService efilingService = new EfilingService();
-        efilingService.setClientId(BigDecimal.TEN);
 
         AccountDetails accountDetails = getAccountDetails();
 
-        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(accountDetails, FilingPackage.builder().create(), efilingService, new EfilingFilingPackage(), false, efilingPaymentServiceMock));
+        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(
+                accountDetails,
+                FilingPackage.builder().create(),
+                new EfilingFilingPackage(),
+                false,
+                efilingPaymentServiceMock));
       
     }
 
