@@ -57,9 +57,13 @@ const LoaderStateData = (props) => {
 const AccountExistsStateData = (props) => {
   setRequiredStorage();
   const mock = new MockAdapter(axios);
+  mock.onGet(apiRequest).reply(200, { navigation, clientApplication });
   mock
-    .onGet(apiRequest)
-    .reply(200, { userDetails, navigation, clientApplication });
+    .onGet("csoAccount")
+    .reply(200, {
+      clientId: userDetails.clientId,
+      internalClientNumber: userDetails.internalClientNumber,
+    });
   mock
     .onGet(getFilingPackagePath)
     .reply(200, { documents, court, submissionFeeAmount });
@@ -70,10 +74,10 @@ const NoAccountExistsStateData = (props) => {
   setRequiredStorage();
   const mock = new MockAdapter(axios);
   mock.onGet(apiRequest).reply(200, {
-    userDetails: { ...userDetails, accounts: null },
     navigation,
     clientApplication,
   });
+  mock.onGet("csoAccount").reply(404);
   mock.onGet("/bceidAccount").reply(200, {
     firstName: "User",
     lastName: "Name",
