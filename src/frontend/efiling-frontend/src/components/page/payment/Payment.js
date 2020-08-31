@@ -22,7 +22,7 @@ import "./Payment.css";
 const baseCalloutText = `I have reviewed the information and the documents in this filing
 package and am prepared to submit them for filing.`;
 
-const setBamboraCSORelation = (submissionId) => {
+const updateCSOAccount = () => {
   const data = {
     internalClientNumber: sessionStorage.getItem("bamboraSuccess"),
   };
@@ -107,12 +107,11 @@ export default function Payment({
       : baseCalloutText;
 
   useEffect(() => {
-    if (sessionStorage.getItem("bamboraSuccess"))
-      setBamboraCSORelation(submissionId);
+    if (sessionStorage.getItem("bamboraSuccess")) updateCSOAccount();
 
     sessionStorage.setItem("currentPage", "payment");
     window.history.pushState(null, null, window.location.href);
-  }, [submissionId]);
+  }, []);
 
   useEffect(() => {
     checkSubmitEnabled(paymentAgreed, setSubmitBtnEnabled);
