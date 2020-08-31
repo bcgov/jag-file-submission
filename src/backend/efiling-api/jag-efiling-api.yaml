@@ -179,35 +179,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EfilingError"
-  "/submission/{submissionId}/set-cso-bambora-relation":
-    post:
-      summary: Apply bambora id and card registered to cso
-      operationId: updateClientDetails
-      tags:
-        - submission
-      parameters:
-        - $ref: "#/components/parameters/xTransactionId"
-        - $ref: "#/components/parameters/submissionId"
-      requestBody:
-        description: update client details parameters
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ClientUpdateRequest"
-      responses:
-        "200":
-          description: Client updated
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ClientUpdateResponse"
-        "403":
-          description: Request does not meet the required criteria
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/EfilingError"
   "/submission/{submissionId}/filing-package":
     get:
       summary: Get filing package information
@@ -291,6 +262,33 @@ paths:
                 $ref: "#/components/schemas/CsoAccount"
         "404":
           description: Cso Account not found
+    put:
+      summary: Update CSO account internalId
+      operationId: updateCsoAccount
+      tags:
+        - account
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+      requestBody:
+        description: update client details parameters
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CsoAccountUpdateRequest"
+      responses:
+        "200":
+          description: Client updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CsoAccount"
+        "403":
+          description: Request does not meet the required criteria
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EfilingError"
   "/bceidAccount":
     get:
       summary: Get a BCeID account
@@ -744,7 +742,7 @@ components:
         bamboraUrl:
           type: string
           description: redirect url
-    ClientUpdateRequest:
+    CsoAccountUpdateRequest:
       description: update client details
       type: object
       required:
@@ -753,6 +751,3 @@ components:
         internalClientNumber:
           type: string
           description: internal client number for request to bambora
-    ClientUpdateResponse:
-      description: update client details
-      type: object
