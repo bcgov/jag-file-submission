@@ -19,6 +19,12 @@ const bamboraRedirectUrl = window.REACT_APP_BAMBORA_REDIRECT_URL
 
 sessionStorage.setItem("bamboraRedirectUrl", bamboraRedirectUrl);
 
+const csoBaseUrl = window.REACT_APP_CSO_BASE_URL
+  ? window.REACT_APP_CSO_BASE_URL
+  : process.env.REACT_APP_CSO_BASE_URL;
+
+sessionStorage.setItem("csoBaseUrl", csoBaseUrl);
+
 // prevent user from leaving site and losing saved data
 window.addEventListener("beforeunload", (e) => {
   if (sessionStorage.getItem("validExit")) return false;

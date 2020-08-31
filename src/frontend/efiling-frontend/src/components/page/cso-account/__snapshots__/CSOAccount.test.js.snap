@@ -911,7 +911,7 @@ exports[`CSOAccount Component Matches the snapshot 1`] = `
                 <p>
                   E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
                   <a
-                    href="https://justice.gov.bc.ca/cso/about/index.do"
+                    href="https://dev.justice.gov.bc.ca/cso/about/index.do"
                     rel="noopener noreferrer"
                     target="_blank"
                   >

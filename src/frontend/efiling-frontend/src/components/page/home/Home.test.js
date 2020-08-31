@@ -47,6 +47,7 @@ describe("Home", () => {
       clientApplication,
     });
     sessionStorage.clear();
+    sessionStorage.setItem("csoBaseUrl", "https://dev.justice.gov.bc.ca/cso");
   });
 
   const component = <Home page={page} />;

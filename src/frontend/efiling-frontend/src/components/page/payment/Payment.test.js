@@ -38,6 +38,7 @@ describe("Payment Component", () => {
     },
   });
   localStorage.setItem("jwt", token);
+  sessionStorage.setItem("csoBaseUrl", "https://dev.justice.gov.bc.ca/cso");
 
   let mock;
   beforeEach(() => {
