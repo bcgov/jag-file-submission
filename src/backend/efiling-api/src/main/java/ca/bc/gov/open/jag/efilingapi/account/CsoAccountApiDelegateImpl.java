@@ -5,10 +5,12 @@ import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.CsoAccountApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.CreateCsoAccountRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.CsoAccount;
+import ca.bc.gov.open.jag.efilingapi.api.model.CsoAccountUpdateRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
+import ca.bc.gov.open.jag.efilingapi.utils.MdcUtils;
 import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
@@ -86,6 +88,48 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
 
         return ResponseEntity.ok(csoAccountMapper.toCsoAccount(accountDetails));
 
+    }
+
+
+    @Override
+    @RolesAllowed("efiling-user")
+    public ResponseEntity<CsoAccount> updateCsoAccount(UUID xTransactionId, CsoAccountUpdateRequest clientUpdateRequest) {
+
+        Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
+
+        MdcUtils.setUserMDC(UUID.randomUUID(), xTransactionId);
+
+        if(!universalId.isPresent())
+            return new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
+                    HttpStatus.FORBIDDEN);
+
+        ResponseEntity response;
+
+        try {
+
+            AccountDetails accountDetails = accountService.getCsoAccountDetails(universalId.get());
+
+            if(accountDetails == null) {
+                return new ResponseEntity(
+                        EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
+                        HttpStatus.FORBIDDEN);
+            }
+
+            accountDetails.updateInternalClientNumber(clientUpdateRequest.getInternalClientNumber());
+
+            accountService.updateClient(accountDetails);
+
+            response = ResponseEntity.ok(csoAccountMapper.toCsoAccount(accountDetails));
+        } catch (EfilingAccountServiceException e) {
+            logger.warn(e.getMessage(), e);
+            response = new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.UPDATE_CLIENT_EXCEPTION).create(),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        MdcUtils.clearUserMDC();
+
+        return response;
     }
 
 }
