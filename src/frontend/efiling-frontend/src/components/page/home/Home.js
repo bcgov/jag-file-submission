@@ -60,7 +60,7 @@ const checkCSOAccountStatus = (
   setError
 ) => {
   axios
-    .get(`/submission/${submissionId}`)
+    .get(`/submission/${submissionId}/config`)
     .then(({ data: { navigation, clientApplication } }) => {
       setClientApplicationName(clientApplication.displayName);
       saveNavigationToSessionStorage(navigation);

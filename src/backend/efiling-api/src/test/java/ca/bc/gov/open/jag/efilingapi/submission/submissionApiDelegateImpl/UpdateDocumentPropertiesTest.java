@@ -204,7 +204,7 @@ public class UpdateDocumentPropertiesTest {
         UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest();
         updateDocumentRequest.addDocumentsItem(new DocumentProperties());
         ResponseEntity actual = sut.updateDocumentProperties(TestHelpers.CASE_2, UUID.randomUUID(), updateDocumentRequest);
-        
+
         assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
 
     }

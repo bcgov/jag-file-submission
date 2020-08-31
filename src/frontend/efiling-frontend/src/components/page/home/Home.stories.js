@@ -25,7 +25,7 @@ const submissionId = "abc123";
 const transactionId = "trans123";
 const page = { header, confirmationPopup, submissionId, transactionId };
 
-const apiRequest = `/submission/${submissionId}`;
+const apiRequest = `/submission/${submissionId}/config`;
 const getFilingPackagePath = `/submission/${submissionId}/filing-package`;
 const navigation = getNavigationData();
 const documents = getDocumentsData();
