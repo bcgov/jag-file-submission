@@ -48,15 +48,6 @@ public class TestHelpers {
         return initialPackage;
     }
 
-    public static FilingPackage createApiPackage(Court court, List<Document> documents, List<Party> parties) {
-        FilingPackage modelPackage = new FilingPackage();
-        modelPackage.setCourt(court);
-        modelPackage.setDocuments(documents);
-        modelPackage.setParties(parties);
-        return modelPackage;
-    }
-
-
     public static Navigation createNavigation(String success, String cancel, String error) {
         Navigation navigation = new Navigation();
         Redirect successRedirect = new Redirect();
@@ -92,50 +83,6 @@ public class TestHelpers {
         court.setClassDescription(CLASS_DESCRIPTION);
         court.setLocationDescription(COURT_DESCRIPTION);
         return court;
-    }
-
-    public static List<DocumentProperties> createApiDocumentPropertiesList() {
-        DocumentProperties documentProperties = new DocumentProperties();
-        documentProperties.setName("random.txt");
-        documentProperties.setType(TYPE);
-        return Arrays.asList(documentProperties);
-    }
-
-    public static List<Document> createApiDocumentList() {
-        Document documentProperties = new Document();
-        documentProperties.setDescription(DESCRIPTION);
-        documentProperties.setStatutoryFeeAmount(BigDecimal.TEN);
-        documentProperties.setName("random.txt");
-        documentProperties.setType(TYPE);
-        documentProperties.setSubType(SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD);
-        documentProperties.setMimeType("application/txt");
-        documentProperties.setIsSupremeCourtScheduling(true);
-        documentProperties.setIsAmendment(true);
-        documentProperties.setData(new JsonObject());
-        return Arrays.asList(documentProperties);
-    }
-
-    public static List<Party> createApiPartyList() {
-
-        Party partyOne = new Party();
-        partyOne.setFirstName(FIRST_NAME);
-        partyOne.setMiddleName(MIDDLE_NAME);
-        partyOne.setLastName(LAST_NAME);
-        partyOne.setNameTypeCd(NAME_TYPE_CD);
-        partyOne.setPartyTypeCd(PARTY_TYPE_CD);
-        partyOne.setRoleTypeCd(ROLE_TYPE_CD);
-        partyOne.setPartyId(BigDecimal.ONE);
-
-        Party partyTwo = new Party();
-        partyTwo.setFirstName(FIRST_NAME);
-        partyTwo.setMiddleName(MIDDLE_NAME);
-        partyTwo.setLastName(LAST_NAME);
-        partyTwo.setNameTypeCd(NAME_TYPE_CD);
-        partyTwo.setPartyTypeCd(PARTY_TYPE_CD);
-        partyTwo.setRoleTypeCd(ROLE_TYPE_CD);
-        partyTwo.setPartyId(BigDecimal.TEN);
-
-        return Arrays.asList(partyOne, partyTwo);
     }
 
     public static ca.bc.gov.open.jag.efilingapi.submission.models.Court createCourt() {
