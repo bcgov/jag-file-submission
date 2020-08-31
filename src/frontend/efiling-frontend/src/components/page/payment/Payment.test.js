@@ -226,9 +226,7 @@ describe("Payment Component", () => {
     sessionStorage.setItem("internalClientNumber", null);
     sessionStorage.setItem("bamboraSuccess", "1234");
 
-    mock
-      .onPost(`/submission/${submissionId}/set-cso-bambora-relation`)
-      .reply(200);
+    mock.onPut("csoAccount").reply(200, { internalClientNumber: "1234" });
 
     render(<Payment payment={payment} />);
 
@@ -241,11 +239,9 @@ describe("Payment Component", () => {
     sessionStorage.setItem("internalClientNumber", null);
     sessionStorage.setItem("bamboraSuccess", "1234");
 
-    mock
-      .onPost(`/submission/${submissionId}/set-cso-bambora-relation`)
-      .reply(400, {
-        message: "There was an error.",
-      });
+    mock.onPut("csoAccount").reply(400, {
+      message: "There was an error.",
+    });
 
     render(<Payment payment={payment} />);
 
