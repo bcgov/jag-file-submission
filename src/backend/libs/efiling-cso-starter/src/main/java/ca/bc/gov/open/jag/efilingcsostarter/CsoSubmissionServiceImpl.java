@@ -49,7 +49,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
             boolean isRushedProcessing,
             EfilingPaymentService paymentService) {
 
-        if(accountDetails == null) throw new IllegalArgumentException("Account Details is required");
+        if(accountDetails == null) throw new IllegalArgumentException("Account Details are required");
         if(accountDetails.getClientId() == null) throw new IllegalArgumentException("Service id is required.");
 
         if(efilingPackage == null) throw new IllegalArgumentException("EfilingPackage is required.");
