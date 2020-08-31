@@ -6,6 +6,7 @@ import ca.bc.gov.ag.csows.filing.*;
 import ca.bc.gov.ag.csows.services.*;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.*;
+import ca.bc.gov.open.jag.efilingcommons.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingPaymentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
@@ -43,17 +44,22 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     @Override
     public BigDecimal submitFilingPackage(
             AccountDetails accountDetails,
+            FilingPackage efilingPackage,
             EfilingService service,
             EfilingFilingPackage filingPackage,
             boolean isRushedProcessing,
             EfilingPaymentService paymentService) {
 
         if(accountDetails == null) throw new IllegalArgumentException("Account Details is required");
+        if(accountDetails.getClientId() == null) throw new IllegalArgumentException("Service id is required.");
+
         if(service == null) throw new IllegalArgumentException("Service is required.");
         if(filingPackage == null) throw new IllegalArgumentException("FilingPackage is required.");
-        if(service.getClientId() == null) throw new IllegalArgumentException("Service id is required.");
+
 
         ServiceSession serviceSession = getServiceSession(accountDetails.getClientId().toString());
+
+        Service testService = serviceMapper.toCreateService(efilingPackage, accountDetails, serviceSession);
 
         Service createdService = createEfilingService(service, serviceSession);
 
@@ -163,7 +169,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
             }
         }
 
-        FilingPackage csoFilingPackage = filingPackageMapper.toFilingPackage(filingPackage, service.getServiceId());
+        ca.bc.gov.ag.csows.filing.FilingPackage csoFilingPackage = filingPackageMapper.toFilingPackage(filingPackage, service.getServiceId());
 
         if(isRushedProcessing) {
             csoFilingPackage.setProcRequest(buildRushedOrderRequest(filingPackage));

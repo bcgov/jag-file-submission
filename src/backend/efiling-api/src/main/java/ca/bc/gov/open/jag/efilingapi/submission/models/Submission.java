@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingapi.submission.models;
 import ca.bc.gov.open.jag.efilingapi.api.model.ClientApplication;
 import ca.bc.gov.open.jag.efilingapi.api.model.Navigation;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.FilingPackage;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
