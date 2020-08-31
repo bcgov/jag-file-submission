@@ -64,7 +64,7 @@ const checkCSOAccountStatus = (
   setError
 ) => {
   axios
-    .get(`/submission/${submissionId}`)
+    .get(`/submission/${submissionId}/config`)
     .then(({ data: { userDetails, navigation, clientApplication } }) => {
       setClientApplicationName(clientApplication.displayName);
       saveDataToSessionStorage(userDetails.internalClientNumber, navigation);
