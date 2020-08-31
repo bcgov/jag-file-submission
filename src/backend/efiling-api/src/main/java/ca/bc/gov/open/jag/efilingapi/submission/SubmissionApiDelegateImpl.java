@@ -253,7 +253,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     @Override
     @RolesAllowed("efiling-user")
-    public ResponseEntity<GetSubmissionResponse> getSubmission(UUID submissionId, UUID xTransactionId) {
+    public ResponseEntity<GetSubmissionConfigResponse> getSubmissionConfig(UUID submissionId, UUID xTransactionId) {
 
         Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
 
@@ -278,14 +278,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             setIdsInCachedSubmission(universalId.get(),fromCacheSubmission.get());
 
 
-        GetSubmissionResponse response = new GetSubmissionResponse();
-
-        UserDetails userDetails = buildUserDetails(universalId.get());
-
-        if (userDetails.getAccounts() == null || userDetails.getAccounts().isEmpty())
-            logger.info("User does not have a CSO account");
-
-        response.setUserDetails(userDetails);
+        GetSubmissionConfigResponse response = new GetSubmissionConfigResponse();
 
         response.setClientApplication(fromCacheSubmission.get().getClientApplication());
 
@@ -296,30 +289,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         MdcUtils.clearUserMDC();
 
         return ResponseEntity.ok(response);
-
-    }
-
-    private UserDetails buildUserDetails(UUID universalId) {
-
-        UserDetails userDetails = new UserDetails();
-
-        AccountDetails accountDetails = accountService.getCsoAccountDetails(universalId);
-
-        if (accountDetails != null) {
-
-            if (accountDetails.isFileRolePresent()) {
-                Account account = new Account();
-                account.setType(Account.TypeEnum.CSO);
-                account.setIdentifier(accountDetails.getAccountId().toString());
-                userDetails.addAccountsItem(account);
-            }
-
-            userDetails.setUniversalId(accountDetails.getUniversalId());
-            userDetails.setInternalClientNumber(accountDetails.getInternalClientNumber());
-
-        }
-
-        return userDetails;
 
     }
 
