@@ -82,7 +82,7 @@ public class SubmitFilingPackageTest {
     }
 
 
-    @DisplayName("Exception: with null service should throw IllegalArgumentException")
+    @DisplayName("Exception: with null account details service should throw IllegalArgumentException")
     @Test
     public void testWithEmptyAccountDetails() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(null,null, new EfilingFilingPackage(), false,null));
