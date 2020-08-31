@@ -41,45 +41,41 @@ public class FilingPakageTest {
     public void testConstructor() {
 
 
-        Court court = new Court(AGENCY_ID,
-                LOCATION,
-                LOCATION_DESCRIPTION,
-                LEVEL,
-                LEVEL_DESCRIPTION,
-                COURT_CLASS,
-                CLASS_DESCRIPTION,
-                DIVISION,
-                FILE_NUMBER,
-                PARTICIPATING_CLASS);
-        List<Document> documents = new ArrayList<>();
-        Object data = "test";
-        Document document = new Document(NAME,
-                TYPE,
-                SUB_TYPE,
-                true,
-                false,
-                data,
-                DESCRIPTION,
-                STATUTORY_FEE_AMOUNT,
-                MIME_TYPE);
-        documents.add(document);
-        List<Party> parties = new ArrayList<>();
-        Party party = new Party(PARTY_ID,
-                PARTY_TYPE_CD,
-                ROLE_TYPE_CD,
-                FIRST_NAME,
-                MIDDLE_NAME,
-                LAST_NAME,
-                NAME_TYPE_CD);
-        parties.add(party);
         FilingPackage actual = new FilingPackage(
                 SUBMISSION_FEE_AMOUNT,
-                court,
-                documents,
-                parties);
+                getCourt(),
+                getDocuments(),
+                getParties());
 
         Assertions.assertEquals(STATUTORY_FEE_AMOUNT, actual.getSubmissionFeeAmount());
+        assertCourt(actual);
+        assertDocuments(actual);
+        assertParties(actual);
+    }
 
+    private void assertParties(FilingPackage actual) {
+        Assertions.assertEquals(PARTY_ID, actual.getParties().get(0).getPartyId());
+        Assertions.assertEquals(PARTY_TYPE_CD, actual.getParties().get(0).getPartyTypeCd());
+        Assertions.assertEquals(ROLE_TYPE_CD, actual.getParties().get(0).getRoleTypeCd());
+        Assertions.assertEquals(FIRST_NAME, actual.getParties().get(0).getFirstName());
+        Assertions.assertEquals(MIDDLE_NAME, actual.getParties().get(0).getMiddleName());
+        Assertions.assertEquals(LAST_NAME, actual.getParties().get(0).getLastName());
+        Assertions.assertEquals(NAME_TYPE_CD, actual.getParties().get(0).getNameTypeCd());
+    }
+
+    private void assertDocuments(FilingPackage actual) {
+        Assertions.assertEquals(NAME, actual.getDocuments().get(0).getName());
+        Assertions.assertEquals(TYPE, actual.getDocuments().get(0).getType());
+        Assertions.assertEquals(SUB_TYPE, actual.getDocuments().get(0).getSubType());
+        Assertions.assertEquals(true, actual.getDocuments().get(0).getIsAmendment());
+        Assertions.assertEquals(false, actual.getDocuments().get(0).getIsSupremeCourtScheduling());
+        Assertions.assertEquals("test", actual.getDocuments().get(0).getData());
+        Assertions.assertEquals(DESCRIPTION, actual.getDocuments().get(0).getDescription());
+        Assertions.assertEquals(STATUTORY_FEE_AMOUNT, actual.getDocuments().get(0).getStatutoryFeeAmount());
+        Assertions.assertEquals(MIME_TYPE, actual.getDocuments().get(0).getMimeType());
+    }
+
+    private void assertCourt(FilingPackage actual) {
         Assertions.assertEquals(AGENCY_ID, actual.getCourt().getAgencyId());
         Assertions.assertEquals(LOCATION, actual.getCourt().getLocation());
         Assertions.assertEquals(LOCATION_DESCRIPTION, actual.getCourt().getLocationDescription());
@@ -90,24 +86,46 @@ public class FilingPakageTest {
         Assertions.assertEquals(DIVISION, actual.getCourt().getDivision());
         Assertions.assertEquals(FILE_NUMBER, actual.getCourt().getFileNumber());
         Assertions.assertEquals(PARTICIPATING_CLASS, actual.getCourt().getParticipatingClass());
+    }
 
-        Assertions.assertEquals(NAME, actual.getDocuments().get(0).getName());
-        Assertions.assertEquals(TYPE, actual.getDocuments().get(0).getType());
-        Assertions.assertEquals(SUB_TYPE, actual.getDocuments().get(0).getSubType());
-        Assertions.assertEquals(true, actual.getDocuments().get(0).getIsAmendment());
-        Assertions.assertEquals(false, actual.getDocuments().get(0).getIsSupremeCourtScheduling());
-        Assertions.assertEquals(data, actual.getDocuments().get(0).getData());
-        Assertions.assertEquals(DESCRIPTION, actual.getDocuments().get(0).getDescription());
-        Assertions.assertEquals(STATUTORY_FEE_AMOUNT, actual.getDocuments().get(0).getStatutoryFeeAmount());
-        Assertions.assertEquals(MIME_TYPE, actual.getDocuments().get(0).getMimeType());
+    private List<Party> getParties() {
+        List<Party> parties = new ArrayList<>();
+        Party party = new Party(PARTY_ID,
+                PARTY_TYPE_CD,
+                ROLE_TYPE_CD,
+                FIRST_NAME,
+                MIDDLE_NAME,
+                LAST_NAME,
+                NAME_TYPE_CD);
+        parties.add(party);
+        return parties;
+    }
 
+    private List<Document> getDocuments() {
+        List<Document> documents = new ArrayList<>();
+        Document document = new Document(NAME,
+                TYPE,
+                SUB_TYPE,
+                true,
+                false,
+                "test",
+                DESCRIPTION,
+                STATUTORY_FEE_AMOUNT,
+                MIME_TYPE);
+        documents.add(document);
+        return documents;
+    }
 
-        Assertions.assertEquals(PARTY_ID, actual.getParties().get(0).getPartyId());
-        Assertions.assertEquals(PARTY_TYPE_CD, actual.getParties().get(0).getPartyTypeCd());
-        Assertions.assertEquals(ROLE_TYPE_CD, actual.getParties().get(0).getRoleTypeCd());
-        Assertions.assertEquals(FIRST_NAME, actual.getParties().get(0).getFirstName());
-        Assertions.assertEquals(MIDDLE_NAME, actual.getParties().get(0).getMiddleName());
-        Assertions.assertEquals(LAST_NAME, actual.getParties().get(0).getLastName());
-        Assertions.assertEquals(NAME_TYPE_CD, actual.getParties().get(0).getNameTypeCd());
+    private Court getCourt() {
+        return new Court(AGENCY_ID,
+                    LOCATION,
+                    LOCATION_DESCRIPTION,
+                    LEVEL,
+                    LEVEL_DESCRIPTION,
+                    COURT_CLASS,
+                    CLASS_DESCRIPTION,
+                    DIVISION,
+                    FILE_NUMBER,
+                    PARTICIPATING_CLASS);
     }
 }
