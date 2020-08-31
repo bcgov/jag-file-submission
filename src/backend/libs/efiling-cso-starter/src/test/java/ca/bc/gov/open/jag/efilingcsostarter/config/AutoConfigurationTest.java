@@ -23,35 +23,35 @@ public class AutoConfigurationTest {
     public void setup() {
         context = new ApplicationContextRunner()
                 .withUserConfiguration(AutoConfiguration.class)
-                .withPropertyValues("cso.fileServerHost=localhost")
-                .withPropertyValues("jag.efiling.soap.clients[0].client=ACCOUNT")
-                .withPropertyValues("jag.efiling.soap.clients[0].userName=username")
-                .withPropertyValues("jag.efiling.soap.clients[0].password=password")
-                .withPropertyValues("jag.efiling.soap.clients[0].uri=http://locahost")
-                .withPropertyValues("jag.efiling.soap.clients[1].client=ROLE")
-                .withPropertyValues("jag.efiling.soap.clients[1].userName=username")
-                .withPropertyValues("jag.efiling.soap.clients[1].password=password")
-                .withPropertyValues("jag.efiling.soap.clients[1].uri=http://locahost")
-                .withPropertyValues("jag.efiling.soap.clients[2].client=LOOKUP")
-                .withPropertyValues("jag.efiling.soap.clients[2].userName=username")
-                .withPropertyValues("jag.efiling.soap.clients[2].password=password")
-                .withPropertyValues("jag.efiling.soap.clients[2].uri=http://locahost")
-                .withPropertyValues("jag.efiling.soap.clients[3].client=STATUS")
-                .withPropertyValues("jag.efiling.soap.clients[3].userName=username")
-                .withPropertyValues("jag.efiling.soap.clients[3].password=password")
-                .withPropertyValues("jag.efiling.soap.clients[3].uri=http://locahost")
-                .withPropertyValues("jag.efiling.soap.clients[4].client=CSOWS")
-                .withPropertyValues("jag.efiling.soap.clients[4].userName=username")
-                .withPropertyValues("jag.efiling.soap.clients[4].password=password")
-                .withPropertyValues("jag.efiling.soap.clients[4].uri=http://locahost")
-                .withPropertyValues("jag.efiling.soap.clients[5].client=FILING")
-                .withPropertyValues("jag.efiling.soap.clients[5].userName=username")
-                .withPropertyValues("jag.efiling.soap.clients[5].password=password")
-                .withPropertyValues("jag.efiling.soap.clients[5].uri=http://locahost")
-                .withPropertyValues("jag.efiling.soap.clients[6].client=SERVICE")
-                .withPropertyValues("jag.efiling.soap.clients[6].userName=username")
-                .withPropertyValues("jag.efiling.soap.clients[6].password=password")
-                .withPropertyValues("jag.efiling.soap.clients[6].uri=http://locahost")
+                .withPropertyValues("cso.fileServerHost=localhost",
+                        "jag.efiling.soap.clients[0].client=ACCOUNT",
+                        "jag.efiling.soap.clients[0].userName=username",
+                        "jag.efiling.soap.clients[0].password=password",
+                        "jag.efiling.soap.clients[0].uri=http://locahost",
+                        "jag.efiling.soap.clients[1].client=ROLE",
+                        "jag.efiling.soap.clients[1].userName=username",
+                        "jag.efiling.soap.clients[1].password=password",
+                        "jag.efiling.soap.clients[1].uri=http://locahost",
+                        "jag.efiling.soap.clients[2].client=LOOKUP",
+                        "jag.efiling.soap.clients[2].userName=username",
+                        "jag.efiling.soap.clients[2].password=password",
+                        "jag.efiling.soap.clients[2].uri=http://locahost",
+                        "jag.efiling.soap.clients[3].client=STATUS",
+                        "jag.efiling.soap.clients[3].userName=username",
+                        "jag.efiling.soap.clients[3].password=password",
+                        "jag.efiling.soap.clients[3].uri=http://locahost",
+                        "jag.efiling.soap.clients[4].client=CSOWS",
+                        "jag.efiling.soap.clients[4].userName=username",
+                        "jag.efiling.soap.clients[4].password=password",
+                        "jag.efiling.soap.clients[4].uri=http://locahost",
+                        "jag.efiling.soap.clients[5].client=FILING",
+                        "jag.efiling.soap.clients[5].userName=username",
+                        "jag.efiling.soap.clients[5].password=password",
+                        "jag.efiling.soap.clients[5].uri=http://locahost",
+                        "jag.efiling.soap.clients[6].client=SERVICE",
+                        "jag.efiling.soap.clients[6].userName=username",
+                        "jag.efiling.soap.clients[6].password=password",
+                        "jag.efiling.soap.clients[6].uri=http://locahost")
                 .withUserConfiguration(CsoProperties.class);
     }
 
