@@ -7,6 +7,7 @@ import ca.bc.gov.open.jagefilingapi.qa.config.ReadConfig;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.FrontendTestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
 import io.restassured.RestAssured;
+import io.restassured.mapper.ObjectMapperType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -49,8 +50,7 @@ public class GenerateUrlRequestBuilders {
                 .extract().response();
     }
 
-    public Response requestWithSinglePdfDocument(String resourceValue, String accountGuid, String fileNamePath,
-                                                 @Nullable String submissionId, @Nullable String pathParam) throws IOException {
+    public Response requestWithSinglePdfDocument(String resourceValue, String accountGuid, String fileNamePath) throws IOException {
 
         payloadData = new GenerateUrlPayload();
         APIResources resourceAPI = APIResources.valueOf(resourceValue);
@@ -61,7 +61,7 @@ public class GenerateUrlRequestBuilders {
 
         String accessToken = jsonPath.get(ACCESS_TOKEN);
 
-        File pdfFile = new File(UPLOAD_FILE_PATH + fileNamePath + submissionId + pathParam);
+        File pdfFile = new File(UPLOAD_FILE_PATH + fileNamePath);
 
         request = RestAssured.given().auth().preemptive().oauth2(accessToken)
                 .spec(TestUtil.submitDocumentsRequestSpecification())
@@ -101,8 +101,7 @@ public class GenerateUrlRequestBuilders {
                 .extract().response();
     }
 
-    public Response requestToGetSubmissionAndDocuments(String resource, String accountGuid, String submissionId,
-                                                       @Nullable String filePathParam, @Nullable String pathParam) throws IOException {
+    public Response requestToGetSubmissionAndDocuments(String resource, String accountGuid, String submissionId) throws IOException {
         APIResources resourceGet = APIResources.valueOf(resource);
         FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
 
@@ -112,7 +111,7 @@ public class GenerateUrlRequestBuilders {
                 .spec(TestUtil.requestSpecification())
                 .header(X_TRANSACTION_ID, accountGuid);
 
-        return request.when().get(resourceGet.getResource() + submissionId + filePathParam + pathParam)
+        return request.when().get(resourceGet.getResource() + submissionId)
                 .then()
                 .spec(TestUtil.validResponseSpecification())
                 .extract().response();
@@ -268,7 +267,8 @@ public class GenerateUrlRequestBuilders {
                 .extract().response();
     }
 
-    public Response requestToUpdateDocumentProperties(String resource, String accountGuid, String submissionId, String pathParam) throws IOException {
+    public Response requestToUpdateDocumentProperties(String resource, String accountGuid, String submissionId,
+                                                      String pathParam) throws IOException {
         payloadData = new GenerateUrlPayload();
         APIResources resourceGet = APIResources.valueOf(resource);
         FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
@@ -278,11 +278,11 @@ public class GenerateUrlRequestBuilders {
         request = given().auth().preemptive().oauth2(userToken)
                 .spec(TestUtil.requestSpecification())
                 .header(X_TRANSACTION_ID, accountGuid)
-                .body(payloadData.generateUpdateDocumentsPayload());
+                .body(payloadData.updateDocumentPropertiesPayload());
 
         return request.when().get(resourceGet.getResource() + submissionId + pathParam)
                 .then()
-                .spec(TestUtil.validResponseSpecification())
+              //  .spec(TestUtil.validResponseSpecification())
                 .extract().response();
     }
 
@@ -298,7 +298,7 @@ public class GenerateUrlRequestBuilders {
 
         return request.when().delete(resourceGet.getResource() + submissionId)
                 .then()
-                .spec(TestUtil.validResponseSpecification())
+                .spec(TestUtil.validResponseCodeSpecification())
                 .extract().response();
     }
 }

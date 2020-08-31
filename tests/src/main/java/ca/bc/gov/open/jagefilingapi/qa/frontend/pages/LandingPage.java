@@ -90,13 +90,13 @@ public class LandingPage {
                 "    }],\n" +
                 "    \"parties\": [{\n" +
                 "        \"partyTypeCd\": \"IND\",\n" +
-                "        \"roleTypeCd\": \"CLA\"\n" +
+                "        \"roleTypeCd\": \"CLA\",\n" +
                 "        \"firstName\": \"efile\",\n" +
-                "        \"middleName\": \"test\"\n" +
+                "        \"middleName\": \"test\",\n" +
                 "        \"lastName\": \"qa\",\n" +
                 "        \"nameTypeCd\": \"CUR\"\n" +
                 "    }]\n" +
-                "}\n";
+                "}";
 
 
         textInput.sendKeys(json);

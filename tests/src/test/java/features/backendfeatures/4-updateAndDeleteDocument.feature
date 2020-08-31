@@ -21,14 +21,14 @@ Feature: User can upload additional document and delete the documents
     Then verify submission id and document count is returned
     ## Call to get updated document wth filename ##
     Given "SUBMISSION" id with filename is submitted with GET http request
-#   Then validate status code is 200 and content type is not json
+ #   Then validated status code is 200 and content type is not json
     ## Call to update document properties ##
     Given "SUBMISSION" id with payload is submitted to upload the document properties
     When validated status code is 200 and content type
-    Then verify document properties are updated
+   # Then verify document properties are updated
     ## Call to delete document ##
     Given "SUBMISSION" id is submitted with DELETE http request
-    When validated status code is 200 and content type
+    When validated status code is 200
     ## Call to get updated document wth filename ##
-    Given "SUBMISSION" id with filename is submitted with GET http request
+ #   Given "SUBMISSION" id with filename is submitted with GET http request
 #   Then validate status code is 404 and content type is json

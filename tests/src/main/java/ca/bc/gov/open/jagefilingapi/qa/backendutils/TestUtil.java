@@ -50,6 +50,10 @@ public class TestUtil {
                 .build();
     }
 
+    public static ResponseSpecification validResponseCodeSpecification() {
+        return new ResponseSpecBuilder().expectStatusCode(200).build();
+    }
+
     public static ResponseSpecification validResponseSpecification() {
         return new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON).build();
     }

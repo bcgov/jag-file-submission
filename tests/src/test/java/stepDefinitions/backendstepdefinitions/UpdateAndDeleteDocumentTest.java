@@ -49,8 +49,7 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
-        response = generateUrlRequestBuilders.requestWithSinglePdfDocument(resource,validExistingCSOGuid, FIRST_FILE_NAME_PATH,
-                                                                            null, null);
+        response = generateUrlRequestBuilders.requestWithSinglePdfDocument(resource,validExistingCSOGuid, FIRST_FILE_NAME_PATH);
     }
 
     @When("validated status code is {int} and content type")
@@ -71,8 +70,15 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
                 log.info("Status code and content type did not match.");
         }
 
-        assertEquals(200, response.getStatusCode());
+        //assertEquals(200, response.getStatusCode());
         assertEquals(CONTENT_TYPE, response.getContentType());
+    }
+
+    @When("validated status code is {int}")
+    public void validateStatusCode(Integer statusCode) {
+        generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
+
+        assertEquals(200, response.getStatusCode());
     }
 
     @Then("verify submission id and document count is returned")
@@ -113,8 +119,7 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
     @Given("{string} id is submitted with GET request")
     public void idIsSubmittedWithGetRequest(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
-        response = generateUrlRequestBuilders.requestToGetSubmissionAndDocuments(resource, validExistingCSOGuid, submissionId,
-                                                                                    null, null);
+        response = generateUrlRequestBuilders.requestToGetSubmissionAndDocuments(resource, validExistingCSOGuid, submissionId);
     }
 
     @Then("verify universal id, user details and account type values are returned and not empty")
@@ -143,8 +148,7 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
-        response = generateUrlRequestBuilders.requestWithSinglePdfDocument(resource,validExistingCSOGuid, SECOND_FILE_NAME_PATH,
-                                                                            submissionId, DOCUMENTS_PATH_PARAM);
+        response = generateUrlRequestBuilders.requestWithSinglePdfDocument(resource,validExistingCSOGuid, SECOND_FILE_NAME_PATH);
     }
 
     @And("verify navigation urls are returned")
@@ -163,8 +167,8 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
     @Given("{string} id with filename is submitted with GET http request")
     public void idWithFilenameIsSubmittedWithGETHttpRequest(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
-        response = generateUrlRequestBuilders.requestToUpdateDocumentProperties(resource,validExistingCSOGuid,
-                submissionId, DOCUMENT_PATH_PARAM);
+        response = generateUrlRequestBuilders.requestToGetDocumentUsingFileName(resource,validExistingCSOGuid,
+                                                                submissionId, DOCUMENT_PATH_PARAM, SECOND_FILE_NAME_PATH);
     }
 
     @Then("validated status code is {int} and content type is not json")
@@ -177,7 +181,7 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
     public void idWithPayloadIsSubmittedToUploadTheDocumentProperties(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToUpdateDocumentProperties(resource,validExistingCSOGuid,
-                                                                                    submissionId, UPDATE_DOCUMENTS_PATH_PARAM);
+                                                submissionId, UPDATE_DOCUMENTS_PATH_PARAM);
     }
 
     @Then("verify document properties are updated")

@@ -45,8 +45,7 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
-        response = generateUrlRequestBuilders.requestWithSinglePdfDocument(resource,validExistingCSOGuid, FILE_NAME_PATH,
-                                                                                null, null);
+        response = generateUrlRequestBuilders.requestWithSinglePdfDocument(resource,validExistingCSOGuid, FILE_NAME_PATH);
     }
 
     @When("status code is {int} and content type is verified")
@@ -104,8 +103,7 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     @Given("{string} id is submitted with GET http request")
     public void idIsSubmittedWithGetHttpRequest(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
-        response = generateUrlRequestBuilders.requestToGetSubmissionAndDocuments(resource, validExistingCSOGuid, submissionId,
-                                                                                    null, null);
+        response = generateUrlRequestBuilders.requestToGetSubmissionAndDocuments(resource, validExistingCSOGuid, submissionId);
     }
 
     @Then("verify universal id, user details, account type and identifier values are returned and not empty")

@@ -1,7 +1,15 @@
 package ca.bc.gov.open.jagefilingapi.qa.backend.generateurlpayload;
 
 import ca.bc.gov.open.jag.efilingapi.qa.api.model.*;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -20,19 +28,32 @@ public class GenerateUrlPayload {
     private static final String SUB_TYPE = "sub";
     private static final boolean IS_AMENDMENT = true;
     private static final boolean IS_SUPREME_COURT_SCHEDULING = true;
-    private static final String DATA = "data";
 
     public static final String SUCCESS_URL = "http://success.com";
     public static final String CANCEL_URL = "http://cancel.com";
     public static final String ERROR_URL = "http://error.com";
 
     private GenerateUrlRequest generateUrlRequest;
+    private UpdateDocumentRequest updateDocumentRequest;
 
     public String validGenerateUrlPayload() throws IOException {
         generateUrlRequest = new GenerateUrlRequest();
-
         ObjectMapper objMap = new ObjectMapper();
+       /* objMap.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+        objMap.setSerializationInclusion(JsonInclude.Include.ALWAYS);
+        objMap.enable(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT);*/
+        objMap.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
         return objMap.writeValueAsString(generateUrlRequestPayload());
+    }
+
+    public String updateDocumentPropertiesPayload() throws IOException {
+        updateDocumentRequest = new UpdateDocumentRequest();
+        ObjectMapper objMap = new ObjectMapper();
+   /*     objMap.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+        objMap.setSerializationInclusion(JsonInclude.Include.ALWAYS);
+        objMap.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);*/
+        objMap.enable(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT);
+        return objMap.writeValueAsString(generateUpdateDocumentsPayload());
     }
 
     public GenerateUrlRequest generateUrlRequestPayload(){
@@ -45,14 +66,14 @@ public class GenerateUrlPayload {
         return generateUrlRequest;
     }
 
-    public GenerateUrlRequest generateUpdateDocumentsPayload() {
-        generateUrlRequest = new GenerateUrlRequest();
+    public UpdateDocumentRequest generateUpdateDocumentsPayload() {
+        updateDocumentRequest = new UpdateDocumentRequest();
+        updateDocumentRequest.setDocuments(generateDocumentPropertiesList());
 
-        generateUrlRequest.setFilingPackage(generateInitialPackage(generateDocumentPropertiesList()));
-        return generateUrlRequest;
+        return updateDocumentRequest;
     }
 
-    public static InitialPackage generateInitialPackage( List<DocumentProperties> documentProperties) {
+    public static InitialPackage generateInitialPackage(List<DocumentProperties> documentProperties) {
         InitialPackage initialPackage = new InitialPackage();
         initialPackage.setDocuments(documentProperties);
         return initialPackage;
@@ -63,6 +84,12 @@ public class GenerateUrlPayload {
         initialPackage.setCourt(court);
         initialPackage.setDocuments(documentProperties);
         return initialPackage;
+    }
+
+    public static FilingPackage generatePackage(List<Document> documents) {
+        FilingPackage modelPackage = new FilingPackage();
+        modelPackage.setDocuments(documents);
+        return modelPackage;
     }
 
     public static FilingPackage generatePackage(Court court, List<Document> documents) {
@@ -104,12 +131,15 @@ public class GenerateUrlPayload {
 
     public static List<DocumentProperties> generateDocumentPropertiesList() {
         DocumentProperties documentProperties = new DocumentProperties();
+
         documentProperties.setName("time.ps1");
         documentProperties.setType(DOCTYPE);
         documentProperties.setSubType(SUB_TYPE);
         documentProperties.setIsAmendment(IS_AMENDMENT);
         documentProperties.setIsSupremeCourtScheduling(IS_SUPREME_COURT_SCHEDULING);
-        documentProperties.setData(DATA);
+
+        String jsonObject = new JsonObject().toString();
+        documentProperties.setData(jsonObject.replace("\"", ""));
 
         return Arrays.asList(documentProperties);
     }
