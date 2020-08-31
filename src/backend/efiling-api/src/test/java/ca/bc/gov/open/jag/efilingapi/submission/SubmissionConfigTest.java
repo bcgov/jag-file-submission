@@ -115,7 +115,7 @@ public class SubmissionConfigTest {
     public static class EfilingSubmissionServiceTest implements EfilingSubmissionService {
 
         @Override
-        public BigDecimal submitFilingPackage(AccountDetails accountDetails, EfilingService service, EfilingFilingPackage filingPackage, boolean isRushedProcessing, EfilingPaymentService payment) {
+        public BigDecimal submitFilingPackage(AccountDetails accountDetails, FilingPackage efilingPackage, EfilingService service, EfilingFilingPackage filingPackage, boolean isRushedProcessing, EfilingPaymentService payment) {
             return null;
         }
     }
