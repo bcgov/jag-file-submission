@@ -10,8 +10,8 @@ public class FilingPackage {
 
     private BigDecimal submissionFeeAmount;
     private Court court;
-    private List<Document> documents;
-    private List<Party> parties;
+    private List<Document> documents = new ArrayList<>();
+    private List<Party> parties = new ArrayList<>();
 
     public FilingPackage(
             @JsonProperty("submissionFeeAmount") BigDecimal submissionFeeAmount,
@@ -21,15 +21,15 @@ public class FilingPackage {
 
         this.submissionFeeAmount = submissionFeeAmount;
         this.court = court;
-        this.documents = documents;
-        this.parties = parties;
+        this.documents.addAll(documents);
+        this.parties.addAll(parties);
     }
 
     public FilingPackage(Builder builder) {
         this.submissionFeeAmount = builder.submissionFeeAmount;
         this.court = builder.court;
-        this.documents = builder.documents;
-        this.parties = builder.parties;
+        this.documents.addAll(builder.documents);
+        this.parties.addAll(builder.parties);
     }
 
     public BigDecimal getSubmissionFeeAmount() {
@@ -50,6 +50,11 @@ public class FilingPackage {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    public void addDocument(Document document) {
+        if(this.documents == null) this.documents = new ArrayList<>();
+        this.documents.add(document);
     }
 
     public static class Builder {
