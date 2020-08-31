@@ -91,14 +91,4 @@ public interface EfilingFilingPackageMapper {
     @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
     EfilingParties toEfilingParties(Submission submission, Party party, String sequenceNumber);
 
-    @Mapping(target = "clientId", source = "accountDetails.clientId")
-    @Mapping(target = "accountId", source = "accountDetails.accountId")
-    @Mapping(target = "internalClientNumber", source = "accountDetails.internalClientNumber")
-    @Mapping(target = "courtFileNumber", source = "filingPackage.court.fileNumber")
-    @Mapping(target = "serviceTypeCd", constant = SubmissionConstants.SUBMISSION_FEE_TYPE)
-    @Mapping(target = "serviceSubtypeCd", constant = SubmissionConstants.SUBMISSION_FEE_SUB_TYPE)
-    @Mapping(target = "entryUserId", source = "accountDetails.clientId")
-    @Mapping(target = "submissionFeeAmount", source = "filingPackage.submissionFeeAmount")
-    EfilingService toEfilingService(Submission submission);
-
 }

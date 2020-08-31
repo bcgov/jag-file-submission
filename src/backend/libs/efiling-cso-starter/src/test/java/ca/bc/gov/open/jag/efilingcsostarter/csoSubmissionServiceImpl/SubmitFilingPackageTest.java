@@ -177,9 +177,6 @@ public class SubmitFilingPackageTest {
         Mockito.when(serviceFacadeBean.addService(any())).thenReturn(TestHelpers.createService());
         Mockito.when(filingFacadeBeanMock.submitFiling(any())).thenThrow(new ca.bc.gov.ag.csows.filing.NestedEjbException_Exception());
         Mockito.when(efilingPaymentServiceMock.makePayment(any())).thenReturn(createTransaction());
-        EfilingService efilingService = new EfilingService();
-        efilingService.setClientId(BigDecimal.TEN);
-
         AccountDetails accountDetails = getAccountDetails();
 
         Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(

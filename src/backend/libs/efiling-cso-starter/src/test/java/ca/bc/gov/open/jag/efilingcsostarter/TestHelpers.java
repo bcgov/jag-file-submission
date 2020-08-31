@@ -1,15 +1,12 @@
 package ca.bc.gov.open.jag.efilingcsostarter;
 
 import ca.bc.gov.ag.csows.services.Service;
-import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
-import ca.bc.gov.open.jag.efilingcommons.model.EfilingTransaction;
 import org.joda.time.DateTime;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.UUID;
@@ -55,58 +52,6 @@ public class TestHelpers {
         GregorianCalendar entryDate = new GregorianCalendar();
         entryDate.setTime(date);
         return DatatypeFactory.newInstance().newXMLGregorianCalendar(entryDate);
-    }
-
-    public static EfilingService createBaseEfilingService() throws DatatypeConfigurationException {
-        return new EfilingService(
-                BigDecimal.TEN,
-                BigDecimal.TEN,
-                CLIENT_REFERENCE_TXT,
-                COURT_FILE_NUMBER,
-                DOCUMENTS_PROCESSED,
-                getXmlDate(TestHelpers.DATE),
-                "10",
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                BigDecimal.TEN,
-                INTERNAL_CLIENT_NUMBER,
-                null);
-    }
-    public static EfilingService createUpdateEfilingService(EfilingService service) throws DatatypeConfigurationException {
-        service.setServiceId(BigDecimal.TEN);
-        service.setServiceReceivedDateTime(getXmlDate(TestHelpers.DATE));
-        service.setServiceReceivedDtmText(SERVICE_RECEIVED_DTM_TEXT);
-        service.setServiceSessionId(BigDecimal.TEN);
-        service.setServiceSubtypeCd(SERVICE_SUBTYPE_CD);
-        service.setServiceTypeCd(SERVICE_TYPE_CD);
-        service.setServiceTypeDesc(SERVICE_TYPE_DESC);
-        service.setTransactions(Arrays.asList(createEfilingTransaction()));
-        return service;
-    }
-    public static EfilingTransaction createEfilingTransaction() throws DatatypeConfigurationException {
-
-        return new EfilingTransaction(APPROVAL_CD,
-                CREDIT_CARD_TYPE_CD,
-                BigDecimal.TEN,
-                TestHelpers.DATE_TIME,
-                ENT_USER_ID,
-                INTERNAL_CLIENT_NO,
-                INVOICE_NO,
-                TestHelpers.DATE_TIME,
-                REFERENCE_MESSAGE_TXT,
-                BigDecimal.TEN,
-                BigDecimal.TEN,
-                TRANSACTION_STATE_CD,
-                TestHelpers.DATE_TIME);
     }
 
     public static Service createService() throws DatatypeConfigurationException {

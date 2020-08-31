@@ -114,10 +114,7 @@ public class SubmissionServiceImpl implements SubmissionService {
     @Override
     public SubmitResponse createSubmission(Submission submission, AccountDetails accountDetails) {
 
-       // uploadFiles(submission);
-
-        EfilingService service = efilingFilingPackageMapper.toEfilingService(submission);
-        service.setEntryDateTime(DateUtils.getCurrentXmlDate());
+        uploadFiles(submission);
 
         List<Party> parties = new ArrayList();
         if (submission.getFilingPackage().getParties() != null)
