@@ -38,7 +38,6 @@ describe("Home", () => {
     email: "username@example.com",
   });
   localStorage.setItem("jwt", token);
-  sessionStorage.setItem("csoBaseUrl", "https://dev.justice.gov.bc.ca/cso");
 
   let mock;
   beforeEach(() => {
@@ -48,6 +47,7 @@ describe("Home", () => {
       clientApplication,
     });
     sessionStorage.clear();
+    sessionStorage.setItem("csoBaseUrl", "https://dev.justice.gov.bc.ca/cso");
   });
 
   const component = <Home page={page} />;
