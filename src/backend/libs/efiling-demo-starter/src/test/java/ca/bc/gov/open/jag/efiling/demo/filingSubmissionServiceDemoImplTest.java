@@ -16,7 +16,7 @@ public class filingSubmissionServiceDemoImplTest {
 
         EfilingSubmissionServiceDemoImpl service = new EfilingSubmissionServiceDemoImpl();
 
-        BigDecimal actual = service.submitFilingPackage(null, null, false, null);
+        BigDecimal actual = service.submitFilingPackage(null,null, null, false, null);
 
         Assertions.assertEquals(BigDecimal.ONE, actual);
 

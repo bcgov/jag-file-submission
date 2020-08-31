@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efiling.demo;
 
+import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingFilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingPaymentService;
@@ -10,7 +11,7 @@ import java.math.BigDecimal;
 public class EfilingSubmissionServiceDemoImpl implements EfilingSubmissionService {
 
     @Override
-    public BigDecimal submitFilingPackage(EfilingService service, EfilingFilingPackage filingPackage, boolean isRushedProcessing,  EfilingPaymentService efilingPaymentService) {
+    public BigDecimal submitFilingPackage(AccountDetails accountDetails, EfilingService service, EfilingFilingPackage filingPackage, boolean isRushedProcessing, EfilingPaymentService efilingPaymentService) {
         return BigDecimal.ONE;
     }
 
