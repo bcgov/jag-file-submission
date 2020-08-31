@@ -596,7 +596,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
                   </strong>
                    and will be used to file documents. 
                   <a
-                    href="https://justice.gov.bc.ca/cso/about/index.do"
+                    href="https://justice.gov.bc.ca/cso/accounts/editProfile.do"
                     rel="noopener noreferrer"
                     target="_blank"
                   >
@@ -1733,7 +1733,7 @@ exports[`Upload Component successful document upload works as expected 1`] = `
                   </strong>
                    and will be used to file documents. 
                   <a
-                    href="https://justice.gov.bc.ca/cso/about/index.do"
+                    href="https://justice.gov.bc.ca/cso/accounts/editProfile.do"
                     rel="noopener noreferrer"
                     target="_blank"
                   >

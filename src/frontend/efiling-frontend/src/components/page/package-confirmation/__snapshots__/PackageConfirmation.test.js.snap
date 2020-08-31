@@ -396,7 +396,7 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
                   </strong>
                    and will be used to file documents. 
                   <a
-                    href="https://justice.gov.bc.ca/cso/about/index.do"
+                    href="https://justice.gov.bc.ca/cso/accounts/editProfile.do"
                     rel="noopener noreferrer"
                     target="_blank"
                   >
@@ -912,7 +912,7 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
                   </strong>
                    and will be used to file documents. 
                   <a
-                    href="https://justice.gov.bc.ca/cso/about/index.do"
+                    href="https://justice.gov.bc.ca/cso/accounts/editProfile.do"
                     rel="noopener noreferrer"
                     target="_blank"
                   >
@@ -1609,7 +1609,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
                   </strong>
                    and will be used to file documents. 
                   <a
-                    href="https://justice.gov.bc.ca/cso/about/index.do"
+                    href="https://justice.gov.bc.ca/cso/accounts/editProfile.do"
                     rel="noopener noreferrer"
                     target="_blank"
                   >
@@ -2306,7 +2306,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
                   </strong>
                    and will be used to file documents. 
                   <a
-                    href="https://justice.gov.bc.ca/cso/about/index.do"
+                    href="https://justice.gov.bc.ca/cso/accounts/editProfile.do"
                     rel="noopener noreferrer"
                     target="_blank"
                   >

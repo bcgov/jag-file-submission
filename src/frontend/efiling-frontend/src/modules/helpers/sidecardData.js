@@ -39,9 +39,8 @@ const csoAccountDetails = () => {
         linked to your Basic BCeID account&nbsp;
         <strong>{username}</strong>
         &nbsp;and will be used to file documents.&nbsp;
-        {/* TODO: fix url */}
         <a
-          href="https://justice.gov.bc.ca/cso/about/index.do"
+          href="https://justice.gov.bc.ca/cso/accounts/editProfile.do"
           target="_blank"
           rel="noopener noreferrer"
         >
