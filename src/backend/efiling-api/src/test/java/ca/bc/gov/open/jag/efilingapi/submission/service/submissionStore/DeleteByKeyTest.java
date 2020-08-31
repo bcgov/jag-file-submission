@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service.submissionStore;
 
+import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStoreImpl;
 import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
@@ -21,7 +22,7 @@ public class DeleteByKeyTest {
     @Test
     @DisplayName("OK: evict should do nothing")
     public void testEvict() {
-        Assertions.assertDoesNotThrow(() -> sut.evict(UUID.randomUUID(), UUID.randomUUID()));
+        Assertions.assertDoesNotThrow(() -> sut.evict(new SubmissionKey( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID())));
     }
 
 }

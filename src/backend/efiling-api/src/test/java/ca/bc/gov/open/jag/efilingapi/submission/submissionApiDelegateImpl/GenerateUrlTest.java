@@ -25,6 +25,7 @@ import org.junit.jupiter.api.*;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
 import org.keycloak.representations.AccessToken;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -99,39 +100,30 @@ public class GenerateUrlTest {
 
         Submission submission = Submission.builder().id(TestHelpers.CASE_1).transactionId(transactionId).expiryDate(10).create();
 
-        Mockito.when(submissionServiceMock.generateFromRequest(
-                Mockito.any(),
-                Mockito.eq(TestHelpers.CASE_1),
-                Mockito.any(),
-                Mockito.any()))
+        Mockito
+                .when(submissionServiceMock.generateFromRequest(
+                        ArgumentMatchers.argThat(x -> x.getSubmissionId().equals(TestHelpers.CASE_1)),
+                        Mockito.any()))
                 .thenReturn(submission);
 
         Mockito.doThrow(new CSOHasMultipleAccountException("CSOHasMultipleAccountException message"))
                 .when(submissionServiceMock).generateFromRequest(
-                Mockito.any(),
-                Mockito.eq(TestHelpers.CASE_2),
-                Mockito.any(),
+                ArgumentMatchers.argThat(x -> x.getSubmissionId().equals(TestHelpers.CASE_2)),
                 Mockito.any());
 
         Mockito.doThrow(new InvalidAccountStateException("InvalidAccountStateException message"))
                 .when(submissionServiceMock).generateFromRequest(
-                Mockito.any(),
-                Mockito.eq(TestHelpers.CASE_3),
-                Mockito.any(),
+                ArgumentMatchers.argThat(x -> x.getSubmissionId().equals(TestHelpers.CASE_3)),
                 Mockito.any());
 
         Mockito.doThrow(new StoreException("StoreException message"))
                 .when(submissionServiceMock).generateFromRequest(
-                Mockito.any(),
-                Mockito.eq(TestHelpers.CASE_4),
-                Mockito.any(),
+                ArgumentMatchers.argThat(x -> x.getSubmissionId().equals(TestHelpers.CASE_4)),
                 Mockito.any());
 
         Mockito.doThrow(new EfilingDocumentServiceException("EfilingDocumentServiceException message"))
                 .when(submissionServiceMock).generateFromRequest(
-                Mockito.any(),
-                Mockito.eq(TestHelpers.CASE_5),
-                Mockito.any(),
+                ArgumentMatchers.argThat(x -> x.getSubmissionId().equals(TestHelpers.CASE_5)),
                 Mockito.any());
 
         FilingPackageMapper filingPackageMapper = new FilingPackageMapperImpl();

@@ -5,6 +5,7 @@ import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.InitialPackage;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
+import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
@@ -94,7 +95,7 @@ public class generateFromRequestTest {
         request.setNavigation(TestHelpers.createDefaultNavigation());
         request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList()));
 
-        Submission actual = sut.generateFromRequest(TestHelpers.CASE_1, TestHelpers.CASE_1, TestHelpers.CASE_1, request);
+        Submission actual = sut.generateFromRequest(new SubmissionKey(TestHelpers.CASE_1, TestHelpers.CASE_1, TestHelpers.CASE_1), request);
 
         Assertions.assertEquals(TestHelpers.ERROR_URL, actual.getNavigation().getError().getUrl());
         Assertions.assertEquals(TestHelpers.CANCEL_URL, actual.getNavigation().getCancel().getUrl());
@@ -150,7 +151,7 @@ public class generateFromRequestTest {
         filingPackage.getCourt().setLevel("TEST2");
         request.setFilingPackage(filingPackage);
 
-        Submission actual = sut.generateFromRequest(TestHelpers.CASE_1, TestHelpers.CASE_1, TestHelpers.CASE_1, request);
+        Submission actual = sut.generateFromRequest(new SubmissionKey(TestHelpers.CASE_1, TestHelpers.CASE_1, TestHelpers.CASE_1), request);
 
         Assertions.assertEquals(TestHelpers.ERROR_URL, actual.getNavigation().getError().getUrl());
         Assertions.assertEquals(TestHelpers.CANCEL_URL, actual.getNavigation().getCancel().getUrl());
@@ -203,7 +204,7 @@ public class generateFromRequestTest {
         request.setNavigation(TestHelpers.createDefaultNavigation());
         request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList()));
 
-        Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(TestHelpers.CASE_2, TestHelpers.CASE_2, TestHelpers.CASE_2, request));
+        Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(new SubmissionKey(TestHelpers.CASE_2, TestHelpers.CASE_2, TestHelpers.CASE_2), request));
 
     }
 
