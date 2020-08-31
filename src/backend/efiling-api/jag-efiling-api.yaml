@@ -263,7 +263,7 @@ paths:
         "404":
           description: Cso Account not found
     put:
-      summary: Update CSO account internalId
+      summary: Update CSO account internal client number
       operationId: updateCsoAccount
       tags:
         - account
