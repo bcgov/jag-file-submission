@@ -393,48 +393,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         return response;
     }
 
-    @Override
-    public ResponseEntity<Object> updateClientDetails(UUID xTransactionId, UUID submissionId, ClientUpdateRequest clientUpdateRequest) {
-
-        Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
-
-        if(!universalId.isPresent())
-            return new ResponseEntity(
-                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
-                    HttpStatus.FORBIDDEN);
-
-        SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
-
-
-        MdcUtils.setUserMDC(submissionId, xTransactionId);
-
-        logger.info("attempting to update cso client details package for transaction [{}]", xTransactionId);
-
-        Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionKey);
-
-        if(!fromCacheSubmission.isPresent())
-            return ResponseEntity.notFound().build();
-
-        ResponseEntity response;
-        try {
-            accountService.updateClient(AccountDetails.builder()
-                    .internalClientNumber(clientUpdateRequest.getInternalClientNumber())
-                    .clientId(fromCacheSubmission.get().getAccountDetails().getClientId())
-                    .cardRegistered(true)
-                    .create());
-
-            fromCacheSubmission.get().getAccountDetails().setInternalClientNumber(clientUpdateRequest.getInternalClientNumber());
-
-            response = ResponseEntity.ok(null);
-        } catch (EfilingAccountServiceException e) {
-            logger.warn(e.getMessage(), e);
-            response = new ResponseEntity(buildEfilingError(ErrorResponse.UPDATE_CLIENT_EXCEPTION), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        MdcUtils.clearUserMDC();
-
-        return response;
-    }
-
     public EfilingError buildEfilingError(ErrorResponse errorResponse) {
 
         EfilingError response = new EfilingError();

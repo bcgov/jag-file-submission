@@ -71,8 +71,9 @@ public class AccountDetails {
 
     public boolean isCardRegistered() { return cardRegistered; }
 
-    public void setInternalClientNumber(String internalClientNumber) {
+    public void updateInternalClientNumber(String internalClientNumber) {
         this.internalClientNumber = internalClientNumber;
+        this.cardRegistered = this.internalClientNumber != null;
     }
 
     public static class Builder {

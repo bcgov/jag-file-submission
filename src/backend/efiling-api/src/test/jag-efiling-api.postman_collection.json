@@ -850,7 +850,69 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"universalId\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"middleName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"accounts\": [\n        {\n            \"type\": \"BCEID\",\n            \"identifier\": \"adipisicing\"\n        },\n        {\n            \"type\": \"CSO\",\n            \"identifier\": \"anim laborum\"\n        }\n    ]\n}"
+              "raw": "{\n  \"firstName\": \"string\",\n  \"lastName\": \"string\",\n  \"middleName\": \"string\",\n  \"email\": \"string\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/csoAccount",
+              "host": ["{{baseUrl}}"],
+              "path": ["csoAccount"]
+            },
+            "description": "In order to create an account, an item with type BCeID is required in the accounts field."
+          },
+          "response": [
+            {
+              "name": "Account Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "X-Auth-UserId",
+                    "value": "<uuid>",
+                    "description": "(Required) Authenticated user id"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"universalId\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"middleName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"accounts\": [\n        {\n            \"type\": \"CSO\",\n            \"identifier\": \"velit et cupidatat laborum eu\"\n        },\n        {\n            \"type\": \"BCEID\",\n            \"identifier\": \"in adipisicing tempor\"\n        }\n    ]\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/csoAccount",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["csoAccount"]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"universalId\": \"<string>\",\n \"firstName\": \"<string>\",\n \"lastName\": \"<string>\",\n \"middleName\": \"<string>\",\n \"email\": \"<string>\",\n \"accounts\": [\n  {\n   \"type\": \"CSO\",\n   \"identifier\": \"velit et cupidatat laborum eu\"\n  },\n  {\n   \"type\": \"BCEID\",\n   \"identifier\": \"in adipisicing tempor\"\n  }\n ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Cso Account",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "description": "(Required) Authenticated user id",
+                "key": "X-Auth-UserId",
+                "value": "{{x-Auth-UserId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"internalClientNumber\": \"string\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/csoAccount",

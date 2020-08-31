@@ -20,11 +20,13 @@ import static org.mockito.ArgumentMatchers.any;
 @DisplayName("AccountServiceImpl test suite")
 public class AccountServiceImplTest {
 
+    private static final String INTERNAL_CLIENT_NUMBER = "123456";
+    private static final String FAIL_INTERNAL_CLIENT_NUMBER = "234567";
+
     private AccountServiceImpl sut;
 
     @Mock
     private EfilingAccountService efilingAccountServiceMock;
-
 
     @BeforeAll
     public void setup() {
@@ -34,6 +36,8 @@ public class AccountServiceImplTest {
                 .builder()
                 .accountId(BigDecimal.TEN)
                 .create();
+
+
         Mockito
                 .when(efilingAccountServiceMock.getAccountDetails(Mockito.eq(TestHelpers.CASE_1)))
                 .thenReturn(accountDetails);
@@ -41,6 +45,7 @@ public class AccountServiceImplTest {
         Mockito
                 .when(efilingAccountServiceMock.createAccount(Mockito.any()))
                 .thenReturn(accountDetails);
+
 
         Mockito.doNothing().when(efilingAccountServiceMock).updateClient(any());
 
@@ -80,5 +85,6 @@ public class AccountServiceImplTest {
 
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountId());
     }
+
 
 }
