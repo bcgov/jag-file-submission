@@ -87,8 +87,8 @@ const checkCSOAccountStatus = (
                   setShowLoader
                 );
               })
-              .catch((err) =>
-                errorRedirect(sessionStorage.getItem("errorUrl"), err)
+              .catch((e) =>
+                errorRedirect(sessionStorage.getItem("errorUrl"), e)
               );
           }
         });
