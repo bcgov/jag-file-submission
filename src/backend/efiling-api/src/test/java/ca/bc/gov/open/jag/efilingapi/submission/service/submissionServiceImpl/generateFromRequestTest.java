@@ -36,10 +36,6 @@ import static org.mockito.ArgumentMatchers.any;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class generateFromRequestTest {
 
-    private static final String MIDDLE_NAME = "case1_middleName";
-    private static final String LAST_NAME = "case1_lastName";
-    private static final String FIRST_NAME = "case1_firstName";
-    private static final String EMAIL = "case1_email";
     private static final String INTERNAL_CLIENT_NUMBER = "INTERNALCLIENT";
 
     private SubmissionServiceImpl sut;
@@ -96,7 +92,7 @@ public class generateFromRequestTest {
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setClientApplication(TestHelpers.createClientApplication("app", "app"));
         request.setNavigation(TestHelpers.createDefaultNavigation());
-        request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList()));
+        request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList()));
 
         Submission actual = sut.generateFromRequest(TestHelpers.CASE_1, TestHelpers.CASE_1, TestHelpers.CASE_1, request);
 
@@ -108,10 +104,6 @@ public class generateFromRequestTest {
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountDetails().getAccountId());
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountDetails().getClientId());
         Assertions.assertEquals(INTERNAL_CLIENT_NUMBER, actual.getAccountDetails().getInternalClientNumber());
-        Assertions.assertEquals(EMAIL, actual.getAccountDetails().getEmail());
-        Assertions.assertEquals(FIRST_NAME, actual.getAccountDetails().getFirstName());
-        Assertions.assertEquals(MIDDLE_NAME, actual.getAccountDetails().getMiddleName());
-        Assertions.assertEquals(LAST_NAME, actual.getAccountDetails().getLastName());
         Assertions.assertEquals(TestHelpers.DIVISION, actual.getFilingPackage().getCourt().getDivision());
         Assertions.assertEquals(TestHelpers.FILENUMBER, actual.getFilingPackage().getCourt().getFileNumber());
         Assertions.assertEquals(TestHelpers.LEVEL, actual.getFilingPackage().getCourt().getLevel());
@@ -154,7 +146,7 @@ public class generateFromRequestTest {
         request.setClientApplication(TestHelpers.createClientApplication("app", "app"));
         request.setNavigation(TestHelpers.createDefaultNavigation());
 
-        InitialPackage filingPackage = TestHelpers.createInitalPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList());
+        InitialPackage filingPackage = TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList());
         filingPackage.getCourt().setLevel("TEST2");
         request.setFilingPackage(filingPackage);
 
@@ -168,10 +160,6 @@ public class generateFromRequestTest {
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountDetails().getAccountId());
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountDetails().getClientId());
         Assertions.assertEquals(INTERNAL_CLIENT_NUMBER, actual.getAccountDetails().getInternalClientNumber());
-        Assertions.assertEquals(EMAIL, actual.getAccountDetails().getEmail());
-        Assertions.assertEquals(FIRST_NAME, actual.getAccountDetails().getFirstName());
-        Assertions.assertEquals(MIDDLE_NAME, actual.getAccountDetails().getMiddleName());
-        Assertions.assertEquals(LAST_NAME, actual.getAccountDetails().getLastName());
         Assertions.assertEquals(TestHelpers.DIVISION, actual.getFilingPackage().getCourt().getDivision());
         Assertions.assertEquals(TestHelpers.FILENUMBER, actual.getFilingPackage().getCourt().getFileNumber());
         Assertions.assertEquals(TestHelpers.LEVEL, actual.getFilingPackage().getCourt().getLevel());
@@ -213,7 +201,7 @@ public class generateFromRequestTest {
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setClientApplication(TestHelpers.createClientApplication("app", "type"));
         request.setNavigation(TestHelpers.createDefaultNavigation());
-        request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createCourt(), TestHelpers.createDocumentPropertiesList()));
+        request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList()));
 
         Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(TestHelpers.CASE_2, TestHelpers.CASE_2, TestHelpers.CASE_2, request));
 
@@ -236,10 +224,6 @@ public class generateFromRequestTest {
                     .clientId(BigDecimal.TEN)
                     .accountId(BigDecimal.TEN)
                     .internalClientNumber(INTERNAL_CLIENT_NUMBER)
-                    .email(EMAIL)
-                    .middleName(MIDDLE_NAME)
-                    .lastName(LAST_NAME)
-                    .firstName(FIRST_NAME)
                     .create())
                 .transactionId(TestHelpers.CASE_1)
                 .navigation(TestHelpers.createDefaultNavigation())
@@ -273,10 +257,6 @@ public class generateFromRequestTest {
         return AccountDetails
                 .builder()
                 .fileRolePresent(fileRolePresent)
-                .middleName(_case + MIDDLE_NAME)
-                .lastName(_case + LAST_NAME)
-                .firstName(_case + FIRST_NAME)
-                .email(_case + EMAIL)
                 .accountId(BigDecimal.TEN)
                 .clientId(BigDecimal.ONE)
                 .create();

@@ -1,7 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission.mappers;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
+import ca.bc.gov.open.jag.efilingapi.submission.models.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
@@ -9,7 +9,9 @@ import org.mapstruct.Mapping;
 
 import java.util.UUID;
 
-@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
+@Mapper(componentModel = "spring",
+        injectionStrategy = InjectionStrategy.CONSTRUCTOR,
+uses = { FilingPackageMapper.class })
 public interface SubmissionMapper {
 
     @Mapping(source = "submissionId", target = "id")

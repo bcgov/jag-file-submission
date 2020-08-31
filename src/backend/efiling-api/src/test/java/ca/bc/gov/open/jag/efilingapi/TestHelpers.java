@@ -1,8 +1,12 @@
 package ca.bc.gov.open.jag.efilingapi;
 
+
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
-import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
-import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
+import ca.bc.gov.open.jag.efilingapi.submission.models.Court;
+import ca.bc.gov.open.jag.efilingapi.submission.models.Document;
+import ca.bc.gov.open.jag.efilingapi.submission.models.FilingPackage;
+import ca.bc.gov.open.jag.efilingapi.submission.models.Party;
+import ca.bc.gov.open.jag.efilingapi.submission.models.*;
 import com.google.gson.JsonObject;
 
 import java.math.BigDecimal;
@@ -42,21 +46,12 @@ public class TestHelpers {
     public static final String PARTY_TYPE_CD = "PARTYCD";
     public static final String ROLE_TYPE_CD = "ROLECD";
 
-    public static InitialPackage createInitalPackage(Court court, List<DocumentProperties> documentProperties) {
+    public static InitialPackage createInitalPackage(ca.bc.gov.open.jag.efilingapi.api.model.Court court, List<DocumentProperties> documentProperties) {
         InitialPackage initialPackage = new InitialPackage();
         initialPackage.setCourt(court);
         initialPackage.setDocuments(documentProperties);
         return initialPackage;
     }
-
-    public static FilingPackage createPackage(Court court, List<Document> documents, List<Party> parties) {
-        FilingPackage modelPackage = new FilingPackage();
-        modelPackage.setCourt(court);
-        modelPackage.setDocuments(documents);
-        modelPackage.setParties(parties);
-        return modelPackage;
-    }
-
 
     public static Navigation createNavigation(String success, String cancel, String error) {
         Navigation navigation = new Navigation();
@@ -80,8 +75,8 @@ public class TestHelpers {
         return clientApplication;
     }
 
-    public static Court createCourt() {
-        Court court = new Court();
+    public static ca.bc.gov.open.jag.efilingapi.api.model.Court createApiCourt() {
+        ca.bc.gov.open.jag.efilingapi.api.model.Court court = new ca.bc.gov.open.jag.efilingapi.api.model.Court();
         court.setDivision(DIVISION);
         court.setFileNumber(FILENUMBER);
         court.setLevel(LEVEL);
@@ -95,6 +90,39 @@ public class TestHelpers {
         return court;
     }
 
+    public static Court createCourt() {
+        return Court.builder()
+                .division(DIVISION)
+                .fileNumber(FILENUMBER)
+                .level(LEVEL)
+                .location(LOCATION)
+                .participatingClass(PARTICIPATIONCLASS)
+                .courtClass(PROPERTYCLASS)
+                .agencyId(BigDecimal.TEN)
+                .levelDescription(LEVEL_DESCRIPTION)
+                .classDescription(CLASS_DESCRIPTION)
+                .locationDescription(COURT_DESCRIPTION).create();
+    }
+
+    public static Submission buildSubmission() {
+        return Submission
+                .builder()
+                .filingPackage(createPackage(createCourt(), createDocumentList(), createPartyList()))
+                .navigation(createNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL))
+                .create();
+    }
+
+    public static FilingPackage createPackage(
+            Court court,
+            List<Document> documents,
+            List<Party> parties) {
+        return FilingPackage.builder()
+                .court(court)
+                .documents(documents)
+                .parties(parties)
+                .create();
+    }
+
     public static List<DocumentProperties> createDocumentPropertiesList() {
         DocumentProperties documentProperties = new DocumentProperties();
         documentProperties.setName("random.txt");
@@ -103,54 +131,41 @@ public class TestHelpers {
     }
 
     public static List<Document> createDocumentList() {
-        Document documentProperties = new Document();
-        documentProperties.setDescription(DESCRIPTION);
-        documentProperties.setStatutoryFeeAmount(BigDecimal.TEN);
-        documentProperties.setName("random.txt");
-        documentProperties.setType(TYPE);
-        documentProperties.setSubType(SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD);
-        documentProperties.setMimeType("application/txt");
-        documentProperties.setIsSupremeCourtScheduling(true);
-        documentProperties.setIsAmendment(true);
-        documentProperties.setData(new JsonObject());
-        return Arrays.asList(documentProperties);
+        return Arrays.asList(Document.builder()
+                .description(DESCRIPTION)
+                .statutoryFeeAmount(BigDecimal.TEN)
+                .name("random.txt")
+                .type(TYPE)
+                .subType(SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD)
+                .mimeType("application/txt")
+                .isSupremeCourtScheduling(true)
+                .isAmendment(true)
+                .data(new JsonObject()).create());
     }
 
     public static List<Party> createPartyList() {
 
-        Party partyOne = new Party();
-        partyOne.setFirstName(FIRST_NAME);
-        partyOne.setMiddleName(MIDDLE_NAME);
-        partyOne.setLastName(LAST_NAME);
-        partyOne.setNameTypeCd(NAME_TYPE_CD);
-        partyOne.setPartyTypeCd(PARTY_TYPE_CD);
-        partyOne.setRoleTypeCd(ROLE_TYPE_CD);
-        partyOne.setPartyId(BigDecimal.ONE);
+        Party partyOne = buildParty(BigDecimal.ONE);
 
-        Party partyTwo = new Party();
-        partyTwo.setFirstName(FIRST_NAME);
-        partyTwo.setMiddleName(MIDDLE_NAME);
-        partyTwo.setLastName(LAST_NAME);
-        partyTwo.setNameTypeCd(NAME_TYPE_CD);
-        partyTwo.setPartyTypeCd(PARTY_TYPE_CD);
-        partyTwo.setRoleTypeCd(ROLE_TYPE_CD);
-        partyTwo.setPartyId(BigDecimal.TEN);
-
+        Party partyTwo = buildParty(BigDecimal.TEN);
         return Arrays.asList(partyOne, partyTwo);
+    }
+
+    private static Party buildParty(BigDecimal partyId) {
+        return Party.builder()
+                .firstName(FIRST_NAME)
+                .middleName(MIDDLE_NAME)
+                .lastName(LAST_NAME)
+                .nameTypeCd(NAME_TYPE_CD)
+                .partyTypeCd(PARTY_TYPE_CD)
+                .roleTypeCd(ROLE_TYPE_CD)
+                .partyId(partyId)
+                .create();
     }
 
     public static Navigation createDefaultNavigation() {
         return createNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL);
     }
 
-    public static EfilingService createEfilingService() {
-        EfilingService service = new EfilingService();
-        service.setAccountId(BigDecimal.TEN);
-        service.setClientId(BigDecimal.TEN);
-        service.setCourtFileNumber(FILENUMBER);
-        service.setServiceId(BigDecimal.TEN);
-        return service;
-
-    }
 
 }

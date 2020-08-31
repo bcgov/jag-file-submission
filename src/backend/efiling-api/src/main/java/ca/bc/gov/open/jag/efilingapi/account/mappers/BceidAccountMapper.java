@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingapi.account.service;
+package ca.bc.gov.open.jag.efilingapi.account.mappers;
 
 import ca.bc.gov.open.bceid.starter.account.models.IndividualIdentity;
 import ca.bc.gov.open.jag.efilingapi.api.model.BceidAccount;

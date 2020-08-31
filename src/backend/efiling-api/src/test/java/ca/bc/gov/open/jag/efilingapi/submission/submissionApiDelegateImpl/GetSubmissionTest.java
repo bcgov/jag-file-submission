@@ -10,6 +10,8 @@ import ca.bc.gov.open.jag.efilingapi.api.model.GetSubmissionResponse;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
+import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapper;
+import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
@@ -133,14 +135,13 @@ public class GetSubmissionTest {
                         .clientId(BigDecimal.TEN)
                         .internalClientNumber(INTERNAL_CLIENT_NUMBER)
                         .universalId(TestHelpers.CASE_2)
-                        .email(EMAIL + TestHelpers.CASE_2)
-                        .firstName(FIRST_NAME + TestHelpers.CASE_2)
                         .accountId(BigDecimal.TEN)
                         .fileRolePresent(true)
                         .cardRegistered(true)
                         .create());
 
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock);
+        FilingPackageMapper filingPackageMapper = new FilingPackageMapperImpl();
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper);
 
     }
 

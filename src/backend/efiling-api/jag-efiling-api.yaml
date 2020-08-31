@@ -269,7 +269,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserFullDetails"
+                $ref: "#/components/schemas/CsoAccount"
     get:
       summary: Get user CSO account
       operationId: GetCsoAccount
@@ -464,8 +464,8 @@ components:
       description: details about the required transaction
       required:
         - clientApplication
+        - filingPackage
         - navigation
-        - documentProperties
       properties:
         clientApplication:
           $ref: "#/components/schemas/ClientApplication"
@@ -508,6 +508,10 @@ components:
     InitialPackage:
       type: object
       description: A filing package can contain one or multiple documents that have or are being submitted electronically for new or existing court file.
+      required:
+        - documents
+        - court
+        - parties
       properties:
         documents:
           type: array
@@ -515,6 +519,10 @@ components:
             $ref: "#/components/schemas/DocumentProperties"
         court:
           $ref: "#/components/schemas/CourtBase"
+        parties:
+          type: array
+          items:
+            $ref: "#/components/schemas/Party"
     FilingPackage:
       type: object
       description: A filing package can contain one or multiple documents that have or are being submitted electronically for new or existing court file.
@@ -605,10 +613,6 @@ components:
         - clientId
         - accountId
         - internalClientNumber
-        - firstName
-        - lastName
-        - middleName
-        - email
         - fileRolePresent
       properties:
         clientId:
@@ -620,18 +624,6 @@ components:
         internalClientNumber:
           type: string
           description: the user cso internal client number
-        firstName:
-          type: string
-          description: the user cso first name
-        lastName:
-          type: string
-          description: the user cso last name
-        middleName:
-          type: string
-          description: the user cso middle name
-        email:
-          type: string
-          description: the user cso email
         fileRolePresent:
           type: boolean
           description: if the user as file role
@@ -685,28 +677,6 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Account"
-    UserFullDetails:
-      description: represents a user submitting a filing package with full details
-      allOf:
-        - $ref: "#/components/schemas/UserDetails"
-      required:
-        - firstName
-        - lastName
-        - middleName
-        - email
-      properties:
-        firstName:
-          type: string
-          description: the user first name
-        lastName:
-          type: string
-          description: the user last name
-        middleName:
-          type: string
-          description: the user middle name
-        email:
-          type: string
-          description: the user email address
     Party:
       description: party related to filing package
       properties:
