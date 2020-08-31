@@ -4,7 +4,7 @@ import axios from "axios";
 import { render, waitFor, fireEvent, getByText } from "@testing-library/react";
 import MockAdapter from "axios-mock-adapter";
 
-import Home, { saveDataToSessionStorage } from "./Home";
+import Home, { saveNavigationToSessionStorage } from "./Home";
 import { getTestData } from "../../../modules/test-data/confirmationPopupTestData";
 import { getUserDetails } from "../../../modules/test-data/userDetailsTestData";
 import { getDocumentsData } from "../../../modules/test-data/documentTestData";
@@ -43,7 +43,6 @@ describe("Home", () => {
   beforeEach(() => {
     mock = new MockAdapter(axios);
     mock.onGet(apiRequest).reply(200, {
-      userDetails: { ...userDetails, accounts: null },
       navigation,
       clientApplication,
     });
@@ -53,9 +52,10 @@ describe("Home", () => {
   const component = <Home page={page} />;
 
   test("Component matches the snapshot when user cso account exists", async () => {
-    mock
-      .onGet(apiRequest)
-      .reply(200, { userDetails, navigation, clientApplication });
+    mock.onGet("/csoAccount").reply(200, {
+      clientId: userDetails.clientId,
+      internalClientNumber: userDetails.internalClientNumber,
+    });
     mock
       .onGet(getFilingPackagePath)
       .reply(200, { documents, court, submissionFeeAmount });
@@ -69,6 +69,7 @@ describe("Home", () => {
   });
 
   test("Component matches the snapshot when user cso account does not exist", async () => {
+    mock.onGet("csoAccount").reply(404);
     mock.onGet("/bceidAccount").reply(200, {
       firstName: "User",
       lastName: "Name",
@@ -110,21 +111,20 @@ describe("Home", () => {
     );
   });
 
-  test("saveDataToSessionStorage saves urls to session storage", () => {
+  test("saveNavigationToSessionStorage saves urls to session storage", () => {
     expect(sessionStorage.getItem("cancelUrl")).toBeFalsy();
     expect(sessionStorage.getItem("successUrl")).toBeFalsy();
     expect(sessionStorage.getItem("errorUrl")).toBeFalsy();
 
-    saveDataToSessionStorage(userDetails.internalClientNumber, navigation);
+    saveNavigationToSessionStorage(navigation);
 
     expect(sessionStorage.getItem("cancelUrl")).toEqual("cancelurl.com");
     expect(sessionStorage.getItem("successUrl")).toEqual("successurl.com");
     expect(sessionStorage.getItem("errorUrl")).toBeFalsy();
-    expect(sessionStorage.getItem("internalClientNumber")).toEqual("ABC123");
 
     sessionStorage.clear();
 
-    saveDataToSessionStorage(userDetails.internalClientNumber, {
+    saveNavigationToSessionStorage({
       ...navigation,
       cancel: { url: "" },
       success: { url: "" },
@@ -134,12 +134,12 @@ describe("Home", () => {
     expect(sessionStorage.getItem("cancelUrl")).toBeFalsy();
     expect(sessionStorage.getItem("successUrl")).toBeFalsy();
     expect(sessionStorage.getItem("errorUrl")).toEqual("error.com");
-    expect(sessionStorage.getItem("internalClientNumber")).toEqual("ABC123");
   });
 
   test("Redirects to error page when lookup to bceid call fails", async () => {
     sessionStorage.setItem("errorUrl", "error.com");
 
+    mock.onGet("csoAccount").reply(404);
     mock.onGet("/bceidAccount").reply(400, {
       message: "There was an error",
     });
@@ -154,7 +154,28 @@ describe("Home", () => {
     );
   });
 
+  test("Redirects back to client app when GET csoAccount call gets non 404 error response", async () => {
+    sessionStorage.setItem("errorUrl", "error.com");
+
+    mock.onGet("csoAccount").reply(500, {
+      message: "There was an error",
+    });
+
+    render(component);
+
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalledWith(
+      "error.com?status=400&message=There was an error.",
+      "_self"
+    );
+  });
+
   test("clicking cancel opens confirmation popup and clicking confirm takes user back to client app", async () => {
+    mock.onGet("csoAccount").reply(200, {
+      clientId: userDetails.clientId,
+      internalClientNumber: userDetails.internalClientNumber,
+    });
     mock.onGet("/bceidAccount").reply(200, {
       firstName: "User",
       lastName: "Name",

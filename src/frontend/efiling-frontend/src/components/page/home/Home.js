@@ -23,14 +23,10 @@ const setRequestHeaders = (transactionId) => {
   });
 };
 
-export const saveDataToSessionStorage = (
-  internalClientNumber,
-  { cancel, success, error }
-) => {
+export const saveNavigationToSessionStorage = ({ cancel, success, error }) => {
   if (cancel.url) sessionStorage.setItem("cancelUrl", cancel.url);
   if (success.url) sessionStorage.setItem("successUrl", success.url);
   if (error.url) sessionStorage.setItem("errorUrl", error.url);
-  sessionStorage.setItem("internalClientNumber", internalClientNumber);
 };
 
 const addUserInfo = (firstName, middleName, lastName) => {
@@ -65,32 +61,37 @@ const checkCSOAccountStatus = (
 ) => {
   axios
     .get(`/submission/${submissionId}/config`)
-    .then(({ data: { userDetails, navigation, clientApplication } }) => {
+    .then(({ data: { navigation, clientApplication } }) => {
       setClientApplicationName(clientApplication.displayName);
-      saveDataToSessionStorage(userDetails.internalClientNumber, navigation);
+      saveNavigationToSessionStorage(navigation);
 
-      if (userDetails.accounts) {
-        const csoAccountIdentifier = userDetails.accounts.find(
-          (o) => o.type === "CSO"
-        ).identifier;
-        sessionStorage.setItem("csoAccountId", csoAccountIdentifier);
-        setCsoAccountStatus({ isNew: false, exists: true });
-      } else {
-        axios
-          .get("/bceidAccount")
-          .then(({ data: { firstName, middleName, lastName } }) => {
-            setRequiredState(
-              firstName,
-              middleName,
-              lastName,
-              setApplicantInfo,
-              setShowLoader
-            );
-          })
-          .catch((err) =>
-            errorRedirect(sessionStorage.getItem("errorUrl"), err)
-          );
-      }
+      axios
+        .get("/csoAccount")
+        .then(({ data: { clientId, internalClientNumber } }) => {
+          sessionStorage.setItem("internalClientNumber", internalClientNumber);
+          sessionStorage.setItem("csoAccountId", clientId);
+          setCsoAccountStatus({ isNew: false, exists: true });
+        })
+        .catch((err) => {
+          if (err.response.status !== 404)
+            errorRedirect(sessionStorage.getItem("errorUrl"), err);
+          else {
+            axios
+              .get("/bceidAccount")
+              .then(({ data: { firstName, middleName, lastName } }) => {
+                setRequiredState(
+                  firstName,
+                  middleName,
+                  lastName,
+                  setApplicantInfo,
+                  setShowLoader
+                );
+              })
+              .catch((e) =>
+                errorRedirect(sessionStorage.getItem("errorUrl"), e)
+              );
+          }
+        });
     })
     .catch((error) => {
       errorRedirect(sessionStorage.getItem("errorUrl"), error);
