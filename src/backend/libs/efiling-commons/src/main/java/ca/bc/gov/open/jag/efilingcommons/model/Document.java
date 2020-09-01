@@ -16,6 +16,7 @@ public class Document {
     private String description;
     private BigDecimal statutoryFeeAmount;
     private String mimeType;
+    private String serverFileName;
 
     @JsonCreator
     public Document(@JsonProperty("name") String name,
@@ -26,7 +27,8 @@ public class Document {
                     @JsonProperty("data") Object data,
                     @JsonProperty("description") String description,
                     @JsonProperty("statutoryFeeAmount") BigDecimal statutoryFeeAmount,
-                    @JsonProperty("mimeType") String mimeType) {
+                    @JsonProperty("mimeType") String mimeType,
+                    @JsonProperty("serverFileName") String serverFileName) {
         this.name = name;
         this.type = type;
         this.subType = subType;
@@ -36,6 +38,7 @@ public class Document {
         this.description = description;
         this.statutoryFeeAmount = statutoryFeeAmount;
         this.mimeType = mimeType;
+        this.serverFileName = serverFileName;
     }
 
     public Document(Builder builder) {
@@ -48,6 +51,7 @@ public class Document {
         this.description = builder.description;
         this.statutoryFeeAmount = builder.statutoryFeeAmount;
         this.mimeType = builder.mimeType;
+        this.serverFileName = builder.serverFileName;
     }
 
     public String getName() {
@@ -86,6 +90,10 @@ public class Document {
         return mimeType;
     }
 
+    public String getServerFileName() {
+        return serverFileName;
+    }
+
     public static Builder builder() {
         return new Builder();
     }
@@ -101,6 +109,7 @@ public class Document {
         private String description;
         private BigDecimal statutoryFeeAmount;
         private String mimeType;
+        private String serverFileName;
 
 
         public Builder name(String name) {
@@ -145,6 +154,11 @@ public class Document {
 
         public Builder mimeType(String mimeType) {
             this.mimeType = mimeType;
+            return this;
+        }
+
+        public Builder serverFileName(String serverFileName) {
+            this.serverFileName = serverFileName;
             return this;
         }
 

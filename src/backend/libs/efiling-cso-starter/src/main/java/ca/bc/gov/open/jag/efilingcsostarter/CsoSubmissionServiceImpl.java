@@ -87,7 +87,6 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
                     efilingPackage.getDocuments().get(i),
                     accountDetails,
                     efilingPackage,
-                    "",
                     csoProperties.getFileServerHost(),
                     milestones,
                     payments,

@@ -91,7 +91,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                         submissionKey.getSubmissionId(),
                         submissionKey.getTransactionId(),
                         generateUrlRequest,
-                        toFilingPackage(generateUrlRequest),
+                        toFilingPackage(generateUrlRequest, submissionKey),
                         getExpiryDate(),
                         isRushedSubmission(generateUrlRequest)));
 
@@ -141,7 +141,7 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     @Override
-    public Submission updateDocuments(Submission submission, UpdateDocumentRequest updateDocumentRequest) {
+    public Submission updateDocuments(Submission submission, UpdateDocumentRequest updateDocumentRequest, SubmissionKey submissionKey) {
 
 
 
@@ -150,7 +150,7 @@ public class SubmissionServiceImpl implements SubmissionService {
             submission.getFilingPackage().addDocument(toDocument(
                     submission.getFilingPackage().getCourt().getLevel(),
                     submission.getFilingPackage().getCourt().getCourtClass(),
-                    documentProperties));
+                    documentProperties, submissionKey));
         });
 
         submissionStore.put(submission);
@@ -158,7 +158,7 @@ public class SubmissionServiceImpl implements SubmissionService {
         return submission;
     }
 
-    private FilingPackage toFilingPackage(GenerateUrlRequest request) {
+    private FilingPackage toFilingPackage(GenerateUrlRequest request, SubmissionKey submissionKey) {
 
         return FilingPackage.builder()
                         .court(populateCourtDetails(request.getFilingPackage().getCourt()))
@@ -169,7 +169,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                 .map(documentProperties -> toDocument(
                         request.getFilingPackage().getCourt().getLevel(),
                         request.getFilingPackage().getCourt().getCourtClass(),
-                        documentProperties))
+                        documentProperties, submissionKey))
                 .collect(Collectors.toList())).create();
 
     }
@@ -192,7 +192,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                 .create();
     }
 
-    private Document toDocument(String courtLevel, String courtClass, DocumentProperties documentProperties) {
+    private Document toDocument(String courtLevel, String courtClass, DocumentProperties documentProperties, SubmissionKey submissionKey) {
 
         DocumentDetails details = documentStore.getDocumentDetails(courtLevel, courtClass, documentProperties.getType());
 
@@ -202,6 +202,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                         .statutoryFeeAmount(details.getStatutoryFeeAmount())
                         .type(documentProperties.getType())
                         .name(documentProperties.getName())
+                        .serverFileName(MessageFormat.format("fh_{1}_{2}_{3}",submissionKey.getSubmissionId(), submissionKey.getTransactionId(), documentProperties.getName()))
                         .mimeType(FileUtils.guessContentTypeFromName(documentProperties.getName()))
                         .isAmendment(documentProperties.getIsAmendment())
                         .isSupremeCourtScheduling(documentProperties.getIsSupremeCourtScheduling())
@@ -213,7 +214,7 @@ public class SubmissionServiceImpl implements SubmissionService {
     private void uploadFiles(Submission submission) {
         submission.getFilingPackage().getDocuments().forEach(
                 document ->
-                        redisStoreToSftpStore(document.getName(), submission));
+                        redisStoreToSftpStore(document.getServerFileName(), submission));
 
     }
 
@@ -230,7 +231,7 @@ public class SubmissionServiceImpl implements SubmissionService {
         SubmissionKey submissionKey = new SubmissionKey(submission.getUniversalId(), submission.getTransactionId(), submission.getId());
 
 
-        sftpService.put(new ByteArrayInputStream(documentStore.get(submissionKey, fileName)), MessageFormat.format("fh_{0}", compositeFileName));
+        sftpService.put(new ByteArrayInputStream(documentStore.get(submissionKey, fileName)), fileName);
 
         //Delete file from cache
         documentStore.evict(submissionKey, fileName);
