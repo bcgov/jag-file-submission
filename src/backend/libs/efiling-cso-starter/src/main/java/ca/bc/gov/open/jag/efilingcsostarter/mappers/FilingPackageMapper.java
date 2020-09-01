@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingcsostarter.mappers;
 
 import ca.bc.gov.ag.csows.filing.CivilDocument;
+import ca.bc.gov.ag.csows.filing.CsoParty;
 import ca.bc.gov.ag.csows.filing.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingFilingPackage;
 import org.mapstruct.Mapper;
@@ -46,9 +47,10 @@ public interface FilingPackageMapper {
     @Mapping(target = "submittedToAgenId", source = "efilingFilingPackage.submittedToAgenId")
     @Mapping(target = "submitterCommentTxt", source = "efilingFilingPackage.submitterCommentTxt")
     @Mapping(target = "serviceId", source = "serviceId")
-    @Mapping(target = "parties", source = "efilingFilingPackage.parties")
+    @Mapping(target = "parties", source = "csoParties")
     FilingPackage toFilingPackage(
             EfilingFilingPackage efilingFilingPackage,
             BigDecimal serviceId,
-            List<CivilDocument> documents);
+            List<CivilDocument> documents,
+            List<CsoParty> csoParties);
 }

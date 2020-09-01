@@ -159,7 +159,6 @@ public class TestHelpers {
                 .nameTypeCd(NAME_TYPE_CD)
                 .partyTypeCd(PARTY_TYPE_CD)
                 .roleTypeCd(ROLE_TYPE_CD)
-                .partyId(partyId)
                 .create();
     }
 

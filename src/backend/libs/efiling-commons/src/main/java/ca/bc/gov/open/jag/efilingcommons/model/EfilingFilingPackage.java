@@ -49,7 +49,6 @@ public class EfilingFilingPackage {
     @XmlSchemaType(name = "dateTime")
     private XMLGregorianCalendar updDtm;
     private String updUserId;
-    private List<EfilingParties> parties;
 
     public String getApplicationCd() {
         return applicationCd;
@@ -331,15 +330,7 @@ public class EfilingFilingPackage {
         this.updUserId = updUserId;
     }
 
-    public List<EfilingParties> getParties() {
-        return parties;
-    }
-
-    public void setParties(List<EfilingParties> parties) {
-        this.parties = parties;
-    }
-
-    public EfilingFilingPackage(String applicationCd, String applicationReferenceGuid, XMLGregorianCalendar autoProcessEndDtm, XMLGregorianCalendar autoProcessStartDtm, Boolean automatedProcessYn, Boolean cfcsaYn, BigDecimal checkedOutByAgenId, BigDecimal checkedOutByPaasSeqNo, BigDecimal checkedOutByPartId, XMLGregorianCalendar checkedOutDtm, String clientFileNo, String courtFileNo, Boolean delayProcessing, XMLGregorianCalendar entDtm, String entUserId, Boolean existingCourtFileYn, Boolean feeExemptYn, String ldcxCourtClassCd, String ldcxCourtDivisionCd, String ldcxCourtLevelCd, String notificationEmailTxt, Boolean notificationRequiredYn, List<EfilingPackageAuthority> packageControls, BigDecimal packageId, Boolean processingCompleteYn, BigDecimal resubmissionOfPackageId, String reviewerNotesTxt, BigDecimal serviceId, XMLGregorianCalendar submitDtm, BigDecimal submittedByAccountId, BigDecimal submittedByClientId, BigDecimal submittedToAgenId, String submitterCommentTxt, XMLGregorianCalendar updDtm, String updUserId, List<EfilingParties> parties) {
+    public EfilingFilingPackage(String applicationCd, String applicationReferenceGuid, XMLGregorianCalendar autoProcessEndDtm, XMLGregorianCalendar autoProcessStartDtm, Boolean automatedProcessYn, Boolean cfcsaYn, BigDecimal checkedOutByAgenId, BigDecimal checkedOutByPaasSeqNo, BigDecimal checkedOutByPartId, XMLGregorianCalendar checkedOutDtm, String clientFileNo, String courtFileNo, Boolean delayProcessing, XMLGregorianCalendar entDtm, String entUserId, Boolean existingCourtFileYn, Boolean feeExemptYn, String ldcxCourtClassCd, String ldcxCourtDivisionCd, String ldcxCourtLevelCd, String notificationEmailTxt, Boolean notificationRequiredYn, List<EfilingPackageAuthority> packageControls, BigDecimal packageId, Boolean processingCompleteYn, BigDecimal resubmissionOfPackageId, String reviewerNotesTxt, BigDecimal serviceId, XMLGregorianCalendar submitDtm, BigDecimal submittedByAccountId, BigDecimal submittedByClientId, BigDecimal submittedToAgenId, String submitterCommentTxt, XMLGregorianCalendar updDtm, String updUserId) {
         this.applicationCd = applicationCd;
         this.applicationReferenceGuid = applicationReferenceGuid;
         this.autoProcessEndDtm = autoProcessEndDtm;
@@ -375,7 +366,6 @@ public class EfilingFilingPackage {
         this.submitterCommentTxt = submitterCommentTxt;
         this.updDtm = updDtm;
         this.updUserId = updUserId;
-        this.parties = parties;
     }
 
     public EfilingFilingPackage() {

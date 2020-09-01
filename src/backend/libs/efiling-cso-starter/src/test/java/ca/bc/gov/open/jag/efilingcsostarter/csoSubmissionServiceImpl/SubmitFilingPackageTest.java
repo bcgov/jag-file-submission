@@ -76,7 +76,9 @@ public class SubmitFilingPackageTest {
 
         // Testing mapper
         DocumentMapper documentMapper = new DocumentMapperImpl();
-        sut = new CsoSubmissionServiceImpl(filingFacadeBeanMock, serviceFacadeBean, new ServiceMapperImpl(), new FilingPackageMapperImpl(), new FinancialTransactionMapperImpl(), csoPropertiesMock, documentMapper);
+        CsoPartyMapper csoPartyMapper = new CsoPartyMapperImpl();
+
+        sut = new CsoSubmissionServiceImpl(filingFacadeBeanMock, serviceFacadeBean, new ServiceMapperImpl(), new FilingPackageMapperImpl(), new FinancialTransactionMapperImpl(), csoPropertiesMock, documentMapper, csoPartyMapper);
 
     }
 

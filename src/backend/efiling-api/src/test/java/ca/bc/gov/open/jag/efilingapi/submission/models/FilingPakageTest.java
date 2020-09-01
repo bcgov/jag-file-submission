@@ -59,7 +59,6 @@ public class FilingPakageTest {
     }
 
     private void assertParties(FilingPackage actual) {
-        Assertions.assertEquals(PARTY_ID, actual.getParties().get(0).getPartyId());
         Assertions.assertEquals(PARTY_TYPE_CD, actual.getParties().get(0).getPartyTypeCd());
         Assertions.assertEquals(ROLE_TYPE_CD, actual.getParties().get(0).getRoleTypeCd());
         Assertions.assertEquals(FIRST_NAME, actual.getParties().get(0).getFirstName());
@@ -95,7 +94,7 @@ public class FilingPakageTest {
 
     private List<Party> getParties() {
         List<Party> parties = new ArrayList<>();
-        Party party = new Party(PARTY_ID,
+        Party party = new Party(
                 PARTY_TYPE_CD,
                 ROLE_TYPE_CD,
                 FIRST_NAME,

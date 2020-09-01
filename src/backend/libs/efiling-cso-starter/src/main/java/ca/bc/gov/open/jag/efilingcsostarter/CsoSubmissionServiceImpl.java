@@ -11,10 +11,7 @@ import ca.bc.gov.open.jag.efilingcommons.service.EfilingPaymentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsostarter.config.CsoProperties;
-import ca.bc.gov.open.jag.efilingcsostarter.mappers.DocumentMapper;
-import ca.bc.gov.open.jag.efilingcsostarter.mappers.FilingPackageMapper;
-import ca.bc.gov.open.jag.efilingcsostarter.mappers.FinancialTransactionMapper;
-import ca.bc.gov.open.jag.efilingcsostarter.mappers.ServiceMapper;
+import ca.bc.gov.open.jag.efilingcsostarter.mappers.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -30,7 +27,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     private final FinancialTransactionMapper financialTransactionMapper;
     private final CsoProperties csoProperties;
     private final DocumentMapper documentMapper;
-
+    private final CsoPartyMapper csoPartyMapper;
 
     public CsoSubmissionServiceImpl(FilingFacadeBean filingFacadeBean,
                                     ServiceFacadeBean serviceFacadeBean,
@@ -38,7 +35,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
                                     FilingPackageMapper filingPackageMapper,
                                     FinancialTransactionMapper financialTransactionMapper,
                                     CsoProperties csoProperties,
-                                    DocumentMapper documentMapper) {
+                                    DocumentMapper documentMapper, CsoPartyMapper csoPartyMapper) {
         this.filingFacadeBean = filingFacadeBean;
         this.serviceFacadeBean = serviceFacadeBean;
         this.serviceMapper = serviceMapper;
@@ -46,6 +43,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         this.financialTransactionMapper = financialTransactionMapper;
         this.csoProperties = csoProperties;
         this.documentMapper = documentMapper;
+        this.csoPartyMapper = csoPartyMapper;
     }
 
     @Override
@@ -58,11 +56,8 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
         if(accountDetails == null) throw new IllegalArgumentException("Account Details are required");
         if(accountDetails.getClientId() == null) throw new IllegalArgumentException("Client id is required.");
-
         if(efilingPackage == null) throw new IllegalArgumentException("EfilingPackage is required.");
-
         if(filingPackage == null) throw new IllegalArgumentException("FilingPackage is required.");
-
 
         ServiceSession serviceSession = getServiceSession(accountDetails.getClientId().toString());
 
@@ -73,6 +68,40 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
                 true,
                 createPayment(paymentService, createdService, efilingPackage.getSubmissionFeeAmount(), accountDetails.getInternalClientNumber()));
 
+        ca.bc.gov.ag.csows.filing.FilingPackage csoFilingPackage = buildFilingPackage(accountDetails, efilingPackage, filingPackage, createdService);
+
+        if(isRushedProcessing) {
+            csoFilingPackage.setProcRequest(buildRushedOrderRequest(filingPackage));
+        }
+
+        BigDecimal filingResult = filePackage(csoFilingPackage);
+
+        updateServiceComplete(createdService);
+
+        return filingResult;
+
+    }
+
+    private ca.bc.gov.ag.csows.filing.FilingPackage buildFilingPackage(AccountDetails accountDetails, FilingPackage efilingPackage, EfilingFilingPackage filingPackage, Service createdService) {
+        return filingPackageMapper.toFilingPackage(
+                        filingPackage,
+                        createdService.getServiceId(),
+                        buildCivilDocuments(accountDetails, efilingPackage),
+                        buildCsoParties(accountDetails, efilingPackage));
+    }
+
+    private List<CsoParty> buildCsoParties(AccountDetails accountDetails, FilingPackage efilingPackage) {
+
+        List<CsoParty> csoParties = new ArrayList<>();
+
+        for(int i =0; i < efilingPackage.getParties().size(); i++) {
+            csoParties.add(csoPartyMapper.toEfilingParties(i, efilingPackage.getParties().get(i), accountDetails));
+        }
+
+        return csoParties;
+    }
+
+    private List<CivilDocument> buildCivilDocuments(AccountDetails accountDetails, FilingPackage efilingPackage) {
         List<CivilDocument> documents = new ArrayList<>();
 
         for(int i = 0; i < efilingPackage.getDocuments().size(); i++) {
@@ -93,13 +122,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
                     statuses
                     ));
         }
-
-        BigDecimal filingResult = filePackage(createdService, filingPackage, documents, isRushedProcessing);
-
-        updateServiceComplete(createdService);
-
-        return filingResult;
-
+        return documents;
     }
 
     private RushOrderRequest buildRushedOrderRequest(EfilingFilingPackage filingPackage) {
@@ -186,19 +209,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
     }
 
-    private BigDecimal filePackage(Service service, EfilingFilingPackage filingPackage, List<CivilDocument> documents, boolean isRushedProcessing) {
-
-
-
-        ca.bc.gov.ag.csows.filing.FilingPackage csoFilingPackage =
-                filingPackageMapper.toFilingPackage(
-                        filingPackage,
-                        service.getServiceId(),
-                        documents);
-
-        if(isRushedProcessing) {
-            csoFilingPackage.setProcRequest(buildRushedOrderRequest(filingPackage));
-        }
+    private BigDecimal filePackage(ca.bc.gov.ag.csows.filing.FilingPackage csoFilingPackage) {
 
         try {
             return filingFacadeBean.submitFiling(csoFilingPackage);
