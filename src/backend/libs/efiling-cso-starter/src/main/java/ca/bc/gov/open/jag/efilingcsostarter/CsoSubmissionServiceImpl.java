@@ -204,7 +204,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     private FinancialTransaction createPayment(EfilingPaymentService paymentService, Service service, BigDecimal submissionFeeAmount, String internalClientNumber) {
 
         EfilingPayment efilingPayment = new EfilingPayment(service.getServiceId(), submissionFeeAmount, generateInvoiceNumber(Keys.INVOICE_PREFIX), internalClientNumber);
-        EfilingTransaction payment = paymentService.makePayment(efilingPayment);
+        PaymentTransaction payment = paymentService.makePayment(efilingPayment);
         return financialTransactionMapper.toTransaction(payment, service);
 
     }

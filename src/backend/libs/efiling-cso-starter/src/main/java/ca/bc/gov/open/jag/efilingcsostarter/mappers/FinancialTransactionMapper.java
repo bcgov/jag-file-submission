@@ -2,7 +2,7 @@ package ca.bc.gov.open.jag.efilingcsostarter.mappers;
 
 import ca.bc.gov.ag.csows.services.FinancialTransaction;
 import ca.bc.gov.ag.csows.services.Service;
-import ca.bc.gov.open.jag.efilingcommons.model.EfilingTransaction;
+import ca.bc.gov.open.jag.efilingcommons.model.PaymentTransaction;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsostarter.Keys;
 import org.joda.time.DateTime;
@@ -32,7 +32,7 @@ public interface FinancialTransactionMapper {
     @Mapping(target = "serviceId", source = "service.serviceId")
     @Mapping(target = "updDtm", ignore = true)
     @Mapping(target = "updUserId", ignore = true)
-    FinancialTransaction toTransaction(EfilingTransaction efilingTransaction, Service service);
+    FinancialTransaction toTransaction(PaymentTransaction efilingTransaction, Service service);
 
 
     @Named("toXmlGregorianDate")
