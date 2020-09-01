@@ -24,6 +24,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -32,6 +33,7 @@ import static org.mockito.ArgumentMatchers.anyBoolean;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class createSubmissionTest {
 
+    public static final String INTERNAL_CLIENT_NUMBER = "12345";
     private SubmissionServiceImpl sut;
 
     @Mock
@@ -61,7 +63,7 @@ public class createSubmissionTest {
     @BeforeAll
     public void setUp(){
         MockitoAnnotations.initMocks(this);
-        Mockito.when(efilingSubmissionServiceMock.submitFilingPackage(any(), any(), anyBoolean(), any())).thenReturn(BigDecimal.TEN);
+        Mockito.when(efilingSubmissionServiceMock.submitFilingPackage(any(), any(), any(), anyBoolean(), any())).thenReturn(BigDecimal.TEN);
         Mockito.when(bamboraPaymentAdapterMock.makePayment(any())).thenReturn(new EfilingTransaction());
         Mockito.when(documentStoreMock.get(any())).thenReturn(new byte[]{});
         Mockito.doNothing().when(sftpServiceMock).put(any(), any());
@@ -87,7 +89,15 @@ public class createSubmissionTest {
                 .expiryDate(10)
                 .clientApplication(TestHelpers.createClientApplication(TestHelpers.DISPLAY_NAME, TestHelpers.TYPE))
                 .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList(), TestHelpers.createPartyList()))
-                .create());
+                .create(),
+                AccountDetails.builder()
+                        .fileRolePresent(true)
+                        .accountId(BigDecimal.ONE)
+                        .cardRegistered(true)
+                        .universalId(UUID.randomUUID())
+                        .clientId(BigDecimal.TEN)
+                        .internalClientNumber(INTERNAL_CLIENT_NUMBER)
+                        .create());
         assertEquals(BigDecimal.TEN, actual.getTransactionId());
     }
 

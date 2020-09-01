@@ -5,10 +5,8 @@ import ca.bc.gov.ag.csows.filing.ProcessItemStatus;
 import ca.bc.gov.ag.csows.filing.*;
 import ca.bc.gov.ag.csows.services.*;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
-import ca.bc.gov.open.jag.efilingcommons.model.EfilingFilingPackage;
-import ca.bc.gov.open.jag.efilingcommons.model.EfilingPayment;
-import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
-import ca.bc.gov.open.jag.efilingcommons.model.EfilingTransaction;
+import ca.bc.gov.open.jag.efilingcommons.model.*;
+import ca.bc.gov.open.jag.efilingcommons.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingPaymentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
@@ -44,20 +42,29 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     }
 
     @Override
-    public BigDecimal submitFilingPackage(EfilingService service, EfilingFilingPackage filingPackage, boolean isRushedProcessing, EfilingPaymentService paymentService) {
+    public BigDecimal submitFilingPackage(
+            AccountDetails accountDetails,
+            FilingPackage efilingPackage,
+            EfilingFilingPackage filingPackage,
+            boolean isRushedProcessing,
+            EfilingPaymentService paymentService) {
 
-        if(service == null) throw new IllegalArgumentException("Service is required.");
+        if(accountDetails == null) throw new IllegalArgumentException("Account Details are required");
+        if(accountDetails.getClientId() == null) throw new IllegalArgumentException("Client id is required.");
+
+        if(efilingPackage == null) throw new IllegalArgumentException("EfilingPackage is required.");
+
         if(filingPackage == null) throw new IllegalArgumentException("FilingPackage is required.");
-        if(service.getClientId() == null) throw new IllegalArgumentException("Service id is required.");
 
-        ServiceSession serviceSession = getServiceSession(service.getClientId().toString());
 
-        Service createdService = createEfilingService(service, serviceSession);
+        ServiceSession serviceSession = getServiceSession(accountDetails.getClientId().toString());
+
+        Service createdService = createEfilingService(efilingPackage, accountDetails, serviceSession);
 
         updatePaymentForService(
                 createdService,
                 true,
-                createPayment(paymentService, createdService, service.getSubmissionFeeAmount(), service.getInternalClientNumber()));
+                createPayment(paymentService, createdService, efilingPackage.getSubmissionFeeAmount(), accountDetails.getInternalClientNumber()));
 
         BigDecimal filingResult = filePackage(createdService, filingPackage, isRushedProcessing);
 
@@ -119,8 +126,10 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         }
     }
 
-    private Service createEfilingService(EfilingService service, ServiceSession serviceSession) {
-        Service serviceToCreate = serviceMapper.toService(service, serviceSession);
+    private Service createEfilingService(FilingPackage efilingPackage, AccountDetails accountDetails, ServiceSession serviceSession) {
+
+        Service serviceToCreate = serviceMapper.toCreateService(efilingPackage, accountDetails, serviceSession);
+
         try {
             return serviceFacadeBean.addService(serviceToCreate);
         } catch (ca.bc.gov.ag.csows.services.NestedEjbException_Exception e) {
@@ -160,7 +169,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
             }
         }
 
-        FilingPackage csoFilingPackage = filingPackageMapper.toFilingPackage(filingPackage, service.getServiceId());
+        ca.bc.gov.ag.csows.filing.FilingPackage csoFilingPackage = filingPackageMapper.toFilingPackage(filingPackage, service.getServiceId());
 
         if(isRushedProcessing) {
             csoFilingPackage.setProcRequest(buildRushedOrderRequest(filingPackage));

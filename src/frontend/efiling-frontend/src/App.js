@@ -64,7 +64,7 @@ export default function App() {
 
     if (cancelUrl) {
       axios
-        .delete(`submission/${submissionId}`)
+        .delete(`submission/${sessionStorage.getItem("submissionId")}`)
         .then(() => window.open(cancelUrl, "_self"))
         .catch(() => window.open(cancelUrl, "_self"));
     }

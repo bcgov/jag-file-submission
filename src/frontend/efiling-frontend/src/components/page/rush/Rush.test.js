@@ -31,6 +31,7 @@ describe("Rush Component", () => {
     },
   });
   localStorage.setItem("jwt", token);
+  sessionStorage.setItem("csoBaseUrl", "https://dev.justice.gov.bc.ca/cso");
 
   test("Matches the snapshot", () => {
     const currentDate = new Date("2019-05-14T11:01:58.135Z");

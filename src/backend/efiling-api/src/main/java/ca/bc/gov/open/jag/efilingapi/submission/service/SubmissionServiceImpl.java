@@ -6,12 +6,15 @@ import ca.bc.gov.open.jag.efilingapi.payment.BamboraPaymentAdapter;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.EfilingFilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
-import ca.bc.gov.open.jag.efilingapi.submission.models.Court;
+import ca.bc.gov.open.jag.efilingcommons.model.Court;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.utils.FileUtils;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.*;
+import ca.bc.gov.open.jag.efilingcommons.model.Document;
+import ca.bc.gov.open.jag.efilingcommons.model.FilingPackage;
+import ca.bc.gov.open.jag.efilingcommons.model.Party;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
@@ -25,7 +28,10 @@ import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.time.Duration;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class SubmissionServiceImpl implements SubmissionService {
@@ -75,6 +81,7 @@ public class SubmissionServiceImpl implements SubmissionService {
         this.sftpService = sftpService;
     }
 
+
     @Override
     public Submission generateFromRequest(SubmissionKey submissionKey, GenerateUrlRequest generateUrlRequest) {
 
@@ -105,14 +112,11 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     @Override
-    public SubmitResponse createSubmission(Submission submission) {
+    public SubmitResponse createSubmission(Submission submission, AccountDetails accountDetails) {
 
         uploadFiles(submission);
 
-        EfilingService service = efilingFilingPackageMapper.toEfilingService(submission);
-        service.setEntryDateTime(DateUtils.getCurrentXmlDate());
-
-        List<ca.bc.gov.open.jag.efilingapi.submission.models.Party> parties = new ArrayList();
+        List<Party> parties = new ArrayList();
         if (submission.getFilingPackage().getParties() != null)
             parties.addAll(submission.getFilingPackage().getParties());
 
@@ -131,10 +135,12 @@ public class SubmissionServiceImpl implements SubmissionService {
         filingPackage.setEntDtm(DateUtils.getCurrentXmlDate());
         filingPackage.setSubmitDtm(DateUtils.getCurrentXmlDate());
         SubmitResponse result = new SubmitResponse();
+
         result.transactionId(
                 efilingSubmissionService
                         .submitFilingPackage(
-                                service,
+                                accountDetails,
+                                submission.getFilingPackage(),
                                 filingPackage,
                                 submission.isRushedSubmission(),
                                 efilingPayment -> bamboraPaymentAdapter.makePayment(efilingPayment)));
@@ -159,9 +165,9 @@ public class SubmissionServiceImpl implements SubmissionService {
         return submission;
     }
 
-    private ca.bc.gov.open.jag.efilingapi.submission.models.FilingPackage toFilingPackage(GenerateUrlRequest request) {
+    private FilingPackage toFilingPackage(GenerateUrlRequest request) {
 
-        return ca.bc.gov.open.jag.efilingapi.submission.models.FilingPackage.builder()
+        return FilingPackage.builder()
                         .court(populateCourtDetails(request.getFilingPackage().getCourt()))
         .submissionFeeAmount(getSubmissionFeeAmount())
                 .documents(request.getFilingPackage()
@@ -193,12 +199,12 @@ public class SubmissionServiceImpl implements SubmissionService {
                 .create();
     }
 
-    private ca.bc.gov.open.jag.efilingapi.submission.models.Document toDocument(String courtLevel, String courtClass, DocumentProperties documentProperties) {
+    private Document toDocument(String courtLevel, String courtClass, DocumentProperties documentProperties) {
 
         DocumentDetails details = documentStore.getDocumentDetails(courtLevel, courtClass, documentProperties.getType());
 
         return
-                ca.bc.gov.open.jag.efilingapi.submission.models.Document.builder()
+                Document.builder()
                         .description(details.getDescription())
                         .statutoryFeeAmount(details.getStatutoryFeeAmount())
                         .type(documentProperties.getType())

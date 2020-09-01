@@ -62,6 +62,7 @@ describe("Upload Component", () => {
 
   const token = generateJWTToken({ preferred_username: "username@bceid" });
   localStorage.setItem("jwt", token);
+  sessionStorage.setItem("csoBaseUrl", "https://dev.justice.gov.bc.ca/cso");
 
   const apiRequest = `/submission/${submissionId}/filing-package`;
   let mock;
