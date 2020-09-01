@@ -6,6 +6,7 @@ import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.InitialPackage;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
+import ca.bc.gov.open.jag.efilingapi.submission.mappers.PartyMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
@@ -81,7 +82,7 @@ public class generateFromRequestTest {
 
         // Testing mapper as part of this unit test
         SubmissionMapper submissionMapper = new SubmissionMapperImpl();
-        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, submissionMapper, null, efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock, null, null);
+        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, submissionMapper, new PartyMapperImpl(), null, efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock, null, null);
 
     }
 

@@ -20,22 +20,18 @@ public interface DocumentMapper {
 
 
 
-
+    @Mapping(target = "packageSeqNo", source = "index")
     @Mapping(target = "amendsAnotherDocumentYn", source = "document.isAmendment", defaultValue = "false")
     @Mapping(target = "clientFileNameTxt", source = "document.name")
     @Mapping(target = "documentSubtypeCd", constant = Keys.DOCUMENT_SUB_TYPE_CD)
     @Mapping(target = "documentTypeCd", source = "document.type")
     @Mapping(target = "entUserId", source = "accountDetails.clientId")
     @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
-    //TODO this is the constructed file name
     @Mapping(target = "filePath", source = "document.serverFileName")
     @Mapping(target = "fileServer", source = "serverHost")
-
     @Mapping(target = "uploadStateCd", constant = Keys.SUBMISSION_UPLOAD_STATE_CD)
-
     @Mapping(target = "jsonObject", expression = "java(java.lang.String.valueOf(document.getData()))")
     @Mapping(target = "xmlDocumentInstanceYn", constant = Keys.XML_DOCUMENT_INSTANCE_YN)
-
     @Mapping(target = "milestones", source = "milestones")
     @Mapping(target = "payments", source = "payments")
     @Mapping(target = "statuses", source = "statuses")

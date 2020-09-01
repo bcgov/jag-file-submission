@@ -112,7 +112,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
             List<DocumentStatuses> statuses = Arrays.asList(documentMapper.toEfilingDocumentStatus(efilingPackage.getDocuments().get(i), accountDetails));
 
             documents.add(documentMapper.toEfilingDocument(
-                    i,
+                    i + 1,
                     efilingPackage.getDocuments().get(i),
                     accountDetails,
                     efilingPackage,
