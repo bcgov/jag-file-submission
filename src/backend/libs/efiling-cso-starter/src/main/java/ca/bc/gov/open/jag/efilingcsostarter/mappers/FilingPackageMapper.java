@@ -4,7 +4,7 @@ import ca.bc.gov.ag.csows.filing.CivilDocument;
 import ca.bc.gov.ag.csows.filing.CsoParty;
 import ca.bc.gov.ag.csows.filing.FilingPackage;
 import ca.bc.gov.ag.csows.filing.PackageAuthority;
-import ca.bc.gov.open.jag.efilingcommons.model.EfilingFilingPackage;
+import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -15,43 +15,35 @@ import java.util.List;
 @Mapper
 public interface FilingPackageMapper {
 
-    @Mapping(target = "applicationCd", source = "efilingFilingPackage.applicationCd")
-    @Mapping(target = "applicationReferenceGuid", source = "efilingFilingPackage.applicationReferenceGuid")
-    @Mapping(target = "autoProcessEndDtm", source = "efilingFilingPackage.autoProcessEndDtm")
-    @Mapping(target = "autoProcessStartDtm", source = "efilingFilingPackage.autoProcessStartDtm")
-    @Mapping(target = "automatedProcessYn", source = "efilingFilingPackage.automatedProcessYn")
-    @Mapping(target = "cfcsaYn", source = "efilingFilingPackage.cfcsaYn")
-    @Mapping(target = "checkedOutByAgenId", source = "efilingFilingPackage.checkedOutByAgenId")
-    @Mapping(target = "checkedOutByPaasSeqNo", source = "efilingFilingPackage.checkedOutByPaasSeqNo")
-    @Mapping(target = "checkedOutByPartId", source = "efilingFilingPackage.checkedOutByPartId")
-    @Mapping(target = "checkedOutDtm", source = "efilingFilingPackage.checkedOutDtm")
-    @Mapping(target = "clientFileNo", source = "efilingFilingPackage.clientFileNo")
-    @Mapping(target = "courtFileNo", source = "efilingFilingPackage.courtFileNo")
-    @Mapping(target = "delayProcessing", source = "efilingFilingPackage.delayProcessing")
-    @Mapping(target = "documents", source = "documents")
-    @Mapping(target = "entDtm", source = "efilingFilingPackage.entDtm")
-    @Mapping(target = "entUserId", source = "efilingFilingPackage.entUserId")
-    @Mapping(target = "existingCourtFileYn", source = "efilingFilingPackage.existingCourtFileYn")
-    @Mapping(target = "feeExemptYn", source = "efilingFilingPackage.feeExemptYn")
-    @Mapping(target = "ldcxCourtClassCd", source = "efilingFilingPackage.ldcxCourtClassCd")
-    @Mapping(target = "ldcxCourtDivisionCd", source = "efilingFilingPackage.ldcxCourtDivisionCd")
-    @Mapping(target = "ldcxCourtLevelCd", source = "efilingFilingPackage.ldcxCourtLevelCd")
-    @Mapping(target = "notificationEmailTxt", source = "efilingFilingPackage.notificationEmailTxt")
+    @Mapping(target = "existingCourtFileYn", constant = "false")
+    @Mapping(target = "processingCompleteYn", constant = "false")
+    @Mapping(target = "feeExemptYn", constant = "false")
+    @Mapping(target = "cfcsaYn", constant = "false")
+    @Mapping(target = "automatedProcessYn", constant = "false")
     @Mapping(target = "notificationRequiredYn", constant = "true")
-    @Mapping(target = "packageControls", source = "packageControls")
-    @Mapping(target = "packageId", source = "efilingFilingPackage.packageId")
-    @Mapping(target = "processingCompleteYn", source = "efilingFilingPackage.processingCompleteYn")
-    @Mapping(target = "resubmissionOfPackageId", source = "efilingFilingPackage.resubmissionOfPackageId")
-    @Mapping(target = "reviewerNotesTxt", source = "efilingFilingPackage.reviewerNotesTxt")
-    @Mapping(target = "submitDtm", source = "submittedDate")
-    @Mapping(target = "submittedByAccountId", source = "efilingFilingPackage.submittedByAccountId")
-    @Mapping(target = "submittedByClientId", source = "efilingFilingPackage.submittedByClientId")
-    @Mapping(target = "submittedToAgenId", source = "efilingFilingPackage.submittedToAgenId")
-    @Mapping(target = "submitterCommentTxt", source = "efilingFilingPackage.submitterCommentTxt")
+
+    @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
+
+    @Mapping(target = "courtFileNo", source = "filingPackage.court.fileNumber")
+    @Mapping(target = "ldcxCourtClassCd", source = "filingPackage.court.courtClass")
+    @Mapping(target = "ldcxCourtLevelCd", source = "filingPackage.court.level")
+    @Mapping(target = "submittedToAgenId", source = "filingPackage.court.agencyId")
+    @Mapping(target = "ldcxCourtDivisionCd", source = "filingPackage.court.division")
+
+    @Mapping(target = "entUserId", source = "accountDetails.clientId")
+    @Mapping(target = "submittedByAccountId", source = "accountDetails.accountId")
+    @Mapping(target = "submittedByClientId", source = "accountDetails.clientId")
+
+    @Mapping(target = "applicationCd", source = "type")
     @Mapping(target = "serviceId", source = "serviceId")
+    @Mapping(target = "submitDtm", source = "submittedDate")
+    @Mapping(target = "documents", source = "documents")
     @Mapping(target = "parties", source = "csoParties")
+    @Mapping(target = "packageControls", source = "packageControls")
     FilingPackage toFilingPackage(
-            EfilingFilingPackage efilingFilingPackage,
+            ca.bc.gov.open.jag.efilingcommons.model.FilingPackage filingPackage,
+            AccountDetails accountDetails,
+            String type,
             BigDecimal serviceId,
             XMLGregorianCalendar submittedDate,
             List<CivilDocument> documents,
