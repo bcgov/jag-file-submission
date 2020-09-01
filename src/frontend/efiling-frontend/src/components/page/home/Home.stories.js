@@ -32,7 +32,8 @@ const documents = getDocumentsData();
 const court = getCourtData();
 const submissionFeeAmount = 25.5;
 const userDetails = getUserDetails();
-const clientApplication = { displayName: "client app" };
+const clientAppName = "client app";
+const csoBaseUrl = "https://dev.justice.gov.bc.ca/cso";
 
 const setRequiredStorage = () => {
   sessionStorage.setItem("errorUrl", "error.com");
@@ -57,7 +58,7 @@ const LoaderStateData = (props) => {
 const AccountExistsStateData = (props) => {
   setRequiredStorage();
   const mock = new MockAdapter(axios);
-  mock.onGet(apiRequest).reply(200, { navigation, clientApplication });
+  mock.onGet(apiRequest).reply(200, { navigation, clientAppName, csoBaseUrl });
   mock.onGet("csoAccount").reply(200, {
     clientId: userDetails.clientId,
     internalClientNumber: userDetails.internalClientNumber,
@@ -73,7 +74,8 @@ const NoAccountExistsStateData = (props) => {
   const mock = new MockAdapter(axios);
   mock.onGet(apiRequest).reply(200, {
     navigation,
-    clientApplication,
+    clientAppName,
+    csoBaseUrl,
   });
   mock.onGet("csoAccount").reply(404);
   mock.onGet("/bceidAccount").reply(200, {
