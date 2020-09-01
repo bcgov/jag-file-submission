@@ -1,8 +1,8 @@
 package ca.bc.gov.open.jag.efilingcommons.service;
 
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingPayment;
-import ca.bc.gov.open.jag.efilingcommons.model.EfilingTransaction;
+import ca.bc.gov.open.jag.efilingcommons.model.PaymentTransaction;
 
 public interface EfilingPaymentService {
-    EfilingTransaction makePayment(EfilingPayment efilingPayment);
+    PaymentTransaction makePayment(EfilingPayment efilingPayment);
 }

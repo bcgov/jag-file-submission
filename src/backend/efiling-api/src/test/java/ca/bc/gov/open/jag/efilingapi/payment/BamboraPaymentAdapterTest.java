@@ -7,7 +7,7 @@ import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.Custom;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.PaymentResponse;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingPayment;
-import ca.bc.gov.open.jag.efilingcommons.model.EfilingTransaction;
+import ca.bc.gov.open.jag.efilingcommons.model.PaymentTransaction;
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
@@ -47,7 +47,7 @@ public class BamboraPaymentAdapterTest {
 
         EfilingPayment payment = new EfilingPayment(BigDecimal.TEN, BigDecimal.TEN, ORDER_NUMBER, INTERNAL_CLIENT_NUMBER);
 
-        EfilingTransaction efilingTransaction = sut.makePayment(payment);
+        PaymentTransaction efilingTransaction = sut.makePayment(payment);
         Assertions.assertEquals(AUTH_CODE, efilingTransaction.getApprovalCd());
         Assertions.assertEquals("APP", efilingTransaction.getTransactionStateCd());
         Assertions.assertEquals(BigDecimal.valueOf(1), efilingTransaction.getEcommerceTransactionId());
@@ -67,7 +67,7 @@ public class BamboraPaymentAdapterTest {
         Mockito.when(paymentsApiMock.makePayment(any())).thenReturn(createPaymentResponse(123,2));
         EfilingPayment payment = new EfilingPayment(BigDecimal.TEN, BigDecimal.TEN, ORDER_NUMBER, INTERNAL_CLIENT_NUMBER);
 
-        EfilingTransaction efilingTransaction = sut.makePayment(payment);
+        PaymentTransaction efilingTransaction = sut.makePayment(payment);
         Assertions.assertEquals(AUTH_CODE, efilingTransaction.getApprovalCd());
         Assertions.assertEquals("DEC", efilingTransaction.getTransactionStateCd());
         Assertions.assertEquals(BigDecimal.valueOf(1), efilingTransaction.getEcommerceTransactionId());

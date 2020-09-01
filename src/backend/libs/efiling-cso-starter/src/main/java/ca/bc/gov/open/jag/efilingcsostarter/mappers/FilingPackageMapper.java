@@ -7,6 +7,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.EfilingFilingPackage;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public interface FilingPackageMapper {
     @Mapping(target = "processingCompleteYn", source = "efilingFilingPackage.processingCompleteYn")
     @Mapping(target = "resubmissionOfPackageId", source = "efilingFilingPackage.resubmissionOfPackageId")
     @Mapping(target = "reviewerNotesTxt", source = "efilingFilingPackage.reviewerNotesTxt")
-    @Mapping(target = "submitDtm", source = "efilingFilingPackage.submitDtm")
+    @Mapping(target = "submitDtm", source = "submittedDate")
     @Mapping(target = "submittedByAccountId", source = "efilingFilingPackage.submittedByAccountId")
     @Mapping(target = "submittedByClientId", source = "efilingFilingPackage.submittedByClientId")
     @Mapping(target = "submittedToAgenId", source = "efilingFilingPackage.submittedToAgenId")
@@ -51,6 +52,7 @@ public interface FilingPackageMapper {
     FilingPackage toFilingPackage(
             EfilingFilingPackage efilingFilingPackage,
             BigDecimal serviceId,
+            XMLGregorianCalendar submittedDate,
             List<CivilDocument> documents,
             List<CsoParty> csoParties);
 }

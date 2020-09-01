@@ -126,7 +126,6 @@ public class SubmissionServiceImpl implements SubmissionService {
         EfilingFilingPackage filingPackage = efilingFilingPackageMapper.toEfilingFilingPackage(submission);
         filingPackage.setPackageControls(Arrays.asList(efilingFilingPackageMapper.toPackageAuthority(submission)));
         filingPackage.setEntDtm(DateUtils.getCurrentXmlDate());
-        filingPackage.setSubmitDtm(DateUtils.getCurrentXmlDate());
         SubmitResponse result = new SubmitResponse();
 
         result.transactionId(

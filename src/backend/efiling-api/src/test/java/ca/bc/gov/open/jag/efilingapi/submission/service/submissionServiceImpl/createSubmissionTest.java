@@ -10,7 +10,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.EfilingTransaction;
+import ca.bc.gov.open.jag.efilingcommons.model.PaymentTransaction;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
@@ -65,7 +65,7 @@ public class createSubmissionTest {
     public void setUp(){
         MockitoAnnotations.initMocks(this);
         Mockito.when(efilingSubmissionServiceMock.submitFilingPackage(any(), any(), any(), anyBoolean(), any())).thenReturn(BigDecimal.TEN);
-        Mockito.when(bamboraPaymentAdapterMock.makePayment(any())).thenReturn(new EfilingTransaction());
+        Mockito.when(bamboraPaymentAdapterMock.makePayment(any())).thenReturn(new PaymentTransaction());
         Mockito.when(documentStoreMock.get(any(), any())).thenReturn(new byte[]{});
         Mockito.doNothing().when(sftpServiceMock).put(any(), any());
         sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, null, new PartyMapperImpl(), new EfilingFilingPackageMapperImpl(),efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock, bamboraPaymentAdapterMock, sftpServiceMock);
