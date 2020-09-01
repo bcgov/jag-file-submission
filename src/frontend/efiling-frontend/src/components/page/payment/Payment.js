@@ -66,9 +66,13 @@ const submitPackage = (submissionId, setSubmitBtnEnabled, setShowLoader) => {
 
   axios
     .post(`/submission/${submissionId}/submit`, {})
-    .then(() => {
+    .then(({ data: { packageRef } }) => {
+      const redirectUrl = `${sessionStorage.getItem(
+        "successUrl"
+      )}?packageRef=${packageRef}`;
+
       sessionStorage.setItem("validExit", true);
-      window.open(sessionStorage.getItem("successUrl"), "_self");
+      window.open(redirectUrl, "_self");
     })
     .catch((err) => errorRedirect(sessionStorage.getItem("errorUrl"), err));
 };
