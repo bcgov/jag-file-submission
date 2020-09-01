@@ -54,6 +54,7 @@
 
 .fill-space {
   width: -webkit-fill-available;
+  width: -moz-available;
 }
 
 .minor-margin-left {

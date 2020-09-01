@@ -64,6 +64,7 @@ main {
   justify-content: space-between;
   float: right;
   width: -webkit-fill-available;
+  width: -moz-available;
 }
 
 .bcgov-button {
