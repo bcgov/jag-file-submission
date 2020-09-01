@@ -72,7 +72,7 @@ public class DeleteSubmissionTest {
 
         MockitoAnnotations.initMocks(this);
 
-        Mockito.doNothing().when(documentStoreMock).evict(Mockito.any());
+        Mockito.doNothing().when(documentStoreMock).evict(Mockito.any(), Mockito.any());
         Mockito.doNothing().when(submissionStoreMock).evict(Mockito.any());
 
         Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);

@@ -50,7 +50,7 @@ public class GetSubmissionDocumentTest {
         NavigationProperties navigationProperties = new NavigationProperties();
         navigationProperties.setBaseUrl("http://localhost");
 
-        Mockito.when(documentStoreMock.get(Mockito.endsWith("test.txt"))).thenReturn(CONTENT.getBytes());
+        Mockito.when(documentStoreMock.get(Mockito.any(), Mockito.endsWith("test.txt"))).thenReturn(CONTENT.getBytes());
 
         FilingPackageMapper filingPackageMapper = new FilingPackageMapperImpl();
         sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, new GenerateUrlResponseMapperImpl(), navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper);

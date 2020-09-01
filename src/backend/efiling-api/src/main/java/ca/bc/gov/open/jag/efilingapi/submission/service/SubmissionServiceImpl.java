@@ -125,13 +125,6 @@ public class SubmissionServiceImpl implements SubmissionService {
                         .map(party -> efilingFilingPackageMapper.toEfilingParties(submission, party, String.valueOf(submission.getFilingPackage().getParties().indexOf(party))))
                         .collect(Collectors.toList()));
         filingPackage.setPackageControls(Arrays.asList(efilingFilingPackageMapper.toPackageAuthority(submission)));
-        filingPackage.setDocuments(submission.getFilingPackage().getDocuments().stream()
-                .map(document -> efilingFilingPackageMapper.toEfilingDocument(document, submission,
-                        Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentMilestone(document, submission)),
-                        Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentPayment(document, submission)),
-                        Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentStatus(document, submission)),
-                        MessageFormat.format("fh_{0}_{1}_{2}", submission.getId(), submission.getUniversalId(), document.getName())))
-                .collect(Collectors.toList()));
         filingPackage.setEntDtm(DateUtils.getCurrentXmlDate());
         filingPackage.setSubmitDtm(DateUtils.getCurrentXmlDate());
         SubmitResponse result = new SubmitResponse();
@@ -234,11 +227,13 @@ public class SubmissionServiceImpl implements SubmissionService {
                 .fileName(fileName)
                 .create().getCompositeId();
 
+        SubmissionKey submissionKey = new SubmissionKey(submission.getUniversalId(), submission.getTransactionId(), submission.getId());
 
-        sftpService.put(new ByteArrayInputStream(documentStore.get(compositeFileName)), MessageFormat.format("fh_{0}", compositeFileName));
+
+        sftpService.put(new ByteArrayInputStream(documentStore.get(submissionKey, fileName)), MessageFormat.format("fh_{0}", compositeFileName));
 
         //Delete file from cache
-        documentStore.evict(compositeFileName);
+        documentStore.evict(submissionKey, fileName);
 
         // TODO: remove this is temp because of the SFTP rsync process
         try {

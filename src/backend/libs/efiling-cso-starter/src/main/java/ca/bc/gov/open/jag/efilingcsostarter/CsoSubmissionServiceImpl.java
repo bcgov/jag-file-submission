@@ -73,14 +73,14 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
                 true,
                 createPayment(paymentService, createdService, efilingPackage.getSubmissionFeeAmount(), accountDetails.getInternalClientNumber()));
 
-        List<EfilingDocument> documents = new ArrayList<>();
+        List<CivilDocument> documents = new ArrayList<>();
 
         for(int i = 0; i < efilingPackage.getDocuments().size(); i++) {
 
-            List<EfilingDocumentPayment> payments = Arrays.asList(documentMapper.toEfilingDocumentPayment(efilingPackage.getDocuments().get(i), accountDetails));
-            List<EfilingDocumentMilestone> milestones = Arrays.asList(documentMapper.toActualSubmittedDate(accountDetails),
+            List<DocumentPayments> payments = Arrays.asList(documentMapper.toEfilingDocumentPayment(efilingPackage.getDocuments().get(i), accountDetails));
+            List<Milestones> milestones = Arrays.asList(documentMapper.toActualSubmittedDate(accountDetails),
                     documentMapper.toComputedSubmittedDate(accountDetails, DateUtils.getCurrentXmlDate()));
-            List<EfilingDocumentStatus> statuses = Arrays.asList(documentMapper.toEfilingDocumentStatus(efilingPackage.getDocuments().get(i), accountDetails));
+            List<DocumentStatuses> statuses = Arrays.asList(documentMapper.toEfilingDocumentStatus(efilingPackage.getDocuments().get(i), accountDetails));
 
             documents.add(documentMapper.toEfilingDocument(
                     i,
@@ -187,7 +187,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
     }
 
-    private BigDecimal filePackage(Service service, EfilingFilingPackage filingPackage, List<EfilingDocument> documents, boolean isRushedProcessing) {
+    private BigDecimal filePackage(Service service, EfilingFilingPackage filingPackage, List<CivilDocument> documents, boolean isRushedProcessing) {
 
 
 

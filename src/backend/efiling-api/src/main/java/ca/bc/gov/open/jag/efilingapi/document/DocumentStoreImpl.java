@@ -1,9 +1,9 @@
 package ca.bc.gov.open.jag.efilingapi.document;
 
+import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentType;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 
@@ -18,20 +18,20 @@ public class DocumentStoreImpl implements DocumentStore {
     }
 
     @Override
-    @CachePut(cacheNames = "document", key = "#compositeId", cacheManager = "documentCacheManager")
-    public byte[] put(String compositeId, byte[] content) {
+    @CachePut(cacheNames = "document", key = "{ #submissionKey.universalId, #submissionKey.submissionId, #submissionKey.transactionId, #fileName }", cacheManager = "documentCacheManager")
+    public byte[] put(SubmissionKey submissionKey, String fileName, byte[] content) {
         return content;
     }
 
     @Override
-    @Cacheable(cacheNames = "document", key = "#compositeId", cacheManager = "documentCacheManager", unless = "#result == null")
-    public byte[] get(String compositeId) {
+    @Cacheable(cacheNames = "document", key = "{ #submissionKey.universalId, #submissionKey.submissionId, #submissionKey.transactionId, #fileName }", cacheManager = "documentCacheManager", unless = "#result == null")
+    public byte[] get(SubmissionKey submissionKey, String fileName) {
         return null;
     }
 
     @Override
-    @Cacheable(cacheNames = "document", key = "#compositeId", cacheManager = "documentCacheManager")
-    public void evict(String compositeId) {
+    @Cacheable(cacheNames = "document", key = "{ #submissionKey.universalId, #submissionKey.submissionId, #submissionKey.transactionId, #fileName }", cacheManager = "documentCacheManager")
+    public void evict(SubmissionKey submissionKey, String fileName) {
         //This implements Redis delete no code required
     }
 

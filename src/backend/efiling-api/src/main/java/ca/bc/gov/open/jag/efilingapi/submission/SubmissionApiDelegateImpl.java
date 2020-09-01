@@ -75,22 +75,29 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @RolesAllowed("efiling-client")
     public ResponseEntity<UploadSubmissionDocumentsResponse> uploadSubmissionDocuments(UUID xTransactionId, String xUserId, List<MultipartFile> files) {
 
-        UUID submissionId = UUID.randomUUID();
-
-        MdcUtils.setClientMDC(submissionId, xTransactionId);
-
-        logger.info("attempting to upload original document [{}]", submissionId);
-
         Optional<UUID> actualUserId = SecurityUtils.stringToUUID(xUserId);
+
+        SubmissionKey submissionKey = new SubmissionKey(
+                actualUserId.get(),
+                xTransactionId,
+                UUID.randomUUID());
+
+        MdcUtils.setClientMDC(submissionKey.getSubmissionId(), xTransactionId);
+
+        logger.info("attempting to upload original document [{}]", submissionKey.getSubmissionId());
+
+
 
         if (!actualUserId.isPresent())
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
                     HttpStatus.FORBIDDEN);
 
-        ResponseEntity response = storeDocuments(submissionId, xTransactionId, actualUserId.get(), files);
 
-        logger.info("successfully uploaded original document [{}]", submissionId);
+
+        ResponseEntity response = storeDocuments(submissionKey, files);
+
+        logger.info("successfully uploaded original document [{}]", submissionKey.getSubmissionId());
 
         MdcUtils.clearClientMDC();
 
@@ -121,7 +128,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         logger.info("attempting to upload new document for transaction [{}]", submissionId);
 
-        ResponseEntity responseEntity = storeDocuments(submissionId, xTransactionId, fromCacheSubmission.get().getUniversalId(), files);
+        ResponseEntity responseEntity = storeDocuments(submissionKey, files);
 
         logger.info("successfully uploaded new document for transaction [{}]", submissionId);
 
@@ -181,9 +188,21 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
                                                           UUID submissionId,
                                                           String filename) {
 
+
         logger.info("getSubmission document for transaction [{}]", xTransactionId);
 
+        Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
+
+        if(!universalId.isPresent())
+            return new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
+                    HttpStatus.FORBIDDEN);
+
+        SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
+
         MdcUtils.setUserMDC(submissionId, xTransactionId);
+
+
 
         Document document = Document
                 .builder()
@@ -192,7 +211,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
                 .fileName(filename)
                 .create();
 
-        byte[] bytes = documentStore.get(document.getCompositeId());
+        byte[] bytes = documentStore.get(submissionKey, filename);
 
         if (bytes == null) return ResponseEntity.notFound().build();
 
@@ -342,13 +361,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         //Remove documents from cache
         if (fromCacheSubmission.get().getFilingPackage() != null && fromCacheSubmission.get().getFilingPackage().getDocuments() != null)
             fromCacheSubmission.get().getFilingPackage().getDocuments().forEach(
-                    document -> documentStore.evict(
-                            Document
-                                    .builder()
-                                    .userId(fromCacheSubmission.get().getUniversalId())
-                                    .submissionId(submissionId)
-                                    .fileName(document.getName())
-                                    .create().getCompositeId()));
+                    document -> documentStore.evict(submissionKey, document.getName()));
 
         //Remove submission from cache
         submissionStore.evict(submissionKey);
@@ -410,7 +423,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         }
     }
 
-    private ResponseEntity storeDocuments(UUID submissionId, UUID xTransactionId, UUID xUserId, List<MultipartFile> files) {
+    private ResponseEntity storeDocuments(SubmissionKey submissionKey, List<MultipartFile> files) {
 
         if (files == null || files.isEmpty())
             return new ResponseEntity(
@@ -433,16 +446,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
                             HttpStatus.BAD_REQUEST);
             }
             for (MultipartFile file : files) {
-                Document document = Document
-                        .builder()
-                        .userId(xUserId)
-                        .transactionId(xTransactionId)
-                        .submissionId(submissionId)
-                        .fileName(file.getResource().getFilename())
-                        .content(file.getBytes())
-                        .create();
-
-                documentStore.put(document.getCompositeId(), document.getContent());
+                documentStore.put(submissionKey, file.getResource().getFilename(), file.getBytes());
             }
 
         } catch (IOException e) {
@@ -452,7 +456,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         logger.info("{} stored in cache", files.size());
 
-        return ResponseEntity.ok(new UploadSubmissionDocumentsResponse().submissionId(submissionId).received(new BigDecimal(files.size())));
+        return ResponseEntity.ok(new UploadSubmissionDocumentsResponse().submissionId(submissionKey.getSubmissionId()).received(new BigDecimal(files.size())));
     }
 
 }
