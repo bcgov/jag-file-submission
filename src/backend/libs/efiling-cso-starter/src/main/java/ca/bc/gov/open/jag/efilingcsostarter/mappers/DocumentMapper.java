@@ -46,18 +46,18 @@ public interface DocumentMapper {
             List<DocumentStatuses> statuses);
 
     @Mapping(target = "entUserId", source = "accountDetails.clientId")
-    @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
-    @Mapping(target = "milestoneDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
+    @Mapping(target = "entDtm", expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
+    @Mapping(target = "milestoneDtm", expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
     @Mapping(target = "milestoneTypeCd",  constant = "ASUB")
     @Mapping(target = "milestoneSeqNo",  constant = "1")
     Milestones toActualSubmittedDate(AccountDetails accountDetails);
 
     @Mapping(target = "entUserId", source = "accountDetails.clientId")
     @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
-    @Mapping(target = "milestoneDtm",  source = "xmlGregorianCalendar")
+    @Mapping(target = "milestoneDtm",  source = "submittedDate")
     @Mapping(target = "milestoneTypeCd",  constant = "CSUB")
     @Mapping(target = "milestoneSeqNo",  constant = "2")
-    Milestones toComputedSubmittedDate(AccountDetails accountDetails, XMLGregorianCalendar xmlGregorianCalendar);
+    Milestones toComputedSubmittedDate(AccountDetails accountDetails, XMLGregorianCalendar submittedDate);
 
     @Mapping(target = "entUserId", source = "accountDetails.clientId")
     @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
