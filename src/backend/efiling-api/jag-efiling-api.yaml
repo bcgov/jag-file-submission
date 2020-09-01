@@ -480,8 +480,12 @@ components:
       properties:
         navigation:
           $ref: "#/components/schemas/Navigation"
-        clientApplication:
-          $ref: "#/components/schemas/ClientApplication"
+        clientAppName:
+          type: string
+          description: the client app name
+        csoBaseUrl:
+          type: string
+          description: the CSO base Url
     Navigation:
       required:
         - success

@@ -173,8 +173,7 @@ public class GetSubmissionTest {
         assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigation().getSuccess().getUrl());
         assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigation().getCancel().getUrl());
         assertEquals(TestHelpers.ERROR_URL, actual.getBody().getNavigation().getError().getUrl());
-        assertEquals(TestHelpers.TYPE, actual.getBody().getClientApplication().getType());
-        assertEquals(TestHelpers.DESCRIPTION, actual.getBody().getClientApplication().getDisplayName());
+        assertEquals(TestHelpers.DESCRIPTION, actual.getBody().getClientAppName());
 
     }
 
