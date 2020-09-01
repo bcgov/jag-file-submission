@@ -123,6 +123,9 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         result.setPackageRef(Base64.getEncoder().encodeToString(submitPackageResponse.getPackageLink().getBytes()));
 
+
+        logger.info("successfully submitted efiling package with cso id [{}]", submitPackageResponse.getTransactionId());
+
         return result;
 
     }

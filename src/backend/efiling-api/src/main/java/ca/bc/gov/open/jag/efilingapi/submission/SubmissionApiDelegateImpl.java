@@ -388,11 +388,13 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         try {
             SubmitResponse result = submissionService.createSubmission(fromCacheSubmission.get(), accountService.getCsoAccountDetails(submissionKey.getUniversalId()));
             response = new ResponseEntity(result, HttpStatus.CREATED);
-        } catch (EfilingSubmissionServiceException e) {
-            response = new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+            logger.info("successfully submitted efiling package for transaction [{}], cso id {}", xTransactionId);
 
-        logger.info("successfully submitted efiling package for transaction [{}]", xTransactionId);
+        } catch (EfilingSubmissionServiceException e) {
+            logger.error("failed package submission {}", xTransactionId);
+            response = new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
 
         MdcUtils.clearUserMDC();
 
