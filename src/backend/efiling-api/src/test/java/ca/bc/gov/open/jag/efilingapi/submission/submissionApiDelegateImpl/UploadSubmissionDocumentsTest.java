@@ -67,6 +67,7 @@ public class UploadSubmissionDocumentsTest {
     @Mock
     private ClamAvService clamAvServiceMock;
 
+
     @BeforeAll
     public void setUp() throws IOException {
         MockitoAnnotations.initMocks(this);
@@ -162,6 +163,7 @@ public class UploadSubmissionDocumentsTest {
     @DisplayName("502: with ioException should return 502")
     public void withScanFailureShouldReturnBadGateway() throws VirusDetectedException, IOException {
 
+
         File file = new File("src/test/resources/test.pdf");
 
         List<MultipartFile> files = new ArrayList<>();
@@ -179,14 +181,14 @@ public class UploadSubmissionDocumentsTest {
     }
 
     @Test
-    @DisplayName("403: with invalid userId then return forbidden 403")
-    public void withInvalidUserIDThenReturnForbidden() {
+    @DisplayName("400: with invalid userId then return BAD REQUEST 400")
+    public void withInvalidUserIDThenReturnBadRequest() {
 
         List<MultipartFile> files = new ArrayList<>();
         files.add(multipartFileMock);
         ResponseEntity actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), "BADUUID", files);
 
-        Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
         Assertions.assertEquals(INVALIDUNIVERSAL.getErrorCode(), ((EfilingError)actual.getBody()).getError());
         Assertions.assertEquals(INVALIDUNIVERSAL.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
     }

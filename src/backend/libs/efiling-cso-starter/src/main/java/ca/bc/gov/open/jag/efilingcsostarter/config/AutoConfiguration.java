@@ -79,6 +79,13 @@ public class AutoConfiguration {
     @Bean
     public FinancialTransactionMapper financialTransactionMapper() { return new FinancialTransactionMapperImpl(); }
 
+    @Bean
+    public DocumentMapper documentMapper() {
+        return new DocumentMapperImpl();
+    }
+
+    @Bean
+    public CsoPartyMapper csoPartyMapper() { return new CsoPartyMapperImpl(); }
 
     @Bean
     @ConditionalOnMissingBean({EfilingAccountService.class})
@@ -112,9 +119,19 @@ public class AutoConfiguration {
                                                              ServiceFacadeBean serviceFacadeBean,
                                                              ServiceMapper serviceMapper,
                                                              FilingPackageMapper filingPackageMapper,
-                                                             FinancialTransactionMapper financialTransactionMapper
-    ) {
-        return new CsoSubmissionServiceImpl(filingFacadeBean, serviceFacadeBean, serviceMapper, filingPackageMapper, financialTransactionMapper, csoProperties); }
+                                                             FinancialTransactionMapper financialTransactionMapper,
+                                                             DocumentMapper documentMapper,
+                                                             CsoPartyMapper csoPartyMapper) {
+
+        return new CsoSubmissionServiceImpl(
+                filingFacadeBean,
+                serviceFacadeBean,
+                serviceMapper,
+                filingPackageMapper,
+                financialTransactionMapper,
+                csoProperties,
+                documentMapper,
+                csoPartyMapper); }
 
 
     public <T> T getPort(Clients clients, Class<T> type) {

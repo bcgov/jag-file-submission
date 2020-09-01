@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.document;
 
+import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentType;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
@@ -49,7 +50,7 @@ public class DocumentStoreImplTest {
     @DisplayName("OK: put document should return byte array")
     public void withoutCacheShouldReturnIt() {
 
-        byte[] actual = sut.put("id", DUMMY_CONTENT.getBytes());
+        byte[] actual = sut.put(new SubmissionKey(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID()), "filename.txt", DUMMY_CONTENT.getBytes());
 
         Assertions.assertEquals(DUMMY_CONTENT, new String(actual));
     }
@@ -57,13 +58,13 @@ public class DocumentStoreImplTest {
     @Test
     @DisplayName("OK: get document by Id should return null")
     public void withoutCacheShouldReturnNull() {
-        Assertions.assertNull(sut.get("id"));
+        Assertions.assertNull(sut.get(new SubmissionKey(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID()), "filename.txt"));
     }
 
     @Test
     @DisplayName("OK: evict should delete submission")
     public void withoutCacheNotThrowException() {
-        Assertions.assertDoesNotThrow(() -> sut.evict("COMPOSITEID"));
+        Assertions.assertDoesNotThrow(() -> sut.evict(new SubmissionKey(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID()), "filename.txt"));
     }
 
     @Test

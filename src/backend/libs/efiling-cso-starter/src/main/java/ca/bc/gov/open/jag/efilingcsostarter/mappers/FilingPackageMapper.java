@@ -1,11 +1,14 @@
 package ca.bc.gov.open.jag.efilingcsostarter.mappers;
 
+import ca.bc.gov.ag.csows.filing.CivilDocument;
+import ca.bc.gov.ag.csows.filing.CsoParty;
 import ca.bc.gov.ag.csows.filing.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingFilingPackage;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Mapper
 public interface FilingPackageMapper {
@@ -23,7 +26,7 @@ public interface FilingPackageMapper {
     @Mapping(target = "clientFileNo", source = "efilingFilingPackage.clientFileNo")
     @Mapping(target = "courtFileNo", source = "efilingFilingPackage.courtFileNo")
     @Mapping(target = "delayProcessing", source = "efilingFilingPackage.delayProcessing")
-    @Mapping(target = "documents", source = "efilingFilingPackage.documents")
+    @Mapping(target = "documents", source = "documents")
     @Mapping(target = "entDtm", source = "efilingFilingPackage.entDtm")
     @Mapping(target = "entUserId", source = "efilingFilingPackage.entUserId")
     @Mapping(target = "existingCourtFileYn", source = "efilingFilingPackage.existingCourtFileYn")
@@ -44,6 +47,10 @@ public interface FilingPackageMapper {
     @Mapping(target = "submittedToAgenId", source = "efilingFilingPackage.submittedToAgenId")
     @Mapping(target = "submitterCommentTxt", source = "efilingFilingPackage.submitterCommentTxt")
     @Mapping(target = "serviceId", source = "serviceId")
-    @Mapping(target = "parties", source = "efilingFilingPackage.parties")
-    FilingPackage toFilingPackage(EfilingFilingPackage efilingFilingPackage, BigDecimal serviceId);
+    @Mapping(target = "parties", source = "csoParties")
+    FilingPackage toFilingPackage(
+            EfilingFilingPackage efilingFilingPackage,
+            BigDecimal serviceId,
+            List<CivilDocument> documents,
+            List<CsoParty> csoParties);
 }
