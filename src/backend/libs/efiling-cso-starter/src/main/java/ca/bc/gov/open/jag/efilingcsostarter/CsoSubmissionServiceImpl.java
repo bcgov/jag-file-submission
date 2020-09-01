@@ -110,7 +110,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         for(int i = 0; i < efilingPackage.getDocuments().size(); i++) {
 
             List<DocumentPayments> payments = Arrays.asList(documentMapper.toEfilingDocumentPayment(efilingPackage.getDocuments().get(i), accountDetails));
-            List<Milestones> milestones = Arrays.asList(documentMapper.toActualSubmittedDate(accountDetails, submittedDate),
+            List<Milestones> milestones = Arrays.asList(documentMapper.toActualSubmittedDate(accountDetails),
                     documentMapper.toComputedSubmittedDate(accountDetails, submittedDate));
             List<DocumentStatuses> statuses = Arrays.asList(documentMapper.toEfilingDocumentStatus(efilingPackage.getDocuments().get(i), accountDetails));
 
