@@ -46,7 +46,19 @@ exports[`Success Component matches the snapshot 1`] = `
         class="content col-md-12"
       >
         <p>
-          You have successfully completed your submission. Please click the button below to go back home.
+          You have successfully completed your submission. Click the link below to reference your submitted package.
+        </p>
+        <span
+          class="href"
+          role="button"
+          tabindex="0"
+        >
+          View my submitted package.
+        </span>
+        <br />
+        <br />
+        <p>
+          Please click the button below to go back home.
         </p>
         <button
           class="bcgov-button normal-white btn"
