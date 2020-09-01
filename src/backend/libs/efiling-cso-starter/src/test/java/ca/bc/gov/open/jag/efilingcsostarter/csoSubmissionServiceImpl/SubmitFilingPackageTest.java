@@ -284,7 +284,7 @@ public class SubmitFilingPackageTest {
 
     @DisplayName("Exception: with NestedEjbException_Exception on calculate submitted date throw EfilingLookupServiceException")
     @Test
-    public void whenComputedSubmittedDateFailesThrowEfilingLookupServiceException() throws NestedEjbException_Exception, ca.bc.gov.ag.csows.filing.NestedEjbException_Exception, DatatypeConfigurationException {
+    public void whenComputedSubmittedDateFailsThrowEfilingLookupServiceException() throws NestedEjbException_Exception, ca.bc.gov.ag.csows.filing.NestedEjbException_Exception, DatatypeConfigurationException {
 
         Mockito.when(serviceFacadeBean.addService(any())).thenReturn(TestHelpers.createService());
         Mockito.when(filingFacadeBeanMock.submitFiling(any())).thenThrow(new ca.bc.gov.ag.csows.filing.NestedEjbException_Exception());
