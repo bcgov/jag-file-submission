@@ -28,10 +28,7 @@ import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class SubmissionServiceImpl implements SubmissionService {
@@ -128,22 +125,23 @@ public class SubmissionServiceImpl implements SubmissionService {
         filingPackage.setEntDtm(DateUtils.getCurrentXmlDate());
         SubmitResponse result = new SubmitResponse();
 
-        result.transactionId(
-                efilingSubmissionService
-                        .submitFilingPackage(
-                                accountDetails,
-                                submission.getFilingPackage(),
-                                filingPackage,
-                                submission.isRushedSubmission(),
-                                efilingPayment -> bamboraPaymentAdapter.makePayment(efilingPayment)));
+        SubmitPackageResponse submitPackageResponse = efilingSubmissionService
+                .submitFilingPackage(
+                        accountDetails,
+                        submission.getFilingPackage(),
+                        filingPackage,
+                        submission.isRushedSubmission(),
+                        efilingPayment -> bamboraPaymentAdapter.makePayment(efilingPayment));
+
+
+        result.setPackageRef(Base64.getEncoder().encodeToString(submitPackageResponse.getPackageLink().getBytes()));
+
         return result;
+
     }
 
     @Override
     public Submission updateDocuments(Submission submission, UpdateDocumentRequest updateDocumentRequest, SubmissionKey submissionKey) {
-
-
-
 
         updateDocumentRequest.getDocuments().stream().forEach(documentProperties -> {
             submission.getFilingPackage().addDocument(toDocument(
