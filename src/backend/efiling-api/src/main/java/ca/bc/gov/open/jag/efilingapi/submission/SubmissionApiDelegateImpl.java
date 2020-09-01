@@ -7,7 +7,6 @@ import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.SubmissionApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
-import ca.bc.gov.open.jag.efilingapi.document.Document;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
@@ -427,7 +426,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
                     HttpStatus.BAD_REQUEST);
 
         try {
-
 
             for (MultipartFile file : files) {
                 try {
