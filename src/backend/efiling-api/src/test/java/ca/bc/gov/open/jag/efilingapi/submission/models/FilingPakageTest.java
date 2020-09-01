@@ -40,6 +40,7 @@ public class FilingPakageTest {
     public static final String LAST_NAME = "lastName";
     public static final String NAME_TYPE_CD = "nameTypeCd";
     public static final BigDecimal SUBMISSION_FEE_AMOUNT = BigDecimal.TEN;
+    public static final String SERVER_FILE_NAME = "SERVER.txt";
 
     @Test
     public void testConstructor() {
@@ -58,7 +59,6 @@ public class FilingPakageTest {
     }
 
     private void assertParties(FilingPackage actual) {
-        Assertions.assertEquals(PARTY_ID, actual.getParties().get(0).getPartyId());
         Assertions.assertEquals(PARTY_TYPE_CD, actual.getParties().get(0).getPartyTypeCd());
         Assertions.assertEquals(ROLE_TYPE_CD, actual.getParties().get(0).getRoleTypeCd());
         Assertions.assertEquals(FIRST_NAME, actual.getParties().get(0).getFirstName());
@@ -94,7 +94,7 @@ public class FilingPakageTest {
 
     private List<Party> getParties() {
         List<Party> parties = new ArrayList<>();
-        Party party = new Party(PARTY_ID,
+        Party party = new Party(
                 PARTY_TYPE_CD,
                 ROLE_TYPE_CD,
                 FIRST_NAME,
@@ -115,7 +115,8 @@ public class FilingPakageTest {
                 "test",
                 DESCRIPTION,
                 STATUTORY_FEE_AMOUNT,
-                MIME_TYPE);
+                MIME_TYPE,
+                SERVER_FILE_NAME);
         documents.add(document);
         return documents;
     }

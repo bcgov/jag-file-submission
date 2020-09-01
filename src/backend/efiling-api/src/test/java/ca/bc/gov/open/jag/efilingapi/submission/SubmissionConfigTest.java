@@ -122,18 +122,19 @@ public class SubmissionConfigTest {
 
     public static class DocumentStoreTest implements DocumentStore {
 
+
         @Override
-        public byte[] put(String compositeId, byte[] content) {
+        public byte[] put(SubmissionKey submissionKey, String fileName, byte[] content) {
             return new byte[0];
         }
 
         @Override
-        public byte[] get(String compositeId) {
+        public byte[] get(SubmissionKey submissionKey, String fileName) {
             return new byte[0];
         }
 
         @Override
-        public void evict(String compositeId) {
+        public void evict(SubmissionKey submissionKey, String fileName) {
 
         }
 

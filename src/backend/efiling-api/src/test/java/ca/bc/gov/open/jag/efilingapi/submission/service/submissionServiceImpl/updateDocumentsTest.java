@@ -4,6 +4,8 @@ import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingapi.api.model.UpdateDocumentRequest;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
+import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
+import ca.bc.gov.open.jag.efilingapi.submission.mappers.PartyMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
@@ -20,6 +22,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 
@@ -55,7 +58,7 @@ public class updateDocumentsTest {
 
         Mockito.when(documentStoreMock.getDocumentDetails(any(), any(), any())).thenReturn(documentDetails);
 
-        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, new SubmissionMapperImpl(), null, efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock, null, null);
+        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, new SubmissionMapperImpl(), new PartyMapperImpl(), null, efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock, null, null);
 
     }
 
@@ -69,7 +72,7 @@ public class updateDocumentsTest {
         updateDocumentRequest.addDocumentsItem(documentProperties);
 
         Submission submission = TestHelpers.buildSubmission();
-        Submission actual = sut.updateDocuments(submission, updateDocumentRequest);
+        Submission actual = sut.updateDocuments(submission, updateDocumentRequest, new SubmissionKey(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID()));
 
         Assertions.assertEquals(2, actual.getFilingPackage().getDocuments().size());
         Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getFilingPackage().getDocuments().get(0).getDescription());
