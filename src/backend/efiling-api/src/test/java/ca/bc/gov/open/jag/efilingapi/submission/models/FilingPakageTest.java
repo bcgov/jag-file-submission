@@ -40,6 +40,7 @@ public class FilingPakageTest {
     public static final String LAST_NAME = "lastName";
     public static final String NAME_TYPE_CD = "nameTypeCd";
     public static final BigDecimal SUBMISSION_FEE_AMOUNT = BigDecimal.TEN;
+    public static final String SERVER_FILE_NAME = "SERVER.txt";
 
     @Test
     public void testConstructor() {
@@ -115,7 +116,8 @@ public class FilingPakageTest {
                 "test",
                 DESCRIPTION,
                 STATUTORY_FEE_AMOUNT,
-                MIME_TYPE, serverFileName);
+                MIME_TYPE,
+                SERVER_FILE_NAME);
         documents.add(document);
         return documents;
     }

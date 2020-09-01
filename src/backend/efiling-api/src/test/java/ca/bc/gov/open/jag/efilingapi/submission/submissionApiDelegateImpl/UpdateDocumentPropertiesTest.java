@@ -120,7 +120,7 @@ public class UpdateDocumentPropertiesTest {
         documentProperties.setIsSupremeCourtScheduling(true);
         updateDocumentRequest.addDocumentsItem(documentProperties);
 
-        Mockito.when(submissionServiceMock.updateDocuments(any(), Mockito.refEq(updateDocumentRequest))).thenReturn(Submission
+        Mockito.when(submissionServiceMock.updateDocuments(any(), Mockito.refEq(updateDocumentRequest), Mockito.any())).thenReturn(Submission
                 .builder()
                 .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList(), TestHelpers.createPartyList()))
                 .navigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
@@ -165,7 +165,7 @@ public class UpdateDocumentPropertiesTest {
         UpdateDocumentRequest errorDocumentRequest = new UpdateDocumentRequest();
         errorDocumentRequest.addDocumentsItem(new DocumentProperties());
 
-        Mockito.when(submissionServiceMock.updateDocuments(any(), Mockito.refEq(errorDocumentRequest))).thenThrow(new EfilingDocumentServiceException("NOOOOOOO"));
+        Mockito.when(submissionServiceMock.updateDocuments(any(), Mockito.refEq(errorDocumentRequest), Mockito.any())).thenThrow(new EfilingDocumentServiceException("NOOOOOOO"));
 
         ResponseEntity actual = sut.updateDocumentProperties(TestHelpers.CASE_1, UUID.randomUUID(), errorDocumentRequest);
 
