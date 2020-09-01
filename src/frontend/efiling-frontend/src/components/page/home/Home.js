@@ -23,10 +23,14 @@ const setRequestHeaders = (transactionId) => {
   });
 };
 
-export const saveNavigationToSessionStorage = ({ cancel, success, error }) => {
+export const saveUrlsToSessionStorage = (
+  { cancel, success, error },
+  csoBaseUrl
+) => {
   if (cancel.url) sessionStorage.setItem("cancelUrl", cancel.url);
   if (success.url) sessionStorage.setItem("successUrl", success.url);
   if (error.url) sessionStorage.setItem("errorUrl", error.url);
+  sessionStorage.setItem("csoBaseUrl", csoBaseUrl);
 };
 
 const addUserInfo = (firstName, middleName, lastName) => {
@@ -61,9 +65,9 @@ const checkCSOAccountStatus = (
 ) => {
   axios
     .get(`/submission/${submissionId}/config`)
-    .then(({ data: { navigation, clientApplication } }) => {
-      setClientApplicationName(clientApplication.displayName);
-      saveNavigationToSessionStorage(navigation);
+    .then(({ data: { navigation, clientAppName, csoBaseUrl } }) => {
+      setClientApplicationName(clientAppName);
+      saveUrlsToSessionStorage(navigation, csoBaseUrl);
 
       axios
         .get("/csoAccount")

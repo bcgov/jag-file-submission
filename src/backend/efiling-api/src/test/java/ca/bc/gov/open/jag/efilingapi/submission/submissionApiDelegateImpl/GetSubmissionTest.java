@@ -118,6 +118,7 @@ public class GetSubmissionTest {
                         .clientId(null)
                         .create()
                 )
+                .clientApplication(TestHelpers.createClientApplication(TestHelpers.DESCRIPTION, TestHelpers.TYPE))
                 .navigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
                 .create();
 
@@ -173,8 +174,7 @@ public class GetSubmissionTest {
         assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigation().getSuccess().getUrl());
         assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigation().getCancel().getUrl());
         assertEquals(TestHelpers.ERROR_URL, actual.getBody().getNavigation().getError().getUrl());
-        assertEquals(TestHelpers.TYPE, actual.getBody().getClientApplication().getType());
-        assertEquals(TestHelpers.DESCRIPTION, actual.getBody().getClientApplication().getDisplayName());
+        assertEquals(TestHelpers.DESCRIPTION, actual.getBody().getClientAppName());
 
     }
 
