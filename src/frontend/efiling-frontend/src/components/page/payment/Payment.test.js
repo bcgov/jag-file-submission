@@ -165,7 +165,7 @@ describe("Payment Component", () => {
 
     mock
       .onPost(`/submission/${submissionId}/submit`)
-      .reply(200, { transactionId: 1 });
+      .reply(200, { packageRef: "packageRef" });
 
     const { container } = render(<Payment payment={payment} />);
 
@@ -174,7 +174,10 @@ describe("Payment Component", () => {
 
     await waitFor(() => {});
 
-    expect(window.open).toHaveBeenCalledWith("success.com", "_self");
+    expect(window.open).toHaveBeenCalledWith(
+      "success.com?packageRef=packageRef",
+      "_self"
+    );
   });
 
   test("Submit on error redirects to error page", async () => {

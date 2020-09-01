@@ -719,11 +719,11 @@ components:
       description: result of submit filing package
       type: object
       required:
-        - transactionId
+        - packageRef
       properties:
-        transactionId:
-          type: number
-          description: the transaction id returned from cso
+        packageRef:
+          type: string
+          description: base64 encoded package reference url
     GenerateCardUrlRequest:
       description: create service request
       type: object

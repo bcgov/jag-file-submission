@@ -63,6 +63,7 @@ public class SubmitFilingPackageTest {
         MockitoAnnotations.initMocks(this);
 
         Mockito.when(csoPropertiesMock.getFileServerHost()).thenReturn("localhost");
+        Mockito.when(csoPropertiesMock.getCsoBasePath()).thenReturn("http://cso");
 
         UserSession userSession = new UserSession();
         userSession.setStartDtm(DateUtils.getCurrentXmlDate());
@@ -138,7 +139,7 @@ public class SubmitFilingPackageTest {
 
         AccountDetails accountDetails = getAccountDetails();
 
-        BigDecimal actual = sut.submitFilingPackage(accountDetails,
+        SubmitPackageResponse actual = sut.submitFilingPackage(accountDetails,
                 FilingPackage.builder()
                         .court(
                                 Court.builder()
@@ -148,7 +149,8 @@ public class SubmitFilingPackageTest {
                 new EfilingFilingPackage(),
                 false,
                 efilingPaymentServiceMock);
-        Assertions.assertEquals(BigDecimal.TEN, actual);
+        Assertions.assertEquals(BigDecimal.TEN, actual.getTransactionId());
+        Assertions.assertEquals("http://cso/cso/accounts/bceidNotification.do?packageNo=10", actual.getPackageLink());
     }
 
     @DisplayName("OK: submitFilingPackage called with rushed Processing")
@@ -161,7 +163,7 @@ public class SubmitFilingPackageTest {
 
         AccountDetails accountDetails = getAccountDetails();
 
-        BigDecimal actual = sut.submitFilingPackage(accountDetails,
+        SubmitPackageResponse actual = sut.submitFilingPackage(accountDetails,
                 FilingPackage.builder()
                         .court(
                                 Court.builder()
@@ -171,7 +173,9 @@ public class SubmitFilingPackageTest {
                 new EfilingFilingPackage(),
                 true,
                 efilingPaymentServiceMock);
-        Assertions.assertEquals(BigDecimal.TEN, actual);
+
+        Assertions.assertEquals(BigDecimal.TEN, actual.getTransactionId());
+        Assertions.assertEquals("http://cso/cso/accounts/bceidNotification.do?packageNo=10", actual.getPackageLink());
     }
 
     @DisplayName("Exception: payment to bambora throw exception")

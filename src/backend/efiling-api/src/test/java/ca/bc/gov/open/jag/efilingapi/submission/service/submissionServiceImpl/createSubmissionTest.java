@@ -11,6 +11,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.PaymentTransaction;
+import ca.bc.gov.open.jag.efilingcommons.model.SubmitPackageResponse;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
@@ -64,7 +65,7 @@ public class createSubmissionTest {
     @BeforeAll
     public void setUp(){
         MockitoAnnotations.initMocks(this);
-        Mockito.when(efilingSubmissionServiceMock.submitFilingPackage(any(), any(), any(), anyBoolean(), any())).thenReturn(BigDecimal.TEN);
+        Mockito.when(efilingSubmissionServiceMock.submitFilingPackage(any(), any(), any(), anyBoolean(), any())).thenReturn(SubmitPackageResponse.builder().transactionId(BigDecimal.TEN).packageLink("http://link").create());
         Mockito.when(bamboraPaymentAdapterMock.makePayment(any())).thenReturn(new PaymentTransaction());
         Mockito.when(documentStoreMock.get(any(), any())).thenReturn(new byte[]{});
         Mockito.doNothing().when(sftpServiceMock).put(any(), any());
@@ -99,7 +100,7 @@ public class createSubmissionTest {
                         .clientId(BigDecimal.TEN)
                         .internalClientNumber(INTERNAL_CLIENT_NUMBER)
                         .create());
-        assertEquals(BigDecimal.TEN, actual.getTransactionId());
+        assertEquals("aHR0cDovL2xpbms=", actual.getPackageRef());
     }
 
 }
