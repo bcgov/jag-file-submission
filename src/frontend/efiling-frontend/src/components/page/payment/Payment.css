@@ -11,6 +11,10 @@
   display: flex;
 }
 
+.normal-blue-ml {
+  margin-left: 1rem;
+}
+
 @media (max-width: 576px) {
   .button-container {
     justify-content: space-between;

@@ -186,7 +186,7 @@ export default function Payment({
               onClick={() => {
                 submitPackage(submissionId, setSubmitBtnEnabled, setShowLoader);
               }}
-              styling="normal-blue btn"
+              styling="normal-blue normal-blue-ml btn"
               disabled={!submitBtnEnabled}
               hasLoader={showLoader}
             />
