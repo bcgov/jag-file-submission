@@ -118,6 +118,7 @@ public class GetSubmissionTest {
                         .clientId(null)
                         .create()
                 )
+                .clientApplication(TestHelpers.createClientApplication(TestHelpers.DESCRIPTION, TestHelpers.TYPE))
                 .navigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
                 .create();
 
