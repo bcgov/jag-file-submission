@@ -176,6 +176,8 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         }
 
         try {
+            csoFilingPackage.setSubmitDtm(filingFacadeBean.calculateSubmittedDate(DateUtils.getCurrentXmlDate(), "WAT"));
+
             return filingFacadeBean.submitFiling(csoFilingPackage);
         } catch (NestedEjbException_Exception e) {
             throw new EfilingSubmissionServiceException("Exception while filing package", e.getCause());

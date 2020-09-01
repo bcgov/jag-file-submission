@@ -56,7 +56,7 @@ public class SubmitFilingPackageTest {
     private CsoProperties csoPropertiesMock;
 
     @BeforeEach
-    public void init() throws NestedEjbException_Exception {
+    public void init() throws NestedEjbException_Exception, ca.bc.gov.ag.csows.filing.NestedEjbException_Exception {
 
         MockitoAnnotations.initMocks(this);
 
@@ -73,6 +73,8 @@ public class SubmitFilingPackageTest {
         serviceSession.setServiceSessionId(new BigDecimal(5678));
         Mockito.doReturn(serviceSession).when(serviceFacadeBean)
                 .createServiceSession(ArgumentMatchers.argThat(x -> x.getUserSessionId().equals(userSession.getUserSessionId())), Mockito.anyString());
+
+        Mockito.when(filingFacadeBeanMock.calculateSubmittedDate(any(), any())).thenReturn(DateUtils.getCurrentXmlDate());
 
         sut = new CsoSubmissionServiceImpl(filingFacadeBeanMock, serviceFacadeBean, new ServiceMapperImpl(), new FilingPackageMapperImpl(), new FinancialTransactionMapperImpl(), csoPropertiesMock);
 
