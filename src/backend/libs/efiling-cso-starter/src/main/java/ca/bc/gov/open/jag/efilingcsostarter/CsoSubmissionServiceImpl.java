@@ -14,6 +14,7 @@ import ca.bc.gov.open.jag.efilingcsostarter.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.*;
 
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -47,7 +48,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     }
 
     @Override
-    public BigDecimal submitFilingPackage(
+    public SubmitPackageResponse submitFilingPackage(
             AccountDetails accountDetails,
             FilingPackage efilingPackage,
             EfilingFilingPackage filingPackage,
@@ -78,8 +79,13 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
         updateServiceComplete(createdService);
 
-        return filingResult;
 
+        return SubmitPackageResponse
+                .builder()
+                .packageLink(MessageFormat
+                        .format("{0}/cso/accounts/bceidNotification.do?packageNo={1}", csoProperties.getCsoBasePath(), filingPackage))
+                .transactionId(filingResult)
+                .create();
     }
 
     private ca.bc.gov.ag.csows.filing.FilingPackage buildFilingPackage(AccountDetails accountDetails, FilingPackage efilingPackage, EfilingFilingPackage filingPackage, Service createdService) {
@@ -102,6 +108,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     }
 
     private List<CivilDocument> buildCivilDocuments(AccountDetails accountDetails, FilingPackage efilingPackage) {
+
         List<CivilDocument> documents = new ArrayList<>();
 
         for(int i = 0; i < efilingPackage.getDocuments().size(); i++) {
@@ -122,7 +129,9 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
                     statuses
                     ));
         }
+
         return documents;
+
     }
 
     private RushOrderRequest buildRushedOrderRequest(EfilingFilingPackage filingPackage) {
@@ -220,12 +229,14 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     }
 
     private void updateServiceComplete(Service service) {
+
         service.setServiceReceivedDtm(DateUtils.getCurrentXmlDate());
         try {
             serviceFacadeBean.updateService(service);
         } catch (ca.bc.gov.ag.csows.services.NestedEjbException_Exception e) {
             throw new EfilingSubmissionServiceException("Exception while updating payment on service", e.getCause());
         }
+
     }
 
 }

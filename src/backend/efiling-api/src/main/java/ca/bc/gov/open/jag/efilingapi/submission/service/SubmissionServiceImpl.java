@@ -129,22 +129,23 @@ public class SubmissionServiceImpl implements SubmissionService {
         filingPackage.setSubmitDtm(DateUtils.getCurrentXmlDate());
         SubmitResponse result = new SubmitResponse();
 
-        result.transactionId(
-                efilingSubmissionService
-                        .submitFilingPackage(
-                                accountDetails,
-                                submission.getFilingPackage(),
-                                filingPackage,
-                                submission.isRushedSubmission(),
-                                efilingPayment -> bamboraPaymentAdapter.makePayment(efilingPayment)));
+        SubmitPackageResponse submitPackageResponse = efilingSubmissionService
+                .submitFilingPackage(
+                        accountDetails,
+                        submission.getFilingPackage(),
+                        filingPackage,
+                        submission.isRushedSubmission(),
+                        efilingPayment -> bamboraPaymentAdapter.makePayment(efilingPayment));
+
+
+        result.setPackageRef(submitPackageResponse.getPackageLink());
+
         return result;
+
     }
 
     @Override
     public Submission updateDocuments(Submission submission, UpdateDocumentRequest updateDocumentRequest, SubmissionKey submissionKey) {
-
-
-
 
         updateDocumentRequest.getDocuments().stream().forEach(documentProperties -> {
             submission.getFilingPackage().addDocument(toDocument(
