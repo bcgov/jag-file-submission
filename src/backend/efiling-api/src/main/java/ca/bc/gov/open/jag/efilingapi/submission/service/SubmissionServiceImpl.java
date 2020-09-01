@@ -4,7 +4,6 @@ import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.payment.BamboraPaymentAdapter;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
-import ca.bc.gov.open.jag.efilingapi.submission.mappers.EfilingFilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.PartyMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
@@ -14,12 +13,10 @@ import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.Court;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
 import ca.bc.gov.open.jag.efilingcommons.model.FilingPackage;
-import ca.bc.gov.open.jag.efilingcommons.model.Party;
 import ca.bc.gov.open.jag.efilingcommons.model.*;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
-import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.sftp.starter.SftpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +25,8 @@ import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.Base64;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class SubmissionServiceImpl implements SubmissionService {
@@ -42,8 +40,6 @@ public class SubmissionServiceImpl implements SubmissionService {
     private final SubmissionMapper submissionMapper;
 
     private final PartyMapper partyMapper;
-
-    private final EfilingFilingPackageMapper efilingFilingPackageMapper;
 
     private final EfilingLookupService efilingLookupService;
 
@@ -61,7 +57,7 @@ public class SubmissionServiceImpl implements SubmissionService {
             SubmissionStore submissionStore,
             CacheProperties cacheProperties,
             SubmissionMapper submissionMapper,
-            PartyMapper partyMapper, EfilingFilingPackageMapper efilingFilingPackageMapper,
+            PartyMapper partyMapper,
             EfilingLookupService efilingLookupService,
             EfilingCourtService efilingCourtService,
             EfilingSubmissionService efilingSubmissionService,
@@ -72,7 +68,6 @@ public class SubmissionServiceImpl implements SubmissionService {
         this.cacheProperties = cacheProperties;
         this.submissionMapper = submissionMapper;
         this.partyMapper = partyMapper;
-        this.efilingFilingPackageMapper = efilingFilingPackageMapper;
         this.efilingLookupService = efilingLookupService;
         this.efilingCourtService = efilingCourtService;
         this.efilingSubmissionService = efilingSubmissionService;
@@ -116,22 +111,15 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         uploadFiles(submission);
 
-        List<Party> parties = new ArrayList();
-        if (submission.getFilingPackage().getParties() != null)
-            parties.addAll(submission.getFilingPackage().getParties());
-
-        EfilingFilingPackage filingPackage = efilingFilingPackageMapper.toEfilingFilingPackage(submission);
-        filingPackage.setEntDtm(DateUtils.getCurrentXmlDate());
         SubmitResponse result = new SubmitResponse();
 
         SubmitPackageResponse submitPackageResponse = efilingSubmissionService
                 .submitFilingPackage(
                         accountDetails,
                         submission.getFilingPackage(),
-                        filingPackage,
+                        submission.getClientApplication().getType(),
                         submission.isRushedSubmission(),
                         efilingPayment -> bamboraPaymentAdapter.makePayment(efilingPayment));
-
 
         result.setPackageRef(Base64.getEncoder().encodeToString(submitPackageResponse.getPackageLink().getBytes()));
 

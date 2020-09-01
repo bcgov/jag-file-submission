@@ -43,6 +43,7 @@ public class SubmitFilingPackageTest {
     public static final UUID UNIVERSAL_ID = UUID.randomUUID();
     private static final String LOCATION = "LOCATION";
     private static final String BAD_LOCATION = "BADLOCATION";
+    public static final String APP_CODE = "APP_CODE";
     CsoSubmissionServiceImpl sut;
 
     @Mock
@@ -98,7 +99,7 @@ public class SubmitFilingPackageTest {
         Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(
                 null,
                 null,
-                new EfilingFilingPackage(),
+                APP_CODE,
                 false,
                 null));
     }
@@ -110,7 +111,7 @@ public class SubmitFilingPackageTest {
         Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(
                 null,
                 FilingPackage.builder().create(),
-                new EfilingFilingPackage(),
+                APP_CODE,
                 false,
                 null));
     }
@@ -119,14 +120,14 @@ public class SubmitFilingPackageTest {
     @Test
     public void testWithEmptyFilingPackage() {
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(AccountDetails.builder().create(), FilingPackage.builder().create(), null, false,null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(AccountDetails.builder().create(), FilingPackage.builder().create(), APP_CODE, false,null));
     }
 
 
     @DisplayName("Exception: with null clientId should throw IllegalArgumentException")
     @Test
     public void testWithEmptyClientId() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(AccountDetails.builder().create(), FilingPackage.builder().create(), new EfilingFilingPackage(), false,null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(AccountDetails.builder().create(), FilingPackage.builder().create(), APP_CODE, false,null));
     }
 
     @DisplayName("OK: submitFilingPackage called with any non-empty submissionId")
@@ -146,7 +147,7 @@ public class SubmitFilingPackageTest {
                                 .location(LOCATION)
                         .create())
                 .create(),
-                new EfilingFilingPackage(),
+                APP_CODE,
                 false,
                 efilingPaymentServiceMock);
         Assertions.assertEquals(BigDecimal.TEN, actual.getTransactionId());
@@ -170,7 +171,7 @@ public class SubmitFilingPackageTest {
                                         .location(LOCATION)
                                         .create())
                         .create(),
-                new EfilingFilingPackage(),
+                APP_CODE,
                 true,
                 efilingPaymentServiceMock);
 
@@ -190,7 +191,7 @@ public class SubmitFilingPackageTest {
         Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(
                 accountDetails,
                 FilingPackage.builder().create(),
-                new EfilingFilingPackage(),
+                APP_CODE,
                 false,
                 efilingPaymentServiceMock));
     }
@@ -213,7 +214,7 @@ public class SubmitFilingPackageTest {
                                         .location(LOCATION)
                                         .create())
                         .create(),
-                new EfilingFilingPackage(),
+                APP_CODE,
                 false,
                 efilingPaymentServiceMock));
 
@@ -226,7 +227,7 @@ public class SubmitFilingPackageTest {
 
         AccountDetails accountDetails = getAccountDetails();
 
-        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(accountDetails, FilingPackage.builder().create(), new EfilingFilingPackage(), false, null));
+        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(accountDetails, FilingPackage.builder().create(), APP_CODE, false, null));
     }
 
     private AccountDetails getAccountDetails() {
@@ -251,7 +252,7 @@ public class SubmitFilingPackageTest {
         Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(
                 getAccountDetails(),
                 FilingPackage.builder().create(),
-                new EfilingFilingPackage(),
+                APP_CODE,
                 false,
                 null));
     }
@@ -263,7 +264,7 @@ public class SubmitFilingPackageTest {
         Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(
                 getAccountDetails(),
                 FilingPackage.builder().create(),
-                new EfilingFilingPackage(), false, null));
+                APP_CODE, false, null));
     }
 
 
@@ -280,7 +281,7 @@ public class SubmitFilingPackageTest {
         Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(
                 accountDetails,
                 FilingPackage.builder().create(),
-                new EfilingFilingPackage(),
+                APP_CODE,
                 false,
                 efilingPaymentServiceMock));
       
@@ -304,7 +305,7 @@ public class SubmitFilingPackageTest {
                                         .location(BAD_LOCATION)
                                         .create())
                         .create(),
-                new EfilingFilingPackage(),
+                APP_CODE,
                 false,
                 efilingPaymentServiceMock));
 
