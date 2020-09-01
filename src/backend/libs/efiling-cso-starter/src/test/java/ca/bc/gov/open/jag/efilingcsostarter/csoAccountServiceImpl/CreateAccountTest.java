@@ -9,6 +9,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.CreateAccountRequest;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoAccountServiceImpl;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoHelpers;
+import ca.bc.gov.open.jag.efilingcsostarter.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.AccountDetailsMapper;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.AccountDetailsMapperImpl;
 import org.junit.jupiter.api.*;
@@ -68,6 +69,8 @@ public class CreateAccountTest {
         UserRoles userRolesWithFileRole = new UserRoles();
         userRolesWithFileRole.getRoles().add(fileRole);
         Mockito.when(roleRegistryPortTypeMock.getRolesForIdentifier(DOMAIN, APPLICATION, CsoHelpers.formatUserGuid(UNIVERSAL_ID), IDENTIFIER_TYPE)).thenReturn(userRolesWithFileRole);
+        CsoProperties csoProperties = new CsoProperties();
+        csoProperties.setCsoBasePath("http://localhost");
         sut = new CsoAccountServiceImpl(accountFacadeBeanMock, roleRegistryPortTypeMock, accountDetailsMapperMock, csoProperties);
     }
 

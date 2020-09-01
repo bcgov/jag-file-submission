@@ -6,6 +6,7 @@ import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoAccountServiceImpl;
+import ca.bc.gov.open.jag.efilingcsostarter.config.CsoProperties;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
@@ -33,6 +34,8 @@ public class UpdateClientTest {
         MockitoAnnotations.initMocks(this);
         initAccountFacadeMocks();
 
+        CsoProperties csoProperties = new CsoProperties();
+        csoProperties.setCsoBasePath("http://localhost");
         sut = new CsoAccountServiceImpl(accountFacadeBeanMock, null, null, csoProperties);
     }
 

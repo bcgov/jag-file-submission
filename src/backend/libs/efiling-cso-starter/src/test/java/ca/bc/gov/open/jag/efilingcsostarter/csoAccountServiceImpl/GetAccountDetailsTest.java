@@ -13,6 +13,7 @@ import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceExcepti
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoAccountServiceImpl;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoHelpers;
+import ca.bc.gov.open.jag.efilingcsostarter.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.AccountDetailsMapper;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
@@ -63,6 +64,8 @@ public class GetAccountDetailsTest {
         initRoleRegistryMocks();
         initBceIdAccountMocks();
 
+        CsoProperties csoProperties = new CsoProperties();
+        csoProperties.setCsoBasePath("http://localhost");
         sut = new CsoAccountServiceImpl(accountFacadeBeanMock, roleRegistryPortTypeMock, accountDetailsMapperMock, csoProperties);
     }
 
@@ -106,16 +109,16 @@ public class GetAccountDetailsTest {
         Mockito.when(roleRegistryPortTypeMock.getRolesForIdentifier(DOMAIN, APPLICATION, CsoHelpers.formatUserGuid(USER_GUID_WITH_FILE_ROLE), IDENTIFIER_TYPE)).thenReturn(userRolesWithFileRole);
         Mockito.when(roleRegistryPortTypeMock.getRolesForIdentifier(DOMAIN, APPLICATION, CsoHelpers.formatUserGuid(USER_GUID_NO_ROLE), IDENTIFIER_TYPE)).thenReturn(userRolesWithoutFileRole);
 
-        AccountDetails csoUserDetailsWithRole = new AccountDetails(UUID.randomUUID(), BigDecimal.TEN, BigDecimal.TEN, INTERNAL_CLIENT_NUMBER ,true, "firstName", "lastName", "middleName", "email", true);
-        Mockito.when(accountDetailsMapperMock.toAccountDetails(Mockito.any(), Mockito.any(), Mockito.eq(true))).thenReturn(csoUserDetailsWithRole);
+        AccountDetails csoUserDetailsWithRole = new AccountDetails(UUID.randomUUID(), BigDecimal.TEN, BigDecimal.TEN, INTERNAL_CLIENT_NUMBER ,true, "firstName", "lastName", "middleName", "email", true, "link");
+        Mockito.when(accountDetailsMapperMock.toAccountDetails(Mockito.any(), Mockito.any(), Mockito.eq(true), Mockito.any())).thenReturn(csoUserDetailsWithRole);
 
-        AccountDetails csoUserDetailsWithoutRole = new AccountDetails(UUID.randomUUID(),BigDecimal.TEN, BigDecimal.TEN, INTERNAL_CLIENT_NUMBER ,false, "firstName", "lastName", "middleName","email", true);
-        Mockito.when(accountDetailsMapperMock.toAccountDetails(Mockito.any(), Mockito.any(), Mockito.eq(false))).thenReturn(csoUserDetailsWithoutRole);
+        AccountDetails csoUserDetailsWithoutRole = new AccountDetails(UUID.randomUUID(),BigDecimal.TEN, BigDecimal.TEN, INTERNAL_CLIENT_NUMBER ,false, "firstName", "lastName", "middleName","email", true, "link");
+        Mockito.when(accountDetailsMapperMock.toAccountDetails(Mockito.any(), Mockito.any(), Mockito.eq(false), Mockito.any())).thenReturn(csoUserDetailsWithoutRole);
     }
 
     private void initBceIdAccountMocks() {
 
-        AccountDetails accountDetailsWithNoCso = new AccountDetails(UUID.randomUUID(), BigDecimal.ZERO, BigDecimal.ZERO, INTERNAL_CLIENT_NUMBER, false, "firstName", "lastName", "middleName","email", true);
+        AccountDetails accountDetailsWithNoCso = new AccountDetails(UUID.randomUUID(), BigDecimal.ZERO, BigDecimal.ZERO, INTERNAL_CLIENT_NUMBER, false, "firstName", "lastName", "middleName","email", true, "link");
         Mockito.when(accountDetailsMapperMock.toAccountDetails(Mockito.any())).thenReturn(accountDetailsWithNoCso);
     }
 
