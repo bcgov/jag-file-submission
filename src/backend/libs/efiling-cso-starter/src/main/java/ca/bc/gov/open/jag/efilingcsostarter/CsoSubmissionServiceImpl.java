@@ -95,7 +95,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         List<CsoParty> csoParties = new ArrayList<>();
 
         for(int i =0; i < efilingPackage.getParties().size(); i++) {
-            csoParties.add(csoPartyMapper.toEfilingParties(i, efilingPackage.getParties().get(i), accountDetails));
+            csoParties.add(csoPartyMapper.toEfilingParties(i + 1, efilingPackage.getParties().get(i), accountDetails));
         }
 
         return csoParties;
