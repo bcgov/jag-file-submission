@@ -121,7 +121,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                         submission.isRushedSubmission(),
                         efilingPayment -> bamboraPaymentAdapter.makePayment(efilingPayment));
 
-        resulta.setPackageRef(Base64.getEncoder().encodeToString(submitPackageResponse.getPackageLink().getBytes()));
+        result.setPackageRef(Base64.getEncoder().encodeToString(submitPackageResponse.getPackageLink().getBytes()));
 
 
         logger.info("successfully submitted efiling package with cso id [{}]", submitPackageResponse.getTransactionId());
