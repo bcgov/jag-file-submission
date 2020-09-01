@@ -172,7 +172,7 @@ public class SubmitFilingPackageTest {
                                         .location(LOCATION)
                                         .create())
                         .create(),
-                new EfilingFilingPackage(),
+                APP_CODE,
                 false,
                 efilingPaymentServiceMock);
         Assertions.assertEquals(new BigDecimal(100000), actual.getTransactionId());
