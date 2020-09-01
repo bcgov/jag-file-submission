@@ -31,7 +31,7 @@ public interface DocumentMapper {
     @Mapping(target = "entUserId", source = "accountDetails.clientId")
     @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
     //TODO this is the constructed file name
-    @Mapping(target = "filePath", source = "filePath")
+    @Mapping(target = "filePath", source = "document.serverFileName")
     @Mapping(target = "fileServer", source = "serverHost")
 
     @Mapping(target = "uploadStateCd", constant = SUBMISSION_UPLOAD_STATE_CD)
@@ -47,7 +47,6 @@ public interface DocumentMapper {
             Document document,
             AccountDetails accountDetails,
             FilingPackage filingPackage,
-            String filePath,
             String serverHost,
             List<Milestones> milestones,
             List<DocumentPayments> payments,

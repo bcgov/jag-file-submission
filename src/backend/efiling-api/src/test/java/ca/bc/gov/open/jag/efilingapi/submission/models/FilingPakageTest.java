@@ -115,7 +115,7 @@ public class FilingPakageTest {
                 "test",
                 DESCRIPTION,
                 STATUTORY_FEE_AMOUNT,
-                MIME_TYPE);
+                MIME_TYPE, serverFileName);
         documents.add(document);
         return documents;
     }

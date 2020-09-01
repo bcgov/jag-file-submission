@@ -171,7 +171,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             return ResponseEntity.notFound().build();
 
         try {
-            Submission submission = submissionService.updateDocuments(fromCacheSubmission.get(), updateDocumentRequest);
+            Submission submission = submissionService.updateDocuments(fromCacheSubmission.get(), updateDocumentRequest, submissionKey);
             UpdateDocumentResponse updateDocumentResponse = new UpdateDocumentResponse();
             FilingPackage filingPackage = filingPackageMapper.toApiFilingPackage(submission.getFilingPackage());
             updateDocumentResponse.setDocuments(filingPackage.getDocuments());
