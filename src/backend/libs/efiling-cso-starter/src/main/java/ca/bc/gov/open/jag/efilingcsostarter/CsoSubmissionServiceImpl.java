@@ -56,10 +56,10 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
             boolean isRushedProcessing,
             EfilingPaymentService paymentService) {
 
-        if(accountDetails == null) throw new IllegalArgumentException("Account Details are required");
-        if(accountDetails.getClientId() == null) throw new IllegalArgumentException("Client id is required.");
-        if(efilingPackage == null) throw new IllegalArgumentException("EfilingPackage is required.");
-        if(filingPackage == null) throw new IllegalArgumentException("FilingPackage is required.");
+        if (accountDetails == null) throw new IllegalArgumentException("Account Details are required");
+        if (accountDetails.getClientId() == null) throw new IllegalArgumentException("Client id is required.");
+        if (efilingPackage == null) throw new IllegalArgumentException("EfilingPackage is required.");
+        if (filingPackage == null) throw new IllegalArgumentException("FilingPackage is required.");
 
         ServiceSession serviceSession = getServiceSession(accountDetails.getClientId().toString());
 
@@ -72,7 +72,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
         ca.bc.gov.ag.csows.filing.FilingPackage csoFilingPackage = buildFilingPackage(accountDetails, efilingPackage, filingPackage, createdService);
 
-        if(isRushedProcessing) {
+        if (isRushedProcessing) {
             csoFilingPackage.setProcRequest(buildRushedOrderRequest(filingPackage));
         }
 
@@ -91,33 +91,30 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     private ca.bc.gov.ag.csows.filing.FilingPackage buildFilingPackage(AccountDetails accountDetails, FilingPackage efilingPackage, EfilingFilingPackage filingPackage, Service createdService) {
         XMLGregorianCalendar submittedDate = getComputedSubmittedDate(efilingPackage.getCourt().getLocation());
         return filingPackageMapper.toFilingPackage(
-                        filingPackage,
-                        createdService.getServiceId(),
-                        submittedDate,
-                        buildCivilDocuments(accountDetails, efilingPackage, submittedDate),
-                        buildCsoParties(accountDetails, efilingPackage));
+                filingPackage,
+                createdService.getServiceId(),
+                submittedDate,
+                buildCivilDocuments(accountDetails, efilingPackage, submittedDate),
+                buildCsoParties(accountDetails, efilingPackage));
     }
 
     private List<CsoParty> buildCsoParties(AccountDetails accountDetails, FilingPackage efilingPackage) {
 
         List<CsoParty> csoParties = new ArrayList<>();
 
-        for(int i =0; i < efilingPackage.getParties().size(); i++) {
+        for (int i = 0; i < efilingPackage.getParties().size(); i++) {
             csoParties.add(csoPartyMapper.toEfilingParties(i + 1, efilingPackage.getParties().get(i), accountDetails));
         }
 
         return csoParties;
     }
 
-<<<<<<< HEAD
-    private List<CivilDocument> buildCivilDocuments(AccountDetails accountDetails, FilingPackage efilingPackage, XMLGregorianCalendar submittedDate) {
-=======
-    private List<CivilDocument> buildCivilDocuments(AccountDetails accountDetails, FilingPackage efilingPackage) {
 
->>>>>>> return-package-url
+    private List<CivilDocument> buildCivilDocuments(AccountDetails accountDetails, FilingPackage efilingPackage, XMLGregorianCalendar submittedDate) {
+
         List<CivilDocument> documents = new ArrayList<>();
 
-        for(int i = 0; i < efilingPackage.getDocuments().size(); i++) {
+        for (int i = 0; i < efilingPackage.getDocuments().size(); i++) {
 
             List<DocumentPayments> payments = Arrays.asList(documentMapper.toEfilingDocumentPayment(efilingPackage.getDocuments().get(i), accountDetails));
             List<Milestones> milestones = Arrays.asList(documentMapper.toActualSubmittedDate(accountDetails),
@@ -133,7 +130,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
                     milestones,
                     payments,
                     statuses
-                    ));
+            ));
         }
 
         return documents;
@@ -156,11 +153,11 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     }
 
     private ProcessItemStatus getProcessItemStatusRequest(EfilingFilingPackage filingPackage) {
-        return getProcessItemStatus(filingPackage,  Keys.REQUEST_PROCESS_STATUS_CD);
+        return getProcessItemStatus(filingPackage, Keys.REQUEST_PROCESS_STATUS_CD);
     }
 
     private ProcessItemStatus getProcessItemStatusApproved(EfilingFilingPackage filingPackage) {
-        return getProcessItemStatus(filingPackage,  Keys.APPROVED_PROCESS_STATUS_CD);
+        return getProcessItemStatus(filingPackage, Keys.APPROVED_PROCESS_STATUS_CD);
     }
 
     private ProcessItemStatus getProcessItemStatus(EfilingFilingPackage filingPackage, String proccessStatusCd) {
@@ -183,7 +180,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
     }
 
-    private ServiceSession getServiceSession(String clientId)  {
+    private ServiceSession getServiceSession(String clientId) {
         try {
             UserSession userSession = serviceFacadeBean.createUserSession(clientId);
             return serviceFacadeBean.createServiceSession(userSession, "request");
@@ -243,18 +240,16 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
             throw new EfilingSubmissionServiceException("Exception while updating payment on service", e.getCause());
         }
 
-<<<<<<< HEAD
     }
 
     private XMLGregorianCalendar getComputedSubmittedDate(String location) {
+
         try {
             return filingFacadeBean.calculateSubmittedDate(DateUtils.getCurrentXmlDate(), location);
         } catch (NestedEjbException_Exception e) {
             throw new EfilingSubmissionServiceException("Exception while retrieving submitted date", e.getCause());
         }
 
-=======
->>>>>>> return-package-url
     }
 
 }

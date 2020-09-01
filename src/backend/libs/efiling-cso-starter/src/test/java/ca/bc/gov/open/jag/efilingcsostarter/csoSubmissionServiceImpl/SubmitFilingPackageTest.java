@@ -140,16 +140,12 @@ public class SubmitFilingPackageTest {
         AccountDetails accountDetails = getAccountDetails();
 
         SubmitPackageResponse actual = sut.submitFilingPackage(accountDetails,
-<<<<<<< HEAD
                 FilingPackage.builder()
                         .court(
                                 Court.builder()
                                 .location(LOCATION)
                         .create())
                 .create(),
-=======
-                FilingPackage.builder().create(),
->>>>>>> return-package-url
                 new EfilingFilingPackage(),
                 false,
                 efilingPaymentServiceMock);
@@ -167,21 +163,17 @@ public class SubmitFilingPackageTest {
 
         AccountDetails accountDetails = getAccountDetails();
 
-<<<<<<< HEAD
+        SubmitPackageResponse actual = sut.submitFilingPackage(accountDetails,
                 FilingPackage.builder()
                         .court(
                                 Court.builder()
                                         .location(LOCATION)
                                         .create())
                         .create(),
-        SubmitPackageResponse actual = sut.submitFilingPackage(accountDetails,
-=======
-        SubmitPackageResponse actual = sut.submitFilingPackage(accountDetails,
-                FilingPackage.builder().create(),
->>>>>>> return-package-url
                 new EfilingFilingPackage(),
                 true,
                 efilingPaymentServiceMock);
+
         Assertions.assertEquals(BigDecimal.TEN, actual.getTransactionId());
         Assertions.assertEquals("http://cso/cso/accounts/bceidNotification.do?packageNo=10", actual.getPackageLink());
     }
