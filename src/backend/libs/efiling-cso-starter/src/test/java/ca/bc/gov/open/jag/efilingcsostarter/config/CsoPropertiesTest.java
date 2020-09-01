@@ -21,7 +21,5 @@ public class CsoPropertiesTest {
         Assertions.assertTrue(sut.isDebugEnabled());
         Assertions.assertEquals(FILE_SERVER_HOST, sut.getFileServerHost());
         Assertions.assertEquals(CSO_BASE_PATH, sut.getCsoBasePath());
-
-
     }
 }
