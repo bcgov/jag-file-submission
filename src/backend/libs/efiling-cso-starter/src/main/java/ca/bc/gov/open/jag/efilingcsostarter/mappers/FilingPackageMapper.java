@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingcsostarter.mappers;
 import ca.bc.gov.ag.csows.filing.CivilDocument;
 import ca.bc.gov.ag.csows.filing.CsoParty;
 import ca.bc.gov.ag.csows.filing.FilingPackage;
+import ca.bc.gov.ag.csows.filing.PackageAuthority;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingFilingPackage;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -37,7 +38,7 @@ public interface FilingPackageMapper {
     @Mapping(target = "ldcxCourtLevelCd", source = "efilingFilingPackage.ldcxCourtLevelCd")
     @Mapping(target = "notificationEmailTxt", source = "efilingFilingPackage.notificationEmailTxt")
     @Mapping(target = "notificationRequiredYn", source = "efilingFilingPackage.notificationRequiredYn")
-    @Mapping(target = "packageControls", source = "efilingFilingPackage.packageControls")
+    @Mapping(target = "packageControls", source = "packageControls")
     @Mapping(target = "packageId", source = "efilingFilingPackage.packageId")
     @Mapping(target = "processingCompleteYn", source = "efilingFilingPackage.processingCompleteYn")
     @Mapping(target = "resubmissionOfPackageId", source = "efilingFilingPackage.resubmissionOfPackageId")
@@ -54,5 +55,6 @@ public interface FilingPackageMapper {
             BigDecimal serviceId,
             XMLGregorianCalendar submittedDate,
             List<CivilDocument> documents,
-            List<CsoParty> csoParties);
+            List<CsoParty> csoParties,
+            List<PackageAuthority> packageControls);
 }

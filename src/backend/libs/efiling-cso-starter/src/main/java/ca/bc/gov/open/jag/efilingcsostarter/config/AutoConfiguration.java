@@ -131,7 +131,7 @@ public class AutoConfiguration {
                 financialTransactionMapper,
                 csoProperties,
                 documentMapper,
-                csoPartyMapper); }
+                csoPartyMapper, packageAuthorityMapper); }
 
 
     public <T> T getPort(Clients clients, Class<T> type) {
