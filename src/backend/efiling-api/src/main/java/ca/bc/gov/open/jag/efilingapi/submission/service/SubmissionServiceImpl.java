@@ -28,10 +28,7 @@ import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class SubmissionServiceImpl implements SubmissionService {
@@ -137,7 +134,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                         efilingPayment -> bamboraPaymentAdapter.makePayment(efilingPayment));
 
 
-        result.setPackageRef(submitPackageResponse.getPackageLink());
+        result.setPackageRef(Base64.getEncoder().encodeToString(submitPackageResponse.getPackageLink().getBytes()));
 
         return result;
 

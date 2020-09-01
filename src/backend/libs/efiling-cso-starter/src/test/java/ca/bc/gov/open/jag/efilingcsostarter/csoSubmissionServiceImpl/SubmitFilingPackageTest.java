@@ -138,7 +138,7 @@ public class SubmitFilingPackageTest {
 
         AccountDetails accountDetails = getAccountDetails();
 
-        BigDecimal actual = sut.submitFilingPackage(accountDetails,
+        SubmitPackageResponse actual = sut.submitFilingPackage(accountDetails,
                 FilingPackage.builder()
                         .court(
                                 Court.builder()
@@ -148,7 +148,8 @@ public class SubmitFilingPackageTest {
                 new EfilingFilingPackage(),
                 false,
                 efilingPaymentServiceMock);
-        Assertions.assertEquals(BigDecimal.TEN, actual);
+        Assertions.assertEquals(BigDecimal.TEN, actual.getTransactionId());
+        Assertions.assertEquals("", actual.getPackageLink());
     }
 
     @DisplayName("OK: submitFilingPackage called with rushed Processing")
@@ -161,17 +162,18 @@ public class SubmitFilingPackageTest {
 
         AccountDetails accountDetails = getAccountDetails();
 
-        BigDecimal actual = sut.submitFilingPackage(accountDetails,
                 FilingPackage.builder()
                         .court(
                                 Court.builder()
                                         .location(LOCATION)
                                         .create())
                         .create(),
+        SubmitPackageResponse actual = sut.submitFilingPackage(accountDetails,
                 new EfilingFilingPackage(),
                 true,
                 efilingPaymentServiceMock);
-        Assertions.assertEquals(BigDecimal.TEN, actual);
+        Assertions.assertEquals(BigDecimal.TEN, actual.getTransactionId());
+        Assertions.assertEquals("", actual.getPackageLink());
     }
 
     @DisplayName("Exception: payment to bambora throw exception")
