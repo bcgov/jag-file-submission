@@ -43,6 +43,9 @@ public class SubmissionConfig {
     public FilingPackageMapper filingPackageApiMapper() { return new FilingPackageMapperImpl(); }
 
     @Bean
+    public PartyMapper partyMapper() { return new PartyMapperImpl(); }
+
+    @Bean
     public SubmissionService submissionService(SubmissionStore submissionStore,
                                                SubmissionMapper submissionMapper,
                                                EfilingFilingPackageMapper efilingFilingPackageMapper,
@@ -51,11 +54,12 @@ public class SubmissionConfig {
                                                EfilingSubmissionService efilingSubmissionService,
                                                DocumentStore documentStore,
                                                BamboraPaymentAdapter bamboraPaymentAdapter,
-                                               SftpService sftpService) {
+                                               SftpService sftpService, PartyMapper partyMapper) {
 
         return new SubmissionServiceImpl(submissionStore,
                 cacheProperties,
                 submissionMapper,
+                partyMapper,
                 efilingFilingPackageMapper,
                 efilingLookupService,
                 efilingCourtService,

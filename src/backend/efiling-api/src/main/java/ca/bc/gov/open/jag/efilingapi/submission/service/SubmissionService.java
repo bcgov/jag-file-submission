@@ -13,6 +13,6 @@ public interface SubmissionService {
 
     SubmitResponse createSubmission(Submission submission, AccountDetails accountDetails);
 
-    Submission updateDocuments(Submission submission, UpdateDocumentRequest updateDocumentRequest);
+    Submission updateDocuments(Submission submission, UpdateDocumentRequest updateDocumentRequest, SubmissionKey submissionKey);
 
 }

@@ -5,16 +5,17 @@ import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.payment.BamboraPaymentAdapter;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.EfilingFilingPackageMapper;
+import ca.bc.gov.open.jag.efilingapi.submission.mappers.PartyMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
-import ca.bc.gov.open.jag.efilingcommons.model.Court;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.utils.FileUtils;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
-import ca.bc.gov.open.jag.efilingcommons.model.*;
+import ca.bc.gov.open.jag.efilingcommons.model.Court;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
 import ca.bc.gov.open.jag.efilingcommons.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.model.Party;
+import ca.bc.gov.open.jag.efilingcommons.model.*;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
@@ -27,7 +28,6 @@ import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,6 +43,8 @@ public class SubmissionServiceImpl implements SubmissionService {
     private final CacheProperties cacheProperties;
 
     private final SubmissionMapper submissionMapper;
+
+    private final PartyMapper partyMapper;
 
     private final EfilingFilingPackageMapper efilingFilingPackageMapper;
 
@@ -62,7 +64,7 @@ public class SubmissionServiceImpl implements SubmissionService {
             SubmissionStore submissionStore,
             CacheProperties cacheProperties,
             SubmissionMapper submissionMapper,
-            EfilingFilingPackageMapper efilingFilingPackageMapper,
+            PartyMapper partyMapper, EfilingFilingPackageMapper efilingFilingPackageMapper,
             EfilingLookupService efilingLookupService,
             EfilingCourtService efilingCourtService,
             EfilingSubmissionService efilingSubmissionService,
@@ -72,6 +74,7 @@ public class SubmissionServiceImpl implements SubmissionService {
         this.submissionStore = submissionStore;
         this.cacheProperties = cacheProperties;
         this.submissionMapper = submissionMapper;
+        this.partyMapper = partyMapper;
         this.efilingFilingPackageMapper = efilingFilingPackageMapper;
         this.efilingLookupService = efilingLookupService;
         this.efilingCourtService = efilingCourtService;
@@ -91,7 +94,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                         submissionKey.getSubmissionId(),
                         submissionKey.getTransactionId(),
                         generateUrlRequest,
-                        toFilingPackage(generateUrlRequest),
+                        toFilingPackage(generateUrlRequest, submissionKey),
                         getExpiryDate(),
                         isRushedSubmission(generateUrlRequest)));
 
@@ -120,18 +123,8 @@ public class SubmissionServiceImpl implements SubmissionService {
         if (submission.getFilingPackage().getParties() != null)
             parties.addAll(submission.getFilingPackage().getParties());
 
-        EfilingFilingPackage filingPackage = efilingFilingPackageMapper.toEfilingFilingPackage(submission,
-                parties.stream()
-                        .map(party -> efilingFilingPackageMapper.toEfilingParties(submission, party, String.valueOf(submission.getFilingPackage().getParties().indexOf(party))))
-                        .collect(Collectors.toList()));
+        EfilingFilingPackage filingPackage = efilingFilingPackageMapper.toEfilingFilingPackage(submission);
         filingPackage.setPackageControls(Arrays.asList(efilingFilingPackageMapper.toPackageAuthority(submission)));
-        filingPackage.setDocuments(submission.getFilingPackage().getDocuments().stream()
-                .map(document -> efilingFilingPackageMapper.toEfilingDocument(document, submission,
-                        Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentMilestone(document, submission)),
-                        Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentPayment(document, submission)),
-                        Arrays.asList(efilingFilingPackageMapper.toEfilingDocumentStatus(document, submission)),
-                        MessageFormat.format("fh_{0}_{1}_{2}", submission.getId(), submission.getUniversalId(), document.getName())))
-                .collect(Collectors.toList()));
         filingPackage.setEntDtm(DateUtils.getCurrentXmlDate());
         filingPackage.setSubmitDtm(DateUtils.getCurrentXmlDate());
         SubmitResponse result = new SubmitResponse();
@@ -148,7 +141,7 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     @Override
-    public Submission updateDocuments(Submission submission, UpdateDocumentRequest updateDocumentRequest) {
+    public Submission updateDocuments(Submission submission, UpdateDocumentRequest updateDocumentRequest, SubmissionKey submissionKey) {
 
 
 
@@ -157,7 +150,7 @@ public class SubmissionServiceImpl implements SubmissionService {
             submission.getFilingPackage().addDocument(toDocument(
                     submission.getFilingPackage().getCourt().getLevel(),
                     submission.getFilingPackage().getCourt().getCourtClass(),
-                    documentProperties));
+                    documentProperties, submissionKey));
         });
 
         submissionStore.put(submission);
@@ -165,19 +158,25 @@ public class SubmissionServiceImpl implements SubmissionService {
         return submission;
     }
 
-    private FilingPackage toFilingPackage(GenerateUrlRequest request) {
+    private FilingPackage toFilingPackage(GenerateUrlRequest request, SubmissionKey submissionKey) {
 
         return FilingPackage.builder()
-                        .court(populateCourtDetails(request.getFilingPackage().getCourt()))
-        .submissionFeeAmount(getSubmissionFeeAmount())
+                .court(populateCourtDetails(request.getFilingPackage().getCourt()))
+                .submissionFeeAmount(getSubmissionFeeAmount())
                 .documents(request.getFilingPackage()
-                .getDocuments()
-                .stream()
-                .map(documentProperties -> toDocument(
-                        request.getFilingPackage().getCourt().getLevel(),
-                        request.getFilingPackage().getCourt().getCourtClass(),
-                        documentProperties))
-                .collect(Collectors.toList())).create();
+                        .getDocuments()
+                        .stream()
+                        .map(documentProperties -> toDocument(
+                                request.getFilingPackage().getCourt().getLevel(),
+                                request.getFilingPackage().getCourt().getCourtClass(),
+                                documentProperties, submissionKey))
+                        .collect(Collectors.toList()))
+                .parties(request.getFilingPackage()
+                        .getParties()
+                        .stream()
+                        .map(party ->  partyMapper.toParty(party))
+                        .collect(Collectors.toList()))
+                .create();
 
     }
 
@@ -199,7 +198,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                 .create();
     }
 
-    private Document toDocument(String courtLevel, String courtClass, DocumentProperties documentProperties) {
+    private Document toDocument(String courtLevel, String courtClass, DocumentProperties documentProperties, SubmissionKey submissionKey) {
 
         DocumentDetails details = documentStore.getDocumentDetails(courtLevel, courtClass, documentProperties.getType());
 
@@ -209,6 +208,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                         .statutoryFeeAmount(details.getStatutoryFeeAmount())
                         .type(documentProperties.getType())
                         .name(documentProperties.getName())
+                        .serverFileName(MessageFormat.format("fh_{0}_{1}_{2}",submissionKey.getSubmissionId(), submissionKey.getTransactionId(), documentProperties.getName()))
                         .mimeType(FileUtils.guessContentTypeFromName(documentProperties.getName()))
                         .isAmendment(documentProperties.getIsAmendment())
                         .isSupremeCourtScheduling(documentProperties.getIsSupremeCourtScheduling())
@@ -220,32 +220,19 @@ public class SubmissionServiceImpl implements SubmissionService {
     private void uploadFiles(Submission submission) {
         submission.getFilingPackage().getDocuments().forEach(
                 document ->
-                        redisStoreToSftpStore(document.getName(), submission));
+                        redisStoreToSftpStore(document, submission));
 
     }
 
-    private void redisStoreToSftpStore(String fileName, Submission submission) {
+    private void redisStoreToSftpStore(Document document, Submission submission) {
 
-        String compositeFileName = ca.bc.gov.open.jag.efilingapi.document.Document
-                .builder()
-                .userId(submission.getUniversalId())
-                .transactionId(submission.getTransactionId())
-                .submissionId(submission.getId())
-                .fileName(fileName)
-                .create().getCompositeId();
+        SubmissionKey submissionKey = new SubmissionKey(submission.getUniversalId(), submission.getTransactionId(), submission.getId());
 
-
-        sftpService.put(new ByteArrayInputStream(documentStore.get(compositeFileName)), MessageFormat.format("fh_{0}", compositeFileName));
+        sftpService.put(new ByteArrayInputStream(documentStore.get(submissionKey, document.getName())),
+                document.getServerFileName());
 
         //Delete file from cache
-        documentStore.evict(compositeFileName);
-
-        // TODO: remove this is temp because of the SFTP rsync process
-        try {
-            Thread.sleep(Duration.ofSeconds(1).toMillis());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        documentStore.evict(submissionKey, document.getName());
 
     }
 

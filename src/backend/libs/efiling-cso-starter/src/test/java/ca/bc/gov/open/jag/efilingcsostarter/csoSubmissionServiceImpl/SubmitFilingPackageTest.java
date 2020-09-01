@@ -74,9 +74,12 @@ public class SubmitFilingPackageTest {
         Mockito.doReturn(serviceSession).when(serviceFacadeBean)
                 .createServiceSession(ArgumentMatchers.argThat(x -> x.getUserSessionId().equals(userSession.getUserSessionId())), Mockito.anyString());
 
+        // Testing mapper
+        DocumentMapper documentMapper = new DocumentMapperImpl();
+        CsoPartyMapper csoPartyMapper = new CsoPartyMapperImpl();
         Mockito.when(filingFacadeBeanMock.calculateSubmittedDate(any(), any())).thenReturn(DateUtils.getCurrentXmlDate());
 
-        sut = new CsoSubmissionServiceImpl(filingFacadeBeanMock, serviceFacadeBean, new ServiceMapperImpl(), new FilingPackageMapperImpl(), new FinancialTransactionMapperImpl(), csoPropertiesMock);
+        sut = new CsoSubmissionServiceImpl(filingFacadeBeanMock, serviceFacadeBean, new ServiceMapperImpl(), new FilingPackageMapperImpl(), new FinancialTransactionMapperImpl(), csoPropertiesMock, documentMapper, csoPartyMapper);
 
     }
 
