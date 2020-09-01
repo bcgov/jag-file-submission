@@ -154,6 +154,32 @@ public class SubmitFilingPackageTest {
         Assertions.assertEquals("http://cso/cso/accounts/bceidNotification.do?packageNo=10", actual.getPackageLink());
     }
 
+    @DisplayName("OK: submitFilingPackage called with any non-empty submissionId")
+    @Test
+    public void testWithPopulatedSubmissionIdBigDecimalValue() throws DatatypeConfigurationException, ca.bc.gov.ag.csows.filing.NestedEjbException_Exception, NestedEjbException_Exception {
+
+        Mockito.when(filingFacadeBeanMock.submitFiling(any())).thenReturn(new BigDecimal(100000));
+        Mockito.when(serviceFacadeBean.addService(any())).thenReturn(TestHelpers.createService());
+        Mockito.when(efilingPaymentServiceMock.makePayment(any())).thenReturn(createTransaction());
+        Mockito.doNothing().when(serviceFacadeBean).updateService(any());
+
+        AccountDetails accountDetails = getAccountDetails();
+
+        SubmitPackageResponse actual = sut.submitFilingPackage(accountDetails,
+                FilingPackage.builder()
+                        .court(
+                                Court.builder()
+                                        .location(LOCATION)
+                                        .create())
+                        .create(),
+                APP_CODE,
+                false,
+                efilingPaymentServiceMock);
+        Assertions.assertEquals(new BigDecimal(100000), actual.getTransactionId());
+        Assertions.assertEquals("http://cso/cso/accounts/bceidNotification.do?packageNo=100000", actual.getPackageLink());
+
+    }
+
     @DisplayName("OK: submitFilingPackage called with rushed Processing")
     @Test
     public void testWithRushedProcessing() throws DatatypeConfigurationException, ca.bc.gov.ag.csows.filing.NestedEjbException_Exception, NestedEjbException_Exception {
