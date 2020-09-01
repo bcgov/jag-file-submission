@@ -1,7 +1,7 @@
 package ca.bc.gov.open.jag.efilingcsostarter.mappers;
 
+import ca.bc.gov.ag.csows.filing.CivilDocument;
 import ca.bc.gov.ag.csows.filing.FilingPackage;
-import ca.bc.gov.open.jag.efilingcommons.model.EfilingDocument;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingFilingPackage;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -50,5 +50,5 @@ public interface FilingPackageMapper {
     FilingPackage toFilingPackage(
             EfilingFilingPackage efilingFilingPackage,
             BigDecimal serviceId,
-            List<EfilingDocument> documents);
+            List<CivilDocument> documents);
 }

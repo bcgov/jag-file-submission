@@ -22,6 +22,8 @@ public interface ServiceMapper {
     @Mapping(target = "feePaidYn", constant = "false")
     @Mapping(target = "userSessionId", source = "serviceSession.userSessionId")
     @Mapping(target = "serviceSessionId", source = "serviceSession.serviceSessionId")
+    @Mapping(target = "updUserId", ignore = true)
+    @Mapping(target = "updDtm", ignore = true)
     Service  toCreateService(FilingPackage filingPackage, AccountDetails accountDetails, ServiceSession serviceSession);
 
 }
