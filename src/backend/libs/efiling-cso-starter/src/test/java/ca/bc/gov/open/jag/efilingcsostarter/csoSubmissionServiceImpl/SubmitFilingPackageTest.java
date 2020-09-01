@@ -63,6 +63,7 @@ public class SubmitFilingPackageTest {
         MockitoAnnotations.initMocks(this);
 
         Mockito.when(csoPropertiesMock.getFileServerHost()).thenReturn("localhost");
+        Mockito.when(csoPropertiesMock.getCsoBasePath()).thenReturn("http://cso");
 
         UserSession userSession = new UserSession();
         userSession.setStartDtm(DateUtils.getCurrentXmlDate());
@@ -149,7 +150,7 @@ public class SubmitFilingPackageTest {
                 false,
                 efilingPaymentServiceMock);
         Assertions.assertEquals(BigDecimal.TEN, actual.getTransactionId());
-        Assertions.assertEquals("", actual.getPackageLink());
+        Assertions.assertEquals("http://cso/cso/accounts/bceidNotification.do?packageNo=10", actual.getPackageLink());
     }
 
     @DisplayName("OK: submitFilingPackage called with rushed Processing")
@@ -173,7 +174,7 @@ public class SubmitFilingPackageTest {
                 true,
                 efilingPaymentServiceMock);
         Assertions.assertEquals(BigDecimal.TEN, actual.getTransactionId());
-        Assertions.assertEquals("", actual.getPackageLink());
+        Assertions.assertEquals("http://cso/cso/accounts/bceidNotification.do?packageNo=10", actual.getPackageLink());
     }
 
     @DisplayName("Exception: payment to bambora throw exception")
