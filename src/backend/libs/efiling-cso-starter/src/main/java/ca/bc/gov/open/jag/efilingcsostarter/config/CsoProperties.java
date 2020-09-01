@@ -7,6 +7,8 @@ public class CsoProperties {
 
     private String fileServerHost;
 
+    private String csoBasePath;
+
     private boolean debugEnabled = false;
 
     public String getFileServerHost() {
@@ -14,8 +16,15 @@ public class CsoProperties {
     }
 
     public void setFileServerHost(String fileServerHost) {
-
         this.fileServerHost = fileServerHost;
+    }
+
+    public String getCsoBasePath() {
+        return csoBasePath;
+    }
+
+    public void setCsoBasePath(String csoBasePath) {
+        this.csoBasePath = csoBasePath;
     }
 
     public boolean isDebugEnabled() {
