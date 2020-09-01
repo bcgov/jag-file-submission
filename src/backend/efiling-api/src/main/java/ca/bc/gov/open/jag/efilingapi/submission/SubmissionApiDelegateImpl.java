@@ -207,15 +207,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         MdcUtils.setUserMDC(submissionId, xTransactionId);
 
-
-
-        Document document = Document
-                .builder()
-                .transactionId(xTransactionId)
-                .submissionId(submissionId)
-                .fileName(filename)
-                .create();
-
         byte[] bytes = documentStore.get(submissionKey, filename);
 
         if (bytes == null) return ResponseEntity.notFound().build();
