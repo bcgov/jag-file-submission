@@ -63,8 +63,10 @@ main {
   display: flex;
   justify-content: space-between;
   float: right;
+  width: 100%;
   width: -webkit-fill-available;
   width: -moz-available;
+  width: fill-available;
 }
 
 .bcgov-button {
