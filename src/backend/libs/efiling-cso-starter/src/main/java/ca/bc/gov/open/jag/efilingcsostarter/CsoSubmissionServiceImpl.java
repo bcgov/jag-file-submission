@@ -109,7 +109,12 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         return csoParties;
     }
 
+<<<<<<< HEAD
     private List<CivilDocument> buildCivilDocuments(AccountDetails accountDetails, FilingPackage efilingPackage, XMLGregorianCalendar submittedDate) {
+=======
+    private List<CivilDocument> buildCivilDocuments(AccountDetails accountDetails, FilingPackage efilingPackage) {
+
+>>>>>>> return-package-url
         List<CivilDocument> documents = new ArrayList<>();
 
         for(int i = 0; i < efilingPackage.getDocuments().size(); i++) {
@@ -238,6 +243,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
             throw new EfilingSubmissionServiceException("Exception while updating payment on service", e.getCause());
         }
 
+<<<<<<< HEAD
     }
 
     private XMLGregorianCalendar getComputedSubmittedDate(String location) {
@@ -247,6 +253,8 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
             throw new EfilingSubmissionServiceException("Exception while retrieving submitted date", e.getCause());
         }
 
+=======
+>>>>>>> return-package-url
     }
 
 }

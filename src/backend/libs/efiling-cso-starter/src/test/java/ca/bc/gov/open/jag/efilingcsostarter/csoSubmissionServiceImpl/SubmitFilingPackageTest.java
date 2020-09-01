@@ -140,12 +140,16 @@ public class SubmitFilingPackageTest {
         AccountDetails accountDetails = getAccountDetails();
 
         SubmitPackageResponse actual = sut.submitFilingPackage(accountDetails,
+<<<<<<< HEAD
                 FilingPackage.builder()
                         .court(
                                 Court.builder()
                                 .location(LOCATION)
                         .create())
                 .create(),
+=======
+                FilingPackage.builder().create(),
+>>>>>>> return-package-url
                 new EfilingFilingPackage(),
                 false,
                 efilingPaymentServiceMock);
@@ -163,6 +167,7 @@ public class SubmitFilingPackageTest {
 
         AccountDetails accountDetails = getAccountDetails();
 
+<<<<<<< HEAD
                 FilingPackage.builder()
                         .court(
                                 Court.builder()
@@ -170,6 +175,10 @@ public class SubmitFilingPackageTest {
                                         .create())
                         .create(),
         SubmitPackageResponse actual = sut.submitFilingPackage(accountDetails,
+=======
+        SubmitPackageResponse actual = sut.submitFilingPackage(accountDetails,
+                FilingPackage.builder().create(),
+>>>>>>> return-package-url
                 new EfilingFilingPackage(),
                 true,
                 efilingPaymentServiceMock);
