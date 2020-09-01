@@ -259,7 +259,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
             Cancel
           </button>
           <button
-            class="bcgov-button normal-blue btn"
+            class="bcgov-button normal-blue normal-blue-ml btn"
             data-test-id=""
             disabled=""
             type="button"
@@ -754,7 +754,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
             Cancel
           </button>
           <button
-            class="bcgov-button normal-blue btn"
+            class="bcgov-button normal-blue normal-blue-ml btn"
             data-test-id=""
             disabled=""
             type="button"
@@ -1249,7 +1249,7 @@ package and am prepared to submit them for filing.
             Cancel
           </button>
           <button
-            class="bcgov-button normal-blue btn"
+            class="bcgov-button normal-blue normal-blue-ml btn"
             data-test-id=""
             disabled=""
             type="button"

@@ -23,10 +23,6 @@ main {
   width: 100%;
 }
 
-.normal-blue {
-  margin-left: 1rem;
-}
-
 @media (max-width: 576px) {
   .page {
     flex-direction: column;
