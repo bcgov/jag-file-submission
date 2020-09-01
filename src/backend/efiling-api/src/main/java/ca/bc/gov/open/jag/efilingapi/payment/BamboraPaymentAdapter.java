@@ -9,7 +9,7 @@ import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.PaymentResponse;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.ProfilePurchase;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingPayment;
-import ca.bc.gov.open.jag.efilingcommons.model.EfilingTransaction;
+import ca.bc.gov.open.jag.efilingcommons.model.PaymentTransaction;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,8 +29,8 @@ public class BamboraPaymentAdapter {
         this.paymentsApi = paymentsApi;
     }
 
-    public EfilingTransaction makePayment(EfilingPayment efilingPayment) {
-        EfilingTransaction result = new EfilingTransaction();
+    public PaymentTransaction makePayment(EfilingPayment efilingPayment) {
+        PaymentTransaction result = new PaymentTransaction();
 
         try {
 

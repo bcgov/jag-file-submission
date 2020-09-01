@@ -260,8 +260,8 @@ public class SubmitFilingPackageTest {
     }
 
 
-    private EfilingTransaction createTransaction() {
-        EfilingTransaction efilingTransaction = new EfilingTransaction();
+    private PaymentTransaction createTransaction() {
+        PaymentTransaction efilingTransaction = new PaymentTransaction();
         efilingTransaction.setApprovalCd(APPROVED);
         efilingTransaction.setEcommerceTransactionId(BigDecimal.TEN);
         efilingTransaction.setInternalClientNo(INTERNAL_CLIENT_NUMBER);

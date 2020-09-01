@@ -4,7 +4,7 @@ import org.joda.time.DateTime;
 
 import java.math.BigDecimal;
 
-public class EfilingTransaction {
+public class PaymentTransaction {
 
     private String approvalCd;
     private String creditCardTypeCd;
@@ -20,7 +20,7 @@ public class EfilingTransaction {
     private String transactionStateCd;
     private DateTime transactonDtm;
 
-    public EfilingTransaction(String approvalCd,
+    public PaymentTransaction(String approvalCd,
                               String creditCardTypeCd,
                               BigDecimal ecommerceTransactionId,
                               DateTime entDtm,
@@ -48,7 +48,7 @@ public class EfilingTransaction {
         this.transactonDtm = transactonDtm;
     }
 
-    public EfilingTransaction() {
+    public PaymentTransaction() {
 
     }
 
