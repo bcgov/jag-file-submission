@@ -13,6 +13,7 @@ import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsostarter.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.*;
 
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -83,10 +84,12 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     }
 
     private ca.bc.gov.ag.csows.filing.FilingPackage buildFilingPackage(AccountDetails accountDetails, FilingPackage efilingPackage, EfilingFilingPackage filingPackage, Service createdService) {
+        XMLGregorianCalendar submittedDate = getComputedSubmittedDate(efilingPackage.getCourt().getLocation());
         return filingPackageMapper.toFilingPackage(
                         filingPackage,
                         createdService.getServiceId(),
-                        buildCivilDocuments(accountDetails, efilingPackage),
+                        submittedDate,
+                        buildCivilDocuments(accountDetails, efilingPackage, submittedDate),
                         buildCsoParties(accountDetails, efilingPackage));
     }
 
@@ -101,14 +104,14 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         return csoParties;
     }
 
-    private List<CivilDocument> buildCivilDocuments(AccountDetails accountDetails, FilingPackage efilingPackage) {
+    private List<CivilDocument> buildCivilDocuments(AccountDetails accountDetails, FilingPackage efilingPackage, XMLGregorianCalendar submittedDate) {
         List<CivilDocument> documents = new ArrayList<>();
 
         for(int i = 0; i < efilingPackage.getDocuments().size(); i++) {
 
             List<DocumentPayments> payments = Arrays.asList(documentMapper.toEfilingDocumentPayment(efilingPackage.getDocuments().get(i), accountDetails));
             List<Milestones> milestones = Arrays.asList(documentMapper.toActualSubmittedDate(accountDetails),
-                    documentMapper.toComputedSubmittedDate(accountDetails, DateUtils.getCurrentXmlDate()));
+                    documentMapper.toComputedSubmittedDate(accountDetails, submittedDate));
             List<DocumentStatuses> statuses = Arrays.asList(documentMapper.toEfilingDocumentStatus(efilingPackage.getDocuments().get(i), accountDetails));
 
             documents.add(documentMapper.toEfilingDocument(
@@ -226,6 +229,15 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         } catch (ca.bc.gov.ag.csows.services.NestedEjbException_Exception e) {
             throw new EfilingSubmissionServiceException("Exception while updating payment on service", e.getCause());
         }
+    }
+
+    private XMLGregorianCalendar getComputedSubmittedDate(String location) {
+        try {
+            return filingFacadeBean.calculateSubmittedDate(DateUtils.getCurrentXmlDate(), location);
+        } catch (NestedEjbException_Exception e) {
+            throw new EfilingSubmissionServiceException("Exception while retrieving submitted date", e.getCause());
+        }
+
     }
 
 }
