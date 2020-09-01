@@ -10,12 +10,14 @@ import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.CreateAccountRequest;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
+import ca.bc.gov.open.jag.efilingcsostarter.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.AccountDetailsMapper;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.WebServiceException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,15 +28,18 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
     private final AccountFacadeBean accountFacadeBean;
     private final RoleRegistryPortType roleRegistryPortType;
     private final AccountDetailsMapper accountDetailsMapper;
+    private final CsoProperties csoProperties;
 
     public CsoAccountServiceImpl(AccountFacadeBean accountFacadeBean,
                                  RoleRegistryPortType roleRegistryPortType,
-                                 AccountDetailsMapper accountDetailsMapper) {
+                                 AccountDetailsMapper accountDetailsMapper,
+                                 CsoProperties csoProperties) {
 
         this.accountFacadeBean = accountFacadeBean;
         this.roleRegistryPortType = roleRegistryPortType;
         this.accountDetailsMapper = accountDetailsMapper;
 
+        this.csoProperties = csoProperties;
     }
 
     @Override
@@ -67,7 +72,8 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
                 accountDetails = accountDetailsMapper.toAccountDetails(
                         createAccountRequest.getUniversalId(),
                         clientProfile,
-                        hasFileRole(CsoHelpers.formatUserGuid(createAccountRequest.getUniversalId())));
+                        hasFileRole(CsoHelpers.formatUserGuid(createAccountRequest.getUniversalId())),
+                        getAccountLink());
             }
         }
         catch (DatatypeConfigurationException | NestedEjbException_Exception | WebServiceException e) {
@@ -75,6 +81,10 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         }
 
         return accountDetails;
+    }
+
+    private String getAccountLink() {
+        return MessageFormat.format("{0}/accounts/editProfile.do", csoProperties.getCsoBasePath());
     }
 
     @Override
@@ -118,7 +128,11 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         }
         // An account must have only one profile associated with it to proceed
         if (profiles.size() == 1) {
-            accountDetails = accountDetailsMapper.toAccountDetails(universalId, profiles.get(0), hasFileRole(CsoHelpers.formatUserGuid(universalId)));
+            accountDetails = accountDetailsMapper.toAccountDetails(
+                    universalId,
+                    profiles.get(0),
+                    hasFileRole(CsoHelpers.formatUserGuid(universalId)),
+                    getAccountLink());
         }
         else if (profiles.size() > 1) {
             throw new CSOHasMultipleAccountException(profiles.get(0).getClientId().toString());

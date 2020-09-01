@@ -4,11 +4,9 @@ import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RoleRegi
 import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
 import ca.bc.gov.ag.csows.ceis.Csows;
 import ca.bc.gov.ag.csows.filing.FilingFacadeBean;
-import ca.bc.gov.ag.csows.filing.PackageAuthority;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.ag.csows.lookups.LookupFacadeBean;
 import ca.bc.gov.ag.csows.services.ServiceFacadeBean;
-import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
@@ -97,7 +95,7 @@ public class AutoConfiguration {
     public EfilingAccountService efilingAccountService(AccountFacadeBean accountFacadeBean,
                                                        RoleRegistryPortType roleRegistryPortType,
                                                        AccountDetailsMapper accountDetailsMapper) {
-        return new CsoAccountServiceImpl(accountFacadeBean, roleRegistryPortType, accountDetailsMapper);
+        return new CsoAccountServiceImpl(accountFacadeBean, roleRegistryPortType, accountDetailsMapper, csoProperties);
     }
 
     @Bean

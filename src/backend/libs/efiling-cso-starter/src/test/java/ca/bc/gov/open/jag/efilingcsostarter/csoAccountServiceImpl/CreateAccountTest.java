@@ -68,7 +68,7 @@ public class CreateAccountTest {
         UserRoles userRolesWithFileRole = new UserRoles();
         userRolesWithFileRole.getRoles().add(fileRole);
         Mockito.when(roleRegistryPortTypeMock.getRolesForIdentifier(DOMAIN, APPLICATION, CsoHelpers.formatUserGuid(UNIVERSAL_ID), IDENTIFIER_TYPE)).thenReturn(userRolesWithFileRole);
-        sut = new CsoAccountServiceImpl(accountFacadeBeanMock, roleRegistryPortTypeMock, accountDetailsMapperMock);
+        sut = new CsoAccountServiceImpl(accountFacadeBeanMock, roleRegistryPortTypeMock, accountDetailsMapperMock, csoProperties);
     }
 
     @Test

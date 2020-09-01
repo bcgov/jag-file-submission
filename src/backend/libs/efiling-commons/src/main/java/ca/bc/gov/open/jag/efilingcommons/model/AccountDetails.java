@@ -14,6 +14,7 @@ public class AccountDetails {
     private String internalClientNumber;
     private boolean fileRolePresent;
     private boolean cardRegistered;
+    private String accountLink;
 
     protected AccountDetails(AccountDetails.Builder builder) {
 
@@ -23,6 +24,7 @@ public class AccountDetails {
         this.fileRolePresent = builder.fileRolePresent;
         this.cardRegistered = builder.cardRegistered;
         this.internalClientNumber = builder.internalClientNumber;
+        this.accountLink = builder.accountLink;
 
     }
 
@@ -42,13 +44,15 @@ public class AccountDetails {
             @JsonProperty("lastName") String lastName,
             @JsonProperty("middleName") String middleName,
             @JsonProperty("email") String email,
-            @JsonProperty("cardRegistered") Boolean cardRegistered) {
+            @JsonProperty("cardRegistered") Boolean cardRegistered,
+            @JsonProperty("accountLink") String accountLink) {
         this.universalId = universalId;
         this.accountId = accountId;
         this.clientId = clientId;
         this.internalClientNumber = internalClientNumber;
         this.fileRolePresent = fileRolePresent;
         this.cardRegistered = cardRegistered;
+        this.accountLink = accountLink;
     }
 
     public UUID getUniversalId() {
@@ -78,6 +82,7 @@ public class AccountDetails {
 
     public static class Builder {
 
+        public String accountLink;
         private UUID universalId;
         private BigDecimal accountId;
         private BigDecimal clientId;
@@ -113,6 +118,11 @@ public class AccountDetails {
 
         public Builder cardRegistered(boolean cardRegistered) {
             this.cardRegistered = cardRegistered;
+            return this;
+        }
+
+        public Builder accountLink(String accountLink) {
+            this.accountLink = accountLink;
             return this;
         }
 

@@ -29,7 +29,7 @@ public class GetOrderNumberTest {
 
         MockitoAnnotations.initMocks(this);
 
-        sut = new CsoAccountServiceImpl(accountFacadeBeanMock, null, null);
+        sut = new CsoAccountServiceImpl(accountFacadeBeanMock, null, null, csoProperties);
     }
 
 

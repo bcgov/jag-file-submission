@@ -63,7 +63,7 @@ public class GetAccountDetailsTest {
         initRoleRegistryMocks();
         initBceIdAccountMocks();
 
-        sut = new CsoAccountServiceImpl(accountFacadeBeanMock, roleRegistryPortTypeMock, accountDetailsMapperMock);
+        sut = new CsoAccountServiceImpl(accountFacadeBeanMock, roleRegistryPortTypeMock, accountDetailsMapperMock, csoProperties);
     }
 
     private void initAccountFacadeMocks() throws NestedEjbException_Exception {

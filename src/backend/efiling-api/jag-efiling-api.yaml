@@ -683,6 +683,7 @@ components:
         - lastName
         - middleName
         - email
+        - accountLink
       properties:
         firstName:
           type: string
@@ -696,6 +697,9 @@ components:
         email:
           type: string
           description: the user email address
+        accountLink:
+          type: string
+          description: cso account link
     UpdateDocumentRequest:
       description: request body for update documents
       type: object
@@ -719,11 +723,11 @@ components:
       description: result of submit filing package
       type: object
       required:
-        - packageRef
+        - transactionId
       properties:
-        packageRef:
-          type: string
-          description: base64 encoded package reference url
+        transactionId:
+          type: number
+          description: the transaction id returned from cso
     GenerateCardUrlRequest:
       description: create service request
       type: object

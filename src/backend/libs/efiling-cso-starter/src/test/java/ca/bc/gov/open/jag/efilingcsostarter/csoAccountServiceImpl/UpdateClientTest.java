@@ -33,7 +33,7 @@ public class UpdateClientTest {
         MockitoAnnotations.initMocks(this);
         initAccountFacadeMocks();
 
-        sut = new CsoAccountServiceImpl(accountFacadeBeanMock, null, null);
+        sut = new CsoAccountServiceImpl(accountFacadeBeanMock, null, null, csoProperties);
     }
 
     private void initAccountFacadeMocks() throws NestedEjbException_Exception {
