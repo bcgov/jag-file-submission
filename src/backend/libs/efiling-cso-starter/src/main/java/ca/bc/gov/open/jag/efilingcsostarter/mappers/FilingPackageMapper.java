@@ -37,7 +37,11 @@ public interface FilingPackageMapper {
     @Mapping(target = "ldcxCourtDivisionCd", source = "efilingFilingPackage.ldcxCourtDivisionCd")
     @Mapping(target = "ldcxCourtLevelCd", source = "efilingFilingPackage.ldcxCourtLevelCd")
     @Mapping(target = "notificationEmailTxt", source = "efilingFilingPackage.notificationEmailTxt")
+<<<<<<< HEAD
     @Mapping(target = "notificationRequiredYn", constant = "true")
+=======
+    @Mapping(target = "notificationRequiredYn", source = "efilingFilingPackage.notificationRequiredYn")
+>>>>>>> efiling-package-mapping
     @Mapping(target = "packageControls", source = "packageControls")
     @Mapping(target = "packageId", source = "efilingFilingPackage.packageId")
     @Mapping(target = "processingCompleteYn", source = "efilingFilingPackage.processingCompleteYn")
