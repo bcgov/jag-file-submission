@@ -26,6 +26,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -128,6 +129,9 @@ public class DeleteSubmissionTest {
     @Test
     @DisplayName("403: with no universal id is forbidden")
     public void withUserNotHavingUniversalIdShouldReturn403() {
+
+
+        BigDecimal test = new BigDecimal(100000000);
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY,null);

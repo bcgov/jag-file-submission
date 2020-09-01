@@ -56,9 +56,6 @@ public class SubmissionConfigTest {
             assertThat(it).hasSingleBean(SubmissionMapper.class);
             Assertions.assertEquals(SubmissionMapperImpl.class, it.getBean(SubmissionMapper.class).getClass());
 
-            assertThat(it).hasSingleBean(EfilingFilingPackageMapper.class);
-            Assertions.assertEquals(EfilingFilingPackageMapperImpl.class, it.getBean(EfilingFilingPackageMapper.class).getClass());
-
             assertThat(it).hasSingleBean(FilingPackageMapper.class);
             Assertions.assertEquals(FilingPackageMapperImpl.class, it.getBean(FilingPackageMapper.class).getClass());
 
@@ -112,9 +109,8 @@ public class SubmissionConfigTest {
     }
 
     public static class EfilingSubmissionServiceTest implements EfilingSubmissionService {
-
         @Override
-        public SubmitPackageResponse submitFilingPackage(AccountDetails accountDetails, FilingPackage efilingPackage, EfilingFilingPackage filingPackage, boolean isRushedProcessing, EfilingPaymentService payment) {
+        public SubmitPackageResponse submitFilingPackage(AccountDetails accountDetails, FilingPackage efilingPackage, String applicationTypeCode, boolean isRushedProcessing, EfilingPaymentService payment) {
             return null;
         }
     }

@@ -35,11 +35,6 @@ public class SubmissionConfig {
     }
 
     @Bean
-    public EfilingFilingPackageMapper efilingFilingPackageMapper() {
-        return new EfilingFilingPackageMapperImpl();
-    }
-
-    @Bean
     public FilingPackageMapper filingPackageApiMapper() { return new FilingPackageMapperImpl(); }
 
     @Bean
@@ -48,7 +43,6 @@ public class SubmissionConfig {
     @Bean
     public SubmissionService submissionService(SubmissionStore submissionStore,
                                                SubmissionMapper submissionMapper,
-                                               EfilingFilingPackageMapper efilingFilingPackageMapper,
                                                EfilingLookupService efilingLookupService,
                                                EfilingCourtService efilingCourtService,
                                                EfilingSubmissionService efilingSubmissionService,
@@ -60,7 +54,6 @@ public class SubmissionConfig {
                 cacheProperties,
                 submissionMapper,
                 partyMapper,
-                efilingFilingPackageMapper,
                 efilingLookupService,
                 efilingCourtService,
                 efilingSubmissionService,
