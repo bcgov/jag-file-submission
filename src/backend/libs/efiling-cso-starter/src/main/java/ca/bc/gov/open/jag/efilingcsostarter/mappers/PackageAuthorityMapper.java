@@ -3,8 +3,10 @@ package ca.bc.gov.open.jag.efilingcsostarter.mappers;
 import ca.bc.gov.ag.csows.filing.PackageAuthority;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcsostarter.Keys;
+import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+@Mapper
 public interface PackageAuthorityMapper {
 
     @Mapping(target = "clientId", source = "accountDetails.clientId")
