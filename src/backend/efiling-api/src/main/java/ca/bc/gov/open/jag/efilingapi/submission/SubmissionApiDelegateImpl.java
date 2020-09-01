@@ -77,6 +77,11 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         Optional<UUID> actualUserId = SecurityUtils.stringToUUID(xUserId);
 
+        if(!actualUserId.isPresent())
+            return new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
+                    HttpStatus.BAD_REQUEST);
+
         SubmissionKey submissionKey = new SubmissionKey(
                 actualUserId.get(),
                 xTransactionId,
