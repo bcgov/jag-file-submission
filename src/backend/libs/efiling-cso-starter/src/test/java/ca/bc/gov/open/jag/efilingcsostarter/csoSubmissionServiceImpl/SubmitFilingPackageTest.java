@@ -41,6 +41,8 @@ public class SubmitFilingPackageTest {
     private static final DateTime ENT_DTM = DateTime.now();
     private static final String APPROVED = "Approved";
     public static final UUID UNIVERSAL_ID = UUID.randomUUID();
+    private static final String LOCATION = "LOCATION";
+    private static final String BAD_LOCATION = "BADLOCATION";
     CsoSubmissionServiceImpl sut;
 
     @Mock
@@ -77,7 +79,12 @@ public class SubmitFilingPackageTest {
         // Testing mapper
         DocumentMapper documentMapper = new DocumentMapperImpl();
         CsoPartyMapper csoPartyMapper = new CsoPartyMapperImpl();
-        Mockito.when(filingFacadeBeanMock.calculateSubmittedDate(any(), any())).thenReturn(DateUtils.getCurrentXmlDate());
+
+        Mockito.doReturn(DateUtils.getCurrentXmlDate()).when(filingFacadeBeanMock)
+                .calculateSubmittedDate(any(), Mockito.eq(LOCATION));
+
+        Mockito.doThrow(ca.bc.gov.ag.csows.filing.NestedEjbException_Exception.class).when(filingFacadeBeanMock)
+                .calculateSubmittedDate(any(), Mockito.eq(BAD_LOCATION));
 
         sut = new CsoSubmissionServiceImpl(filingFacadeBeanMock, serviceFacadeBean, new ServiceMapperImpl(), new FilingPackageMapperImpl(), new FinancialTransactionMapperImpl(), csoPropertiesMock, documentMapper, csoPartyMapper);
 
@@ -132,7 +139,12 @@ public class SubmitFilingPackageTest {
         AccountDetails accountDetails = getAccountDetails();
 
         BigDecimal actual = sut.submitFilingPackage(accountDetails,
-                FilingPackage.builder().create(),
+                FilingPackage.builder()
+                        .court(
+                                Court.builder()
+                                .location(LOCATION)
+                        .create())
+                .create(),
                 new EfilingFilingPackage(),
                 false,
                 efilingPaymentServiceMock);
@@ -150,7 +162,12 @@ public class SubmitFilingPackageTest {
         AccountDetails accountDetails = getAccountDetails();
 
         BigDecimal actual = sut.submitFilingPackage(accountDetails,
-                FilingPackage.builder().create(),
+                FilingPackage.builder()
+                        .court(
+                                Court.builder()
+                                        .location(LOCATION)
+                                        .create())
+                        .create(),
                 new EfilingFilingPackage(),
                 true,
                 efilingPaymentServiceMock);
@@ -186,7 +203,12 @@ public class SubmitFilingPackageTest {
 
         Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(
                 accountDetails,
-                FilingPackage.builder().create(),
+                FilingPackage.builder()
+                        .court(
+                                Court.builder()
+                                        .location(LOCATION)
+                                        .create())
+                        .create(),
                 new EfilingFilingPackage(),
                 false,
                 efilingPaymentServiceMock));
@@ -258,6 +280,30 @@ public class SubmitFilingPackageTest {
                 false,
                 efilingPaymentServiceMock));
       
+    }
+
+    @DisplayName("Exception: with NestedEjbException_Exception on calculate submitted date throw EfilingLookupServiceException")
+    @Test
+    public void whenComputedSubmittedDateFailesThrowEfilingLookupServiceException() throws NestedEjbException_Exception, ca.bc.gov.ag.csows.filing.NestedEjbException_Exception, DatatypeConfigurationException {
+
+        Mockito.when(serviceFacadeBean.addService(any())).thenReturn(TestHelpers.createService());
+        Mockito.when(filingFacadeBeanMock.submitFiling(any())).thenThrow(new ca.bc.gov.ag.csows.filing.NestedEjbException_Exception());
+        Mockito.when(efilingPaymentServiceMock.makePayment(any())).thenReturn(createTransaction());
+
+        AccountDetails accountDetails = getAccountDetails();
+
+        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(
+                accountDetails,
+                FilingPackage.builder()
+                        .court(
+                                Court.builder()
+                                        .location(BAD_LOCATION)
+                                        .create())
+                        .create(),
+                new EfilingFilingPackage(),
+                false,
+                efilingPaymentServiceMock));
+
     }
 
 
