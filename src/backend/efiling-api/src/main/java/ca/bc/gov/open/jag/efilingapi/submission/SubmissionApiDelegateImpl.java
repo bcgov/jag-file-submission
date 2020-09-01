@@ -74,15 +74,15 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @RolesAllowed("efiling-client")
     public ResponseEntity<UploadSubmissionDocumentsResponse> uploadSubmissionDocuments(UUID xTransactionId, String xUserId, List<MultipartFile> files) {
 
-        Optional<UUID> actualUserId = SecurityUtils.stringToUUID(xUserId);
+        Optional<UUID> universalId = SecurityUtils.stringToUUID(xUserId);
 
-        if(!actualUserId.isPresent())
+        if(!universalId.isPresent())
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
                     HttpStatus.BAD_REQUEST);
 
         SubmissionKey submissionKey = new SubmissionKey(
-                actualUserId.get(),
+                universalId.get(),
                 xTransactionId,
                 UUID.randomUUID());
 
@@ -90,14 +90,10 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         logger.info("attempting to upload original document [{}]", submissionKey.getSubmissionId());
 
-
-
-        if (!actualUserId.isPresent())
+        if (!universalId.isPresent())
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
                     HttpStatus.FORBIDDEN);
-
-
 
         ResponseEntity response = storeDocuments(submissionKey, files);
 
@@ -227,14 +223,14 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         logger.info("Attempting to generate Url Request Received");
 
-        Optional<UUID> actualUserId = SecurityUtils.stringToUUID(xUserId);
+        Optional<UUID> universalId = SecurityUtils.stringToUUID(xUserId);
 
-        if (!actualUserId.isPresent())
+        if (!universalId.isPresent())
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
                     HttpStatus.FORBIDDEN);
 
-        SubmissionKey submissionKey = new SubmissionKey(actualUserId.get(), xTransactionId, submissionId);
+        SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
 
         ResponseEntity response;
 
