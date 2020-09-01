@@ -30,6 +30,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     private final CsoProperties csoProperties;
     private final DocumentMapper documentMapper;
     private final CsoPartyMapper csoPartyMapper;
+    private final PackageAuthorityMapper packageAuthorityMapper;
 
     public CsoSubmissionServiceImpl(FilingFacadeBean filingFacadeBean,
                                     ServiceFacadeBean serviceFacadeBean,
@@ -37,7 +38,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
                                     FilingPackageMapper filingPackageMapper,
                                     FinancialTransactionMapper financialTransactionMapper,
                                     CsoProperties csoProperties,
-                                    DocumentMapper documentMapper, CsoPartyMapper csoPartyMapper) {
+                                    DocumentMapper documentMapper, CsoPartyMapper csoPartyMapper, PackageAuthorityMapper packageAuthorityMapper) {
         this.filingFacadeBean = filingFacadeBean;
         this.serviceFacadeBean = serviceFacadeBean;
         this.serviceMapper = serviceMapper;
@@ -46,6 +47,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         this.csoProperties = csoProperties;
         this.documentMapper = documentMapper;
         this.csoPartyMapper = csoPartyMapper;
+        this.packageAuthorityMapper = packageAuthorityMapper;
     }
 
     @Override
@@ -91,11 +93,18 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     private ca.bc.gov.ag.csows.filing.FilingPackage buildFilingPackage(AccountDetails accountDetails, FilingPackage efilingPackage, EfilingFilingPackage filingPackage, Service createdService) {
         XMLGregorianCalendar submittedDate = getComputedSubmittedDate(efilingPackage.getCourt().getLocation());
         return filingPackageMapper.toFilingPackage(
-                filingPackage,
-                createdService.getServiceId(),
-                submittedDate,
-                buildCivilDocuments(accountDetails, efilingPackage, submittedDate),
-                buildCsoParties(accountDetails, efilingPackage));
+                        filingPackage,
+                        createdService.getServiceId(),
+                        submittedDate,
+                        buildCivilDocuments(accountDetails, efilingPackage, submittedDate),
+                        buildCsoParties(accountDetails, efilingPackage),
+                        buildPackageAuthorities(accountDetails));
+    }
+
+    private List<PackageAuthority> buildPackageAuthorities(AccountDetails accountDetails) {
+
+        return Arrays.asList(packageAuthorityMapper.toPackageAuthority(accountDetails));
+
     }
 
     private List<CsoParty> buildCsoParties(AccountDetails accountDetails, FilingPackage efilingPackage) {

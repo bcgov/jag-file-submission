@@ -1,10 +1,8 @@
 package ca.bc.gov.open.jag.efilingcommons.model;
 
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigDecimal;
-import java.util.List;
 
 public class EfilingFilingPackage {
     private String applicationCd;
@@ -33,8 +31,6 @@ public class EfilingFilingPackage {
     private String ldcxCourtLevelCd;
     private String notificationEmailTxt;
     private Boolean notificationRequiredYn;
-    @XmlElement(nillable = true)
-    private List<EfilingPackageAuthority> packageControls;
     private BigDecimal packageId;
     private Boolean processingCompleteYn;
     private BigDecimal resubmissionOfPackageId;
@@ -226,14 +222,6 @@ public class EfilingFilingPackage {
         this.notificationRequiredYn = notificationRequiredYn;
     }
 
-    public List<EfilingPackageAuthority> getPackageControls() {
-        return packageControls;
-    }
-
-    public void setPackageControls(List<EfilingPackageAuthority> packageControls) {
-        this.packageControls = packageControls;
-    }
-
     public BigDecimal getPackageId() {
         return packageId;
     }
@@ -330,7 +318,7 @@ public class EfilingFilingPackage {
         this.updUserId = updUserId;
     }
 
-    public EfilingFilingPackage(String applicationCd, String applicationReferenceGuid, XMLGregorianCalendar autoProcessEndDtm, XMLGregorianCalendar autoProcessStartDtm, Boolean automatedProcessYn, Boolean cfcsaYn, BigDecimal checkedOutByAgenId, BigDecimal checkedOutByPaasSeqNo, BigDecimal checkedOutByPartId, XMLGregorianCalendar checkedOutDtm, String clientFileNo, String courtFileNo, Boolean delayProcessing, XMLGregorianCalendar entDtm, String entUserId, Boolean existingCourtFileYn, Boolean feeExemptYn, String ldcxCourtClassCd, String ldcxCourtDivisionCd, String ldcxCourtLevelCd, String notificationEmailTxt, Boolean notificationRequiredYn, List<EfilingPackageAuthority> packageControls, BigDecimal packageId, Boolean processingCompleteYn, BigDecimal resubmissionOfPackageId, String reviewerNotesTxt, BigDecimal serviceId, XMLGregorianCalendar submitDtm, BigDecimal submittedByAccountId, BigDecimal submittedByClientId, BigDecimal submittedToAgenId, String submitterCommentTxt, XMLGregorianCalendar updDtm, String updUserId) {
+    public EfilingFilingPackage(String applicationCd, String applicationReferenceGuid, XMLGregorianCalendar autoProcessEndDtm, XMLGregorianCalendar autoProcessStartDtm, Boolean automatedProcessYn, Boolean cfcsaYn, BigDecimal checkedOutByAgenId, BigDecimal checkedOutByPaasSeqNo, BigDecimal checkedOutByPartId, XMLGregorianCalendar checkedOutDtm, String clientFileNo, String courtFileNo, Boolean delayProcessing, XMLGregorianCalendar entDtm, String entUserId, Boolean existingCourtFileYn, Boolean feeExemptYn, String ldcxCourtClassCd, String ldcxCourtDivisionCd, String ldcxCourtLevelCd, String notificationEmailTxt, Boolean notificationRequiredYn, BigDecimal packageId, Boolean processingCompleteYn, BigDecimal resubmissionOfPackageId, String reviewerNotesTxt, BigDecimal serviceId, XMLGregorianCalendar submitDtm, BigDecimal submittedByAccountId, BigDecimal submittedByClientId, BigDecimal submittedToAgenId, String submitterCommentTxt, XMLGregorianCalendar updDtm, String updUserId) {
         this.applicationCd = applicationCd;
         this.applicationReferenceGuid = applicationReferenceGuid;
         this.autoProcessEndDtm = autoProcessEndDtm;
@@ -353,7 +341,6 @@ public class EfilingFilingPackage {
         this.ldcxCourtLevelCd = ldcxCourtLevelCd;
         this.notificationEmailTxt = notificationEmailTxt;
         this.notificationRequiredYn = notificationRequiredYn;
-        this.packageControls = packageControls;
         this.packageId = packageId;
         this.processingCompleteYn = processingCompleteYn;
         this.resubmissionOfPackageId = resubmissionOfPackageId;

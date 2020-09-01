@@ -4,6 +4,7 @@ public class Keys {
 
 
 
+
     private Keys() {}
 
     public static String INVOICE_PREFIX = "15";
@@ -24,5 +25,6 @@ public class Keys {
     public static final String PARTY_ROLE_TYPE_CD = "IND";
     public static final String PARTY_TYPE_CD = "CLA";
     public static final String PARTY_NAME_TYPE_CD = "CUR";
+    public static final String PRIVILEGE_CD = "UPDT";
 
 }
