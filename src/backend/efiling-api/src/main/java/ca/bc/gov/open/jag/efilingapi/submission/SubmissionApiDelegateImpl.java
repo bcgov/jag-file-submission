@@ -290,9 +290,11 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         GetSubmissionConfigResponse response = new GetSubmissionConfigResponse();
 
-        response.setClientApplication(fromCacheSubmission.get().getClientApplication());
+        response.setClientAppName(fromCacheSubmission.get().getClientApplication().getDisplayName());
 
         response.setNavigation(fromCacheSubmission.get().getNavigation());
+
+        response.setCsoBaseUrl(navigationProperties.getCsoBaseUrl());
 
         logger.info("Successfully retrieved submission for transactionId [{}]", xTransactionId);
 
