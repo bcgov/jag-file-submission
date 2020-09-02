@@ -62,7 +62,7 @@ public interface DocumentMapper {
     @Mapping(target = "entUserId", source = "accountDetails.clientId")
     @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
     @Mapping(target = "paymentStatusCd",  constant = Keys.PAYMENT_STATUS_CD)
-    @Mapping(target = "statutoryFeeAmt",  source = "document.statutoryFeeAmount")
+    @Mapping(target = "statutoryFeeAmt",  source = "document.statutoryFeeAmount", defaultValue = "0")
     @Mapping(target = "paymentSeqNo",  constant = "1")
     DocumentPayments toEfilingDocumentPayment(Document document, AccountDetails accountDetails);
 
