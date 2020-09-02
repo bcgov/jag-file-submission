@@ -4,6 +4,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentType;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 
@@ -30,7 +31,7 @@ public class DocumentStoreImpl implements DocumentStore {
     }
 
     @Override
-    @Cacheable(cacheNames = "document", key = "{ #submissionKey.universalId, #submissionKey.submissionId, #submissionKey.transactionId, #fileName }", cacheManager = "documentCacheManager")
+    @CacheEvict(cacheNames = "document", key = "{ #submissionKey.universalId, #submissionKey.submissionId, #submissionKey.transactionId, #fileName }", cacheManager = "documentCacheManager")
     public void evict(SubmissionKey submissionKey, String fileName) {
         //This implements Redis delete no code required
     }
