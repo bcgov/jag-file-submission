@@ -49,9 +49,9 @@ public class SubmissionTest {
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountDetails().getClientId());
         Assertions.assertEquals(INTERNAL_CLIENT_NUMBER, actual.getAccountDetails().getInternalClientNumber());
         Assertions.assertEquals(DISPLAYNAME, actual.getClientAppName());
-        Assertions.assertEquals(ERROR, actual.getNavigation().getError());
-        Assertions.assertEquals(CANCEL, actual.getNavigation().getCancel());
-        Assertions.assertEquals(CASE_1, actual.getNavigation().getSuccess());
+        Assertions.assertEquals(ERROR, actual.getNavigationUrls().getError());
+        Assertions.assertEquals(CANCEL, actual.getNavigationUrls().getCancel());
+        Assertions.assertEquals(CASE_1, actual.getNavigationUrls().getSuccess());
         Assertions.assertEquals(TestHelpers.DIVISION, actual.getFilingPackage().getCourt().getDivision());
         Assertions.assertEquals(TestHelpers.FILENUMBER, actual.getFilingPackage().getCourt().getFileNumber());
         Assertions.assertEquals(TestHelpers.LEVEL, actual.getFilingPackage().getCourt().getLevel());

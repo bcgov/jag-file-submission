@@ -93,14 +93,14 @@ public class generateFromRequestTest {
 
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setClientAppName("app");
-        request.setNavigation(TestHelpers.createDefaultNavigation());
+        request.setNavigationUrls(TestHelpers.createDefaultNavigation());
         request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList()));
 
         Submission actual = sut.generateFromRequest(new SubmissionKey(TestHelpers.CASE_1, TestHelpers.CASE_1, TestHelpers.CASE_1), request);
 
-        Assertions.assertEquals(TestHelpers.ERROR_URL, actual.getNavigation().getError());
-        Assertions.assertEquals(TestHelpers.CANCEL_URL, actual.getNavigation().getCancel());
-        Assertions.assertEquals(TestHelpers.SUCCESS_URL, actual.getNavigation().getSuccess());
+        Assertions.assertEquals(TestHelpers.ERROR_URL, actual.getNavigationUrls().getError());
+        Assertions.assertEquals(TestHelpers.CANCEL_URL, actual.getNavigationUrls().getCancel());
+        Assertions.assertEquals(TestHelpers.SUCCESS_URL, actual.getNavigationUrls().getSuccess());
         Assertions.assertEquals(10, actual.getExpiryDate());
         Assertions.assertNotNull(actual.getId());
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountDetails().getAccountId());
@@ -144,7 +144,7 @@ public class generateFromRequestTest {
 
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setClientAppName("app");
-        request.setNavigation(TestHelpers.createDefaultNavigation());
+        request.setNavigationUrls(TestHelpers.createDefaultNavigation());
 
         InitialPackage filingPackage = TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList());
         filingPackage.getCourt().setLevel("TEST2");
@@ -152,9 +152,9 @@ public class generateFromRequestTest {
 
         Submission actual = sut.generateFromRequest(new SubmissionKey(TestHelpers.CASE_1, TestHelpers.CASE_1, TestHelpers.CASE_1), request);
 
-        Assertions.assertEquals(TestHelpers.ERROR_URL, actual.getNavigation().getError());
-        Assertions.assertEquals(TestHelpers.CANCEL_URL, actual.getNavigation().getCancel());
-        Assertions.assertEquals(TestHelpers.SUCCESS_URL, actual.getNavigation().getSuccess());
+        Assertions.assertEquals(TestHelpers.ERROR_URL, actual.getNavigationUrls().getError());
+        Assertions.assertEquals(TestHelpers.CANCEL_URL, actual.getNavigationUrls().getCancel());
+        Assertions.assertEquals(TestHelpers.SUCCESS_URL, actual.getNavigationUrls().getSuccess());
         Assertions.assertEquals(10, actual.getExpiryDate());
         Assertions.assertNotNull(actual.getId());
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountDetails().getAccountId());
@@ -198,7 +198,7 @@ public class generateFromRequestTest {
 
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setClientAppName("app");
-        request.setNavigation(TestHelpers.createDefaultNavigation());
+        request.setNavigationUrls(TestHelpers.createDefaultNavigation());
         request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList()));
 
         Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(new SubmissionKey(TestHelpers.CASE_2, TestHelpers.CASE_2, TestHelpers.CASE_2), request));
@@ -224,7 +224,7 @@ public class generateFromRequestTest {
                     .internalClientNumber(INTERNAL_CLIENT_NUMBER)
                     .create())
                 .transactionId(TestHelpers.CASE_1)
-                .navigation(TestHelpers.createDefaultNavigation())
+                .navigationUrls(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
                 .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList(), TestHelpers.createPartyList()))
                 .create();

@@ -16,7 +16,7 @@ public interface SubmissionMapper {
     @Mapping(source = "submissionKey.submissionId", target = "id")
     @Mapping(source = "submissionKey.universalId", target = "universalId")
     @Mapping(source = "submissionKey.transactionId", target = "transactionId")
-    @Mapping(source = "generateUrlRequest.navigation", target = "navigation")
+    @Mapping(source = "generateUrlRequest.navigationUrls", target = "navigationUrls")
     @Mapping(source = "generateUrlRequest.clientAppName", target = "clientAppName")
     @Mapping(source = "filingPackage", target = "filingPackage")
     @Mapping(source = "expiryDate", target = "expiryDate")
