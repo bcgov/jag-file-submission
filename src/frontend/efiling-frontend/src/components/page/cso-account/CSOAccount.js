@@ -44,12 +44,9 @@ export default function CSOAccount({
     const applicantDetails = { firstName, lastName, email };
     axios
       .post("/csoAccount", applicantDetails)
-      .then(({ data: { accounts } }) => {
-        accounts.forEach((account) => {
-          if (account.type === "CSO") {
-            sessionStorage.setItem("csoAccountId", account.identifier);
-          }
-        });
+      .then(({ data: { clientId, internalClientNumber } }) => {
+        sessionStorage.setItem("internalClientNumber", internalClientNumber);
+        sessionStorage.setItem("csoAccountId", clientId);
         setCsoAccountStatus({ exists: true, isNew: true });
       })
       .catch((error) => {

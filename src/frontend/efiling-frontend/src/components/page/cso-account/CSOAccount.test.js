@@ -45,12 +45,11 @@ describe("CSOAccount Component", () => {
 
   test("On success, setCsoAccountStatus exists and isNew to true", async () => {
     sessionStorage.setItem("csoAccountId", null);
+    sessionStorage.setItem("internalClientNumber", null);
 
     mock.onPost(API_REQUEST).reply(201, {
-      accounts: [
-        { type: "CSO", identifier: "identifier" },
-        { type: "notCSO", identifier: "newIdentifier" },
-      ],
+      internalClientNumber: "ABC123",
+      clientId: "123",
     });
 
     const { container } = render(
@@ -69,30 +68,8 @@ describe("CSOAccount Component", () => {
     await waitFor(() => {});
 
     expect(setCsoAccountStatus).toHaveBeenCalled();
-    expect(sessionStorage.getItem("csoAccountId")).toEqual("identifier");
-  });
-
-  test("On success, if not type of CSO then it does not set the value in session storage", async () => {
-    sessionStorage.setItem("csoAccountId", "someId");
-
-    mock.onPost(API_REQUEST).reply(201, {
-      accounts: [
-        { type: "notCSO", identifier: "identifier" },
-        { type: "notCSO", identifier: "newIdentifier" },
-      ],
-    });
-
-    render(
-      <CSOAccount
-        confirmationPopup={confirmationPopup}
-        applicantInfo={applicantInfo}
-        setCsoAccountStatus={setCsoAccountStatus}
-      />
-    );
-
-    await waitFor(() => {});
-
-    expect(sessionStorage.getItem("csoAccountId")).toEqual("someId");
+    expect(sessionStorage.getItem("csoAccountId")).toEqual("123");
+    expect(sessionStorage.getItem("internalClientNumber")).toEqual("ABC123");
   });
 
   test("On failed account creation, should redirect to parent application", async () => {
