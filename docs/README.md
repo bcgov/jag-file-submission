@@ -123,7 +123,7 @@ We also append a reference to the cso package to the url that you can provide to
 The url is base64 encoded and looks like this:
 
 ```
-  http//somewhere.com?
+  http//somewhere.com?packageRef=ABC123==
 ```
 
 ## Api Documentation
