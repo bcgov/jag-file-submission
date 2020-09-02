@@ -191,10 +191,12 @@ public class SubmitFilingPackageTest {
 
         AccountDetails accountDetails = getAccountDetails();
 
-        SubmitPackageResponse actual = sut.submitFilingPackage(accountDetails,
-                FilingPackage.builder()
-                        .court(
-                                Court.builder()
+        SubmitPackageResponse actual = sut.submitFilingPackage(
+                SubmitPackageRequest.builder()
+                        .accountDetails(accountDetails)
+                        .filingPackage(FilingPackage
+                                .builder()
+                                .court(Court.builder()
                                         .location(LOCATION)
                                         .agencyId(AGENCY_ID)
                                         .courtClass(COURT_CLASS)
@@ -210,8 +212,6 @@ public class SubmitFilingPackageTest {
                                 .subType(TYPE)
                                 .create()))
                         .create(),
-                APP_CODE,
-                false,
                 efilingPaymentServiceMock);
 
         Mockito.verify(filingFacadeBeanMock, Mockito.times(1))
