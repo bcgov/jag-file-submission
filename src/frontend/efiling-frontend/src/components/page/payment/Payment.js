@@ -24,13 +24,15 @@ package and am prepared to submit them for filing.`;
 
 const getCreditCardType = () => {
   if (
-    sessionStorage.getItem("internalClientNumber") !== "null" &&
+    (sessionStorage.getItem("internalClientNumber") !== "null" ||
+      sessionStorage.getItem("bamboraSuccess")) &&
     sessionStorage.getItem("bamboraErrorExists") !== "true"
   )
     return getCreditCardAlerts().existingCreditCard;
 
   if (
-    sessionStorage.getItem("internalClientNumber") !== "null" &&
+    (sessionStorage.getItem("internalClientNumber") !== "null" ||
+      sessionStorage.getItem("bamboraSuccess")) &&
     sessionStorage.getItem("bamboraErrorExists") === "true"
   )
     return getCreditCardAlerts().failedUpdateCreditCard;
@@ -38,7 +40,7 @@ const getCreditCardType = () => {
   return getCreditCardAlerts().noCreditCard;
 };
 
-const updateCSOAccount = (setSubmitBtnEnabled) => {
+const updateCSOAccount = () => {
   const data = {
     internalClientNumber: sessionStorage.getItem("bamboraSuccess"),
   };
@@ -52,8 +54,6 @@ const updateCSOAccount = (setSubmitBtnEnabled) => {
       sessionStorage.setItem("bamboraErrorExists", true);
       errorRedirect(sessionStorage.getItem("errorUrl"), err);
     });
-
-  setSubmitBtnEnabled(false);
 };
 
 const generateCourtDataTable = ({
@@ -132,7 +132,7 @@ export default function Payment({
       sessionStorage.getItem("bamboraSuccess") &&
       sessionStorage.getItem("internalClientNumber") === "null"
     )
-      updateCSOAccount(setSubmitBtnEnabled);
+      updateCSOAccount();
 
     sessionStorage.setItem("currentPage", "payment");
     window.history.pushState(null, null, window.location.href);
