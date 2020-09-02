@@ -41,21 +41,22 @@ public class SubmitFilingPackageTest {
     private static final DateTime PROCESS_DT = DateTime.now();
     private static final DateTime ENT_DTM = DateTime.now();
     private static final String APPROVED = "Approved";
-    public static final UUID UNIVERSAL_ID = UUID.randomUUID();
+    private static final UUID UNIVERSAL_ID = UUID.randomUUID();
     private static final String LOCATION = "LOCATION";
     private static final String BAD_LOCATION = "BADLOCATION";
-    public static final String APP_CODE = "APP_CODE";
-    public static final String COURT_CLASS = "courtClass";
-    public static final String DIVISION = "DIVISION";
-    public static final String LEVEL = "level";
-    public static final BigDecimal AGENCY_ID = BigDecimal.TEN;
-    public static final String FILE_NUMBER = "fileNumber";
-    public static final String DOCUMENT = "document";
-    public static final String SERVERFILENAME = "serverfilename";
-    public static final boolean IS_AMENDMENT = true;
-    public static final boolean IS_SUPREME_COURT_SCHEDULING = false;
-    public static final String TYPE = "type";
-    public static final BigDecimal STATUTORY_FEE_AMOUNT = BigDecimal.TEN;
+    private static final String APP_CODE = "APP_CODE";
+    private static final String COURT_CLASS = "courtClass";
+    private static final String DIVISION = "DIVISION";
+    private static final String LEVEL = "level";
+    private static final BigDecimal AGENCY_ID = BigDecimal.TEN;
+    private static final String FILE_NUMBER = "fileNumber";
+    private static final String DOCUMENT = "document";
+    private static final String SERVERFILENAME = "serverfilename";
+    private static final boolean IS_AMENDMENT = true;
+    private static final boolean IS_SUPREME_COURT_SCHEDULING = false;
+    private final String TYPE = "type";
+    private static final BigDecimal STATUTORY_FEE_AMOUNT = BigDecimal.TEN;
+    
     CsoSubmissionServiceImpl sut;
 
     @Mock
