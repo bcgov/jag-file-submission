@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission.models;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.Navigation;
+
+import ca.bc.gov.open.jag.efilingapi.api.model.NavigationUrls;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.FilingPackage;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -23,7 +24,7 @@ public class Submission {
 
     private AccountDetails accountDetails;
 
-    private Navigation navigation;
+    private NavigationUrls navigationUrls;
 
     private String clientAppName;
 
@@ -36,7 +37,7 @@ public class Submission {
         this.transactionId = builder.transactionId;
         this.accountDetails = builder.accountDetails;
         this.filingPackage = builder.filingPackage;
-        this.navigation = builder.navigation;
+        this.navigationUrls = builder.navigationUrls;
         this.clientAppName = builder.clientAppName;
         this.expiryDate = builder.expiryDate;
         this.universalId = builder.universalId;
@@ -54,7 +55,7 @@ public class Submission {
             @JsonProperty("bceid") UUID universalId,
             @JsonProperty("accountDetails") AccountDetails accountDetails,
             @JsonProperty("package") FilingPackage filingPackage,
-            @JsonProperty("navigation") Navigation navigation,
+            @JsonProperty("navigation") NavigationUrls navigationUrls,
             @JsonProperty("clientAppName") String clientAppName,
             @JsonProperty("expiryDate") long expiryDate,
             @JsonProperty("rushedSubmission") boolean rushedSubmission) {
@@ -63,7 +64,7 @@ public class Submission {
         this.universalId = universalId;
         this.accountDetails = accountDetails;
         this.filingPackage = filingPackage;
-        this.navigation = navigation;
+        this.navigationUrls = navigationUrls;
         this.clientAppName = clientAppName;
         this.expiryDate = expiryDate;
         this.rushedSubmission = rushedSubmission;
@@ -79,8 +80,8 @@ public class Submission {
         return filingPackage;
     }
 
-    public Navigation getNavigation() {
-        return navigation;
+    public NavigationUrls getNavigationUrls() {
+        return navigationUrls;
     }
 
     public String getClientAppName() { return clientAppName; }
@@ -106,7 +107,7 @@ public class Submission {
         private UUID universalId;
         private AccountDetails accountDetails;
         private FilingPackage filingPackage;
-        private Navigation navigation;
+        private NavigationUrls navigationUrls;
         private String clientAppName;
         private long expiryDate;
         private boolean rushedSubmission;
@@ -136,8 +137,8 @@ public class Submission {
             return this;
         }
 
-        public Builder navigation(Navigation navigation) {
-            this.navigation = navigation;
+        public Builder navigationUrls(NavigationUrls navigationUrls) {
+            this.navigationUrls = navigationUrls;
             return this;
         }
 

@@ -53,8 +53,8 @@ public class TestHelpers {
         return initialPackage;
     }
 
-    public static Navigation createNavigation(String success, String cancel, String error) {
-        Navigation navigation = new Navigation();
+    public static NavigationUrls createNavigation(String success, String cancel, String error) {
+        NavigationUrls navigation = new NavigationUrls();
         navigation.setSuccess(success);
         navigation.setCancel(cancel);
         navigation.setError(error);
@@ -102,7 +102,7 @@ public class TestHelpers {
         return Submission
                 .builder()
                 .filingPackage(createPackage(createCourt(), createDocumentList(), createPartyList()))
-                .navigation(createNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL))
+                .navigationUrls(createNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL))
                 .create();
     }
 
@@ -156,7 +156,7 @@ public class TestHelpers {
                 .create();
     }
 
-    public static Navigation createDefaultNavigation() {
+    public static NavigationUrls createDefaultNavigation() {
         return createNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL);
     }
 

@@ -85,7 +85,7 @@ public class createSubmissionTest {
                         .internalClientNumber("123")
                         .create())
                 .transactionId(TestHelpers.CASE_1)
-                .navigation(TestHelpers.createDefaultNavigation())
+                .navigationUrls(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
                 .clientAppName(TestHelpers.DISPLAY_NAME)
                 .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList(), TestHelpers.createPartyList()))
