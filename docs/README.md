@@ -103,6 +103,8 @@ the `filingPackage` object represents the court information about the submited p
 
 the `documents` array represents the previously uploaded document
 
+the `parties` array represents all parties associated with the submission
+
 on submission you will receive the following response:
 
 ```json
@@ -113,6 +115,16 @@ on submission you will receive the following response:
 ```
 
 Redirect the user to `efilingUrl` and we will handle the rest for you.
+
+On successfull submission the user will be redirected back to your application using the success url.
+
+We also append a reference to the cso package to the url that you can provide to the user to access the package and the confirmation receipt.
+
+The url is base64 encoded and looks like this:
+
+```
+  http//somewhere.com?
+```
 
 ## Api Documentation
 
