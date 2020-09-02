@@ -19,6 +19,7 @@ import org.mockito.MockitoAnnotations;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -40,10 +41,22 @@ public class SubmitFilingPackageTest {
     private static final DateTime PROCESS_DT = DateTime.now();
     private static final DateTime ENT_DTM = DateTime.now();
     private static final String APPROVED = "Approved";
-    public static final UUID UNIVERSAL_ID = UUID.randomUUID();
+    private static final UUID UNIVERSAL_ID = UUID.randomUUID();
     private static final String LOCATION = "LOCATION";
     private static final String BAD_LOCATION = "BADLOCATION";
-    public static final String APP_CODE = "APP_CODE";
+    private static final String APP_CODE = "APP_CODE";
+    private static final String COURT_CLASS = "courtClass";
+    private static final String DIVISION = "DIVISION";
+    private static final String LEVEL = "level";
+    private static final BigDecimal AGENCY_ID = BigDecimal.TEN;
+    private static final String FILE_NUMBER = "fileNumber";
+    private static final String DOCUMENT = "document";
+    private static final String SERVERFILENAME = "serverfilename";
+    private static final boolean IS_AMENDMENT = true;
+    private static final boolean IS_SUPREME_COURT_SCHEDULING = false;
+    private final String TYPE = "type";
+    private static final BigDecimal STATUTORY_FEE_AMOUNT = BigDecimal.TEN;
+    
     CsoSubmissionServiceImpl sut;
 
     @Mock
@@ -120,19 +133,67 @@ public class SubmitFilingPackageTest {
     @Test
     public void testWithEmptyFilingPackage() {
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(AccountDetails.builder().create(), FilingPackage.builder().create(), APP_CODE, false,null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(AccountDetails.builder().create(), FilingPackage.builder().create(), APP_CODE, false, null));
     }
 
 
     @DisplayName("Exception: with null clientId should throw IllegalArgumentException")
     @Test
     public void testWithEmptyClientId() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(AccountDetails.builder().create(), FilingPackage.builder().create(), APP_CODE, false,null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(AccountDetails.builder().create(), FilingPackage.builder().create(), APP_CODE, false, null));
     }
 
     @DisplayName("OK: submitFilingPackage called with any non-empty submissionId")
     @Test
     public void testWithPopulatedSubmissionId() throws DatatypeConfigurationException, ca.bc.gov.ag.csows.filing.NestedEjbException_Exception, NestedEjbException_Exception {
+
+        Mockito.when(filingFacadeBeanMock.submitFiling(any())).thenReturn(BigDecimal.TEN);
+        Mockito.when(serviceFacadeBean.addService(any())).thenReturn(TestHelpers.createService());
+        Mockito.when(efilingPaymentServiceMock.makePayment(any())).thenReturn(createTransaction());
+        Mockito.doNothing().when(serviceFacadeBean).updateService(any());
+
+        AccountDetails accountDetails = getAccountDetails();
+
+        SubmitPackageResponse actual = sut.submitFilingPackage(accountDetails,
+                FilingPackage.builder()
+                        .court(Court.builder()
+                                .location(LOCATION)
+                                .agencyId(AGENCY_ID)
+                                .courtClass(COURT_CLASS)
+                                .division(DIVISION)
+                                .level(LEVEL)
+                                .fileNumber(FILE_NUMBER)
+                                .create())
+                        .documents(Arrays.asList(Document.builder()
+                                .name(DOCUMENT)
+                                .serverFileName(SERVERFILENAME)
+                                .isAmendment(IS_AMENDMENT)
+                                .isSupremeCourtScheduling(IS_SUPREME_COURT_SCHEDULING)
+                                .subType(TYPE)
+                                .statutoryFeeAmount(STATUTORY_FEE_AMOUNT)
+                                .create()))
+                        .create(),
+                APP_CODE,
+                false,
+                efilingPaymentServiceMock);
+
+        Mockito.verify(filingFacadeBeanMock, Mockito.times(1))
+                .submitFiling(ArgumentMatchers.argThat(filingPackage ->
+                        filingPackage.getCourtFileNo().equals(FILE_NUMBER) &&
+                                filingPackage.getLdcxCourtClassCd().equals(COURT_CLASS) &&
+                                filingPackage.getLdcxCourtDivisionCd().equals(DIVISION) &&
+                                filingPackage.getLdcxCourtLevelCd().equals(LEVEL) &&
+                                filingPackage.getSubmittedToAgenId().equals(AGENCY_ID) &&
+                                filingPackage.getDocuments().get(0).getPayments().get(0).getStatutoryFeeAmt().equals(STATUTORY_FEE_AMOUNT)));
+
+        Assertions.assertEquals(BigDecimal.TEN, actual.getTransactionId());
+        Assertions.assertEquals("http://cso/cso/accounts/bceidNotification.do?packageNo=10", actual.getPackageLink());
+    }
+
+    @DisplayName("OK: with no fees should defalt to 0")
+    @Test
+    public void withNoFeeShouldDefaultToZero() throws DatatypeConfigurationException, ca.bc.gov.ag.csows.filing.NestedEjbException_Exception, NestedEjbException_Exception {
+
         Mockito.when(filingFacadeBeanMock.submitFiling(any())).thenReturn(BigDecimal.TEN);
         Mockito.when(serviceFacadeBean.addService(any())).thenReturn(TestHelpers.createService());
         Mockito.when(efilingPaymentServiceMock.makePayment(any())).thenReturn(createTransaction());
@@ -144,12 +205,34 @@ public class SubmitFilingPackageTest {
                 FilingPackage.builder()
                         .court(
                                 Court.builder()
-                                .location(LOCATION)
-                        .create())
-                .create(),
+                                        .location(LOCATION)
+                                        .agencyId(AGENCY_ID)
+                                        .courtClass(COURT_CLASS)
+                                        .division(DIVISION)
+                                        .level(LEVEL)
+                                        .fileNumber(FILE_NUMBER)
+                                        .create())
+                        .documents(Arrays.asList(Document.builder()
+                                .name(DOCUMENT)
+                                .serverFileName(SERVERFILENAME)
+                                .isAmendment(IS_AMENDMENT)
+                                .isSupremeCourtScheduling(IS_SUPREME_COURT_SCHEDULING)
+                                .subType(TYPE)
+                                .create()))
+                        .create(),
                 APP_CODE,
                 false,
                 efilingPaymentServiceMock);
+
+        Mockito.verify(filingFacadeBeanMock, Mockito.times(1))
+                .submitFiling(ArgumentMatchers.argThat(filingPackage ->
+                        filingPackage.getCourtFileNo().equals(FILE_NUMBER) &&
+                                filingPackage.getLdcxCourtClassCd().equals(COURT_CLASS) &&
+                                filingPackage.getLdcxCourtDivisionCd().equals(DIVISION) &&
+                                filingPackage.getLdcxCourtLevelCd().equals(LEVEL) &&
+                                filingPackage.getSubmittedToAgenId().equals(AGENCY_ID) &&
+                                filingPackage.getDocuments().get(0).getPayments().get(0).getStatutoryFeeAmt().equals(BigDecimal.ZERO)));
+
         Assertions.assertEquals(BigDecimal.TEN, actual.getTransactionId());
         Assertions.assertEquals("http://cso/cso/accounts/bceidNotification.do?packageNo=10", actual.getPackageLink());
     }
@@ -310,7 +393,7 @@ public class SubmitFilingPackageTest {
                 APP_CODE,
                 false,
                 efilingPaymentServiceMock));
-      
+
     }
 
     @DisplayName("Exception: with NestedEjbException_Exception on calculate submitted date throw EfilingLookupServiceException")

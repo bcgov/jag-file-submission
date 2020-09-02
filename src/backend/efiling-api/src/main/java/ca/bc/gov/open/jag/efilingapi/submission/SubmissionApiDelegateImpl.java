@@ -394,6 +394,8 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             logger.error("failed package submission {}", xTransactionId);
             response = new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
 
+        } finally {
+            this.submissionStore.evict(submissionKey);
         }
 
         MdcUtils.clearUserMDC();
