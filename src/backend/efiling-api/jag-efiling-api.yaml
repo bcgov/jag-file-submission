@@ -460,15 +460,15 @@ components:
       required:
         - clientApplication
         - filingPackage
-        - navigation
+        - navigationUrls
       properties:
         clientAppName:
           type: string
           description: Name of the application to be displayed
         filingPackage:
           $ref: "#/components/schemas/InitialPackage"
-        navigation:
-          $ref: "#/components/schemas/Navigation"
+        navigationUrls:
+          $ref: "#/components/schemas/NavigationUrls"
     GenerateUrlResponse:
       description: A temporary url for uploading submission
       properties:
@@ -485,14 +485,14 @@ components:
         - csoBaseUrl
       properties:
         navigation:
-          $ref: "#/components/schemas/Navigation"
+          $ref: "#/components/schemas/NavigationUrls"
         clientAppName:
           type: string
           description: the client app name
         csoBaseUrl:
           type: string
           description: the CSO base Url
-    Navigation:
+    NavigationUrls:
       required:
         - success
         - error
