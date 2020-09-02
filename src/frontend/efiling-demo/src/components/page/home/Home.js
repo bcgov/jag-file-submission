@@ -13,10 +13,7 @@ import "./Home.css";
 
 // Note: Some of these values are temporarily hard-coded
 const urlBody = {
-  clientApplication: {
-    displayName: "Demo App",
-    type: "app",
-  },
+  clientAppName: "Demo App",
   filingPackage: {
     court: {
       location: "1211",
@@ -34,25 +31,18 @@ const urlBody = {
     ],
     parties: [
       {
-        partyTypeCd: "IND",
-        roleTypeCd: "CLA",
+        partyType: "IND",
+        roleType: "CLA",
         firstName: "Bob",
         middleName: "Alan",
         lastName: "Ross",
-        nameTypeCd: "CUR",
       },
     ],
   },
-  navigation: {
-    success: {
-      url: `${window.location.origin}/efiling-demo/success`,
-    },
-    error: {
-      url: `${window.location.origin}/efiling-demo/error`,
-    },
-    cancel: {
-      url: `${window.location.origin}/efiling-demo/cancel`,
-    },
+  navigationUrls: {
+    success: `${window.location.origin}/efiling-demo/success`,
+    error: `${window.location.origin}/efiling-demo/error`,
+    cancel: `${window.location.origin}/efiling-demo/cancel`,
   },
 };
 
