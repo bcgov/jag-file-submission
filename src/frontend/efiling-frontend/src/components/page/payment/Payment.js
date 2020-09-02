@@ -23,18 +23,13 @@ const baseCalloutText = `I have reviewed the information and the documents in th
 package and am prepared to submit them for filing.`;
 
 const getCreditCardType = () => {
-  if (
-    (sessionStorage.getItem("internalClientNumber") !== "null" ||
-      sessionStorage.getItem("bamboraSuccess")) &&
-    sessionStorage.getItem("bamboraErrorExists") !== "true"
-  )
+  const bamboraSuccess =
+    sessionStorage.getItem("internalClientNumber") !== "null" ||
+    sessionStorage.getItem("bamboraSuccess");
+  if (bamboraSuccess && sessionStorage.getItem("bamboraErrorExists") !== "true")
     return getCreditCardAlerts().existingCreditCard;
 
-  if (
-    (sessionStorage.getItem("internalClientNumber") !== "null" ||
-      sessionStorage.getItem("bamboraSuccess")) &&
-    sessionStorage.getItem("bamboraErrorExists") === "true"
-  )
+  if (bamboraSuccess && sessionStorage.getItem("bamboraErrorExists") === "true")
     return getCreditCardAlerts().failedUpdateCreditCard;
 
   return getCreditCardAlerts().noCreditCard;
