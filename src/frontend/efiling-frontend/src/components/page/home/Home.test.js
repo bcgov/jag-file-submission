@@ -24,7 +24,7 @@ const page = { header, confirmationPopup, submissionId, transactionId };
 describe("Home", () => {
   const apiRequest = `/submission/${submissionId}/config`;
   const getFilingPackagePath = `/submission/${submissionId}/filing-package`;
-  const navigation = getNavigationData();
+  const navigationUrls = getNavigationData();
   const documents = getDocumentsData();
   const court = getCourtData();
   const submissionFeeAmount = 25.5;
@@ -44,7 +44,7 @@ describe("Home", () => {
   beforeEach(() => {
     mock = new MockAdapter(axios);
     mock.onGet(apiRequest).reply(200, {
-      navigation,
+      navigationUrls,
       clientAppName,
       csoBaseUrl,
     });
@@ -119,11 +119,11 @@ describe("Home", () => {
     expect(sessionStorage.getItem("errorUrl")).toBeFalsy();
     expect(sessionStorage.getItem("csoBaseUrl")).toBeFalsy();
 
-    saveUrlsToSessionStorage(navigation, csoBaseUrl);
+    saveUrlsToSessionStorage(navigationUrls, csoBaseUrl);
 
-    expect(sessionStorage.getItem("cancelUrl")).toEqual(navigation.cancel.url);
+    expect(sessionStorage.getItem("cancelUrl")).toEqual(navigationUrls.cancel);
     expect(sessionStorage.getItem("successUrl")).toEqual(
-      navigation.success.url
+      navigationUrls.success
     );
     expect(sessionStorage.getItem("errorUrl")).toBeFalsy();
     expect(sessionStorage.getItem("csoBaseUrl")).toEqual(csoBaseUrl);
@@ -132,10 +132,10 @@ describe("Home", () => {
 
     saveUrlsToSessionStorage(
       {
-        ...navigation,
-        cancel: { url: "" },
-        success: { url: "" },
-        error: { url: "error.com" },
+        ...navigationUrls,
+        cancel: "",
+        success: "",
+        error: "error.com",
       },
       csoBaseUrl
     );
