@@ -661,6 +661,9 @@ components:
         partyType:
           type: string
           description: party type code
+          enum:
+            - IND
+            - ORG
         roleType:
           type: string
           description: role type code
@@ -673,9 +676,6 @@ components:
         lastName:
           type: string
           description: last name
-        nameType:
-          type: string
-          description: name type code
     CreateCsoAccountRequest:
       description: represents a request to create a user
       required:
