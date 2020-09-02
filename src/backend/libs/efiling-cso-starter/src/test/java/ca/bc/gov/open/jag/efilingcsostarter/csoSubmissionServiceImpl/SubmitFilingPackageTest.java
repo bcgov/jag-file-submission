@@ -151,7 +151,7 @@ public class SubmitFilingPackageTest {
                 false,
                 efilingPaymentServiceMock);
         Assertions.assertEquals(BigDecimal.TEN, actual.getTransactionId());
-        Assertions.assertEquals("http://cso/cso/accounts/bceidNotification.do?packageNo=10", actual.getPackageLink());
+        Assertions.assertEquals("http://cso/accounts/bceidNotification.do?packageNo=10", actual.getPackageLink());
     }
 
     @DisplayName("OK: submitFilingPackage called with any non-empty submissionId")
@@ -202,7 +202,7 @@ public class SubmitFilingPackageTest {
                 efilingPaymentServiceMock);
 
         Assertions.assertEquals(BigDecimal.TEN, actual.getTransactionId());
-        Assertions.assertEquals("http://cso/cso/accounts/bceidNotification.do?packageNo=10", actual.getPackageLink());
+        Assertions.assertEquals("http://accounts/bceidNotification.do?packageNo=10", actual.getPackageLink());
     }
 
     @DisplayName("Exception: payment to bambora throw exception")
