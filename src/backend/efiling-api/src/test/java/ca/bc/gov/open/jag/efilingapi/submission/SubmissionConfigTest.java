@@ -109,8 +109,9 @@ public class SubmissionConfigTest {
     }
 
     public static class EfilingSubmissionServiceTest implements EfilingSubmissionService {
+
         @Override
-        public SubmitPackageResponse submitFilingPackage(AccountDetails accountDetails, FilingPackage efilingPackage, String applicationTypeCode, boolean isRushedProcessing, EfilingPaymentService payment) {
+        public SubmitPackageResponse submitFilingPackage(SubmitPackageRequest submitPackageRequest, EfilingPaymentService payment) {
             return null;
         }
     }

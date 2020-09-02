@@ -5,14 +5,12 @@ import ca.bc.gov.ag.csows.filing.ProcessItemStatus;
 import ca.bc.gov.ag.csows.filing.*;
 import ca.bc.gov.ag.csows.services.*;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
-import ca.bc.gov.open.jag.efilingcommons.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.model.*;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingPaymentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsostarter.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.*;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigDecimal;
@@ -39,7 +37,9 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
                                     FilingPackageMapper filingPackageMapper,
                                     FinancialTransactionMapper financialTransactionMapper,
                                     CsoProperties csoProperties,
-                                    DocumentMapper documentMapper, CsoPartyMapper csoPartyMapper, PackageAuthorityMapper packageAuthorityMapper) {
+                                    DocumentMapper documentMapper,
+                                    CsoPartyMapper csoPartyMapper,
+                                    PackageAuthorityMapper packageAuthorityMapper) {
         this.filingFacadeBean = filingFacadeBean;
         this.serviceFacadeBean = serviceFacadeBean;
         this.serviceMapper = serviceMapper;
@@ -53,30 +53,30 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
     @Override
     public SubmitPackageResponse submitFilingPackage(
-            AccountDetails accountDetails,
-            FilingPackage efilingPackage,
-            String applicationTypeCode,
-            boolean isRushedProcessing,
+            SubmitPackageRequest submitPackageRequest,
             EfilingPaymentService paymentService) {
 
-        if (accountDetails == null) throw new IllegalArgumentException("Account Details are required");
-        if (accountDetails.getClientId() == null) throw new IllegalArgumentException("Client id is required.");
-        if (efilingPackage == null) throw new IllegalArgumentException("EfilingPackage is required.");
-        if (StringUtils.isBlank(applicationTypeCode)) throw new IllegalArgumentException("Application Type code is required.");
+        if (submitPackageRequest.getAccountDetails() == null) throw new IllegalArgumentException("Account Details are required");
+        if (submitPackageRequest.getAccountDetails().getClientId() == null) throw new IllegalArgumentException("Client id is required.");
+        if (submitPackageRequest.getFilingPackage() == null) throw new IllegalArgumentException("EfilingPackage is required.");
 
-        ServiceSession serviceSession = getServiceSession(accountDetails.getClientId().toString());
+        ServiceSession serviceSession = getServiceSession(submitPackageRequest.getAccountDetails());
 
-        Service createdService = createEfilingService(efilingPackage, accountDetails, serviceSession);
+        Service createdService = createEfilingService(submitPackageRequest, serviceSession);
 
         updatePaymentForService(
                 createdService,
                 true,
-                createPayment(paymentService, createdService, efilingPackage.getSubmissionFeeAmount(), accountDetails.getInternalClientNumber()));
+                createPayment(
+                        paymentService,
+                        createdService,
+                        submitPackageRequest.getFilingPackage().getSubmissionFeeAmount(),
+                        submitPackageRequest.getAccountDetails().getInternalClientNumber()));
 
-        ca.bc.gov.ag.csows.filing.FilingPackage csoFilingPackage = buildFilingPackage(accountDetails, efilingPackage, createdService, applicationTypeCode);
+        ca.bc.gov.ag.csows.filing.FilingPackage csoFilingPackage = buildFilingPackage(submitPackageRequest, createdService);
 
-        if (isRushedProcessing) {
-            csoFilingPackage.setProcRequest(buildRushedOrderRequest(accountDetails));
+        if (submitPackageRequest.getFilingPackage().isRushedSubmission()) {
+            csoFilingPackage.setProcRequest(buildRushedOrderRequest(submitPackageRequest.getAccountDetails()));
         }
 
         BigDecimal filingResult = filePackage(csoFilingPackage);
@@ -91,17 +91,16 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
                 .create();
     }
 
-    private ca.bc.gov.ag.csows.filing.FilingPackage buildFilingPackage(AccountDetails accountDetails, FilingPackage efilingPackage, Service createdService, String applicationTypeCode) {
-        XMLGregorianCalendar submittedDate = getComputedSubmittedDate(efilingPackage.getCourt().getLocation());
+    private ca.bc.gov.ag.csows.filing.FilingPackage buildFilingPackage(SubmitPackageRequest submitPackageRequest, Service createdService) {
+        XMLGregorianCalendar submittedDate = getComputedSubmittedDate(submitPackageRequest.getFilingPackage().getCourt().getLocation());
         return filingPackageMapper.toFilingPackage(
-                        efilingPackage,
-                        accountDetails,
-                        applicationTypeCode,
+                        submitPackageRequest.getFilingPackage(),
+                        submitPackageRequest.getAccountDetails(),
                         createdService.getServiceId(),
                         submittedDate,
-                        buildCivilDocuments(accountDetails, efilingPackage, submittedDate),
-                        buildCsoParties(accountDetails, efilingPackage),
-                        buildPackageAuthorities(accountDetails));
+                        buildCivilDocuments(submitPackageRequest, submittedDate),
+                        buildCsoParties(submitPackageRequest),
+                        buildPackageAuthorities(submitPackageRequest.getAccountDetails()));
     }
 
     private List<PackageAuthority> buildPackageAuthorities(AccountDetails accountDetails) {
@@ -110,34 +109,34 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
     }
 
-    private List<CsoParty> buildCsoParties(AccountDetails accountDetails, FilingPackage efilingPackage) {
+    private List<CsoParty> buildCsoParties(SubmitPackageRequest submitPackageRequest) {
 
         List<CsoParty> csoParties = new ArrayList<>();
 
-        for (int i = 0; i < efilingPackage.getParties().size(); i++) {
-            csoParties.add(csoPartyMapper.toEfilingParties(i + 1, efilingPackage.getParties().get(i), accountDetails));
+        for (int i = 0; i < submitPackageRequest.getFilingPackage().getParties().size(); i++) {
+            csoParties.add(csoPartyMapper.toEfilingParties(i + 1, submitPackageRequest.getFilingPackage().getParties().get(i), submitPackageRequest.getAccountDetails()));
         }
 
         return csoParties;
     }
 
 
-    private List<CivilDocument> buildCivilDocuments(AccountDetails accountDetails, FilingPackage efilingPackage, XMLGregorianCalendar submittedDate) {
+    private List<CivilDocument> buildCivilDocuments(SubmitPackageRequest submitPackageRequest, XMLGregorianCalendar submittedDate) {
 
         List<CivilDocument> documents = new ArrayList<>();
 
-        for (int i = 0; i < efilingPackage.getDocuments().size(); i++) {
+        for (int i = 0; i < submitPackageRequest.getFilingPackage().getDocuments().size(); i++) {
 
-            List<DocumentPayments> payments = Arrays.asList(documentMapper.toEfilingDocumentPayment(efilingPackage.getDocuments().get(i), accountDetails));
-            List<Milestones> milestones = Arrays.asList(documentMapper.toActualSubmittedDate(accountDetails),
-                    documentMapper.toComputedSubmittedDate(accountDetails, submittedDate));
-            List<DocumentStatuses> statuses = Arrays.asList(documentMapper.toEfilingDocumentStatus(efilingPackage.getDocuments().get(i), accountDetails));
+            List<DocumentPayments> payments = Arrays.asList(documentMapper.toEfilingDocumentPayment(submitPackageRequest.getFilingPackage().getDocuments().get(i), submitPackageRequest.getAccountDetails()));
+            List<Milestones> milestones = Arrays.asList(documentMapper.toActualSubmittedDate(submitPackageRequest.getAccountDetails()),
+                    documentMapper.toComputedSubmittedDate(submitPackageRequest.getAccountDetails(), submittedDate));
+            List<DocumentStatuses> statuses = Arrays.asList(documentMapper.toEfilingDocumentStatus(submitPackageRequest.getFilingPackage().getDocuments().get(i), submitPackageRequest.getAccountDetails()));
 
             documents.add(documentMapper.toEfilingDocument(
                     i + 1,
-                    efilingPackage.getDocuments().get(i),
-                    accountDetails,
-                    efilingPackage,
+                    submitPackageRequest.getFilingPackage().getDocuments().get(i),
+                    submitPackageRequest.getAccountDetails(),
+                    submitPackageRequest.getFilingPackage(),
                     csoProperties.getFileServerHost(),
                     milestones,
                     payments,
@@ -192,18 +191,18 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
     }
 
-    private ServiceSession getServiceSession(String clientId) {
+    private ServiceSession getServiceSession(AccountDetails accountDetails) {
         try {
-            UserSession userSession = serviceFacadeBean.createUserSession(clientId);
+            UserSession userSession = serviceFacadeBean.createUserSession(accountDetails.getClientId().toString());
             return serviceFacadeBean.createServiceSession(userSession, "request");
         } catch (ca.bc.gov.ag.csows.services.NestedEjbException_Exception e) {
             throw new EfilingSubmissionServiceException("Exception while getting user session", e.getCause());
         }
     }
 
-    private Service createEfilingService(FilingPackage efilingPackage, AccountDetails accountDetails, ServiceSession serviceSession) {
+    private Service createEfilingService(SubmitPackageRequest submitPackageRequest, ServiceSession serviceSession) {
 
-        Service serviceToCreate = serviceMapper.toCreateService(efilingPackage, accountDetails, serviceSession);
+        Service serviceToCreate = serviceMapper.toCreateService(submitPackageRequest.getFilingPackage(), submitPackageRequest.getAccountDetails(), serviceSession);
 
         try {
             return serviceFacadeBean.addService(serviceToCreate);
@@ -234,34 +233,28 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     }
 
     private BigDecimal filePackage(ca.bc.gov.ag.csows.filing.FilingPackage csoFilingPackage) {
-
         try {
             return filingFacadeBean.submitFiling(csoFilingPackage);
         } catch (NestedEjbException_Exception e) {
             throw new EfilingSubmissionServiceException("Exception while filing package", e.getCause());
         }
-
     }
 
     private void updateServiceComplete(Service service) {
-
         service.setServiceReceivedDtm(DateUtils.getCurrentXmlDate());
         try {
             serviceFacadeBean.updateService(service);
         } catch (ca.bc.gov.ag.csows.services.NestedEjbException_Exception e) {
             throw new EfilingSubmissionServiceException("Exception while updating payment on service", e.getCause());
         }
-
     }
 
     private XMLGregorianCalendar getComputedSubmittedDate(String location) {
-
         try {
             return filingFacadeBean.calculateSubmittedDate(DateUtils.getCurrentXmlDate(), location);
         } catch (NestedEjbException_Exception e) {
             throw new EfilingSubmissionServiceException("Exception while retrieving submitted date", e.getCause());
         }
-
     }
 
 }

@@ -92,15 +92,15 @@ public class generateFromRequestTest {
     public void withValidAccountShouldReturnSubmission() {
 
         GenerateUrlRequest request = new GenerateUrlRequest();
-        request.setClientApplication(TestHelpers.createClientApplication("app", "app"));
+        request.setClientAppName("app");
         request.setNavigation(TestHelpers.createDefaultNavigation());
         request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList()));
 
         Submission actual = sut.generateFromRequest(new SubmissionKey(TestHelpers.CASE_1, TestHelpers.CASE_1, TestHelpers.CASE_1), request);
 
-        Assertions.assertEquals(TestHelpers.ERROR_URL, actual.getNavigation().getError().getUrl());
-        Assertions.assertEquals(TestHelpers.CANCEL_URL, actual.getNavigation().getCancel().getUrl());
-        Assertions.assertEquals(TestHelpers.SUCCESS_URL, actual.getNavigation().getSuccess().getUrl());
+        Assertions.assertEquals(TestHelpers.ERROR_URL, actual.getNavigation().getError());
+        Assertions.assertEquals(TestHelpers.CANCEL_URL, actual.getNavigation().getCancel());
+        Assertions.assertEquals(TestHelpers.SUCCESS_URL, actual.getNavigation().getSuccess());
         Assertions.assertEquals(10, actual.getExpiryDate());
         Assertions.assertNotNull(actual.getId());
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountDetails().getAccountId());
@@ -143,7 +143,7 @@ public class generateFromRequestTest {
     public void withValidAccountNoRushedShouldReturnSubmission() {
 
         GenerateUrlRequest request = new GenerateUrlRequest();
-        request.setClientApplication(TestHelpers.createClientApplication("app", "app"));
+        request.setClientAppName("app");
         request.setNavigation(TestHelpers.createDefaultNavigation());
 
         InitialPackage filingPackage = TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList());
@@ -152,9 +152,9 @@ public class generateFromRequestTest {
 
         Submission actual = sut.generateFromRequest(new SubmissionKey(TestHelpers.CASE_1, TestHelpers.CASE_1, TestHelpers.CASE_1), request);
 
-        Assertions.assertEquals(TestHelpers.ERROR_URL, actual.getNavigation().getError().getUrl());
-        Assertions.assertEquals(TestHelpers.CANCEL_URL, actual.getNavigation().getCancel().getUrl());
-        Assertions.assertEquals(TestHelpers.SUCCESS_URL, actual.getNavigation().getSuccess().getUrl());
+        Assertions.assertEquals(TestHelpers.ERROR_URL, actual.getNavigation().getError());
+        Assertions.assertEquals(TestHelpers.CANCEL_URL, actual.getNavigation().getCancel());
+        Assertions.assertEquals(TestHelpers.SUCCESS_URL, actual.getNavigation().getSuccess());
         Assertions.assertEquals(10, actual.getExpiryDate());
         Assertions.assertNotNull(actual.getId());
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountDetails().getAccountId());
@@ -197,7 +197,7 @@ public class generateFromRequestTest {
     public void withEmptySubmissionShouldThrowStoreException() {
 
         GenerateUrlRequest request = new GenerateUrlRequest();
-        request.setClientApplication(TestHelpers.createClientApplication("app", "type"));
+        request.setClientAppName("app");
         request.setNavigation(TestHelpers.createDefaultNavigation());
         request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList()));
 

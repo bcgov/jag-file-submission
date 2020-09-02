@@ -17,7 +17,7 @@ public class EfilingSubmissionServiceDemoImplTest {
 
         EfilingSubmissionServiceDemoImpl service = new EfilingSubmissionServiceDemoImpl();
 
-        SubmitPackageResponse actual = service.submitFilingPackage(null, null, null, false, null);
+        SubmitPackageResponse actual = service.submitFilingPackage(null, null);
 
         Assertions.assertEquals(BigDecimal.TEN, actual.getTransactionId());
         Assertions.assertEquals("http://demo", actual.getPackageLink());

@@ -1,9 +1,9 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service.submissionStore;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.ClientApplication;
-import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStoreImpl;
+import ca.bc.gov.open.jag.efilingcommons.model.FilingPackage;
 import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
@@ -29,11 +29,15 @@ public class PutTest {
 
         ClientApplication clientApplication = new ClientApplication();
         clientApplication.setType("type");
-        Submission submission = new Submission.Builder().clientApplication(clientApplication).create();
+        Submission submission = Submission
+                .builder()
+                .clientAppName("AppName")
+                .filingPackage(FilingPackage.builder().applicationType("type")
+                        .create()).create();
         Optional<Submission> actual = sut.put(submission);
 
         Assertions.assertTrue(actual.isPresent());
-        Assertions.assertEquals("type", actual.get().getClientApplication().getType());
+        Assertions.assertEquals("type", actual.get().getFilingPackage().getApplicationType());
 
     }
 

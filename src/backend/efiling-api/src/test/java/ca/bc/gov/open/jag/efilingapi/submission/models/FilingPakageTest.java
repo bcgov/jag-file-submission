@@ -41,6 +41,7 @@ public class FilingPakageTest {
     public static final String NAME_TYPE_CD = "nameTypeCd";
     public static final BigDecimal SUBMISSION_FEE_AMOUNT = BigDecimal.TEN;
     public static final String SERVER_FILE_NAME = "SERVER.txt";
+    public static final String APP_TYPE = "appType";
 
     @Test
     public void testConstructor() {
@@ -50,9 +51,13 @@ public class FilingPakageTest {
                 SUBMISSION_FEE_AMOUNT,
                 getCourt(),
                 getDocuments(),
-                getParties());
+                getParties(),
+                APP_TYPE,
+                false);
 
         Assertions.assertEquals(STATUTORY_FEE_AMOUNT, actual.getSubmissionFeeAmount());
+        Assertions.assertEquals(APP_TYPE, actual.getApplicationType());
+        Assertions.assertFalse(actual.isRushedSubmission());
         assertCourt(actual);
         assertDocuments(actual);
         assertParties(actual);
