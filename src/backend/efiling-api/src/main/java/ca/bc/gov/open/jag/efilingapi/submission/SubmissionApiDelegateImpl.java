@@ -336,8 +336,8 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
 
     @Override
+    @RolesAllowed("efiling-user")
     public ResponseEntity<Void> deleteSubmission(UUID submissionId, UUID xTransactionId) {
-
 
         Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
 
