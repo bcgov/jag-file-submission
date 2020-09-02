@@ -142,7 +142,7 @@ public class GenerateUrlTest {
         otherClaims.put(Keys.CSO_APPLICATION_CODE, CODE);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
+        generateUrlRequest.setClientAppName(DISPLAYNAME);
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
         ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(transactionId, UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_1, generateUrlRequest);
@@ -159,7 +159,7 @@ public class GenerateUrlTest {
     public void whenCSOHasMultipleAccountExceptionShouldReturnBadRequest() {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
-        generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
+        generateUrlRequest.setClientAppName(DISPLAYNAME);
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
         ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_2, generateUrlRequest);
@@ -176,7 +176,7 @@ public class GenerateUrlTest {
     public void whenInvalidAccountStateExceptionShouldReturnForbidden() {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
-        generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
+        generateUrlRequest.setClientAppName(DISPLAYNAME);
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
         ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_3, generateUrlRequest);
@@ -193,7 +193,7 @@ public class GenerateUrlTest {
     public void whenStoreExceptionShouldReturnInternalServerError() {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
-        generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
+        generateUrlRequest.setClientAppName(DISPLAYNAME);
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
         ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_4, generateUrlRequest);
@@ -210,10 +210,11 @@ public class GenerateUrlTest {
     public void whenDocumentExceptionShouldReturnInternalServerError() {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
-        generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
+        generateUrlRequest.setClientAppName(DISPLAYNAME);
         generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
         ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_5, generateUrlRequest);
+
 
         EfilingError actualError = (EfilingError) actual.getBody();
 

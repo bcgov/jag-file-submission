@@ -9,6 +9,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.utils.FileUtils;
+import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.Court;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
@@ -82,9 +83,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         Optional<Submission> cachedSubmission = submissionStore.put(
                 submissionMapper.toSubmission(
-                        submissionKey.getUniversalId(),
-                        submissionKey.getSubmissionId(),
-                        submissionKey.getTransactionId(),
+                        submissionKey,
                         generateUrlRequest,
                         toFilingPackage(generateUrlRequest, submissionKey),
                         getExpiryDate(),
@@ -115,10 +114,10 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         SubmitPackageResponse submitPackageResponse = efilingSubmissionService
                 .submitFilingPackage(
-                        accountDetails,
-                        submission.getFilingPackage(),
-                        submission.getClientApplication().getType(),
-                        submission.isRushedSubmission(),
+                        SubmitPackageRequest.builder()
+                                .accountDetails(accountDetails)
+                                .filingPackage(submission.getFilingPackage())
+                                .create(),
                         efilingPayment -> bamboraPaymentAdapter.makePayment(efilingPayment));
 
         result.setPackageRef(Base64.getEncoder().encodeToString(submitPackageResponse.getPackageLink().getBytes()));
@@ -147,7 +146,8 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private FilingPackage toFilingPackage(GenerateUrlRequest request, SubmissionKey submissionKey) {
 
-        return FilingPackage.builder()
+        return FilingPackage
+                .builder()
                 .court(populateCourtDetails(request.getFilingPackage().getCourt()))
                 .submissionFeeAmount(getSubmissionFeeAmount())
                 .documents(request.getFilingPackage()
@@ -163,6 +163,8 @@ public class SubmissionServiceImpl implements SubmissionService {
                         .stream()
                         .map(party ->  partyMapper.toParty(party))
                         .collect(Collectors.toList()))
+                .applicationType(SecurityUtils.getApplicationCode())
+                .rushedSubmission(isRushedSubmission(request))
                 .create();
 
     }
