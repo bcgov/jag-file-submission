@@ -29,12 +29,12 @@ public interface FilingPackageMapper {
     @Mapping(target = "ldcxCourtLevelCd", source = "filingPackage.court.level")
     @Mapping(target = "submittedToAgenId", source = "filingPackage.court.agencyId")
     @Mapping(target = "ldcxCourtDivisionCd", source = "filingPackage.court.division")
+    @Mapping(target = "applicationCd", source = "filingPackage.applicationType")
 
     @Mapping(target = "entUserId", source = "accountDetails.clientId")
     @Mapping(target = "submittedByAccountId", source = "accountDetails.accountId")
     @Mapping(target = "submittedByClientId", source = "accountDetails.clientId")
 
-    @Mapping(target = "applicationCd", source = "type")
     @Mapping(target = "serviceId", source = "serviceId")
     @Mapping(target = "submitDtm", source = "submittedDate")
     @Mapping(target = "documents", source = "documents")
@@ -43,7 +43,6 @@ public interface FilingPackageMapper {
     FilingPackage toFilingPackage(
             ca.bc.gov.open.jag.efilingcommons.model.FilingPackage filingPackage,
             AccountDetails accountDetails,
-            String type,
             BigDecimal serviceId,
             XMLGregorianCalendar submittedDate,
             List<CivilDocument> documents,

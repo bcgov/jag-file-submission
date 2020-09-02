@@ -218,7 +218,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @RolesAllowed("efiling-client")
     public ResponseEntity<GenerateUrlResponse> generateUrl(UUID xTransactionId, String xUserId, UUID submissionId, GenerateUrlRequest generateUrlRequest) {
 
-
         MdcUtils.setClientMDC(xTransactionId, submissionId);
 
         logger.info("Attempting to generate Url Request Received");
@@ -235,7 +234,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         ResponseEntity response;
 
         try {
-            generateUrlRequest.getClientApplication().setType(SecurityUtils.getApplicationCode());
             response = ResponseEntity.ok(
                     generateUrlResponseMapper.toGenerateUrlResponse(
                             submissionService.generateFromRequest(submissionKey, generateUrlRequest),
@@ -290,7 +288,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         GetSubmissionConfigResponse response = new GetSubmissionConfigResponse();
 
-        response.setClientAppName(fromCacheSubmission.get().getClientApplication().getDisplayName());
+        response.setClientAppName(fromCacheSubmission.get().getClientAppName());
 
         response.setNavigation(fromCacheSubmission.get().getNavigation());
 

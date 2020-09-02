@@ -41,18 +41,17 @@ public class SubmissionTest {
                         .create(),
                 TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList(), TestHelpers.createPartyList()),
                 TestHelpers.createNavigation(CASE_1, CANCEL, ERROR),
-                TestHelpers.createClientApplication(DISPLAYNAME, TYPE),
+                DISPLAYNAME,
                 1, true);
 
 
-        Assertions.assertEquals(TYPE, actual.getClientApplication().getType());
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountDetails().getAccountId());
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountDetails().getClientId());
         Assertions.assertEquals(INTERNAL_CLIENT_NUMBER, actual.getAccountDetails().getInternalClientNumber());
-        Assertions.assertEquals(DISPLAYNAME, actual.getClientApplication().getDisplayName());
-        Assertions.assertEquals(ERROR, actual.getNavigation().getError().getUrl());
-        Assertions.assertEquals(CANCEL, actual.getNavigation().getCancel().getUrl());
-        Assertions.assertEquals(CASE_1, actual.getNavigation().getSuccess().getUrl());
+        Assertions.assertEquals(DISPLAYNAME, actual.getClientAppName());
+        Assertions.assertEquals(ERROR, actual.getNavigation().getError());
+        Assertions.assertEquals(CANCEL, actual.getNavigation().getCancel());
+        Assertions.assertEquals(CASE_1, actual.getNavigation().getSuccess());
         Assertions.assertEquals(TestHelpers.DIVISION, actual.getFilingPackage().getCourt().getDivision());
         Assertions.assertEquals(TestHelpers.FILENUMBER, actual.getFilingPackage().getCourt().getFileNumber());
         Assertions.assertEquals(TestHelpers.LEVEL, actual.getFilingPackage().getCourt().getLevel());
