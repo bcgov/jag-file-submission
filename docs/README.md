@@ -57,31 +57,38 @@ payload:
 
 ```json
 {
-  "navigation": {
-    "success": {
-      "url": "http//somewhere.com"
-    },
-    "error": {
-      "url": "http//somewhere.com"
-    },
-    "cancel": {
-      "url": "http//somewhere.com"
-    }
+  "navigationUrls": {
+    "success": "http//somewhere.com",
+    "error": "http//somewhere.com",
+    "cancel": "http//somewhere.com"
   },
-  "clientApplication": {
-    "displayName": "your application name"
-  },
+  "clientAppName": "my app",
   "filingPackage": {
     "court": {
-      "location": "XXXX",
-      "level": "X",
-      "courtClass": "X",
-      "division": "X"
+      "location": "1211",
+      "level": "P",
+      "courtClass": "F",
+      "division": "S",
+      "fileNumber": "123",
+      "participatingClass": "4400"
     },
+    "submissionFeeAmount": 7.0,
     "documents": [
       {
         "name": "test.pdf",
-        "type": "XXX"
+        "type": "WNC",
+        "description": "Without Notice Application Checklist",
+        "statutoryFeeAmount": 0,
+        "md5": ""
+      }
+    ],
+    "parties": [
+      {
+        "partyType": "IND",
+        "roleType": "CLA",
+        "firstName": "efile",
+        "middleName": "test",
+        "lastName": "qa"
       }
     ]
   }
