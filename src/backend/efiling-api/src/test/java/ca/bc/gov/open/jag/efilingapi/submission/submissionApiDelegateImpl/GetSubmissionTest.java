@@ -102,7 +102,7 @@ public class GetSubmissionTest {
         navigationProperties.setBaseUrl("http://localhost");
         Submission submissionWithCsoAccount = Submission
                 .builder()
-                .navigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
+                .navigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
                 .clientAppName(TestHelpers.DESCRIPTION)
                 .create();
 
@@ -119,7 +119,7 @@ public class GetSubmissionTest {
                         .create()
                 )
                 .clientAppName(TestHelpers.DESCRIPTION)
-                .navigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
+                .navigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
                 .create();
 
         Mockito

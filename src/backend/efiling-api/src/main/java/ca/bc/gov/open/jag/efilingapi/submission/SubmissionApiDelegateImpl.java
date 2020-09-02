@@ -290,7 +290,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         response.setClientAppName(fromCacheSubmission.get().getClientAppName());
 
-        response.setNavigation(fromCacheSubmission.get().getNavigation());
+        response.setNavigation(fromCacheSubmission.get().getNavigationUrls());
 
         response.setCsoBaseUrl(navigationProperties.getCsoBaseUrl());
 
