@@ -256,12 +256,12 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
     private XMLGregorianCalendar getComputedSubmittedDate(String location) {
 
-       // try {
+        try {
 
-            return DateUtils.getCurrentXmlDate();//filingFacadeBean.calculateSubmittedDate(DateUtils.getCurrentXmlDate(), location);
-       // } catch (NestedEjbException_Exception e) {
-        //    throw new EfilingSubmissionServiceException("Exception while retrieving submitted date", e.getCause());
-       // }
+            return filingFacadeBean.calculateSubmittedDate(DateUtils.getCurrentXmlDate(), location);
+        } catch (NestedEjbException_Exception e) {
+            throw new EfilingSubmissionServiceException("Exception while retrieving submitted date", e.getCause());
+        }
 
     }
 
