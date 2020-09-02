@@ -405,6 +405,10 @@ components:
       required:
         - type
         - name
+        - isAmendment
+        - isSupremeCourtScheduling
+        - data
+        - md5
       properties:
         name:
           type: string
@@ -412,9 +416,6 @@ components:
         type:
           type: string
           description: the submission type
-        subType:
-          type: string
-          description: sub type value
         isAmendment:
           type: boolean
           description: is the document an amendment to another
@@ -424,6 +425,9 @@ components:
         data:
           type: object
           description: store additional details
+        md5:
+          type: string
+          description: document computed md5 hash
     Document:
       required:
         - description
@@ -458,8 +462,9 @@ components:
         - filingPackage
         - navigation
       properties:
-        clientApplication:
-          $ref: "#/components/schemas/ClientApplication"
+        clientAppName:
+          type: string
+          description: Name of the application to be displayed
         filingPackage:
           $ref: "#/components/schemas/InitialPackage"
         navigation:
@@ -476,7 +481,8 @@ components:
       type: object
       required:
         - navigation
-        - clientApplication
+        - clientAppName
+        - csoBaseUrl
       properties:
         navigation:
           $ref: "#/components/schemas/Navigation"
@@ -493,11 +499,14 @@ components:
         - cancel
       properties:
         success:
-          $ref: "#/components/schemas/Redirect"
+          type: string
+          description: where user should be redirected on success
         error:
-          $ref: "#/components/schemas/Redirect"
+          type: string
+          description: where user should be redirected on error
         cancel:
-          $ref: "#/components/schemas/Redirect"
+          type: string
+          description: where user should be redirected on error
     InitialPackage:
       type: object
       description: A filing package can contain one or multiple documents that have or are being submitted electronically for new or existing court file.
@@ -506,12 +515,12 @@ components:
         - court
         - parties
       properties:
+        court:
+          $ref: "#/components/schemas/CourtBase"
         documents:
           type: array
           items:
             $ref: "#/components/schemas/DocumentProperties"
-        court:
-          $ref: "#/components/schemas/CourtBase"
         parties:
           type: array
           items:
@@ -582,12 +591,6 @@ components:
         classDescription:
           type: string
           description: the court location description
-    Redirect:
-      required:
-        - url
-      properties:
-        url:
-          type: string
     ClientApplication:
       type: object
       required:
@@ -655,13 +658,10 @@ components:
     Party:
       description: party related to filing package
       properties:
-        partyId:
-          type: number
-          description: primary key
-        partyTypeCd:
+        partyType:
           type: string
           description: party type code
-        roleTypeCd:
+        roleType:
           type: string
           description: role type code
         firstName:
@@ -673,7 +673,7 @@ components:
         lastName:
           type: string
           description: last name
-        nameTypeCd:
+        nameType:
           type: string
           description: name type code
     CreateCsoAccountRequest:

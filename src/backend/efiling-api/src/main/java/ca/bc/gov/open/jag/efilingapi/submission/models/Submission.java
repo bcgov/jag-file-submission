@@ -1,6 +1,5 @@
 package ca.bc.gov.open.jag.efilingapi.submission.models;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.ClientApplication;
 import ca.bc.gov.open.jag.efilingapi.api.model.Navigation;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.FilingPackage;
@@ -26,7 +25,7 @@ public class Submission {
 
     private Navigation navigation;
 
-    private ClientApplication clientApplication;
+    private String clientAppName;
 
     private FilingPackage filingPackage;
 
@@ -38,7 +37,7 @@ public class Submission {
         this.accountDetails = builder.accountDetails;
         this.filingPackage = builder.filingPackage;
         this.navigation = builder.navigation;
-        this.clientApplication = builder.clientApplication;
+        this.clientAppName = builder.clientAppName;
         this.expiryDate = builder.expiryDate;
         this.universalId = builder.universalId;
         this.rushedSubmission = builder.rushedSubmission;
@@ -56,7 +55,7 @@ public class Submission {
             @JsonProperty("accountDetails") AccountDetails accountDetails,
             @JsonProperty("package") FilingPackage filingPackage,
             @JsonProperty("navigation") Navigation navigation,
-            @JsonProperty("clientApplication") ClientApplication clientApplication,
+            @JsonProperty("clientAppName") String clientAppName,
             @JsonProperty("expiryDate") long expiryDate,
             @JsonProperty("rushedSubmission") boolean rushedSubmission) {
         this.id = id;
@@ -65,7 +64,7 @@ public class Submission {
         this.accountDetails = accountDetails;
         this.filingPackage = filingPackage;
         this.navigation = navigation;
-        this.clientApplication = clientApplication;
+        this.clientAppName = clientAppName;
         this.expiryDate = expiryDate;
         this.rushedSubmission = rushedSubmission;
     }
@@ -84,7 +83,7 @@ public class Submission {
         return navigation;
     }
 
-    public ClientApplication getClientApplication() { return clientApplication; }
+    public String getClientAppName() { return clientAppName; }
 
     public long getExpiryDate() {
         return expiryDate;
@@ -108,7 +107,7 @@ public class Submission {
         private AccountDetails accountDetails;
         private FilingPackage filingPackage;
         private Navigation navigation;
-        private ClientApplication clientApplication;
+        private String clientAppName;
         private long expiryDate;
         private boolean rushedSubmission;
 
@@ -142,8 +141,8 @@ public class Submission {
             return this;
         }
 
-        public Builder clientApplication(ClientApplication clientApplication) {
-            this.clientApplication = clientApplication;
+        public Builder clientAppName(String clientAppName) {
+            this.clientAppName = clientAppName;
             return this;
         }
 
