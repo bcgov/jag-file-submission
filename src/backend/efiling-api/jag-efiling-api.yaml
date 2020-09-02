@@ -506,7 +506,7 @@ components:
           description: where user should be redirected on error
         cancel:
           type: string
-          description: where user should be redirected on error
+          description: where user should be redirected on cancel
     InitialPackage:
       type: object
       description: A filing package can contain one or multiple documents that have or are being submitted electronically for new or existing court file.
