@@ -92,6 +92,7 @@ bcgov:
   clamav:
     host: ${CLAMAV_HOST:localhost}
     port: ${CLAMAV_PORT:3310}
+    timeout: ${CLAMAV_TIMEOUT:50000}
 info:
   app:
     name: @project.name@
