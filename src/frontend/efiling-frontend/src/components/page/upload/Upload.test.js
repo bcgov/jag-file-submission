@@ -53,6 +53,7 @@ describe("Upload Component", () => {
   const documents = getDocumentsData();
   const court = getCourtData();
   const submissionFeeAmount = 25.5;
+  const setShowLoader = jest.fn();
 
   const upload = {
     confirmationPopup,
@@ -149,10 +150,11 @@ describe("Upload Component", () => {
       .onPost(`/submission/${submissionId}/documents`)
       .reply(400, { message: "There was an error." });
 
-    uploadDocuments(submissionId, [], jest.fn());
+    uploadDocuments(submissionId, [], jest.fn(), setShowLoader, jest.fn());
 
     await waitFor(() => {});
 
+    expect(setShowLoader).toHaveBeenCalledWith(false);
     expect(window.open).toHaveBeenCalledWith(
       "errorexample.com?status=400&message=There was an error.",
       "_self"
@@ -166,10 +168,11 @@ describe("Upload Component", () => {
       .onPost(`/submission/${submissionId}/update-documents`)
       .reply(400, { message: "There was an error." });
 
-    uploadDocuments(submissionId, [], jest.fn());
+    uploadDocuments(submissionId, [], jest.fn(), setShowLoader, jest.fn());
 
     await waitFor(() => {});
 
+    expect(setShowLoader).toHaveBeenCalledWith(false);
     expect(window.open).toHaveBeenCalledWith(
       "errorexample.com?status=400&message=There was an error.",
       "_self"

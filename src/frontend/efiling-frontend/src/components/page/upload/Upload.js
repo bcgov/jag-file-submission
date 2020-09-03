@@ -261,9 +261,11 @@ export const uploadDocuments = (
       axios
         .post(`/submission/${submissionId}/update-documents`, filesToUpload)
         .then(() => setShowPackageConfirmation(true))
-        .catch((error) =>
-          errorRedirect(sessionStorage.getItem("errorUrl"), error)
-        );
+        .catch((error) => {
+          setShowLoader(false);
+          setContinueBtnEnabled(true);
+          errorRedirect(sessionStorage.getItem("errorUrl"), error);
+        });
     })
     .catch((err) => {
       setShowLoader(false);
