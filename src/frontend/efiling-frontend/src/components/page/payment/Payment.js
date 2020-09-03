@@ -22,6 +22,19 @@ import "./Payment.css";
 const baseCalloutText = `I have reviewed the information and the documents in this filing
 package and am prepared to submit them for filing.`;
 
+const getCreditCardType = () => {
+  const bamboraSuccess =
+    sessionStorage.getItem("internalClientNumber") !== "null" ||
+    sessionStorage.getItem("bamboraSuccess");
+  if (bamboraSuccess && sessionStorage.getItem("bamboraErrorExists") !== "true")
+    return getCreditCardAlerts().existingCreditCard;
+
+  if (bamboraSuccess && sessionStorage.getItem("bamboraErrorExists") === "true")
+    return getCreditCardAlerts().failedUpdateCreditCard;
+
+  return getCreditCardAlerts().noCreditCard;
+};
+
 const updateCSOAccount = () => {
   const data = {
     internalClientNumber: sessionStorage.getItem("bamboraSuccess"),
@@ -32,7 +45,10 @@ const updateCSOAccount = () => {
     .then(({ data: { internalClientNumber } }) =>
       sessionStorage.setItem("internalClientNumber", internalClientNumber)
     )
-    .catch((err) => errorRedirect(sessionStorage.getItem("errorUrl"), err));
+    .catch((err) => {
+      sessionStorage.setItem("bamboraErrorExists", true);
+      errorRedirect(sessionStorage.getItem("errorUrl"), err);
+    });
 };
 
 const generateCourtDataTable = ({
@@ -87,11 +103,7 @@ export default function Payment({
   payment: { confirmationPopup, submissionId, courtData, files, submissionFee },
 }) {
   const rushFlagExists = getJWTData().realm_access.roles.includes("rush_flag");
-  const creditCardAlert =
-    sessionStorage.getItem("internalClientNumber") !== "null" ||
-    sessionStorage.getItem("bamboraSuccess")
-      ? getCreditCardAlerts().existingCreditCard
-      : getCreditCardAlerts().noCreditCard;
+  const creditCardAlert = getCreditCardType();
 
   const [paymentAgreed, setPaymentAgreed] = useState(false);
   const [submitBtnEnabled, setSubmitBtnEnabled] = useState(false);
@@ -111,7 +123,11 @@ export default function Payment({
       : baseCalloutText;
 
   useEffect(() => {
-    if (sessionStorage.getItem("bamboraSuccess")) updateCSOAccount();
+    if (
+      sessionStorage.getItem("bamboraSuccess") &&
+      sessionStorage.getItem("internalClientNumber") === "null"
+    )
+      updateCSOAccount();
 
     sessionStorage.setItem("currentPage", "payment");
     window.history.pushState(null, null, window.location.href);

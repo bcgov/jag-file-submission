@@ -37,8 +37,10 @@ export default function App() {
 
   if (responseCode === "19" || responseCode === "17")
     sessionStorage.setItem("bamboraErrorExists", true);
-  if (responseCode === "1")
+  if (responseCode === "1") {
     sessionStorage.setItem("bamboraSuccess", customerCode);
+    sessionStorage.setItem("bamboraErrorExists", false);
+  }
 
   if (typeof customerCode === "undefined")
     sessionStorage.removeItem("isBamboraRedirect");

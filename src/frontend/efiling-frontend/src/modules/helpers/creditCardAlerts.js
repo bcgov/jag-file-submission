@@ -82,12 +82,43 @@ const noCreditCard = () => {
   );
 };
 
+const failedUpdateCreditCard = () => {
+  return (
+    <Alert
+      icon={<MdCreditCard size={32} />}
+      type="warning"
+      styling="warning-background no-padding-bottom"
+      element={
+        <p>
+          <span>
+            <strong>Credit Card registration failed.&nbsp;</strong>
+            You have an existing Credit Card registered with your CSO account
+            and can proceed.
+          </span>
+          <br />
+          <span
+            onClick={() => registerCard()}
+            onKeyDown={() => registerCard()}
+            className="file-href"
+            role="button"
+            tabIndex={0}
+          >
+            Register a new Credit Card.
+          </span>
+        </p>
+      }
+    />
+  );
+};
+
 export function getCreditCardAlerts() {
   const existingCreditCardData = existingCreditCard();
   const noCreditCardData = noCreditCard();
+  const failedUpdateCreditCardData = failedUpdateCreditCard();
 
   return {
     existingCreditCard: existingCreditCardData,
     noCreditCard: noCreditCardData,
+    failedUpdateCreditCard: failedUpdateCreditCardData,
   };
 }
