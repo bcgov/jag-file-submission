@@ -53,26 +53,12 @@ public class TestHelpers {
         return initialPackage;
     }
 
-    public static Navigation createNavigation(String success, String cancel, String error) {
-        Navigation navigation = new Navigation();
-        Redirect successRedirect = new Redirect();
-        successRedirect.setUrl(success);
-        navigation.setSuccess(successRedirect);
-        Redirect cancelRedirect = new Redirect();
-        cancelRedirect.setUrl(cancel);
-        navigation.setCancel(cancelRedirect);
-        Redirect errorRedirect = new Redirect();
-        errorRedirect.setUrl(error);
-        navigation.setError(errorRedirect);
+    public static NavigationUrls createNavigation(String success, String cancel, String error) {
+        NavigationUrls navigation = new NavigationUrls();
+        navigation.setSuccess(success);
+        navigation.setCancel(cancel);
+        navigation.setError(error);
         return navigation;
-    }
-
-    public static ClientApplication createClientApplication(String displayName, String type) {
-        ClientApplication clientApplication = new ClientApplication();
-        clientApplication.setDisplayName(displayName);
-        clientApplication.setType(type);
-
-        return clientApplication;
     }
 
     public static ca.bc.gov.open.jag.efilingapi.api.model.Court createApiCourt() {
@@ -108,7 +94,7 @@ public class TestHelpers {
         return Submission
                 .builder()
                 .filingPackage(createPackage(createCourt(), createDocumentList(), createPartyList()))
-                .navigation(createNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL))
+                .navigationUrls(createNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL))
                 .create();
     }
 

@@ -95,7 +95,7 @@ public class SubmitTest {
 
         Submission submissionExists = Submission
                 .builder()
-                .navigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
+                .navigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
                 .create();
 
         Mockito
@@ -104,7 +104,7 @@ public class SubmitTest {
 
         Submission submissionError = Submission
                 .builder()
-                .navigation(TestHelpers.createNavigation(null, null, null))
+                .navigationUrls(TestHelpers.createNavigation(null, null, null))
                 .create();
 
         Mockito
