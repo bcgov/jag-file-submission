@@ -242,6 +242,12 @@ const generateFormData = (acceptedFiles) => {
   return formData;
 };
 
+const handleError = (error, setShowLoader, setContinueBtnEnabled) => {
+  setShowLoader(false);
+  setContinueBtnEnabled(true);
+  errorRedirect(sessionStorage.getItem("errorUrl"), error);
+};
+
 export const uploadDocuments = (
   submissionId,
   acceptedFiles,
@@ -261,17 +267,11 @@ export const uploadDocuments = (
       axios
         .post(`/submission/${submissionId}/update-documents`, filesToUpload)
         .then(() => setShowPackageConfirmation(true))
-        .catch((error) => {
-          setShowLoader(false);
-          setContinueBtnEnabled(true);
-          errorRedirect(sessionStorage.getItem("errorUrl"), error);
-        });
+        .catch((error) =>
+          handleError(error, setShowLoader, setContinueBtnEnabled)
+        );
     })
-    .catch((err) => {
-      setShowLoader(false);
-      setContinueBtnEnabled(true);
-      errorRedirect(sessionStorage.getItem("errorUrl"), err);
-    });
+    .catch((err) => handleError(err, setShowLoader, setContinueBtnEnabled));
 };
 
 const checkForDuplicateFiles = (droppedFiles, acceptedFiles) => {
