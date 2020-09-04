@@ -20,14 +20,12 @@ public interface SubmissionMapper {
     @Mapping(source = "generateUrlRequest.navigationUrls", target = "navigationUrls")
     @Mapping(source = "filingPackage", target = "filingPackage")
     @Mapping(source = "expiryDate", target = "expiryDate")
-    @Mapping(source = "rushedSubmission", target = "rushedSubmission")
     Submission toSubmission(
             UUID universalId,
             UUID submissionId,
             UUID transactionId,
             GenerateUrlRequest generateUrlRequest,
             FilingPackage filingPackage,
-            long expiryDate,
-            boolean rushedSubmission);
+            long expiryDate);
 
 }
