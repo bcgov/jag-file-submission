@@ -9,6 +9,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.utils.FileUtils;
+import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.Court;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
@@ -87,8 +88,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                         submissionKey.getTransactionId(),
                         generateUrlRequest,
                         toFilingPackage(generateUrlRequest, submissionKey),
-                        getExpiryDate(),
-                        isRushedSubmission(generateUrlRequest)));
+                        getExpiryDate()));
 
         if (!cachedSubmission.isPresent())
             throw new StoreException("exception while storing submission object");
@@ -100,7 +100,7 @@ public class SubmissionServiceImpl implements SubmissionService {
     private boolean isRushedSubmission(GenerateUrlRequest generateUrlRequest) {
 
         for (DocumentProperties documentProperties : generateUrlRequest.getFilingPackage().getDocuments()) {
-            DocumentDetails documentDetails = documentStore.getDocumentDetails(generateUrlRequest.getFilingPackage().getCourt().getLevel(), generateUrlRequest.getFilingPackage().getCourt().getCourtClass(), documentProperties.getType());
+            DocumentDetails documentDetails = documentStore.getDocumentDetails(generateUrlRequest.getFilingPackage().getCourt().getLevel(), generateUrlRequest.getFilingPackage().getCourt().getCourtClass(), documentProperties.getType().getValue());
             if (documentDetails.isRushRequired()) return true;
         }
         return false;
@@ -117,8 +117,6 @@ public class SubmissionServiceImpl implements SubmissionService {
                 .submitFilingPackage(
                         accountDetails,
                         submission.getFilingPackage(),
-                        submission.getClientApplication().getType(),
-                        submission.isRushedSubmission(),
                         efilingPayment -> bamboraPaymentAdapter.makePayment(efilingPayment));
 
         result.setPackageRef(Base64.getEncoder().encodeToString(submitPackageResponse.getPackageLink().getBytes()));
@@ -163,6 +161,8 @@ public class SubmissionServiceImpl implements SubmissionService {
                         .stream()
                         .map(party ->  partyMapper.toParty(party))
                         .collect(Collectors.toList()))
+                .rushedSubmission(isRushedSubmission(request))
+                .applicationCode(SecurityUtils.getApplicationCode())
                 .create();
 
     }
@@ -187,13 +187,13 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private Document toDocument(String courtLevel, String courtClass, DocumentProperties documentProperties, SubmissionKey submissionKey) {
 
-        DocumentDetails details = documentStore.getDocumentDetails(courtLevel, courtClass, documentProperties.getType());
+        DocumentDetails details = documentStore.getDocumentDetails(courtLevel, courtClass, documentProperties.getType().getValue());
 
         return
                 Document.builder()
                         .description(details.getDescription())
                         .statutoryFeeAmount(details.getStatutoryFeeAmount())
-                        .type(documentProperties.getType())
+                        .type(documentProperties.getType().getValue())
                         .name(documentProperties.getName())
                         .serverFileName(MessageFormat.format("fh_{0}_{1}_{2}",submissionKey.getSubmissionId(), submissionKey.getTransactionId(), documentProperties.getName()))
                         .mimeType(FileUtils.guessContentTypeFromName(documentProperties.getName()))

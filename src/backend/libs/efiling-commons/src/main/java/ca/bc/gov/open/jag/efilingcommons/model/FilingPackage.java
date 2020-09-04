@@ -12,17 +12,24 @@ public class FilingPackage {
     private Court court;
     private List<Document> documents = new ArrayList<>();
     private List<Party> parties = new ArrayList<>();
+    private boolean rushedSubmission = false;
+    private String applicationCode;
 
     public FilingPackage(
             @JsonProperty("submissionFeeAmount") BigDecimal submissionFeeAmount,
             @JsonProperty("court") Court court,
             @JsonProperty("documents") List<Document> documents,
-            @JsonProperty("parties") List<Party> parties) {
+            @JsonProperty("parties") List<Party> parties,
+            @JsonProperty("rushedSubmission") boolean rushedSubmission,
+            @JsonProperty("applicationCode") String applicationCode
+    ) {
 
         this.submissionFeeAmount = submissionFeeAmount;
         this.court = court;
         this.documents.addAll(documents);
         this.parties.addAll(parties);
+        this.applicationCode = applicationCode;
+        this.rushedSubmission = rushedSubmission;
     }
 
     public FilingPackage(Builder builder) {
@@ -30,6 +37,8 @@ public class FilingPackage {
         this.court = builder.court;
         this.documents.addAll(builder.documents);
         this.parties.addAll(builder.parties);
+        this.applicationCode = builder.applicationCode;
+        this.rushedSubmission = builder.rushedSubmission;
     }
 
     public BigDecimal getSubmissionFeeAmount() {
@@ -48,6 +57,10 @@ public class FilingPackage {
         return parties;
     }
 
+    public boolean isRushedSubmission() { return rushedSubmission; }
+
+    public String getApplicationCode() { return applicationCode; }
+
     public static Builder builder() {
         return new Builder();
     }
@@ -63,6 +76,18 @@ public class FilingPackage {
         private Court court;
         private List<Document> documents = new ArrayList<>();
         private List<Party> parties = new ArrayList<>();
+        private String applicationCode;
+        private boolean rushedSubmission;
+
+        public Builder rushedSubmission(boolean rushedSubmission) {
+            this.rushedSubmission = rushedSubmission;
+            return this;
+        }
+
+        public Builder applicationCode(String applicationCode) {
+            this.applicationCode = applicationCode;
+            return this;
+        }
 
         public Builder submissionFeeAmount(BigDecimal submissionFeeAmount) {
             this.submissionFeeAmount = submissionFeeAmount;
