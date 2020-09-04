@@ -29,7 +29,6 @@ public class TestHelpers {
     public static final String PARTICIPATIONCLASS = "PARTICIPATIONCLASS";
     public static final String PROPERTYCLASS = "PROPERTYCLASS";
     public static final String DESCRIPTION = "DESCRIPTION";
-    public static final String TYPE = "TYPE";
     public static final String COURT_DESCRIPTION = "TESTCOURTDESC";
     public static final String LEVEL_DESCRIPTION = "TESTLEVELDESC";
     public static final String CLASS_DESCRIPTION = "TESTCLASSDESC";
@@ -45,6 +44,7 @@ public class TestHelpers {
     public static final String NAME_TYPE_CD = "NAMECD";
     public static final String PARTY_TYPE_CD = "PARTYCD";
     public static final String ROLE_TYPE_CD = "ROLECD";
+    public static final DocumentProperties.TypeEnum TYPE = DocumentProperties.TypeEnum.AAB;
 
     public static InitialPackage createInitalPackage(ca.bc.gov.open.jag.efilingapi.api.model.Court court, List<DocumentProperties> documentProperties) {
         InitialPackage initialPackage = new InitialPackage();
@@ -121,7 +121,7 @@ public class TestHelpers {
                 .description(DESCRIPTION)
                 .statutoryFeeAmount(BigDecimal.TEN)
                 .name("random.txt")
-                .type(TYPE)
+                .type(TYPE.getValue())
                 .subType(SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD)
                 .mimeType("application/txt")
                 .isSupremeCourtScheduling(true)
