@@ -162,9 +162,9 @@ public class GetSubmissionTest {
 
         ResponseEntity<GetSubmissionConfigResponse> actual = sut.getSubmissionConfig(TestHelpers.CASE_2, TestHelpers.CASE_2);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigation().getSuccess());
-        assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigation().getCancel());
-        assertEquals(TestHelpers.ERROR_URL, actual.getBody().getNavigation().getError());
+        assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigationUrls().getSuccess());
+        assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigationUrls().getCancel());
+        assertEquals(TestHelpers.ERROR_URL, actual.getBody().getNavigationUrls().getError());
         assertEquals(TestHelpers.DESCRIPTION, actual.getBody().getClientAppName());
 
     }
@@ -180,9 +180,9 @@ public class GetSubmissionTest {
 
         ResponseEntity<GetSubmissionConfigResponse> actual = sut.getSubmissionConfig(TestHelpers.CASE_3, UUID.randomUUID());
         assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigation().getSuccess());
-        assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigation().getCancel());
-        assertEquals(TestHelpers.ERROR_URL, actual.getBody().getNavigation().getError());
+        assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigationUrls().getSuccess());
+        assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigationUrls().getCancel());
+        assertEquals(TestHelpers.ERROR_URL, actual.getBody().getNavigationUrls().getError());
     }
 
     @Test
@@ -196,9 +196,9 @@ public class GetSubmissionTest {
 
         ResponseEntity<GetSubmissionConfigResponse> actual = sut.getSubmissionConfig(TestHelpers.CASE_4, UUID.randomUUID());
         assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigation().getSuccess());
-        assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigation().getCancel());
-        assertEquals(TestHelpers.ERROR_URL, actual.getBody().getNavigation().getError());
+        assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigationUrls().getSuccess());
+        assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigationUrls().getCancel());
+        assertEquals(TestHelpers.ERROR_URL, actual.getBody().getNavigationUrls().getError());
     }
 
     @Test
