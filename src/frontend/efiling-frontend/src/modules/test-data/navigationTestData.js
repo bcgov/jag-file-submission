@@ -1,15 +1,9 @@
-const navigation = {
-  cancel: {
-    url: "cancelurl.com",
-  },
-  success: {
-    url: "successurl.com",
-  },
-  error: {
-    url: "",
-  },
+const navigationUrls = {
+  cancel: "cancelurl.com",
+  success: "successurl.com",
+  error: "",
 };
 
 export function getNavigationData() {
-  return navigation;
+  return navigationUrls;
 }
