@@ -112,7 +112,7 @@ public class TestHelpers {
     public static List<DocumentProperties> createDocumentPropertiesList() {
         DocumentProperties documentProperties = new DocumentProperties();
         documentProperties.setName("random.txt");
-        documentProperties.setType(TYPE);
+        documentProperties.setType(DocumentProperties.TypeEnum.AAB);
         return Arrays.asList(documentProperties);
     }
 
@@ -148,7 +148,7 @@ public class TestHelpers {
                 .create();
     }
 
-    public static Navigation createDefaultNavigation() {
+    public static NavigationUrls createDefaultNavigation() {
         return createNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL);
     }
 

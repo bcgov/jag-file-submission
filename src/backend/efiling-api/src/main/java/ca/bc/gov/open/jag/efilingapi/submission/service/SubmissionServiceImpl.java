@@ -117,7 +117,6 @@ public class SubmissionServiceImpl implements SubmissionService {
                 .submitFilingPackage(
                         accountDetails,
                         submission.getFilingPackage(),
-                        submission.isRushedSubmission(),
                         efilingPayment -> bamboraPaymentAdapter.makePayment(efilingPayment));
 
         result.setPackageRef(Base64.getEncoder().encodeToString(submitPackageResponse.getPackageLink().getBytes()));
