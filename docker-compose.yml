@@ -102,6 +102,7 @@ services:
       - REDIS_PASSWORD=admin
       - NAVIGATION_BASE_URL=http://localhost:3000/efiling
       - NAVIGATION_EXPIRYTIME=10
+      - CLAMAV_HOST=clamav
 
     networks:
       - fisu-net
