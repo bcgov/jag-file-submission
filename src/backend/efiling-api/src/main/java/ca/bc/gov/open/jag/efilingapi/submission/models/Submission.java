@@ -30,7 +30,7 @@ public class Submission {
         this.id = builder.id;
         this.transactionId = builder.transactionId;
         this.filingPackage = builder.filingPackage;
-        this.navigationUrls = builder.navigation;
+        this.navigationUrls = builder.navigationUrls;
         this.expiryDate = builder.expiryDate;
         this.universalId = builder.universalId;
         this.clientAppName = builder.clientAppName;
@@ -82,7 +82,7 @@ public class Submission {
         private UUID transactionId;
         private UUID universalId;
         private FilingPackage filingPackage;
-        private NavigationUrls navigation;
+        private NavigationUrls navigationUrls;
         private long expiryDate;
         private String clientAppName;
 
@@ -114,7 +114,7 @@ public class Submission {
         }
 
         public Builder navigationUrls(NavigationUrls navigationUrls) {
-            this.navigation = navigationUrls;
+            this.navigationUrls = navigationUrls;
             return this;
         }
 
