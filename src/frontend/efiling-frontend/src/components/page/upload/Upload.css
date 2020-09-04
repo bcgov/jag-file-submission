@@ -56,7 +56,7 @@
   width: 100%;
   width: -webkit-fill-available;
   width: -moz-available;
-  width: fill-available;
+  width: stretch;
 }
 
 .minor-margin-left {
