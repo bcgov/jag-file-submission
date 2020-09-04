@@ -1812,7 +1812,7 @@ components:
         - clientAppName
         - csoBaseUrl
       properties:
-        NavigationUrls:
+        navigationUrls:
           $ref: "#/components/schemas/NavigationUrls"
         clientAppName:
           type: string
