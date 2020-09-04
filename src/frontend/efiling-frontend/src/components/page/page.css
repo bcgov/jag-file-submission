@@ -62,7 +62,7 @@ main {
   width: 100%;
   width: -webkit-fill-available;
   width: -moz-available;
-  width: fill-available;
+  width: stretch;
 }
 
 .bcgov-button {
