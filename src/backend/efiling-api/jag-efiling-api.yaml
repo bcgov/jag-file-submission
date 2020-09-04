@@ -125,7 +125,7 @@ paths:
           description: Config not found
   "/submission/{submissionId}/generateUrl":
     post:
-      summary: Generates a secure  * `URL` - for e-filing submission
+      summary: Generates a secure URL for e-filing submission
       operationId: GenerateUrl
       tags:
         - submission
@@ -228,9 +228,9 @@ paths:
           description: Document not found
   "/csoAccount":
     post:
-      summary: Create a  * `CSO` - account
+      summary: Create a CSO account
       operationId: CreateAccount
-      description: In order to create an account, an item with type B * `CEID` - is required in the accounts field.
+      description: In order to create an account, an item with type BCeID is required in the accounts field.
       tags:
         - account
       parameters:
@@ -250,7 +250,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/CsoAccount"
     get:
-      summary: Get user  * `CSO` - account
+      summary: Get user CSO account
       operationId: GetCsoAccount
       description: Get a user cso account.
       tags:
@@ -259,7 +259,7 @@ paths:
         - $ref: "#/components/parameters/xTransactionId"
       responses:
         "200":
-          description: A  * `CSO` - Account
+          description: A CSO Account
           content:
             application/json:
               schema:
@@ -267,7 +267,7 @@ paths:
         "404":
           description: Cso Account not found
     put:
-      summary: Update  * `CSO` - account internal client number
+      summary: Update CSO account internal client number
       operationId: updateCsoAccount
       tags:
         - account
@@ -295,9 +295,9 @@ paths:
                 $ref: "#/components/schemas/EfilingError"
   "/bceidAccount":
     get:
-      summary: Get a BCe * `ID` - account
+      summary: Get a BCeID account
       operationId: GetBceidAccount
-      description: Retrieve BCe * `ID` - user account information
+      description: Retrieve BCeID user account information
       tags:
         - account
       parameters:
@@ -383,7 +383,7 @@ components:
         type: string
         format: string
       required: true
-      description: A unique BCe * `ID` - universal id passed to initial calls
+      description: A unique BCeID universal id passed to initial calls
     submissionId:
       name: submissionId
       in: path
@@ -395,7 +395,7 @@ components:
   schemas:
     BceidAccount:
       type: object
-      description: BCe * `ID` - account details
+      description: BCeID account details
       properties:
         firstName:
           type: string
@@ -1819,7 +1819,7 @@ components:
           description: the client app name
         csoBaseUrl:
           type: string
-          description: the  * `CSO` - base Url
+          description: the CSO base Url
     NavigationUrls:
       required:
         - success
