@@ -9,6 +9,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.utils.FileUtils;
+import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.Court;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
@@ -87,8 +88,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                         submissionKey.getTransactionId(),
                         generateUrlRequest,
                         toFilingPackage(generateUrlRequest, submissionKey),
-                        getExpiryDate(),
-                        isRushedSubmission(generateUrlRequest)));
+                        getExpiryDate()));
 
         if (!cachedSubmission.isPresent())
             throw new StoreException("exception while storing submission object");
@@ -161,6 +161,8 @@ public class SubmissionServiceImpl implements SubmissionService {
                         .stream()
                         .map(party ->  partyMapper.toParty(party))
                         .collect(Collectors.toList()))
+                .rushedSubmission(isRushedSubmission(request))
+                .applicationCode(SecurityUtils.getApplicationCode())
                 .create();
 
     }
