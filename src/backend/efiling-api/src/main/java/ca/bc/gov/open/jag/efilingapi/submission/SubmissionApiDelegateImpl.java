@@ -235,7 +235,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         ResponseEntity response;
 
         try {
-            generateUrlRequest.getClientApplication().setType(SecurityUtils.getApplicationCode());
             response = ResponseEntity.ok(
                     generateUrlResponseMapper.toGenerateUrlResponse(
                             submissionService.generateFromRequest(submissionKey, generateUrlRequest),
@@ -290,7 +289,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         GetSubmissionConfigResponse response = new GetSubmissionConfigResponse();
 
-        response.setClientAppName(fromCacheSubmission.get().getClientApplication().getDisplayName());
+        response.setClientAppName(fromCacheSubmission.get().getClientAppName());
 
         response.setNavigation(fromCacheSubmission.get().getNavigationUrls());
 

@@ -7,6 +7,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.*;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingPaymentService;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoSubmissionServiceImpl;
+import ca.bc.gov.open.jag.efilingcsostarter.Keys;
 import ca.bc.gov.open.jag.efilingcsostarter.TestHelpers;
 import ca.bc.gov.open.jag.efilingcsostarter.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsostarter.mappers.*;
@@ -44,7 +45,6 @@ public class SubmitFilingPackageTest {
     private static final UUID UNIVERSAL_ID = UUID.randomUUID();
     private static final String LOCATION = "LOCATION";
     private static final String BAD_LOCATION = "BADLOCATION";
-    private static final String APP_CODE = "APP_CODE";
     private static final String COURT_CLASS = "courtClass";
     private static final String DIVISION = "DIVISION";
     private static final String LEVEL = "level";
@@ -54,9 +54,10 @@ public class SubmitFilingPackageTest {
     private static final String SERVERFILENAME = "serverfilename";
     private static final boolean IS_AMENDMENT = true;
     private static final boolean IS_SUPREME_COURT_SCHEDULING = false;
+    private static final String APP_CODE = "APP_CODE";
     private final String TYPE = "type";
     private static final BigDecimal STATUTORY_FEE_AMOUNT = BigDecimal.TEN;
-    
+
     CsoSubmissionServiceImpl sut;
 
     @Mock
@@ -112,8 +113,6 @@ public class SubmitFilingPackageTest {
         Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(
                 null,
                 null,
-                APP_CODE,
-                false,
                 null));
     }
 
@@ -124,8 +123,6 @@ public class SubmitFilingPackageTest {
         Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(
                 null,
                 FilingPackage.builder().create(),
-                APP_CODE,
-                false,
                 null));
     }
 
@@ -133,14 +130,20 @@ public class SubmitFilingPackageTest {
     @Test
     public void testWithEmptyFilingPackage() {
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(AccountDetails.builder().create(), FilingPackage.builder().create(), APP_CODE, false, null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(
+                AccountDetails.builder().create(),
+                FilingPackage.builder().create()
+                , null));
     }
 
 
     @DisplayName("Exception: with null clientId should throw IllegalArgumentException")
     @Test
     public void testWithEmptyClientId() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(AccountDetails.builder().create(), FilingPackage.builder().create(), APP_CODE, false, null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.submitFilingPackage(
+                AccountDetails.builder().create(),
+                FilingPackage.builder().create(),
+                null));
     }
 
     @DisplayName("OK: submitFilingPackage called with any non-empty submissionId")
@@ -156,6 +159,8 @@ public class SubmitFilingPackageTest {
 
         SubmitPackageResponse actual = sut.submitFilingPackage(accountDetails,
                 FilingPackage.builder()
+                        .applicationCode(APP_CODE)
+                        .rushedSubmission(false)
                         .court(Court.builder()
                                 .location(LOCATION)
                                 .agencyId(AGENCY_ID)
@@ -173,13 +178,68 @@ public class SubmitFilingPackageTest {
                                 .statutoryFeeAmount(STATUTORY_FEE_AMOUNT)
                                 .create()))
                         .create(),
-                APP_CODE,
-                false,
                 efilingPaymentServiceMock);
 
         Mockito.verify(filingFacadeBeanMock, Mockito.times(1))
                 .submitFiling(ArgumentMatchers.argThat(filingPackage ->
+                        filingPackage.getProcRequest() == null &&
+                        filingPackage.getApplicationCd().equals(APP_CODE) &&
                         filingPackage.getCourtFileNo().equals(FILE_NUMBER) &&
+                        filingPackage.getLdcxCourtClassCd().equals(COURT_CLASS) &&
+                        filingPackage.getLdcxCourtDivisionCd().equals(DIVISION) &&
+                        filingPackage.getLdcxCourtLevelCd().equals(LEVEL) &&
+                        filingPackage.getSubmittedToAgenId().equals(AGENCY_ID) &&
+                        filingPackage.getDocuments().get(0).getPayments().get(0).getStatutoryFeeAmt().equals(STATUTORY_FEE_AMOUNT)));
+
+        Assertions.assertEquals(BigDecimal.TEN, actual.getTransactionId());
+        Assertions.assertEquals("http://cso/cso/accounts/bceidNotification.do?packageNo=10", actual.getPackageLink());
+    }
+
+    @DisplayName("OK: submitFilingPackage called with any non-empty submissionId and rushed flag")
+    @Test
+    public void withRushedSubmissionShouldAddRushedParams() throws DatatypeConfigurationException, ca.bc.gov.ag.csows.filing.NestedEjbException_Exception, NestedEjbException_Exception {
+
+        Mockito.when(filingFacadeBeanMock.submitFiling(any())).thenReturn(BigDecimal.TEN);
+        Mockito.when(serviceFacadeBean.addService(any())).thenReturn(TestHelpers.createService());
+        Mockito.when(efilingPaymentServiceMock.makePayment(any())).thenReturn(createTransaction());
+        Mockito.doNothing().when(serviceFacadeBean).updateService(any());
+
+        AccountDetails accountDetails = getAccountDetails();
+
+        SubmitPackageResponse actual = sut.submitFilingPackage(accountDetails,
+                FilingPackage.builder()
+                        .applicationCode(APP_CODE)
+                        .rushedSubmission(true)
+                        .court(Court.builder()
+                                .location(LOCATION)
+                                .agencyId(AGENCY_ID)
+                                .courtClass(COURT_CLASS)
+                                .division(DIVISION)
+                                .level(LEVEL)
+                                .fileNumber(FILE_NUMBER)
+                                .create())
+                        .documents(Arrays.asList(Document.builder()
+                                .name(DOCUMENT)
+                                .serverFileName(SERVERFILENAME)
+                                .isAmendment(IS_AMENDMENT)
+                                .isSupremeCourtScheduling(IS_SUPREME_COURT_SCHEDULING)
+                                .subType(TYPE)
+                                .statutoryFeeAmount(STATUTORY_FEE_AMOUNT)
+                                .create()))
+                        .create(),
+                efilingPaymentServiceMock);
+
+        Mockito.verify(filingFacadeBeanMock, Mockito.times(1))
+                .submitFiling(ArgumentMatchers.argThat(filingPackage ->
+                        filingPackage.getProcRequest().getItem().getProcessReasonCd().equals(Keys.RUSH_PROCESS_REASON_CD) &&
+                                filingPackage.getProcRequest().getEntDtm().compare(DateUtils.getCurrentXmlDate()) == -1 &&
+                                filingPackage.getProcRequest().getEntUserId().equals(accountDetails.getClientId().toString()) &&
+                                filingPackage.getProcRequest().getRequestDt().compare(DateUtils.getCurrentXmlDate()) == -1 &&
+                                filingPackage.getProcRequest().getItem().getEntDtm().compare(DateUtils.getCurrentXmlDate()) == -1 &&
+                                filingPackage.getProcRequest().getItem().getEntUserId().equals(accountDetails.getClientId().toString()) &&
+                                filingPackage.getProcRequest().getItem().getProcessReasonCd().equals(Keys.RUSH_PROCESS_REASON_CD) &&
+                                filingPackage.getApplicationCd().equals(APP_CODE) &&
+                                filingPackage.getCourtFileNo().equals(FILE_NUMBER) &&
                                 filingPackage.getLdcxCourtClassCd().equals(COURT_CLASS) &&
                                 filingPackage.getLdcxCourtDivisionCd().equals(DIVISION) &&
                                 filingPackage.getLdcxCourtLevelCd().equals(LEVEL) &&
@@ -203,6 +263,7 @@ public class SubmitFilingPackageTest {
 
         SubmitPackageResponse actual = sut.submitFilingPackage(accountDetails,
                 FilingPackage.builder()
+                        .applicationCode(APP_CODE)
                         .court(
                                 Court.builder()
                                         .location(LOCATION)
@@ -220,8 +281,6 @@ public class SubmitFilingPackageTest {
                                 .subType(TYPE)
                                 .create()))
                         .create(),
-                APP_CODE,
-                false,
                 efilingPaymentServiceMock);
 
         Mockito.verify(filingFacadeBeanMock, Mockito.times(1))
@@ -250,13 +309,12 @@ public class SubmitFilingPackageTest {
 
         SubmitPackageResponse actual = sut.submitFilingPackage(accountDetails,
                 FilingPackage.builder()
+                        .applicationCode(APP_CODE)
                         .court(
                                 Court.builder()
                                         .location(LOCATION)
                                         .create())
                         .create(),
-                APP_CODE,
-                false,
                 efilingPaymentServiceMock);
         Assertions.assertEquals(new BigDecimal(100000), actual.getTransactionId());
         Assertions.assertEquals("http://cso/cso/accounts/bceidNotification.do?packageNo=100000", actual.getPackageLink());
@@ -275,13 +333,12 @@ public class SubmitFilingPackageTest {
 
         SubmitPackageResponse actual = sut.submitFilingPackage(accountDetails,
                 FilingPackage.builder()
+                        .applicationCode(APP_CODE)
                         .court(
                                 Court.builder()
                                         .location(LOCATION)
                                         .create())
                         .create(),
-                APP_CODE,
-                true,
                 efilingPaymentServiceMock);
 
         Assertions.assertEquals(BigDecimal.TEN, actual.getTransactionId());
@@ -299,9 +356,9 @@ public class SubmitFilingPackageTest {
 
         Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(
                 accountDetails,
-                FilingPackage.builder().create(),
-                APP_CODE,
-                false,
+                FilingPackage.builder()
+                        .applicationCode(APP_CODE)
+                        .create(),
                 efilingPaymentServiceMock));
     }
 
@@ -318,13 +375,12 @@ public class SubmitFilingPackageTest {
         Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(
                 accountDetails,
                 FilingPackage.builder()
+                        .applicationCode(APP_CODE)
                         .court(
                                 Court.builder()
                                         .location(LOCATION)
                                         .create())
                         .create(),
-                APP_CODE,
-                false,
                 efilingPaymentServiceMock));
 
     }
@@ -336,7 +392,13 @@ public class SubmitFilingPackageTest {
 
         AccountDetails accountDetails = getAccountDetails();
 
-        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(accountDetails, FilingPackage.builder().create(), APP_CODE, false, null));
+        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(
+                accountDetails,
+                FilingPackage
+                        .builder()
+                        .applicationCode(APP_CODE)
+                        .create(),
+                null));
     }
 
     private AccountDetails getAccountDetails() {
@@ -360,9 +422,10 @@ public class SubmitFilingPackageTest {
 
         Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(
                 getAccountDetails(),
-                FilingPackage.builder().create(),
-                APP_CODE,
-                false,
+                FilingPackage
+                        .builder()
+                        .applicationCode(APP_CODE)
+                        .create(),
                 null));
     }
 
@@ -372,8 +435,10 @@ public class SubmitFilingPackageTest {
         Mockito.doThrow(new NestedEjbException_Exception()).when(serviceFacadeBean).createUserSession(Mockito.anyString());
         Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(
                 getAccountDetails(),
-                FilingPackage.builder().create(),
-                APP_CODE, false, null));
+                FilingPackage.builder()
+                        .applicationCode(APP_CODE)
+                        .create(),
+                null));
     }
 
 
@@ -389,9 +454,10 @@ public class SubmitFilingPackageTest {
 
         Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(
                 accountDetails,
-                FilingPackage.builder().create(),
-                APP_CODE,
-                false,
+                FilingPackage
+                        .builder()
+                        .applicationCode(APP_CODE)
+                        .create(),
                 efilingPaymentServiceMock));
 
     }
@@ -409,13 +475,12 @@ public class SubmitFilingPackageTest {
         Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.submitFilingPackage(
                 accountDetails,
                 FilingPackage.builder()
+                        .applicationCode(APP_CODE)
                         .court(
                                 Court.builder()
                                         .location(BAD_LOCATION)
                                         .create())
                         .create(),
-                APP_CODE,
-                false,
                 efilingPaymentServiceMock));
 
     }

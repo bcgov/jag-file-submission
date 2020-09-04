@@ -29,6 +29,8 @@ public class Submission {
 
     private boolean rushedSubmission;
 
+    private String clientAppName;
+
     protected Submission(Submission.Builder builder) {
         this.id = builder.id;
         this.transactionId = builder.transactionId;
@@ -38,6 +40,7 @@ public class Submission {
         this.expiryDate = builder.expiryDate;
         this.universalId = builder.universalId;
         this.rushedSubmission = builder.rushedSubmission;
+        this.clientAppName = builder.clientAppName;
     }
 
     public static Submission.Builder builder() {
@@ -47,11 +50,12 @@ public class Submission {
     @JsonCreator
     public Submission(
             @JsonProperty("id") UUID id,
-            @JsonProperty("owner") UUID transactionId,
-            @JsonProperty("bceid") UUID universalId,
+            @JsonProperty("transactionId") UUID transactionId,
+            @JsonProperty("universalId") UUID universalId,
+            @JsonProperty("clientAppName") String clientAppName,
             @JsonProperty("accountDetails") AccountDetails accountDetails,
-            @JsonProperty("package") FilingPackage filingPackage,
-            @JsonProperty("navigation") NavigationUrls navigation,
+            @JsonProperty("filingPackage") FilingPackage filingPackage,
+            @JsonProperty("navigationUrls") NavigationUrls navigationUrls,
             @JsonProperty("expiryDate") long expiryDate,
             @JsonProperty("rushedSubmission") boolean rushedSubmission) {
         this.id = id;
@@ -59,7 +63,7 @@ public class Submission {
         this.universalId = universalId;
         this.accountDetails = accountDetails;
         this.filingPackage = filingPackage;
-        this.navigationUrls = navigation;
+        this.navigationUrls = navigationUrls;
         this.expiryDate = expiryDate;
         this.rushedSubmission = rushedSubmission;
     }
@@ -69,6 +73,8 @@ public class Submission {
     public UUID getTransactionId() { return transactionId; }
 
     public UUID getUniversalId() { return universalId; }
+
+    public String getClientAppName() { return clientAppName; }
 
     public FilingPackage getFilingPackage() {
         return filingPackage;
@@ -100,9 +106,16 @@ public class Submission {
         private NavigationUrls navigation;
         private long expiryDate;
         private boolean rushedSubmission;
+        private String clientAppName;
+
 
         public Builder id (UUID id) {
             this.id = id;
+            return this;
+        }
+
+        public Builder clientAppName(String clientAppName) {
+            this.clientAppName = clientAppName;
             return this;
         }
 

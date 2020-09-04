@@ -55,14 +55,12 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     public SubmitPackageResponse submitFilingPackage(
             AccountDetails accountDetails,
             FilingPackage efilingPackage,
-            String applicationTypeCode,
-            boolean isRushedProcessing,
             EfilingPaymentService paymentService) {
 
         if (accountDetails == null) throw new IllegalArgumentException("Account Details are required");
         if (accountDetails.getClientId() == null) throw new IllegalArgumentException("Client id is required.");
         if (efilingPackage == null) throw new IllegalArgumentException("EfilingPackage is required.");
-        if (StringUtils.isBlank(applicationTypeCode)) throw new IllegalArgumentException("Application Type code is required.");
+        if (StringUtils.isBlank(efilingPackage.getApplicationCode())) throw new IllegalArgumentException("Application Type code is required.");
 
         ServiceSession serviceSession = getServiceSession(accountDetails.getClientId().toString());
 
@@ -73,9 +71,9 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
                 true,
                 createPayment(paymentService, createdService, efilingPackage.getSubmissionFeeAmount(), accountDetails.getInternalClientNumber()));
 
-        ca.bc.gov.ag.csows.filing.FilingPackage csoFilingPackage = buildFilingPackage(accountDetails, efilingPackage, createdService, applicationTypeCode);
+        ca.bc.gov.ag.csows.filing.FilingPackage csoFilingPackage = buildFilingPackage(accountDetails, efilingPackage, createdService);
 
-        if (isRushedProcessing) {
+        if (efilingPackage.isRushedSubmission()) {
             csoFilingPackage.setProcRequest(buildRushedOrderRequest(accountDetails));
         }
 
@@ -91,12 +89,11 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
                 .create();
     }
 
-    private ca.bc.gov.ag.csows.filing.FilingPackage buildFilingPackage(AccountDetails accountDetails, FilingPackage efilingPackage, Service createdService, String applicationTypeCode) {
+    private ca.bc.gov.ag.csows.filing.FilingPackage buildFilingPackage(AccountDetails accountDetails, FilingPackage efilingPackage, Service createdService) {
         XMLGregorianCalendar submittedDate = getComputedSubmittedDate(efilingPackage.getCourt().getLocation());
         return filingPackageMapper.toFilingPackage(
                         efilingPackage,
                         accountDetails,
-                        applicationTypeCode,
                         createdService.getServiceId(),
                         submittedDate,
                         buildCivilDocuments(accountDetails, efilingPackage, submittedDate),
