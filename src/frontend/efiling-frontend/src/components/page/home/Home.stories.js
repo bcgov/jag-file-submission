@@ -27,7 +27,7 @@ const page = { header, confirmationPopup, submissionId, transactionId };
 
 const apiRequest = `/submission/${submissionId}/config`;
 const getFilingPackagePath = `/submission/${submissionId}/filing-package`;
-const navigation = getNavigationData();
+const navigationUrls = getNavigationData();
 const documents = getDocumentsData();
 const court = getCourtData();
 const submissionFeeAmount = 25.5;
@@ -58,7 +58,9 @@ const LoaderStateData = (props) => {
 const AccountExistsStateData = (props) => {
   setRequiredStorage();
   const mock = new MockAdapter(axios);
-  mock.onGet(apiRequest).reply(200, { navigation, clientAppName, csoBaseUrl });
+  mock
+    .onGet(apiRequest)
+    .reply(200, { navigationUrls, clientAppName, csoBaseUrl });
   mock.onGet("csoAccount").reply(200, {
     clientId: userDetails.clientId,
     internalClientNumber: userDetails.internalClientNumber,
@@ -73,7 +75,7 @@ const NoAccountExistsStateData = (props) => {
   setRequiredStorage();
   const mock = new MockAdapter(axios);
   mock.onGet(apiRequest).reply(200, {
-    navigation,
+    navigationUrls,
     clientAppName,
     csoBaseUrl,
   });

@@ -16,8 +16,6 @@ import java.util.UUID;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class GetByKeyTest {
 
-    private static final String TYPE = "type";
-
     @InjectMocks
     private SubmissionStoreImpl sut;
 
@@ -27,7 +25,7 @@ public class GetByKeyTest {
         MockitoAnnotations.initMocks(this);
 
         DocumentProperties documentMetadata = new DocumentProperties();
-        documentMetadata.setType(TYPE);
+        documentMetadata.setType(TestHelpers.TYPE);
     }
 
     @Test

@@ -27,9 +27,9 @@ export const saveUrlsToSessionStorage = (
   { cancel, success, error },
   csoBaseUrl
 ) => {
-  if (cancel.url) sessionStorage.setItem("cancelUrl", cancel.url);
-  if (success.url) sessionStorage.setItem("successUrl", success.url);
-  if (error.url) sessionStorage.setItem("errorUrl", error.url);
+  sessionStorage.setItem("cancelUrl", cancel);
+  sessionStorage.setItem("successUrl", success);
+  sessionStorage.setItem("errorUrl", error);
   sessionStorage.setItem("csoBaseUrl", csoBaseUrl);
 };
 
@@ -65,9 +65,9 @@ const checkCSOAccountStatus = (
 ) => {
   axios
     .get(`/submission/${submissionId}/config`)
-    .then(({ data: { navigation, clientAppName, csoBaseUrl } }) => {
+    .then(({ data: { navigationUrls, clientAppName, csoBaseUrl } }) => {
       setClientApplicationName(clientAppName);
-      saveUrlsToSessionStorage(navigation, csoBaseUrl);
+      saveUrlsToSessionStorage(navigationUrls, csoBaseUrl);
 
       axios
         .get("/csoAccount")

@@ -19,7 +19,6 @@ import ca.bc.gov.open.jag.efilingapi.utils.MdcUtils;
 import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
 import ca.bc.gov.open.jag.efilingapi.utils.TikaAnalysis;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.*;
-import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -235,7 +234,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         ResponseEntity response;
 
         try {
-            generateUrlRequest.getClientApplication().setType(SecurityUtils.getApplicationCode());
             response = ResponseEntity.ok(
                     generateUrlResponseMapper.toGenerateUrlResponse(
                             submissionService.generateFromRequest(submissionKey, generateUrlRequest),
@@ -281,18 +279,11 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         if (!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
 
-
-        if (fromCacheSubmission.get().getAccountDetails() == null ||
-            fromCacheSubmission.get().getAccountDetails().getAccountId() == null ||
-            fromCacheSubmission.get().getAccountDetails().getClientId() == null)
-            setIdsInCachedSubmission(universalId.get(),fromCacheSubmission.get());
-
-
         GetSubmissionConfigResponse response = new GetSubmissionConfigResponse();
 
-        response.setClientAppName(fromCacheSubmission.get().getClientApplication().getDisplayName());
+        response.setClientAppName(fromCacheSubmission.get().getClientAppName());
 
-        response.setNavigation(fromCacheSubmission.get().getNavigation());
+        response.setNavigationUrls(fromCacheSubmission.get().getNavigationUrls());
 
         response.setCsoBaseUrl(navigationProperties.getCsoBaseUrl());
 
@@ -410,14 +401,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         response.setMessage(errorResponse.getErrorMessage());
         return response;
 
-    }
-
-    private void setIdsInCachedSubmission(UUID universalId, Submission submission) {
-        AccountDetails accountDetails = accountService.getCsoAccountDetails(universalId);
-        if (accountDetails != null) {
-            submission.setAccountDetails(accountDetails);
-            this.submissionStore.put(submission);
-        }
     }
 
     private ResponseEntity storeDocuments(SubmissionKey submissionKey, List<MultipartFile> files) {

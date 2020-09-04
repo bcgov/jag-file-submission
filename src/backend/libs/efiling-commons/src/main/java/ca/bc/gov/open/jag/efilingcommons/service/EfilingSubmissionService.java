@@ -9,8 +9,6 @@ public interface EfilingSubmissionService {
     SubmitPackageResponse submitFilingPackage(
             AccountDetails accountDetails,
             FilingPackage efilingPackage,
-            String applicationTypeCode,
-            boolean isRushedProcessing,
             EfilingPaymentService payment);
 
 }

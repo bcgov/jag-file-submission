@@ -50,7 +50,9 @@ public class FilingPakageTest {
                 SUBMISSION_FEE_AMOUNT,
                 getCourt(),
                 getDocuments(),
-                getParties());
+                getParties(),
+                true,
+                "TEST");
 
         Assertions.assertEquals(STATUTORY_FEE_AMOUNT, actual.getSubmissionFeeAmount());
         assertCourt(actual);

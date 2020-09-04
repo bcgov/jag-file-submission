@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 public class EfilingSubmissionServiceDemoImpl implements EfilingSubmissionService {
 
     @Override
-    public SubmitPackageResponse submitFilingPackage(AccountDetails accountDetails, FilingPackage efilingPackage, String applicationTypeCode, boolean isRushedProcessing, EfilingPaymentService payment) {
+    public SubmitPackageResponse submitFilingPackage(AccountDetails accountDetails, FilingPackage efilingPackage, EfilingPaymentService payment) {
         return SubmitPackageResponse.builder().transactionId(BigDecimal.TEN).packageLink("http://demo").create();
     }
 }
