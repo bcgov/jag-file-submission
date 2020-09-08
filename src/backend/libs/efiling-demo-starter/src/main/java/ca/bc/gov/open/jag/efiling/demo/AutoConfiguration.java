@@ -1,5 +1,9 @@
 package ca.bc.gov.open.jag.efiling.demo;
 
+import ca.bc.gov.open.bceid.starter.account.BCeIDAccountService;
+import ca.bc.gov.open.bceid.starter.account.GetAccountRequest;
+import ca.bc.gov.open.bceid.starter.account.models.IndividualIdentity;
+import ca.bc.gov.open.bceid.starter.account.models.Name;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.*;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,6 +16,8 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
+
+import java.util.Optional;
 
 @Configuration
 @ComponentScan
@@ -60,6 +66,18 @@ public class AutoConfiguration {
     @Bean(name = "accountSerializer")
     public Jackson2JsonRedisSerializer jackson2JsonRedisSerializer() {
         return new Jackson2JsonRedisSerializer(AccountDetails.class);
+    }
+
+
+    @Bean
+    public BCeIDAccountService bCeIDAccountService() {
+        return new BCeIDAccountService() {
+            @Override
+            public Optional<IndividualIdentity> getIndividualIdentity(GetAccountRequest getAccountRequest) {
+                IndividualIdentity individualIdentity = IndividualIdentity.builder().name(Name.builder().firstName("Bob").middleName("Alan").surname("Ross").create()).create();
+                return Optional.of(individualIdentity);
+            }
+        };
     }
 
 }

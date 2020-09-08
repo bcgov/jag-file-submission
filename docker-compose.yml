@@ -18,6 +18,7 @@ services:
       - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-frontend
       - REACT_APP_KEYCLOAK_URL=${KEYCLOAK_URL}
       - REACT_APP_API_BASE_URL=http://localhost:8080
+      - REACT_APP_BAMBORA_REDIRECT_URL=http://localhost:3000/efiling
 
   #############################################################################################
   ###                                 EFILING DEMO                                          ###
@@ -37,6 +38,8 @@ services:
       - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-demo
       - REACT_APP_KEYCLOAK_URL=${EFILING_DEMO_KEYCLOAK_URL}
       - REACT_APP_API_BASE_URL=http://localhost:8080
+      - REACT_APP_DEMO_CLIENT_SECRET=${EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}
+      - REACT_APP_DEMO_URL=${KEYCLOAK_URL}
 
   #############################################################################################
   ###                           Efiling api backend app                                     ###
@@ -102,6 +105,7 @@ services:
       - REDIS_PASSWORD=admin
       - NAVIGATION_BASE_URL=http://localhost:3000/efiling
       - NAVIGATION_EXPIRYTIME=10
+      - CLAMAV_HOST=clamav
 
     networks:
       - fisu-net
