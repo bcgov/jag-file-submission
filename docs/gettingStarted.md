@@ -57,33 +57,40 @@ payload:
 
 ```json
 {
-  "navigation": {
-    "success": {
-      "url": "http//somewhere.com"
-    },
-    "error": {
-      "url": "http//somewhere.com"
-    },
-    "cancel": {
-      "url": "http//somewhere.com"
-    }
-  },
-  "clientApplication": {
-    "displayName": "your application name"
-  },
+  "clientAppName": "string",
   "filingPackage": {
     "court": {
-      "location": "XXXX",
-      "level": "X",
-      "courtClass": "X",
-      "division": "X"
+      "location": "string",
+      "level": "P",
+      "courtClass": "F",
+      "division": "I",
+      "fileNumber": "string",
+      "participatingClass": "string"
     },
     "documents": [
       {
-        "name": "test.pdf",
-        "type": "XXX"
+        "name": "string",
+        "type": "ABP",
+        "isAmendment": true,
+        "isSupremeCourtScheduling": true,
+        "data": {},
+        "md5": "string"
+      }
+    ],
+    "parties": [
+      {
+        "partyType": "IND",
+        "roleType": "ABC",
+        "firstName": "string",
+        "middleName": "string",
+        "lastName": "string"
       }
     ]
+  },
+  "navigationUrls": {
+    "success": "string",
+    "error": "string",
+    "cancel": "string"
   }
 }
 ```
