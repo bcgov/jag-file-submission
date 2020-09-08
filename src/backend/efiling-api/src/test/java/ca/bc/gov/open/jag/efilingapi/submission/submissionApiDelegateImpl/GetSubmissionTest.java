@@ -43,10 +43,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DisplayName("SubmissionApiDelegateImpl test suite")
 public class GetSubmissionTest {
 
-    private static final String EMAIL = "email";
-    private static final String FIRST_NAME = "firstName";
-    private static final String LAST_NAME = "lastName";
-    private static final String MIDDLE_NAME = "middleName";
+
     private static final String SERVICE_TYPE_CD = "DCFL";
     private static final String SERVICE_TYPE_CD1 = "NOTDCFL";
     private static final String INTERNAL_CLIENT_NUMBER = "123";
@@ -102,8 +99,8 @@ public class GetSubmissionTest {
         navigationProperties.setBaseUrl("http://localhost");
         Submission submissionWithCsoAccount = Submission
                 .builder()
-                .navigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
-                .clientApplication(TestHelpers.createClientApplication(TestHelpers.DESCRIPTION, TestHelpers.TYPE))
+                .clientAppName(TestHelpers.DESCRIPTION)
+                .navigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
                 .create();
 
         Mockito
@@ -113,12 +110,7 @@ public class GetSubmissionTest {
 
         Submission submissionWithoutCsoAccount = Submission
                 .builder()
-                .accountDetails(AccountDetails.builder()
-                        .accountId(null)
-                        .clientId(null)
-                        .create()
-                )
-                .navigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
+                .navigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
                 .create();
 
         Mockito
@@ -168,13 +160,12 @@ public class GetSubmissionTest {
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_2);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<GetSubmissionConfigResponse> actual = sut.getSubmissionConfig( TestHelpers.CASE_2, TestHelpers.CASE_2);
+        ResponseEntity<GetSubmissionConfigResponse> actual = sut.getSubmissionConfig(TestHelpers.CASE_2, TestHelpers.CASE_2);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigation().getSuccess().getUrl());
-        assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigation().getCancel().getUrl());
-        assertEquals(TestHelpers.ERROR_URL, actual.getBody().getNavigation().getError().getUrl());
-        assertEquals(TestHelpers.TYPE, actual.getBody().getClientApplication().getType());
-        assertEquals(TestHelpers.DESCRIPTION, actual.getBody().getClientApplication().getDisplayName());
+        assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigationUrls().getSuccess());
+        assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigationUrls().getCancel());
+        assertEquals(TestHelpers.ERROR_URL, actual.getBody().getNavigationUrls().getError());
+        assertEquals(TestHelpers.DESCRIPTION, actual.getBody().getClientAppName());
 
     }
 
@@ -189,9 +180,9 @@ public class GetSubmissionTest {
 
         ResponseEntity<GetSubmissionConfigResponse> actual = sut.getSubmissionConfig(TestHelpers.CASE_3, UUID.randomUUID());
         assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigation().getSuccess().getUrl());
-        assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigation().getCancel().getUrl());
-        assertEquals(TestHelpers.ERROR_URL, actual.getBody().getNavigation().getError().getUrl());
+        assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigationUrls().getSuccess());
+        assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigationUrls().getCancel());
+        assertEquals(TestHelpers.ERROR_URL, actual.getBody().getNavigationUrls().getError());
     }
 
     @Test
@@ -205,9 +196,9 @@ public class GetSubmissionTest {
 
         ResponseEntity<GetSubmissionConfigResponse> actual = sut.getSubmissionConfig(TestHelpers.CASE_4, UUID.randomUUID());
         assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigation().getSuccess().getUrl());
-        assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigation().getCancel().getUrl());
-        assertEquals(TestHelpers.ERROR_URL, actual.getBody().getNavigation().getError().getUrl());
+        assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigationUrls().getSuccess());
+        assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigationUrls().getCancel());
+        assertEquals(TestHelpers.ERROR_URL, actual.getBody().getNavigationUrls().getError());
     }
 
     @Test

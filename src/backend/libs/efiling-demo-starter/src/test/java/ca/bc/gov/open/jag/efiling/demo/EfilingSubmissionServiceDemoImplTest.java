@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efiling.demo;
 
+import ca.bc.gov.open.jag.efilingcommons.model.SubmitPackageResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,9 +17,10 @@ public class EfilingSubmissionServiceDemoImplTest {
 
         EfilingSubmissionServiceDemoImpl service = new EfilingSubmissionServiceDemoImpl();
 
-        BigDecimal actual = service.submitFilingPackage(null, null, null, false, null);
+        SubmitPackageResponse actual = service.submitFilingPackage(null, null, null);
 
-        Assertions.assertEquals(BigDecimal.ONE, actual);
+        Assertions.assertEquals(BigDecimal.TEN, actual.getTransactionId());
+        Assertions.assertEquals("http://demo", actual.getPackageLink());
 
     }
 }

@@ -30,7 +30,6 @@ public class TestHelpers {
     public static final String PARTICIPATIONCLASS = "PARTICIPATIONCLASS";
     public static final String PROPERTYCLASS = "PROPERTYCLASS";
     public static final String DESCRIPTION = "DESCRIPTION";
-    public static final String TYPE = "TYPE";
     public static final String COURT_DESCRIPTION = "TESTCOURTDESC";
     public static final String LEVEL_DESCRIPTION = "TESTLEVELDESC";
     public static final String CLASS_DESCRIPTION = "TESTCLASSDESC";
@@ -46,6 +45,7 @@ public class TestHelpers {
     public static final String NAME_TYPE_CD = "NAMECD";
     public static final String PARTY_TYPE_CD = "PARTYCD";
     public static final String ROLE_TYPE_CD = "ROLECD";
+    public static final DocumentProperties.TypeEnum TYPE = DocumentProperties.TypeEnum.AAB;
 
     public static InitialPackage createInitalPackage(ca.bc.gov.open.jag.efilingapi.api.model.Court court, List<DocumentProperties> documentProperties) {
         InitialPackage initialPackage = new InitialPackage();
@@ -54,26 +54,12 @@ public class TestHelpers {
         return initialPackage;
     }
 
-    public static Navigation createNavigation(String success, String cancel, String error) {
-        Navigation navigation = new Navigation();
-        Redirect successRedirect = new Redirect();
-        successRedirect.setUrl(success);
-        navigation.setSuccess(successRedirect);
-        Redirect cancelRedirect = new Redirect();
-        cancelRedirect.setUrl(cancel);
-        navigation.setCancel(cancelRedirect);
-        Redirect errorRedirect = new Redirect();
-        errorRedirect.setUrl(error);
-        navigation.setError(errorRedirect);
+    public static NavigationUrls createNavigation(String success, String cancel, String error) {
+        NavigationUrls navigation = new NavigationUrls();
+        navigation.setSuccess(success);
+        navigation.setCancel(cancel);
+        navigation.setError(error);
         return navigation;
-    }
-
-    public static ClientApplication createClientApplication(String displayName, String type) {
-        ClientApplication clientApplication = new ClientApplication();
-        clientApplication.setDisplayName(displayName);
-        clientApplication.setType(type);
-
-        return clientApplication;
     }
 
     public static ca.bc.gov.open.jag.efilingapi.api.model.Court createApiCourt() {
@@ -109,7 +95,7 @@ public class TestHelpers {
         return Submission
                 .builder()
                 .filingPackage(createPackage(createCourt(), createDocumentList(), createPartyList()))
-                .navigation(createNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL))
+                .navigationUrls(createNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL))
                 .create();
     }
 
@@ -127,7 +113,7 @@ public class TestHelpers {
     public static List<DocumentProperties> createDocumentPropertiesList() {
         DocumentProperties documentProperties = new DocumentProperties();
         documentProperties.setName("random.txt");
-        documentProperties.setType(TYPE);
+        documentProperties.setType(DocumentProperties.TypeEnum.AAB);
         return Arrays.asList(documentProperties);
     }
 
@@ -136,7 +122,7 @@ public class TestHelpers {
                 .description(DESCRIPTION)
                 .statutoryFeeAmount(BigDecimal.TEN)
                 .name("random.txt")
-                .type(TYPE)
+                .type(TYPE.getValue())
                 .subType(SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD)
                 .mimeType("application/txt")
                 .isSupremeCourtScheduling(true)
@@ -163,7 +149,7 @@ public class TestHelpers {
                 .create();
     }
 
-    public static Navigation createDefaultNavigation() {
+    public static NavigationUrls createDefaultNavigation() {
         return createNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL);
     }
 

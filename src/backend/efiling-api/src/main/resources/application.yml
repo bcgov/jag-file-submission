@@ -1,5 +1,6 @@
 server:
   port: ${SERVER_PORT:8080}
+
 spring:
   redis:
     host: ${REDIS_HOST:localhost}
@@ -8,6 +9,10 @@ spring:
   cache:
     redis:
       time-to-live: ${CACHE_TTL:600000}
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
 keycloak:
   auth-server-url: ${KEYCLOAK_AUTH_SERVER_URL}
   realm: ${KEYCLOAK_REALM}
@@ -23,6 +28,7 @@ jag:
       demo: ${DEMO_MODE:false}
     navigation:
       baseUrl: ${NAVIGATION_BASE_URL:http://localhost:3000/efiling}
+      csoBaseUrl: ${CSO_BASE_URL:http://localhost/cso}
     soap:
       clients:
         - client: ACCOUNT
@@ -56,6 +62,7 @@ jag:
 
 cso:
   fileServerHost: ${CSO_FILE_SERVER_HOST}
+  csoBasePath: ${CSO_BASE_URL:http://localhost/cso}
   debugEnabled: ${CSO_DEBUG_ENABLED:false}
 
 bambora:
@@ -85,6 +92,7 @@ bcgov:
   clamav:
     host: ${CLAMAV_HOST:localhost}
     port: ${CLAMAV_PORT:3310}
+    timeout: ${CLAMAV_TIMEOUT:50000}
 info:
   app:
     name: @project.name@

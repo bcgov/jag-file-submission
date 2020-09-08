@@ -4,7 +4,7 @@ import axios from "axios";
 import { render, waitFor, fireEvent, getByText } from "@testing-library/react";
 import MockAdapter from "axios-mock-adapter";
 
-import Home, { saveNavigationToSessionStorage } from "./Home";
+import Home, { saveUrlsToSessionStorage } from "./Home";
 import { getTestData } from "../../../modules/test-data/confirmationPopupTestData";
 import { getUserDetails } from "../../../modules/test-data/userDetailsTestData";
 import { getDocumentsData } from "../../../modules/test-data/documentTestData";
@@ -24,12 +24,13 @@ const page = { header, confirmationPopup, submissionId, transactionId };
 describe("Home", () => {
   const apiRequest = `/submission/${submissionId}/config`;
   const getFilingPackagePath = `/submission/${submissionId}/filing-package`;
-  const navigation = getNavigationData();
+  const navigationUrls = getNavigationData();
   const documents = getDocumentsData();
   const court = getCourtData();
   const submissionFeeAmount = 25.5;
   const userDetails = getUserDetails();
-  const clientApplication = { displayName: "client app" };
+  const clientAppName = "client app";
+  const csoBaseUrl = "https://dev.justice.gov.bc.ca/cso";
 
   window.open = jest.fn();
 
@@ -43,11 +44,11 @@ describe("Home", () => {
   beforeEach(() => {
     mock = new MockAdapter(axios);
     mock.onGet(apiRequest).reply(200, {
-      navigation,
-      clientApplication,
+      navigationUrls,
+      clientAppName,
+      csoBaseUrl,
     });
     sessionStorage.clear();
-    sessionStorage.setItem("csoBaseUrl", "https://dev.justice.gov.bc.ca/cso");
   });
 
   const component = <Home page={page} />;
@@ -112,29 +113,37 @@ describe("Home", () => {
     );
   });
 
-  test("saveNavigationToSessionStorage saves urls to session storage", () => {
+  test("saveUrlsToSessionStorage saves urls to session storage", () => {
     expect(sessionStorage.getItem("cancelUrl")).toBeFalsy();
     expect(sessionStorage.getItem("successUrl")).toBeFalsy();
     expect(sessionStorage.getItem("errorUrl")).toBeFalsy();
+    expect(sessionStorage.getItem("csoBaseUrl")).toBeFalsy();
 
-    saveNavigationToSessionStorage(navigation);
+    saveUrlsToSessionStorage(navigationUrls, csoBaseUrl);
 
-    expect(sessionStorage.getItem("cancelUrl")).toEqual("cancelurl.com");
-    expect(sessionStorage.getItem("successUrl")).toEqual("successurl.com");
+    expect(sessionStorage.getItem("cancelUrl")).toEqual(navigationUrls.cancel);
+    expect(sessionStorage.getItem("successUrl")).toEqual(
+      navigationUrls.success
+    );
     expect(sessionStorage.getItem("errorUrl")).toBeFalsy();
+    expect(sessionStorage.getItem("csoBaseUrl")).toEqual(csoBaseUrl);
 
     sessionStorage.clear();
 
-    saveNavigationToSessionStorage({
-      ...navigation,
-      cancel: { url: "" },
-      success: { url: "" },
-      error: { url: "error.com" },
-    });
+    saveUrlsToSessionStorage(
+      {
+        ...navigationUrls,
+        cancel: "",
+        success: "",
+        error: "error.com",
+      },
+      csoBaseUrl
+    );
 
     expect(sessionStorage.getItem("cancelUrl")).toBeFalsy();
     expect(sessionStorage.getItem("successUrl")).toBeFalsy();
     expect(sessionStorage.getItem("errorUrl")).toEqual("error.com");
+    expect(sessionStorage.getItem("csoBaseUrl")).toEqual(csoBaseUrl);
   });
 
   test("Redirects to error page when lookup to bceid call fails", async () => {

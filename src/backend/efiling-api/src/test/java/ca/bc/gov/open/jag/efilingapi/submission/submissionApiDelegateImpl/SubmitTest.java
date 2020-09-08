@@ -33,7 +33,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -96,7 +95,7 @@ public class SubmitTest {
 
         Submission submissionExists = Submission
                 .builder()
-                .navigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
+                .navigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
                 .create();
 
         Mockito
@@ -105,7 +104,7 @@ public class SubmitTest {
 
         Submission submissionError = Submission
                 .builder()
-                .navigation(TestHelpers.createNavigation(null, null, null))
+                .navigationUrls(TestHelpers.createNavigation(null, null, null))
                 .create();
 
         Mockito
@@ -114,7 +113,7 @@ public class SubmitTest {
                 .get(ArgumentMatchers.argThat(x -> x.getSubmissionId().equals(TestHelpers.CASE_2)));
 
         SubmitResponse result = new SubmitResponse();
-        result.setTransactionId(BigDecimal.TEN);
+        result.setPackageRef("packageref");
 
         Mockito
                 .when(submissionServiceMock.createSubmission(Mockito.refEq(submissionExists), Mockito.any()))
@@ -137,7 +136,7 @@ public class SubmitTest {
 
         ResponseEntity<SubmitResponse> actual = sut.submit(UUID.randomUUID(), TestHelpers.CASE_1, null);
         assertEquals(HttpStatus.CREATED, actual.getStatusCode());
-        assertEquals(BigDecimal.TEN, actual.getBody().getTransactionId());
+        assertEquals("packageref", actual.getBody().getPackageRef());
 
     }
 

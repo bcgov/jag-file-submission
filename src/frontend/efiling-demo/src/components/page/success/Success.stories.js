@@ -13,7 +13,9 @@ const header = {
   history: createMemoryHistory(),
 };
 
-const page = { header };
+const packageRef = "aHR0cHM6L2thZ2VObz0xMTQzMA==";
+
+const page = { header, packageRef };
 
 export const Default = () => <Success page={page} />;
 

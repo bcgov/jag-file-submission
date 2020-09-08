@@ -4,22 +4,20 @@ import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.payment.BamboraPaymentAdapter;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
-import ca.bc.gov.open.jag.efilingapi.submission.mappers.EfilingFilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.PartyMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.utils.FileUtils;
+import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.Court;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
 import ca.bc.gov.open.jag.efilingcommons.model.FilingPackage;
-import ca.bc.gov.open.jag.efilingcommons.model.Party;
 import ca.bc.gov.open.jag.efilingcommons.model.*;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
-import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.sftp.starter.SftpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,9 +26,7 @@ import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Base64;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -45,8 +41,6 @@ public class SubmissionServiceImpl implements SubmissionService {
     private final SubmissionMapper submissionMapper;
 
     private final PartyMapper partyMapper;
-
-    private final EfilingFilingPackageMapper efilingFilingPackageMapper;
 
     private final EfilingLookupService efilingLookupService;
 
@@ -64,7 +58,7 @@ public class SubmissionServiceImpl implements SubmissionService {
             SubmissionStore submissionStore,
             CacheProperties cacheProperties,
             SubmissionMapper submissionMapper,
-            PartyMapper partyMapper, EfilingFilingPackageMapper efilingFilingPackageMapper,
+            PartyMapper partyMapper,
             EfilingLookupService efilingLookupService,
             EfilingCourtService efilingCourtService,
             EfilingSubmissionService efilingSubmissionService,
@@ -75,7 +69,6 @@ public class SubmissionServiceImpl implements SubmissionService {
         this.cacheProperties = cacheProperties;
         this.submissionMapper = submissionMapper;
         this.partyMapper = partyMapper;
-        this.efilingFilingPackageMapper = efilingFilingPackageMapper;
         this.efilingLookupService = efilingLookupService;
         this.efilingCourtService = efilingCourtService;
         this.efilingSubmissionService = efilingSubmissionService;
@@ -95,8 +88,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                         submissionKey.getTransactionId(),
                         generateUrlRequest,
                         toFilingPackage(generateUrlRequest, submissionKey),
-                        getExpiryDate(),
-                        isRushedSubmission(generateUrlRequest)));
+                        getExpiryDate()));
 
         if (!cachedSubmission.isPresent())
             throw new StoreException("exception while storing submission object");
@@ -108,7 +100,7 @@ public class SubmissionServiceImpl implements SubmissionService {
     private boolean isRushedSubmission(GenerateUrlRequest generateUrlRequest) {
 
         for (DocumentProperties documentProperties : generateUrlRequest.getFilingPackage().getDocuments()) {
-            DocumentDetails documentDetails = documentStore.getDocumentDetails(generateUrlRequest.getFilingPackage().getCourt().getLevel(), generateUrlRequest.getFilingPackage().getCourt().getCourtClass(), documentProperties.getType());
+            DocumentDetails documentDetails = documentStore.getDocumentDetails(generateUrlRequest.getFilingPackage().getCourt().getLevel(), generateUrlRequest.getFilingPackage().getCourt().getCourtClass(), documentProperties.getType().getValue());
             if (documentDetails.isRushRequired()) return true;
         }
         return false;
@@ -119,32 +111,25 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         uploadFiles(submission);
 
-        List<Party> parties = new ArrayList();
-        if (submission.getFilingPackage().getParties() != null)
-            parties.addAll(submission.getFilingPackage().getParties());
-
-        EfilingFilingPackage filingPackage = efilingFilingPackageMapper.toEfilingFilingPackage(submission);
-        filingPackage.setPackageControls(Arrays.asList(efilingFilingPackageMapper.toPackageAuthority(submission)));
-        filingPackage.setEntDtm(DateUtils.getCurrentXmlDate());
-        filingPackage.setSubmitDtm(DateUtils.getCurrentXmlDate());
         SubmitResponse result = new SubmitResponse();
 
-        result.transactionId(
-                efilingSubmissionService
-                        .submitFilingPackage(
-                                accountDetails,
-                                submission.getFilingPackage(),
-                                filingPackage,
-                                submission.isRushedSubmission(),
-                                efilingPayment -> bamboraPaymentAdapter.makePayment(efilingPayment)));
+        SubmitPackageResponse submitPackageResponse = efilingSubmissionService
+                .submitFilingPackage(
+                        accountDetails,
+                        submission.getFilingPackage(),
+                        efilingPayment -> bamboraPaymentAdapter.makePayment(efilingPayment));
+
+        result.setPackageRef(Base64.getEncoder().encodeToString(submitPackageResponse.getPackageLink().getBytes()));
+
+
+        logger.info("successfully submitted efiling package with cso id [{}]", submitPackageResponse.getTransactionId());
+
         return result;
+
     }
 
     @Override
     public Submission updateDocuments(Submission submission, UpdateDocumentRequest updateDocumentRequest, SubmissionKey submissionKey) {
-
-
-
 
         updateDocumentRequest.getDocuments().stream().forEach(documentProperties -> {
             submission.getFilingPackage().addDocument(toDocument(
@@ -176,6 +161,8 @@ public class SubmissionServiceImpl implements SubmissionService {
                         .stream()
                         .map(party ->  partyMapper.toParty(party))
                         .collect(Collectors.toList()))
+                .rushedSubmission(isRushedSubmission(request))
+                .applicationCode(SecurityUtils.getApplicationCode())
                 .create();
 
     }
@@ -200,13 +187,13 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private Document toDocument(String courtLevel, String courtClass, DocumentProperties documentProperties, SubmissionKey submissionKey) {
 
-        DocumentDetails details = documentStore.getDocumentDetails(courtLevel, courtClass, documentProperties.getType());
+        DocumentDetails details = documentStore.getDocumentDetails(courtLevel, courtClass, documentProperties.getType().getValue());
 
         return
                 Document.builder()
                         .description(details.getDescription())
                         .statutoryFeeAmount(details.getStatutoryFeeAmount())
-                        .type(documentProperties.getType())
+                        .type(documentProperties.getType().getValue())
                         .name(documentProperties.getName())
                         .serverFileName(MessageFormat.format("fh_{0}_{1}_{2}",submissionKey.getSubmissionId(), submissionKey.getTransactionId(), documentProperties.getName()))
                         .mimeType(FileUtils.guessContentTypeFromName(documentProperties.getName()))

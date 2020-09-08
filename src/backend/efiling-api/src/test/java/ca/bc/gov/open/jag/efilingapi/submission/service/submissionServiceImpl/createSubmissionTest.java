@@ -4,13 +4,13 @@ import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.SubmitResponse;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.payment.BamboraPaymentAdapter;
-import ca.bc.gov.open.jag.efilingapi.submission.mappers.EfilingFilingPackageMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.PartyMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.EfilingTransaction;
+import ca.bc.gov.open.jag.efilingcommons.model.PaymentTransaction;
+import ca.bc.gov.open.jag.efilingcommons.model.SubmitPackageResponse;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
@@ -29,12 +29,12 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyBoolean;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class createSubmissionTest {
 
     public static final String INTERNAL_CLIENT_NUMBER = "12345";
+    public static final String CLIENT_APP_NAME = "clientAppName";
     private SubmissionServiceImpl sut;
 
     @Mock
@@ -64,11 +64,11 @@ public class createSubmissionTest {
     @BeforeAll
     public void setUp(){
         MockitoAnnotations.initMocks(this);
-        Mockito.when(efilingSubmissionServiceMock.submitFilingPackage(any(), any(), any(), anyBoolean(), any())).thenReturn(BigDecimal.TEN);
-        Mockito.when(bamboraPaymentAdapterMock.makePayment(any())).thenReturn(new EfilingTransaction());
+        Mockito.when(efilingSubmissionServiceMock.submitFilingPackage(any(), any(), any())).thenReturn(SubmitPackageResponse.builder().transactionId(BigDecimal.TEN).packageLink("http://link").create());
+        Mockito.when(bamboraPaymentAdapterMock.makePayment(any())).thenReturn(new PaymentTransaction());
         Mockito.when(documentStoreMock.get(any(), any())).thenReturn(new byte[]{});
         Mockito.doNothing().when(sftpServiceMock).put(any(), any());
-        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, null, new PartyMapperImpl(), new EfilingFilingPackageMapperImpl(),efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock, bamboraPaymentAdapterMock, sftpServiceMock);
+        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, null, new PartyMapperImpl(), efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock, bamboraPaymentAdapterMock, sftpServiceMock);
 
     }
 
@@ -80,15 +80,10 @@ public class createSubmissionTest {
         SubmitResponse actual = sut.createSubmission(Submission
                 .builder()
                 .id(TestHelpers.CASE_1)
-                .accountDetails(AccountDetails.builder()
-                        .clientId(BigDecimal.TEN)
-                        .accountId(BigDecimal.TEN)
-                        .internalClientNumber("123")
-                        .create())
                 .transactionId(TestHelpers.CASE_1)
-                .navigation(TestHelpers.createDefaultNavigation())
+                .navigationUrls(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
-                .clientApplication(TestHelpers.createClientApplication(TestHelpers.DISPLAY_NAME, TestHelpers.TYPE))
+                .clientAppName(CLIENT_APP_NAME)
                 .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList(), TestHelpers.createPartyList()))
                 .create(),
                 AccountDetails.builder()
@@ -99,7 +94,7 @@ public class createSubmissionTest {
                         .clientId(BigDecimal.TEN)
                         .internalClientNumber(INTERNAL_CLIENT_NUMBER)
                         .create());
-        assertEquals(BigDecimal.TEN, actual.getTransactionId());
+        assertEquals("aHR0cDovL2xpbms=", actual.getPackageRef());
     }
 
 }

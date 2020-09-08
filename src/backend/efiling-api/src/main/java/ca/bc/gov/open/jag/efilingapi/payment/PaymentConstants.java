@@ -21,7 +21,11 @@ public class PaymentConstants {
         CARD_TYPES.put(CardPurchaseResponse.CardTypeEnum.AM,"AX");
         CARD_TYPES.put(CardPurchaseResponse.CardTypeEnum.NN,"NN");
         CARD_TYPES.put(CardPurchaseResponse.CardTypeEnum.MC,"M");
-        CARD_TYPES.put(CardPurchaseResponse.CardTypeEnum.VI,"VI");
+        CARD_TYPES.put(CardPurchaseResponse.CardTypeEnum.VI,"V");
+        CARD_TYPES.put(CardPurchaseResponse.CardTypeEnum.IO, "IO");
+        CARD_TYPES.put(CardPurchaseResponse.CardTypeEnum.MD, "MD");
+        CARD_TYPES.put(CardPurchaseResponse.CardTypeEnum.PV, "PV");
+        // TODO: this card are not in used, they will fail in CSO
         CARD_TYPES.put(CardPurchaseResponse.CardTypeEnum.DI,"DI");
         CARD_TYPES.put(CardPurchaseResponse.CardTypeEnum.JB,"JB");
     }

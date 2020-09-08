@@ -27,12 +27,13 @@ const page = { header, confirmationPopup, submissionId, transactionId };
 
 const apiRequest = `/submission/${submissionId}/config`;
 const getFilingPackagePath = `/submission/${submissionId}/filing-package`;
-const navigation = getNavigationData();
+const navigationUrls = getNavigationData();
 const documents = getDocumentsData();
 const court = getCourtData();
 const submissionFeeAmount = 25.5;
 const userDetails = getUserDetails();
-const clientApplication = { displayName: "client app" };
+const clientAppName = "client app";
+const csoBaseUrl = "https://dev.justice.gov.bc.ca/cso";
 
 const setRequiredStorage = () => {
   sessionStorage.setItem("errorUrl", "error.com");
@@ -57,7 +58,9 @@ const LoaderStateData = (props) => {
 const AccountExistsStateData = (props) => {
   setRequiredStorage();
   const mock = new MockAdapter(axios);
-  mock.onGet(apiRequest).reply(200, { navigation, clientApplication });
+  mock
+    .onGet(apiRequest)
+    .reply(200, { navigationUrls, clientAppName, csoBaseUrl });
   mock.onGet("csoAccount").reply(200, {
     clientId: userDetails.clientId,
     internalClientNumber: userDetails.internalClientNumber,
@@ -72,8 +75,9 @@ const NoAccountExistsStateData = (props) => {
   setRequiredStorage();
   const mock = new MockAdapter(axios);
   mock.onGet(apiRequest).reply(200, {
-    navigation,
-    clientApplication,
+    navigationUrls,
+    clientAppName,
+    csoBaseUrl,
   });
   mock.onGet("csoAccount").reply(404);
   mock.onGet("/bceidAccount").reply(200, {

@@ -44,9 +44,8 @@ import static ca.bc.gov.open.jag.efilingapi.error.ErrorResponse.INVALIDUNIVERSAL
 @DisplayName("SubmissionApiDelegateImpl test suite")
 public class GenerateUrlTest {
 
-    private static final String TYPE = "type";
-    private static final String DISPLAYNAME = "DISPLAYNAME";
     private static final String CODE = "CODE";
+    private static final String CLIENT_APP_NAME = "clientAppName";
 
     private SubmissionApiDelegateImpl sut;
 
@@ -142,8 +141,8 @@ public class GenerateUrlTest {
         otherClaims.put(Keys.CSO_APPLICATION_CODE, CODE);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
-        generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
+        generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
+        generateUrlRequest.setNavigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
         ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(transactionId, UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_1, generateUrlRequest);
 
@@ -159,8 +158,8 @@ public class GenerateUrlTest {
     public void whenCSOHasMultipleAccountExceptionShouldReturnBadRequest() {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
-        generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
-        generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
+        generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
+        generateUrlRequest.setNavigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
         ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_2, generateUrlRequest);
 
@@ -176,8 +175,8 @@ public class GenerateUrlTest {
     public void whenInvalidAccountStateExceptionShouldReturnForbidden() {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
-        generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
-        generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
+        generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
+        generateUrlRequest.setNavigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
         ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_3, generateUrlRequest);
 
@@ -193,8 +192,8 @@ public class GenerateUrlTest {
     public void whenStoreExceptionShouldReturnInternalServerError() {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
-        generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
-        generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
+        generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
+        generateUrlRequest.setNavigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
         ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_4, generateUrlRequest);
 
@@ -210,8 +209,8 @@ public class GenerateUrlTest {
     public void whenDocumentExceptionShouldReturnInternalServerError() {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
-        generateUrlRequest.setClientApplication(TestHelpers.createClientApplication(DISPLAYNAME,TYPE));
-        generateUrlRequest.setNavigation(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
+        generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
+        generateUrlRequest.setNavigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
         ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_5, generateUrlRequest);
 

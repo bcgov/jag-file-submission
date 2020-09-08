@@ -242,10 +242,18 @@ const generateFormData = (acceptedFiles) => {
   return formData;
 };
 
+const handleError = (error, setShowLoader, setContinueBtnEnabled) => {
+  setShowLoader(false);
+  setContinueBtnEnabled(true);
+  errorRedirect(sessionStorage.getItem("errorUrl"), error);
+};
+
 export const uploadDocuments = (
   submissionId,
   acceptedFiles,
-  setShowPackageConfirmation
+  setShowPackageConfirmation,
+  setShowLoader,
+  setContinueBtnEnabled
 ) => {
   axios
     .post(
@@ -260,10 +268,10 @@ export const uploadDocuments = (
         .post(`/submission/${submissionId}/update-documents`, filesToUpload)
         .then(() => setShowPackageConfirmation(true))
         .catch((error) =>
-          errorRedirect(sessionStorage.getItem("errorUrl"), error)
+          handleError(error, setShowLoader, setContinueBtnEnabled)
         );
     })
-    .catch((err) => errorRedirect(sessionStorage.getItem("errorUrl"), err));
+    .catch((err) => handleError(err, setShowLoader, setContinueBtnEnabled));
 };
 
 const checkForDuplicateFiles = (droppedFiles, acceptedFiles) => {
@@ -288,6 +296,7 @@ export default function Upload({
   const [items, setItems] = useState([]);
   const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [showLoader, setShowLoader] = useState(false);
 
   useEffect(() => {
     sessionStorage.setItem("currentPage", "upload");
@@ -383,15 +392,20 @@ export default function Upload({
           />
           <Button
             label="Continue"
-            onClick={() =>
+            onClick={() => {
+              setShowLoader(true);
+              setContinueBtnEnabled(false);
               uploadDocuments(
                 submissionId,
                 acceptedFiles,
-                setShowPackageConfirmation
-              )
-            }
+                setShowPackageConfirmation,
+                setShowLoader,
+                setContinueBtnEnabled
+              );
+            }}
             styling="normal-blue btn"
             disabled={!continueBtnEnabled}
+            hasLoader={showLoader}
           />
         </section>
       </div>

@@ -19,7 +19,6 @@ import ca.bc.gov.open.jag.efilingapi.utils.MdcUtils;
 import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
 import ca.bc.gov.open.jag.efilingapi.utils.TikaAnalysis;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.*;
-import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -235,7 +234,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         ResponseEntity response;
 
         try {
-            generateUrlRequest.getClientApplication().setType(SecurityUtils.getApplicationCode());
             response = ResponseEntity.ok(
                     generateUrlResponseMapper.toGenerateUrlResponse(
                             submissionService.generateFromRequest(submissionKey, generateUrlRequest),
@@ -281,18 +279,13 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         if (!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
 
-
-        if (fromCacheSubmission.get().getAccountDetails() == null ||
-            fromCacheSubmission.get().getAccountDetails().getAccountId() == null ||
-            fromCacheSubmission.get().getAccountDetails().getClientId() == null)
-            setIdsInCachedSubmission(universalId.get(),fromCacheSubmission.get());
-
-
         GetSubmissionConfigResponse response = new GetSubmissionConfigResponse();
 
-        response.setClientApplication(fromCacheSubmission.get().getClientApplication());
+        response.setClientAppName(fromCacheSubmission.get().getClientAppName());
 
-        response.setNavigation(fromCacheSubmission.get().getNavigation());
+        response.setNavigationUrls(fromCacheSubmission.get().getNavigationUrls());
+
+        response.setCsoBaseUrl(navigationProperties.getCsoBaseUrl());
 
         logger.info("Successfully retrieved submission for transactionId [{}]", xTransactionId);
 
@@ -334,8 +327,8 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
 
     @Override
+    @RolesAllowed("efiling-user")
     public ResponseEntity<Void> deleteSubmission(UUID submissionId, UUID xTransactionId) {
-
 
         Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
 
@@ -386,11 +379,15 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         try {
             SubmitResponse result = submissionService.createSubmission(fromCacheSubmission.get(), accountService.getCsoAccountDetails(submissionKey.getUniversalId()));
             response = new ResponseEntity(result, HttpStatus.CREATED);
-        } catch (EfilingSubmissionServiceException e) {
-            response = new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+            logger.info("successfully submitted efiling package for transaction [{}], cso id {}", xTransactionId);
 
-        logger.info("successfully submitted efiling package for transaction [{}]", xTransactionId);
+        } catch (EfilingSubmissionServiceException e) {
+            logger.error("failed package submission {}", xTransactionId);
+            response = new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+
+        } finally {
+            this.submissionStore.evict(submissionKey);
+        }
 
         MdcUtils.clearUserMDC();
 
@@ -404,14 +401,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         response.setMessage(errorResponse.getErrorMessage());
         return response;
 
-    }
-
-    private void setIdsInCachedSubmission(UUID universalId, Submission submission) {
-        AccountDetails accountDetails = accountService.getCsoAccountDetails(universalId);
-        if (accountDetails != null) {
-            submission.setAccountDetails(accountDetails);
-            this.submissionStore.put(submission);
-        }
     }
 
     private ResponseEntity storeDocuments(SubmissionKey submissionKey, List<MultipartFile> files) {

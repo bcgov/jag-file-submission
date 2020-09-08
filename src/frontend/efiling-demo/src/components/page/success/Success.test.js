@@ -8,7 +8,13 @@ const header = {
   history: createMemoryHistory(),
 };
 
-const page = { header };
+const packageRef = "aHR0cHM6L2thZ2VObz0xMTQzMA==";
+const buff = Buffer.from(packageRef, "base64");
+const url = buff.toString("ascii");
+
+const page = { header, packageRef };
+
+window.open = jest.fn();
 
 describe("Success", () => {
   test("Component matches the snapshot", () => {
@@ -23,5 +29,21 @@ describe("Success", () => {
     fireEvent.click(getByText(container, "Return home"));
 
     expect(header.history.location.pathname).toEqual("/");
+  });
+
+  test("Clicking on link to view package submission details decodes ref and opens the url", () => {
+    const { container } = render(<Success page={page} />);
+
+    fireEvent.click(getByText(container, "View my submitted package."));
+
+    expect(window.open).toHaveBeenCalledWith(url);
+  });
+
+  test("Keydown on link to view package submission details decodes ref and opens the url", () => {
+    const { container } = render(<Success page={page} />);
+
+    fireEvent.keyDown(getByText(container, "View my submitted package."));
+
+    expect(window.open).toHaveBeenCalledWith(url);
   });
 });

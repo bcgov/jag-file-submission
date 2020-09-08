@@ -1514,7 +1514,7 @@ definitions:
         type: string
         maxLength: 2
         description: "The type of card used in the transaction. AM = American Express, DI = Diners, JB = JCB, MC = MasterCard, NN = Discover, VI = Visa"
-        enum: ["AM", "DI", "JB", "MC", "NN", "VI"]
+        enum: ["AM", "DI", "JB", "MC", "NN", "VI", "PV", "MD", "IO"]
       last_four:
         type: string
         maxLength: 4

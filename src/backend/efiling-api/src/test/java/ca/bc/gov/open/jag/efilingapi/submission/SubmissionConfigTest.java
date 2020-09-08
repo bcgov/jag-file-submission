@@ -24,7 +24,6 @@ import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.math.BigDecimal;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -56,9 +55,6 @@ public class SubmissionConfigTest {
 
             assertThat(it).hasSingleBean(SubmissionMapper.class);
             Assertions.assertEquals(SubmissionMapperImpl.class, it.getBean(SubmissionMapper.class).getClass());
-
-            assertThat(it).hasSingleBean(EfilingFilingPackageMapper.class);
-            Assertions.assertEquals(EfilingFilingPackageMapperImpl.class, it.getBean(EfilingFilingPackageMapper.class).getClass());
 
             assertThat(it).hasSingleBean(FilingPackageMapper.class);
             Assertions.assertEquals(FilingPackageMapperImpl.class, it.getBean(FilingPackageMapper.class).getClass());
@@ -115,7 +111,7 @@ public class SubmissionConfigTest {
     public static class EfilingSubmissionServiceTest implements EfilingSubmissionService {
 
         @Override
-        public BigDecimal submitFilingPackage(AccountDetails accountDetails, FilingPackage efilingPackage, EfilingFilingPackage filingPackage, boolean isRushedProcessing, EfilingPaymentService payment) {
+        public SubmitPackageResponse submitFilingPackage(AccountDetails accountDetails, FilingPackage efilingPackage, EfilingPaymentService payment) {
             return null;
         }
     }

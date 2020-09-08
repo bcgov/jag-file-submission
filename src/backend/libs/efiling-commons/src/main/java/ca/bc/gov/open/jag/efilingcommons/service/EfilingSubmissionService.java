@@ -1,18 +1,14 @@
 package ca.bc.gov.open.jag.efilingcommons.service;
 
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.EfilingFilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.model.FilingPackage;
-
-import java.math.BigDecimal;
+import ca.bc.gov.open.jag.efilingcommons.model.SubmitPackageResponse;
 
 public interface EfilingSubmissionService {
 
-    BigDecimal submitFilingPackage(
+    SubmitPackageResponse submitFilingPackage(
             AccountDetails accountDetails,
             FilingPackage efilingPackage,
-            EfilingFilingPackage filingPackage,
-            boolean isRushedProcessing,
             EfilingPaymentService payment);
 
 }

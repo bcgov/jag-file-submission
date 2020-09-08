@@ -1,7 +1,8 @@
 package ca.bc.gov.open.jag.efilingapi.lookup.lookupApiDelegateImpl;
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
-import ca.bc.gov.open.jag.efilingapi.api.model.*;
+import ca.bc.gov.open.jag.efilingapi.api.model.DocumentTypes;
+import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jag.efilingapi.lookup.LookupApiDelegateImpl;
@@ -15,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class GetDocumentTypesTest {
     @BeforeAll
     public void setUp() throws IOException {
         MockitoAnnotations.initMocks(this);
-        List<DocumentType> documentTypes = Arrays.asList(new DocumentType(TestHelpers.DESCRIPTION, TestHelpers.TYPE, true));
+        List<DocumentType> documentTypes = Arrays.asList(new DocumentType(TestHelpers.DESCRIPTION, TestHelpers.TYPE.getValue(), true));
 
         Mockito.when(documentStoreMock.getDocumentTypes(LEVEL, CLASS)).thenReturn(documentTypes);
         Mockito.when(documentStoreMock.getDocumentTypes(BAD, BAD)).thenThrow(new EfilingDocumentServiceException("NOOOOOOO"));
@@ -51,7 +51,7 @@ public class GetDocumentTypesTest {
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
         Assertions.assertEquals(1, actual.getBody().getDocumentTypes().size());
         Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getBody().getDocumentTypes().get(0).getDescription());
-        Assertions.assertEquals(TestHelpers.TYPE, actual.getBody().getDocumentTypes().get(0).getType());
+        Assertions.assertEquals(TestHelpers.TYPE.getValue(), actual.getBody().getDocumentTypes().get(0).getType());
     }
 
     @Test

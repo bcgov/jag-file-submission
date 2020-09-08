@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { MdDescription, MdCheckBox, MdDeleteForever } from "react-icons/md";
+import { MdDescription, MdCheckBox } from "react-icons/md";
 import ConfirmationPopup, {
   Alert,
   Button,
@@ -51,9 +51,6 @@ const generateTable = (file, data, submissionId) => {
           >
             {file.name}
           </span>
-          {file.isAmendment != null && (
-            <MdDeleteForever size={32} className="push-margin-left pointer" />
-          )}
         </div>
       ),
       value: <Table elements={data} />,

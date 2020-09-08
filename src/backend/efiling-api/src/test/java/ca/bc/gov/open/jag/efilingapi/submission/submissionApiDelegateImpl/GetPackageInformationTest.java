@@ -152,7 +152,7 @@ public class GetPackageInformationTest {
                 .description(TestHelpers.DESCRIPTION)
                 .statutoryFeeAmount(BigDecimal.TEN)
                 .name("random.txt")
-                .type(TestHelpers.TYPE)
+                .type(TestHelpers.TYPE.getValue())
                 .subType(SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD)
                 .mimeType("application/txt")
                 .isSupremeCourtScheduling(null)
