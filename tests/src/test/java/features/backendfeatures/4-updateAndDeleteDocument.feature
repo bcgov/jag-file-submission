@@ -1,6 +1,6 @@
 Feature: User can upload additional document and delete the documents
 
-  @backendd
+ # @backend
   Scenario: Verify additional document can be uploaded, retrieved and deleted
      ## Call to upload the document ##
     Given initial document is posted to "DOCUMENT_SUBMISSION" with valid existing CSO account guid and a single pdf file
