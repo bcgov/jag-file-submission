@@ -11,6 +11,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 
 public class FrontendTestUtil extends DriverClass {
 
@@ -39,6 +40,7 @@ public class FrontendTestUtil extends DriverClass {
 
         driverSetUp();
         String url = readConfig.getBaseUrl();
+        Map<String, String> env = System.getenv();
 
         String username = System.getProperty("BCEID_USERNAME");
         String password = System.getProperty("BCEID_PASSWORD");
