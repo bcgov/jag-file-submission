@@ -68,8 +68,8 @@ public class EFileSubmissionTest extends DriverClass {
         log.info("Landing page url is accessed successfully");
 
         AuthenticationPage authenticationPage = new AuthenticationPage(driver);
-       // authenticationPage.clickBceid();
-        authenticationPage.signInWithIdir(username, password);
+        authenticationPage.clickBceid();
+        authenticationPage.signInWithBceid(username, password);
         log.info("user is authenticated before reaching eFiling demo page");
 
         WebDriverWait wait = new WebDriverWait(driver, 60);
@@ -100,8 +100,8 @@ public class EFileSubmissionTest extends DriverClass {
         log.info("Pdf file is uploaded successfully.");
 
         AuthenticationPage authenticationPage = new AuthenticationPage(driver);
-       // authenticationPage.clickBceid();
-        authenticationPage.signInWithIdir(username, password);
+        authenticationPage.clickBceid();
+        authenticationPage.signInWithBceid(username, password);
         log.info("user is authenticated in eFiling demo page.");
     }
 
@@ -186,7 +186,7 @@ public class EFileSubmissionTest extends DriverClass {
 
         AuthenticationPage authenticationPage = new AuthenticationPage(driver);
         authenticationPage.clickBceid();
-        authenticationPage.signInWithIdir(username, password);
+        authenticationPage.signInWithBceid(username, password);
         log.info("user is authenticated in eFiling demo page.");
     }
 

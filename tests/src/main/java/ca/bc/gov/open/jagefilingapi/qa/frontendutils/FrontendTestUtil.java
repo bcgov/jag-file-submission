@@ -42,14 +42,15 @@ public class FrontendTestUtil extends DriverClass {
 
         String username = System.getProperty("BCEID_USERNAME");
         String password = System.getProperty("BCEID_PASSWORD");
+        System.out.println(username);
+        System.out.println(password);
 
         driver.get(url);
         log.info("Landing page url is accessed successfully");
 
-        // ** Leaving this step for demo mode **
-        // authenticationPage.clickBceid();
         AuthenticationPage authenticationPage = new AuthenticationPage(driver);
-        authenticationPage.signInWithIdir(username, password);
+        authenticationPage.clickBceid();
+        authenticationPage.signInWithBceid(username, password);
         log.info("user is authenticated before reaching eFiling demo page");
 
         // ** Leaving this step for demo mode **
@@ -63,8 +64,8 @@ public class FrontendTestUtil extends DriverClass {
         log.info("Pdf file is uploaded successfully.");
 
         // ** Leaving this step for demo mode **
-        // authenticationPage.clickBceid();
-        authenticationPage.signInWithIdir(username, password);
+         authenticationPage.clickBceid();
+        authenticationPage.signInWithBceid(username, password);
         log.info("user is authenticated in eFiling demo page.");
 
         PackageConfirmationPage packageConfirmationPage = new PackageConfirmationPage(driver);

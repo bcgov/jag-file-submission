@@ -36,7 +36,7 @@ public class AuthenticationPage {
     }
 
     //Actions:
-    public void signInWithIdir(String userNm, String pwd) {
+    public void signInWithBceid(String userNm, String pwd) {
         wait = new WebDriverWait(driver, 60);
         wait.until(ExpectedConditions.titleIs("Government of British Columbia"));
         log.info("Waiting for the page to load...");
@@ -47,7 +47,7 @@ public class AuthenticationPage {
 
     public void clickBceid() {
         wait = new WebDriverWait(driver, 60);
-        wait.until(ExpectedConditions.titleIs("Government of British Columbia"));
+        wait.until(ExpectedConditions.titleIs("Log in to CSB Efiling Hub"));
         bceidBtn.click();
     }
 }
