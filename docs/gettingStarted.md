@@ -57,31 +57,32 @@ payload:
 
 ```json
 {
-  "navigation": {
-    "success": {
-      "url": "http//somewhere.com"
-    },
-    "error": {
-      "url": "http//somewhere.com"
-    },
-    "cancel": {
-      "url": "http//somewhere.com"
-    }
+  "navigationUrls": {
+    "success": "http//somewhere.com",
+    "error": "http//somewhere.com",
+    "cancel": "http//somewhere.com"
   },
-  "clientApplication": {
-    "displayName": "your application name"
-  },
+  "clientAppName": "your application name",
   "filingPackage": {
     "court": {
       "location": "XXXX",
-      "level": "X",
-      "courtClass": "X",
-      "division": "X"
+      "level": "P",
+      "courtClass": "F",
+      "division": "I"
     },
     "documents": [
       {
         "name": "test.pdf",
         "type": "XXX"
+      }
+    ],
+    "parties": [
+      {
+        "partyType": "IND",
+        "roleType": "ABC",
+        "firstName": "string",
+        "middleName": "string",
+        "lastName": "string"
       }
     ]
   }
