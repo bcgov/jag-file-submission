@@ -70,27 +70,13 @@ public class AutoConfiguration {
 
     @Bean
     public BCeIDAccountService bCeIDAccountService() {
-
         return new BCeIDAccountService() {
             @Override
             public Optional<IndividualIdentity> getIndividualIdentity(GetAccountRequest getAccountRequest) {
-
-
-                 Name name = Name.builder()
-                        .firstName("firstName")
-                        .otherMiddleName("otherMiddleName")
-                        .surname("surname")
-                        .initials("initial")
-                        .create();
-                IndividualIdentity individualIdentity =
-                        IndividualIdentity.builder()
-                                .name(name)
-                                .create();
-
+                IndividualIdentity individualIdentity = IndividualIdentity.builder().name(Name.builder().firstName("Bob").middleName("Alan").surname("Ross").create()).create();
                 return Optional.of(individualIdentity);
             }
         };
-
     }
 
 }

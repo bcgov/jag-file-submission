@@ -80,20 +80,20 @@ const checkCSOAccountStatus = (
           if (err.response.status !== 404)
             errorRedirect(sessionStorage.getItem("errorUrl"), err);
           else {
-            // axios
-            //   .get("/bceidAccount")
-            //   .then(({ data: { firstName, middleName, lastName } }) => {
-            setRequiredState(
-              "firstName",
-              "middleName",
-              "lastName",
-              setApplicantInfo,
-              setShowLoader
-            );
-            // })
-            // .catch((e) =>
-            //   errorRedirect(sessionStorage.getItem("errorUrl"), e)
-            // );
+            axios
+              .get("/bceidAccount")
+              .then(({ data: { firstName, middleName, lastName } }) => {
+                setRequiredState(
+                  firstName,
+                  middleName,
+                  lastName,
+                  setApplicantInfo,
+                  setShowLoader
+                );
+              })
+              .catch((e) =>
+                errorRedirect(sessionStorage.getItem("errorUrl"), e)
+              );
           }
         });
     })

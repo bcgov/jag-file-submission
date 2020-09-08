@@ -28,7 +28,7 @@
         <org.glassfish.jersey.inject.version>2.31</org.glassfish.jersey.inject.version>
         <com.brsanthu.version>2.2</com.brsanthu.version>
         <org.threeten.version>1.4.4</org.threeten.version>
-        <com.github.joschi.jackson.version>2.10.0</com.github.joschi.jackson.version>
+        <com.github.joschi.jackson.version>2.11.2</com.github.joschi.jackson.version>
         <com.google.code.findbugs.version>3.0.2</com.google.code.findbugs.version>
         <ca.bc.gov.open.version>0.1.8</ca.bc.gov.open.version>
     </properties>
