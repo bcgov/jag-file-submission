@@ -134,8 +134,6 @@ public class SubmitTest {
                 .thenReturn(result);
 
         Mockito.doThrow(EfilingSubmissionServiceException.class).when(submissionServiceMock).createSubmission(ArgumentMatchers.argThat(x -> x.getId().equals(TestHelpers.CASE_2)), Mockito.any());
-
-
         Mockito.doThrow(EfilingPaymentException.class).when(submissionServiceMock).createSubmission(ArgumentMatchers.argThat(x -> x.getId().equals(TestHelpers.CASE_4)), Mockito.any());
 
         FilingPackageMapper filingPackageMapper = new FilingPackageMapperImpl();
