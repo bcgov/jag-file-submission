@@ -6,6 +6,8 @@ public enum ErrorResponse {
     INVALIDUNIVERSAL("Invalid universal id."),
     ACCOUNTEXCEPTION("Client has multiple CSO profiles."),
     DOCUMENT_TYPE_ERROR("Error while retrieving documents"),
+    PAYMENT_FAILURE("Error while making payment"),
+    SUBMISSION_FAILURE("Error while submitting filing package"),
     DOCUMENT_REQUIRED("At least one document is required."),
     DOCUMENT_STORAGE_FAILURE("An unknown error happened while storing documents."),
     FILE_TYPE_ERROR("File is not a PDF"),
