@@ -39,7 +39,6 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
     private static final String FIRST_FILE_NAME_PATH = "/test-document.pdf";
     private static final String SECOND_FILE_NAME_PATH = "/test-document-2.pdf";
     private static final String DOCUMENT_PATH_PARAM = "/document";
-    private static final String DOCUMENTS_PATH_PARAM = "/documents";
     private static final String UPDATE_DOCUMENTS_PATH_PARAM = "/update-documents";
 
 
@@ -71,7 +70,6 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
                 log.info("Status code and content type did not match.");
         }
 
-        //assertEquals(200, response.getStatusCode());
         assertEquals(CONTENT_TYPE, response.getContentType());
     }
 

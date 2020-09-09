@@ -65,8 +65,6 @@ public class EFileSubmissionTest extends DriverClass {
 
         username = System.getProperty("BCEID_USERNAME");
         password = System.getProperty("BCEID_PASSWORD");
-        System.out.println(username);
-        System.out.println(password);
 
         driver.get(url);
         log.info("Landing page url is accessed successfully");

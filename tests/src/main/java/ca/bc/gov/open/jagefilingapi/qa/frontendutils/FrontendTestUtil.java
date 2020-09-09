@@ -64,9 +64,6 @@ public class FrontendTestUtil extends DriverClass {
         authenticationPage.signInWithBceid(username, password);
         log.info("user is authenticated in eFiling hub.");
 
-        CreateCsoAccountPage createCsoAccountPage = new CreateCsoAccountPage(driver);
-        createCsoAccountPage.verifyCsoBtnIsDisplayed();
-
         JavascriptExecutor js = (JavascriptExecutor) driver;
         String userToken = js.executeScript("return window.localStorage.getItem('jwt');").toString();
         driver.quit();

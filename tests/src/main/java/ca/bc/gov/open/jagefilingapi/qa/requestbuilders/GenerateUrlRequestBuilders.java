@@ -121,7 +121,6 @@ public class GenerateUrlRequestBuilders {
         FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
 
         userToken = frontendTestUtil.getUserJwtToken();
-        System.out.println(userToken);
 
         request = given().auth().preemptive().oauth2(userToken)
                 .spec(TestUtil.requestSpecification())
@@ -139,7 +138,6 @@ public class GenerateUrlRequestBuilders {
         FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
 
         userToken = frontendTestUtil.getUserJwtToken();
-        System.out.println(userToken);
 
         request = given().auth().preemptive().oauth2(userToken)
                 .spec(TestUtil.requestSpecification())
