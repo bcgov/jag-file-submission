@@ -37,7 +37,6 @@
 				<module>libs/efiling-bom</module>
 				<module>libs/efiling-commons</module>
 				<module>libs/efiling-cso-starter</module>
-				<module>libs/efiling-demo-starter</module>
 			</modules>
 		</profile>
 	</profiles>
