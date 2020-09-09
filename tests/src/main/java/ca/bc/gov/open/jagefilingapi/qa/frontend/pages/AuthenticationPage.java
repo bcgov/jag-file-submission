@@ -37,7 +37,7 @@ public class AuthenticationPage {
 
     //Actions:
     public void signInWithBceid(String userNm, String pwd) {
-        wait = new WebDriverWait(driver, 60);
+        wait = new WebDriverWait(driver, 90);
         wait.until(ExpectedConditions.titleIs("Government of British Columbia"));
         log.info("Waiting for the page to load...");
         userName.sendKeys(userNm);

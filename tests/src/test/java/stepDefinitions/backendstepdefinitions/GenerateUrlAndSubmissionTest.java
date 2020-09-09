@@ -125,7 +125,7 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     @Then("verify court details and document details are returned and not empty")
     public void verifyCourtDetailsAndDocumentDetailsAreReturnedAndNotEmpty() {
         jsonPath = new JsonPath(response.asString());
-        float submissionFeeAmount = jsonPath.get("submissionFeeAmount");
+        int submissionFeeAmount = jsonPath.get("submissionFeeAmount");
 
         assertThat(jsonPath.get("court.location"), is(not(emptyString())));
         assertThat(jsonPath.get("court.level"), is(not(emptyString())));
@@ -154,13 +154,9 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     public void verifySuccessErrorAndCancelNavigationUrlsAreReturned() {
         jsonPath = new JsonPath(response.asString());
 
-        String successUrl = jsonPath.get("navigation.success.url");
-        String errorUrl = jsonPath.get("navigation.error.url");
-        String cancelUrl = jsonPath.get("navigation.cancel.url");
-
-        assertNotNull(successUrl);
-        assertNotNull(errorUrl);
-        assertNotNull(cancelUrl);
+        assertNotNull(jsonPath.get("navigationUrls.success"));
+        assertNotNull(jsonPath.get("navigationUrls.error"));
+        assertNotNull(jsonPath.get("navigationUrls.cancel"));
     }
 
     @Given("{string} id with filename path is submitted with GET http request")

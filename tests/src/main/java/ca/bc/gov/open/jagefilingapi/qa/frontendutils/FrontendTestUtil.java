@@ -70,7 +70,6 @@ public class FrontendTestUtil extends DriverClass {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         String userToken = js.executeScript("return window.localStorage.getItem('jwt');").toString();
         driver.quit();
-        System.out.println(userToken);
         return userToken;
     }
 }
