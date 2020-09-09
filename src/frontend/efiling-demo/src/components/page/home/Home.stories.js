@@ -18,8 +18,8 @@ const header = {
 const page = { header };
 
 const setRequiredStorage = () => {
-  sessionStorage.setItem("demoKeycloakUrl", "demokeycloakexample.com");
-  sessionStorage.setItem("demoKeycloakRealm", "demoRealm");
+  sessionStorage.setItem("apiKeycloakUrl", "apikeycloakexample.com");
+  sessionStorage.setItem("apiKeycloakRealm", "apiRealm");
 };
 
 const LoadData = (props) => {
@@ -27,7 +27,7 @@ const LoadData = (props) => {
   const mock = new MockAdapter(axios);
   mock
     .onPost(
-      "demokeycloakexample.com/realms/demoRealm/protocol/openid-connect/token"
+      "apikeycloakexample.com/realms/apiRealm/protocol/openid-connect/token"
     )
     .reply(200, { access_token: "token" });
   return props.children({ page });

@@ -7,7 +7,7 @@ import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.Custom;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.PaymentRequest;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.PaymentResponse;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.ProfilePurchase;
-import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingPaymentException;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingPayment;
 import ca.bc.gov.open.jag.efilingcommons.model.PaymentTransaction;
 import org.joda.time.DateTime;
@@ -60,7 +60,7 @@ public class BamboraPaymentAdapter {
         } catch (ApiException e) {
 
             logger.error("Bambora payment exception", e);
-            throw new EfilingSubmissionServiceException("Bambora payment exception", e.getCause());
+            throw new EfilingPaymentException("Bambora payment exception", e.getCause());
 
         }
 
