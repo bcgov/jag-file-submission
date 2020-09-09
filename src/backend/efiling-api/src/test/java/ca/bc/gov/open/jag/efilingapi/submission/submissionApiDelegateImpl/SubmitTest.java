@@ -15,6 +15,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMappe
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingPaymentException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -107,10 +108,20 @@ public class SubmitTest {
                 .navigationUrls(TestHelpers.createNavigation(null, null, null))
                 .create();
 
+        Submission submissionPaymentError = Submission
+                .builder()
+                .navigationUrls(TestHelpers.createNavigation(null, null, null))
+                .create();
+
         Mockito
                 .doReturn(Optional.of(submissionError))
                 .when(submissionStoreMock)
                 .get(ArgumentMatchers.argThat(x -> x.getSubmissionId().equals(TestHelpers.CASE_2)));
+
+        Mockito
+                .doReturn(Optional.of(submissionPaymentError))
+                .when(submissionStoreMock)
+                .get(ArgumentMatchers.argThat(x -> x.getSubmissionId().equals(TestHelpers.CASE_4)));
 
         SubmitResponse result = new SubmitResponse();
         result.setPackageRef("packageref");
@@ -120,6 +131,9 @@ public class SubmitTest {
                 .thenReturn(result);
 
         Mockito.when(submissionServiceMock.createSubmission(Mockito.refEq(submissionError), Mockito.any())).thenThrow(new EfilingSubmissionServiceException("Nooooooo", new Throwable()));
+
+        Mockito.when(submissionServiceMock.createSubmission(Mockito.refEq(submissionPaymentError), Mockito.any())).thenThrow(new EfilingPaymentException("Nooooooo", new Throwable()));
+
 
         FilingPackageMapper filingPackageMapper = new FilingPackageMapperImpl();
         sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationPropertiesMock, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper);
@@ -141,7 +155,7 @@ public class SubmitTest {
     }
 
     @Test
-    @DisplayName("500: with valid request but soap servie throws an exception return 500")
+    @DisplayName("500: with valid request but soap service throws an exception return 500")
     public void withErrorInServiceShouldReturnInternalServiceError() {
 
         Map<String, Object> otherClaims = new HashMap<>();
@@ -150,8 +164,23 @@ public class SubmitTest {
 
         ResponseEntity actual = sut.submit(UUID.randomUUID(), TestHelpers.CASE_2, null);
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode());
-        assertEquals("DOCUMENT_TYPE_ERROR", ((EfilingError)actual.getBody()).getError());
-        assertEquals("Error while retrieving documents", ((EfilingError)actual.getBody()).getMessage());
+        assertEquals("SUBMISSION_FAILURE", ((EfilingError)actual.getBody()).getError());
+        assertEquals("Error while submitting filing package", ((EfilingError)actual.getBody()).getMessage());
+
+    }
+
+    @Test
+    @DisplayName("400: with valid request but bambora throws an exception return 400")
+    public void withErrorInBamboraShouldReturnBadRequest() {
+
+        Map<String, Object> otherClaims = new HashMap<>();
+        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
+        ResponseEntity actual = sut.submit(UUID.randomUUID(), TestHelpers.CASE_4, null);
+        assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
+        assertEquals("PAYMENT_FAILURE", ((EfilingError)actual.getBody()).getError());
+        assertEquals("Error while making payment", ((EfilingError)actual.getBody()).getMessage());
 
     }
 

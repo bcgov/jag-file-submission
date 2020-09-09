@@ -383,7 +383,11 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         } catch (EfilingSubmissionServiceException e) {
             logger.error("failed package submission {}", xTransactionId);
-            response = new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+            response = new ResponseEntity(buildEfilingError(ErrorResponse.SUBMISSION_FAILURE), HttpStatus.INTERNAL_SERVER_ERROR);
+
+        } catch (EfilingPaymentException e) {
+            logger.error("payment failure during package submission {}", xTransactionId);
+            response = new ResponseEntity(buildEfilingError(ErrorResponse.PAYMENT_FAILURE), HttpStatus.BAD_REQUEST);
 
         } finally {
             this.submissionStore.evict(submissionKey);

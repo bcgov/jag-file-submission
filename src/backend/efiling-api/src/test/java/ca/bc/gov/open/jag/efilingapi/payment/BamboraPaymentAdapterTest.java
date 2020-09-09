@@ -5,7 +5,7 @@ import ca.bc.gov.open.jag.efilingbamboraapiclient.api.handler.ApiException;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.CardPurchaseResponse;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.Custom;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.PaymentResponse;
-import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingPaymentException;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingPayment;
 import ca.bc.gov.open.jag.efilingcommons.model.PaymentTransaction;
 import org.joda.time.DateTime;
@@ -86,7 +86,7 @@ public class BamboraPaymentAdapterTest {
         Mockito.when(paymentsApiMock.makePayment(any())).thenThrow(ApiException.class);
         EfilingPayment payment = new EfilingPayment(BigDecimal.TEN, BigDecimal.TEN, ORDER_NUMBER, INTERNAL_CLIENT_NUMBER);
 
-        Assertions.assertThrows(EfilingSubmissionServiceException.class, () -> sut.makePayment(payment));
+        Assertions.assertThrows(EfilingPaymentException.class, () -> sut.makePayment(payment));
     }
 
     private PaymentResponse createPaymentResponse(int messageId, int approved) {
