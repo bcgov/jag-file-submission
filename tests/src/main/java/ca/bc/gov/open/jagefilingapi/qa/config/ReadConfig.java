@@ -32,4 +32,8 @@ public class ReadConfig {
         public String getBrowser() {
             return prop.getProperty("browser");
     }
+
+       public String getKeycloakUrl() {
+        return prop.getProperty("keycloakUrl");
+    }
 }

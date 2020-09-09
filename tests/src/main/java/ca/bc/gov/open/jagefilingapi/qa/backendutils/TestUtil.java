@@ -10,11 +10,17 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
-
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URLEncodedUtils;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
 
 import static io.restassured.RestAssured.baseURI;
 
@@ -44,20 +50,16 @@ public class TestUtil {
                 .build();
     }
 
-    public static ResponseSpecification validDocumentResponseSpecification() {
-        return new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON).build();
+    public static ResponseSpecification validResponseCodeSpecification() {
+        return new ResponseSpecBuilder().expectStatusCode(200).build();
     }
 
-    public static ResponseSpecification responseSpecification() {
+    public static ResponseSpecification validResponseSpecification() {
         return new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON).build();
     }
 
     public static ResponseSpecification errorResponseSpecification() {
-        return new ResponseSpecBuilder().expectStatusCode(403).expectContentType(ContentType.JSON).build();
-    }
-
-    public static ResponseSpecification withoutIdResponseSpecification() {
-        return new ResponseSpecBuilder().expectStatusCode(405).expectContentType(ContentType.JSON).build();
+        return new ResponseSpecBuilder().expectStatusCode(415).expectContentType(ContentType.JSON).build();
     }
 
     public static ResponseSpecification createCsoAccountResponseSpecification() {
@@ -72,13 +74,26 @@ public class TestUtil {
         return new ResponseSpecBuilder().expectStatusCode(404).expectContentType(ContentType.JSON).build();
     }
 
-    public static ResponseSpecification documentValidResponseSpecification() {
-        return new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.fromContentType("application/octet-stream")).build();
-    }
-
     public static String getJsonPath(Response response, String key) {
         String resp = response.asString();
         JsonPath jsonPath = new JsonPath(resp);
         return jsonPath.get(key);
+    }
+
+    public static List<String> getSubmissionAndTransId(String respUrl, String submissionId, String transactionId) throws URISyntaxException {
+
+        List<NameValuePair> params = URLEncodedUtils.parse(new URI(respUrl), StandardCharsets.UTF_8);
+
+        String respSubId = null;
+        String respTransId = null;
+        
+        for (NameValuePair param : params) {
+            if (param.getName().equals(submissionId)) {
+                respSubId = param.getValue();
+            } else if (param.getName().equals(transactionId)) {
+                respTransId = param.getValue();
+            }
+        }
+        return Arrays.asList(respSubId, respTransId);
     }
 }

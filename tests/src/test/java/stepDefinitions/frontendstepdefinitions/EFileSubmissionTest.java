@@ -15,7 +15,6 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -23,20 +22,21 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public class EFileSubmissionTest extends DriverClass {
 
-     ReadConfig readConfig;
-     LandingPage landingPage;
-     EFileSubmissionPage eFileSubmissionPage;
-     PackageConfirmationPage packageConfirmationPage;
-     private static final String EFILE_SUBMISSION_PAGE_TITLE = "E-File submission";
+    ReadConfig readConfig;
+    LandingPage landingPage;
+    EFileSubmissionPage eFileSubmissionPage;
+    PackageConfirmationPage packageConfirmationPage;
+    private static final String EFILE_SUBMISSION_PAGE_TITLE = "E-File submission";
     private static final String EFILING_DEMO_CLIENT_PAGE_TITLE = "eFiling Demo Client";
-     private static final String BASE_PATH = "user.dir";
-     private static final String PDF_PATH = "/src/test/java/testdatasource/test-pdf-document.pdf";
-     private String filePath;
-     private String username;
-     private String password;
+    private static final String BASE_PATH = "user.dir";
+    private static final String PDF_PATH = "/src/test/java/testdatasource/test-document.pdf";
+    private String filePath;
+    private String username;
+    private String password;
 
     @Before("@frontend")
     public void setUp() throws IOException {
@@ -45,12 +45,12 @@ public class EFileSubmissionTest extends DriverClass {
     }
 
     @After("@frontend")
-    public void tearDown(Scenario scenario){
-        if(scenario.isFailed()) {
+    public void tearDown(Scenario scenario) {
+        if (scenario.isFailed()) {
             String testName = scenario.getName();
-                log.info(testName + "is Failed");
-                final byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-                scenario.attach(screenshot, "image/png", "Failed test");
+            log.info(testName + "is Failed");
+            final byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+            scenario.attach(screenshot, "image/png", "Failed test");
         }
         driver.close();
         driver.quit();
@@ -61,17 +61,17 @@ public class EFileSubmissionTest extends DriverClass {
     public void userIsOnTheLandingPage() throws IOException {
         readConfig = new ReadConfig();
         String url = readConfig.getBaseUrl();
-        Dotenv dotenv = Dotenv.load();
+        Map<String, String> env = System.getenv();
 
-        username = dotenv.get("BCEID_USERNAME");
-        password = dotenv.get("BCEID_PASSWORD");
+        username = System.getProperty("BCEID_USERNAME");
+        password = System.getProperty("BCEID_PASSWORD");
 
         driver.get(url);
         log.info("Landing page url is accessed successfully");
 
         AuthenticationPage authenticationPage = new AuthenticationPage(driver);
         authenticationPage.clickBceid();
-        authenticationPage.signInWithIdir(username, password);
+        authenticationPage.signInWithBceid(username, password);
         log.info("user is authenticated before reaching eFiling demo page");
 
         WebDriverWait wait = new WebDriverWait(driver, 60);
@@ -90,25 +90,22 @@ public class EFileSubmissionTest extends DriverClass {
         readConfig = new ReadConfig();
         landingPage = new LandingPage(driver);
 
-        validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
-        landingPage.enterAccountGuid(validExistingCSOGuid);
-
         filePath = System.getProperty(BASE_PATH) + PDF_PATH;
         landingPage.chooseFileToUpload(filePath);
 
         landingPage.enterJsonData();
 
-        landingPage.clickGenerateUrlButton();
+        landingPage.clickEfilePackageButton();
         log.info("Pdf file is uploaded successfully.");
 
         AuthenticationPage authenticationPage = new AuthenticationPage(driver);
         authenticationPage.clickBceid();
-        authenticationPage.signInWithIdir(username, password);
+        authenticationPage.signInWithBceid(username, password);
         log.info("user is authenticated in eFiling demo page.");
     }
 
     @Then("eFile submission page is displayed and user clicks the cancel button")
-    public void eFileSubmissionPageIsDisplayedAncUserClicksTheCancelButton() {
+    public void eFileSubmissionPageIsDisplayedAncUserClicksTheCancelButton() throws IOException {
         eFileSubmissionPage = new EFileSubmissionPage(driver);
         packageConfirmationPage = new PackageConfirmationPage(driver);
 
@@ -120,7 +117,6 @@ public class EFileSubmissionTest extends DriverClass {
         Assert.assertTrue(continuePaymentBtnIsDisplayed);
 
         packageConfirmationPage.clickContinuePaymentBtn();
-
         eFileSubmissionPage.clickCancelButton();
     }
 
@@ -184,12 +180,12 @@ public class EFileSubmissionTest extends DriverClass {
 
         landingPage.enterJsonData();
 
-        landingPage.clickGenerateUrlButton();
+        landingPage.clickEfilePackageButton();
         log.info("Pdf file is uploaded successfully.");
 
         AuthenticationPage authenticationPage = new AuthenticationPage(driver);
         authenticationPage.clickBceid();
-        authenticationPage.signInWithIdir(username, password);
+        authenticationPage.signInWithBceid(username, password);
         log.info("user is authenticated in eFiling demo page.");
     }
 
@@ -231,11 +227,11 @@ public class EFileSubmissionTest extends DriverClass {
     public void errorMessageIsDisplayed() {
         landingPage = new LandingPage(driver);
 
-        landingPage.clickGenerateUrlButton();
+        landingPage.clickEfilePackageButton();
         log.info("Generate Url button in eFiling frontend page is clicked");
 
         String expMsg = "An error occurred while eFiling your package. Please make sure you upload at least one file and try again.";
-        String actMsg =  landingPage.getErrorMessageText();
+        String actMsg = landingPage.getErrorMessageText();
         Assert.assertEquals(actMsg, expMsg);
 
         log.info("Expected message is verified");

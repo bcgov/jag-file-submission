@@ -1,6 +1,5 @@
 package ca.bc.gov.open.jagefilingapi.qa.frontend.pages;
 
-import ca.bc.gov.open.jagefilingapi.qa.frontendutils.DriverClass;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.FrontendTestUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -12,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
 
-public class PackageConfirmationPage {
+public class CreateCsoAccountPage {
 
     private final WebDriver driver;
 
@@ -20,11 +19,11 @@ public class PackageConfirmationPage {
     @FindBy(xpath = "//button[@data-test-id='upload-btn']")
     WebElement uploadDocumentsBtn;
 
-    @FindBy(xpath = "//button[@data-test-id='continue-btn']")
-    WebElement continuePaymentBtn;
+    @FindBy(xpath = "//button[@data-test-id='create-cso-btn']")
+    WebElement createCsoBtn;
 
     //Initializing the driver:
-    public PackageConfirmationPage(WebDriver driver) {
+    public CreateCsoAccountPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
@@ -34,19 +33,19 @@ public class PackageConfirmationPage {
         return uploadDocumentsBtn.isDisplayed();
     }
 
-    public boolean verifyContinuePaymentBtnIsDisplayed() throws IOException {
+    public boolean verifyCsoBtnIsDisplayed() throws IOException {
         WebDriverWait wait = new WebDriverWait(driver, 60);
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@data-test-id='continue-btn']")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@data-test-id='create-cso-btn']")));
         try {
-            return continuePaymentBtn.isDisplayed();
+            return createCsoBtn.isDisplayed();
         } catch (org.openqa.selenium.TimeoutException ex) {
             FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
             frontendTestUtil.getUserJwtToken();
         }
-        return continuePaymentBtn.isDisplayed();
+        return createCsoBtn.isDisplayed();
     }
 
-    public void clickContinuePaymentBtn() {
-         continuePaymentBtn.click();
+    public void clickCreateCsoAccountBtn() {
+         createCsoBtn.click();
     }
 }
