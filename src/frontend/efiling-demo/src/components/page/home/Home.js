@@ -166,11 +166,11 @@ export default function Home({ page: { header } }) {
   const [submitBtnEnabled, setSubmitBtnEnabled] = useState(true);
   const [showLoader, setShowLoader] = useState(false);
 
-  const keycloakClientId = sessionStorage.getItem("demoKeycloakClientId");
-  const keycloakBaseUrl = sessionStorage.getItem("demoKeycloakUrl");
-  const keycloakRealm = sessionStorage.getItem("demoKeycloakRealm");
+  const keycloakClientId = sessionStorage.getItem("apiKeycloakClientId");
+  const keycloakBaseUrl = sessionStorage.getItem("apiKeycloakUrl");
+  const keycloakRealm = sessionStorage.getItem("apiKeycloakRealm");
   const keycloakClientSecret = sessionStorage.getItem(
-    "demoKeycloakClientSecret"
+    "apiKeycloakClientSecret"
   );
 
   useEffect(() => {

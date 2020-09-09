@@ -64,8 +64,8 @@ describe("Home", () => {
     documents: [files[0].file],
   };
 
-  sessionStorage.setItem("demoKeycloakUrl", "demokeycloakexample.com");
-  sessionStorage.setItem("demoKeycloakRealm", "demoRealm");
+  sessionStorage.setItem("apiKeycloakUrl", "apikeycloakexample.com");
+  sessionStorage.setItem("apiKeycloakRealm", "apiRealm");
 
   const token = generateJWTToken({
     "universal-id": "123",
@@ -86,7 +86,7 @@ describe("Home", () => {
   test("Component matches the snapshot", async () => {
     mock
       .onPost(
-        "demokeycloakexample.com/realms/demoRealm/protocol/openid-connect/token"
+        "apikeycloakexample.com/realms/apiRealm/protocol/openid-connect/token"
       )
       .reply(200, { access_token: token });
 
@@ -100,7 +100,7 @@ describe("Home", () => {
   test("when post to keycloak token endpoint fails, sets error", async () => {
     mock
       .onPost(
-        "demokeycloakexample.com/realms/demoRealm/protocol/openid-connect/token"
+        "apikeycloakexample.com/realms/apiRealm/protocol/openid-connect/token"
       )
       .reply(400);
 
@@ -119,7 +119,7 @@ describe("Home", () => {
   test("displays an error message on page on failure of generateUrl call", async () => {
     mock
       .onPost(
-        "demokeycloakexample.com/realms/demoRealm/protocol/openid-connect/token"
+        "apikeycloakexample.com/realms/apiRealm/protocol/openid-connect/token"
       )
       .reply(200, { access_token: token });
     mock.onPost("/submission/documents").reply(200, { submissionId });
@@ -156,7 +156,7 @@ describe("Home", () => {
   test("displays an error message on page on failure of upload documents call", async () => {
     mock
       .onPost(
-        "demokeycloakexample.com/realms/demoRealm/protocol/openid-connect/token"
+        "apikeycloakexample.com/realms/apiRealm/protocol/openid-connect/token"
       )
       .reply(200, { access_token: token });
     mock.onPost("/submission/documents").reply(400);
@@ -193,7 +193,7 @@ describe("Home", () => {
   test("invoke onDrop when drop event occurs and efile successfully", async () => {
     mock
       .onPost(
-        "demokeycloakexample.com/realms/demoRealm/protocol/openid-connect/token"
+        "apikeycloakexample.com/realms/apiRealm/protocol/openid-connect/token"
       )
       .reply(200, { access_token: token });
     mock.onPost("/submission/documents").reply(200, { submissionId });
@@ -227,7 +227,7 @@ describe("Home", () => {
   test("uploading document with incorrect name matching filing package sets error", async () => {
     mock
       .onPost(
-        "demokeycloakexample.com/realms/demoRealm/protocol/openid-connect/token"
+        "apikeycloakexample.com/realms/apiRealm/protocol/openid-connect/token"
       )
       .reply(200, { access_token: token });
     mock.onPost("/submission/documents").reply(200, { submissionId });
