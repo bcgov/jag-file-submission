@@ -94,7 +94,6 @@ public class LandingPage {
                 "        \"firstName\": \"efile\",\n" +
                 "        \"middleName\": \"test\",\n" +
                 "        \"lastName\": \"qa\",\n" +
-                "        \"nameTypeCd\": \"CUR\"\n" +
                 "    }]\n" +
                 "}";
 
