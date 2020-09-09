@@ -68,6 +68,7 @@ public class AutoConfiguration {
         return new Jackson2JsonRedisSerializer(AccountDetails.class);
     }
 
+
     @Bean
     public BCeIDAccountService bCeIDAccountService() {
         return new BCeIDAccountService() {
