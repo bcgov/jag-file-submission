@@ -1974,6 +1974,9 @@ components:
           description: the number of document received
     Party:
       description: party related to filing package
+      required:
+        - roleType
+        - partyType
       properties:
         partyType:
           type: string

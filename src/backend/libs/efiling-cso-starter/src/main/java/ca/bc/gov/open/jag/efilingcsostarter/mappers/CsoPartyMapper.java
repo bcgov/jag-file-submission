@@ -10,8 +10,8 @@ import org.mapstruct.Mapping;
 @Mapper
 public interface CsoPartyMapper {
 
-    @Mapping(target = "partyTypeCd", source = "party.partyTypeCd", defaultValue = Keys.PARTY_TYPE_CD)
-    @Mapping(target = "roleTypeCd", source = "party.roleTypeCd", defaultValue = Keys.PARTY_ROLE_TYPE_CD)
+    @Mapping(target = "partyTypeCd", source = "party.partyTypeCd")
+    @Mapping(target = "roleTypeCd", source = "party.roleTypeCd")
     @Mapping(target = "current.entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
     @Mapping(target = "current.entUserId", source = "accountDetails.clientId")
     @Mapping(target = "current.firstGivenNm", source = "party.firstName")
