@@ -34,6 +34,7 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     private static final String SUBMISSION_ID = "submissionId";
     private static final String TRANSACTION_ID = "transactionId";
     private static final String GENERATE_URL_PATH_PARAM = "/generateUrl";
+    private static final String GET_CONFIG_PATH = "/config";
     private static final String FILE_NAME_PATH = "/test-document.pdf";
     private static final String FILING_PACKAGE_PATH_PARAM = "/filing-package";
     private static final String DOCUMENT_PATH_PARAM = "/document";
@@ -62,7 +63,6 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
 
         submissionId = TestUtil.getJsonPath(response, SUBMISSION_ID);
         int receivedCount = jsonPath.get("received");
-        System.out.println(receivedCount);
 
         switch (receivedCount) {
             case 1:
@@ -103,28 +103,16 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     @Given("{string} id is submitted with GET http request")
     public void idIsSubmittedWithGetHttpRequest(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
-        response = generateUrlRequestBuilders.requestToGetSubmissionAndDocuments(resource, validExistingCSOGuid, submissionId);
+        response = generateUrlRequestBuilders.requestToGetSubmissionConfig(resource, validExistingCSOGuid, submissionId, GET_CONFIG_PATH);
     }
 
-    @Then("verify universal id, user details, account type and identifier values are returned and not empty")
-    public void verifyUniversalIdUserDetailsAccountTypeAndIdentifierValuesAreReturnedAndNotEmpty() {
+    @Then("verify clientAppName and csoBaseUrl values are returned and not empty")
+    public void verifyUniversalIdClientAppNameAndCsoBaseUrlValuesAreReturnedAndNotEmpty() {
         jsonPath = new JsonPath(response.asString());
 
-        String universalId = jsonPath.get("userDetails.universalId");
-        String displayName = jsonPath.get("clientApplication.displayName");
-        String clientAppType = jsonPath.get("clientApplication.type");
-
-        List<String> type = jsonPath.get("userDetails.accounts.type");
-        List<String> identifier = jsonPath.get("userDetails.accounts.identifier");
-
-        assertThat(universalId, is(not(emptyString())));
-        assertThat(displayName, is(not(emptyString())));
-        assertThat(clientAppType, is(not(emptyString())));
-        log.info("Names and email objects from the valid CSO account submission response have valid values");
-
-        assertFalse(type.isEmpty());
-        assertFalse(identifier.isEmpty());
-        log.info("Account type and identifier objects from the valid CSO account submission response have valid values");
+        assertThat(jsonPath.get("clientAppName"), is(not(emptyString())));
+        assertThat(jsonPath.get("csoBaseUrl"), is(not(emptyString())));
+        log.info("ClientAppName and csoBaseUrl objects from the response are correct.");
     }
 
     @Given("{string} id with filing package path is submitted with GET http request")

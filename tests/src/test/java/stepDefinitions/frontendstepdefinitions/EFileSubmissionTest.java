@@ -65,6 +65,8 @@ public class EFileSubmissionTest extends DriverClass {
 
         username = System.getProperty("BCEID_USERNAME");
         password = System.getProperty("BCEID_PASSWORD");
+        System.out.println(username);
+        System.out.println(password);
 
         driver.get(url);
         log.info("Landing page url is accessed successfully");
@@ -89,9 +91,6 @@ public class EFileSubmissionTest extends DriverClass {
     public void userEntersAValidExistingCsoAccountGuidAndUploadsADocument(String validExistingCSOGuid) throws IOException {
         readConfig = new ReadConfig();
         landingPage = new LandingPage(driver);
-
-        //validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
-        //landingPage.enterAccountGuid(validExistingCSOGuid);
 
         filePath = System.getProperty(BASE_PATH) + PDF_PATH;
         landingPage.chooseFileToUpload(filePath);

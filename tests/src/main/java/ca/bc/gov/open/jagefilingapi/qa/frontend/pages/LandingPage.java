@@ -89,8 +89,8 @@ public class LandingPage {
                 "        \"type\": \"AFF\"\n" +
                 "    }],\n" +
                 "    \"parties\": [{\n" +
-                "        \"partyTypeCd\": \"IND\",\n" +
-                "        \"roleTypeCd\": \"CLA\",\n" +
+                "        \"partyType\": \"IND\",\n" +
+                "        \"roleType\": \"CLA\",\n" +
                 "        \"firstName\": \"efile\",\n" +
                 "        \"middleName\": \"test\",\n" +
                 "        \"lastName\": \"qa\",\n" +

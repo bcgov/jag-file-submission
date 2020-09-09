@@ -34,6 +34,7 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
     private static final String SUBMISSION_ID = "submissionId";
     private static final String TRANSACTION_ID = "transactionId";
     private static final String PATH_PARAM = "/generateUrl";
+    private static final String GET_CONFIG_PATH = "/config";
     private static final String FILE_NAME_PATH = "/test-document.pdf";
     private static final String FILING_PACKAGE_PATH_PARAM = "/filing-package";
     private static final String DOCUMENT_PATH_PARAM = "/document";
@@ -93,7 +94,8 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
     @Given("{string} id is submitted with non existing CSO account GET http request")
     public void idIsSubmittedWithNonExistingCsoAccountGetHttpRequest(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
-        response = generateUrlRequestBuilders.requestToGetSubmissionAndDocuments(resource, nonExistingCSOGuid, submissionId);
+        response = generateUrlRequestBuilders.requestToGetSubmissionConfig(resource, nonExistingCSOGuid,
+                                                                                submissionId, GET_CONFIG_PATH);
     }
 
     @Then("verify universal id, account type and identifier values are returned")

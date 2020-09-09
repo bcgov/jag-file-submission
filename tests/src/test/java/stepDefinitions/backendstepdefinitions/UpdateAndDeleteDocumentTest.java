@@ -35,6 +35,7 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
     private static final String SUBMISSION_ID = "submissionId";
     private static final String TRANSACTION_ID = "transactionId";
     private static final String GENERATE_URL_PATH_PARAM = "/generateUrl";
+    private static final String GET_CONFIG_PATH = "/config";
     private static final String FIRST_FILE_NAME_PATH = "/test-document.pdf";
     private static final String SECOND_FILE_NAME_PATH = "/test-document-2.pdf";
     private static final String DOCUMENT_PATH_PARAM = "/document";
@@ -119,7 +120,8 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
     @Given("{string} id is submitted with GET request")
     public void idIsSubmittedWithGetRequest(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
-        response = generateUrlRequestBuilders.requestToGetSubmissionAndDocuments(resource, validExistingCSOGuid, submissionId);
+        response = generateUrlRequestBuilders.requestToGetSubmissionConfig(resource, validExistingCSOGuid,
+                                                                                submissionId, GET_CONFIG_PATH);
     }
 
     @Then("verify universal id, user details and account type values are returned and not empty")

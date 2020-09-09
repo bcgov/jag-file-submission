@@ -7,12 +7,10 @@ import ca.bc.gov.open.jagefilingapi.qa.config.ReadConfig;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.FrontendTestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
 import io.restassured.RestAssured;
-import io.restassured.mapper.ObjectMapperType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
-import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 
@@ -101,7 +99,7 @@ public class GenerateUrlRequestBuilders {
                 .extract().response();
     }
 
-    public Response requestToGetSubmissionAndDocuments(String resource, String accountGuid, String submissionId) throws IOException {
+    public Response requestToGetSubmissionConfig(String resource, String accountGuid, String submissionId, String pathParam) throws IOException {
         APIResources resourceGet = APIResources.valueOf(resource);
         FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
 
@@ -111,7 +109,7 @@ public class GenerateUrlRequestBuilders {
                 .spec(TestUtil.requestSpecification())
                 .header(X_TRANSACTION_ID, accountGuid);
 
-        return request.when().get(resourceGet.getResource() + submissionId)
+        return request.when().get(resourceGet.getResource() + submissionId + pathParam)
                 .then()
                 .spec(TestUtil.validResponseSpecification())
                 .extract().response();
@@ -277,8 +275,8 @@ public class GenerateUrlRequestBuilders {
 
         request = given().auth().preemptive().oauth2(userToken)
                 .spec(TestUtil.requestSpecification())
-                .header(X_TRANSACTION_ID, accountGuid)
-                .body(payloadData.updateDocumentPropertiesPayload());
+                .header(X_TRANSACTION_ID, accountGuid);
+              //  .body(payloadData.updateDocumentPropertiesPayload());
 
         return request.when().get(resourceGet.getResource() + submissionId + pathParam)
                 .then()

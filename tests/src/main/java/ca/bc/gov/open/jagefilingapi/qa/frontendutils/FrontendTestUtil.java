@@ -2,8 +2,8 @@ package ca.bc.gov.open.jagefilingapi.qa.frontendutils;
 
 import ca.bc.gov.open.jagefilingapi.qa.config.ReadConfig;
 import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.AuthenticationPage;
+import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.CreateCsoAccountPage;
 import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.LandingPage;
-import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.PackageConfirmationPage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
@@ -44,8 +44,6 @@ public class FrontendTestUtil extends DriverClass {
 
         String username = System.getProperty("BCEID_USERNAME");
         String password = System.getProperty("BCEID_PASSWORD");
-        System.out.println(username);
-        System.out.println(password);
 
         driver.get(url);
         log.info("Landing page url is accessed successfully");
@@ -55,9 +53,6 @@ public class FrontendTestUtil extends DriverClass {
         authenticationPage.signInWithBceid(username, password);
         log.info("user is authenticated before reaching eFiling demo page");
 
-        // ** Leaving this step for demo mode **
-        //validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
-        //landingPage.enterAccountGuid(validExistingCSOGuid);
         LandingPage landingPage = new LandingPage(driver);
         String filePath = System.getProperty(BASE_PATH) + PDF_PATH;
         landingPage.chooseFileToUpload(filePath);
@@ -65,18 +60,17 @@ public class FrontendTestUtil extends DriverClass {
         landingPage.clickEfilePackageButton();
         log.info("Pdf file is uploaded successfully.");
 
-        // ** Leaving this step for demo mode **
-         authenticationPage.clickBceid();
+        authenticationPage.clickBceid();
         authenticationPage.signInWithBceid(username, password);
-        log.info("user is authenticated in eFiling demo page.");
+        log.info("user is authenticated in eFiling hub.");
 
-        PackageConfirmationPage packageConfirmationPage = new PackageConfirmationPage(driver);
-        boolean continuePaymentBtnIsDisplayed = packageConfirmationPage.verifyContinuePaymentBtnIsDisplayed();
-     //   Assert.assertTrue(continuePaymentBtnIsDisplayed);
+        CreateCsoAccountPage createCsoAccountPage = new CreateCsoAccountPage(driver);
+        createCsoAccountPage.verifyCsoBtnIsDisplayed();
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
         String userToken = js.executeScript("return window.localStorage.getItem('jwt');").toString();
         driver.quit();
+        System.out.println(userToken);
         return userToken;
     }
 }

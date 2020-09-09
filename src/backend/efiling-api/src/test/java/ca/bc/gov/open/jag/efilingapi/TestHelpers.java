@@ -7,7 +7,6 @@ import ca.bc.gov.open.jag.efilingcommons.model.Document;
 import ca.bc.gov.open.jag.efilingcommons.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.model.Party;
 import ca.bc.gov.open.jag.efilingapi.submission.models.*;
-import ca.bc.gov.open.jag.efilingcommons.model.EfilingService;
 import com.google.gson.JsonObject;
 
 import java.math.BigDecimal;
@@ -151,16 +150,6 @@ public class TestHelpers {
 
     public static NavigationUrls createDefaultNavigation() {
         return createNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL);
-    }
-
-    public static EfilingService createEfilingService() {
-        EfilingService service = new EfilingService();
-        service.setAccountId(BigDecimal.TEN);
-        service.setClientId(BigDecimal.TEN);
-        service.setCourtFileNumber(FILENUMBER);
-        service.setServiceId(BigDecimal.TEN);
-        return service;
-
     }
 
 }

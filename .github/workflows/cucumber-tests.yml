@@ -2,7 +2,7 @@ name: Cucumber Tests
 
 on:
   push:
-    branches: [master, fixdemomodeforkarthik]
+    branches: [master]
 
 jobs:
   cucumber-tests:
