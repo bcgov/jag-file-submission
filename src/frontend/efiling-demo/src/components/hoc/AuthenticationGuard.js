@@ -10,20 +10,23 @@ const url = window.REACT_APP_KEYCLOAK_URL
 const realm = window.REACT_APP_KEYCLOAK_REALM
   ? window.REACT_APP_KEYCLOAK_REALM
   : process.env.REACT_APP_KEYCLOAK_REALM;
-const clientId = window.REACT_APP_KEYCLOAK_CLIENT_ID
+const apiKeycloakClientId = window.REACT_APP_KEYCLOAK_CLIENT_ID
   ? window.REACT_APP_KEYCLOAK_CLIENT_ID
   : process.env.REACT_APP_KEYCLOAK_CLIENT_ID;
-const demoSecret = window.REACT_APP_DEMO_CLIENT_SECRET
-  ? window.REACT_APP_DEMO_CLIENT_SECRET
-  : process.env.REACT_APP_DEMO_CLIENT_SECRET;
-const demoUrl = window.REACT_APP_DEMO_URL
-  ? window.REACT_APP_DEMO_URL
-  : process.env.REACT_APP_DEMO_URL;
+const apiKeycloakSecret = window.REACT_APP_KEYCLOAK_CLIENT_SECRET
+  ? window.REACT_APP_KEYCLOAK_CLIENT_SECRET
+  : process.env.REACT_APP_KEYCLOAK_CLIENT_SECRET;
+const apiKeycloakUrl = window.REACT_APP_API_KEYCLOAK_URL
+  ? window.REACT_APP_API_KEYCLOAK_URL
+  : process.env.REACT_APP_API_KEYCLOAK_URL;
+const clientId = window.REACT_APP_DEMO_CLIENT_ID
+  ? window.REACT_APP_DEMO_CLIENT_ID
+  : process.env.REACT_APP_DEMO_CLIENT_ID;
 
-sessionStorage.setItem("demoKeycloakRealm", realm);
-sessionStorage.setItem("demoKeycloakUrl", demoUrl);
-sessionStorage.setItem("demoKeycloakClientId", clientId);
-sessionStorage.setItem("demoKeycloakClientSecret", demoSecret);
+sessionStorage.setItem("apiKeycloakRealm", realm);
+sessionStorage.setItem("apiKeycloakUrl", apiKeycloakUrl);
+sessionStorage.setItem("apiKeycloakClientId", apiKeycloakClientId);
+sessionStorage.setItem("apiKeycloakClientSecret", apiKeycloakSecret);
 
 const defaultIdentityProvider = window.REACT_APP_DEFAULT_IDENTITY_PROVIDER
   ? window.REACT_APP_DEFAULT_IDENTITY_PROVIDER
