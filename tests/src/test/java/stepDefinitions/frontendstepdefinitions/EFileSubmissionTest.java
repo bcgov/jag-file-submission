@@ -61,7 +61,6 @@ public class EFileSubmissionTest extends DriverClass {
     public void userIsOnTheLandingPage() throws IOException {
         readConfig = new ReadConfig();
         String url = readConfig.getBaseUrl();
-        Map<String, String> env = System.getenv();
 
         username = System.getProperty("BCEID_USERNAME");
         password = System.getProperty("BCEID_PASSWORD");

@@ -40,7 +40,6 @@ public class FrontendTestUtil extends DriverClass {
 
         driverSetUp();
         String url = readConfig.getBaseUrl();
-        Map<String, String> env = System.getenv();
 
         String username = System.getProperty("BCEID_USERNAME");
         String password = System.getProperty("BCEID_PASSWORD");
