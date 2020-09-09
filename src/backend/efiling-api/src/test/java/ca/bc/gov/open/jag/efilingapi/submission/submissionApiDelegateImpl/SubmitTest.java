@@ -96,6 +96,7 @@ public class SubmitTest {
 
         Submission submissionExists = Submission
                 .builder()
+                .id(TestHelpers.CASE_1)
                 .navigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
                 .create();
 
@@ -105,11 +106,13 @@ public class SubmitTest {
 
         Submission submissionError = Submission
                 .builder()
+                .id(TestHelpers.CASE_2)
                 .navigationUrls(TestHelpers.createNavigation(null, null, null))
                 .create();
 
         Submission submissionPaymentError = Submission
                 .builder()
+                .id(TestHelpers.CASE_4)
                 .navigationUrls(TestHelpers.createNavigation(null, null, null))
                 .create();
 
@@ -130,10 +133,10 @@ public class SubmitTest {
                 .when(submissionServiceMock.createSubmission(Mockito.refEq(submissionExists), Mockito.any()))
                 .thenReturn(result);
 
-        Mockito.when(submissionServiceMock.createSubmission(Mockito.refEq(submissionError), Mockito.any())).thenThrow(new EfilingSubmissionServiceException("Nooooooo", new Throwable()));
+        Mockito.doThrow(EfilingSubmissionServiceException.class).when(submissionServiceMock).createSubmission(ArgumentMatchers.argThat(x -> x.getId().equals(TestHelpers.CASE_2)), Mockito.any());
 
-        Mockito.when(submissionServiceMock.createSubmission(Mockito.refEq(submissionPaymentError), Mockito.any())).thenThrow(new EfilingPaymentException("Nooooooo", new Throwable()));
 
+        Mockito.doThrow(EfilingPaymentException.class).when(submissionServiceMock).createSubmission(ArgumentMatchers.argThat(x -> x.getId().equals(TestHelpers.CASE_4)), Mockito.any());
 
         FilingPackageMapper filingPackageMapper = new FilingPackageMapperImpl();
         sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationPropertiesMock, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper);
