@@ -15,7 +15,7 @@ Feature: As a user my account should be validated and provided with an option to
       | validExistingCSOGuid |
       | validExistingCSOGuid |
 
-  @frontend
+ # @frontend
   Scenario Outline: Verify user with valid CSO account guid is able to proceed with E-File submission if cancel button is clicked
     When user enters a valid existing CSO account guid "<validExistingCSOGuid>" and uploads a document
     Then eFile submission page is displayed and user clicks the cancel button
@@ -26,7 +26,7 @@ Feature: As a user my account should be validated and provided with an option to
       | validExistingCSOGuid |
       | validExistingCSOGuid |
 
-  @frontend
+  #@frontend
   Scenario Outline: Verify user with non existing CSO account guid can cancel CSO account creation after accepting the user agreement
     When user enters non existing CSO account guid "<nonExistingCSOGuid>" and uploads a document
     Then eFile submission page with user agreement is displayed
@@ -39,7 +39,7 @@ Feature: As a user my account should be validated and provided with an option to
       | nonExistingCSOGuid |
       | nonExistingCSOGuid |
 
-  @frontend
+ # @frontend
   Scenario Outline: Verify user with non existing CSO account guid is able to proceed with E-File submission if cancel button is clicked
     When user enters non existing CSO account guid "<nonExistingCSOGuid>" and uploads a document
     Then eFile submission page with user agreement is displayed
@@ -51,7 +51,7 @@ Feature: As a user my account should be validated and provided with an option to
       | nonExistingCSOGuid |
       | nonExistingCSOGuid |
 
-  @frontend
+ # @frontend
   Scenario Outline: Verify invalid CSO account guid without eFiling role returns error message
     When  user enters invalid CSO account guid without eFiling role "<invalidNoFilingRoleGuid>"
     Then error message is displayed
@@ -60,7 +60,7 @@ Feature: As a user my account should be validated and provided with an option to
       | invalidNoFilingRoleGuid |
       | invalidNoFilingRoleGuid |
 
-  @frontend
+ # @frontend
   Scenario Outline: Verify there are no broken links in the page
     When  user enters a valid existing CSO account guid "<validExistingCSOGuid>" and uploads a document
     Then eFile submission page is displayed and user clicks the cancel button

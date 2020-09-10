@@ -2,6 +2,7 @@ package ca.bc.gov.open.jagefilingapi.qa.backend.generateurlpayload;
 
 import ca.bc.gov.open.jag.efilingapi.qa.api.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -10,87 +11,74 @@ import java.util.List;
 
 public class GenerateUrlPayload {
 
-    private static final String DIVISION = "division";
-    private static final String FILENUMBER = "file number";
-    private static final String LEVEL = "level";
-    private static final String LOCATION = "location";
-    private static final String PARTICIPATIONCLASS = "class";
-    private static final String PROPERTYCLASS = "property class";
-    private static final String DESCRIPTION = "description";
-    private static final String APPTYPE = "Client application type";
-    private static final String DOCTYPE = "Document type";
-    private static final String DISPLAYNAME = "Display name";
+    public static final String DIVISION = "DIVISION";
+    public static final String FILE_NUMBER = "FILENUMBER";
+    public static final String LEVEL = "P";
+    public static final String LOCATION = "1211";
+    private static final String COURT_CLASS = "F";
+    public static final String PARTICIPATION_CLASS = "PARTICIPATIONCLASS";
+    public static final String COURT_DESCRIPTION = "TESTCOURTDESC";
+    public static final String LEVEL_DESCRIPTION = "TESTLEVELDESC";
+    public static final String CLASS_DESCRIPTION = "TESTCLASSDESC";
+
+    public static final String CLIENT_APP_NAME = "Efiling demo";
+
+    public static final String FIRST_NAME = "FIRSTNAME";
+    public static final String MIDDLE_NAME = "MIDDLENAME";
+    public static final String LAST_NAME = "LASTNAME";
+    public static final String MD5 = "Md 5";
+    public static final Party.RoleTypeEnum ROLE_TYPE = Party.RoleTypeEnum.ABC;
+    public static final Party.PartyTypeEnum PARTY_TYPE = Party.PartyTypeEnum.IND;
+    public static final DocumentProperties.TypeEnum TYPE = DocumentProperties.TypeEnum.AAB;
 
     public static final String SUCCESS_URL = "http://success.com";
     public static final String CANCEL_URL = "http://cancel.com";
     public static final String ERROR_URL = "http://error.com";
-    private static final String LEVEL_DESCRIPTION = "level description";
-    private static final String CLASS_DESCRIPTION = "class description";
-    private static final String COURT_DESCRIPTION = "court description";
 
     private GenerateUrlRequest generateUrlRequest;
 
     public String validGenerateUrlPayload() throws IOException {
         generateUrlRequest = new GenerateUrlRequest();
-
         ObjectMapper objMap = new ObjectMapper();
         return objMap.writeValueAsString(generateUrlRequestPayload());
     }
 
     public GenerateUrlRequest generateUrlRequestPayload(){
         generateUrlRequest = new GenerateUrlRequest();
-
-        generateUrlRequest.setClientApplication(generateClientApplication(DISPLAYNAME, APPTYPE));
-        generateUrlRequest.setFilingPackage(generateInitialPackage(generateCourt(), generateDocumentPropertiesList()));
-        generateUrlRequest.setNavigation(generateNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL));
-
+        generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
+        generateUrlRequest.setFilingPackage(generateInitialPackage(generateCourt(), generateDocumentPropertiesList(), generatePartyList()));
+        generateUrlRequest.setNavigationUrls(generateNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL));
         return generateUrlRequest;
     }
 
-    public static InitialPackage generateInitialPackage(Court court, List<DocumentProperties> documentProperties) {
+    public static InitialPackage generateInitialPackage(Court court, List<DocumentProperties> documentProperties, List<Party> parties) {
         InitialPackage initialPackage = new InitialPackage();
+
         initialPackage.setCourt(court);
         initialPackage.setDocuments(documentProperties);
+        initialPackage.setParties(parties);
         return initialPackage;
     }
 
-    public static FilingPackage generatePackage(Court court, List<Document> documents) {
-        FilingPackage modelPackage = new FilingPackage();
-        modelPackage.setCourt(court);
-        modelPackage.setDocuments(documents);
-        return modelPackage;
-    }
+    public static NavigationUrls generateNavigation(String success, String cancel, String error) {
+        NavigationUrls navigation = new NavigationUrls();
 
-    public static Navigation generateNavigation(String success, String cancel, String error) {
-        Navigation navigation = new Navigation();
-        Redirect successRedirect = new Redirect();
-        successRedirect.setUrl(success);
-        navigation.setSuccess(successRedirect);
-        Redirect cancelRedirect = new Redirect();
-        cancelRedirect.setUrl(cancel);
-        navigation.setCancel(cancelRedirect);
-        Redirect errorRedirect = new Redirect();
-        errorRedirect.setUrl(error);
-        navigation.setError(errorRedirect);
+        navigation.setSuccess(success);
+        navigation.setCancel(cancel);
+        navigation.setError(error);
         return navigation;
-    }
-
-    public static ClientApplication generateClientApplication(String displayName, String type) {
-        ClientApplication clientApplication = new ClientApplication();
-        clientApplication.setDisplayName(displayName);
-        clientApplication.setType(type);
-
-        return clientApplication;
     }
 
     public static Court generateCourt() {
         Court court = new Court();
+
         court.setDivision(DIVISION);
-        court.setFileNumber(FILENUMBER);
+        court.setFileNumber(FILE_NUMBER);
         court.setLevel(LEVEL);
         court.setLocation(LOCATION);
-        court.setParticipatingClass(PARTICIPATIONCLASS);
-        court.setCourtClass(PROPERTYCLASS);
+        court.setParticipatingClass(PARTICIPATION_CLASS);
+        court.setCourtClass(COURT_CLASS);
+        court.setAgencyId(BigDecimal.TEN);
         court.setLevelDescription(LEVEL_DESCRIPTION);
         court.setClassDescription(CLASS_DESCRIPTION);
         court.setLocationDescription(COURT_DESCRIPTION);
@@ -99,23 +87,31 @@ public class GenerateUrlPayload {
 
     public static List<DocumentProperties> generateDocumentPropertiesList() {
         DocumentProperties documentProperties = new DocumentProperties();
-        documentProperties.setName("random.txt");
-        documentProperties.setType(DOCTYPE);
 
+        documentProperties.setName(FIRST_NAME);
+        documentProperties.setType(DocumentProperties.TypeEnum.AAB);
+        documentProperties.setName(FIRST_NAME);
+        documentProperties.setType(TYPE);
+        documentProperties.setIsAmendment(true);
+        documentProperties.setIsSupremeCourtScheduling(true);
+        documentProperties.setData(new ObjectMapper().createObjectNode());
+        documentProperties.setMd5(MD5);
         return Arrays.asList(documentProperties);
     }
 
-    public static List<Document> generateDocumentList() {
-        Document documentProperties = new Document();
-        documentProperties.setDescription(DESCRIPTION);
-        documentProperties.setStatutoryFeeAmount(BigDecimal.TEN);
-        documentProperties.setName("random.txt");
-        documentProperties.setType(DOCTYPE);
+    public static List<Party> generatePartyList() {
+        Party parties = new Party();
 
-        return Arrays.asList(documentProperties);
+        parties.setFirstName(FIRST_NAME);
+        parties.setMiddleName(MIDDLE_NAME);
+        parties.setLastName(LAST_NAME);
+        parties.setRoleType(ROLE_TYPE);
+        parties.setPartyType(PARTY_TYPE);
+
+        return Arrays.asList(parties);
     }
 
-    public static Navigation generateDefaultNavigation() {
+    public static NavigationUrls createDefaultNavigation() {
         return generateNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL);
     }
 }

@@ -36,8 +36,8 @@ public class AuthenticationPage {
     }
 
     //Actions:
-    public void signInWithIdir(String userNm, String pwd) {
-        wait = new WebDriverWait(driver, 60);
+    public void signInWithBceid(String userNm, String pwd) {
+        wait = new WebDriverWait(driver, 90);
         wait.until(ExpectedConditions.titleIs("Government of British Columbia"));
         log.info("Waiting for the page to load...");
         userName.sendKeys(userNm);
@@ -51,4 +51,3 @@ public class AuthenticationPage {
         bceidBtn.click();
     }
 }
-

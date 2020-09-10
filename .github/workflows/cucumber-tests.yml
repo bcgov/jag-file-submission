@@ -2,7 +2,7 @@ name: Cucumber Tests
 
 on:
   push:
-    branches: [master]
+    branches: [master, qa-squash-backup]
 
 jobs:
   cucumber-tests:
@@ -19,7 +19,7 @@ jobs:
 
       # Build Docker
       - name: build docker
-        run: docker-compose up -d efiling-frontend efiling-demo efiling-api redis
+        run: KEYCLOAK_CREDENTIALS_SECRET=${{secrets.KEYCLOAK_CREDENTIALS_SECRET}} KEYCLOAK_REALM=${{secrets.KEYCLOAK_REALM}} KEYCLOAK_URL=${{secrets.KEYCLOAK_URL}} EFILING_DEMO_KEYCLOAK_REALM=${{secrets.EFILING_DEMO_KEYCLOAK_REALM}} EFILING_DEMO_KEYCLOAK_URL=${{secrets.EFILING_DEMO_KEYCLOAK_URL}} docker-compose up -d efiling-frontend efiling-demo efiling-api redis sftp
 
       # Wait for sometime
       - name: Sleep for 30 seconds
@@ -29,11 +29,7 @@ jobs:
 
       # Run Tests
       - name: run tests
-        run: mvn verify -f tests/pom.xml
-        # Get credentials from repo secrets
-        env:
-          BCEID_USERNAME: ${{secrets.BCEID_USERNAME}}
-          BCEID_PASSWORD: ${{secrets.BCEID_PASSWORD}}
+        run: mvn verify -DBCEID_USERNAME=${{secrets.BCEID_USERNAME}} -DBCEID_PASSWORD=${{secrets.BCEID_PASSWORD}} -DKEYCLOAK_URL=${{secrets.KEYCLOAK_URL}}/realms/${{secrets.KEYCLOAK_REALM}}/protocol/openid-connect/token  -f tests/pom.xml
 
       # Upload Spark report for debugging purposes
       - name: Upload Spark report for debugging purposes
