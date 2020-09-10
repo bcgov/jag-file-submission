@@ -53,6 +53,8 @@ services:
         - MVN_PROFILE=${MVN_PROFILE:-demo}
         - SKIP_TESTS=true
         - STARTERS_V=v0.1.8
+    depends_on:
+      - redis
     ports:
       - "8080:8080"
     environment:
