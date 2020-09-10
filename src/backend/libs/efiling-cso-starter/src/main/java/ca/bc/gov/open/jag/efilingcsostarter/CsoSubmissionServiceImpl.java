@@ -112,7 +112,13 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         List<CsoParty> csoParties = new ArrayList<>();
 
         for (int i = 0; i < efilingPackage.getParties().size(); i++) {
-            csoParties.add(csoPartyMapper.toEfilingParties(i + 1, efilingPackage.getParties().get(i), accountDetails));
+            //Due to a bug in mapstructs code generation when using expressions that refer to a specfic object
+            //string formatting has to done here
+            csoParties.add(csoPartyMapper.toEfilingParties(i + 1,
+                    efilingPackage.getParties().get(i),
+                    accountDetails,
+                    StringUtils.capitalize(efilingPackage.getParties().get(i).getFirstName()),
+                    StringUtils.upperCase(efilingPackage.getParties().get(i).getLastName())));
         }
 
         return csoParties;
