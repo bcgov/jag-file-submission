@@ -47,6 +47,8 @@ services:
   #############################################################################################
   efiling-api:
     build:
+      depends_on:
+        - redis
       context: ./src/backend
       args:
         - SERVICE_NAME=efiling-api
