@@ -37,8 +37,8 @@ public class GenerateUrlRequestBuilders {
         ReadConfig readConfig = new ReadConfig();
        // String resourceAPI = readConfig.getKeycloakUrl();
         String resourceAPI = System.getProperty("KEYCLOAK_URL");
-        String clientSecret = JsonDataReader.getCsoAccountGuid().getClientSecret();
-        //String validUserid = System.getProperty("EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET");
+        //String clientSecret = JsonDataReader.getCsoAccountGuid().getClientSecret();
+        String clientSecret = System.getProperty("EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET");
 
         request = RestAssured.given().spec(TestUtil.submitDocumentsRequestSpecification())
                 .formParam(CLIENT_ID, "efiling-demo")
