@@ -35,15 +35,15 @@ public class GenerateUrlRequestBuilders {
 
     public Response getBearerToken() throws IOException {
         ReadConfig readConfig = new ReadConfig();
-       // String resourceAPI = readConfig.getKeycloakUrl();
-        String resourceAPI = System.getProperty("KEYCLOAK_URL");
-       // String validUserid = JsonDataReader.getCsoAccountGuid().getClientSecret();
-        String validUserid = System.getProperty("EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET");
+        String resourceAPI = readConfig.getKeycloakUrl();
+        //String resourceAPI = System.getProperty("KEYCLOAK_URL");
+        String clientSecret = JsonDataReader.getCsoAccountGuid().getClientSecret();
+        //String validUserid = System.getProperty("EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET");
 
         request = RestAssured.given().spec(TestUtil.submitDocumentsRequestSpecification())
                 .formParam(CLIENT_ID, "efiling-demo")
                 .formParam(GRANT_TYPE, "client_credentials")
-                .formParam(CLIENT_SECRET, validUserid);
+                .formParam(CLIENT_SECRET, clientSecret);
 
         return request.when().post(resourceAPI).then()
                 .spec(TestUtil.validResponseSpecification())
@@ -64,12 +64,12 @@ public class GenerateUrlRequestBuilders {
         File pdfFile = new File(UPLOAD_FILE_PATH + fileNamePath);
 
         request = RestAssured.given().auth().preemptive().oauth2(accessToken)
-                .spec(TestUtil.submitDocumentsRequestSpecification())
+               // .spec(TestUtil.submitDocumentsRequestSpecification())
                 .header(X_TRANSACTION_ID, accountGuid)
                 .header(X_USER_ID, validUserid)
                 .multiPart(FILES, pdfFile);
 
-        return request.when().post(resourceAPI.getResource()).then()
+        return request.when().post("http://localhost:8080/submission/documents").then()
                 .spec(TestUtil.validResponseSpecification())
                 .extract().response();
     }
