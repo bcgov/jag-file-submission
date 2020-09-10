@@ -23,8 +23,6 @@ jobs:
         run: |
           EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET=${{secrets.EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}} KEYCLOAK_REALM=${{secrets.KEYCLOAK_REALM}} KEYCLOAK_URL=${{secrets.KEYCLOAK_URL}} EFILING_DEMO_KEYCLOAK_REALM=${{secrets.EFILING_DEMO_KEYCLOAK_REALM}} EFILING_DEMO_KEYCLOAK_URL=${{secrets.EFILING_DEMO_KEYCLOAK_URL}} docker-compose up -d efiling-api redis sftp
           sleep 30
-          curl http://localhost:8080
-          curl http://localhost:8080/submission/documents
           curl http://127.0.0.1:8080/submission/documents
           mvn verify -DBCEID_USERNAME=${{secrets.BCEID_USERNAME}} -DBCEID_PASSWORD=${{secrets.BCEID_PASSWORD}} -DKEYCLOAK_URL=${{secrets.KEYCLOAK_URL}}/realms/${{secrets.KEYCLOAK_REALM}}/protocol/openid-connect/token  -f tests/pom.xml
 
