@@ -12,11 +12,8 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
 
-import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 
 
@@ -66,16 +63,13 @@ public class GenerateUrlRequestBuilders {
 
         File pdfFile = new File(UPLOAD_FILE_PATH + fileNamePath);
 
-        ReadConfig readConfig = new ReadConfig();
-        String baseUri= readConfig.getBaseUri();
-
         request = RestAssured.given().auth().preemptive().oauth2(accessToken)
-               // .spec(TestUtil.submitDocumentsRequestSpecification())
+                .spec(TestUtil.submitDocumentsRequestSpecification())
                 .header(X_TRANSACTION_ID, accountGuid)
                 .header(X_USER_ID, validUserid)
                 .multiPart(FILES, pdfFile);
 
-        return request.when().post(baseUri + resourceAPI.getResource()).then()
+        return request.when().post(resourceAPI.getResource()).then()
                 .spec(TestUtil.validResponseSpecification())
                 .extract().response();
     }
