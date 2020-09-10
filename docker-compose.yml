@@ -47,14 +47,14 @@ services:
   #############################################################################################
   efiling-api:
     build:
-      depends_on:
-        - redis
       context: ./src/backend
       args:
         - SERVICE_NAME=efiling-api
         - MVN_PROFILE=${MVN_PROFILE:-demo}
         - SKIP_TESTS=true
         - STARTERS_V=v0.1.8
+    depends_on:
+      - redis
     ports:
       - "8080:8080"
     environment:
