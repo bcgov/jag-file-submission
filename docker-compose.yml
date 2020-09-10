@@ -17,7 +17,7 @@ services:
       - REACT_APP_KEYCLOAK_REALM=${KEYCLOAK_REALM}
       - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-frontend
       - REACT_APP_KEYCLOAK_URL=${KEYCLOAK_URL}
-      - REACT_APP_API_BASE_URL=http://localhost:8081
+      - REACT_APP_API_BASE_URL=http://localhost:8080
       - REACT_APP_BAMBORA_REDIRECT_URL=http://localhost:3000/efiling
 
   #############################################################################################
@@ -37,7 +37,7 @@ services:
       - REACT_APP_KEYCLOAK_REALM=${EFILING_DEMO_KEYCLOAK_REALM}
       - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-demo
       - REACT_APP_KEYCLOAK_URL=${EFILING_DEMO_KEYCLOAK_URL}
-      - REACT_APP_API_BASE_URL=http://localhost:8081
+      - REACT_APP_API_BASE_URL=http://localhost:8080
       - REACT_APP_KEYCLOAK_CLIENT_SECRET=${EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}
       - REACT_APP_API_KEYCLOAK_URL=${KEYCLOAK_URL}
       - REACT_APP_DEMO_CLIENT_ID=demo-app
@@ -54,7 +54,7 @@ services:
         - SKIP_TESTS=true
         - STARTERS_V=v0.1.8
     ports:
-      - "8081:8081"
+      - "8080:8080"
     environment:
       - CSO_ACCOUNTFACADE_URI=${CSO_ACCOUNTFACADE_URI}
       - CSO_ACCOUNTFACADE_USERNAME=${CSO_ACCOUNTFACADE_USERNAME}
