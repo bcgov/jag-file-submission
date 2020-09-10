@@ -12,17 +12,17 @@ Feature: When user uploads the documents, id is authenticated user details, navi
     When status code is 200 and content type is verified
     Then verify expiry date and eFiling url are returned with the CSO account guid and submission id
     ## Call to get submission config ##
-    Given "SUBMISSION" id is submitted with GET http request
-    When status code is 200 and content type is verified
-    Then verify clientAppName and csoBaseUrl values are returned and not empty
-    And verify success, error and cancel navigation urls are returned
+  #  Given "SUBMISSION" id is submitted with GET http request
+  #  When status code is 200 and content type is verified
+   # Then verify clientAppName and csoBaseUrl values are returned and not empty
+    #And verify success, error and cancel navigation urls are returned
     ## Call to get filing package info ##
-    Given "SUBMISSION" id with filing package path is submitted with GET http request
-    When status code is 200 and content type is verified
-    Then verify court details and document details are returned and not empty
+   # Given "SUBMISSION" id with filing package path is submitted with GET http request
+   # When status code is 200 and content type is verified
+    #Then verify court details and document details are returned and not empty
     ## Call to get document wth filename ##
-    Given "SUBMISSION" id with filename path is submitted with GET http request
-    Then Verify status code is 200 and content type is not json
+   # Given "SUBMISSION" id with filename path is submitted with GET http request
+   # Then Verify status code is 200 and content type is not json
 
   @backend
   Scenario: Verify if multiple document is uploaded, url is generated and package information can be retrieved for requests made with valid CSO account
