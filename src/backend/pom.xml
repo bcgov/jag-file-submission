@@ -37,6 +37,15 @@
 				<module>libs/efiling-bom</module>
 				<module>libs/efiling-commons</module>
 				<module>libs/efiling-cso-starter</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>docker</id>
+			<modules>
+				<module>libs/efiling-bambora-api-client</module>
+				<module>libs/efiling-bom</module>
+				<module>libs/efiling-commons</module>
+				<module>libs/efiling-cso-starter</module>
 				<module>libs/efiling-demo-starter</module>
 			</modules>
 		</profile>
