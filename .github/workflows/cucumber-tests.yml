@@ -2,7 +2,7 @@ name: Cucumber Tests
 
 on:
   push:
-    branches: [master, qa-squash-backup]
+    branches: [master, qa-backend-updates]
 
 jobs:
   cucumber-tests:
