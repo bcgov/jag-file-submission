@@ -35,7 +35,8 @@ public class GenerateUrlRequestBuilders {
 
     public Response getBearerToken() throws IOException {
         ReadConfig readConfig = new ReadConfig();
-        String resourceAPI = readConfig.getKeycloakUrl();
+        //String resourceAPI = readConfig.getKeycloakUrl();
+        String resourceAPI = System.getProperty("KEYCLOAK_URL");
         String validUserid = JsonDataReader.getCsoAccountGuid().getClientSecret();
 
         request = RestAssured.given().spec(TestUtil.submitDocumentsRequestSpecification())
