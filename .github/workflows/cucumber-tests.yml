@@ -29,6 +29,7 @@ jobs:
           nmap -v 127.0.0.1
           nmap -v 127.0.0.1 -p 8080
           nmap -v 127.0.0.1 -p 6379
+          nmap -v 127.0.0.1 -p 3310
           mvn verify -DBCEID_USERNAME=${{secrets.BCEID_USERNAME}} -DBCEID_PASSWORD=${{secrets.BCEID_PASSWORD}} -DKEYCLOAK_URL=${{secrets.KEYCLOAK_URL}}/realms/${{secrets.KEYCLOAK_REALM}}/protocol/openid-connect/token  -f tests/pom.xml
 
       # Wait for sometime
