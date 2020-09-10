@@ -50,10 +50,10 @@ public class GenerateUrlRequestBuilders {
                 .extract().response();
     }
 
-    public Response requestWithSinglePdfDocument(String resourceValue, String accountGuid, String fileNamePath) throws IOException {
+    public Response requestWithSinglePdfDocument( String accountGuid, String fileNamePath) throws IOException {
 
         payloadData = new GenerateUrlPayload();
-        APIResources resourceAPI = APIResources.valueOf(resourceValue);
+      //  APIResources resourceAPI = APIResources.valueOf(resourceValue);
         String validUserid = JsonDataReader.getCsoAccountGuid().getValidUserId();
 
         Response response = getBearerToken();
