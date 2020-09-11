@@ -15,7 +15,7 @@ Feature: When user uploads the documents, id is authenticated user details, navi
     Given "SUBMISSION" id is submitted with GET http request
     When status code is 200 and content type is verified
     Then verify clientAppName and csoBaseUrl values are returned and not empty
-    #And verify success, error and cancel navigation urls are returned
+    And verify success, error and cancel navigation urls are returned
     ## Call to get filing package info ##
     Given "SUBMISSION" id with filing package path is submitted with GET http request
     When status code is 200 and content type is verified
