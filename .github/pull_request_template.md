@@ -24,7 +24,7 @@ Please describe the tests that you ran to verify your changes.
 If Yes: Has Docker been updated accordingly?
 
 - [ ] Yes
-- [ ] No 
+- [ ] No
 
 ## Checklist:
 
