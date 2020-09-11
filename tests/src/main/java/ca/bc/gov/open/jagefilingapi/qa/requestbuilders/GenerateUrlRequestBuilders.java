@@ -42,7 +42,8 @@ public class GenerateUrlRequestBuilders {
         String clientSecret = System.getProperty("EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET");
         System.out.println(clientSecret);
 
-        request = RestAssured.given().spec(TestUtil.submitDocumentsRequestSpecification())
+        request = RestAssured.given()
+                //.spec(TestUtil.submitDocumentsRequestSpecification())
                 .formParam(CLIENT_ID, "efiling-demo")
                 .formParam(GRANT_TYPE, "client_credentials")
                 .formParam(CLIENT_SECRET, clientSecret);
