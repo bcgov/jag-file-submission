@@ -7,6 +7,8 @@ import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.LandingPage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -35,7 +37,7 @@ public class FrontendTestUtil extends DriverClass {
         }
     }
 
-    public String getUserJwtToken() throws IOException {
+    public String getUserJwtToken() throws IOException, InterruptedException {
         ReadConfig readConfig = new ReadConfig();
 
         driverSetUp();
@@ -49,6 +51,7 @@ public class FrontendTestUtil extends DriverClass {
 
         AuthenticationPage authenticationPage = new AuthenticationPage(driver);
         authenticationPage.clickBceid();
+        Thread.sleep(2000L);
         authenticationPage.signInWithBceid(username, password);
         log.info("user is authenticated before reaching eFiling demo page");
 
@@ -58,6 +61,8 @@ public class FrontendTestUtil extends DriverClass {
         landingPage.enterJsonData();
         landingPage.clickEfilePackageButton();
         log.info("Pdf file is uploaded successfully.");
+
+        Thread.sleep(4000L);
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
         String userToken = js.executeScript("return window.localStorage.getItem('jwt');").toString();

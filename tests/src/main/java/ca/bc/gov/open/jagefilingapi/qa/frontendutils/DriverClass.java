@@ -34,7 +34,7 @@ public class DriverClass {
                     options.addArguments("--disable-extensions");
                     options.addArguments("--dns-prefetch-disable");
                     options.addArguments("--disable-gpu");
-                    options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+                    options.setPageLoadStrategy(PageLoadStrategy.NONE);
                     driver = new ChromeDriver(options);
                     break;
                 case "firefox":
@@ -47,8 +47,8 @@ public class DriverClass {
         }
         public void  driverSetUp() throws IOException {
             initializeDriver();
-
             driver.manage().timeouts().implicitlyWait(90, TimeUnit.SECONDS);
+            driver.manage().timeouts().setScriptTimeout(120, TimeUnit.SECONDS);
             driver.manage().deleteAllCookies();
     }
 }
