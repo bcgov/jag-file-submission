@@ -48,7 +48,7 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
         System.out.println(validExistingCSOGuid);
         System.out.println(resource);
 
-        response = generateUrlRequestBuilders.requestWithSinglePdfDocument("http://localhost:8080",validExistingCSOGuid, FILE_NAME_PATH);
+        response = generateUrlRequestBuilders.requestWithSinglePdfDocument(resource,validExistingCSOGuid, FILE_NAME_PATH);
         System.out.println(response.toString());
 
     }
