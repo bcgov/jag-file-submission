@@ -43,19 +43,20 @@ public class GenerateUrlRequestBuilders {
         System.out.println(clientSecret);
 
         request = RestAssured.given()
-                //.spec(TestUtil.submitDocumentsRequestSpecification())
+                .spec(TestUtil.submitDocumentsRequestSpecification())
                 .formParam(CLIENT_ID, "efiling-demo")
                 .formParam(GRANT_TYPE, "client_credentials")
                 .formParam(CLIENT_SECRET, clientSecret);
 
-        System.out.println(request);
+        System.out.println(request.log());
         System.out.println(request.toString());
         System.out.println(clientSecret);
-        System.out.println(resourceAPI);
 
+        System.out.println(resourceAPI);
         return request.when().post(resourceAPI).then()
-                .spec(TestUtil.validResponseSpecification())
+              //  .spec(TestUtil.validResponseSpecification())
                 .extract().response();
+
     }
 
     public Response requestWithSinglePdfDocument(String accountGuid, String fileNamePath) throws IOException {
@@ -67,6 +68,7 @@ public class GenerateUrlRequestBuilders {
         System.out.println(validUserid);
 
         Response response = getBearerToken();
+        System.out.println(response.asString());
         JsonPath jsonPath = new JsonPath(response.asString());
 
         String accessToken = jsonPath.get(ACCESS_TOKEN);
