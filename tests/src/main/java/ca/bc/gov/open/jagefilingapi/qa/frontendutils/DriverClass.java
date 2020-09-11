@@ -41,10 +41,6 @@ public class DriverClass {
                     WebDriverManager.firefoxdriver().setup();
                     driver = new FirefoxDriver();
                     break;
-                case "edge":
-                    WebDriverManager.edgedriver().setup();
-                    driver = new EdgeDriver();
-                    break;
                 default:
                     log.info("URL value is not available in the properties file.");
             }
