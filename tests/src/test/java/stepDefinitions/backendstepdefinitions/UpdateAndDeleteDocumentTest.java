@@ -49,7 +49,7 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
-       // response = generateUrlRequestBuilders.requestWithSinglePdfDocument(resource,validExistingCSOGuid, FIRST_FILE_NAME_PATH);
+        response = generateUrlRequestBuilders.requestWithSinglePdfDocument(resource,validExistingCSOGuid, FIRST_FILE_NAME_PATH);
     }
 
     @When("validated status code is {int} and content type")
@@ -148,7 +148,7 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
-       // response = generateUrlRequestBuilders.requestWithSinglePdfDocument(resource,validExistingCSOGuid, SECOND_FILE_NAME_PATH);
+        response = generateUrlRequestBuilders.requestWithSinglePdfDocument(resource,validExistingCSOGuid, SECOND_FILE_NAME_PATH);
     }
 
     @And("verify navigation urls are returned")

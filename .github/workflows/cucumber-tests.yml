@@ -21,19 +21,11 @@ jobs:
       - name: build docker
         # run: EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET=${{secrets.EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}} KEYCLOAK_REALM=${{secrets.KEYCLOAK_REALM}} KEYCLOAK_URL=${{secrets.KEYCLOAK_URL}} EFILING_DEMO_KEYCLOAK_REALM=${{secrets.EFILING_DEMO_KEYCLOAK_REALM}} EFILING_DEMO_KEYCLOAK_URL=${{secrets.EFILING_DEMO_KEYCLOAK_URL}} docker-compose up -d efiling-frontend efiling-demo efiling-api redis sftp
         run: |
-          sudo apt-get install -yqq nmap
           sleep 10
           EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET=${{secrets.EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}} KEYCLOAK_REALM=${{secrets.KEYCLOAK_REALM}} KEYCLOAK_URL=${{secrets.KEYCLOAK_URL}} EFILING_DEMO_KEYCLOAK_REALM=${{secrets.EFILING_DEMO_KEYCLOAK_REALM}} EFILING_DEMO_KEYCLOAK_URL=${{secrets.EFILING_DEMO_KEYCLOAK_URL}} KEYCLOAK_AUTH_SERVER_URL=${{secrets.EFILING_DEMO_KEYCLOAK_URL}} docker-compose up -d redis sftp clamav
           EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET=${{secrets.EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}} KEYCLOAK_REALM=${{secrets.KEYCLOAK_REALM}} KEYCLOAK_URL=${{secrets.KEYCLOAK_URL}} EFILING_DEMO_KEYCLOAK_REALM=${{secrets.EFILING_DEMO_KEYCLOAK_REALM}} EFILING_DEMO_KEYCLOAK_URL=${{secrets.EFILING_DEMO_KEYCLOAK_URL}} KEYCLOAK_AUTH_SERVER_URL=${{secrets.EFILING_DEMO_KEYCLOAK_URL}} CSO_DEBUG_ENABLED=false KEYCLOAK_SSL_REQUIRED=none KEYCLOAK_RESOURCE=efiling-api docker-compose build efiling-api
           EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET=${{secrets.EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}} KEYCLOAK_REALM=${{secrets.KEYCLOAK_REALM}} KEYCLOAK_URL=${{secrets.KEYCLOAK_URL}} EFILING_DEMO_KEYCLOAK_REALM=${{secrets.EFILING_DEMO_KEYCLOAK_REALM}} EFILING_DEMO_KEYCLOAK_URL=${{secrets.EFILING_DEMO_KEYCLOAK_URL}} KEYCLOAK_AUTH_SERVER_URL=${{secrets.EFILING_DEMO_KEYCLOAK_URL}} CSO_DEBUG_ENABLED=false KEYCLOAK_SSL_REQUIRED=none KEYCLOAK_RESOURCE=efiling-api docker-compose up efiling-api &disown
           sleep 30
-          docker ps
-          curl http://localhost:8080
-          curl http://localhost:8080/submission/documents
-          nmap -v 127.0.0.1
-          nmap -v 127.0.0.1 -p 8080
-          nmap -v 127.0.0.1 -p 6379
-          nmap -v 127.0.0.1 -p 3310
           mvn verify -DBCEID_USERNAME=${{secrets.BCEID_USERNAME}} -DBCEID_PASSWORD=${{secrets.BCEID_PASSWORD}} -DKEYCLOAK_URL=${{secrets.KEYCLOAK_URL}}/realms/${{secrets.KEYCLOAK_REALM}}/protocol/openid-connect/token -DEFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET=${{secrets.EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}} -f tests/pom.xml
 
       # Wait for sometime

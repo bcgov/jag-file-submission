@@ -33,56 +33,38 @@ public class GenerateUrlRequestBuilders {
     private GenerateUrlPayload payloadData;
     public String userToken;
 
-    public Response getBearerToken() throws IOException {
-        ReadConfig readConfig = new ReadConfig();
-       // String resourceAPI = readConfig.getKeycloakUrl();
+    public Response getBearerToken() {
         String resourceAPI = System.getProperty("KEYCLOAK_URL");
-        System.out.println(resourceAPI);
-        //String clientSecret = JsonDataReader.getCsoAccountGuid().getClientSecret();
         String clientSecret = System.getProperty("EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET");
-        System.out.println(clientSecret);
 
         request = RestAssured.given()
-                .spec(TestUtil.submitDocumentsRequestSpecification())
                 .formParam(CLIENT_ID, "efiling-demo")
                 .formParam(GRANT_TYPE, "client_credentials")
                 .formParam(CLIENT_SECRET, clientSecret);
 
-        System.out.println(request.log());
-        System.out.println(request.toString());
-        System.out.println(clientSecret);
-
-        System.out.println(resourceAPI);
         return request.when().post(resourceAPI).then()
-              //  .spec(TestUtil.validResponseSpecification())
+                .spec(TestUtil.validResponseSpecification())
                 .extract().response();
-
     }
 
-    public Response requestWithSinglePdfDocument(String accountGuid, String fileNamePath) throws IOException {
-
+    public Response requestWithSinglePdfDocument(String resourceValue, String accountGuid, String fileNamePath) throws IOException {
         payloadData = new GenerateUrlPayload();
-     //   APIResources resourceAPI = APIResources.valueOf(DOCUMENT_SUBMISSION);
-       // System.out.println(resourceAPI.getResource());
+        APIResources resourceAPI = APIResources.valueOf(resourceValue);
         String validUserid = JsonDataReader.getCsoAccountGuid().getValidUserId();
-        System.out.println(validUserid);
 
         Response response = getBearerToken();
-        System.out.println(response.asString());
         JsonPath jsonPath = new JsonPath(response.asString());
 
         String accessToken = jsonPath.get(ACCESS_TOKEN);
-        System.out.println(accessToken);
-
         File pdfFile = new File(UPLOAD_FILE_PATH + fileNamePath);
 
         request = RestAssured.given().auth().preemptive().oauth2(accessToken)
-               // .spec(TestUtil.submitDocumentsRequestSpecification())
+                .spec(TestUtil.submitDocumentsRequestSpecification())
                 .header(X_TRANSACTION_ID, accountGuid)
                 .header(X_USER_ID, validUserid)
                 .multiPart(FILES, pdfFile);
 
-        return request.when().post("http://localhost:8080/submission/documents").then()
+        return request.when().post(resourceAPI.getResource()).then()
                 .spec(TestUtil.validResponseSpecification())
                 .extract().response();
     }

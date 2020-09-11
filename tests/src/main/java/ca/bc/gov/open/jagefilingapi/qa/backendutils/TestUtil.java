@@ -44,8 +44,8 @@ public class TestUtil {
         ReadConfig readConfig = new ReadConfig();
 
         PrintStream log = new PrintStream(new FileOutputStream("logs/backendLogging.txt"));
-       // baseURI= readConfig.getBaseUri();
-        return new RequestSpecBuilder().addFilter(RequestLoggingFilter
+        baseURI= readConfig.getBaseUri();
+        return new RequestSpecBuilder().setBaseUri(baseURI).addFilter(RequestLoggingFilter
                 .logRequestTo(log)).addFilter(ResponseLoggingFilter.logResponseTo(log))
                 .build();
     }
