@@ -48,6 +48,11 @@ public class GenerateUrlRequestBuilders {
                 .formParam(GRANT_TYPE, "client_credentials")
                 .formParam(CLIENT_SECRET, clientSecret);
 
+        System.out.println(request);
+        System.out.println(request.toString());
+        System.out.println(clientSecret);
+        System.out.println(resourceAPI);
+
         return request.when().post(resourceAPI).then()
                 .spec(TestUtil.validResponseSpecification())
                 .extract().response();
