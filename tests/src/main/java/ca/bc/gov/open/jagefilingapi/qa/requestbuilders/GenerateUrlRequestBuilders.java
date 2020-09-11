@@ -56,6 +56,7 @@ public class GenerateUrlRequestBuilders {
 
         payloadData = new GenerateUrlPayload();
         APIResources resourceAPI = APIResources.valueOf(resourceValue);
+        System.out.println(resourceAPI);
         String validUserid = JsonDataReader.getCsoAccountGuid().getValidUserId();
         System.out.println(validUserid);
 
@@ -68,7 +69,7 @@ public class GenerateUrlRequestBuilders {
         File pdfFile = new File(UPLOAD_FILE_PATH + fileNamePath);
 
         request = RestAssured.given().auth().preemptive().oauth2(accessToken)
-                .spec(TestUtil.submitDocumentsRequestSpecification())
+               // .spec(TestUtil.submitDocumentsRequestSpecification())
                 .header(X_TRANSACTION_ID, accountGuid)
                 .header(X_USER_ID, validUserid)
                 .multiPart(FILES, pdfFile);
