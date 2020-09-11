@@ -28,6 +28,8 @@ jobs:
           EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET=${{secrets.EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}} KEYCLOAK_REALM=${{secrets.KEYCLOAK_REALM}} KEYCLOAK_URL=${{secrets.KEYCLOAK_URL}} EFILING_DEMO_KEYCLOAK_REALM=${{secrets.EFILING_DEMO_KEYCLOAK_REALM}} EFILING_DEMO_KEYCLOAK_URL=${{secrets.EFILING_DEMO_KEYCLOAK_URL}} CSO_DEBUG_ENABLED=false KEYCLOAK_SSL_REQUIRED=none docker-compose up efiling-api &disown
           sleep 30
           docker ps
+          curl http://localhost:8080
+          curl http://localhost:8080/submission/documents
           nmap -v 127.0.0.1
           nmap -v 127.0.0.1 -p 8080
           nmap -v 127.0.0.1 -p 6379
