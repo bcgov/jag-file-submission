@@ -34,7 +34,7 @@ public class PackageConfirmationPage {
         return uploadDocumentsBtn.isDisplayed();
     }
 
-    public boolean verifyContinuePaymentBtnIsDisplayed() throws IOException {
+    public boolean verifyContinuePaymentBtnIsDisplayed() throws IOException, InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 60);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@data-test-id='continue-btn']")));
         try {

@@ -92,7 +92,7 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
     }
 
     @Given("{string} id is submitted with non existing CSO account GET http request")
-    public void idIsSubmittedWithNonExistingCsoAccountGetHttpRequest(String resource) throws IOException {
+    public void idIsSubmittedWithNonExistingCsoAccountGetHttpRequest(String resource) throws IOException, InterruptedException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToGetSubmissionConfig(resource, nonExistingCSOGuid,
                                                                                 submissionId, GET_CONFIG_PATH);
@@ -161,14 +161,14 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
     }
 
     @Given("{string} id with filing package path is submitted with non existing CSO account GET http request")
-    public void idWithFilingPackagePathIsSubmittedWithNonExistingCSOAccountGETHttpRequest(String resource) throws IOException {
+    public void idWithFilingPackagePathIsSubmittedWithNonExistingCSOAccountGETHttpRequest(String resource) throws IOException, InterruptedException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToGetFilingPackage(resource, nonExistingCSOGuid,
                                                                         submissionId, FILING_PACKAGE_PATH_PARAM );
     }
 
     @Given("{string} id with filename path is submitted with non existing CSO account GET http request")
-    public void idWithFilenamePathIsSubmittedWithNonExistingCSOAccountGETHttpRequest(String resource) throws IOException {
+    public void idWithFilenamePathIsSubmittedWithNonExistingCSOAccountGETHttpRequest(String resource) throws IOException, InterruptedException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToGetDocumentUsingFileName(resource, nonExistingCSOGuid,
                 submissionId, DOCUMENT_PATH_PARAM, FILE_NAME_PATH);

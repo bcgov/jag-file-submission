@@ -3,7 +3,6 @@ package ca.bc.gov.open.jagefilingapi.qa.requestbuilders;
 import ca.bc.gov.open.jagefilingapi.qa.backend.generateurlpayload.GenerateUrlPayload;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.APIResources;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
-import ca.bc.gov.open.jagefilingapi.qa.config.ReadConfig;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.FrontendTestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
 import io.restassured.RestAssured;
@@ -33,15 +32,14 @@ public class GenerateUrlRequestBuilders {
     private GenerateUrlPayload payloadData;
     public String userToken;
 
-    public Response getBearerToken() throws IOException {
-        ReadConfig readConfig = new ReadConfig();
-        String resourceAPI = readConfig.getKeycloakUrl();
-        String validUserid = JsonDataReader.getCsoAccountGuid().getClientSecret();
+    public Response getBearerToken() {
+        String resourceAPI = System.getProperty("KEYCLOAK_URL");
+        String clientSecret = System.getProperty("EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET");
 
-        request = RestAssured.given().spec(TestUtil.submitDocumentsRequestSpecification())
+        request = RestAssured.given()
                 .formParam(CLIENT_ID, "efiling-demo")
                 .formParam(GRANT_TYPE, "client_credentials")
-                .formParam(CLIENT_SECRET, validUserid);
+                .formParam(CLIENT_SECRET, clientSecret);
 
         return request.when().post(resourceAPI).then()
                 .spec(TestUtil.validResponseSpecification())
@@ -49,7 +47,6 @@ public class GenerateUrlRequestBuilders {
     }
 
     public Response requestWithSinglePdfDocument(String resourceValue, String accountGuid, String fileNamePath) throws IOException {
-
         payloadData = new GenerateUrlPayload();
         APIResources resourceAPI = APIResources.valueOf(resourceValue);
         String validUserid = JsonDataReader.getCsoAccountGuid().getValidUserId();
@@ -58,7 +55,6 @@ public class GenerateUrlRequestBuilders {
         JsonPath jsonPath = new JsonPath(response.asString());
 
         String accessToken = jsonPath.get(ACCESS_TOKEN);
-
         File pdfFile = new File(UPLOAD_FILE_PATH + fileNamePath);
 
         request = RestAssured.given().auth().preemptive().oauth2(accessToken)
@@ -99,7 +95,7 @@ public class GenerateUrlRequestBuilders {
                 .extract().response();
     }
 
-    public Response requestToGetSubmissionConfig(String resource, String accountGuid, String submissionId, String pathParam) throws IOException {
+    public Response requestToGetSubmissionConfig(String resource, String accountGuid, String submissionId, String pathParam) throws IOException, InterruptedException {
         APIResources resourceGet = APIResources.valueOf(resource);
         FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
 
@@ -116,7 +112,7 @@ public class GenerateUrlRequestBuilders {
     }
 
     public Response requestToGetFilingPackage(String resource, String accountGuid,
-                                              String submissionId, String filePathParam) throws IOException {
+                                              String submissionId, String filePathParam) throws IOException, InterruptedException {
         APIResources resourceGet = APIResources.valueOf(resource);
         FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
 
@@ -133,7 +129,7 @@ public class GenerateUrlRequestBuilders {
     }
 
     public Response requestToGetDocumentUsingFileName(String resource, String accountGuid,
-                                              String submissionId, String pathParam, String fileName) throws IOException {
+                                              String submissionId, String pathParam, String fileName) throws IOException, InterruptedException {
         APIResources resourceGet = APIResources.valueOf(resource);
         FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
 
@@ -266,7 +262,7 @@ public class GenerateUrlRequestBuilders {
     }
 
     public Response requestToUpdateDocumentProperties(String resource, String accountGuid, String submissionId,
-                                                      String pathParam) throws IOException {
+                                                      String pathParam) throws IOException, InterruptedException {
         payloadData = new GenerateUrlPayload();
         APIResources resourceGet = APIResources.valueOf(resource);
         FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
@@ -284,7 +280,7 @@ public class GenerateUrlRequestBuilders {
                 .extract().response();
     }
 
-    public Response requestToDeleteDocuments(String resource, String accountGuid, String submissionId) throws IOException {
+    public Response requestToDeleteDocuments(String resource, String accountGuid, String submissionId) throws IOException, InterruptedException {
         APIResources resourceGet = APIResources.valueOf(resource);
         FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
 

@@ -34,15 +34,13 @@ public class CreateCsoAccountPage {
     }
 
     public boolean verifyCsoBtnIsDisplayed() throws IOException {
-        WebDriverWait wait = new WebDriverWait(driver, 60);
+        WebDriverWait wait = new WebDriverWait(driver, 90);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@data-test-id='create-cso-btn']")));
         try {
             return createCsoBtn.isDisplayed();
         } catch (org.openqa.selenium.TimeoutException ex) {
-            FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
-            frontendTestUtil.getUserJwtToken();
+            return createCsoBtn.isDisplayed();
         }
-        return createCsoBtn.isDisplayed();
     }
 
     public void clickCreateCsoAccountBtn() {

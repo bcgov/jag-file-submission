@@ -101,7 +101,7 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     }
 
     @Given("{string} id is submitted with GET http request")
-    public void idIsSubmittedWithGetHttpRequest(String resource) throws IOException {
+    public void idIsSubmittedWithGetHttpRequest(String resource) throws IOException, InterruptedException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToGetSubmissionConfig(resource, validExistingCSOGuid, submissionId, GET_CONFIG_PATH);
     }
@@ -116,7 +116,7 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     }
 
     @Given("{string} id with filing package path is submitted with GET http request")
-    public void idWithFilingPackagePathIsSubmittedWithGETHttpRequest(String resource) throws IOException {
+    public void idWithFilingPackagePathIsSubmittedWithGETHttpRequest(String resource) throws IOException, InterruptedException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToGetFilingPackage(resource,validExistingCSOGuid,
                                                                 submissionId, FILING_PACKAGE_PATH_PARAM );
@@ -160,7 +160,7 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     }
 
     @Given("{string} id with filename path is submitted with GET http request")
-    public void idWithFilenamePathIsSubmittedWithGETHttpRequest(String resource) throws IOException {
+    public void idWithFilenamePathIsSubmittedWithGETHttpRequest(String resource) throws IOException, InterruptedException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToGetDocumentUsingFileName(resource,validExistingCSOGuid,
                                                                     submissionId, DOCUMENT_PATH_PARAM, FILE_NAME_PATH);
