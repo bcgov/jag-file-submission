@@ -52,11 +52,11 @@ public class GenerateUrlRequestBuilders {
                 .extract().response();
     }
 
-    public Response requestWithSinglePdfDocument(String resourceValue, String accountGuid, String fileNamePath) throws IOException {
+    public Response requestWithSinglePdfDocument(String accountGuid, String fileNamePath) throws IOException {
 
         payloadData = new GenerateUrlPayload();
-        APIResources resourceAPI = APIResources.valueOf(resourceValue);
-        System.out.println(resourceAPI);
+     //   APIResources resourceAPI = APIResources.valueOf(DOCUMENT_SUBMISSION);
+       // System.out.println(resourceAPI.getResource());
         String validUserid = JsonDataReader.getCsoAccountGuid().getValidUserId();
         System.out.println(validUserid);
 
@@ -74,7 +74,7 @@ public class GenerateUrlRequestBuilders {
                 .header(X_USER_ID, validUserid)
                 .multiPart(FILES, pdfFile);
 
-        return request.when().post(resourceAPI.getResource()).then()
+        return request.when().post("http://localhost:8080/submission/documents").then()
                 .spec(TestUtil.validResponseSpecification())
                 .extract().response();
     }

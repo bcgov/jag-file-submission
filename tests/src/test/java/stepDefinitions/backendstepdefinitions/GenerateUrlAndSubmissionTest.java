@@ -41,14 +41,14 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
 
     public Logger log = LogManager.getLogger(GenerateUrlAndSubmissionTest.class);
 
-    @Given("POST http request is made to {string} with valid existing CSO account guid and a single pdf file")
-    public void postHttpRequestIsMadeToWithValidExistingCsoAccountGuidAndASinglePdfFile(String resource) throws IOException {
+    @Given("POST http request is made to with valid existing CSO account guid and a single pdf file")
+    public void postHttpRequestIsMadeToWithValidExistingCsoAccountGuidAndASinglePdfFile() throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
         System.out.println(validExistingCSOGuid);
-        System.out.println(resource);
 
-        response = generateUrlRequestBuilders.requestWithSinglePdfDocument(resource,validExistingCSOGuid, FILE_NAME_PATH);
+
+        response = generateUrlRequestBuilders.requestWithSinglePdfDocument(validExistingCSOGuid, FILE_NAME_PATH);
         System.out.println(response.toString());
 
     }
