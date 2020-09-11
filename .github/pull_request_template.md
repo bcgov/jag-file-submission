@@ -16,6 +16,16 @@ if your change is a breaking change, please add `breaking change` label to this 
 
 Please describe the tests that you ran to verify your changes.
 
+## Does the change need to be reflected in Docker?
+
+- [ ] Yes
+- [ ] No
+
+If Yes: Has Docker been updated accordingly?
+
+- [ ] Yes
+- [ ] No 
+
 ## Checklist:
 
 - [ ] My code follows the style guidelines of this project
