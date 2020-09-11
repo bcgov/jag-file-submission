@@ -168,6 +168,7 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
 
     @Then("Verify status code is {int} and content type is not json")
     public void verifyStatusCodeIsAndContentTypeIsNotJson(Integer int1) {
+        generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         assertEquals(200, response.getStatusCode());
         assertEquals("application/octet-stream", response.getContentType());
     }

@@ -1,13 +1,13 @@
 Feature: When user uploads the incorrect filetype, has a invalid cso account then correct error messages are returned
 
- # @backend
+  #@backend
   Scenario: Verify document is not supported for requests made with incorrect file type value
     ## Call to upload the document ##
     Given POST http request is made to "DOCUMENT_SUBMISSION" with invalid file type and a single image file
     When status code is 400 and content type is not json
     Then verify response returns document required error and message
 
- # @backend
+  #@backend
   Scenario: Verify secure url is not generated for requests made with invalid CSO account guid in the request header
     ## Call to generate url ##
     Given POST http request is made to "GENERATE_URL_API" with invalid CSO account guid in the header
@@ -21,7 +21,7 @@ Feature: When user uploads the incorrect filetype, has a invalid cso account the
     When error status code is 404 and content type is verified
     Then verify error message is present and message has no value
 
-  # @backend
+#  @backend
   Scenario: Verify secure url is not generated if path is invalid
     ## Call to generate url ##
     Given POST http request is made to "GENERATE_URL_API" with invalid path

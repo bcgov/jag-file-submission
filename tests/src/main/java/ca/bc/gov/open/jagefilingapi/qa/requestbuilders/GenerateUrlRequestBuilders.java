@@ -3,6 +3,7 @@ package ca.bc.gov.open.jagefilingapi.qa.requestbuilders;
 import ca.bc.gov.open.jagefilingapi.qa.backend.generateurlpayload.GenerateUrlPayload;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.APIResources;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
+import ca.bc.gov.open.jagefilingapi.qa.config.ReadConfig;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.FrontendTestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
 import io.restassured.RestAssured;
@@ -32,9 +33,12 @@ public class GenerateUrlRequestBuilders {
     private GenerateUrlPayload payloadData;
     public String userToken;
 
-    public Response getBearerToken() {
-        String resourceAPI = System.getProperty("KEYCLOAK_URL");
-        String clientSecret = System.getProperty("EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET");
+    public Response getBearerToken() throws IOException {
+        ReadConfig readConfig = new ReadConfig();
+        String resourceAPI = readConfig.getKeycloakUrl();
+        String clientSecret = JsonDataReader.getCsoAccountGuid().getClientSecret();
+    /*  String resourceAPI = System.getProperty("KEYCLOAK_URL");
+        String clientSecret = System.getProperty("EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET");*/
 
         request = RestAssured.given()
                 .formParam(CLIENT_ID, "efiling-demo")
@@ -141,7 +145,7 @@ public class GenerateUrlRequestBuilders {
 
         return request.when().get(resourceGet.getResource() + submissionId + pathParam + fileName)
                 .then()
-                //.spec(TestUtil.validResponseSpecification())
+                .spec(TestUtil.validResponseCodeSpecification())
                 .extract().response();
     }
 
@@ -276,7 +280,7 @@ public class GenerateUrlRequestBuilders {
 
         return request.when().get(resourceGet.getResource() + submissionId + pathParam)
                 .then()
-              //  .spec(TestUtil.validResponseSpecification())
+                .spec(TestUtil.validResponseSpecification())
                 .extract().response();
     }
 

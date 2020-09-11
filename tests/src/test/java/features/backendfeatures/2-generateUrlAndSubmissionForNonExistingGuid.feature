@@ -12,10 +12,10 @@ Feature: When user with non existing guid uploads the documents, id is authentic
     Given POST http request is made to "GENERATE_URL_API" with client application, court details and navigation urls with non existing guid
     When status code is 200 and content type are verified
     Then verify expiry date and eFiling url are returned with non existing CSO account guid and submission id
-    ## Call to get user details ##
+    ## Call to get submission config ##
     Given "SUBMISSION" id is submitted with non existing CSO account GET http request
     When status code is 200 and content type are verified
-    Then verify universal id, account type and identifier values are returned
+    Then verify clientAppName and csoBaseUrl values are returned
     And verify success, error and cancel navigation urls are also returned
     ## Call to get filing package info ##
     Given "SUBMISSION" id with filing package path is submitted with non existing CSO account GET http request
@@ -23,4 +23,4 @@ Feature: When user with non existing guid uploads the documents, id is authentic
     Then verify court details and document details are returned
     ## Call to get document wth filename ##
     Given "SUBMISSION" id with filename path is submitted with non existing CSO account GET http request
-  #  Then Verify status code is 200 and content type is not json
+    Then Verify status code is 200 and content type is octet-stream

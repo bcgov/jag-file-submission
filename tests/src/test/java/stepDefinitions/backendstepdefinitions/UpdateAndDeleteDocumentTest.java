@@ -122,25 +122,13 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
                                                                                 submissionId, GET_CONFIG_PATH);
     }
 
-    @Then("verify universal id, user details and account type values are returned and not empty")
-    public void verifyUniversalIdUserDetailsAndAccountTypeValuesAreReturnedAndNotEmpty() {
+    @Then("ClientAppName and csoBaseUrl values are verified")
+    public void clientAppNameAndCsoBaseUrlValuesAreVerified() {
         jsonPath = new JsonPath(response.asString());
 
-        String universalId = jsonPath.get("userDetails.universalId");
-        String displayName = jsonPath.get("clientApplication.displayName");
-        String clientAppType = jsonPath.get("clientApplication.type");
-
-        List<String> type = jsonPath.get("userDetails.accounts.type");
-        List<String> identifier = jsonPath.get("userDetails.accounts.identifier");
-
-        assertThat(universalId, is(not(emptyString())));
-        assertThat(displayName, is(not(emptyString())));
-        assertThat(clientAppType, is(not(emptyString())));
-        log.info("Names and email objects from the valid CSO account submission response have valid values");
-
-        assertFalse(type.isEmpty());
-        assertFalse(identifier.isEmpty());
-        log.info("Account type and identifier objects from the valid CSO account submission response have valid values");
+        assertThat(jsonPath.get("clientAppName"), is(not(emptyString())));
+        assertThat(jsonPath.get("csoBaseUrl"), is(not(emptyString())));
+        log.info("ClientAppName and csoBaseUrl objects from the response are correct.");
     }
 
     @Given("second document is posted to {string}")
@@ -154,14 +142,9 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
     @And("verify navigation urls are returned")
     public void verifyNavigationUrlsAreReturned() {
         jsonPath = new JsonPath(response.asString());
-
-        String successUrl = jsonPath.get("navigation.success.url");
-        String errorUrl = jsonPath.get("navigation.error.url");
-        String cancelUrl = jsonPath.get("navigation.cancel.url");
-
-        assertNotNull(successUrl);
-        assertNotNull(errorUrl);
-        assertNotNull(cancelUrl);
+        assertNotNull(jsonPath.get("navigationUrls.success"));
+        assertNotNull(jsonPath.get("navigationUrls.error"));
+        assertNotNull(jsonPath.get("navigationUrls.cancel"));
     }
 
     @Given("{string} id with filename is submitted with GET http request")
@@ -198,7 +181,6 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
         assertFalse(jsonPath.get("documents.statutoryFeeAmount").toString().isEmpty());
         assertFalse(jsonPath.get("documents.mimeType").toString().isEmpty());
         log.info("Document properties are updated");
-
     }
 
     @Given("{string} id is submitted with DELETE http request")

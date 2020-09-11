@@ -98,44 +98,28 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
                                                                                 submissionId, GET_CONFIG_PATH);
     }
 
-    @Then("verify universal id, account type and identifier values are returned")
-    public void verifyUniversalIdAccountTypeAndIdentifierValuesAreReturned() {
+    @Then("verify clientAppName and csoBaseUrl values are returned")
+    public void verifyClientAppNameAndCsoBaseUrlValuesAreReturned() {
         jsonPath = new JsonPath(response.asString());
 
-        String universalId = jsonPath.get("userDetails.universalId");
-        String displayName = jsonPath.get("clientApplication.displayName");
-        String clientAppType = jsonPath.get("clientApplication.type");
-
-        List<String> type = jsonPath.get("userDetails.accounts.type");
-        List<String> identifier = jsonPath.get("userDetails.accounts.identifier");
-
-        assertThat(universalId, is(not(emptyString())));
-        assertThat(displayName, is(not(emptyString())));
-        assertThat(clientAppType, is(not(emptyString())));
-        log.info("Universal id, display name and type for non existing CSO account submission response have valid values");
-
-        assertFalse(type.isEmpty());
-        assertFalse(identifier.isEmpty());
-        log.info("Account type and identifier objects from the valid CSO account submission response have valid values");
+        assertThat(jsonPath.get("clientAppName"), is(not(emptyString())));
+        assertThat(jsonPath.get("csoBaseUrl"), is(not(emptyString())));
+        log.info("ClientAppName and csoBaseUrl objects from the response are correct.");
     }
 
     @And("verify success, error and cancel navigation urls are also returned")
     public void verifySuccessErrorAndCancelNavigationUrlsAreReturned() {
         jsonPath = new JsonPath(response.asString());
 
-        String successUrl = jsonPath.get("navigation.success.url");
-        String errorUrl = jsonPath.get("navigation.error.url");
-        String cancelUrl = jsonPath.get("navigation.cancel.url");
-
-        assertNotNull(successUrl);
-        assertNotNull(errorUrl);
-        assertNotNull(cancelUrl);
+        assertNotNull(jsonPath.get("navigationUrls.success"));
+        assertNotNull(jsonPath.get("navigationUrls.error"));
+        assertNotNull(jsonPath.get("navigationUrls.cancel"));;
     }
 
     @Then("verify court details and document details are returned")
     public void verifyCourtDetailsAndDocumentDetailsAreReturned() {
         jsonPath = new JsonPath(response.asString());
-        float submissionFeeAmount = jsonPath.get("submissionFeeAmount");
+        int submissionFeeAmount = jsonPath.get("submissionFeeAmount");
 
         assertThat(jsonPath.get("court.location"), is(not(emptyString())));
         assertThat(jsonPath.get("court.level"), is(not(emptyString())));
@@ -172,5 +156,12 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToGetDocumentUsingFileName(resource, nonExistingCSOGuid,
                 submissionId, DOCUMENT_PATH_PARAM, FILE_NAME_PATH);
+    }
+
+    @Then("Verify status code is {int} and content type is octet-stream")
+    public void verifyStatusCodeIsAndContentTypeIsOctetStream(Integer int1) {
+        generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
+        assertEquals(200, response.getStatusCode());
+        assertEquals("application/octet-stream", response.getContentType());
     }
 }
