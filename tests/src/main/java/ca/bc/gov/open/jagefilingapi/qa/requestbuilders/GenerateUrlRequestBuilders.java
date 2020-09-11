@@ -37,8 +37,10 @@ public class GenerateUrlRequestBuilders {
         ReadConfig readConfig = new ReadConfig();
        // String resourceAPI = readConfig.getKeycloakUrl();
         String resourceAPI = System.getProperty("KEYCLOAK_URL");
+        System.out.println(resourceAPI);
         //String clientSecret = JsonDataReader.getCsoAccountGuid().getClientSecret();
         String clientSecret = System.getProperty("EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET");
+        System.out.println(clientSecret);
 
         request = RestAssured.given().spec(TestUtil.submitDocumentsRequestSpecification())
                 .formParam(CLIENT_ID, "efiling-demo")
@@ -55,11 +57,13 @@ public class GenerateUrlRequestBuilders {
         payloadData = new GenerateUrlPayload();
         APIResources resourceAPI = APIResources.valueOf(resourceValue);
         String validUserid = JsonDataReader.getCsoAccountGuid().getValidUserId();
+        System.out.println(validUserid);
 
         Response response = getBearerToken();
         JsonPath jsonPath = new JsonPath(response.asString());
 
         String accessToken = jsonPath.get(ACCESS_TOKEN);
+        System.out.println(accessToken);
 
         File pdfFile = new File(UPLOAD_FILE_PATH + fileNamePath);
 
