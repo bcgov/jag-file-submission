@@ -3,7 +3,6 @@ package ca.bc.gov.open.jagefilingapi.qa.requestbuilders;
 import ca.bc.gov.open.jagefilingapi.qa.backend.generateurlpayload.GenerateUrlPayload;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.APIResources;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
-import ca.bc.gov.open.jagefilingapi.qa.config.ReadConfig;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.FrontendTestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
 import io.restassured.RestAssured;
@@ -96,7 +95,7 @@ public class GenerateUrlRequestBuilders {
                 .extract().response();
     }
 
-    public Response requestToGetSubmissionConfig(String resource, String accountGuid, String submissionId, String pathParam) throws IOException {
+    public Response requestToGetSubmissionConfig(String resource, String accountGuid, String submissionId, String pathParam) throws IOException, InterruptedException {
         APIResources resourceGet = APIResources.valueOf(resource);
         FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
 
@@ -113,7 +112,7 @@ public class GenerateUrlRequestBuilders {
     }
 
     public Response requestToGetFilingPackage(String resource, String accountGuid,
-                                              String submissionId, String filePathParam) throws IOException {
+                                              String submissionId, String filePathParam) throws IOException, InterruptedException {
         APIResources resourceGet = APIResources.valueOf(resource);
         FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
 
@@ -130,7 +129,7 @@ public class GenerateUrlRequestBuilders {
     }
 
     public Response requestToGetDocumentUsingFileName(String resource, String accountGuid,
-                                              String submissionId, String pathParam, String fileName) throws IOException {
+                                              String submissionId, String pathParam, String fileName) throws IOException, InterruptedException {
         APIResources resourceGet = APIResources.valueOf(resource);
         FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
 
@@ -263,7 +262,7 @@ public class GenerateUrlRequestBuilders {
     }
 
     public Response requestToUpdateDocumentProperties(String resource, String accountGuid, String submissionId,
-                                                      String pathParam) throws IOException {
+                                                      String pathParam) throws IOException, InterruptedException {
         payloadData = new GenerateUrlPayload();
         APIResources resourceGet = APIResources.valueOf(resource);
         FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
@@ -281,7 +280,7 @@ public class GenerateUrlRequestBuilders {
                 .extract().response();
     }
 
-    public Response requestToDeleteDocuments(String resource, String accountGuid, String submissionId) throws IOException {
+    public Response requestToDeleteDocuments(String resource, String accountGuid, String submissionId) throws IOException, InterruptedException {
         APIResources resourceGet = APIResources.valueOf(resource);
         FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
 
