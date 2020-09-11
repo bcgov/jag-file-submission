@@ -116,7 +116,7 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
     }
 
     @Given("{string} id is submitted with GET request")
-    public void idIsSubmittedWithGetRequest(String resource) throws IOException {
+    public void idIsSubmittedWithGetRequest(String resource) throws IOException, InterruptedException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToGetSubmissionConfig(resource, validExistingCSOGuid,
                                                                                 submissionId, GET_CONFIG_PATH);
@@ -165,7 +165,7 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
     }
 
     @Given("{string} id with filename is submitted with GET http request")
-    public void idWithFilenameIsSubmittedWithGETHttpRequest(String resource) throws IOException {
+    public void idWithFilenameIsSubmittedWithGETHttpRequest(String resource) throws IOException, InterruptedException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToGetDocumentUsingFileName(resource,validExistingCSOGuid,
                                                                 submissionId, DOCUMENT_PATH_PARAM, SECOND_FILE_NAME_PATH);
@@ -178,7 +178,7 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
     }
 
     @Given("{string} id with payload is submitted to upload the document properties")
-    public void idWithPayloadIsSubmittedToUploadTheDocumentProperties(String resource) throws IOException {
+    public void idWithPayloadIsSubmittedToUploadTheDocumentProperties(String resource) throws IOException, InterruptedException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToUpdateDocumentProperties(resource,validExistingCSOGuid,
                                                 submissionId, UPDATE_DOCUMENTS_PATH_PARAM);
@@ -202,7 +202,7 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
     }
 
     @Given("{string} id is submitted with DELETE http request")
-    public void idIsSubmittedWithDeleteHttpRequest(String resource) throws IOException {
+    public void idIsSubmittedWithDeleteHttpRequest(String resource) throws IOException, InterruptedException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToDeleteDocuments(resource, validExistingCSOGuid, submissionId);
     }
