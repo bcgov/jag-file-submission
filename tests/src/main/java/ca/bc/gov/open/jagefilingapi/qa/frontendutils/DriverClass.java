@@ -4,6 +4,7 @@ import ca.bc.gov.open.jagefilingapi.qa.config.ReadConfig;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -25,10 +26,15 @@ public class DriverClass {
                 case "chrome":
                     WebDriverManager.chromedriver().setup();
                     ChromeOptions options = new ChromeOptions();
+                    options.addArguments("enable-automation");
                     options.addArguments("--no-sandbox");
                     options.addArguments("--disable-dev-shm-usage");
                     options.addArguments("--headless");
                     options.addArguments("--window-size=1920,1080");
+                    options.addArguments("--disable-extensions");
+                    options.addArguments("--dns-prefetch-disable");
+                    options.addArguments("--disable-gpu");
+                    options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
                     driver = new ChromeDriver(options);
                     break;
                 case "firefox":
