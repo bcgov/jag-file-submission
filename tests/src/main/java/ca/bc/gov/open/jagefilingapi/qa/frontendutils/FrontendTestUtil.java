@@ -59,10 +59,6 @@ public class FrontendTestUtil extends DriverClass {
         landingPage.clickEfilePackageButton();
         log.info("Pdf file is uploaded successfully.");
 
-        authenticationPage.clickBceid();
-        authenticationPage.signInWithBceid(username, password);
-        log.info("user is authenticated in eFiling hub.");
-
         JavascriptExecutor js = (JavascriptExecutor) driver;
         String userToken = js.executeScript("return window.localStorage.getItem('jwt');").toString();
         driver.quit();
