@@ -16,7 +16,7 @@ if your change is a breaking change, please add `breaking change` label to this 
 
 Please describe the tests that you ran to verify your changes.
 
-## Does the change need to be reflected in Docker?
+## Does the change impact or break the Docker build?
 
 - [ ] Yes
 - [ ] No
