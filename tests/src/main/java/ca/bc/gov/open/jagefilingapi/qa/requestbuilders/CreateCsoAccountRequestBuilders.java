@@ -5,7 +5,6 @@ import ca.bc.gov.open.jagefilingapi.qa.backendutils.APIResources;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.FrontendTestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
@@ -18,7 +17,6 @@ public class CreateCsoAccountRequestBuilders {
     private RequestSpecification request;
     private CreateCsoAccountPayload csoAccountPayloadData;
     private static final String X_TRANSACTION_ID = "X-Transaction-Id";
-    private static final String ACCESS_TOKEN = "access_token";
     private String validExistingCSOGuid;
 
     public Response requestWithValidRequestBody(String resourceValue) throws IOException, InterruptedException {

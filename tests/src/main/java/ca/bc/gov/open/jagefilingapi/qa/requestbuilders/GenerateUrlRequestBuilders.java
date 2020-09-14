@@ -33,7 +33,6 @@ public class GenerateUrlRequestBuilders {
     public String userToken;
 
     public Response getBearerToken() throws IOException {
-        ReadConfig readConfig = new ReadConfig();
         String resourceAPI = System.getProperty("KEYCLOAK_URL");
         String clientSecret = System.getProperty("EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET");
 
