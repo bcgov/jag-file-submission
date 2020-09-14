@@ -47,7 +47,7 @@ public class FrontendTestUtil extends DriverClass {
 
         AuthenticationPage authenticationPage = new AuthenticationPage(driver);
         authenticationPage.clickBceid();
-        Thread.sleep(4000L);
+        Thread.sleep(5000L);
         authenticationPage.signInWithBceid(username, password);
         log.info("user is authenticated before reaching eFiling demo page");
 
