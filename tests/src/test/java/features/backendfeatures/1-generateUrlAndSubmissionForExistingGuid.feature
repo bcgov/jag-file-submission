@@ -24,7 +24,7 @@ Feature: When user uploads the documents, id is authenticated user details, navi
     Given "SUBMISSION" id with filename path is submitted with GET http request
     Then Verify status code is 200 and content type is not json
 
- # @backend
+  @backend
   Scenario: Verify if multiple document is uploaded, url is generated and package information can be retrieved for requests made with valid CSO account
     ## Call to upload the document ##
     Given POST http request is made to "DOCUMENT_SUBMISSION" with valid existing CSO account guid and multiple file

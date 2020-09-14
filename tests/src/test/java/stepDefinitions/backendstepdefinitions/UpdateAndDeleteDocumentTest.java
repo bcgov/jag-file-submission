@@ -160,8 +160,8 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
         assertEquals("application/octet-stream", response.getContentType());
     }
 
-    @Given("{string} id with payload is submitted to upload the document properties")
-    public void idWithPayloadIsSubmittedToUploadTheDocumentProperties(String resource) throws IOException, InterruptedException {
+    @Given("{string} id with payload is submitted to update the document properties")
+    public void idWithPayloadIsSubmittedToUpdateTheDocumentProperties(String resource) throws IOException, InterruptedException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToUpdateDocumentProperties(resource,validExistingCSOGuid,
                                                 submissionId, UPDATE_DOCUMENTS_PATH_PARAM);
@@ -170,15 +170,14 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
     @Then("verify document properties are updated")
     public void verifyDocumentPropertiesAreUpdated() {
         jsonPath = new JsonPath(response.asString());
+        int statutoryFee = jsonPath.get("documents.statutoryFeeAmount");
 
         assertFalse(jsonPath.get("documents.name").toString().isEmpty());
         assertFalse(jsonPath.get("documents.type").toString().isEmpty());
-        assertFalse(jsonPath.get("documents.subType").toString().isEmpty());
-        assertFalse(jsonPath.get("documents.isAmendment").toString().isEmpty());
-        assertFalse(jsonPath.get("documents.isSupremeCourtScheduling").toString().isEmpty());
-        assertFalse(jsonPath.get("documents.data").toString().isEmpty());
+        assertTrue(jsonPath.get("documents.isAmendment"));
+        assertTrue(jsonPath.get("documents.isSupremeCourtScheduling"));
         assertFalse(jsonPath.get("documents.description").toString().isEmpty());
-        assertFalse(jsonPath.get("documents.statutoryFeeAmount").toString().isEmpty());
+        assertEquals(0 , statutoryFee);
         assertFalse(jsonPath.get("documents.mimeType").toString().isEmpty());
         log.info("Document properties are updated");
     }

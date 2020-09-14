@@ -2,7 +2,6 @@ package ca.bc.gov.open.jagefilingapi.qa.backend.generateurlpayload;
 
 import ca.bc.gov.open.jag.efilingapi.qa.api.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -27,8 +26,6 @@ public class GenerateUrlPayload {
     public static final String MIDDLE_NAME = "MIDDLENAME";
     public static final String LAST_NAME = "LASTNAME";
     public static final String MD5 = "Md 5";
-    public static final Party.RoleTypeEnum ROLE_TYPE = Party.RoleTypeEnum.ABC;
-    public static final Party.PartyTypeEnum PARTY_TYPE = Party.PartyTypeEnum.IND;
     public static final DocumentProperties.TypeEnum TYPE = DocumentProperties.TypeEnum.AAB;
 
     public static final String SUCCESS_URL = "http://success.com";
@@ -43,12 +40,23 @@ public class GenerateUrlPayload {
         return objMap.writeValueAsString(generateUrlRequestPayload());
     }
 
+    public String updatePropertiesPayload() throws IOException {
+        ObjectMapper objMap = new ObjectMapper();
+        return objMap.writeValueAsString(updatePropertiesPackage());
+    }
+
     public GenerateUrlRequest generateUrlRequestPayload(){
         generateUrlRequest = new GenerateUrlRequest();
         generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
         generateUrlRequest.setFilingPackage(generateInitialPackage(generateCourt(), generateDocumentPropertiesList(), generatePartyList()));
         generateUrlRequest.setNavigationUrls(generateNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL));
         return generateUrlRequest;
+    }
+
+    public static UpdateDocumentRequest updatePropertiesPackage() {
+        UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest();
+        updateDocumentRequest.setDocuments(generateDocumentPropertiesList());
+        return updateDocumentRequest;
     }
 
     public static InitialPackage generateInitialPackage(Court court, List<DocumentProperties> documentProperties, List<Party> parties) {
@@ -90,8 +98,6 @@ public class GenerateUrlPayload {
 
         documentProperties.setName(FIRST_NAME);
         documentProperties.setType(DocumentProperties.TypeEnum.AAB);
-        documentProperties.setName(FIRST_NAME);
-        documentProperties.setType(TYPE);
         documentProperties.setIsAmendment(true);
         documentProperties.setIsSupremeCourtScheduling(true);
         documentProperties.setData(new ObjectMapper().createObjectNode());
@@ -105,8 +111,8 @@ public class GenerateUrlPayload {
         parties.setFirstName(FIRST_NAME);
         parties.setMiddleName(MIDDLE_NAME);
         parties.setLastName(LAST_NAME);
-        parties.setRoleType(ROLE_TYPE);
-        parties.setPartyType(PARTY_TYPE);
+        parties.setRoleType(Party.RoleTypeEnum.ABC);
+        parties.setPartyType(Party.PartyTypeEnum.IND);
 
         return Arrays.asList(parties);
     }

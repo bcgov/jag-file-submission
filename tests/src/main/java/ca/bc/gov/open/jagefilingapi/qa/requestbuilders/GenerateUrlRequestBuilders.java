@@ -275,12 +275,12 @@ public class GenerateUrlRequestBuilders {
 
         request = given().auth().preemptive().oauth2(userToken)
                 .spec(TestUtil.requestSpecification())
-                .header(X_TRANSACTION_ID, accountGuid);
-              //  .body(payloadData.updateDocumentPropertiesPayload());
+                .header(X_TRANSACTION_ID, accountGuid)
+                .body(payloadData.updatePropertiesPayload());
 
-        return request.when().get(resourceGet.getResource() + submissionId + pathParam)
+        return request.when().post(resourceGet.getResource() + submissionId + pathParam)
                 .then()
-                .spec(TestUtil.validResponseSpecification())
+//                .spec(TestUtil.validResponseSpecification())
                 .extract().response();
     }
 

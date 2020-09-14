@@ -1,7 +1,7 @@
 Feature: When user with non existing guid uploads the documents, id is authenticated user details,
   navigation urls are generated and user, submission package details can be retrieved
 
- # @backend
+  @backend
   Scenario: Verify if a single document is uploaded, url is generated and package information can be retrieved for
   requests made with non existing valid CSO account
     ## Call to upload the document ##
