@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
          features = {"src/test/java/features"},
          glue ={"stepDefinitions"},
          monochrome = true,
-         tags = "@csoo",
+         tags = "@backend",
          plugin = {
                  "pretty",
                  "html:target/cucumber-reports/cucumber-pretty",

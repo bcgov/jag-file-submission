@@ -1,6 +1,6 @@
 Feature: When user uploads the incorrect filetype, has a invalid cso account then correct error messages are returned
 
-  #@backend
+  @backend
   Scenario: Verify document is not supported for requests made with incorrect file type value
     ## Call to upload the document ##
     Given POST http request is made to "DOCUMENT_SUBMISSION" with invalid file type and a single image file

@@ -15,11 +15,8 @@ public class LookUpRequestBuilders {
 
     private RequestSpecification request;
 
-
-
     public Response requestToGetDocumentTypes(String resourceValue) throws IOException, InterruptedException {
         APIResources validCreateAccountResourceAPI = APIResources.valueOf(resourceValue);
-       String validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
         FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
         String userToken = frontendTestUtil.getUserJwtToken();

@@ -46,3 +46,7 @@ Feature: When user uploads the documents, id is authenticated user details, navi
     ## Call to get document wth filename ##
     Given "SUBMISSION" id with filename path is submitted with GET http request
     Then Verify status code is 200 and content type is not json
+      ## Call to submit document ##
+  #  Given "SUBMISSION" id with submit path is submitted with POST http request
+  #  Then Verify status code is 200 and content type is not json
+  #  And packageRef is returned

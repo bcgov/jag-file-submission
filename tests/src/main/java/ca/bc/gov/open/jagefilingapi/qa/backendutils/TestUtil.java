@@ -81,7 +81,6 @@ public class TestUtil {
     }
 
     public static List<String> getSubmissionAndTransId(String respUrl, String submissionId, String transactionId) throws URISyntaxException {
-
         List<NameValuePair> params = URLEncodedUtils.parse(new URI(respUrl), StandardCharsets.UTF_8);
 
         String respSubId = null;

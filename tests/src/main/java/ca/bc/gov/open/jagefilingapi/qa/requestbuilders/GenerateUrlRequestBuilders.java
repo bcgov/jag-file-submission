@@ -16,7 +16,6 @@ import java.io.IOException;
 
 import static io.restassured.RestAssured.given;
 
-
 public class GenerateUrlRequestBuilders {
 
     private RequestSpecification request;
@@ -35,10 +34,8 @@ public class GenerateUrlRequestBuilders {
 
     public Response getBearerToken() throws IOException {
         ReadConfig readConfig = new ReadConfig();
-        String resourceAPI = readConfig.getKeycloakUrl();
-        String clientSecret = JsonDataReader.getCsoAccountGuid().getClientSecret();
-    /*  String resourceAPI = System.getProperty("KEYCLOAK_URL");
-        String clientSecret = System.getProperty("EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET");*/
+        String resourceAPI = System.getProperty("KEYCLOAK_URL");
+        String clientSecret = System.getProperty("EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET");
 
         request = RestAssured.given()
                 .formParam(CLIENT_ID, "efiling-demo")

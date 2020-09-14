@@ -1,22 +1,29 @@
 package stepDefinitions.backendstepdefinitions;
 
+import ca.bc.gov.open.jagefilingapi.qa.backend.generateurlpayload.GenerateUrlPayload;
+import ca.bc.gov.open.jagefilingapi.qa.backendutils.APIResources;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.DriverClass;
+import ca.bc.gov.open.jagefilingapi.qa.frontendutils.FrontendTestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
 import ca.bc.gov.open.jagefilingapi.qa.requestbuilders.GenerateUrlRequestBuilders;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.Assert;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
 
+import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyString;
@@ -177,5 +184,30 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     public void POSTHttpRequestIsMadeToWithValidExistingCSOAccountGuidAndMultipleFile(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.validRequestWithMultipleDocuments(resource);
+    }
+
+    @Given("{string} id with submit path is submitted with POST http request")
+    public void IdWithSubmitPathsSubmittedWithPOSTHttpRequest(String resource) throws IOException, InterruptedException {
+        generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
+        APIResources resourceGet = APIResources.valueOf(resource);
+        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
+
+       String userToken = frontendTestUtil.getUserJwtToken();
+
+        RequestSpecification request = given().auth().preemptive().oauth2(userToken)
+                .spec(TestUtil.requestSpecification())
+                .header("x-transaction-id", validExistingCSOGuid)
+                .body(new ObjectMapper().createObjectNode());
+
+        response = request.when().post(resourceGet.getResource() + submissionId + "/submit")
+                .then()
+                .spec(TestUtil.validResponseSpecification())
+                .extract().response();
+    }
+
+    @Then("packageRef is returned")
+    public void packageRefIsReturned() {
+        jsonPath = new JsonPath(response.asString());
+        assertThat(jsonPath.get("packageRef"), is(not(emptyString())));
     }
 }

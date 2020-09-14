@@ -46,7 +46,7 @@ public class AuthenticationPage {
     }
 
     public void clickBceid() {
-        wait = new WebDriverWait(driver, 60);
+        wait = new WebDriverWait(driver, 90);
         wait.until(ExpectedConditions.titleIs("Log in to Family Law Act Application"));
         bceidBtn.click();
     }

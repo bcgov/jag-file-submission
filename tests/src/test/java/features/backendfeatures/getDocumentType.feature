@@ -1,7 +1,6 @@
-Feature: New CSO accounts can be created if a BCeID profile is not associated with a CSO account
+Feature: Document type can be retrieved
 
-   @csoo
- #  @backend
+   @backend
    Scenario: Verify document type can be retrieved successfully
    ## Lookup api call ##
    Given Get http request is made to "LOOK_UP_API" with court level and class details

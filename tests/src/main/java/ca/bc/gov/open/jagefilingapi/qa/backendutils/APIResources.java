@@ -9,6 +9,7 @@ public enum APIResources {
     CSO_ACCOUNT_API("/csoAccount"),
     BCEID_ACCOUNT_API("/bceidAccount"),
     LOOK_UP_API("/lookup/documentTypes"),
+    PAYMENT_API("/payment/generate-update-card"),
     INCORRECT_GENERATE_URL_API("/submissions/generateUrl"),
     INCORRECT_CREATE_CSO_ACCOUNT_API("/csoAccounts");
 

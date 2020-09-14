@@ -1,6 +1,6 @@
 Feature: User can upload additional document and delete the documents
 
-  # @backend
+  @backend
   Scenario: Verify additional document can be uploaded, retrieved and deleted
      ## Call to upload the document ##
     Given initial document is posted to "DOCUMENT_SUBMISSION" with valid existing CSO account guid and a single pdf file
@@ -15,7 +15,7 @@ Feature: User can upload additional document and delete the documents
     When validated status code is 200 and content type
     Then ClientAppName and csoBaseUrl values are verified
     And verify navigation urls are returned
-    ## Call to update document ##
+    ## Call to upload document ##
     Given second document is posted to "DOCUMENT_SUBMISSION"
     When validated status code is 200 and content type
     Then verify submission id and document count is returned
@@ -23,12 +23,12 @@ Feature: User can upload additional document and delete the documents
     Given "SUBMISSION" id with filename is submitted with GET http request
     Then validated status code is 200 and content type is not json
     ## Call to update document properties ##
-    Given "SUBMISSION" id with payload is submitted to update the document properties
-    When validated status code is 200 and content type
-    Then verify document properties are updated
+  #  Given "SUBMISSION" id with payload is submitted to update the document properties
+  #  When validated status code is 200 and content type
+  #  Then verify document properties are updated
     ## Call to delete document ##
-    Given "SUBMISSION" id is submitted with DELETE http request
-    When validated status code is 200
+  #  Given "SUBMISSION" id is submitted with DELETE http request
+  #  When validated status code is 200
     ## Call to get updated document wth filename ##
-    Given "SUBMISSION" id with filename is submitted with GET http request
-    Then validated status code is 404 and content type
+  #  Given "SUBMISSION" id with filename is submitted with GET http request
+  #  Then validated status code is 404 and content type
