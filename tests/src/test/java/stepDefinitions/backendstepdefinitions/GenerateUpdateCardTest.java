@@ -28,7 +28,7 @@ public class GenerateUpdateCardTest {
         response = paymentRequestBuilders.requestToGenerateUpdateCard(resource);
     }
 
-    @When("status {int} and content type are verified")
+    @When("status {int} is correct and content type are verified")
     public void statusIsAndContentTypeIsVerified(Integer status) {
         paymentRequestBuilders = new PaymentRequestBuilders();
 

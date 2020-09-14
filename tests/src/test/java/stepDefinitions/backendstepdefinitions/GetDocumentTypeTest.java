@@ -30,10 +30,9 @@ public class GetDocumentTypeTest {
         response = lookUpRequestBuilders.requestToGetDocumentTypes(resource);
     }
 
-    @When("status {int} and content type are verified")
+    @When("response code {int} and content type are verified")
     public void statusIsAndContentTypeIsVerified(Integer status) {
         lookUpRequestBuilders = new LookUpRequestBuilders();
-
 
         assertEquals(200, response.getStatusCode());
         assertEquals(CONTENT_TYPE, response.getContentType());
