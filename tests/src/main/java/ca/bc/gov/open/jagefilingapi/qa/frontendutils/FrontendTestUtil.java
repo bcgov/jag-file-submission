@@ -2,18 +2,14 @@ package ca.bc.gov.open.jagefilingapi.qa.frontendutils;
 
 import ca.bc.gov.open.jagefilingapi.qa.config.ReadConfig;
 import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.AuthenticationPage;
-import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.CreateCsoAccountPage;
 import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.LandingPage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Map;
 
 public class FrontendTestUtil extends DriverClass {
 
@@ -51,7 +47,7 @@ public class FrontendTestUtil extends DriverClass {
 
         AuthenticationPage authenticationPage = new AuthenticationPage(driver);
         authenticationPage.clickBceid();
-        Thread.sleep(2000L);
+        Thread.sleep(4000L);
         authenticationPage.signInWithBceid(username, password);
         log.info("user is authenticated before reaching eFiling demo page");
 
