@@ -2,28 +2,22 @@ Feature: New CSO accounts can be created if a BCeID profile is not associated wi
 
    @backend
    Scenario: Verify a CSO account can be created successfully
-   ## Create CSO account ##
-   Given POST http request is made to "CSO_ACCOUNT_API" with a valid request body
-   When status is 201 and content type is verified
-   Then verify response returns clientId, accountId and internalClientNumber
-
-  @backend
-  Scenario: Verify a CSO account details can be retrieved successfully
-   ## Get CSO account details ##
-   Given GET http request is made to "CSO_ACCOUNT_API"
-   When status is 200 and content type is verified
-   Then verify response returns clientId, accountId and internalClientNumber
-
-  @backend
-  Scenario: Verify a CSO account internal client number can be updated successfully
-   ## Update CSO account internal client number ##
+    ## Create CSO account ##
+    Given POST http request is made to "CSO_ACCOUNT_API" with a valid request body
+    When status is 201 and content type is verified
+    Then verify response returns clientId, accountId and internalClientNumber
+    ## Get CSO account details ##
+    Given GET http request is made to "CSO_ACCOUNT_API"
+    When status is 200 and content type is verified
+    Then verify response returns clientId, accountId and internalClientNumber
+    ## Update CSO account internal client number ##
     Given PUT http request is made to "CSO_ACCOUNT_API" with a valid request body
     When status is 200 and content type is verified
     Then verify response returns clientId, accountId and internalClientNumber is updated
 
   @backend
   Scenario: Verify a BCeID account details can be retrieved successfully
-   ## Get BCeID account details ##
+    ## Get BCeID account details ##
     Given GET request is made to "BCEID_ACCOUNT_API"
     When status is 200 and content type is verified
     Then verify response returns firstName, lastName and middleName

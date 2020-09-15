@@ -2,6 +2,7 @@ package ca.bc.gov.open.jagefilingapi.qa.frontend.pages;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -37,12 +38,13 @@ public class AuthenticationPage {
 
     //Actions:
     public void signInWithBceid(String userNm, String pwd) {
-        wait = new WebDriverWait(driver, 120);
+        wait = new WebDriverWait(driver, 90);
         wait.until(ExpectedConditions.titleIs("Government of British Columbia"));
         log.info("Waiting for the page to load...");
         userName.sendKeys(userNm);
         password.sendKeys(pwd);
         continueBtn.click();
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//*[@data-test-id='continue-btn']")));
     }
 
     public void clickBceid() {

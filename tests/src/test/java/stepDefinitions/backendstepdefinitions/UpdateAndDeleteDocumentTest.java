@@ -2,16 +2,13 @@ package stepDefinitions.backendstepdefinitions;
 
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.DriverClass;
+import ca.bc.gov.open.jagefilingapi.qa.frontendutils.FrontendTestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
 import ca.bc.gov.open.jagefilingapi.qa.requestbuilders.GenerateUrlRequestBuilders;
-import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.restassured.RestAssured;
-import io.restassured.config.HttpClientConfig;
-import io.restassured.config.RestAssuredConfig;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
@@ -22,7 +19,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.not;
@@ -44,17 +40,10 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
     private static final String SECOND_FILE_NAME_PATH = "/test-document-2.pdf";
     private static final String DOCUMENT_PATH_PARAM = "/document";
     private static final String UPDATE_DOCUMENTS_PATH_PARAM = "/update-documents";
-
+    private String respUrl;
+    private String userToken;
 
     public Logger log = LogManager.getLogger(UpdateAndDeleteDocumentTest.class);
-
-    @Before
-    public void restAssuredConfig() {
-        RestAssured.config= RestAssuredConfig.config().httpClient(HttpClientConfig.httpClientConfig().
-                setParam("http.connection.timeout",300000).
-                setParam("http.socket.timeout",300000).
-                setParam("http.connection-manager.timeout",300000));
-    }
 
     @Given("initial document is posted to {string} with valid existing CSO account guid and a single pdf file")
     public void initialDocumentIsPostedToWithValidExistingCsoAccountGuidAndASinglePdfFile(String resource) throws IOException {
@@ -117,7 +106,7 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
         jsonPath = new JsonPath(response.asString());
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
-        String respUrl = jsonPath.get("efilingUrl");
+         respUrl = jsonPath.get("efilingUrl");
         Long expiryDate = jsonPath.get("expiryDate");
 
         List<String> respId = TestUtil.getSubmissionAndTransId(respUrl, SUBMISSION_ID, TRANSACTION_ID);
@@ -130,8 +119,12 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
     @Given("{string} id is submitted with GET request")
     public void idIsSubmittedWithGetRequest(String resource) throws IOException, InterruptedException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
+        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
+
+        userToken = frontendTestUtil.getUserJwtToken(respUrl);
+
         response = generateUrlRequestBuilders.requestToGetSubmissionConfig(resource, validExistingCSOGuid,
-                                                                                submissionId, GET_CONFIG_PATH);
+                                                                                submissionId, GET_CONFIG_PATH, userToken);
     }
 
     @Then("ClientAppName and csoBaseUrl values are verified")
@@ -160,10 +153,10 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
     }
 
     @Given("{string} id with filename is submitted with GET http request")
-    public void idWithFilenameIsSubmittedWithGETHttpRequest(String resource) throws IOException, InterruptedException {
+    public void idWithFilenameIsSubmittedWithGETHttpRequest(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToGetDocumentUsingFileName(resource,validExistingCSOGuid,
-                                                                submissionId, DOCUMENT_PATH_PARAM, SECOND_FILE_NAME_PATH);
+                                                                submissionId, DOCUMENT_PATH_PARAM, SECOND_FILE_NAME_PATH, userToken);
     }
 
     @Then("validated status code is {int} and content type is not json")
@@ -173,10 +166,10 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
     }
 
     @Given("{string} id with payload is submitted to update the document properties")
-    public void idWithPayloadIsSubmittedToUpdateTheDocumentProperties(String resource) throws IOException, InterruptedException {
+    public void idWithPayloadIsSubmittedToUpdateTheDocumentProperties(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToUpdateDocumentProperties(resource,validExistingCSOGuid,
-                                                submissionId, UPDATE_DOCUMENTS_PATH_PARAM);
+                                                submissionId, UPDATE_DOCUMENTS_PATH_PARAM, userToken);
     }
 
     @Then("verify document properties are updated")
@@ -195,8 +188,8 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
     }
 
     @Given("{string} id is submitted with DELETE http request")
-    public void idIsSubmittedWithDeleteHttpRequest(String resource) throws IOException, InterruptedException {
+    public void idIsSubmittedWithDeleteHttpRequest(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
-        response = generateUrlRequestBuilders.requestToDeleteDocuments(resource, validExistingCSOGuid, submissionId);
+        response = generateUrlRequestBuilders.requestToDeleteDocuments(resource, validExistingCSOGuid, submissionId, userToken);
     }
 }

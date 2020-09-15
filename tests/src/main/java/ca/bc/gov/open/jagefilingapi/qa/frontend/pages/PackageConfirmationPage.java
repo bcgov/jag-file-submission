@@ -41,7 +41,7 @@ public class PackageConfirmationPage {
             return continuePaymentBtn.isDisplayed();
         } catch (org.openqa.selenium.TimeoutException ex) {
             FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
-            frontendTestUtil.getUserJwtToken();
+          //  frontendTestUtil.getUserJwtToken();
         }
         return continuePaymentBtn.isDisplayed();
     }

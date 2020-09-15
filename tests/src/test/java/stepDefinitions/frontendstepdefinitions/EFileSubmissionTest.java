@@ -40,7 +40,7 @@ public class EFileSubmissionTest extends DriverClass {
     private String username;
     private String password;
 
-    @Before
+    @Before()
     public void setUp() throws IOException {
         driverSetUp();
         log.info("Browser is initialized from the driver class");

@@ -1,27 +1,19 @@
 package stepDefinitions.backendstepdefinitions;
 
+import ca.bc.gov.open.jagefilingapi.qa.backendutils.GenerateUrlHelper;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
-import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
+import ca.bc.gov.open.jagefilingapi.qa.frontendutils.FrontendTestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.requestbuilders.CreateCsoAccountRequestBuilders;
-import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.restassured.RestAssured;
-import io.restassured.config.HttpClientConfig;
-import io.restassured.config.RestAssuredConfig;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.emptyString;
-import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.*;
 
 public class CreateCsoAccountTest {
@@ -29,22 +21,21 @@ public class CreateCsoAccountTest {
     private CreateCsoAccountRequestBuilders createCsoAccountRequestBuilders;
     private static final String CONTENT_TYPE = "application/json";
     public Logger log = LogManager.getLogger(CreateCsoAccountTest.class);
-    private Response response;
     private JsonPath jsonPath;
-
-    @Before
-    public void restAssuredConfig() {
-        RestAssured.config= RestAssuredConfig.config().httpClient(HttpClientConfig.httpClientConfig().
-                setParam("http.connection.timeout",300000).
-                setParam("http.socket.timeout",300000).
-                setParam("http.connection-manager.timeout",300000));
-    }
+    private String userToken;
+    private Response response;
+    private String respUrl;
 
     @Given("POST http request is made to {string} with a valid request body")
     public void postHttpRequestIsMadeToWithAValidRequestBody(String resource) throws IOException, InterruptedException {
         createCsoAccountRequestBuilders = new CreateCsoAccountRequestBuilders();
+        GenerateUrlHelper generateUrlHelper = new GenerateUrlHelper();
+        respUrl = generateUrlHelper.getGeneratedUrl();
 
-        response = createCsoAccountRequestBuilders.requestWithValidRequestBody(resource);
+        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
+        userToken = frontendTestUtil.getUserJwtToken(respUrl);
+
+        response = createCsoAccountRequestBuilders.requestWithValidRequestBody(resource, userToken);
     }
 
     @When("status is {int} and content type is verified")
@@ -80,17 +71,17 @@ public class CreateCsoAccountTest {
     }
 
     @Given("GET http request is made to {string}")
-    public void getHttpRequestIsMadeToCsoAccount(String resource) throws IOException, InterruptedException {
+    public void getHttpRequestIsMadeToCsoAccount(String resource) throws IOException {
         createCsoAccountRequestBuilders = new CreateCsoAccountRequestBuilders();
 
-        response = createCsoAccountRequestBuilders.requestToGetUserCsoAccount(resource);
+        response = createCsoAccountRequestBuilders.requestToGetUserCsoAccount(resource, userToken);
     }
 
     @Given("PUT http request is made to {string} with a valid request body")
-    public void putHttpRequestIsMadeToWithAValidRequestBody(String resource) throws IOException, InterruptedException {
+    public void putHttpRequestIsMadeToWithAValidRequestBody(String resource) throws IOException {
         createCsoAccountRequestBuilders = new CreateCsoAccountRequestBuilders();
 
-        response = createCsoAccountRequestBuilders.requestToUpdateUserCsoAccount(resource);
+        response = createCsoAccountRequestBuilders.requestToUpdateUserCsoAccount(resource, userToken);
     }
 
     @Then("verify response returns clientId, accountId and internalClientNumber is updated")
@@ -117,8 +108,13 @@ public class CreateCsoAccountTest {
     @Given("GET request is made to {string}")
     public void getHttpRequestIsMadeToBceidAccount(String resource) throws IOException, InterruptedException {
         createCsoAccountRequestBuilders = new CreateCsoAccountRequestBuilders();
+        GenerateUrlHelper generateUrlHelper = new GenerateUrlHelper();
+        respUrl = generateUrlHelper.getGeneratedUrl();
 
-        response = createCsoAccountRequestBuilders.requestToGetUserBceidAccount(resource);
+        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
+        userToken = frontendTestUtil.getUserJwtToken(respUrl);
+
+        response = createCsoAccountRequestBuilders.requestToGetUserBceidAccount(resource, userToken);
     }
 
     @Then("verify response returns firstName, lastName and middleName")

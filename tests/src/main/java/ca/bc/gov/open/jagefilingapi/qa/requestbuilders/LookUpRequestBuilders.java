@@ -2,8 +2,6 @@ package ca.bc.gov.open.jagefilingapi.qa.requestbuilders;
 
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.APIResources;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
-import ca.bc.gov.open.jagefilingapi.qa.frontendutils.FrontendTestUtil;
-import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
@@ -13,16 +11,11 @@ import static io.restassured.RestAssured.given;
 
 public class LookUpRequestBuilders {
 
-    private RequestSpecification request;
-
-    public Response requestToGetDocumentTypes(String resourceValue) throws IOException, InterruptedException {
+    public Response requestToGetDocumentTypes(String resourceValue, String userJwt) throws IOException {
         APIResources validCreateAccountResourceAPI = APIResources.valueOf(resourceValue);
 
-        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
-        String userToken = frontendTestUtil.getUserJwtToken();
-
-        request = given().spec(TestUtil.requestSpecification())
-                .auth().preemptive().oauth2(userToken);
+        RequestSpecification request = given().spec(TestUtil.requestSpecification())
+                .auth().preemptive().oauth2(userJwt);
 
         return request.when()
                 .get(validCreateAccountResourceAPI.getResource() + "/P" + "/F")

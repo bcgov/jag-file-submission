@@ -3,7 +3,6 @@ package ca.bc.gov.open.jagefilingapi.qa.requestbuilders;
 import ca.bc.gov.open.jagefilingapi.qa.backend.createcsoaccountpayload.CreateCsoAccountPayload;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.APIResources;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
-import ca.bc.gov.open.jagefilingapi.qa.frontendutils.FrontendTestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -19,16 +18,13 @@ public class CreateCsoAccountRequestBuilders {
     private static final String X_TRANSACTION_ID = "X-Transaction-Id";
     private String validExistingCSOGuid;
 
-    public Response requestWithValidRequestBody(String resourceValue) throws IOException, InterruptedException {
+    public Response requestWithValidRequestBody(String resourceValue, String userJwt) throws IOException {
         csoAccountPayloadData = new CreateCsoAccountPayload();
         APIResources validCreateAccountResourceAPI = APIResources.valueOf(resourceValue);
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
-        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
-        String userToken = frontendTestUtil.getUserJwtToken();
-
         request = given().spec(TestUtil.requestSpecification())
-                .auth().preemptive().oauth2(userToken)
+                .auth().preemptive().oauth2(userJwt)
                 .header(X_TRANSACTION_ID, validExistingCSOGuid)
                 .body(csoAccountPayloadData.createCsoAccountPayload());
 
@@ -38,16 +34,13 @@ public class CreateCsoAccountRequestBuilders {
                 .extract().response();
     }
 
-    public Response requestToGetUserCsoAccount(String resourceValue) throws IOException, InterruptedException {
+    public Response requestToGetUserCsoAccount(String resourceValue, String userJwt) throws IOException {
         csoAccountPayloadData = new CreateCsoAccountPayload();
         APIResources validCreateAccountResourceAPI = APIResources.valueOf(resourceValue);
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
-        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
-        String userToken = frontendTestUtil.getUserJwtToken();
-
         request = given().spec(TestUtil.requestSpecification())
-                .auth().preemptive().oauth2(userToken)
+                .auth().preemptive().oauth2(userJwt)
                 .header(X_TRANSACTION_ID, validExistingCSOGuid);
 
         return request.when()
@@ -56,16 +49,13 @@ public class CreateCsoAccountRequestBuilders {
                 .extract().response();
     }
 
-    public Response requestToUpdateUserCsoAccount(String resourceValue) throws IOException, InterruptedException {
+    public Response requestToUpdateUserCsoAccount(String resourceValue, String userJwt) throws IOException {
         csoAccountPayloadData = new CreateCsoAccountPayload();
         APIResources validCreateAccountResourceAPI = APIResources.valueOf(resourceValue);
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
-        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
-        String userToken = frontendTestUtil.getUserJwtToken();
-
         request = given().spec(TestUtil.requestSpecification())
-                .auth().preemptive().oauth2(userToken)
+                .auth().preemptive().oauth2(userJwt)
                 .header(X_TRANSACTION_ID, validExistingCSOGuid)
                 .body(csoAccountPayloadData.updateCsoAccountInternalClientNumber());
 
@@ -75,15 +65,12 @@ public class CreateCsoAccountRequestBuilders {
                 .extract().response();
     }
 
-    public Response requestToGetUserBceidAccount(String resourceValue) throws IOException, InterruptedException {
+    public Response requestToGetUserBceidAccount(String resourceValue, String userJwt) throws IOException {
         APIResources validCreateAccountResourceAPI = APIResources.valueOf(resourceValue);
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
-        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
-        String userToken = frontendTestUtil.getUserJwtToken();
-
         request = given().spec(TestUtil.requestSpecification())
-                .auth().preemptive().oauth2(userToken)
+                .auth().preemptive().oauth2(userJwt)
                 .header(X_TRANSACTION_ID, validExistingCSOGuid);
 
         return request.when()

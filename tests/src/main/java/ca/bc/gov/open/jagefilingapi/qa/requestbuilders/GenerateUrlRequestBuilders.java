@@ -3,7 +3,6 @@ package ca.bc.gov.open.jagefilingapi.qa.requestbuilders;
 import ca.bc.gov.open.jagefilingapi.qa.backend.generateurlpayload.GenerateUrlPayload;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.APIResources;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
-import ca.bc.gov.open.jagefilingapi.qa.frontendutils.FrontendTestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
@@ -47,7 +46,7 @@ public class GenerateUrlRequestBuilders {
 
     public Response requestWithSinglePdfDocument(String resourceValue, String accountGuid, String fileNamePath) throws IOException {
         payloadData = new GenerateUrlPayload();
-        APIResources resourceAPI = APIResources.valueOf(resourceValue);
+        APIResources resourceAPI = APIResources.valueOf("DOCUMENT_SUBMISSION");
         String validUserid = JsonDataReader.getCsoAccountGuid().getValidUserId();
 
         Response response = getBearerToken();
@@ -94,13 +93,10 @@ public class GenerateUrlRequestBuilders {
                 .extract().response();
     }
 
-    public Response requestToGetSubmissionConfig(String resource, String accountGuid, String submissionId, String pathParam) throws IOException, InterruptedException {
+    public Response requestToGetSubmissionConfig(String resource, String accountGuid, String submissionId, String pathParam, String userJwt) throws IOException, InterruptedException {
         APIResources resourceGet = APIResources.valueOf(resource);
-        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
 
-        userToken = frontendTestUtil.getUserJwtToken();
-
-        request = given().auth().preemptive().oauth2(userToken)
+        request = given().auth().preemptive().oauth2(userJwt)
                 .spec(TestUtil.requestSpecification())
                 .header(X_TRANSACTION_ID, accountGuid);
 
@@ -111,13 +107,10 @@ public class GenerateUrlRequestBuilders {
     }
 
     public Response requestToGetFilingPackage(String resource, String accountGuid,
-                                              String submissionId, String filePathParam) throws IOException, InterruptedException {
+                                              String submissionId, String filePathParam, String userJwt) throws IOException {
         APIResources resourceGet = APIResources.valueOf(resource);
-        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
 
-        userToken = frontendTestUtil.getUserJwtToken();
-
-        request = given().auth().preemptive().oauth2(userToken)
+        request = given().auth().preemptive().oauth2(userJwt)
                 .spec(TestUtil.requestSpecification())
                 .header(X_TRANSACTION_ID, accountGuid);
 
@@ -128,13 +121,10 @@ public class GenerateUrlRequestBuilders {
     }
 
     public Response requestToGetDocumentUsingFileName(String resource, String accountGuid,
-                                              String submissionId, String pathParam, String fileName) throws IOException, InterruptedException {
+                                              String submissionId, String pathParam, String fileName, String userJwt) throws IOException {
         APIResources resourceGet = APIResources.valueOf(resource);
-        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
 
-        userToken = frontendTestUtil.getUserJwtToken();
-
-        request = given().auth().preemptive().oauth2(userToken)
+        request = given().auth().preemptive().oauth2(userJwt)
                 .spec(TestUtil.requestSpecification())
                 .header(X_TRANSACTION_ID, accountGuid);
 
@@ -171,7 +161,7 @@ public class GenerateUrlRequestBuilders {
     public Response postRequestWithPayload(String resourceValue, String accountGuid,
                                            String submissionId, String pathParam) throws IOException {
         payloadData = new GenerateUrlPayload();
-        APIResources resourceGet = APIResources.valueOf(resourceValue);
+        APIResources resourceGet = APIResources.valueOf("GENERATE_URL_API");
         String validUserid = JsonDataReader.getCsoAccountGuid().getValidUserId();
 
         Response response = getBearerToken();
@@ -261,31 +251,25 @@ public class GenerateUrlRequestBuilders {
     }
 
     public Response requestToUpdateDocumentProperties(String resource, String accountGuid, String submissionId,
-                                                      String pathParam) throws IOException, InterruptedException {
+                                                      String pathParam, String userJwt) throws IOException {
         payloadData = new GenerateUrlPayload();
         APIResources resourceGet = APIResources.valueOf(resource);
-        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
 
-        userToken = frontendTestUtil.getUserJwtToken();
-
-        request = given().auth().preemptive().oauth2(userToken)
+        request = given().auth().preemptive().oauth2(userJwt)
                 .spec(TestUtil.requestSpecification())
                 .header(X_TRANSACTION_ID, accountGuid)
                 .body(payloadData.updatePropertiesPayload());
 
         return request.when().post(resourceGet.getResource() + submissionId + pathParam)
                 .then()
-//                .spec(TestUtil.validResponseSpecification())
+                .spec(TestUtil.validResponseSpecification())
                 .extract().response();
     }
 
-    public Response requestToDeleteDocuments(String resource, String accountGuid, String submissionId) throws IOException, InterruptedException {
+    public Response requestToDeleteDocuments(String resource, String accountGuid, String submissionId, String userJwt) throws IOException {
         APIResources resourceGet = APIResources.valueOf(resource);
-        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
 
-        userToken = frontendTestUtil.getUserJwtToken();
-
-        request = given().auth().preemptive().oauth2(userToken)
+        request = given().auth().preemptive().oauth2(userJwt)
                 .spec(TestUtil.requestSpecification())
                 .header(X_TRANSACTION_ID, accountGuid);
 

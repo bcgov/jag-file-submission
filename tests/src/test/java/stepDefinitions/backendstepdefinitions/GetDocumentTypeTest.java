@@ -1,13 +1,11 @@
 package stepDefinitions.backendstepdefinitions;
 
+import ca.bc.gov.open.jagefilingapi.qa.backendutils.GenerateUrlHelper;
+import ca.bc.gov.open.jagefilingapi.qa.frontendutils.FrontendTestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.requestbuilders.LookUpRequestBuilders;
-import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.restassured.RestAssured;
-import io.restassured.config.HttpClientConfig;
-import io.restassured.config.RestAssuredConfig;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
@@ -25,19 +23,16 @@ public class GetDocumentTypeTest {
     public Logger log = LogManager.getLogger(GetDocumentTypeTest.class);
     private Response response;
 
-    @Before
-    public void restAssuredConfig() {
-        RestAssured.config= RestAssuredConfig.config().httpClient(HttpClientConfig.httpClientConfig().
-                setParam("http.connection.timeout",300000).
-                setParam("http.socket.timeout",300000).
-                setParam("http.connection-manager.timeout",300000));
-    }
-
     @Given("Get http request is made to {string} with court level and class details")
     public void GetHttpRequestIsMadeWithCourtLevelAndClassDetails(String resource) throws IOException, InterruptedException {
         lookUpRequestBuilders = new LookUpRequestBuilders();
+        GenerateUrlHelper generateUrlHelper = new GenerateUrlHelper();
+        String respUrl = generateUrlHelper.getGeneratedUrl();
 
-        response = lookUpRequestBuilders.requestToGetDocumentTypes(resource);
+        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
+        String userToken = frontendTestUtil.getUserJwtToken(respUrl);
+
+        response = lookUpRequestBuilders.requestToGetDocumentTypes(resource, userToken);
     }
 
     @When("response code {int} and content type are verified")

@@ -47,6 +47,8 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     private static final String FILE_NAME_PATH = "/test-document.pdf";
     private static final String FILING_PACKAGE_PATH_PARAM = "/filing-package";
     private static final String DOCUMENT_PATH_PARAM = "/document";
+    private String respUrl;
+    private String userToken;
 
     public Logger log = LogManager.getLogger(GenerateUrlAndSubmissionTest.class);
 
@@ -107,7 +109,7 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
         jsonPath = new JsonPath(response.asString());
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
-        String respUrl = jsonPath.get("efilingUrl");
+        respUrl = jsonPath.get("efilingUrl");
         Long expiryDate = jsonPath.get("expiryDate");
 
         List<String> respId = TestUtil.getSubmissionAndTransId(respUrl, SUBMISSION_ID, TRANSACTION_ID);
@@ -120,7 +122,10 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     @Given("{string} id is submitted with GET http request")
     public void idIsSubmittedWithGetHttpRequest(String resource) throws IOException, InterruptedException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
-        response = generateUrlRequestBuilders.requestToGetSubmissionConfig(resource, validExistingCSOGuid, submissionId, GET_CONFIG_PATH);
+        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
+
+        userToken = frontendTestUtil.getUserJwtToken(respUrl);
+        response = generateUrlRequestBuilders.requestToGetSubmissionConfig(resource, validExistingCSOGuid, submissionId, GET_CONFIG_PATH, userToken);
     }
 
     @Then("verify clientAppName and csoBaseUrl values are returned and not empty")
@@ -133,10 +138,10 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     }
 
     @Given("{string} id with filing package path is submitted with GET http request")
-    public void idWithFilingPackagePathIsSubmittedWithGETHttpRequest(String resource) throws IOException, InterruptedException {
+    public void idWithFilingPackagePathIsSubmittedWithGETHttpRequest(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToGetFilingPackage(resource,validExistingCSOGuid,
-                                                                submissionId, FILING_PACKAGE_PATH_PARAM );
+                                                                submissionId, FILING_PACKAGE_PATH_PARAM, userToken);
     }
 
     @Then("verify court details and document details are returned and not empty")
@@ -177,10 +182,10 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     }
 
     @Given("{string} id with filename path is submitted with GET http request")
-    public void idWithFilenamePathIsSubmittedWithGETHttpRequest(String resource) throws IOException, InterruptedException {
+    public void idWithFilenamePathIsSubmittedWithGETHttpRequest(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToGetDocumentUsingFileName(resource,validExistingCSOGuid,
-                                                                    submissionId, DOCUMENT_PATH_PARAM, FILE_NAME_PATH);
+                                                                    submissionId, DOCUMENT_PATH_PARAM, FILE_NAME_PATH, userToken);
     }
 
     @Then("Verify status code is {int} and content type is not json")
@@ -197,14 +202,12 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     }
 
     @Given("{string} id with submit path is submitted with POST http request")
-    public void IdWithSubmitPathsSubmittedWithPOSTHttpRequest(String resource) throws IOException, InterruptedException {
+    public void IdWithSubmitPathsSubmittedWithPOSTHttpRequest(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         APIResources resourceGet = APIResources.valueOf(resource);
-        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
 
-       String userToken = frontendTestUtil.getUserJwtToken();
-
-        RequestSpecification request = given().auth().preemptive().oauth2(userToken)
+        RequestSpecification request = given()
+                .auth().preemptive().oauth2(userToken)
                 .spec(TestUtil.requestSpecification())
                 .header("x-transaction-id", validExistingCSOGuid)
                 .body(new ObjectMapper().createObjectNode());

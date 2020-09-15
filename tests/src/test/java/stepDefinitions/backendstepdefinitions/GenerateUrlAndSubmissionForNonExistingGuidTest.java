@@ -2,16 +2,13 @@ package stepDefinitions.backendstepdefinitions;
 
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.DriverClass;
+import ca.bc.gov.open.jagefilingapi.qa.frontendutils.FrontendTestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
 import ca.bc.gov.open.jagefilingapi.qa.requestbuilders.GenerateUrlRequestBuilders;
-import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.restassured.RestAssured;
-import io.restassured.config.HttpClientConfig;
-import io.restassured.config.RestAssuredConfig;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
@@ -42,16 +39,10 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
     private static final String FILE_NAME_PATH = "/test-document.pdf";
     private static final String FILING_PACKAGE_PATH_PARAM = "/filing-package";
     private static final String DOCUMENT_PATH_PARAM = "/document";
+    private String respUrl;
+    private String userToken;
 
     public Logger log = LogManager.getLogger(GenerateUrlAndSubmissionForNonExistingGuidTest.class);
-
-    @Before
-    public void restAssuredConfig() {
-        RestAssured.config= RestAssuredConfig.config().httpClient(HttpClientConfig.httpClientConfig().
-                setParam("http.connection.timeout",300000).
-                setParam("http.socket.timeout",300000).
-                setParam("http.connection-manager.timeout",300000));
-    }
 
     @Given("POST http request is made to {string} with non existing CSO account guid and a single pdf file")
     public void postHttpRequestIsMadeToWithNonExistingCSOAccountGuidAndASinglePdfFile(String resource) throws IOException {
@@ -92,7 +83,7 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
     public void verifyExpiryDateAndEFilingUrlAreReturnedWithNonExistingCSOAccountGuidAndSubmissionId() throws URISyntaxException {
         jsonPath = new JsonPath(response.asString());
 
-        String respUrl = jsonPath.get("efilingUrl");
+        respUrl = jsonPath.get("efilingUrl");
         Long expiryDate = jsonPath.get("expiryDate");
 
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
@@ -106,8 +97,11 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
     @Given("{string} id is submitted with non existing CSO account GET http request")
     public void idIsSubmittedWithNonExistingCsoAccountGetHttpRequest(String resource) throws IOException, InterruptedException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
+        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
+
+        userToken = frontendTestUtil.getUserJwtToken(respUrl);
         response = generateUrlRequestBuilders.requestToGetSubmissionConfig(resource, nonExistingCSOGuid,
-                                                                                submissionId, GET_CONFIG_PATH);
+                                                                                submissionId, GET_CONFIG_PATH, userToken);
     }
 
     @Then("verify clientAppName and csoBaseUrl values are returned")
@@ -157,17 +151,17 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
     }
 
     @Given("{string} id with filing package path is submitted with non existing CSO account GET http request")
-    public void idWithFilingPackagePathIsSubmittedWithNonExistingCSOAccountGETHttpRequest(String resource) throws IOException, InterruptedException {
+    public void idWithFilingPackagePathIsSubmittedWithNonExistingCSOAccountGETHttpRequest(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToGetFilingPackage(resource, nonExistingCSOGuid,
-                                                                        submissionId, FILING_PACKAGE_PATH_PARAM );
+                                                                        submissionId, FILING_PACKAGE_PATH_PARAM, userToken );
     }
 
     @Given("{string} id with filename path is submitted with non existing CSO account GET http request")
-    public void idWithFilenamePathIsSubmittedWithNonExistingCSOAccountGETHttpRequest(String resource) throws IOException, InterruptedException {
+    public void idWithFilenamePathIsSubmittedWithNonExistingCSOAccountGETHttpRequest(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToGetDocumentUsingFileName(resource, nonExistingCSOGuid,
-                submissionId, DOCUMENT_PATH_PARAM, FILE_NAME_PATH);
+                submissionId, DOCUMENT_PATH_PARAM, FILE_NAME_PATH, userToken);
     }
 
     @Then("Verify status code is {int} and content type is octet-stream")
