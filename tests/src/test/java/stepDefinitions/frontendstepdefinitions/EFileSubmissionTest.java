@@ -40,13 +40,13 @@ public class EFileSubmissionTest extends DriverClass {
     private String username;
     private String password;
 
-    @Before("@frontend")
+    @Before
     public void setUp() throws IOException {
         driverSetUp();
         log.info("Browser is initialized from the driver class");
     }
 
-    @After("@frontend")
+    @After
     public void tearDown(Scenario scenario) {
         if (scenario.isFailed()) {
             String testName = scenario.getName();
