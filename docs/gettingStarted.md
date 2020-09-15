@@ -95,13 +95,44 @@ payload:
 }
 ```
 
-The `navigation` object represents a list of possible returns to your application based on the status of the document e-filing
+### Generate URL Payload Details
 
-the `clientAppplication` object represents how your application is labelled in **efiling hub**
+The `navigation` object represents a list of possible returns to your application based on the status of the document e-filing.
+The `clientAppplication` object represents how your application is labelled in **efiling hub**.
+The `filingPackage` object represents the court information about the submited package along with the document(s) info.
+The `documents` array represents the previously uploaded document.
 
-the `filingPackage` object represents the court information about the submited package along with the document(s) info
+Answers to FAQ:
 
-the `documents` array represents the previously uploaded document
+1) What should be used for `roleType` and `partyType` in parties?
+
+The default values to be used for `roleType` is CLA and for `partyType` it is IND.
+
+2) Are the various types of documents the ones present in the list in https://bcgov.github.io/jag-file-submission/#/data?
+
+Yes. This is our list of various document types that can be submitted.
+
+3) For the parties info, would this be the applicant and respondent?
+
+NOT SURE
+
+4) For documents, what kind of information should/can be included in the following fields?
+
+Data:  
+
+MD5: 
+
+isAmendment: This marks if the document is an amendment and is for use only by documents uploaded via the eFiling hub.
+
+5) What should the value of `clientAppName` be?
+
+This field signifies the name of the parent application integrating with the eFiling hub and will show up on the eFiling hub, so please use a full form name such as `Family Law Act Application`.
+
+6) For the court information, how should the fields be determined for this section?
+
+NOT SURE
+
+### Response
 
 on submission you will receive the following response:
 
