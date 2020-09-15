@@ -106,6 +106,11 @@ public class SubmissionConfigTest {
         public CourtDetails getCourtDescription(String agencyIdentifierCd, String courtLevel, String courtClass) {
             return null;
         }
+
+        @Override
+        public boolean checkValidLevelClassLocation(String courtLevel, String courtClass) {
+            return false;
+        }
     }
 
     public static class EfilingSubmissionServiceTest implements EfilingSubmissionService {

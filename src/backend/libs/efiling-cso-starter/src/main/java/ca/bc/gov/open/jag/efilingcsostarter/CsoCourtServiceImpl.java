@@ -34,6 +34,11 @@ public class CsoCourtServiceImpl implements EfilingCourtService {
                 .orElseThrow(() -> new EfilingCourtServiceException("Court not found"));
     }
 
+    @Override
+    public boolean checkValidLevelClassLocation(String courtLevel, String courtClass) {
+        return false;
+    }
+
     private String getCourLevelDescription(String courtLevel) {
         CsoCourtLevelArr levels = csows.getCourtLevels();
         return levels.getArray().stream()
