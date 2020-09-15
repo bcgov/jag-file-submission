@@ -122,13 +122,13 @@ Yes. Applicant and respondent is correct for the parties.
 
 4) For documents, what kind of information should/can be included in the following fields?
 
-Data: 
+Data: A copy of the data collected on parent app side. JSON object containing the party info, potential issue, acts, things associated with divorce, etc.
 
-MD5: 
+MD5: Hash to encrypt the payload.
 
-isAmendment: This marks if the document is an amendment and is for use only by documents uploaded via the eFiling hub.
+isAmendment: This marks if the document is an amendment.
 
-isSupremeCourtScheduling: This marks if the document is for supreme court scheduling and is for use only by documents uploaded via the eFiling hub.
+isSupremeCourtScheduling: This marks if the document is for supreme court scheduling. The Supreme Court Scheduling will not apply initially as we are dealing with Provincial Court, but in the future Supreme Court will be applicable.
 
 5) What should the value of `clientAppName` be?
 
@@ -136,7 +136,7 @@ This field signifies the name of the parent application integrating with the eFi
 
 6) For the court information, how should the fields be determined for this section?
 
-
+Parent app should know level and class. Court location can be provided through the code tables.
 
 ### Response
 
