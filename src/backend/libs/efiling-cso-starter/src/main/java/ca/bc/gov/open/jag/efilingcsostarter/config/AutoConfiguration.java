@@ -113,8 +113,8 @@ public class AutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean({EfilingCourtService.class})
-    public CsoCourtServiceImpl efilingCourtService(Csows csows, FilingStatusFacade filingStatusFacade) {
-        return new CsoCourtServiceImpl(csows, filingStatusFacade);
+    public CsoCourtServiceImpl efilingCourtService(Csows csows, FilingStatusFacadeBean filingStatusFacadeBean) {
+        return new CsoCourtServiceImpl(csows, filingStatusFacadeBean);
     }
 
     @Bean

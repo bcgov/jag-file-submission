@@ -8,6 +8,7 @@ import ca.bc.gov.ag.csows.ceis.Csows;
 import ca.bc.gov.ag.csows.filing.FilingFacadeBean;
 import ca.bc.gov.ag.csows.filing.NestedEjbException;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacade;
+import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtServiceException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
@@ -21,9 +22,9 @@ import java.math.BigDecimal;
 public class CsoCourtServiceImpl implements EfilingCourtService {
 
     private final Csows csows;
-    private final FilingStatusFacade filingStatusFacadeBean;
+    private final FilingStatusFacadeBean filingStatusFacadeBean;
 
-    public CsoCourtServiceImpl(Csows csows, FilingStatusFacade filingStatusFacadeBean) {
+    public CsoCourtServiceImpl(Csows csows, FilingStatusFacadeBean filingStatusFacadeBean) {
         this.filingStatusFacadeBean = filingStatusFacadeBean;
         this.csows = csows;
     }
@@ -47,7 +48,7 @@ public class CsoCourtServiceImpl implements EfilingCourtService {
     public boolean checkValidLevelClassLocation(BigDecimal agencyId, String courtLevel, String courtClass) {
         try {
             // Check CSO for isParticipatingClass
-            return filingStatusFacadeBean.getFilingStatusFacadeBeanPort().isParticipatingClass(
+            return filingStatusFacadeBean.isParticipatingClass(
                     agencyId,
                     courtLevel,
                     courtClass
