@@ -24,6 +24,7 @@ import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -108,7 +109,7 @@ public class SubmissionConfigTest {
         }
 
         @Override
-        public boolean checkValidLevelClassLocation(String courtLevel, String courtClass) {
+        public boolean checkValidLevelClassLocation(BigDecimal agencyId, String courtLevel, String courtClass) {
             return false;
         }
     }

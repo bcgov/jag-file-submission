@@ -82,11 +82,14 @@ public class SubmissionServiceImpl implements SubmissionService {
     public Submission generateFromRequest(SubmissionKey submissionKey, GenerateUrlRequest generateUrlRequest) {
 
         boolean isValidLevelClassLocation = efilingCourtService.checkValidLevelClassLocation(
+                BigDecimal.ONE,
                 generateUrlRequest.getFilingPackage().getCourt().getLevel(),
                 generateUrlRequest.getFilingPackage().getCourt().getCourtClass()
         );
 
+        System.out.println("#########################################");
         System.out.println(isValidLevelClassLocation);
+        System.out.println("#########################################");
 
         Optional<Submission> cachedSubmission = submissionStore.put(
                 submissionMapper.toSubmission(

@@ -107,6 +107,7 @@ services:
       - NAVIGATION_BASE_URL=http://localhost:3000/efiling
       - NAVIGATION_EXPIRYTIME=10
       - CLAMAV_HOST=clamav
+      - CLAMAV_TIMEOUT=150000
 
     networks:
       - fisu-net

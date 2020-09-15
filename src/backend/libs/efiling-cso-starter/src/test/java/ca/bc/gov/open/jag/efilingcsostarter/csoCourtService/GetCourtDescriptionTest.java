@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingcsostarter.csoCourtService;
 
 import ca.bc.gov.ag.csows.ceis.*;
+import ca.bc.gov.ag.csows.filing.status.FilingStatusFacade;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
 import ca.bc.gov.open.jag.efilingcsostarter.CsoCourtServiceImpl;
@@ -37,6 +38,9 @@ public class GetCourtDescriptionTest {
     Csows csowsMock;
 
     @Mock
+    FilingStatusFacade filingStatusFacadeMock;
+
+    @Mock
     CsoAgencyArr csoAgencyArrMock;
 
 
@@ -64,7 +68,7 @@ public class GetCourtDescriptionTest {
         Mockito.when(csoAgencyArrMock.getArray()).thenReturn(createAgencyArray());
         Mockito.when(csowsMock.getCourtLocations()).thenReturn(csoAgencyArrMock);
 
-        sut = new CsoCourtServiceImpl(csowsMock);
+        sut = new CsoCourtServiceImpl(csowsMock, filingStatusFacadeMock);
     }
     @DisplayName("Exception: with null parameter throws Illegal Argument exception")
     @Test

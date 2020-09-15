@@ -5,17 +5,26 @@ import ca.bc.gov.ag.csows.ceis.CsoCourtClassArr;
 import ca.bc.gov.ag.csows.ceis.CsoCourtLevelArr;
 import ca.bc.gov.ag.csows.ceis.Csows;
 
+import ca.bc.gov.ag.csows.filing.FilingFacadeBean;
+import ca.bc.gov.ag.csows.filing.NestedEjbException;
+import ca.bc.gov.ag.csows.filing.status.FilingStatusFacade;
+import ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtServiceException;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import org.apache.commons.lang3.StringUtils;
+
+import java.math.BigDecimal;
 
 
 public class CsoCourtServiceImpl implements EfilingCourtService {
 
     private final Csows csows;
+    private final FilingStatusFacade filingStatusFacadeBean;
 
-    public CsoCourtServiceImpl(Csows csows) {
+    public CsoCourtServiceImpl(Csows csows, FilingStatusFacade filingStatusFacadeBean) {
+        this.filingStatusFacadeBean = filingStatusFacadeBean;
         this.csows = csows;
     }
 
@@ -35,8 +44,17 @@ public class CsoCourtServiceImpl implements EfilingCourtService {
     }
 
     @Override
-    public boolean checkValidLevelClassLocation(String courtLevel, String courtClass) {
-        return false;
+    public boolean checkValidLevelClassLocation(BigDecimal agencyId, String courtLevel, String courtClass) {
+        try {
+            // Check CSO for isParticipatingClass
+            return filingStatusFacadeBean.getFilingStatusFacadeBeanPort().isParticipatingClass(
+                    agencyId,
+                    courtLevel,
+                    courtClass
+            );
+        } catch (ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception e) {
+            throw new EfilingCourtServiceException("Exception while checking isParticipatingClass");
+        }
     }
 
     private String getCourLevelDescription(String courtLevel) {
