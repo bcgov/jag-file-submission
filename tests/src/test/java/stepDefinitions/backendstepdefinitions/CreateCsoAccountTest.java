@@ -3,9 +3,13 @@ package stepDefinitions.backendstepdefinitions;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
 import ca.bc.gov.open.jagefilingapi.qa.requestbuilders.CreateCsoAccountRequestBuilders;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.restassured.RestAssured;
+import io.restassured.config.HttpClientConfig;
+import io.restassured.config.RestAssuredConfig;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
@@ -27,6 +31,14 @@ public class CreateCsoAccountTest {
     public Logger log = LogManager.getLogger(CreateCsoAccountTest.class);
     private Response response;
     private JsonPath jsonPath;
+
+    @Before
+    public void restAssuredConfig() {
+        RestAssured.config= RestAssuredConfig.config().httpClient(HttpClientConfig.httpClientConfig().
+                setParam("http.connection.timeout",300000).
+                setParam("http.socket.timeout",300000).
+                setParam("http.connection-manager.timeout",300000));
+    }
 
     @Given("POST http request is made to {string} with a valid request body")
     public void postHttpRequestIsMadeToWithAValidRequestBody(String resource) throws IOException, InterruptedException {

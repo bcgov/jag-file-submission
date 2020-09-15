@@ -3,9 +3,13 @@ package stepDefinitions.backendstepdefinitions;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.DriverClass;
 import ca.bc.gov.open.jagefilingapi.qa.requestbuilders.GenerateUrlRequestBuilders;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.restassured.RestAssured;
+import io.restassured.config.HttpClientConfig;
+import io.restassured.config.RestAssuredConfig;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
@@ -24,6 +28,14 @@ public class GenerateUrlAndSubmissionNegativeTest extends DriverClass {
     private static final String MESSAGE = "message";
 
     public Logger log = LogManager.getLogger(GenerateUrlAndSubmissionNegativeTest.class);
+
+    @Before
+    public void restAssuredConfig() {
+        RestAssured.config= RestAssuredConfig.config().httpClient(HttpClientConfig.httpClientConfig().
+                setParam("http.connection.timeout",300000).
+                setParam("http.socket.timeout",300000).
+                setParam("http.connection-manager.timeout",300000));
+    }
 
     @When("error status code is {int} and content type is verified")
     public void errorStatusCodeIsAndContentTypeIsVerified(Integer statusCode) {
