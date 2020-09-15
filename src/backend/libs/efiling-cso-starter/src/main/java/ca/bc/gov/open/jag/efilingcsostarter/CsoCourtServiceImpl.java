@@ -4,14 +4,8 @@ import ca.bc.gov.ag.csows.ceis.CsoAgencyArr;
 import ca.bc.gov.ag.csows.ceis.CsoCourtClassArr;
 import ca.bc.gov.ag.csows.ceis.CsoCourtLevelArr;
 import ca.bc.gov.ag.csows.ceis.Csows;
-
-import ca.bc.gov.ag.csows.filing.FilingFacadeBean;
-import ca.bc.gov.ag.csows.filing.NestedEjbException;
-import ca.bc.gov.ag.csows.filing.status.FilingStatusFacade;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
-import ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtServiceException;
-import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import org.apache.commons.lang3.StringUtils;

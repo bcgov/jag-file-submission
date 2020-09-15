@@ -4,7 +4,6 @@ import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RoleRegi
 import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
 import ca.bc.gov.ag.csows.ceis.Csows;
 import ca.bc.gov.ag.csows.filing.FilingFacadeBean;
-import ca.bc.gov.ag.csows.filing.status.FilingStatusFacade;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.ag.csows.lookups.LookupFacadeBean;
 import ca.bc.gov.ag.csows.services.ServiceFacadeBean;
