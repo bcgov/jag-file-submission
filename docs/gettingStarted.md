@@ -102,7 +102,7 @@ The `clientAppplication` object represents how your application is labelled in *
 The `filingPackage` object represents the court information about the submited package along with the document(s) info.
 The `documents` array represents the previously uploaded document.
 
-Answers to FAQ:
+### Answers to FAQ:
 
 1) What should be used for `roleType` and `partyType` in parties?
 
