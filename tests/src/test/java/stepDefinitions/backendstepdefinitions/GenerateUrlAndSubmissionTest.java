@@ -52,14 +52,6 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
 
     public Logger log = LogManager.getLogger(GenerateUrlAndSubmissionTest.class);
 
-    @Before
-    public void restAssuredConfig() {
-        RestAssured.config= RestAssuredConfig.config().httpClient(HttpClientConfig.httpClientConfig().
-                setParam("http.connection.timeout",300000).
-                setParam("http.socket.timeout",300000).
-                setParam("http.connection-manager.timeout",300000));
-    }
-
     @Given("POST http request is made to {string} with valid existing CSO account guid and a single pdf file")
     public void postHttpRequestIsMadeToWithValidExistingCsoAccountGuidAndASinglePdfFile(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();

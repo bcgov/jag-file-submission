@@ -36,17 +36,27 @@ public class FrontendTestUtil extends DriverClass {
         String username = System.getProperty("BCEID_USERNAME");
         String password = System.getProperty("BCEID_PASSWORD");
 
-        driver.get(respUrl);
-        log.info("Package confirmation page url is accessed successfully");
+        try {
+            for(int i=0; i<3; i++) {
+                driver.get(respUrl);
+                log.info("Package confirmation page url is accessed successfully");
 
-        AuthenticationPage authenticationPage = new AuthenticationPage(driver);
-        authenticationPage.clickBceid();
-        Thread.sleep(5000L);
-        authenticationPage.signInWithBceid(username, password);
-        log.info("user is authenticated before reaching eFiling hub page");
+                AuthenticationPage authenticationPage = new AuthenticationPage(driver);
+                authenticationPage.clickBceid();
+                Thread.sleep(5000L);
+                authenticationPage.signInWithBceid(username, password);
+                log.info("user is authenticated before reaching eFiling hub page");
 
-        PackageConfirmationPage packageConfirmationPage = new PackageConfirmationPage(driver);
-        packageConfirmationPage.verifyContinuePaymentBtnIsDisplayed();
+                PackageConfirmationPage packageConfirmationPage = new PackageConfirmationPage(driver);
+                packageConfirmationPage.verifyContinuePaymentBtnIsDisplayed();
+
+                if(packageConfirmationPage.verifyContinuePaymentBtnIsDisplayed()) {
+                    break;
+                }
+            }
+        } catch (org.openqa.selenium.TimeoutException tx) {
+            log.info("Package confirmation page is not displayed");
+        }
 
         Thread.sleep(4000L);
         JavascriptExecutor js = (JavascriptExecutor) driver;
