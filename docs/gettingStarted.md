@@ -109,7 +109,7 @@ The `documents` array represents the previously uploaded document.
 
 1) What should be used for `roleType` and `partyType` in parties?
 
-The default values to be used for `roleType` is CLA and for `partyType` it is IND.
+The default values to be used for `roleType` is CLA and for `partyType` it is IND. Can refer to the roles in the code tables for more details.
 
 2) Are the various types of documents the ones present in the list in https://bcgov.github.io/jag-file-submission/#/data?
 
