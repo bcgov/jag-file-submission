@@ -114,18 +114,21 @@ The default values to be used for `roleType` is CLA and for `partyType` it is IN
 2) Are the various types of documents the ones present in the list in https://bcgov.github.io/jag-file-submission/#/data?
 
 Yes. This is our list of various document types that can be submitted.
+For FLA, the document types are as follows: Application to Obtain an Order (APO) , Notice of Motion (NM), Affidavit (AFF), and Electronic Filing Statement (EFS- Provincial).
 
 3) For the parties info, would this be the applicant and respondent?
 
-NOT SURE
+Yes. Applicant and respondent is correct for the parties.
 
 4) For documents, what kind of information should/can be included in the following fields?
 
-Data:  
+Data: 
 
 MD5: 
 
 isAmendment: This marks if the document is an amendment and is for use only by documents uploaded via the eFiling hub.
+
+isSupremeCourtScheduling: This marks if the document is for supreme court scheduling and is for use only by documents uploaded via the eFiling hub.
 
 5) What should the value of `clientAppName` be?
 
@@ -133,7 +136,7 @@ This field signifies the name of the parent application integrating with the eFi
 
 6) For the court information, how should the fields be determined for this section?
 
-NOT SURE
+
 
 ### Response
 
