@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jagefilingapi.qa.frontendutils;
 
 import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.AuthenticationPage;
+import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.PackageConfirmationPage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
@@ -43,6 +44,9 @@ public class FrontendTestUtil extends DriverClass {
         Thread.sleep(5000L);
         authenticationPage.signInWithBceid(username, password);
         log.info("user is authenticated before reaching eFiling hub page");
+
+        PackageConfirmationPage packageConfirmationPage = new PackageConfirmationPage(driver);
+        packageConfirmationPage.verifyContinuePaymentBtnIsDisplayed();
 
         Thread.sleep(4000L);
         JavascriptExecutor js = (JavascriptExecutor) driver;

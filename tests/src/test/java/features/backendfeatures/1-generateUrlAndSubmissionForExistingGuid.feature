@@ -1,7 +1,7 @@
 Feature: When user uploads the documents, id is authenticated user details, navigation urls are generated and user,
   submission package details can be retrieved
 
-  @backend
+  @backendd
   Scenario: Verify if a single document is uploaded, url is generated and package information can be retrieved for requests made with valid CSO account
     ## Call to upload the document ##
     Given POST http request is made to "DOCUMENT_SUBMISSION" with valid existing CSO account guid and a single pdf file

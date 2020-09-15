@@ -31,8 +31,8 @@ public class GenerateUrlRequestBuilders {
     public String userToken;
 
     public Response getBearerToken() {
-        String resourceAPI = System.getProperty("KEYCLOAK_URL");
-        String clientSecret = System.getProperty("EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET");
+      String resourceAPI = System.getProperty("KEYCLOAK_URL");
+      String clientSecret = System.getProperty("EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET");
 
         request = RestAssured.given()
                 .formParam(CLIENT_ID, "efiling-demo")

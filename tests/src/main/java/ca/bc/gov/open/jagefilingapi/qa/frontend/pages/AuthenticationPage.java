@@ -37,14 +37,14 @@ public class AuthenticationPage {
     }
 
     //Actions:
-    public void signInWithBceid(String userNm, String pwd) {
+    public void signInWithBceid(String userNm, String pwd) throws InterruptedException {
         wait = new WebDriverWait(driver, 90);
         wait.until(ExpectedConditions.titleIs("Government of British Columbia"));
         log.info("Waiting for the page to load...");
         userName.sendKeys(userNm);
         password.sendKeys(pwd);
+        Thread.sleep(2000L);
         continueBtn.click();
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//*[@data-test-id='continue-btn']")));
     }
 
     public void clickBceid() {
