@@ -1,6 +1,6 @@
 Feature: New CSO accounts can be created if a BCeID profile is not associated with a CSO account
 
-   @backendd
+   @backend
    Scenario: Verify a CSO account can be created successfully
     ## Create CSO account ##
     Given POST http request is made to "CSO_ACCOUNT_API" with a valid request body

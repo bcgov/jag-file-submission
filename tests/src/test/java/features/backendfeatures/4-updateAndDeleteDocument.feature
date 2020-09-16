@@ -22,6 +22,9 @@ Feature: User can upload additional document and delete the documents
     ## Call to get updated document wth filename ##
     Given "SUBMISSION" id with filename is submitted with GET http request
     Then validated status code is 200 and content type is not json
+
+   ## Below commented out test steps will be used when the endpoints are implemented on demo mode ##
+
     ## Call to update document properties ##
   #  Given "SUBMISSION" id with payload is submitted to update the document properties
   #  When validated status code is 200 and content type
