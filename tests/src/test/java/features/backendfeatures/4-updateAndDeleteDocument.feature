@@ -15,7 +15,7 @@ Feature: User can upload additional document and delete the documents
     When validated status code is 200 and content type
     Then ClientAppName and csoBaseUrl values are verified
     And verify navigation urls are returned
-    ## Call to upload document ##
+    ## Call to upload second document ##
     Given second document is posted to "DOCUMENT_SUBMISSION"
     When validated status code is 200 and content type
     Then verify submission id and document count is returned

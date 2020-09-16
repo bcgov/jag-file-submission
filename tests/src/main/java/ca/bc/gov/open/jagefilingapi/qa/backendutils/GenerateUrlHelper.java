@@ -8,7 +8,6 @@ import java.io.IOException;
 
 public class GenerateUrlHelper {
 
-    private Response response;
     private static final String SUBMISSION_ID = "submissionId";
     private static final String GENERATE_URL_PATH_PARAM = "/generateUrl";
     private static final String FILE_NAME_PATH = "/test-document.pdf";
@@ -17,9 +16,9 @@ public class GenerateUrlHelper {
         GenerateUrlRequestBuilders generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         String validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
-        response = generateUrlRequestBuilders.requestWithSinglePdfDocument("/submission/documents", validExistingCSOGuid, FILE_NAME_PATH);
+        Response response = generateUrlRequestBuilders.requestWithSinglePdfDocument(APIResources.valueOf("DOCUMENT_SUBMISSION").toString(), validExistingCSOGuid, FILE_NAME_PATH);
         String submissionId = TestUtil.getJsonPath(response, SUBMISSION_ID);
-        response = generateUrlRequestBuilders.postRequestWithPayload("/submission/", validExistingCSOGuid, submissionId, GENERATE_URL_PATH_PARAM);
+        response = generateUrlRequestBuilders.postRequestWithPayload(APIResources.valueOf("GENERATE_URL_API").toString(), validExistingCSOGuid, submissionId, GENERATE_URL_PATH_PARAM);
 
         JsonPath jsonPath = new JsonPath(response.asString());
 

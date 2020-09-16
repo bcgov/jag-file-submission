@@ -41,7 +41,7 @@ public class EFileSubmissionTest extends DriverClass {
     private String username;
     private String password;
 
-    @Before()
+    @Before
     public void setUp() throws IOException {
         TestUtil testUtil = new TestUtil();
         testUtil.restAssuredConfig();

@@ -27,6 +27,11 @@ public class GenerateUrlRequestBuilders {
     private static final String GRANT_TYPE = "grant_type";
     private static final String CLIENT_SECRET = "client_secret";
     private static final String ACCESS_TOKEN = "access_token";
+    private static final String GET_CONFIG_PATH = "/config";
+    private static final String FILING_PACKAGE_PATH_PARAM = "/filing-package";
+    private static final String DOCUMENT_PATH_PARAM = "/document";
+    private static final String SECOND_FILE_NAME_PATH = "/test-document-2.pdf";
+    private static final String UPDATE_DOCUMENTS_PATH_PARAM = "/update-documents";
     private GenerateUrlPayload payloadData;
     public String userToken;
 
@@ -46,7 +51,7 @@ public class GenerateUrlRequestBuilders {
 
     public Response requestWithSinglePdfDocument(String resourceValue, String accountGuid, String fileNamePath) throws IOException {
         payloadData = new GenerateUrlPayload();
-        APIResources resourceAPI = APIResources.valueOf("DOCUMENT_SUBMISSION");
+        APIResources resourceAPI = APIResources.valueOf(resourceValue);
         String validUserid = JsonDataReader.getCsoAccountGuid().getValidUserId();
 
         Response response = getBearerToken();
@@ -93,42 +98,56 @@ public class GenerateUrlRequestBuilders {
                 .extract().response();
     }
 
-    public Response requestToGetSubmissionConfig(String resource, String accountGuid, String submissionId, String pathParam, String userJwt) throws IOException, InterruptedException {
+    public Response requestToGetSubmissionConfig(String resource, String accountGuid, String submissionId, String userJwt) throws IOException {
         APIResources resourceGet = APIResources.valueOf(resource);
 
         request = given().auth().preemptive().oauth2(userJwt)
                 .spec(TestUtil.requestSpecification())
                 .header(X_TRANSACTION_ID, accountGuid);
 
-        return request.when().get(resourceGet.getResource() + submissionId + pathParam)
+        return request.when().get(resourceGet.getResource() + submissionId + GET_CONFIG_PATH)
                 .then()
                 .spec(TestUtil.validResponseSpecification())
                 .extract().response();
     }
 
     public Response requestToGetFilingPackage(String resource, String accountGuid,
-                                              String submissionId, String filePathParam, String userJwt) throws IOException {
+                                              String submissionId, String userJwt) throws IOException {
         APIResources resourceGet = APIResources.valueOf(resource);
 
         request = given().auth().preemptive().oauth2(userJwt)
                 .spec(TestUtil.requestSpecification())
                 .header(X_TRANSACTION_ID, accountGuid);
 
-        return request.when().get(resourceGet.getResource() + submissionId + filePathParam)
+        return request.when().get(resourceGet.getResource() + submissionId + FILING_PACKAGE_PATH_PARAM)
                 .then()
                 .spec(TestUtil.validResponseSpecification())
                 .extract().response();
     }
 
     public Response requestToGetDocumentUsingFileName(String resource, String accountGuid,
-                                              String submissionId, String pathParam, String fileName, String userJwt) throws IOException {
+                                              String submissionId, String userJwt) throws IOException {
         APIResources resourceGet = APIResources.valueOf(resource);
 
         request = given().auth().preemptive().oauth2(userJwt)
                 .spec(TestUtil.requestSpecification())
                 .header(X_TRANSACTION_ID, accountGuid);
 
-        return request.when().get(resourceGet.getResource() + submissionId + pathParam + fileName)
+        return request.when().get(resourceGet.getResource() + submissionId + DOCUMENT_PATH_PARAM + FILE_NAME_PATH)
+                .then()
+                .spec(TestUtil.validResponseCodeSpecification())
+                .extract().response();
+    }
+
+    public Response requestToGetDocumentUsingSecondFileName(String resource, String accountGuid,
+                                                      String submissionId, String userJwt) throws IOException {
+        APIResources resourceGet = APIResources.valueOf(resource);
+
+        request = given().auth().preemptive().oauth2(userJwt)
+                .spec(TestUtil.requestSpecification())
+                .header(X_TRANSACTION_ID, accountGuid);
+
+        return request.when().get(resourceGet.getResource() + submissionId + DOCUMENT_PATH_PARAM + SECOND_FILE_NAME_PATH)
                 .then()
                 .spec(TestUtil.validResponseCodeSpecification())
                 .extract().response();
@@ -161,7 +180,7 @@ public class GenerateUrlRequestBuilders {
     public Response postRequestWithPayload(String resourceValue, String accountGuid,
                                            String submissionId, String pathParam) throws IOException {
         payloadData = new GenerateUrlPayload();
-        APIResources resourceGet = APIResources.valueOf("GENERATE_URL_API");
+        APIResources resourceGet = APIResources.valueOf(resourceValue);
         String validUserid = JsonDataReader.getCsoAccountGuid().getValidUserId();
 
         Response response = getBearerToken();
@@ -251,7 +270,7 @@ public class GenerateUrlRequestBuilders {
     }
 
     public Response requestToUpdateDocumentProperties(String resource, String accountGuid, String submissionId,
-                                                      String pathParam, String userJwt) throws IOException {
+                                                      String userJwt) throws IOException {
         payloadData = new GenerateUrlPayload();
         APIResources resourceGet = APIResources.valueOf(resource);
 
@@ -260,7 +279,7 @@ public class GenerateUrlRequestBuilders {
                 .header(X_TRANSACTION_ID, accountGuid)
                 .body(payloadData.updatePropertiesPayload());
 
-        return request.when().post(resourceGet.getResource() + submissionId + pathParam)
+        return request.when().post(resourceGet.getResource() + submissionId + UPDATE_DOCUMENTS_PATH_PARAM)
                 .then()
                 .spec(TestUtil.validResponseSpecification())
                 .extract().response();

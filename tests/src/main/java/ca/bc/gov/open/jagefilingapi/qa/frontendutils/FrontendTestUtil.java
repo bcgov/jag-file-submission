@@ -5,6 +5,7 @@ import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.PackageConfirmationPage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -32,18 +33,18 @@ public class FrontendTestUtil extends DriverClass {
 
     public String getUserJwtToken(String respUrl) throws InterruptedException, IOException {
         driverSetUp();
-
         String username = System.getProperty("BCEID_USERNAME");
         String password = System.getProperty("BCEID_PASSWORD");
 
         try {
-            for(int i=0; i<3; i++) {
+            for(int i = 0; i<3; i++) {
+
                 driver.get(respUrl);
                 log.info("Package confirmation page url is accessed successfully");
 
                 AuthenticationPage authenticationPage = new AuthenticationPage(driver);
                 authenticationPage.clickBceid();
-                Thread.sleep(5000L);
+                Thread.sleep(4000L);
                 authenticationPage.signInWithBceid(username, password);
                 log.info("user is authenticated before reaching eFiling hub page");
 

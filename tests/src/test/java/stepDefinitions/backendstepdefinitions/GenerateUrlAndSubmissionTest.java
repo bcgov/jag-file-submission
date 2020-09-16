@@ -7,14 +7,10 @@ import ca.bc.gov.open.jagefilingapi.qa.frontendutils.FrontendTestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
 import ca.bc.gov.open.jagefilingapi.qa.requestbuilders.GenerateUrlRequestBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.restassured.RestAssured;
-import io.restassured.config.HttpClientConfig;
-import io.restassured.config.RestAssuredConfig;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -43,10 +39,7 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     private static final String SUBMISSION_ID = "submissionId";
     private static final String TRANSACTION_ID = "transactionId";
     private static final String GENERATE_URL_PATH_PARAM = "/generateUrl";
-    private static final String GET_CONFIG_PATH = "/config";
     private static final String FILE_NAME_PATH = "/test-document.pdf";
-    private static final String FILING_PACKAGE_PATH_PARAM = "/filing-package";
-    private static final String DOCUMENT_PATH_PARAM = "/document";
     private String respUrl;
     private String userToken;
 
@@ -117,7 +110,7 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
         FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
 
         userToken = frontendTestUtil.getUserJwtToken(respUrl);
-        response = generateUrlRequestBuilders.requestToGetSubmissionConfig(resource, validExistingCSOGuid, submissionId, GET_CONFIG_PATH, userToken);
+        response = generateUrlRequestBuilders.requestToGetSubmissionConfig(resource, validExistingCSOGuid, submissionId, userToken);
     }
 
     @Then("verify clientAppName and csoBaseUrl values are returned and not empty")
@@ -133,7 +126,7 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     public void idWithFilingPackagePathIsSubmittedWithGETHttpRequest(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToGetFilingPackage(resource,validExistingCSOGuid,
-                                                                submissionId, FILING_PACKAGE_PATH_PARAM, userToken);
+                                                                submissionId, userToken);
     }
 
     @Then("verify court details and document details are returned and not empty")
@@ -177,7 +170,7 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     public void idWithFilenamePathIsSubmittedWithGETHttpRequest(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToGetDocumentUsingFileName(resource,validExistingCSOGuid,
-                                                                    submissionId, DOCUMENT_PATH_PARAM, FILE_NAME_PATH, userToken);
+                                                                    submissionId, userToken);
     }
 
     @Then("Verify status code is {int} and content type is not json")

@@ -35,11 +35,8 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
     private static final String SUBMISSION_ID = "submissionId";
     private static final String TRANSACTION_ID = "transactionId";
     private static final String GENERATE_URL_PATH_PARAM = "/generateUrl";
-    private static final String GET_CONFIG_PATH = "/config";
     private static final String FIRST_FILE_NAME_PATH = "/test-document.pdf";
     private static final String SECOND_FILE_NAME_PATH = "/test-document-2.pdf";
-    private static final String DOCUMENT_PATH_PARAM = "/document";
-    private static final String UPDATE_DOCUMENTS_PATH_PARAM = "/update-documents";
     private String respUrl;
     private String userToken;
 
@@ -124,7 +121,7 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
         userToken = frontendTestUtil.getUserJwtToken(respUrl);
 
         response = generateUrlRequestBuilders.requestToGetSubmissionConfig(resource, validExistingCSOGuid,
-                                                                                submissionId, GET_CONFIG_PATH, userToken);
+                                                                                submissionId, userToken);
     }
 
     @Then("ClientAppName and csoBaseUrl values are verified")
@@ -155,8 +152,8 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
     @Given("{string} id with filename is submitted with GET http request")
     public void idWithFilenameIsSubmittedWithGETHttpRequest(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
-        response = generateUrlRequestBuilders.requestToGetDocumentUsingFileName(resource,validExistingCSOGuid,
-                                                                submissionId, DOCUMENT_PATH_PARAM, SECOND_FILE_NAME_PATH, userToken);
+        response = generateUrlRequestBuilders.requestToGetDocumentUsingSecondFileName(resource,validExistingCSOGuid,
+                                                                submissionId, userToken);
     }
 
     @Then("validated status code is {int} and content type is not json")
@@ -169,7 +166,7 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
     public void idWithPayloadIsSubmittedToUpdateTheDocumentProperties(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToUpdateDocumentProperties(resource,validExistingCSOGuid,
-                                                submissionId, UPDATE_DOCUMENTS_PATH_PARAM, userToken);
+                                                submissionId, userToken);
     }
 
     @Then("verify document properties are updated")

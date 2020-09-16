@@ -35,10 +35,7 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
     private static final String SUBMISSION_ID = "submissionId";
     private static final String TRANSACTION_ID = "transactionId";
     private static final String PATH_PARAM = "/generateUrl";
-    private static final String GET_CONFIG_PATH = "/config";
     private static final String FILE_NAME_PATH = "/test-document.pdf";
-    private static final String FILING_PACKAGE_PATH_PARAM = "/filing-package";
-    private static final String DOCUMENT_PATH_PARAM = "/document";
     private String respUrl;
     private String userToken;
 
@@ -101,7 +98,7 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
 
         userToken = frontendTestUtil.getUserJwtToken(respUrl);
         response = generateUrlRequestBuilders.requestToGetSubmissionConfig(resource, nonExistingCSOGuid,
-                                                                                submissionId, GET_CONFIG_PATH, userToken);
+                                                                                submissionId, userToken);
     }
 
     @Then("verify clientAppName and csoBaseUrl values are returned")
@@ -154,14 +151,14 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
     public void idWithFilingPackagePathIsSubmittedWithNonExistingCSOAccountGETHttpRequest(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToGetFilingPackage(resource, nonExistingCSOGuid,
-                                                                        submissionId, FILING_PACKAGE_PATH_PARAM, userToken );
+                                                                        submissionId, userToken );
     }
 
     @Given("{string} id with filename path is submitted with non existing CSO account GET http request")
     public void idWithFilenamePathIsSubmittedWithNonExistingCSOAccountGETHttpRequest(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToGetDocumentUsingFileName(resource, nonExistingCSOGuid,
-                submissionId, DOCUMENT_PATH_PARAM, FILE_NAME_PATH, userToken);
+                                                                                        submissionId, userToken);
     }
 
     @Then("Verify status code is {int} and content type is octet-stream")
