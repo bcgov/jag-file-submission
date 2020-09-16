@@ -196,6 +196,8 @@ public class generateFromRequestTest {
         request.setNavigationUrls(TestHelpers.createDefaultNavigation());
         request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList()));
 
+        Mockito.when(efilingCourtService.checkValidLevelClassLocation(any(), any(), any())).thenReturn(true);
+
         Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(new SubmissionKey(TestHelpers.CASE_2, TestHelpers.CASE_2, TestHelpers.CASE_2), request));
 
     }
