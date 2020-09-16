@@ -20,6 +20,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import org.junit.jupiter.api.*;
@@ -57,6 +58,9 @@ public class generateFromRequestTest {
     private EfilingCourtService efilingCourtService;
 
     @Mock
+    private EfilingDocumentService efilingDocumentService;
+
+    @Mock
     private DocumentStore documentStoreMock;
 
     @Mock
@@ -84,7 +88,7 @@ public class generateFromRequestTest {
 
         // Testing mapper as part of this unit test
         SubmissionMapper submissionMapper = new SubmissionMapperImpl();
-        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, submissionMapper, new PartyMapperImpl(), efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock, null, null);
+        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, submissionMapper, new PartyMapperImpl(), efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock, null, null, efilingDocumentService);
 
     }
 
