@@ -11,6 +11,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.utils.FileUtils;
 import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.Court;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
 import ca.bc.gov.open.jag.efilingcommons.model.FilingPackage;
@@ -80,16 +81,17 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     @Override
     public Submission generateFromRequest(SubmissionKey submissionKey, GenerateUrlRequest generateUrlRequest) {
+        CourtBase courtBase = generateUrlRequest.getFilingPackage().getCourt();
+        CourtDetails courtDetails = efilingCourtService.getCourtDescription(courtBase.getLocation(), courtBase.getLevel(), courtBase.getCourtClass());
 
         boolean isValidLevelClassLocation = efilingCourtService.checkValidLevelClassLocation(
-                BigDecimal.ONE,
-                generateUrlRequest.getFilingPackage().getCourt().getLevel(),
-                generateUrlRequest.getFilingPackage().getCourt().getCourtClass()
+                courtDetails.getCourtId(),
+                courtBase.getLevel(),
+                courtBase.getCourtClass()
         );
 
-        System.out.println("#########################################");
-        System.out.println(isValidLevelClassLocation);
-        System.out.println("#########################################");
+        if (!isValidLevelClassLocation)
+            throw new EfilingCourtServiceException("invalid court level, class and location combination");
 
         Optional<Submission> cachedSubmission = submissionStore.put(
                 submissionMapper.toSubmission(
