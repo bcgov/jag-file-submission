@@ -1,6 +1,5 @@
 package ca.bc.gov.open.jag.efilingapi.submission;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.payment.BamboraPaymentAdapter;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.*;
@@ -111,11 +110,6 @@ public class SubmissionConfigTest {
 
         @Override
         public boolean checkValidLevelClassLocation(BigDecimal agencyId, String courtLevel, String courtClass) {
-            return false;
-        }
-
-        @Override
-        public boolean checkValidLevelClassDocument(List<DocumentProperties> documents, String courtLevel, String courtClass) {
             return false;
         }
     }
