@@ -29,7 +29,7 @@ public class DriverClass {
                     options.addArguments("enable-automation");
                     options.addArguments("--no-sandbox");
                     options.addArguments("--disable-dev-shm-usage");
-                  //  options.addArguments("--headless");
+                    options.addArguments("--headless");
                     options.addArguments("--window-size=1920,1080");
                     options.addArguments("--disable-extensions");
                     options.addArguments("--dns-prefetch-disable");
