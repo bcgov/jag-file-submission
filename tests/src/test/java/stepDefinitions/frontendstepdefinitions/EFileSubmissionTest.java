@@ -101,11 +101,6 @@ public class EFileSubmissionTest extends DriverClass {
 
         landingPage.clickEfilePackageButton();
         log.info("Pdf file is uploaded successfully.");
-
-        AuthenticationPage authenticationPage = new AuthenticationPage(driver);
-        authenticationPage.clickBceid();
-        authenticationPage.signInWithBceid(username, password);
-        log.info("user is authenticated in eFiling demo page.");
     }
 
     @Then("eFile submission page is displayed and user clicks the cancel button")

@@ -93,10 +93,9 @@ public class LandingPage {
                 "        \"roleType\": \"CLA\",\n" +
                 "        \"firstName\": \"efile\",\n" +
                 "        \"middleName\": \"test\",\n" +
-                "        \"lastName\": \"qa\",\n" +
+                "        \"lastName\": \"qa\"\n" +
                 "    }]\n" +
                 "}";
-
 
         textInput.sendKeys(json);
 

@@ -3,6 +3,7 @@ package ca.bc.gov.open.jagefilingapi.qa.requestbuilders;
 import ca.bc.gov.open.jagefilingapi.qa.backend.generateurlpayload.GenerateUrlPayload;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.APIResources;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
+import ca.bc.gov.open.jagefilingapi.qa.config.ReadConfig;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
@@ -33,11 +34,13 @@ public class GenerateUrlRequestBuilders {
     private static final String SECOND_FILE_NAME_PATH = "/test-document-2.pdf";
     private static final String UPDATE_DOCUMENTS_PATH_PARAM = "/update-documents";
     private GenerateUrlPayload payloadData;
-    public String userToken;
 
-    public Response getBearerToken() {
-      String resourceAPI = System.getProperty("KEYCLOAK_URL");
-      String clientSecret = System.getProperty("EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET");
+    public Response getBearerToken() throws IOException {
+        ReadConfig readConfig = new ReadConfig();
+        String resourceAPI = readConfig.getKeycloakUrl();
+        String clientSecret = JsonDataReader.getCsoAccountGuid().getClientSecret();
+    /*  String resourceAPI = System.getProperty("KEYCLOAK_URL");
+      String clientSecret = System.getProperty("EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET");*/
 
         request = RestAssured.given()
                 .formParam(CLIENT_ID, "efiling-demo")
