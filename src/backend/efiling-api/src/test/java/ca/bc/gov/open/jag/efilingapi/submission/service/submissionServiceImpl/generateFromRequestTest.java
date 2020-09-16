@@ -13,6 +13,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.*;
@@ -101,7 +102,7 @@ public class generateFromRequestTest {
         request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList()));
 
         Mockito.when(efilingCourtService.checkValidLevelClassLocation(any(), any(), any())).thenReturn(true);
-        Mockito.when(efilingDocumentService.getDocumentTypes(any(), any())).thenReturn(TestHelpers.createDocumentTypesList());
+        Mockito.when(efilingDocumentService.getDocumentTypes(any(), any())).thenReturn(TestHelpers.createValidDocumentTypesList());
 
         Submission actual = sut.generateFromRequest(new SubmissionKey(TestHelpers.CASE_1, TestHelpers.CASE_1, TestHelpers.CASE_1), request);
 
@@ -155,7 +156,7 @@ public class generateFromRequestTest {
         request.setFilingPackage(filingPackage);
 
         Mockito.when(efilingCourtService.checkValidLevelClassLocation(any(), any(), any())).thenReturn(true);
-        Mockito.when(efilingDocumentService.getDocumentTypes(any(), any())).thenReturn(TestHelpers.createDocumentTypesList());
+        Mockito.when(efilingDocumentService.getDocumentTypes(any(), any())).thenReturn(TestHelpers.createValidDocumentTypesList());
 
         Submission actual = sut.generateFromRequest(new SubmissionKey(TestHelpers.CASE_1, TestHelpers.CASE_1, TestHelpers.CASE_1), request);
 
@@ -206,7 +207,7 @@ public class generateFromRequestTest {
         request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList()));
 
         Mockito.when(efilingCourtService.checkValidLevelClassLocation(any(), any(), any())).thenReturn(true);
-        Mockito.when(efilingDocumentService.getDocumentTypes(any(), any())).thenReturn(TestHelpers.createDocumentTypesList());
+        Mockito.when(efilingDocumentService.getDocumentTypes(any(), any())).thenReturn(TestHelpers.createValidDocumentTypesList());
 
         Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(new SubmissionKey(TestHelpers.CASE_2, TestHelpers.CASE_2, TestHelpers.CASE_2), request));
     }
@@ -223,6 +224,21 @@ public class generateFromRequestTest {
         Mockito.when(efilingCourtService.checkValidLevelClassLocation(any(), any(), any())).thenReturn(false);
 
         Assertions.assertThrows(EfilingCourtServiceException.class, () -> sut.generateFromRequest(new SubmissionKey(TestHelpers.CASE_2, TestHelpers.CASE_2, TestHelpers.CASE_2), request));
+    }
+
+    @Test
+    @DisplayName("Exception: with invalid document type should throw EfilingDocumentServiceException")
+    public void withInvalidDocumentTypeShouldThrowEfilingDocumentServiceException() {
+
+        GenerateUrlRequest request = new GenerateUrlRequest();
+        request.setClientAppName(CLIENT_APP_NAME);
+        request.setNavigationUrls(TestHelpers.createDefaultNavigation());
+        request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList()));
+
+        Mockito.when(efilingCourtService.checkValidLevelClassLocation(any(), any(), any())).thenReturn(true);
+        Mockito.when(efilingDocumentService.getDocumentTypes(any(), any())).thenReturn(TestHelpers.createInvalidDocumentTypesList());
+
+        Assertions.assertThrows(EfilingDocumentServiceException.class, () -> sut.generateFromRequest(new SubmissionKey(TestHelpers.CASE_2, TestHelpers.CASE_2, TestHelpers.CASE_2), request));
     }
 
     private void configureCase1(ServiceFees fee) {

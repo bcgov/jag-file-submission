@@ -117,8 +117,13 @@ public class TestHelpers {
         return Arrays.asList(documentProperties);
     }
 
-    public static List<DocumentType> createDocumentTypesList() {
+    public static List<DocumentType> createValidDocumentTypesList() {
         DocumentType documentType = new DocumentType(DESCRIPTION, TYPE.getValue(), false);
+        return Arrays.asList(documentType);
+    }
+
+    public static List<DocumentType> createInvalidDocumentTypesList() {
+        DocumentType documentType = new DocumentType(DESCRIPTION, "ZZZ", false);
         return Arrays.asList(documentType);
     }
 
