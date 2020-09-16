@@ -4,6 +4,7 @@ package ca.bc.gov.open.jag.efilingapi;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingcommons.model.Court;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentType;
 import ca.bc.gov.open.jag.efilingcommons.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.model.Party;
 import ca.bc.gov.open.jag.efilingapi.submission.models.*;
@@ -114,6 +115,11 @@ public class TestHelpers {
         documentProperties.setName("random.txt");
         documentProperties.setType(DocumentProperties.TypeEnum.AAB);
         return Arrays.asList(documentProperties);
+    }
+
+    public static List<DocumentType> createDocumentTypesList() {
+        DocumentType documentType = new DocumentType(DESCRIPTION, TYPE.getValue(), false);
+        return Arrays.asList(documentType);
     }
 
     public static List<Document> createDocumentList() {

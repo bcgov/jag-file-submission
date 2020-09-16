@@ -15,10 +15,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtServiceException;
-import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
+import ca.bc.gov.open.jag.efilingcommons.model.*;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
@@ -33,6 +30,7 @@ import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -103,6 +101,7 @@ public class generateFromRequestTest {
         request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList()));
 
         Mockito.when(efilingCourtService.checkValidLevelClassLocation(any(), any(), any())).thenReturn(true);
+        Mockito.when(efilingDocumentService.getDocumentTypes(any(), any())).thenReturn(TestHelpers.createDocumentTypesList());
 
         Submission actual = sut.generateFromRequest(new SubmissionKey(TestHelpers.CASE_1, TestHelpers.CASE_1, TestHelpers.CASE_1), request);
 
@@ -156,6 +155,7 @@ public class generateFromRequestTest {
         request.setFilingPackage(filingPackage);
 
         Mockito.when(efilingCourtService.checkValidLevelClassLocation(any(), any(), any())).thenReturn(true);
+        Mockito.when(efilingDocumentService.getDocumentTypes(any(), any())).thenReturn(TestHelpers.createDocumentTypesList());
 
         Submission actual = sut.generateFromRequest(new SubmissionKey(TestHelpers.CASE_1, TestHelpers.CASE_1, TestHelpers.CASE_1), request);
 
@@ -206,6 +206,7 @@ public class generateFromRequestTest {
         request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList()));
 
         Mockito.when(efilingCourtService.checkValidLevelClassLocation(any(), any(), any())).thenReturn(true);
+        Mockito.when(efilingDocumentService.getDocumentTypes(any(), any())).thenReturn(TestHelpers.createDocumentTypesList());
 
         Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(new SubmissionKey(TestHelpers.CASE_2, TestHelpers.CASE_2, TestHelpers.CASE_2), request));
     }
