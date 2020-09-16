@@ -230,7 +230,7 @@
                 </repository>
             </repositories>
 
-           <dependencies>
+            <dependencies>
                 <dependency>
                     <groupId>com.splunk.logging</groupId>
                     <artifactId>splunk-library-javalogging</artifactId>
