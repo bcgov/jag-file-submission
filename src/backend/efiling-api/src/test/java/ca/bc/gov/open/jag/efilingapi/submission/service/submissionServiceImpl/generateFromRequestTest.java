@@ -14,6 +14,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
@@ -199,7 +200,20 @@ public class generateFromRequestTest {
         Mockito.when(efilingCourtService.checkValidLevelClassLocation(any(), any(), any())).thenReturn(true);
 
         Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(new SubmissionKey(TestHelpers.CASE_2, TestHelpers.CASE_2, TestHelpers.CASE_2), request));
+    }
 
+    @Test
+    @DisplayName("Exception: with invalid court location, level and class combination should throw EfilingCourtServiceException")
+    public void withInvalidCourtLocationLevelClassShouldThrowEfilingCourtServiceException() {
+
+        GenerateUrlRequest request = new GenerateUrlRequest();
+        request.setClientAppName(CLIENT_APP_NAME);
+        request.setNavigationUrls(TestHelpers.createDefaultNavigation());
+        request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList()));
+
+        Mockito.when(efilingCourtService.checkValidLevelClassLocation(any(), any(), any())).thenReturn(false);
+
+        Assertions.assertThrows(EfilingCourtServiceException.class, () -> sut.generateFromRequest(new SubmissionKey(TestHelpers.CASE_2, TestHelpers.CASE_2, TestHelpers.CASE_2), request));
     }
 
     private void configureCase1(ServiceFees fee) {
