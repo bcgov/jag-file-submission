@@ -95,13 +95,50 @@ payload:
 }
 ```
 
-The `navigation` object represents a list of possible returns to your application based on the status of the document e-filing
+### Generate URL Payload Details
 
-the `clientAppplication` object represents how your application is labelled in **efiling hub**
+The `navigation` object represents a list of possible returns to your application based on the status of the document e-filing.
 
-the `filingPackage` object represents the court information about the submited package along with the document(s) info
+The `clientAppplication` object represents how your application is labelled in **efiling hub**.
 
-the `documents` array represents the previously uploaded document
+The `filingPackage` object represents the court information about the submited package along with the document(s) info.
+
+The `documents` array represents the previously uploaded document.
+
+### Answers to FAQ:
+
+1) What should be used for `roleType` and `partyType` in parties?
+
+The default values to be used for `roleType` is CLA and for `partyType` it is IND. Can refer to the roles in the code tables for more details.
+
+2) Are the various types of documents the ones present in the list in https://bcgov.github.io/jag-file-submission/#/data?
+
+Yes. This is our list of various document types that can be submitted.
+For FLA, the document types are as follows: Application to Obtain an Order (APO) , Notice of Motion (NM), Affidavit (AFF), and Electronic Filing Statement (EFS- Provincial).
+
+3) For the parties info, would this be the applicant and respondent?
+
+Yes. Applicant and respondent is correct for the parties.
+
+4) For documents, what kind of information should/can be included in the following fields?
+
+Data: A copy of the data collected on parent app side. JSON object containing the party info, potential issue, acts, things associated with divorce, etc.
+
+MD5: Hash to encrypt the payload.
+
+isAmendment: This marks if the document is an amendment.
+
+isSupremeCourtScheduling: This marks if the document is for supreme court scheduling. The Supreme Court Scheduling will not apply initially as we are dealing with Provincial Court, but in the future Supreme Court will be applicable.
+
+5) What should the value of `clientAppName` be?
+
+This field signifies the name of the parent application integrating with the eFiling hub and will show up on the eFiling hub, so please use a full form name such as `Family Law Act Application`.
+
+6) For the court information, how should the fields be determined for this section?
+
+Parent app should know level and class. Court location can be provided through the code tables.
+
+### Response
 
 on submission you will receive the following response:
 
