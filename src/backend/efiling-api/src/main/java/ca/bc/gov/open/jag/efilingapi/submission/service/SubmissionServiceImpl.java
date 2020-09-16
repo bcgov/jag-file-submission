@@ -109,7 +109,7 @@ public class SubmissionServiceImpl implements SubmissionService {
         // TESTING
         for (DocumentType tes : validDocumentTypes) {
             System.out.println("##################");
-            System.out.println(tes);
+            System.out.println(tes.getType());
         }
         for (DocumentProperties t : generateUrlRequest.getFilingPackage().getDocuments()) {
             System.out.println("##################");
