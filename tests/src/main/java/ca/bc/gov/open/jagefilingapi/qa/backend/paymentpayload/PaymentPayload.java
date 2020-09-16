@@ -16,6 +16,7 @@ public class PaymentPayload {
         ObjectMapper objMap = new ObjectMapper();
         return objMap.writeValueAsString(generateUpdateCard());
     }
+    
     public GenerateCardUrlRequest generateUpdateCard(){
         generateCardUrlRequest = new GenerateCardUrlRequest();
         generateCardUrlRequest.setInternalClientNumber(INTERNAL_CLIENT_NUMBER);
