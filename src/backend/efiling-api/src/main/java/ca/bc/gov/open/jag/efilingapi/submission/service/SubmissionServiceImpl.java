@@ -106,6 +106,18 @@ public class SubmissionServiceImpl implements SubmissionService {
                 courtBase.getCourtClass()
         );
 
+        // TESTING
+        for (DocumentType tes : validDocumentTypes) {
+            System.out.println("##################");
+            System.out.println(tes);
+        }
+        for (DocumentProperties t : generateUrlRequest.getFilingPackage().getDocuments()) {
+            System.out.println("##################");
+            System.out.println(t);
+        }
+
+        // END TESTING
+
         if (!checkValidDocumentTypes(validDocumentTypes, generateUrlRequest.getFilingPackage().getDocuments()))
             throw new EfilingDocumentServiceException("invalid document types provided");
 
