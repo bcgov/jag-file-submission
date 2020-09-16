@@ -98,8 +98,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                 courtBase.getCourtClass()
         );
 
-        if (!isValidLevelClassLocation)
-            throw new EfilingCourtServiceException("invalid court level, class and location combination");
+        if (!isValidLevelClassLocation) throw new EfilingCourtServiceException("invalid court level, class and location combination");
 
         List<DocumentType> validDocumentTypes = efilingDocumentService.getDocumentTypes(
                 courtBase.getLevel(),
