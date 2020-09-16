@@ -230,13 +230,13 @@
                 </repository>
             </repositories>
 
-            <!-- <dependencies>
+            <dependencies>
                 <dependency>
                     <groupId>com.splunk.logging</groupId>
                     <artifactId>splunk-library-javalogging</artifactId>
                     <version>1.8.0</version>
                 </dependency>
-            </dependencies> -->
+            </dependencies>
 
         </profile>
 
