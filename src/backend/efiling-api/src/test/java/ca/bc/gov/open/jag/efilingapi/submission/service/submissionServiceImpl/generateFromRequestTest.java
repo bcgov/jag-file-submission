@@ -99,7 +99,7 @@ public class generateFromRequestTest {
         request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList()));
 
         Mockito.when(efilingCourtService.checkValidLevelClassLocation(any(), any(), any())).thenReturn(true);
-        
+
         Submission actual = sut.generateFromRequest(new SubmissionKey(TestHelpers.CASE_1, TestHelpers.CASE_1, TestHelpers.CASE_1), request);
 
         Assertions.assertEquals(TestHelpers.ERROR_URL, actual.getNavigationUrls().getError());

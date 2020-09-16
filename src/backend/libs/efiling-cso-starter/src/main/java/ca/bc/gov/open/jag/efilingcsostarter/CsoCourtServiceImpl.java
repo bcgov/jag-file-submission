@@ -41,7 +41,7 @@ public class CsoCourtServiceImpl implements EfilingCourtService {
     @Override
     public boolean checkValidLevelClassLocation(BigDecimal agencyId, String courtLevel, String courtClass) {
         try {
-            // Check CSO for isParticipatingClass
+            // Call CSO for isParticipatingClass
             return filingStatusFacadeBean.isParticipatingClass(
                     agencyId,
                     courtLevel,
