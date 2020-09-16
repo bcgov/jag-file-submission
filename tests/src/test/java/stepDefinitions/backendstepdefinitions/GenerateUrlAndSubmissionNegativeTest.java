@@ -12,6 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+
 import static org.junit.Assert.assertEquals;
 
 public class GenerateUrlAndSubmissionNegativeTest extends DriverClass {

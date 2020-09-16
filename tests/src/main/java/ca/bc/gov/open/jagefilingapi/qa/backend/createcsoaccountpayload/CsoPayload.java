@@ -2,32 +2,23 @@ package ca.bc.gov.open.jagefilingapi.qa.backend.createcsoaccountpayload;
 
 public class CsoPayload {
 
-    private String universalId;
     private String firstName;
     private String lastName;
     private String middleName;
     private String email;
-    Accounts[] accounts;
+    private String internalClientNumber;
 
-    public CsoPayload(String universalId, String firstName, String lastName,
-                      String middleName, String email, Accounts[] accounts) {
+    public CsoPayload(String internalClientNumber) {
+        this.internalClientNumber = internalClientNumber;
+    }
 
-        this.universalId = universalId;
+    public CsoPayload(String firstName, String lastName,
+                      String middleName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.middleName = middleName;
         this.email = email;
-        this.accounts = accounts;
     }
-
-    public String getUniversalId() {
-        return universalId;
-    }
-
-    public void setUniversalId(String universalId) {
-        this.universalId = universalId;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -60,7 +51,11 @@ public class CsoPayload {
         this.email = email;
     }
 
-    public Accounts[] getAccounts() { return accounts; }
+    public String getInternalClientNumber() {
+        return internalClientNumber;
+    }
 
-    public void setAccounts(Accounts[] accounts) { this.accounts = accounts; }
+    public void setInternalClientNumber(String internalClientNumber) {
+        this.internalClientNumber = internalClientNumber;
+    }
 }

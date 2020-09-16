@@ -1,5 +1,6 @@
 package stepDefinitions.frontendstepdefinitions;
 
+import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.config.ReadConfig;
 import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.AuthenticationPage;
 import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.EFileSubmissionPage;
@@ -40,13 +41,15 @@ public class EFileSubmissionTest extends DriverClass {
     private String username;
     private String password;
 
-    @Before("@frontend")
+    @Before
     public void setUp() throws IOException {
+        TestUtil testUtil = new TestUtil();
+        testUtil.restAssuredConfig();
         driverSetUp();
         log.info("Browser is initialized from the driver class");
     }
 
-    @After("@frontend")
+    @After
     public void tearDown(Scenario scenario) {
         if (scenario.isFailed()) {
             String testName = scenario.getName();
@@ -60,7 +63,7 @@ public class EFileSubmissionTest extends DriverClass {
     }
 
     @Given("user is on the landing page")
-    public void userIsOnTheLandingPage() throws IOException {
+    public void userIsOnTheLandingPage() throws IOException, InterruptedException {
         readConfig = new ReadConfig();
         String url = readConfig.getBaseUrl();
 
@@ -87,7 +90,7 @@ public class EFileSubmissionTest extends DriverClass {
     }
 
     @When("user enters a valid existing CSO account guid {string} and uploads a document")
-    public void userEntersAValidExistingCsoAccountGuidAndUploadsADocument(String validExistingCSOGuid) throws IOException {
+    public void userEntersAValidExistingCsoAccountGuidAndUploadsADocument(String validExistingCSOGuid) throws IOException, InterruptedException {
         readConfig = new ReadConfig();
         landingPage = new LandingPage(driver);
 
@@ -170,7 +173,7 @@ public class EFileSubmissionTest extends DriverClass {
     }
 
     @When("user enters non existing CSO account guid {string} and uploads a document")
-    public void userEntersNonExistingCsoAccountGuidAndUploadsADocument(String nonExistingCSOGuid) throws IOException {
+    public void userEntersNonExistingCsoAccountGuidAndUploadsADocument(String nonExistingCSOGuid) throws IOException, InterruptedException {
         landingPage = new LandingPage(driver);
 
         nonExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getNonExistingCSOGuid();

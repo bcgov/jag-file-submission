@@ -1,7 +1,8 @@
 package stepDefinitions.backendstepdefinitions;
 
+import ca.bc.gov.open.jagefilingapi.qa.backendutils.GenerateUrlHelper;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
-import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
+import ca.bc.gov.open.jagefilingapi.qa.frontendutils.FrontendTestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.requestbuilders.CreateCsoAccountRequestBuilders;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -12,27 +13,29 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.emptyString;
-import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class CreateCsoAccountTest {
 
     private CreateCsoAccountRequestBuilders createCsoAccountRequestBuilders;
     private static final String CONTENT_TYPE = "application/json";
     public Logger log = LogManager.getLogger(CreateCsoAccountTest.class);
-    private Response response;
     private JsonPath jsonPath;
+    private String userToken;
+    private Response response;
+    private String respUrl;
 
     @Given("POST http request is made to {string} with a valid request body")
-    public void postHttpRequestIsMadeToWithAValidRequestBody(String resource) throws IOException {
+    public void postHttpRequestIsMadeToWithAValidRequestBody(String resource) throws IOException, InterruptedException {
         createCsoAccountRequestBuilders = new CreateCsoAccountRequestBuilders();
+        GenerateUrlHelper generateUrlHelper = new GenerateUrlHelper();
+        respUrl = generateUrlHelper.getGeneratedUrl();
 
-        response = createCsoAccountRequestBuilders.requestWithValidRequestBody(resource);
+        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
+        userToken = frontendTestUtil.getUserJwtToken(respUrl);
+
+        response = createCsoAccountRequestBuilders.requestWithValidRequestBody(resource, userToken);
     }
 
     @When("status is {int} and content type is verified")
@@ -44,8 +47,8 @@ public class CreateCsoAccountTest {
                 assertEquals(201, response.getStatusCode());
                 assertEquals(CONTENT_TYPE, response.getContentType());
                 break;
-            case 400:
-                assertEquals(400, response.getStatusCode());
+            case 200:
+                assertEquals(200, response.getStatusCode());
                 assertEquals(CONTENT_TYPE, response.getContentType());
                 break;
             case 404:
@@ -57,60 +60,70 @@ public class CreateCsoAccountTest {
         }
     }
 
-    @Then("verify response returns names, email and accounts with type and identifiers")
-    public void verifyResponseReturnsNamesEmailAndAccountsWithTypeAndIdentifiers() throws IOException {
+    @Then("verify response returns clientId, accountId and internalClientNumber")
+    public void verifyResponseReturnsClientIdAccountIdAndInternalClientNumber() {
         jsonPath = new JsonPath(response.asString());
 
-        String respUniversalId = jsonPath.get("universalId");
-        String respFirstName = jsonPath.get("firstName");
-        String respLastName = jsonPath.get("lastName");
-        String respMiddleName = jsonPath.get("middleName");
-        String respEmail = jsonPath.get("email");
-
-        List<String> respTypes = jsonPath.get("accounts.type");
-        String requestType = respTypes.get(0);
-
-        List<String> respIdentifiers = jsonPath.get("accounts.identifier");
-        String requestId = respIdentifiers.get(0);
-
-        String validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
-
-        assertEquals(validExistingCSOGuid,respUniversalId);
-        assertThat(respFirstName, is(not(emptyString())));
-        assertThat(respLastName, is(not(emptyString())));
-        assertThat(respMiddleName, is(not(emptyString())));
-        assertThat(respEmail, is(not(emptyString())));
-        assertEquals("CSO", requestType);
-        assertEquals("1", requestId);
+        assertEquals("1", jsonPath.get("clientId"));
+        assertEquals("1", jsonPath.get("accountId"));
+        assertNull(jsonPath.get("internalClientNumber"));
+        assertTrue(jsonPath.get("fileRolePresent"));
     }
 
-    @Given("POST http request is made to {string} with incorrect account type")
-    public void postHttpRequestIsMadeToWithIncorrectAccountType(String resource) throws IOException {
+    @Given("GET http request is made to {string}")
+    public void getHttpRequestIsMadeToCsoAccount(String resource) throws IOException {
         createCsoAccountRequestBuilders = new CreateCsoAccountRequestBuilders();
 
-        response = createCsoAccountRequestBuilders.requestWithIncorrectAccountType(resource);
+        response = createCsoAccountRequestBuilders.requestToGetUserCsoAccount(resource, userToken);
     }
 
+    @Given("PUT http request is made to {string} with a valid request body")
+    public void putHttpRequestIsMadeToWithAValidRequestBody(String resource) throws IOException {
+        createCsoAccountRequestBuilders = new CreateCsoAccountRequestBuilders();
+
+        response = createCsoAccountRequestBuilders.requestToUpdateUserCsoAccount(resource, userToken);
+    }
+
+    @Then("verify response returns clientId, accountId and internalClientNumber is updated")
+    public void verifyResponseReturnsClientIdAccountIdAndInternalClientNumberIsUpdated() {
+        jsonPath = new JsonPath(response.asString());
+
+        assertEquals("1", jsonPath.get("clientId"));
+        assertEquals("1", jsonPath.get("accountId"));
+        assertEquals("23423", jsonPath.get("internalClientNumber"));
+        assertTrue(jsonPath.get("fileRolePresent"));
+    }
     @Then("verify response body has error, status and an empty message")
     public void verifyResponseBodyHasErrorStatusAndAnEmptyMessage() {
         jsonPath = new JsonPath(response.asString());
-
-        String respError = TestUtil.getJsonPath(response, "error");
-        String respMessage = TestUtil.getJsonPath(response, "message");
         int status = jsonPath.get("status");
 
-        switch (status) {
-            case 400:
-                assertEquals("Bad Request", respError);
-                assertEquals("", respMessage);
-                break;
-            case 404:
-                assertEquals("Not Found", respError);
-                assertEquals("", respMessage);
-                break;
-            default:
-                log.info("Status, error and message response for incorrect and or invalid request is verified.");
-        }
+        assertEquals(404, status);
+        assertEquals("Not Found", TestUtil.getJsonPath(response, "error"));
+        assertEquals("", TestUtil.getJsonPath(response, "message"));
+
+        log.info("Status, error and message response are verified.");
+    }
+
+    @Given("GET request is made to {string}")
+    public void getHttpRequestIsMadeToBceidAccount(String resource) throws IOException, InterruptedException {
+        createCsoAccountRequestBuilders = new CreateCsoAccountRequestBuilders();
+        GenerateUrlHelper generateUrlHelper = new GenerateUrlHelper();
+        respUrl = generateUrlHelper.getGeneratedUrl();
+
+        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
+        userToken = frontendTestUtil.getUserJwtToken(respUrl);
+
+        response = createCsoAccountRequestBuilders.requestToGetUserBceidAccount(resource, userToken);
+    }
+
+    @Then("verify response returns firstName, lastName and middleName")
+    public void verifyResponseReturnsFirstNameLastNameAndMiddleName() {
+        jsonPath = new JsonPath(response.asString());
+
+        assertEquals("Bob", jsonPath.get("firstName"));
+        assertEquals("Ross", jsonPath.get("lastName"));
+        assertEquals("Alan", jsonPath.get("middleName"));
     }
 
     @Given("POST http request is made to {string} with incorrect path value")
