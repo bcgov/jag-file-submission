@@ -277,6 +277,11 @@ public class SubmissionServiceImpl implements SubmissionService {
         for (DocumentProperties document : documents) {
             boolean currentDocumentTypeValid = false;
             for (DocumentType documentType : validDocumentTypes) {
+                System.out.println("HIHIHIHIHIHIHI");
+                System.out.println(documentType.getType());
+                System.out.println(document.getType());
+                System.out.println(documentType.getType().equals(document.getType()));
+                System.out.println("HIHIHIHIHIHIHI");
                 if (documentType.getType().equals(document.getType())) {
                     currentDocumentTypeValid = true;
                     break;
