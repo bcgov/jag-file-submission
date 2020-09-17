@@ -83,7 +83,7 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
                 authenticationPage.signInWithBceid(username, password);
                 log.info("user is authenticated before reaching eFiling hub page");
 
-                WebDriverWait wait = new WebDriverWait(driver, 90);
+                WebDriverWait wait = new WebDriverWait(driver, 120);
                 wait.until(ExpectedConditions.titleIs(EFILING_DEMO_CLIENT_PAGE_TITLE));
 
                 landingPage = new LandingPage(driver);
@@ -94,9 +94,8 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
         } catch (org.openqa.selenium.TimeoutException tx) {
             log.info("Efiling demo client page is not displayed");
         }
-        String actualTitle = landingPage.verifyLandingPageTitle();
 
-        Assert.assertEquals(EFILING_DEMO_CLIENT_PAGE_TITLE, actualTitle);
+        Assert.assertEquals(EFILING_DEMO_CLIENT_PAGE_TITLE, landingPage.verifyLandingPageTitle());
         log.info("Efiling demo client page title is verified");
     }
 
