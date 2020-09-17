@@ -3,10 +3,13 @@ package ca.bc.gov.open.jagefilingapi.qa.frontend.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import javax.swing.*;
 
 public class DocumentUploadPage {
 
@@ -61,6 +64,7 @@ public class DocumentUploadPage {
     }
 
     public void clickRemoveFileIcon() {
-        removeFileIcon.click();
+        Actions action = new Actions(driver);
+        action.moveToElement(removeFileIcon).click();
     }
 }

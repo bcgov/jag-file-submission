@@ -1,5 +1,6 @@
+@backend
 Feature: New CSO accounts can be created if a BCeID profile is not associated with a CSO account
-
+  @demo
    @backend
    Scenario: Verify a CSO account can be created successfully
     ## Create CSO account ##
@@ -14,14 +15,14 @@ Feature: New CSO accounts can be created if a BCeID profile is not associated wi
     Given PUT http request is made to "CSO_ACCOUNT_API" with a valid request body
     When status is 200 and content type is verified
     Then verify response returns clientId, accountId and internalClientNumber is updated
-
+  @demo
   @backend
   Scenario: Verify a BCeID account details can be retrieved successfully
     ## Get BCeID account details ##
     Given GET request is made to "BCEID_ACCOUNT_API"
     When status is 200 and content type is verified
     Then verify response returns firstName, lastName and middleName
-
+  @demo
   @backend
   Scenario: Verify a CSO account cannot be created for requests made with incorrect path
     ## Create CSO account ##

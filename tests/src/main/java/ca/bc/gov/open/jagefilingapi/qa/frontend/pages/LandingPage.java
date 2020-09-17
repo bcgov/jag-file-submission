@@ -42,7 +42,7 @@ public class LandingPage {
 
     //Actions:
     public String verifyLandingPageTitle() {
-        WebDriverWait wait = new WebDriverWait(driver, 90);
+        WebDriverWait wait = new WebDriverWait(driver, 120);
         wait.until(ExpectedConditions.titleContains("eFiling Demo Client"));
         return driver.getTitle();
     }
@@ -82,7 +82,7 @@ public class LandingPage {
                 "    },\n" +
                 "    \"documents\": [{\n" +
                 "        \"name\": \"test-document.pdf\",\n" +
-                "        \"type\": \"AFF\"\n" +
+                "        \"type\": \"AAB\"\n" +
                 "    }],\n" +
                 "    \"parties\": [{\n" +
                 "        \"partyType\": \"IND\",\n" +

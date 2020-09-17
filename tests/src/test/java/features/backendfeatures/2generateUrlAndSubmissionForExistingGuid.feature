@@ -1,3 +1,4 @@
+@backend
 Feature: When user uploads the documents, id is authenticated user details, navigation urls are generated and user,
   submission package details can be retrieved
 

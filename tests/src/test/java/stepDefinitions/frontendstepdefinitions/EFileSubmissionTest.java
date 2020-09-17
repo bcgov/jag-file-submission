@@ -37,7 +37,7 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
     private static final String BASE_PATH = "user.dir";
     private static final String PDF_PATH = "/src/test/java/testdatasource/test-document.pdf";
     private static final String SECOND_PDF_PATH = "/src/test/java/testdatasource/test-document-2.pdf";
-    private List<String> expectedUploadedFilesList = ImmutableList.of("test-document.pdf", "test-document-2.pdf");
+    private final List<String> expectedUploadedFilesList = ImmutableList.of("test-document.pdf", "test-document-2.pdf");
     private String filePath;
     private String username;
     private String password;
@@ -94,10 +94,6 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
     public void userEntersAValidExistingCsoAccountGuidAndUploadsADocument() throws IOException {
         readConfig = new ReadConfig();
         landingPage = new LandingPage(driver);
-    /*    GenerateUrlHelper generateUrlHelper = new GenerateUrlHelper();
-        String respUrl = generateUrlHelper.getGeneratedUrl();
-        System.out.println(respUrl);
-*/
         filePath = System.getProperty(BASE_PATH) + PDF_PATH;
         landingPage.chooseFileToUpload(filePath);
 
@@ -105,22 +101,6 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
 
         landingPage.clickEfilePackageButton();
         log.info("Pdf file is uploaded successfully.");
-    }
-
-    @Then("eFile submission page is displayed and user clicks the cancel button")
-    public void eFileSubmissionPageIsDisplayedAncUserClicksTheCancelButton() {
-        eFileSubmissionPage = new EFileSubmissionPage(driver);
-        packageConfirmationPage = new PackageConfirmationPage(driver);
-
-        String actualTitle = eFileSubmissionPage.verifyEfilingPageTitle();
-        Assert.assertEquals(EFILE_SUBMISSION_PAGE_TITLE, actualTitle);
-        log.info("eFiling Frontend page title is verified");
-
-        boolean continuePaymentBtnIsDisplayed = packageConfirmationPage.verifyContinuePaymentBtnIsDisplayed();
-        assertTrue(continuePaymentBtnIsDisplayed);
-
-        packageConfirmationPage.clickContinuePaymentBtn();
-        eFileSubmissionPage.clickCancelButton();
     }
 
     @Then("user confirms the cancellation in the confirmation window")
@@ -199,11 +179,6 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
         documentUploadPage.clickIsAmendmentRadioBtn();
         documentUploadPage.clickIsSupremeCourtBtn();
         log.info("Additional document is added successfully.");
-      /*  documentUploadPage.clickContinueBtn();
-
-        List<String>uploadedFiles = packageConfirmationPage.getUploadedFilesList();
-        assertEquals(uploadedFiles, expectedUploadedFilesList);
-        log.info("Additional file is uploaded successfully.");*/
     }
 
     @And("submit and verify the document is uploaded")
@@ -240,8 +215,8 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
         packageConfirmationPage = new PackageConfirmationPage(driver);
 
         documentUploadPage.clickCancelUpload();
-       // packageConfirmationPage.
-        //log.info("Document upload is cancelled in upload page.");
+        packageConfirmationPage.verifyContinuePaymentBtnIsDisplayed();
+        log.info("Document upload is cancelled in upload page.");
     }
 
     @When("user enters non existing CSO account guid and uploads a document")
@@ -285,33 +260,6 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
         eFileSubmissionPage.selectCheckbox();
         eFileSubmissionPage.clickAcceptTermsCancelButton();
     }
-
-/*    @When("user enters invalid CSO account guid without eFiling role")
-    public void userEntersInvalidCsoAccountGuidWithoutEfilingRole() throws IOException {
-        landingPage = new LandingPage(driver);
-
-        String invalidNoFilingRoleGuid = JsonDataReader.getCsoAccountGuid().getInvalidNoFilingRoleGuid();
-        landingPage.enterAccountGuid(invalidNoFilingRoleGuid);
-
-        filePath = System.getProperty(BASE_PATH) + PDF_PATH;
-        landingPage.chooseFileToUpload(filePath);
-
-        landingPage.enterJsonData();
-    }*/
-/*
-    @Then("error message is displayed")
-    public void errorMessageIsDisplayed() {
-        landingPage = new LandingPage(driver);
-
-        landingPage.clickEfilePackageButton();
-        log.info("Generate Url button in eFiling frontend page is clicked");
-
-        String expMsg = "An error occurred while eFiling your package. Please make sure you upload at least one file and try again.";
-        String actMsg = landingPage.getErrorMessageText();
-        Assert.assertEquals(actMsg, expMsg);
-
-        log.info("Expected message is verified");
-    }*/
 
     @Then("verify there are no broken links in the page")
     public void verifyThereAreNoBrokenLinksInThePage() throws IOException {
