@@ -262,19 +262,6 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     private boolean checkValidDocumentTypes(List<DocumentType> validDocumentTypes, List<DocumentProperties> documents) {
-//        for (DocumentProperties document : documents) {
-//            boolean currentDocumentTypeValid = false;
-//            for (DocumentType documentType : validDocumentTypes) {
-//                if (documentType.getType().equals(document.getType().getValue())) {
-//                    currentDocumentTypeValid = true;
-//                    break;
-//                }
-//            }
-//
-//            if (!currentDocumentTypeValid) return false;
-//        }
-
-
         AtomicBoolean isValid = new AtomicBoolean(true);
 
         documents.stream().forEach(document -> {
