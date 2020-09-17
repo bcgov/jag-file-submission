@@ -173,6 +173,7 @@
                     <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="arg1" type="xs:string"/>
                     <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="isParticipatingClassResponse">
@@ -211,6 +212,7 @@
                     <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="arg1" type="xs:string"/>
                     <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="findParticipatingClassResponse">
