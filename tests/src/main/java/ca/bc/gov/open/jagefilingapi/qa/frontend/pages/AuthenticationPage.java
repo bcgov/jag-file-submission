@@ -2,6 +2,7 @@ package ca.bc.gov.open.jagefilingapi.qa.frontend.pages;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -36,17 +37,18 @@ public class AuthenticationPage {
     }
 
     //Actions:
-    public void signInWithBceid(String userNm, String pwd) {
+    public void signInWithBceid(String userNm, String pwd) throws InterruptedException {
         wait = new WebDriverWait(driver, 90);
         wait.until(ExpectedConditions.titleIs("Government of British Columbia"));
         log.info("Waiting for the page to load...");
         userName.sendKeys(userNm);
         password.sendKeys(pwd);
+        Thread.sleep(2000L);
         continueBtn.click();
     }
 
     public void clickBceid() {
-        wait = new WebDriverWait(driver, 60);
+        wait = new WebDriverWait(driver, 90);
         wait.until(ExpectedConditions.titleIs("Log in to Family Law Act Application"));
         bceidBtn.click();
     }

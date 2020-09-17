@@ -15,16 +15,17 @@ public class CreateCsoAccountRequestBuilders {
 
     private RequestSpecification request;
     private CreateCsoAccountPayload csoAccountPayloadData;
-    private static final String X_AUTH_USER_ID = "X-Auth-UserId";
+    private static final String X_TRANSACTION_ID = "X-Transaction-Id";
     private String validExistingCSOGuid;
 
-    public Response requestWithValidRequestBody(String resourceValue) throws IOException {
+    public Response requestWithValidRequestBody(String resourceValue, String userJwt) throws IOException {
         csoAccountPayloadData = new CreateCsoAccountPayload();
         APIResources validCreateAccountResourceAPI = APIResources.valueOf(resourceValue);
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
         request = given().spec(TestUtil.requestSpecification())
-                .header(X_AUTH_USER_ID, validExistingCSOGuid)
+                .auth().preemptive().oauth2(userJwt)
+                .header(X_TRANSACTION_ID, validExistingCSOGuid)
                 .body(csoAccountPayloadData.createCsoAccountPayload());
 
         return request.when()
@@ -33,18 +34,48 @@ public class CreateCsoAccountRequestBuilders {
                 .extract().response();
     }
 
-    public Response requestWithIncorrectAccountType(String resourceValue) throws IOException {
+    public Response requestToGetUserCsoAccount(String resourceValue, String userJwt) throws IOException {
         csoAccountPayloadData = new CreateCsoAccountPayload();
         APIResources validCreateAccountResourceAPI = APIResources.valueOf(resourceValue);
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
         request = given().spec(TestUtil.requestSpecification())
-                .header(X_AUTH_USER_ID, validExistingCSOGuid)
-                .body(csoAccountPayloadData.createIncorrectTypeCsoAccountPayload());
+                .auth().preemptive().oauth2(userJwt)
+                .header(X_TRANSACTION_ID, validExistingCSOGuid);
 
         return request.when()
-                .post(validCreateAccountResourceAPI.getResource())
-                .then().spec(TestUtil.createCsoAccountIncorrectTypeErrorResponseSpecification())
+                .get(validCreateAccountResourceAPI.getResource())
+                .then().spec(TestUtil.validResponseSpecification())
+                .extract().response();
+    }
+
+    public Response requestToUpdateUserCsoAccount(String resourceValue, String userJwt) throws IOException {
+        csoAccountPayloadData = new CreateCsoAccountPayload();
+        APIResources validCreateAccountResourceAPI = APIResources.valueOf(resourceValue);
+        validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
+
+        request = given().spec(TestUtil.requestSpecification())
+                .auth().preemptive().oauth2(userJwt)
+                .header(X_TRANSACTION_ID, validExistingCSOGuid)
+                .body(csoAccountPayloadData.updateCsoAccountInternalClientNumber());
+
+        return request.when()
+                .put(validCreateAccountResourceAPI.getResource())
+                .then().spec(TestUtil.validResponseSpecification())
+                .extract().response();
+    }
+
+    public Response requestToGetUserBceidAccount(String resourceValue, String userJwt) throws IOException {
+        APIResources validCreateAccountResourceAPI = APIResources.valueOf(resourceValue);
+        validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
+
+        request = given().spec(TestUtil.requestSpecification())
+                .auth().preemptive().oauth2(userJwt)
+                .header(X_TRANSACTION_ID, validExistingCSOGuid);
+
+        return request.when()
+                .get(validCreateAccountResourceAPI.getResource())
+                .then().spec(TestUtil.validResponseSpecification())
                 .extract().response();
     }
 

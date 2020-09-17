@@ -2,6 +2,7 @@ package stepDefinitions.backendstepdefinitions;
 
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.DriverClass;
+import ca.bc.gov.open.jagefilingapi.qa.frontendutils.FrontendTestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
 import ca.bc.gov.open.jagefilingapi.qa.requestbuilders.GenerateUrlRequestBuilders;
 import io.cucumber.java.en.And;
@@ -34,10 +35,9 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
     private static final String SUBMISSION_ID = "submissionId";
     private static final String TRANSACTION_ID = "transactionId";
     private static final String PATH_PARAM = "/generateUrl";
-    private static final String GET_CONFIG_PATH = "/config";
     private static final String FILE_NAME_PATH = "/test-document.pdf";
-    private static final String FILING_PACKAGE_PATH_PARAM = "/filing-package";
-    private static final String DOCUMENT_PATH_PARAM = "/document";
+    private String respUrl;
+    private String userToken;
 
     public Logger log = LogManager.getLogger(GenerateUrlAndSubmissionForNonExistingGuidTest.class);
 
@@ -80,7 +80,7 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
     public void verifyExpiryDateAndEFilingUrlAreReturnedWithNonExistingCSOAccountGuidAndSubmissionId() throws URISyntaxException {
         jsonPath = new JsonPath(response.asString());
 
-        String respUrl = jsonPath.get("efilingUrl");
+        respUrl = jsonPath.get("efilingUrl");
         Long expiryDate = jsonPath.get("expiryDate");
 
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
@@ -94,48 +94,35 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
     @Given("{string} id is submitted with non existing CSO account GET http request")
     public void idIsSubmittedWithNonExistingCsoAccountGetHttpRequest(String resource) throws IOException, InterruptedException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
+        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
+
+        userToken = frontendTestUtil.getUserJwtToken(respUrl);
         response = generateUrlRequestBuilders.requestToGetSubmissionConfig(resource, nonExistingCSOGuid,
-                                                                                submissionId, GET_CONFIG_PATH);
+                                                                                submissionId, userToken);
     }
 
-    @Then("verify universal id, account type and identifier values are returned")
-    public void verifyUniversalIdAccountTypeAndIdentifierValuesAreReturned() {
+    @Then("verify clientAppName and csoBaseUrl values are returned")
+    public void verifyClientAppNameAndCsoBaseUrlValuesAreReturned() {
         jsonPath = new JsonPath(response.asString());
 
-        String universalId = jsonPath.get("userDetails.universalId");
-        String displayName = jsonPath.get("clientApplication.displayName");
-        String clientAppType = jsonPath.get("clientApplication.type");
-
-        List<String> type = jsonPath.get("userDetails.accounts.type");
-        List<String> identifier = jsonPath.get("userDetails.accounts.identifier");
-
-        assertThat(universalId, is(not(emptyString())));
-        assertThat(displayName, is(not(emptyString())));
-        assertThat(clientAppType, is(not(emptyString())));
-        log.info("Universal id, display name and type for non existing CSO account submission response have valid values");
-
-        assertFalse(type.isEmpty());
-        assertFalse(identifier.isEmpty());
-        log.info("Account type and identifier objects from the valid CSO account submission response have valid values");
+        assertThat(jsonPath.get("clientAppName"), is(not(emptyString())));
+        assertThat(jsonPath.get("csoBaseUrl"), is(not(emptyString())));
+        log.info("ClientAppName and csoBaseUrl objects from the response are correct.");
     }
 
     @And("verify success, error and cancel navigation urls are also returned")
     public void verifySuccessErrorAndCancelNavigationUrlsAreReturned() {
         jsonPath = new JsonPath(response.asString());
 
-        String successUrl = jsonPath.get("navigation.success.url");
-        String errorUrl = jsonPath.get("navigation.error.url");
-        String cancelUrl = jsonPath.get("navigation.cancel.url");
-
-        assertNotNull(successUrl);
-        assertNotNull(errorUrl);
-        assertNotNull(cancelUrl);
+        assertNotNull(jsonPath.get("navigationUrls.success"));
+        assertNotNull(jsonPath.get("navigationUrls.error"));
+        assertNotNull(jsonPath.get("navigationUrls.cancel"));;
     }
 
     @Then("verify court details and document details are returned")
     public void verifyCourtDetailsAndDocumentDetailsAreReturned() {
         jsonPath = new JsonPath(response.asString());
-        float submissionFeeAmount = jsonPath.get("submissionFeeAmount");
+        int submissionFeeAmount = jsonPath.get("submissionFeeAmount");
 
         assertThat(jsonPath.get("court.location"), is(not(emptyString())));
         assertThat(jsonPath.get("court.level"), is(not(emptyString())));
@@ -161,16 +148,23 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
     }
 
     @Given("{string} id with filing package path is submitted with non existing CSO account GET http request")
-    public void idWithFilingPackagePathIsSubmittedWithNonExistingCSOAccountGETHttpRequest(String resource) throws IOException, InterruptedException {
+    public void idWithFilingPackagePathIsSubmittedWithNonExistingCSOAccountGETHttpRequest(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToGetFilingPackage(resource, nonExistingCSOGuid,
-                                                                        submissionId, FILING_PACKAGE_PATH_PARAM );
+                                                                        submissionId, userToken );
     }
 
     @Given("{string} id with filename path is submitted with non existing CSO account GET http request")
-    public void idWithFilenamePathIsSubmittedWithNonExistingCSOAccountGETHttpRequest(String resource) throws IOException, InterruptedException {
+    public void idWithFilenamePathIsSubmittedWithNonExistingCSOAccountGETHttpRequest(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToGetDocumentUsingFileName(resource, nonExistingCSOGuid,
-                submissionId, DOCUMENT_PATH_PARAM, FILE_NAME_PATH);
+                                                                                        submissionId, userToken);
+    }
+
+    @Then("Verify status code is {int} and content type is octet-stream")
+    public void verifyStatusCodeIsAndContentTypeIsOctetStream(Integer int1) {
+        generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
+        assertEquals(200, response.getStatusCode());
+        assertEquals("application/octet-stream", response.getContentType());
     }
 }

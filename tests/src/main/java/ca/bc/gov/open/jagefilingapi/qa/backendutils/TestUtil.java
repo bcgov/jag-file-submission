@@ -1,8 +1,12 @@
 package ca.bc.gov.open.jagefilingapi.qa.backendutils;
 
 import ca.bc.gov.open.jagefilingapi.qa.config.ReadConfig;
+import io.cucumber.java.Before;
+import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.config.HttpClientConfig;
+import io.restassured.config.RestAssuredConfig;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
@@ -25,10 +29,6 @@ import java.util.List;
 import static io.restassured.RestAssured.baseURI;
 
 public class TestUtil {
-
-    private TestUtil() {
-        throw new IllegalStateException("Utility class");
-    }
 
     public static RequestSpecification requestSpecification() throws IOException {
         ReadConfig readConfig = new ReadConfig();
@@ -81,7 +81,6 @@ public class TestUtil {
     }
 
     public static List<String> getSubmissionAndTransId(String respUrl, String submissionId, String transactionId) throws URISyntaxException {
-
         List<NameValuePair> params = URLEncodedUtils.parse(new URI(respUrl), StandardCharsets.UTF_8);
 
         String respSubId = null;
@@ -95,5 +94,12 @@ public class TestUtil {
             }
         }
         return Arrays.asList(respSubId, respTransId);
+    }
+
+    public void restAssuredConfig() {
+        RestAssured.config= RestAssuredConfig.config().httpClient(HttpClientConfig.httpClientConfig().
+                setParam("http.connection.timeout",300000).
+                setParam("http.socket.timeout",300000).
+                setParam("http.connection-manager.timeout",300000));
     }
 }

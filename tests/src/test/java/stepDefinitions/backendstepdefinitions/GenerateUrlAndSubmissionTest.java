@@ -1,15 +1,19 @@
 package stepDefinitions.backendstepdefinitions;
 
+import ca.bc.gov.open.jagefilingapi.qa.backendutils.APIResources;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.DriverClass;
+import ca.bc.gov.open.jagefilingapi.qa.frontendutils.FrontendTestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
 import ca.bc.gov.open.jagefilingapi.qa.requestbuilders.GenerateUrlRequestBuilders;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,6 +21,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
 
+import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyString;
@@ -34,10 +39,9 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     private static final String SUBMISSION_ID = "submissionId";
     private static final String TRANSACTION_ID = "transactionId";
     private static final String GENERATE_URL_PATH_PARAM = "/generateUrl";
-    private static final String GET_CONFIG_PATH = "/config";
     private static final String FILE_NAME_PATH = "/test-document.pdf";
-    private static final String FILING_PACKAGE_PATH_PARAM = "/filing-package";
-    private static final String DOCUMENT_PATH_PARAM = "/document";
+    private String respUrl;
+    private String userToken;
 
     public Logger log = LogManager.getLogger(GenerateUrlAndSubmissionTest.class);
 
@@ -90,7 +94,7 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
         jsonPath = new JsonPath(response.asString());
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
-        String respUrl = jsonPath.get("efilingUrl");
+        respUrl = jsonPath.get("efilingUrl");
         Long expiryDate = jsonPath.get("expiryDate");
 
         List<String> respId = TestUtil.getSubmissionAndTransId(respUrl, SUBMISSION_ID, TRANSACTION_ID);
@@ -103,7 +107,10 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     @Given("{string} id is submitted with GET http request")
     public void idIsSubmittedWithGetHttpRequest(String resource) throws IOException, InterruptedException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
-        response = generateUrlRequestBuilders.requestToGetSubmissionConfig(resource, validExistingCSOGuid, submissionId, GET_CONFIG_PATH);
+        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
+
+        userToken = frontendTestUtil.getUserJwtToken(respUrl);
+        response = generateUrlRequestBuilders.requestToGetSubmissionConfig(resource, validExistingCSOGuid, submissionId, userToken);
     }
 
     @Then("verify clientAppName and csoBaseUrl values are returned and not empty")
@@ -116,10 +123,10 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     }
 
     @Given("{string} id with filing package path is submitted with GET http request")
-    public void idWithFilingPackagePathIsSubmittedWithGETHttpRequest(String resource) throws IOException, InterruptedException {
+    public void idWithFilingPackagePathIsSubmittedWithGETHttpRequest(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToGetFilingPackage(resource,validExistingCSOGuid,
-                                                                submissionId, FILING_PACKAGE_PATH_PARAM );
+                                                                submissionId, userToken);
     }
 
     @Then("verify court details and document details are returned and not empty")
@@ -160,14 +167,15 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     }
 
     @Given("{string} id with filename path is submitted with GET http request")
-    public void idWithFilenamePathIsSubmittedWithGETHttpRequest(String resource) throws IOException, InterruptedException {
+    public void idWithFilenamePathIsSubmittedWithGETHttpRequest(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToGetDocumentUsingFileName(resource,validExistingCSOGuid,
-                                                                    submissionId, DOCUMENT_PATH_PARAM, FILE_NAME_PATH);
+                                                                    submissionId, userToken);
     }
 
     @Then("Verify status code is {int} and content type is not json")
     public void verifyStatusCodeIsAndContentTypeIsNotJson(Integer int1) {
+        generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         assertEquals(200, response.getStatusCode());
         assertEquals("application/octet-stream", response.getContentType());
     }
@@ -176,5 +184,28 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     public void POSTHttpRequestIsMadeToWithValidExistingCSOAccountGuidAndMultipleFile(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.validRequestWithMultipleDocuments(resource);
+    }
+
+    @Given("{string} id with submit path is submitted with POST http request")
+    public void IdWithSubmitPathsSubmittedWithPOSTHttpRequest(String resource) throws IOException {
+        generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
+        APIResources resourceGet = APIResources.valueOf(resource);
+
+        RequestSpecification request = given()
+                .auth().preemptive().oauth2(userToken)
+                .spec(TestUtil.requestSpecification())
+                .header("x-transaction-id", validExistingCSOGuid)
+                .body(new ObjectMapper().createObjectNode());
+
+        response = request.when().post(resourceGet.getResource() + submissionId + "/submit")
+                .then()
+                .spec(TestUtil.validResponseSpecification())
+                .extract().response();
+    }
+
+    @Then("packageRef is returned")
+    public void packageRefIsReturned() {
+        jsonPath = new JsonPath(response.asString());
+        assertThat(jsonPath.get("packageRef"), is(not(emptyString())));
     }
 }

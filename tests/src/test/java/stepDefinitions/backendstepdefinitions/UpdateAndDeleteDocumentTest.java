@@ -2,6 +2,7 @@ package stepDefinitions.backendstepdefinitions;
 
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.DriverClass;
+import ca.bc.gov.open.jagefilingapi.qa.frontendutils.FrontendTestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
 import ca.bc.gov.open.jagefilingapi.qa.requestbuilders.GenerateUrlRequestBuilders;
 import io.cucumber.java.en.And;
@@ -18,7 +19,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.not;
@@ -35,12 +35,10 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
     private static final String SUBMISSION_ID = "submissionId";
     private static final String TRANSACTION_ID = "transactionId";
     private static final String GENERATE_URL_PATH_PARAM = "/generateUrl";
-    private static final String GET_CONFIG_PATH = "/config";
     private static final String FIRST_FILE_NAME_PATH = "/test-document.pdf";
     private static final String SECOND_FILE_NAME_PATH = "/test-document-2.pdf";
-    private static final String DOCUMENT_PATH_PARAM = "/document";
-    private static final String UPDATE_DOCUMENTS_PATH_PARAM = "/update-documents";
-
+    private String respUrl;
+    private String userToken;
 
     public Logger log = LogManager.getLogger(UpdateAndDeleteDocumentTest.class);
 
@@ -105,7 +103,7 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
         jsonPath = new JsonPath(response.asString());
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
-        String respUrl = jsonPath.get("efilingUrl");
+         respUrl = jsonPath.get("efilingUrl");
         Long expiryDate = jsonPath.get("expiryDate");
 
         List<String> respId = TestUtil.getSubmissionAndTransId(respUrl, SUBMISSION_ID, TRANSACTION_ID);
@@ -118,29 +116,21 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
     @Given("{string} id is submitted with GET request")
     public void idIsSubmittedWithGetRequest(String resource) throws IOException, InterruptedException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
+        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
+
+        userToken = frontendTestUtil.getUserJwtToken(respUrl);
+
         response = generateUrlRequestBuilders.requestToGetSubmissionConfig(resource, validExistingCSOGuid,
-                                                                                submissionId, GET_CONFIG_PATH);
+                                                                                submissionId, userToken);
     }
 
-    @Then("verify universal id, user details and account type values are returned and not empty")
-    public void verifyUniversalIdUserDetailsAndAccountTypeValuesAreReturnedAndNotEmpty() {
+    @Then("ClientAppName and csoBaseUrl values are verified")
+    public void clientAppNameAndCsoBaseUrlValuesAreVerified() {
         jsonPath = new JsonPath(response.asString());
 
-        String universalId = jsonPath.get("userDetails.universalId");
-        String displayName = jsonPath.get("clientApplication.displayName");
-        String clientAppType = jsonPath.get("clientApplication.type");
-
-        List<String> type = jsonPath.get("userDetails.accounts.type");
-        List<String> identifier = jsonPath.get("userDetails.accounts.identifier");
-
-        assertThat(universalId, is(not(emptyString())));
-        assertThat(displayName, is(not(emptyString())));
-        assertThat(clientAppType, is(not(emptyString())));
-        log.info("Names and email objects from the valid CSO account submission response have valid values");
-
-        assertFalse(type.isEmpty());
-        assertFalse(identifier.isEmpty());
-        log.info("Account type and identifier objects from the valid CSO account submission response have valid values");
+        assertThat(jsonPath.get("clientAppName"), is(not(emptyString())));
+        assertThat(jsonPath.get("csoBaseUrl"), is(not(emptyString())));
+        log.info("ClientAppName and csoBaseUrl objects from the response are correct.");
     }
 
     @Given("second document is posted to {string}")
@@ -154,21 +144,16 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
     @And("verify navigation urls are returned")
     public void verifyNavigationUrlsAreReturned() {
         jsonPath = new JsonPath(response.asString());
-
-        String successUrl = jsonPath.get("navigation.success.url");
-        String errorUrl = jsonPath.get("navigation.error.url");
-        String cancelUrl = jsonPath.get("navigation.cancel.url");
-
-        assertNotNull(successUrl);
-        assertNotNull(errorUrl);
-        assertNotNull(cancelUrl);
+        assertNotNull(jsonPath.get("navigationUrls.success"));
+        assertNotNull(jsonPath.get("navigationUrls.error"));
+        assertNotNull(jsonPath.get("navigationUrls.cancel"));
     }
 
     @Given("{string} id with filename is submitted with GET http request")
-    public void idWithFilenameIsSubmittedWithGETHttpRequest(String resource) throws IOException, InterruptedException {
+    public void idWithFilenameIsSubmittedWithGETHttpRequest(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
-        response = generateUrlRequestBuilders.requestToGetDocumentUsingFileName(resource,validExistingCSOGuid,
-                                                                submissionId, DOCUMENT_PATH_PARAM, SECOND_FILE_NAME_PATH);
+        response = generateUrlRequestBuilders.requestToGetDocumentUsingSecondFileName(resource,validExistingCSOGuid,
+                                                                submissionId, userToken);
     }
 
     @Then("validated status code is {int} and content type is not json")
@@ -177,33 +162,31 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
         assertEquals("application/octet-stream", response.getContentType());
     }
 
-    @Given("{string} id with payload is submitted to upload the document properties")
-    public void idWithPayloadIsSubmittedToUploadTheDocumentProperties(String resource) throws IOException, InterruptedException {
+    @Given("{string} id with payload is submitted to update the document properties")
+    public void idWithPayloadIsSubmittedToUpdateTheDocumentProperties(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToUpdateDocumentProperties(resource,validExistingCSOGuid,
-                                                submissionId, UPDATE_DOCUMENTS_PATH_PARAM);
+                                                submissionId, userToken);
     }
 
     @Then("verify document properties are updated")
     public void verifyDocumentPropertiesAreUpdated() {
         jsonPath = new JsonPath(response.asString());
+        int statutoryFee = jsonPath.get("documents.statutoryFeeAmount");
 
         assertFalse(jsonPath.get("documents.name").toString().isEmpty());
         assertFalse(jsonPath.get("documents.type").toString().isEmpty());
-        assertFalse(jsonPath.get("documents.subType").toString().isEmpty());
-        assertFalse(jsonPath.get("documents.isAmendment").toString().isEmpty());
-        assertFalse(jsonPath.get("documents.isSupremeCourtScheduling").toString().isEmpty());
-        assertFalse(jsonPath.get("documents.data").toString().isEmpty());
+        assertTrue(jsonPath.get("documents.isAmendment"));
+        assertTrue(jsonPath.get("documents.isSupremeCourtScheduling"));
         assertFalse(jsonPath.get("documents.description").toString().isEmpty());
-        assertFalse(jsonPath.get("documents.statutoryFeeAmount").toString().isEmpty());
+        assertEquals(0 , statutoryFee);
         assertFalse(jsonPath.get("documents.mimeType").toString().isEmpty());
         log.info("Document properties are updated");
-
     }
 
     @Given("{string} id is submitted with DELETE http request")
-    public void idIsSubmittedWithDeleteHttpRequest(String resource) throws IOException, InterruptedException {
+    public void idIsSubmittedWithDeleteHttpRequest(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
-        response = generateUrlRequestBuilders.requestToDeleteDocuments(resource, validExistingCSOGuid, submissionId);
+        response = generateUrlRequestBuilders.requestToDeleteDocuments(resource, validExistingCSOGuid, submissionId, userToken);
     }
 }
