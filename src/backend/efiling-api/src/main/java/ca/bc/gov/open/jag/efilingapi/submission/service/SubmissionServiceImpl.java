@@ -33,6 +33,7 @@ import java.text.MessageFormat;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 public class SubmissionServiceImpl implements SubmissionService {
@@ -118,8 +119,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                         toFilingPackage(generateUrlRequest, submissionKey),
                         getExpiryDate()));
 
-        if (!cachedSubmission.isPresent())
-            throw new StoreException("exception while storing submission object");
+        if (!cachedSubmission.isPresent()) throw new StoreException("exception while storing submission object");
 
         return cachedSubmission.get();
 
@@ -262,19 +262,34 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     private boolean checkValidDocumentTypes(List<DocumentType> validDocumentTypes, List<DocumentProperties> documents) {
-        for (DocumentProperties document : documents) {
-            boolean currentDocumentTypeValid = false;
-            for (DocumentType documentType : validDocumentTypes) {
+//        for (DocumentProperties document : documents) {
+//            boolean currentDocumentTypeValid = false;
+//            for (DocumentType documentType : validDocumentTypes) {
+//                if (documentType.getType().equals(document.getType().getValue())) {
+//                    currentDocumentTypeValid = true;
+//                    break;
+//                }
+//            }
+//
+//            if (!currentDocumentTypeValid) return false;
+//        }
+
+
+        AtomicBoolean isValid = new AtomicBoolean(true);
+
+        documents.stream().forEach(document -> {
+            AtomicBoolean currentDocumentTypeValid = new AtomicBoolean(false);
+            validDocumentTypes.stream().forEach(documentType -> {
                 if (documentType.getType().equals(document.getType().getValue())) {
-                    currentDocumentTypeValid = true;
-                    break;
+                    currentDocumentTypeValid.set(true);
                 }
-            }
+            });
 
-            if (!currentDocumentTypeValid) return false;
-        }
+            if (!currentDocumentTypeValid.get()) isValid.set(false);
+        });
 
-        return true;
+
+        return isValid.get();
     }
 
 }
