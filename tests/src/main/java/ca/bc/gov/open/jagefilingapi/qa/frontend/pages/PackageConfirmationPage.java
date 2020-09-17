@@ -8,12 +8,21 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PackageConfirmationPage {
 
     private final WebDriver driver;
 
     @FindBy(xpath = "//button[@data-test-id='continue-btn']")
     WebElement continuePaymentBtn;
+
+    @FindBy(xpath = "//*[@data-test-id='upload-link']")
+    WebElement uploadLink;
+
+    @FindBy(xpath = "//span[@data-test-id='uploaded-file']")
+    List<WebElement> uploadedFiles;
 
     //Initializing the driver:
     public PackageConfirmationPage(WebDriver driver) {
@@ -30,5 +39,19 @@ public class PackageConfirmationPage {
 
     public void clickContinuePaymentBtn() {
          continuePaymentBtn.click();
+    }
+
+    public void clickUploadLink() {
+        WebDriverWait wait = new WebDriverWait(driver, 90);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@data-test-id='upload-link']")));
+        uploadLink.click();
+    }
+
+    public List<String> getUploadedFilesList() {
+        List<String> UploadedFileList = new ArrayList<>();
+        for (WebElement webElement : uploadedFiles) {
+            UploadedFileList.add(webElement.getText());
+        }
+        return UploadedFileList;
     }
 }

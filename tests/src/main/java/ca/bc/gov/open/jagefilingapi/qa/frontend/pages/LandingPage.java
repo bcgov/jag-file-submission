@@ -31,9 +31,6 @@ public class LandingPage {
     @FindBy(xpath = "//*[@id='root']/div/main/div/div/div[1]/div/input")
     WebElement chooseFile;
 
-    @FindBy(xpath = "//*[starts-with(@id,'filepond--item')]")
-    WebElement selectedFile;
-
     @FindBy(xpath = "//*[@id='1']")
     WebElement textInput;
 
@@ -45,9 +42,8 @@ public class LandingPage {
 
     //Actions:
     public String verifyLandingPageTitle() {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
-        wait.until(ExpectedConditions.titleIs("eFiling Demo Client"));
-        log.info("Waiting for the page to load...");
+        WebDriverWait wait = new WebDriverWait(driver, 90);
+        wait.until(ExpectedConditions.titleContains("eFiling Demo Client"));
         return driver.getTitle();
     }
 
