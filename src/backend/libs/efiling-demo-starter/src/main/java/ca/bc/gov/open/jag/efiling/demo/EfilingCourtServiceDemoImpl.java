@@ -10,4 +10,9 @@ public class EfilingCourtServiceDemoImpl implements EfilingCourtService {
     public CourtDetails getCourtDescription(String agencyIdentifierCd, String courtLevel, String courtClass) {
         return new CourtDetails(BigDecimal.TEN, "Imma Court", "Imma Class", "Imma Level");
     }
+
+    @Override
+    public boolean checkValidLevelClassLocation(BigDecimal agencyId, String courtLevel, String courtClass, String applicationCode) {
+        return true;
+    }
 }
