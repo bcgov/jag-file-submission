@@ -71,23 +71,33 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
         username = System.getProperty("BCEID_USERNAME");
         password = System.getProperty("BCEID_PASSWORD");
 
-        driver.get(url);
-        log.info("Landing page url is accessed successfully");
+        try {
+            for(int i = 0; i<3; i++) {
 
-        AuthenticationPage authenticationPage = new AuthenticationPage(driver);
-        authenticationPage.clickBceid();
-        authenticationPage.signInWithBceid(username, password);
-        log.info("user is authenticated before reaching eFiling demo page");
+                driver.get(url);
+                log.info("Efiling demo client page url is accessed successfully");
 
-        WebDriverWait wait = new WebDriverWait(driver, 60);
-        wait.until(ExpectedConditions.titleIs(EFILING_DEMO_CLIENT_PAGE_TITLE));
+                AuthenticationPage authenticationPage = new AuthenticationPage(driver);
+                authenticationPage.clickBceid();
+                Thread.sleep(4000L);
+                authenticationPage.signInWithBceid(username, password);
+                log.info("user is authenticated before reaching eFiling hub page");
 
-        landingPage = new LandingPage(driver);
+                WebDriverWait wait = new WebDriverWait(driver, 90);
+                wait.until(ExpectedConditions.titleIs(EFILING_DEMO_CLIENT_PAGE_TITLE));
 
+                landingPage = new LandingPage(driver);
+                if(landingPage.verifyEfilingPackageBtnIsDisplayed()) {
+                    break;
+                }
+            }
+        } catch (org.openqa.selenium.TimeoutException tx) {
+            log.info("Efiling demo client page is not displayed");
+        }
         String actualTitle = landingPage.verifyLandingPageTitle();
 
         Assert.assertEquals(EFILING_DEMO_CLIENT_PAGE_TITLE, actualTitle);
-        log.info("Landing page title is verified");
+        log.info("Efiling demo client page title is verified");
     }
 
     @When("user enters a valid existing CSO account guid and uploads a document")

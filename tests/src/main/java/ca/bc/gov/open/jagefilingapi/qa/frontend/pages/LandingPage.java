@@ -3,6 +3,7 @@ package ca.bc.gov.open.jagefilingapi.qa.frontend.pages;
 import ca.bc.gov.open.jagefilingapi.qa.config.ReadConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -23,7 +24,8 @@ public class LandingPage {
     WebElement guidInputForm;
 
     @FindBy(xpath = "//button[@data-test-id='generate-url-btn']")
-    WebElement generateUrlButton;
+    WebElement eFilingPackageBtn;
+
 
     @FindBy(xpath = "//*[@id='root']/div/main/div/div/span[1]")
     WebElement getErrorText;
@@ -47,6 +49,12 @@ public class LandingPage {
         return driver.getTitle();
     }
 
+    public boolean verifyEfilingPackageBtnIsDisplayed() {
+        WebDriverWait wait = new WebDriverWait(driver, 120);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@data-test-id='generate-url-btn']")));
+        return eFilingPackageBtn.isDisplayed();
+    }
+
     public LandingPage getUrl() throws IOException {
         readConfig = new ReadConfig();
         String url = readConfig.getBaseUrl();
@@ -59,7 +67,7 @@ public class LandingPage {
     }
 
     public void clickEfilePackageButton() {
-        generateUrlButton.click();
+        eFilingPackageBtn.click();
     }
 
     public String getErrorMessageText() {
