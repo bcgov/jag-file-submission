@@ -104,6 +104,7 @@ exports[`Storyshots Home Account Exists 1`] = `
                       >
                         <span
                           class="file-href"
+                          data-test-id="uploaded-file"
                           role="button"
                           tabindex="0"
                         >
@@ -210,6 +211,7 @@ exports[`Storyshots Home Account Exists 1`] = `
                       >
                         <span
                           class="file-href"
+                          data-test-id="uploaded-file"
                           role="button"
                           tabindex="0"
                         >
@@ -257,6 +259,7 @@ exports[`Storyshots Home Account Exists 1`] = `
           Do you have additional documents to upload? 
           <span
             class="file-href"
+            data-test-id="upload-link"
             role="button"
             tabindex="0"
           >
@@ -698,6 +701,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
                       >
                         <span
                           class="file-href"
+                          data-test-id="uploaded-file"
                           role="button"
                           tabindex="0"
                         >
@@ -804,6 +808,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
                       >
                         <span
                           class="file-href"
+                          data-test-id="uploaded-file"
                           role="button"
                           tabindex="0"
                         >
@@ -851,6 +856,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
           Do you have additional documents to upload? 
           <span
             class="file-href"
+            data-test-id="upload-link"
             role="button"
             tabindex="0"
           >

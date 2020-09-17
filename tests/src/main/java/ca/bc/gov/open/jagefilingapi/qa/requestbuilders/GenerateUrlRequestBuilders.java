@@ -34,7 +34,6 @@ public class GenerateUrlRequestBuilders {
     private static final String SECOND_FILE_NAME_PATH = "/test-document-2.pdf";
     private static final String UPDATE_DOCUMENTS_PATH_PARAM = "/update-documents";
     private GenerateUrlPayload payloadData;
-    public String userToken;
 
     public Response getBearerToken() throws IOException {
         ReadConfig readConfig = new ReadConfig();

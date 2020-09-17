@@ -48,6 +48,7 @@ const generateTable = (file, data, submissionId) => {
             tabIndex={0}
             className="file-href"
             onClick={() => downloadFile(file, submissionId)}
+            data-test-id="uploaded-file"
           >
             {file.name}
           </span>
@@ -211,6 +212,7 @@ export default function PackageConfirmation({
             role="button"
             tabIndex={0}
             className="file-href"
+            data-test-id="upload-link"
             onClick={() => setShowUpload(true)}
           >
             Upload them now.

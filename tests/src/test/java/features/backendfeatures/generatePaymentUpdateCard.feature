@@ -1,5 +1,6 @@
+@backend
 Feature: Payment card can be updated
-
+   @demo
    @backend
    Scenario: Verify payment card can be updated
    ## generate update-card call ##

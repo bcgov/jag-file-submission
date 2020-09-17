@@ -1496,6 +1496,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                       >
                         <span
                           class="file-href"
+                          data-test-id="uploaded-file"
                           role="button"
                           tabindex="0"
                         >
@@ -1602,6 +1603,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                       >
                         <span
                           class="file-href"
+                          data-test-id="uploaded-file"
                           role="button"
                           tabindex="0"
                         >
@@ -1649,6 +1651,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
           Do you have additional documents to upload? 
           <span
             class="file-href"
+            data-test-id="upload-link"
             role="button"
             tabindex="0"
           >

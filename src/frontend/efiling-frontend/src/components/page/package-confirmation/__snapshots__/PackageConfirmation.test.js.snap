@@ -67,6 +67,7 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
                     >
                       <span
                         class="file-href"
+                        data-test-id="uploaded-file"
                         role="button"
                         tabindex="0"
                       >
@@ -173,6 +174,7 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
                     >
                       <span
                         class="file-href"
+                        data-test-id="uploaded-file"
                         role="button"
                         tabindex="0"
                       >
@@ -220,6 +222,7 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
         Do you have additional documents to upload? 
         <span
           class="file-href"
+          data-test-id="upload-link"
           role="button"
           tabindex="0"
         >
@@ -568,6 +571,7 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
                     >
                       <span
                         class="file-href"
+                        data-test-id="uploaded-file"
                         role="button"
                         tabindex="0"
                       >
@@ -674,6 +678,7 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
                     >
                       <span
                         class="file-href"
+                        data-test-id="uploaded-file"
                         role="button"
                         tabindex="0"
                       >
@@ -721,6 +726,7 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
         Do you have additional documents to upload? 
         <span
           class="file-href"
+          data-test-id="upload-link"
           role="button"
           tabindex="0"
         >
@@ -1025,14 +1031,14 @@ exports[`PackageConfirmation Component On click of Upload them now text, it redi
       >
         <button
           class="bcgov-button normal-white btn"
-          data-test-id=""
+          data-test-id="cancel-upload-btn"
           type="button"
         >
           Cancel Upload
         </button>
         <button
           class="bcgov-button normal-blue btn"
-          data-test-id=""
+          data-test-id="continue-upload-btn"
           disabled=""
           type="button"
         >
@@ -1722,14 +1728,14 @@ exports[`PackageConfirmation Component On keydown of Upload them now text, it re
       >
         <button
           class="bcgov-button normal-white btn"
-          data-test-id=""
+          data-test-id="cancel-upload-btn"
           type="button"
         >
           Cancel Upload
         </button>
         <button
           class="bcgov-button normal-blue btn"
-          data-test-id=""
+          data-test-id="continue-upload-btn"
           disabled=""
           type="button"
         >

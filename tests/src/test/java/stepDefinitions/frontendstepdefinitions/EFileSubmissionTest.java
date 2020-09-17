@@ -2,13 +2,10 @@ package stepDefinitions.frontendstepdefinitions;
 
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.config.ReadConfig;
-import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.AuthenticationPage;
-import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.EFileSubmissionPage;
-import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.LandingPage;
-import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.PackageConfirmationPage;
-import ca.bc.gov.open.jagefilingapi.qa.frontendutils.DriverClass;
+import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.*;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.FrontendTestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
+import com.google.common.collect.ImmutableList;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
@@ -27,7 +24,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.IOException;
 import java.util.List;
 
-public class EFileSubmissionTest extends DriverClass {
+import static org.junit.Assert.*;
+
+public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.frontendutils.DriverClass {
 
     ReadConfig readConfig;
     LandingPage landingPage;
@@ -37,6 +36,8 @@ public class EFileSubmissionTest extends DriverClass {
     private static final String EFILING_DEMO_CLIENT_PAGE_TITLE = "eFiling Demo Client";
     private static final String BASE_PATH = "user.dir";
     private static final String PDF_PATH = "/src/test/java/testdatasource/test-document.pdf";
+    private static final String SECOND_PDF_PATH = "/src/test/java/testdatasource/test-document-2.pdf";
+    private final List<String> expectedUploadedFilesList = ImmutableList.of("test-document.pdf", "test-document-2.pdf");
     private String filePath;
     private String username;
     private String password;
@@ -89,11 +90,10 @@ public class EFileSubmissionTest extends DriverClass {
         log.info("Landing page title is verified");
     }
 
-    @When("user enters a valid existing CSO account guid {string} and uploads a document")
-    public void userEntersAValidExistingCsoAccountGuidAndUploadsADocument(String validExistingCSOGuid) throws IOException, InterruptedException {
+    @When("user enters a valid existing CSO account guid and uploads a document")
+    public void userEntersAValidExistingCsoAccountGuidAndUploadsADocument() throws IOException {
         readConfig = new ReadConfig();
         landingPage = new LandingPage(driver);
-
         filePath = System.getProperty(BASE_PATH) + PDF_PATH;
         landingPage.chooseFileToUpload(filePath);
 
@@ -101,27 +101,6 @@ public class EFileSubmissionTest extends DriverClass {
 
         landingPage.clickEfilePackageButton();
         log.info("Pdf file is uploaded successfully.");
-
-        AuthenticationPage authenticationPage = new AuthenticationPage(driver);
-        authenticationPage.clickBceid();
-        authenticationPage.signInWithBceid(username, password);
-        log.info("user is authenticated in eFiling demo page.");
-    }
-
-    @Then("eFile submission page is displayed and user clicks the cancel button")
-    public void eFileSubmissionPageIsDisplayedAncUserClicksTheCancelButton() throws IOException, InterruptedException {
-        eFileSubmissionPage = new EFileSubmissionPage(driver);
-        packageConfirmationPage = new PackageConfirmationPage(driver);
-
-        String actualTitle = eFileSubmissionPage.verifyEfilingPageTitle();
-        Assert.assertEquals(EFILE_SUBMISSION_PAGE_TITLE, actualTitle);
-        log.info("eFiling Frontend page title is verified");
-
-        boolean continuePaymentBtnIsDisplayed = packageConfirmationPage.verifyContinuePaymentBtnIsDisplayed();
-        Assert.assertTrue(continuePaymentBtnIsDisplayed);
-
-        packageConfirmationPage.clickContinuePaymentBtn();
-        eFileSubmissionPage.clickCancelButton();
     }
 
     @Then("user confirms the cancellation in the confirmation window")
@@ -137,7 +116,7 @@ public class EFileSubmissionTest extends DriverClass {
         eFileSubmissionPage = new EFileSubmissionPage(driver);
 
         boolean cancelPageIsDisplayed = eFileSubmissionPage.verifyCancelPageIsDisplayed();
-        Assert.assertTrue(cancelPageIsDisplayed);
+        assertTrue(cancelPageIsDisplayed);
         log.info("Navigated to the cancel page from the E-File submission page.");
     }
 
@@ -172,11 +151,79 @@ public class EFileSubmissionTest extends DriverClass {
         log.info("eFiling Frontend page title is verified");
     }
 
-    @When("user enters non existing CSO account guid {string} and uploads a document")
-    public void userEntersNonExistingCsoAccountGuidAndUploadsADocument(String nonExistingCSOGuid) throws IOException, InterruptedException {
+    @Then("user clicks on create CSO account")
+    public void userClicksOnCreateCSOAccount() {
+        CreateCsoAccountPage createCsoAccountPage = new CreateCsoAccountPage(driver);
+        createCsoAccountPage.clickCreateCsoAccountBtn();
+    }
+
+    @Then("the CSO account is created successfully")
+    public void theCSOAccountIsCreatedSuccessfully() {
+        packageConfirmationPage = new PackageConfirmationPage(driver);
+        assertTrue(packageConfirmationPage.verifyContinuePaymentBtnIsDisplayed());
+    }
+
+    @Then("user can upload an additional document")
+    public void userCanUploadAnAdditionalDocument() {
+        eFileSubmissionPage = new EFileSubmissionPage(driver);
+        packageConfirmationPage = new PackageConfirmationPage(driver);
         landingPage = new LandingPage(driver);
 
-        nonExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getNonExistingCSOGuid();
+        packageConfirmationPage.clickUploadLink();
+
+        DocumentUploadPage documentUploadPage = new DocumentUploadPage(driver);
+
+        filePath = System.getProperty(BASE_PATH) + SECOND_PDF_PATH;
+        documentUploadPage.selectFileToUpload(filePath);
+
+        documentUploadPage.clickIsAmendmentRadioBtn();
+        documentUploadPage.clickIsSupremeCourtBtn();
+        log.info("Additional document is added successfully.");
+    }
+
+    @And("submit and verify the document is uploaded")
+    public void submitAndVerifyTheDocumentIsUploaded() {
+        DocumentUploadPage documentUploadPage = new DocumentUploadPage(driver);
+        packageConfirmationPage = new PackageConfirmationPage(driver);
+
+        documentUploadPage.clickContinueBtn();
+
+        List<String>uploadedFiles = packageConfirmationPage.getUploadedFilesList();
+        assertEquals(uploadedFiles, expectedUploadedFilesList);
+        log.info("Additional file is uploaded successfully.");
+    }
+
+    @Then("user clicks continue payment button")
+    public void userClicksContinuePaymentButton() {
+        eFileSubmissionPage = new EFileSubmissionPage(driver);
+        packageConfirmationPage = new PackageConfirmationPage(driver);
+
+        packageConfirmationPage.clickContinuePaymentBtn();
+    }
+
+    @And("delete the selected additional document")
+    public void userCanDeleteTheSelectedAdditionalDocument() {
+        DocumentUploadPage documentUploadPage = new DocumentUploadPage(driver);
+
+        documentUploadPage.clickRemoveFileIcon();
+        log.info("Added file is removed.");
+    }
+
+    @Then("user clicks cancel upload button")
+    public void userClicksCancelUploadButton() {
+        DocumentUploadPage documentUploadPage = new DocumentUploadPage(driver);
+        packageConfirmationPage = new PackageConfirmationPage(driver);
+
+        documentUploadPage.clickCancelUpload();
+        packageConfirmationPage.verifyContinuePaymentBtnIsDisplayed();
+        log.info("Document upload is cancelled in upload page.");
+    }
+
+    @When("user enters non existing CSO account guid and uploads a document")
+    public void userEntersNonExistingCsoAccountGuidAndUploadsADocument() throws IOException, InterruptedException {
+        landingPage = new LandingPage(driver);
+
+        String nonExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getNonExistingCSOGuid();
         landingPage.enterAccountGuid(nonExistingCSOGuid);
 
         filePath = System.getProperty(BASE_PATH) + PDF_PATH;
@@ -194,7 +241,7 @@ public class EFileSubmissionTest extends DriverClass {
     }
 
     @Then("eFile submission page with user agreement is displayed")
-    public void eFileSubmissionPageWithUserAgreementIsDisplayed() {
+    public void eFileSubmissionPageWithUserAgreementIsDisplayed() throws IOException {
         eFileSubmissionPage = new EFileSubmissionPage(driver);
         landingPage = new LandingPage(driver);
 
@@ -202,8 +249,8 @@ public class EFileSubmissionTest extends DriverClass {
         Assert.assertEquals(EFILE_SUBMISSION_PAGE_TITLE, actualTitle);
         log.info("eFile submission page title is verified");
 
-        boolean createCsoAccountBtnIsDisplayed = eFileSubmissionPage.verifyCreateCsoAccountBtnIsDisplayed();
-        Assert.assertTrue(createCsoAccountBtnIsDisplayed);
+        CreateCsoAccountPage createCsoAccountPage = new CreateCsoAccountPage(driver);
+        createCsoAccountPage.verifyCsoBtnIsDisplayed();
     }
 
     @Then("user accepts agreement and clicks cancel button")
@@ -212,33 +259,6 @@ public class EFileSubmissionTest extends DriverClass {
 
         eFileSubmissionPage.selectCheckbox();
         eFileSubmissionPage.clickAcceptTermsCancelButton();
-    }
-
-    @When("user enters invalid CSO account guid without eFiling role {string}")
-    public void userEntersInvalidCsoAccountGuidWithoutEfilingRole(String invalidNoFilingRoleGuid) throws IOException {
-        landingPage = new LandingPage(driver);
-
-        invalidNoFilingRoleGuid = JsonDataReader.getCsoAccountGuid().getInvalidNoFilingRoleGuid();
-        landingPage.enterAccountGuid(invalidNoFilingRoleGuid);
-
-        filePath = System.getProperty(BASE_PATH) + PDF_PATH;
-        landingPage.chooseFileToUpload(filePath);
-
-        landingPage.enterJsonData();
-    }
-
-    @Then("error message is displayed")
-    public void errorMessageIsDisplayed() {
-        landingPage = new LandingPage(driver);
-
-        landingPage.clickEfilePackageButton();
-        log.info("Generate Url button in eFiling frontend page is clicked");
-
-        String expMsg = "An error occurred while eFiling your package. Please make sure you upload at least one file and try again.";
-        String actMsg = landingPage.getErrorMessageText();
-        Assert.assertEquals(actMsg, expMsg);
-
-        log.info("Expected message is verified");
     }
 
     @Then("verify there are no broken links in the page")

@@ -2,6 +2,7 @@ package ca.bc.gov.open.jagefilingapi.qa.frontend.pages;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -78,12 +79,14 @@ public class EFileSubmissionPage {
     }
 
     public void clickReturnHomeButton() {
-        wait = new WebDriverWait(driver, 30);
+        wait = new WebDriverWait(driver, 60);
         wait.until(ExpectedConditions.visibilityOf(returnHomeButton));
         returnHomeButton.click();
     }
 
     public void selectCheckbox() {
+        wait = new WebDriverWait(driver, 60);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("acceptTerms")));
         acceptTermsCheckbox.click();
         if(acceptTermsCheckbox.isSelected()) {
             log.info("Accept user agreement checkbox is toggled on.");
