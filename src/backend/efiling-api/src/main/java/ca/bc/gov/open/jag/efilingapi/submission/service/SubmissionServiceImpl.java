@@ -95,7 +95,8 @@ public class SubmissionServiceImpl implements SubmissionService {
         boolean isValidLevelClassLocation = efilingCourtService.checkValidLevelClassLocation(
                 courtDetails.getCourtId(),
                 courtBase.getLevel(),
-                courtBase.getCourtClass()
+                courtBase.getCourtClass(),
+                SecurityUtils.getApplicationCode()
         );
 
         if (!isValidLevelClassLocation) throw new EfilingCourtServiceException("invalid court level, class and location combination");
@@ -264,6 +265,10 @@ public class SubmissionServiceImpl implements SubmissionService {
         for (DocumentProperties document : documents) {
             boolean currentDocumentTypeValid = false;
             for (DocumentType documentType : validDocumentTypes) {
+                System.out.println("##########################");
+                System.out.println(document.getType().getValue());
+                System.out.println(documentType.getType());
+                System.out.println("##########################");
                 if (documentType.getType().equals(document.getType().getValue())) {
                     currentDocumentTypeValid = true;
                     break;

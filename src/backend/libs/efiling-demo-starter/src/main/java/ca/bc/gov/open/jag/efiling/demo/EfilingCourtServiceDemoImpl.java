@@ -12,7 +12,7 @@ public class EfilingCourtServiceDemoImpl implements EfilingCourtService {
     }
 
     @Override
-    public boolean checkValidLevelClassLocation(BigDecimal agencyId, String courtLevel, String courtClass) {
+    public boolean checkValidLevelClassLocation(BigDecimal agencyId, String courtLevel, String courtClass, String applicationCode) {
         return true;
     }
 }

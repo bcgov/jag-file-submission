@@ -39,13 +39,14 @@ public class CsoCourtServiceImpl implements EfilingCourtService {
     }
 
     @Override
-    public boolean checkValidLevelClassLocation(BigDecimal agencyId, String courtLevel, String courtClass) {
+    public boolean checkValidLevelClassLocation(BigDecimal agencyId, String courtLevel, String courtClass, String appplicationCode) {
         try {
             // Call CSO for isParticipatingClass
             return filingStatusFacadeBean.isParticipatingClass(
                     agencyId,
                     courtLevel,
-                    courtClass
+                    courtClass,
+                    appplicationCode
             );
         } catch (ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception e) {
             throw new EfilingCourtServiceException("Exception while checking isParticipatingClass");
