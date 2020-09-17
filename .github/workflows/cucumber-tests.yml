@@ -3,8 +3,6 @@ name: Cucumber Tests
 on:
   push:
     branches: [master, qa-updated-ui-tests]
-  pull_request:
-    branches: [master]
 
 jobs:
   cucumber-tests:
