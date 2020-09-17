@@ -247,7 +247,7 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
 
         String actualTitle = eFileSubmissionPage.verifyEfilingPageTitle();
         Assert.assertEquals(EFILE_SUBMISSION_PAGE_TITLE, actualTitle);
-        log.info("eFile submission page title is verified");
+        log.info("eFile submission page title is verified.");
 
         CreateCsoAccountPage createCsoAccountPage = new CreateCsoAccountPage(driver);
         createCsoAccountPage.verifyCsoBtnIsDisplayed();
