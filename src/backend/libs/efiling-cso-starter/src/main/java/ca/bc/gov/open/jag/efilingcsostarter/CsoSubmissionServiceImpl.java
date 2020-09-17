@@ -84,7 +84,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         return SubmitPackageResponse
                 .builder()
                 .packageLink(MessageFormat
-                        .format("{0}/cso/accounts/bceidNotification.do?packageNo={1}", csoProperties.getCsoBasePath(), filingResult.toPlainString()))
+                        .format("{0}{1}{2}", csoProperties.getCsoBasePath(), csoProperties.getCsoPackagePath(), filingResult.toPlainString()))
                 .transactionId(filingResult)
                 .create();
     }

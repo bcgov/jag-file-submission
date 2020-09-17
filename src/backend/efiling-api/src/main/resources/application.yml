@@ -63,6 +63,7 @@ jag:
 cso:
   fileServerHost: ${CSO_FILE_SERVER_HOST}
   csoBasePath: ${CSO_BASE_URL:http://localhost/cso}
+  csoPackagePath: ${CSO_PACKAGE_PATH:/accounts/bceidNotification.do?packageNo=}
   debugEnabled: ${CSO_DEBUG_ENABLED:false}
 
 bambora:

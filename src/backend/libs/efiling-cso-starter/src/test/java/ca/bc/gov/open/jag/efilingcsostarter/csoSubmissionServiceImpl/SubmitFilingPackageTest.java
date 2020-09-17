@@ -79,6 +79,7 @@ public class SubmitFilingPackageTest {
 
         Mockito.when(csoPropertiesMock.getFileServerHost()).thenReturn("localhost");
         Mockito.when(csoPropertiesMock.getCsoBasePath()).thenReturn("http://cso");
+        Mockito.when(csoPropertiesMock.getCsoPackagePath()).thenReturn("/accounts/bceidNotification.do?packageNo=");
 
         UserSession userSession = new UserSession();
         userSession.setStartDtm(DateUtils.getCurrentXmlDate());
@@ -192,7 +193,7 @@ public class SubmitFilingPackageTest {
                         filingPackage.getDocuments().get(0).getPayments().get(0).getStatutoryFeeAmt().equals(STATUTORY_FEE_AMOUNT)));
 
         Assertions.assertEquals(BigDecimal.TEN, actual.getTransactionId());
-        Assertions.assertEquals("http://cso/cso/accounts/bceidNotification.do?packageNo=10", actual.getPackageLink());
+        Assertions.assertEquals("http://cso/accounts/bceidNotification.do?packageNo=10", actual.getPackageLink());
     }
 
     @DisplayName("OK: submitFilingPackage called with any non-empty submissionId and rushed flag")
@@ -247,10 +248,10 @@ public class SubmitFilingPackageTest {
                                 filingPackage.getDocuments().get(0).getPayments().get(0).getStatutoryFeeAmt().equals(STATUTORY_FEE_AMOUNT)));
 
         Assertions.assertEquals(BigDecimal.TEN, actual.getTransactionId());
-        Assertions.assertEquals("http://cso/cso/accounts/bceidNotification.do?packageNo=10", actual.getPackageLink());
+        Assertions.assertEquals("http://cso/accounts/bceidNotification.do?packageNo=10", actual.getPackageLink());
     }
 
-    @DisplayName("OK: with no fees should defalt to 0")
+    @DisplayName("OK: with no fees should default to 0")
     @Test
     public void withNoFeeShouldDefaultToZero() throws DatatypeConfigurationException, ca.bc.gov.ag.csows.filing.NestedEjbException_Exception, NestedEjbException_Exception {
 
@@ -293,7 +294,7 @@ public class SubmitFilingPackageTest {
                                 filingPackage.getDocuments().get(0).getPayments().get(0).getStatutoryFeeAmt().equals(BigDecimal.ZERO)));
 
         Assertions.assertEquals(BigDecimal.TEN, actual.getTransactionId());
-        Assertions.assertEquals("http://cso/cso/accounts/bceidNotification.do?packageNo=10", actual.getPackageLink());
+        Assertions.assertEquals("http://cso/accounts/bceidNotification.do?packageNo=10", actual.getPackageLink());
     }
 
     @DisplayName("OK: submitFilingPackage called with any non-empty submissionId")
@@ -317,7 +318,7 @@ public class SubmitFilingPackageTest {
                         .create(),
                 efilingPaymentServiceMock);
         Assertions.assertEquals(new BigDecimal(100000), actual.getTransactionId());
-        Assertions.assertEquals("http://cso/cso/accounts/bceidNotification.do?packageNo=100000", actual.getPackageLink());
+        Assertions.assertEquals("http://cso/accounts/bceidNotification.do?packageNo=100000", actual.getPackageLink());
 
     }
 
@@ -342,7 +343,7 @@ public class SubmitFilingPackageTest {
                 efilingPaymentServiceMock);
 
         Assertions.assertEquals(BigDecimal.TEN, actual.getTransactionId());
-        Assertions.assertEquals("http://cso/cso/accounts/bceidNotification.do?packageNo=10", actual.getPackageLink());
+        Assertions.assertEquals("http://cso/accounts/bceidNotification.do?packageNo=10", actual.getPackageLink());
     }
 
     @DisplayName("Exception: payment to bambora throw exception")
