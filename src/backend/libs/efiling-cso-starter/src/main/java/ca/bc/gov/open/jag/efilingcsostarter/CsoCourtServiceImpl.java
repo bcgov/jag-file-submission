@@ -4,18 +4,22 @@ import ca.bc.gov.ag.csows.ceis.CsoAgencyArr;
 import ca.bc.gov.ag.csows.ceis.CsoCourtClassArr;
 import ca.bc.gov.ag.csows.ceis.CsoCourtLevelArr;
 import ca.bc.gov.ag.csows.ceis.Csows;
-
+import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import org.apache.commons.lang3.StringUtils;
 
+import java.math.BigDecimal;
+
 
 public class CsoCourtServiceImpl implements EfilingCourtService {
 
     private final Csows csows;
+    private final FilingStatusFacadeBean filingStatusFacadeBean;
 
-    public CsoCourtServiceImpl(Csows csows) {
+    public CsoCourtServiceImpl(Csows csows, FilingStatusFacadeBean filingStatusFacadeBean) {
+        this.filingStatusFacadeBean = filingStatusFacadeBean;
         this.csows = csows;
     }
 
@@ -32,6 +36,21 @@ public class CsoCourtServiceImpl implements EfilingCourtService {
                 .findFirst()
                 .map(court -> new CourtDetails(court.getAgenId(), court.getAgenAgencyNm(), getClassDescription(courtClass), getCourLevelDescription(courtLevel)))
                 .orElseThrow(() -> new EfilingCourtServiceException("Court not found"));
+    }
+
+    @Override
+    public boolean checkValidLevelClassLocation(BigDecimal agencyId, String courtLevel, String courtClass, String appplicationCode) {
+        try {
+            // Call CSO for isParticipatingClass
+            return filingStatusFacadeBean.isParticipatingClass(
+                    agencyId,
+                    courtLevel,
+                    courtClass,
+                    appplicationCode
+            );
+        } catch (ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception e) {
+            throw new EfilingCourtServiceException("Exception while checking isParticipatingClass");
+        }
     }
 
     private String getCourLevelDescription(String courtLevel) {

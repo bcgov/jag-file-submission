@@ -10,5 +10,4 @@ public interface EfilingSubmissionService {
             AccountDetails accountDetails,
             FilingPackage efilingPackage,
             EfilingPaymentService payment);
-
 }

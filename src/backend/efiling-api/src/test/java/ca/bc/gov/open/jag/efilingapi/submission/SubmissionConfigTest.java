@@ -10,10 +10,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStoreImpl;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.PaymentsApi;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.handler.ApiClient;
 import ca.bc.gov.open.jag.efilingcommons.model.*;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingPaymentService;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
+import ca.bc.gov.open.jag.efilingcommons.service.*;
 import ca.bc.gov.open.sftp.starter.SftpService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -24,6 +21,8 @@ import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,6 +41,7 @@ public class SubmissionConfigTest {
             .withBean(SftpServiceTestImpl.class)
             .withBean(EfilingLookupServiceTest.class)
             .withBean(EfilingCourtServiceTest.class)
+            .withBean(EfilingDocumentServiceTest.class)
             .withBean(EfilingSubmissionServiceTest.class)
             .withBean(DocumentStoreTest.class);
 
@@ -106,12 +106,30 @@ public class SubmissionConfigTest {
         public CourtDetails getCourtDescription(String agencyIdentifierCd, String courtLevel, String courtClass) {
             return null;
         }
+
+        @Override
+        public boolean checkValidLevelClassLocation(BigDecimal agencyId, String courtLevel, String courtClass, String applicationCode) {
+            return false;
+        }
     }
 
     public static class EfilingSubmissionServiceTest implements EfilingSubmissionService {
 
         @Override
         public SubmitPackageResponse submitFilingPackage(AccountDetails accountDetails, FilingPackage efilingPackage, EfilingPaymentService payment) {
+            return null;
+        }
+    }
+
+    public static class EfilingDocumentServiceTest implements EfilingDocumentService {
+
+        @Override
+        public DocumentDetails getDocumentDetails(String courtLevel, String courtClass, String documentType) {
+            return null;
+        }
+
+        @Override
+        public List<DocumentType> getDocumentTypes(String courtLevel, String courtClass) {
             return null;
         }
     }

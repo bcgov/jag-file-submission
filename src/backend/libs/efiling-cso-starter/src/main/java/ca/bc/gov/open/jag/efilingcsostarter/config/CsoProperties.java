@@ -9,6 +9,8 @@ public class CsoProperties {
 
     private String csoBasePath;
 
+    private String csoPackagePath;
+
     private boolean debugEnabled = false;
 
     public String getFileServerHost() {
@@ -26,6 +28,10 @@ public class CsoProperties {
     public void setCsoBasePath(String csoBasePath) {
         this.csoBasePath = csoBasePath;
     }
+
+    public String getCsoPackagePath() { return csoPackagePath; }
+
+    public void setCsoPackagePath(String csoPackagePath) {  this.csoPackagePath = csoPackagePath; }
 
     public boolean isDebugEnabled() {
         return debugEnabled;
