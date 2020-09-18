@@ -1,6 +1,5 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service;
 
-import ca.bc.gov.ag.csows.lookups.CodeValue;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.api.model.Party;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
