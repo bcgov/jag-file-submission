@@ -1,6 +1,8 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service;
 
+import ca.bc.gov.ag.csows.lookups.CodeValue;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
+import ca.bc.gov.open.jag.efilingapi.api.model.Party;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.payment.BamboraPaymentAdapter;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
@@ -11,6 +13,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.utils.FileUtils;
 import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingLookupServiceException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.Court;
@@ -243,24 +246,6 @@ public class SubmissionServiceImpl implements SubmissionService {
         return System.currentTimeMillis() + cacheProperties.getRedis().getTimeToLive().toMillis();
     }
 
-    private boolean checkValidDocumentTypes(List<DocumentType> validDocumentTypes, List<DocumentProperties> documents) {
-        AtomicBoolean isValid = new AtomicBoolean(true);
-
-        documents.stream().forEach(document -> {
-            AtomicBoolean currentDocumentTypeValid = new AtomicBoolean(false);
-            validDocumentTypes.stream().forEach(documentType -> {
-                if (documentType.getType().equals(document.getType().getValue())) {
-                    currentDocumentTypeValid.set(true);
-                }
-            });
-
-            if (!currentDocumentTypeValid.get()) isValid.set(false);
-        });
-
-
-        return isValid.get();
-    }
-
     private void validateGenerateUrlRequest(GenerateUrlRequest generateUrlRequest) {
         CourtBase courtBase = generateUrlRequest.getFilingPackage().getCourt();
         CourtDetails courtDetails = efilingCourtService.getCourtDescription(courtBase.getLocation(), courtBase.getLevel(), courtBase.getCourtClass());
@@ -284,6 +269,17 @@ public class SubmissionServiceImpl implements SubmissionService {
                     courtBase.getCourtClass(),
                     SecurityUtils.getApplicationCode()
             );
+        } else {
+            // If no court file number present, validate parties
+            String documentTypes = generateCommaSeparatedDocumentTypes(generateUrlRequest.getFilingPackage().getDocuments());
+            List<String> validPartyRoles = efilingLookupService.getValidPartyRoles(
+                    courtBase.getLevel(),
+                    courtBase.getCourtClass(),
+                    documentTypes
+            );
+
+            if (!checkValidPartyRoles(validPartyRoles, generateUrlRequest.getFilingPackage().getParties()))
+                throw new EfilingLookupServiceException("invalid parties provided");
         }
         if (!isValidCourtFileNumber) throw new EfilingCourtServiceException("invalid court file number");
 
@@ -291,6 +287,51 @@ public class SubmissionServiceImpl implements SubmissionService {
         List<DocumentType> validDocumentTypes = efilingDocumentService.getDocumentTypes(courtBase.getLevel(), courtBase.getCourtClass());
         if (!checkValidDocumentTypes(validDocumentTypes, generateUrlRequest.getFilingPackage().getDocuments()))
             throw new EfilingDocumentServiceException("invalid document types provided");
+    }
+
+    private boolean checkValidPartyRoles(List<String> validPartyRoles, List<Party> parties) {
+        AtomicBoolean isValid = new AtomicBoolean(true);
+
+        parties.stream().forEach(party -> {
+            AtomicBoolean currentPartyRoleValid = new AtomicBoolean(false);
+            validPartyRoles.stream().forEach(validRole -> {
+                if (validRole.equals(party.getRoleType().getValue())) {
+                    currentPartyRoleValid.set(true);
+                }
+            });
+
+            if (!currentPartyRoleValid.get()) isValid.set(false);
+        });
+
+        return isValid.get();
+    }
+
+    private boolean checkValidDocumentTypes(List<DocumentType> validDocumentTypes, List<DocumentProperties> documents) {
+        AtomicBoolean isValid = new AtomicBoolean(true);
+
+        documents.stream().forEach(document -> {
+            AtomicBoolean currentDocumentTypeValid = new AtomicBoolean(false);
+            validDocumentTypes.stream().forEach(documentType -> {
+                if (documentType.getType().equals(document.getType().getValue())) {
+                    currentDocumentTypeValid.set(true);
+                }
+            });
+
+            if (!currentDocumentTypeValid.get()) isValid.set(false);
+        });
+
+        return isValid.get();
+    }
+
+    private String generateCommaSeparatedDocumentTypes(List<DocumentProperties> documentProperties) {
+        String documentTypes = "";
+        for (DocumentProperties doc : documentProperties) {
+            documentTypes = documentTypes + doc.getType() + ",";
+        }
+
+        documentTypes = documentTypes.substring(0, documentTypes.length() - 1);
+
+        return documentTypes;
     }
 
 }
