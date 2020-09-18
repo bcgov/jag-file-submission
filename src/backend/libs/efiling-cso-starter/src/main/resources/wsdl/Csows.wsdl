@@ -1287,6 +1287,7 @@
                     <xs:element minOccurs="0" name="arg6" type="xs:dateTime"/>
                     <xs:element minOccurs="0" name="arg7" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="arg8" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="arg9" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="fileNumberSearchResponse">
