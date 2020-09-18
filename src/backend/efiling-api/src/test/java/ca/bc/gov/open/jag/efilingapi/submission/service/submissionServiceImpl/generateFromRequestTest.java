@@ -14,6 +14,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingLookupServiceException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.*;
@@ -31,6 +32,7 @@ import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -240,6 +242,38 @@ public class generateFromRequestTest {
         Mockito.when(efilingCourtService.checkValidCourtFileNumber(any(), any(), any(), any(), any())).thenReturn(false);
 
         Assertions.assertThrows(EfilingCourtServiceException.class, () -> sut.generateFromRequest(new SubmissionKey(TestHelpers.CASE_2, TestHelpers.CASE_2, TestHelpers.CASE_2), request));
+    }
+
+    @Test
+    @DisplayName("Exception: with no court file number and no parties, should throw EfilingLookupServiceException")
+    public void withNoCourtFileNumberAndNoPartiesShouldThrowEfilingLookupServiceException() {
+
+        GenerateUrlRequest request = new GenerateUrlRequest();
+        request.setClientAppName(CLIENT_APP_NAME);
+        request.setNavigationUrls(TestHelpers.createDefaultNavigation());
+        request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList()));
+        request.getFilingPackage().getCourt().setFileNumber("");
+        request.getFilingPackage().setParties(new ArrayList<>());
+
+        Mockito.when(efilingCourtService.checkValidLevelClassLocation(any(), any(), any(), any())).thenReturn(true);
+
+        Assertions.assertThrows(EfilingLookupServiceException.class, () -> sut.generateFromRequest(new SubmissionKey(TestHelpers.CASE_2, TestHelpers.CASE_2, TestHelpers.CASE_2), request));
+    }
+
+    @Test
+    @DisplayName("Exception: with no court file number and invalid parties, should throw EfilingLookupServiceException")
+    public void withNoCourtFileNumberAndInvalidPartiesShouldThrowEfilingLookupServiceException() {
+
+        GenerateUrlRequest request = new GenerateUrlRequest();
+        request.setClientAppName(CLIENT_APP_NAME);
+        request.setNavigationUrls(TestHelpers.createDefaultNavigation());
+        request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList()));
+        request.getFilingPackage().getCourt().setFileNumber("");
+
+        Mockito.when(efilingCourtService.checkValidLevelClassLocation(any(), any(), any(), any())).thenReturn(true);
+        Mockito.when(efilingLookupService.getValidPartyRoles(any(), any(), any())).thenReturn(TestHelpers.createInvalidPartyRoles());
+
+        Assertions.assertThrows(EfilingLookupServiceException.class, () -> sut.generateFromRequest(new SubmissionKey(TestHelpers.CASE_2, TestHelpers.CASE_2, TestHelpers.CASE_2), request));
     }
 
     @Test
