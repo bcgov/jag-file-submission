@@ -62,7 +62,8 @@ public class CsoCourtServiceImpl implements EfilingCourtService {
                 null,
                 null,
                 BigDecimal.ONE,
-                true
+                Boolean.TRUE,
+                applicationCode
         );
 
         // check if total records is greater than zero
