@@ -270,6 +270,9 @@ public class SubmissionServiceImpl implements SubmissionService {
             );
         } else {
             // If no court file number present, validate parties
+            List<Party> parties = generateUrlRequest.getFilingPackage().getParties();
+            if (parties.isEmpty()) throw new EfilingLookupServiceException("no parties provided");
+
             String documentTypes = generateCommaSeparatedDocumentTypes(generateUrlRequest.getFilingPackage().getDocuments());
             List<String> validPartyRoles = efilingLookupService.getValidPartyRoles(
                     courtBase.getLevel(),
@@ -277,7 +280,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                     documentTypes
             );
 
-            if (!checkValidPartyRoles(validPartyRoles, generateUrlRequest.getFilingPackage().getParties()))
+            if (!checkValidPartyRoles(validPartyRoles, parties))
                 throw new EfilingLookupServiceException("invalid parties provided");
         }
         if (!isValidCourtFileNumber) throw new EfilingCourtServiceException("invalid court file number");

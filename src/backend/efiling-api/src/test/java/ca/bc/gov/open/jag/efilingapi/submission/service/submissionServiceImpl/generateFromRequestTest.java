@@ -31,7 +31,6 @@ import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -39,7 +38,6 @@ import static org.mockito.ArgumentMatchers.any;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class generateFromRequestTest {
 
-    private static final String INTERNAL_CLIENT_NUMBER = "INTERNALCLIENT";
     public static final String CLIENT_APP_NAME = "clientAppName";
 
     private SubmissionServiceImpl sut;
