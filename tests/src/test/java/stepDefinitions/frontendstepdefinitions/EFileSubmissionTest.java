@@ -180,16 +180,4 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
         packageConfirmationPage.verifyContinuePaymentBtnIsDisplayed();
         log.info("Document upload is cancelled in upload page.");
     }
-
-    @Then("verify there are no broken links in the page")
-    public void verifyThereAreNoBrokenLinksInThePage() throws IOException {
-        List<WebElement> links = driver.findElements(By.tagName("a"));
-
-        log.info("Total links are " + links.size());
-
-        for (WebElement element : links) {
-            String url = element.getAttribute("href");
-            FrontendTestUtil.verifyLinkActive(url);
-        }
-    }
 }
