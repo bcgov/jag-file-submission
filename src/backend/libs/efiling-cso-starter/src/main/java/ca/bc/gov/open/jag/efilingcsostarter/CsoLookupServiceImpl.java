@@ -47,8 +47,6 @@ public class CsoLookupServiceImpl implements EfilingLookupService {
 
     @Override
     public List<String> getValidPartyRoles(String courtLevel, String courtClass, String documentTypes) {
-        System.out.println("#################################");
-        System.out.println(documentTypes);
         try {
             List<CodeValue> partyRolesResponse = lookupFacadeItf.getEfilingPartyRoles(courtLevel, courtClass, documentTypes);
             ArrayList<String> validRoles = new ArrayList<>();
@@ -56,9 +54,7 @@ public class CsoLookupServiceImpl implements EfilingLookupService {
             for (CodeValue partyRole : partyRolesResponse) {
                 validRoles.add(partyRole.getCode());
             }
-
-            System.out.println("#############################");
-            System.out.println(validRoles);
+            
             return validRoles;
 
         } catch(NestedEjbException_Exception e) {
