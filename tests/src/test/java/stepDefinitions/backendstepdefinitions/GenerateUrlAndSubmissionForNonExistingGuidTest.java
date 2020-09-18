@@ -91,12 +91,16 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
         assertNotNull(expiryDate);
     }
 
+    @Given("token is retrieved from the frontend")
+    public void tokenIsRetrievedFromTheFrontend() throws IOException, InterruptedException {
+        generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
+        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
+        userToken = frontendTestUtil.getUserJwtToken(respUrl);
+    }
+
     @Given("{string} id is submitted with non existing CSO account GET http request")
     public void idIsSubmittedWithNonExistingCsoAccountGetHttpRequest(String resource) throws IOException, InterruptedException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
-        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
-
-        userToken = frontendTestUtil.getUserJwtToken(respUrl);
         response = generateUrlRequestBuilders.requestToGetSubmissionConfig(resource, nonExistingCSOGuid,
                                                                                 submissionId, userToken);
     }

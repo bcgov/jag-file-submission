@@ -1,6 +1,7 @@
 package stepDefinitions.backendstepdefinitions;
 
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.GenerateUrlHelper;
+import ca.bc.gov.open.jagefilingapi.qa.frontendutils.DriverClass;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.FrontendTestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.requestbuilders.PaymentRequestBuilders;
 import io.cucumber.java.en.Given;
@@ -16,22 +17,26 @@ import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class GenerateUpdateCardTest {
+public class GenerateUpdateCardTest extends DriverClass {
 
     private PaymentRequestBuilders paymentRequestBuilders;
     private static final String CONTENT_TYPE = "application/json";
     public Logger log = LogManager.getLogger(GenerateUpdateCardTest.class);
     private Response response;
+    private String userToken;
 
-    @Given("POST http request is made to {string} with internalClientNumber and redirect Url details")
-    public void GetHttpRequestIsMadeWithInternalClientNumberAndRedirectUrlDetails(String resource) throws IOException, InterruptedException {
-        paymentRequestBuilders = new PaymentRequestBuilders();
+    @Given("user jwt is retrieved from the frontend")
+    public void userJwtIsRetrievedFromTheFrontend() throws IOException, InterruptedException {
         GenerateUrlHelper generateUrlHelper = new GenerateUrlHelper();
         String respUrl = generateUrlHelper.getGeneratedUrl();
 
         FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
-        String userToken = frontendTestUtil.getUserJwtToken(respUrl);
+         userToken = frontendTestUtil.getUserJwtToken(respUrl);
+    }
 
+    @Then("POST http request is made to {string} with internalClientNumber and redirect Url details")
+    public void GetHttpRequestIsMadeWithInternalClientNumberAndRedirectUrlDetails(String resource) throws IOException {
+        paymentRequestBuilders = new PaymentRequestBuilders();
         response = paymentRequestBuilders.requestToGenerateUpdateCard(resource, userToken);
     }
 

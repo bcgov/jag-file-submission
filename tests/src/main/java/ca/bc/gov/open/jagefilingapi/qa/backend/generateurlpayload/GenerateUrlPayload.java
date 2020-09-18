@@ -96,7 +96,7 @@ public class GenerateUrlPayload {
     public static List<DocumentProperties> generateDocumentPropertiesList() {
         DocumentProperties documentProperties = new DocumentProperties();
 
-        documentProperties.setName(FIRST_NAME);
+        documentProperties.setName("test-document.pdf");
         documentProperties.setType(DocumentProperties.TypeEnum.AAB);
         documentProperties.setIsAmendment(true);
         documentProperties.setIsSupremeCourtScheduling(true);

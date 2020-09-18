@@ -2,6 +2,7 @@ package ca.bc.gov.open.jagefilingapi.qa.frontend.pages;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -44,7 +45,7 @@ public class EFileSubmissionPage {
 
     //Actions:
     public String verifyEfilingPageTitle() {
-        wait = new WebDriverWait(driver, 60);
+        wait = new WebDriverWait(driver, 120);
         wait.until(ExpectedConditions.titleIs("E-File submission"));
         log.info("Waiting for the page to load...");
         return driver.getTitle();
@@ -61,12 +62,6 @@ public class EFileSubmissionPage {
         wait.until(ExpectedConditions.visibilityOf(confirmCancelSubmission));
     }
 
-    public void clickConfirmCancellation() {
-        driver.switchTo().activeElement();
-        confirmCancelSubmission.click();
-        driver.switchTo().defaultContent();
-    }
-
     public void clickResumeSubmission() {
         driver.switchTo().activeElement();
         resumeSubmission.click();
@@ -74,16 +69,14 @@ public class EFileSubmissionPage {
     }
 
     public boolean verifyCancelPageIsDisplayed() {
+        wait = new WebDriverWait(driver, 60);
+        wait.until(ExpectedConditions.visibilityOf(returnHomeButton));
         return returnHomeButton.isDisplayed();
     }
 
-    public void clickReturnHomeButton() {
-        wait = new WebDriverWait(driver, 30);
-        wait.until(ExpectedConditions.visibilityOf(returnHomeButton));
-        returnHomeButton.click();
-    }
-
     public void selectCheckbox() {
+        wait = new WebDriverWait(driver, 60);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("acceptTerms")));
         acceptTermsCheckbox.click();
         if(acceptTermsCheckbox.isSelected()) {
             log.info("Accept user agreement checkbox is toggled on.");
@@ -93,6 +86,8 @@ public class EFileSubmissionPage {
     }
 
     public boolean verifyCreateCsoAccountBtnIsDisplayed() {
+        wait = new WebDriverWait(driver, 60);
+        wait.until(ExpectedConditions.visibilityOf(createCsoAccountButton));
         return createCsoAccountButton.isDisplayed();
     }
 

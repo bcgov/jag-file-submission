@@ -12,7 +12,8 @@ Feature: When user uploads the documents, id is authenticated user details, navi
     When status code is 200 and content type is verified
     Then verify expiry date and eFiling url are returned with the CSO account guid and submission id
     ## Call to get submission config ##
-    Given "SUBMISSION" id is submitted with GET http request
+    Given user token is retrieved from the frontend
+    Then "SUBMISSION" id is submitted with GET http request
     When status code is 200 and content type is verified
     Then verify clientAppName and csoBaseUrl values are returned and not empty
     And verify success, error and cancel navigation urls are returned
@@ -35,7 +36,8 @@ Feature: When user uploads the documents, id is authenticated user details, navi
     When status code is 200 and content type is verified
     Then verify expiry date and eFiling url are returned with the CSO account guid and submission id
     ## Call to get user details ##
-    Given "SUBMISSION" id is submitted with GET http request
+    Given user token is retrieved from the frontend
+    Then "SUBMISSION" id is submitted with GET http request
     When status code is 200 and content type is verified
     Then verify clientAppName and csoBaseUrl values are returned and not empty
     And verify success, error and cancel navigation urls are returned

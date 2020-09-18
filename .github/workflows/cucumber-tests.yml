@@ -32,11 +32,11 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: cucumber-spark-report
-          path: tests\test-output\extent\Spark\Index.html
+          path: ./tests/test-output/extent/Spark/Index.html
 
       # Upload Cucumber JSON for debugging purposes
       - name: Upload Cucumber JSON for debugging purposes
         uses: actions/upload-artifact@v2
         with:
           name: cucumber-json-report
-          path: tests\target\cucumber-reports\CucumberTestReport.json
+          path: ./tests/target/cucumber-reports/CucumberTestReport.json

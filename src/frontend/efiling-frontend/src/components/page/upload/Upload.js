@@ -387,11 +387,13 @@ export default function Upload({
         <section className="buttons pt-2">
           <Button
             label="Cancel Upload"
+            testId="cancel-upload-btn"
             onClick={() => setShowPackageConfirmation(true)}
             styling="normal-white btn"
           />
           <Button
             label="Continue"
+            testId="continue-upload-btn"
             onClick={() => {
               setShowLoader(true);
               setContinueBtnEnabled(false);

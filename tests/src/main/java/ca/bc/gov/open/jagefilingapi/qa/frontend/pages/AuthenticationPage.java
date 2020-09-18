@@ -2,7 +2,6 @@ package ca.bc.gov.open.jagefilingapi.qa.frontend.pages;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -27,7 +26,7 @@ public class AuthenticationPage {
     @FindBy(xpath = "//input[@type='submit']")
     WebElement continueBtn;
 
-    @FindBy(xpath = "//*[@id='zocial-bceid']")
+    @FindBy(id = "zocial-bceid")
     WebElement bceidBtn;
 
     //Initializing the driver:

@@ -55,14 +55,14 @@ exports[`Upload Component Matches the snapshot 1`] = `
       >
         <button
           class="bcgov-button normal-white btn"
-          data-test-id=""
+          data-test-id="cancel-upload-btn"
           type="button"
         >
           Cancel Upload
         </button>
         <button
           class="bcgov-button normal-blue btn"
-          data-test-id=""
+          data-test-id="continue-upload-btn"
           disabled=""
           type="button"
         >
@@ -269,6 +269,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
                     >
                       <span
                         class="file-href"
+                        data-test-id="uploaded-file"
                         role="button"
                         tabindex="0"
                       >
@@ -375,6 +376,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
                     >
                       <span
                         class="file-href"
+                        data-test-id="uploaded-file"
                         role="button"
                         tabindex="0"
                       >
@@ -422,6 +424,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
         Do you have additional documents to upload? 
         <span
           class="file-href"
+          data-test-id="upload-link"
           role="button"
           tabindex="0"
         >
@@ -967,14 +970,14 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
       >
         <button
           class="bcgov-button normal-white btn"
-          data-test-id=""
+          data-test-id="cancel-upload-btn"
           type="button"
         >
           Cancel Upload
         </button>
         <button
           class="bcgov-button normal-blue btn"
-          data-test-id=""
+          data-test-id="continue-upload-btn"
           disabled=""
           type="button"
         >
@@ -1181,6 +1184,7 @@ exports[`Upload Component successful document upload works as expected 1`] = `
                     >
                       <span
                         class="file-href"
+                        data-test-id="uploaded-file"
                         role="button"
                         tabindex="0"
                       >
@@ -1287,6 +1291,7 @@ exports[`Upload Component successful document upload works as expected 1`] = `
                     >
                       <span
                         class="file-href"
+                        data-test-id="uploaded-file"
                         role="button"
                         tabindex="0"
                       >
@@ -1377,6 +1382,7 @@ exports[`Upload Component successful document upload works as expected 1`] = `
                     >
                       <span
                         class="file-href"
+                        data-test-id="uploaded-file"
                         role="button"
                         tabindex="0"
                       >
@@ -1467,6 +1473,7 @@ exports[`Upload Component successful document upload works as expected 1`] = `
                     >
                       <span
                         class="file-href"
+                        data-test-id="uploaded-file"
                         role="button"
                         tabindex="0"
                       >
@@ -1514,6 +1521,7 @@ exports[`Upload Component successful document upload works as expected 1`] = `
         Do you have additional documents to upload? 
         <span
           class="file-href"
+          data-test-id="upload-link"
           role="button"
           tabindex="0"
         >

@@ -1,6 +1,7 @@
 package stepDefinitions.backendstepdefinitions;
 
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.GenerateUrlHelper;
+import ca.bc.gov.open.jagefilingapi.qa.frontendutils.DriverClass;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.FrontendTestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.requestbuilders.LookUpRequestBuilders;
 import io.cucumber.java.en.Given;
@@ -16,22 +17,26 @@ import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class GetDocumentTypeTest {
+public class GetDocumentTypeTest extends DriverClass {
 
     private LookUpRequestBuilders lookUpRequestBuilders;
     private static final String CONTENT_TYPE = "application/json";
     public Logger log = LogManager.getLogger(GetDocumentTypeTest.class);
     private Response response;
+    public String userToken;
 
-    @Given("Get http request is made to {string} with court level and class details")
-    public void GetHttpRequestIsMadeWithCourtLevelAndClassDetails(String resource) throws IOException, InterruptedException {
-        lookUpRequestBuilders = new LookUpRequestBuilders();
+    @Given("user JWT token is retrieved from the frontend")
+    public void userJwtTokenIsRetrievedFromTheFrontend() throws IOException, InterruptedException {
         GenerateUrlHelper generateUrlHelper = new GenerateUrlHelper();
         String respUrl = generateUrlHelper.getGeneratedUrl();
 
         FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
-        String userToken = frontendTestUtil.getUserJwtToken(respUrl);
+        userToken = frontendTestUtil.getUserJwtToken(respUrl);
+    }
 
+    @Then("Get http request is made to {string} with court level and class details")
+    public void GetHttpRequestIsMadeWithCourtLevelAndClassDetails(String resource) throws IOException, InterruptedException {
+        lookUpRequestBuilders = new LookUpRequestBuilders();
         response = lookUpRequestBuilders.requestToGetDocumentTypes(resource, userToken);
     }
 
