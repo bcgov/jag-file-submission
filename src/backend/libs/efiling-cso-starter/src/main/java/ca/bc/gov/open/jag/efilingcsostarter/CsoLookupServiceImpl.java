@@ -54,7 +54,7 @@ public class CsoLookupServiceImpl implements EfilingLookupService {
             for (CodeValue partyRole : partyRolesResponse) {
                 validRoles.add(partyRole.getCode());
             }
-            
+
             return validRoles;
 
         } catch(NestedEjbException_Exception e) {

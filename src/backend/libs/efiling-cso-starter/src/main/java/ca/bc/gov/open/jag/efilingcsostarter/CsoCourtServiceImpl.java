@@ -2,7 +2,6 @@ package ca.bc.gov.open.jag.efilingcsostarter;
 
 import ca.bc.gov.ag.csows.ceis.*;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
-import ca.bc.gov.ag.csows.lookups.LookupFacadeBean;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
