@@ -3,7 +3,6 @@ package stepDefinitions.frontendstepdefinitions;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.GenerateUrlHelper;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.*;
-import ca.bc.gov.open.jagefilingapi.qa.frontendutils.FrontendTestUtil;
 import com.google.common.collect.ImmutableList;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -13,7 +12,9 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
-import org.openqa.selenium.*;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.TimeoutException;
 
 import java.io.IOException;
 import java.util.List;
@@ -25,7 +26,6 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
 
     EFileSubmissionPage eFileSubmissionPage;
     PackageConfirmationPage packageConfirmationPage;
-    FrontendTestUtil frontendTestUtil;
     private static final String EFILE_SUBMISSION_PAGE_TITLE = "E-File submission";
     private static final String BASE_PATH = "user.dir";
     private static final String SECOND_PDF_PATH = "/src/test/java/testdatasource/test-document-2.pdf";
@@ -34,8 +34,8 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
     @Before
     public void setUp() throws IOException {
         TestUtil testUtil = new TestUtil();
-        driverSetUp();
         testUtil.restAssuredConfig();
+        driverSetUp();
     }
 
     @After
@@ -85,7 +85,6 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
 
     @Then("user accepts agreement and clicks cancel button")
     public void userAcceptsAgreementAndClicksCancelButton() {
-        frontendTestUtil = new FrontendTestUtil();
         eFileSubmissionPage = new EFileSubmissionPage(driver);
 
         eFileSubmissionPage.selectCheckbox();
@@ -94,7 +93,6 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
 
     @Then("user clicks resume E-File submission in the confirmation window")
     public void userClicksResumeEFileSubmissionInTheConfirmationWindow() {
-        frontendTestUtil = new FrontendTestUtil();
         eFileSubmissionPage = new EFileSubmissionPage(driver);
 
         eFileSubmissionPage.clickResumeSubmission();
@@ -103,7 +101,6 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
 
     @And("the user stays on the E-File submission page")
     public void theUserStaysOnTheEFileSubmissionPage() {
-        frontendTestUtil = new FrontendTestUtil();
         eFileSubmissionPage = new EFileSubmissionPage(driver);
 
         String actualTitle = eFileSubmissionPage.verifyEfilingPageTitle();
@@ -113,21 +110,18 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
 
     @Then("user clicks on create CSO account")
     public void userClicksOnCreateCSOAccount() {
-        frontendTestUtil = new FrontendTestUtil();
         CreateCsoAccountPage createCsoAccountPage = new CreateCsoAccountPage(driver);
         createCsoAccountPage.clickCreateCsoAccountBtn();
     }
 
     @Then("the CSO account is created successfully")
     public void theCSOAccountIsCreatedSuccessfully() {
-        frontendTestUtil = new FrontendTestUtil();
         packageConfirmationPage = new PackageConfirmationPage(driver);
         assertTrue(packageConfirmationPage.verifyContinuePaymentBtnIsDisplayed());
     }
 
     @When("user can upload an additional document")
-    public void userCanUploadAnAdditionalDocument() throws IOException {
-        frontendTestUtil = new FrontendTestUtil();
+    public void userCanUploadAnAdditionalDocument() {
         eFileSubmissionPage = new EFileSubmissionPage(driver);
         packageConfirmationPage = new PackageConfirmationPage(driver);
 

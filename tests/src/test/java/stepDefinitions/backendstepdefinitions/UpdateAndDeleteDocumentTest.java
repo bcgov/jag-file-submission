@@ -113,8 +113,8 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
         assertNotNull(expiryDate);
     }
 
-    @Given("retrieve from the frontend")
-    public void retrieveFromTheFrontend() throws IOException, InterruptedException {
+    @Given("retrieve jwt from the frontend")
+    public void retrieveJwtFromTheFrontend() throws IOException, InterruptedException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
         userToken = frontendTestUtil.getUserJwtToken(respUrl);

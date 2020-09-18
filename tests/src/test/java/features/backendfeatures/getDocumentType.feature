@@ -1,5 +1,5 @@
 Feature: Document type can be retrieved
-   @demo
+
    @backend
    Scenario: Verify document type can be retrieved successfully
    ## Lookup api call ##

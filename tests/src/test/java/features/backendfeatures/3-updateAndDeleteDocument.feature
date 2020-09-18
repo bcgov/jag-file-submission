@@ -1,5 +1,5 @@
 Feature: User can upload additional document and delete the documents
-  @demo
+
   @backend
   Scenario: Verify additional document can be uploaded, retrieved and deleted
      ## Call to upload the document ##
@@ -11,7 +11,7 @@ Feature: User can upload additional document and delete the documents
     When validated status code is 200 and content type
     Then verify expiry date and eFiling url are returned with the submission id
     ## Call to get submission config ##
-    Given retrieve from the frontend
+    Given retrieve jwt from the frontend
     Then "SUBMISSION" id is submitted with GET request
     When validated status code is 200 and content type
     Then ClientAppName and csoBaseUrl values are verified

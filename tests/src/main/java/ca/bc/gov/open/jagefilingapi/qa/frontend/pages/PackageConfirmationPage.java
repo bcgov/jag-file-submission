@@ -2,8 +2,10 @@ package ca.bc.gov.open.jagefilingapi.qa.frontend.pages;
 
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.DriverClass;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -44,16 +46,14 @@ public class PackageConfirmationPage extends DriverClass {
 
     public void clickUploadLink() {
         try {
-            for (int i = 0; i < 3; i++) {
-                WebDriverWait wait = new WebDriverWait(driver, 120);
-                wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@data-test-id='upload-link']")));
-                uploadLink.click();
-                if (!uploadLink.isDisplayed()) {
-                    break;
-                }
-            }
+            Actions action = new Actions(driver);
+            WebDriverWait wait = new WebDriverWait(driver, 120);
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@data-test-id='upload-link']")));
+            action.moveToElement(uploadLink).click().build().perform();
+
         } catch (org.openqa.selenium.TimeoutException tx) {
-            log.info("Upload link is not displayed in the page");
+            JavascriptExecutor js = (JavascriptExecutor)driver;
+            js.executeScript("arguments[0].click();", uploadLink);
         }
     }
 

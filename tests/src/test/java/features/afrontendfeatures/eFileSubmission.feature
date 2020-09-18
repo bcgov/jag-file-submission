@@ -4,7 +4,7 @@ Feature: As a user my account should be validated and be able to proceed with E-
     Given user is on the eFiling submission page
 
   @frontend
-    ## Creates new CSO account. Redis need to be rebuilt to run this test##
+    ## Creates new CSO account. Redis need to be rebuilt to run this test locally ##
   Scenario: Verify user with non existing CSO account guid is able to create a CSO account
     And user accepts agreement and clicks cancel button
     Then user clicks resume E-File submission in the confirmation window
