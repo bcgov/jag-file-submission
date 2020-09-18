@@ -42,7 +42,7 @@ public class PackageConfirmationPage {
     }
 
     public void clickUploadLink() {
-        WebDriverWait wait = new WebDriverWait(driver, 90);
+        WebDriverWait wait = new WebDriverWait(driver, 120);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@data-test-id='upload-link']")));
         uploadLink.click();
     }
