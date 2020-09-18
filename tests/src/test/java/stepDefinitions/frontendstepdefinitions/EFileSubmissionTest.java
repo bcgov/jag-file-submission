@@ -151,7 +151,6 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
         documentUploadPage.clickContinueBtn();
 
         List<String>uploadedFiles = packageConfirmationPage.getUploadedFilesList();
-        System.out.println(uploadedFiles);
         assertEquals(uploadedFiles, expectedUploadedFilesList);
         log.info("Additional file is uploaded successfully.");
     }
