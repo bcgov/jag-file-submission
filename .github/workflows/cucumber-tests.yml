@@ -2,7 +2,7 @@ name: Cucumber Tests
 
 on:
   push:
-    branches: [master, qa-updated-ui-tests]
+    branches: [master]
 
 jobs:
   cucumber-tests:
@@ -40,10 +40,3 @@ jobs:
         with:
           name: cucumber-json-report
           path: ./tests/target/cucumber-reports/CucumberTestReport.json
-
-      # Upload frontend failed screenshots for debugging purposes
-      - name: Upload failure screenshots for debugging purposes
-        uses: actions/upload-artifact@v2
-        with:
-          name: cucumber-frontend-screenshot
-          path: .tests/test-output/screenshots
