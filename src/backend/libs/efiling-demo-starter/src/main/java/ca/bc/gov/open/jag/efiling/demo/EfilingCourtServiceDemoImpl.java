@@ -15,4 +15,9 @@ public class EfilingCourtServiceDemoImpl implements EfilingCourtService {
     public boolean checkValidLevelClassLocation(BigDecimal agencyId, String courtLevel, String courtClass, String applicationCode) {
         return true;
     }
+
+    @Override
+    public boolean checkValidCourtFileNumber(String fileNumber, BigDecimal agencyId, String courtLevel, String courtClass, String applicationCode) {
+        return true;
+    }
 }
