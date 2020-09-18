@@ -288,10 +288,7 @@ public class SubmissionServiceImpl implements SubmissionService {
         if (!isValidCourtFileNumber) throw new EfilingCourtServiceException("invalid court file number");
 
         // Validate document types
-        List<DocumentType> validDocumentTypes = efilingDocumentService.getDocumentTypes(
-                courtBase.getLevel(),
-                courtBase.getCourtClass()
-        );
+        List<DocumentType> validDocumentTypes = efilingDocumentService.getDocumentTypes(courtBase.getLevel(), courtBase.getCourtClass());
         if (!checkValidDocumentTypes(validDocumentTypes, generateUrlRequest.getFilingPackage().getDocuments()))
             throw new EfilingDocumentServiceException("invalid document types provided");
     }
