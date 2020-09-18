@@ -93,20 +93,33 @@ public class SubmissionServiceImpl implements SubmissionService {
         CourtBase courtBase = generateUrlRequest.getFilingPackage().getCourt();
         CourtDetails courtDetails = efilingCourtService.getCourtDescription(courtBase.getLocation(), courtBase.getLevel(), courtBase.getCourtClass());
 
+        // Validate court level, class and location
         boolean isValidLevelClassLocation = efilingCourtService.checkValidLevelClassLocation(
                 courtDetails.getCourtId(),
                 courtBase.getLevel(),
                 courtBase.getCourtClass(),
                 SecurityUtils.getApplicationCode()
         );
-
         if (!isValidLevelClassLocation) throw new EfilingCourtServiceException("invalid court level, class and location combination");
 
+        // If court file number present, validate court file number, level, class and location
+        if (courtBase.getFileNumber() != null && !courtBase.getFileNumber().isEmpty()) {
+            boolean isValidCourtFileNumber = efilingCourtService.checkValidCourtFileNumber(
+                    courtBase.getFileNumber(),
+                    courtDetails.getCourtId(),
+                    courtBase.getLevel(),
+                    courtBase.getCourtClass(),
+                    SecurityUtils.getApplicationCode()
+            );
+
+            if (!isValidCourtFileNumber) throw new EfilingCourtServiceException("invalid court file number");
+        }
+
+        // Validate document types
         List<DocumentType> validDocumentTypes = efilingDocumentService.getDocumentTypes(
                 courtBase.getLevel(),
                 courtBase.getCourtClass()
         );
-
         if (!checkValidDocumentTypes(validDocumentTypes, generateUrlRequest.getFilingPackage().getDocuments()))
             throw new EfilingDocumentServiceException("invalid document types provided");
 

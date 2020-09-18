@@ -1,9 +1,6 @@
 package ca.bc.gov.open.jag.efilingcsostarter;
 
-import ca.bc.gov.ag.csows.ceis.CsoAgencyArr;
-import ca.bc.gov.ag.csows.ceis.CsoCourtClassArr;
-import ca.bc.gov.ag.csows.ceis.CsoCourtLevelArr;
-import ca.bc.gov.ag.csows.ceis.Csows;
+import ca.bc.gov.ag.csows.ceis.*;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
@@ -51,6 +48,25 @@ public class CsoCourtServiceImpl implements EfilingCourtService {
         } catch (ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception e) {
             throw new EfilingCourtServiceException("Exception while checking isParticipatingClass");
         }
+    }
+
+    @Override
+    public boolean checkValidCourtFileNumber(String fileNumber, BigDecimal agencyId, String courtLevel, String courtClass, String applicationCode) {
+        // Call CSO for fileNumberSearch
+        CsoFileSrchResultRet fileNumberSearchResult = csows.fileNumberSearch(
+                BigDecimal.ZERO,
+                fileNumber,
+                agencyId,
+                courtLevel,
+                courtClass,
+                null,
+                null,
+                BigDecimal.ONE,
+                true
+        );
+
+        // check if total records is greater than zero
+        return (fileNumberSearchResult.getTotalRecords().compareTo(BigDecimal.ZERO) == 1);
     }
 
     private String getCourLevelDescription(String courtLevel) {
