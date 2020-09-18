@@ -1,4 +1,3 @@
-@backend
 Feature: When user uploads the incorrect filetype, has a invalid cso account then correct error messages are returned
   @demo
   @backend

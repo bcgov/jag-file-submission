@@ -1,7 +1,7 @@
 package ca.bc.gov.open.jagefilingapi.qa.frontendutils;
 
 import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.AuthenticationPage;
-import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.PackageConfirmationPage;
+import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.EFileSubmissionPage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
@@ -30,36 +30,38 @@ public class FrontendTestUtil extends DriverClass {
         }
     }
 
-    public String getUserJwtToken(String respUrl) throws InterruptedException, IOException {
-        driverSetUp();
+    public void accessFrontEndPage(String respUrl) throws InterruptedException, IOException {
         String username = System.getProperty("BCEID_USERNAME");
         String password = System.getProperty("BCEID_PASSWORD");
 
         try {
             for(int i = 0; i<3; i++) {
-
+                driverSetUp();
                 driver.get(respUrl);
-                log.info("Package confirmation page url is accessed successfully");
+                log.info("Efiling hub page url is accessed successfully");
 
                 AuthenticationPage authenticationPage = new AuthenticationPage(driver);
                 authenticationPage.clickBceid();
                 Thread.sleep(4000L);
                 authenticationPage.signInWithBceid(username, password);
                 log.info("user is authenticated before reaching eFiling hub page");
-
-                PackageConfirmationPage packageConfirmationPage = new PackageConfirmationPage(driver);
-                packageConfirmationPage.verifyContinuePaymentBtnIsDisplayed();
-
-                if(packageConfirmationPage.verifyContinuePaymentBtnIsDisplayed()) {
+                EFileSubmissionPage eFileSubmissionPage = new EFileSubmissionPage(driver);
+                if(eFileSubmissionPage.verifyEfilingPageTitle().equals("E-File submission")) {
                     break;
                 }
             }
         } catch (org.openqa.selenium.TimeoutException tx) {
-            log.info("Package confirmation page is not displayed");
+            log.info("Create CSO account or Package confirmation page is not displayed");
         }
-
         Thread.sleep(4000L);
+    }
+
+    public String getUserJwtToken(String respUrl) throws IOException, InterruptedException {
+        accessFrontEndPage(respUrl);
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        return js.executeScript("return window.localStorage.getItem('jwt');").toString();
+        String userToken = js.executeScript("return window.localStorage.getItem('jwt');").toString();
+        driver.quit();
+        return userToken;
+
     }
 }

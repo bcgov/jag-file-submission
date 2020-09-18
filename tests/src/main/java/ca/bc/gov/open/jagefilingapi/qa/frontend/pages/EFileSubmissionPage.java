@@ -45,7 +45,7 @@ public class EFileSubmissionPage {
 
     //Actions:
     public String verifyEfilingPageTitle() {
-        wait = new WebDriverWait(driver, 60);
+        wait = new WebDriverWait(driver, 120);
         wait.until(ExpectedConditions.titleIs("E-File submission"));
         log.info("Waiting for the page to load...");
         return driver.getTitle();
@@ -62,12 +62,6 @@ public class EFileSubmissionPage {
         wait.until(ExpectedConditions.visibilityOf(confirmCancelSubmission));
     }
 
-    public void clickConfirmCancellation() {
-        driver.switchTo().activeElement();
-        confirmCancelSubmission.click();
-        driver.switchTo().defaultContent();
-    }
-
     public void clickResumeSubmission() {
         driver.switchTo().activeElement();
         resumeSubmission.click();
@@ -75,13 +69,9 @@ public class EFileSubmissionPage {
     }
 
     public boolean verifyCancelPageIsDisplayed() {
-        return returnHomeButton.isDisplayed();
-    }
-
-    public void clickReturnHomeButton() {
         wait = new WebDriverWait(driver, 60);
         wait.until(ExpectedConditions.visibilityOf(returnHomeButton));
-        returnHomeButton.click();
+        return returnHomeButton.isDisplayed();
     }
 
     public void selectCheckbox() {
@@ -96,6 +86,8 @@ public class EFileSubmissionPage {
     }
 
     public boolean verifyCreateCsoAccountBtnIsDisplayed() {
+        wait = new WebDriverWait(driver, 60);
+        wait.until(ExpectedConditions.visibilityOf(createCsoAccountButton));
         return createCsoAccountButton.isDisplayed();
     }
 
