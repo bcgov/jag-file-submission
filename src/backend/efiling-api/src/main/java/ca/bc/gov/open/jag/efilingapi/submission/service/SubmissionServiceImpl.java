@@ -275,17 +275,17 @@ public class SubmissionServiceImpl implements SubmissionService {
         if (!isValidLevelClassLocation) throw new EfilingCourtServiceException("invalid court level, class and location combination");
 
         // If court file number present, validate court file number, level, class and location
+        boolean isValidCourtFileNumber = true;
         if (courtBase.getFileNumber() != null && !courtBase.getFileNumber().isEmpty()) {
-            boolean isValidCourtFileNumber = efilingCourtService.checkValidCourtFileNumber(
+            isValidCourtFileNumber = efilingCourtService.checkValidCourtFileNumber(
                     courtBase.getFileNumber(),
                     courtDetails.getCourtId(),
                     courtBase.getLevel(),
                     courtBase.getCourtClass(),
                     SecurityUtils.getApplicationCode()
             );
-
-            if (!isValidCourtFileNumber) throw new EfilingCourtServiceException("invalid court file number");
         }
+        if (!isValidCourtFileNumber) throw new EfilingCourtServiceException("invalid court file number");
 
         // Validate document types
         List<DocumentType> validDocumentTypes = efilingDocumentService.getDocumentTypes(
