@@ -8,16 +8,11 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.IOException;
-
 public class CreateCsoAccountPage {
 
     private final WebDriver driver;
 
-    //Page Objects:
-    @FindBy(xpath = "//button[@data-test-id='upload-btn']")
-    WebElement uploadDocumentsBtn;
-
+    //Page Objects
     @FindBy(xpath = "//button[@data-test-id='create-cso-btn']")
     WebElement createCsoBtn;
 
@@ -28,11 +23,8 @@ public class CreateCsoAccountPage {
     }
 
     //Actions:
-    public boolean verifyUploadDocumentIsDisplayed() {
-        return uploadDocumentsBtn.isDisplayed();
-    }
 
-    public boolean verifyCsoBtnIsDisplayed() throws IOException {
+    public boolean verifyCsoBtnIsDisplayed() {
         WebDriverWait wait = new WebDriverWait(driver, 90);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@data-test-id='create-cso-btn']")));
         try {

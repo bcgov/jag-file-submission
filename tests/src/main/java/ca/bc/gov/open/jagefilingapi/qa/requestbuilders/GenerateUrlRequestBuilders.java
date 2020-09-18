@@ -34,7 +34,7 @@ public class GenerateUrlRequestBuilders {
     private static final String UPDATE_DOCUMENTS_PATH_PARAM = "/update-documents";
     private GenerateUrlPayload payloadData;
 
-    public Response getBearerToken() throws IOException {
+    public Response getBearerToken() {
       String resourceAPI = System.getProperty("KEYCLOAK_URL");
       String clientSecret = System.getProperty("EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET");
 

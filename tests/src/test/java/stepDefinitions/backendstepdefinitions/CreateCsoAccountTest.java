@@ -2,6 +2,7 @@ package stepDefinitions.backendstepdefinitions;
 
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.GenerateUrlHelper;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
+import ca.bc.gov.open.jagefilingapi.qa.frontendutils.DriverClass;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.FrontendTestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.requestbuilders.CreateCsoAccountRequestBuilders;
 import io.cucumber.java.en.Given;
@@ -16,7 +17,7 @@ import java.io.IOException;
 
 import static org.junit.Assert.*;
 
-public class CreateCsoAccountTest {
+public class CreateCsoAccountTest extends DriverClass {
 
     private CreateCsoAccountRequestBuilders createCsoAccountRequestBuilders;
     private static final String CONTENT_TYPE = "application/json";
@@ -24,17 +25,19 @@ public class CreateCsoAccountTest {
     private JsonPath jsonPath;
     private String userToken;
     private Response response;
-    private String respUrl;
 
-    @Given("POST http request is made to {string} with a valid request body")
-    public void postHttpRequestIsMadeToWithAValidRequestBody(String resource) throws IOException, InterruptedException {
-        createCsoAccountRequestBuilders = new CreateCsoAccountRequestBuilders();
+    @Given("user token is retrieved")
+    public void userTokenIsRetrieved() throws IOException, InterruptedException {
         GenerateUrlHelper generateUrlHelper = new GenerateUrlHelper();
-        respUrl = generateUrlHelper.getGeneratedUrl();
+        String respUrl = generateUrlHelper.getGeneratedUrl();
 
         FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
         userToken = frontendTestUtil.getUserJwtToken(respUrl);
+    }
 
+    @Then("POST http request is made to {string} with a valid request body")
+    public void postHttpRequestIsMadeToWithAValidRequestBody(String resource) throws IOException, InterruptedException {
+        createCsoAccountRequestBuilders = new CreateCsoAccountRequestBuilders();
         response = createCsoAccountRequestBuilders.requestWithValidRequestBody(resource, userToken);
     }
 
@@ -105,15 +108,9 @@ public class CreateCsoAccountTest {
         log.info("Status, error and message response are verified.");
     }
 
-    @Given("GET request is made to {string}")
-    public void getHttpRequestIsMadeToBceidAccount(String resource) throws IOException, InterruptedException {
+    @Then("GET request is made to {string}")
+    public void getHttpRequestIsMadeToBceidAccount(String resource) throws IOException {
         createCsoAccountRequestBuilders = new CreateCsoAccountRequestBuilders();
-        GenerateUrlHelper generateUrlHelper = new GenerateUrlHelper();
-        respUrl = generateUrlHelper.getGeneratedUrl();
-
-        FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
-        userToken = frontendTestUtil.getUserJwtToken(respUrl);
-
         response = createCsoAccountRequestBuilders.requestToGetUserBceidAccount(resource, userToken);
     }
 
@@ -126,7 +123,7 @@ public class CreateCsoAccountTest {
         assertEquals("Alan", jsonPath.get("middleName"));
     }
 
-    @Given("POST http request is made to {string} with incorrect path value")
+    @Then("POST http request is made to {string} with incorrect path value")
     public void postHttpRequestIsMadeToWithIncorrectPathValue(String resource) throws IOException {
         createCsoAccountRequestBuilders = new CreateCsoAccountRequestBuilders();
 

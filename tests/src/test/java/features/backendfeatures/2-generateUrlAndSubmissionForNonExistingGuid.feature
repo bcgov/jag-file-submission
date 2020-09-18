@@ -1,4 +1,3 @@
-@backend
 Feature: When user with non existing guid uploads the documents, id is authenticated user details,
   navigation urls are generated and user, submission package details can be retrieved
   @demo
@@ -14,7 +13,8 @@ Feature: When user with non existing guid uploads the documents, id is authentic
     When status code is 200 and content type are verified
     Then verify expiry date and eFiling url are returned with non existing CSO account guid and submission id
     ## Call to get submission config ##
-    Given "SUBMISSION" id is submitted with non existing CSO account GET http request
+    Given token is retrieved from the frontend
+    Then "SUBMISSION" id is submitted with non existing CSO account GET http request
     When status code is 200 and content type are verified
     Then verify clientAppName and csoBaseUrl values are returned
     And verify success, error and cancel navigation urls are also returned

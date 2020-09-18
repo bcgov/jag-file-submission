@@ -104,12 +104,16 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
         assertNotNull(expiryDate);
     }
 
-    @Given("{string} id is submitted with GET http request")
-    public void idIsSubmittedWithGetHttpRequest(String resource) throws IOException, InterruptedException {
+    @Given("user token is retrieved from the frontend")
+    public void userTokenisRetrievedFromTheFrontend() throws IOException, InterruptedException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
-
         userToken = frontendTestUtil.getUserJwtToken(respUrl);
+    }
+
+    @Then("{string} id is submitted with GET http request")
+    public void idIsSubmittedWithGetHttpRequest(String resource) throws IOException {
+        generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToGetSubmissionConfig(resource, validExistingCSOGuid, submissionId, userToken);
     }
 
