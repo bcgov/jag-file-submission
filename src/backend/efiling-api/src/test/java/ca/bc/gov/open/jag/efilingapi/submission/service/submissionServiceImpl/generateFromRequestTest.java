@@ -271,7 +271,7 @@ public class generateFromRequestTest {
         request.getFilingPackage().getCourt().setFileNumber("");
 
         Mockito.when(efilingCourtService.checkValidLevelClassLocation(any(), any(), any(), any())).thenReturn(true);
-        Mockito.when(efilingLookupService.getValidPartyRoles(any(), any(), any())).thenReturn(TestHelpers.createInvalidPartyRoles());
+        Mockito.when(efilingLookupService.getValidPartyRoles(any(), any(), any())).thenReturn(TestHelpers.createValidPartyRoles());
 
         Assertions.assertThrows(EfilingLookupServiceException.class, () -> sut.generateFromRequest(new SubmissionKey(TestHelpers.CASE_2, TestHelpers.CASE_2, TestHelpers.CASE_2), request));
     }
