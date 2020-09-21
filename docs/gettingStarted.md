@@ -107,34 +107,34 @@ The `documents` array represents the previously uploaded document.
 
 ### Answers to FAQ:
 
-1. What should be used for `roleType` and `partyType` in parties?
+#### What should be used for `roleType` and `partyType` in parties?
 
 The default values to be used for `roleType` is CLA and for `partyType` it is IND. Can refer to the roles in the code tables for more details.
 
-2. Are the various types of documents the ones present in the list in https://bcgov.github.io/jag-file-submission/#/data?
+#### Are the various types of documents the ones present in the list in https://bcgov.github.io/jag-file-submission/#/data?
 
 Yes. This is our list of various document types that can be submitted.
 For FLA, the document types are as follows: Application to Obtain an Order (APO) , Notice of Motion (NM), Affidavit (AFF), and Electronic Filing Statement (EFS- Provincial).
 
-3. For the parties info, would this be the applicant and respondent?
+#### For the parties info, would this be the applicant and respondent?
 
 Yes. Applicant and respondent is correct for the parties.
 
-4. For documents, what kind of information should/can be included in the following fields?
+#### For documents, what kind of information should/can be included in the following fields?
 
-Data: A copy of the data collected on parent app side. JSON object containing the party info, potential issue, acts, things associated with divorce, etc.
+`Data`: A copy of the data collected on parent app side. JSON object containing the party info, potential issue, acts, things associated with divorce, etc.
 
-MD5: Computed hash value of the document content, it is used as a checksum to validate the document integrity.
+`MD5`: Computed hash value of the document content, it is used as a checksum to validate the document integrity.
 
-isAmendment: This marks if the document is an amendment.
+`isAmendment`: This marks if the document is an amendment.
 
-isSupremeCourtScheduling: This marks if the document is for supreme court scheduling. The Supreme Court Scheduling will not apply initially as we are dealing with Provincial Court, but in the future Supreme Court will be applicable.
+`isSupremeCourtScheduling`: This marks if the document is for supreme court scheduling. The Supreme Court Scheduling will not apply initially as we are dealing with Provincial Court, but in the future Supreme Court will be applicable.
 
-5. What should the value of `clientAppName` be?
+#### What should the value of `clientAppName` be?
 
 This field signifies the name of the parent application integrating with the eFiling hub and will show up on the eFiling hub, so please use a full form name such as `Family Law Act Application`.
 
-6. For the court information, how should the fields be determined for this section?
+#### For the court information, how should the fields be determined for this section?
 
 Parent app should know level and class. Court location can be provided through the code tables.
 
