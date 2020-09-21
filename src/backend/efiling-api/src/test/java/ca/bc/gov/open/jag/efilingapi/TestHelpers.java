@@ -128,9 +128,16 @@ public class TestHelpers {
         return Arrays.asList(documentType);
     }
 
+    public static List<String> createInvalidPartyRoles() {
+        List<String> invalidRoles = new ArrayList<>();
+        invalidRoles.add(ROLE_TYPE_CD);
+
+        return invalidRoles;
+    }
+
     public static List<String> createValidPartyRoles() {
-        ArrayList<String> validRoles = new ArrayList<>();
-        validRoles.add(ROLE_TYPE_CD);
+        List<String> validRoles = new ArrayList<>();
+        validRoles.add("ABC");
 
         return validRoles;
     }
