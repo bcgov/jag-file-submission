@@ -253,7 +253,13 @@ public class SubmissionServiceImpl implements SubmissionService {
         validateCourtLevelClassLocation(courtDetails, courtBase);
 
         // Validate court file number and parties
-        validateCourtFileNumberAndParties(courtDetails, courtBase, generateUrlRequest);
+        if (courtBase.getFileNumber() != null && !courtBase.getFileNumber().isEmpty()) {
+            // If court file number present, validate court file number, level, class and location
+            validateCourtFileNumber(courtDetails, courtBase);
+        } else {
+            // If no court file number present, validate parties
+            validateParties(generateUrlRequest, courtBase);
+        }
 
         // Validate document types
         validateDocumentTypes(courtBase, generateUrlRequest);
@@ -269,33 +275,31 @@ public class SubmissionServiceImpl implements SubmissionService {
         if (!isValidLevelClassLocation) throw new EfilingCourtServiceException("invalid court level, class and location combination");
     }
 
-    private void validateCourtFileNumberAndParties(CourtDetails courtDetails, CourtBase courtBase, GenerateUrlRequest generateUrlRequest) {
-        // If court file number present, validate court file number, level, class and location
+    private void validateCourtFileNumber(CourtDetails courtDetails, CourtBase courtBase) {
         boolean isValidCourtFileNumber = true;
-        if (courtBase.getFileNumber() != null && !courtBase.getFileNumber().isEmpty()) {
-            isValidCourtFileNumber = efilingCourtService.checkValidCourtFileNumber(
-                    courtBase.getFileNumber(),
-                    courtDetails.getCourtId(),
-                    courtBase.getLevel(),
-                    courtBase.getCourtClass(),
-                    SecurityUtils.getApplicationCode()
-            );
-        } else {
-            // If no court file number present, validate parties
-            List<Party> parties = generateUrlRequest.getFilingPackage().getParties();
-            if (parties.isEmpty()) throw new EfilingLookupServiceException("no parties provided");
-
-            String documentTypes = generateCommaSeparatedDocumentTypes(generateUrlRequest.getFilingPackage().getDocuments());
-            List<String> validPartyRoles = efilingLookupService.getValidPartyRoles(
-                    courtBase.getLevel(),
-                    courtBase.getCourtClass(),
-                    documentTypes
-            );
-
-            if (!checkValidPartyRoles(validPartyRoles, parties))
-                throw new EfilingLookupServiceException("invalid parties provided");
-        }
+        isValidCourtFileNumber = efilingCourtService.checkValidCourtFileNumber(
+                courtBase.getFileNumber(),
+                courtDetails.getCourtId(),
+                courtBase.getLevel(),
+                courtBase.getCourtClass(),
+                SecurityUtils.getApplicationCode()
+        );
         if (!isValidCourtFileNumber) throw new EfilingCourtServiceException("invalid court file number");
+    }
+
+    private void validateParties(GenerateUrlRequest generateUrlRequest, CourtBase courtBase) {
+        List<Party> parties = generateUrlRequest.getFilingPackage().getParties();
+        if (parties.isEmpty()) throw new EfilingLookupServiceException("no parties provided");
+
+        String documentTypes = generateCommaSeparatedDocumentTypes(generateUrlRequest.getFilingPackage().getDocuments());
+        List<String> validPartyRoles = efilingLookupService.getValidPartyRoles(
+                courtBase.getLevel(),
+                courtBase.getCourtClass(),
+                documentTypes
+        );
+
+        if (!checkValidPartyRoles(validPartyRoles, parties))
+            throw new EfilingLookupServiceException("invalid parties provided");
     }
 
     private void validateDocumentTypes(CourtBase courtBase, GenerateUrlRequest generateUrlRequest) {
