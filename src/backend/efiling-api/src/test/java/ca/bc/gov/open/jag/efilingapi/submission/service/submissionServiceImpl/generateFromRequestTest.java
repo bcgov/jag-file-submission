@@ -4,6 +4,7 @@ package ca.bc.gov.open.jag.efilingapi.submission.service.submissionServiceImpl;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.InitialPackage;
+import ca.bc.gov.open.jag.efilingapi.api.model.Party;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.PartyMapperImpl;
@@ -33,6 +34,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -253,7 +255,6 @@ public class generateFromRequestTest {
         request.setNavigationUrls(TestHelpers.createDefaultNavigation());
         request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList()));
         request.getFilingPackage().getCourt().setFileNumber("");
-        request.getFilingPackage().setParties(new ArrayList<>());
 
         Mockito.when(efilingCourtService.checkValidLevelClassLocation(any(), any(), any(), any())).thenReturn(true);
 
@@ -269,6 +270,12 @@ public class generateFromRequestTest {
         request.setNavigationUrls(TestHelpers.createDefaultNavigation());
         request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList()));
         request.getFilingPackage().getCourt().setFileNumber("");
+
+        List<Party> parties = new ArrayList<>();
+        Party party = new Party();
+        party.setRoleType(Party.RoleTypeEnum.ABC);
+        parties.add(party);
+        request.getFilingPackage().setParties(parties);
 
         Mockito.when(efilingCourtService.checkValidLevelClassLocation(any(), any(), any(), any())).thenReturn(true);
         Mockito.when(efilingLookupService.getValidPartyRoles(any(), any(), any())).thenReturn(TestHelpers.createValidPartyRoles());

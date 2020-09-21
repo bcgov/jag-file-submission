@@ -130,7 +130,7 @@ public class TestHelpers {
 
     public static List<String> createValidPartyRoles() {
         ArrayList<String> validRoles = new ArrayList<>();
-        validRoles.add("validRole");
+        validRoles.add(ROLE_TYPE_CD);
 
         return validRoles;
     }
