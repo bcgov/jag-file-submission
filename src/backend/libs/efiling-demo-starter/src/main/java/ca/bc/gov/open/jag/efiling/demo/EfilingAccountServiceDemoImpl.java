@@ -16,7 +16,9 @@ public class EfilingAccountServiceDemoImpl implements EfilingAccountService {
 
     @Cacheable(cacheNames = "account", key = "#userGuid", unless="#result == null", cacheManager = "demoAccountCacheManager")
     public AccountDetails getAccountDetails(UUID userGuid) {
-        return null;
+        AccountDetails accountDetails = AccountDetails.builder().fileRolePresent(true).create();
+
+        return accountDetails;
     }
 
     @CachePut(cacheNames = "account", key = "#createAccountRequest.universalId", cacheManager = "demoAccountCacheManager")
