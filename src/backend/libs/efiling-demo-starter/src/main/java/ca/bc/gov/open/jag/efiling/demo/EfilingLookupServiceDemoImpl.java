@@ -20,8 +20,8 @@ public class EfilingLookupServiceDemoImpl implements EfilingLookupService {
 
     @Override
     public List<String> getValidPartyRoles(String courtLevel, String courtClass, String documentTypes) {
-        ArrayList<String> validRoles = new ArrayList<>();
-        validRoles.add("role1");
+        List<String> validRoles = new ArrayList<>();
+        validRoles.add("ROLECD");
 
         return validRoles;
     }

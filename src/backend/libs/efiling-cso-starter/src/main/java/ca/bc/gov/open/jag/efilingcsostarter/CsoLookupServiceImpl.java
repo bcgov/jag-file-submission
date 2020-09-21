@@ -49,7 +49,7 @@ public class CsoLookupServiceImpl implements EfilingLookupService {
     public List<String> getValidPartyRoles(String courtLevel, String courtClass, String documentTypes) {
         try {
             List<CodeValue> partyRolesResponse = lookupFacadeItf.getEfilingPartyRoles(courtLevel, courtClass, documentTypes);
-            ArrayList<String> validRoles = new ArrayList<>();
+            List<String> validRoles = new ArrayList<>();
 
             for (CodeValue partyRole : partyRolesResponse) {
                 validRoles.add(partyRole.getCode());
