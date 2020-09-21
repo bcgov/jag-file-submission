@@ -250,6 +250,16 @@ public class SubmissionServiceImpl implements SubmissionService {
         CourtDetails courtDetails = efilingCourtService.getCourtDescription(courtBase.getLocation(), courtBase.getLevel(), courtBase.getCourtClass());
 
         // Validate court level, class and location
+        validateCourtLevelClassLocation(courtDetails, courtBase);
+
+        // Validate court file number and parties
+        validateCourtFileNumberAndParties(courtDetails, courtBase, generateUrlRequest);
+
+        // Validate document types
+        validateDocumentTypes(courtBase, generateUrlRequest);
+    }
+
+    private void validateCourtLevelClassLocation(CourtDetails courtDetails, CourtBase courtBase) {
         boolean isValidLevelClassLocation = efilingCourtService.checkValidLevelClassLocation(
                 courtDetails.getCourtId(),
                 courtBase.getLevel(),
@@ -257,7 +267,9 @@ public class SubmissionServiceImpl implements SubmissionService {
                 SecurityUtils.getApplicationCode()
         );
         if (!isValidLevelClassLocation) throw new EfilingCourtServiceException("invalid court level, class and location combination");
+    }
 
+    private void validateCourtFileNumberAndParties(CourtDetails courtDetails, CourtBase courtBase, GenerateUrlRequest generateUrlRequest) {
         // If court file number present, validate court file number, level, class and location
         boolean isValidCourtFileNumber = true;
         if (courtBase.getFileNumber() != null && !courtBase.getFileNumber().isEmpty()) {
@@ -284,8 +296,9 @@ public class SubmissionServiceImpl implements SubmissionService {
                 throw new EfilingLookupServiceException("invalid parties provided");
         }
         if (!isValidCourtFileNumber) throw new EfilingCourtServiceException("invalid court file number");
+    }
 
-        // Validate document types
+    private void validateDocumentTypes(CourtBase courtBase, GenerateUrlRequest generateUrlRequest) {
         List<DocumentType> validDocumentTypes = efilingDocumentService.getDocumentTypes(courtBase.getLevel(), courtBase.getCourtClass());
         if (!checkValidDocumentTypes(validDocumentTypes, generateUrlRequest.getFilingPackage().getDocuments()))
             throw new EfilingDocumentServiceException("invalid document types provided");
