@@ -3,7 +3,6 @@ Feature: As a user my account should be validated and be able to proceed with E-
   Background:
     Given user is on the eFiling submission page
 
-
    @frontend
   Scenario: Verify user with valid CSO account guid can upload a document for E-File submission
     When user can upload an additional document
