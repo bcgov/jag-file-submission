@@ -3,7 +3,6 @@ Feature: As a user my account should be validated and be able to proceed with E-
   Background:
     Given user is on the eFiling submission page
 
- # @frontend
     ## Creates new CSO account. Redis need to be rebuilt to run this test locally ##
 
    @frontend
