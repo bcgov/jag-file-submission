@@ -3,7 +3,6 @@ Feature: As a user my account should be validated and be able to proceed with E-
   Background:
     Given user is on the eFiling submission page
 
-    ## Creates new CSO account. Redis need to be rebuilt to run this test locally ##
 
    @frontend
   Scenario: Verify user with valid CSO account guid can upload a document for E-File submission
