@@ -344,14 +344,18 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     private String generateCommaSeparatedDocumentTypes(List<DocumentProperties> documentProperties) {
-        String documentTypes = "";
+        StringBuilder documentTypes = new StringBuilder();
+
         for (DocumentProperties doc : documentProperties) {
-            documentTypes = documentTypes + doc.getType() + ",";
+            documentTypes.append(MessageFormat.format("{0},", doc.getType()));
         }
 
-        documentTypes = documentTypes.substring(0, documentTypes.length() - 1);
+        documentTypes.delete(documentTypes.length() - 1, documentTypes.length());
 
-        return documentTypes;
+        System.out.println("#################");
+        System.out.println(documentTypes.toString());
+
+        return documentTypes.toString();
     }
 
 }
