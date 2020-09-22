@@ -38,6 +38,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import javax.validation.Valid;
 import java.util.*;
 
+import static org.mockito.ArgumentMatchers.any;
 import static ca.bc.gov.open.jag.efilingapi.error.ErrorResponse.INVALIDUNIVERSAL;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -98,6 +99,8 @@ public class GenerateUrlTest {
         navigationProperties.setBaseUrl("http://localhost");
 
         Submission submission = Submission.builder().id(TestHelpers.CASE_1).transactionId(transactionId).expiryDate(10).create();
+
+        Mockito.when(accountServiceMock.getCsoAccountDetails(any())).thenReturn(TestHelpers.createCSOAccountDetails(true));
 
         Mockito
                 .when(submissionServiceMock.generateFromRequest(
@@ -185,6 +188,25 @@ public class GenerateUrlTest {
         Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
         Assertions.assertEquals(ErrorResponse.INVALIDROLE.getErrorCode(), actualError.getError());
         Assertions.assertEquals(ErrorResponse.INVALIDROLE.getErrorMessage(), actualError.getMessage());
+    }
+
+    @Test
+    @DisplayName("403: when EFileRole not present should return FORBIDDEN")
+    public void whenEFileRoleNotPresentShouldReturnForbidden() {
+        @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
+
+        Map<String, Object> otherClaims = new HashMap<>();
+        otherClaims.put(Keys.CSO_APPLICATION_CODE, CODE);
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
+        Mockito.when(accountServiceMock.getCsoAccountDetails(any())).thenReturn(TestHelpers.createCSOAccountDetails(false));
+
+        generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
+        generateUrlRequest.setNavigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
+
+        ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(transactionId, UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_1, generateUrlRequest);
+
+        Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
     }
 
     @Test

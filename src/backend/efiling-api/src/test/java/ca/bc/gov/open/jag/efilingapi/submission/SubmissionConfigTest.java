@@ -111,6 +111,11 @@ public class SubmissionConfigTest {
         public boolean checkValidLevelClassLocation(BigDecimal agencyId, String courtLevel, String courtClass, String applicationCode) {
             return false;
         }
+
+        @Override
+        public boolean checkValidCourtFileNumber(String fileNumber, BigDecimal agencyId, String courtLevel, String courtClass, String applicationCode) {
+            return false;
+        }
     }
 
     public static class EfilingSubmissionServiceTest implements EfilingSubmissionService {

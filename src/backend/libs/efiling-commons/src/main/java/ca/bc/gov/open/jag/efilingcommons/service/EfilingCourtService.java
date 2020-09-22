@@ -8,4 +8,6 @@ public interface EfilingCourtService {
     CourtDetails getCourtDescription(String agencyIdentifierCd, String courtLevel, String courtClass);
 
     boolean checkValidLevelClassLocation(BigDecimal agencyId, String courtLevel, String courtClass, String applicationCode);
+
+    boolean checkValidCourtFileNumber(String fileNumber, BigDecimal agencyId, String courtLevel, String courtClass, String applicationCode);
 }
