@@ -255,11 +255,11 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         // Validate court file number and parties
         if (StringUtils.isEmpty(courtBase.getFileNumber())) {
-            // If court file number present, validate court file number, level, class and location
-            validateCourtFileNumber(courtDetails, courtBase);
-        } else {
             // If no court file number present, validate parties
             validateParties(generateUrlRequest, courtBase);
+        } else {
+            // If court file number present, validate court file number, level, class and location
+            validateCourtFileNumber(courtDetails, courtBase);
         }
 
         // Validate document types
