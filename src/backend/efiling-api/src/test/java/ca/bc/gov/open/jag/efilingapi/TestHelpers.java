@@ -12,6 +12,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.Party;
 import com.google.gson.JsonObject;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -126,6 +127,20 @@ public class TestHelpers {
     public static List<DocumentType> createInvalidDocumentTypesList() {
         DocumentType documentType = new DocumentType(DESCRIPTION, "ZZZ", false);
         return Arrays.asList(documentType);
+    }
+
+    public static List<String> createInvalidPartyRoles() {
+        List<String> invalidRoles = new ArrayList<>();
+        invalidRoles.add(ROLE_TYPE_CD);
+
+        return invalidRoles;
+    }
+
+    public static List<String> createValidPartyRoles() {
+        List<String> validRoles = new ArrayList<>();
+        validRoles.add("ABC");
+
+        return validRoles;
     }
 
     public static List<Document> createDocumentList() {

@@ -98,6 +98,11 @@ public class SubmissionConfigTest {
         public ServiceFees getServiceFee(String serviceId) {
             return null;
         }
+
+        @Override
+        public List<String> getValidPartyRoles(String courtLevel, String courtClass, String documentTypes) {
+            return null;
+        }
     }
 
     public static class EfilingCourtServiceTest implements EfilingCourtService {
