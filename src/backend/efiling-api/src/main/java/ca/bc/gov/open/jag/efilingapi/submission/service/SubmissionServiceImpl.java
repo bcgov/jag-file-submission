@@ -25,6 +25,7 @@ import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import ca.bc.gov.open.sftp.starter.SftpService;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
@@ -253,7 +254,7 @@ public class SubmissionServiceImpl implements SubmissionService {
         validateCourtLevelClassLocation(courtDetails, courtBase);
 
         // Validate court file number and parties
-        if (courtBase.getFileNumber() != null && !courtBase.getFileNumber().isEmpty()) {
+        if (StringUtils.isEmpty(courtBase.getFileNumber())) {
             // If court file number present, validate court file number, level, class and location
             validateCourtFileNumber(courtDetails, courtBase);
         } else {
