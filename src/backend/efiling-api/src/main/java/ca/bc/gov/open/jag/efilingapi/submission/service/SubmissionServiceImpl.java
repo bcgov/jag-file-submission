@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
+import ca.bc.gov.open.jag.efilingapi.api.model.Party;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.payment.BamboraPaymentAdapter;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
@@ -11,6 +12,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.utils.FileUtils;
 import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingLookupServiceException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.Court;
@@ -23,6 +25,7 @@ import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import ca.bc.gov.open.sftp.starter.SftpService;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
@@ -243,6 +246,86 @@ public class SubmissionServiceImpl implements SubmissionService {
         return System.currentTimeMillis() + cacheProperties.getRedis().getTimeToLive().toMillis();
     }
 
+    private void validateGenerateUrlRequest(GenerateUrlRequest generateUrlRequest) {
+        CourtBase courtBase = generateUrlRequest.getFilingPackage().getCourt();
+        CourtDetails courtDetails = efilingCourtService.getCourtDescription(courtBase.getLocation(), courtBase.getLevel(), courtBase.getCourtClass());
+
+        // Validate court level, class and location
+        validateCourtLevelClassLocation(courtDetails, courtBase);
+
+        // Validate court file number and parties
+        if (StringUtils.isEmpty(courtBase.getFileNumber())) {
+            // If no court file number present, validate parties
+            validateParties(generateUrlRequest, courtBase);
+        } else {
+            // If court file number present, validate court file number, level, class and location
+            validateCourtFileNumber(courtDetails, courtBase);
+        }
+
+        // Validate document types
+        validateDocumentTypes(courtBase, generateUrlRequest);
+    }
+
+    private void validateCourtLevelClassLocation(CourtDetails courtDetails, CourtBase courtBase) {
+        boolean isValidLevelClassLocation = efilingCourtService.checkValidLevelClassLocation(
+                courtDetails.getCourtId(),
+                courtBase.getLevel(),
+                courtBase.getCourtClass(),
+                SecurityUtils.getApplicationCode()
+        );
+        if (!isValidLevelClassLocation) throw new EfilingCourtServiceException("invalid court level, class and location combination");
+    }
+
+    private void validateCourtFileNumber(CourtDetails courtDetails, CourtBase courtBase) {
+        boolean isValidCourtFileNumber = true;
+        isValidCourtFileNumber = efilingCourtService.checkValidCourtFileNumber(
+                courtBase.getFileNumber(),
+                courtDetails.getCourtId(),
+                courtBase.getLevel(),
+                courtBase.getCourtClass(),
+                SecurityUtils.getApplicationCode()
+        );
+        if (!isValidCourtFileNumber) throw new EfilingCourtServiceException("invalid court file number");
+    }
+
+    private void validateParties(GenerateUrlRequest generateUrlRequest, CourtBase courtBase) {
+        List<Party> parties = generateUrlRequest.getFilingPackage().getParties();
+        if (parties.isEmpty()) throw new EfilingLookupServiceException("no parties provided");
+
+        String documentTypes = generateCommaSeparatedDocumentTypes(generateUrlRequest.getFilingPackage().getDocuments());
+        List<String> validPartyRoles = efilingLookupService.getValidPartyRoles(
+                courtBase.getLevel(),
+                courtBase.getCourtClass(),
+                documentTypes
+        );
+
+        if (!checkValidPartyRoles(validPartyRoles, parties))
+            throw new EfilingLookupServiceException("invalid parties provided");
+    }
+
+    private void validateDocumentTypes(CourtBase courtBase, GenerateUrlRequest generateUrlRequest) {
+        List<DocumentType> validDocumentTypes = efilingDocumentService.getDocumentTypes(courtBase.getLevel(), courtBase.getCourtClass());
+        if (!checkValidDocumentTypes(validDocumentTypes, generateUrlRequest.getFilingPackage().getDocuments()))
+            throw new EfilingDocumentServiceException("invalid document types provided");
+    }
+
+    private boolean checkValidPartyRoles(List<String> validPartyRoles, List<Party> parties) {
+        AtomicBoolean isValid = new AtomicBoolean(true);
+
+        parties.stream().forEach(party -> {
+            AtomicBoolean currentPartyRoleValid = new AtomicBoolean(false);
+            validPartyRoles.stream().forEach(validRole -> {
+                if (validRole.equals(party.getRoleType().getValue())) {
+                    currentPartyRoleValid.set(true);
+                }
+            });
+
+            if (!currentPartyRoleValid.get()) isValid.set(false);
+        });
+
+        return isValid.get();
+    }
+
     private boolean checkValidDocumentTypes(List<DocumentType> validDocumentTypes, List<DocumentProperties> documents) {
         AtomicBoolean isValid = new AtomicBoolean(true);
 
@@ -257,40 +340,19 @@ public class SubmissionServiceImpl implements SubmissionService {
             if (!currentDocumentTypeValid.get()) isValid.set(false);
         });
 
-
         return isValid.get();
     }
 
-    private void validateGenerateUrlRequest(GenerateUrlRequest generateUrlRequest) {
-        CourtBase courtBase = generateUrlRequest.getFilingPackage().getCourt();
-        CourtDetails courtDetails = efilingCourtService.getCourtDescription(courtBase.getLocation(), courtBase.getLevel(), courtBase.getCourtClass());
+    private String generateCommaSeparatedDocumentTypes(List<DocumentProperties> documentProperties) {
+        StringBuilder documentTypes = new StringBuilder();
 
-        // Validate court level, class and location
-        boolean isValidLevelClassLocation = efilingCourtService.checkValidLevelClassLocation(
-                courtDetails.getCourtId(),
-                courtBase.getLevel(),
-                courtBase.getCourtClass(),
-                SecurityUtils.getApplicationCode()
-        );
-        if (!isValidLevelClassLocation) throw new EfilingCourtServiceException("invalid court level, class and location combination");
-
-        // If court file number present, validate court file number, level, class and location
-        boolean isValidCourtFileNumber = true;
-        if (courtBase.getFileNumber() != null && !courtBase.getFileNumber().isEmpty()) {
-            isValidCourtFileNumber = efilingCourtService.checkValidCourtFileNumber(
-                    courtBase.getFileNumber(),
-                    courtDetails.getCourtId(),
-                    courtBase.getLevel(),
-                    courtBase.getCourtClass(),
-                    SecurityUtils.getApplicationCode()
-            );
+        for (DocumentProperties doc : documentProperties) {
+            documentTypes.append(MessageFormat.format("{0},", doc.getType()));
         }
-        if (!isValidCourtFileNumber) throw new EfilingCourtServiceException("invalid court file number");
 
-        // Validate document types
-        List<DocumentType> validDocumentTypes = efilingDocumentService.getDocumentTypes(courtBase.getLevel(), courtBase.getCourtClass());
-        if (!checkValidDocumentTypes(validDocumentTypes, generateUrlRequest.getFilingPackage().getDocuments()))
-            throw new EfilingDocumentServiceException("invalid document types provided");
+        documentTypes.delete(documentTypes.length() - 1, documentTypes.length());
+
+        return documentTypes.toString();
     }
 
 }
