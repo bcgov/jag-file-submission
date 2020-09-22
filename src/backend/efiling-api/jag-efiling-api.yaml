@@ -1755,7 +1755,7 @@ components:
           description: store additional details
         md5:
           type: string
-          description: document computed md5 hash
+          description: Computed hash value of the document content, it is used as a checksum to validate the document integrity.
     Document:
       required:
         - description

@@ -2,12 +2,13 @@ package ca.bc.gov.open.jag.efilingapi;
 
 
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
+import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
+import ca.bc.gov.open.jag.efilingapi.submission.models.*;
 import ca.bc.gov.open.jag.efilingcommons.model.Court;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentType;
 import ca.bc.gov.open.jag.efilingcommons.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.model.Party;
-import ca.bc.gov.open.jag.efilingapi.submission.models.*;
 import com.google.gson.JsonObject;
 
 import java.math.BigDecimal;
@@ -172,6 +173,10 @@ public class TestHelpers {
                 .partyTypeCd(PARTY_TYPE_CD)
                 .roleTypeCd(ROLE_TYPE_CD)
                 .create();
+    }
+
+    public static AccountDetails createCSOAccountDetails(boolean isFileRolePresent) {
+        return AccountDetails.builder().fileRolePresent(isFileRolePresent).create();
     }
 
     public static NavigationUrls createDefaultNavigation() {
