@@ -352,9 +352,6 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         documentTypes.delete(documentTypes.length() - 1, documentTypes.length());
 
-        System.out.println("#################");
-        System.out.println(documentTypes.toString());
-
         return documentTypes.toString();
     }
 
