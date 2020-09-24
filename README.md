@@ -66,7 +66,7 @@ Click Reset Password
 Create your known hosts for sftp upload. In command prompt navigate to /users/<YOURNAME>/.ssh/ and run command:
 
 ```
-ssh-keyscan -p 22 localhost  >> known_hosts
+ssh-keyscan -p 23 localhost  >> known_hosts
 ```
 
 If you want to integrate with the CSO application change the `MVN_PROFILE` to `default`
