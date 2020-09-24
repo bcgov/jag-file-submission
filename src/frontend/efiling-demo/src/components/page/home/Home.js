@@ -27,6 +27,8 @@ const urlBody = {
       {
         name: "string",
         type: "AFF",
+        data: {},
+        md5: "string",
       },
     ],
     parties: [
@@ -102,6 +104,8 @@ const generatePackageData = (files, filingPackage) => {
     documentData.push({
       name: files[i].name,
       type: document.type,
+      data: document.data,
+      md5: document.md5,
     });
   }
 
