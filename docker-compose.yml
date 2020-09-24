@@ -187,7 +187,7 @@ services:
   sftp:
     image: atmoz/sftp
     ports:
-      - "23:22"
+      - "22:22"
     command: admin:admin:::upload
     networks:
       - fisu-net

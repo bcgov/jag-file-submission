@@ -213,6 +213,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                         .isAmendment(documentProperties.getIsAmendment())
                         .isSupremeCourtScheduling(documentProperties.getIsSupremeCourtScheduling())
                         .subType(details.getOrderDocument() ? SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD : SubmissionConstants.SUBMISSION_ODOC_DOCUMENT_SUB_TYPE_CD)
+                        .data(documentProperties.getData())
                         .create();
 
     }
