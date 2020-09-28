@@ -5,6 +5,7 @@ exports[`Storyshots Home Account Exists 1`] = `
   <main>
     <header>
       <nav
+        aria-label="Header"
         class="container-fluid navbar navbar-expand-lg navbar-dark"
       >
         <div
@@ -15,7 +16,6 @@ exports[`Storyshots Home Account Exists 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-none d-md-block pointer"
           height="44"
-          role="presentation"
           src="undefined/images/bcid-logo-rev-en.svg"
           width="181"
         />
@@ -23,7 +23,6 @@ exports[`Storyshots Home Account Exists 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-md-none pointer"
           height="44"
-          role="presentation"
           src="undefined/images/bcid-symbol-rev.svg"
           width="64"
         />
@@ -510,6 +509,7 @@ exports[`Storyshots Home Account Exists 1`] = `
       class="footer"
     >
       <nav
+        aria-label="Footer"
         class="navbar navbar-expand-sm navbar-dark justify-content-end"
       >
         <button
@@ -602,6 +602,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
   <main>
     <header>
       <nav
+        aria-label="Header"
         class="container-fluid navbar navbar-expand-lg navbar-dark"
       >
         <div
@@ -612,7 +613,6 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-none d-md-block pointer"
           height="44"
-          role="presentation"
           src="undefined/images/bcid-logo-rev-en.svg"
           width="181"
         />
@@ -620,7 +620,6 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-md-none pointer"
           height="44"
-          role="presentation"
           src="undefined/images/bcid-symbol-rev.svg"
           width="64"
         />
@@ -1107,6 +1106,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
       class="footer"
     >
       <nav
+        aria-label="Footer"
         class="navbar navbar-expand-sm navbar-dark justify-content-end"
       >
         <button
@@ -1199,6 +1199,7 @@ exports[`Storyshots Home Error 1`] = `
   <main>
     <header>
       <nav
+        aria-label="Header"
         class="container-fluid navbar navbar-expand-lg navbar-dark"
       >
         <div
@@ -1209,7 +1210,6 @@ exports[`Storyshots Home Error 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-none d-md-block pointer"
           height="44"
-          role="presentation"
           src="undefined/images/bcid-logo-rev-en.svg"
           width="181"
         />
@@ -1217,7 +1217,6 @@ exports[`Storyshots Home Error 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-md-none pointer"
           height="44"
-          role="presentation"
           src="undefined/images/bcid-symbol-rev.svg"
           width="64"
         />
@@ -1276,6 +1275,7 @@ exports[`Storyshots Home Error 1`] = `
       class="footer"
     >
       <nav
+        aria-label="Footer"
         class="navbar navbar-expand-sm navbar-dark justify-content-end"
       >
         <button
@@ -1368,6 +1368,7 @@ exports[`Storyshots Home Error Mobile 1`] = `
   <main>
     <header>
       <nav
+        aria-label="Header"
         class="container-fluid navbar navbar-expand-lg navbar-dark"
       >
         <div
@@ -1378,7 +1379,6 @@ exports[`Storyshots Home Error Mobile 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-none d-md-block pointer"
           height="44"
-          role="presentation"
           src="undefined/images/bcid-logo-rev-en.svg"
           width="181"
         />
@@ -1386,7 +1386,6 @@ exports[`Storyshots Home Error Mobile 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-md-none pointer"
           height="44"
-          role="presentation"
           src="undefined/images/bcid-symbol-rev.svg"
           width="64"
         />
@@ -1445,6 +1444,7 @@ exports[`Storyshots Home Error Mobile 1`] = `
       class="footer"
     >
       <nav
+        aria-label="Footer"
         class="navbar navbar-expand-sm navbar-dark justify-content-end"
       >
         <button
@@ -1537,6 +1537,7 @@ exports[`Storyshots Home No Account Exists 1`] = `
   <main>
     <header>
       <nav
+        aria-label="Header"
         class="container-fluid navbar navbar-expand-lg navbar-dark"
       >
         <div
@@ -1547,7 +1548,6 @@ exports[`Storyshots Home No Account Exists 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-none d-md-block pointer"
           height="44"
-          role="presentation"
           src="undefined/images/bcid-logo-rev-en.svg"
           width="181"
         />
@@ -1555,7 +1555,6 @@ exports[`Storyshots Home No Account Exists 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-md-none pointer"
           height="44"
-          role="presentation"
           src="undefined/images/bcid-symbol-rev.svg"
           width="64"
         />
@@ -2499,6 +2498,7 @@ exports[`Storyshots Home No Account Exists 1`] = `
       class="footer"
     >
       <nav
+        aria-label="Footer"
         class="navbar navbar-expand-sm navbar-dark justify-content-end"
       >
         <button
@@ -2591,6 +2591,7 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
   <main>
     <header>
       <nav
+        aria-label="Header"
         class="container-fluid navbar navbar-expand-lg navbar-dark"
       >
         <div
@@ -2601,7 +2602,6 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-none d-md-block pointer"
           height="44"
-          role="presentation"
           src="undefined/images/bcid-logo-rev-en.svg"
           width="181"
         />
@@ -2609,7 +2609,6 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-md-none pointer"
           height="44"
-          role="presentation"
           src="undefined/images/bcid-symbol-rev.svg"
           width="64"
         />
@@ -3553,6 +3552,7 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
       class="footer"
     >
       <nav
+        aria-label="Footer"
         class="navbar navbar-expand-sm navbar-dark justify-content-end"
       >
         <button
