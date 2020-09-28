@@ -1737,7 +1737,7 @@ exports[`Payment Component On back click, it redirects back to the package confi
         </div>
         <br />
       </div>
-      <h3>
+      <h2>
         Do you have additional documents to upload? 
         <span
           class="file-href"
@@ -1747,7 +1747,7 @@ exports[`Payment Component On back click, it redirects back to the package confi
         >
           Upload them now.
         </span>
-      </h3>
+      </h2>
       <br />
       <br />
       <h2>

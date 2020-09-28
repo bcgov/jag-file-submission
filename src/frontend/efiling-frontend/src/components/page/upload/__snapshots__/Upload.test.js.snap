@@ -420,7 +420,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
         </div>
         <br />
       </div>
-      <h3>
+      <h2>
         Do you have additional documents to upload? 
         <span
           class="file-href"
@@ -430,7 +430,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
         >
           Upload them now.
         </span>
-      </h3>
+      </h2>
       <br />
       <br />
       <h2>
@@ -1517,7 +1517,7 @@ exports[`Upload Component successful document upload works as expected 1`] = `
         </div>
         <br />
       </div>
-      <h3>
+      <h2>
         Do you have additional documents to upload? 
         <span
           class="file-href"
@@ -1527,7 +1527,7 @@ exports[`Upload Component successful document upload works as expected 1`] = `
         >
           Upload them now.
         </span>
-      </h3>
+      </h2>
       <br />
       <br />
       <h2>

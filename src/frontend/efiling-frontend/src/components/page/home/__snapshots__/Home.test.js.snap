@@ -1646,7 +1646,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
           </div>
           <br />
         </div>
-        <h3>
+        <h2>
           Do you have additional documents to upload? 
           <span
             class="file-href"
@@ -1656,7 +1656,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
           >
             Upload them now.
           </span>
-        </h3>
+        </h2>
         <br />
         <br />
         <h2>

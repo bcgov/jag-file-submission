@@ -218,7 +218,7 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
         </div>
         <br />
       </div>
-      <h3>
+      <h2>
         Do you have additional documents to upload? 
         <span
           class="file-href"
@@ -228,7 +228,7 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
         >
           Upload them now.
         </span>
-      </h3>
+      </h2>
       <br />
       <br />
       <h2>
@@ -722,7 +722,7 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
         </div>
         <br />
       </div>
-      <h3>
+      <h2>
         Do you have additional documents to upload? 
         <span
           class="file-href"
@@ -732,7 +732,7 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
         >
           Upload them now.
         </span>
-      </h3>
+      </h2>
       <br />
       <br />
       <h2>

@@ -254,7 +254,7 @@ exports[`Storyshots Home Account Exists 1`] = `
           </div>
           <br />
         </div>
-        <h3>
+        <h2>
           Do you have additional documents to upload? 
           <span
             class="file-href"
@@ -264,7 +264,7 @@ exports[`Storyshots Home Account Exists 1`] = `
           >
             Upload them now.
           </span>
-        </h3>
+        </h2>
         <br />
         <br />
         <h2>
@@ -851,7 +851,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
           </div>
           <br />
         </div>
-        <h3>
+        <h2>
           Do you have additional documents to upload? 
           <span
             class="file-href"
@@ -861,7 +861,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
           >
             Upload them now.
           </span>
-        </h3>
+        </h2>
         <br />
         <br />
         <h2>
