@@ -21,7 +21,7 @@
     "react-scripts": "3.4.3",
     "react-dropzone": "^11.1.0",
     "regenerator-runtime": "^0.13.5",
-    "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/0.5.8/shared-components-0.5.8.tgz",
+    "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/0.5.9/shared-components-0.5.9.tgz",
     "uuid": "^8.3.0"
   },
   "scripts": {

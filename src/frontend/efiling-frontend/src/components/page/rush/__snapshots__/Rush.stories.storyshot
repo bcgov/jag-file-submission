@@ -392,7 +392,7 @@ you feel are necessary.
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="csoAccountDetailsCard"
           >
             <div
               class="container-background bluegrey-heading"
@@ -470,7 +470,7 @@ you feel are necessary.
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="aboutCsoCard"
           >
             <div
               class="container-background bluegrey-heading"
@@ -926,7 +926,7 @@ you feel are necessary.
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="csoAccountDetailsCard"
           >
             <div
               class="container-background bluegrey-heading"
@@ -1004,7 +1004,7 @@ you feel are necessary.
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="aboutCsoCard"
           >
             <div
               class="container-background bluegrey-heading"

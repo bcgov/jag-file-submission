@@ -330,7 +330,7 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="csoAccountDetailsCard"
           >
             <div
               class="container-background bluegrey-heading"
@@ -408,7 +408,7 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="aboutCsoCard"
           >
             <div
               class="container-background bluegrey-heading"
@@ -834,7 +834,7 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="csoAccountDetailsCard"
           >
             <div
               class="container-background bluegrey-heading"
@@ -912,7 +912,7 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="aboutCsoCard"
           >
             <div
               class="container-background bluegrey-heading"
@@ -1060,7 +1060,7 @@ exports[`PackageConfirmation Component On click of Upload them now text, it redi
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="amendmentsCard"
           >
             <div
               class="container-background bluegrey-heading"
@@ -1122,7 +1122,7 @@ exports[`PackageConfirmation Component On click of Upload them now text, it redi
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="supremeCourtSchedulingCard"
           >
             <div
               class="container-background bluegrey-heading"
@@ -1461,7 +1461,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="rushSubmissionCard"
           >
             <div
               class="container-background bluegrey-heading"
@@ -1531,7 +1531,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="csoAccountDetailsCard"
           >
             <div
               class="container-background bluegrey-heading"
@@ -1609,7 +1609,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="aboutCsoCard"
           >
             <div
               class="container-background bluegrey-heading"
@@ -1757,7 +1757,7 @@ exports[`PackageConfirmation Component On keydown of Upload them now text, it re
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="amendmentsCard"
           >
             <div
               class="container-background bluegrey-heading"
@@ -1819,7 +1819,7 @@ exports[`PackageConfirmation Component On keydown of Upload them now text, it re
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="supremeCourtSchedulingCard"
           >
             <div
               class="container-background bluegrey-heading"
@@ -2158,7 +2158,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="rushSubmissionCard"
           >
             <div
               class="container-background bluegrey-heading"
@@ -2228,7 +2228,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="csoAccountDetailsCard"
           >
             <div
               class="container-background bluegrey-heading"
@@ -2306,7 +2306,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="aboutCsoCard"
           >
             <div
               class="container-background bluegrey-heading"

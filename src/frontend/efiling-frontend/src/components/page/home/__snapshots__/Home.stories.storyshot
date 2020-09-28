@@ -366,7 +366,7 @@ exports[`Storyshots Home Account Exists 1`] = `
             <p />
             <section
               class="bluegrey-container"
-              id="bluegrey-section"
+              id="csoAccountDetailsCard"
             >
               <div
                 class="container-background bluegrey-heading"
@@ -444,7 +444,7 @@ exports[`Storyshots Home Account Exists 1`] = `
             <p />
             <section
               class="bluegrey-container"
-              id="bluegrey-section"
+              id="aboutCsoCard"
             >
               <div
                 class="container-background bluegrey-heading"
@@ -963,7 +963,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
             <p />
             <section
               class="bluegrey-container"
-              id="bluegrey-section"
+              id="csoAccountDetailsCard"
             >
               <div
                 class="container-background bluegrey-heading"
@@ -1041,7 +1041,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
             <p />
             <section
               class="bluegrey-container"
-              id="bluegrey-section"
+              id="aboutCsoCard"
             >
               <div
                 class="container-background bluegrey-heading"
@@ -2433,7 +2433,7 @@ exports[`Storyshots Home No Account Exists 1`] = `
             <p />
             <section
               class="bluegrey-container"
-              id="bluegrey-section"
+              id="aboutCsoCard"
             >
               <div
                 class="container-background bluegrey-heading"
@@ -3487,7 +3487,7 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
             <p />
             <section
               class="bluegrey-container"
-              id="bluegrey-section"
+              id="aboutCsoCard"
             >
               <div
                 class="container-background bluegrey-heading"

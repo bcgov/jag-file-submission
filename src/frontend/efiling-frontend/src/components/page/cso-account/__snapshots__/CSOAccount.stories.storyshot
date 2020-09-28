@@ -865,7 +865,7 @@ exports[`Storyshots CSOAccount Default 1`] = `
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="aboutCsoCard"
           >
             <div
               class="container-background bluegrey-heading"
@@ -1794,7 +1794,7 @@ exports[`Storyshots CSOAccount Mobile 1`] = `
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="aboutCsoCard"
           >
             <div
               class="container-background bluegrey-heading"
