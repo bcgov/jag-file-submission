@@ -5,6 +5,7 @@ exports[`Storyshots Success Default 1`] = `
   <main>
     <header>
       <nav
+        aria-label="Header"
         class="container-fluid navbar navbar-expand-lg navbar-dark"
       >
         <div
@@ -15,7 +16,6 @@ exports[`Storyshots Success Default 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-none d-md-block pointer"
           height="44"
-          role="presentation"
           src="undefined/images/bcid-logo-rev-en.svg"
           width="181"
         />
@@ -23,7 +23,6 @@ exports[`Storyshots Success Default 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-md-none pointer"
           height="44"
-          role="presentation"
           src="undefined/images/bcid-symbol-rev.svg"
           width="64"
         />
@@ -73,6 +72,7 @@ exports[`Storyshots Success Default 1`] = `
       class="footer"
     >
       <nav
+        aria-label="Footer"
         class="navbar navbar-expand-sm navbar-dark justify-content-end"
       >
         <button
@@ -165,6 +165,7 @@ exports[`Storyshots Success Mobile 1`] = `
   <main>
     <header>
       <nav
+        aria-label="Header"
         class="container-fluid navbar navbar-expand-lg navbar-dark"
       >
         <div
@@ -175,7 +176,6 @@ exports[`Storyshots Success Mobile 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-none d-md-block pointer"
           height="44"
-          role="presentation"
           src="undefined/images/bcid-logo-rev-en.svg"
           width="181"
         />
@@ -183,7 +183,6 @@ exports[`Storyshots Success Mobile 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-md-none pointer"
           height="44"
-          role="presentation"
           src="undefined/images/bcid-symbol-rev.svg"
           width="64"
         />
@@ -233,6 +232,7 @@ exports[`Storyshots Success Mobile 1`] = `
       class="footer"
     >
       <nav
+        aria-label="Footer"
         class="navbar navbar-expand-sm navbar-dark justify-content-end"
       >
         <button

@@ -5,6 +5,7 @@ exports[`Home Component matches the snapshot when error encountered 1`] = `
   <main>
     <header>
       <nav
+        aria-label="Header"
         class="container-fluid navbar navbar-expand-lg navbar-dark"
       >
         <div
@@ -15,7 +16,6 @@ exports[`Home Component matches the snapshot when error encountered 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-none d-md-block pointer"
           height="44"
-          role="presentation"
           src="undefined/images/bcid-logo-rev-en.svg"
           width="181"
         />
@@ -23,7 +23,6 @@ exports[`Home Component matches the snapshot when error encountered 1`] = `
           alt="B.C. Government Logo"
           class="img-fluid d-md-none pointer"
           height="44"
-          role="presentation"
           src="undefined/images/bcid-symbol-rev.svg"
           width="64"
         />
@@ -82,6 +81,7 @@ exports[`Home Component matches the snapshot when error encountered 1`] = `
       class="footer"
     >
       <nav
+        aria-label="Footer"
         class="navbar navbar-expand-sm navbar-dark justify-content-end"
       >
         <button
@@ -174,6 +174,7 @@ exports[`Home Component matches the snapshot when error encountered, does not at
   <main>
     <header>
       <nav
+        aria-label="Header"
         class="container-fluid navbar navbar-expand-lg navbar-dark"
       >
         <div
@@ -184,7 +185,6 @@ exports[`Home Component matches the snapshot when error encountered, does not at
           alt="B.C. Government Logo"
           class="img-fluid d-none d-md-block pointer"
           height="44"
-          role="presentation"
           src="undefined/images/bcid-logo-rev-en.svg"
           width="181"
         />
@@ -192,7 +192,6 @@ exports[`Home Component matches the snapshot when error encountered, does not at
           alt="B.C. Government Logo"
           class="img-fluid d-md-none pointer"
           height="44"
-          role="presentation"
           src="undefined/images/bcid-symbol-rev.svg"
           width="64"
         />
@@ -251,6 +250,7 @@ exports[`Home Component matches the snapshot when error encountered, does not at
       class="footer"
     >
       <nav
+        aria-label="Footer"
         class="navbar navbar-expand-sm navbar-dark justify-content-end"
       >
         <button
@@ -343,6 +343,7 @@ exports[`Home Component matches the snapshot when user cso account does not exis
   <main>
     <header>
       <nav
+        aria-label="Header"
         class="container-fluid navbar navbar-expand-lg navbar-dark"
       >
         <div
@@ -353,7 +354,6 @@ exports[`Home Component matches the snapshot when user cso account does not exis
           alt="B.C. Government Logo"
           class="img-fluid d-none d-md-block pointer"
           height="44"
-          role="presentation"
           src="undefined/images/bcid-logo-rev-en.svg"
           width="181"
         />
@@ -361,7 +361,6 @@ exports[`Home Component matches the snapshot when user cso account does not exis
           alt="B.C. Government Logo"
           class="img-fluid d-md-none pointer"
           height="44"
-          role="presentation"
           src="undefined/images/bcid-symbol-rev.svg"
           width="64"
         />
@@ -1305,6 +1304,7 @@ exports[`Home Component matches the snapshot when user cso account does not exis
       class="footer"
     >
       <nav
+        aria-label="Footer"
         class="navbar navbar-expand-sm navbar-dark justify-content-end"
       >
         <button
@@ -1397,6 +1397,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
   <main>
     <header>
       <nav
+        aria-label="Header"
         class="container-fluid navbar navbar-expand-lg navbar-dark"
       >
         <div
@@ -1407,7 +1408,6 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
           alt="B.C. Government Logo"
           class="img-fluid d-none d-md-block pointer"
           height="44"
-          role="presentation"
           src="undefined/images/bcid-logo-rev-en.svg"
           width="181"
         />
@@ -1415,7 +1415,6 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
           alt="B.C. Government Logo"
           class="img-fluid d-md-none pointer"
           height="44"
-          role="presentation"
           src="undefined/images/bcid-symbol-rev.svg"
           width="64"
         />
@@ -1902,6 +1901,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
       class="footer"
     >
       <nav
+        aria-label="Footer"
         class="navbar navbar-expand-sm navbar-dark justify-content-end"
       >
         <button
