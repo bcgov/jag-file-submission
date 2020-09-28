@@ -45,6 +45,10 @@ exports[`Home Component matches the snapshot 1`] = `
       <div
         class="content col-md-12"
       >
+        <h1>
+          Welcome to the eFiling Demo Client
+        </h1>
+        <br />
         <div
           class="dropzone-outer-box"
           data-testid="dropdownzone"

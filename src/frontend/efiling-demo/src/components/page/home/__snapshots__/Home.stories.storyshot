@@ -45,6 +45,10 @@ exports[`Storyshots Home Default 1`] = `
       <div
         class="content col-md-12"
       >
+        <h1>
+          Welcome to the eFiling Demo Client
+        </h1>
+        <br />
         <div
           class="dropzone-outer-box"
           data-testid="dropdownzone"
@@ -241,6 +245,10 @@ exports[`Storyshots Home Mobile 1`] = `
       <div
         class="content col-md-12"
       >
+        <h1>
+          Welcome to the eFiling Demo Client
+        </h1>
+        <br />
         <div
           class="dropzone-outer-box"
           data-testid="dropdownzone"

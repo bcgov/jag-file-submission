@@ -200,6 +200,8 @@ export default function Home({ page: { header } }) {
       <Header header={header} />
       <div className="page">
         <div className="content col-md-12">
+          <h1>Welcome to the eFiling Demo Client</h1>
+          <br />
           <Dropzone
             onDrop={(droppedFiles) => setFiles(files.concat(droppedFiles))}
           >
