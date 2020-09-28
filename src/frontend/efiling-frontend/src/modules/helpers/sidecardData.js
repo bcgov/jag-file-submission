@@ -22,6 +22,7 @@ const aboutCso = () => {
       </p>,
     ],
     type: "bluegrey",
+    id: "aboutCsoCard",
     isWide: true,
     icon: <MdInfoOutline className="side-card-icon" />,
   };
@@ -52,6 +53,7 @@ const csoAccountDetails = () => {
       </p>,
     ],
     type: "bluegrey",
+    id: "csoAccountDetailsCard",
     isWide: true,
     icon: <MdPerson className="side-card-icon" />,
   };
@@ -78,6 +80,7 @@ const rushSubmission = (onClick) => {
       </p>,
     ],
     type: "bluegrey",
+    id: "rushSubmissionCard",
     isWide: true,
     icon: <MdTimer className="side-card-icon" />,
   };
@@ -93,6 +96,7 @@ const amendments = () => {
       </p>,
     ],
     type: "bluegrey",
+    id: "amendmentsCard",
     isWide: true,
     icon: <MdInfoOutline className="side-card-icon" />,
   };
@@ -108,6 +112,7 @@ const supremeCourtScheduling = () => {
       </p>,
     ],
     type: "bluegrey",
+    id: "supremeCourtSchedulingCard",
     isWide: true,
     icon: <MdInfoOutline className="side-card-icon" />,
   };

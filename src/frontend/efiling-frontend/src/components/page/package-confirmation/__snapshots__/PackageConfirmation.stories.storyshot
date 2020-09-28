@@ -218,7 +218,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
         </div>
         <br />
       </div>
-      <h3>
+      <h2>
         Do you have additional documents to upload? 
         <span
           class="file-href"
@@ -228,7 +228,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
         >
           Upload them now.
         </span>
-      </h3>
+      </h2>
       <br />
       <br />
       <h2>
@@ -330,7 +330,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="csoAccountDetailsCard"
           >
             <div
               class="container-background bluegrey-heading"
@@ -408,7 +408,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="aboutCsoCard"
           >
             <div
               class="container-background bluegrey-heading"
@@ -690,7 +690,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
         </div>
         <br />
       </div>
-      <h3>
+      <h2>
         Do you have additional documents to upload? 
         <span
           class="file-href"
@@ -700,7 +700,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
         >
           Upload them now.
         </span>
-      </h3>
+      </h2>
       <br />
       <br />
       <h2>
@@ -802,7 +802,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="csoAccountDetailsCard"
           >
             <div
               class="container-background bluegrey-heading"
@@ -880,7 +880,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="aboutCsoCard"
           >
             <div
               class="container-background bluegrey-heading"
@@ -1194,7 +1194,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
         </div>
         <br />
       </div>
-      <h3>
+      <h2>
         Do you have additional documents to upload? 
         <span
           class="file-href"
@@ -1204,7 +1204,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
         >
           Upload them now.
         </span>
-      </h3>
+      </h2>
       <br />
       <br />
       <h2>
@@ -1306,7 +1306,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="csoAccountDetailsCard"
           >
             <div
               class="container-background bluegrey-heading"
@@ -1384,7 +1384,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="aboutCsoCard"
           >
             <div
               class="container-background bluegrey-heading"

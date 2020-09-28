@@ -205,7 +205,7 @@ export default function PackageConfirmation({
             <br />
           </div>
         ))}
-        <h3>
+        <h2>
           Do you have additional documents to upload?&nbsp;
           <span
             onKeyDown={() => setShowUpload(true)}
@@ -217,7 +217,7 @@ export default function PackageConfirmation({
           >
             Upload them now.
           </span>
-        </h3>
+        </h2>
         <br />
         <br />
         <h2>Summary</h2>

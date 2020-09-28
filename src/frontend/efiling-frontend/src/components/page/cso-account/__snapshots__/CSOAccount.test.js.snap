@@ -865,7 +865,7 @@ exports[`CSOAccount Component Matches the snapshot 1`] = `
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="aboutCsoCard"
           >
             <div
               class="container-background bluegrey-heading"

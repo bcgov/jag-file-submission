@@ -1239,7 +1239,7 @@ exports[`Home Component matches the snapshot when user cso account does not exis
             <p />
             <section
               class="bluegrey-container"
-              id="bluegrey-section"
+              id="aboutCsoCard"
             >
               <div
                 class="container-background bluegrey-heading"
@@ -1646,7 +1646,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
           </div>
           <br />
         </div>
-        <h3>
+        <h2>
           Do you have additional documents to upload? 
           <span
             class="file-href"
@@ -1656,7 +1656,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
           >
             Upload them now.
           </span>
-        </h3>
+        </h2>
         <br />
         <br />
         <h2>
@@ -1758,7 +1758,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
             <p />
             <section
               class="bluegrey-container"
-              id="bluegrey-section"
+              id="csoAccountDetailsCard"
             >
               <div
                 class="container-background bluegrey-heading"
@@ -1836,7 +1836,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
             <p />
             <section
               class="bluegrey-container"
-              id="bluegrey-section"
+              id="aboutCsoCard"
             >
               <div
                 class="container-background bluegrey-heading"

@@ -84,7 +84,7 @@ exports[`Storyshots Upload Default 1`] = `
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="amendmentsCard"
           >
             <div
               class="container-background bluegrey-heading"
@@ -146,7 +146,7 @@ exports[`Storyshots Upload Default 1`] = `
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="supremeCourtSchedulingCard"
           >
             <div
               class="container-background bluegrey-heading"
@@ -286,7 +286,7 @@ exports[`Storyshots Upload Mobile 1`] = `
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="amendmentsCard"
           >
             <div
               class="container-background bluegrey-heading"
@@ -348,7 +348,7 @@ exports[`Storyshots Upload Mobile 1`] = `
           <p />
           <section
             class="bluegrey-container"
-            id="bluegrey-section"
+            id="supremeCourtSchedulingCard"
           >
             <div
               class="container-background bluegrey-heading"
