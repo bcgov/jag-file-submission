@@ -4,6 +4,12 @@
 
 Generic File Submission API (to be used by the Family Law Act Application at first)
 
+## Summary
+
+As component of the Court Digital Transformation Strategy (CDTS), the Efiling hub uses modern, secure, scalable, microservice architecture and API first design to facilitate easy integration of other applications (i.e. Family Law Act application, Online Divorce Assistant, Representation Agreement app) with the current electronic filing services that are provisioned by the Court Services Online application.
+
+The eFiling hub is a foundational component to enhance citizen experiences for the submission of court documents electronically, while streamlining backend court registry processes.
+
 ## Project Structure
 
     .
