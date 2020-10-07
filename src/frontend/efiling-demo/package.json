@@ -22,7 +22,7 @@
     "react-dropzone": "^11.1.0",
     "regenerator-runtime": "^0.13.5",
     "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/0.5.9/shared-components-0.5.9.tgz",
-    "uuid": "^8.3.0"
+    "uuid": "^8.3.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -54,13 +54,13 @@
   "devDependencies": {
     "@babel/preset-env": "^7.11.0",
     "@babel/core": "^7.11.6",
-    "@storybook/addons": "^6.0.21",
-    "@storybook/addon-storyshots": "^6.0.19",
+    "@storybook/addons": "^6.0.26",
+    "@storybook/addon-storyshots": "^6.0.26",
     "@storybook/addon-links": "^6.0.21",
     "@storybook/addon-actions": "^6.0.19",
-    "@storybook/addon-viewport": "^6.0.19",
+    "@storybook/addon-viewport": "^6.0.26",
     "@storybook/preset-create-react-app": "^3.0.0",
-    "@storybook/react": "^6.0.22",
+    "@storybook/react": "^6.0.26",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.0.4",
     "@testing-library/react-hooks": "3.4.2",
