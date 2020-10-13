@@ -16,7 +16,7 @@
     <java.version>1.8</java.version>
     <org.seleniumhq.selenium.version>3.141.59</org.seleniumhq.selenium.version>
     <io.rest-assured.version>4.3.1</io.rest-assured.version>
-    <junit.version>4.12</junit.version>
+    <junit.version>4.13.1</junit.version>
     <io.github.bonigarcia.version>4.0.0</io.github.bonigarcia.version>
     <org.apache.logging.log4j.version>2.13.3</org.apache.logging.log4j.version>
     <org.slf4j.version>1.7.30</org.slf4j.version>
