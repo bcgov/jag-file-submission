@@ -18,7 +18,7 @@
         <net.rakugakibox.spring.boot.version>2.7.1</net.rakugakibox.spring.boot.version>
         <org.apache.commons.version>3.11</org.apache.commons.version>
         <org.springdoc.version>1.4.8</org.springdoc.version>
-        <org.mapstruct.version>1.4.0.Final</org.mapstruct.version>
+        <org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
         <com.splunk.logging.version>1.8.0</com.splunk.logging.version>
         <org.openapitools.version>0.2.1</org.openapitools.version>
         <org.apache.cxf.version>3.4.0</org.apache.cxf.version>
