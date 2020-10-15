@@ -10,7 +10,7 @@
 
     <properties>
         <io.github.openfeign.opentracing.version>0.4.1</io.github.openfeign.opentracing.version>
-        <io.opentracing.contrib.version>3.2.0</io.opentracing.contrib.version>
+        <io.opentracing.contrib.version>3.2.2</io.opentracing.contrib.version>
         <io.springfox.version>2.9.2</io.springfox.version>
         <io.swagger.version>1.6.2</io.swagger.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
@@ -18,7 +18,7 @@
         <net.rakugakibox.spring.boot.version>2.7.1</net.rakugakibox.spring.boot.version>
         <org.apache.commons.version>3.11</org.apache.commons.version>
         <org.springdoc.version>1.4.8</org.springdoc.version>
-        <org.mapstruct.version>1.4.0.Final</org.mapstruct.version>
+        <org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
         <com.splunk.logging.version>1.8.0</com.splunk.logging.version>
         <org.openapitools.version>0.2.1</org.openapitools.version>
         <org.apache.cxf.version>3.4.0</org.apache.cxf.version>
@@ -27,7 +27,7 @@
         <javax.xml.bind.version>2.3.1</javax.xml.bind.version>
         <org.glassfish.jersey.inject.version>2.32</org.glassfish.jersey.inject.version>
         <com.brsanthu.version>2.2</com.brsanthu.version>
-        <org.threeten.version>1.4.4</org.threeten.version>
+        <org.threeten.version>1.4.5</org.threeten.version>
         <com.github.joschi.jackson.version>2.11.2</com.github.joschi.jackson.version>
         <com.google.code.findbugs.version>3.0.2</com.google.code.findbugs.version>
         <ca.bc.gov.open.version>0.1.8</ca.bc.gov.open.version>
