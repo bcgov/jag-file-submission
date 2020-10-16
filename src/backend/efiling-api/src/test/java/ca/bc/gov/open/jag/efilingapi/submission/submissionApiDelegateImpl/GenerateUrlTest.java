@@ -47,6 +47,9 @@ public class GenerateUrlTest {
 
     private static final String CODE = "CODE";
     private static final String CLIENT_APP_NAME = "clientAppName";
+    private static final UUID USER_WITH_CSO_ACCOUNT = UUID.fromString("1593769b-ac4b-43d9-9e81-38877eefcca5");
+    private static final UUID USER_WITH_NO_CSO_ACCOUNT = UUID.fromString("1593769b-ac4b-43d9-9e81-38877eefcca6");
+
 
     private SubmissionApiDelegateImpl sut;
 
@@ -100,7 +103,8 @@ public class GenerateUrlTest {
 
         Submission submission = Submission.builder().id(TestHelpers.CASE_1).transactionId(transactionId).expiryDate(10).create();
 
-        Mockito.when(accountServiceMock.getCsoAccountDetails(any())).thenReturn(TestHelpers.createCSOAccountDetails(true));
+        Mockito.when(accountServiceMock.getCsoAccountDetails(Mockito.eq(USER_WITH_CSO_ACCOUNT))).thenReturn(TestHelpers.createCSOAccountDetails(true));
+        Mockito.when(accountServiceMock.getCsoAccountDetails(Mockito.eq(USER_WITH_NO_CSO_ACCOUNT))).thenReturn(null);
 
         Mockito
                 .when(submissionServiceMock.generateFromRequest(
@@ -147,7 +151,29 @@ public class GenerateUrlTest {
         generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
         generateUrlRequest.setNavigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
 
-        ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(transactionId, UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_1, generateUrlRequest);
+        ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(transactionId, USER_WITH_CSO_ACCOUNT.toString().replace("-", ""), TestHelpers.CASE_1, generateUrlRequest);
+
+        Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
+        Assertions.assertEquals("http://localhost?submissionId=" + TestHelpers.CASE_1.toString() + "&transactionId="  + transactionId, actual.getBody().getEfilingUrl());
+        Assertions.assertNotNull(actual.getBody().getExpiryDate());
+
+    }
+
+
+    @Test
+    @DisplayName("200: with user having no CSO account should return a valid url")
+    public void withUserHavingNoCSOAccountShouldReturnValidUrl() {
+
+        @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
+
+        Map<String, Object> otherClaims = new HashMap<>();
+        otherClaims.put(Keys.CSO_APPLICATION_CODE, CODE);
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
+        generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
+        generateUrlRequest.setNavigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
+
+        ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(transactionId, USER_WITH_NO_CSO_ACCOUNT.toString().replace("-", ""), TestHelpers.CASE_1, generateUrlRequest);
 
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
         Assertions.assertEquals("http://localhost?submissionId=" + TestHelpers.CASE_1.toString() + "&transactionId="  + transactionId, actual.getBody().getEfilingUrl());
@@ -254,5 +280,7 @@ public class GenerateUrlTest {
         Assertions.assertEquals(INVALIDUNIVERSAL.getErrorCode(), ((EfilingError)actual.getBody()).getError());
         Assertions.assertEquals(INVALIDUNIVERSAL.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
     }
+
+
 }
 
