@@ -229,7 +229,8 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
                     HttpStatus.FORBIDDEN);
 
-        if (!accountService.getCsoAccountDetails(universalId.get()).isFileRolePresent())
+        if (accountService.getCsoAccountDetails(universalId.get()) != null &&
+                !accountService.getCsoAccountDetails(universalId.get()).isFileRolePresent())
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDROLE).create(),
                     HttpStatus.FORBIDDEN);
