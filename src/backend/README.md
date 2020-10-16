@@ -25,3 +25,11 @@ mvn clean install -P libs
 ```
 mvn clean verify -P all
 ```
+
+### Update Version
+
+Run
+
+```
+mvn versions:set -DartifactId=*  -DgroupId=*
+```
