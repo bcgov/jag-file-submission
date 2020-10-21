@@ -6,4 +6,4 @@ Feature: Payment card can be updated
    Given user jwt is retrieved from the frontend
    Then POST http request is made to "PAYMENT_API" with internalClientNumber and redirect Url details
    When status 200 is correct and content type are verified
-   Then verify response returns bambora url
+   Then verify response returns bambora Url
