@@ -15,7 +15,6 @@ public class EfilingLookupServiceDemoImpl implements EfilingLookupService {
         return  new ServiceFees(
                 BigDecimal.valueOf(7),
                 "serviceTypeCd");
-
     }
 
     @Override

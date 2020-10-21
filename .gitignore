@@ -7,3 +7,4 @@ tests/logs
 .idea
 tests/test-output
 .env
+src/test/resources/local.properties

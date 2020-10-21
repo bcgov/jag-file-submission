@@ -64,6 +64,7 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
             for (int i = 0; i < 3; i++) {
                 GenerateUrlHelper generateUrlHelper = new GenerateUrlHelper();
                 String respUrl = generateUrlHelper.getGeneratedUrl();
+                System.out.println(respUrl);
 
                 driver.get(respUrl);
                 log.info("EFiling submission page url is accessed successfully");

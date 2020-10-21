@@ -44,7 +44,7 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
     @Given("POST http request is made to {string} with non existing CSO account guid and a single pdf file")
     public void postHttpRequestIsMadeToWithNonExistingCSOAccountGuidAndASinglePdfFile(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
-        nonExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getNonExistingCSOGuid();
+        nonExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getInvalidNoFilingRoleGuid();
 
         response = generateUrlRequestBuilders.requestWithSinglePdfDocument(resource, nonExistingCSOGuid, FILE_NAME_PATH);
     }
@@ -71,7 +71,7 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
     @Given("POST http request is made to {string} with client application, court details and navigation urls with non existing guid")
     public void POSTHttpRequestIsMadeToWithClientApplicationCourtDetailsAndNavigationUrlsWithNonExistingGuid(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
-        nonExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getNonExistingCSOGuid();
+        nonExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getInvalidNoFilingRoleGuid();
 
         response = generateUrlRequestBuilders.postRequestWithPayload(resource,nonExistingCSOGuid, submissionId, PATH_PARAM );
     }

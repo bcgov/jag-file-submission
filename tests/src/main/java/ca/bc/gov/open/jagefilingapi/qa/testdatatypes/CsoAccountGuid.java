@@ -4,10 +4,13 @@ public class CsoAccountGuid {
 
     private String validExistingCSOGuid;
     private String invalidNoFilingRoleGuid;
-    private String nonExistingCSOGuid;
+
     private String validUserId;
     private String inValidUserId;
     private String clientSecret;
+
+    public CsoAccountGuid() {
+    }
 
     public String getValidExistingCSOGuid() {
         return validExistingCSOGuid;
@@ -25,13 +28,6 @@ public class CsoAccountGuid {
         this.invalidNoFilingRoleGuid = invalidNoFilingRoleGuid;
     }
 
-    public String getNonExistingCSOGuid() {
-        return nonExistingCSOGuid;
-    }
-
-    public void setNonExistingCSOGuid(String nonExistingCSOGuid) {
-        this.nonExistingCSOGuid = nonExistingCSOGuid;
-    }
 
     public String getValidUserId() {
         return validUserId;

@@ -1,6 +1,5 @@
 package ca.bc.gov.open.jagefilingapi.qa.frontendutils;
 
-import ca.bc.gov.open.jagefilingapi.qa.config.ReadConfig;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,9 +17,8 @@ public class DriverClass {
         public WebDriver driver;
         public Logger log = LogManager.getLogger(DriverClass.class);
 
-        public void initializeDriver() throws IOException {
-            ReadConfig readConfig = new ReadConfig();
-            String  browser = readConfig.getBrowser();
+        public void initializeDriver() {
+            String  browser = System.getProperty("BROWSER");
             switch (browser) {
                 case "chrome":
                     WebDriverManager.chromedriver().setup();

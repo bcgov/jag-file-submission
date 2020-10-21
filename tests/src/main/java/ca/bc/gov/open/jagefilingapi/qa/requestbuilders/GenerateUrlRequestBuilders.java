@@ -35,8 +35,8 @@ public class GenerateUrlRequestBuilders {
     private GenerateUrlPayload payloadData;
 
     public Response getBearerToken() {
-      String resourceAPI = System.getProperty("KEYCLOAK_URL");
-      String clientSecret = System.getProperty("EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET");
+        String resourceAPI = System.getProperty("KEYCLOAK_URL");
+        String clientSecret = System.getProperty("EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET");
 
         request = RestAssured.given()
                 .formParam(CLIENT_ID, "efiling-demo")
@@ -203,7 +203,7 @@ public class GenerateUrlRequestBuilders {
         payloadData = new GenerateUrlPayload();
         APIResources resourceAPI = APIResources.valueOf(resourceValue);
         String invalidNoFilingRoleGuid = JsonDataReader.getCsoAccountGuid().getInvalidNoFilingRoleGuid();
-        String inValidUserId = JsonDataReader.getCsoAccountGuid().getInValidUserId();
+        String validUserId = JsonDataReader.getCsoAccountGuid().getValidUserId();
 
         Response response = getBearerToken();
         JsonPath jsonPath = new JsonPath(response.asString());
@@ -214,7 +214,7 @@ public class GenerateUrlRequestBuilders {
         request = given().auth().preemptive().oauth2(accessToken)
                 .spec(TestUtil.submitDocumentsRequestSpecification())
                 .header(X_TRANSACTION_ID, invalidNoFilingRoleGuid)
-                .header(X_USER_ID, inValidUserId)
+                .header(X_USER_ID, validUserId)
                 .multiPart(FILES, pdfFile);
 
         return request.when().post(resourceAPI.getResource() + invalidNoFilingRoleGuid + GENERATE_URL_PATH)

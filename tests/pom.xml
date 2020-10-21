@@ -143,12 +143,25 @@
       <artifactId>jackson-databind-nullable</artifactId>
       <version>${org.openapitools.version}</version>
     </dependency>
-    <dependency>
-      <groupId>io.github.cdimascio</groupId>
-      <artifactId>java-dotenv</artifactId>
-      <version>5.2.1</version>
-    </dependency>
   </dependencies>
+
+  <profiles>
+    <profile>
+      <id>config</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <build.profile.id>config</build.profile.id>
+      </properties>
+    </profile>
+    <profile>
+      <id>local</id>
+      <properties>
+        <build.profile.id>local</build.profile.id>
+      </properties>
+    </profile>
+  </profiles>
 
   <build>
     <plugins>
@@ -175,12 +188,7 @@
           <includes>
             <include>**/*CucumberTest*.java</include>
           </includes>
-          <systemPropertyVariables>
-            <BCEID_USERNAME>${BCEID_USERNAME}</BCEID_USERNAME>
-            <BCEID_PASSWORD>${BCEID_PASSWORD}</BCEID_PASSWORD>
-            <KEYCLOAK_URL>${KEYCLOAK_URL}</KEYCLOAK_URL>
-            <EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET>${EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}</EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET>
-          </systemPropertyVariables>
+          <systemPropertiesFile>src/test/resources/${build.profile.id}.properties</systemPropertiesFile>
         </configuration>
       </plugin>
 
