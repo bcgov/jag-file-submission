@@ -34,8 +34,8 @@ Set the following property values in the [local.properties file](src/test/resour
 
 ## Running the maven Tests without cucumber tags
 
-[config.properties](src/test/resources/config.properties) are pointing to docker, change it for other source.
-
+[config.properties](src/test/resources/config.properties) are for TEST env.
+[demo.properties](src/test/resources/demo.properties) are for GitHub actions.
 [account-data.json](src/test/java/testdatasource/account-data.json) uses demo accounts, value can be changed.
 
 ```bash

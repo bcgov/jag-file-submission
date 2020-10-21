@@ -10,6 +10,7 @@ public class CsoAccountGuid {
     private String clientSecret;
 
     public CsoAccountGuid() {
+        // Empty constructor
     }
 
     public String getValidExistingCSOGuid() {
