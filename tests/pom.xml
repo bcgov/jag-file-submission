@@ -156,12 +156,6 @@
       </properties>
     </profile>
     <profile>
-      <id>demo</id>
-      <properties>
-        <build.profile.id>demo</build.profile.id>
-      </properties>
-    </profile>
-    <profile>
       <id>local</id>
       <properties>
         <build.profile.id>local</build.profile.id>
