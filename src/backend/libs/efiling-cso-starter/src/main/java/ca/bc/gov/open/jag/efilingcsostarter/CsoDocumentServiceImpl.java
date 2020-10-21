@@ -36,6 +36,7 @@ public class CsoDocumentServiceImpl implements EfilingDocumentService {
         if (StringUtils.isBlank(courtClass)) throw new IllegalArgumentException("courtClass level is required.");
         if (StringUtils.isBlank(documentType)) throw new IllegalArgumentException("documentType level is required.");
 
+        
         return getSoapDocumentTypes(courtLevel, courtClass).stream()
                 .filter(doc -> doc.getDocumentTypeCd().equals(documentType))
                 .findFirst()
