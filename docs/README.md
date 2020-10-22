@@ -104,7 +104,7 @@ The `navigation` object represents a list of possible returns to your applicatio
 
 #### clientApplication
 
-The `clientAppplication` object represents how your application is labelled in **efiling hub**.
+The `clientApplication` object represents how your application is labelled in **efiling hub**.
 
 #### filingPackage
 
