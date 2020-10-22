@@ -17,7 +17,7 @@ This guide will provide you with all information you need to get started.
 Get an oauth token from our Keycloak Server using the following curl
 
 ```bash
-curl --location --request POST 'url' \
+curl --location --request POST 'keycloak_url' \
 --header 'Content-Type: application/x-www-form-urlencoded' \
 --data-urlencode 'client_id=[your client id]' \
 --data-urlencode 'grant_type=client_credentials' \
