@@ -126,7 +126,7 @@ The `court` object represents the court details.
 
 ##### Documents
 
-The `documents` array represents the previously uploaded document.
+The `documents` array represents the previously uploaded documents.
 
 ###### Properties
 
