@@ -29,7 +29,7 @@ curl --location --request POST 'keycloak_url' \
 Start by uploading document(s) to the **eFiling Hub** API:
 
 ```bash
-curl --location --request POST 'http://fla-nginx-proxy-qzaydf-dev.pathfinder.gov.bc.ca/api/submission/documents' \
+curl --location --request POST '[filing-hub-url]/submission/documents' \
 --header 'X-Transaction-Id: ca09e538-d34e-11ea-87d0-0242ac130003' \
 --header 'Content-Type: multipart/form-data' \
 --header 'Authorization: Bearer [bearer_token]' \
@@ -48,7 +48,7 @@ the response includes a submission id that you will use to generate a redirect u
 Then generate a unique url to redirect the users to the **eFiling Hub**
 
 ```bash
-curl --location --request POST 'http://fla-nginx-proxy-qzaydf-dev.pathfinder.gov.bc.ca/api/submission/5e9492cf-e87e-48b5-ba55-0c198d8edde5/generateUrl' \
+curl --location --request POST '[filing-hub-url]/submission/5e9492cf-e87e-48b5-ba55-0c198d8edde5/generateUrl' \
 --header 'X-Transaction-Id: ca09e538-d34e-11ea-87d0-0242ac130003' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer [bearer_token]' \
@@ -116,13 +116,13 @@ The `court` object represents the court details.
 
 ##### Properties
 
-| name       | type   | description                                                                   |
-| ---------- | ------ | ----------------------------------------------------------------------------- |
-| location   | string | Court House where the package is submitted to                                 |
-| level      | string | Court level, can be `Supreme` of `Provincial`                                 |
-| courtClass | string | Court Classification see [Court Classification](data.md#Court-Classification) |
-| division   | string | R for Criminal, I for Civil see [Court Division](data.md#Court-Division)      |
-| fileNumber | string | The court file number                                                         |
+| name       | type   | required | description                                                                   |
+| ---------- | ------ | -------- | ----------------------------------------------------------------------------- |
+| location   | string | true     | Court House where the package is submitted to                                 |
+| level      | string | true     | Court level, can be `Supreme` of `Provincial`                                 |
+| courtClass | string | true     | Court Classification see [Court Classification](data.md#Court-Classification) |
+| division   | string | true     | R for Criminal, I for Civil see [Court Division](data.md#Court-Division)      |
+| fileNumber | string | false    | The court file number, leave blank for new Package Submission                 |
 
 ##### Documents
 
@@ -130,14 +130,14 @@ The `documents` array represents the previously uploaded documents.
 
 ###### Properties
 
-| name                     | type    | description                                                                                |
-| ------------------------ | ------- | ------------------------------------------------------------------------------------------ |
-| name                     | string  | the document name, must be the same name as uploaded previously                            |
-| type                     | string  | the type of document see [Document Type Codes](data.md#Document-Type-Codes)                |
-| isAmendment              | boolean | if the document is an amendment                                                            |
-| isSupremeCourtScheduling | boolean | if the document is directed to Supreme Court Scheduling                                    |
-| data                     | object  | A non defined json object representing the form data of the document                        |
-| md5                      | string  | The md5 hash value of the document content, used to validate the integrity of the document |
+| name                     | type    | required | description                                                                                |
+| ------------------------ | ------- | -------- | ------------------------------------------------------------------------------------------ |
+| name                     | string  | true     | the document name, must be the same name as uploaded previously                            |
+| type                     | string  | true     | the type of document see [Document Type Codes](data.md#Document-Type-Codes)                |
+| isAmendment              | boolean | true     | if the document is an amendment                                                            |
+| isSupremeCourtScheduling | boolean | true     | if the document is directed to Supreme Court Scheduling                                    |
+| data                     | object  | false    | A non defined json object representing the form data of the document                       |
+| md5                      | string  | false    | The md5 hash value of the document content, used to validate the integrity of the document |
 
 ##### parties
 
@@ -145,13 +145,13 @@ The `parties` array represents a list of parties for the submission
 
 ##### Properties
 
-| name       | type   | description                                                                                     |
-| ---------- | ------ | ----------------------------------------------------------------------------------------------- |
-| partyType  | string | the party type, IND for individual or ORG for Organization see [Party Type](data.md#Party Type) |
-| roleType   | string | the party role, see [Party Role](data.md#Party-Role)                                            |
-| firstName  | string | the party first name                                                                            |
-| middleName | string | the party middle name                                                                           |
-| lastName   | string | the party last name                                                                             |
+| name       | type   | required | description                                                                                     |
+| ---------- | ------ | -------- | ----------------------------------------------------------------------------------------------- |
+| partyType  | string | true     | the party type, IND for individual or ORG for Organization see [Party Type](data.md#Party Type) |
+| roleType   | string | true     | the party role, see [Party Role](data.md#Party-Role)                                            |
+| firstName  | string | true     | the party first name                                                                            |
+| middleName | string | false    | the party middle name                                                                           |
+| lastName   | string | true     | the party last name                                                                             |
 
 ### Api Documentation
 
