@@ -51,7 +51,7 @@ public class PackageConfirmationPage extends DriverClass {
             wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@data-test-id='upload-link']")));
             action.moveToElement(uploadLink).click().build().perform();
 
-        } catch (org.openqa.selenium.TimeoutException tx) {
+        } catch (org.openqa.selenium.TimeoutException | org.openqa.selenium.NoSuchElementException tx) {
             JavascriptExecutor js = (JavascriptExecutor)driver;
             js.executeScript("arguments[0].click();", uploadLink);
         }

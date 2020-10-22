@@ -1,7 +1,5 @@
 package ca.bc.gov.open.jagefilingapi.qa.backendutils;
 
-import ca.bc.gov.open.jagefilingapi.qa.config.ReadConfig;
-import io.cucumber.java.Before;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
@@ -26,25 +24,21 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 
-import static io.restassured.RestAssured.baseURI;
-
 public class TestUtil {
 
     public static RequestSpecification requestSpecification() throws IOException {
-        ReadConfig readConfig = new ReadConfig();
 
         PrintStream log = new PrintStream(new FileOutputStream("logs/backendLogging.txt"));
-        baseURI= readConfig.getBaseUri();
+        String baseURI = System.getProperty("BASE_URI");
         return new RequestSpecBuilder().setBaseUri(baseURI).addFilter(RequestLoggingFilter
                 .logRequestTo(log)).addFilter(ResponseLoggingFilter.logResponseTo(log))
                 .setContentType(ContentType.JSON).build();
     }
 
     public static RequestSpecification submitDocumentsRequestSpecification() throws IOException {
-        ReadConfig readConfig = new ReadConfig();
 
         PrintStream log = new PrintStream(new FileOutputStream("logs/backendLogging.txt"));
-        baseURI= readConfig.getBaseUri();
+        String baseURI = System.getProperty("BASE_URI");
         return new RequestSpecBuilder().setBaseUri(baseURI).addFilter(RequestLoggingFilter
                 .logRequestTo(log)).addFilter(ResponseLoggingFilter.logResponseTo(log))
                 .build();

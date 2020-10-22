@@ -5,7 +5,6 @@ public enum APIResources {
     GENERATE_URL_API("/submission/"),
     SUBMISSION("/submission/"),
     DOCUMENT_SUBMISSION("/submission/documents"),
-    EFILING_URL("http://localhost:3000/efiling"),
     CSO_ACCOUNT_API("/csoAccount"),
     BCEID_ACCOUNT_API("/bceidAccount"),
     LOOK_UP_API("/lookup/documentTypes"),
@@ -18,7 +17,6 @@ public enum APIResources {
     APIResources(String resource) {
         this.resource = resource;
     }
-
     public String getResource() {
         return resource;
     }
