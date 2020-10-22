@@ -4,6 +4,7 @@ public class CsoAccountGuid {
 
     private String validExistingCSOGuid;
     private String invalidNoFilingRoleGuid;
+    private String validUserId;
 
     public CsoAccountGuid() {
         // Empty constructor
@@ -23,5 +24,13 @@ public class CsoAccountGuid {
 
     public void setInvalidNoFilingRoleGuid(String invalidNoFilingRoleGuid) {
         this.invalidNoFilingRoleGuid = invalidNoFilingRoleGuid;
+    }
+
+    public String getValidUserId() {
+        return validUserId;
+    }
+
+    public void setValidUserId(String validUserId) {
+        this.validUserId = validUserId;
     }
 }
