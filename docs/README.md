@@ -26,7 +26,7 @@ curl --location --request POST 'keycloak_url' \
 
 > the secret should be kept safe and not exposed to the public
 
-Start by uploading document(s) to the **efiling hub** api
+Start by uploading document(s) to the **eFiling Hub** API:
 
 ```bash
 curl --location --request POST 'http://fla-nginx-proxy-qzaydf-dev.pathfinder.gov.bc.ca/api/submission/documents' \
