@@ -32,7 +32,7 @@ Start by uploading document(s) to the **efiling hub** api
 curl --location --request POST 'http://fla-nginx-proxy-qzaydf-dev.pathfinder.gov.bc.ca/api/submission/documents' \
 --header 'X-Transaction-Id: ca09e538-d34e-11ea-87d0-0242ac130003' \
 --header 'Content-Type: multipart/form-data' \
---header 'Authorization: Bearer [your bearer token]' \
+--header 'Authorization: Bearer [bearer_token]' \
 --form 'files=test.pdf'
 ```
 
