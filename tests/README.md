@@ -56,7 +56,7 @@ We support running the tests with the current tags:
 
 ### Tags
 
-Using tags would only run the specific tests.
+Using tags will only run the specified tests.
 
 ```bash
 cd tests
