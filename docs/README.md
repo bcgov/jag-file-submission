@@ -102,7 +102,7 @@ payload:
 
 The `navigation` object represents a list of possible returns to your application based on the status of the document e-filing.
 
-#### clientAppplication
+#### clientApplication
 
 The `clientAppplication` object represents how your application is labelled in **efiling hub**.
 
