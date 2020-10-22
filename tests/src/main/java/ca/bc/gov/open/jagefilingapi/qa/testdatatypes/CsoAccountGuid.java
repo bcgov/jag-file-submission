@@ -5,10 +5,6 @@ public class CsoAccountGuid {
     private String validExistingCSOGuid;
     private String invalidNoFilingRoleGuid;
 
-    private String validUserId;
-    private String inValidUserId;
-    private String clientSecret;
-
     public CsoAccountGuid() {
         // Empty constructor
     }
@@ -27,16 +23,5 @@ public class CsoAccountGuid {
 
     public void setInvalidNoFilingRoleGuid(String invalidNoFilingRoleGuid) {
         this.invalidNoFilingRoleGuid = invalidNoFilingRoleGuid;
-    }
-
-
-    public String getValidUserId() {
-        return validUserId;
-    }
-
-    public String getInValidUserId() {return inValidUserId;}
-
-    public String getClientSecret() {
-        return clientSecret;
     }
 }
