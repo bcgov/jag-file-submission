@@ -51,7 +51,7 @@ Then generate a unique url to redirect the users to the **efiling hub**
 curl --location --request POST 'http://fla-nginx-proxy-qzaydf-dev.pathfinder.gov.bc.ca/api/submission/5e9492cf-e87e-48b5-ba55-0c198d8edde5/generateUrl' \
 --header 'X-Transaction-Id: ca09e538-d34e-11ea-87d0-0242ac130003' \
 --header 'Content-Type: application/json' \
---header 'Authorization: Bearer [your bearer token]' \
+--header 'Authorization: Bearer [bearer_token]' \
 --data-raw 'the json payload bellow'
 ```
 
