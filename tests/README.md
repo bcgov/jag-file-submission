@@ -8,7 +8,6 @@ The folder structure for the automation will be as follows:
 tests
 ├── src
 │    └── main
-|    |   └──config
 |    |   └──pages
 |    |   └──util
 |    └── test
@@ -34,8 +33,7 @@ Set the following property values in the [local.properties file](src/test/resour
 
 ## Running the maven Tests without cucumber tags
 
-[config.properties](src/test/resources/config.properties) are for TEST env.
-[demo.properties](src/test/resources/demo.properties) are for GitHub actions.
+[config.properties](src/test/resources/config.properties) are for CI/CD env.
 [account-data.json](src/test/java/testdatasource/account-data.json) uses demo accounts, value can be changed.
 
 ```bash
