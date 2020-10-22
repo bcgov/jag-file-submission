@@ -14,7 +14,7 @@ This guide will provide you with all the required information you need to get st
 
 ### Start Integrating
 
-Get an oauth token from our Keycloak Server using the following curl
+Get an oauth token from our Keycloak Server using the following curl command:
 
 ```bash
 curl --location --request POST 'keycloak_url' \
