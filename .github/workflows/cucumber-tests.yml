@@ -2,7 +2,7 @@ name: Cucumber Tests
 
 on:
   push:
-    branches: [master, qa-missed-variable]
+    branches: [master]
 
 jobs:
   cucumber-tests:
