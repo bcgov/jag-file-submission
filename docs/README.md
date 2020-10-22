@@ -136,7 +136,7 @@ The `documents` array represents the previously uploaded documents.
 | type                     | string  | the type of document see [Document Type Codes](data.md#Document-Type-Codes)                |
 | isAmendment              | boolean | if the document is an amendment                                                            |
 | isSupremeCourtScheduling | boolean | if the document is directed to Supreme Court Scheduling                                    |
-| data                     | object  | A non define json object representing the form data of the document                        |
+| data                     | object  | A non defined json object representing the form data of the document                        |
 | md5                      | string  | The md5 hash value of the document content, used to validate the integrity of the document |
 
 ##### parties
