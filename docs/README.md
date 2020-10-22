@@ -108,7 +108,7 @@ The `clientAppplication` object represents how your application is labelled in *
 
 #### filingPackage
 
-The `filingPackage` object represents the court information about the submited package along with the document(s) info.
+The `filingPackage` object represents the court information about the submitted package along with the document(s) info.
 
 ##### court
 
