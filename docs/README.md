@@ -6,7 +6,7 @@ Generic File Submission API (to be used by the Family Law Act Application at fir
 
 Are you ready to integrate your application with the BC Gov E-filing Hub in order to allow your users to e-file documents?
 
-This guide will provide you with all information you need to get started.
+This guide will provide you with all the required information you need to get started.
 
 ### Request a profile
 
