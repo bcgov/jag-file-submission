@@ -89,14 +89,10 @@ export default function App() {
       <Switch>
         <Redirect exact from="/" to="/efiling" />
         <Route exact path="/efiling">
-          <AuthenticationGuard
-            page={{
-              header,
-              confirmationPopup,
-              submissionId: sessionStorage.getItem("submissionId"),
-              transactionId: sessionStorage.getItem("transactionId"),
-            }}
-          />
+          <AuthenticationGuard page={{ header, confirmationPopup }} />
+        </Route>
+        <Route path="/efiling/packagereview/:packageId">
+          <AuthenticationGuard page={{ header }} />
         </Route>
       </Switch>
     </div>
