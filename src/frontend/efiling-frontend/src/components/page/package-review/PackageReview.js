@@ -11,7 +11,10 @@ export default function PackageReview({ page: { header, packageId } }) {
         <div className="content col-md-8">
           <h1>Package Review!</h1>
           <br />
-          <p>We are dealing with package ID: {packageId}</p>
+          <p>
+            We are dealing with package ID:
+            {packageId}
+          </p>
           <br />
           <section className="buttons pt-2">
             <Button
