@@ -16,7 +16,7 @@ export default function PackageReview({ page: { header, packageId } }) {
           <section className="buttons pt-2">
             <Button
               label="Cancel and Return to Parent App"
-              onClick={() => console.log("hey")}
+              onClick={() => window.open("http://google.com", "_self")}
               styling="normal-white btn"
             />
           </section>
