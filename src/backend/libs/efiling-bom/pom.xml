@@ -14,7 +14,7 @@
         <io.springfox.version>2.9.2</io.springfox.version>
         <io.swagger.version>1.6.2</io.swagger.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
-        <joda-time.version>2.10.6</joda-time.version>
+        <joda-time.version>2.10.8</joda-time.version>
         <net.rakugakibox.spring.boot.version>2.7.1</net.rakugakibox.spring.boot.version>
         <org.apache.commons.version>3.11</org.apache.commons.version>
         <org.springdoc.version>1.4.8</org.springdoc.version>
