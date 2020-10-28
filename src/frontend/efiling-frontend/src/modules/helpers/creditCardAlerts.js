@@ -28,7 +28,7 @@ const existingCreditCard = () => {
     <Alert
       icon={<MdCreditCard size={32} />}
       type="success"
-      styling="success-background no-padding-bottom"
+      styling="bcgov-success-background bcgov-no-padding-bottom"
       element={
         <p>
           <span>
@@ -55,7 +55,7 @@ const noCreditCard = () => {
     <Alert
       icon={<MdCreditCard size={32} />}
       type="error"
-      styling="error-background no-padding-bottom"
+      styling="bcgov-error-background bcgov-no-padding-bottom"
       element={
         <p>
           <span>
@@ -87,7 +87,7 @@ const failedUpdateCreditCard = () => {
     <Alert
       icon={<MdCreditCard size={32} />}
       type="warning"
-      styling="warning-background no-padding-bottom"
+      styling="bcgov-warning-background bcgov-no-padding-bottom"
       element={
         <p>
           <span>

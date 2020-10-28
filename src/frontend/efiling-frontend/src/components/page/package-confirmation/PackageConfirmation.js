@@ -166,7 +166,7 @@ export default function PackageConfirmation({
             <Alert
               icon={<MdCheckBox size={32} />}
               type="success"
-              styling="success-background"
+              styling="bcgov-success-background"
               element="CSO Account created successfully."
             />
             <br />
@@ -187,7 +187,7 @@ export default function PackageConfirmation({
         {files.map((file) => (
           <div key={file.name}>
             <DisplayBox
-              styling="border-background display-file"
+              styling="bcgov-border-background bcgov-display-file"
               icon={
                 <div style={{ color: "rgb(252, 186, 25)" }}>
                   <MdDescription size={32} />
@@ -238,7 +238,7 @@ export default function PackageConfirmation({
           <Button
             label="Continue to Payment"
             onClick={() => setShowPayment(true)}
-            styling="normal-blue btn"
+            styling="bcgov-normal-blue btn"
             testId="continue-btn"
           />
         </section>

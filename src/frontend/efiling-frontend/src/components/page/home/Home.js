@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { MdCancel } from "react-icons/md";
-
 import { Header, Footer, Loader, Alert } from "shared-components";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { getJWTData } from "../../../modules/helpers/authentication-helper/authenticationHelper";
@@ -158,7 +157,7 @@ export default function Home({
             <Alert
               icon={<MdCancel size={32} />}
               type="error"
-              styling="error-background"
+              styling="bcgov-error-background"
               element="Authorized users only."
             />
           </div>

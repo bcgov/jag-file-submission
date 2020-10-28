@@ -365,7 +365,7 @@ export default function Upload({
             {acceptedFiles.map((file) => (
               <div key={file.name}>
                 <DisplayBox
-                  styling="border-background"
+                  styling="bcgov-border-background"
                   element={
                     <Table
                       elements={generateTable(
@@ -389,7 +389,7 @@ export default function Upload({
             label="Cancel Upload"
             testId="cancel-upload-btn"
             onClick={() => setShowPackageConfirmation(true)}
-            styling="normal-white btn"
+            styling="bcgov-normal-white btn"
           />
           <Button
             label="Continue"
@@ -405,7 +405,7 @@ export default function Upload({
                 setContinueBtnEnabled
               );
             }}
-            styling="normal-blue btn"
+            styling="bcgov-normal-blue btn"
             disabled={!continueBtnEnabled}
             hasLoader={showLoader}
           />

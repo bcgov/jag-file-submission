@@ -188,7 +188,7 @@ export default function Payment({
               sessionStorage.removeItem("isBamboraRedirect");
               setShowPackageConfirmation(true);
             }}
-            styling="normal-white btn"
+            styling="bcgov-normal-white btn"
           />
           <div className="button-container">
             <ConfirmationPopup
@@ -202,7 +202,7 @@ export default function Payment({
               onClick={() => {
                 submitPackage(submissionId, setSubmitBtnEnabled, setShowLoader);
               }}
-              styling="normal-blue normal-blue-ml btn"
+              styling="bcgov-normal-blue normal-blue-ml btn"
               disabled={!submitBtnEnabled}
               hasLoader={showLoader}
             />
