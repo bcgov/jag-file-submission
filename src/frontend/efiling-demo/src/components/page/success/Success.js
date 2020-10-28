@@ -34,7 +34,7 @@ export default function Success({ page: { header, packageRef } }) {
           <Button
             onClick={() => header.history.push("/")}
             label="Return home"
-            styling="normal-white btn"
+            styling="bcgov-normal-white btn"
           />
         </div>
       </div>

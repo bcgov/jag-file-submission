@@ -259,7 +259,7 @@ export default function Home({ page: { header } }) {
               }
             }}
             label="E-File my Package"
-            styling="normal-blue btn"
+            styling="bcgov-normal-blue btn"
             testId="generate-url-btn"
             hasLoader={showLoader}
             disabled={!submitBtnEnabled}
