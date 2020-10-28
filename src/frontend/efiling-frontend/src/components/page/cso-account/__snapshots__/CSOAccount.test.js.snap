@@ -15,10 +15,10 @@ exports[`CSOAccount Component Matches the snapshot 1`] = `
           Create a Court Services Online (CSO) Account
         </h1>
         <div
-          class="display-box warning-background"
+          class="bcgov-display-box bcgov-warning-background"
         >
           <div
-            class="display-icon"
+            class="bcgov-display-icon"
           >
             <div
               style="color: rgb(252, 186, 25);"
@@ -40,7 +40,7 @@ exports[`CSOAccount Component Matches the snapshot 1`] = `
             </div>
           </div>
           <div
-            class="display-right-element"
+            class="bcgov-display-right-element"
           >
             You need a CSO account to use E-File Submission. Create one now to continue.
           </div>
@@ -50,10 +50,10 @@ exports[`CSOAccount Component Matches the snapshot 1`] = `
           The following information will be used to create your CSO account.
         </p>
         <div
-          class="display-box "
+          class="bcgov-display-box "
         >
           <div
-            class="display-icon"
+            class="bcgov-display-icon"
           >
             <div
               style="color: rgb(252, 186, 25);"
@@ -75,7 +75,7 @@ exports[`CSOAccount Component Matches the snapshot 1`] = `
             </div>
           </div>
           <div
-            class="display-right-element"
+            class="bcgov-display-right-element"
           >
             <div
               class="bcgov-table "
@@ -134,10 +134,10 @@ exports[`CSOAccount Component Matches the snapshot 1`] = `
       </div>
       <div>
         <div
-          class="non-printable full-width"
+          class="bcgov-non-printable bcgov-full-width"
         >
           <span
-            class="print-page print"
+            class="bcgov-print-page print"
             role="button"
             tabindex="0"
           >
@@ -162,7 +162,7 @@ exports[`CSOAccount Component Matches the snapshot 1`] = `
           </h3>
         </div>
         <section
-          class="scroll-box printable"
+          class="bcgov-scroll-box bcgov-printable"
         >
           <p>
             The parties to this agreement are:
@@ -809,7 +809,7 @@ exports[`CSOAccount Component Matches the snapshot 1`] = `
           </ol>
         </section>
         <section
-          class="non-printable pt-2"
+          class="bcgov-non-printable pt-2"
         >
           <label
             for="acceptTerms"
@@ -823,7 +823,7 @@ exports[`CSOAccount Component Matches the snapshot 1`] = `
               I accept the Service Agreement
             </b>
             <span
-              class="mandatory"
+              class="bcgov-mandatory"
               id="asterisk"
             >
               *
@@ -842,7 +842,7 @@ exports[`CSOAccount Component Matches the snapshot 1`] = `
           Cancel
         </button>
         <button
-          class="bcgov-button normal-blue btn"
+          class="bcgov-button bcgov-normal-blue btn"
           data-test-id="create-cso-btn"
           disabled=""
           type="button"
@@ -855,7 +855,7 @@ exports[`CSOAccount Component Matches the snapshot 1`] = `
       class="sidecard"
     >
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -864,23 +864,23 @@ exports[`CSOAccount Component Matches the snapshot 1`] = `
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="aboutCsoCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -895,7 +895,7 @@ exports[`CSOAccount Component Matches the snapshot 1`] = `
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     About E-File Submission
                   </div>
@@ -903,10 +903,10 @@ exports[`CSOAccount Component Matches the snapshot 1`] = `
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
