@@ -503,7 +503,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
         class="buttons pt-2"
       >
         <button
-          class="bcgov-button normal-white btn"
+          class="bcgov-button bcgov-normal-white btn"
           data-test-id="main-cancel-btn"
           type="button"
         >
@@ -1600,7 +1600,7 @@ exports[`Upload Component successful document upload works as expected 1`] = `
         class="buttons pt-2"
       >
         <button
-          class="bcgov-button normal-white btn"
+          class="bcgov-button bcgov-normal-white btn"
           data-test-id="main-cancel-btn"
           type="button"
         >

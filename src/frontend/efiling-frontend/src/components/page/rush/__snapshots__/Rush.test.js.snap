@@ -252,7 +252,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
           class="button-container"
         >
           <button
-            class="bcgov-button normal-white btn"
+            class="bcgov-button bcgov-normal-white btn"
             data-test-id="main-cancel-btn"
             type="button"
           >

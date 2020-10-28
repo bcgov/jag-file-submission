@@ -835,7 +835,7 @@ exports[`CSOAccount Component Matches the snapshot 1`] = `
         class="non-printable buttons pt-4"
       >
         <button
-          class="bcgov-button normal-white btn"
+          class="bcgov-button bcgov-normal-white btn"
           data-test-id="main-cancel-btn"
           type="button"
         >

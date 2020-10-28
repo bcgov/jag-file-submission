@@ -1215,7 +1215,7 @@ exports[`Home Component matches the snapshot when user cso account does not exis
           class="non-printable buttons pt-4"
         >
           <button
-            class="bcgov-button normal-white btn"
+            class="bcgov-button bcgov-normal-white btn"
             data-test-id="main-cancel-btn"
             type="button"
           >
@@ -1737,7 +1737,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
           class="buttons pt-2"
         >
           <button
-            class="bcgov-button normal-white btn"
+            class="bcgov-button bcgov-normal-white btn"
             data-test-id="main-cancel-btn"
             type="button"
           >

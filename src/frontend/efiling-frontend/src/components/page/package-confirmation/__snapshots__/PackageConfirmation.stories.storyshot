@@ -301,7 +301,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
         class="buttons pt-2"
       >
         <button
-          class="bcgov-button normal-white btn"
+          class="bcgov-button bcgov-normal-white btn"
           data-test-id="main-cancel-btn"
           type="button"
         >
@@ -773,7 +773,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
         class="buttons pt-2"
       >
         <button
-          class="bcgov-button normal-white btn"
+          class="bcgov-button bcgov-normal-white btn"
           data-test-id="main-cancel-btn"
           type="button"
         >
@@ -1277,7 +1277,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
         class="buttons pt-2"
       >
         <button
-          class="bcgov-button normal-white btn"
+          class="bcgov-button bcgov-normal-white btn"
           data-test-id="main-cancel-btn"
           type="button"
         >

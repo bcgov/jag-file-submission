@@ -339,7 +339,7 @@ exports[`Storyshots Home Account Exists 1`] = `
           class="buttons pt-2"
         >
           <button
-            class="bcgov-button normal-white btn"
+            class="bcgov-button bcgov-normal-white btn"
             data-test-id="main-cancel-btn"
             type="button"
           >
@@ -938,7 +938,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
           class="buttons pt-2"
         >
           <button
-            class="bcgov-button normal-white btn"
+            class="bcgov-button bcgov-normal-white btn"
             data-test-id="main-cancel-btn"
             type="button"
           >
@@ -2413,7 +2413,7 @@ exports[`Storyshots Home No Account Exists 1`] = `
           class="non-printable buttons pt-4"
         >
           <button
-            class="bcgov-button normal-white btn"
+            class="bcgov-button bcgov-normal-white btn"
             data-test-id="main-cancel-btn"
             type="button"
           >
@@ -3469,7 +3469,7 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
           class="non-printable buttons pt-4"
         >
           <button
-            class="bcgov-button normal-white btn"
+            class="bcgov-button bcgov-normal-white btn"
             data-test-id="main-cancel-btn"
             type="button"
           >
