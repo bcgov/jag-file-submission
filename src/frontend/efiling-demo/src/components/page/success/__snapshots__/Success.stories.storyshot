@@ -3,32 +3,34 @@
 exports[`Storyshots Success Default 1`] = `
 <DocumentFragment>
   <main>
-    <header>
+    <header
+      class="bcgov-header"
+    >
       <nav
         aria-label="Header"
         class="container-fluid navbar navbar-expand-lg navbar-dark"
       >
         <div
           aria-labelledby="title"
-          class="navbar-brand pointer"
+          class="navbar-brand bcgov-pointer"
         />
         <img
           alt="B.C. Government Logo"
-          class="img-fluid d-none d-md-block pointer"
+          class="img-fluid d-none d-md-block bcgov-pointer"
           height="44"
           src="undefined/images/bcid-logo-rev-en.svg"
           width="181"
         />
         <img
           alt="B.C. Government Logo"
-          class="img-fluid d-md-none pointer"
+          class="img-fluid d-md-none bcgov-pointer"
           height="44"
           src="undefined/images/bcid-symbol-rev.svg"
           width="64"
         />
         <div
           aria-labelledby="title"
-          class="pointer navbar-brand nav-item nav-link"
+          class="bcgov-pointer navbar-brand nav-item nav-link"
         />
         <div
           class="navbar-brand"
@@ -60,7 +62,7 @@ exports[`Storyshots Success Default 1`] = `
           Please click the button below to go back home.
         </p>
         <button
-          class="bcgov-button normal-white btn"
+          class="bcgov-button bcgov-normal-white btn"
           data-test-id=""
           type="button"
         >
@@ -69,7 +71,7 @@ exports[`Storyshots Success Default 1`] = `
       </div>
     </div>
     <footer
-      class="footer"
+      class="bcgov-footer"
     >
       <nav
         aria-label="Footer"
@@ -163,32 +165,34 @@ exports[`Storyshots Success Default 1`] = `
 exports[`Storyshots Success Mobile 1`] = `
 <DocumentFragment>
   <main>
-    <header>
+    <header
+      class="bcgov-header"
+    >
       <nav
         aria-label="Header"
         class="container-fluid navbar navbar-expand-lg navbar-dark"
       >
         <div
           aria-labelledby="title"
-          class="navbar-brand pointer"
+          class="navbar-brand bcgov-pointer"
         />
         <img
           alt="B.C. Government Logo"
-          class="img-fluid d-none d-md-block pointer"
+          class="img-fluid d-none d-md-block bcgov-pointer"
           height="44"
           src="undefined/images/bcid-logo-rev-en.svg"
           width="181"
         />
         <img
           alt="B.C. Government Logo"
-          class="img-fluid d-md-none pointer"
+          class="img-fluid d-md-none bcgov-pointer"
           height="44"
           src="undefined/images/bcid-symbol-rev.svg"
           width="64"
         />
         <div
           aria-labelledby="title"
-          class="pointer navbar-brand nav-item nav-link"
+          class="bcgov-pointer navbar-brand nav-item nav-link"
         />
         <div
           class="navbar-brand"
@@ -220,7 +224,7 @@ exports[`Storyshots Success Mobile 1`] = `
           Please click the button below to go back home.
         </p>
         <button
-          class="bcgov-button normal-white btn"
+          class="bcgov-button bcgov-normal-white btn"
           data-test-id=""
           type="button"
         >
@@ -229,7 +233,7 @@ exports[`Storyshots Success Mobile 1`] = `
       </div>
     </div>
     <footer
-      class="footer"
+      class="bcgov-footer"
     >
       <nav
         aria-label="Footer"
