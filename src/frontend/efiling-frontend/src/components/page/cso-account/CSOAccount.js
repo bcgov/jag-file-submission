@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { MdPerson, MdError } from "react-icons/md";
 import axios from "axios";
-
 import ConfirmationPopup, {
   TermsOfUse,
   Button,
@@ -71,7 +70,7 @@ export default function CSOAccount({
           <Alert
             icon={<MdError size={32} />}
             type="warning"
-            styling="warning-background"
+            styling="bcgov-warning-background"
             element="You need a CSO account to use E-File Submission. Create one now to continue."
           />
           <br />
@@ -100,7 +99,7 @@ export default function CSOAccount({
             label="Create CSO Account"
             testId="create-cso-btn"
             onClick={() => createCSOAccount(applicantInfo)}
-            styling="normal-blue btn"
+            styling="bcgov-normal-blue btn"
             disabled={!continueBtnEnabled}
             hasLoader={showLoader}
           />

@@ -5,19 +5,19 @@ const onButtonClick = () => {};
 
 const mainButton = {
   label: "Cancel",
-  styling: "normal-white btn",
+  styling: "bcgov-normal-white btn",
   onClick: onButtonClick,
 };
 
 const confirmButton = {
   label: "Yes, cancel",
-  styling: "normal-blue btn consistent-width",
+  styling: "bcgov-normal-blue btn bcgov-consistent-width",
   onClick: onButtonClick,
 };
 
 const cancelButton = {
   label: "No, dont cancel",
-  styling: "normal-white btn consistent-width",
+  styling: "bcgov-normal-white btn bcgov-consistent-width",
   onClick: onButtonClick,
 };
 

@@ -24,7 +24,7 @@ const aboutCso = () => {
     type: "bluegrey",
     id: "aboutCsoCard",
     isWide: true,
-    icon: <MdInfoOutline className="side-card-icon" />,
+    icon: <MdInfoOutline className="bcgov-side-card-icon" />,
   };
 };
 
@@ -55,7 +55,7 @@ const csoAccountDetails = () => {
     type: "bluegrey",
     id: "csoAccountDetailsCard",
     isWide: true,
-    icon: <MdPerson className="side-card-icon" />,
+    icon: <MdPerson className="bcgov-side-card-icon" />,
   };
 };
 
@@ -82,7 +82,7 @@ const rushSubmission = (onClick) => {
     type: "bluegrey",
     id: "rushSubmissionCard",
     isWide: true,
-    icon: <MdTimer className="side-card-icon" />,
+    icon: <MdTimer className="bcgov-side-card-icon" />,
   };
 };
 
@@ -98,7 +98,7 @@ const amendments = () => {
     type: "bluegrey",
     id: "amendmentsCard",
     isWide: true,
-    icon: <MdInfoOutline className="side-card-icon" />,
+    icon: <MdInfoOutline className="bcgov-side-card-icon" />,
   };
 };
 
@@ -114,7 +114,7 @@ const supremeCourtScheduling = () => {
     type: "bluegrey",
     id: "supremeCourtSchedulingCard",
     isWide: true,
-    icon: <MdInfoOutline className="side-card-icon" />,
+    icon: <MdInfoOutline className="bcgov-side-card-icon" />,
   };
 };
 

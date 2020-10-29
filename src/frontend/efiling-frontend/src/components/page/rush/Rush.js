@@ -31,7 +31,7 @@ const generateInputField = (input, onChange) => {
 export default function Rush({ payment }) {
   const input = {
     isReadOnly: false,
-    styling: "editable-white",
+    styling: "bcgov-editable-white",
     isRequired: true,
   };
   const aboutCsoSidecard = getSidecardData().aboutCso;
@@ -171,12 +171,12 @@ export default function Rush({ payment }) {
           <Button
             label="Cancel Request"
             onClick={() => setShowPayment(true)}
-            styling="normal-white btn"
+            styling="bcgov-normal-white btn"
           />
           <Button
             label="Submit Request"
             onClick={() => console.log("submit rush")}
-            styling="normal-blue btn"
+            styling="bcgov-normal-blue btn"
           />
         </section>
       </div>

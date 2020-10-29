@@ -54,14 +54,14 @@ exports[`Storyshots Upload Default 1`] = `
         class="buttons pt-2"
       >
         <button
-          class="bcgov-button normal-white btn"
+          class="bcgov-button bcgov-normal-white btn"
           data-test-id="cancel-upload-btn"
           type="button"
         >
           Cancel Upload
         </button>
         <button
-          class="bcgov-button normal-blue btn"
+          class="bcgov-button bcgov-normal-blue btn"
           data-test-id="continue-upload-btn"
           disabled=""
           type="button"
@@ -74,7 +74,7 @@ exports[`Storyshots Upload Default 1`] = `
       class="sidecard"
     >
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -83,23 +83,23 @@ exports[`Storyshots Upload Default 1`] = `
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="amendmentsCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -114,7 +114,7 @@ exports[`Storyshots Upload Default 1`] = `
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     Amendments
                   </div>
@@ -122,10 +122,10 @@ exports[`Storyshots Upload Default 1`] = `
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   Please indicate document uploads that are amendments - changes or alterations to existing, previously submitted documents.
@@ -136,7 +136,7 @@ exports[`Storyshots Upload Default 1`] = `
         </div>
       </div>
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -145,23 +145,23 @@ exports[`Storyshots Upload Default 1`] = `
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="supremeCourtSchedulingCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -176,7 +176,7 @@ exports[`Storyshots Upload Default 1`] = `
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     Supreme Court Scheduling
                   </div>
@@ -184,10 +184,10 @@ exports[`Storyshots Upload Default 1`] = `
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   Please indicate if your document upload has been approved for Supreme Court Scheduling...
@@ -256,14 +256,14 @@ exports[`Storyshots Upload Mobile 1`] = `
         class="buttons pt-2"
       >
         <button
-          class="bcgov-button normal-white btn"
+          class="bcgov-button bcgov-normal-white btn"
           data-test-id="cancel-upload-btn"
           type="button"
         >
           Cancel Upload
         </button>
         <button
-          class="bcgov-button normal-blue btn"
+          class="bcgov-button bcgov-normal-blue btn"
           data-test-id="continue-upload-btn"
           disabled=""
           type="button"
@@ -276,7 +276,7 @@ exports[`Storyshots Upload Mobile 1`] = `
       class="sidecard"
     >
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -285,23 +285,23 @@ exports[`Storyshots Upload Mobile 1`] = `
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="amendmentsCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -316,7 +316,7 @@ exports[`Storyshots Upload Mobile 1`] = `
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     Amendments
                   </div>
@@ -324,10 +324,10 @@ exports[`Storyshots Upload Mobile 1`] = `
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   Please indicate document uploads that are amendments - changes or alterations to existing, previously submitted documents.
@@ -338,7 +338,7 @@ exports[`Storyshots Upload Mobile 1`] = `
         </div>
       </div>
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -347,23 +347,23 @@ exports[`Storyshots Upload Mobile 1`] = `
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="supremeCourtSchedulingCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -378,7 +378,7 @@ exports[`Storyshots Upload Mobile 1`] = `
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     Supreme Court Scheduling
                   </div>
@@ -386,10 +386,10 @@ exports[`Storyshots Upload Mobile 1`] = `
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   Please indicate if your document upload has been approved for Supreme Court Scheduling...

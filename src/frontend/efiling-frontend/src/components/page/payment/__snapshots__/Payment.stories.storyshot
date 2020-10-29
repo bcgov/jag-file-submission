@@ -12,10 +12,10 @@ exports[`Storyshots Payment Mobile 1`] = `
         Payment
       </h1>
       <div
-        class="display-box success-background no-padding-bottom"
+        class="bcgov-display-box bcgov-success-background bcgov-no-padding-bottom"
       >
         <div
-          class="display-icon"
+          class="bcgov-display-icon"
         >
           <div
             style="color: rgb(46, 133, 64);"
@@ -37,7 +37,7 @@ exports[`Storyshots Payment Mobile 1`] = `
           </div>
         </div>
         <div
-          class="display-right-element"
+          class="bcgov-display-right-element"
         >
           <p>
             <span>
@@ -230,7 +230,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
             I agree
           </b>
           <span
-            class="mandatory"
+            class="bcgov-mandatory"
             id="asterisk"
           >
             *
@@ -242,7 +242,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
         class="pt-2 buttons"
       >
         <button
-          class="bcgov-button normal-white btn"
+          class="bcgov-button bcgov-normal-white btn"
           data-test-id=""
           type="button"
         >
@@ -252,14 +252,14 @@ package and am prepared to submit them for filing. I agree that all fees for thi
           class="button-container"
         >
           <button
-            class="bcgov-button normal-white btn"
+            class="bcgov-button bcgov-normal-white btn"
             data-test-id="main-cancel-btn"
             type="button"
           >
             Cancel
           </button>
           <button
-            class="bcgov-button normal-blue normal-blue-ml btn"
+            class="bcgov-button bcgov-normal-blue normal-blue-ml btn"
             data-test-id=""
             disabled=""
             type="button"
@@ -273,7 +273,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
       class="sidecard"
     >
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -282,23 +282,23 @@ package and am prepared to submit them for filing. I agree that all fees for thi
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="rushSubmissionCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -313,7 +313,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     Rush/Urgent Submission
                   </div>
@@ -321,10 +321,10 @@ package and am prepared to submit them for filing. I agree that all fees for thi
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   If you wish to request that this package be submitted on an urgent (rush) basis, you must provide a reason for your request to be considered. 
@@ -343,7 +343,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
         </div>
       </div>
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -352,23 +352,23 @@ package and am prepared to submit them for filing. I agree that all fees for thi
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="csoAccountDetailsCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -383,7 +383,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     Your CSO Account
                   </div>
@@ -391,10 +391,10 @@ package and am prepared to submit them for filing. I agree that all fees for thi
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   CSO account 
@@ -421,7 +421,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
         </div>
       </div>
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -430,23 +430,23 @@ package and am prepared to submit them for filing. I agree that all fees for thi
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="aboutCsoCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -461,7 +461,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     About E-File Submission
                   </div>
@@ -469,10 +469,10 @@ package and am prepared to submit them for filing. I agree that all fees for thi
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
@@ -507,10 +507,10 @@ exports[`Storyshots Payment With Fees 1`] = `
         Payment
       </h1>
       <div
-        class="display-box success-background no-padding-bottom"
+        class="bcgov-display-box bcgov-success-background bcgov-no-padding-bottom"
       >
         <div
-          class="display-icon"
+          class="bcgov-display-icon"
         >
           <div
             style="color: rgb(46, 133, 64);"
@@ -532,7 +532,7 @@ exports[`Storyshots Payment With Fees 1`] = `
           </div>
         </div>
         <div
-          class="display-right-element"
+          class="bcgov-display-right-element"
         >
           <p>
             <span>
@@ -725,7 +725,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
             I agree
           </b>
           <span
-            class="mandatory"
+            class="bcgov-mandatory"
             id="asterisk"
           >
             *
@@ -737,7 +737,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
         class="pt-2 buttons"
       >
         <button
-          class="bcgov-button normal-white btn"
+          class="bcgov-button bcgov-normal-white btn"
           data-test-id=""
           type="button"
         >
@@ -747,14 +747,14 @@ package and am prepared to submit them for filing. I agree that all fees for thi
           class="button-container"
         >
           <button
-            class="bcgov-button normal-white btn"
+            class="bcgov-button bcgov-normal-white btn"
             data-test-id="main-cancel-btn"
             type="button"
           >
             Cancel
           </button>
           <button
-            class="bcgov-button normal-blue normal-blue-ml btn"
+            class="bcgov-button bcgov-normal-blue normal-blue-ml btn"
             data-test-id=""
             disabled=""
             type="button"
@@ -768,7 +768,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
       class="sidecard"
     >
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -777,23 +777,23 @@ package and am prepared to submit them for filing. I agree that all fees for thi
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="rushSubmissionCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -808,7 +808,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     Rush/Urgent Submission
                   </div>
@@ -816,10 +816,10 @@ package and am prepared to submit them for filing. I agree that all fees for thi
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   If you wish to request that this package be submitted on an urgent (rush) basis, you must provide a reason for your request to be considered. 
@@ -838,7 +838,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
         </div>
       </div>
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -847,23 +847,23 @@ package and am prepared to submit them for filing. I agree that all fees for thi
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="csoAccountDetailsCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -878,7 +878,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     Your CSO Account
                   </div>
@@ -886,10 +886,10 @@ package and am prepared to submit them for filing. I agree that all fees for thi
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   CSO account 
@@ -916,7 +916,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
         </div>
       </div>
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -925,23 +925,23 @@ package and am prepared to submit them for filing. I agree that all fees for thi
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="aboutCsoCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -956,7 +956,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     About E-File Submission
                   </div>
@@ -964,10 +964,10 @@ package and am prepared to submit them for filing. I agree that all fees for thi
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
@@ -1002,10 +1002,10 @@ exports[`Storyshots Payment Without Fees 1`] = `
         Payment
       </h1>
       <div
-        class="display-box success-background no-padding-bottom"
+        class="bcgov-display-box bcgov-success-background bcgov-no-padding-bottom"
       >
         <div
-          class="display-icon"
+          class="bcgov-display-icon"
         >
           <div
             style="color: rgb(46, 133, 64);"
@@ -1027,7 +1027,7 @@ exports[`Storyshots Payment Without Fees 1`] = `
           </div>
         </div>
         <div
-          class="display-right-element"
+          class="bcgov-display-right-element"
         >
           <p>
             <span>
@@ -1220,7 +1220,7 @@ package and am prepared to submit them for filing.
             I agree
           </b>
           <span
-            class="mandatory"
+            class="bcgov-mandatory"
             id="asterisk"
           >
             *
@@ -1232,7 +1232,7 @@ package and am prepared to submit them for filing.
         class="pt-2 buttons"
       >
         <button
-          class="bcgov-button normal-white btn"
+          class="bcgov-button bcgov-normal-white btn"
           data-test-id=""
           type="button"
         >
@@ -1242,14 +1242,14 @@ package and am prepared to submit them for filing.
           class="button-container"
         >
           <button
-            class="bcgov-button normal-white btn"
+            class="bcgov-button bcgov-normal-white btn"
             data-test-id="main-cancel-btn"
             type="button"
           >
             Cancel
           </button>
           <button
-            class="bcgov-button normal-blue normal-blue-ml btn"
+            class="bcgov-button bcgov-normal-blue normal-blue-ml btn"
             data-test-id=""
             disabled=""
             type="button"
@@ -1263,7 +1263,7 @@ package and am prepared to submit them for filing.
       class="sidecard"
     >
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -1272,23 +1272,23 @@ package and am prepared to submit them for filing.
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="rushSubmissionCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -1303,7 +1303,7 @@ package and am prepared to submit them for filing.
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     Rush/Urgent Submission
                   </div>
@@ -1311,10 +1311,10 @@ package and am prepared to submit them for filing.
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   If you wish to request that this package be submitted on an urgent (rush) basis, you must provide a reason for your request to be considered. 
@@ -1333,7 +1333,7 @@ package and am prepared to submit them for filing.
         </div>
       </div>
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -1342,23 +1342,23 @@ package and am prepared to submit them for filing.
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="csoAccountDetailsCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -1373,7 +1373,7 @@ package and am prepared to submit them for filing.
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     Your CSO Account
                   </div>
@@ -1381,10 +1381,10 @@ package and am prepared to submit them for filing.
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   CSO account 
@@ -1411,7 +1411,7 @@ package and am prepared to submit them for filing.
         </div>
       </div>
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -1420,23 +1420,23 @@ package and am prepared to submit them for filing.
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="aboutCsoCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -1451,7 +1451,7 @@ package and am prepared to submit them for filing.
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     About E-File Submission
                   </div>
@@ -1459,10 +1459,10 @@ package and am prepared to submit them for filing.
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 

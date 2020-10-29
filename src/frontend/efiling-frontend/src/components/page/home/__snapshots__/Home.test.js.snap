@@ -3,32 +3,34 @@
 exports[`Home Component matches the snapshot when error encountered 1`] = `
 <DocumentFragment>
   <main>
-    <header>
+    <header
+      class="bcgov-header"
+    >
       <nav
         aria-label="Header"
         class="container-fluid navbar navbar-expand-lg navbar-dark"
       >
         <div
           aria-labelledby="title"
-          class="navbar-brand pointer"
+          class="navbar-brand bcgov-pointer"
         />
         <img
           alt="B.C. Government Logo"
-          class="img-fluid d-none d-md-block pointer"
+          class="img-fluid d-none d-md-block bcgov-pointer"
           height="44"
           src="undefined/images/bcid-logo-rev-en.svg"
           width="181"
         />
         <img
           alt="B.C. Government Logo"
-          class="img-fluid d-md-none pointer"
+          class="img-fluid d-md-none bcgov-pointer"
           height="44"
           src="undefined/images/bcid-symbol-rev.svg"
           width="64"
         />
         <div
           aria-labelledby="title"
-          class="pointer navbar-brand nav-item nav-link"
+          class="bcgov-pointer navbar-brand nav-item nav-link"
         />
         <div
           class="navbar-brand"
@@ -45,10 +47,10 @@ exports[`Home Component matches the snapshot when error encountered 1`] = `
         class="content col-md-8"
       >
         <div
-          class="display-box error-background"
+          class="bcgov-display-box bcgov-error-background"
         >
           <div
-            class="display-icon"
+            class="bcgov-display-icon"
           >
             <div
               style="color: rgb(216, 41, 47);"
@@ -70,7 +72,7 @@ exports[`Home Component matches the snapshot when error encountered 1`] = `
             </div>
           </div>
           <div
-            class="display-right-element"
+            class="bcgov-display-right-element"
           >
             Authorized users only.
           </div>
@@ -78,7 +80,7 @@ exports[`Home Component matches the snapshot when error encountered 1`] = `
       </div>
     </div>
     <footer
-      class="footer"
+      class="bcgov-footer"
     >
       <nav
         aria-label="Footer"
@@ -172,32 +174,34 @@ exports[`Home Component matches the snapshot when error encountered 1`] = `
 exports[`Home Component matches the snapshot when error encountered, does not attempt to redirect with no errorUrl 1`] = `
 <DocumentFragment>
   <main>
-    <header>
+    <header
+      class="bcgov-header"
+    >
       <nav
         aria-label="Header"
         class="container-fluid navbar navbar-expand-lg navbar-dark"
       >
         <div
           aria-labelledby="title"
-          class="navbar-brand pointer"
+          class="navbar-brand bcgov-pointer"
         />
         <img
           alt="B.C. Government Logo"
-          class="img-fluid d-none d-md-block pointer"
+          class="img-fluid d-none d-md-block bcgov-pointer"
           height="44"
           src="undefined/images/bcid-logo-rev-en.svg"
           width="181"
         />
         <img
           alt="B.C. Government Logo"
-          class="img-fluid d-md-none pointer"
+          class="img-fluid d-md-none bcgov-pointer"
           height="44"
           src="undefined/images/bcid-symbol-rev.svg"
           width="64"
         />
         <div
           aria-labelledby="title"
-          class="pointer navbar-brand nav-item nav-link"
+          class="bcgov-pointer navbar-brand nav-item nav-link"
         />
         <div
           class="navbar-brand"
@@ -214,10 +218,10 @@ exports[`Home Component matches the snapshot when error encountered, does not at
         class="content col-md-8"
       >
         <div
-          class="display-box error-background"
+          class="bcgov-display-box bcgov-error-background"
         >
           <div
-            class="display-icon"
+            class="bcgov-display-icon"
           >
             <div
               style="color: rgb(216, 41, 47);"
@@ -239,7 +243,7 @@ exports[`Home Component matches the snapshot when error encountered, does not at
             </div>
           </div>
           <div
-            class="display-right-element"
+            class="bcgov-display-right-element"
           >
             Authorized users only.
           </div>
@@ -247,7 +251,7 @@ exports[`Home Component matches the snapshot when error encountered, does not at
       </div>
     </div>
     <footer
-      class="footer"
+      class="bcgov-footer"
     >
       <nav
         aria-label="Footer"
@@ -341,32 +345,34 @@ exports[`Home Component matches the snapshot when error encountered, does not at
 exports[`Home Component matches the snapshot when user cso account does not exist 1`] = `
 <DocumentFragment>
   <main>
-    <header>
+    <header
+      class="bcgov-header"
+    >
       <nav
         aria-label="Header"
         class="container-fluid navbar navbar-expand-lg navbar-dark"
       >
         <div
           aria-labelledby="title"
-          class="navbar-brand pointer"
+          class="navbar-brand bcgov-pointer"
         />
         <img
           alt="B.C. Government Logo"
-          class="img-fluid d-none d-md-block pointer"
+          class="img-fluid d-none d-md-block bcgov-pointer"
           height="44"
           src="undefined/images/bcid-logo-rev-en.svg"
           width="181"
         />
         <img
           alt="B.C. Government Logo"
-          class="img-fluid d-md-none pointer"
+          class="img-fluid d-md-none bcgov-pointer"
           height="44"
           src="undefined/images/bcid-symbol-rev.svg"
           width="64"
         />
         <div
           aria-labelledby="title"
-          class="pointer navbar-brand nav-item nav-link"
+          class="bcgov-pointer navbar-brand nav-item nav-link"
         />
         <div
           class="navbar-brand"
@@ -389,10 +395,10 @@ exports[`Home Component matches the snapshot when user cso account does not exis
             Create a Court Services Online (CSO) Account
           </h1>
           <div
-            class="display-box warning-background"
+            class="bcgov-display-box bcgov-warning-background"
           >
             <div
-              class="display-icon"
+              class="bcgov-display-icon"
             >
               <div
                 style="color: rgb(252, 186, 25);"
@@ -414,7 +420,7 @@ exports[`Home Component matches the snapshot when user cso account does not exis
               </div>
             </div>
             <div
-              class="display-right-element"
+              class="bcgov-display-right-element"
             >
               You need a CSO account to use E-File Submission. Create one now to continue.
             </div>
@@ -424,10 +430,10 @@ exports[`Home Component matches the snapshot when user cso account does not exis
             The following information will be used to create your CSO account.
           </p>
           <div
-            class="display-box "
+            class="bcgov-display-box "
           >
             <div
-              class="display-icon"
+              class="bcgov-display-icon"
             >
               <div
                 style="color: rgb(252, 186, 25);"
@@ -449,7 +455,7 @@ exports[`Home Component matches the snapshot when user cso account does not exis
               </div>
             </div>
             <div
-              class="display-right-element"
+              class="bcgov-display-right-element"
             >
               <div
                 class="bcgov-table "
@@ -508,10 +514,10 @@ exports[`Home Component matches the snapshot when user cso account does not exis
         </div>
         <div>
           <div
-            class="non-printable full-width"
+            class="bcgov-non-printable bcgov-full-width"
           >
             <span
-              class="print-page print"
+              class="bcgov-print-page print"
               role="button"
               tabindex="0"
             >
@@ -536,7 +542,7 @@ exports[`Home Component matches the snapshot when user cso account does not exis
             </h3>
           </div>
           <section
-            class="scroll-box printable"
+            class="bcgov-scroll-box bcgov-printable"
           >
             <p>
               The parties to this agreement are:
@@ -1183,7 +1189,7 @@ exports[`Home Component matches the snapshot when user cso account does not exis
             </ol>
           </section>
           <section
-            class="non-printable pt-2"
+            class="bcgov-non-printable pt-2"
           >
             <label
               for="acceptTerms"
@@ -1197,7 +1203,7 @@ exports[`Home Component matches the snapshot when user cso account does not exis
                 I accept the Service Agreement
               </b>
               <span
-                class="mandatory"
+                class="bcgov-mandatory"
                 id="asterisk"
               >
                 *
@@ -1209,14 +1215,14 @@ exports[`Home Component matches the snapshot when user cso account does not exis
           class="non-printable buttons pt-4"
         >
           <button
-            class="bcgov-button normal-white btn"
+            class="bcgov-button bcgov-normal-white btn"
             data-test-id="main-cancel-btn"
             type="button"
           >
             Cancel
           </button>
           <button
-            class="bcgov-button normal-blue btn"
+            class="bcgov-button bcgov-normal-blue btn"
             data-test-id="create-cso-btn"
             disabled=""
             type="button"
@@ -1229,7 +1235,7 @@ exports[`Home Component matches the snapshot when user cso account does not exis
         class="sidecard"
       >
         <div
-          class="wide-dashboard-spacing"
+          class="bcgov-wide-dashboard-spacing"
           style="position: relative;"
         >
           <div
@@ -1238,23 +1244,23 @@ exports[`Home Component matches the snapshot when user cso account does not exis
           >
             <p />
             <section
-              class="bluegrey-container"
+              class="bcgov-bluegrey-container"
               id="aboutCsoCard"
             >
               <div
-                class="container-background bluegrey-heading"
+                class="bcgov-container-background bcgov-bluegrey-heading"
               >
                 <h2
-                  class="heading-style"
+                  class="bcgov-heading-style"
                 >
                   <div
-                    class="side-card-row"
+                    class="bcgov-side-card-row"
                   >
                     <div
-                      class="round-icon-wrapper"
+                      class="bcgov-round-icon-wrapper"
                     >
                       <svg
-                        class="side-card-icon"
+                        class="bcgov-side-card-icon"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -1269,7 +1275,7 @@ exports[`Home Component matches the snapshot when user cso account does not exis
                       </svg>
                     </div>
                     <div
-                      class="side-card-title"
+                      class="bcgov-side-card-title"
                     >
                       About E-File Submission
                     </div>
@@ -1277,10 +1283,10 @@ exports[`Home Component matches the snapshot when user cso account does not exis
                 </h2>
               </div>
               <div
-                class="bluegrey-content"
+                class="bcgov-bluegrey-content"
               >
                 <span
-                  class="content-style"
+                  class="bcgov-content-style"
                 >
                   <p>
                     E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
@@ -1301,7 +1307,7 @@ exports[`Home Component matches the snapshot when user cso account does not exis
       </div>
     </div>
     <footer
-      class="footer"
+      class="bcgov-footer"
     >
       <nav
         aria-label="Footer"
@@ -1395,32 +1401,34 @@ exports[`Home Component matches the snapshot when user cso account does not exis
 exports[`Home Component matches the snapshot when user cso account exists 1`] = `
 <DocumentFragment>
   <main>
-    <header>
+    <header
+      class="bcgov-header"
+    >
       <nav
         aria-label="Header"
         class="container-fluid navbar navbar-expand-lg navbar-dark"
       >
         <div
           aria-labelledby="title"
-          class="navbar-brand pointer"
+          class="navbar-brand bcgov-pointer"
         />
         <img
           alt="B.C. Government Logo"
-          class="img-fluid d-none d-md-block pointer"
+          class="img-fluid d-none d-md-block bcgov-pointer"
           height="44"
           src="undefined/images/bcid-logo-rev-en.svg"
           width="181"
         />
         <img
           alt="B.C. Government Logo"
-          class="img-fluid d-md-none pointer"
+          class="img-fluid d-md-none bcgov-pointer"
           height="44"
           src="undefined/images/bcid-symbol-rev.svg"
           width="64"
         />
         <div
           aria-labelledby="title"
-          class="pointer navbar-brand nav-item nav-link"
+          class="bcgov-pointer navbar-brand nav-item nav-link"
         />
         <div
           class="navbar-brand"
@@ -1450,10 +1458,10 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
         <br />
         <div>
           <div
-            class="display-box border-background display-file"
+            class="bcgov-display-box bcgov-border-background bcgov-display-file"
           >
             <div
-              class="display-icon"
+              class="bcgov-display-icon"
             >
               <div
                 style="color: rgb(252, 186, 25);"
@@ -1475,7 +1483,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
               </div>
             </div>
             <div
-              class="display-right-element"
+              class="bcgov-display-right-element"
             >
               <div
                 class="bcgov-table "
@@ -1557,10 +1565,10 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
         </div>
         <div>
           <div
-            class="display-box border-background display-file"
+            class="bcgov-display-box bcgov-border-background bcgov-display-file"
           >
             <div
-              class="display-icon"
+              class="bcgov-display-icon"
             >
               <div
                 style="color: rgb(252, 186, 25);"
@@ -1582,7 +1590,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
               </div>
             </div>
             <div
-              class="display-right-element"
+              class="bcgov-display-right-element"
             >
               <div
                 class="bcgov-table "
@@ -1729,14 +1737,14 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
           class="buttons pt-2"
         >
           <button
-            class="bcgov-button normal-white btn"
+            class="bcgov-button bcgov-normal-white btn"
             data-test-id="main-cancel-btn"
             type="button"
           >
             Cancel
           </button>
           <button
-            class="bcgov-button normal-blue btn"
+            class="bcgov-button bcgov-normal-blue btn"
             data-test-id="continue-btn"
             type="button"
           >
@@ -1748,7 +1756,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
         class="sidecard"
       >
         <div
-          class="wide-dashboard-spacing"
+          class="bcgov-wide-dashboard-spacing"
           style="position: relative;"
         >
           <div
@@ -1757,23 +1765,23 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
           >
             <p />
             <section
-              class="bluegrey-container"
+              class="bcgov-bluegrey-container"
               id="csoAccountDetailsCard"
             >
               <div
-                class="container-background bluegrey-heading"
+                class="bcgov-container-background bcgov-bluegrey-heading"
               >
                 <h2
-                  class="heading-style"
+                  class="bcgov-heading-style"
                 >
                   <div
-                    class="side-card-row"
+                    class="bcgov-side-card-row"
                   >
                     <div
-                      class="round-icon-wrapper"
+                      class="bcgov-round-icon-wrapper"
                     >
                       <svg
-                        class="side-card-icon"
+                        class="bcgov-side-card-icon"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -1788,7 +1796,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                       </svg>
                     </div>
                     <div
-                      class="side-card-title"
+                      class="bcgov-side-card-title"
                     >
                       Your CSO Account
                     </div>
@@ -1796,10 +1804,10 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                 </h2>
               </div>
               <div
-                class="bluegrey-content"
+                class="bcgov-bluegrey-content"
               >
                 <span
-                  class="content-style"
+                  class="bcgov-content-style"
                 >
                   <p>
                     CSO account 
@@ -1826,7 +1834,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
           </div>
         </div>
         <div
-          class="wide-dashboard-spacing"
+          class="bcgov-wide-dashboard-spacing"
           style="position: relative;"
         >
           <div
@@ -1835,23 +1843,23 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
           >
             <p />
             <section
-              class="bluegrey-container"
+              class="bcgov-bluegrey-container"
               id="aboutCsoCard"
             >
               <div
-                class="container-background bluegrey-heading"
+                class="bcgov-container-background bcgov-bluegrey-heading"
               >
                 <h2
-                  class="heading-style"
+                  class="bcgov-heading-style"
                 >
                   <div
-                    class="side-card-row"
+                    class="bcgov-side-card-row"
                   >
                     <div
-                      class="round-icon-wrapper"
+                      class="bcgov-round-icon-wrapper"
                     >
                       <svg
-                        class="side-card-icon"
+                        class="bcgov-side-card-icon"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -1866,7 +1874,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                       </svg>
                     </div>
                     <div
-                      class="side-card-title"
+                      class="bcgov-side-card-title"
                     >
                       About E-File Submission
                     </div>
@@ -1874,10 +1882,10 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                 </h2>
               </div>
               <div
-                class="bluegrey-content"
+                class="bcgov-bluegrey-content"
               >
                 <span
-                  class="content-style"
+                  class="bcgov-content-style"
                 >
                   <p>
                     E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
@@ -1898,7 +1906,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
       </div>
     </div>
     <footer
-      class="footer"
+      class="bcgov-footer"
     >
       <nav
         aria-label="Footer"

@@ -12,17 +12,17 @@ import AuthenticationGuard from "./components/hoc/AuthenticationGuard";
 
 const mainButton = {
   label: "Cancel",
-  styling: "normal-white btn",
+  styling: "bcgov-normal-white btn",
 };
 
 const confirmButton = {
   label: "Yes, cancel E-File Submission",
-  styling: "normal-blue btn consistent-width",
+  styling: "bcgov-normal-blue btn bcgov-consistent-width",
 };
 
 const cancelButton = {
   label: "No, resume E-File Submission",
-  styling: "normal-white btn consistent-width",
+  styling: "bcgov-normal-white btn bcgov-consistent-width",
 };
 
 export default function App() {
