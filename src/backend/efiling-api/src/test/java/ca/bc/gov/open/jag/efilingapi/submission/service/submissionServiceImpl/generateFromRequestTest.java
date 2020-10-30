@@ -306,21 +306,6 @@ public class generateFromRequestTest {
     }
 
     @Test
-    @DisplayName("Exception: with no court file number and no parties, should throw EfilingLookupServiceException")
-    public void withNoCourtFileNumberAndNoPartiesShouldThrowEfilingLookupServiceException() {
-
-        GenerateUrlRequest request = new GenerateUrlRequest();
-        request.setClientAppName(CLIENT_APP_NAME);
-        request.setNavigationUrls(TestHelpers.createDefaultNavigation());
-        request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList()));
-        request.getFilingPackage().getCourt().setFileNumber("");
-
-        Mockito.when(efilingCourtService.checkValidLevelClassLocation(any(), any(), any(), any())).thenReturn(true);
-
-        Assertions.assertThrows(EfilingLookupServiceException.class, () -> sut.generateFromRequest(new SubmissionKey(TestHelpers.CASE_2, TestHelpers.CASE_2, TestHelpers.CASE_2), request));
-    }
-
-    @Test
     @DisplayName("Exception: with no court file number and invalid parties, should throw EfilingLookupServiceException")
     public void withNoCourtFileNumberAndInvalidPartiesShouldThrowEfilingLookupServiceException() {
 

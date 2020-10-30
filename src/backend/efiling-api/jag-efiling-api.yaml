@@ -1783,6 +1783,10 @@ components:
           type: string
         message:
           type: string
+        details:
+          type: array
+          items:
+            type: string
     GenerateUrlRequest:
       description: details about the required transaction
       required:
