@@ -11,7 +11,7 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
 
         Notification notification = new Notification();
 
-        if(initialPackage.getFilingPackage() == null) {
+        if (initialPackage.getFilingPackage() == null) {
             notification.addError("Initial Package is required.");
             return notification;
         }
@@ -24,12 +24,8 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
 
     private void validateParties(InitialPackage initialPackage, Notification notification) {
 
-        if(StringUtils.isBlank(initialPackage.getCourt().getFileNumber())) {
-
-            if(initialPackage.getParties().isEmpty()) {
-                notification.addError("At least 1 party is required for new submission.");
-            }
-        }
+        if (StringUtils.isBlank(initialPackage.getCourt().getFileNumber()) && initialPackage.getParties().isEmpty())
+            notification.addError("At least 1 party is required for new submission.");
 
     }
 
