@@ -68,8 +68,8 @@ public class SubmissionConfig {
     }
 
     @Bean
-    public GenerateUrlRequestValidator packageValidator() {
-        return new GenerateUrlRequestValidatorImpl();
+    public GenerateUrlRequestValidator packageValidator(SubmissionService submissionService) {
+        return new GenerateUrlRequestValidatorImpl(submissionService);
     }
 
 }
