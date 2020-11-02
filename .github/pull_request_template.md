@@ -9,6 +9,7 @@ This PR includes the following proposed change(s):
 - [ ] Bug fix (non-breaking change which fixes an issue)
 - [ ] New feature (non-breaking change which adds functionality)
 - [ ] Refactoring / Documentation
+- [ ] Version change
 
 if your change is a breaking change, please add `breaking change` label to this PR
 

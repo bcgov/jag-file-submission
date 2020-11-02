@@ -11,6 +11,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMapper;
+import ca.bc.gov.open.jag.efilingapi.submission.validator.GenerateUrlRequestValidator;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
@@ -75,6 +76,9 @@ public class GetPackageInformationTest {
     @Mock
     private AccessToken tokenMock;
 
+    @Mock
+    private GenerateUrlRequestValidator generateUrlRequestValidator;
+
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -97,7 +101,7 @@ public class GetPackageInformationTest {
         Mockito.when(submissionStoreMock.get(ArgumentMatchers.argThat(x -> x.getSubmissionId().equals(TestHelpers.CASE_1)))).thenReturn(Optional.of(submissionWithParentApplication));
 
         FilingPackageMapper filingPackageMapper = new FilingPackageMapperImpl();
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper, generateUrlRequestValidator);
     }
 
     @Test

@@ -289,9 +289,16 @@ public class SubmissionServiceImpl implements SubmissionService {
         if (!isValidCourtFileNumber) throw new EfilingCourtServiceException("invalid court file number");
     }
 
+    private void validateDocumentTypes(CourtBase courtBase, GenerateUrlRequest generateUrlRequest) {
+        List<DocumentType> validDocumentTypes = efilingDocumentService.getDocumentTypes(courtBase.getLevel(), courtBase.getCourtClass());
+        if (!checkValidDocumentTypes(validDocumentTypes, generateUrlRequest.getFilingPackage().getDocuments()))
+            throw new EfilingDocumentServiceException("invalid document types provided");
+    }
+
+
     private void validateParties(GenerateUrlRequest generateUrlRequest, CourtBase courtBase) {
+
         List<Party> parties = generateUrlRequest.getFilingPackage().getParties();
-        if (parties.isEmpty()) throw new EfilingLookupServiceException("no parties provided");
 
         String documentTypes = generateCommaSeparatedDocumentTypes(generateUrlRequest.getFilingPackage().getDocuments());
         List<String> validPartyRoles = efilingLookupService.getValidPartyRoles(
@@ -302,12 +309,6 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         if (!checkValidPartyRoles(validPartyRoles, parties))
             throw new EfilingLookupServiceException("invalid parties provided");
-    }
-
-    private void validateDocumentTypes(CourtBase courtBase, GenerateUrlRequest generateUrlRequest) {
-        List<DocumentType> validDocumentTypes = efilingDocumentService.getDocumentTypes(courtBase.getLevel(), courtBase.getCourtClass());
-        if (!checkValidDocumentTypes(validDocumentTypes, generateUrlRequest.getFilingPackage().getDocuments()))
-            throw new EfilingDocumentServiceException("invalid document types provided");
     }
 
     private boolean checkValidPartyRoles(List<String> validPartyRoles, List<Party> parties) {

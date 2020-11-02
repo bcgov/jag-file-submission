@@ -15,6 +15,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMappe
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
+import ca.bc.gov.open.jag.efilingapi.submission.validator.GenerateUrlRequestValidator;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import org.junit.jupiter.api.BeforeAll;
@@ -83,6 +84,9 @@ public class GetSubmissionTest {
     @Mock
     private ClamAvService clamAvServiceMock;
 
+    @Mock
+    private GenerateUrlRequestValidator generateUrlRequestValidator;
+
     @BeforeAll
     public void setUp() {
 
@@ -136,7 +140,7 @@ public class GetSubmissionTest {
                         .create());
 
         FilingPackageMapper filingPackageMapper = new FilingPackageMapperImpl();
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper, generateUrlRequestValidator);
 
     }
 

@@ -15,7 +15,9 @@ import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMappe
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
+import ca.bc.gov.open.jag.efilingapi.submission.validator.GenerateUrlRequestValidator;
 import ca.bc.gov.open.jag.efilingapi.utils.MdcUtils;
+import ca.bc.gov.open.jag.efilingapi.utils.Notification;
 import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
 import ca.bc.gov.open.jag.efilingapi.utils.TikaAnalysis;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.*;
@@ -52,13 +54,14 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     private final DocumentStore documentStore;
     private final ClamAvService clamAvService;
     private final FilingPackageMapper filingPackageMapper;
+    private final GenerateUrlRequestValidator generateUrlRequestValidator;
 
     public SubmissionApiDelegateImpl(
             SubmissionService submissionService,
             AccountService accountService,
             GenerateUrlResponseMapper generateUrlResponseMapper,
             NavigationProperties navigationProperties,
-            SubmissionStore submissionStore, DocumentStore documentStore, ClamAvService clamAvService, FilingPackageMapper filingPackageMapper) {
+            SubmissionStore submissionStore, DocumentStore documentStore, ClamAvService clamAvService, FilingPackageMapper filingPackageMapper, GenerateUrlRequestValidator generateUrlRequestValidator) {
         this.submissionService = submissionService;
         this.accountService = accountService;
         this.generateUrlResponseMapper = generateUrlResponseMapper;
@@ -67,6 +70,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         this.documentStore = documentStore;
         this.clamAvService = clamAvService;
         this.filingPackageMapper = filingPackageMapper;
+        this.generateUrlRequestValidator = generateUrlRequestValidator;
     }
 
     @Override
@@ -228,6 +232,13 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
                     HttpStatus.FORBIDDEN);
+
+        Notification validation = generateUrlRequestValidator.validate(generateUrlRequest);
+
+        if(validation.hasError())
+            return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALID_INITIAL_SUBMISSION_PAYLOAD).addDetails(validation.getErrors()).create(),
+                    HttpStatus.BAD_REQUEST);
+
 
         if (accountService.getCsoAccountDetails(universalId.get()) != null &&
                 !accountService.getCsoAccountDetails(universalId.get()).isFileRolePresent())

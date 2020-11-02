@@ -15,6 +15,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMappe
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
+import ca.bc.gov.open.jag.efilingapi.submission.validator.GenerateUrlRequestValidator;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
 import org.junit.jupiter.api.*;
 import org.keycloak.KeycloakPrincipal;
@@ -83,6 +84,9 @@ public class UpdateDocumentPropertiesTest {
     @Mock
     private AccessToken tokenMock;
 
+    @Mock
+    private GenerateUrlRequestValidator generateUrlRequestValidator;
+
     @BeforeEach
     public void setUp() throws IOException {
         MockitoAnnotations.initMocks(this);
@@ -100,7 +104,7 @@ public class UpdateDocumentPropertiesTest {
 
 
         FilingPackageMapper filingPackageMapper = new FilingPackageMapperImpl();
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper, generateUrlRequestValidator);
     }
 
     @Test

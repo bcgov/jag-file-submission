@@ -13,6 +13,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
+import ca.bc.gov.open.jag.efilingapi.submission.validator.GenerateUrlRequestValidator;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -67,6 +68,9 @@ public class UploadSubmissionDocumentsTest {
     @Mock
     private ClamAvService clamAvServiceMock;
 
+    @Mock
+    private GenerateUrlRequestValidator generateUrlRequestValidator;
+
 
     @BeforeAll
     public void setUp() throws IOException {
@@ -77,7 +81,7 @@ public class UploadSubmissionDocumentsTest {
         Mockito.when(multipartFileMock.getBytes()).thenThrow(new IOException("random"));
 
         FilingPackageMapper filingPackageMapper = new FilingPackageMapperImpl();
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper, generateUrlRequestValidator);
     }
 
     @Test
