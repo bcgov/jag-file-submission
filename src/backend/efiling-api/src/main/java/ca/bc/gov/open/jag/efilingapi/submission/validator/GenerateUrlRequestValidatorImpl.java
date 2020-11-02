@@ -68,7 +68,7 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
         if(!invalidParties.isEmpty()) {
 
             invalidParties.stream().forEach(party -> {
-                notification.addError(MessageFormat.format("Role type [{0}] invalid.", party.getRoleType()));
+                notification.addError(MessageFormat.format("Role type [{0}] is invalid.", party.getRoleType()));
             });
 
         }

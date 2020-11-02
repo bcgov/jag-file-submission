@@ -129,8 +129,8 @@ public class GenerateUrlRequestValidatorImplTest {
         Notification actual = sut.validate(generateUrlRequest);
 
         Assertions.assertTrue(actual.hasError());
-        Assertions.assertEquals("Role type [CAV] invalid.", actual.getErrors().get(0));
-        Assertions.assertEquals("Role type [DEO] invalid.", actual.getErrors().get(1));
+        Assertions.assertEquals("Role type [CAV] is invalid.", actual.getErrors().get(0));
+        Assertions.assertEquals("Role type [DEO] is invalid.", actual.getErrors().get(1));
 
     }
 
@@ -155,7 +155,7 @@ public class GenerateUrlRequestValidatorImplTest {
         Notification actual = sut.validate(generateUrlRequest);
 
         Assertions.assertTrue(actual.hasError());
-        Assertions.assertEquals("Role type [null] invalid.", actual.getErrors().get(0));
+        Assertions.assertEquals("Role type [null] is invalid.", actual.getErrors().get(0));
 
     }
 
