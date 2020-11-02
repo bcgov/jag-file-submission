@@ -1,6 +1,5 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.Party;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.payment.BamboraPaymentAdapter;
@@ -298,23 +297,6 @@ public class SubmissionServiceImpl implements SubmissionService {
         List<DocumentType> validDocumentTypes = efilingDocumentService.getDocumentTypes(courtBase.getLevel(), courtBase.getCourtClass());
         if (!checkValidDocumentTypes(validDocumentTypes, generateUrlRequest.getFilingPackage().getDocuments()))
             throw new EfilingDocumentServiceException("invalid document types provided");
-    }
-
-    private boolean checkValidPartyRoles(List<String> validPartyRoles, List<Party> parties) {
-        AtomicBoolean isValid = new AtomicBoolean(true);
-
-        parties.stream().forEach(party -> {
-            AtomicBoolean currentPartyRoleValid = new AtomicBoolean(false);
-            validPartyRoles.stream().forEach(validRole -> {
-                if (validRole.equals(party.getRoleType().getValue())) {
-                    currentPartyRoleValid.set(true);
-                }
-            });
-
-            if (!currentPartyRoleValid.get()) isValid.set(false);
-        });
-
-        return isValid.get();
     }
 
     private boolean checkValidDocumentTypes(List<DocumentType> validDocumentTypes, List<DocumentProperties> documents) {
