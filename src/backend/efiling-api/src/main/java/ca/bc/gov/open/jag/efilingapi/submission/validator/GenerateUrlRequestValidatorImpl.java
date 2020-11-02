@@ -40,7 +40,7 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
      *
      * if court file number is empty then at least 1 party is required
      *
-     * Parties types must be valid based on the document types submitted
+     * Party types must be valid based on the document types submitted
      *
      * @param initialPackage
      * @param notification
