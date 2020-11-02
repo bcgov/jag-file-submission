@@ -235,17 +235,9 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         Notification validation = generateUrlRequestValidator.validate(generateUrlRequest);
 
-        if(validation.hasError()) {
-
-            EfilingError errorResponse = new EfilingError();
-
-            errorResponse.setError("400");
-            errorResponse.setMessage("Initial submission package is invalid");
-
-            errorResponse.setDetails(validation.getErrors());
-
-            return new ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST);
-        }
+        if(validation.hasError())
+            return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALID_INITIAL_SUBMISSION_PAYLOAD).addDetails(validation.getErrors()).create(),
+                    HttpStatus.BAD_REQUEST);
 
 
         if (accountService.getCsoAccountDetails(universalId.get()) != null &&
