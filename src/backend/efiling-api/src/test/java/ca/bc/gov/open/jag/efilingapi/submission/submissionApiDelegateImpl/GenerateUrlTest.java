@@ -228,7 +228,7 @@ public class GenerateUrlTest {
         EfilingError actualError = (EfilingError) actual.getBody();
 
         Assertions.assertEquals("Initial Submission payload invalid, find more in the details array.", actualError.getMessage());
-        Assertions.assertEquals("400", actualError.getError());
+        Assertions.assertEquals("INVALID_INITIAL_SUBMISSION_PAYLOAD", actualError.getError());
         Assertions.assertEquals("a random error", actualError.getDetails().get(0));
 
     }
