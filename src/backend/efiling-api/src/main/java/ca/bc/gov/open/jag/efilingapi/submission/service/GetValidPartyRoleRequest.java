@@ -8,12 +8,12 @@ import java.util.stream.Collectors;
 
 public class GetValidPartyRoleRequest {
 
-    private List<DocumentProperties> documents = new ArrayList<>();
+    private List<DocumentProperties> documentPropertiesList = new ArrayList<>();
     private String courtLevel;
     private String courtClassification;
 
-    public List<DocumentProperties> getDocuments() {
-        return documents;
+    public List<DocumentProperties> getDocumentPropertiesList() {
+        return documentPropertiesList;
     }
 
     public String getCourtLevel() {
@@ -24,12 +24,12 @@ public class GetValidPartyRoleRequest {
         return courtClassification;
     }
 
-    public String getDocumentTypeAsString() {
-        return this.documents.stream().map(x -> x.getType().getValue()).collect(Collectors.joining(","));
+    public String getDocumentTypesAsString() {
+        return this.documentPropertiesList.stream().map(x -> x.getType().getValue()).collect(Collectors.joining(","));
     }
 
     public GetValidPartyRoleRequest(Builder builder) {
-        this.documents = builder.documents;
+        this.documentPropertiesList = builder.documents;
         this.courtLevel = builder.courtLevel;
         this.courtClassification = builder.courtClassification;
     }

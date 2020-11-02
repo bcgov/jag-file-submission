@@ -37,8 +37,8 @@ public class GetValidPartyRoleRequestTest {
 
         Assertions.assertEquals(COURT_CLASSIFICATION, actual.getCourtClassification());
         Assertions.assertEquals(COURT_LEVEL, actual.getCourtLevel());
-        Assertions.assertEquals(3, actual.getDocuments().size());
-        Assertions.assertEquals("AAB,ACMW,TAX", actual.getDocumentTypeAsString());
+        Assertions.assertEquals(3, actual.getDocumentPropertiesList().size());
+        Assertions.assertEquals("AAB,ACMW,TAX", actual.getDocumentTypesAsString());
 
 
     }

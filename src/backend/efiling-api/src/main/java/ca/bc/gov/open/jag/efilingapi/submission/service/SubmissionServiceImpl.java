@@ -159,7 +159,7 @@ public class SubmissionServiceImpl implements SubmissionService {
         return efilingLookupService.getValidPartyRoles(
                 getValidPartyRoleRequest.getCourtLevel(),
                 getValidPartyRoleRequest.getCourtClassification(),
-                getValidPartyRoleRequest.getDocumentTypeAsString()
+                getValidPartyRoleRequest.getDocumentTypesAsString()
         );
     }
 
