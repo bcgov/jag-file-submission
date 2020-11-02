@@ -1,11 +1,10 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
-import ca.bc.gov.open.jag.efilingapi.api.model.SubmitResponse;
-import ca.bc.gov.open.jag.efilingapi.api.model.UpdateDocumentRequest;
+import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
+import java.util.List;
 
 public interface SubmissionService {
 
@@ -14,5 +13,7 @@ public interface SubmissionService {
     SubmitResponse createSubmission(Submission submission, AccountDetails accountDetails);
 
     Submission updateDocuments(Submission submission, UpdateDocumentRequest updateDocumentRequest, SubmissionKey submissionKey);
+
+    List<String> getValidPartyRoles(GetValidPartyRoleRequest getValidPartyRoleRequest);
 
 }

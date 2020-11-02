@@ -1,7 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.api.model.Party;
+import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.payment.BamboraPaymentAdapter;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
@@ -11,10 +11,9 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.utils.FileUtils;
 import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
-import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
-import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingLookupServiceException;
-import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtServiceException;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.Court;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentType;
@@ -156,6 +155,15 @@ public class SubmissionServiceImpl implements SubmissionService {
         return submission;
     }
 
+    @Override
+    public List<String> getValidPartyRoles(GetValidPartyRoleRequest getValidPartyRoleRequest) {
+        return efilingLookupService.getValidPartyRoles(
+                getValidPartyRoleRequest.getCourtLevel(),
+                getValidPartyRoleRequest.getCourtClassification(),
+                getValidPartyRoleRequest.getDocumentTypeAsString()
+        );
+    }
+
     private FilingPackage toFilingPackage(GenerateUrlRequest request, SubmissionKey submissionKey) {
 
         return FilingPackage.builder()
@@ -255,10 +263,7 @@ public class SubmissionServiceImpl implements SubmissionService {
         validateCourtLevelClassLocation(courtDetails, courtBase);
 
         // Validate court file number and parties
-        if (StringUtils.isEmpty(courtBase.getFileNumber())) {
-            // If no court file number present, validate parties
-            validateParties(generateUrlRequest, courtBase);
-        } else {
+        if (!StringUtils.isEmpty(courtBase.getFileNumber())) {
             // If court file number present, validate court file number, level, class and location
             validateCourtFileNumber(courtDetails, courtBase);
         }
@@ -295,22 +300,6 @@ public class SubmissionServiceImpl implements SubmissionService {
             throw new EfilingDocumentServiceException("invalid document types provided");
     }
 
-
-    private void validateParties(GenerateUrlRequest generateUrlRequest, CourtBase courtBase) {
-
-        List<Party> parties = generateUrlRequest.getFilingPackage().getParties();
-
-        String documentTypes = generateCommaSeparatedDocumentTypes(generateUrlRequest.getFilingPackage().getDocuments());
-        List<String> validPartyRoles = efilingLookupService.getValidPartyRoles(
-                courtBase.getLevel(),
-                courtBase.getCourtClass(),
-                documentTypes
-        );
-
-        if (!checkValidPartyRoles(validPartyRoles, parties))
-            throw new EfilingLookupServiceException("invalid parties provided");
-    }
-
     private boolean checkValidPartyRoles(List<String> validPartyRoles, List<Party> parties) {
         AtomicBoolean isValid = new AtomicBoolean(true);
 
@@ -343,18 +332,6 @@ public class SubmissionServiceImpl implements SubmissionService {
         });
 
         return isValid.get();
-    }
-
-    private String generateCommaSeparatedDocumentTypes(List<DocumentProperties> documentProperties) {
-        StringBuilder documentTypes = new StringBuilder();
-
-        for (DocumentProperties doc : documentProperties) {
-            documentTypes.append(MessageFormat.format("{0},", doc.getType()));
-        }
-
-        documentTypes.delete(documentTypes.length() - 1, documentTypes.length());
-
-        return documentTypes.toString();
     }
 
 }
