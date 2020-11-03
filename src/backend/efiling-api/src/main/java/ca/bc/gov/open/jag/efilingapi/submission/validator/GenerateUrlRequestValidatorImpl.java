@@ -4,7 +4,7 @@ import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.InitialPackage;
 import ca.bc.gov.open.jag.efilingapi.api.model.Party;
 import ca.bc.gov.open.jag.efilingapi.court.models.GetCourtDetailsRequest;
-import ca.bc.gov.open.jag.efilingapi.court.models.IsValidCourtRequestRequest;
+import ca.bc.gov.open.jag.efilingapi.court.models.IsValidCourtRequest;
 import ca.bc.gov.open.jag.efilingapi.court.services.CourtService;
 import ca.bc.gov.open.jag.efilingapi.submission.models.GetValidPartyRoleRequest;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
@@ -57,7 +57,7 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
                 .courtClassification(initialPackage.getCourt().getCourtClass())
                 .create());
 
-        if(this.courtService.IsValidCourt(IsValidCourtRequestRequest
+        if(this.courtService.isValidCourt(IsValidCourtRequest
                 .builder()
                 .applicationCode(applicationCode)
                 .courtClassification(initialPackage.getCourt().getLocation())

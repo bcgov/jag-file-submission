@@ -1,7 +1,7 @@
-package ca.bc.gov.open.jag.efilingapi.court;
+package ca.bc.gov.open.jag.efilingapi.court.services;
 
 import ca.bc.gov.open.jag.efilingapi.court.models.GetCourtDetailsRequest;
-import ca.bc.gov.open.jag.efilingapi.court.services.CourtServiceImpl;
+import ca.bc.gov.open.jag.efilingapi.court.models.IsValidCourtRequest;
 import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import org.junit.jupiter.api.*;
@@ -21,6 +21,8 @@ public class CourtServiceImplTest {
     public static final String COURT_DESCRIPTION = "courtDescription";
     public static final String LEVEL_DESCRIPTION = "levelDescription";
     public static final BigDecimal COURT_ID = BigDecimal.TEN;
+    public static final String CASE_1 = "case1";
+    public static final String CASE_2 = "case2";
 
     private CourtServiceImpl sut;
 
@@ -38,7 +40,24 @@ public class CourtServiceImplTest {
                 Mockito.eq(COURT_LEVEL),
                 Mockito.eq(COURT_CLASSIFICATION))).thenReturn(courtDetails);
 
+        Mockito.when(efilingCourtServiceMock
+                .checkValidLevelClassLocation(
+                        Mockito.eq(COURT_ID),
+                        Mockito.eq(COURT_LEVEL),
+                        Mockito.eq(COURT_CLASSIFICATION),
+                        Mockito.eq(CASE_1)
+                )).thenReturn(true);
+
+        Mockito.when(efilingCourtServiceMock
+                .checkValidLevelClassLocation(
+                        Mockito.eq(COURT_ID),
+                        Mockito.eq(COURT_LEVEL),
+                        Mockito.eq(COURT_CLASSIFICATION),
+                        Mockito.eq(CASE_2)
+                )).thenReturn(false);
+
         sut = new CourtServiceImpl(efilingCourtServiceMock);
+
     }
 
 
@@ -57,6 +76,37 @@ public class CourtServiceImplTest {
         Assertions.assertEquals(CLASS_DESCRIPTION, actual.getClassDescription());
         Assertions.assertEquals(COURT_DESCRIPTION, actual.getCourtDescription());
         Assertions.assertEquals(LEVEL_DESCRIPTION, actual.getLevelDescription());
+
+    }
+
+    @Test
+    @DisplayName("ok: should validate court classification and return true")
+    public void shouldValidateCourtClassificationAndReturnTrue() {
+
+        boolean actual = sut.isValidCourt(IsValidCourtRequest.builder()
+                .applicationCode(CASE_1)
+                .courtClassification(COURT_CLASSIFICATION)
+                .courtId(COURT_ID)
+                .courtLevel(COURT_LEVEL)
+                .create());
+
+        Assertions.assertTrue(actual);
+
+    }
+
+    @Test
+    @DisplayName("ok: should validate court classification and return false")
+    public void shouldValidateCourtClassificationAndReturnFalse() {
+
+        boolean actual = sut.isValidCourt(IsValidCourtRequest.builder()
+                .applicationCode(CASE_2)
+                .courtClassification(COURT_CLASSIFICATION)
+                .courtId(COURT_ID)
+                .courtLevel(COURT_LEVEL)
+                .create());
+
+        Assertions.assertFalse(actual);
+
 
     }
 
