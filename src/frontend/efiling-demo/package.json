@@ -33,7 +33,7 @@
     "build-storybook": "build-storybook -s public",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "coverage": "jest --coverage --watchAll --env=jest-environment-jsdom-sixteen",
+    "coverage": "jest --coverage --env=jest-environment-jsdom-sixteen",
     "precommit": "pretty-quick --staged"
   },
   "eslintConfig": {
