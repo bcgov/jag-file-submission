@@ -8,15 +8,20 @@ public class Notification {
     private List<String> errors = new ArrayList<>();
 
     public Boolean hasError() {
-        return !errors.isEmpty();
+        return !this.errors.isEmpty();
     }
 
     public void addError(String error) {
         errors.add(error);
     }
 
-    public List<String> getErrors() {
-        return errors;
+    public void addError(List<String> errors) {
+        this.errors.addAll(errors);
     }
+
+    public List<String> getErrors() {
+        return this.errors;
+    }
+
 
 }

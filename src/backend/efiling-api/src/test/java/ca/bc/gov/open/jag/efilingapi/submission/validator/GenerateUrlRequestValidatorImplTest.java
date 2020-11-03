@@ -4,6 +4,7 @@ import ca.bc.gov.open.jag.efilingapi.api.model.CourtBase;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.InitialPackage;
 import ca.bc.gov.open.jag.efilingapi.api.model.Party;
+import ca.bc.gov.open.jag.efilingapi.court.services.CourtService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.utils.Notification;
 import org.junit.jupiter.api.*;
@@ -22,11 +23,15 @@ public class GenerateUrlRequestValidatorImplTest {
     private static final String COURT_CLASSIFICATION = "COURT_CLASSIFICATION";
     private static final String[] ROLE_TYPES = new String[] { "ADJ", "CIT" };
     private static final String COURT_LEVEL = "COURT_LEVEL";
+    public static final String APPLICATION_CODE = "app_code";
 
     private GenerateUrlRequestValidatorImpl sut;
 
     @Mock
     private SubmissionService submissionService;
+
+    @Mock
+    private CourtService courtServiceMock;
 
     @BeforeEach
     public void setup() {
@@ -38,7 +43,7 @@ public class GenerateUrlRequestValidatorImplTest {
                         ArgumentMatchers.argThat(x -> x.getCourtClassification().equals(COURT_CLASSIFICATION))))
                 .thenReturn(Arrays.asList(ROLE_TYPES));
 
-        sut = new GenerateUrlRequestValidatorImpl(submissionService);
+        sut = new GenerateUrlRequestValidatorImpl(submissionService, courtServiceMock);
 
     }
 
@@ -64,7 +69,7 @@ public class GenerateUrlRequestValidatorImplTest {
         initialFilingPackage.setParties(parties);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
 
         Assertions.assertFalse(actual.hasError());
 
@@ -76,7 +81,7 @@ public class GenerateUrlRequestValidatorImplTest {
 
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
-        Notification actual = sut.validate(generateUrlRequest);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("Initial Package is required.", actual.getErrors().get(0));
@@ -97,7 +102,7 @@ public class GenerateUrlRequestValidatorImplTest {
         initialFilingPackage.setCourt(court);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("At least 1 party is required for new submission.", actual.getErrors().get(0));
@@ -126,7 +131,7 @@ public class GenerateUrlRequestValidatorImplTest {
         initialFilingPackage.setParties(parties);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("Role type [CAV] is invalid.", actual.getErrors().get(0));
@@ -152,7 +157,7 @@ public class GenerateUrlRequestValidatorImplTest {
         initialFilingPackage.setParties(parties);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("Role type [null] is invalid.", actual.getErrors().get(0));

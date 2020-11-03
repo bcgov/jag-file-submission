@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission;
 
+import ca.bc.gov.open.jag.efilingapi.court.services.CourtService;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.payment.BamboraPaymentAdapter;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.*;
@@ -22,6 +23,8 @@ import org.springframework.context.annotation.Configuration;
 public class SubmissionConfig {
 
     private final CacheProperties cacheProperties;
+
+    private CourtService courtServiceMock;
 
     public SubmissionConfig(CacheProperties cacheProperties) {
         this.cacheProperties = cacheProperties;
@@ -69,7 +72,7 @@ public class SubmissionConfig {
 
     @Bean
     public GenerateUrlRequestValidator packageValidator(SubmissionService submissionService) {
-        return new GenerateUrlRequestValidatorImpl(submissionService);
+        return new GenerateUrlRequestValidatorImpl(submissionService, courtServiceMock);
     }
 
 }

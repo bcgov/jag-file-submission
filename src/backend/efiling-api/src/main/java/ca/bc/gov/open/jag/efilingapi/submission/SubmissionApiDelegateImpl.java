@@ -233,7 +233,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
                     HttpStatus.FORBIDDEN);
 
-        Notification validation = generateUrlRequestValidator.validate(generateUrlRequest);
+        Notification validation = generateUrlRequestValidator.validate(generateUrlRequest, SecurityUtils.getApplicationCode());
 
         if(validation.hasError())
             return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALID_INITIAL_SUBMISSION_PAYLOAD).addDetails(validation.getErrors()).create(),
@@ -315,7 +315,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @Override
     @RolesAllowed("efiling-user")
     public ResponseEntity<FilingPackage> getSubmissionFilingPackage(UUID xTransactionId, UUID submissionId) {
-
 
         Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
 
