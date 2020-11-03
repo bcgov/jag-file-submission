@@ -2451,10 +2451,10 @@
     "@babel/runtime" "^7.11.2"
     "@testing-library/dom" "^7.26.0"
 
-"@testing-library/user-event@^12.1.7":
-  version "12.1.8"
-  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-12.1.8.tgz#52b419455a3da2ac7ac17b77f8fd621c3700ec12"
-  integrity sha512-UUcTuT8HyDwGaRXgNgvMS1uOlreLv9+WsXi1FNj3mmumnB2d3hv2cov0RAd99lx8QI2CtAAOELxoihGj8x/nWg==
+"@testing-library/user-event@^12.1.10":
+  version "12.1.10"
+  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-12.1.10.tgz#e043ef5aa10e4b3e56b434e383d2fbfef1fcfb7f"
+  integrity sha512-StlNdKHp2Rpb7yrny/5/CGpz8bR3jLa1Ge59ODGU6TmAhkrxSpvR6tCD1gaMFkkjEUWkmmye8BaXsZPcaiJ6Ug==
   dependencies:
     "@babel/runtime" "^7.10.2"
 
@@ -3701,7 +3701,7 @@ atob@^2.1.2:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-attr-accept@^2.0.0:
+attr-accept@^2.2.1:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/attr-accept/-/attr-accept-2.2.2.tgz#646613809660110749e92f2c10833b70968d929b"
   integrity sha512-7prDjvt9HmqiZ0cl5CRjtS84sEyhsHP2coDkaZKRKVfCDo9s7iw7ChVmar78Gu9pC4SoR/28wFu/G5JJhTnqEg==
@@ -6973,12 +6973,12 @@ file-saver@^2.0.2:
   resolved "https://registry.yarnpkg.com/file-saver/-/file-saver-2.0.2.tgz#06d6e728a9ea2df2cce2f8d9e84dfcdc338ec17a"
   integrity sha512-Wz3c3XQ5xroCxd1G8b7yL0Ehkf0TC9oYC6buPFkNnU9EnaPlifeAFCyCh+iewXTyFRcg0a6j3J7FmJsIhlhBdw==
 
-file-selector@^0.1.12:
-  version "0.1.13"
-  resolved "https://registry.yarnpkg.com/file-selector/-/file-selector-0.1.13.tgz#5efd977ca2bca1700992df1b10e254f4e73d2df4"
-  integrity sha512-T2efCBY6Ps+jLIWdNQsmzt/UnAjKOEAlsZVdnQztg/BtAZGNL4uX1Jet9cMM8gify/x4CSudreji2HssGBNVIQ==
+file-selector@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/file-selector/-/file-selector-0.2.2.tgz#76186ac94ea01a18262a1e9ee36a8815911bc0b4"
+  integrity sha512-tMZc0lkFzhOGlZUAkQ5iljPORvDX+nWEI+9C5nj9KT7Ax8bAUUtI/GYM8JFIjyKfKlQkJRC84D0UgxwDqRGvRQ==
   dependencies:
-    tslib "^2.0.1"
+    tslib "^2.0.3"
 
 file-system-cache@^1.0.5:
   version "1.0.5"
@@ -12420,13 +12420,13 @@ react-draggable@^4.0.3:
     classnames "^2.2.5"
     prop-types "^15.6.0"
 
-react-dropzone@^11.2.0:
-  version "11.2.0"
-  resolved "https://registry.yarnpkg.com/react-dropzone/-/react-dropzone-11.2.0.tgz#4e54fa3479e6b6bb93f67914e4a27f1260807fdb"
-  integrity sha512-S/qaXQHCCg7MVlcrhqd05MLC6DupITLUB0CFn3iCLs6OTjzxdGDF1WTktTe5Jyq8jZdxYfMHNUZOHL0mg+K0Dw==
+react-dropzone@^11.2.3:
+  version "11.2.3"
+  resolved "https://registry.yarnpkg.com/react-dropzone/-/react-dropzone-11.2.3.tgz#8a49e9fc7ab75eaccf748c382a790092c035cef1"
+  integrity sha512-D99BhHm7H1h7ztUH/FLDo4wDy7VzXMbHoS/tUZHtoaY37Y55uadq0kUKqoaJ8PXl+niqdb5t6GankuEaAL6Vwg==
   dependencies:
-    attr-accept "^2.0.0"
-    file-selector "^0.1.12"
+    attr-accept "^2.2.1"
+    file-selector "^0.2.2"
     prop-types "^15.7.2"
 
 react-error-overlay@^6.0.7:
@@ -14431,7 +14431,7 @@ tslib@^1.10.0, tslib@^1.8.1, tslib@^1.9.0:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
-tslib@^2.0.0, tslib@^2.0.1:
+tslib@^2.0.0, tslib@^2.0.1, tslib@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.0.3.tgz#8e0741ac45fc0c226e58a17bfc3e64b9bc6ca61c"
   integrity sha512-uZtkfKblCEQtZKBF6EBXVZeQNl82yqtDQdv+eck8u7tdPxjLu2/lp5/uPW+um2tpuxINHWy3GhiccY7QgEaVHQ==
