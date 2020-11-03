@@ -13,7 +13,6 @@ import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.xml.bind.SchemaOutputResolver;
 import java.io.IOException;
 
 import static org.junit.Assert.*;
