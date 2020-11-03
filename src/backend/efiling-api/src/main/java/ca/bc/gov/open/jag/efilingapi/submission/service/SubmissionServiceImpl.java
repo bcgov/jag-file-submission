@@ -259,9 +259,6 @@ public class SubmissionServiceImpl implements SubmissionService {
         CourtBase courtBase = generateUrlRequest.getFilingPackage().getCourt();
         CourtDetails courtDetails = efilingCourtService.getCourtDescription(courtBase.getLocation(), courtBase.getLevel(), courtBase.getCourtClass());
 
-        // Validate court level, class and location
-        validateCourtLevelClassLocation(courtDetails, courtBase);
-
         // Validate court file number and parties
         if (!StringUtils.isEmpty(courtBase.getFileNumber())) {
             // If court file number present, validate court file number, level, class and location
@@ -270,16 +267,6 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         // Validate document types
         validateDocumentTypes(courtBase, generateUrlRequest);
-    }
-
-    private void validateCourtLevelClassLocation(CourtDetails courtDetails, CourtBase courtBase) {
-        boolean isValidLevelClassLocation = efilingCourtService.checkValidLevelClassLocation(
-                courtDetails.getCourtId(),
-                courtBase.getLevel(),
-                courtBase.getCourtClass(),
-                SecurityUtils.getApplicationCode()
-        );
-        if (!isValidLevelClassLocation) throw new EfilingCourtServiceException("invalid court level, class and location combination");
     }
 
     private void validateCourtFileNumber(CourtDetails courtDetails, CourtBase courtBase) {

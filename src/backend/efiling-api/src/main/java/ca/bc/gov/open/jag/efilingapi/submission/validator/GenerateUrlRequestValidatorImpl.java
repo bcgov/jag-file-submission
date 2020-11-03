@@ -50,21 +50,28 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
 
         List<String> result = new ArrayList<>();
 
-        CourtDetails courtDetails = this.courtService.getCourtDetails(GetCourtDetailsRequest
-                .builder()
-                .courtLocation(initialPackage.getCourt().getLocation())
-                .courtLevel(initialPackage.getCourt().getLevel())
-                .courtClassification(initialPackage.getCourt().getCourtClass())
-                .create());
 
-        if(this.courtService.isValidCourt(IsValidCourtRequest
-                .builder()
-                .applicationCode(applicationCode)
-                .courtClassification(initialPackage.getCourt().getLocation())
-                .courtLevel(initialPackage.getCourt().getLevel())
-                .courtId(courtDetails.getCourtId())
-                .create())) {
-            result.add("Court with Location: [{0}], Level: [{1}], Classification: [{2}] is not a valid court.");
+        try {
+
+            CourtDetails courtDetails = this.courtService.getCourtDetails(GetCourtDetailsRequest
+                    .builder()
+                    .courtLocation(initialPackage.getCourt().getLocation())
+                    .courtLevel(initialPackage.getCourt().getLevel())
+                    .courtClassification(initialPackage.getCourt().getCourtClass())
+                    .create());
+
+            if (!this.courtService.isValidCourt(IsValidCourtRequest
+                    .builder()
+                    .applicationCode(applicationCode)
+                    .courtClassification(initialPackage.getCourt().getLocation())
+                    .courtLevel(initialPackage.getCourt().getLevel())
+                    .courtId(courtDetails.getCourtId())
+                    .create())) {
+                result.add("Court with Location: [{0}], Level: [{1}], Classification: [{2}] is not a valid court.");
+            }
+
+        } catch (Exception ex) {
+            result.add(MessageFormat.format("Court details not valid: {0}", ex.getMessage()));
         }
 
         return result;

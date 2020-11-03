@@ -24,8 +24,6 @@ public class SubmissionConfig {
 
     private final CacheProperties cacheProperties;
 
-    private CourtService courtServiceMock;
-
     public SubmissionConfig(CacheProperties cacheProperties) {
         this.cacheProperties = cacheProperties;
     }
@@ -71,8 +69,8 @@ public class SubmissionConfig {
     }
 
     @Bean
-    public GenerateUrlRequestValidator packageValidator(SubmissionService submissionService) {
-        return new GenerateUrlRequestValidatorImpl(submissionService, courtServiceMock);
+    public GenerateUrlRequestValidator packageValidator(SubmissionService submissionService, CourtService courtService) {
+        return new GenerateUrlRequestValidatorImpl(submissionService, courtService);
     }
 
 }

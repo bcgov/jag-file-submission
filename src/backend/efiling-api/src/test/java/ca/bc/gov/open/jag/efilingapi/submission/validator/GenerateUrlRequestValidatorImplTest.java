@@ -7,12 +7,14 @@ import ca.bc.gov.open.jag.efilingapi.api.model.Party;
 import ca.bc.gov.open.jag.efilingapi.court.services.CourtService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.utils.Notification;
+import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,7 +25,14 @@ public class GenerateUrlRequestValidatorImplTest {
     private static final String COURT_CLASSIFICATION = "COURT_CLASSIFICATION";
     private static final String[] ROLE_TYPES = new String[] { "ADJ", "CIT" };
     private static final String COURT_LEVEL = "COURT_LEVEL";
-    public static final String APPLICATION_CODE = "app_code";
+    private static final String APPLICATION_CODE = "app_code";
+    private static final String COURT_DESCRIPTION = "courtDescription";
+    private static final String CLASS_DESCRIPTION = "classDescription";
+    private static final String LEVEL_DESCRIPTION = "levelDescription";
+    private static final BigDecimal COURT_ID = BigDecimal.ONE;
+    private static final String CASE_1 = "CASE1";
+    private static final String CASE_2 = "case2";
+    private static final BigDecimal COURT_ID_2 = BigDecimal.TEN;
 
     private GenerateUrlRequestValidatorImpl sut;
 
@@ -43,6 +52,25 @@ public class GenerateUrlRequestValidatorImplTest {
                         ArgumentMatchers.argThat(x -> x.getCourtClassification().equals(COURT_CLASSIFICATION))))
                 .thenReturn(Arrays.asList(ROLE_TYPES));
 
+        CourtDetails courtDetails = new CourtDetails(COURT_ID, COURT_DESCRIPTION, CLASS_DESCRIPTION, LEVEL_DESCRIPTION);
+
+        Mockito
+                .when(courtServiceMock.getCourtDetails(ArgumentMatchers.argThat(x -> x.getCourtLocation().equals(CASE_1))))
+                .thenReturn(courtDetails);
+
+        Mockito
+                .when(courtServiceMock.isValidCourt(ArgumentMatchers.argThat(x -> x.getCourtId().equals(COURT_ID)))).thenReturn(true);
+
+        CourtDetails courtDetails2 = new CourtDetails(COURT_ID_2, COURT_DESCRIPTION, CLASS_DESCRIPTION, LEVEL_DESCRIPTION);
+
+        Mockito
+                .when(courtServiceMock.getCourtDetails(ArgumentMatchers.argThat(x -> x.getCourtLocation().equals(CASE_2))))
+                .thenReturn(courtDetails2);
+
+        Mockito
+                .when(courtServiceMock.isValidCourt(ArgumentMatchers.argThat(x -> x.getCourtId().equals(COURT_ID_2)))).thenReturn(false);
+
+
         sut = new GenerateUrlRequestValidatorImpl(submissionService, courtServiceMock);
 
     }
@@ -57,6 +85,36 @@ public class GenerateUrlRequestValidatorImplTest {
         CourtBase court = new CourtBase();
         court.setLevel(COURT_LEVEL);
         court.setCourtClass(COURT_CLASSIFICATION);
+        court.setLocation(CASE_1);
+        initialFilingPackage.setCourt(court);
+
+        List<Party> parties = new ArrayList<>();
+        Party party = new Party();
+        party.setRoleType(Party.RoleTypeEnum.ADJ);
+        parties.add(party);
+        Party party2 = new Party();
+        party2.setRoleType(Party.RoleTypeEnum.CIT);
+        parties.add(party2);
+        initialFilingPackage.setParties(parties);
+
+        generateUrlRequest.setFilingPackage(initialFilingPackage);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+
+        Assertions.assertFalse(actual.hasError());
+
+    }
+
+    @Test
+    @DisplayName("error: with invalid court should return an error")
+    public void withInvalidCourtShouldReturnError() {
+
+        GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
+        InitialPackage initialFilingPackage = new InitialPackage();
+
+        CourtBase court = new CourtBase();
+        court.setLevel(COURT_LEVEL);
+        court.setCourtClass(COURT_CLASSIFICATION);
+        court.setLocation(CASE_2);
         initialFilingPackage.setCourt(court);
 
         List<Party> parties = new ArrayList<>();
