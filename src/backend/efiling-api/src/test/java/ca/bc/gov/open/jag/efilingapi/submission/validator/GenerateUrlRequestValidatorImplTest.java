@@ -38,7 +38,7 @@ public class GenerateUrlRequestValidatorImplTest {
                         ArgumentMatchers.argThat(x -> x.getCourtClassification().equals(COURT_CLASSIFICATION))))
                 .thenReturn(Arrays.asList(ROLE_TYPES));
 
-        sut = new GenerateUrlRequestValidatorImpl(submissionService);
+        sut = new GenerateUrlRequestValidatorImpl(submissionService, courtService);
 
     }
 

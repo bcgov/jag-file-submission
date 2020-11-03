@@ -1,10 +1,9 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service.submissionServiceImpl;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.payment.BamboraPaymentAdapter;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.PartyMapperImpl;
-import ca.bc.gov.open.jag.efilingapi.submission.models.GetValidPartyRoleRequest;
+import ca.bc.gov.open.jag.efilingapi.court.models.IsValidCourtRequest;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
@@ -18,15 +17,18 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.math.BigDecimal;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class GetValidPartyRolesTest {
+@DisplayName("Is Valid Court Location Test suite")
+public class IsValidCourtLocationTest {
 
-    private static String[] ROLE_TYPES = new String[] {"role1", "role2", "role3", "role4", "role5"};
 
+    public static final String APP_1 = "App1";
+    public static final String COURT_CLASS = "court class";
+    public static final BigDecimal COURT_ID = BigDecimal.ONE;
+    public static final String COURT_LEVEL = "courtLevel";
+    public static final String APP_2 = "App2";
     private SubmissionServiceImpl sut;
 
     @Mock
@@ -60,37 +62,55 @@ public class GetValidPartyRolesTest {
     @BeforeAll
     public void setUp(){
         MockitoAnnotations.initMocks(this);
-
-        Mockito.when(efilingLookupService.getValidPartyRoles(
-                Mockito.eq("A"),
-                Mockito.eq("B"),
-                Mockito.eq("POR,ACMW"))).thenReturn(Arrays.asList(ROLE_TYPES));
+        Mockito.when(efilingCourtService.checkValidLevelClassLocation(
+                Mockito.eq(COURT_ID),
+                Mockito.eq(COURT_LEVEL),
+                Mockito.eq(COURT_CLASS),
+                Mockito.eq(APP_1)))
+                .thenReturn(true);
+        Mockito.when(efilingCourtService.checkValidLevelClassLocation(
+                Mockito.eq(COURT_ID),
+                Mockito.eq(COURT_LEVEL),
+                Mockito.eq(COURT_CLASS),
+                Mockito.eq(APP_2)))
+                .thenReturn(false);
         sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, null, new PartyMapperImpl(), efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock, bamboraPaymentAdapterMock, sftpServiceMock, efilingDocumentService);
     }
 
-    @Test
-    @DisplayName("ok: service will return a valid list of role types")
-    public void shouldReturnAValidListOfTypes()
-    {
 
-        List<DocumentProperties> documents = new ArrayList<>();
-        DocumentProperties document1 = new DocumentProperties();
-        document1.setType(DocumentProperties.TypeEnum.POR);
-        documents.add(document1);
-        DocumentProperties document2 = new DocumentProperties();
-        document2.setType(DocumentProperties.TypeEnum.ACMW);
-        documents.add(document2);
-        GetValidPartyRoleRequest getValidPartyRoleRequest = GetValidPartyRoleRequest
+    @Test
+    @DisplayName("ok: with valid combination should return true")
+    public void WithValidCombinationShouldBeValid() {
+
+
+        IsValidCourtRequest request = IsValidCourtRequest
                 .builder()
-                .courtLevel("A")
-                .courtClassification("B")
-                .documents(documents)
+                .applicationCode(APP_1)
+                .courtClassification(COURT_CLASS)
+                .courtId(COURT_ID)
+                .courtLevel(COURT_LEVEL)
+                .create();
+        Boolean actual = sut.isValidCourtLocation(request);
+
+        Assertions.assertTrue(actual);
+
+    }
+
+    @Test
+    @DisplayName("ok: with valid combination should return false")
+    public void WithValidCombinationShouldBeInValid() {
+
+        IsValidCourtRequest request = IsValidCourtRequest
+                .builder()
+                .applicationCode(APP_2)
+                .courtClassification(COURT_CLASS)
+                .courtId(COURT_ID)
+                .courtLevel(COURT_LEVEL)
                 .create();
 
-        List<String> actual = sut.getValidPartyRoles(getValidPartyRoleRequest);
+        Boolean actual = sut.isValidCourtLocation(request);
 
-        Assertions.assertEquals(5, actual.size());
-        Assertions.assertTrue(Arrays.asList(ROLE_TYPES).containsAll(actual));
+        Assertions.assertFalse(actual);
 
     }
 
