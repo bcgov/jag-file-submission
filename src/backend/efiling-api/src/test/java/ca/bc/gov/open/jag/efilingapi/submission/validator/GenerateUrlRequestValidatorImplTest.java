@@ -55,20 +55,23 @@ public class GenerateUrlRequestValidatorImplTest {
         CourtDetails courtDetails = new CourtDetails(COURT_ID, COURT_DESCRIPTION, CLASS_DESCRIPTION, LEVEL_DESCRIPTION);
 
         Mockito
-                .when(courtServiceMock.getCourtDetails(ArgumentMatchers.argThat(x -> x.getCourtLocation().equals(CASE_1))))
-                .thenReturn(courtDetails);
+                .doReturn(courtDetails)
+                .when(courtServiceMock).getCourtDetails(ArgumentMatchers.argThat(x -> x.getCourtLocation().equals(CASE_1)));
 
         Mockito
-                .when(courtServiceMock.isValidCourt(ArgumentMatchers.argThat(x -> x.getCourtId().equals(COURT_ID)))).thenReturn(true);
+                .doReturn(true)
+                .when(courtServiceMock).isValidCourt(ArgumentMatchers.argThat(x -> x.getCourtId().equals(COURT_ID)));
 
         CourtDetails courtDetails2 = new CourtDetails(COURT_ID_2, COURT_DESCRIPTION, CLASS_DESCRIPTION, LEVEL_DESCRIPTION);
 
         Mockito
-                .when(courtServiceMock.getCourtDetails(ArgumentMatchers.argThat(x -> x.getCourtLocation().equals(CASE_2))))
-                .thenReturn(courtDetails2);
+                .doReturn(courtDetails2)
+                .when(courtServiceMock)
+                .getCourtDetails(ArgumentMatchers.argThat(x -> x.getCourtLocation().equals(CASE_2)));
 
         Mockito
-                .when(courtServiceMock.isValidCourt(ArgumentMatchers.argThat(x -> x.getCourtId().equals(COURT_ID_2)))).thenReturn(false);
+                .doReturn(false)
+                .when(courtServiceMock).isValidCourt(ArgumentMatchers.argThat(x -> x.getCourtId().equals(COURT_ID_2)));
 
 
         sut = new GenerateUrlRequestValidatorImpl(submissionService, courtServiceMock);
@@ -129,7 +132,8 @@ public class GenerateUrlRequestValidatorImplTest {
         generateUrlRequest.setFilingPackage(initialFilingPackage);
         Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
 
-        Assertions.assertFalse(actual.hasError());
+        Assertions.assertTrue(actual.hasError());
+        Assertions.assertEquals("Court with Location: [case2], Level: [COURT_LEVEL], Classification: [COURT_CLASSIFICATION] is not a valid court.", actual.getErrors().get(0));
 
     }
 

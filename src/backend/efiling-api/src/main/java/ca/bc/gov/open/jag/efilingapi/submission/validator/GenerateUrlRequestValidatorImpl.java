@@ -67,7 +67,8 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
                     .courtLevel(initialPackage.getCourt().getLevel())
                     .courtId(courtDetails.getCourtId())
                     .create())) {
-                result.add("Court with Location: [{0}], Level: [{1}], Classification: [{2}] is not a valid court.");
+                result.add(MessageFormat.format("Court with Location: [{0}], Level: [{1}], Classification: [{2}] is not a valid court.",
+                        initialPackage.getCourt().getLocation(), initialPackage.getCourt().getLevel(), initialPackage.getCourt().getCourtClass()));
             }
 
         } catch (Exception ex) {
