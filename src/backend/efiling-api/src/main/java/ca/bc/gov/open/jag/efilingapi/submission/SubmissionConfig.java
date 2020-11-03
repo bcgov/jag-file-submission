@@ -24,6 +24,8 @@ public class SubmissionConfig {
 
     private final CacheProperties cacheProperties;
 
+    private CourtService courtServiceMock;
+
     public SubmissionConfig(CacheProperties cacheProperties) {
         this.cacheProperties = cacheProperties;
     }
