@@ -17,7 +17,6 @@ import ca.bc.gov.open.jag.efilingcommons.model.Document;
 import ca.bc.gov.open.jag.efilingcommons.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.model.*;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import ca.bc.gov.open.sftp.starter.SftpService;
@@ -49,8 +48,6 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private final EfilingCourtService efilingCourtService;
 
-    private final EfilingDocumentService efilingDocumentService;
-
     private final EfilingSubmissionService efilingSubmissionService;
 
     private final DocumentStore documentStore;
@@ -69,8 +66,7 @@ public class SubmissionServiceImpl implements SubmissionService {
             EfilingSubmissionService efilingSubmissionService,
             DocumentStore documentStore,
             BamboraPaymentAdapter bamboraPaymentAdapter,
-            SftpService sftpService,
-            EfilingDocumentService efilingDocumentService) {
+            SftpService sftpService) {
         this.submissionStore = submissionStore;
         this.cacheProperties = cacheProperties;
         this.submissionMapper = submissionMapper;
@@ -81,7 +77,6 @@ public class SubmissionServiceImpl implements SubmissionService {
         this.documentStore = documentStore;
         this.bamboraPaymentAdapter = bamboraPaymentAdapter;
         this.sftpService = sftpService;
-        this.efilingDocumentService = efilingDocumentService;
     }
 
 

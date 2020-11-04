@@ -12,7 +12,6 @@ import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStoreImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.validator.GenerateUrlRequestValidator;
 import ca.bc.gov.open.jag.efilingapi.submission.validator.GenerateUrlRequestValidatorImpl;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import ca.bc.gov.open.sftp.starter.SftpService;
@@ -53,8 +52,7 @@ public class SubmissionConfig {
                                                EfilingSubmissionService efilingSubmissionService,
                                                DocumentStore documentStore,
                                                BamboraPaymentAdapter bamboraPaymentAdapter,
-                                               SftpService sftpService, PartyMapper partyMapper,
-                                               EfilingDocumentService efilingDocumentService) {
+                                               SftpService sftpService, PartyMapper partyMapper) {
 
         return new SubmissionServiceImpl(submissionStore,
                 cacheProperties,
@@ -65,8 +63,7 @@ public class SubmissionConfig {
                 efilingSubmissionService,
                 documentStore,
                 bamboraPaymentAdapter,
-                sftpService,
-                efilingDocumentService);
+                sftpService);
     }
 
     @Bean
