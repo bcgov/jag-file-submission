@@ -4,6 +4,7 @@ import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.InitialPackage;
 import ca.bc.gov.open.jag.efilingapi.api.model.Party;
 import ca.bc.gov.open.jag.efilingapi.court.models.GetCourtDetailsRequest;
+import ca.bc.gov.open.jag.efilingapi.court.models.IsValidCourtFileNumberRequest;
 import ca.bc.gov.open.jag.efilingapi.court.models.IsValidCourtRequest;
 import ca.bc.gov.open.jag.efilingapi.court.services.CourtService;
 import ca.bc.gov.open.jag.efilingapi.submission.models.GetValidPartyRoleRequest;
@@ -38,32 +39,41 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
             return notification;
         }
 
-        notification.addError(validateParties(generateUrlRequest.getFilingPackage()));
+        CourtDetails courtDetails = this.courtService.getCourtDetails(GetCourtDetailsRequest
+                .builder()
+                .courtLocation(generateUrlRequest.getFilingPackage().getCourt().getLocation())
+                .courtLevel(generateUrlRequest.getFilingPackage().getCourt().getLevel())
+                .courtClassification(generateUrlRequest.getFilingPackage().getCourt().getCourtClass())
+                .create());
 
-        notification.addError(validateCourt(generateUrlRequest.getFilingPackage(), applicationCode));
+        if(courtDetails == null) {
+            notification.addError(MessageFormat.format("Court with Location: [{0}], Level: [{1}], Classification: [{2}] is not a valid court.",
+                    generateUrlRequest.getFilingPackage().getCourt().getLocation(), generateUrlRequest.getFilingPackage().getCourt().getLevel(), generateUrlRequest.getFilingPackage().getCourt().getCourtClass()));
+            return notification;
+        }
+
+        notification.addError(validateCourt(generateUrlRequest.getFilingPackage(), courtDetails, applicationCode));
+
+        if(isNewSubmission(generateUrlRequest.getFilingPackage())) {
+            notification.addError(validateParties(generateUrlRequest.getFilingPackage()));
+        } else {
+            notification.addError(validateCourtFileNumber(generateUrlRequest.getFilingPackage(), courtDetails, applicationCode));
+        }
 
         return notification;
 
     }
 
-    private List<String> validateCourt(InitialPackage initialPackage, String applicationCode) {
+    private List<String> validateCourt(InitialPackage initialPackage, CourtDetails courtDetails, String applicationCode) {
 
         List<String> result = new ArrayList<>();
 
-
         try {
-
-            CourtDetails courtDetails = this.courtService.getCourtDetails(GetCourtDetailsRequest
-                    .builder()
-                    .courtLocation(initialPackage.getCourt().getLocation())
-                    .courtLevel(initialPackage.getCourt().getLevel())
-                    .courtClassification(initialPackage.getCourt().getCourtClass())
-                    .create());
 
             if (!this.courtService.isValidCourt(IsValidCourtRequest
                     .builder()
                     .applicationCode(applicationCode)
-                    .courtClassification(initialPackage.getCourt().getLocation())
+                    .courtClassification(initialPackage.getCourt().getCourtClass())
                     .courtLevel(initialPackage.getCourt().getLevel())
                     .courtId(courtDetails.getCourtId())
                     .create())) {
@@ -77,6 +87,10 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
 
         return result;
 
+    }
+
+    private boolean isNewSubmission(InitialPackage initialPackage) {
+        return initialPackage.getCourt() != null && StringUtils.isBlank(initialPackage.getCourt().getFileNumber());
     }
 
     /**
@@ -117,6 +131,24 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
             });
 
         }
+
+        return result;
+
+    }
+
+    private List<String> validateCourtFileNumber(InitialPackage initialPackage, CourtDetails courtDetails, String applicationCode) {
+
+        List<String> result = new ArrayList<>();
+
+        if(!this.courtService.isValidCourtFileNumber(IsValidCourtFileNumberRequest
+                .builder()
+                .fileNumber(initialPackage.getCourt().getFileNumber())
+                .courtClassification(initialPackage.getCourt().getCourtClass())
+                .courtLevel(initialPackage.getCourt().getLevel())
+                .courtId(courtDetails.getCourtId())
+                .applicationCode(applicationCode)
+                .create()))
+            result.add(MessageFormat.format("FileNumber [{0}] does not exists.", initialPackage.getCourt().getFileNumber()));
 
         return result;
 

@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.court.services;
 
 import ca.bc.gov.open.jag.efilingapi.court.models.GetCourtDetailsRequest;
+import ca.bc.gov.open.jag.efilingapi.court.models.IsValidCourtFileNumberRequest;
 import ca.bc.gov.open.jag.efilingapi.court.models.IsValidCourtRequest;
 import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
@@ -30,6 +31,19 @@ public class CourtServiceImpl implements CourtService {
                 getCourtDetailsRequest.getCourtLocation(),
                 getCourtDetailsRequest.getCourtLevel(),
                 getCourtDetailsRequest.getCourtClassification());
+
+    }
+
+    @Override
+    public boolean isValidCourtFileNumber(IsValidCourtFileNumberRequest isValidCourtFileNumberRequest){
+
+        return efilingCourtService.checkValidCourtFileNumber(
+                isValidCourtFileNumberRequest.getFileNumber(),
+                isValidCourtFileNumberRequest.getCourtId(),
+                isValidCourtFileNumberRequest.getCourtLevel(),
+                isValidCourtFileNumberRequest.getCourtClassification(),
+                isValidCourtFileNumberRequest.getApplicationCode()
+        );
 
     }
 

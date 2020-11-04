@@ -11,7 +11,6 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.utils.FileUtils;
 import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
-import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtServiceException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.Court;
@@ -24,7 +23,6 @@ import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import ca.bc.gov.open.sftp.starter.SftpService;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
@@ -256,30 +254,8 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     private void validateGenerateUrlRequest(GenerateUrlRequest generateUrlRequest) {
-
-        CourtBase courtBase = generateUrlRequest.getFilingPackage().getCourt();
-        CourtDetails courtDetails = efilingCourtService.getCourtDescription(courtBase.getLocation(), courtBase.getLevel(), courtBase.getCourtClass());
-
-        // Validate court file number and parties
-        if (!StringUtils.isEmpty(courtBase.getFileNumber())) {
-            // If court file number present, validate court file number, level, class and location
-            validateCourtFileNumber(courtDetails, courtBase);
-        }
-
         // Validate document types
-        validateDocumentTypes(courtBase, generateUrlRequest);
-    }
-
-    private void validateCourtFileNumber(CourtDetails courtDetails, CourtBase courtBase) {
-        boolean isValidCourtFileNumber = true;
-        isValidCourtFileNumber = efilingCourtService.checkValidCourtFileNumber(
-                courtBase.getFileNumber(),
-                courtDetails.getCourtId(),
-                courtBase.getLevel(),
-                courtBase.getCourtClass(),
-                SecurityUtils.getApplicationCode()
-        );
-        if (!isValidCourtFileNumber) throw new EfilingCourtServiceException("invalid court file number");
+        validateDocumentTypes(generateUrlRequest.getFilingPackage().getCourt(), generateUrlRequest);
     }
 
     private void validateDocumentTypes(CourtBase courtBase, GenerateUrlRequest generateUrlRequest) {

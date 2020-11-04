@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.court.services;
 
 import ca.bc.gov.open.jag.efilingapi.court.models.GetCourtDetailsRequest;
+import ca.bc.gov.open.jag.efilingapi.court.models.IsValidCourtFileNumberRequest;
 import ca.bc.gov.open.jag.efilingapi.court.models.IsValidCourtRequest;
 import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
@@ -23,6 +24,7 @@ public class CourtServiceImplTest {
     public static final BigDecimal COURT_ID = BigDecimal.TEN;
     public static final String CASE_1 = "case1";
     public static final String CASE_2 = "case2";
+    public static final String FILE_NUMBER = "123465";
 
     private CourtServiceImpl sut;
 
@@ -55,6 +57,24 @@ public class CourtServiceImplTest {
                         Mockito.eq(COURT_CLASSIFICATION),
                         Mockito.eq(CASE_2)
                 )).thenReturn(false);
+
+        Mockito.when(efilingCourtServiceMock
+        .checkValidCourtFileNumber(
+                Mockito.eq(FILE_NUMBER),
+                Mockito.eq(COURT_ID),
+                Mockito.eq(COURT_LEVEL),
+                Mockito.eq(COURT_CLASSIFICATION),
+                Mockito.eq(CASE_1)
+        )).thenReturn(true);
+
+        Mockito.when(efilingCourtServiceMock
+        .checkValidCourtFileNumber(
+                Mockito.eq(FILE_NUMBER),
+                Mockito.eq(COURT_ID),
+                Mockito.eq(COURT_LEVEL),
+                Mockito.eq(COURT_CLASSIFICATION),
+                Mockito.eq(CASE_2)
+        )).thenReturn(false);
 
         sut = new CourtServiceImpl(efilingCourtServiceMock);
 
@@ -107,6 +127,36 @@ public class CourtServiceImplTest {
 
         Assertions.assertFalse(actual);
 
+
+    }
+
+    @Test
+    @DisplayName("ok: should validate a court file number and return true")
+    public void shouldValidateACourtFileNumberAndReturnTrue() {
+
+        boolean actual = sut.isValidCourtFileNumber(IsValidCourtFileNumberRequest.builder()
+                .applicationCode(CASE_1)
+                .courtId(COURT_ID)
+                .courtLevel(COURT_LEVEL)
+                .courtClassification(COURT_CLASSIFICATION)
+                .fileNumber(FILE_NUMBER).create());
+
+        Assertions.assertTrue(actual);
+
+    }
+
+    @Test
+    @DisplayName("ok: should validate a court file number and return false")
+    public void shouldValidateACourtFileNumberAndReturnFalse() {
+
+        boolean actual = sut.isValidCourtFileNumber(IsValidCourtFileNumberRequest.builder()
+                .applicationCode(CASE_2)
+                .courtId(COURT_ID)
+                .courtLevel(COURT_LEVEL)
+                .courtClassification(COURT_CLASSIFICATION)
+                .fileNumber(FILE_NUMBER).create());
+
+        Assertions.assertFalse(actual);
 
     }
 

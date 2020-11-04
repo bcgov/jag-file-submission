@@ -33,6 +33,9 @@ public class GenerateUrlRequestValidatorImplTest {
     private static final String CASE_1 = "CASE1";
     private static final String CASE_2 = "case2";
     private static final BigDecimal COURT_ID_2 = BigDecimal.TEN;
+    private static final String COURT_LOCATION = "court location";
+    public static final String FILE_NUMBER_SUCCESS = "filenumber";
+    public static final String FILE_NUMBER_ERROR = "file_number_error";
 
     private GenerateUrlRequestValidatorImpl sut;
 
@@ -71,7 +74,19 @@ public class GenerateUrlRequestValidatorImplTest {
 
         Mockito
                 .doReturn(false)
-                .when(courtServiceMock).isValidCourt(ArgumentMatchers.argThat(x -> x.getCourtId().equals(COURT_ID_2)));
+                .when(courtServiceMock)
+                .isValidCourt(ArgumentMatchers.argThat(x -> x.getCourtId().equals(COURT_ID_2)));
+
+
+        Mockito
+                .doReturn(true)
+                .when(courtServiceMock)
+                .isValidCourtFileNumber(ArgumentMatchers.argThat(x -> x.getFileNumber().equals(FILE_NUMBER_SUCCESS)));
+
+        Mockito
+                .doReturn(false)
+                .when(courtServiceMock)
+                .isValidCourtFileNumber(ArgumentMatchers.argThat(x -> x.getFileNumber().equals(FILE_NUMBER_ERROR)));
 
 
         sut = new GenerateUrlRequestValidatorImpl(submissionService, courtServiceMock);
@@ -79,8 +94,8 @@ public class GenerateUrlRequestValidatorImplTest {
     }
 
     @Test
-    @DisplayName("ok: without error should return a notification without error")
-    public void withoutErrorShouldReturnNoError() {
+    @DisplayName("ok: new submission without error should return a notification without error")
+    public void newSubmissionWithoutErrorShouldReturnNoError() {
 
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
         InitialPackage initialFilingPackage = new InitialPackage();
@@ -106,6 +121,75 @@ public class GenerateUrlRequestValidatorImplTest {
         Assertions.assertFalse(actual.hasError());
 
     }
+
+    @Test
+    @DisplayName("ok: returning submission without error should return a notification without error")
+    public void returningSubmissionwithoutErrorShouldReturnNoError() {
+
+        GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
+        InitialPackage initialFilingPackage = new InitialPackage();
+
+        CourtBase court = new CourtBase();
+        court.setLevel(COURT_LEVEL);
+        court.setCourtClass(COURT_CLASSIFICATION);
+        court.setLocation(CASE_1);
+        court.setFileNumber(FILE_NUMBER_SUCCESS);
+        initialFilingPackage.setCourt(court);
+
+        generateUrlRequest.setFilingPackage(initialFilingPackage);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+
+        Assertions.assertFalse(actual.hasError());
+
+    }
+
+    @Test
+    @DisplayName("error: with no courtDetails should return error")
+    public void withNoCourtDetailsShouldReturnError() {
+
+        GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
+        InitialPackage initialFilingPackage = new InitialPackage();
+
+        CourtBase court = new CourtBase();
+        court.setLocation("unknown");
+        court.setLevel(COURT_LEVEL);
+        court.setCourtClass(COURT_CLASSIFICATION);
+        initialFilingPackage.setCourt(court);
+
+        List<Party> parties = new ArrayList<>();
+        Party party = new Party();
+        parties.add(party);
+        initialFilingPackage.setParties(parties);
+
+        generateUrlRequest.setFilingPackage(initialFilingPackage);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+
+        Assertions.assertTrue(actual.hasError());
+        Assertions.assertEquals("Court with Location: [unknown], Level: [COURT_LEVEL], Classification: [COURT_CLASSIFICATION] is not a valid court.", actual.getErrors().get(0));
+
+    }
+
+    @Test
+    @DisplayName("ok: returning submission with invalid filenumber should return a notification with error")
+    public void returningSubmissionWithInvalidFileNumberShouldReturnNotificationWithErrors() {
+
+        GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
+        InitialPackage initialFilingPackage = new InitialPackage();
+
+        CourtBase court = new CourtBase();
+        court.setLevel(COURT_LEVEL);
+        court.setCourtClass(COURT_CLASSIFICATION);
+        court.setLocation(CASE_1);
+        court.setFileNumber(FILE_NUMBER_ERROR);
+        initialFilingPackage.setCourt(court);
+
+        generateUrlRequest.setFilingPackage(initialFilingPackage);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+
+        Assertions.assertTrue(actual.hasError());
+        Assertions.assertEquals("FileNumber [file_number_error] does not exists.", actual.getErrors().get(0));
+    }
+
 
     @Test
     @DisplayName("error: with invalid court should return an error")
@@ -159,6 +243,7 @@ public class GenerateUrlRequestValidatorImplTest {
         InitialPackage initialFilingPackage = new InitialPackage();
 
         CourtBase court = new CourtBase();
+        court.setLocation(CASE_1);
         court.setLevel(COURT_LEVEL);
         court.setCourtClass(COURT_CLASSIFICATION);
         initialFilingPackage.setCourt(court);
@@ -179,6 +264,7 @@ public class GenerateUrlRequestValidatorImplTest {
         InitialPackage initialFilingPackage = new InitialPackage();
 
         CourtBase court = new CourtBase();
+        court.setLocation(CASE_1);
         court.setLevel(COURT_LEVEL);
         court.setCourtClass(COURT_CLASSIFICATION);
         initialFilingPackage.setCourt(court);
@@ -209,6 +295,7 @@ public class GenerateUrlRequestValidatorImplTest {
         InitialPackage initialFilingPackage = new InitialPackage();
 
         CourtBase court = new CourtBase();
+        court.setLocation(CASE_1);
         court.setLevel(COURT_LEVEL);
         court.setCourtClass(COURT_CLASSIFICATION);
         initialFilingPackage.setCourt(court);
@@ -225,5 +312,7 @@ public class GenerateUrlRequestValidatorImplTest {
         Assertions.assertEquals("Role type [null] is invalid.", actual.getErrors().get(0));
 
     }
+
+
 
 }
