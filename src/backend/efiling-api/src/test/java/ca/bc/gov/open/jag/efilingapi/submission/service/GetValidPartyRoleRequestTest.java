@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
+import ca.bc.gov.open.jag.efilingapi.submission.models.GetValidPartyRoleRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

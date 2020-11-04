@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingapi.submission.service;
+package ca.bc.gov.open.jag.efilingapi.submission.models;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 

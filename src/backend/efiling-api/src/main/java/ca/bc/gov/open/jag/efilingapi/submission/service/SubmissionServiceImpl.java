@@ -6,6 +6,7 @@ import ca.bc.gov.open.jag.efilingapi.payment.BamboraPaymentAdapter;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.PartyMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
+import ca.bc.gov.open.jag.efilingapi.submission.models.GetValidPartyRoleRequest;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.utils.FileUtils;
@@ -255,11 +256,9 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     private void validateGenerateUrlRequest(GenerateUrlRequest generateUrlRequest) {
+
         CourtBase courtBase = generateUrlRequest.getFilingPackage().getCourt();
         CourtDetails courtDetails = efilingCourtService.getCourtDescription(courtBase.getLocation(), courtBase.getLevel(), courtBase.getCourtClass());
-
-        // Validate court level, class and location
-        validateCourtLevelClassLocation(courtDetails, courtBase);
 
         // Validate court file number and parties
         if (!StringUtils.isEmpty(courtBase.getFileNumber())) {
@@ -269,16 +268,6 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         // Validate document types
         validateDocumentTypes(courtBase, generateUrlRequest);
-    }
-
-    private void validateCourtLevelClassLocation(CourtDetails courtDetails, CourtBase courtBase) {
-        boolean isValidLevelClassLocation = efilingCourtService.checkValidLevelClassLocation(
-                courtDetails.getCourtId(),
-                courtBase.getLevel(),
-                courtBase.getCourtClass(),
-                SecurityUtils.getApplicationCode()
-        );
-        if (!isValidLevelClassLocation) throw new EfilingCourtServiceException("invalid court level, class and location combination");
     }
 
     private void validateCourtFileNumber(CourtDetails courtDetails, CourtBase courtBase) {
