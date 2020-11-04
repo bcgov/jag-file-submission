@@ -144,6 +144,32 @@ public class GenerateUrlRequestValidatorImplTest {
     }
 
     @Test
+    @DisplayName("error: with no courtDetails should return error")
+    public void withNoCourtDetailsShouldReturnError() {
+
+        GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
+        InitialPackage initialFilingPackage = new InitialPackage();
+
+        CourtBase court = new CourtBase();
+        court.setLocation("unknown");
+        court.setLevel(COURT_LEVEL);
+        court.setCourtClass(COURT_CLASSIFICATION);
+        initialFilingPackage.setCourt(court);
+
+        List<Party> parties = new ArrayList<>();
+        Party party = new Party();
+        parties.add(party);
+        initialFilingPackage.setParties(parties);
+
+        generateUrlRequest.setFilingPackage(initialFilingPackage);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+
+        Assertions.assertTrue(actual.hasError());
+        Assertions.assertEquals("Court with Location: [unknown], Level: [COURT_LEVEL], Classification: [COURT_CLASSIFICATION] is not a valid court.", actual.getErrors().get(0));
+
+    }
+
+    @Test
     @DisplayName("ok: returning submission with invalid filenumber should return a notification with error")
     public void returningSubmissionWithInvalidFileNumberShouldReturnNotificationWithErrors() {
 
