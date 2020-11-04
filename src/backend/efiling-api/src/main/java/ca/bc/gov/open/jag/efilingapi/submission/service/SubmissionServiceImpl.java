@@ -11,15 +11,12 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.utils.FileUtils;
 import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
-import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.Court;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
-import ca.bc.gov.open.jag.efilingcommons.model.DocumentType;
 import ca.bc.gov.open.jag.efilingcommons.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.model.*;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import ca.bc.gov.open.sftp.starter.SftpService;
@@ -33,7 +30,6 @@ import java.text.MessageFormat;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 public class SubmissionServiceImpl implements SubmissionService {
@@ -51,8 +47,6 @@ public class SubmissionServiceImpl implements SubmissionService {
     private final EfilingLookupService efilingLookupService;
 
     private final EfilingCourtService efilingCourtService;
-
-    private final EfilingDocumentService efilingDocumentService;
 
     private final EfilingSubmissionService efilingSubmissionService;
 
@@ -72,8 +66,7 @@ public class SubmissionServiceImpl implements SubmissionService {
             EfilingSubmissionService efilingSubmissionService,
             DocumentStore documentStore,
             BamboraPaymentAdapter bamboraPaymentAdapter,
-            SftpService sftpService,
-            EfilingDocumentService efilingDocumentService) {
+            SftpService sftpService) {
         this.submissionStore = submissionStore;
         this.cacheProperties = cacheProperties;
         this.submissionMapper = submissionMapper;
@@ -84,13 +77,11 @@ public class SubmissionServiceImpl implements SubmissionService {
         this.documentStore = documentStore;
         this.bamboraPaymentAdapter = bamboraPaymentAdapter;
         this.sftpService = sftpService;
-        this.efilingDocumentService = efilingDocumentService;
     }
 
 
     @Override
     public Submission generateFromRequest(SubmissionKey submissionKey, GenerateUrlRequest generateUrlRequest) {
-        validateGenerateUrlRequest(generateUrlRequest);
 
         Optional<Submission> cachedSubmission = submissionStore.put(
                 submissionMapper.toSubmission(
@@ -251,34 +242,6 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private long getExpiryDate() {
         return System.currentTimeMillis() + cacheProperties.getRedis().getTimeToLive().toMillis();
-    }
-
-    private void validateGenerateUrlRequest(GenerateUrlRequest generateUrlRequest) {
-        // Validate document types
-        validateDocumentTypes(generateUrlRequest.getFilingPackage().getCourt(), generateUrlRequest);
-    }
-
-    private void validateDocumentTypes(CourtBase courtBase, GenerateUrlRequest generateUrlRequest) {
-        List<DocumentType> validDocumentTypes = efilingDocumentService.getDocumentTypes(courtBase.getLevel(), courtBase.getCourtClass());
-        if (!checkValidDocumentTypes(validDocumentTypes, generateUrlRequest.getFilingPackage().getDocuments()))
-            throw new EfilingDocumentServiceException("invalid document types provided");
-    }
-
-    private boolean checkValidDocumentTypes(List<DocumentType> validDocumentTypes, List<DocumentProperties> documents) {
-        AtomicBoolean isValid = new AtomicBoolean(true);
-
-        documents.stream().forEach(document -> {
-            AtomicBoolean currentDocumentTypeValid = new AtomicBoolean(false);
-            validDocumentTypes.stream().forEach(documentType -> {
-                if (documentType.getType().equals(document.getType().getValue())) {
-                    currentDocumentTypeValid.set(true);
-                }
-            });
-
-            if (!currentDocumentTypeValid.get()) isValid.set(false);
-        });
-
-        return isValid.get();
     }
 
 }

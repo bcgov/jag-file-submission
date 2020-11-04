@@ -8,7 +8,6 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.GetValidPartyRoleRequest;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import ca.bc.gov.open.sftp.starter.SftpService;
@@ -42,9 +41,6 @@ public class GetValidPartyRolesTest {
     private EfilingCourtService efilingCourtService;
 
     @Mock
-    private EfilingDocumentService efilingDocumentService;
-
-    @Mock
     private DocumentStore documentStoreMock;
 
     @Mock
@@ -65,7 +61,7 @@ public class GetValidPartyRolesTest {
                 Mockito.eq("A"),
                 Mockito.eq("B"),
                 Mockito.eq("POR,ACMW"))).thenReturn(Arrays.asList(ROLE_TYPES));
-        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, null, new PartyMapperImpl(), efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock, bamboraPaymentAdapterMock, sftpServiceMock, efilingDocumentService);
+        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, null, new PartyMapperImpl(), efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock, bamboraPaymentAdapterMock, sftpServiceMock);
     }
 
     @Test

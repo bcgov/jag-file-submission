@@ -13,7 +13,6 @@ import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import org.junit.jupiter.api.*;
@@ -44,9 +43,6 @@ public class updateDocumentsTest {
     private EfilingCourtService efilingCourtService;
 
     @Mock
-    private EfilingDocumentService efilingDocumentService;
-
-    @Mock
     private DocumentStore documentStoreMock;
 
     @Mock
@@ -72,8 +68,7 @@ public class updateDocumentsTest {
                 efilingSubmissionServiceMock,
                 documentStoreMock,
                 null,
-                null,
-                efilingDocumentService);
+                null);
 
     }
 
