@@ -1,13 +1,12 @@
 package ca.bc.gov.open.jag.efilingapi.submission.validator;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.CourtBase;
-import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
-import ca.bc.gov.open.jag.efilingapi.api.model.InitialPackage;
-import ca.bc.gov.open.jag.efilingapi.api.model.Party;
+import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.court.services.CourtService;
+import ca.bc.gov.open.jag.efilingapi.document.DocumentService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.utils.Notification;
 import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentType;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
@@ -44,6 +43,9 @@ public class GenerateUrlRequestValidatorImplTest {
 
     @Mock
     private CourtService courtServiceMock;
+
+    @Mock
+    private DocumentService documentServiceMock;
 
     @BeforeEach
     public void setup() {
@@ -88,8 +90,18 @@ public class GenerateUrlRequestValidatorImplTest {
                 .when(courtServiceMock)
                 .isValidCourtFileNumber(ArgumentMatchers.argThat(x -> x.getFileNumber().equals(FILE_NUMBER_ERROR)));
 
+        List<DocumentType> documentTypes = new ArrayList<>();
+        DocumentType document = new DocumentType("Description", "ACMW", true);
+        documentTypes.add(document);
 
-        sut = new GenerateUrlRequestValidatorImpl(submissionService, courtServiceMock);
+        Mockito
+                .doReturn(documentTypes)
+                .when(documentServiceMock)
+                .getValidDocumentTypes(ArgumentMatchers.argThat(x -> x.getCourtLevel().equals(COURT_LEVEL)));
+
+
+
+        sut = new GenerateUrlRequestValidatorImpl(submissionService, courtServiceMock, documentServiceMock);
 
     }
 
@@ -115,6 +127,12 @@ public class GenerateUrlRequestValidatorImplTest {
         parties.add(party2);
         initialFilingPackage.setParties(parties);
 
+        List<DocumentProperties> documentList = new ArrayList<>();
+        DocumentProperties documentProperties = new DocumentProperties();
+        documentProperties.setType(DocumentProperties.TypeEnum.ACMW);
+        documentList.add(documentProperties);
+        initialFilingPackage.setDocuments(documentList);
+
         generateUrlRequest.setFilingPackage(initialFilingPackage);
         Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
 
@@ -136,8 +154,17 @@ public class GenerateUrlRequestValidatorImplTest {
         court.setFileNumber(FILE_NUMBER_SUCCESS);
         initialFilingPackage.setCourt(court);
 
+
+        List<DocumentProperties> documentList = new ArrayList<>();
+        DocumentProperties documentProperties = new DocumentProperties();
+        documentProperties.setType(DocumentProperties.TypeEnum.ACMW);
+        documentList.add(documentProperties);
+        initialFilingPackage.setDocuments(documentList);
+
         generateUrlRequest.setFilingPackage(initialFilingPackage);
         Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+
+
 
         Assertions.assertFalse(actual.hasError());
 
@@ -310,6 +337,42 @@ public class GenerateUrlRequestValidatorImplTest {
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("Role type [null] is invalid.", actual.getErrors().get(0));
+
+    }
+
+    @Test
+    @DisplayName("error: with invalid document type should return notification with Error")
+    public void withInvalidDocumentTypeShouldReturnNotificationWithError() {
+
+        GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
+        InitialPackage initialFilingPackage = new InitialPackage();
+
+        CourtBase court = new CourtBase();
+        court.setLevel(COURT_LEVEL);
+        court.setCourtClass(COURT_CLASSIFICATION);
+        court.setLocation(CASE_1);
+        initialFilingPackage.setCourt(court);
+
+        List<Party> parties = new ArrayList<>();
+        Party party = new Party();
+        party.setRoleType(Party.RoleTypeEnum.ADJ);
+        parties.add(party);
+        Party party2 = new Party();
+        party2.setRoleType(Party.RoleTypeEnum.CIT);
+        parties.add(party2);
+        initialFilingPackage.setParties(parties);
+
+        List<DocumentProperties> documentList = new ArrayList<>();
+        DocumentProperties documentProperties = new DocumentProperties();
+        documentProperties.setType(DocumentProperties.TypeEnum.TAX);
+        documentList.add(documentProperties);
+        initialFilingPackage.setDocuments(documentList);
+
+        generateUrlRequest.setFilingPackage(initialFilingPackage);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+
+        Assertions.assertTrue(actual.hasError());
+        Assertions.assertEquals("Document type [TAX] is invalid.", actual.getErrors().get(0));
 
     }
 

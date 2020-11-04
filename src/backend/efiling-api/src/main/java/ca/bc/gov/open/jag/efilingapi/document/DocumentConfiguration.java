@@ -12,4 +12,9 @@ public class DocumentConfiguration {
         return new DocumentStoreImpl(efilingDocumentService);
     }
 
+    @Bean
+    public DocumentService documentService(EfilingDocumentService efilingDocumentService) {
+        return new DocumentServiceImpl(efilingDocumentService);
+    }
+
 }

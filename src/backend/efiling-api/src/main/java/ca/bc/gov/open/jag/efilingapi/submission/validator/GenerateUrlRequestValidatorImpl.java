@@ -2,11 +2,12 @@ package ca.bc.gov.open.jag.efilingapi.submission.validator;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.InitialPackage;
-import ca.bc.gov.open.jag.efilingapi.api.model.Party;
 import ca.bc.gov.open.jag.efilingapi.court.models.GetCourtDetailsRequest;
 import ca.bc.gov.open.jag.efilingapi.court.models.IsValidCourtFileNumberRequest;
 import ca.bc.gov.open.jag.efilingapi.court.models.IsValidCourtRequest;
 import ca.bc.gov.open.jag.efilingapi.court.services.CourtService;
+import ca.bc.gov.open.jag.efilingapi.document.DocumentService;
+import ca.bc.gov.open.jag.efilingapi.document.models.GetValidDocumentTypesRequest;
 import ca.bc.gov.open.jag.efilingapi.submission.models.GetValidPartyRoleRequest;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.utils.Notification;
@@ -15,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,11 +24,13 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
 
     private final SubmissionService submissionService;
     private final CourtService courtService;
+    private final DocumentService documentService;
 
     public GenerateUrlRequestValidatorImpl(SubmissionService submissionService,
-                                           CourtService courtService) {
+                                           CourtService courtService, DocumentService documentService) {
         this.submissionService = submissionService;
         this.courtService = courtService;
+        this.documentService = documentService;
     }
 
     @Override
@@ -60,32 +64,25 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
             notification.addError(validateCourtFileNumber(generateUrlRequest.getFilingPackage(), courtDetails, applicationCode));
         }
 
+        notification.addError(validateDocumentTypes(generateUrlRequest.getFilingPackage()));
+
         return notification;
 
     }
 
     private List<String> validateCourt(InitialPackage initialPackage, CourtDetails courtDetails, String applicationCode) {
 
-        List<String> result = new ArrayList<>();
+        if (!this.courtService.isValidCourt(IsValidCourtRequest
+                .builder()
+                .applicationCode(applicationCode)
+                .courtClassification(initialPackage.getCourt().getCourtClass())
+                .courtLevel(initialPackage.getCourt().getLevel())
+                .courtId(courtDetails.getCourtId())
+                .create()))
+             return Arrays.asList(MessageFormat.format("Court with Location: [{0}], Level: [{1}], Classification: [{2}] is not a valid court.",
+                    initialPackage.getCourt().getLocation(), initialPackage.getCourt().getLevel(), initialPackage.getCourt().getCourtClass()));
 
-        try {
-
-            if (!this.courtService.isValidCourt(IsValidCourtRequest
-                    .builder()
-                    .applicationCode(applicationCode)
-                    .courtClassification(initialPackage.getCourt().getCourtClass())
-                    .courtLevel(initialPackage.getCourt().getLevel())
-                    .courtId(courtDetails.getCourtId())
-                    .create())) {
-                result.add(MessageFormat.format("Court with Location: [{0}], Level: [{1}], Classification: [{2}] is not a valid court.",
-                        initialPackage.getCourt().getLocation(), initialPackage.getCourt().getLevel(), initialPackage.getCourt().getCourtClass()));
-            }
-
-        } catch (Exception ex) {
-            result.add(MessageFormat.format("Court details not valid: {0}", ex.getMessage()));
-        }
-
-        return result;
+        return new ArrayList<>();
 
     }
 
@@ -104,11 +101,8 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
      */
     private List<String> validateParties(InitialPackage initialPackage) {
 
-        List<String> result = new ArrayList<>();
-
         if (StringUtils.isBlank(initialPackage.getCourt().getFileNumber()) && initialPackage.getParties().isEmpty()) {
-            result.add("At least 1 party is required for new submission.");
-            return result;
+            return Arrays.asList("At least 1 party is required for new submission.");
         }
 
         List<String> validPartyRoles = submissionService.getValidPartyRoles(GetValidPartyRoleRequest
@@ -118,21 +112,12 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
                 .documents(initialPackage.getDocuments())
                 .create());
 
-        List<Party> invalidParties = initialPackage
+        return initialPackage
                 .getParties()
                 .stream()
                 .filter(party -> party.getRoleType() == null || !validPartyRoles.contains(party.getRoleType().toString()))
+                .map(party -> MessageFormat.format("Role type [{0}] is invalid.", party.getRoleType()))
                 .collect(Collectors.toList());
-
-        if(!invalidParties.isEmpty()) {
-
-            invalidParties.stream().forEach(party -> {
-                result.add(MessageFormat.format("Role type [{0}] is invalid.", party.getRoleType()));
-            });
-
-        }
-
-        return result;
 
     }
 
@@ -152,6 +137,21 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
 
         return result;
 
+    }
+
+    public List<String> validateDocumentTypes(InitialPackage initialPackage) {
+
+        List<String> validDocumentTypes = this.documentService.getValidDocumentTypes(GetValidDocumentTypesRequest.builder()
+                .courtClassification(initialPackage.getCourt().getCourtClass())
+                .courtLevel(initialPackage.getCourt().getLevel())
+                .create()).stream().map(x -> x.getType()).collect(Collectors.toList());
+
+        return initialPackage.getDocuments()
+                .stream()
+                .map(x -> x.getType().getValue())
+                .filter(x -> !validDocumentTypes.contains(x))
+                .map(invalidType -> MessageFormat.format("Document type [{0}] is invalid.", invalidType))
+                .collect(Collectors.toList());
     }
 
 }

@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission;
 
 import ca.bc.gov.open.jag.efilingapi.court.services.CourtService;
+import ca.bc.gov.open.jag.efilingapi.document.DocumentService;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.payment.BamboraPaymentAdapter;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.*;
@@ -69,8 +70,8 @@ public class SubmissionConfig {
     }
 
     @Bean
-    public GenerateUrlRequestValidator packageValidator(SubmissionService submissionService, CourtService courtService) {
-        return new GenerateUrlRequestValidatorImpl(submissionService, courtService);
+    public GenerateUrlRequestValidator packageValidator(SubmissionService submissionService, CourtService courtService, DocumentService documentService) {
+        return new GenerateUrlRequestValidatorImpl(submissionService, courtService, documentService);
     }
 
 }

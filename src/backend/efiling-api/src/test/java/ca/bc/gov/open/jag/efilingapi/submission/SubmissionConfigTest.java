@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingapi.submission;
 
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.fakes.CourtServiceFake;
+import ca.bc.gov.open.jag.efilingapi.fakes.DocumentServiceFake;
 import ca.bc.gov.open.jag.efilingapi.fakes.EfilingCourtServiceFake;
 import ca.bc.gov.open.jag.efilingapi.payment.BamboraPaymentAdapter;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapper;
@@ -50,7 +51,8 @@ public class SubmissionConfigTest {
             .withBean(EfilingDocumentServiceTest.class)
             .withBean(EfilingSubmissionServiceTest.class)
             .withBean(DocumentStoreTest.class)
-            .withBean(CourtServiceFake.class);
+            .withBean(CourtServiceFake.class)
+            .withBean(DocumentServiceFake.class);
 
     @Test
     @DisplayName("Test Submission Beans")
