@@ -256,6 +256,7 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     private void validateGenerateUrlRequest(GenerateUrlRequest generateUrlRequest) {
+
         CourtBase courtBase = generateUrlRequest.getFilingPackage().getCourt();
         CourtDetails courtDetails = efilingCourtService.getCourtDescription(courtBase.getLocation(), courtBase.getLevel(), courtBase.getCourtClass());
 
