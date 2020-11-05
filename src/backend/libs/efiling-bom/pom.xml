@@ -6,7 +6,7 @@
 
     <groupId>ca.bc.gov.open.jag</groupId>
     <artifactId>efiling-bom</artifactId>
-    <version>0.4.2-SNAPSHOT</version>
+    <version>0.4.2</version>
 
     <properties>
         <io.github.openfeign.opentracing.version>0.4.1</io.github.openfeign.opentracing.version>
