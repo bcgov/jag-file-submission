@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.lookup.lookupApiDelegateImpl;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.CourtInformation;
+import ca.bc.gov.open.jag.efilingapi.api.model.CourtLocations;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.lookup.LookupApiDelegateImpl;
 import org.junit.jupiter.api.*;
@@ -32,29 +33,30 @@ public class GetCourtInformationTest {
     @DisplayName("200")
     public void withValidCourtNameReturnCourtInformation() {
 
-        ResponseEntity<CourtInformation> actual = sut.getCourtInformation(COURTNAME);
+        ResponseEntity<CourtLocations> actual = sut.getCourtLocations();
 
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
-        Assertions.assertEquals(BigDecimal.ONE, actual.getBody().getCourtId());
-        Assertions.assertEquals("Test",actual.getBody().getCourtName());
-        Assertions.assertEquals("Test",actual.getBody().getCourtCode());
-        Assertions.assertEquals("Test",actual.getBody().getTimeZone());
-        Assertions.assertEquals("Test",actual.getBody().getDaylightSavings());
-        Assertions.assertEquals("Test",actual.getBody().getCourtIdentifierCode());
-        Assertions.assertEquals("Test",actual.getBody().getAddressLine1());
-        Assertions.assertEquals("Test",actual.getBody().getAddressLine2());
-        Assertions.assertEquals("Test",actual.getBody().getAddressLine3());
-        Assertions.assertEquals("Test",actual.getBody().getPostalCode());
-        Assertions.assertEquals(BigDecimal.valueOf(123),actual.getBody().getCitySequenceNumber());
-        Assertions.assertEquals("Test",actual.getBody().getCityAbbreviation());
-        Assertions.assertEquals("Test",actual.getBody().getCityName());
-        Assertions.assertEquals(BigDecimal.valueOf(123),actual.getBody().getProvinceSequenceNumber());
-        Assertions.assertEquals("Test",actual.getBody().getProvinceAbbreviation());
-        Assertions.assertEquals("Test",actual.getBody().getProvinceName());
-        Assertions.assertEquals(BigDecimal.ONE,actual.getBody().getCountryId());
-        Assertions.assertEquals("Test",actual.getBody().getCountryAbbreviation());
-        Assertions.assertEquals("Test",actual.getBody().getCountryName());
-        Assertions.assertEquals(true,actual.getBody().getIsProvincialCourt());
-        Assertions.assertEquals(true,actual.getBody().getIsSupremeCourt());
+        Assertions.assertEquals(1, actual.getBody().getDocuments().size());
+        Assertions.assertEquals(BigDecimal.ONE, actual.getBody().getDocuments().get(0).getCourtId());
+        Assertions.assertEquals("Test",actual.getBody().getDocuments().get(0).getCourtName());
+        Assertions.assertEquals("Test",actual.getBody().getDocuments().get(0).getCourtCode());
+        Assertions.assertEquals("Test",actual.getBody().getDocuments().get(0).getTimeZone());
+        Assertions.assertEquals("Test",actual.getBody().getDocuments().get(0).getDaylightSavings());
+        Assertions.assertEquals("Test",actual.getBody().getDocuments().get(0).getCourtIdentifierCode());
+        Assertions.assertEquals("Test",actual.getBody().getDocuments().get(0).getAddressLine1());
+        Assertions.assertEquals("Test",actual.getBody().getDocuments().get(0).getAddressLine2());
+        Assertions.assertEquals("Test",actual.getBody().getDocuments().get(0).getAddressLine3());
+        Assertions.assertEquals("Test",actual.getBody().getDocuments().get(0).getPostalCode());
+        Assertions.assertEquals(BigDecimal.valueOf(123),actual.getBody().getDocuments().get(0).getCitySequenceNumber());
+        Assertions.assertEquals("Test",actual.getBody().getDocuments().get(0).getCityAbbreviation());
+        Assertions.assertEquals("Test",actual.getBody().getDocuments().get(0).getCityName());
+        Assertions.assertEquals(BigDecimal.valueOf(123),actual.getBody().getDocuments().get(0).getProvinceSequenceNumber());
+        Assertions.assertEquals("Test",actual.getBody().getDocuments().get(0).getProvinceAbbreviation());
+        Assertions.assertEquals("Test",actual.getBody().getDocuments().get(0).getProvinceName());
+        Assertions.assertEquals(BigDecimal.ONE,actual.getBody().getDocuments().get(0).getCountryId());
+        Assertions.assertEquals("Test",actual.getBody().getDocuments().get(0).getCountryAbbreviation());
+        Assertions.assertEquals("Test",actual.getBody().getDocuments().get(0).getCountryName());
+        Assertions.assertEquals(true,actual.getBody().getDocuments().get(0).getIsProvincialCourt());
+        Assertions.assertEquals(true,actual.getBody().getDocuments().get(0).getIsSupremeCourt());
     }
 }

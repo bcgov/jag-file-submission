@@ -1,10 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.lookup;
 
 import ca.bc.gov.open.jag.efilingapi.api.LookupApiDelegate;
-import ca.bc.gov.open.jag.efilingapi.api.model.CourtInformation;
-import ca.bc.gov.open.jag.efilingapi.api.model.DocumentType;
-import ca.bc.gov.open.jag.efilingapi.api.model.DocumentTypes;
-import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
+import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
@@ -16,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.security.RolesAllowed;
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 @Service
 public class LookupApiDelegateImpl implements LookupApiDelegate {
@@ -47,30 +45,32 @@ public class LookupApiDelegateImpl implements LookupApiDelegate {
     }
 
     @Override
-    public ResponseEntity<CourtInformation> getCourtInformation(String courtName) {
-        CourtInformation courtInformation = new CourtInformation();
-        courtInformation.setCourtId(BigDecimal.ONE);
-        courtInformation.setCourtName("Test");
-        courtInformation.setCourtCode("Test");
-        courtInformation.setTimeZone("Test");
-        courtInformation.setDaylightSavings("Test");
-        courtInformation.setCourtIdentifierCode("Test");
-        courtInformation.setAddressLine1("Test");
-        courtInformation.setAddressLine2("Test");
-        courtInformation.setAddressLine3("Test");
-        courtInformation.setPostalCode("Test");
-        courtInformation.setCitySequenceNumber(BigDecimal.valueOf(123));
-        courtInformation.setCityAbbreviation("Test");
-        courtInformation.setCityName("Test");
-        courtInformation.setProvinceSequenceNumber(BigDecimal.valueOf(123));
-        courtInformation.setProvinceAbbreviation("Test");
-        courtInformation.setProvinceName("Test");
-        courtInformation.setCountryId(BigDecimal.ONE);
-        courtInformation.setCountryAbbreviation("Test");
-        courtInformation.setCountryName("Test");
-        courtInformation.setIsProvincialCourt(true);
-        courtInformation.setIsSupremeCourt(true);
-        return ResponseEntity.ok(courtInformation);
+    public ResponseEntity<CourtLocations> getCourtLocations() {
+        CourtLocation courtLocation = new CourtLocation();
+        courtLocation.setCourtId(BigDecimal.ONE);
+        courtLocation.setCourtName("Test");
+        courtLocation.setCourtCode("Test");
+        courtLocation.setTimeZone("Test");
+        courtLocation.setDaylightSavings("Test");
+        courtLocation.setCourtIdentifierCode("Test");
+        courtLocation.setAddressLine1("Test");
+        courtLocation.setAddressLine2("Test");
+        courtLocation.setAddressLine3("Test");
+        courtLocation.setPostalCode("Test");
+        courtLocation.setCitySequenceNumber(BigDecimal.valueOf(123));
+        courtLocation.setCityAbbreviation("Test");
+        courtLocation.setCityName("Test");
+        courtLocation.setProvinceSequenceNumber(BigDecimal.valueOf(123));
+        courtLocation.setProvinceAbbreviation("Test");
+        courtLocation.setProvinceName("Test");
+        courtLocation.setCountryId(BigDecimal.ONE);
+        courtLocation.setCountryAbbreviation("Test");
+        courtLocation.setCountryName("Test");
+        courtLocation.setIsProvincialCourt(true);
+        courtLocation.setIsSupremeCourt(true);
+        CourtLocations courtLocations = new CourtLocations();
+        courtLocations.setDocuments(Arrays.asList(courtLocation));
+        return ResponseEntity.ok(courtLocations);
     }
 
     private DocumentType toDocumentType(ca.bc.gov.open.jag.efilingcommons.model.DocumentType documentType) {

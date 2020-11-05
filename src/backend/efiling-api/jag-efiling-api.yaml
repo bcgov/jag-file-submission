@@ -338,29 +338,20 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DocumentTypes"
-  "/lookup/courtInformation/{courtName}":
+  "/lookup/courtLocations/":
     get:
-      summary: Get court information
-      operationId: GetCourtInformation
+      summary: Get court locations
+      operationId: GetCourtLocations
       description: get court information by court name
       tags:
         - lookup
-      parameters:
-        - name: courtName
-          in: path
-          description: court name
-          required: true
-          schema:
-            type: string
       responses:
         "200":
           description: Information of a court
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CourtInformation"
-        "404":
-          description: Court not found
+                $ref: "#/components/schemas/CourtLocations"
   "/payment/generate-update-card":
     post:
       summary: Update card on bambora
@@ -2222,7 +2213,7 @@ components:
         internalClientNumber:
           type: string
           description: internal client number for request to bambora
-    CourtInformation:
+    CourtLocation:
       type: object
       description: "Court related information"
       required:
@@ -2311,3 +2302,12 @@ components:
         isSupremeCourt:
           description: the court is supreme
           type: boolean
+    CourtLocations:
+      description: resposne body for courtlocations
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: "#/components/schemas/CourtLocation"
+
