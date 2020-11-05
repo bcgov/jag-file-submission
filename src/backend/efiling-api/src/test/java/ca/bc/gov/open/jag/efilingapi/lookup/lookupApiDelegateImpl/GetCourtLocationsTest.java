@@ -9,13 +9,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import java.io.IOException;
 import java.math.BigDecimal;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("LookupApiDelegateImpl test suite")
-public class GetCourtInformationTest {
-    private static final String COURTNAME = "COURTNAME";
+public class GetCourtLocationsTest {
     LookupApiDelegateImpl sut;
 
     @Mock
@@ -31,7 +29,7 @@ public class GetCourtInformationTest {
 
     @Test
     @DisplayName("200")
-    public void withValidCourtNameReturnCourtInformation() {
+    public void withValidCourtNameReturnCourtLocations() {
 
         ResponseEntity<CourtLocations> actual = sut.getCourtLocations();
 
