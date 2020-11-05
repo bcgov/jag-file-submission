@@ -45,7 +45,7 @@ public class LookupApiDelegateImpl implements LookupApiDelegate {
     }
 
     @Override
-    public ResponseEntity<CourtLocations> getCourtLocations() {
+    public ResponseEntity<CourtLocations> getCourtLocations(String courtLevel) {
         CourtLocation courtLocation = new CourtLocation();
         courtLocation.setCourtId(BigDecimal.ONE);
         courtLocation.setCourtName("Test");

@@ -1,6 +1,5 @@
 package ca.bc.gov.open.jag.efilingapi.lookup.lookupApiDelegateImpl;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.CourtInformation;
 import ca.bc.gov.open.jag.efilingapi.api.model.CourtLocations;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.lookup.LookupApiDelegateImpl;
@@ -14,6 +13,7 @@ import java.math.BigDecimal;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("LookupApiDelegateImpl test suite")
 public class GetCourtLocationsTest {
+    private final String COURTLEVEL = "COURTLEVEL";
     LookupApiDelegateImpl sut;
 
     @Mock
@@ -31,7 +31,7 @@ public class GetCourtLocationsTest {
     @DisplayName("200")
     public void withValidCourtNameReturnCourtLocations() {
 
-        ResponseEntity<CourtLocations> actual = sut.getCourtLocations();
+        ResponseEntity<CourtLocations> actual = sut.getCourtLocations(COURTLEVEL);
 
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
         Assertions.assertEquals(1, actual.getBody().getDocuments().size());
