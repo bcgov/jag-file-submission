@@ -338,13 +338,20 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DocumentTypes"
-  "/lookup/courtLocations/":
+  "/lookup/court":
     get:
       summary: Get court locations
       operationId: GetCourtLocations
       description: get court information by court name
       tags:
         - lookup
+      parameters:
+        - name: courtLevel
+          in: query
+          description: court type filter
+          required: false
+          schema:
+            type: string
       responses:
         "200":
           description: Information of a court
@@ -2310,4 +2317,3 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/CourtLocation"
-
