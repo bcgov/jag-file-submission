@@ -45,35 +45,6 @@ public class LookupApiDelegateImpl implements LookupApiDelegate {
         }
     }
 
-    @Override
-    public ResponseEntity<CourtLocations> getCourtLocations(String courtLevel) {
-        CourtLocation courtLocation = new CourtLocation();
-        courtLocation.setCourtId(BigDecimal.ONE);
-        courtLocation.setCourtName("Test");
-        courtLocation.setCourtCode("Test");
-        courtLocation.setTimeZone("Test");
-        courtLocation.setDaylightSavings("Test");
-        courtLocation.setCourtIdentifierCode("Test");
-        courtLocation.setAddressLine1("Test");
-        courtLocation.setAddressLine2("Test");
-        courtLocation.setAddressLine3("Test");
-        courtLocation.setPostalCode("Test");
-        courtLocation.setCitySequenceNumber(BigDecimal.valueOf(123));
-        courtLocation.setCityAbbreviation("Test");
-        courtLocation.setCityName("Test");
-        courtLocation.setProvinceSequenceNumber(BigDecimal.valueOf(123));
-        courtLocation.setProvinceAbbreviation("Test");
-        courtLocation.setProvinceName("Test");
-        courtLocation.setCountryId(BigDecimal.ONE);
-        courtLocation.setCountryAbbreviation("Test");
-        courtLocation.setCountryName("Test");
-        courtLocation.setIsProvincialCourt(true);
-        courtLocation.setIsSupremeCourt(true);
-        CourtLocations courtLocations = new CourtLocations();
-        courtLocations.setDocuments(Arrays.asList(courtLocation));
-        return ResponseEntity.ok(courtLocations);
-    }
-
     private DocumentType toDocumentType(ca.bc.gov.open.jag.efilingcommons.model.DocumentType documentType) {
         DocumentType outDocumentType = new DocumentType();
         outDocumentType.setType(documentType.getType());
