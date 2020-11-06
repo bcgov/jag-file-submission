@@ -1,0 +1,22 @@
+openapi: 3.0.0
+info:
+  version: 0.3.0
+  title: ceis-fake-api
+  description: ceis api
+servers:
+  - url: "http://localhost:8080"
+tags:
+  - name: lookup
+paths:
+  "/something/courts":
+    get:
+      summary: Get court information
+      operationId: GetCourtInformation
+      description: get court information by court name
+      tags:
+        - lookup
+      responses:
+        "200":
+          description: Information of a court
+        "404":
+          description: Court not found
