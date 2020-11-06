@@ -1,10 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.courts;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.CourtLocations;
-import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
-import ca.bc.gov.open.jag.efilingapi.lookup.LookupApiDelegateImpl;
 import org.junit.jupiter.api.*;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
