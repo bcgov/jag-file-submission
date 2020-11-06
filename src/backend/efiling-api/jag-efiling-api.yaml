@@ -10,6 +10,8 @@ tags:
     description: Endpoints that are exposed to external client
   - name: submission
     description: Submission Api
+  - name: courts
+    description: Courts
 security:
   - bearerAuth: []
 paths:
@@ -338,18 +340,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DocumentTypes"
-  "/lookup/courtInformation/{courtName}":
+  "/courts":
     get:
-      summary: Get court information
-      operationId: GetCourtInformation
+      summary: Get court locations
+      operationId: GetCourtLocations
       description: get court information by court name
       tags:
-        - lookup
+        - court
       parameters:
-        - name: courtName
-          in: path
-          description: court name
-          required: true
+        - name: courtLevel
+          in: query
+          description: court type filter
+          required: false
           schema:
             type: string
       responses:
@@ -358,9 +360,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CourtInformation"
-        "404":
-          description: Court not found
+                $ref: "#/components/schemas/CourtLocations"
   "/payment/generate-update-card":
     post:
       summary: Update card on bambora
@@ -2222,50 +2222,49 @@ components:
         internalClientNumber:
           type: string
           description: internal client number for request to bambora
-    CourtInformation:
+    CourtLocation:
       type: object
       description: "Court related information"
       required:
-        - courtId
-        - courtName
-        - courtCode
-        - timeZone
-        - daylightSavings
-        - courtIdentifierCode
+        - id
+        - name
+        - code
+        - isSupremeCourt
+        - address
+      properties:
+        id:
+          type: number
+          description: the court id
+        name:
+          type: string
+          description: the court name
+        code:
+          type: string
+          description: the court code
+        isSupremeCourt:
+          type: boolean
+          description: the court supreme
+        address:
+          $ref: "#/components/schemas/Address"
+    CourtLocations:
+      description: resposne body for courtlocations
+      type: object
+      properties:
+        courts:
+          type: array
+          items:
+            $ref: "#/components/schemas/CourtLocation"
+    Address:
+      description: address object
+      type: object
+      required:
         - addressLine1
         - addressLine2
         - addressLine3
-        - postalCode
-        - citySequenceNumber
-        - cityAbbreviation
         - cityName
-        - provinceSequenceNumber
-        - provinceAbbreviation
         - provinceName
-        - countryId
-        - countryAbbreviation
         - countryName
-        - isProvincialCourt
-        - isSupremeCourt
       properties:
-        courtId:
-          type: number
-          description: the court id
-        courtName:
-          type: string
-          description: the court name
-        courtCode:
-          type: string
-          description: the court code
-        timeZone:
-          type: string
-          description: the court time zone
-        daylightSavings:
-          type: string
-          description: the court daylight savings
-        courtIdentifierCode:
-          description: the court identifier code
-          type: string
         addressLine1:
           type: string
           description: the court address line one
@@ -2278,36 +2277,13 @@ components:
         postalCode:
           type: string
           description: the court postal code
-        citySequenceNumber:
-          type: number
-          description: the court sequence number
-        cityAbbreviation:
-          description: the court city abbreviation
-          type: string
         cityName:
           description: the court city name
           type: string
-        provinceSequenceNumber:
-          type: number
-          description: the court province sequence number
-        provinceAbbreviation:
-          type: string
-          description: the court province abbreviation
         provinceName:
           type: string
           description: the court province name
-        countryId:
-          type: number
-          description: the court country id
-        countryAbbreviation:
-          type: string
-          description: the court country abbreviation
         countryName:
-          description: the court country name
+          description: the address country name
           type: string
-        isProvincialCourt:
-          type: boolean
-          description: the court is provincial
-        isSupremeCourt:
-          description: the court is supreme
-          type: boolean
+
