@@ -15,6 +15,7 @@ import javax.annotation.security.RolesAllowed;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.stream.Collectors;
+
 @Service
 public class LookupApiDelegateImpl implements LookupApiDelegate {
     Logger logger = LoggerFactory.getLogger(LookupApiDelegateImpl.class);
