@@ -12,23 +12,43 @@ import java.util.Arrays;
 public class CourtsApiDelegateImpl implements CourtsApiDelegate {
     @Override
     public ResponseEntity<CourtLocations> getCourtLocations(String courtLevel) {
-        CourtLocation courtLocation = new CourtLocation();
-        courtLocation.setId(BigDecimal.ONE);
-        courtLocation.setName("Test");
-        courtLocation.setCode("Test");
-        courtLocation.setIsSupremeCourt(true);
-        Address address = new Address();
-        address.setAddressLine1("Test");
-        address.setAddressLine2("Test");
-        address.setAddressLine3("Test");
-        address.setPostalCode("Test");
-        address.setCityName("Test");
-        address.setProvinceName("Test");
-        address.setCountryName("Test");
-        courtLocation.setAddress(address);
+        return ResponseEntity.ok(buildMockData());
+    }
+
+    private CourtLocations buildMockData() {
+        CourtLocation courtLocationOne = new CourtLocation();
+        courtLocationOne.setId(BigDecimal.valueOf(1031));
+        courtLocationOne.setName("Campbell River");
+        courtLocationOne.setCode("MockCode");
+        courtLocationOne.setIsSupremeCourt(true);
+        Address addressOne = new Address();
+        addressOne.setAddressLine1("500 - 13th Avenue");
+        addressOne.setAddressLine2("");
+        addressOne.setAddressLine3("");
+        addressOne.setPostalCode("V9W 6P1");
+        addressOne.setCityName("Campbell River");
+        addressOne.setProvinceName("British Columbia");
+        addressOne.setCountryName("Canada");
+        courtLocationOne.setAddress(addressOne);
+
+        CourtLocation courtLocationTwo = new CourtLocation();
+        courtLocationTwo.setId(BigDecimal.valueOf(3521));
+        courtLocationTwo.setName("Chilliwack");
+        courtLocationTwo.setCode("MockCode");
+        courtLocationTwo.setIsSupremeCourt(true);
+        Address addressTwo = new Address();
+        addressTwo.setAddressLine1("46085 Yale Road");
+        addressTwo.setAddressLine2("");
+        addressTwo.setAddressLine3("");
+        addressTwo.setPostalCode("V2P 2L8");
+        addressTwo.setCityName("Chilliwack");
+        addressTwo.setProvinceName("British Columbia");
+        addressTwo.setCountryName("Canada");
+        courtLocationTwo.setAddress(addressTwo);
+
         CourtLocations courtLocations = new CourtLocations();
-        courtLocations.setCourts(Arrays.asList(courtLocation));
-        return ResponseEntity.ok(courtLocations);
+        courtLocations.setCourts(Arrays.asList(courtLocationOne,courtLocationTwo));
+        return courtLocations;
     }
 
 }
