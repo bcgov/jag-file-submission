@@ -3,13 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ca.bc.gov.open.jag</groupId>
-	<artifactId>efiling-bambora-api-client</artifactId>
+	<artifactId>efiling-ceis-api-client</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>efiling-bambora-api-client</name>
-	<description>Client for Bambora</description>
+	<name>efiling-ceis-api-client</name>
+	<description>Client for CEIS ORDS</description>
 
 	<properties>
-		<default-package>ca.bc.gov.open.jag.efilingbamboraapiclient</default-package>
+		<default-package>ca.bc.gov.open.jag.efilingceisapiclient</default-package>
 		<java.version>1.8</java.version>
 	</properties>
 
@@ -131,7 +131,7 @@
 			<dependency>
 				<groupId>ca.bc.gov.open.jag</groupId>
 				<artifactId>efiling-bom</artifactId>
-				<version>0.5.0-SNAPSHOT</version>
+				<version>0.4.2</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -151,7 +151,7 @@
 							<goal>generate</goal>
 						</goals>
 						<configuration>
-							<inputSpec>${project.basedir}/payments-swagger.yaml</inputSpec>
+							<inputSpec>${project.basedir}/ceis-ords-swagger.yaml</inputSpec>
 							<generatorName>java</generatorName>
 							<configOptions>
 								<dateLibrary>joda</dateLibrary>
