@@ -2229,7 +2229,7 @@ components:
         - id
         - name
         - code
-        - level
+        - isSupremeCourt
         - address
       properties:
         id:
@@ -2241,9 +2241,9 @@ components:
         code:
           type: string
           description: the court code
-        level:
-          type: string
-          description: the court level
+        isSupremeCourt:
+          type: boolean
+          description: the court supreme
         address:
           $ref: "#/components/schemas/Address"
     CourtLocations:

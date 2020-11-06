@@ -35,7 +35,7 @@ public class GetCourtLocationsTest {
         Assertions.assertEquals(BigDecimal.ONE, actual.getBody().getCourts().get(0).getId());
         Assertions.assertEquals("Test",actual.getBody().getCourts().get(0).getName());
         Assertions.assertEquals("Test",actual.getBody().getCourts().get(0).getCode());
-        Assertions.assertEquals("P",actual.getBody().getCourts().get(0).getLevel());
+        Assertions.assertEquals(true,actual.getBody().getCourts().get(0).getIsSupremeCourt());
         Assertions.assertEquals("Test",actual.getBody().getCourts().get(0).getAddress().getAddressLine1());
         Assertions.assertEquals("Test",actual.getBody().getCourts().get(0).getAddress().getAddressLine2());
         Assertions.assertEquals("Test",actual.getBody().getCourts().get(0).getAddress().getAddressLine3());

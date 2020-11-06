@@ -16,7 +16,7 @@ public class CourtsApiDelegateImpl implements CourtsApiDelegate {
         courtLocation.setId(BigDecimal.ONE);
         courtLocation.setName("Test");
         courtLocation.setCode("Test");
-        courtLocation.setLevel("P");
+        courtLocation.setIsSupremeCourt(true);
         Address address = new Address();
         address.setAddressLine1("Test");
         address.setAddressLine2("Test");
