@@ -25,8 +25,6 @@ public class CourtsApiDelegateImpl implements CourtsApiDelegate {
         courtLocationOne.setIsSupremeCourt(true);
         Address addressOne = new Address();
         addressOne.setAddressLine1("500 - 13th Avenue");
-        addressOne.setAddressLine2("");
-        addressOne.setAddressLine3("");
         addressOne.setPostalCode("V9W 6P1");
         addressOne.setCityName("Campbell River");
         addressOne.setProvinceName("British Columbia");
@@ -40,8 +38,8 @@ public class CourtsApiDelegateImpl implements CourtsApiDelegate {
         courtLocationTwo.setIsSupremeCourt(true);
         Address addressTwo = new Address();
         addressTwo.setAddressLine1("46085 Yale Road");
-        addressTwo.setAddressLine2("");
-        addressTwo.setAddressLine3("");
+        addressTwo.setAddressLine2("  ");
+        addressTwo.setAddressLine3("  ");
         addressTwo.setPostalCode("V2P 2L8");
         addressTwo.setCityName("Chilliwack");
         addressTwo.setProvinceName("British Columbia");
