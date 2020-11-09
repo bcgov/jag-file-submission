@@ -5,10 +5,12 @@ import ca.bc.gov.open.jag.efilingapi.api.model.Address;
 import ca.bc.gov.open.jag.efilingapi.api.model.CourtLocation;
 import ca.bc.gov.open.jag.efilingapi.api.model.CourtLocations;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
 
+@Service
 public class CourtsApiDelegateImpl implements CourtsApiDelegate {
     @Override
     public ResponseEntity<CourtLocations> getCourtLocations(String courtLevel) {
