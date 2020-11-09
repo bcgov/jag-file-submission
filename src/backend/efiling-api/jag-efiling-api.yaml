@@ -2259,8 +2259,6 @@ components:
       type: object
       required:
         - addressLine1
-        - addressLine2
-        - addressLine3
         - cityName
         - provinceName
         - countryName
