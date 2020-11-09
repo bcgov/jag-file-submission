@@ -2,6 +2,7 @@
   "name": "efiling-frontend",
   "version": "0.5.0",
   "private": true,
+  "homepage": "efilinghub",
   "dependencies": {
     "@babel/preset-react": "^7.12.1",
     "@bcgov/bootstrap-theme": "github:bcgov/bootstrap-theme",
