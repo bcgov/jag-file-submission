@@ -20,7 +20,6 @@ public class CourtsConfigurationTest {
     ApplicationContextRunner context = new ApplicationContextRunner()
             .withBean(CeisApiClient.class)
             .withBean(DefaultApi.class)
-            .withBean(CourtLocationMapperImpl.class)
             .withUserConfiguration(CourtsConfiguration.class);
 
     @Test

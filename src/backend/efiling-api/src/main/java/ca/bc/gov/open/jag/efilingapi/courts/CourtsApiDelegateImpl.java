@@ -1,12 +1,9 @@
 package ca.bc.gov.open.jag.efilingapi.courts;
 
 import ca.bc.gov.open.jag.efilingapi.api.CourtsApiDelegate;
-import ca.bc.gov.open.jag.efilingapi.api.model.Address;
-import ca.bc.gov.open.jag.efilingapi.api.model.CourtLocation;
 import ca.bc.gov.open.jag.efilingapi.api.model.CourtLocations;
 import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
-import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingceisapiclient.api.handler.ApiException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.util.Arrays;
 
 @Service
 public class CourtsApiDelegateImpl implements CourtsApiDelegate {
