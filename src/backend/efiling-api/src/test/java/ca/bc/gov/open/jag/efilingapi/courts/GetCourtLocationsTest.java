@@ -81,7 +81,7 @@ public class GetCourtLocationsTest {
         Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode());
         Assertions.assertEquals(COURT_LOCATION_ERROR.getErrorCode(), ((EfilingError)actual.getBody()).getError());
         Assertions.assertEquals(COURT_LOCATION_ERROR.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
-        
+
     }
 
     private CourtLocations buildMockData() {

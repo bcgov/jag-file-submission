@@ -37,8 +37,8 @@ public class CeisLookupAdapter {
 
     private boolean isSearchedType(String isSupreme, String isProvincial, String courtType) {
         if (StringUtils.isEmpty(courtType)) return true;
-        if (courtType.equals("P") && (!StringUtils.isEmpty(isProvincial)) && isProvincial.equals("Y")) return true;
         if (courtType.equals("S") && (!StringUtils.isEmpty(isSupreme)) && isSupreme.equals("Y")) return true;
+        if (courtType.equals("P") && (!StringUtils.isEmpty(isProvincial)) && isProvincial.equals("Y")) return true;
 
         return false;
     }
