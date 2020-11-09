@@ -8,6 +8,7 @@ import ca.bc.gov.open.jag.efilingceisapiclient.api.handler.ApiException;
 import org.jvnet.hk2.annotations.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,8 +25,7 @@ public class CeisLookupAdapter {
     }
 
     public CourtLocations getCourLocations(String courtType) throws ApiException {
-
-        List<CourtLocation> courtLocationList = ((List<ca.bc.gov.open.jag.efilingceisapiclient.api.model.CourtLocation>) defaultApi.courtLocationsGet()).stream()
+        List<CourtLocation> courtLocationList = defaultApi.courtLocationsGet().getCourtlocations().stream()
                 .filter(courtLocation -> isSearchedType(courtLocation.getIssupremecourt(), courtLocation.getIsprovincialcourt(), courtType))
                 .map(courtLocationMapper::toCourtLocation)
                 .collect(Collectors.toList());;

@@ -131,7 +131,7 @@ public class CeisLookupAdapterTest {
 
     }
 
-    private List<ca.bc.gov.open.jag.efilingceisapiclient.api.model.CourtLocation> buildMockData() {
+    private ca.bc.gov.open.jag.efilingceisapiclient.api.model.CourtLocations buildMockData() {
 
         ca.bc.gov.open.jag.efilingceisapiclient.api.model.CourtLocation courtLocationOne = new ca.bc.gov.open.jag.efilingceisapiclient.api.model.CourtLocation();
         courtLocationOne.setCourtid(BigDecimal.valueOf(1031));
@@ -160,7 +160,9 @@ public class CeisLookupAdapterTest {
         courtLocationTwo.setProvincename("British Columbia");
         courtLocationTwo.setCountryname("Canada");
 
-        return Arrays.asList(courtLocationOne,courtLocationTwo);
+        ca.bc.gov.open.jag.efilingceisapiclient.api.model.CourtLocations courtLocations = new ca.bc.gov.open.jag.efilingceisapiclient.api.model.CourtLocations();
+        courtLocations.setCourtlocations(Arrays.asList(courtLocationOne,courtLocationTwo));
+        return courtLocations;
 
     }
 

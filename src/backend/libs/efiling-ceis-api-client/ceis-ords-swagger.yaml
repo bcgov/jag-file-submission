@@ -5,7 +5,7 @@ info:
 host: dev.jag.gov.bc.ca
 basePath: /ords/devj/ceisords/web
 schemes:
-  - http
+  - https
 produces:
   - application/json
 paths:
@@ -16,11 +16,7 @@ paths:
         '200':
           description: output of the endpoint
           schema:
-            properties:
-              courtlocations:
-                type: array
-                items:
-                  $ref: '#/definitions/CourtLocation'
+            $ref: '#/definitions/CourtLocations'
       parameters: []
   /health:
     get:
@@ -32,6 +28,12 @@ paths:
             type: object
             properties: {}
 definitions:
+  CourtLocations:
+    properties:
+      courtlocations:
+        type: array
+        items:
+          $ref: '#/definitions/CourtLocation'
   CourtLocation:
     type: object
     description: "Court related information"
@@ -78,3 +80,4 @@ definitions:
         type: string
       issupremecourt:
         type: string
+
