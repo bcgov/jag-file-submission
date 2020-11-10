@@ -1,6 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.courts.config;
 
-import ca.bc.gov.open.jag.efilingapi.courts.CeisLookupAdapter;
+import ca.bc.gov.open.jag.efilingapi.courts.CeisLookupAdapterImpl;
 import ca.bc.gov.open.jag.efilingapi.courts.CourtsConfiguration;
 import ca.bc.gov.open.jag.efilingapi.courts.mappers.CourtLocationMapper;
 
@@ -25,7 +25,7 @@ public class CourtsConfigurationTest {
     public void testConfigure() {
 
         context.run(it -> {
-            assertThat(it).hasSingleBean(CeisLookupAdapter.class);
+            assertThat(it).hasSingleBean(CeisLookupAdapterImpl.class);
             assertThat(it).hasSingleBean(CourtLocationMapper.class);
         });
 

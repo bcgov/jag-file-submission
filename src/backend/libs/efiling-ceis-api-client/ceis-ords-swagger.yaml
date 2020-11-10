@@ -2,6 +2,10 @@ swagger: '2.0'
 info:
   title: ORDS generated API for web
   version: 1.0.0
+host: dev.jag.gov.bc.ca
+basePath: /ords/devj/ceisords/web
+schemes:
+  - https
 produces:
   - application/json
 paths:

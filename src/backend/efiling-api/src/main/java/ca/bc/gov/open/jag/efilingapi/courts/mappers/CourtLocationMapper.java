@@ -1,8 +1,11 @@
 package ca.bc.gov.open.jag.efilingapi.courts.mappers;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.CourtLocation;
+import ca.bc.gov.open.jag.efilingcommons.model.InternalCourtLocation;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+
+import java.util.List;
 
 @Mapper
 public interface CourtLocationMapper {
@@ -17,5 +20,7 @@ public interface CourtLocationMapper {
     @Mapping(target = "address.cityName", source="cityname")
     @Mapping(target = "address.provinceName", source="provincename")
     @Mapping(target = "address.countryName", source="countryname")
-    CourtLocation toCourtLocation(ca.bc.gov.open.jag.efilingceisapiclient.api.model.CourtLocation courtLocation);
+    InternalCourtLocation toCourtLocation(ca.bc.gov.open.jag.efilingceisapiclient.api.model.CourtLocation courtLocation);
+
+    List<CourtLocation> toCourtLocationList(List<InternalCourtLocation> courtLocations);
 }

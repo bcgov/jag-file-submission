@@ -1,10 +1,13 @@
 package ca.bc.gov.open.jag.efilingapi.courts;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.Address;
-import ca.bc.gov.open.jag.efilingapi.api.model.CourtLocation;
 import ca.bc.gov.open.jag.efilingapi.api.model.CourtLocations;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
+import ca.bc.gov.open.jag.efilingapi.courts.mappers.CourtLocationMapper;
+import ca.bc.gov.open.jag.efilingapi.courts.mappers.CourtLocationMapperImpl;
 import ca.bc.gov.open.jag.efilingceisapiclient.api.handler.ApiException;
+import ca.bc.gov.open.jag.efilingcommons.adapter.CeisLookupAdapter;
+import ca.bc.gov.open.jag.efilingcommons.model.InternalCourtLocation;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -13,9 +16,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.List;
 
 import static ca.bc.gov.open.jag.efilingapi.error.ErrorResponse.COURT_LOCATION_ERROR;
-import static ca.bc.gov.open.jag.efilingapi.error.ErrorResponse.INVALIDUNIVERSAL;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("CourtsApiDelegateImpl test suite")
@@ -25,17 +28,22 @@ public class GetCourtLocationsTest {
     CourtsApiDelegateImpl sut;
 
     @Mock
-    CeisLookupAdapter ceisLookupAdapter;
+    CeisLookupAdapter ceisLookupAdapterMock;
+
+    @Mock
+    CourtLocationMapper courtLocationMapperMock;
 
     @BeforeAll
-    public void setUp() throws ApiException {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        Mockito.when(ceisLookupAdapter.getCourLocations(COURTLEVEL)).thenReturn(buildMockData());
+        Mockito.when(ceisLookupAdapterMock.getCourLocations(COURTLEVEL)).thenReturn(buildMockData());
 
-        Mockito.when(ceisLookupAdapter.getCourLocations(COURTLEVELERROR)).thenThrow(new ApiException());
+        Mockito.when(ceisLookupAdapterMock.getCourLocations(COURTLEVELERROR)).thenReturn(null);
 
-        sut = new CourtsApiDelegateImpl(ceisLookupAdapter);
+        courtLocationMapperMock = new CourtLocationMapperImpl();
+
+        sut = new CourtsApiDelegateImpl(ceisLookupAdapterMock, courtLocationMapperMock);
     }
 
     @Test
@@ -84,13 +92,13 @@ public class GetCourtLocationsTest {
 
     }
 
-    private CourtLocations buildMockData() {
-        CourtLocation courtLocationOne = new CourtLocation();
+    private List<InternalCourtLocation> buildMockData() {
+        InternalCourtLocation courtLocationOne = new InternalCourtLocation();
         courtLocationOne.setId(BigDecimal.valueOf(1031));
         courtLocationOne.setName("Campbell River");
         courtLocationOne.setCode("MockCode");
         courtLocationOne.setIsSupremeCourt(true);
-        Address addressOne = new Address();
+        ca.bc.gov.open.jag.efilingcommons.model.Address addressOne = new ca.bc.gov.open.jag.efilingcommons.model.Address();
         addressOne.setAddressLine1("500 - 13th Avenue");
         addressOne.setPostalCode("V9W 6P1");
         addressOne.setCityName("Campbell River");
@@ -98,12 +106,12 @@ public class GetCourtLocationsTest {
         addressOne.setCountryName("Canada");
         courtLocationOne.setAddress(addressOne);
 
-        CourtLocation courtLocationTwo = new CourtLocation();
+        InternalCourtLocation courtLocationTwo = new InternalCourtLocation();
         courtLocationTwo.setId(BigDecimal.valueOf(3521));
         courtLocationTwo.setName("Chilliwack");
         courtLocationTwo.setCode("MockCode");
         courtLocationTwo.setIsSupremeCourt(true);
-        Address addressTwo = new Address();
+        ca.bc.gov.open.jag.efilingcommons.model.Address addressTwo = new ca.bc.gov.open.jag.efilingcommons.model.Address();
         addressTwo.setAddressLine1("46085 Yale Road");
         addressTwo.setAddressLine2("  ");
         addressTwo.setAddressLine3("  ");
@@ -113,8 +121,6 @@ public class GetCourtLocationsTest {
         addressTwo.setCountryName("Canada");
         courtLocationTwo.setAddress(addressTwo);
 
-        CourtLocations courtLocations = new CourtLocations();
-        courtLocations.setCourts(Arrays.asList(courtLocationOne,courtLocationTwo));
-        return courtLocations;
+        return Arrays.asList(courtLocationOne,courtLocationTwo);
     }
 }
