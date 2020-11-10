@@ -65,7 +65,7 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/react-hooks": "3.4.2",
     "@testing-library/user-event": "^12.1.10",
-    "axios-mock-adapter": "^1.18.1",
+    "axios-mock-adapter": "^1.19.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-import": "^2.22.1",
