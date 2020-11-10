@@ -4,6 +4,7 @@ import ca.bc.gov.open.bceid.starter.account.BCeIDAccountService;
 import ca.bc.gov.open.bceid.starter.account.GetAccountRequest;
 import ca.bc.gov.open.bceid.starter.account.models.IndividualIdentity;
 import ca.bc.gov.open.bceid.starter.account.models.Name;
+import ca.bc.gov.open.jag.efilingcommons.adapter.CeisLookupAdapter;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.*;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -41,6 +42,10 @@ public class AutoConfiguration {
 
     @Bean
     public EfilingSubmissionService efilingSubmissionService() { return new EfilingSubmissionServiceDemoImpl(); }
+
+    @Bean
+    public CeisLookupAdapter ceisLookupAdapter() { return new EfilingCeisLookupAdapterDemoImpl(); }
+
 
     /**
      * Configures the cache manager for demo accounts

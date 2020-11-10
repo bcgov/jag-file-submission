@@ -1,24 +1,49 @@
 package ca.bc.gov.open.jag.efilingapi.courts;
 
+import ca.bc.gov.open.jag.efilingapi.api.model.Address;
 import ca.bc.gov.open.jag.efilingapi.api.model.CourtLocations;
+import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
+import ca.bc.gov.open.jag.efilingapi.courts.mappers.CourtLocationMapper;
+import ca.bc.gov.open.jag.efilingapi.courts.mappers.CourtLocationMapperImpl;
+import ca.bc.gov.open.jag.efilingceisapiclient.api.handler.ApiException;
+import ca.bc.gov.open.jag.efilingcommons.adapter.CeisLookupAdapter;
+import ca.bc.gov.open.jag.efilingcommons.model.InternalCourtLocation;
 import org.junit.jupiter.api.*;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
+
+import static ca.bc.gov.open.jag.efilingapi.error.ErrorResponse.COURT_LOCATION_ERROR;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("CourtsApiDelegateImpl test suite")
 public class GetCourtLocationsTest {
     private final String COURTLEVEL = "COURTLEVEL";
+    private final String COURTLEVELERROR = "COURTLEVELERROR";
     CourtsApiDelegateImpl sut;
 
+    @Mock
+    CeisLookupAdapter ceisLookupAdapterMock;
+
+    @Mock
+    CourtLocationMapper courtLocationMapperMock;
 
     @BeforeAll
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        sut = new CourtsApiDelegateImpl();
+        Mockito.when(ceisLookupAdapterMock.getCourLocations(COURTLEVEL)).thenReturn(buildMockData());
+
+        Mockito.when(ceisLookupAdapterMock.getCourLocations(COURTLEVELERROR)).thenReturn(null);
+
+        courtLocationMapperMock = new CourtLocationMapperImpl();
+
+        sut = new CourtsApiDelegateImpl(ceisLookupAdapterMock, courtLocationMapperMock);
     }
 
     @Test
@@ -53,5 +78,49 @@ public class GetCourtLocationsTest {
         Assertions.assertEquals("British Columbia",actual.getBody().getCourts().get(1).getAddress().getProvinceName());
         Assertions.assertEquals("Canada",actual.getBody().getCourts().get(1).getAddress().getCountryName());
 
+    }
+
+    @Test
+    @DisplayName("500")
+    public void withValidAdapterThrowsException() {
+
+        ResponseEntity actual = sut.getCourtLocations(COURTLEVELERROR);
+
+        Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode());
+        Assertions.assertEquals(COURT_LOCATION_ERROR.getErrorCode(), ((EfilingError)actual.getBody()).getError());
+        Assertions.assertEquals(COURT_LOCATION_ERROR.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
+
+    }
+
+    private List<InternalCourtLocation> buildMockData() {
+        InternalCourtLocation courtLocationOne = new InternalCourtLocation();
+        courtLocationOne.setId(BigDecimal.valueOf(1031));
+        courtLocationOne.setName("Campbell River");
+        courtLocationOne.setCode("MockCode");
+        courtLocationOne.setIsSupremeCourt(true);
+        ca.bc.gov.open.jag.efilingcommons.model.Address addressOne = new ca.bc.gov.open.jag.efilingcommons.model.Address();
+        addressOne.setAddressLine1("500 - 13th Avenue");
+        addressOne.setPostalCode("V9W 6P1");
+        addressOne.setCityName("Campbell River");
+        addressOne.setProvinceName("British Columbia");
+        addressOne.setCountryName("Canada");
+        courtLocationOne.setAddress(addressOne);
+
+        InternalCourtLocation courtLocationTwo = new InternalCourtLocation();
+        courtLocationTwo.setId(BigDecimal.valueOf(3521));
+        courtLocationTwo.setName("Chilliwack");
+        courtLocationTwo.setCode("MockCode");
+        courtLocationTwo.setIsSupremeCourt(true);
+        ca.bc.gov.open.jag.efilingcommons.model.Address addressTwo = new ca.bc.gov.open.jag.efilingcommons.model.Address();
+        addressTwo.setAddressLine1("46085 Yale Road");
+        addressTwo.setAddressLine2("  ");
+        addressTwo.setAddressLine3("  ");
+        addressTwo.setPostalCode("V2P 2L8");
+        addressTwo.setCityName("Chilliwack");
+        addressTwo.setProvinceName("British Columbia");
+        addressTwo.setCountryName("Canada");
+        courtLocationTwo.setAddress(addressTwo);
+
+        return Arrays.asList(courtLocationOne,courtLocationTwo);
     }
 }

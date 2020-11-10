@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  ca.bc.gov.open.jag.bambora.AutoConfiguration
+  ca.bc.gov.open.jag.ceis.AutoConfiguration
