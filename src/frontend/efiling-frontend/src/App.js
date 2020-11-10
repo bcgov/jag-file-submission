@@ -87,8 +87,8 @@ export default function App() {
   return (
     <div>
       <Switch>
-        <Redirect exact from="/" to="/efiling" />
-        <Route exact path="/efiling">
+        <Redirect exact from="/" to="/efilinghub" />
+        <Route exact path="/efilinghub">
           <AuthenticationGuard
             page={{
               header,
