@@ -1,6 +1,5 @@
 package ca.bc.gov.open.jag.efilingapi.courts.adapter;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.CourtLocation;
 import ca.bc.gov.open.jag.efilingapi.courts.CeisLookupAdapterImpl;
 import ca.bc.gov.open.jag.efilingapi.courts.mappers.CourtLocationMapper;
 import ca.bc.gov.open.jag.efilingapi.courts.mappers.CourtLocationMapperImpl;
