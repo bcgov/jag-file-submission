@@ -27,7 +27,7 @@ public class CeisLookupAdapter {
         List<CourtLocation> courtLocationList = defaultApi.courtLocationsGet().getCourtlocations().stream()
                 .filter(courtLocation -> isSearchedType(courtLocation.getIssupremecourt(), courtLocation.getIsprovincialcourt(), courtType))
                 .map(courtLocationMapper::toCourtLocation)
-                .collect(Collectors.toList());;
+                .collect(Collectors.toList());
         CourtLocations courtLocations = new CourtLocations();
         courtLocations.setCourts(courtLocationList);
         return courtLocations;
