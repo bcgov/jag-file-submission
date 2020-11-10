@@ -26,6 +26,8 @@ public class EfilingCeisLookupAdapterDemoImplTest {
         Assertions.assertEquals("MockCode", actual.get(0).getCode());
         Assertions.assertEquals(true, actual.get(0).getIsSupremeCourt());
         Assertions.assertEquals("500 - 13th Avenue", actual.get(0).getAddress().getAddressLine1());
+        Assertions.assertNull(actual.get(0).getAddress().getAddressLine2());
+        Assertions.assertNull(actual.get(0).getAddress().getAddressLine3());
         Assertions.assertEquals("V9W 6P1", actual.get(0).getAddress().getPostalCode());
         Assertions.assertEquals("Campbell River", actual.get(0).getAddress().getCityName());
         Assertions.assertEquals("British Columbia", actual.get(0).getAddress().getProvinceName());
