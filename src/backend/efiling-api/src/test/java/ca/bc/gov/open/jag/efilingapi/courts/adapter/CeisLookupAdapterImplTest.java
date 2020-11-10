@@ -31,11 +31,9 @@ public class CeisLookupAdapterImplTest {
     @Mock
     CourtLocationMapper courtLocationMapperMock;
 
-    @BeforeAll
+    @BeforeEach
     public void setUp() throws ApiException {
         MockitoAnnotations.initMocks(this);
-
-        Mockito.when(defaultApiMock.courtLocationsGet()).thenReturn(buildMockData());
 
         courtLocationMapperMock = new CourtLocationMapperImpl();
 
@@ -45,6 +43,8 @@ public class CeisLookupAdapterImplTest {
     @Test
     @DisplayName("Get Provincial")
     public void withPAsParameterReturnOnlyProvincial() throws ApiException {
+
+        Mockito.when(defaultApiMock.courtLocationsGet()).thenReturn(buildMockData());
 
         List<InternalCourtLocation> actual = sut.getCourLocations(PROVINCIAL);
 
@@ -80,6 +80,8 @@ public class CeisLookupAdapterImplTest {
     @DisplayName("Get Supreme")
     public void withSAsParameterReturnOnlySupreme() throws ApiException {
 
+        Mockito.when(defaultApiMock.courtLocationsGet()).thenReturn(buildMockData());
+
         List<InternalCourtLocation> actual = sut.getCourLocations(SUPREME);
 
         Assertions.assertEquals(1, actual.size());
@@ -100,6 +102,8 @@ public class CeisLookupAdapterImplTest {
     @Test
     @DisplayName("Get All")
     public void withNullAsParameterReturnAll() throws ApiException {
+
+        Mockito.when(defaultApiMock.courtLocationsGet()).thenReturn(buildMockData());
 
         List<InternalCourtLocation> actual = sut.getCourLocations(null);
 
@@ -128,6 +132,18 @@ public class CeisLookupAdapterImplTest {
         Assertions.assertEquals("Chilliwack", actual.get(1).getAddress().getCityName());
         Assertions.assertEquals("British Columbia", actual.get(1).getAddress().getProvinceName());
         Assertions.assertEquals("Canada", actual.get(1).getAddress().getCountryName());
+
+    }
+
+    @Test
+    @DisplayName("Exception")
+    public void withExceptionReturnNull() throws ApiException {
+
+        Mockito.when(defaultApiMock.courtLocationsGet()).thenThrow(new ApiException());
+
+        List<InternalCourtLocation> actual = sut.getCourLocations(null);
+
+        Assertions.assertNull(actual);
 
     }
 
