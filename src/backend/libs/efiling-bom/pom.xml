@@ -21,7 +21,7 @@
         <org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
         <com.splunk.logging.version>1.8.0</com.splunk.logging.version>
         <org.openapitools.version>0.2.1</org.openapitools.version>
-        <org.apache.cxf.version>3.4.0</org.apache.cxf.version>
+        <org.apache.cxf.version>3.4.1</org.apache.cxf.version>
         <org.apache.tika.version>1.24.1</org.apache.tika.version>
         <com.fasterxml.jackson.core.version>2.11.3</com.fasterxml.jackson.core.version>
         <javax.xml.bind.version>2.3.1</javax.xml.bind.version>
