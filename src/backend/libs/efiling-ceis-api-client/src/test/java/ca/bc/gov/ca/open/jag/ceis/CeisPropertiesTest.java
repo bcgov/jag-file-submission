@@ -12,12 +12,18 @@ import org.junit.jupiter.api.TestInstance;
 public class CeisPropertiesTest {
 
     private static final String BASEPATH = "AVALUE";
+    private static final String USERNAME = "USERNAME";
+    private static final String PASSWORD = "PASSWORD";
 
     @Test
     public void testProperties() {
         CeisProperties bamboraProperties = new CeisProperties();
         bamboraProperties.setCeisBasePath(BASEPATH);
+        bamboraProperties.setCeisUsername(USERNAME);
+        bamboraProperties.setCeisPassword(PASSWORD);
         Assertions.assertEquals(BASEPATH, bamboraProperties.getCeisBasePath());
+        Assertions.assertEquals(USERNAME, bamboraProperties.getCeisUsername());
+        Assertions.assertEquals(PASSWORD, bamboraProperties.getCeisPassword());
     }
 
 }

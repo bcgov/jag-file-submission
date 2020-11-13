@@ -8,8 +8,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-
-
+import org.apache.commons.lang3.StringUtils;
 
 @Configuration
 @EnableConfigurationProperties(CeisProperties.class)
@@ -23,6 +22,10 @@ public class AutoConfiguration {
         //Setting this to null will make it use the base path
         apiClient.setServerIndex(null);
         apiClient.setBasePath(ceisProperties.getCeisBasePath());
+        if(!StringUtils.isEmpty(ceisProperties.getCeisUsername())) {
+            apiClient.setUsername(ceisProperties.getCeisUsername());
+            apiClient.setPassword(ceisProperties.getCeisPassword());
+        }
         return apiClient;
 
     }
