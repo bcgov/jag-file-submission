@@ -40,7 +40,7 @@ public class CeisLookupAdapterImplTest {
     }
 
     @Test
-    @DisplayName("Get Provincial")
+    @DisplayName("OK: Get Provincial")
     public void withPAsParameterReturnOnlyProvincial() throws ApiException {
 
         Mockito.when(defaultApiMock.courtLocationsGet()).thenReturn(buildMockData());
@@ -76,7 +76,7 @@ public class CeisLookupAdapterImplTest {
     }
 
     @Test
-    @DisplayName("Get Supreme")
+    @DisplayName("OK: Get Supreme")
     public void withSAsParameterReturnOnlySupreme() throws ApiException {
 
         Mockito.when(defaultApiMock.courtLocationsGet()).thenReturn(buildMockData());
@@ -99,7 +99,7 @@ public class CeisLookupAdapterImplTest {
     }
 
     @Test
-    @DisplayName("Get All")
+    @DisplayName("OK: Get All")
     public void withNullAsParameterReturnAll() throws ApiException {
 
         Mockito.when(defaultApiMock.courtLocationsGet()).thenReturn(buildMockData());
@@ -135,7 +135,7 @@ public class CeisLookupAdapterImplTest {
     }
 
     @Test
-    @DisplayName("Exception")
+    @DisplayName("Error: return null")
     public void withExceptionReturnNull() throws ApiException {
 
         Mockito.when(defaultApiMock.courtLocationsGet()).thenThrow(new ApiException());
