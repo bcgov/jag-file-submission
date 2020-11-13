@@ -23,6 +23,8 @@ public class AutoConfiguration {
         //Setting this to null will make it use the base path
         apiClient.setServerIndex(null);
         apiClient.setBasePath(ceisProperties.getCeisBasePath());
+        apiClient.setUsername(ceisProperties.getCeisUsername());
+        apiClient.setPassword(ceisProperties.getCeisPassword());
         return apiClient;
 
     }
