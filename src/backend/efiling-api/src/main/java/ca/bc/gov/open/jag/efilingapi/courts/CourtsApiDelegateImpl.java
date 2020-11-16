@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 
@@ -31,6 +32,7 @@ public class CourtsApiDelegateImpl implements CourtsApiDelegate {
     }
 
     @Override
+    @RolesAllowed("efiling-client")
     public ResponseEntity<CourtLocations> getCourtLocations(String courtLevel) {
 
         logger.info("Request for court level recieved {}", courtLevel);
