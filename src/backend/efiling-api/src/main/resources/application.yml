@@ -62,6 +62,8 @@ jag:
 
 ceis:
   ceisBasePath: ${CEIS_BASE_PATH}
+  ceisUsername: ${CEIS_USERNAME}
+  ceisPassword: ${CEIS_PASSWORD}
 
 cso:
   fileServerHost: ${CSO_FILE_SERVER_HOST}
