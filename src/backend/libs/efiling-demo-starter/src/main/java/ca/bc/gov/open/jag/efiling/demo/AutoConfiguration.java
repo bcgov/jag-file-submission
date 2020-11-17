@@ -44,7 +44,7 @@ public class AutoConfiguration {
     public EfilingSubmissionService efilingSubmissionService() { return new EfilingSubmissionServiceDemoImpl(); }
 
     @Bean
-    public CeisLookupAdapter ceisLookupAdapter() { return new EfilingCeisLookupAdapterDemoImpl(); }
+    public CeisLookupAdapter efilingCeisLookupAdapter() { return new EfilingCeisLookupAdapterDemoImpl(); }
 
 
     /**
