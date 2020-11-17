@@ -18,7 +18,7 @@ services:
       - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-frontend
       - REACT_APP_KEYCLOAK_URL=${KEYCLOAK_URL}
       - REACT_APP_API_BASE_URL=http://localhost:8080
-      - REACT_APP_BAMBORA_REDIRECT_URL=http://localhost:3000/efiling
+      - REACT_APP_BAMBORA_REDIRECT_URL=http://localhost:3000/efilinghub
 
   #############################################################################################
   ###                                 EFILING DEMO                                          ###
@@ -105,7 +105,7 @@ services:
       - REDIS_PORT=6379
       - REDIS_PASSWORD=admin
       - CEIS_BASE_PATH=${CEIS_BASE_PATH}
-      - NAVIGATION_BASE_URL=http://localhost:3000/efiling
+      - NAVIGATION_BASE_URL=http://localhost:3000/efilinghub
       - NAVIGATION_EXPIRYTIME=10
       - CLAMAV_HOST=clamav
       - CLAMAV_TIMEOUT=150000
