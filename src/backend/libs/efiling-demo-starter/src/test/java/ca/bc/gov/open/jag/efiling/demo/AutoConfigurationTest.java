@@ -62,7 +62,7 @@ public class AutoConfigurationTest {
     @DisplayName("OK: AutoConfiguration should return instance of EfilingCeisLookupAdapterDemoImpl")
     public void autoConfigurationShouldReturnEfilingCeisLookupAdapterDemoImpl() {
 
-        CeisLookupAdapter actual = sut.ceisLookupAdapter();
+        CeisLookupAdapter actual = sut.efilingCeisLookupAdapter();
         Assertions.assertEquals(EfilingCeisLookupAdapterDemoImpl.class, actual.getClass());
 
     }
