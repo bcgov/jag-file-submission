@@ -8,6 +8,10 @@ schemes:
   - https
 produces:
   - application/json
+securityDefinitions:
+  basicAuth:
+    type: basic
+    description: HTTP Basic Authentication.
 paths:
   /courtLocations:
     get:
