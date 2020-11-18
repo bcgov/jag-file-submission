@@ -3,7 +3,10 @@ package ca.bc.gov.open.jag.efilingcommons.model;
 import java.math.BigDecimal;
 
 public class InternalCourtLocation {
+
     private BigDecimal id;
+
+    private String identifierCode;
 
     private String name;
 
@@ -12,7 +15,6 @@ public class InternalCourtLocation {
     private Boolean isSupremeCourt;
 
     private Address address;
-
 
     public BigDecimal getId() {
         return id;
@@ -30,7 +32,6 @@ public class InternalCourtLocation {
         this.name = name;
     }
 
-
     public String getCode() {
         return code;
     }
@@ -38,7 +39,6 @@ public class InternalCourtLocation {
     public void setCode(String code) {
         this.code = code;
     }
-
 
     public Boolean getIsSupremeCourt() {
         return isSupremeCourt;
@@ -48,7 +48,6 @@ public class InternalCourtLocation {
         this.isSupremeCourt = isSupremeCourt;
     }
 
-
     public Address getAddress() {
         return address;
     }
@@ -57,5 +56,7 @@ public class InternalCourtLocation {
         this.address = address;
     }
 
+    public String getIdentifierCode() { return identifierCode; }
 
+    public void setIdentifierCode(String identifierCode) { this.identifierCode = identifierCode; }
 }
