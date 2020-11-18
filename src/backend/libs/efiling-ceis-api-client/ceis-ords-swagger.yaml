@@ -1,4 +1,4 @@
-swagger: '2.0'
+swagger: "2.0"
 info:
   title: ORDS generated API for web
   version: 1.0.0
@@ -15,18 +15,20 @@ securityDefinitions:
 paths:
   /courtLocations:
     get:
+      security:
+        - basicAuth: []
       description: Get a list of the court locations
       responses:
-        '200':
+        "200":
           description: output of the endpoint
           schema:
-            $ref: '#/definitions/CourtLocations'
+            $ref: "#/definitions/CourtLocations"
       parameters: []
   /health:
     get:
       description: Dummy endpoint to check that API calls are working
       responses:
-        '200':
+        "200":
           description: output of the endpoint
           schema:
             type: object
@@ -37,7 +39,7 @@ definitions:
       courtlocations:
         type: array
         items:
-          $ref: '#/definitions/CourtLocation'
+          $ref: "#/definitions/CourtLocation"
   CourtLocation:
     type: object
     description: "Court related information"
@@ -84,4 +86,3 @@ definitions:
         type: string
       issupremecourt:
         type: string
-
