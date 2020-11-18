@@ -169,7 +169,7 @@ public class GenerateUrlRequestBuilders {
                 .spec(TestUtil.submitDocumentsRequestSpecification())
                 .header(X_TRANSACTION_ID, validExistingCSOGuid)
                 .header(X_USER_ID, validUserid)
-                .multiPart("file", pngFile);
+                .multiPart(FILES, pngFile);
 
         return request.when().post(resourceAPI.getResource()).then()
                 .spec(TestUtil.createCsoAccountIncorrectTypeErrorResponseSpecification())
