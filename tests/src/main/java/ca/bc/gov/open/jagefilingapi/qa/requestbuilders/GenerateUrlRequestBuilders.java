@@ -163,7 +163,7 @@ public class GenerateUrlRequestBuilders {
         JsonPath jsonPath = new JsonPath(response.asString());
 
         String accessToken = jsonPath.get(ACCESS_TOKEN);
-        File pngFile = new File(UPLOAD_FILE_PATH + "/test-image-document.png");
+        File pngFile = new File(UPLOAD_FILE_PATH + "/cukes.PNG");
 
         request = RestAssured.given().auth().preemptive().oauth2(accessToken)
                 .spec(TestUtil.submitDocumentsRequestSpecification())
