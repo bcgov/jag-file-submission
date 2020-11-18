@@ -10,6 +10,7 @@ import java.util.List;
 @Mapper
 public interface CourtLocationMapper {
     @Mapping(target = "id", source="courtid")
+    @Mapping(target = "identifierCode", source="courtidentifiercode")
     @Mapping(target = "name", source="courtname")
     @Mapping(target = "code", source="courtcode")
     @Mapping(target = "isSupremeCourt", expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.BooleanUtils.toBoolean(courtLocation.getIssupremecourt()))")
