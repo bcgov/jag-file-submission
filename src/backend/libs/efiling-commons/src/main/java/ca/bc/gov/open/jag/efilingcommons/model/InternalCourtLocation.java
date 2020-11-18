@@ -6,7 +6,7 @@ public class InternalCourtLocation {
 
     private BigDecimal id;
 
-    private BigDecimal identifierCode;
+    private String identifierCode;
 
     private String name;
 
@@ -56,7 +56,12 @@ public class InternalCourtLocation {
         this.address = address;
     }
 
-    public BigDecimal getIdentifierCode() { return identifierCode; }
+    public String getIdentifierCode() {
+        return identifierCode;
+    }
 
-    public void setIdentifierCode(BigDecimal identifierCode) { this.identifierCode = identifierCode; }
+    public void setIdentifierCode(String identifierCode) {
+        this.identifierCode = identifierCode;
+    }
+    
 }
