@@ -82,8 +82,8 @@ public class GenerateUrlAndSubmissionNegativeTest extends DriverClass {
         System.out.println("###############################");
         System.out.println("###############################");
 
-        System.out.println("error");
-        System.out.println("message");
+        System.out.println(error);
+        System.out.println(message);
 
         System.out.println("###############################");
         System.out.println("###############################");
