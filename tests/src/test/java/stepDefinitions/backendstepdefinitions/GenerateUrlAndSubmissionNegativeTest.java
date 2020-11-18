@@ -64,6 +64,7 @@ public class GenerateUrlAndSubmissionNegativeTest extends DriverClass {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
 
         response = generateUrlRequestBuilders.requestWithIncorrectFileType(resource);
+        System.out.println(response.asString());
     }
 
     @When("status code is {int} and content type is not json")
@@ -77,6 +78,15 @@ public class GenerateUrlAndSubmissionNegativeTest extends DriverClass {
         jsonPath = new JsonPath(response.asString());
         String error = jsonPath.get(ERROR);
         String message = jsonPath.get(MESSAGE);
+
+        System.out.println("###############################");
+        System.out.println("###############################");
+
+        System.out.println("error");
+        System.out.println("message");
+
+        System.out.println("###############################");
+        System.out.println("###############################");
 
         assertEquals("DOCUMENT_REQUIRED", error);
         assertEquals("At least one document is required.", message);
