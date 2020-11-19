@@ -21,15 +21,16 @@ public class EfilingAccountServiceDemoImplTest {
 
     @Test
     @DisplayName("OK: with empty cache should return null")
+    @Order(1)
     public void withEmptyCacheShouldReturnNull() {
-
         AccountDetails actual = sut.getAccountDetails(ACCOUNT_ID);
-        Assertions.assertNull(actual);
+        Assertions.assertNull(actual.getAccountId());
 
     }
 
     @Test
     @DisplayName("OK: should create an account")
+    @Order(2)
     public void shouldCreateAnAccount() {
 
          AccountDetails actual = sut.createAccount(CreateAccountRequest.builder().universalId(ACCOUNT_ID).firstName(FIRST_NAME).create());
@@ -38,6 +39,7 @@ public class EfilingAccountServiceDemoImplTest {
 
     @Test
     @DisplayName("OK: should return order number as string")
+    @Order(3)
     public void shouldReturnOrderNumber() {
         String actual = sut.getOrderNumber();
         Assertions.assertEquals("1234", actual);

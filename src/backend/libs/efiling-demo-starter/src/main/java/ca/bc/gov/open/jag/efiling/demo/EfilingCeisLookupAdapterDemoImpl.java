@@ -14,6 +14,7 @@ public class EfilingCeisLookupAdapterDemoImpl implements CeisLookupAdapter {
 
         InternalCourtLocation courtLocationOne = new InternalCourtLocation();
         courtLocationOne.setId(BigDecimal.valueOf(1031));
+        courtLocationOne.setIdentifierCode("TEST");
         courtLocationOne.setName("Campbell River");
         courtLocationOne.setCode("MockCode");
         courtLocationOne.setIsSupremeCourt(true);
@@ -27,6 +28,7 @@ public class EfilingCeisLookupAdapterDemoImpl implements CeisLookupAdapter {
 
         InternalCourtLocation courtLocationTwo = new InternalCourtLocation();
         courtLocationTwo.setId(BigDecimal.valueOf(3521));
+        courtLocationTwo.setIdentifierCode("1234");
         courtLocationTwo.setName("Chilliwack");
         courtLocationTwo.setCode("MockCode");
         courtLocationTwo.setIsSupremeCourt(true);
