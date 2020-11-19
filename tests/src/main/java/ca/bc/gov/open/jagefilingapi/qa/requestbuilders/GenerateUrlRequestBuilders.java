@@ -66,7 +66,6 @@ public class GenerateUrlRequestBuilders {
                 .multiPart(FILES, file);
 
         return request.when().post(resourceAPI.getResource()).then()
-                .spec(TestUtil.validResponseSpecification())
                 .extract().response();
     }
 
