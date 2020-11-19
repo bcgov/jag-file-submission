@@ -57,16 +57,15 @@ public class GenerateUrlRequestBuilders {
         JsonPath jsonPath = new JsonPath(response.asString());
 
         String accessToken = jsonPath.get(ACCESS_TOKEN);
-        File pdfFile = new File(UPLOAD_FILE_PATH + fileNamePath);
+        File file = new File(UPLOAD_FILE_PATH + fileNamePath);
 
         request = RestAssured.given().auth().preemptive().oauth2(accessToken)
                 .spec(TestUtil.submitDocumentsRequestSpecification())
                 .header(X_TRANSACTION_ID, accountGuid)
                 .header(X_USER_ID, validUserid)
-                .multiPart(FILES, pdfFile);
+                .multiPart(FILES, file);
 
         return request.when().post(resourceAPI.getResource()).then()
-                .spec(TestUtil.validResponseSpecification())
                 .extract().response();
     }
 
@@ -149,30 +148,6 @@ public class GenerateUrlRequestBuilders {
         return request.when().get(resourceGet.getResource() + submissionId + DOCUMENT_PATH_PARAM + SECOND_FILE_NAME_PATH)
                 .then()
                 .spec(TestUtil.validResponseCodeSpecification())
-                .extract().response();
-    }
-
-    public Response requestWithIncorrectFileType(String resourceValue) throws IOException {
-        payloadData = new GenerateUrlPayload();
-
-        APIResources resourceAPI = APIResources.valueOf(resourceValue);
-        String validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
-        String validUserid = JsonDataReader.getCsoAccountGuid().getValidUserId();
-
-        Response response = getBearerToken();
-        JsonPath jsonPath = new JsonPath(response.asString());
-
-        String accessToken = jsonPath.get(ACCESS_TOKEN);
-        File pngFile = new File(UPLOAD_FILE_PATH + "/test-image-document.png");
-
-        request = RestAssured.given().auth().preemptive().oauth2(accessToken)
-                .spec(TestUtil.submitDocumentsRequestSpecification())
-                .header(X_TRANSACTION_ID, validExistingCSOGuid)
-                .header(X_USER_ID, validUserid)
-                .multiPart("file", pngFile);
-
-        return request.when().post(resourceAPI.getResource()).then()
-                .spec(TestUtil.createCsoAccountIncorrectTypeErrorResponseSpecification())
                 .extract().response();
     }
 
