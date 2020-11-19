@@ -2,6 +2,7 @@ package stepDefinitions.backendstepdefinitions;
 
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
 import ca.bc.gov.open.jagefilingapi.qa.frontendutils.DriverClass;
+import ca.bc.gov.open.jagefilingapi.qa.frontendutils.JsonDataReader;
 import ca.bc.gov.open.jagefilingapi.qa.requestbuilders.GenerateUrlRequestBuilders;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -23,6 +24,7 @@ public class GenerateUrlAndSubmissionNegativeTest extends DriverClass {
     private static final String CONTENT_TYPE = "application/json";
     private static final String ERROR = "error";
     private static final String MESSAGE = "message";
+    private static final String FILE_NAME_PATH = "/test-image-document.png";
 
     public Logger log = LogManager.getLogger(GenerateUrlAndSubmissionNegativeTest.class);
 
@@ -62,8 +64,12 @@ public class GenerateUrlAndSubmissionNegativeTest extends DriverClass {
     @Given("POST http request is made to {string} with invalid file type and a single image file")
     public void postHttpRequestIsMadeToWithInvalidFileTypeAndASingleImageFile(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
+        String validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
-        response = generateUrlRequestBuilders.requestWithIncorrectFileType(resource);
+        response = generateUrlRequestBuilders.requestWithSinglePdfDocument(resource,validExistingCSOGuid, FILE_NAME_PATH);
+      /*  generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
+
+        response = generateUrlRequestBuilders.requestWithIncorrectFileType(resource);*/
     }
 
     @When("status code is {int} and content type is not json")

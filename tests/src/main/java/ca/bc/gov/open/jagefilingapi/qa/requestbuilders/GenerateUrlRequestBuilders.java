@@ -57,13 +57,13 @@ public class GenerateUrlRequestBuilders {
         JsonPath jsonPath = new JsonPath(response.asString());
 
         String accessToken = jsonPath.get(ACCESS_TOKEN);
-        File pdfFile = new File(UPLOAD_FILE_PATH + fileNamePath);
+        File file = new File(UPLOAD_FILE_PATH + fileNamePath);
 
         request = RestAssured.given().auth().preemptive().oauth2(accessToken)
                 .spec(TestUtil.submitDocumentsRequestSpecification())
                 .header(X_TRANSACTION_ID, accountGuid)
                 .header(X_USER_ID, validUserid)
-                .multiPart(FILES, pdfFile);
+                .multiPart(FILES, file);
 
         return request.when().post(resourceAPI.getResource()).then()
                 .spec(TestUtil.validResponseSpecification())
