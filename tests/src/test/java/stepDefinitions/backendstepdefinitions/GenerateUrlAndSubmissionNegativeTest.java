@@ -67,9 +67,6 @@ public class GenerateUrlAndSubmissionNegativeTest extends DriverClass {
         String validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
         response = generateUrlRequestBuilders.requestWithSinglePdfDocument(resource,validExistingCSOGuid, FILE_NAME_PATH);
-      /*  generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
-
-        response = generateUrlRequestBuilders.requestWithIncorrectFileType(resource);*/
     }
 
     @When("status code is {int} and content type is not json")

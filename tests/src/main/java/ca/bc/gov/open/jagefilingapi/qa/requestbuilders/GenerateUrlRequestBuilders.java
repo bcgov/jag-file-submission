@@ -152,30 +152,6 @@ public class GenerateUrlRequestBuilders {
                 .extract().response();
     }
 
-    public Response requestWithIncorrectFileType(String resourceValue) throws IOException {
-        payloadData = new GenerateUrlPayload();
-
-        APIResources resourceAPI = APIResources.valueOf(resourceValue);
-        String validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
-        String validUserid = JsonDataReader.getCsoAccountGuid().getValidUserId();
-
-        Response response = getBearerToken();
-        JsonPath jsonPath = new JsonPath(response.asString());
-
-        String accessToken = jsonPath.get(ACCESS_TOKEN);
-        File pngFile = new File(UPLOAD_FILE_PATH + "/test-image-document.png");
-
-        request = RestAssured.given().auth().preemptive().oauth2(accessToken)
-                .spec(TestUtil.submitDocumentsRequestSpecification())
-                .header(X_TRANSACTION_ID, validExistingCSOGuid)
-                .header(X_USER_ID, validUserid)
-                .multiPart(FILES, pngFile);
-
-        return request.when().post(resourceAPI.getResource()).then()
-                .spec(TestUtil.createCsoAccountIncorrectTypeErrorResponseSpecification())
-                .extract().response();
-    }
-
     public Response postRequestWithPayload(String resourceValue, String accountGuid,
                                            String submissionId, String pathParam) throws IOException {
         payloadData = new GenerateUrlPayload();
