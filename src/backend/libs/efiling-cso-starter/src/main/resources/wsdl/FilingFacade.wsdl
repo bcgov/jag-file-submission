@@ -91,6 +91,7 @@
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="restrAccReqs" nillable="true" type="tns:accessRequest"/>
                     <xs:element minOccurs="0" name="resubmissionOfPackageId" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="reviewerNotesTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="securityTypeTxt" type="xs:string"/>
                     <xs:element minOccurs="0" name="serviceId" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="submitDtm" type="xs:dateTime"/>
                     <xs:element minOccurs="0" name="submittedByAccountId" type="xs:decimal"/>
@@ -99,6 +100,7 @@
                     <xs:element minOccurs="0" name="submitterCommentTxt" type="xs:string"/>
                     <xs:element minOccurs="0" name="updDtm" type="xs:dateTime"/>
                     <xs:element minOccurs="0" name="updUserId" type="xs:string"/>
+                    <xs:element minOccurs="0" name="userAccessTxt" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="civilDocument">
