@@ -15,7 +15,7 @@ import java.util.List;
 @Mapper
 public interface FilingPackageMapper {
 
-    @Mapping(target = "existingCourtFileYn", expression = "java(!org.apache.commons.lang3.StringUtils.isBlank(filingPackage.getCourt().getFileNumber()))")
+    @Mapping(target = "existingCourtFileYn", expression = "java(org.apache.commons.lang3.StringUtils.isNotBlank(filingPackage.getCourt().getFileNumber()))")
     @Mapping(target = "processingCompleteYn", constant = "false")
     @Mapping(target = "feeExemptYn", constant = "false")
     @Mapping(target = "cfcsaYn", constant = "false")
