@@ -47,6 +47,7 @@ public class BamboraPaymentAdapter {
                 MDC.remove(Keys.MDC_EFILING_SUBMISSION_FEE);
                 result.setTransactionStateCd(PaymentConstants.TRANSACTION_STATE_APPROVED);
             } else {
+                logger.info("Failed payment");
                 result.setTransactionStateCd(PaymentConstants.TRANSACTION_STATE_DECLINED);
             }
             result.setApprovalCd(response.getAuthCode());
