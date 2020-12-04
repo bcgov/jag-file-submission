@@ -40,7 +40,7 @@ import java.util.Optional;
 import static org.mockito.ArgumentMatchers.any;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class generateFromRequestTest {
+public class GenerateFromRequestTest {
 
     public static final String CLIENT_APP_NAME = "clientAppName";
 

@@ -315,6 +315,38 @@ public class GenerateUrlRequestValidatorImplTest {
     }
 
     @Test
+    @DisplayName("error: with role type not in list and with fileNumber should return multiple errors")
+    public void withRoleTypeNotInListAnFileNumberSetShouldReturnMultipleErrors() {
+
+        GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
+        InitialPackage initialFilingPackage = new InitialPackage();
+
+        CourtBase court = new CourtBase();
+        court.setLocation(CASE_1);
+        court.setLevel(COURT_LEVEL);
+        court.setCourtClass(COURT_CLASSIFICATION);
+        court.setFileNumber(FILE_NUMBER_SUCCESS);
+        initialFilingPackage.setCourt(court);
+
+        List<Party> parties = new ArrayList<>();
+        Party party = new Party();
+        party.setRoleType(Party.RoleTypeEnum.CAV);
+        parties.add(party);
+        Party party2 = new Party();
+        party2.setRoleType(Party.RoleTypeEnum.DEO);
+        parties.add(party2);
+        initialFilingPackage.setParties(parties);
+
+        generateUrlRequest.setFilingPackage(initialFilingPackage);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+
+        Assertions.assertTrue(actual.hasError());
+        Assertions.assertEquals("Role type [CAV] is invalid.", actual.getErrors().get(0));
+        Assertions.assertEquals("Role type [DEO] is invalid.", actual.getErrors().get(1));
+
+    }
+
+    @Test
     @DisplayName("error: with role type Null should return error")
     public void withRoleTypeNullNotInListShouldReturnMultipleErrors() {
 

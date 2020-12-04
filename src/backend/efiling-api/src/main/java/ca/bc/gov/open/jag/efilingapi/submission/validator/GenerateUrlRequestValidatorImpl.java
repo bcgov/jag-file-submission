@@ -58,9 +58,9 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
 
         notification.addError(validateCourt(generateUrlRequest.getFilingPackage(), courtDetails, applicationCode));
 
-        if(isNewSubmission(generateUrlRequest.getFilingPackage())) {
-            notification.addError(validateParties(generateUrlRequest.getFilingPackage()));
-        } else {
+        notification.addError(validateParties(generateUrlRequest.getFilingPackage()));
+
+        if(!isNewSubmission(generateUrlRequest.getFilingPackage())) {
             notification.addError(validateCourtFileNumber(generateUrlRequest.getFilingPackage(), courtDetails, applicationCode));
         }
 
