@@ -27,7 +27,7 @@ import java.util.UUID;
 import static org.mockito.ArgumentMatchers.any;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class updateDocumentsTest {
+public class UpdateDocumentsTest {
     private SubmissionServiceImpl sut;
 
     @Mock

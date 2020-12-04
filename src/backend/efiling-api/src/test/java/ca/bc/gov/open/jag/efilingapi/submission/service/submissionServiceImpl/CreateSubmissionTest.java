@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class createSubmissionTest {
+public class CreateSubmissionTest {
 
     public static final String INTERNAL_CLIENT_NUMBER = "12345";
     public static final String CLIENT_APP_NAME = "clientAppName";
