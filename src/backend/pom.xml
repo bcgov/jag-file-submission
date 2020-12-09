@@ -6,7 +6,7 @@
 
 	<groupId>ca.bc.gov.open</groupId>
 	<artifactId>jag-efiling-backend</artifactId>
-	<version>0.4.4-SNAPSHOT</version>
+	<version>0.5.0</version>
 
 	<description>FLA Document Upload</description>
 

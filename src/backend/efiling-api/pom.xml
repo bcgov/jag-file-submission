@@ -10,7 +10,7 @@
     </parent>
     <groupId>ca.bc.gov.open.jag</groupId>
     <artifactId>efiling-api</artifactId>
-    <version>0.4.4-SNAPSHOT</version>
+    <version>0.5.0</version>
     <name>efiling-api</name>
     <description>Demo project for Spring Boot</description>
 
@@ -56,13 +56,13 @@
         <dependency>
             <groupId>ca.bc.gov.open.jag</groupId>
             <artifactId>efiling-commons</artifactId>
-            <version>0.4.4-SNAPSHOT</version>
+            <version>0.5.0</version>
         </dependency>
 
         <dependency>
             <groupId>ca.bc.gov.open.jag</groupId>
             <artifactId>efiling-cso-starter</artifactId>
-            <version>0.4.4-SNAPSHOT</version>
+            <version>0.5.0</version>
         </dependency>
 
         <dependency>
@@ -74,7 +74,7 @@
         <dependency>
             <groupId>ca.bc.gov.open.jag</groupId>
             <artifactId>efiling-ceis-api-client</artifactId>
-            <version>0.4.4-SNAPSHOT</version>
+            <version>0.5.0</version>
         </dependency>
 
         <dependency>
@@ -204,7 +204,7 @@
             <dependency>
                 <groupId>ca.bc.gov.open.jag</groupId>
                 <artifactId>efiling-bom</artifactId>
-                <version>0.4.4-SNAPSHOT</version>
+                <version>0.5.0</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -252,7 +252,7 @@
                 <dependency>
                     <groupId>ca.bc.gov.open.jag</groupId>
                     <artifactId>efiling-demo-starter</artifactId>
-                    <version>0.4.4-SNAPSHOT</version>
+                    <version>0.5.0</version>
                 </dependency>
             </dependencies>
         </profile>
