@@ -64,6 +64,13 @@ You should use environment variables to configure the jag efiling api
 | SFTP_REMOTELOCATION            | String  | remote directory                             | not set by default             |
 | SFTP_KNOWNHOSTS                | String  | location of known hosts file                 | not set by default             |
 | SFTP_ALLOWUNKNOWN              | Boolean | allow unkown hosts                           | not set by default             |
+| CEIS_BASE_PATH                 | String  | Base path for ords                             | not set by default             |
+| CEIS_USERNAME                  | String  | Basic auth username                 | not set by default             |
+| CEIS_PASSWORD                  | String  | Basic auth password                           | not set by default             |
+| BCEID_SERVICE_URI                | String  | BCEID uri              | not set by default             |
+| BCEID_SERVICE_USERNAME              | String | BCEID username                              | not set by default             |
+| BCEID_SERVICE_PASSWORD                 | String  | BCEID password                             | not set by default             |
+| BCEID_SERVICE_ONLINE_SERVICE_ID                  | String  | BCEID online service id                 | not set by default             |
 
 ## Backend Folder Structure
 
