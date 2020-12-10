@@ -1,6 +1,6 @@
 package ca.bc.gov.open.jag.efiling.demo;
 
-import ca.bc.gov.open.jag.efilingcommons.adapter.CeisLookupAdapter;
+import ca.bc.gov.open.jag.efilingcommons.court.CourtLocationService;
 import ca.bc.gov.open.jag.efilingcommons.model.Address;
 import ca.bc.gov.open.jag.efilingcommons.model.InternalCourtLocation;
 
@@ -8,9 +8,10 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
-public class EfilingCeisLookupAdapterDemoImpl implements CeisLookupAdapter {
+public class CourtLocationServiceDemoImpl implements CourtLocationService {
+
     @Override
-    public List<InternalCourtLocation> getCourLocations(String courtType) {
+    public List<InternalCourtLocation> getCourtLocations(String courtType) {
 
         InternalCourtLocation courtLocationOne = new InternalCourtLocation();
         courtLocationOne.setId(BigDecimal.valueOf(1031));
