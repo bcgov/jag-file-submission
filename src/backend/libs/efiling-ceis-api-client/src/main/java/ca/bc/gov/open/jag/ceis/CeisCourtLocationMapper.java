@@ -5,7 +5,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper
-public interface CourtLocationMapper {
+public interface CeisCourtLocationMapper {
 
     @Mapping(target = "id", source="courtid")
     @Mapping(target = "identifierCode", source="courtidentifiercode")

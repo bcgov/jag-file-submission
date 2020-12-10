@@ -10,12 +10,12 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class CourtLocationServiceDemoImplTest {
+public class EfilingEfilingCourtLocationServiceDemoImplTest {
     @DisplayName("Test list returned")
     @Test
     public void testDemoCourtLookupServiceTest() {
 
-        CourtLocationServiceDemoImpl service = new CourtLocationServiceDemoImpl();
+        EfilingCourtLocationServiceDemoImpl service = new EfilingCourtLocationServiceDemoImpl();
 
         List<InternalCourtLocation> actual = service.getCourtLocations("TYPE");
 

@@ -4,7 +4,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.InternalCourtLocation;
 
 import java.util.List;
 
-public interface CourtLocationService {
+public interface EfilingCourtLocationService {
 
 
     List<InternalCourtLocation> getCourtLocations(String courtType);
