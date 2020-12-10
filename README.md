@@ -97,7 +97,7 @@ Click on the Credentials tab
 
 Set the password and set Temporary OFF
 
-Click Reset Password <!-- Why do we need to do this? This just undoes the previous step right?-->
+Click Reset Password
 
 If you want to integrate with the CSO application change the `MVN_PROFILE` to `default` and fill out the other environment variables in the [.env.template](.env.template) file.
 
