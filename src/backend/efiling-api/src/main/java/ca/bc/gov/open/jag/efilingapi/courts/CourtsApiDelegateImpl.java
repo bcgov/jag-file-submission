@@ -35,7 +35,7 @@ public class CourtsApiDelegateImpl implements CourtsApiDelegate {
     @RolesAllowed("efiling-client")
     public ResponseEntity<CourtLocations> getCourtLocations(String courtLevel) {
 
-        logger.info("Request for court level recieved {}", courtLevel);
+        logger.info("Request for court level received {}", courtLevel);
         List<CourtLocation> courtLocationsList = courtLocationMapper.toCourtLocationList(efilingCourtLocationService.getCourtLocations(courtLevel));
         if (courtLocationsList == null) return new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.COURT_LOCATION_ERROR).create(),
