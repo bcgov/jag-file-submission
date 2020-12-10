@@ -32,8 +32,6 @@ The eFiling hub is a foundational component to enhance citizen experiences for t
     ├── LICENSE                                 # Apache License
     └── README.md                               # This file.
 
-There are also README files for the [back end](src/backend/README.md) and [front end](src/frontend/README.md).
-
 ## Apps
 
 | Name                | description                                  | doc                                                      |
