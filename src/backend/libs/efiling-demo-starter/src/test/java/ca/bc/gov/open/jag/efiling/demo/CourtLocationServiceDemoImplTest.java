@@ -10,15 +10,14 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class EfilingCeisLookupAdapterDemoImplTest {
+public class CourtLocationServiceDemoImplTest {
     @DisplayName("Test list returned")
     @Test
     public void testDemoCourtLookupServiceTest() {
 
-        EfilingCeisLookupAdapterDemoImpl service = new EfilingCeisLookupAdapterDemoImpl();
+        CourtLocationServiceDemoImpl service = new CourtLocationServiceDemoImpl();
 
-
-        List<InternalCourtLocation> actual = service.getCourLocations("TYPE");
+        List<InternalCourtLocation> actual = service.getCourtLocations("TYPE");
 
         Assertions.assertEquals(2, actual.size());
         Assertions.assertEquals(BigDecimal.valueOf(1031), actual.get(0).getId());

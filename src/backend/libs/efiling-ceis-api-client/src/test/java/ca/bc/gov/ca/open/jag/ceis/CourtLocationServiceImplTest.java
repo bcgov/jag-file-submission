@@ -1,10 +1,11 @@
-package ca.bc.gov.open.jag.efilingapi.courts.adapter;
+package ca.bc.gov.ca.open.jag.ceis;
 
-import ca.bc.gov.open.jag.efilingapi.courts.CeisLookupAdapterImpl;
-import ca.bc.gov.open.jag.efilingapi.courts.mappers.CourtLocationMapper;
-import ca.bc.gov.open.jag.efilingapi.courts.mappers.CourtLocationMapperImpl;
+import ca.bc.gov.open.jag.ceis.CourtLocationMapperImpl;
+import ca.bc.gov.open.jag.ceis.CourtLocationServiceImpl;
 import ca.bc.gov.open.jag.efilingceisapiclient.api.DefaultApi;
 import ca.bc.gov.open.jag.efilingceisapiclient.api.handler.ApiException;
+import ca.bc.gov.open.jag.efilingceisapiclient.api.model.CourtLocation;
+import ca.bc.gov.open.jag.efilingceisapiclient.api.model.CourtLocations;
 import ca.bc.gov.open.jag.efilingcommons.model.InternalCourtLocation;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
@@ -16,27 +17,22 @@ import java.util.Arrays;
 import java.util.List;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@DisplayName("CeisLookupAdapter test suite")
-public class CeisLookupAdapterImplTest {
+public class CourtLocationServiceImplTest {
+
     private final String PROVINCIAL = "P";
     private final String SUPREME = "S";
 
-
-    CeisLookupAdapterImpl sut;
-
-    @Mock
-    DefaultApi defaultApiMock;
+    private CourtLocationServiceImpl sut;
 
     @Mock
-    CourtLocationMapper courtLocationMapperMock;
+    private DefaultApi defaultApiMock;
 
     @BeforeEach
-    public void setUp() throws ApiException {
-        MockitoAnnotations.initMocks(this);
+    public void beforeEach() throws ApiException {
 
-        courtLocationMapperMock = new CourtLocationMapperImpl();
+        MockitoAnnotations.openMocks(this);
 
-        sut = new CeisLookupAdapterImpl(defaultApiMock, courtLocationMapperMock);
+        sut = new CourtLocationServiceImpl(defaultApiMock, new CourtLocationMapperImpl());
     }
 
     @Test
@@ -45,7 +41,7 @@ public class CeisLookupAdapterImplTest {
 
         Mockito.when(defaultApiMock.courtLocationsGet()).thenReturn(buildMockData());
 
-        List<InternalCourtLocation> actual = sut.getCourLocations(PROVINCIAL);
+        List<InternalCourtLocation> actual = sut.getCourtLocations(PROVINCIAL);
 
         Assertions.assertEquals(2, actual.size());
 
@@ -81,7 +77,7 @@ public class CeisLookupAdapterImplTest {
 
         Mockito.when(defaultApiMock.courtLocationsGet()).thenReturn(buildMockData());
 
-        List<InternalCourtLocation> actual = sut.getCourLocations(SUPREME);
+        List<InternalCourtLocation> actual = sut.getCourtLocations(SUPREME);
 
         Assertions.assertEquals(1, actual.size());
         Assertions.assertEquals(BigDecimal.valueOf(1031), actual.get(0).getId());
@@ -104,7 +100,7 @@ public class CeisLookupAdapterImplTest {
 
         Mockito.when(defaultApiMock.courtLocationsGet()).thenReturn(buildMockData());
 
-        List<InternalCourtLocation> actual = sut.getCourLocations(null);
+        List<InternalCourtLocation> actual = sut.getCourtLocations(null);
 
         Assertions.assertEquals(2, actual.size());
 
@@ -134,21 +130,10 @@ public class CeisLookupAdapterImplTest {
 
     }
 
-    @Test
-    @DisplayName("Error: return null")
-    public void withExceptionReturnNull() throws ApiException {
 
-        Mockito.when(defaultApiMock.courtLocationsGet()).thenThrow(new ApiException());
+    private CourtLocations buildMockData() {
 
-        List<InternalCourtLocation> actual = sut.getCourLocations(null);
-
-        Assertions.assertNull(actual);
-
-    }
-
-    private ca.bc.gov.open.jag.efilingceisapiclient.api.model.CourtLocations buildMockData() {
-
-        ca.bc.gov.open.jag.efilingceisapiclient.api.model.CourtLocation courtLocationOne = new ca.bc.gov.open.jag.efilingceisapiclient.api.model.CourtLocation();
+        CourtLocation courtLocationOne = new ca.bc.gov.open.jag.efilingceisapiclient.api.model.CourtLocation();
         courtLocationOne.setCourtid(BigDecimal.valueOf(1031));
         courtLocationOne.setCourtname("Campbell River");
         courtLocationOne.setCourtcode("MockCode");
@@ -161,7 +146,7 @@ public class CeisLookupAdapterImplTest {
         courtLocationOne.setCountryname("Canada");
 
 
-        ca.bc.gov.open.jag.efilingceisapiclient.api.model.CourtLocation courtLocationTwo = new ca.bc.gov.open.jag.efilingceisapiclient.api.model.CourtLocation();
+        CourtLocation courtLocationTwo = new ca.bc.gov.open.jag.efilingceisapiclient.api.model.CourtLocation();
         courtLocationTwo.setCourtid(BigDecimal.valueOf(3521));
         courtLocationTwo.setCourtname("Chilliwack");
         courtLocationTwo.setCourtcode("MockCode");
@@ -175,10 +160,23 @@ public class CeisLookupAdapterImplTest {
         courtLocationTwo.setProvincename("British Columbia");
         courtLocationTwo.setCountryname("Canada");
 
-        ca.bc.gov.open.jag.efilingceisapiclient.api.model.CourtLocations courtLocations = new ca.bc.gov.open.jag.efilingceisapiclient.api.model.CourtLocations();
+        CourtLocations courtLocations = new CourtLocations();
         courtLocations.setCourtlocations(Arrays.asList(courtLocationOne,courtLocationTwo));
         return courtLocations;
 
     }
+
+    @Test
+    @DisplayName("Error: return null")
+    public void withExceptionReturnNull() throws ApiException {
+
+        Mockito.when(defaultApiMock.courtLocationsGet()).thenThrow(new ApiException());
+
+        List<InternalCourtLocation> actual = sut.getCourtLocations(null);
+
+        Assertions.assertNull(actual);
+
+    }
+
 
 }

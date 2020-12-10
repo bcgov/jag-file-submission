@@ -1,11 +1,10 @@
 package ca.bc.gov.open.jag.efilingapi.courts.config;
 
-import ca.bc.gov.open.jag.efilingapi.courts.CeisLookupAdapterImpl;
 import ca.bc.gov.open.jag.efilingapi.courts.CourtsConfiguration;
 import ca.bc.gov.open.jag.efilingapi.courts.mappers.CourtLocationMapper;
-
 import ca.bc.gov.open.jag.efilingceisapiclient.api.DefaultApi;
 import ca.bc.gov.open.jag.efilingceisapiclient.api.handler.ApiClient;
+import ca.bc.gov.open.jag.efilingcommons.court.CourtLocationService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -25,7 +24,7 @@ public class CourtsConfigurationTest {
     public void testConfigure() {
 
         context.run(it -> {
-            assertThat(it).hasSingleBean(CeisLookupAdapterImpl.class);
+            assertThat(it).hasSingleBean(CourtLocationService.class);
             assertThat(it).hasSingleBean(CourtLocationMapper.class);
         });
 

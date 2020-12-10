@@ -6,7 +6,7 @@ import ca.bc.gov.open.jag.efilingapi.api.model.CourtLocations;
 import ca.bc.gov.open.jag.efilingapi.courts.mappers.CourtLocationMapper;
 import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
-import ca.bc.gov.open.jag.efilingcommons.adapter.CeisLookupAdapter;
+import ca.bc.gov.open.jag.efilingcommons.court.CourtLocationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -22,12 +22,12 @@ public class CourtsApiDelegateImpl implements CourtsApiDelegate {
 
     Logger logger = LoggerFactory.getLogger(CourtsApiDelegateImpl.class);
 
-    private final CeisLookupAdapter ceisLookupAdapter;
+    private final CourtLocationService courtLocationService;
 
     private final CourtLocationMapper courtLocationMapper;
 
-    public CourtsApiDelegateImpl(CeisLookupAdapter ceisLookupAdapter, CourtLocationMapper courtLocationMapper) {
-        this.ceisLookupAdapter = ceisLookupAdapter;
+    public CourtsApiDelegateImpl(CourtLocationService courtLocationService, CourtLocationMapper courtLocationMapper) {
+        this.courtLocationService = courtLocationService;
         this.courtLocationMapper = courtLocationMapper;
     }
 
@@ -36,7 +36,7 @@ public class CourtsApiDelegateImpl implements CourtsApiDelegate {
     public ResponseEntity<CourtLocations> getCourtLocations(String courtLevel) {
 
         logger.info("Request for court level recieved {}", courtLevel);
-        List<CourtLocation> courtLocationsList = courtLocationMapper.toCourtLocationList(ceisLookupAdapter.getCourLocations(courtLevel));
+        List<CourtLocation> courtLocationsList = courtLocationMapper.toCourtLocationList(courtLocationService.getCourtLocations(courtLevel));
         if (courtLocationsList == null) return new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.COURT_LOCATION_ERROR).create(),
                 HttpStatus.INTERNAL_SERVER_ERROR);

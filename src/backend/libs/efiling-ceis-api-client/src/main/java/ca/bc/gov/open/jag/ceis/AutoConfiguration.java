@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.ceis;
 
 import ca.bc.gov.open.jag.efilingceisapiclient.api.DefaultApi;
 import ca.bc.gov.open.jag.efilingceisapiclient.api.handler.ApiClient;
+import ca.bc.gov.open.jag.efilingcommons.court.CourtLocationService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -33,6 +34,17 @@ public class AutoConfiguration {
     @Bean
     public DefaultApi defaultApi(@Qualifier("ceisApiClient") final ApiClient apiClient) {
         return new DefaultApi(apiClient);
+    }
+
+    @Bean
+    public CourtLocationMapper courtLocationMapper() {
+        return new CourtLocationMapperImpl();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean({CourtLocationService.class})
+    public CourtLocationService courtLocationService(DefaultApi defaultApi, CourtLocationMapper courtLocationMapper) {
+        return new CourtLocationServiceImpl(defaultApi, courtLocationMapper);
     }
 
 }
