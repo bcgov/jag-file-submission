@@ -1,6 +1,6 @@
 package ca.bc.gov.open.jag.efiling.demo;
 
-import ca.bc.gov.open.jag.efilingcommons.court.CourtLocationService;
+import ca.bc.gov.open.jag.efilingcommons.court.EfilingCourtLocationService;
 import ca.bc.gov.open.jag.efilingcommons.service.*;
 import org.junit.jupiter.api.*;
 
@@ -62,8 +62,8 @@ public class AutoConfigurationTest {
     @DisplayName("OK: AutoConfiguration should return instance of EfilingCeisLookupAdapterDemoImpl")
     public void autoConfigurationShouldReturnEfilingCeisLookupAdapterDemoImpl() {
 
-        CourtLocationService actual = sut.courtLocationService();
-        Assertions.assertEquals(CourtLocationServiceDemoImpl.class, actual.getClass());
+        EfilingCourtLocationService actual = sut.efilingCourtLocationService();
+        Assertions.assertEquals(EfilingCourtLocationServiceDemoImpl.class, actual.getClass());
 
     }
 

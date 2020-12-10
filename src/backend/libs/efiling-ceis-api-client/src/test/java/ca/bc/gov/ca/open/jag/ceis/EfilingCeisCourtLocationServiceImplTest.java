@@ -1,7 +1,7 @@
 package ca.bc.gov.ca.open.jag.ceis;
 
-import ca.bc.gov.open.jag.ceis.CourtLocationMapperImpl;
-import ca.bc.gov.open.jag.ceis.CourtLocationServiceImpl;
+import ca.bc.gov.open.jag.ceis.CeisCourtLocationMapperImpl;
+import ca.bc.gov.open.jag.ceis.CeisCourtLocationServiceImpl;
 import ca.bc.gov.open.jag.efilingceisapiclient.api.DefaultApi;
 import ca.bc.gov.open.jag.efilingceisapiclient.api.handler.ApiException;
 import ca.bc.gov.open.jag.efilingceisapiclient.api.model.CourtLocation;
@@ -17,12 +17,12 @@ import java.util.Arrays;
 import java.util.List;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class CourtLocationServiceImplTest {
+public class EfilingCeisCourtLocationServiceImplTest {
 
     private final String PROVINCIAL = "P";
     private final String SUPREME = "S";
 
-    private CourtLocationServiceImpl sut;
+    private CeisCourtLocationServiceImpl sut;
 
     @Mock
     private DefaultApi defaultApiMock;
@@ -32,7 +32,7 @@ public class CourtLocationServiceImplTest {
 
         MockitoAnnotations.openMocks(this);
 
-        sut = new CourtLocationServiceImpl(defaultApiMock, new CourtLocationMapperImpl());
+        sut = new CeisCourtLocationServiceImpl(defaultApiMock, new CeisCourtLocationMapperImpl());
     }
 
     @Test

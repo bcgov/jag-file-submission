@@ -3,7 +3,7 @@ package ca.bc.gov.open.jag.efilingapi.courts;
 import ca.bc.gov.open.jag.efilingapi.api.model.CourtLocations;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.courts.mappers.CourtLocationMapperImpl;
-import ca.bc.gov.open.jag.efilingcommons.court.CourtLocationService;
+import ca.bc.gov.open.jag.efilingcommons.court.EfilingCourtLocationService;
 import ca.bc.gov.open.jag.efilingcommons.model.InternalCourtLocation;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
@@ -30,17 +30,17 @@ public class GetCourtLocationsTest {
 
 
     @Mock
-    CourtLocationService courtLocationServiceMock;
+    EfilingCourtLocationService efilingCourtLocationServiceMock;
 
     @BeforeAll
     public void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        Mockito.when(courtLocationServiceMock.getCourtLocations(COURTLEVEL)).thenReturn(buildMockData());
+        Mockito.when(efilingCourtLocationServiceMock.getCourtLocations(COURTLEVEL)).thenReturn(buildMockData());
 
-        Mockito.when(courtLocationServiceMock.getCourtLocations(COURTLEVELERROR)).thenReturn(null);
+        Mockito.when(efilingCourtLocationServiceMock.getCourtLocations(COURTLEVELERROR)).thenReturn(null);
 
-        sut = new CourtsApiDelegateImpl(courtLocationServiceMock, new CourtLocationMapperImpl());
+        sut = new CourtsApiDelegateImpl(efilingCourtLocationServiceMock, new CourtLocationMapperImpl());
     }
 
     @Test

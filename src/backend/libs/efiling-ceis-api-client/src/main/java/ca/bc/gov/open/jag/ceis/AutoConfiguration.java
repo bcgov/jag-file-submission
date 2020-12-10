@@ -2,7 +2,7 @@ package ca.bc.gov.open.jag.ceis;
 
 import ca.bc.gov.open.jag.efilingceisapiclient.api.DefaultApi;
 import ca.bc.gov.open.jag.efilingceisapiclient.api.handler.ApiClient;
-import ca.bc.gov.open.jag.efilingcommons.court.CourtLocationService;
+import ca.bc.gov.open.jag.efilingcommons.court.EfilingCourtLocationService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -37,14 +37,14 @@ public class AutoConfiguration {
     }
 
     @Bean
-    public CourtLocationMapper courtLocationMapper() {
-        return new CourtLocationMapperImpl();
+    public CeisCourtLocationMapper ceisCourtLocationMapper() {
+        return new CeisCourtLocationMapperImpl();
     }
 
     @Bean
-    @ConditionalOnMissingBean({CourtLocationService.class})
-    public CourtLocationService courtLocationService(DefaultApi defaultApi, CourtLocationMapper courtLocationMapper) {
-        return new CourtLocationServiceImpl(defaultApi, courtLocationMapper);
+    @ConditionalOnMissingBean({EfilingCourtLocationService.class})
+    public EfilingCourtLocationService efilingCourtLocationService(DefaultApi defaultApi, CeisCourtLocationMapper courtLocationMapper) {
+        return new CeisCourtLocationServiceImpl(defaultApi, courtLocationMapper);
     }
 
 }
