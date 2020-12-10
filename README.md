@@ -32,6 +32,8 @@ The eFiling hub is a foundational component to enhance citizen experiences for t
     ├── LICENSE                                 # Apache License
     └── README.md                               # This file.
 
+There are also README files for the [back end](src/backend/README.md) and [front end](src/frontend/README.md).
+
 ## Apps
 
 | Name                | description                                  | doc                                                      |
@@ -47,9 +49,9 @@ The eFiling hub is a foundational component to enhance citizen experiences for t
 
 ## Running the App
 
-By default a demo mode is enabled.
+By default a demo mode is enabled. <!-- is this configured by MVN_PROFILE or DEMO_MODE?-->
 
-First create a local `.env` at the root of the repository based off `.env.template`.
+First create a local `.env` at the root of the repository based off [.env.template](.env.template).
 
 Configure Keycloak
 
@@ -57,9 +59,12 @@ Configure Keycloak
 docker-compose up -d --build keycloak
 ```
 
-go to [Efiling-api credentials](http://localhost:8081/auth/admin/master/console/#/realms/SpringBootKeycloak/clients/b7fd5f2f-d047-4916-a35e-0f7c622dfb5d/credentials) and click generate Secrets
+go to [Efiling-api credentials](http://localhost:8081/auth/admin/master/console/#/realms/SpringBootKeycloak/clients/b7fd5f2f-d047-4916-a35e-0f7c622dfb5d/credentials) and sign in. The default credentials to a new keycloak instance are:
 
-Copy the value of the secret to the `KEYCLOAK_CREDENTIALS_SECRET` in your `.env` file
+    username: admin
+    password: admin
+
+After signing in, click Regenerate Secret. Copy the value of the secret to the `KEYCLOAK_CREDENTIALS_SECRET` in your `.env` file
 
 Create a user [here](http://localhost:8081/auth/admin/master/console/#/create/user/SpringBootKeycloak)
 
@@ -67,66 +72,9 @@ Click on the Credentials tab
 
 Set the password and set Temporary OFF
 
-Click Reset Password
+Click Reset Password <!-- Why do we need to do this? This just undoes the previous step right?-->
 
-Create your known hosts for sftp upload. In command prompt navigate to /users/<YOURNAME>/.ssh/ and run command:
-
-```
-ssh-keyscan -p 23 localhost  >> known_hosts
-```
-
-If you want to integrate with the CSO application change the `MVN_PROFILE` to `default`
-
-Set the following environment variables:
-
-```
-MVN_PROFILE=
-CSO_ACCOUNTFACADE_URI=
-CSO_ACCOUNTFACADE_USERNAME=
-CSO_ACCOUNTFACADE_PASSWORD=
-CSO_ROLEREGISTRY_USERNAME=
-CSO_ROLEREGISTRY_PASSWORD=
-CSO_ROLEREGISTRY_URI=
-CSO_LOOKUPFACADE_USERNAME=
-CSO_LOOKUPFACADE_PASSWORD=
-CSO_LOOKUPFACADE_URI=
-CSO_BCEIDSERVICE_URI=
-CSO_FILINGSTATSFACADE_URI=
-CSO_FILINGSTATSFACADE_USERNAME=
-CSO_FILINGSTATSFACADE_PASSWORD=
-CSO_BCEIDSERVICE_USERNAME=
-CSO_BCEIDSERVICE_PASSWORD=
-CSOWS_USERNAME=
-CSOWS_PASSWORD=
-CSOWS_URI=
-CSO_FILINGFACADE_URI=
-CSO_FILINGFACADE_PASSWORD=
-CSO_FILINGFACADE_USERNAME=
-CSO_SERVICEFACADE_URI=
-CSO_SERVICEFACADE_USERNAME=
-CSO_SERVICEFACADE_PASSWORD=
-KEYCLOAK_AUTH_SERVER_URL=
-KEYCLOAK_REALM=
-KEYCLOAK_RESOURCE=
-KEYCLOAK_CREDENTIALS_SECRET=
-KEYCLOAK_SSL_REQUIRED=
-BAMBORA_APIPASSCODE=
-BAMBORA_MERCHANTID=
-SFTP_KNOWNHOSTS=
-SFTP_REMOTELOCATION=
-SFTP_PRIVATE_KEY=
-BCEID_SERVICE_URI=
-BCEID_SERVICE_USERNAME=
-BCEID_SERVICE_PASSWORD=
-BCEID_SERVICE_ONLINE_SERVICE_ID=
-CSO_FILE_SERVER_HOST=
-CSO_DEBUG_ENABLED=
-BAMBORA_PROFILE_URL=
-BAMBORA_HASHKEY=
-BAMBORA_PROFILE_SERVICE_VERSION=
-BAMBORA_URL_EXPIRY=
-CEIS_BASE_PATH=
-```
+If you want to integrate with the CSO application change the `MVN_PROFILE` to `default` <!-- is this configured by MVN_PROFILE or DEMO_MODE?-->
 
 run
 
@@ -134,7 +82,13 @@ run
 docker-compose up -d --build
 ```
 
-to get started, access the front end application [here](http://localhost:3001) and enter a user account and you will get redirected to the file upload.
+After running, create your known hosts for sftp upload. In command prompt navigate to /users/YOURNAME/.ssh/ and run command:
+
+```
+ssh-keyscan -p 23 localhost  >> known_hosts
+```
+
+To get started, access the front end application [here](http://localhost:3001) and enter a user account and you will get redirected to the file upload.
 
 You can get test accounts [here](https://bcgov.github.io/jag-file-submission/#/gettingStarted?id=test-accounts) when the app is running in demo mode.
 
