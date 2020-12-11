@@ -3,10 +3,11 @@ package ca.bc.gov.open.jag.ceis;
 import ca.bc.gov.open.jag.efilingceisapiclient.api.DefaultApi;
 import ca.bc.gov.open.jag.efilingceisapiclient.api.handler.ApiException;
 import ca.bc.gov.open.jag.efilingcommons.court.EfilingCourtLocationService;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtLocationServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.InternalCourtLocation;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,7 +38,7 @@ public class CeisCourtLocationServiceImpl implements EfilingCourtLocationService
             return courtLocationList;
         } catch (ApiException e) {
             logger.error(e.getMessage(), e);
-            return null;
+            throw new EfilingCourtLocationServiceException("Exception while retrieving court location", e);
         }
 
     }
