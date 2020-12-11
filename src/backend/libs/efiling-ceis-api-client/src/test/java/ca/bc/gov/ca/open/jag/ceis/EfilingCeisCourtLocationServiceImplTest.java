@@ -6,6 +6,7 @@ import ca.bc.gov.open.jag.efilingceisapiclient.api.DefaultApi;
 import ca.bc.gov.open.jag.efilingceisapiclient.api.handler.ApiException;
 import ca.bc.gov.open.jag.efilingceisapiclient.api.model.CourtLocation;
 import ca.bc.gov.open.jag.efilingceisapiclient.api.model.CourtLocations;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtLocationServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.InternalCourtLocation;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
@@ -171,12 +172,8 @@ public class EfilingCeisCourtLocationServiceImplTest {
     public void withExceptionReturnNull() throws ApiException {
 
         Mockito.when(defaultApiMock.courtLocationsGet()).thenThrow(new ApiException());
-
-        List<InternalCourtLocation> actual = sut.getCourtLocations(null);
-
-        Assertions.assertNull(actual);
+        Assertions.assertThrows(EfilingCourtLocationServiceException.class, () -> sut.getCourtLocations(null));
 
     }
-
 
 }
