@@ -56,25 +56,23 @@ const generateCourtDataTable = ({
   locationDescription,
   levelDescription,
   classDescription,
-}) => {
-  return [
-    {
-      name: "Court File Number:",
-      value: fileNumber,
-      isValueBold: true,
-    },
-    {
-      name: "Location:",
-      value: locationDescription,
-      isValueBold: true,
-    },
-    {
-      name: "Level and Class:",
-      value: `${levelDescription} ${classDescription}`,
-      isValueBold: true,
-    },
-  ];
-};
+}) => [
+  {
+    name: "Court File Number:",
+    value: fileNumber,
+    isValueBold: true,
+  },
+  {
+    name: "Location:",
+    value: locationDescription,
+    isValueBold: true,
+  },
+  {
+    name: "Level and Class:",
+    value: `${levelDescription} ${classDescription}`,
+    isValueBold: true,
+  },
+];
 
 const submitPackage = (submissionId, setSubmitBtnEnabled, setShowLoader) => {
   setShowLoader(true);
