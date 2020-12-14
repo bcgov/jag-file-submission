@@ -58,7 +58,6 @@ exports[`Home Component matches the snapshot when error encountered 1`] = `
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"
@@ -229,7 +228,6 @@ exports[`Home Component matches the snapshot when error encountered, does not at
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"
@@ -406,7 +404,6 @@ exports[`Home Component matches the snapshot when user cso account does not exis
                 <svg
                   fill="currentColor"
                   height="32"
-                  size="32"
                   stroke="currentColor"
                   stroke-width="0"
                   viewBox="0 0 24 24"
@@ -441,7 +438,6 @@ exports[`Home Component matches the snapshot when user cso account does not exis
                 <svg
                   fill="currentColor"
                   height="32"
-                  size="32"
                   stroke="currentColor"
                   stroke-width="0"
                   viewBox="0 0 24 24"
@@ -1469,7 +1465,6 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                 <svg
                   fill="currentColor"
                   height="32"
-                  size="32"
                   stroke="currentColor"
                   stroke-width="0"
                   viewBox="0 0 24 24"
@@ -1576,7 +1571,6 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                 <svg
                   fill="currentColor"
                   height="32"
-                  size="32"
                   stroke="currentColor"
                   stroke-width="0"
                   viewBox="0 0 24 24"

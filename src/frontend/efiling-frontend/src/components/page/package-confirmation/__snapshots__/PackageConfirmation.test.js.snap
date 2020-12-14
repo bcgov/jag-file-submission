@@ -33,7 +33,6 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"
@@ -140,7 +139,6 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"
@@ -492,7 +490,6 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
             <svg
               fill="currentColor"
               height="32"
-              size="32"
               stroke="currentColor"
               stroke-width="0"
               viewBox="0 0 24 24"
@@ -537,7 +534,6 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"
@@ -644,7 +640,6 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"
@@ -1201,7 +1196,6 @@ exports[`PackageConfirmation Component On click of continue to payment button, i
             <svg
               fill="currentColor"
               height="32"
-              size="32"
               stroke="currentColor"
               stroke-width="0"
               viewBox="0 0 24 24"
@@ -1898,7 +1892,6 @@ exports[`PackageConfirmation Component take user directly to payment page when c
             <svg
               fill="currentColor"
               height="32"
-              size="32"
               stroke="currentColor"
               stroke-width="0"
               viewBox="0 0 24 24"

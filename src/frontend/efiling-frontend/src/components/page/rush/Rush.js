@@ -20,13 +20,11 @@ const calloutText = `Please provide the date of when the direction was made,
 the name of the Judge who made the direction along with any additional details
 you feel are necessary.`;
 
-const generateInputField = (input, onChange) => {
-  return (
-    <div className="form-child">
-      <Input input={input} onChange={onChange} />
-    </div>
-  );
-};
+const generateInputField = (input, onChange) => (
+  <div className="form-child">
+    <Input input={input} onChange={onChange} />
+  </div>
+);
 
 export default function Rush({ payment }) {
   const input = {
