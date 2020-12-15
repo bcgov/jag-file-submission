@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingcsoclient.config;
+package ca.bc.gov.open.jag.efilingcsostarter.config;
 
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RoleRegistryPortType;
 import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
@@ -11,6 +11,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
 import ca.bc.gov.open.jag.efilingcommons.service.*;
 import ca.bc.gov.open.jag.efilingcsoclient.*;
+import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.*;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
