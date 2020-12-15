@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingcsostarter;
+package ca.bc.gov.open.jag.efilingcsoclient;
 
 import ca.bc.gov.ag.csows.services.Service;
 import org.joda.time.DateTime;

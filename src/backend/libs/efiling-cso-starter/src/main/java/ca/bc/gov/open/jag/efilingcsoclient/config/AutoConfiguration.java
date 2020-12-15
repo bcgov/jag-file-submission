@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingcsostarter.config;
+package ca.bc.gov.open.jag.efilingcsoclient.config;
 
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RoleRegistryPortType;
 import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
@@ -12,7 +12,6 @@ import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
 import ca.bc.gov.open.jag.efilingcommons.service.*;
 import ca.bc.gov.open.jag.efilingcsoclient.*;
-import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.cxf.ext.logging.LoggingInInterceptor;

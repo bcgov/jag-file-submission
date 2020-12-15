@@ -1,8 +1,7 @@
-package ca.bc.gov.open.jag.efilingcsostarter.config;
+package ca.bc.gov.open.jag.efilingcsoclient.config;
 
 
 import ca.bc.gov.open.jag.efilingcommons.service.*;
-import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.AccountDetailsMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
