@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingcsostarter.csoLookupService;
+package ca.bc.gov.open.jag.efilingcsoclient.csoLookupService;
 
 import ca.bc.gov.ag.csows.lookups.LookupFacadeBean;
 import ca.bc.gov.ag.csows.lookups.NestedEjbException_Exception;
@@ -35,7 +35,7 @@ public class CsoLookupServiceImplTest {
     @BeforeEach
     public void init() throws NestedEjbException_Exception {
 
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
         Mockito.when(serviceFeeMock.getFeeAmt()).thenReturn(BigDecimal.TEN);
         Mockito.when(serviceFeeMock.getServiceTypeCd()).thenReturn(SERVICE_TYPE_CD);
 

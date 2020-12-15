@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingcsostarter.csoSubmissionServiceImpl;
+package ca.bc.gov.open.jag.efilingcsoclient.csoSubmissionServiceImpl;
 
 import ca.bc.gov.ag.csows.filing.FilingFacadeBean;
 import ca.bc.gov.ag.csows.services.*;
@@ -10,7 +10,7 @@ import ca.bc.gov.open.jag.efilingcsoclient.CsoSubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingcsoclient.Keys;
 import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.*;
-import ca.bc.gov.open.jag.efilingcsostarter.TestHelpers;
+import ca.bc.gov.open.jag.efilingcsoclient.TestHelpers;
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
@@ -75,7 +75,7 @@ public class SubmitFilingPackageTest {
     @BeforeEach
     public void init() throws NestedEjbException_Exception, ca.bc.gov.ag.csows.filing.NestedEjbException_Exception {
 
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
 
         Mockito.when(csoPropertiesMock.getFileServerHost()).thenReturn("localhost");
         Mockito.when(csoPropertiesMock.getCsoBasePath()).thenReturn("http://cso");

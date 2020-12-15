@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingcsostarter.csoLookupService;
+package ca.bc.gov.open.jag.efilingcsoclient.csoLookupService;
 
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import org.junit.jupiter.api.*;

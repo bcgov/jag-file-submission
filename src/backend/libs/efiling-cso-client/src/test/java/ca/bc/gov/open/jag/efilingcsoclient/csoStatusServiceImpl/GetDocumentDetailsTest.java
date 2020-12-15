@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingcsostarter.csoStatusServiceImpl;
+package ca.bc.gov.open.jag.efilingcsoclient.csoStatusServiceImpl;
 
 import ca.bc.gov.ag.csows.filing.status.DocumentType;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
@@ -35,7 +35,7 @@ public class GetDocumentDetailsTest {
     @BeforeAll
     public void setUp() throws NestedEjbException_Exception {
 
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
         DocumentType documentType = new DocumentType();
         documentType.setDocumentTypeCd(DOCUMENT_TYPE_CD);
         documentType.setDocumentTypeDesc(DESCRIPTION);

@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingcsostarter.csoAccountServiceImpl;
+package ca.bc.gov.open.jag.efilingcsoclient.csoAccountServiceImpl;
 
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RegisteredRole;
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RoleRegistry;
@@ -58,7 +58,7 @@ public class GetAccountDetailsTest {
     @BeforeEach
     public void init() throws NestedEjbException_Exception {
 
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
         initAccountFacadeMocks();
         initRoleRegistryMocks();
         initBceIdAccountMocks();

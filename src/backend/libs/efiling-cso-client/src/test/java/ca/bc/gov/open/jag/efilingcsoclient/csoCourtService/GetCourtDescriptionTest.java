@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingcsostarter.csoCourtService;
+package ca.bc.gov.open.jag.efilingcsoclient.csoCourtService;
 
 import ca.bc.gov.ag.csows.ceis.*;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
@@ -57,7 +57,7 @@ public class GetCourtDescriptionTest {
     @BeforeAll
     public void setUp() {
 
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
 
         Mockito.when(csoCourtLevelArrMock.getArray()).thenReturn(createLevelArray());
         Mockito.when(csowsMock.getCourtLevels()).thenReturn(csoCourtLevelArrMock);

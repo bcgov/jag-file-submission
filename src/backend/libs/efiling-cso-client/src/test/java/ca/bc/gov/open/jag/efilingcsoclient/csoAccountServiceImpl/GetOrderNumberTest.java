@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingcsostarter.csoAccountServiceImpl;
+package ca.bc.gov.open.jag.efilingcsoclient.csoAccountServiceImpl;
 
 import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
 import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
@@ -27,7 +27,7 @@ public class GetOrderNumberTest {
     @BeforeEach
     public void init() throws NestedEjbException_Exception {
 
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
 
         sut = new CsoAccountServiceImpl(accountFacadeBeanMock, null, null);
     }
