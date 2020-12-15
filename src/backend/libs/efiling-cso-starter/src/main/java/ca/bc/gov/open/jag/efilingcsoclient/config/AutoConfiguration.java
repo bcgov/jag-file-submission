@@ -33,28 +33,28 @@ public class AutoConfiguration {
 
     @Bean
     public AccountFacadeBean accountFacadeBean() {
-        return SoapUtils.getPort(Clients.ACCOUNT, AccountFacadeBean.class, soapProperties, csoProperties);
+        return SoapUtils.getPort(Clients.ACCOUNT, AccountFacadeBean.class, soapProperties, csoProperties.isDebugEnabled());
     }
 
     @Bean
     public RoleRegistryPortType roleRegistryPortType() {
-       return SoapUtils.getPort(Clients.ROLE, RoleRegistryPortType.class, soapProperties, csoProperties);
+       return SoapUtils.getPort(Clients.ROLE, RoleRegistryPortType.class, soapProperties, csoProperties.isDebugEnabled());
     }
 
     @Bean
-    public FilingStatusFacadeBean filingStatusFacadeBean() { return SoapUtils.getPort(Clients.STATUS, FilingStatusFacadeBean.class, soapProperties, csoProperties); }
+    public FilingStatusFacadeBean filingStatusFacadeBean() { return SoapUtils.getPort(Clients.STATUS, FilingStatusFacadeBean.class, soapProperties, csoProperties.isDebugEnabled()); }
 
     @Bean
-    public LookupFacadeBean lookupFacadeBean() { return SoapUtils.getPort(Clients.LOOKUP, LookupFacadeBean.class, soapProperties, csoProperties); }
+    public LookupFacadeBean lookupFacadeBean() { return SoapUtils.getPort(Clients.LOOKUP, LookupFacadeBean.class, soapProperties, csoProperties.isDebugEnabled()); }
 
     @Bean
-    public Csows csows() { return SoapUtils.getPort(Clients.CSOWS, Csows.class, soapProperties, csoProperties); }
+    public Csows csows() { return SoapUtils.getPort(Clients.CSOWS, Csows.class, soapProperties, csoProperties.isDebugEnabled()); }
 
     @Bean
-    public FilingFacadeBean filingFacadeBean() { return SoapUtils.getPort(Clients.FILING, FilingFacadeBean.class, soapProperties, csoProperties); }
+    public FilingFacadeBean filingFacadeBean() { return SoapUtils.getPort(Clients.FILING, FilingFacadeBean.class, soapProperties, csoProperties.isDebugEnabled()); }
 
     @Bean
-    public ServiceFacadeBean serviceFacadeBean() { return SoapUtils.getPort(Clients.SERVICE, ServiceFacadeBean.class, soapProperties, csoProperties); }
+    public ServiceFacadeBean serviceFacadeBean() { return SoapUtils.getPort(Clients.SERVICE, ServiceFacadeBean.class, soapProperties, csoProperties.isDebugEnabled()); }
 
     @Bean
     public AccountDetailsMapper accountDetailsMapper() {

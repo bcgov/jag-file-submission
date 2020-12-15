@@ -3,7 +3,6 @@ package ca.bc.gov.open.jag.efilingcsoclient;
 import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
-import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.cxf.ext.logging.LoggingInInterceptor;
 import org.apache.cxf.ext.logging.LoggingOutInterceptor;
@@ -13,7 +12,7 @@ public class SoapUtils {
 
     private SoapUtils() {}
 
-    public static <T> T getPort(Clients clients, Class<T> type, SoapProperties soapProperties, CsoProperties csoProperties) {
+    public static <T> T getPort(Clients clients, Class<T> type, SoapProperties soapProperties, boolean debugEnabled) {
         JaxWsProxyFactoryBean jaxWsProxyFactoryBean = new JaxWsProxyFactoryBean();
         jaxWsProxyFactoryBean.setServiceClass(type);
         EfilingSoapClientProperties efilingSoapClientProperties = soapProperties.findByEnum(clients);
@@ -23,7 +22,7 @@ public class SoapUtils {
         if(StringUtils.isNotBlank(efilingSoapClientProperties.getPassword()))
             jaxWsProxyFactoryBean.setPassword(efilingSoapClientProperties.getPassword());
 
-        if(csoProperties.isDebugEnabled()) {
+        if(debugEnabled) {
             LoggingInInterceptor loggingInInterceptor = new LoggingInInterceptor();
             loggingInInterceptor.setPrettyLogging(true);
             LoggingOutInterceptor loggingOutInterceptor = new LoggingOutInterceptor();
