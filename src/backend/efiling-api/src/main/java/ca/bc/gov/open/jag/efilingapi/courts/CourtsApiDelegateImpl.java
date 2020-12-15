@@ -32,7 +32,7 @@ public class CourtsApiDelegateImpl implements CourtsApiDelegate {
     }
 
     @Override
-    @RolesAllowed("efiling-client")
+    @RolesAllowed({"efiling-client", "efiling-admin"})
     public ResponseEntity<CourtLocations> getCourtLocations(String courtLevel) {
 
         logger.info("Request for court level recieved {}", courtLevel);
