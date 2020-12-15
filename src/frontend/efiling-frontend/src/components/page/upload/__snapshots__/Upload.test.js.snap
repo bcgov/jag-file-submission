@@ -235,7 +235,6 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"
@@ -342,7 +341,6 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"
@@ -755,7 +753,6 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
                         <svg
                           fill="currentColor"
                           height="32"
-                          size="32"
                           stroke="currentColor"
                           stroke-width="0"
                           viewBox="0 0 24 24"
@@ -780,7 +777,6 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
                         data-testid="remove-icon"
                         fill="currentColor"
                         height="32"
-                        size="32"
                         stroke="currentColor"
                         stroke-width="0"
                         viewBox="0 0 24 24"
@@ -1150,7 +1146,6 @@ exports[`Upload Component successful document upload works as expected 1`] = `
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"
@@ -1257,7 +1252,6 @@ exports[`Upload Component successful document upload works as expected 1`] = `
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"
@@ -1348,7 +1342,6 @@ exports[`Upload Component successful document upload works as expected 1`] = `
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"
@@ -1439,7 +1432,6 @@ exports[`Upload Component successful document upload works as expected 1`] = `
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"

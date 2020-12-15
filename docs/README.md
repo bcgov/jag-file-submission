@@ -31,6 +31,7 @@ Start by uploading document(s) to the **eFiling Hub** API:
 ```bash
 curl --location --request POST '[filing-hub-url]/submission/documents' \
 --header 'X-Transaction-Id: ca09e538-d34e-11ea-87d0-0242ac130003' \
+--header 'X-User-Id: [X-User-Id]' \
 --header 'Content-Type: multipart/form-data' \
 --header 'Authorization: Bearer [bearer_token]' \
 --form 'files=test.pdf'
@@ -50,6 +51,7 @@ Then generate a unique url to redirect the users to the **eFiling Hub**
 ```bash
 curl --location --request POST '[filing-hub-url]/submission/5e9492cf-e87e-48b5-ba55-0c198d8edde5/generateUrl' \
 --header 'X-Transaction-Id: ca09e538-d34e-11ea-87d0-0242ac130003' \
+--header 'X-User-Id: [X-User-Id]' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer [bearer_token]' \
 --data-raw 'the json payload bellow'

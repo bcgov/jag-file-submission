@@ -77,8 +77,8 @@ export default function AuthenticationGuard({
   );
 }
 
-const updateToken = () => {
-  return new Promise((resolve, reject) => {
+const updateToken = () =>
+  new Promise((resolve, reject) => {
     keycloak
       .updateToken()
       .success(() => {
@@ -89,7 +89,6 @@ const updateToken = () => {
         reject(new Error("Could not refresh token"));
       });
   });
-};
 
 // Function that will be called to refresh authorization
 function refreshAuthLogic(failedRequest) {

@@ -71,7 +71,6 @@ exports[`Storyshots Home Account Exists 1`] = `
                 <svg
                   fill="currentColor"
                   height="32"
-                  size="32"
                   stroke="currentColor"
                   stroke-width="0"
                   viewBox="0 0 24 24"
@@ -178,7 +177,6 @@ exports[`Storyshots Home Account Exists 1`] = `
                 <svg
                   fill="currentColor"
                   height="32"
-                  size="32"
                   stroke="currentColor"
                   stroke-width="0"
                   viewBox="0 0 24 24"
@@ -670,7 +668,6 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
                 <svg
                   fill="currentColor"
                   height="32"
-                  size="32"
                   stroke="currentColor"
                   stroke-width="0"
                   viewBox="0 0 24 24"
@@ -777,7 +774,6 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
                 <svg
                   fill="currentColor"
                   height="32"
-                  size="32"
                   stroke="currentColor"
                   stroke-width="0"
                   viewBox="0 0 24 24"
@@ -1256,7 +1252,6 @@ exports[`Storyshots Home Error 1`] = `
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"
@@ -1427,7 +1422,6 @@ exports[`Storyshots Home Error Mobile 1`] = `
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"
@@ -1604,7 +1598,6 @@ exports[`Storyshots Home No Account Exists 1`] = `
                 <svg
                   fill="currentColor"
                   height="32"
-                  size="32"
                   stroke="currentColor"
                   stroke-width="0"
                   viewBox="0 0 24 24"
@@ -1639,7 +1632,6 @@ exports[`Storyshots Home No Account Exists 1`] = `
                 <svg
                   fill="currentColor"
                   height="32"
-                  size="32"
                   stroke="currentColor"
                   stroke-width="0"
                   viewBox="0 0 24 24"
@@ -2660,7 +2652,6 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
                 <svg
                   fill="currentColor"
                   height="32"
-                  size="32"
                   stroke="currentColor"
                   stroke-width="0"
                   viewBox="0 0 24 24"
@@ -2695,7 +2686,6 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
                 <svg
                   fill="currentColor"
                   height="32"
-                  size="32"
                   stroke="currentColor"
                   stroke-width="0"
                   viewBox="0 0 24 24"

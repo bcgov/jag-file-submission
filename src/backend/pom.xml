@@ -6,7 +6,7 @@
 
 	<groupId>ca.bc.gov.open</groupId>
 	<artifactId>jag-efiling-backend</artifactId>
-	<version>0.4.4-SNAPSHOT</version>
+	<version>0.6.0-SNAPSHOT</version>
 
 	<description>FLA Document Upload</description>
 
@@ -25,10 +25,12 @@
 				<module>libs/efiling-bambora-api-client</module>
 				<module>libs/efiling-ceis-api-client</module>
 				<module>libs/efiling-commons</module>
+				<module>libs/efiling-cso-client</module>
 				<module>libs/efiling-cso-starter</module>
 				<module>libs/efiling-bom</module>
 				<module>libs/efiling-demo-starter</module>
 				<module>efiling-api</module>
+				<module>efiling-graphql</module>
 			</modules>
 		</profile>
 		<profile>
@@ -38,6 +40,7 @@
 				<module>libs/efiling-ceis-api-client</module>
 				<module>libs/efiling-bom</module>
 				<module>libs/efiling-commons</module>
+				<module>libs/efiling-cso-client</module>
 				<module>libs/efiling-cso-starter</module>
 			</modules>
 		</profile>
@@ -48,6 +51,7 @@
 				<module>libs/efiling-ceis-api-client</module>
 				<module>libs/efiling-bom</module>
 				<module>libs/efiling-commons</module>
+				<module>libs/efiling-cso-client</module>
 				<module>libs/efiling-cso-starter</module>
 				<module>libs/efiling-demo-starter</module>
 			</modules>
