@@ -51,32 +51,29 @@ By default a demo mode is enabled.
 
 First create a local `.env` at the root of the repository based off [.env.template](.env.template). Below are the variables that need to be configured to get the application running in demo mode.
 
-| Variable Name                            | Description                                                      | Example                    |
-| ---------------------------------------- | ---------------------------------------------------------------- | -------------------------- |
-| MVN_PROFILE                              | Set the front end application to be in demo mode or default mode | demo or default            |
-| SERVER_PORT                              | Port that the API will run on                                    | 8080                       |
-| KEYCLOAK_SSL_REQUIRED                    | Configure whether to use SSL when communicating with Keycloak    | none                       |
-| KEYCLOAK_RESOURCE                        | The Keycloak resource that is used by the API                    | efiling-api                |
-| KEYCLOAK_URL                             | The auth URL for Keycloak                                        | http://localhost:8081/auth |
-| KEYCLOAK_REALM                           | The realm configured for your Keycloak instance                  | SpringBootKeycloak         |
-| KEYCLOAK_CREDENTIALS_SECRET              | The secret generated in your Keycloak instance                   |                            |
-| KEYCLOAK_AUTH_SERVER_URL                 | The auth server URL for Keycloak                                 | http://localhost:8081/auth |
-| EFILING_DEMO_KEYCLOAK_URL                | The auth URL for the demo app's Keycloak                         | http://localhost:8081/auth |
-| EFILING_DEMO_KEYCLOAK_REALM              | The realm configured for your demo app's Keycloak instance       | SpringBootKeycloak         |
-| EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET | The secret generated in your demo app's Keycloak instance        | http://localhost:8081/auth |
-| BAMBORA_APIPASSCODE                      | Passcode required to use the Bambora API                         |                            |
-| BAMBORA_MERCHANTID                       | Unique identifier requried to use the Bambora API                |                            |
-| BAMBORA_PROFILE_URL                      | URL of the Bambora profile                                       |                            |
-| BAMBORA_HASHKEY                          | Specific key used with the merchant ID for generating links      |                            |
-| BAMBORA_PROFILE_SERVICE_VERSION          | Bambora profile service version                                  | 1.0                        |
-| BAMBORA_URL_EXPIRY                       | Bambora URL expiry time in minutes                               | 30                         |
-| SFTP_KNOWNHOSTS                          | The directory with your knownhosts file                          | /users/YOURNAME/.ssh/      |
-| SFTP_REMOTELOCATION                      | Remote SFTP directory directory                                  | directory                  |
-| SFTP_PRIVATE_KEY                         | Private key for SFTP server                                      |                            |
-| BCEID_SERVICE_URI                        | URI for the BCEID service used by Keycloak                       |                            |
-| BCEID_SERVICE_USERNAME                   | Username for the BCEID service                                   |                            |
-| BCEID_SERVICE_PASSWORD                   | Password for the BCEID service                                   |                            |
-| BCEID_SERVICE_ONLINE_SERVICE_ID          | Unique service ID for BCEID online service                       |                            |
+| Variable Name                   | Description                                                      | Example                    |
+| ------------------------------- | ---------------------------------------------------------------- | -------------------------- |
+| MVN_PROFILE                     | Set the front end application to be in demo mode or default mode | demo or default            |
+| SERVER_PORT                     | Port that the API will run on                                    | 8080                       |
+| KEYCLOAK_SSL_REQUIRED           | Configure whether to use SSL when communicating with Keycloak    | none                       |
+| KEYCLOAK_RESOURCE               | The Keycloak resource that is used by the API                    | efiling-api                |
+| KEYCLOAK_URL                    | The auth URL for Keycloak                                        | http://localhost:8081/auth |
+| KEYCLOAK_REALM                  | The realm configured for your Keycloak instance                  | SpringBootKeycloak         |
+| KEYCLOAK_CREDENTIALS_SECRET     | The secret generated in your Keycloak instance                   |                            |
+| KEYCLOAK_AUTH_SERVER_URL        | The auth server URL for Keycloak                                 | http://localhost:8081/auth |
+| BAMBORA_APIPASSCODE             | Passcode required to use the Bambora API                         |                            |
+| BAMBORA_MERCHANTID              | Unique identifier requried to use the Bambora API                |                            |
+| BAMBORA_PROFILE_URL             | URL of the Bambora profile                                       |                            |
+| BAMBORA_HASHKEY                 | Specific key used with the merchant ID for generating links      |                            |
+| BAMBORA_PROFILE_SERVICE_VERSION | Bambora profile service version                                  | 1.0                        |
+| BAMBORA_URL_EXPIRY              | Bambora URL expiry time in minutes                               | 30                         |
+| SFTP_KNOWNHOSTS                 | The directory with your knownhosts file                          | /users/YOURNAME/.ssh/      |
+| SFTP_REMOTELOCATION             | Remote SFTP directory directory                                  | directory                  |
+| SFTP_PRIVATE_KEY                | Private key for SFTP server                                      |                            |
+| BCEID_SERVICE_URI               | URI for the BCEID service used by Keycloak                       |                            |
+| BCEID_SERVICE_USERNAME          | Username for the BCEID service                                   |                            |
+| BCEID_SERVICE_PASSWORD          | Password for the BCEID service                                   |                            |
+| BCEID_SERVICE_ONLINE_SERVICE_ID | Unique service ID for BCEID online service                       |                            |
 
 Configure Keycloak
 

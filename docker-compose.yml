@@ -34,12 +34,10 @@ services:
     ports:
       - 3001:3000
     environment:
-      - REACT_APP_KEYCLOAK_REALM=${EFILING_DEMO_KEYCLOAK_REALM}
+      - REACT_APP_KEYCLOAK_REALM=${KEYCLOAK_REALM}
       - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-demo
-      - REACT_APP_KEYCLOAK_URL=${EFILING_DEMO_KEYCLOAK_URL}
+      - REACT_APP_KEYCLOAK_URL=${KEYCLOAK_URL}
       - REACT_APP_API_BASE_URL=http://localhost:8080
-      - REACT_APP_KEYCLOAK_CLIENT_SECRET=${EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}
-      - REACT_APP_API_KEYCLOAK_URL=${KEYCLOAK_URL}
       - REACT_APP_DEMO_CLIENT_ID=demo-app
 
   #############################################################################################
