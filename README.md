@@ -38,7 +38,7 @@ The eFiling hub is a foundational component to enhance citizen experiences for t
 | ------------------- | -------------------------------------------- | -------------------------------------------------------- |
 | backend             | all server side services                     | [README](src/backend/README.md)                          |
 | efiling-api         | the main api for interating with the service | [README](src/backend/efiling-api/README.md)              |
-| efiling-worker      | process submitted documents                  | [README](src/backend/efiling-worker/README.md)           |
+| efiling-graphql     | the efiling-hub graphql for fast access      | [README](src/backend/efiling-graphql/README.md)          |
 | efiling-cso-starter | soap client implementations                  | [README](src/backend/libs/efiling-cso-starter/README.md) |
 | frontend            | all client side applications                 | [README](src/frontend/README.md)                         |
 | efiling-frontend    | the frontend for uploading documents         | [README](src/frontend/efiling-frontend/README.md)        |
@@ -132,6 +132,10 @@ React front end demo app accessible at [http://localhost:3001](http://localhost:
 #### efiling-api
 
 Efiling Api check health at [http://localhost:8080/actuator/health](http://localhost:8080/actuator/health)
+
+#### efiling-graphql
+
+GraphQl editor at [http://localhost:8090/graphql-ui/](http://localhost:8090/graphql-ui/)
 
 #### redis
 
