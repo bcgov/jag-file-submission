@@ -21,6 +21,7 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 @Configuration
@@ -99,7 +100,7 @@ public class AutoConfiguration {
             @Override
             public PaymentTransaction makePayment(EfilingPayment efilingPayment) {
                 PaymentTransaction paymentTransaction = new PaymentTransaction();
-                if(efilingPayment.getPaymentAmount().equals(10)) {
+                if(efilingPayment.getPaymentAmount().equals(new BigDecimal(10))) {
                     paymentTransaction.setApprovalCd(TRANSACTION_STATE_DECLINED);
                 } else {
                     paymentTransaction.setApprovalCd(TRANSACTION_STATE_APPROVED);
