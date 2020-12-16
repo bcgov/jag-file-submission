@@ -57,7 +57,7 @@
 			</modules>
 		</profile>
 		<profile>
-			<id>efilng-graphql</id>
+			<id>efiling-graphql</id>
 			<modules>
 				<module>libs/efiling-bom</module>
 				<module>libs/efiling-commons</module>
