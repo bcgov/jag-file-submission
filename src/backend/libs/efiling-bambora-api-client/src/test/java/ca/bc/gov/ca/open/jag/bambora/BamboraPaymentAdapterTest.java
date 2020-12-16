@@ -1,5 +1,6 @@
-package ca.bc.gov.open.jag.efilingapi.payment;
+package ca.bc.gov.ca.open.jag.bambora;
 
+import ca.bc.gov.open.jag.bambora.BamboraPaymentAdapter;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.PaymentsApi;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.handler.ApiException;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.CardPurchaseResponse;
@@ -8,6 +9,7 @@ import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.PaymentResponse;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingPaymentException;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingPayment;
 import ca.bc.gov.open.jag.efilingcommons.model.PaymentTransaction;
+import ca.bc.gov.open.jag.efilingcommons.payment.PaymentAdapter;
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
@@ -30,7 +32,7 @@ public class BamboraPaymentAdapterTest {
     @Mock
     PaymentsApi paymentsApiMock;
 
-    BamboraPaymentAdapter sut;
+    PaymentAdapter sut;
 
     @BeforeEach
     void initialize() {
