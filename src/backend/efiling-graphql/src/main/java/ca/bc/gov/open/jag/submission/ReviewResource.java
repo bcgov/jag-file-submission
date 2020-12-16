@@ -10,9 +10,6 @@ import javax.inject.Inject;
 @GraphQLApi
 public class ReviewResource {
 
-    @Inject
-    EfilingSubmissionService efilingSubmissionService;
-
     @Query("submissionReview")
     @Description("Query a submission")
     public String getSubmission() {
