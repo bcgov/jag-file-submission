@@ -41,7 +41,8 @@ public class FrontendTestUtil extends DriverClass {
                 log.info("Efiling hub page url is accessed successfully");
 
                 AuthenticationPage authenticationPage = new AuthenticationPage(driver);
-                authenticationPage.clickBceid();
+                // not needed for TEST
+              //  authenticationPage.clickBceid();
                 Thread.sleep(4000L);
                 authenticationPage.signInWithBceid(username, password);
                 log.info("user is authenticated before reaching eFiling hub page");

@@ -51,6 +51,7 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
         response = generateUrlRequestBuilders.requestWithSinglePdfDocument(resource,validExistingCSOGuid, FILE_NAME_PATH);
+        System.out.println(response.asString());
     }
 
     @When("status code is {int} and content type is verified")
@@ -87,6 +88,7 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
         response = generateUrlRequestBuilders.postRequestWithPayload(resource,validExistingCSOGuid, submissionId, GENERATE_URL_PATH_PARAM);
+        System.out.println(response.asString());
     }
 
     @Then("verify expiry date and eFiling url are returned with the CSO account guid and submission id")
@@ -136,7 +138,7 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     @Then("verify court details and document details are returned and not empty")
     public void verifyCourtDetailsAndDocumentDetailsAreReturnedAndNotEmpty() {
         jsonPath = new JsonPath(response.asString());
-        int submissionFeeAmount = jsonPath.get("submissionFeeAmount");
+        Float submissionFeeAmount = jsonPath.get("submissionFeeAmount");
 
         assertThat(jsonPath.get("court.location"), is(not(emptyString())));
         assertThat(jsonPath.get("court.level"), is(not(emptyString())));
@@ -175,6 +177,13 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToGetDocumentUsingFileName(resource,validExistingCSOGuid,
                                                                     submissionId, userToken);
+    }
+
+    @Given("{string} without court level type is submitted with GET http request")
+    public void withoutCourtLevelTypeIsSubmittedWithGETHttpRequest(String resource) throws IOException {
+        generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
+        response = generateUrlRequestBuilders.requestToGetCourts(resource);
+        System.out.println(response.asString());
     }
 
     @Then("Verify status code is {int} and content type is not json")

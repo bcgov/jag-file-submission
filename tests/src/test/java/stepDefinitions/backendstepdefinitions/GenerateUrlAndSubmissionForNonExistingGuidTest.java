@@ -126,7 +126,7 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
     @Then("verify court details and document details are returned")
     public void verifyCourtDetailsAndDocumentDetailsAreReturned() {
         jsonPath = new JsonPath(response.asString());
-        int submissionFeeAmount = jsonPath.get("submissionFeeAmount");
+        Float submissionFeeAmount = jsonPath.get("submissionFeeAmount");
 
         assertThat(jsonPath.get("court.location"), is(not(emptyString())));
         assertThat(jsonPath.get("court.level"), is(not(emptyString())));

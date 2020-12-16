@@ -67,9 +67,12 @@ public class CreateCsoAccountTest extends DriverClass {
     public void verifyResponseReturnsClientIdAccountIdAndInternalClientNumber() {
         jsonPath = new JsonPath(response.asString());
 
-        assertEquals("1", jsonPath.get("clientId"));
-        assertEquals("1", jsonPath.get("accountId"));
-        assertNull(jsonPath.get("internalClientNumber"));
+        // For TEST
+        assertEquals("752", jsonPath.get("clientId"));
+        assertEquals("437", jsonPath.get("accountId"));
+//        assertEquals("1", jsonPath.get("clientId"));
+//        assertEquals("1", jsonPath.get("accountId"));
+        assertNotNull(jsonPath.get("internalClientNumber"));
         assertTrue(jsonPath.get("fileRolePresent"));
     }
 
@@ -91,8 +94,11 @@ public class CreateCsoAccountTest extends DriverClass {
     public void verifyResponseReturnsClientIdAccountIdAndInternalClientNumberIsUpdated() {
         jsonPath = new JsonPath(response.asString());
 
-        assertEquals("1", jsonPath.get("clientId"));
-        assertEquals("1", jsonPath.get("accountId"));
+        // For TEST
+        assertEquals("752", jsonPath.get("clientId"));
+        assertEquals("437", jsonPath.get("accountId"));
+//        assertEquals("1", jsonPath.get("clientId"));
+//        assertEquals("1", jsonPath.get("accountId"));
         assertEquals("23423", jsonPath.get("internalClientNumber"));
         assertTrue(jsonPath.get("fileRolePresent"));
     }
@@ -118,9 +124,10 @@ public class CreateCsoAccountTest extends DriverClass {
     public void verifyResponseReturnsFirstNameLastNameAndMiddleName() {
         jsonPath = new JsonPath(response.asString());
 
-        assertEquals("Bob", jsonPath.get("firstName"));
-        assertEquals("Ross", jsonPath.get("lastName"));
-        assertEquals("Alan", jsonPath.get("middleName"));
+        // Demo mode bob ross alan
+        assertEquals("efilehub test account", jsonPath.get("firstName"));
+        assertEquals("efile tester", jsonPath.get("lastName"));
+        assertEquals("", jsonPath.get("middleName"));
     }
 
     @Then("POST http request is made to {string} with incorrect path value")

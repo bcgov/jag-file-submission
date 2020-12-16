@@ -1,6 +1,6 @@
 Feature: Payment card can be updated
 
-   @backend
+   @backendDemo
    Scenario: Verify payment card can be updated
    ## generate update-card call ##
    Given user jwt is retrieved from the frontend

@@ -10,7 +10,8 @@ public enum APIResources {
     LOOK_UP_API("/lookup/documentTypes"),
     PAYMENT_API("/payment/generate-update-card"),
     INCORRECT_GENERATE_URL_API("/submissions/generateUrl"),
-    INCORRECT_CREATE_CSO_ACCOUNT_API("/csoAccounts");
+    INCORRECT_CREATE_CSO_ACCOUNT_API("/csoAccounts"),
+    COURTS_API("/courts");
 
     private final String resource;
 

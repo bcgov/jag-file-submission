@@ -1,0 +1,156 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -------------------< ca.bc.gov.open:cucumber-tests >--------------------
+[INFO] Building cucumber-tests 1.0-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- openapi-generator-maven-plugin:4.3.1:generate (spring-boot-api) @ cucumber-tests ---
+[INFO] No .openapi-generator-ignore file found.
+[INFO] OpenAPI Generator: spring (server)
+[INFO] Generator 'spring' is considered stable.
+[INFO] ----------------------------------
+[INFO] Set base package to invoker package (ca.bc.gov.open.jag.efilingapi.qa.api.handler)
+[INFO] Environment variable JAVA_POST_PROCESS_FILE not defined so the Java code may not be properly formatted. To define it, try 'export JAVA_POST_PROCESS_FILE="/usr/local/bin/clang-format -i"' (Linux/Mac)
+[INFO] NOTE: To enable file post-processing, 'enablePostProcessFile' must be set to `true` (--enable-post-process-file for CLI).
+[INFO] Processing operation UploadSubmissionDocuments
+[INFO] Processing operation DeleteSubmission
+[INFO] Processing operation UploadAdditionalSubmissionDocuments
+[INFO] Processing operation UpdateDocumentProperties
+[INFO] Processing operation GetSubmissionConfig
+[INFO] Processing operation GenerateUrl
+[INFO] Processing operation submit
+[INFO] Processing operation GetSubmissionFilingPackage
+[INFO] Processing operation GetSubmissionDocument
+[INFO] Processing operation GetCsoAccount
+[INFO] Processing operation updateCsoAccount
+[INFO] Processing operation CreateAccount
+[INFO] Processing operation GetBceidAccount
+[INFO] Processing operation GetDocumentTypes
+[INFO] Processing operation GetCourtLocations
+[INFO] Processing operation UpdateCreditCard
+[WARNING] [deprecated] inheritance without use of 'discriminator.propertyName' is deprecated and will be removed in a future release. Generating model for composed schema name: null. Title: null
+[WARNING] [deprecated] inheritance without use of 'discriminator.propertyName' is deprecated and will be removed in a future release. Generating model for composed schema name: null. Title: null
+[WARNING] [deprecated] inheritance without use of 'discriminator.propertyName' is deprecated and will be removed in a future release. Generating model for composed schema name: null. Title: null
+[WARNING] [deprecated] inheritance without use of 'discriminator.propertyName' is deprecated and will be removed in a future release. Generating model for composed schema name: null. Title: null
+[INFO] Model SubmitRequest not generated since it's a free-form object
+[INFO] Model inline_object (marked as unused due to form parameters) is generated due to the system property skipFormModel=false (default)
+[INFO] Model inline_object_1 (marked as unused due to form parameters) is generated due to the system property skipFormModel=false (default)
+[INFO] writing file C:\Users\202609\github\jag-file-submission\tests\target\generated-sources\openapi\src\main\java\ca\bc\gov\open\jag\efilingapi\qa\api\model\Address.java
+[INFO] writing file C:\Users\202609\github\jag-file-submission\tests\target\generated-sources\openapi\src\main\java\ca\bc\gov\open\jag\efilingapi\qa\api\model\BceidAccount.java
+[INFO] writing file C:\Users\202609\github\jag-file-submission\tests\target\generated-sources\openapi\src\main\java\ca\bc\gov\open\jag\efilingapi\qa\api\model\Court.java
+[INFO] writing file C:\Users\202609\github\jag-file-submission\tests\target\generated-sources\openapi\src\main\java\ca\bc\gov\open\jag\efilingapi\qa\api\model\CourtBase.java
+[INFO] writing file C:\Users\202609\github\jag-file-submission\tests\target\generated-sources\openapi\src\main\java\ca\bc\gov\open\jag\efilingapi\qa\api\model\CourtLocation.java
+[INFO] writing file C:\Users\202609\github\jag-file-submission\tests\target\generated-sources\openapi\src\main\java\ca\bc\gov\open\jag\efilingapi\qa\api\model\CourtLocations.java
+[INFO] writing file C:\Users\202609\github\jag-file-submission\tests\target\generated-sources\openapi\src\main\java\ca\bc\gov\open\jag\efilingapi\qa\api\model\CreateCsoAccountRequest.java
+[INFO] writing file C:\Users\202609\github\jag-file-submission\tests\target\generated-sources\openapi\src\main\java\ca\bc\gov\open\jag\efilingapi\qa\api\model\CsoAccount.java
+[INFO] writing file C:\Users\202609\github\jag-file-submission\tests\target\generated-sources\openapi\src\main\java\ca\bc\gov\open\jag\efilingapi\qa\api\model\CsoAccountUpdateRequest.java
+[INFO] writing file C:\Users\202609\github\jag-file-submission\tests\target\generated-sources\openapi\src\main\java\ca\bc\gov\open\jag\efilingapi\qa\api\model\Document.java
+[INFO] writing file C:\Users\202609\github\jag-file-submission\tests\target\generated-sources\openapi\src\main\java\ca\bc\gov\open\jag\efilingapi\qa\api\model\DocumentProperties.java
+[INFO] writing file C:\Users\202609\github\jag-file-submission\tests\target\generated-sources\openapi\src\main\java\ca\bc\gov\open\jag\efilingapi\qa\api\model\DocumentType.java
+[INFO] writing file C:\Users\202609\github\jag-file-submission\tests\target\generated-sources\openapi\src\main\java\ca\bc\gov\open\jag\efilingapi\qa\api\model\DocumentTypes.java
+[INFO] writing file C:\Users\202609\github\jag-file-submission\tests\target\generated-sources\openapi\src\main\java\ca\bc\gov\open\jag\efilingapi\qa\api\model\EfilingError.java
+[INFO] writing file C:\Users\202609\github\jag-file-submission\tests\target\generated-sources\openapi\src\main\java\ca\bc\gov\open\jag\efilingapi\qa\api\model\FilingPackage.java
+[INFO] writing file C:\Users\202609\github\jag-file-submission\tests\target\generated-sources\openapi\src\main\java\ca\bc\gov\open\jag\efilingapi\qa\api\model\GenerateCardUrlRequest.java
+[INFO] writing file C:\Users\202609\github\jag-file-submission\tests\target\generated-sources\openapi\src\main\java\ca\bc\gov\open\jag\efilingapi\qa\api\model\GenerateCardUrlResponse.java
+[INFO] writing file C:\Users\202609\github\jag-file-submission\tests\target\generated-sources\openapi\src\main\java\ca\bc\gov\open\jag\efilingapi\qa\api\model\GenerateUrlRequest.java
+[INFO] writing file C:\Users\202609\github\jag-file-submission\tests\target\generated-sources\openapi\src\main\java\ca\bc\gov\open\jag\efilingapi\qa\api\model\GenerateUrlResponse.java
+[INFO] writing file C:\Users\202609\github\jag-file-submission\tests\target\generated-sources\openapi\src\main\java\ca\bc\gov\open\jag\efilingapi\qa\api\model\GetSubmissionConfigResponse.java
+[INFO] writing file C:\Users\202609\github\jag-file-submission\tests\target\generated-sources\openapi\src\main\java\ca\bc\gov\open\jag\efilingapi\qa\api\model\InitialPackage.java
+[INFO] writing file C:\Users\202609\github\jag-file-submission\tests\target\generated-sources\openapi\src\main\java\ca\bc\gov\open\jag\efilingapi\qa\api\model\InlineObject.java
+[INFO] writing file C:\Users\202609\github\jag-file-submission\tests\target\generated-sources\openapi\src\main\java\ca\bc\gov\open\jag\efilingapi\qa\api\model\InlineObject1.java
+[INFO] writing file C:\Users\202609\github\jag-file-submission\tests\target\generated-sources\openapi\src\main\java\ca\bc\gov\open\jag\efilingapi\qa\api\model\NavigationUrls.java
+[INFO] writing file C:\Users\202609\github\jag-file-submission\tests\target\generated-sources\openapi\src\main\java\ca\bc\gov\open\jag\efilingapi\qa\api\model\Party.java
+[INFO] writing file C:\Users\202609\github\jag-file-submission\tests\target\generated-sources\openapi\src\main\java\ca\bc\gov\open\jag\efilingapi\qa\api\model\SubmitResponse.java
+[INFO] writing file C:\Users\202609\github\jag-file-submission\tests\target\generated-sources\openapi\src\main\java\ca\bc\gov\open\jag\efilingapi\qa\api\model\UpdateDocumentRequest.java
+[INFO] writing file C:\Users\202609\github\jag-file-submission\tests\target\generated-sources\openapi\src\main\java\ca\bc\gov\open\jag\efilingapi\qa\api\model\UpdateDocumentResponse.java
+[INFO] writing file C:\Users\202609\github\jag-file-submission\tests\target\generated-sources\openapi\src\main\java\ca\bc\gov\open\jag\efilingapi\qa\api\model\UploadSubmissionDocumentsResponse.java
+[INFO] Skipping generation of APIs.
+[INFO] Skipping generation of supporting files.
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ cucumber-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\202609\github\jag-file-submission\tests\src\main\resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.1:compile (default-compile) @ cucumber-tests ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 48 source files to C:\Users\202609\github\jag-file-submission\tests\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ cucumber-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 5 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.1:testCompile (default-testCompile) @ cucumber-tests ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 9 source files to C:\Users\202609\github\jag-file-submission\tests\target\test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.0.0-M3:test (default-test) @ cucumber-tests ---
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running ca.bc.gov.open.jagefilingapi.qa.cucumber.Options.RunCucumberTest
+
+@backendDemo
+Scenario: Verify if a single document is uploaded, url is generated and package information can be retrieved for requests made with valid CSO account # src/test/java/features/backendfeatures/1-generateUrlAndSubmissionForExistingGuid.feature:5
+[INFO ] 2020-12-08 04:51:38.890 DriverClass.java - URL value is not available in the properties file.
+      java.lang.NullPointerException
+	at ca.bc.gov.open.jagefilingapi.qa.frontendutils.DriverClass.driverSetUp(DriverClass.java:47)
+	at stepDefinitions.frontendstepdefinitions.EFileSubmissionTest.setUp(EFileSubmissionTest.java:40)
+
+  Given POST http request is made to "DOCUMENT_SUBMISSION" with valid existing CSO account guid and a single pdf file                                 # stepDefinitions.backendstepdefinitions.GenerateUrlAndSubmissionTest.postHttpRequestIsMadeToWithValidExistingCsoAccountGuidAndASinglePdfFile(java.lang.String)
+  When status code is 200 and content type is verified                                                                                                # stepDefinitions.backendstepdefinitions.GenerateUrlAndSubmissionTest.statusCodeIsAndContentTypeIsVerified(java.lang.Integer)
+  Then verify submission id and document count is received                                                                                            # stepDefinitions.backendstepdefinitions.GenerateUrlAndSubmissionTest.verifySubmissionIdAndDocumentCountIsReceived()
+  Given POST http request is made to "GENERATE_URL_API" with client application, court details and navigation urls                                    # stepDefinitions.backendstepdefinitions.GenerateUrlAndSubmissionTest.POSTHttpRequestIsMadeToWithClientApplicationCourtDetailsAndNavigationUrls(java.lang.String)
+  When status code is 200 and content type is verified                                                                                                # stepDefinitions.backendstepdefinitions.GenerateUrlAndSubmissionTest.statusCodeIsAndContentTypeIsVerified(java.lang.Integer)
+  Then verify expiry date and eFiling url are returned with the CSO account guid and submission id                                                    # stepDefinitions.backendstepdefinitions.GenerateUrlAndSubmissionTest.verifyExpiryDateAndEfilingUrlAreReturnedWithTheCsoAccountGuidAndSubmissionId()
+  Given user token is retrieved from the frontend                                                                                                     # stepDefinitions.backendstepdefinitions.GenerateUrlAndSubmissionTest.userTokenisRetrievedFromTheFrontend()
+  Then "SUBMISSION" id is submitted with GET http request                                                                                             # stepDefinitions.backendstepdefinitions.GenerateUrlAndSubmissionTest.idIsSubmittedWithGetHttpRequest(java.lang.String)
+  When status code is 200 and content type is verified                                                                                                # stepDefinitions.backendstepdefinitions.GenerateUrlAndSubmissionTest.statusCodeIsAndContentTypeIsVerified(java.lang.Integer)
+  Then verify clientAppName and csoBaseUrl values are returned and not empty                                                                          # stepDefinitions.backendstepdefinitions.GenerateUrlAndSubmissionTest.verifyUniversalIdClientAppNameAndCsoBaseUrlValuesAreReturnedAndNotEmpty()
+  And verify success, error and cancel navigation urls are returned                                                                                   # stepDefinitions.backendstepdefinitions.GenerateUrlAndSubmissionTest.verifySuccessErrorAndCancelNavigationUrlsAreReturned()
+  Given "SUBMISSION" id with filing package path is submitted with GET http request                                                                   # stepDefinitions.backendstepdefinitions.GenerateUrlAndSubmissionTest.idWithFilingPackagePathIsSubmittedWithGETHttpRequest(java.lang.String)
+  When status code is 200 and content type is verified                                                                                                # stepDefinitions.backendstepdefinitions.GenerateUrlAndSubmissionTest.statusCodeIsAndContentTypeIsVerified(java.lang.Integer)
+  Then verify court details and document details are returned and not empty                                                                           # stepDefinitions.backendstepdefinitions.GenerateUrlAndSubmissionTest.verifyCourtDetailsAndDocumentDetailsAreReturnedAndNotEmpty()
+  Given "SUBMISSION" id with filename path is submitted with GET http request                                                                         # stepDefinitions.backendstepdefinitions.GenerateUrlAndSubmissionTest.idWithFilenamePathIsSubmittedWithGETHttpRequest(java.lang.String)
+  Then Verify status code is 200 and content type is not json                                                                                         # stepDefinitions.backendstepdefinitions.GenerateUrlAndSubmissionTest.verifyStatusCodeIsAndContentTypeIsNotJson(java.lang.Integer)
+  Given "COURTS_API" without court level type is submitted with GET http request                                                                      # stepDefinitions.backendstepdefinitions.GenerateUrlAndSubmissionTest.withoutCourtLevelTypeIsSubmittedWithGETHttpRequest(java.lang.String)
+  Then Verify status code is 200 and content type is not json                                                                                         # stepDefinitions.backendstepdefinitions.GenerateUrlAndSubmissionTest.verifyStatusCodeIsAndContentTypeIsNotJson(java.lang.Integer)
+[INFO ] 2020-12-08 04:51:38.971 EFileSubmissionTest.java - Verify if a single document is uploaded, url is generated and package information can be retrieved for requests made with valid CSO accountis Failed
+      java.lang.NullPointerException
+	at stepDefinitions.frontendstepdefinitions.EFileSubmissionTest.tearDown(EFileSubmissionTest.java:48)
+
+[ERROR] Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 3.161 s <<< FAILURE! - in ca.bc.gov.open.jagefilingapi.qa.cucumber.Options.RunCucumberTest
+[ERROR] Verify if a single document is uploaded, url is generated and package information can be retrieved for requests made with valid CSO account(When user uploads the documents, id is authenticated user details, navigation urls are generated and user,)  Time elapsed: 1.137 s  <<< ERROR!
+java.lang.NullPointerException
+
+[ERROR] Verify if a single document is uploaded, url is generated and package information can be retrieved for requests made with valid CSO account(When user uploads the documents, id is authenticated user details, navigation urls are generated and user,)  Time elapsed: 1.137 s  <<< ERROR!
+java.lang.NullPointerException
+
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Errors: 
+[ERROR] When user uploads the documents, id is authenticated user details, navigation urls are generated and user,.Verify if a single document is uploaded, url is generated and package information can be retrieved for requests made with valid CSO account(When user uploads the documents, id is authenticated user details, navigation urls are generated and user,)
+[ERROR]   Run 1: null
+[ERROR]   Run 2: null
+[INFO] 
+[INFO] 
+[ERROR] Tests run: 1, Failures: 0, Errors: 1, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  15.137 s
+[INFO] Finished at: 2020-12-08T04:51:39-08:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.0.0-M3:test (default-test) on project cucumber-tests: There are test failures.
+[ERROR] 
+[ERROR] Please refer to C:\Users\202609\github\jag-file-submission\tests\target\surefire-reports for the individual test results.
+[ERROR] Please refer to dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
