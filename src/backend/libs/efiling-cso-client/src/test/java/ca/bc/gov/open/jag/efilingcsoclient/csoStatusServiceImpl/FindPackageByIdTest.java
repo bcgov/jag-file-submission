@@ -9,6 +9,7 @@ import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingStatusServiceExceptio
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoStatusServiceImpl;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapperImpl;
+import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
@@ -36,6 +37,7 @@ public class FindPackageByIdTest {
     public static final String FIRST_NAME = "FIRSTNAME";
     public static final String LAST_NAME = "LASTNAME";
     public static final String PACKAGE_NO = "PACKAGENO";
+    public static final DateTime SUBMITED_DATE = new DateTime(2020, 12, 12, 1, 1);
     @Mock
     FilingStatusFacadeBean filingStatusFacadeBean;
 
@@ -51,7 +53,7 @@ public class FindPackageByIdTest {
     private static CsoStatusServiceImpl sut;
 
     @BeforeAll
-    public void beforeAll() throws NestedEjbException_Exception {
+    public void beforeAll() throws NestedEjbException_Exception, DatatypeConfigurationException {
 
         MockitoAnnotations.openMocks(this);
 
@@ -69,8 +71,25 @@ public class FindPackageByIdTest {
 
     @DisplayName("OK: package found")
     @Test
-    public void testWithFoundResult() {
+    public void testWithFoundResult() throws DatatypeConfigurationException {
         ca.bc.gov.open.jag.efilingcommons.model.FilePackage result = sut.findStatusByPackage(SUCCESS_CLIENT, SUCCESS_PACKAGE);
+
+        Assertions.assertEquals(CLIENT_FILE_NO, result.getClientFileNo());
+        Assertions.assertEquals(COURT_CLASS_CD, result.getCourtClassCd());
+        Assertions.assertEquals(COURT_FILE_NO, result.getCourtFileNo());
+        Assertions.assertEquals(COURT_LEVEL_CD, result.getCourtLevelCd());
+        Assertions.assertEquals(COURT_LOCATION_CD, result.getCourtLocationCd());
+        Assertions.assertEquals(BigDecimal.ONE, result.getCourtLocationId());
+        Assertions.assertEquals(COURT_LOCATION_NAME, result.getCourtLocationName());
+        Assertions.assertEquals(true, result.getExistingCourtFileYN());
+        Assertions.assertEquals(FILING_COMMENTS_TXT, result.getFilingCommentsTxt());
+        Assertions.assertEquals(FIRST_NAME, result.getFirstName());
+        Assertions.assertEquals(true, result.getHasChecklist());
+        Assertions.assertEquals(true, result.getHasRegistryNotice());
+        Assertions.assertEquals(LAST_NAME, result.getLastName());
+        Assertions.assertEquals(PACKAGE_NO, result.getPackageNo());
+        Assertions.assertEquals(SUBMITED_DATE.toString(), result.getSubmittedDate().toString());
+
     }
 
     @DisplayName("Exception: no packages found")
@@ -109,7 +128,7 @@ public class FindPackageByIdTest {
         filePackage.setHasRegistryNotice(true);
         filePackage.setLastName(LAST_NAME);
         filePackage.setPackageNo(PACKAGE_NO);
-        filePackage.setSubmittedDate(DateUtils.getXmlDate(new Date(2020,12,12)));
+        filePackage.setSubmittedDate(DateUtils.getXmlDate(SUBMITED_DATE));
         return filePackage;
     }
 }

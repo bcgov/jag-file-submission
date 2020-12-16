@@ -66,6 +66,7 @@ public class AutoConfigurationTest {
             assertThat(it).hasSingleBean(EfilingLookupService.class);
             assertThat(it).hasSingleBean(EfilingCourtService.class);
             assertThat(it).hasSingleBean(EfilingSubmissionService.class);
+            assertThat(it).hasSingleBean(EfilingStatusService.class);
             assertThat(it).hasSingleBean(AccountDetailsMapper.class);
         });
 

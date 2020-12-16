@@ -1,5 +1,7 @@
 package ca.bc.gov.open.jag.efilingcommons.model;
 
+import org.joda.time.DateTime;
+
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigDecimal;
 
@@ -18,7 +20,7 @@ public class FilePackage {
     private Boolean hasRegistryNotice;
     private String lastName;
     private String packageNo;
-    private XMLGregorianCalendar submittedDate;
+    private DateTime submittedDate;
 
     public String getClientFileNo() {
         return clientFileNo;
@@ -132,11 +134,11 @@ public class FilePackage {
         this.packageNo = packageNo;
     }
 
-    public XMLGregorianCalendar getSubmittedDate() {
+    public DateTime getSubmittedDate() {
         return submittedDate;
     }
 
-    public void setSubmittedDate(XMLGregorianCalendar submittedDate) {
+    public void setSubmittedDate(DateTime submittedDate) {
         this.submittedDate = submittedDate;
     }
 }
