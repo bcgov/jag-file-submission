@@ -89,6 +89,10 @@ public class AutoConfiguration {
     public FinancialTransactionMapper financialTransactionMapper() { return new FinancialTransactionMapperImpl(); }
 
     @Bean
+    public FilePackageMapper filePackageMapper() { return new FilePackageMapperImpl(); }
+
+
+    @Bean
     public DocumentMapper documentMapper() {
         return new DocumentMapperImpl();
     }
@@ -124,6 +128,13 @@ public class AutoConfiguration {
     public CsoCourtServiceImpl efilingCourtService(Csows csows, FilingStatusFacadeBean filingStatusFacadeBean) {
         return new CsoCourtServiceImpl(csows, filingStatusFacadeBean);
     }
+
+    @Bean
+    @ConditionalOnMissingBean({EfilingStatusService.class})
+    public CsoStatusServiceImpl efilingStatusService(FilingStatusFacadeBean filingStatusFacadeBean, FilePackageMapper filePackageMapper) {
+        return new CsoStatusServiceImpl(filingStatusFacadeBean, filePackageMapper);
+    }
+
 
     @Bean
     @ConditionalOnMissingBean({EfilingSubmissionService.class})
