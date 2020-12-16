@@ -125,14 +125,12 @@ public class AutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnMissingBean({EfilingStatusService.class})
     public CsoStatusServiceImpl efilingStatusService(FilingStatusFacadeBean filingStatusFacadeBean, FilePackageMapper filePackageMapper) {
         return new CsoStatusServiceImpl(filingStatusFacadeBean, filePackageMapper);
     }
 
 
     @Bean
-    @ConditionalOnMissingBean({EfilingSubmissionService.class})
     public EfilingSubmissionService efilingSubmissionService(FilingFacadeBean filingFacadeBean,
                                                              ServiceFacadeBean serviceFacadeBean,
                                                              ServiceMapper serviceMapper,
