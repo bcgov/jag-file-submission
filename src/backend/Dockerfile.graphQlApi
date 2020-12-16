@@ -28,7 +28,7 @@ WORKDIR /
 
 COPY . .
 
-RUN mvn -B clean install -P efilng-graphql
+RUN mvn -B clean install -P efiling-graphql
 
 WORKDIR /efiling-graphql
 

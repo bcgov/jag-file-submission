@@ -1,6 +1,5 @@
-package ca.bc.gov.open.jag.efilingapi.payment;
+package ca.bc.gov.open.jag.bambora;
 
-import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.PaymentsApi;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.handler.ApiException;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.Custom;
@@ -10,16 +9,15 @@ import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.ProfilePurchase;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingPaymentException;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingPayment;
 import ca.bc.gov.open.jag.efilingcommons.model.PaymentTransaction;
+import ca.bc.gov.open.jag.efilingcommons.payment.PaymentAdapter;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
-import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
-@Service
-public class BamboraPaymentAdapter {
+public class BamboraPaymentAdapter implements PaymentAdapter {
 
     Logger logger = LoggerFactory.getLogger(BamboraPaymentAdapter.class);
 
@@ -42,9 +40,9 @@ public class BamboraPaymentAdapter {
             result.setTransactonDtm(DateTime.now());
             result.setTransactionAmt(BigDecimal.valueOf(response.getAmount()));
             if (response.getApproved() == PaymentConstants.BAMBORA_APPROVAL_RESPONSE) {
-                MDC.put(Keys.MDC_EFILING_SUBMISSION_FEE, response.getAmount().toString());
+                MDC.put(PaymentConstants.MDC_EFILING_SUBMISSION_FEE, response.getAmount().toString());
                 logger.info("Successful payment of [{}]", response.getAmount());
-                MDC.remove(Keys.MDC_EFILING_SUBMISSION_FEE);
+                MDC.remove(PaymentConstants.MDC_EFILING_SUBMISSION_FEE);
                 result.setTransactionStateCd(PaymentConstants.TRANSACTION_STATE_APPROVED);
             } else {
                 logger.info("Failed payment");
