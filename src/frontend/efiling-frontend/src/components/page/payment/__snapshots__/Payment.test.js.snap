@@ -555,7 +555,6 @@ exports[`Payment Component Matches the snapshot with existing credit card 1`] = 
             <svg
               fill="currentColor"
               height="32"
-              size="32"
               stroke="currentColor"
               stroke-width="0"
               viewBox="0 0 24 24"
@@ -1048,7 +1047,6 @@ exports[`Payment Component Matches the snapshot with no credit card 1`] = `
             <svg
               fill="currentColor"
               height="32"
-              size="32"
               stroke="currentColor"
               stroke-width="0"
               viewBox="0 0 24 24"
@@ -1552,7 +1550,6 @@ exports[`Payment Component On back click, it redirects back to the package confi
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"
@@ -1659,7 +1656,6 @@ exports[`Payment Component On back click, it redirects back to the package confi
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"

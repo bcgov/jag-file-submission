@@ -64,9 +64,9 @@ const removeUploadedFile = (
   setAcceptedFiles,
   setContinueBtnEnabled
 ) => {
-  filesToUpload.documents = filesToUpload.documents.filter((doc) => {
-    return doc.name !== fileName;
-  });
+  filesToUpload.documents = filesToUpload.documents.filter(
+    (doc) => doc.name !== fileName
+  );
 
   setAcceptedFiles(acceptedFiles.filter((f) => f.name !== fileName));
   setContinueBtnEnabled(checkValidityOfUploadedFiles());
@@ -158,29 +158,27 @@ const generateRadioButtonJSX = (fileName, type, setContinueBtnEnabled) => {
   );
 };
 
-const generateDropdownJSX = (items, fileName, setContinueBtnEnabled) => {
-  return (
-    <>
-      <div className="table-value top-spacing">
-        <Dropdown
-          label="Description:"
-          items={translateItems(items)}
-          onSelect={(val) => {
-            filesToUpload.documents.forEach((f) => {
-              const file = f;
-              if (file.name === fileName) {
-                file.type = items.find((item) => item.description === val).type;
-              }
-            });
+const generateDropdownJSX = (items, fileName, setContinueBtnEnabled) => (
+  <>
+    <div className="table-value top-spacing">
+      <Dropdown
+        label="Description:"
+        items={translateItems(items)}
+        onSelect={(val) => {
+          filesToUpload.documents.forEach((f) => {
+            const file = f;
+            if (file.name === fileName) {
+              file.type = items.find((item) => item.description === val).type;
+            }
+          });
 
-            setContinueBtnEnabled(checkValidityOfUploadedFiles());
-          }}
-        />
-      </div>
-      <br />
-    </>
-  );
-};
+          setContinueBtnEnabled(checkValidityOfUploadedFiles());
+        }}
+      />
+    </div>
+    <br />
+  </>
+);
 
 const generateTable = (
   items,

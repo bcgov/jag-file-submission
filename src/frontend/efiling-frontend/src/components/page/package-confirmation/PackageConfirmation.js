@@ -37,27 +37,25 @@ const downloadFile = (file, submissionId) => {
     });
 };
 
-const generateTable = (file, data, submissionId) => {
-  return [
-    {
-      name: (
-        <div style={{ width: "80%" }}>
-          <span
-            onKeyDown={() => downloadFile(file, submissionId)}
-            role="button"
-            tabIndex={0}
-            className="file-href"
-            onClick={() => downloadFile(file, submissionId)}
-            data-test-id="uploaded-file"
-          >
-            {file.name}
-          </span>
-        </div>
-      ),
-      value: <Table elements={data} />,
-    },
-  ];
-};
+const generateTable = (file, data, submissionId) => [
+  {
+    name: (
+      <div style={{ width: "80%" }}>
+        <span
+          onKeyDown={() => downloadFile(file, submissionId)}
+          role="button"
+          tabIndex={0}
+          className="file-href"
+          onClick={() => downloadFile(file, submissionId)}
+          data-test-id="uploaded-file"
+        >
+          {file.name}
+        </span>
+      </div>
+    ),
+    value: <Table elements={data} />,
+  },
+];
 
 const generateTableData = (file, submissionId) => {
   const data = [

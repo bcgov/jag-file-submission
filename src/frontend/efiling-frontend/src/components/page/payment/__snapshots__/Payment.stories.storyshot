@@ -23,7 +23,6 @@ exports[`Storyshots Payment Mobile 1`] = `
             <svg
               fill="currentColor"
               height="32"
-              size="32"
               stroke="currentColor"
               stroke-width="0"
               viewBox="0 0 24 24"
@@ -518,7 +517,6 @@ exports[`Storyshots Payment With Fees 1`] = `
             <svg
               fill="currentColor"
               height="32"
-              size="32"
               stroke="currentColor"
               stroke-width="0"
               viewBox="0 0 24 24"
@@ -1013,7 +1011,6 @@ exports[`Storyshots Payment Without Fees 1`] = `
             <svg
               fill="currentColor"
               height="32"
-              size="32"
               stroke="currentColor"
               stroke-width="0"
               viewBox="0 0 24 24"

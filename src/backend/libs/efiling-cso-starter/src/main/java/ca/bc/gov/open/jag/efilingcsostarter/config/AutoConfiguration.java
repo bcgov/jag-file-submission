@@ -8,15 +8,11 @@ import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.ag.csows.lookups.LookupFacadeBean;
 import ca.bc.gov.ag.csows.services.ServiceFacadeBean;
 import ca.bc.gov.open.jag.efilingcommons.model.Clients;
-import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
 import ca.bc.gov.open.jag.efilingcommons.service.*;
-import ca.bc.gov.open.jag.efilingcsostarter.*;
-import ca.bc.gov.open.jag.efilingcsostarter.mappers.*;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.cxf.ext.logging.LoggingInInterceptor;
-import org.apache.cxf.ext.logging.LoggingOutInterceptor;
-import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
+import ca.bc.gov.open.jag.efilingcsoclient.*;
+import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
+import ca.bc.gov.open.jag.efilingcsoclient.mappers.*;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -24,42 +20,42 @@ import org.springframework.context.annotation.Configuration;
 
 
 @Configuration
-@EnableConfigurationProperties({SoapProperties.class, CsoProperties.class})
+@EnableConfigurationProperties({SoapProperties.class, SpringCsoProperties.class})
 public class AutoConfiguration {
 
     private final SoapProperties soapProperties;
 
     private final CsoProperties csoProperties;
 
-    public AutoConfiguration(SoapProperties soapProperties, CsoProperties csoProperties) {
+    public AutoConfiguration(SoapProperties soapProperties, SpringCsoProperties csoProperties) {
         this.soapProperties = soapProperties;
         this.csoProperties = csoProperties;
     }
 
     @Bean
     public AccountFacadeBean accountFacadeBean() {
-        return getPort(Clients.ACCOUNT, AccountFacadeBean.class);
+        return SoapUtils.getPort(Clients.ACCOUNT, AccountFacadeBean.class, soapProperties, csoProperties.isDebugEnabled());
     }
 
     @Bean
     public RoleRegistryPortType roleRegistryPortType() {
-       return getPort(Clients.ROLE, RoleRegistryPortType.class);
+       return SoapUtils.getPort(Clients.ROLE, RoleRegistryPortType.class, soapProperties, csoProperties.isDebugEnabled());
     }
 
     @Bean
-    public FilingStatusFacadeBean filingStatusFacadeBean() { return getPort(Clients.STATUS, FilingStatusFacadeBean.class); }
+    public FilingStatusFacadeBean filingStatusFacadeBean() { return SoapUtils.getPort(Clients.STATUS, FilingStatusFacadeBean.class, soapProperties, csoProperties.isDebugEnabled()); }
 
     @Bean
-    public LookupFacadeBean lookupFacadeBean() { return getPort(Clients.LOOKUP, LookupFacadeBean.class); }
+    public LookupFacadeBean lookupFacadeBean() { return SoapUtils.getPort(Clients.LOOKUP, LookupFacadeBean.class, soapProperties, csoProperties.isDebugEnabled()); }
 
     @Bean
-    public Csows csows() { return getPort(Clients.CSOWS, Csows.class); }
+    public Csows csows() { return SoapUtils.getPort(Clients.CSOWS, Csows.class, soapProperties, csoProperties.isDebugEnabled()); }
 
     @Bean
-    public FilingFacadeBean filingFacadeBean() { return getPort(Clients.FILING, FilingFacadeBean.class); }
+    public FilingFacadeBean filingFacadeBean() { return SoapUtils.getPort(Clients.FILING, FilingFacadeBean.class, soapProperties, csoProperties.isDebugEnabled()); }
 
     @Bean
-    public ServiceFacadeBean serviceFacadeBean() { return getPort(Clients.SERVICE, ServiceFacadeBean.class); }
+    public ServiceFacadeBean serviceFacadeBean() { return SoapUtils.getPort(Clients.SERVICE, ServiceFacadeBean.class, soapProperties, csoProperties.isDebugEnabled()); }
 
     @Bean
     public AccountDetailsMapper accountDetailsMapper() {
@@ -139,26 +135,6 @@ public class AutoConfiguration {
                 packageAuthorityMapper); }
 
 
-    public <T> T getPort(Clients clients, Class<T> type) {
-        JaxWsProxyFactoryBean jaxWsProxyFactoryBean = new JaxWsProxyFactoryBean();
-        jaxWsProxyFactoryBean.setServiceClass(type);
-        EfilingSoapClientProperties efilingSoapClientProperties = soapProperties.findByEnum(clients);
-        jaxWsProxyFactoryBean.setAddress(efilingSoapClientProperties.getUri());
-        if(StringUtils.isNotBlank(efilingSoapClientProperties.getUserName()))
-            jaxWsProxyFactoryBean.setUsername(efilingSoapClientProperties.getUserName());
-        if(StringUtils.isNotBlank(efilingSoapClientProperties.getPassword()))
-            jaxWsProxyFactoryBean.setPassword(efilingSoapClientProperties.getPassword());
 
-        if(csoProperties.isDebugEnabled()) {
-            LoggingInInterceptor loggingInInterceptor = new LoggingInInterceptor();
-            loggingInInterceptor.setPrettyLogging(true);
-            LoggingOutInterceptor loggingOutInterceptor = new LoggingOutInterceptor();
-            loggingOutInterceptor.setPrettyLogging(true);
-            jaxWsProxyFactoryBean.getOutInterceptors().add(0, loggingOutInterceptor);
-            jaxWsProxyFactoryBean.getInInterceptors().add(0, loggingInInterceptor);
-        }
-
-        return type.cast(jaxWsProxyFactoryBean.create());
-    }
 
 }
