@@ -11,8 +11,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      # In this step, this action saves a list of existing images,
+      # the cache is created without them in the post run.
+      # It also restores the cache if it exists.
+      - uses: satackey/action-docker-layer-caching@v0.0.8
+        # Ignore the failure of a step and avoid terminating the job.
+        continue-on-error: true
+
       # Build Docker and Run Tests
       - name: build docker
         run: |
-          EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET=${{secrets.EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}} KEYCLOAK_REALM=${{secrets.KEYCLOAK_REALM}} KEYCLOAK_URL=${{secrets.KEYCLOAK_URL}} EFILING_DEMO_KEYCLOAK_REALM=${{secrets.EFILING_DEMO_KEYCLOAK_REALM}} EFILING_DEMO_KEYCLOAK_URL=${{secrets.EFILING_DEMO_KEYCLOAK_URL}} KEYCLOAK_AUTH_SERVER_URL=${{secrets.EFILING_DEMO_KEYCLOAK_URL}} docker-compose up -d redis sftp clamav efiling-api keycloak efiling-demo efiling-frontend
- 
+          EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET=${{secrets.EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}} KEYCLOAK_REALM=${{secrets.KEYCLOAK_REALM}} KEYCLOAK_URL=${{secrets.KEYCLOAK_URL}} EFILING_DEMO_KEYCLOAK_REALM=${{secrets.EFILING_DEMO_KEYCLOAK_REALM}} EFILING_DEMO_KEYCLOAK_URL=${{secrets.EFILING_DEMO_KEYCLOAK_URL}} KEYCLOAK_AUTH_SERVER_URL=${{secrets.EFILING_DEMO_KEYCLOAK_URL}} docker-compose build redis sftp clamav efiling-api keycloak efiling-demo efiling-frontend efiling-graphql
