@@ -107,6 +107,21 @@ services:
       - NAVIGATION_EXPIRYTIME=10
       - CLAMAV_HOST=clamav
       - CLAMAV_TIMEOUT=150000
+    networks:
+      - fisu-net
+
+  #############################################################################################
+  ###                                 Efiling graphql api                                   ###
+  #############################################################################################
+
+  efiling-graphql:
+    build:
+      context: ./src/backend
+      dockerfile: Dockerfile.graphQlApi
+      args:
+        - STARTERS_V=v0.1.8
+    ports:
+      - "8090:8080"
 
     networks:
       - fisu-net

@@ -9,28 +9,31 @@
     <version>0.6.0-SNAPSHOT</version>
 
     <properties>
+        <ca.bc.gov.open.version>0.1.8</ca.bc.gov.open.version>
+        <com.github.joschi.jackson.version>2.11.3</com.github.joschi.jackson.version>
+        <com.google.code.findbugs.version>3.0.2</com.google.code.findbugs.version>
+        <com.brsanthu.version>2.2</com.brsanthu.version>
+        <com.fasterxml.jackson.core.version>2.11.3</com.fasterxml.jackson.core.version>
+        <com.splunk.logging.version>1.8.0</com.splunk.logging.version>
         <io.github.openfeign.opentracing.version>0.4.1</io.github.openfeign.opentracing.version>
         <io.opentracing.contrib.version>3.2.2</io.opentracing.contrib.version>
         <io.springfox.version>2.9.2</io.springfox.version>
         <io.swagger.version>1.6.2</io.swagger.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
+        <javax.xml.bind.version>2.3.1</javax.xml.bind.version>
         <joda-time.version>2.10.8</joda-time.version>
         <net.rakugakibox.spring.boot.version>2.7.1</net.rakugakibox.spring.boot.version>
-        <org.apache.commons.version>3.11</org.apache.commons.version>
-        <org.springdoc.version>1.5.1</org.springdoc.version>
-        <org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
-        <com.splunk.logging.version>1.8.0</com.splunk.logging.version>
-        <org.openapitools.version>0.2.1</org.openapitools.version>
         <org.apache.cxf.version>3.4.1</org.apache.cxf.version>
         <org.apache.tika.version>1.24.1</org.apache.tika.version>
-        <com.fasterxml.jackson.core.version>2.11.3</com.fasterxml.jackson.core.version>
-        <javax.xml.bind.version>2.3.1</javax.xml.bind.version>
+        <org.apache.commons.version>3.11</org.apache.commons.version>
+        <org.junit.jupiter.version>5.6.3</org.junit.jupiter.version>
+        <org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
+        <org.mockito.mockito-all.version>1.10.19</org.mockito.mockito-all.version>
+        <org.mockito.mockito-core.version>3.6.0</org.mockito.mockito-core.version>
         <org.glassfish.jersey.inject.version>2.32</org.glassfish.jersey.inject.version>
-        <com.brsanthu.version>2.2</com.brsanthu.version>
+        <org.openapitools.version>0.2.1</org.openapitools.version>
+        <org.springdoc.version>1.5.1</org.springdoc.version>
         <org.threeten.version>1.5.0</org.threeten.version>
-        <com.github.joschi.jackson.version>2.11.3</com.github.joschi.jackson.version>
-        <com.google.code.findbugs.version>3.0.2</com.google.code.findbugs.version>
-        <ca.bc.gov.open.version>0.1.8</ca.bc.gov.open.version>
     </properties>
 
     <repositories>
@@ -227,6 +230,37 @@
                 <artifactId>bambora-payment-starter</artifactId>
                 <version>${ca.bc.gov.open.version}</version>
             </dependency>
+
+
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${org.junit.jupiter.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>${org.junit.jupiter.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>${org.mockito.mockito-all.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${org.mockito.mockito-core.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+
 
         </dependencies>
     </dependencyManagement>
