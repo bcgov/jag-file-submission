@@ -9,11 +9,13 @@ import ca.bc.gov.ag.csows.lookups.LookupFacadeBean;
 import ca.bc.gov.ag.csows.services.ServiceFacadeBean;
 import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
-import ca.bc.gov.open.jag.efilingcommons.service.*;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import ca.bc.gov.open.jag.efilingcsoclient.*;
 import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.*;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -87,7 +89,6 @@ public class AutoConfiguration {
     public PackageAuthorityMapper packageAuthorityMapper() { return new PackageAuthorityMapperImpl(); }
 
     @Bean
-    @ConditionalOnMissingBean({EfilingAccountService.class})
     public EfilingAccountService efilingAccountService(AccountFacadeBean accountFacadeBean,
                                                        RoleRegistryPortType roleRegistryPortType,
                                                        AccountDetailsMapper accountDetailsMapper) {
@@ -95,25 +96,21 @@ public class AutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnMissingBean({EfilingDocumentService.class})
     public EfilingDocumentService efilingDocumentService(FilingStatusFacadeBean filingStatusFacadeBean) {
         return new CsoDocumentServiceImpl(filingStatusFacadeBean);
     }
 
     @Bean
-    @ConditionalOnMissingBean({EfilingLookupService.class})
     public EfilingLookupService efilingLookupService(LookupFacadeBean lookupFacadeBean) {
         return new CsoLookupServiceImpl(lookupFacadeBean);
     }
 
     @Bean
-    @ConditionalOnMissingBean({EfilingCourtService.class})
     public CsoCourtServiceImpl efilingCourtService(Csows csows, FilingStatusFacadeBean filingStatusFacadeBean) {
         return new CsoCourtServiceImpl(csows, filingStatusFacadeBean);
     }
 
     @Bean
-    @ConditionalOnMissingBean({EfilingSubmissionService.class})
     public EfilingSubmissionService efilingSubmissionService(FilingFacadeBean filingFacadeBean,
                                                              ServiceFacadeBean serviceFacadeBean,
                                                              ServiceMapper serviceMapper,
