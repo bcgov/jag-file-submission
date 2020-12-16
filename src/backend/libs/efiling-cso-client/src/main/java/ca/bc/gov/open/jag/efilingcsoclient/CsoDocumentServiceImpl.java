@@ -7,13 +7,12 @@ import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceExcept
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
+
 public class CsoDocumentServiceImpl implements EfilingDocumentService {
 
     private final FilingStatusFacadeBean filingStatusFacadeBean;

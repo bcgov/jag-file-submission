@@ -1,9 +1,8 @@
-package ca.bc.gov.open.jag.efilingcsoclient;
+package ca.bc.gov.open.jag.efilingcsostarter.config;
 
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
-import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
 import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

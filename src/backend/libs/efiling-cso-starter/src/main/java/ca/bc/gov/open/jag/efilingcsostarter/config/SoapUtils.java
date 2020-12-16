@@ -1,8 +1,7 @@
-package ca.bc.gov.open.jag.efilingcsoclient;
+package ca.bc.gov.open.jag.efilingcsostarter.config;
 
 import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
-import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.cxf.ext.logging.LoggingInInterceptor;
 import org.apache.cxf.ext.logging.LoggingOutInterceptor;
