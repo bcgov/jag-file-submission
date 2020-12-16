@@ -10,6 +10,7 @@ import ca.bc.gov.open.jag.efilingcommons.service.EfilingStatusService;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapper;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 public class CsoStatusServiceImpl implements EfilingStatusService {
 
@@ -23,13 +24,13 @@ public class CsoStatusServiceImpl implements EfilingStatusService {
     }
 
     @Override
-    public FilePackage findStatusByPackage(BigDecimal clientId, BigDecimal packageNo) {
+    public Optional<FilePackage> findStatusByPackage(BigDecimal clientId, BigDecimal packageNo) {
         try {
 
             FilingStatus filingStatus = filingStatusFacadeBean.findStatusBySearchCriteria(clientId, null, null, null, null, null, packageNo, null, null, null, null, null, BigDecimal.ONE, null);
-            if (filingStatus.getFilePackages().isEmpty())  throw new EfilingStatusServiceException("No records for that package");
+            if (filingStatus.getFilePackages().isEmpty()) return Optional.empty();
 
-            return filePackageMapper.toFilePackage(filingStatus.getFilePackages().get(0));
+            return  Optional.of(filePackageMapper.toFilePackage(filingStatus.getFilePackages().get(0)));
 
         } catch (NestedEjbException_Exception e) {
             throw new EfilingStatusServiceException("Exception while finding status", e.getCause());

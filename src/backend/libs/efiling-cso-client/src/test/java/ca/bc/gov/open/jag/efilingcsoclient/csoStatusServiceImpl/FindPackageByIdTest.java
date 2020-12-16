@@ -4,7 +4,6 @@ import ca.bc.gov.ag.csows.filing.status.FilePackage;
 import ca.bc.gov.ag.csows.filing.status.FilingStatus;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
-import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingStatusServiceException;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoStatusServiceImpl;
@@ -18,9 +17,8 @@ import org.mockito.MockitoAnnotations;
 
 
 import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 
@@ -47,8 +45,8 @@ public class FindPackageByIdTest {
     private final BigDecimal EXCEPTION_CLIENT = BigDecimal.TEN;
     private final BigDecimal EXCEPTION_PACKAGE = BigDecimal.TEN;
 
-    private final BigDecimal NOTFOUND_CLIENT = BigDecimal.TEN;
-    private final BigDecimal NOTFOUND_PACKAGE = BigDecimal.TEN;
+    private final BigDecimal NOTFOUND_CLIENT = BigDecimal.ZERO;
+    private final BigDecimal NOTFOUND_PACKAGE = BigDecimal.ZERO;
 
     private static CsoStatusServiceImpl sut;
 
@@ -72,30 +70,33 @@ public class FindPackageByIdTest {
     @DisplayName("OK: package found")
     @Test
     public void testWithFoundResult() throws DatatypeConfigurationException {
-        ca.bc.gov.open.jag.efilingcommons.model.FilePackage result = sut.findStatusByPackage(SUCCESS_CLIENT, SUCCESS_PACKAGE);
+        Optional<ca.bc.gov.open.jag.efilingcommons.model.FilePackage> result = sut.findStatusByPackage(SUCCESS_CLIENT, SUCCESS_PACKAGE);
 
-        Assertions.assertEquals(CLIENT_FILE_NO, result.getClientFileNo());
-        Assertions.assertEquals(COURT_CLASS_CD, result.getCourtClassCd());
-        Assertions.assertEquals(COURT_FILE_NO, result.getCourtFileNo());
-        Assertions.assertEquals(COURT_LEVEL_CD, result.getCourtLevelCd());
-        Assertions.assertEquals(COURT_LOCATION_CD, result.getCourtLocationCd());
-        Assertions.assertEquals(BigDecimal.ONE, result.getCourtLocationId());
-        Assertions.assertEquals(COURT_LOCATION_NAME, result.getCourtLocationName());
-        Assertions.assertEquals(true, result.getExistingCourtFileYN());
-        Assertions.assertEquals(FILING_COMMENTS_TXT, result.getFilingCommentsTxt());
-        Assertions.assertEquals(FIRST_NAME, result.getFirstName());
-        Assertions.assertEquals(true, result.getHasChecklist());
-        Assertions.assertEquals(true, result.getHasRegistryNotice());
-        Assertions.assertEquals(LAST_NAME, result.getLastName());
-        Assertions.assertEquals(PACKAGE_NO, result.getPackageNo());
-        Assertions.assertEquals(SUBMITED_DATE.toString(), result.getSubmittedDate().toString());
+        Assertions.assertEquals(CLIENT_FILE_NO, result.get().getClientFileNo());
+        Assertions.assertEquals(COURT_CLASS_CD, result.get().getCourtClassCd());
+        Assertions.assertEquals(COURT_FILE_NO, result.get().getCourtFileNo());
+        Assertions.assertEquals(COURT_LEVEL_CD, result.get().getCourtLevelCd());
+        Assertions.assertEquals(COURT_LOCATION_CD, result.get().getCourtLocationCd());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getCourtLocationId());
+        Assertions.assertEquals(COURT_LOCATION_NAME, result.get().getCourtLocationName());
+        Assertions.assertEquals(true, result.get().getExistingCourtFileYN());
+        Assertions.assertEquals(FILING_COMMENTS_TXT, result.get().getFilingCommentsTxt());
+        Assertions.assertEquals(FIRST_NAME, result.get().getFirstName());
+        Assertions.assertEquals(true, result.get().getHasChecklist());
+        Assertions.assertEquals(true, result.get().getHasRegistryNotice());
+        Assertions.assertEquals(LAST_NAME, result.get().getLastName());
+        Assertions.assertEquals(PACKAGE_NO, result.get().getPackageNo());
+        Assertions.assertEquals(SUBMITED_DATE.toString(), result.get().getSubmittedDate().toString());
 
     }
 
-    @DisplayName("Exception: no packages found")
+    @DisplayName("Ok: no packages found")
     @Test
     public void testWithNoResult() {
-        Assertions.assertThrows(EfilingStatusServiceException.class, () -> sut.findStatusByPackage(NOTFOUND_CLIENT, NOTFOUND_PACKAGE));
+        Optional<ca.bc.gov.open.jag.efilingcommons.model.FilePackage> result = sut.findStatusByPackage(NOTFOUND_CLIENT, NOTFOUND_PACKAGE);
+
+        Assertions.assertFalse(result.isPresent());
+
     }
 
     @DisplayName("Exception: filing status facade throws an exception")
