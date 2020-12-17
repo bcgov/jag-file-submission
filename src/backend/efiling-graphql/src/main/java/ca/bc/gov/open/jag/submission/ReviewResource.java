@@ -6,6 +6,8 @@ import org.eclipse.microprofile.graphql.Description;
 import org.eclipse.microprofile.graphql.GraphQLApi;
 import org.eclipse.microprofile.graphql.Name;
 import org.eclipse.microprofile.graphql.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 
@@ -13,16 +15,19 @@ import java.math.BigDecimal;
 @GraphQLApi
 public class ReviewResource {
 
+    Logger logger = LoggerFactory.getLogger(this.getClass());
+
+
     private final EfilingStatusService efilingStatusService;
 
     public ReviewResource(EfilingStatusService efilingStatusService) {
         this.efilingStatusService = efilingStatusService;
     }
 
-    @Query("packageReview")
+    @Query
     @Description("Query a package")
     public FilePackage getSubmission(@Name("clientId") BigDecimal clientId, @Name("packageNo") BigDecimal packageNo) {
-
+        logger.info("GraphQl Request received");
         return efilingStatusService.findStatusByPackage(clientId, packageNo).get();
     }
 }
