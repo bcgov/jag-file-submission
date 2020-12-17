@@ -2,19 +2,19 @@ module.exports = {
   env: {
     browser: true,
     es6: true,
-    jest: true
+    jest: true,
   },
   extends: ["plugin:react/recommended", "airbnb", "prettier"],
   globals: {
     Atomics: "readonly",
-    SharedArrayBuffer: "readonly"
+    SharedArrayBuffer: "readonly",
   },
   parserOptions: {
     ecmaFeatures: {
-      jsx: true
+      jsx: true,
     },
     ecmaVersion: 2018,
-    sourceType: "module"
+    sourceType: "module",
   },
   plugins: ["react", "prettier"],
   ignorePatterns: ["node_modules/", "build/"],
@@ -27,6 +27,11 @@ module.exports = {
     "react/jsx-wrap-multilines": "off",
     "import/no-cycle": "off",
     "react/forbid-prop-types": "off",
-    "prettier/prettier": ["error"]
-  }
+    "prettier/prettier": [
+      "error",
+      {
+        endOfLine: "auto",
+      },
+    ],
+  },
 };

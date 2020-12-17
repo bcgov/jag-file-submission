@@ -10,6 +10,8 @@ tags:
     description: Endpoints that are exposed to external client
   - name: submission
     description: Submission Api
+  - name: courts
+    description: Courts
 security:
   - bearerAuth: []
 paths:
@@ -338,6 +340,27 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DocumentTypes"
+  "/courts":
+    get:
+      summary: Get court locations
+      operationId: GetCourtLocations
+      description: get court information by court name
+      tags:
+        - courts
+      parameters:
+        - name: courtLevel
+          in: query
+          description: court type filter
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Information of a court
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CourtLocations"
   "/payment/generate-update-card":
     post:
       summary: Update card on bambora
@@ -473,7 +496,7 @@ components:
                * `LPC` - Letter - Court Proceeding via Teleconference
                * `LPV` - Letter - Court Proceeding via Videoconference
                * `LT` - Letter General
-              LT5J	Letter Request for 5 Judges
+              LT5J  Letter Request for 5 Judges
                * `MEMA` - Memorandum of Appellant
                * `MEMI` - Memorandum of Intervenor
                * `MEMO` - Memorandum of Other
@@ -1783,6 +1806,10 @@ components:
           type: string
         message:
           type: string
+        details:
+          type: array
+          items:
+            type: string
     GenerateUrlRequest:
       description: details about the required transaction
       required:
@@ -2195,3 +2222,69 @@ components:
         internalClientNumber:
           type: string
           description: internal client number for request to bambora
+    CourtLocation:
+      type: object
+      description: "Court related information"
+      required:
+        - id
+        - name
+        - code
+        - identifierCode
+        - isSupremeCourt
+        - address
+      properties:
+        id:
+          type: number
+          description: the court id
+        identifierCode:
+          type: string
+          description: the court id code
+        name:
+          type: string
+          description: the court name
+        code:
+          type: string
+          description: the court code
+        isSupremeCourt:
+          type: boolean
+          description: the court supreme
+        address:
+          $ref: "#/components/schemas/Address"
+    CourtLocations:
+      description: resposne body for courtlocations
+      type: object
+      properties:
+        courts:
+          type: array
+          items:
+            $ref: "#/components/schemas/CourtLocation"
+    Address:
+      description: address object
+      type: object
+      required:
+        - addressLine1
+        - cityName
+        - provinceName
+        - countryName
+      properties:
+        addressLine1:
+          type: string
+          description: the court address line one
+        addressLine2:
+          type: string
+          description: the court address line two
+        addressLine3:
+          type: string
+          description: the court address line three
+        postalCode:
+          type: string
+          description: the court postal code
+        cityName:
+          description: the court city name
+          type: string
+        provinceName:
+          type: string
+          description: the court province name
+        countryName:
+          description: the address country name
+          type: string

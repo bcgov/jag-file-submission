@@ -20,18 +20,16 @@ const calloutText = `Please provide the date of when the direction was made,
 the name of the Judge who made the direction along with any additional details
 you feel are necessary.`;
 
-const generateInputField = (input, onChange) => {
-  return (
-    <div className="form-child">
-      <Input input={input} onChange={onChange} />
-    </div>
-  );
-};
+const generateInputField = (input, onChange) => (
+  <div className="form-child">
+    <Input input={input} onChange={onChange} />
+  </div>
+);
 
 export default function Rush({ payment }) {
   const input = {
     isReadOnly: false,
-    styling: "editable-white",
+    styling: "bcgov-editable-white",
     isRequired: true,
   };
   const aboutCsoSidecard = getSidecardData().aboutCso;
@@ -171,12 +169,12 @@ export default function Rush({ payment }) {
           <Button
             label="Cancel Request"
             onClick={() => setShowPayment(true)}
-            styling="normal-white btn"
+            styling="bcgov-normal-white btn"
           />
           <Button
             label="Submit Request"
             onClick={() => console.log("submit rush")}
-            styling="normal-blue btn"
+            styling="bcgov-normal-blue btn"
           />
         </section>
       </div>

@@ -4,9 +4,7 @@ import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
-import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
-import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
-import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlResponse;
+import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
@@ -17,6 +15,8 @@ import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMappe
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
+import ca.bc.gov.open.jag.efilingapi.submission.validator.GenerateUrlRequestValidator;
+import ca.bc.gov.open.jag.efilingapi.utils.Notification;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.CSOHasMultipleAccountException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
@@ -85,6 +85,9 @@ public class GenerateUrlTest {
     private ClamAvService clamAvServiceMock;
     private UUID transactionId = UUID.randomUUID();
 
+    @Mock
+    private GenerateUrlRequestValidator generateUrlRequestValidatorMock;
+
 
     @BeforeAll
     public void setUp() {
@@ -132,8 +135,20 @@ public class GenerateUrlTest {
                 ArgumentMatchers.argThat(x -> x.getSubmissionId().equals(TestHelpers.CASE_5)),
                 Mockito.any());
 
+        Notification notification = new Notification();
+        Mockito.doReturn(notification).when(generateUrlRequestValidatorMock)
+                .validate(
+                        ArgumentMatchers.argThat(x -> x.getFilingPackage().getCourt().getLocation().equals("valid")),
+                        Mockito.anyString());
+
+        Notification invalidNotification = new Notification();
+        invalidNotification.addError("a random error");
+        Mockito.doReturn(invalidNotification).when(generateUrlRequestValidatorMock).validate(
+                ArgumentMatchers.argThat(x -> x.getFilingPackage().getCourt().getLocation().equals("invalid")),
+                Mockito.anyString());
+
         FilingPackageMapper filingPackageMapper = new FilingPackageMapperImpl();
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, new GenerateUrlResponseMapperImpl(), navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, new GenerateUrlResponseMapperImpl(), navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper, generateUrlRequestValidatorMock);
 
     }
 
@@ -150,6 +165,12 @@ public class GenerateUrlTest {
 
         generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
         generateUrlRequest.setNavigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
+        generateUrlRequest.setNavigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
+        InitialPackage initialPackage = new InitialPackage();
+        CourtBase court = new CourtBase();
+        court.setLocation("valid");
+        initialPackage.setCourt(court);
+        generateUrlRequest.setFilingPackage(initialPackage);
 
         ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(transactionId, USER_WITH_CSO_ACCOUNT.toString().replace("-", ""), TestHelpers.CASE_1, generateUrlRequest);
 
@@ -172,6 +193,12 @@ public class GenerateUrlTest {
 
         generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
         generateUrlRequest.setNavigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
+        generateUrlRequest.setNavigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
+        InitialPackage initialPackage = new InitialPackage();
+        CourtBase court = new CourtBase();
+        court.setLocation("valid");
+        initialPackage.setCourt(court);
+        generateUrlRequest.setFilingPackage(initialPackage);
 
         ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(transactionId, USER_WITH_NO_CSO_ACCOUNT.toString().replace("-", ""), TestHelpers.CASE_1, generateUrlRequest);
 
@@ -181,6 +208,35 @@ public class GenerateUrlTest {
 
     }
 
+    @Test
+    @DisplayName("400: with initialPackage validation failure should return 400")
+    public void whenInitialPackageValidationFailureShouldReturn() {
+
+        @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
+
+        Map<String, Object> otherClaims = new HashMap<>();
+        otherClaims.put(Keys.CSO_APPLICATION_CODE, CODE);
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
+        generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
+        generateUrlRequest.setNavigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
+        InitialPackage initialPackage = new InitialPackage();
+        CourtBase court = new CourtBase();
+        court.setLocation("invalid");
+        initialPackage.setCourt(court);
+        generateUrlRequest.setFilingPackage(initialPackage);
+
+        ResponseEntity actual = sut.generateUrl(transactionId, USER_WITH_NO_CSO_ACCOUNT.toString().replace("-", ""), TestHelpers.CASE_1, generateUrlRequest);
+
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
+
+        EfilingError actualError = (EfilingError) actual.getBody();
+
+        Assertions.assertEquals("Initial Submission payload invalid, find more in the details array.", actualError.getMessage());
+        Assertions.assertEquals("INVALID_INITIAL_SUBMISSION_PAYLOAD", actualError.getError());
+        Assertions.assertEquals("a random error", actualError.getDetails().get(0));
+
+    }
 
     @Test
     @DisplayName("400: when CSOHasMultipleAccountException should return Bad Request")
@@ -189,6 +245,11 @@ public class GenerateUrlTest {
 
         generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
         generateUrlRequest.setNavigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
+        InitialPackage initialPackage = new InitialPackage();
+        CourtBase court = new CourtBase();
+        court.setLocation("valid");
+        initialPackage.setCourt(court);
+        generateUrlRequest.setFilingPackage(initialPackage);
 
         ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_2, generateUrlRequest);
 
@@ -206,6 +267,11 @@ public class GenerateUrlTest {
 
         generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
         generateUrlRequest.setNavigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
+        InitialPackage initialPackage = new InitialPackage();
+        CourtBase court = new CourtBase();
+        court.setLocation("valid");
+        initialPackage.setCourt(court);
+        generateUrlRequest.setFilingPackage(initialPackage);
 
         ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_3, generateUrlRequest);
 
@@ -229,6 +295,11 @@ public class GenerateUrlTest {
 
         generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
         generateUrlRequest.setNavigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
+        InitialPackage initialPackage = new InitialPackage();
+        CourtBase court = new CourtBase();
+        court.setLocation("valid");
+        initialPackage.setCourt(court);
+        generateUrlRequest.setFilingPackage(initialPackage);
 
         ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(transactionId, UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_1, generateUrlRequest);
 
@@ -242,6 +313,11 @@ public class GenerateUrlTest {
 
         generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
         generateUrlRequest.setNavigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
+        InitialPackage initialPackage = new InitialPackage();
+        CourtBase court = new CourtBase();
+        court.setLocation("valid");
+        initialPackage.setCourt(court);
+        generateUrlRequest.setFilingPackage(initialPackage);
 
         ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_4, generateUrlRequest);
 
@@ -259,6 +335,11 @@ public class GenerateUrlTest {
 
         generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
         generateUrlRequest.setNavigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
+        InitialPackage initialPackage = new InitialPackage();
+        CourtBase court = new CourtBase();
+        court.setLocation("valid");
+        initialPackage.setCourt(court);
+        generateUrlRequest.setFilingPackage(initialPackage);
 
         ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_5, generateUrlRequest);
 

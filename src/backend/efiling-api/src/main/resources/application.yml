@@ -60,6 +60,11 @@ jag:
           password: ${CSO_SERVICEFACADE_PASSWORD}
           uri: ${CSO_SERVICEFACADE_URI:http://localhost:8091}
 
+ceis:
+  ceisBasePath: ${CEIS_BASE_PATH}
+  ceisUsername: ${CEIS_USERNAME}
+  ceisPassword: ${CEIS_PASSWORD}
+
 cso:
   fileServerHost: ${CSO_FILE_SERVER_HOST}
   csoBasePath: ${CSO_BASE_URL:http://localhost/cso}

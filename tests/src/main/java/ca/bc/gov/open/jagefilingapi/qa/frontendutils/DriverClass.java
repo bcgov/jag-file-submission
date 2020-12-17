@@ -42,9 +42,9 @@ public class DriverClass {
                     log.info("URL value is not available in the properties file.");
             }
         }
-        public void  driverSetUp() throws IOException {
+        public void  driverSetUp() {
             initializeDriver();
-            driver.manage().timeouts().implicitlyWait(90, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
             driver.manage().timeouts().setScriptTimeout(120, TimeUnit.SECONDS);
             driver.manage().deleteAllCookies();
     }

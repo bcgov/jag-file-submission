@@ -1,9 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.lookup;
 
 import ca.bc.gov.open.jag.efilingapi.api.LookupApiDelegate;
-import ca.bc.gov.open.jag.efilingapi.api.model.DocumentType;
-import ca.bc.gov.open.jag.efilingapi.api.model.DocumentTypes;
-import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
+import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
@@ -15,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.security.RolesAllowed;
 import java.util.stream.Collectors;
+
 @Service
 public class LookupApiDelegateImpl implements LookupApiDelegate {
     Logger logger = LoggerFactory.getLogger(LookupApiDelegateImpl.class);

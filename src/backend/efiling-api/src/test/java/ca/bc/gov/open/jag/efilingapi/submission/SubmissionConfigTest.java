@@ -1,16 +1,23 @@
 package ca.bc.gov.open.jag.efilingapi.submission;
 
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
-import ca.bc.gov.open.jag.efilingapi.payment.BamboraPaymentAdapter;
-import ca.bc.gov.open.jag.efilingapi.submission.mappers.*;
+import ca.bc.gov.open.jag.efilingapi.fakes.CourtServiceFake;
+import ca.bc.gov.open.jag.efilingapi.fakes.DocumentServiceFake;
+import ca.bc.gov.open.jag.efilingapi.fakes.EfilingCourtServiceFake;
+import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapper;
+import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapperImpl;
+import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
+import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStoreImpl;
-import ca.bc.gov.open.jag.efilingbamboraapiclient.api.PaymentsApi;
-import ca.bc.gov.open.jag.efilingbamboraapiclient.api.handler.ApiClient;
 import ca.bc.gov.open.jag.efilingcommons.model.*;
-import ca.bc.gov.open.jag.efilingcommons.service.*;
+import ca.bc.gov.open.jag.efilingcommons.payment.PaymentAdapter;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingPaymentService;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import ca.bc.gov.open.sftp.starter.SftpService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -21,8 +28,6 @@ import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,15 +40,15 @@ public class SubmissionConfigTest {
             .withUserConfiguration(
                     SubmissionConfig.class,
                     CacheProperties.class)
-            .withBean(ApiClient.class)
-            .withBean(PaymentsApi.class)
-            .withBean(BamboraPaymentAdapter.class)
+            .withBean(PaymentAdapterTest.class)
             .withBean(SftpServiceTestImpl.class)
             .withBean(EfilingLookupServiceTest.class)
-            .withBean(EfilingCourtServiceTest.class)
+            .withBean(EfilingCourtServiceFake.class)
             .withBean(EfilingDocumentServiceTest.class)
             .withBean(EfilingSubmissionServiceTest.class)
-            .withBean(DocumentStoreTest.class);
+            .withBean(DocumentStoreTest.class)
+            .withBean(CourtServiceFake.class)
+            .withBean(DocumentServiceFake.class);
 
     @Test
     @DisplayName("Test Submission Beans")
@@ -105,24 +110,6 @@ public class SubmissionConfigTest {
         }
     }
 
-    public static class EfilingCourtServiceTest implements EfilingCourtService {
-
-        @Override
-        public CourtDetails getCourtDescription(String agencyIdentifierCd, String courtLevel, String courtClass) {
-            return null;
-        }
-
-        @Override
-        public boolean checkValidLevelClassLocation(BigDecimal agencyId, String courtLevel, String courtClass, String applicationCode) {
-            return false;
-        }
-
-        @Override
-        public boolean checkValidCourtFileNumber(String fileNumber, BigDecimal agencyId, String courtLevel, String courtClass, String applicationCode) {
-            return false;
-        }
-    }
-
     public static class EfilingSubmissionServiceTest implements EfilingSubmissionService {
 
         @Override
@@ -172,5 +159,13 @@ public class SubmissionConfigTest {
             return null;
         }
     }
-    
+
+    public static class PaymentAdapterTest implements PaymentAdapter {
+
+        @Override
+        public PaymentTransaction makePayment(EfilingPayment efilingPayment) {
+            return null;
+        }
+    }
+
 }

@@ -56,25 +56,23 @@ const generateCourtDataTable = ({
   locationDescription,
   levelDescription,
   classDescription,
-}) => {
-  return [
-    {
-      name: "Court File Number:",
-      value: fileNumber,
-      isValueBold: true,
-    },
-    {
-      name: "Location:",
-      value: locationDescription,
-      isValueBold: true,
-    },
-    {
-      name: "Level and Class:",
-      value: `${levelDescription} ${classDescription}`,
-      isValueBold: true,
-    },
-  ];
-};
+}) => [
+  {
+    name: "Court File Number:",
+    value: fileNumber,
+    isValueBold: true,
+  },
+  {
+    name: "Location:",
+    value: locationDescription,
+    isValueBold: true,
+  },
+  {
+    name: "Level and Class:",
+    value: `${levelDescription} ${classDescription}`,
+    isValueBold: true,
+  },
+];
 
 const submitPackage = (submissionId, setSubmitBtnEnabled, setShowLoader) => {
   setShowLoader(true);
@@ -188,7 +186,7 @@ export default function Payment({
               sessionStorage.removeItem("isBamboraRedirect");
               setShowPackageConfirmation(true);
             }}
-            styling="normal-white btn"
+            styling="bcgov-normal-white btn"
           />
           <div className="button-container">
             <ConfirmationPopup
@@ -202,7 +200,7 @@ export default function Payment({
               onClick={() => {
                 submitPackage(submissionId, setSubmitBtnEnabled, setShowLoader);
               }}
-              styling="normal-blue normal-blue-ml btn"
+              styling="bcgov-normal-blue normal-blue-ml btn"
               disabled={!submitBtnEnabled}
               hasLoader={showLoader}
             />

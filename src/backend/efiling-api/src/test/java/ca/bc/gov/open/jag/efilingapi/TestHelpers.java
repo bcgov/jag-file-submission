@@ -46,7 +46,7 @@ public class TestHelpers {
     public static final String LAST_NAME = "LASTNAME";
     public static final String NAME_TYPE_CD = "NAMECD";
     public static final String PARTY_TYPE_CD = "PARTYCD";
-    public static final String ROLE_TYPE_CD = "ROLECD";
+    public static final String ROLE_TYPE_CD = "ABC";
     public static final DocumentProperties.TypeEnum TYPE = DocumentProperties.TypeEnum.AAB;
 
     public static InitialPackage createInitalPackage(ca.bc.gov.open.jag.efilingapi.api.model.Court court, List<DocumentProperties> documentProperties) {

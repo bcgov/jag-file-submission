@@ -18,7 +18,7 @@ services:
       - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-frontend
       - REACT_APP_KEYCLOAK_URL=${KEYCLOAK_URL}
       - REACT_APP_API_BASE_URL=http://localhost:8080
-      - REACT_APP_BAMBORA_REDIRECT_URL=http://localhost:3000/efiling
+      - REACT_APP_BAMBORA_REDIRECT_URL=http://localhost:3000/efilinghub
 
   #############################################################################################
   ###                                 EFILING DEMO                                          ###
@@ -34,12 +34,10 @@ services:
     ports:
       - 3001:3000
     environment:
-      - REACT_APP_KEYCLOAK_REALM=${EFILING_DEMO_KEYCLOAK_REALM}
+      - REACT_APP_KEYCLOAK_REALM=${KEYCLOAK_REALM}
       - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-demo
-      - REACT_APP_KEYCLOAK_URL=${EFILING_DEMO_KEYCLOAK_URL}
+      - REACT_APP_KEYCLOAK_URL=${KEYCLOAK_URL}
       - REACT_APP_API_BASE_URL=http://localhost:8080
-      - REACT_APP_KEYCLOAK_CLIENT_SECRET=${EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}
-      - REACT_APP_API_KEYCLOAK_URL=${KEYCLOAK_URL}
       - REACT_APP_DEMO_CLIENT_ID=demo-app
 
   #############################################################################################
@@ -56,6 +54,7 @@ services:
     ports:
       - "8080:8080"
     environment:
+      - MVN_PROFILE=${MVN_PROFILE}
       - CSO_ACCOUNTFACADE_URI=${CSO_ACCOUNTFACADE_URI}
       - CSO_ACCOUNTFACADE_USERNAME=${CSO_ACCOUNTFACADE_USERNAME}
       - CSO_ACCOUNTFACADE_PASSWORD=${CSO_ACCOUNTFACADE_PASSWORD}
@@ -65,7 +64,6 @@ services:
       - CSO_LOOKUPFACADE_USERNAME=${CSO_LOOKUPFACADE_USERNAME}
       - CSO_LOOKUPFACADE_PASSWORD=${CSO_LOOKUPFACADE_PASSWORD}
       - CSO_LOOKUPFACADE_URI=${CSO_LOOKUPFACADE_URI}
-      - MVN_PROFILE=${MVN_PROFILE}
       - CSO_BCEIDSERVICE_URI=${CSO_BCEIDSERVICE_URI}
       - CSO_FILINGSTATSFACADE_URI=${CSO_FILINGSTATSFACADE_URI}
       - CSO_FILINGSTATSFACADE_USERNAME=${CSO_FILINGSTATSFACADE_USERNAME}
@@ -104,10 +102,26 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - REDIS_PASSWORD=admin
-      - NAVIGATION_BASE_URL=http://localhost:3000/efiling
+      - CEIS_BASE_PATH=${CEIS_BASE_PATH}
+      - NAVIGATION_BASE_URL=http://localhost:3000/efilinghub
       - NAVIGATION_EXPIRYTIME=10
       - CLAMAV_HOST=clamav
       - CLAMAV_TIMEOUT=150000
+    networks:
+      - fisu-net
+
+  #############################################################################################
+  ###                                 Efiling graphql api                                   ###
+  #############################################################################################
+
+  efiling-graphql:
+    build:
+      context: ./src/backend
+      dockerfile: Dockerfile.graphQlApi
+      args:
+        - STARTERS_V=v0.1.8
+    ports:
+      - "8090:8080"
 
     networks:
       - fisu-net

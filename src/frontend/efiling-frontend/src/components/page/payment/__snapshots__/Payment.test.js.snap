@@ -66,7 +66,7 @@ you feel are necessary.
         </p>
       </div>
       <div
-        class="input-label"
+        class="bcgov-input-label"
       >
         <label
           for="Date"
@@ -74,7 +74,7 @@ you feel are necessary.
           Date
         </label>
         <span
-          class="mandatory"
+          class="bcgov-mandatory"
           id="asterisk"
         >
           *
@@ -115,7 +115,7 @@ you feel are necessary.
       </div>
       <br />
       <div
-        class="input-label"
+        class="bcgov-input-label"
       >
         <label
           for="detailed-reason"
@@ -123,7 +123,7 @@ you feel are necessary.
           Clear and detailed reason(s)
         </label>
         <span
-          class="mandatory"
+          class="bcgov-mandatory"
           id="asterisk"
         >
           *
@@ -131,7 +131,7 @@ you feel are necessary.
          
       </div>
       <textarea
-        class="text-input"
+        class="bcgov-text-input"
         cols="60"
         id="detailed-reason"
         rows="8"
@@ -147,34 +147,34 @@ you feel are necessary.
         >
           <div>
             <label
-              class="label"
+              class="bcgov-label"
               for="lastName"
             >
               <div
-                class="input-label"
+                class="bcgov-input-label"
               >
                 Last Name
               </div>
               <span
-                class="mandatory"
+                class="bcgov-mandatory"
                 id="asterisk"
               >
                 *
               </span>
                
               <span
-                class="note"
+                class="bcgov-note"
               />
             </label>
             <input
-              class="editable-white"
+              class="bcgov-editable-white"
               id="lastName"
               type="text"
               value=""
             />
             <br />
             <span
-              class="error"
+              class="bcgov-error"
             />
           </div>
         </div>
@@ -183,28 +183,28 @@ you feel are necessary.
         >
           <div>
             <label
-              class="label"
+              class="bcgov-label"
               for="org"
             >
               <div
-                class="input-label"
+                class="bcgov-input-label"
               >
                 Organization
               </div>
                
               <span
-                class="note"
+                class="bcgov-note"
               />
             </label>
             <input
-              class="editable-white"
+              class="bcgov-editable-white"
               id="org"
               type="text"
               value=""
             />
             <br />
             <span
-              class="error"
+              class="bcgov-error"
             />
           </div>
         </div>
@@ -217,34 +217,34 @@ you feel are necessary.
         >
           <div>
             <label
-              class="label"
+              class="bcgov-label"
               for="firstName"
             >
               <div
-                class="input-label"
+                class="bcgov-input-label"
               >
                 First Name
               </div>
               <span
-                class="mandatory"
+                class="bcgov-mandatory"
                 id="asterisk"
               >
                 *
               </span>
                
               <span
-                class="note"
+                class="bcgov-note"
               />
             </label>
             <input
-              class="editable-white"
+              class="bcgov-editable-white"
               id="firstName"
               type="text"
               value=""
             />
             <br />
             <span
-              class="error"
+              class="bcgov-error"
             />
           </div>
         </div>
@@ -253,28 +253,28 @@ you feel are necessary.
         >
           <div>
             <label
-              class="label"
+              class="bcgov-label"
               for="country"
             >
               <div
-                class="input-label"
+                class="bcgov-input-label"
               >
                 Contact Country
               </div>
                
               <span
-                class="note"
+                class="bcgov-note"
               />
             </label>
             <input
-              class="editable-white"
+              class="bcgov-editable-white"
               id="country"
               type="text"
               value=""
             />
             <br />
             <span
-              class="error"
+              class="bcgov-error"
             />
           </div>
         </div>
@@ -287,34 +287,34 @@ you feel are necessary.
         >
           <div>
             <label
-              class="label"
+              class="bcgov-label"
               for="phoneNumber"
             >
               <div
-                class="input-label"
+                class="bcgov-input-label"
               >
                 Phone Number
               </div>
               <span
-                class="mandatory"
+                class="bcgov-mandatory"
                 id="asterisk"
               >
                 *
               </span>
                
               <span
-                class="note"
+                class="bcgov-note"
               />
             </label>
             <input
-              class="editable-white"
+              class="bcgov-editable-white"
               id="phoneNumber"
               type="text"
               value=""
             />
             <br />
             <span
-              class="error"
+              class="bcgov-error"
             />
           </div>
         </div>
@@ -363,14 +363,14 @@ you feel are necessary.
         class="buttons pt-2"
       >
         <button
-          class="bcgov-button normal-white btn"
+          class="bcgov-button bcgov-normal-white btn"
           data-test-id=""
           type="button"
         >
           Cancel Request
         </button>
         <button
-          class="bcgov-button normal-blue btn"
+          class="bcgov-button bcgov-normal-blue btn"
           data-test-id=""
           type="button"
         >
@@ -382,7 +382,7 @@ you feel are necessary.
       class="sidecard"
     >
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -391,23 +391,23 @@ you feel are necessary.
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="csoAccountDetailsCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -422,7 +422,7 @@ you feel are necessary.
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     Your CSO Account
                   </div>
@@ -430,10 +430,10 @@ you feel are necessary.
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   CSO account 
@@ -458,7 +458,7 @@ you feel are necessary.
         </div>
       </div>
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -467,23 +467,23 @@ you feel are necessary.
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="aboutCsoCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -498,7 +498,7 @@ you feel are necessary.
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     About E-File Submission
                   </div>
@@ -506,10 +506,10 @@ you feel are necessary.
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
@@ -544,10 +544,10 @@ exports[`Payment Component Matches the snapshot with existing credit card 1`] = 
         Payment
       </h1>
       <div
-        class="display-box success-background no-padding-bottom"
+        class="bcgov-display-box bcgov-success-background bcgov-no-padding-bottom"
       >
         <div
-          class="display-icon"
+          class="bcgov-display-icon"
         >
           <div
             style="color: rgb(46, 133, 64);"
@@ -555,7 +555,6 @@ exports[`Payment Component Matches the snapshot with existing credit card 1`] = 
             <svg
               fill="currentColor"
               height="32"
-              size="32"
               stroke="currentColor"
               stroke-width="0"
               viewBox="0 0 24 24"
@@ -569,7 +568,7 @@ exports[`Payment Component Matches the snapshot with existing credit card 1`] = 
           </div>
         </div>
         <div
-          class="display-right-element"
+          class="bcgov-display-right-element"
         >
           <p>
             <span>
@@ -762,7 +761,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
             I agree
           </b>
           <span
-            class="mandatory"
+            class="bcgov-mandatory"
             id="asterisk"
           >
             *
@@ -774,7 +773,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
         class="pt-2 buttons"
       >
         <button
-          class="bcgov-button normal-white btn"
+          class="bcgov-button bcgov-normal-white btn"
           data-test-id=""
           type="button"
         >
@@ -784,14 +783,14 @@ package and am prepared to submit them for filing. I agree that all fees for thi
           class="button-container"
         >
           <button
-            class="bcgov-button normal-white btn"
+            class="bcgov-button bcgov-normal-white btn"
             data-test-id="main-cancel-btn"
             type="button"
           >
             Cancel
           </button>
           <button
-            class="bcgov-button normal-blue normal-blue-ml btn"
+            class="bcgov-button bcgov-normal-blue normal-blue-ml btn"
             data-test-id=""
             disabled=""
             type="button"
@@ -805,7 +804,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
       class="sidecard"
     >
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -814,23 +813,23 @@ package and am prepared to submit them for filing. I agree that all fees for thi
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="rushSubmissionCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -845,7 +844,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     Rush/Urgent Submission
                   </div>
@@ -853,10 +852,10 @@ package and am prepared to submit them for filing. I agree that all fees for thi
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   If you wish to request that this package be submitted on an urgent (rush) basis, you must provide a reason for your request to be considered. 
@@ -875,7 +874,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
         </div>
       </div>
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -884,23 +883,23 @@ package and am prepared to submit them for filing. I agree that all fees for thi
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="csoAccountDetailsCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -915,7 +914,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     Your CSO Account
                   </div>
@@ -923,10 +922,10 @@ package and am prepared to submit them for filing. I agree that all fees for thi
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   CSO account 
@@ -951,7 +950,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
         </div>
       </div>
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -960,23 +959,23 @@ package and am prepared to submit them for filing. I agree that all fees for thi
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="aboutCsoCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -991,7 +990,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     About E-File Submission
                   </div>
@@ -999,10 +998,10 @@ package and am prepared to submit them for filing. I agree that all fees for thi
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
@@ -1037,10 +1036,10 @@ exports[`Payment Component Matches the snapshot with no credit card 1`] = `
         Payment
       </h1>
       <div
-        class="display-box error-background no-padding-bottom"
+        class="bcgov-display-box bcgov-error-background bcgov-no-padding-bottom"
       >
         <div
-          class="display-icon"
+          class="bcgov-display-icon"
         >
           <div
             style="color: rgb(216, 41, 47);"
@@ -1048,7 +1047,6 @@ exports[`Payment Component Matches the snapshot with no credit card 1`] = `
             <svg
               fill="currentColor"
               height="32"
-              size="32"
               stroke="currentColor"
               stroke-width="0"
               viewBox="0 0 24 24"
@@ -1062,7 +1060,7 @@ exports[`Payment Component Matches the snapshot with no credit card 1`] = `
           </div>
         </div>
         <div
-          class="display-right-element"
+          class="bcgov-display-right-element"
         >
           <p>
             <span>
@@ -1256,7 +1254,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
             I agree
           </b>
           <span
-            class="mandatory"
+            class="bcgov-mandatory"
             id="asterisk"
           >
             *
@@ -1268,7 +1266,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
         class="pt-2 buttons"
       >
         <button
-          class="bcgov-button normal-white btn"
+          class="bcgov-button bcgov-normal-white btn"
           data-test-id=""
           type="button"
         >
@@ -1278,14 +1276,14 @@ package and am prepared to submit them for filing. I agree that all fees for thi
           class="button-container"
         >
           <button
-            class="bcgov-button normal-white btn"
+            class="bcgov-button bcgov-normal-white btn"
             data-test-id="main-cancel-btn"
             type="button"
           >
             Cancel
           </button>
           <button
-            class="bcgov-button normal-blue normal-blue-ml btn"
+            class="bcgov-button bcgov-normal-blue normal-blue-ml btn"
             data-test-id=""
             disabled=""
             type="button"
@@ -1299,7 +1297,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
       class="sidecard"
     >
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -1308,23 +1306,23 @@ package and am prepared to submit them for filing. I agree that all fees for thi
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="rushSubmissionCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -1339,7 +1337,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     Rush/Urgent Submission
                   </div>
@@ -1347,10 +1345,10 @@ package and am prepared to submit them for filing. I agree that all fees for thi
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   If you wish to request that this package be submitted on an urgent (rush) basis, you must provide a reason for your request to be considered. 
@@ -1369,7 +1367,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
         </div>
       </div>
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -1378,23 +1376,23 @@ package and am prepared to submit them for filing. I agree that all fees for thi
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="csoAccountDetailsCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -1409,7 +1407,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     Your CSO Account
                   </div>
@@ -1417,10 +1415,10 @@ package and am prepared to submit them for filing. I agree that all fees for thi
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   CSO account 
@@ -1445,7 +1443,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
         </div>
       </div>
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -1454,23 +1452,23 @@ package and am prepared to submit them for filing. I agree that all fees for thi
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="aboutCsoCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -1485,7 +1483,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     About E-File Submission
                   </div>
@@ -1493,10 +1491,10 @@ package and am prepared to submit them for filing. I agree that all fees for thi
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
@@ -1541,10 +1539,10 @@ exports[`Payment Component On back click, it redirects back to the package confi
       <br />
       <div>
         <div
-          class="display-box border-background display-file"
+          class="bcgov-display-box bcgov-border-background bcgov-display-file"
         >
           <div
-            class="display-icon"
+            class="bcgov-display-icon"
           >
             <div
               style="color: rgb(252, 186, 25);"
@@ -1552,7 +1550,6 @@ exports[`Payment Component On back click, it redirects back to the package confi
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"
@@ -1566,7 +1563,7 @@ exports[`Payment Component On back click, it redirects back to the package confi
             </div>
           </div>
           <div
-            class="display-right-element"
+            class="bcgov-display-right-element"
           >
             <div
               class="bcgov-table "
@@ -1648,10 +1645,10 @@ exports[`Payment Component On back click, it redirects back to the package confi
       </div>
       <div>
         <div
-          class="display-box border-background display-file"
+          class="bcgov-display-box bcgov-border-background bcgov-display-file"
         >
           <div
-            class="display-icon"
+            class="bcgov-display-icon"
           >
             <div
               style="color: rgb(252, 186, 25);"
@@ -1659,7 +1656,6 @@ exports[`Payment Component On back click, it redirects back to the package confi
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"
@@ -1673,7 +1669,7 @@ exports[`Payment Component On back click, it redirects back to the package confi
             </div>
           </div>
           <div
-            class="display-right-element"
+            class="bcgov-display-right-element"
           >
             <div
               class="bcgov-table "
@@ -1820,14 +1816,14 @@ exports[`Payment Component On back click, it redirects back to the package confi
         class="buttons pt-2"
       >
         <button
-          class="bcgov-button normal-white btn"
+          class="bcgov-button bcgov-normal-white btn"
           data-test-id="main-cancel-btn"
           type="button"
         >
           Cancel
         </button>
         <button
-          class="bcgov-button normal-blue btn"
+          class="bcgov-button bcgov-normal-blue btn"
           data-test-id="continue-btn"
           type="button"
         >
@@ -1839,7 +1835,7 @@ exports[`Payment Component On back click, it redirects back to the package confi
       class="sidecard"
     >
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -1848,23 +1844,23 @@ exports[`Payment Component On back click, it redirects back to the package confi
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="csoAccountDetailsCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -1879,7 +1875,7 @@ exports[`Payment Component On back click, it redirects back to the package confi
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     Your CSO Account
                   </div>
@@ -1887,10 +1883,10 @@ exports[`Payment Component On back click, it redirects back to the package confi
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   CSO account 
@@ -1915,7 +1911,7 @@ exports[`Payment Component On back click, it redirects back to the package confi
         </div>
       </div>
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -1924,23 +1920,23 @@ exports[`Payment Component On back click, it redirects back to the package confi
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="aboutCsoCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -1955,7 +1951,7 @@ exports[`Payment Component On back click, it redirects back to the package confi
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     About E-File Submission
                   </div>
@@ -1963,10 +1959,10 @@ exports[`Payment Component On back click, it redirects back to the package confi
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 

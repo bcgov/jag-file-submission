@@ -1,31 +1,25 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
-import ca.bc.gov.open.jag.efilingapi.api.model.Party;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
-import ca.bc.gov.open.jag.efilingapi.payment.BamboraPaymentAdapter;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.PartyMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
+import ca.bc.gov.open.jag.efilingapi.submission.models.GetValidPartyRoleRequest;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.utils.FileUtils;
 import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
-import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
-import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingLookupServiceException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
-import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.Court;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
-import ca.bc.gov.open.jag.efilingcommons.model.DocumentType;
 import ca.bc.gov.open.jag.efilingcommons.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.model.*;
+import ca.bc.gov.open.jag.efilingcommons.payment.PaymentAdapter;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import ca.bc.gov.open.sftp.starter.SftpService;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
@@ -36,7 +30,6 @@ import java.text.MessageFormat;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 public class SubmissionServiceImpl implements SubmissionService {
@@ -55,13 +48,11 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private final EfilingCourtService efilingCourtService;
 
-    private final EfilingDocumentService efilingDocumentService;
-
     private final EfilingSubmissionService efilingSubmissionService;
 
     private final DocumentStore documentStore;
 
-    private final BamboraPaymentAdapter bamboraPaymentAdapter;
+    private final PaymentAdapter paymentAdapter;
 
     private final SftpService sftpService;
 
@@ -74,9 +65,8 @@ public class SubmissionServiceImpl implements SubmissionService {
             EfilingCourtService efilingCourtService,
             EfilingSubmissionService efilingSubmissionService,
             DocumentStore documentStore,
-            BamboraPaymentAdapter bamboraPaymentAdapter,
-            SftpService sftpService,
-            EfilingDocumentService efilingDocumentService) {
+            PaymentAdapter paymentAdapter,
+            SftpService sftpService) {
         this.submissionStore = submissionStore;
         this.cacheProperties = cacheProperties;
         this.submissionMapper = submissionMapper;
@@ -85,15 +75,13 @@ public class SubmissionServiceImpl implements SubmissionService {
         this.efilingCourtService = efilingCourtService;
         this.efilingSubmissionService = efilingSubmissionService;
         this.documentStore = documentStore;
-        this.bamboraPaymentAdapter = bamboraPaymentAdapter;
+        this.paymentAdapter = paymentAdapter;
         this.sftpService = sftpService;
-        this.efilingDocumentService = efilingDocumentService;
     }
 
 
     @Override
     public Submission generateFromRequest(SubmissionKey submissionKey, GenerateUrlRequest generateUrlRequest) {
-        validateGenerateUrlRequest(generateUrlRequest);
 
         Optional<Submission> cachedSubmission = submissionStore.put(
                 submissionMapper.toSubmission(
@@ -130,7 +118,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                 .submitFilingPackage(
                         accountDetails,
                         submission.getFilingPackage(),
-                        efilingPayment -> bamboraPaymentAdapter.makePayment(efilingPayment));
+                        efilingPayment -> paymentAdapter.makePayment(efilingPayment));
 
         result.setPackageRef(Base64.getEncoder().encodeToString(submitPackageResponse.getPackageLink().getBytes()));
 
@@ -154,6 +142,15 @@ public class SubmissionServiceImpl implements SubmissionService {
         submissionStore.put(submission);
 
         return submission;
+    }
+
+    @Override
+    public List<String> getValidPartyRoles(GetValidPartyRoleRequest getValidPartyRoleRequest) {
+        return efilingLookupService.getValidPartyRoles(
+                getValidPartyRoleRequest.getCourtLevel(),
+                getValidPartyRoleRequest.getCourtClassification(),
+                getValidPartyRoleRequest.getDocumentTypesAsString()
+        );
     }
 
     private FilingPackage toFilingPackage(GenerateUrlRequest request, SubmissionKey submissionKey) {
@@ -245,115 +242,6 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private long getExpiryDate() {
         return System.currentTimeMillis() + cacheProperties.getRedis().getTimeToLive().toMillis();
-    }
-
-    private void validateGenerateUrlRequest(GenerateUrlRequest generateUrlRequest) {
-        CourtBase courtBase = generateUrlRequest.getFilingPackage().getCourt();
-        CourtDetails courtDetails = efilingCourtService.getCourtDescription(courtBase.getLocation(), courtBase.getLevel(), courtBase.getCourtClass());
-
-        // Validate court level, class and location
-        validateCourtLevelClassLocation(courtDetails, courtBase);
-
-        // Validate court file number and parties
-        if (StringUtils.isEmpty(courtBase.getFileNumber())) {
-            // If no court file number present, validate parties
-            validateParties(generateUrlRequest, courtBase);
-        } else {
-            // If court file number present, validate court file number, level, class and location
-            validateCourtFileNumber(courtDetails, courtBase);
-        }
-
-        // Validate document types
-        validateDocumentTypes(courtBase, generateUrlRequest);
-    }
-
-    private void validateCourtLevelClassLocation(CourtDetails courtDetails, CourtBase courtBase) {
-        boolean isValidLevelClassLocation = efilingCourtService.checkValidLevelClassLocation(
-                courtDetails.getCourtId(),
-                courtBase.getLevel(),
-                courtBase.getCourtClass(),
-                SecurityUtils.getApplicationCode()
-        );
-        if (!isValidLevelClassLocation) throw new EfilingCourtServiceException("invalid court level, class and location combination");
-    }
-
-    private void validateCourtFileNumber(CourtDetails courtDetails, CourtBase courtBase) {
-        boolean isValidCourtFileNumber = true;
-        isValidCourtFileNumber = efilingCourtService.checkValidCourtFileNumber(
-                courtBase.getFileNumber(),
-                courtDetails.getCourtId(),
-                courtBase.getLevel(),
-                courtBase.getCourtClass(),
-                SecurityUtils.getApplicationCode()
-        );
-        if (!isValidCourtFileNumber) throw new EfilingCourtServiceException("invalid court file number");
-    }
-
-    private void validateParties(GenerateUrlRequest generateUrlRequest, CourtBase courtBase) {
-        List<Party> parties = generateUrlRequest.getFilingPackage().getParties();
-        if (parties.isEmpty()) throw new EfilingLookupServiceException("no parties provided");
-
-        String documentTypes = generateCommaSeparatedDocumentTypes(generateUrlRequest.getFilingPackage().getDocuments());
-        List<String> validPartyRoles = efilingLookupService.getValidPartyRoles(
-                courtBase.getLevel(),
-                courtBase.getCourtClass(),
-                documentTypes
-        );
-
-        if (!checkValidPartyRoles(validPartyRoles, parties))
-            throw new EfilingLookupServiceException("invalid parties provided");
-    }
-
-    private void validateDocumentTypes(CourtBase courtBase, GenerateUrlRequest generateUrlRequest) {
-        List<DocumentType> validDocumentTypes = efilingDocumentService.getDocumentTypes(courtBase.getLevel(), courtBase.getCourtClass());
-        if (!checkValidDocumentTypes(validDocumentTypes, generateUrlRequest.getFilingPackage().getDocuments()))
-            throw new EfilingDocumentServiceException("invalid document types provided");
-    }
-
-    private boolean checkValidPartyRoles(List<String> validPartyRoles, List<Party> parties) {
-        AtomicBoolean isValid = new AtomicBoolean(true);
-
-        parties.stream().forEach(party -> {
-            AtomicBoolean currentPartyRoleValid = new AtomicBoolean(false);
-            validPartyRoles.stream().forEach(validRole -> {
-                if (validRole.equals(party.getRoleType().getValue())) {
-                    currentPartyRoleValid.set(true);
-                }
-            });
-
-            if (!currentPartyRoleValid.get()) isValid.set(false);
-        });
-
-        return isValid.get();
-    }
-
-    private boolean checkValidDocumentTypes(List<DocumentType> validDocumentTypes, List<DocumentProperties> documents) {
-        AtomicBoolean isValid = new AtomicBoolean(true);
-
-        documents.stream().forEach(document -> {
-            AtomicBoolean currentDocumentTypeValid = new AtomicBoolean(false);
-            validDocumentTypes.stream().forEach(documentType -> {
-                if (documentType.getType().equals(document.getType().getValue())) {
-                    currentDocumentTypeValid.set(true);
-                }
-            });
-
-            if (!currentDocumentTypeValid.get()) isValid.set(false);
-        });
-
-        return isValid.get();
-    }
-
-    private String generateCommaSeparatedDocumentTypes(List<DocumentProperties> documentProperties) {
-        StringBuilder documentTypes = new StringBuilder();
-
-        for (DocumentProperties doc : documentProperties) {
-            documentTypes.append(MessageFormat.format("{0},", doc.getType()));
-        }
-
-        documentTypes.delete(documentTypes.length() - 1, documentTypes.length());
-
-        return documentTypes.toString();
     }
 
 }

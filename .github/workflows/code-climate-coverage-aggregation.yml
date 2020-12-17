@@ -33,21 +33,26 @@ jobs:
       # Set required Git env vars for either pull request
       - name: Set ENV for codeclimate (pull_request)
         run: |
-          echo "::set-env name=GIT_BRANCH::${{ github.event.pull_request.head.ref }}"
-          echo "::set-env name=GIT_COMMIT_SHA::${{ github.event.pull_request.head.sha }}"
+          echo "GIT_BRANCH=${{ github.event.pull_request.head.ref }}" >> $GITHUB_ENV
+          echo "GIT_COMMIT_SHA=${{ github.event.pull_request.head.sha }}" >> $GITHUB_ENV
+          #echo "::set-env name=GIT_BRANCH::${{ github.event.pull_request.head.ref }}"
+          #echo "::set-env name=GIT_COMMIT_SHA::${{ github.event.pull_request.head.sha }}"
         if: github.event_name == 'pull_request'
 
       # Set required Git env vars for a push to master
       - name: Set ENV for codeclimate (push)
         run: |
-          echo "::set-env name=GIT_BRANCH::$GITHUB_REF"
-          echo "::set-env name=GIT_COMMIT_SHA::$GITHUB_SHA"
+          echo "GIT_BRANCH=$GITHUB_REF" >> GITHUB_ENV
+          echo "GIT_COMMIT_SHA=$GITHUB_SHA" >> GITHUB_ENV
+          #echo "::set-env name=GIT_BRANCH::$GITHUB_REF"
+          #echo "::set-env name=GIT_COMMIT_SHA::$GITHUB_SHA"
         if: github.event_name == 'push'
 
       # Trimming the ref to master in order to publish correct report (paambaati)
       - name: Set ref/head/master to master
         run: |
-          echo "::set-env name=GIT_BRANCH::master"
+          echo "GIT_BRANCH=master" >> $GITHUB_ENV
+          #echo "::set-env name=GIT_BRANCH::master"
         if: env.GIT_BRANCH == 'refs/heads/master'
 
       # Figure out where yarn is caching things
@@ -111,7 +116,8 @@ jobs:
       # Count of all total coverage files available
       - name: Count files present
         run: |
-          echo "::set-env name=FILE_COUNTER::$(ls -1q ./coverage | wc -l )"
+          echo "FILE_COUNTER=$(ls -1q ./coverage | wc -l )" >> $GITHUB_ENV
+          #echo "::set-env name=FILE_COUNTER::$(ls -1q ./coverage | wc -l )"
 
       # Sum the coverage reports
       - name: Summing the coverage reports generated
@@ -162,21 +168,26 @@ jobs:
       # Set required Git env vars for either pull request
       - name: Set ENV for codeclimate (pull_request)
         run: |
-          echo "::set-env name=GIT_BRANCH::${{ github.event.pull_request.head.ref }}"
-          echo "::set-env name=GIT_COMMIT_SHA::${{ github.event.pull_request.head.sha }}"
+          echo "GIT_BRANCH=${{ github.event.pull_request.head.ref }}" >> $GITHUB_ENV
+          echo "GIT_COMMIT_SHA=${{ github.event.pull_request.head.sha }}" >> $GITHUB_ENV
+          #echo "::set-env name=GIT_BRANCH::${{ github.event.pull_request.head.ref }}"
+          #echo "::set-env name=GIT_COMMIT_SHA::${{ github.event.pull_request.head.sha }}"
         if: github.event_name == 'pull_request'
 
       # Set required Git env vars for a push to master
       - name: Set ENV for codeclimate (push)
         run: |
-          echo "::set-env name=GIT_BRANCH::$GITHUB_REF"
-          echo "::set-env name=GIT_COMMIT_SHA::$GITHUB_SHA"
+          echo "GIT_BRANCH=$GITHUB_REF" >> $GITHUB_ENV
+          echo "GIT_COMMIT_SHA=$GITHUB_SHA" >> $GITHUB_ENV
+          #echo "::set-env name=GIT_BRANCH::$GITHUB_REF"
+          #echo "::set-env name=GIT_COMMIT_SHA::$GITHUB_SHA"
         if: github.event_name == 'push'
 
       # Trimming the ref to master in order to publish correct report (paambaati)
       - name: Set ref/head/master to master
         run: |
-          echo "::set-env name=GIT_BRANCH::master"
+          echo "GIT_BRANCH=master" >> $GITHUB_ENV
+          #echo "::set-env name=GIT_BRANCH::master"
         if: env.GIT_BRANCH == 'refs/heads/master'
 
       # Setup Java Environment
@@ -224,7 +235,8 @@ jobs:
       # Count of all total coverage files available
       - name: Count files present
         run: |
-          echo "::set-env name=FILE_COUNTER::$(ls -1q ./coverage | wc -l )"
+          echo "FILE_COUNTER=$(ls -1q ./coverage | wc -l )" >> $GITHUB_ENV
+          #echo "::set-env name=FILE_COUNTER::$(ls -1q ./coverage | wc -l )"
 
       # Sum the coverage reports
       - name: Summing the coverage reports generated
@@ -259,21 +271,26 @@ jobs:
       # Set required Git env vars for either pull request
       - name: Set ENV for codeclimate (pull_request)
         run: |
-          echo "::set-env name=GIT_BRANCH::${{ github.event.pull_request.head.ref }}"
-          echo "::set-env name=GIT_COMMIT_SHA::${{ github.event.pull_request.head.sha }}"
+          echo "GIT_BRANCH=${{ github.event.pull_request.head.ref }}" >> $GITHUB_ENV
+          echo "GIT_COMMIT_SHA=${{ github.event.pull_request.head.sha }}" >> $GITHUB_ENV
+          #echo "::set-env name=GIT_BRANCH::${{ github.event.pull_request.head.ref }}"
+          #echo "::set-env name=GIT_COMMIT_SHA::${{ github.event.pull_request.head.sha }}"
         if: github.event_name == 'pull_request'
 
       # Set required Git env vars for a push to master
       - name: Set ENV for codeclimate (push)
         run: |
-          echo "::set-env name=GIT_BRANCH::$GITHUB_REF"
-          echo "::set-env name=GIT_COMMIT_SHA::$GITHUB_SHA"
+          echo "GIT_BRANCH=$GITHUB_REF" >> $GITHUB_ENV
+          echo "GIT_COMMIT_SHA=$GITHUB_SHA" >> $GITHUB_ENV
+          #echo "::set-env name=GIT_BRANCH::$GITHUB_REF"
+          #echo "::set-env name=GIT_COMMIT_SHA::$GITHUB_SHA"
         if: github.event_name == 'push'
 
       # Trimming the ref to master in order to publish correct report (paambaati)
       - name: Set ref/head/master to master
         run: |
-          echo "::set-env name=GIT_BRANCH::master"
+          echo "GIT_BRANCH=master" >> $GITHUB_ENV
+          #echo "::set-env name=GIT_BRANCH::master"
         if: env.GIT_BRANCH == 'refs/heads/master'
 
       # Make Directory for downloaded files
@@ -330,4 +347,4 @@ jobs:
 
       # Upload total coverage report to Code Climate
       - name: Upload coverage report to Code Climate
-        run: ./cc-test-reporter upload-coverage -i coverage-reports/total-codeclimate.json
+        run: ./cc-test-reporter upload-coverage -d -i coverage-reports/total-codeclimate.json

@@ -54,14 +54,14 @@ exports[`Upload Component Matches the snapshot 1`] = `
         class="buttons pt-2"
       >
         <button
-          class="bcgov-button normal-white btn"
+          class="bcgov-button bcgov-normal-white btn"
           data-test-id="cancel-upload-btn"
           type="button"
         >
           Cancel Upload
         </button>
         <button
-          class="bcgov-button normal-blue btn"
+          class="bcgov-button bcgov-normal-blue btn"
           data-test-id="continue-upload-btn"
           disabled=""
           type="button"
@@ -74,7 +74,7 @@ exports[`Upload Component Matches the snapshot 1`] = `
       class="sidecard"
     >
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -83,23 +83,23 @@ exports[`Upload Component Matches the snapshot 1`] = `
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="amendmentsCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -114,7 +114,7 @@ exports[`Upload Component Matches the snapshot 1`] = `
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     Amendments
                   </div>
@@ -122,10 +122,10 @@ exports[`Upload Component Matches the snapshot 1`] = `
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   Please indicate document uploads that are amendments - changes or alterations to existing, previously submitted documents.
@@ -136,7 +136,7 @@ exports[`Upload Component Matches the snapshot 1`] = `
         </div>
       </div>
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -145,23 +145,23 @@ exports[`Upload Component Matches the snapshot 1`] = `
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="supremeCourtSchedulingCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -176,7 +176,7 @@ exports[`Upload Component Matches the snapshot 1`] = `
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     Supreme Court Scheduling
                   </div>
@@ -184,10 +184,10 @@ exports[`Upload Component Matches the snapshot 1`] = `
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   Please indicate if your document upload has been approved for Supreme Court Scheduling...
@@ -224,10 +224,10 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
       <br />
       <div>
         <div
-          class="display-box border-background display-file"
+          class="bcgov-display-box bcgov-border-background bcgov-display-file"
         >
           <div
-            class="display-icon"
+            class="bcgov-display-icon"
           >
             <div
               style="color: rgb(252, 186, 25);"
@@ -235,7 +235,6 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"
@@ -249,7 +248,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
             </div>
           </div>
           <div
-            class="display-right-element"
+            class="bcgov-display-right-element"
           >
             <div
               class="bcgov-table "
@@ -331,10 +330,10 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
       </div>
       <div>
         <div
-          class="display-box border-background display-file"
+          class="bcgov-display-box bcgov-border-background bcgov-display-file"
         >
           <div
-            class="display-icon"
+            class="bcgov-display-icon"
           >
             <div
               style="color: rgb(252, 186, 25);"
@@ -342,7 +341,6 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"
@@ -356,7 +354,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
             </div>
           </div>
           <div
-            class="display-right-element"
+            class="bcgov-display-right-element"
           >
             <div
               class="bcgov-table "
@@ -503,14 +501,14 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
         class="buttons pt-2"
       >
         <button
-          class="bcgov-button normal-white btn"
+          class="bcgov-button bcgov-normal-white btn"
           data-test-id="main-cancel-btn"
           type="button"
         >
           Cancel
         </button>
         <button
-          class="bcgov-button normal-blue btn"
+          class="bcgov-button bcgov-normal-blue btn"
           data-test-id="continue-btn"
           type="button"
         >
@@ -522,7 +520,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
       class="sidecard"
     >
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -531,23 +529,23 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="csoAccountDetailsCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -562,7 +560,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     Your CSO Account
                   </div>
@@ -570,10 +568,10 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   CSO account 
@@ -598,7 +596,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
         </div>
       </div>
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -607,23 +605,23 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="aboutCsoCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -638,7 +636,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     About E-File Submission
                   </div>
@@ -646,10 +644,10 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
@@ -728,10 +726,10 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
       <br />
       <div>
         <div
-          class="display-box border-background"
+          class="bcgov-display-box bcgov-border-background"
         >
           <div
-            class="display-right-element"
+            class="bcgov-display-right-element"
           >
             <div
               class="bcgov-table "
@@ -755,7 +753,6 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
                         <svg
                           fill="currentColor"
                           height="32"
-                          size="32"
                           stroke="currentColor"
                           stroke-width="0"
                           viewBox="0 0 24 24"
@@ -780,7 +777,6 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
                         data-testid="remove-icon"
                         fill="currentColor"
                         height="32"
-                        size="32"
                         stroke="currentColor"
                         stroke-width="0"
                         viewBox="0 0 24 24"
@@ -969,14 +965,14 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
         class="buttons pt-2"
       >
         <button
-          class="bcgov-button normal-white btn"
+          class="bcgov-button bcgov-normal-white btn"
           data-test-id="cancel-upload-btn"
           type="button"
         >
           Cancel Upload
         </button>
         <button
-          class="bcgov-button normal-blue btn"
+          class="bcgov-button bcgov-normal-blue btn"
           data-test-id="continue-upload-btn"
           disabled=""
           type="button"
@@ -989,7 +985,7 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
       class="sidecard"
     >
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -998,23 +994,23 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="amendmentsCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -1029,7 +1025,7 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     Amendments
                   </div>
@@ -1037,10 +1033,10 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   Please indicate document uploads that are amendments - changes or alterations to existing, previously submitted documents.
@@ -1051,7 +1047,7 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
         </div>
       </div>
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -1060,23 +1056,23 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="supremeCourtSchedulingCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -1091,7 +1087,7 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     Supreme Court Scheduling
                   </div>
@@ -1099,10 +1095,10 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   Please indicate if your document upload has been approved for Supreme Court Scheduling...
@@ -1139,10 +1135,10 @@ exports[`Upload Component successful document upload works as expected 1`] = `
       <br />
       <div>
         <div
-          class="display-box border-background display-file"
+          class="bcgov-display-box bcgov-border-background bcgov-display-file"
         >
           <div
-            class="display-icon"
+            class="bcgov-display-icon"
           >
             <div
               style="color: rgb(252, 186, 25);"
@@ -1150,7 +1146,6 @@ exports[`Upload Component successful document upload works as expected 1`] = `
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"
@@ -1164,7 +1159,7 @@ exports[`Upload Component successful document upload works as expected 1`] = `
             </div>
           </div>
           <div
-            class="display-right-element"
+            class="bcgov-display-right-element"
           >
             <div
               class="bcgov-table "
@@ -1246,10 +1241,10 @@ exports[`Upload Component successful document upload works as expected 1`] = `
       </div>
       <div>
         <div
-          class="display-box border-background display-file"
+          class="bcgov-display-box bcgov-border-background bcgov-display-file"
         >
           <div
-            class="display-icon"
+            class="bcgov-display-icon"
           >
             <div
               style="color: rgb(252, 186, 25);"
@@ -1257,7 +1252,6 @@ exports[`Upload Component successful document upload works as expected 1`] = `
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"
@@ -1271,7 +1265,7 @@ exports[`Upload Component successful document upload works as expected 1`] = `
             </div>
           </div>
           <div
-            class="display-right-element"
+            class="bcgov-display-right-element"
           >
             <div
               class="bcgov-table "
@@ -1337,10 +1331,10 @@ exports[`Upload Component successful document upload works as expected 1`] = `
       </div>
       <div>
         <div
-          class="display-box border-background display-file"
+          class="bcgov-display-box bcgov-border-background bcgov-display-file"
         >
           <div
-            class="display-icon"
+            class="bcgov-display-icon"
           >
             <div
               style="color: rgb(252, 186, 25);"
@@ -1348,7 +1342,6 @@ exports[`Upload Component successful document upload works as expected 1`] = `
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"
@@ -1362,7 +1355,7 @@ exports[`Upload Component successful document upload works as expected 1`] = `
             </div>
           </div>
           <div
-            class="display-right-element"
+            class="bcgov-display-right-element"
           >
             <div
               class="bcgov-table "
@@ -1428,10 +1421,10 @@ exports[`Upload Component successful document upload works as expected 1`] = `
       </div>
       <div>
         <div
-          class="display-box border-background display-file"
+          class="bcgov-display-box bcgov-border-background bcgov-display-file"
         >
           <div
-            class="display-icon"
+            class="bcgov-display-icon"
           >
             <div
               style="color: rgb(252, 186, 25);"
@@ -1439,7 +1432,6 @@ exports[`Upload Component successful document upload works as expected 1`] = `
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"
@@ -1453,7 +1445,7 @@ exports[`Upload Component successful document upload works as expected 1`] = `
             </div>
           </div>
           <div
-            class="display-right-element"
+            class="bcgov-display-right-element"
           >
             <div
               class="bcgov-table "
@@ -1600,14 +1592,14 @@ exports[`Upload Component successful document upload works as expected 1`] = `
         class="buttons pt-2"
       >
         <button
-          class="bcgov-button normal-white btn"
+          class="bcgov-button bcgov-normal-white btn"
           data-test-id="main-cancel-btn"
           type="button"
         >
           Cancel
         </button>
         <button
-          class="bcgov-button normal-blue btn"
+          class="bcgov-button bcgov-normal-blue btn"
           data-test-id="continue-btn"
           type="button"
         >
@@ -1619,7 +1611,7 @@ exports[`Upload Component successful document upload works as expected 1`] = `
       class="sidecard"
     >
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -1628,23 +1620,23 @@ exports[`Upload Component successful document upload works as expected 1`] = `
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="csoAccountDetailsCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -1659,7 +1651,7 @@ exports[`Upload Component successful document upload works as expected 1`] = `
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     Your CSO Account
                   </div>
@@ -1667,10 +1659,10 @@ exports[`Upload Component successful document upload works as expected 1`] = `
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   CSO account 
@@ -1695,7 +1687,7 @@ exports[`Upload Component successful document upload works as expected 1`] = `
         </div>
       </div>
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -1704,23 +1696,23 @@ exports[`Upload Component successful document upload works as expected 1`] = `
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="aboutCsoCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -1735,7 +1727,7 @@ exports[`Upload Component successful document upload works as expected 1`] = `
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     About E-File Submission
                   </div>
@@ -1743,10 +1735,10 @@ exports[`Upload Component successful document upload works as expected 1`] = `
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 

@@ -12,17 +12,17 @@ import AuthenticationGuard from "./components/hoc/AuthenticationGuard";
 
 const mainButton = {
   label: "Cancel",
-  styling: "normal-white btn",
+  styling: "bcgov-normal-white btn",
 };
 
 const confirmButton = {
   label: "Yes, cancel E-File Submission",
-  styling: "normal-blue btn consistent-width",
+  styling: "bcgov-normal-blue btn bcgov-consistent-width",
 };
 
 const cancelButton = {
   label: "No, resume E-File Submission",
-  styling: "normal-white btn consistent-width",
+  styling: "bcgov-normal-white btn bcgov-consistent-width",
 };
 
 export default function App() {
@@ -87,11 +87,11 @@ export default function App() {
   return (
     <div>
       <Switch>
-        <Redirect exact from="/" to="/efiling" />
-        <Route exact path="/efiling">
+        <Redirect exact from="/" to="/efilinghub" />
+        <Route exact path="/efilinghub">
           <AuthenticationGuard page={{ header, confirmationPopup }} />
         </Route>
-        <Route path="/efiling/packagereview/:packageId">
+        <Route path="/efilinghub/packagereview/:packageId">
           <AuthenticationGuard page={{ header }} />
         </Route>
       </Switch>

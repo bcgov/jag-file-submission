@@ -34,7 +34,7 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
     private final List<String> expectedUploadedFilesList = ImmutableList.of("test-document.pdf", "test-document-2.pdf");
 
     @Before
-    public void setUp() throws IOException {
+    public void setUp() {
         TestUtil testUtil = new TestUtil();
         testUtil.restAssuredConfig();
         driverSetUp();

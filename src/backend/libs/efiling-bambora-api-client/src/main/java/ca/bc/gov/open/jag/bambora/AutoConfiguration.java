@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.bambora;
 
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.PaymentsApi;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.handler.ApiClient;
+import ca.bc.gov.open.jag.efilingcommons.payment.PaymentAdapter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -28,4 +29,9 @@ public class AutoConfiguration {
         return new PaymentsApi(apiClient);
     }
 
+
+    @Bean
+    public PaymentAdapter paymentAdapter(PaymentsApi paymentsApi) {
+        return new BamboraPaymentAdapter(paymentsApi);
+    }
 }

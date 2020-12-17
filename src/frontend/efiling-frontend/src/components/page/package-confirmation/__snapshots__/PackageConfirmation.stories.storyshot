@@ -22,10 +22,10 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
       <br />
       <div>
         <div
-          class="display-box border-background display-file"
+          class="bcgov-display-box bcgov-border-background bcgov-display-file"
         >
           <div
-            class="display-icon"
+            class="bcgov-display-icon"
           >
             <div
               style="color: rgb(252, 186, 25);"
@@ -33,7 +33,6 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"
@@ -47,7 +46,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
             </div>
           </div>
           <div
-            class="display-right-element"
+            class="bcgov-display-right-element"
           >
             <div
               class="bcgov-table "
@@ -129,10 +128,10 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
       </div>
       <div>
         <div
-          class="display-box border-background display-file"
+          class="bcgov-display-box bcgov-border-background bcgov-display-file"
         >
           <div
-            class="display-icon"
+            class="bcgov-display-icon"
           >
             <div
               style="color: rgb(252, 186, 25);"
@@ -140,7 +139,6 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"
@@ -154,7 +152,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
             </div>
           </div>
           <div
-            class="display-right-element"
+            class="bcgov-display-right-element"
           >
             <div
               class="bcgov-table "
@@ -301,14 +299,14 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
         class="buttons pt-2"
       >
         <button
-          class="bcgov-button normal-white btn"
+          class="bcgov-button bcgov-normal-white btn"
           data-test-id="main-cancel-btn"
           type="button"
         >
           Cancel
         </button>
         <button
-          class="bcgov-button normal-blue btn"
+          class="bcgov-button bcgov-normal-blue btn"
           data-test-id="continue-btn"
           type="button"
         >
@@ -320,7 +318,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
       class="sidecard"
     >
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -329,23 +327,23 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="csoAccountDetailsCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -360,7 +358,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     Your CSO Account
                   </div>
@@ -368,10 +366,10 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   CSO account 
@@ -398,7 +396,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
         </div>
       </div>
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -407,23 +405,23 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="aboutCsoCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -438,7 +436,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     About E-File Submission
                   </div>
@@ -446,10 +444,10 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
@@ -494,10 +492,10 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
       <br />
       <div>
         <div
-          class="display-box border-background display-file"
+          class="bcgov-display-box bcgov-border-background bcgov-display-file"
         >
           <div
-            class="display-icon"
+            class="bcgov-display-icon"
           >
             <div
               style="color: rgb(252, 186, 25);"
@@ -505,7 +503,6 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"
@@ -519,7 +516,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
             </div>
           </div>
           <div
-            class="display-right-element"
+            class="bcgov-display-right-element"
           >
             <div
               class="bcgov-table "
@@ -601,10 +598,10 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
       </div>
       <div>
         <div
-          class="display-box border-background display-file"
+          class="bcgov-display-box bcgov-border-background bcgov-display-file"
         >
           <div
-            class="display-icon"
+            class="bcgov-display-icon"
           >
             <div
               style="color: rgb(252, 186, 25);"
@@ -612,7 +609,6 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"
@@ -626,7 +622,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
             </div>
           </div>
           <div
-            class="display-right-element"
+            class="bcgov-display-right-element"
           >
             <div
               class="bcgov-table "
@@ -773,14 +769,14 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
         class="buttons pt-2"
       >
         <button
-          class="bcgov-button normal-white btn"
+          class="bcgov-button bcgov-normal-white btn"
           data-test-id="main-cancel-btn"
           type="button"
         >
           Cancel
         </button>
         <button
-          class="bcgov-button normal-blue btn"
+          class="bcgov-button bcgov-normal-blue btn"
           data-test-id="continue-btn"
           type="button"
         >
@@ -792,7 +788,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
       class="sidecard"
     >
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -801,23 +797,23 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="csoAccountDetailsCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -832,7 +828,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     Your CSO Account
                   </div>
@@ -840,10 +836,10 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   CSO account 
@@ -870,7 +866,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
         </div>
       </div>
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -879,23 +875,23 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="aboutCsoCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -910,7 +906,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     About E-File Submission
                   </div>
@@ -918,10 +914,10 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
@@ -953,10 +949,10 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
       class="content col-md-8"
     >
       <div
-        class="display-box success-background"
+        class="bcgov-display-box bcgov-success-background"
       >
         <div
-          class="display-icon"
+          class="bcgov-display-icon"
         >
           <div
             style="color: rgb(46, 133, 64);"
@@ -964,7 +960,6 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
             <svg
               fill="currentColor"
               height="32"
-              size="32"
               stroke="currentColor"
               stroke-width="0"
               viewBox="0 0 24 24"
@@ -978,7 +973,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
           </div>
         </div>
         <div
-          class="display-right-element"
+          class="bcgov-display-right-element"
         >
           CSO Account created successfully.
         </div>
@@ -998,10 +993,10 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
       <br />
       <div>
         <div
-          class="display-box border-background display-file"
+          class="bcgov-display-box bcgov-border-background bcgov-display-file"
         >
           <div
-            class="display-icon"
+            class="bcgov-display-icon"
           >
             <div
               style="color: rgb(252, 186, 25);"
@@ -1009,7 +1004,6 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"
@@ -1023,7 +1017,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
             </div>
           </div>
           <div
-            class="display-right-element"
+            class="bcgov-display-right-element"
           >
             <div
               class="bcgov-table "
@@ -1105,10 +1099,10 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
       </div>
       <div>
         <div
-          class="display-box border-background display-file"
+          class="bcgov-display-box bcgov-border-background bcgov-display-file"
         >
           <div
-            class="display-icon"
+            class="bcgov-display-icon"
           >
             <div
               style="color: rgb(252, 186, 25);"
@@ -1116,7 +1110,6 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
               <svg
                 fill="currentColor"
                 height="32"
-                size="32"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 24 24"
@@ -1130,7 +1123,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
             </div>
           </div>
           <div
-            class="display-right-element"
+            class="bcgov-display-right-element"
           >
             <div
               class="bcgov-table "
@@ -1277,14 +1270,14 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
         class="buttons pt-2"
       >
         <button
-          class="bcgov-button normal-white btn"
+          class="bcgov-button bcgov-normal-white btn"
           data-test-id="main-cancel-btn"
           type="button"
         >
           Cancel
         </button>
         <button
-          class="bcgov-button normal-blue btn"
+          class="bcgov-button bcgov-normal-blue btn"
           data-test-id="continue-btn"
           type="button"
         >
@@ -1296,7 +1289,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
       class="sidecard"
     >
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -1305,23 +1298,23 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="csoAccountDetailsCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -1336,7 +1329,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     Your CSO Account
                   </div>
@@ -1344,10 +1337,10 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   CSO account 
@@ -1374,7 +1367,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
         </div>
       </div>
       <div
-        class="wide-dashboard-spacing"
+        class="bcgov-wide-dashboard-spacing"
         style="position: relative;"
       >
         <div
@@ -1383,23 +1376,23 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
         >
           <p />
           <section
-            class="bluegrey-container"
+            class="bcgov-bluegrey-container"
             id="aboutCsoCard"
           >
             <div
-              class="container-background bluegrey-heading"
+              class="bcgov-container-background bcgov-bluegrey-heading"
             >
               <h2
-                class="heading-style"
+                class="bcgov-heading-style"
               >
                 <div
-                  class="side-card-row"
+                  class="bcgov-side-card-row"
                 >
                   <div
-                    class="round-icon-wrapper"
+                    class="bcgov-round-icon-wrapper"
                   >
                     <svg
-                      class="side-card-icon"
+                      class="bcgov-side-card-icon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -1414,7 +1407,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
                     </svg>
                   </div>
                   <div
-                    class="side-card-title"
+                    class="bcgov-side-card-title"
                   >
                     About E-File Submission
                   </div>
@@ -1422,10 +1415,10 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
               </h2>
             </div>
             <div
-              class="bluegrey-content"
+              class="bcgov-bluegrey-content"
             >
               <span
-                class="content-style"
+                class="bcgov-content-style"
               >
                 <p>
                   E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
