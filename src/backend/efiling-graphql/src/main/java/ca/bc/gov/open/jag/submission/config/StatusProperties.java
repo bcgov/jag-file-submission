@@ -37,7 +37,7 @@ public class StatusProperties {
         return isDebugEnabled;
     }
 
-    public void setDebugEnabled(boolean debugEnabled) {
+    public void setIsDebugEnabled(boolean debugEnabled) {
         isDebugEnabled = debugEnabled;
     }
 }
