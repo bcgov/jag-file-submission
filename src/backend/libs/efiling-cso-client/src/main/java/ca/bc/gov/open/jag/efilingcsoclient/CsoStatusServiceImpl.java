@@ -5,9 +5,8 @@ import ca.bc.gov.ag.csows.filing.status.FilingStatus;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingStatusServiceException;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
-import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapper;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,11 +19,8 @@ public class CsoStatusServiceImpl implements EfilingStatusService {
 
     private final FilingStatusFacadeBean filingStatusFacadeBean;
 
-    private final FilePackageMapper filePackageMapper;
-
-    public CsoStatusServiceImpl(FilingStatusFacadeBean filingStatusFacadeBean, FilePackageMapper filePackageMapper) {
+    public CsoStatusServiceImpl(FilingStatusFacadeBean filingStatusFacadeBean) {
         this.filingStatusFacadeBean = filingStatusFacadeBean;
-        this.filePackageMapper = filePackageMapper;
     }
 
     @Override
