@@ -5,8 +5,8 @@ import ca.bc.gov.ag.csows.filing.status.FilingStatus;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingStatusServiceException;
-import ca.bc.gov.open.jag.efilingcommons.model.FilePackage;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingStatusService;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
+import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +28,7 @@ public class CsoStatusServiceImpl implements EfilingStatusService {
     }
 
     @Override
-    public Optional<FilePackage> findStatusByPackage(BigDecimal clientId, BigDecimal packageNo) {
+    public Optional<FilingPackage> findStatusByPackage(BigDecimal clientId, BigDecimal packageNo) {
         try {
             logger.info("Calling soap service");
 
@@ -37,7 +37,9 @@ public class CsoStatusServiceImpl implements EfilingStatusService {
 
             if (filingStatus.getFilePackages().isEmpty()) return Optional.empty();
 
-            return  Optional.of(filePackageMapper.toFilePackage(filingStatus.getFilePackages().get(0)));
+            FilingPackage result = FilingPackage.builder().applicationCode("test").create();
+
+            return  Optional.of(result);
 
         } catch (NestedEjbException_Exception e) {
             throw new EfilingStatusServiceException("Exception while finding status", e.getCause());

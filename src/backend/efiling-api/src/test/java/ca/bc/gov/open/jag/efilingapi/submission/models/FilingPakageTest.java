@@ -2,7 +2,7 @@ package ca.bc.gov.open.jag.efilingapi.submission.models;
 
 import ca.bc.gov.open.jag.efilingcommons.model.Court;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
-import ca.bc.gov.open.jag.efilingcommons.model.FilingPackage;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.model.Party;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

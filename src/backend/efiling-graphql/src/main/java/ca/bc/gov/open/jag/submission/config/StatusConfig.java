@@ -3,7 +3,7 @@ package ca.bc.gov.open.jag.submission.config;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingStatusService;
+import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoStatusServiceImpl;
 import ca.bc.gov.open.jag.efilingcsoclient.SoapUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapperImpl;

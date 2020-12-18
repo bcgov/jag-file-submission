@@ -1,5 +1,8 @@
-package ca.bc.gov.open.jag.efilingcommons.model;
+package ca.bc.gov.open.jag.efilingcommons.submission.models;
 
+import ca.bc.gov.open.jag.efilingcommons.model.Court;
+import ca.bc.gov.open.jag.efilingcommons.model.Document;
+import ca.bc.gov.open.jag.efilingcommons.model.Party;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
