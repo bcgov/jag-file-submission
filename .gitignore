@@ -8,3 +8,4 @@ tests/logs
 tests/test-output
 .env
 tests/src/test/resources/local.properties
+yarn.lock
