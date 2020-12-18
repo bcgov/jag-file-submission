@@ -3,7 +3,6 @@ package ca.bc.gov.open.jag.efilingapi.submission;
 import ca.bc.gov.open.jag.efilingapi.court.services.CourtService;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentService;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
-import ca.bc.gov.open.jag.efilingapi.payment.BamboraPaymentAdapter;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.*;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionServiceImpl;
@@ -11,6 +10,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStoreImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.validator.GenerateUrlRequestValidator;
 import ca.bc.gov.open.jag.efilingapi.submission.validator.GenerateUrlRequestValidatorImpl;
+import ca.bc.gov.open.jag.efilingcommons.payment.PaymentAdapter;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
@@ -51,7 +51,7 @@ public class SubmissionConfig {
                                                EfilingCourtService efilingCourtService,
                                                EfilingSubmissionService efilingSubmissionService,
                                                DocumentStore documentStore,
-                                               BamboraPaymentAdapter bamboraPaymentAdapter,
+                                               PaymentAdapter paymentAdapter,
                                                SftpService sftpService, PartyMapper partyMapper) {
 
         return new SubmissionServiceImpl(submissionStore,
@@ -62,7 +62,7 @@ public class SubmissionConfig {
                 efilingCourtService,
                 efilingSubmissionService,
                 documentStore,
-                bamboraPaymentAdapter,
+                paymentAdapter,
                 sftpService);
     }
 
