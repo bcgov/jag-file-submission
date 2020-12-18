@@ -2,7 +2,6 @@ package ca.bc.gov.open.jag.efilingapi.submission.service;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
-import ca.bc.gov.open.jag.efilingapi.payment.BamboraPaymentAdapter;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.PartyMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
@@ -14,8 +13,9 @@ import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.Court;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
-import ca.bc.gov.open.jag.efilingcommons.model.FilingPackage;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.model.*;
+import ca.bc.gov.open.jag.efilingcommons.payment.PaymentAdapter;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
@@ -52,7 +52,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private final DocumentStore documentStore;
 
-    private final BamboraPaymentAdapter bamboraPaymentAdapter;
+    private final PaymentAdapter paymentAdapter;
 
     private final SftpService sftpService;
 
@@ -65,7 +65,7 @@ public class SubmissionServiceImpl implements SubmissionService {
             EfilingCourtService efilingCourtService,
             EfilingSubmissionService efilingSubmissionService,
             DocumentStore documentStore,
-            BamboraPaymentAdapter bamboraPaymentAdapter,
+            PaymentAdapter paymentAdapter,
             SftpService sftpService) {
         this.submissionStore = submissionStore;
         this.cacheProperties = cacheProperties;
@@ -75,7 +75,7 @@ public class SubmissionServiceImpl implements SubmissionService {
         this.efilingCourtService = efilingCourtService;
         this.efilingSubmissionService = efilingSubmissionService;
         this.documentStore = documentStore;
-        this.bamboraPaymentAdapter = bamboraPaymentAdapter;
+        this.paymentAdapter = paymentAdapter;
         this.sftpService = sftpService;
     }
 
@@ -118,7 +118,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                 .submitFilingPackage(
                         accountDetails,
                         submission.getFilingPackage(),
-                        efilingPayment -> bamboraPaymentAdapter.makePayment(efilingPayment));
+                        efilingPayment -> paymentAdapter.makePayment(efilingPayment));
 
         result.setPackageRef(Base64.getEncoder().encodeToString(submitPackageResponse.getPackageLink().getBytes()));
 

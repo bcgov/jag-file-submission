@@ -1,8 +1,6 @@
 package ca.bc.gov.open.jag.efilingcsoclient;
 
-import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
-import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.cxf.ext.logging.LoggingInInterceptor;
 import org.apache.cxf.ext.logging.LoggingOutInterceptor;
@@ -12,10 +10,9 @@ public class SoapUtils {
 
     private SoapUtils() {}
 
-    public static <T> T getPort(Clients clients, Class<T> type, SoapProperties soapProperties, boolean debugEnabled) {
+    public static <T> T getPort(Class<T> type, EfilingSoapClientProperties efilingSoapClientProperties, boolean debugEnabled) {
         JaxWsProxyFactoryBean jaxWsProxyFactoryBean = new JaxWsProxyFactoryBean();
         jaxWsProxyFactoryBean.setServiceClass(type);
-        EfilingSoapClientProperties efilingSoapClientProperties = soapProperties.findByEnum(clients);
         jaxWsProxyFactoryBean.setAddress(efilingSoapClientProperties.getUri());
         if(StringUtils.isNotBlank(efilingSoapClientProperties.getUserName()))
             jaxWsProxyFactoryBean.setUsername(efilingSoapClientProperties.getUserName());

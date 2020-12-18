@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingcsoclient.csoStatusServiceImpl;
+package ca.bc.gov.open.jag.efilingcsoclient.csoDocumentServiceImpl;
 
 import ca.bc.gov.ag.csows.filing.status.DocumentType;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;

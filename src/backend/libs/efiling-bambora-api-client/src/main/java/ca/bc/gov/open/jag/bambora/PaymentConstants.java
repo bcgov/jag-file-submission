@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingapi.payment;
+package ca.bc.gov.open.jag.bambora;
 
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.CardPurchaseResponse;
 
@@ -29,4 +29,6 @@ public class PaymentConstants {
         CARD_TYPES.put(CardPurchaseResponse.CardTypeEnum.DI,"DI");
         CARD_TYPES.put(CardPurchaseResponse.CardTypeEnum.JB,"JB");
     }
+    public static final String EFILING_APP = "efiling";
+    public static final String MDC_EFILING_SUBMISSION_FEE = EFILING_APP + ".submissionFee";
 }

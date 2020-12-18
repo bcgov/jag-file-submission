@@ -2,8 +2,10 @@ package ca.bc.gov.ca.open.jag.ceis;
 
 import ca.bc.gov.open.jag.ceis.AutoConfiguration;
 
+import ca.bc.gov.open.jag.ceis.CeisCourtLocationMapper;
 import ca.bc.gov.open.jag.efilingceisapiclient.api.DefaultApi;
 import ca.bc.gov.open.jag.efilingceisapiclient.api.handler.ApiClient;
+import ca.bc.gov.open.jag.efilingcommons.court.EfilingCourtLocationService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -23,6 +25,8 @@ public class AutoConfigurationTest {
         context.run(it -> {
             assertThat(it).hasSingleBean(DefaultApi.class);
             assertThat(it).hasSingleBean(ApiClient.class);
+            assertThat(it).hasSingleBean(CeisCourtLocationMapper.class);
+            assertThat(it).hasSingleBean(EfilingCourtLocationService.class);
         });
 
     }
