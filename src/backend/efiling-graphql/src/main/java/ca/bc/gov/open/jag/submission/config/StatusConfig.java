@@ -5,6 +5,8 @@ import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoStatusServiceImpl;
 import ca.bc.gov.open.jag.efilingcsoclient.SoapUtils;
+import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapper;
+import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapperImpl;
 import io.quarkus.arc.DefaultBean;
 
 import javax.enterprise.context.Dependent;
@@ -34,5 +36,9 @@ public class StatusConfig {
     private EfilingStatusService efilingStatusService() {
         return new CsoStatusServiceImpl(filingStatusFacadeBean());
     }
+
+    @Produces
+    @DefaultBean
+    private FilePackageMapper filePackageMapper() { return new FilePackageMapperImpl(); }
 
 }
