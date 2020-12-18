@@ -8,11 +8,15 @@ import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingStatusServiceExceptio
 import ca.bc.gov.open.jag.efilingcommons.model.FilePackage;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingStatusService;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.util.Optional;
 
 public class CsoStatusServiceImpl implements EfilingStatusService {
+
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final FilingStatusFacadeBean filingStatusFacadeBean;
 
@@ -26,6 +30,7 @@ public class CsoStatusServiceImpl implements EfilingStatusService {
     @Override
     public Optional<FilePackage> findStatusByPackage(BigDecimal clientId, BigDecimal packageNo) {
         try {
+            logger.info("Calling soap service");
 
             FilingStatus filingStatus = filingStatusFacadeBean
                     .findStatusBySearchCriteria(null,null,null,null, null,null,packageNo, clientId,null,null,null,null,BigDecimal.ONE,null);
