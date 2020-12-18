@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.submission.config;
+package ca.bc.gov.open.jag.packagereview.config;
 
 import io.quarkus.arc.config.ConfigProperties;
 

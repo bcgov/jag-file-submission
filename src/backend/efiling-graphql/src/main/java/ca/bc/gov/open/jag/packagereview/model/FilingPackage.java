@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.submission.model;
+package ca.bc.gov.open.jag.packagereview.model;
 
 import org.joda.time.DateTime;
 
