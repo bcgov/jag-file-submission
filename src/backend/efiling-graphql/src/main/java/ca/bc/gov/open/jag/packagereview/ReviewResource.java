@@ -1,8 +1,8 @@
-package ca.bc.gov.open.jag.submission;
+package ca.bc.gov.open.jag.packagereview;
 
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
-import ca.bc.gov.open.jag.submission.model.FilePackageOutput;
+import ca.bc.gov.open.jag.packagereview.mapper.FilingPackageMapper;
 import org.eclipse.microprofile.graphql.Description;
 import org.eclipse.microprofile.graphql.GraphQLApi;
 import org.eclipse.microprofile.graphql.Name;
@@ -22,23 +22,27 @@ public class ReviewResource {
 
     private final EfilingStatusService efilingStatusService;
 
-    public ReviewResource(EfilingStatusService efilingStatusService) {
+    private final FilingPackageMapper filingPackageMapper;
+
+    public ReviewResource(EfilingStatusService efilingStatusService, FilingPackageMapper filingPackageMapper) {
         this.efilingStatusService = efilingStatusService;
+        this.filingPackageMapper = filingPackageMapper;
     }
 
     @Query
     @Description("Query a package")
-    public FilePackageOutput getSubmission(@Name("clientId") BigDecimal clientId, @Name("packageNo") BigDecimal packageNo) {
+    public ca.bc.gov.open.jag.packagereview.model.FilingPackage getSubmission(@Name("clientId") BigDecimal clientId, @Name("packageNo") BigDecimal packageNo) {
         logger.info("GraphQl Request received");
 
         Optional<FilingPackage> filePackage = efilingStatusService.findStatusByPackage(clientId, packageNo);
 
-        FilePackageOutput filePackageOutput = new FilePackageOutput();
-
+        ca.bc.gov.open.jag.packagereview.model.FilingPackage responseFilingPackage = new ca.bc.gov.open.jag.packagereview.model.FilingPackage();
         if (filePackage.isPresent()) {
-            filePackageOutput.setCourtClass(filePackage.get().getApplicationCode());
+           responseFilingPackage = filingPackageMapper.toResponseFilingPackage(filePackage.get());
+           responseFilingPackage.setClientFileNo(clientId.toPlainString());
+           responseFilingPackage.setPackageNo(packageNo.toPlainString());
         }
 
-        return filePackageOutput;
+        return responseFilingPackage;
     }
 }
