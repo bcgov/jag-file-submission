@@ -1,12 +1,10 @@
 package ca.bc.gov.open.jag.submission.config;
 
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
-
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoStatusServiceImpl;
 import ca.bc.gov.open.jag.efilingcsoclient.SoapUtils;
-import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapperImpl;
 import io.quarkus.arc.DefaultBean;
 
 import javax.enterprise.context.Dependent;
@@ -34,7 +32,7 @@ public class StatusConfig {
     @Produces
     @DefaultBean
     private EfilingStatusService efilingStatusService() {
-        return new CsoStatusServiceImpl(filingStatusFacadeBean(),new FilePackageMapperImpl());
+        return new CsoStatusServiceImpl(filingStatusFacadeBean());
     }
 
 }
