@@ -7,6 +7,7 @@ import ca.bc.gov.open.jag.efilingcommons.service.EfilingStatusService;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoStatusServiceImpl;
 import ca.bc.gov.open.jag.efilingcsoclient.SoapUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapperImpl;
+import io.quarkus.arc.DefaultBean;
 
 import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Produces;
@@ -21,12 +22,17 @@ public class StatusConfig {
     }
 
     @Produces
+    @DefaultBean
     public FilingStatusFacadeBean filingStatusFacadeBean() {
         EfilingSoapClientProperties efilingSoapClientProperties = new EfilingSoapClientProperties();
+        efilingSoapClientProperties.setUri(statusProperties.getUri());
+        efilingSoapClientProperties.setUserName(statusProperties.getUserName());
+        efilingSoapClientProperties.setPassword(statusProperties.getPassword());
         return SoapUtils.getPort(FilingStatusFacadeBean.class, efilingSoapClientProperties, statusProperties.isDebugEnabled());
     }
 
     @Produces
+    @DefaultBean
     private EfilingStatusService efilingStatusService() {
         return new CsoStatusServiceImpl(filingStatusFacadeBean(),new FilePackageMapperImpl());
     }
