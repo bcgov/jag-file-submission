@@ -3,7 +3,7 @@ package ca.bc.gov.open.jag.efilingcsoclient.mappers;
 import ca.bc.gov.ag.csows.services.Service;
 import ca.bc.gov.ag.csows.services.ServiceSession;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.FilingPackage;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
 import ca.bc.gov.open.jag.efilingcsoclient.Keys;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
