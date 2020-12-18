@@ -5,16 +5,15 @@ import ca.bc.gov.ag.csows.filing.status.FilingStatus;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingStatusServiceException;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoStatusServiceImpl;
-import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapperImpl;
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
@@ -64,36 +63,22 @@ public class FindPackageByIdTest {
 
         Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(EXCEPTION_PACKAGE), ArgumentMatchers.eq(EXCEPTION_CLIENT), any(), any(), any(), any(), any(), any())).thenThrow(new NestedEjbException_Exception());
 
-        sut = new CsoStatusServiceImpl(filingStatusFacadeBean, new FilePackageMapperImpl());
+        sut = new CsoStatusServiceImpl(filingStatusFacadeBean);
     }
 
     @DisplayName("OK: package found")
     @Test
     public void testWithFoundResult() throws DatatypeConfigurationException {
-        Optional<ca.bc.gov.open.jag.efilingcommons.model.FilePackage> result = sut.findStatusByPackage(SUCCESS_CLIENT, SUCCESS_PACKAGE);
+        Optional<FilingPackage> result = sut.findStatusByPackage(SUCCESS_CLIENT, SUCCESS_PACKAGE);
 
-        Assertions.assertEquals(CLIENT_FILE_NO, result.get().getClientFileNo());
-        Assertions.assertEquals(COURT_CLASS_CD, result.get().getCourtClassCd());
-        Assertions.assertEquals(COURT_FILE_NO, result.get().getCourtFileNo());
-        Assertions.assertEquals(COURT_LEVEL_CD, result.get().getCourtLevelCd());
-        Assertions.assertEquals(COURT_LOCATION_CD, result.get().getCourtLocationCd());
-        Assertions.assertEquals(BigDecimal.ONE, result.get().getCourtLocationId());
-        Assertions.assertEquals(COURT_LOCATION_NAME, result.get().getCourtLocationName());
-        Assertions.assertEquals(true, result.get().getExistingCourtFileYN());
-        Assertions.assertEquals(FILING_COMMENTS_TXT, result.get().getFilingCommentsTxt());
-        Assertions.assertEquals(FIRST_NAME, result.get().getFirstName());
-        Assertions.assertEquals(true, result.get().getHasChecklist());
-        Assertions.assertEquals(true, result.get().getHasRegistryNotice());
-        Assertions.assertEquals(LAST_NAME, result.get().getLastName());
-        Assertions.assertEquals(PACKAGE_NO, result.get().getPackageNo());
-        Assertions.assertEquals(SUBMITED_DATE.toString(), result.get().getSubmittedDate().toString());
+        Assertions.assertEquals("test", result.get().getApplicationCode());
 
     }
 
     @DisplayName("Ok: no packages found")
     @Test
     public void testWithNoResult() {
-        Optional<ca.bc.gov.open.jag.efilingcommons.model.FilePackage> result = sut.findStatusByPackage(NOTFOUND_CLIENT, NOTFOUND_PACKAGE);
+        Optional<FilingPackage> result = sut.findStatusByPackage(NOTFOUND_CLIENT, NOTFOUND_PACKAGE);
 
         Assertions.assertFalse(result.isPresent());
 

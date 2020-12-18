@@ -41,7 +41,7 @@ public interface FilingPackageMapper {
     @Mapping(target = "parties", source = "csoParties")
     @Mapping(target = "packageControls", source = "packageControls")
     FilingPackage toFilingPackage(
-            ca.bc.gov.open.jag.efilingcommons.model.FilingPackage filingPackage,
+            ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage filingPackage,
             AccountDetails accountDetails,
             BigDecimal serviceId,
             XMLGregorianCalendar submittedDate,

@@ -125,8 +125,8 @@ public class AutoConfiguration {
     }
 
     @Bean
-    public CsoStatusServiceImpl efilingStatusService(FilingStatusFacadeBean filingStatusFacadeBean, FilePackageMapper filePackageMapper) {
-        return new CsoStatusServiceImpl(filingStatusFacadeBean, filePackageMapper);
+    public CsoStatusServiceImpl efilingStatusService(FilingStatusFacadeBean filingStatusFacadeBean) {
+        return new CsoStatusServiceImpl(filingStatusFacadeBean);
     }
 
 
