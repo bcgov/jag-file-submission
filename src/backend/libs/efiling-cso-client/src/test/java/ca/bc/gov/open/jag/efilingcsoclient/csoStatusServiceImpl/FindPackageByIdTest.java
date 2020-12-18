@@ -8,14 +8,12 @@ import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingStatusServiceExceptio
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoStatusServiceImpl;
-import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapperImpl;
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
@@ -65,7 +63,7 @@ public class FindPackageByIdTest {
 
         Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(EXCEPTION_PACKAGE), ArgumentMatchers.eq(EXCEPTION_CLIENT), any(), any(), any(), any(), any(), any())).thenThrow(new NestedEjbException_Exception());
 
-        sut = new CsoStatusServiceImpl(filingStatusFacadeBean, new FilePackageMapperImpl());
+        sut = new CsoStatusServiceImpl(filingStatusFacadeBean);
     }
 
     @DisplayName("OK: package found")

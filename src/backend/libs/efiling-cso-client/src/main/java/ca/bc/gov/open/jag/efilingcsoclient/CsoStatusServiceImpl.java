@@ -20,12 +20,16 @@ public class CsoStatusServiceImpl implements EfilingStatusService {
     private final FilingStatusFacadeBean filingStatusFacadeBean;
 
     public CsoStatusServiceImpl(FilingStatusFacadeBean filingStatusFacadeBean) {
+
         this.filingStatusFacadeBean = filingStatusFacadeBean;
+
     }
 
     @Override
     public Optional<FilingPackage> findStatusByPackage(BigDecimal clientId, BigDecimal packageNo) {
+
         try {
+
             logger.info("Calling soap service");
 
             FilingStatus filingStatus = filingStatusFacadeBean
@@ -38,7 +42,10 @@ public class CsoStatusServiceImpl implements EfilingStatusService {
             return  Optional.of(result);
 
         } catch (NestedEjbException_Exception e) {
+
             throw new EfilingStatusServiceException("Exception while finding status", e.getCause());
+
         }
+
     }
 }
