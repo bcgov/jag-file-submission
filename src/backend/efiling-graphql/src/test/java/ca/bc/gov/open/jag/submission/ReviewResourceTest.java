@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 
-@QuarkusTest
+//@QuarkusTest
 public class ReviewResourceTest {
 
-    @Test
+    //@Test
     public void testEndpoint() {
         given()
                 .when().get("/graphql/schema.graphql")

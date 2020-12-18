@@ -2,7 +2,7 @@ package ca.bc.gov.open.jag.efilingcommons.model;
 
 import org.joda.time.DateTime;
 
-import javax.xml.datatype.XMLGregorianCalendar;
+
 import java.math.BigDecimal;
 
 public class FilePackage {
