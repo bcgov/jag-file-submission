@@ -21,4 +21,4 @@ jobs:
       # Build Docker and Run Tests
       - name: build docker
         run: |
-          EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET=${{secrets.EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}} KEYCLOAK_REALM=${{secrets.KEYCLOAK_REALM}} KEYCLOAK_URL=${{secrets.KEYCLOAK_URL}} EFILING_DEMO_KEYCLOAK_REALM=${{secrets.EFILING_DEMO_KEYCLOAK_REALM}} EFILING_DEMO_KEYCLOAK_URL=${{secrets.EFILING_DEMO_KEYCLOAK_URL}} KEYCLOAK_AUTH_SERVER_URL=${{secrets.EFILING_DEMO_KEYCLOAK_URL}} docker-compose build redis sftp clamav efiling-api keycloak efiling-demo efiling-frontend efiling-graphql
+          docker-compose build efiling-api efiling-demo efiling-frontend efiling-graphql
