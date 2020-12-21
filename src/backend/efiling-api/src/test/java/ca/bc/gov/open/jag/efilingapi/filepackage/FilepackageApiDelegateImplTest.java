@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingapi.filePackage;
+package ca.bc.gov.open.jag.efilingapi.filepackage;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import org.junit.jupiter.api.*;
