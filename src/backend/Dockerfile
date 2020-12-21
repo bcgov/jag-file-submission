@@ -14,8 +14,9 @@ ENV STARTERS_V=${STARTERS_V}
 RUN mkdir /root/.ssh && \
     chmod 0700 /root/.ssh  && \
     ssh-keyscan -t rsa localhost >> ~/.ssh/known_hosts  && \
+    apt-get clean && \
     apt-get update  && \
-    apt-get install -y git
+    apt-get -y install git
 
 WORKDIR /libs
 
