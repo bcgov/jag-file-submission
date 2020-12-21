@@ -2,7 +2,7 @@ package ca.bc.gov.open.jag.packagereview;
 
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
-import ca.bc.gov.open.jag.packagereview.mapper.FilingPackageMapperImpl;
+import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilingPackageMapperImpl;
 import io.quarkus.test.Mock;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Assertions;
@@ -34,7 +34,7 @@ public class ReviewResourceTest {
 
         Mockito.when(efilingStatusServiceMock.findStatusByPackage(ArgumentMatchers.eq(SUCCESS_CLIENT),ArgumentMatchers.eq(SUCCESS_PACKAGE))).thenReturn(Optional.of(FilingPackage.builder().applicationCode("test").create()));
 
-        sut = new ReviewResource(efilingStatusServiceMock, new FilingPackageMapperImpl());
+        //sut = new ReviewResource(efilingStatusServiceMock, new FilingPackageMapperImpl());
     }
 
    // @Test
