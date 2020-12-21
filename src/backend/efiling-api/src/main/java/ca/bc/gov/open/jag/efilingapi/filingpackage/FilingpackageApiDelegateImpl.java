@@ -1,6 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.filingpackage;
 
-import ca.bc.gov.open.jag.efilingapi.api.FilepackageApiDelegate;
+import ca.bc.gov.open.jag.efilingapi.api.FilingpackageApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
@@ -14,17 +14,17 @@ import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.UUID;
 
-public class FilepackageApiDelegateImpl implements FilepackageApiDelegate {
+public class FilingpackageApiDelegateImpl implements FilingpackageApiDelegate {
 
     private final FilingPackageService filingPackageService;
 
-    public FilepackageApiDelegateImpl(FilingPackageService filingPackageService) {
+    public FilingpackageApiDelegateImpl(FilingPackageService filingPackageService) {
         this.filingPackageService = filingPackageService;
     }
 
     @Override
     @RolesAllowed("efiling-user")
-    public ResponseEntity<FilingPackage> getFilePackage(BigDecimal packageIdentifier) {
+    public ResponseEntity<FilingPackage> getFilingPackage(BigDecimal packageIdentifier) {
 
         Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
 

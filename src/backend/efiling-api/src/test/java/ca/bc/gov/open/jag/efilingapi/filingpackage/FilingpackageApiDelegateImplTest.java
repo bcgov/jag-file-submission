@@ -27,12 +27,12 @@ import static org.mockito.AdditionalMatchers.eq;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("FilepackageApiDelegateImplTest")
-public class FilepackageApiDelegateImplTest {
+public class FilingpackageApiDelegateImplTest {
     public static final UUID CASE_1 = UUID.randomUUID();
     public static final UUID CASE_2 = UUID.randomUUID();
 
 
-    FilepackageApiDelegateImpl sut;
+    FilingpackageApiDelegateImpl sut;
 
     @Mock
     FilingPackageService filingPackageService;
@@ -69,7 +69,7 @@ public class FilepackageApiDelegateImplTest {
 
         Mockito.when(filingPackageService.getCSOFilingPackage(ArgumentMatchers.eq(CASE_2), ArgumentMatchers.eq(BigDecimal.TEN))).thenReturn(Optional.empty());
 
-        sut = new FilepackageApiDelegateImpl(filingPackageService);
+        sut = new FilingpackageApiDelegateImpl(filingPackageService);
     }
 
     @Test
@@ -80,7 +80,7 @@ public class FilepackageApiDelegateImplTest {
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, CASE_1);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<FilingPackage> result = sut.getFilePackage(BigDecimal.ONE);
+        ResponseEntity<FilingPackage> result = sut.getFilingPackage(BigDecimal.ONE);
 
         Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
 
@@ -92,7 +92,7 @@ public class FilepackageApiDelegateImplTest {
 
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(null);
 
-        ResponseEntity actual = sut.getFilePackage(BigDecimal.ONE);
+        ResponseEntity actual = sut.getFilingPackage(BigDecimal.ONE);
 
         Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
 
@@ -106,7 +106,7 @@ public class FilepackageApiDelegateImplTest {
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, CASE_2);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<FilingPackage> result = sut.getFilePackage(BigDecimal.TEN);
+        ResponseEntity<FilingPackage> result = sut.getFilingPackage(BigDecimal.TEN);
 
         Assertions.assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
 
