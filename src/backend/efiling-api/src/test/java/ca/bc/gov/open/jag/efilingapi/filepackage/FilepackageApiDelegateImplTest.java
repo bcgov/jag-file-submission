@@ -26,7 +26,7 @@ import java.util.UUID;
 import static org.mockito.AdditionalMatchers.eq;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@DisplayName("PaymentApiDelegateImpl")
+@DisplayName("FilepackageApiDelegateImplTest")
 public class FilepackageApiDelegateImplTest {
     public static final UUID CASE_1 = UUID.randomUUID();
     public static final UUID CASE_2 = UUID.randomUUID();
