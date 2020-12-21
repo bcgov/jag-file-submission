@@ -6,6 +6,7 @@ import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingStatusServiceException;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoStatusServiceImpl;
 import org.joda.time.DateTime;
@@ -69,7 +70,7 @@ public class FindPackageByIdTest {
     @DisplayName("OK: package found")
     @Test
     public void testWithFoundResult() throws DatatypeConfigurationException {
-        Optional<FilingPackage> result = sut.findStatusByPackage(SUCCESS_CLIENT, SUCCESS_PACKAGE);
+        Optional<FilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(SUCCESS_CLIENT, SUCCESS_PACKAGE));
 
         Assertions.assertEquals("test", result.get().getApplicationCode());
 
@@ -78,7 +79,7 @@ public class FindPackageByIdTest {
     @DisplayName("Ok: no packages found")
     @Test
     public void testWithNoResult() {
-        Optional<FilingPackage> result = sut.findStatusByPackage(NOTFOUND_CLIENT, NOTFOUND_PACKAGE);
+        Optional<FilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(NOTFOUND_CLIENT, NOTFOUND_PACKAGE));
 
         Assertions.assertFalse(result.isPresent());
 
@@ -87,7 +88,7 @@ public class FindPackageByIdTest {
     @DisplayName("Exception: filing status facade throws an exception")
     @Test
     public void testWithException() {
-        Assertions.assertThrows(EfilingStatusServiceException.class, () -> sut.findStatusByPackage(EXCEPTION_CLIENT, EXCEPTION_PACKAGE));
+        Assertions.assertThrows(EfilingStatusServiceException.class, () -> sut.findStatusByPackage(new FilingPackageRequest(EXCEPTION_CLIENT, EXCEPTION_PACKAGE)));
     }
 
     private FilingStatus createFilingStatus() {
