@@ -13,7 +13,6 @@ ENV PATH ./node_modules/.bin:$PATH
 
 # install dependencies
 RUN yarn install
-RUN yarn global add react-scripts@3.4.1
 
 # set working directory
 WORKDIR /${SERVICE_NAME}
