@@ -1,8 +1,8 @@
-package ca.bc.gov.open.jag.efilingapi.filepackage;
+package ca.bc.gov.open.jag.efilingapi.filingpackage;
 
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.CreateCsoAccountRequest;
-import ca.bc.gov.open.jag.efilingapi.filepackage.service.FilePackageService;
+import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("FilePackageConfigTest")
-public class FilePackageConfigTest {
+public class FilingPackageConfigTest {
 
 
     @Configuration
@@ -63,15 +63,15 @@ public class FilePackageConfigTest {
     }
 
     ApplicationContextRunner context = new ApplicationContextRunner()
-            .withUserConfiguration(FilePackageConfigTest.TestConfig.class)
-            .withUserConfiguration(FilePackageConfig.class);
+            .withUserConfiguration(FilingPackageConfigTest.TestConfig.class)
+            .withUserConfiguration(FilingPackageConfig.class);
 
     @Test
     public void testConfigure() {
 
         context.run(it -> {
             assertThat(it).hasSingleBean(AccountService.class);
-            assertThat(it).hasSingleBean(FilePackageService.class);
+            assertThat(it).hasSingleBean(FilingPackageService.class);
 
         });
 

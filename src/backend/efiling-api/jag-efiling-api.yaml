@@ -12,7 +12,7 @@ tags:
     description: Submission Api
   - name: courts
     description: Courts
-  - name: filePackage
+  - name: filingPackage
     description: File Package
 security:
   - bearerAuth: []
@@ -386,13 +386,13 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GenerateCardUrlResponse"
-  "/filepackage/{packageIdentifier}":
+  "/filingpackage/{packageIdentifier}":
     get:
-      summary: Get file package
-      operationId: GetFilePackage
+      summary: Get filing package
+      operationId: GetFilingPackage
       description: get filing package details from cso
       tags:
-        - filePackage
+        - filingPackage
       parameters:
         - name: packageIdentifier
           in: path

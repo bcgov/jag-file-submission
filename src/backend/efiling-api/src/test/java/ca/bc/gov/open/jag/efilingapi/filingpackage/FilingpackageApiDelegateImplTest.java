@@ -1,8 +1,8 @@
-package ca.bc.gov.open.jag.efilingapi.filepackage;
+package ca.bc.gov.open.jag.efilingapi.filingpackage;
 
 import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
-import ca.bc.gov.open.jag.efilingapi.filepackage.service.FilePackageService;
+import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import org.junit.jupiter.api.*;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
@@ -35,7 +35,7 @@ public class FilepackageApiDelegateImplTest {
     FilepackageApiDelegateImpl sut;
 
     @Mock
-    FilePackageService filePackageService;
+    FilingPackageService filingPackageService;
 
     @Mock
     private SecurityContext securityContextMock;
@@ -64,12 +64,12 @@ public class FilepackageApiDelegateImplTest {
 
         SecurityContextHolder.setContext(securityContextMock);
 
-        Mockito.when(filePackageService.getCSOFilingPackage(ArgumentMatchers.eq(CASE_1), ArgumentMatchers.eq(BigDecimal.ONE))).thenReturn(Optional.of(new FilingPackage()));
+        Mockito.when(filingPackageService.getCSOFilingPackage(ArgumentMatchers.eq(CASE_1), ArgumentMatchers.eq(BigDecimal.ONE))).thenReturn(Optional.of(new FilingPackage()));
 
 
-        Mockito.when(filePackageService.getCSOFilingPackage(ArgumentMatchers.eq(CASE_2), ArgumentMatchers.eq(BigDecimal.TEN))).thenReturn(Optional.empty());
+        Mockito.when(filingPackageService.getCSOFilingPackage(ArgumentMatchers.eq(CASE_2), ArgumentMatchers.eq(BigDecimal.TEN))).thenReturn(Optional.empty());
 
-        sut = new FilepackageApiDelegateImpl(filePackageService);
+        sut = new FilepackageApiDelegateImpl(filingPackageService);
     }
 
     @Test

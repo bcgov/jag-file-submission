@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingapi.filepackage.service;
+package ca.bc.gov.open.jag.efilingapi.filingpackage.service;
 
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
@@ -12,9 +12,9 @@ import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("FilePackageServiceImplTest")
-public class FilePackageServiceImplTest {
+public class FilingPackageServiceImplTest {
 
-    FilePackageServiceImpl sut;
+    FilingPackageServiceImpl sut;
 
     @Mock
     EfilingStatusService efilingStatusServiceMock;
@@ -24,7 +24,7 @@ public class FilePackageServiceImplTest {
 
     @BeforeAll
     public void beforeAll() {
-        sut = new FilePackageServiceImpl(efilingStatusServiceMock, accountServiceMock);
+        sut = new FilingPackageServiceImpl(efilingStatusServiceMock, accountServiceMock);
     }
 
     @Test
