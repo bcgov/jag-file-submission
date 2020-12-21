@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 public class FilepackageApiDelegateImpl implements FilepackageApiDelegate {
     @Override
-    public ResponseEntity<FilingPackage> getFilePackage( BigDecimal packageIdentifier) {
+    public ResponseEntity<FilingPackage> getFilePackage(BigDecimal packageIdentifier) {
         return ResponseEntity.ok(new FilingPackage());
     }
 }
