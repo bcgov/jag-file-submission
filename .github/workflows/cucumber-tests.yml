@@ -2,7 +2,7 @@ name: Cucumber Tests
 
 on:
   push:
-    branches: [master, feature/test-docker]
+    branches: [master]
 
 jobs:
   cucumber-tests:
