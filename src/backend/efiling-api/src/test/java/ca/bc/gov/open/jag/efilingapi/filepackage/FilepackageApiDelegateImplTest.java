@@ -1,7 +1,10 @@
 package ca.bc.gov.open.jag.efilingapi.filepackage;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
+import ca.bc.gov.open.jag.efilingapi.filepackage.service.FilePackageService;
 import org.junit.jupiter.api.*;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -12,9 +15,15 @@ import java.math.BigDecimal;
 public class FilepackageApiDelegateImplTest {
     FilepackageApiDelegateImpl sut;
 
+    @Mock
+    FilePackageService filePackageService;
+
     @BeforeAll
     public void beforeAll() {
-        sut = new FilepackageApiDelegateImpl();
+
+        MockitoAnnotations.openMocks(this);
+
+        sut = new FilepackageApiDelegateImpl(filePackageService);
     }
 
     @Test
