@@ -46,7 +46,6 @@ public class DriverClass {
             initializeDriver();
             driver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
             driver.manage().timeouts().setScriptTimeout(120, TimeUnit.SECONDS);
-           // driver.manage().window().maximize();
             driver.manage().deleteAllCookies();
     }
 }

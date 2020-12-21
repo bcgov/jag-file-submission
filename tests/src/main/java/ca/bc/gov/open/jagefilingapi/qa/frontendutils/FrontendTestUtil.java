@@ -33,6 +33,7 @@ public class FrontendTestUtil extends DriverClass {
     public void accessFrontEndPage(String respUrl) throws InterruptedException, IOException {
         String username = System.getProperty("BCEID_USERNAME");
         String password = System.getProperty("BCEID_PASSWORD");
+        String env = System.getProperty("ENV");
 
         try {
             for(int i = 0; i<3; i++) {
@@ -41,8 +42,9 @@ public class FrontendTestUtil extends DriverClass {
                 log.info("Efiling hub page url is accessed successfully");
 
                 AuthenticationPage authenticationPage = new AuthenticationPage(driver);
-                // not needed for TEST
-              //  authenticationPage.clickBceid();
+                if(env.equals("demo")) {
+                    authenticationPage.clickBceid();
+                }
                 Thread.sleep(4000L);
                 authenticationPage.signInWithBceid(username, password);
                 log.info("user is authenticated before reaching eFiling hub page");

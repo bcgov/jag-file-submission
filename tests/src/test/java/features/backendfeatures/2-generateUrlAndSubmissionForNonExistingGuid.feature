@@ -1,7 +1,7 @@
 Feature: When user with non existing guid uploads the documents, id is authenticated user details,
   navigation urls are generated and user, submission package details can be retrieved
 
-#  @backendDemo
+  @backend
   Scenario: Verify if a single document is uploaded, url is generated and package information can be retrieved for
   requests made with non existing valid CSO account
     ## Call to upload the document ##
@@ -18,10 +18,10 @@ Feature: When user with non existing guid uploads the documents, id is authentic
     When status code is 200 and content type are verified
     Then verify clientAppName and csoBaseUrl values are returned
     And verify success, error and cancel navigation urls are also returned
-#    ## Call to get filing package info ##
+    ## Call to get filing package info ##
     Given "SUBMISSION" id with filing package path is submitted with non existing CSO account GET http request
     When status code is 200 and content type are verified
     Then verify court details and document details are returned
-#    ## Call to get document wth filename ##
+    ## Call to get document wth filename ##
     Given "SUBMISSION" id with filename path is submitted with non existing CSO account GET http request
     Then Verify status code is 200 and content type is octet-stream

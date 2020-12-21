@@ -67,11 +67,9 @@ public class CreateCsoAccountTest extends DriverClass {
     public void verifyResponseReturnsClientIdAccountIdAndInternalClientNumber() {
         jsonPath = new JsonPath(response.asString());
 
-        // For TEST
         assertEquals("752", jsonPath.get("clientId"));
         assertEquals("437", jsonPath.get("accountId"));
-//        assertEquals("1", jsonPath.get("clientId"));
-//        assertEquals("1", jsonPath.get("accountId"));
+
         assertNotNull(jsonPath.get("internalClientNumber"));
         assertTrue(jsonPath.get("fileRolePresent"));
     }
@@ -93,12 +91,9 @@ public class CreateCsoAccountTest extends DriverClass {
     @Then("verify response returns clientId, accountId and internalClientNumber is updated")
     public void verifyResponseReturnsClientIdAccountIdAndInternalClientNumberIsUpdated() {
         jsonPath = new JsonPath(response.asString());
-
-        // For TEST
         assertEquals("752", jsonPath.get("clientId"));
         assertEquals("437", jsonPath.get("accountId"));
-//        assertEquals("1", jsonPath.get("clientId"));
-//        assertEquals("1", jsonPath.get("accountId"));
+
         assertEquals("23423", jsonPath.get("internalClientNumber"));
         assertTrue(jsonPath.get("fileRolePresent"));
     }
@@ -124,7 +119,6 @@ public class CreateCsoAccountTest extends DriverClass {
     public void verifyResponseReturnsFirstNameLastNameAndMiddleName() {
         jsonPath = new JsonPath(response.asString());
 
-        // Demo mode bob ross alan
         assertEquals("efilehub test account", jsonPath.get("firstName"));
         assertEquals("efile tester", jsonPath.get("lastName"));
         assertEquals("", jsonPath.get("middleName"));

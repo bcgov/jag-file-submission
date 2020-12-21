@@ -1,6 +1,6 @@
 Feature: User can upload additional document and delete the documents
 
- # @backendDemo
+  @backend
   Scenario: Verify additional document can be uploaded, retrieved and deleted
      ## Call to upload the document ##
     Given initial document is posted to "DOCUMENT_SUBMISSION" with valid existing CSO account guid and a single pdf file
@@ -16,11 +16,11 @@ Feature: User can upload additional document and delete the documents
     When validated status code is 200 and content type
     Then ClientAppName and csoBaseUrl values are verified
     And verify navigation urls are returned
-#    ## Call to upload second document ##
+    ## Call to upload second document ##
     Given second document is posted to "DOCUMENT_SUBMISSION"
     When validated status code is 200 and content type
     Then verify submission id and document count is returned
-#    ## Call to get updated document wth filename ##
+    ## Call to get updated document wth filename ##
     Given "SUBMISSION" id with filename is submitted with GET http request
     Then validated status code is 200 and content type is not json
 

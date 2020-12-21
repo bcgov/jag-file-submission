@@ -38,6 +38,6 @@ public class EfilingDocumentServiceDemoImplTest {
 
         Assertions.assertEquals(2, actual.size());
         Assertions.assertEquals("Description1", actual.get(0).getDescription());
-        Assertions.assertEquals("AAB", actual.get(0).getType());
+        Assertions.assertEquals("AFF", actual.get(0).getType());
     }
 }

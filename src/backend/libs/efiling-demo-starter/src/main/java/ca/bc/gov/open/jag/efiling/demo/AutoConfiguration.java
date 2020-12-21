@@ -87,7 +87,7 @@ public class AutoConfiguration {
         return new BCeIDAccountService() {
             @Override
             public Optional<IndividualIdentity> getIndividualIdentity(GetAccountRequest getAccountRequest) {
-                IndividualIdentity individualIdentity = IndividualIdentity.builder().name(Name.builder().firstName("Bob").middleName("Alan").surname("Ross").create()).create();
+                IndividualIdentity individualIdentity = IndividualIdentity.builder().name(Name.builder().firstName("efilehub test account").middleName("").surname("efile tester").create()).create();
                 return Optional.of(individualIdentity);
             }
         };

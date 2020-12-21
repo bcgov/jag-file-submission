@@ -59,6 +59,7 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
 
         String username = System.getProperty("BCEID_USERNAME");
         String password = System.getProperty("BCEID_PASSWORD");
+        String env = System.getProperty("ENV");
 
         try {
             for (int i = 0; i < 3; i++) {
@@ -69,7 +70,9 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
                 log.info("EFiling submission page url is accessed successfully");
 
                 AuthenticationPage authenticationPage = new AuthenticationPage(driver);
-                authenticationPage.clickBceid();
+                if(env.equals("demo")) {
+                    authenticationPage.clickBceid();
+                }
                 Thread.sleep(4000L);
                 authenticationPage.signInWithBceid(username, password);
                 log.info("user is authenticated before reaching eFiling hub page");

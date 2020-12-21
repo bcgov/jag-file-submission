@@ -50,7 +50,7 @@ public class AutoConfigurationTest {
             Assertions.assertEquals("DEC", paymentAdapter.makePayment(new EfilingPayment(BigDecimal.TEN, BigDecimal.TEN, "invoice", "client")).getApprovalCd());
 
             GetAccountRequest request =  GetAccountRequest.BusinessSelfRequest("test");
-            Assertions.assertEquals("Bob", bCeIDAccountService.getIndividualIdentity(request).get().getName().getFirstName());
+            Assertions.assertEquals("efilehub test account", bCeIDAccountService.getIndividualIdentity(request).get().getName().getFirstName());
 
         });
     }

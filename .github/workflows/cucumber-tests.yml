@@ -2,7 +2,7 @@ name: Cucumber Tests
 
 on:
   push:
-    branches: [master]
+    branches: [master, qa-court-lookup]
 
 jobs:
   cucumber-tests:
@@ -32,7 +32,7 @@ jobs:
           KEYCLOAK_CREDENTIALS_SECRET=${{secrets.EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}} KEYCLOAK_REALM=${{secrets.KEYCLOAK_REALM}} KEYCLOAK_URL=${{secrets.KEYCLOAK_URL}} REACT_APP_KEYCLOAK_REALM=${{secrets.EFILING_DEMO_KEYCLOAK_REALM}} REACT_APP_KEYCLOAK_URL=${{secrets.EFILING_DEMO_KEYCLOAK_URL}} KEYCLOAK_AUTH_SERVER_URL=${{secrets.EFILING_DEMO_KEYCLOAK_URL}} CSO_DEBUG_ENABLED=false KEYCLOAK_SSL_REQUIRED=none KEYCLOAK_RESOURCE=efiling-api docker-compose build efiling-api
           KEYCLOAK_CREDENTIALS_SECRET=${{secrets.EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}} KEYCLOAK_REALM=${{secrets.KEYCLOAK_REALM}} KEYCLOAK_URL=${{secrets.KEYCLOAK_URL}} REACT_APP_KEYCLOAK_REALM=${{secrets.EFILING_DEMO_KEYCLOAK_REALM}} REACT_APP_KEYCLOAK_URL=${{secrets.EFILING_DEMO_KEYCLOAK_URL}} KEYCLOAK_AUTH_SERVER_URL=${{secrets.EFILING_DEMO_KEYCLOAK_URL}} CSO_DEBUG_ENABLED=false KEYCLOAK_SSL_REQUIRED=none KEYCLOAK_RESOURCE=efiling-api docker-compose up efiling-api &disown
           sleep 30
-          mvn verify -Pconfig -DBCEID_USERNAME=${{secrets.BCEID_USERNAME}} -DBCEID_PASSWORD=${{secrets.BCEID_PASSWORD}} -DEFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET=${{secrets.EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}} -DKEYCLOAK_URL=${{secrets.KEYCLOAK_URL}}/realms/${{secrets.KEYCLOAK_REALM}}/protocol/openid-connect/token -DBASE_URI=${{secrets.BASE_URI}} -DBROWSER=${{secrets.BROWSER}} -f tests/pom.xml
+          mvn verify -Pconfig -DBCEID_USERNAME=${{secrets.BCEID_USERNAME}} -DBCEID_PASSWORD=${{secrets.BCEID_PASSWORD}} -DEFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET=${{secrets.EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}} -DKEYCLOAK_URL=${{secrets.KEYCLOAK_URL}}/realms/${{secrets.KEYCLOAK_REALM}}/protocol/openid-connect/token -DBASE_URI=${{secrets.BASE_URI}} -DBROWSER=${{secrets.BROWSER}} -DENV=${{secrets.ENV}} -f tests/pom.xml
 
       # Upload Spark report for debugging purposes
       - name: Upload Spark report for debugging purposes
