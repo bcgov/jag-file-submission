@@ -32,13 +32,11 @@ public class GenerateUrlRequestBuilders {
     private static final String DOCUMENT_PATH_PARAM = "/document";
     private static final String SECOND_FILE_NAME_PATH = "/test-document-2.pdf";
     private static final String UPDATE_DOCUMENTS_PATH_PARAM = "/update-documents";
-    private static final String GET_COURTS_PATH = "/courts";
     private GenerateUrlPayload payloadData;
 
     public Response getBearerToken() {
         String resourceAPI = System.getProperty("KEYCLOAK_URL");
         String clientSecret = System.getProperty("EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET");
-        //"efiling-demo"
         request = RestAssured.given()
                 .formParam(CLIENT_ID, "efiling-demo")
                 .formParam(GRANT_TYPE, "client_credentials")
@@ -107,9 +105,6 @@ public class GenerateUrlRequestBuilders {
 
         request = RestAssured.given().auth().preemptive().oauth2(accessToken)
                 .spec(TestUtil.requestSpecification());
-        //.header(X_TRANSACTION_ID, accountGuid);
-        //.queryParam("courtLevel", "P")
-
         return request.when().get(resourceGet.getResource())
                 .then()
                 .spec(TestUtil.validResponseSpecification())

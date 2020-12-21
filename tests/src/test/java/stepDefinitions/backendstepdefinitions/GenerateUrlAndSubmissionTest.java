@@ -53,7 +53,6 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
         response = generateUrlRequestBuilders.requestWithSinglePdfDocument(resource,validExistingCSOGuid, FILE_NAME_PATH);
-        System.out.println(response.asString());
     }
 
     @When("status code is {int} and content type is verified")
@@ -90,7 +89,6 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
         validExistingCSOGuid = JsonDataReader.getCsoAccountGuid().getValidExistingCSOGuid();
 
         response = generateUrlRequestBuilders.postRequestWithPayload(resource,validExistingCSOGuid, submissionId, GENERATE_URL_PATH_PARAM);
-        System.out.println(response.asString());
     }
 
     @Then("verify expiry date and eFiling url are returned with the CSO account guid and submission id")
