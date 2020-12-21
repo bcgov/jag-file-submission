@@ -20,7 +20,7 @@ public class FilepackageApiDelegateImplTest {
     @Test
     @DisplayName("200: ok url was generated")
     public void withValidRequestReturnFilingPackage() {
-        ResponseEntity<FilingPackage> result = sut.getFilePackage(BigDecimal.ONE, BigDecimal.ONE);
+        ResponseEntity<FilingPackage> result = sut.getFilePackage(BigDecimal.ONE);
 
         Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
 
