@@ -386,7 +386,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GenerateCardUrlResponse"
-  "/filepackage/{clientId}/{packageNumber}":
+  "/filepackage/{packageIdentifier}":
     get:
       summary: Get file package
       operationId: GetFilePackage
@@ -394,15 +394,9 @@ paths:
       tags:
         - filePackage
       parameters:
-        - name: clientId
+        - name: packageIdentifier
           in: path
-          description: client identifier
-          required: true
-          schema:
-            type: number
-        - name: packageNumber
-          in: path
-          description: package number
+          description: package identifier
           required: true
           schema:
             type: number
