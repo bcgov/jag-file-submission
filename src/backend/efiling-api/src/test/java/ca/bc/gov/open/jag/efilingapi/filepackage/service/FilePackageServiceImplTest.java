@@ -1,9 +1,37 @@
 package ca.bc.gov.open.jag.efilingapi.filepackage.service;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.TestInstance;
+import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
+import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
+import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
+import org.junit.jupiter.api.*;
+import org.mockito.Mock;
+
+import java.math.BigDecimal;
+import java.util.Optional;
+import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("FilePackageServiceImplTest")
 public class FilePackageServiceImplTest {
+
+    FilePackageServiceImpl sut;
+
+    @Mock
+    EfilingStatusService efilingStatusServiceMock;
+
+    @Mock
+    AccountService accountServiceMock;
+
+    @BeforeAll
+    public void beforeAll() {
+        sut = new FilePackageServiceImpl(efilingStatusServiceMock, accountServiceMock);
+    }
+
+    @Test
+    @DisplayName("Ok: a filing package was returned")
+    public void withValidRequestReturnFilingPackage() {
+        Optional<FilingPackage> result = sut.getCSOFilingPackage(UUID.randomUUID(), BigDecimal.ONE);
+        //This test for now will return empty optional
+        Assertions.assertTrue(!result.isPresent());
+    }
 }
