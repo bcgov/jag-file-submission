@@ -69,8 +69,6 @@ public class CreateCsoAccountTest extends DriverClass {
 
         assertEquals("752", jsonPath.get("clientId"));
         assertEquals("437", jsonPath.get("accountId"));
-
-        assertNotNull(jsonPath.get("internalClientNumber"));
         assertTrue(jsonPath.get("fileRolePresent"));
     }
 

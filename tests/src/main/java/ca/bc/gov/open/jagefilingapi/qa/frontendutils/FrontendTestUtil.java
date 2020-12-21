@@ -32,7 +32,8 @@ public class FrontendTestUtil extends DriverClass {
 
     public void accessFrontEndPage(String respUrl) throws InterruptedException, IOException {
         try {
-            for(int i = 0; i<3; i++) {
+            int i = 0;
+            while (i<=3) {
                 driverSetUp();
                 driver.get(respUrl);
                 log.info("Efiling hub page url is accessed successfully");
@@ -48,6 +49,7 @@ public class FrontendTestUtil extends DriverClass {
                 if(eFileSubmissionPage.verifyEfilingPageTitle().equals("E-File submission")) {
                     break;
                 }
+                i++;
             }
         } catch (org.openqa.selenium.TimeoutException tx) {
             log.info("Create CSO account or Package confirmation page is not displayed");

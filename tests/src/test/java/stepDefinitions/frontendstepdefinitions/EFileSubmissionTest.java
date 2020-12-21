@@ -57,7 +57,8 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
     public void userIsOnTheEfilingSubmissionPage() throws IOException {
         eFileSubmissionPage = new EFileSubmissionPage(driver);
         try {
-            for (int i = 0; i < 3; i++) {
+            int i = 0;
+            while(i <= 3) {
                 GenerateUrlHelper generateUrlHelper = new GenerateUrlHelper();
                 String respUrl = generateUrlHelper.getGeneratedUrl();
 
@@ -75,6 +76,7 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
                 if (eFileSubmissionPage.verifyCreateCsoAccountBtnIsDisplayed()) {
                     break;
                 }
+                i++;
             }
         } catch (TimeoutException | InterruptedException tx) {
             log.info("Efiling hub page is not displayed");
