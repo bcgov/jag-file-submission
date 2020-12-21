@@ -5,6 +5,7 @@ import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 import java.util.UUID;
 
 public class FilePackageServiceImpl implements FilePackageService {
@@ -20,7 +21,7 @@ public class FilePackageServiceImpl implements FilePackageService {
 
 
     @Override
-    public FilingPackage getCSOFilingPackage(UUID universalId, BigDecimal packageNumber) {
-        return null;
+    public Optional<FilingPackage> getCSOFilingPackage(UUID universalId, BigDecimal packageNumber) {
+        return Optional.empty();
     }
 }
