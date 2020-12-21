@@ -143,6 +143,12 @@
       <artifactId>jackson-databind-nullable</artifactId>
       <version>${org.openapitools.version}</version>
     </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.1</version>
+      <scope>compile</scope>
+    </dependency>
   </dependencies>
 
   <profiles>
