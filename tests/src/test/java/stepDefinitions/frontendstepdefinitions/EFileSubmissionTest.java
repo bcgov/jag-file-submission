@@ -56,12 +56,7 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
     @Given("user is on the eFiling submission page")
     public void userIsOnTheEfilingSubmissionPage() throws IOException {
         eFileSubmissionPage = new EFileSubmissionPage(driver);
-
-        String username = System.getProperty("BCEID_USERNAME");
-        String password = System.getProperty("BCEID_PASSWORD");
-
         try {
-            for (int i = 0; i < 3; i++) {
                 GenerateUrlHelper generateUrlHelper = new GenerateUrlHelper();
                 String respUrl = generateUrlHelper.getGeneratedUrl();
 
@@ -69,15 +64,15 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
                 log.info("EFiling submission page url is accessed successfully");
 
                 AuthenticationPage authenticationPage = new AuthenticationPage(driver);
-                authenticationPage.clickBceid();
+                if(System.getProperty("ENV").equals("demo")) {
+                    authenticationPage.clickBceid();
+                }
                 Thread.sleep(4000L);
-                authenticationPage.signInWithBceid(username, password);
+                authenticationPage.signInWithBceid(System.getProperty("BCEID_USERNAME"), System.getProperty("BCEID_PASSWORD"));
                 log.info("user is authenticated before reaching eFiling hub page");
 
-                if (eFileSubmissionPage.verifyCreateCsoAccountBtnIsDisplayed()) {
-                    break;
-                }
-            }
+                eFileSubmissionPage.verifyCreateCsoAccountBtnIsDisplayed();
+
         } catch (TimeoutException | InterruptedException tx) {
             log.info("Efiling hub page is not displayed");
         }

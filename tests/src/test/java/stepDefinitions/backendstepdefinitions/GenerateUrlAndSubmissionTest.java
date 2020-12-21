@@ -16,8 +16,10 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.Assert;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URISyntaxException;
 import java.util.List;
 
@@ -136,7 +138,6 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     @Then("verify court details and document details are returned and not empty")
     public void verifyCourtDetailsAndDocumentDetailsAreReturnedAndNotEmpty() {
         jsonPath = new JsonPath(response.asString());
-        int submissionFeeAmount = jsonPath.get("submissionFeeAmount");
 
         assertThat(jsonPath.get("court.location"), is(not(emptyString())));
         assertThat(jsonPath.get("court.level"), is(not(emptyString())));
@@ -147,7 +148,7 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
         assertThat(jsonPath.get("court.locationDescription"), is(not(emptyString())));
         assertThat(jsonPath.get("court.levelDescription"), is(not(emptyString())));
         assertThat(jsonPath.get("parties"), is(not(emptyString())));
-        assertEquals(7.00, submissionFeeAmount, 0);
+        Assert.assertEquals(Integer.valueOf(7), jsonPath.get("submissionFeeAmount"));
         log.info("Court fee and document details response have valid values");
 
         assertFalse(jsonPath.get("documents.name").toString().isEmpty());
@@ -211,5 +212,22 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     public void packageRefIsReturned() {
         jsonPath = new JsonPath(response.asString());
         assertThat(jsonPath.get("packageRef"), is(not(emptyString())));
+    }
+
+    @Given("{string} without court level type is submitted with GET http request")
+    public void withoutCourtLevelTypeIsSubmittedWithGETHttpRequest(String resource) throws IOException {
+        generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
+        response = generateUrlRequestBuilders.requestToGetCourts(resource);
+    }
+
+    @Then("validate the court location details")
+    public void validateTheCourtLocationDetails() {
+        jsonPath = new JsonPath(response.asString());
+        Assert.assertEquals(Integer.valueOf(10264), jsonPath.get("courts.id[0]"));
+        Assert.assertEquals(Integer.valueOf(9393), jsonPath.get("courts.id[1]"));
+        Assert.assertEquals("5871", jsonPath.get("courts.identifierCode[0]"));
+        Assert.assertEquals("3561", jsonPath.get("courts.identifierCode[1]"));
+        Assert.assertEquals("OMH", jsonPath.get("courts.code[0]"));
+        Assert.assertEquals("ABB", jsonPath.get("courts.code[1]"));
     }
 }

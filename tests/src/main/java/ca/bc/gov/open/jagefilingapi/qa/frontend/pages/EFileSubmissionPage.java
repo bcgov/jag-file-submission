@@ -44,7 +44,7 @@ public class EFileSubmissionPage {
 
     //Actions:
     public String verifyEfilingPageTitle() {
-        wait = new WebDriverWait(driver, 120);
+        wait = new WebDriverWait(driver, 90);
         wait.until(ExpectedConditions.titleIs("E-File submission"));
         log.info("Waiting for the page to load...");
         return driver.getTitle();

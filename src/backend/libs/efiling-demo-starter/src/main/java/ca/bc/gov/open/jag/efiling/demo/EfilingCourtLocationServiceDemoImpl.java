@@ -14,10 +14,10 @@ public class EfilingCourtLocationServiceDemoImpl implements EfilingCourtLocation
     public List<InternalCourtLocation> getCourtLocations(String courtType) {
 
         InternalCourtLocation courtLocationOne = new InternalCourtLocation();
-        courtLocationOne.setId(BigDecimal.valueOf(1031));
-        courtLocationOne.setIdentifierCode("TEST");
+        courtLocationOne.setId(BigDecimal.valueOf(10264));
+        courtLocationOne.setIdentifierCode("5871");
         courtLocationOne.setName("Campbell River");
-        courtLocationOne.setCode("MockCode");
+        courtLocationOne.setCode("OMH");
         courtLocationOne.setIsSupremeCourt(true);
         Address addressOne = new Address();
         addressOne.setAddressLine1("500 - 13th Avenue");
@@ -28,10 +28,10 @@ public class EfilingCourtLocationServiceDemoImpl implements EfilingCourtLocation
         courtLocationOne.setAddress(addressOne);
 
         InternalCourtLocation courtLocationTwo = new InternalCourtLocation();
-        courtLocationTwo.setId(BigDecimal.valueOf(3521));
-        courtLocationTwo.setIdentifierCode("1234");
+        courtLocationTwo.setId(BigDecimal.valueOf(9393));
+        courtLocationTwo.setIdentifierCode("3561");
         courtLocationTwo.setName("Chilliwack");
-        courtLocationTwo.setCode("MockCode");
+        courtLocationTwo.setCode("ABB");
         courtLocationTwo.setIsSupremeCourt(true);
         Address addressTwo = new Address();
         addressTwo.setAddressLine1("46085 Yale Road");

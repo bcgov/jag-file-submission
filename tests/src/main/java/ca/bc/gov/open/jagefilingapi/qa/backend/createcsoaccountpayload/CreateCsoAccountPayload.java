@@ -7,7 +7,7 @@ import java.io.IOException;
 public class CreateCsoAccountPayload {
 
     public String createCsoAccountPayload() throws IOException {
-        CsoPayload csoPayload = new CsoPayload("Bob ", "Alan ", "Ross", "bob.ross@example.com");
+        CsoPayload csoPayload = new CsoPayload("efile tester", "efilehub test account", "", " karthikeyan.murugaiyan.gov.bc.ca");
 
         ObjectMapper csoAccountPayload = new ObjectMapper();
         return csoAccountPayload.writeValueAsString(csoPayload);

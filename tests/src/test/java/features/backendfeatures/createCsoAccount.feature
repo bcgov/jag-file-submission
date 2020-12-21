@@ -2,7 +2,7 @@ Feature: New CSO accounts can be created if a BCeID profile is not associated wi
 
    @backend
    Scenario: Verify a CSO account can be created successfully
-    ## Create CSO account ##
+    ## Create CSO account only on Demo mode ##
     Given user token is retrieved
     Then POST http request is made to "CSO_ACCOUNT_API" with a valid request body
     When status is 201 and content type is verified

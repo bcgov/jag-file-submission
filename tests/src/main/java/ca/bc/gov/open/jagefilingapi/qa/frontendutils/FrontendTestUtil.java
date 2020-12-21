@@ -5,14 +5,15 @@ import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.EFileSubmissionPage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import org.junit.Assert;
 
 public class FrontendTestUtil extends DriverClass {
 
     private static final Logger log = LogManager.getLogger(FrontendTestUtil.class);
+    private static final String EFILE_SUBMISSION_PAGE_TITLE = "E-File submission";
 
     public static void verifyLinkActive(String linkUrl) throws IOException {
 
@@ -31,25 +32,22 @@ public class FrontendTestUtil extends DriverClass {
     }
 
     public void accessFrontEndPage(String respUrl) throws InterruptedException, IOException {
-        String username = System.getProperty("BCEID_USERNAME");
-        String password = System.getProperty("BCEID_PASSWORD");
-
-        try {
-            for(int i = 0; i<3; i++) {
+            try {
                 driverSetUp();
                 driver.get(respUrl);
                 log.info("Efiling hub page url is accessed successfully");
 
                 AuthenticationPage authenticationPage = new AuthenticationPage(driver);
-                authenticationPage.clickBceid();
+                if(System.getProperty("ENV").equals("demo")) {
+                    authenticationPage.clickBceid();
+                }
                 Thread.sleep(4000L);
-                authenticationPage.signInWithBceid(username, password);
+                authenticationPage.signInWithBceid(System.getProperty("BCEID_USERNAME"), System.getProperty("BCEID_PASSWORD"));
                 log.info("user is authenticated before reaching eFiling hub page");
                 EFileSubmissionPage eFileSubmissionPage = new EFileSubmissionPage(driver);
-                if(eFileSubmissionPage.verifyEfilingPageTitle().equals("E-File submission")) {
-                    break;
-                }
-            }
+                Assert.assertEquals(EFILE_SUBMISSION_PAGE_TITLE, eFileSubmissionPage.verifyEfilingPageTitle());
+                log.info("Efiling submission page title is verified");
+
         } catch (org.openqa.selenium.TimeoutException tx) {
             log.info("Create CSO account or Package confirmation page is not displayed");
         }
