@@ -101,9 +101,9 @@ bcgov:
     timeout: ${CLAMAV_TIMEOUT:50000}
 info:
   app:
-    name: @project.name@
-    description: @project.description@
-    version: @project.version@
+    name: "@project.name@"
+    description: "@project.description@"
+    version: "@project.version@"
 opentracing:
   jaeger:
     service-name: efilingApi
