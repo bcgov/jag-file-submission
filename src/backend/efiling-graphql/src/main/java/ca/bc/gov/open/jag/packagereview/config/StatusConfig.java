@@ -35,7 +35,7 @@ public class StatusConfig {
     @Produces
     @DefaultBean
     private EfilingStatusService efilingStatusService() {
-        return new CsoStatusServiceImpl(filingStatusFacadeBean());
+        return new CsoStatusServiceImpl(filingStatusFacadeBean(), null);
     }
 
     @Produces
