@@ -10,6 +10,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.EfilingPayment;
 import ca.bc.gov.open.jag.efilingcommons.model.PaymentTransaction;
 import ca.bc.gov.open.jag.efilingcommons.payment.PaymentAdapter;
 import ca.bc.gov.open.jag.efilingcommons.service.*;
+import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
@@ -54,6 +55,8 @@ public class AutoConfiguration {
     @Bean
     public EfilingCourtLocationService efilingCourtLocationService() { return new EfilingCourtLocationServiceDemoImpl(); }
 
+    @Bean
+    public EfilingStatusService efilingStatusService() { return new EfilingStatusServiceDemoImpl(); }
 
     /**
      * Configures the cache manager for demo accounts
