@@ -2,8 +2,7 @@ name: Cucumber Tests
 
 on:
   push:
-    branches: [master, pipeline]
-
+    branches: [master]
   workflow_dispatch:
 
 jobs:
@@ -55,9 +54,9 @@ jobs:
           REACT_APP_KEYCLOAK_REALM: ${{secrets.EFILING_DEMO_KEYCLOAK_REALM}}
           REACT_APP_KEYCLOAK_URL: ${{secrets.EFILING_DEMO_KEYCLOAK_URL}}
           KEYCLOAK_AUTH_SERVER_URL: ${{secrets.EFILING_DEMO_KEYCLOAK_URL}}
-          CSO_DEBUG_ENABLED: false
-          KEYCLOAK_SSL_REQUIRED: none
-          KEYCLOAK_RESOURCE: efiling-api
+          CSO_DEBUG_ENABLED: 'false'
+          KEYCLOAK_SSL_REQUIRED: 'none'
+          KEYCLOAK_RESOURCE: 'efiling-api'
         run: |
           docker-compose up -d redis sftp clamav efiling-demo efiling-frontend efiling-api &disown
           until $(curl --output /dev/null --silent --head --fail http://localhost:8080/actuator/health); do
