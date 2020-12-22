@@ -3,6 +3,7 @@ name: Cucumber Tests
 on:
   push:
     branches: [master]
+  workflow_dispatch:
 
 jobs:
   cucumber-tests:
@@ -20,7 +21,8 @@ jobs:
       # In this step, this action saves a list of existing images,
       # the cache is created without them in the post run.
       # It also restores the cache if it exists.
-      - uses: satackey/action-docker-layer-caching@v0.0.11
+      - name: Pull the previously cached images.
+        uses: satackey/action-docker-layer-caching@v0.0.11
         # Ignore the failure of a step and avoid terminating the job.
         continue-on-error: true
         with:
@@ -37,15 +39,29 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      # Build Docker and Run Tests
-      - name: build docker
+      - name: Build Docker Images
+        env:
+          DOCKER_BUILDKIT: '1'
+          CSO_DEBUG_ENABLED: 'false'
         run: |
-          sleep 10
+          docker-compose build --parallel efiling-demo efiling-frontend efiling-api
 
-          KEYCLOAK_CREDENTIALS_SECRET=${{secrets.EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}} KEYCLOAK_REALM=${{secrets.KEYCLOAK_REALM}} KEYCLOAK_URL=${{secrets.KEYCLOAK_URL}} REACT_APP_KEYCLOAK_REALM=${{secrets.EFILING_DEMO_KEYCLOAK_REALM}} REACT_APP_KEYCLOAK_URL=${{secrets.EFILING_DEMO_KEYCLOAK_URL}} KEYCLOAK_AUTH_SERVER_URL=${{secrets.EFILING_DEMO_KEYCLOAK_URL}} CSO_DEBUG_ENABLED=false KEYCLOAK_SSL_REQUIRED=none KEYCLOAK_RESOURCE=efiling-api docker-compose up -d redis sftp clamav efiling-demo efiling-frontend efiling-api &disown
+      - name: Standup Docker Pods
+        env:
+          KEYCLOAK_CREDENTIALS_SECRET: ${{secrets.EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}}
+          KEYCLOAK_REALM: ${{secrets.KEYCLOAK_REALM}}
+          KEYCLOAK_URL: ${{secrets.KEYCLOAK_URL}}
+          REACT_APP_KEYCLOAK_REALM: ${{secrets.EFILING_DEMO_KEYCLOAK_REALM}}
+          REACT_APP_KEYCLOAK_URL: ${{secrets.EFILING_DEMO_KEYCLOAK_URL}}
+          KEYCLOAK_AUTH_SERVER_URL: ${{secrets.EFILING_DEMO_KEYCLOAK_URL}}
+          CSO_DEBUG_ENABLED: 'false'
+          KEYCLOAK_SSL_REQUIRED: 'none'
+          KEYCLOAK_RESOURCE: 'efiling-api'
+        run: |
+          docker-compose up -d redis sftp clamav efiling-demo efiling-frontend efiling-api &disown
           until $(curl --output /dev/null --silent --head --fail http://localhost:8080/actuator/health); do
-              printf 'efiling-api not up'
-              sleep 5
+            printf 'efiling-api not up'
+            sleep 5
           done
           printf 'up'
           mvn verify -Pconfig -DBCEID_USERNAME=${{secrets.BCEID_USERNAME}} -DBCEID_PASSWORD=${{secrets.BCEID_PASSWORD}} -DEFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET=${{secrets.EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}} -DKEYCLOAK_URL=${{secrets.KEYCLOAK_URL}}/realms/${{secrets.KEYCLOAK_REALM}}/protocol/openid-connect/token -DBASE_URI=${{secrets.BASE_URI}} -DBROWSER=${{secrets.BROWSER}} -DENV=${{secrets.ENV}} -f tests/pom.xml
