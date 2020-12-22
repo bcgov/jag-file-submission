@@ -36,7 +36,7 @@ public class FilingPackageServiceImplTest {
     public static final String PARTICIPATING_CLASS = "PARTICIPATING_CLASS";
     public static final String FIRST_NAME = "FIRST_NAME";
     public static final String LAST_NAME = "LAST_NAME";
-    public static final String MIDDLENAME = "MIDDLENAME";
+    public static final String MIDDLE_NAME = "MIDDLENAME";
     public static final String NAME_TYPE = "NAME_TYPE";
     public static final String DESCRIPTION = "DESCRIPTION";
     public static final String MIME_TYPE = "MIME_TYPE";
@@ -91,7 +91,7 @@ public class FilingPackageServiceImplTest {
         Assertions.assertEquals(1, result.get().getParties().size());
         Assertions.assertEquals(FIRST_NAME, result.get().getParties().get(0).getFirstName());
         Assertions.assertEquals(LAST_NAME, result.get().getParties().get(0).getLastName());
-        Assertions.assertEquals(MIDDLENAME, result.get().getParties().get(0).getMiddleName());
+        Assertions.assertEquals(MIDDLE_NAME, result.get().getParties().get(0).getMiddleName());
         //Document
         Assertions.assertEquals(1, result.get().getDocuments().size());
         Assertions.assertEquals(DATA, result.get().getDocuments().get(0).getData());
@@ -164,7 +164,7 @@ public class FilingPackageServiceImplTest {
         return Party.builder()
                 .firstName(FIRST_NAME)
                 .lastName(LAST_NAME)
-                .middleName(MIDDLENAME)
+                .middleName(MIDDLE_NAME)
                 .nameTypeCd(NAME_TYPE)
                 .partyTypeCd(ca.bc.gov.open.jag.efilingapi.api.model.Party.PartyTypeEnum.IND.getValue())
                 .roleTypeCd(ca.bc.gov.open.jag.efilingapi.api.model.Party.RoleTypeEnum.ABC.getValue())
