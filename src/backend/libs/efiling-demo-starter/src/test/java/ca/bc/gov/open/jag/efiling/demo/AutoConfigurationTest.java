@@ -6,6 +6,7 @@ import ca.bc.gov.open.jag.efilingcommons.court.EfilingCourtLocationService;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingPayment;
 import ca.bc.gov.open.jag.efilingcommons.payment.PaymentAdapter;
 import ca.bc.gov.open.jag.efilingcommons.service.*;
+import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 import org.springframework.cache.CacheManager;
@@ -38,6 +39,7 @@ public class AutoConfigurationTest {
             assertThat(it).hasSingleBean(EfilingCourtService.class);
             assertThat(it).hasSingleBean(EfilingSubmissionService.class);
             assertThat(it).hasSingleBean(EfilingCourtLocationService.class);
+            assertThat(it).hasSingleBean(EfilingStatusService.class);
             assertThat(it).hasSingleBean(CacheManager.class);
             assertThat(it).hasSingleBean(Jackson2JsonRedisSerializer.class);
             assertThat(it).hasSingleBean(BCeIDAccountService.class);
