@@ -2,7 +2,8 @@ name: Cucumber Tests
 
 on:
   push:
-    branches: [master]
+    branches: [master, pipeline]
+
   workflow_dispatch:
 
 jobs:
