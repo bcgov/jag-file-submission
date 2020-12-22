@@ -9,6 +9,7 @@ import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoStatusServiceImpl;
+import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapperImpl;
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
@@ -64,7 +65,7 @@ public class FindPackageByIdTest {
 
         Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(EXCEPTION_PACKAGE), ArgumentMatchers.eq(EXCEPTION_CLIENT), any(), any(), any(), any(), any(), any())).thenThrow(new NestedEjbException_Exception());
 
-        sut = new CsoStatusServiceImpl(filingStatusFacadeBean);
+        sut = new CsoStatusServiceImpl(filingStatusFacadeBean, new FilePackageMapperImpl());
     }
 
     @DisplayName("OK: package found")
@@ -72,7 +73,11 @@ public class FindPackageByIdTest {
     public void testWithFoundResult() throws DatatypeConfigurationException {
         Optional<FilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(SUCCESS_CLIENT, SUCCESS_PACKAGE));
 
-        Assertions.assertEquals("test", result.get().getApplicationCode());
+        Assertions.assertEquals(COURT_FILE_NO, result.get().getCourt().getFileNumber());
+        Assertions.assertEquals(COURT_CLASS_CD, result.get().getCourt().getCourtClass());
+        Assertions.assertEquals(COURT_LEVEL_CD, result.get().getCourt().getLevel());
+        Assertions.assertEquals(COURT_LOCATION_CD, result.get().getCourt().getLocation());
+        Assertions.assertEquals(COURT_LOCATION_NAME, result.get().getCourt().getLocationDescription());
 
     }
 
