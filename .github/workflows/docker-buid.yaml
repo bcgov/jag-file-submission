@@ -26,4 +26,4 @@ jobs:
       # Build Docker and Run Tests
       - name: build docker
         run: |
-          docker-compose build efiling-api efiling-demo efiling-frontend efiling-graphql
+          docker-compose build efiling-api efiling-demo efiling-frontend
