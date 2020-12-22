@@ -17,7 +17,6 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
@@ -39,14 +38,13 @@ public class FilingPackageServiceImplTest {
     public static final String LAST_NAME = "LAST_NAME";
     public static final String MIDDLENAME = "MIDDLENAME";
     public static final String NAME_TYPE = "NAME_TYPE";
-    public static final String PARTY_TYPE = "PARTY_TYPE";
-    public static final String ROLE_TYPE = "ROLE_TYPE";
     public static final String DESCRIPTION = "DESCRIPTION";
     public static final String MIME_TYPE = "MIME_TYPE";
     public static final String FILE_NAME = "FILE_NAME";
     public static final String NAME = "NAME";
     public static final String SUB_TYPE = "SUB_TYPE";
     public static final String TYPE = "TYPE";
+    public static final Object DATA = new Object();
     FilingPackageServiceImpl sut;
 
     @Mock
@@ -80,10 +78,29 @@ public class FilingPackageServiceImplTest {
         Assertions.assertEquals(BigDecimal.ONE, result.get().getSubmissionFeeAmount());
         //Court
         Assertions.assertEquals(BigDecimal.ONE, result.get().getCourt().getAgencyId());
+        Assertions.assertEquals(CLASS_DESCRIPTION, result.get().getCourt().getClassDescription());
+        Assertions.assertEquals(COURT_CLASS, result.get().getCourt().getCourtClass());
+        Assertions.assertEquals(DIVISION, result.get().getCourt().getDivision());
+        Assertions.assertEquals(FILE_NUMBER, result.get().getCourt().getFileNumber());
+        Assertions.assertEquals(LEVEL, result.get().getCourt().getLevel());
+        Assertions.assertEquals(LEVEL_DESCRIPTION, result.get().getCourt().getLevelDescription());
+        Assertions.assertEquals(LOCATION,result.get().getCourt().getLocation());
+        Assertions.assertEquals(LOCATION_DESCRIPTION, result.get().getCourt().getLocationDescription());
+        Assertions.assertEquals(PARTICIPATING_CLASS, result.get().getCourt().getParticipatingClass());
         //Party
         Assertions.assertEquals(1, result.get().getParties().size());
+        Assertions.assertEquals(FIRST_NAME, result.get().getParties().get(0).getFirstName());
+        Assertions.assertEquals(LAST_NAME, result.get().getParties().get(0).getLastName());
+        Assertions.assertEquals(MIDDLENAME, result.get().getParties().get(0).getMiddleName());
         //Document
         Assertions.assertEquals(1, result.get().getDocuments().size());
+        Assertions.assertEquals(DATA, result.get().getDocuments().get(0).getData());
+        Assertions.assertEquals(DESCRIPTION, result.get().getDocuments().get(0).getDescription());
+        Assertions.assertFalse(result.get().getDocuments().get(0).getIsAmendment());
+        Assertions.assertTrue(result.get().getDocuments().get(0).getIsSupremeCourtScheduling());
+        Assertions.assertEquals(MIME_TYPE, result.get().getDocuments().get(0).getMimeType());
+        Assertions.assertEquals(NAME, result.get().getDocuments().get(0).getName());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getDocuments().get(0).getStatutoryFeeAmount());
     }
 
     @Test
@@ -149,14 +166,14 @@ public class FilingPackageServiceImplTest {
                 .lastName(LAST_NAME)
                 .middleName(MIDDLENAME)
                 .nameTypeCd(NAME_TYPE)
-                .partyTypeCd(PARTY_TYPE)
-                .roleTypeCd(ROLE_TYPE)
+                .partyTypeCd(ca.bc.gov.open.jag.efilingapi.api.model.Party.PartyTypeEnum.IND.getValue())
+                .roleTypeCd(ca.bc.gov.open.jag.efilingapi.api.model.Party.RoleTypeEnum.ABC.getValue())
                 .create();
     }
 
     private Document createDocument() {
         return Document.builder()
-                .data(new Object())
+                .data(DATA)
                 .description(DESCRIPTION)
                 .isAmendment(Boolean.FALSE)
                 .isSupremeCourtScheduling(Boolean.TRUE)
