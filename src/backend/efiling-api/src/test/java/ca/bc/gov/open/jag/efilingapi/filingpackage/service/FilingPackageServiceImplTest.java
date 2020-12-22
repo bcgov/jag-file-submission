@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingapi.filingpackage.service;
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
+import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.mapper.FilingPackageMapperImpl;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
@@ -76,13 +77,13 @@ public class FilingPackageServiceImplTest {
 
         Assertions.assertTrue(result.isPresent());
         //Filing Package
-        Assertions.assertEquals(result.isPresent());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getSubmissionFeeAmount());
         //Court
-        Assertions.assertEquals(result.get());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getCourt().getAgencyId());
         //Party
-        Assertions.assertEquals(result.isPresent());
+        Assertions.assertEquals(1, result.get().getParties().size());
         //Document
-        Assertions.assertEquals(result.isPresent());
+        Assertions.assertEquals(1, result.get().getDocuments().size());
     }
 
     @Test
@@ -164,7 +165,7 @@ public class FilingPackageServiceImplTest {
                 .serverFileName(FILE_NAME)
                 .statutoryFeeAmount(BigDecimal.ONE)
                 .subType(SUB_TYPE)
-                .type(TYPE)
+                .type(DocumentProperties.TypeEnum.AAB.getValue())
                 .create();
     }
 }
