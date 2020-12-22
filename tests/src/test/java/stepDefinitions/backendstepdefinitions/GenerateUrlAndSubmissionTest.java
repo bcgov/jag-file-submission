@@ -98,7 +98,6 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
 
         respUrl = jsonPath.get("efilingUrl");
         Long expiryDate = jsonPath.get("expiryDate");
-
         List<String> respId = TestUtil.getSubmissionAndTransId(respUrl, SUBMISSION_ID, TRANSACTION_ID);
 
         assertEquals(submissionId, respId.get(0));

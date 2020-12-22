@@ -161,12 +161,6 @@
         <build.profile.id>config</build.profile.id>
       </properties>
     </profile>
-    <profile>
-      <id>local</id>
-      <properties>
-        <build.profile.id>local</build.profile.id>
-      </properties>
-    </profile>
   </profiles>
 
   <build>
@@ -191,6 +185,9 @@
           </execution>
         </executions>
         <configuration>
+          <parallel>methods</parallel>
+          <useUnlimitedThreads>true</useUnlimitedThreads>
+          <testFailureIgnore>true</testFailureIgnore>
           <includes>
             <include>**/*CucumberTest*.java</include>
           </includes>
