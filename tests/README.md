@@ -40,10 +40,10 @@ Set the following property values in the [local.properties file](src/test/resour
 cd tests
 ```
 
-Run the tests with the local profile
+Run the tests with the config profile
 
 ```bash
-mvn verify -Plocal
+mvn verify -Pconfig
 ```
 
 Running the tests create an html report [here](test-output/extent/HtmlReport/ExtentHtml.html)
