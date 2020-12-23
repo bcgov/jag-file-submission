@@ -10,13 +10,8 @@ jobs:
     name: Runs cucumber-tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
-      # Using shell script to install Google Chrome
-      - name: Install Google Chrome
-        run: |
-          chmod +x ./scripts/installChrome.sh
-           ./scripts/installChrome.sh
+      - name: Pull Git repo.
+        uses: actions/checkout@v2
 
       # In this step, this action saves a list of existing images,
       # the cache is created without them in the post run.
@@ -47,6 +42,15 @@ jobs:
           docker-compose build --parallel efiling-demo efiling-frontend efiling-api
 
       - name: Standup Docker Pods
+        run: |
+          docker-compose up -d redis sftp clamav efiling-demo efiling-frontend efiling-api &disown
+          until $(curl --output /dev/null --silent --head --fail http://localhost:8080/actuator/health); do
+            printf 'efiling-api not up'
+            sleep 5
+          done
+          printf 'up'
+
+      - name: Running Integration Tests
         env:
           KEYCLOAK_CREDENTIALS_SECRET: ${{secrets.EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}}
           KEYCLOAK_REALM: ${{secrets.KEYCLOAK_REALM}}
@@ -58,12 +62,8 @@ jobs:
           KEYCLOAK_SSL_REQUIRED: 'none'
           KEYCLOAK_RESOURCE: 'efiling-api'
         run: |
-          docker-compose up -d redis sftp clamav efiling-demo efiling-frontend efiling-api &disown
-          until $(curl --output /dev/null --silent --head --fail http://localhost:8080/actuator/health); do
-            printf 'efiling-api not up'
-            sleep 5
-          done
-          printf 'up'
+          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          apt install ./google-chrome-stable_current_amd64.deb
           mvn verify -Pconfig -DBCEID_USERNAME=${{secrets.BCEID_USERNAME}} -DBCEID_PASSWORD=${{secrets.BCEID_PASSWORD}} -DEFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET=${{secrets.EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}} -DKEYCLOAK_URL=${{secrets.KEYCLOAK_URL}}/realms/${{secrets.KEYCLOAK_REALM}}/protocol/openid-connect/token -DBASE_URI=${{secrets.BASE_URI}} -DBROWSER=${{secrets.BROWSER}} -DENV=${{secrets.ENV}} -f tests/pom.xml
 
       # Upload Spark report for debugging purposes
