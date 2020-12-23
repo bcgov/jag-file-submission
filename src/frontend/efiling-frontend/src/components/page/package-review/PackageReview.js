@@ -1,9 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Header, Footer, Button } from "shared-components";
 import { propTypes } from "../../../types/propTypes";
+import { Table } from "shared-components";
+import axios from "axios";
 
 export default function PackageReview({ page: { header, packageId } }) {
+  useEffect(() => {
+    console.log(packageId);
+    axios
+      .get("filingPackage/" + packageId)
+      .then((response) => {
+        console.log("success");
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
+
   return (
     <main>
       <Header header={header} />
