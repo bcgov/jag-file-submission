@@ -43,7 +43,7 @@ jobs:
 
       - name: Standup Docker Pods
         run: |
-          docker-compose up -d redis sftp clamav efiling-demo efiling-frontend efiling-api &disown
+          docker-compose up -d redis sftp clamav efiling-demo efiling-frontend efiling-api
 
       - name: Running Integration Tests
         env:
