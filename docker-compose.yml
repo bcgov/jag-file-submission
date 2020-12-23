@@ -44,6 +44,8 @@ services:
   ###                           Efiling api backend app                                     ###
   #############################################################################################
   efiling-api:
+    container_name: efiling-api
+    hostname: efiling-api
     build:
       context: ./src/backend
       args:
