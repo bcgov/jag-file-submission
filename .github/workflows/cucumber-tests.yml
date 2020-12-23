@@ -44,7 +44,7 @@ jobs:
       - name: Standup Docker Pods
         run: |
           docker-compose up -d redis sftp clamav efiling-demo efiling-frontend efiling-api &disown
-          until $(curl --output /dev/null --silent --head --fail http://localhost:8080/actuator/health); do
+          until $(curl --output /dev/null --silent --head --fail http://efiling-api:8080/actuator/health); do
             printf 'efiling-api not up'
             sleep 5
           done
