@@ -1,0 +1,136 @@
+package ca.bc.gov.open.jag.efilingcommons.submission.models.review;
+
+import ca.bc.gov.open.jag.efilingcommons.model.Document;
+import org.joda.time.DateTime;
+
+public class ReviewDocument extends Document {
+    private DateTime dateFiled;
+    private DateTime dateWithdrawn;
+    private String documentId;
+    private String documentUploadStatusCd;
+    private Boolean initiatingDoc;
+    private String largeFileYn;
+    private String packageId;
+    private String packageSeqNo;
+    private Boolean paymentProcessed;
+    private String status;
+    private String statusCode;
+    private DateTime statusDate;
+    private Boolean trialDivision;
+    private Boolean xmlDoc;
+    public ReviewDocument(Builder builder) {
+        super(builder);
+    }
+
+    public DateTime getDateFiled() {
+        return dateFiled;
+    }
+
+    public void setDateFiled(DateTime dateFiled) {
+        this.dateFiled = dateFiled;
+    }
+
+    public DateTime getDateWithdrawn() {
+        return dateWithdrawn;
+    }
+
+    public void setDateWithdrawn(DateTime dateWithdrawn) {
+        this.dateWithdrawn = dateWithdrawn;
+    }
+
+    public String getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
+    }
+
+    public String getDocumentUploadStatusCd() {
+        return documentUploadStatusCd;
+    }
+
+    public void setDocumentUploadStatusCd(String documentUploadStatusCd) {
+        this.documentUploadStatusCd = documentUploadStatusCd;
+    }
+
+    public Boolean getInitiatingDoc() {
+        return initiatingDoc;
+    }
+
+    public void setInitiatingDoc(Boolean initiatingDoc) {
+        this.initiatingDoc = initiatingDoc;
+    }
+
+    public String getLargeFileYn() {
+        return largeFileYn;
+    }
+
+    public void setLargeFileYn(String largeFileYn) {
+        this.largeFileYn = largeFileYn;
+    }
+
+    public String getPackageId() {
+        return packageId;
+    }
+
+    public void setPackageId(String packageId) {
+        this.packageId = packageId;
+    }
+
+    public String getPackageSeqNo() {
+        return packageSeqNo;
+    }
+
+    public void setPackageSeqNo(String packageSeqNo) {
+        this.packageSeqNo = packageSeqNo;
+    }
+
+    public Boolean getPaymentProcessed() {
+        return paymentProcessed;
+    }
+
+    public void setPaymentProcessed(Boolean paymentProcessed) {
+        this.paymentProcessed = paymentProcessed;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
+    }
+
+    public DateTime getStatusDate() {
+        return statusDate;
+    }
+
+    public void setStatusDate(DateTime statusDate) {
+        this.statusDate = statusDate;
+    }
+
+    public Boolean getTrialDivision() {
+        return trialDivision;
+    }
+
+    public void setTrialDivision(Boolean trialDivision) {
+        this.trialDivision = trialDivision;
+    }
+
+    public Boolean getXmlDoc() {
+        return xmlDoc;
+    }
+
+    public void setXmlDoc(Boolean xmlDoc) {
+        this.xmlDoc = xmlDoc;
+    }
+}
