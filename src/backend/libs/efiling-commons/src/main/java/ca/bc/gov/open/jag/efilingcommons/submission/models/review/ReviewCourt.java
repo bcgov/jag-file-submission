@@ -1,14 +1,90 @@
 package ca.bc.gov.open.jag.efilingcommons.submission.models.review;
 
-import ca.bc.gov.open.jag.efilingcommons.model.Court;
-
 import java.math.BigDecimal;
 
-public class ReviewCourt extends Court {
+public class ReviewCourt {
+    private String locationDescription;
+    private String location;
+    private String level;
+    private String levelDescription;
+    private String courtClass;
+    private String classDescription;
+    private String division;
+    private String fileNumber;
+    private String participatingClass;
     private BigDecimal locationId;
     private Boolean existingFileYN;
-    public ReviewCourt(Builder builder) {
-        super(builder);
+
+    public String getLocationDescription() {
+        return locationDescription;
+    }
+
+    public void setLocationDescription(String locationDescription) {
+        this.locationDescription = locationDescription;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public String getLevelDescription() {
+        return levelDescription;
+    }
+
+    public void setLevelDescription(String levelDescription) {
+        this.levelDescription = levelDescription;
+    }
+
+    public String getCourtClass() {
+        return courtClass;
+    }
+
+    public void setCourtClass(String courtClass) {
+        this.courtClass = courtClass;
+    }
+
+    public String getClassDescription() {
+        return classDescription;
+    }
+
+    public void setClassDescription(String classDescription) {
+        this.classDescription = classDescription;
+    }
+
+    public String getDivision() {
+        return division;
+    }
+
+    public void setDivision(String division) {
+        this.division = division;
+    }
+
+    public String getFileNumber() {
+        return fileNumber;
+    }
+
+    public void setFileNumber(String fileNumber) {
+        this.fileNumber = fileNumber;
+    }
+
+    public String getParticipatingClass() {
+        return participatingClass;
+    }
+
+    public void setParticipatingClass(String participatingClass) {
+        this.participatingClass = participatingClass;
     }
 
     public BigDecimal getLocationId() {

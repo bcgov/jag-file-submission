@@ -1,13 +1,15 @@
 package ca.bc.gov.open.jag.efilingcommons.submission.models.review;
 
-import ca.bc.gov.open.jag.efilingcommons.model.Document;
 import org.joda.time.DateTime;
 
-public class ReviewDocument extends Document {
+public class ReviewDocument {
     private DateTime dateFiled;
     private DateTime dateWithdrawn;
     private String documentId;
+    private String documentType;
+    private String documentTypeCd;
     private String documentUploadStatusCd;
+    private String fileName;
     private Boolean initiatingDoc;
     private String largeFileYn;
     private String packageId;
@@ -18,8 +20,29 @@ public class ReviewDocument extends Document {
     private DateTime statusDate;
     private Boolean trialDivision;
     private Boolean xmlDoc;
-    public ReviewDocument(Builder builder) {
-        super(builder);
+
+    public String getDocumentType() {
+        return documentType;
+    }
+
+    public void setDocumentType(String documentType) {
+        this.documentType = documentType;
+    }
+
+    public String getDocumentTypeCd() {
+        return documentTypeCd;
+    }
+
+    public void setDocumentTypeCd(String documentTypeCd) {
+        this.documentTypeCd = documentTypeCd;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     public DateTime getDateFiled() {
