@@ -37,6 +37,11 @@ jobs:
       - name: Build Docker Images
         env:
           DOCKER_BUILDKIT: '1'
+        run: |
+          docker-compose build --parallel efiling-demo efiling-frontend efiling-api
+
+      - name: Standup Docker Pods
+        env:
           CSO_DEBUG_ENABLED: 'false'
           KEYCLOAK_CREDENTIALS_SECRET: ${{secrets.EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}}
           KEYCLOAK_REALM: ${{secrets.KEYCLOAK_REALM}}
@@ -46,15 +51,12 @@ jobs:
           KEYCLOAK_AUTH_SERVER_URL: ${{secrets.EFILING_DEMO_KEYCLOAK_URL}}
           KEYCLOAK_SSL_REQUIRED: 'none'
           KEYCLOAK_RESOURCE: 'efiling-api'
-          DOCKERIZE_VERSION: v0.6.1
-        run: |
-          docker-compose build --parallel efiling-demo efiling-frontend efiling-api
-
-      - name: Standup Docker Pods
         run: |
           docker-compose up -d redis sftp clamav efiling-demo efiling-frontend efiling-api
 
       - name: Running Integration Tests
+        env:
+          DOCKERIZE_VERSION: v0.6.1
         run: |
           # Maven requires chrome driver.
           wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
