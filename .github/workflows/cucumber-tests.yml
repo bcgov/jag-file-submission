@@ -44,7 +44,6 @@ jobs:
           REACT_APP_KEYCLOAK_REALM: ${{secrets.EFILING_DEMO_KEYCLOAK_REALM}}
           REACT_APP_KEYCLOAK_URL: ${{secrets.EFILING_DEMO_KEYCLOAK_URL}}
           KEYCLOAK_AUTH_SERVER_URL: ${{secrets.EFILING_DEMO_KEYCLOAK_URL}}
-          CSO_DEBUG_ENABLED: 'false'
           KEYCLOAK_SSL_REQUIRED: 'none'
           KEYCLOAK_RESOURCE: 'efiling-api'
           DOCKERIZE_VERSION: v0.6.1
@@ -57,7 +56,7 @@ jobs:
 
       - name: Running Integration Tests
         run: |
-          # Jenkins requires chrome driver.
+          # Maven requires chrome driver.
           wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
           sudo apt-get -y install ./google-chrome-stable_current_amd64.deb
 
