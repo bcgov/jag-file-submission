@@ -28,7 +28,7 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
 
     EFileSubmissionPage eFileSubmissionPage;
     PackageConfirmationPage packageConfirmationPage;
-    private static final String EFILE_SUBMISSION_PAGE_TITLE = "E-File submission";
+    private static final String EFILE_SUBMISSION_PAGE_TITLE = "E-File submissio";
     private static final String BASE_PATH = "user.dir";
     private static final String SECOND_PDF_PATH = "/src/test/java/testdatasource/test-document-2.pdf";
     private final List<String> expectedUploadedFilesList = ImmutableList.of("test-document.pdf", "test-document-2.pdf");
