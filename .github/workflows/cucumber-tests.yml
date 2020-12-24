@@ -67,7 +67,6 @@ jobs:
           tar -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
           ./dockerize -wait http://127.0.0.1:8080 -timeout 120s mvn verify -Pconfig -DBCEID_USERNAME=${{secrets.BCEID_USERNAME}} -DBCEID_PASSWORD=${{secrets.BCEID_PASSWORD}} -DEFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET=${{secrets.EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}} -DKEYCLOAK_URL=${{secrets.KEYCLOAK_URL}}/realms/${{secrets.KEYCLOAK_REALM}}/protocol/openid-connect/token -DBASE_URI=${{secrets.BASE_URI}} -DBROWSER=${{secrets.BROWSER}} -DENV=${{secrets.ENV}} -f tests/pom.xml
-          echo $?
 
       # Upload Spark report for debugging purposes
       - name: Upload Spark report for debugging purposes
