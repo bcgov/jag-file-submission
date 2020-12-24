@@ -38,15 +38,6 @@ jobs:
         env:
           DOCKER_BUILDKIT: '1'
           CSO_DEBUG_ENABLED: 'false'
-        run: |
-          docker-compose build --parallel efiling-demo efiling-frontend efiling-api
-
-      - name: Standup Docker Pods
-        run: |
-          docker-compose up -d redis sftp clamav efiling-demo efiling-frontend efiling-api
-
-      - name: Running Integration Tests
-        env:
           KEYCLOAK_CREDENTIALS_SECRET: ${{secrets.EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}}
           KEYCLOAK_REALM: ${{secrets.KEYCLOAK_REALM}}
           KEYCLOAK_URL: ${{secrets.KEYCLOAK_URL}}
@@ -58,6 +49,14 @@ jobs:
           KEYCLOAK_RESOURCE: 'efiling-api'
           DOCKERIZE_VERSION: v0.6.1
         run: |
+          docker-compose build --parallel efiling-demo efiling-frontend efiling-api
+
+      - name: Standup Docker Pods
+        run: |
+          docker-compose up -d redis sftp clamav efiling-demo efiling-frontend efiling-api
+
+      - name: Running Integration Tests
+        run: |
           # Jenkins requires chrome driver.
           wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
           sudo apt-get -y install ./google-chrome-stable_current_amd64.deb
@@ -66,7 +65,7 @@ jobs:
           wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
           tar -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
-          ./dockerize -wait http://127.0.0.1/actuator/health:8080 -timeout 60s mvn verify -Pconfig -DBCEID_USERNAME=${{secrets.BCEID_USERNAME}} -DBCEID_PASSWORD=${{secrets.BCEID_PASSWORD}} -DEFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET=${{secrets.EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}} -DKEYCLOAK_URL=${{secrets.KEYCLOAK_URL}}/realms/${{secrets.KEYCLOAK_REALM}}/protocol/openid-connect/token -DBASE_URI=${{secrets.BASE_URI}} -DBROWSER=${{secrets.BROWSER}} -DENV=${{secrets.ENV}} -f tests/pom.xml
+          ./dockerize -wait http://127.0.0.1/actuator/health:8080 -timeout 120s mvn verify -Pconfig -DBCEID_USERNAME=${{secrets.BCEID_USERNAME}} -DBCEID_PASSWORD=${{secrets.BCEID_PASSWORD}} -DEFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET=${{secrets.EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}} -DKEYCLOAK_URL=${{secrets.KEYCLOAK_URL}}/realms/${{secrets.KEYCLOAK_REALM}}/protocol/openid-connect/token -DBASE_URI=${{secrets.BASE_URI}} -DBROWSER=${{secrets.BROWSER}} -DENV=${{secrets.ENV}} -f tests/pom.xml
 
       # Upload Spark report for debugging purposes
       - name: Upload Spark report for debugging purposes
