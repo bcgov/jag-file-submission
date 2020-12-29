@@ -165,6 +165,9 @@ services:
   keycloak-config:
     build:
       context: ./.settings/keycloak
+      args:
+        - KEYCLOAK_URL=http://keycloak:8080
+    command: sh -c "dockerize -wait http://keycloak:8080 -timeout 300s -wait-retry-interval 10s /tmp/createuser.sh"
     networks:
       - fisu-net
 
