@@ -36,23 +36,23 @@ jobs:
 
       - name: Build Docker Images
         env:
-          DOCKER_BUILDKIT: '1'
+          DOCKER_BUILDKIT: "1"
         run: |
-          docker-compose build --parallel efiling-demo efiling-frontend efiling-api
+          docker-compose build --parallel efiling-demo efiling-frontend efiling-api keycloak keycloak-config
 
       - name: Standup Docker Pods
         env:
-          CSO_DEBUG_ENABLED: 'false'
+          CSO_DEBUG_ENABLED: "false"
           KEYCLOAK_CREDENTIALS_SECRET: ${{secrets.EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}}
           KEYCLOAK_REALM: ${{secrets.KEYCLOAK_REALM}}
           KEYCLOAK_URL: ${{secrets.KEYCLOAK_URL}}
           REACT_APP_KEYCLOAK_REALM: ${{secrets.EFILING_DEMO_KEYCLOAK_REALM}}
           REACT_APP_KEYCLOAK_URL: ${{secrets.EFILING_DEMO_KEYCLOAK_URL}}
           KEYCLOAK_AUTH_SERVER_URL: ${{secrets.EFILING_DEMO_KEYCLOAK_URL}}
-          KEYCLOAK_SSL_REQUIRED: 'none'
-          KEYCLOAK_RESOURCE: 'efiling-api'
+          KEYCLOAK_SSL_REQUIRED: "none"
+          KEYCLOAK_RESOURCE: "efiling-api"
         run: |
-          docker-compose up -d redis sftp clamav efiling-demo efiling-frontend efiling-api
+          docker-compose up -d redis sftp clamav efiling-demo efiling-frontend efiling-api keycloak keycloak-config
 
       - name: Running Integration Tests
         env:
