@@ -147,27 +147,20 @@ services:
   # #############################################################################################
   # ###                                        KEYCLOAK                                       ###
   # #############################################################################################
-  # TODO: Removed this KeyCloak as we're currently pointing to client side dev keycloak (pathfinder) 
-  # keycloak:
-  #   image: jboss/keycloak
-  #   environment:
-  #     DB_VENDOR: H2
-  #     KEYCLOAK_USER: admin
-  #     KEYCLOAK_PASSWORD: admin
-  #     KEYCLOAK_IMPORT: /tmp/realm-export.json
-  #     KEYCLOAK_AUTH_SERVER_URL: http://localhost:8081/auth
-  #     KEYCLOAK_REALM: SpringBootKeycloak
-  #     KEYCLOAK_RESOURCE: efiling-api
-  #     KEYCLOAK_CREDENTIALS_SECRET: 3d7be270-34a5-4c4f-82cb-d0d22cb88aa8
-  #     # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
-  #     # JDBC_PARAMS: "ssl=true"
-  #   volumes:
-  #     - ./.settings/realm-export.json:/tmp/realm-export.json
-  #   ports:
-  #     - 8081:8080
-  #   command: ["-Dkeycloak.profile.feature.upload_scripts=enabled"]
-  #   networks:
-  #     - fisu-net
+  # TODO: Removed this KeyCloak as we're currently pointing to client side dev keycloak (pathfinder)
+  keycloak:
+    image: quay.io/keycloak/keycloak
+    environment:
+      DB_VENDOR: H2
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+      KEYCLOAK_IMPORT: /tmp/example-export.json
+    volumes:
+      - .settings/realm-export.json:/tmp/example-export.json
+    ports:
+      - 8081:8080
+    networks:
+      - fisu-net
 
   #############################################################################################
   ###                                        NGINX                                          ###
