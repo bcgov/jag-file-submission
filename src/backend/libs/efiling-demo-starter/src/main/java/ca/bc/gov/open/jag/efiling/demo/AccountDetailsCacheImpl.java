@@ -9,13 +9,13 @@ import java.util.UUID;
 public class AccountDetailsCacheImpl implements AccountDetailsCache {
 
     @Override
-    @CachePut(cacheNames = "account", key = "#accountDetails.universalId", cacheManager = "demoAccountCacheManager")
+    @CachePut(cacheNames = "account", key = "#accountDetails.universalId", cacheManager = "demoAccountCacheManager", unless="#result == null")
     public AccountDetails put(AccountDetails accountDetails) {
         return null;
     }
 
     @Override
-    @Cacheable(cacheNames = "account", key = "#userGuid", unless="#result == null", cacheManager = "demoAccountCacheManager")
+    @Cacheable(cacheNames = "account", key = "#userGuid", cacheManager = "demoAccountCacheManager", unless="#result == null")
     public AccountDetails get(UUID userGuid) {
         return null;
     }
