@@ -35,9 +35,9 @@ services:
       - 3001:3000
     environment:
       - REACT_APP_KEYCLOAK_REALM=${KEYCLOAK_REALM:-Efiling-Hub}
+      - REACT_APP_DEMO_CLIENT_ID=efiling-admin
       - REACT_APP_KEYCLOAK_URL=${KEYCLOAK_URL:-http://localhost:8081/auth}
       - REACT_APP_API_BASE_URL=http://localhost:8080
-      - REACT_APP_DEMO_CLIENT_ID=efiling-admin
 
   #############################################################################################
   ###                           Efiling api backend app                                     ###
@@ -84,8 +84,6 @@ services:
       - CSO_SERVICEFACADE_URI=${CSO_SERVICEFACADE_URI}
       - CSO_SERVICEFACADE_USERNAME=${CSO_SERVICEFACADE_USERNAME}
       - CSO_SERVICEFACADE_PASSWORD=${CSO_SERVICEFACADE_PASSWORD}
-      - BAMBORA_APIPASSCODE=${BAMBORA_APIPASSCODE}
-      - BAMBORA_MERCHANTID=${BAMBORA_MERCHANTID}
       - SFTP_KNOWNHOSTS=${SFTP_KNOWNHOSTS}
       - SFTP_REMOTELOCATION=${SFTP_REMOTELOCATION}
       - SFTP_PRIVATE_KEY=${SFTP_PRIVATE_KEY}
@@ -95,8 +93,10 @@ services:
       - BCEID_SERVICE_ONLINE_SERVICE_ID=${BCEID_SERVICE_ONLINE_SERVICE_ID}
       - CSO_FILE_SERVER_HOST=${CSO_FILE_SERVER_HOST}
       - CSO_DEBUG_ENABLED=${CSO_DEBUG_ENABLED}
-      - BAMBORA_PROFILE_URL=${BAMBORA_PROFILE_URL}
-      - BAMBORA_HASHKEY=${BAMBORA_HASHKEY}
+      - BAMBORA_APIPASSCODE=${BAMBORA_APIPASSCODE:-passcode}
+      - BAMBORA_MERCHANTID=${BAMBORA_MERCHANTID-merchantid}
+      - BAMBORA_PROFILE_URL=${BAMBORA_PROFILE_URL:-https://web.na.bambora.com/scripts/paymentProfile/webform.asp}
+      - BAMBORA_HASHKEY=${BAMBORA_HASHKEY:-key}
       - BAMBORA_PROFILE_SERVICE_VERSION=${BAMBORA_PROFILE_SERVICE_VERSION}
       - BAMBORA_URL_EXPIRY=10
       - REDIS_HOST=redis
