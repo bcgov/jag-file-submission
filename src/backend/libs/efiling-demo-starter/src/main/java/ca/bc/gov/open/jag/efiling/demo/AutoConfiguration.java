@@ -34,8 +34,8 @@ public class AutoConfiguration {
     public static final String TRANSACTION_STATE_APPROVED = "APP";
 
     @Bean
-    public EfilingAccountService efilingAccountService() {
-        return new EfilingAccountServiceDemoImpl();
+    public EfilingAccountService efilingAccountService(AccountDetailsCache accountDetailsCache) {
+        return new EfilingAccountServiceDemoImpl(accountDetailsCache);
     }
 
     @Bean
@@ -57,6 +57,9 @@ public class AutoConfiguration {
 
     @Bean
     public EfilingStatusService efilingStatusService() { return new EfilingStatusServiceDemoImpl(); }
+
+    @Bean
+    public AccountDetailsCache accountDetailsCache() { return new AccountDetailsCacheImpl(); }
 
     /**
      * Configures the cache manager for demo accounts
