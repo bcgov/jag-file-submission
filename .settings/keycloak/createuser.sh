@@ -33,6 +33,9 @@ CREATE_USER_STATUS=$(curl -s -o /dev/null -w '%{http_code}' \
                     "email": "bobross@paintit.com",
                     "enabled": "true",
                     "username": "bobross",
+                    "attributes": {
+                        "universal-id": ["77da92db-0791-491e-8c58-1a969e67d2fa"]
+                    },
                     "credentials": [
                         {
                             "type": "password",
