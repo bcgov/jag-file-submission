@@ -11,6 +11,7 @@ import AuthenticationGuard from "./components/hoc/AuthenticationGuard";
 import Cancel from "./components/page/cancel/Cancel";
 import Error from "./components/page/error/Error";
 import Success from "./components/page/success/Success";
+import UpdateCreditCard from "./components/page/payment/creditcard/UpdateCreditCard";
 
 export default function App() {
   const location = useLocation();
@@ -38,6 +39,9 @@ export default function App() {
         </Route>
         <Route exact path="/efiling-demo/success">
           <Success page={{ header, packageRef }} />
+        </Route>
+        <Route exact path="/efiling-demo/updatecard">
+          <UpdateCreditCard page={{ header }} />
         </Route>
       </Switch>
     </div>
