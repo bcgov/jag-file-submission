@@ -70,7 +70,7 @@ describe("Success", () => {
       >
         <Route
           component={(routerProps) => (
-            <UpdateCreditCard page={page} {...routerProps} />
+            <UpdateCreditCard page={page} routerProps={routerProps} />
           )}
           path="/updateCreditCard"
         />
