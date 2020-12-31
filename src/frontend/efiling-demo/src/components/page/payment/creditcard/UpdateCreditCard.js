@@ -41,7 +41,7 @@ export default function UpdateCreditCard({ page: { header } }) {
         <div className="content container">
           <div className="row justify-content-md-center">
             <div className="col-md-8 col-sm-12">
-              <div class="card">
+              <div className="card">
                 <div className="card-body">
                   <h5 className="card-title">Query String values</h5>
                   <Table elements={queryParams} />
@@ -58,7 +58,6 @@ export default function UpdateCreditCard({ page: { header } }) {
                 }}
                 label="Simulate Card Update Success"
                 styling="btn btn-success mx-auto"
-                testId="generate-url-btn"
               />
             </div>
             <div className="col-md-4 col-sm-12 mt-2">
@@ -68,7 +67,6 @@ export default function UpdateCreditCard({ page: { header } }) {
                 }}
                 label="Simulate Card Update Failure"
                 styling="btn btn-danger mx-auto"
-                testId="generate-url-btn"
               />
             </div>
           </div>

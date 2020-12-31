@@ -1,6 +1,7 @@
 import React from "react";
 import { createMemoryHistory } from "history";
-import { render, getByText, fireEvent } from "@testing-library/react";
+import { render, fireEvent, getByText } from "@testing-library/react";
+import { MemoryRouter, Route } from "react-router";
 import UpdateCreditCard from "./UpdateCreditCard";
 
 const header = {
@@ -8,41 +9,81 @@ const header = {
   history: createMemoryHistory(),
 };
 
-const buff = Buffer.from(packageRef, "base64");
-const url = buff.toString("ascii");
-
-const page = { header, packageRef };
+const page = { header };
 
 window.open = jest.fn();
 
 describe("Success", () => {
   test("Component matches the snapshot", () => {
-    const { asFragment } = render(<UpdateCreditCard page={page} />);
+    const history = createMemoryHistory();
+
+    const { asFragment } = render(
+      <MemoryRouter
+        initialEntries={[
+          "/updateCreditCard?serviceVersion=1&merchantId=merchantid&trnLanguage=eng&operationType=N&ref1=customerCode&trnReturnURL=http://localhost:3000/efilinghub&trnOrderNumber=C1234&hashValue=97F9D18E87F902807890CBF8B11D3244&hashExpiry=202012302048",
+        ]}
+      >
+        <Route
+          component={(routerProps) => (
+            <UpdateCreditCard page={page} {...routerProps} />
+          )}
+          path="/updateCreditCard"
+        />
+      </MemoryRouter>
+    );
 
     expect(asFragment()).toMatchSnapshot();
   });
 
-  test("Clicking button on success page redirects to home", () => {
-    const { container } = render(<Success page={page} />);
+  test("Click on failure should redirect to efilinghub with error code 19", () => {
+    global.open = jest.fn();
 
-    fireEvent.click(getByText(container, "Return home"));
+    const { container } = render(
+      <MemoryRouter
+        initialEntries={[
+          "/updateCreditCard?serviceVersion=1&merchantId=merchantid&trnLanguage=eng&operationType=N&ref1=customerCode&trnReturnURL=http://localhost:3000/efilinghub&trnOrderNumber=C1234&hashValue=97F9D18E87F902807890CBF8B11D3244&hashExpiry=202012302048",
+        ]}
+      >
+        <Route
+          component={(routerProps) => (
+            <UpdateCreditCard page={page} {...routerProps} />
+          )}
+          path="/updateCreditCard"
+        />
+      </MemoryRouter>
+    );
 
-    expect(header.history.location.pathname).toEqual("/");
+    fireEvent.click(getByText(container, "Simulate Card Update Failure"));
+
+    expect(global.open).toBeCalledWith(
+      "http://localhost:3000/efilinghub?responseCode=19",
+      "_self"
+    );
   });
 
-  test("Clicking on link to view package submission details decodes ref and opens the url", () => {
-    const { container } = render(<Success page={page} />);
+  test("Click on success should redirect to efilinghub with error code 1", () => {
+    global.open = jest.fn();
 
-    fireEvent.click(getByText(container, "View my submitted package."));
+    const { container } = render(
+      <MemoryRouter
+        initialEntries={[
+          "/updateCreditCard?serviceVersion=1&merchantId=merchantid&trnLanguage=eng&operationType=N&ref1=customerCode&trnReturnURL=http://localhost:3000/efilinghub&trnOrderNumber=C1234&hashValue=97F9D18E87F902807890CBF8B11D3244&hashExpiry=202012302048",
+        ]}
+      >
+        <Route
+          component={(routerProps) => (
+            <UpdateCreditCard page={page} {...routerProps} />
+          )}
+          path="/updateCreditCard"
+        />
+      </MemoryRouter>
+    );
 
-    expect(window.open).toHaveBeenCalledWith(url);
-  });
+    fireEvent.click(getByText(container, "Simulate Card Update Success"));
 
-  test("Keydown on link to view package submission details decodes ref and opens the url", () => {
-    const { container } = render(<Success page={page} />);
-
-    fireEvent.keyDown(getByText(container, "View my submitted package."));
-
-    expect(window.open).toHaveBeenCalledWith(url);
+    expect(global.open).toBeCalledWith(
+      "http://localhost:3000/efilinghub?responseCode=1",
+      "_self"
+    );
   });
 });

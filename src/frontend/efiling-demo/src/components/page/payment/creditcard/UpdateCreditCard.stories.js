@@ -33,7 +33,20 @@ export const Default = () => {
   );
 };
 
-export const Mobile = () => <UpdateCreditCard page={page} />;
+export const Mobile = () => (
+  <MemoryRouter
+    initialEntries={[
+      "/updateCreditCard?serviceVersion=1&merchantId=merchantid&trnLanguage=eng&operationType=N&ref1=customerCode&trnReturnURL=http://localhost:3000/efilinghub&trnOrderNumber=C1234&hashValue=97F9D18E87F902807890CBF8B11D3244&hashExpiry=202012302048",
+    ]}
+  >
+    <Route
+      component={(routerProps) => (
+        <UpdateCreditCard page={page} {...routerProps} />
+      )}
+      path="/updateCreditCard"
+    />
+  </MemoryRouter>
+);
 
 Mobile.parameters = {
   viewport: {
