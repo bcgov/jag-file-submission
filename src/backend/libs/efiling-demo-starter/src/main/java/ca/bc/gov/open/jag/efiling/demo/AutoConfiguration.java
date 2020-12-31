@@ -29,6 +29,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -124,18 +125,18 @@ public class AutoConfiguration {
 
             @Override
             public void moveFile(String s, String s1) {
-
+                // not in use in demo so left without implementation
             }
 
             @Override
             @Cacheable(cacheNames = "demoDocument", key = "#s", cacheManager = "demoDocumentCacheManager", unless = "#result == null")
             public void put(InputStream inputStream, String s) {
-
+                // not in use in demo so left without implementation
             }
 
             @Override
             public List<String> listFiles(String s) {
-                return null;
+                return new ArrayList<>();
             }
         };
     }
