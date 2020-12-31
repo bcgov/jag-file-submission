@@ -34,6 +34,7 @@ public class AutoConfigurationTest {
     @DisplayName("OK: AutoConfiguration should return instance of EfilingAccountServiceDemoImpl")
     public void autoConfigurationShouldReturnDemoAccountServiceImpl() {
         context.run(it -> {
+
             assertThat(it).hasSingleBean(EfilingAccountService.class);
             assertThat(it).hasSingleBean(EfilingLookupService.class);
             assertThat(it).hasSingleBean(EfilingDocumentService.class);
@@ -45,13 +46,6 @@ public class AutoConfigurationTest {
             assertThat(it).hasBean("demoDocumentCacheManager");
             assertThat(it).hasSingleBean(Jackson2JsonRedisSerializer.class);
             assertThat(it).hasSingleBean(BCeIDAccountService.class);
-        });
-    }
-
-    @Test
-    @DisplayName("OK: test of paymentAdapterMock")
-    public void testMockPaymentAdapter() {
-        context.run(it -> {
 
             assertThat(it).hasSingleBean(PaymentAdapter.class);
 
@@ -63,15 +57,6 @@ public class AutoConfigurationTest {
 
             GetAccountRequest request = GetAccountRequest.BusinessSelfRequest("test");
             Assertions.assertEquals("efilehub test account", bCeIDAccountService.getIndividualIdentity(request).get().getName().getFirstName());
-
-
-        });
-    }
-
-    @Test
-    @DisplayName("OK: test of sftpServiceMock")
-    public void testMockSftpAdapter() {
-        context.run(it -> {
 
             assertThat(it).hasSingleBean(SftpService.class);
 
