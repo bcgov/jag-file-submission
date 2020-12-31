@@ -4,7 +4,6 @@ import ca.bc.gov.open.bceid.starter.account.BCeIDAccountService;
 import ca.bc.gov.open.bceid.starter.account.GetAccountRequest;
 import ca.bc.gov.open.bceid.starter.account.models.IndividualIdentity;
 import ca.bc.gov.open.bceid.starter.account.models.Name;
-import ca.bc.gov.open.jag.efiling.demo.overriding.SftpServiceImpl;
 import ca.bc.gov.open.jag.efilingcommons.court.EfilingCourtLocationService;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingPayment;
@@ -15,6 +14,7 @@ import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
 import ca.bc.gov.open.sftp.starter.SftpService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -25,8 +25,11 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.time.Duration;
+import java.util.List;
 import java.util.Optional;
 
 @Configuration
@@ -113,7 +116,28 @@ public class AutoConfiguration {
     @Bean(name = "demoSftpService")
     @Primary
     public SftpService sftpService() {
-        return new SftpServiceImpl();
+        return new SftpService() {
+            @Override
+            public ByteArrayInputStream getContent(String s) {
+                return null;
+            }
+
+            @Override
+            public void moveFile(String s, String s1) {
+
+            }
+
+            @Override
+            @Cacheable(cacheNames = "demoDocument", key = "#s", cacheManager = "demoDocumentCacheManager", unless = "#result == null")
+            public void put(InputStream inputStream, String s) {
+
+            }
+
+            @Override
+            public List<String> listFiles(String s) {
+                return null;
+            }
+        };
     }
 
     @Bean
