@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { Footer, Header, Button, Table } from "shared-components";
 import { useLocation } from "react-router-dom";
 import queryString from "query-string";
+
+import { propTypes } from "../../../../types/propTypes";
 
 export default function UpdateCreditCard({ page: { header } }) {
   const successCode = 1;
@@ -15,14 +18,12 @@ export default function UpdateCreditCard({ page: { header } }) {
     window.open(`${redirectUrl}?responseCode=${code}`, "_self");
   };
 
-  console.log(queryParams);
-
   useEffect(() => {
     const paramters = [];
 
     const queryStrings = queryString.parse(location.search);
 
-    Object.keys(queryStrings).map((key, i) => {
+    Object.keys(queryStrings).forEach((key) => {
       paramters.push({
         name: key,
         value: queryStrings[key],
@@ -77,3 +78,9 @@ export default function UpdateCreditCard({ page: { header } }) {
     </main>
   );
 }
+
+UpdateCreditCard.propTypes = {
+  page: PropTypes.shape({
+    header: propTypes.header,
+  }).isRequired,
+};

@@ -15,8 +15,6 @@ window.open = jest.fn();
 
 describe("Success", () => {
   test("Component matches the snapshot", () => {
-    const history = createMemoryHistory();
-
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
@@ -25,7 +23,7 @@ describe("Success", () => {
       >
         <Route
           component={(routerProps) => (
-            <UpdateCreditCard page={page} {...routerProps} />
+            <UpdateCreditCard page={page} routerProps={routerProps} />
           )}
           path="/updateCreditCard"
         />
@@ -46,7 +44,7 @@ describe("Success", () => {
       >
         <Route
           component={(routerProps) => (
-            <UpdateCreditCard page={page} {...routerProps} />
+            <UpdateCreditCard page={page} routerProps={routerProps} />
           )}
           path="/updateCreditCard"
         />

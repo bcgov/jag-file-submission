@@ -25,7 +25,7 @@ export const Default = () => {
     >
       <Route
         component={(routerProps) => (
-          <UpdateCreditCard page={page} {...routerProps} />
+          <UpdateCreditCard page={page} routerProps={routerProps} />
         )}
         path="/updateCreditCard"
       />
@@ -41,7 +41,7 @@ export const Mobile = () => (
   >
     <Route
       component={(routerProps) => (
-        <UpdateCreditCard page={page} {...routerProps} />
+        <UpdateCreditCard page={page} routerProps={routerProps} />
       )}
       path="/updateCreditCard"
     />
