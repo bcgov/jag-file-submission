@@ -27,7 +27,7 @@ jag:
     global:
       demo: ${DEMO_MODE:false}
     navigation:
-      baseUrl: ${NAVIGATION_BASE_URL:http://localhost:3000/efiling}
+      baseUrl: ${NAVIGATION_BASE_URL:http://localhost:3000/efilinghub}
       csoBaseUrl: ${CSO_BASE_URL:http://localhost/cso}
     soap:
       clients:

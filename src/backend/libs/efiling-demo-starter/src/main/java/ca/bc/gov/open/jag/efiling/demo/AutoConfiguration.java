@@ -4,6 +4,7 @@ import ca.bc.gov.open.bceid.starter.account.BCeIDAccountService;
 import ca.bc.gov.open.bceid.starter.account.GetAccountRequest;
 import ca.bc.gov.open.bceid.starter.account.models.IndividualIdentity;
 import ca.bc.gov.open.bceid.starter.account.models.Name;
+import ca.bc.gov.open.jag.efiling.demo.overriding.SftpServiceImpl;
 import ca.bc.gov.open.jag.efilingcommons.court.EfilingCourtLocationService;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingPayment;
@@ -11,11 +12,13 @@ import ca.bc.gov.open.jag.efilingcommons.model.PaymentTransaction;
 import ca.bc.gov.open.jag.efilingcommons.payment.PaymentAdapter;
 import ca.bc.gov.open.jag.efilingcommons.service.*;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
+import ca.bc.gov.open.sftp.starter.SftpService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
@@ -23,6 +26,7 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.util.Optional;
 
 @Configuration
@@ -87,6 +91,30 @@ public class AutoConfiguration {
         return new Jackson2JsonRedisSerializer(AccountDetails.class);
     }
 
+    /**
+     * Configures the cache manager
+     * @param jedisConnectionFactory A jedisConnectionFactory
+     * @return
+     */
+    @Bean(name = "demoDocumentCacheManager")
+    public CacheManager demoDocumentCacheManager(
+            JedisConnectionFactory jedisConnectionFactory) {
+
+        RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
+                .disableCachingNullValues()
+                .entryTtl(Duration.ofHours(24));
+
+        redisCacheConfiguration.usePrefix();
+
+        return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(jedisConnectionFactory)
+                .cacheDefaults(redisCacheConfiguration).build();
+    }
+
+    @Bean(name = "demoSftpService")
+    @Primary
+    public SftpService sftpService() {
+        return new SftpServiceImpl();
+    }
 
     @Bean
     public BCeIDAccountService bCeIDAccountService() {
