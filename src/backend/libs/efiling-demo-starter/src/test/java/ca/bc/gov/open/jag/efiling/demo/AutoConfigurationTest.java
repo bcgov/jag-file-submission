@@ -23,7 +23,7 @@ public class AutoConfigurationTest {
 
     private ApplicationContextRunner context;
 
-    @BeforeAll
+    @BeforeEach
     public void beforeAll() {
         context = new ApplicationContextRunner()
                 .withUserConfiguration(AutoConfiguration.class)
