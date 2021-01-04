@@ -12,11 +12,17 @@ import java.util.UUID;
 
 public class EfilingAccountServiceDemoImpl implements EfilingAccountService {
 
+    private final AccountDetailsCache accountDetailsCache;
+
+    public EfilingAccountServiceDemoImpl(AccountDetailsCache accountDetailsCache) {
+        this.accountDetailsCache = accountDetailsCache;
+    }
+
     @Cacheable(cacheNames = "account", key = "#userGuid", unless="#result == null", cacheManager = "demoAccountCacheManager")
     public AccountDetails getAccountDetails(UUID userGuid) {
-        AccountDetails accountDetails = AccountDetails.builder().fileRolePresent(true).create();
 
-        return accountDetails;
+        return accountDetailsCache.get(userGuid);
+
     }
 
     @CachePut(cacheNames = "account", key = "#createAccountRequest.universalId", cacheManager = "demoAccountCacheManager")
@@ -30,13 +36,15 @@ public class EfilingAccountServiceDemoImpl implements EfilingAccountService {
                 .cardRegistered(true)
                 .create();
 
+        this.accountDetailsCache.put(accountDetails);
+
         return accountDetails;
 
     }
 
     @Override
     public void updateClient(AccountDetails accountDetails) {
-        //Void not doing a thing in demo mode
+        this.accountDetailsCache.put(accountDetails);
     }
 
     @Override

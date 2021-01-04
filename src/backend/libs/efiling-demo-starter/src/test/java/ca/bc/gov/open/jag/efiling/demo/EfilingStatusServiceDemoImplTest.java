@@ -1,8 +1,8 @@
 package ca.bc.gov.open.jag.efiling.demo;
 
-import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import org.junit.jupiter.api.*;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class EfilingStatusServiceDemoImplTest {
     EfilingStatusServiceDemoImpl sut;
 
