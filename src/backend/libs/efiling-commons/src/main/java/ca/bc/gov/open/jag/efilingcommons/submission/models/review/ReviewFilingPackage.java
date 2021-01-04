@@ -126,6 +126,17 @@ public class ReviewFilingPackage extends FilingPackage {
                                @JsonProperty("payments") List<PackagePayment> payments,
                                @JsonProperty("submittedDate") DateTime submittedDate) {
         super(submissionFeeAmount, court, documents, parties, rushedSubmission, applicationCode);
+        this.clientFileNo = clientFileNo;
+        this.existingCourtFileYN = existingCourtFileYN;
+        this.filingCommentsTxt = filingCommentsTxt;
+        this.firstName = firstName;
+        this.hasChecklist = hasChecklist;
+        this.hasRegistryNotice = hasRegistryNotice;
+        this.lastName = lastName;
+        this.packageNo = packageNo;
+        this.packageRequests = packageRequests;
+        this.payments = payments;
+        this.submittedDate = submittedDate;
     }
 
     public ReviewFilingPackage(Builder builder) {
@@ -144,6 +155,8 @@ public class ReviewFilingPackage extends FilingPackage {
     }
 
     public static class Builder extends FilingPackage.Builder {
+
+        public Builder() {}
 
         private String clientFileNo;
         private Boolean existingCourtFileYN;
