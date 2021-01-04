@@ -16,7 +16,7 @@ spring:
 keycloak:
   auth-server-url: ${KEYCLOAK_AUTH_SERVER_URL}
   realm: ${KEYCLOAK_REALM}
-  resource: ${KEYCLOAK_RESOURCE}
+  resource: ${KEYCLOAK_RESOURCE:efiling-api}
   credentials:
     secret: ${KEYCLOAK_CREDENTIALS_SECRET}
   use-resource-role-mappings: true
@@ -27,7 +27,7 @@ jag:
     global:
       demo: ${DEMO_MODE:false}
     navigation:
-      baseUrl: ${NAVIGATION_BASE_URL:http://localhost:3000/efiling}
+      baseUrl: ${NAVIGATION_BASE_URL:http://localhost:3000/efilinghub}
       csoBaseUrl: ${CSO_BASE_URL:http://localhost/cso}
     soap:
       clients:

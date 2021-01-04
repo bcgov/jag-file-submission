@@ -104,15 +104,7 @@ run
 docker-compose up -d --build
 ```
 
-After running, create your known hosts for sftp upload. In command prompt navigate to /users/YOURNAME/.ssh/ and run command:
-
-```
-ssh-keyscan -p 23 localhost  >> known_hosts
-```
-
-To get started, access the front end application [here](http://localhost:3001) and enter a user account and you will get redirected to the file upload.
-
-You can get test accounts [here](https://bcgov.github.io/jag-file-submission/#/gettingStarted?id=test-accounts) when the app is running in demo mode.
+To get started, access the front end application [here](http://localhost:3001) use the following username `bobross` and password `changeme`
 
 ![screen](docs/media/demoApp.png)
 
@@ -130,10 +122,6 @@ React front end demo app accessible at [http://localhost:3001](http://localhost:
 
 Efiling Api check health at [http://localhost:8080/actuator/health](http://localhost:8080/actuator/health)
 
-#### efiling-graphql
-
-GraphQl editor at [http://localhost:8090/graphql-ui/](http://localhost:8090/graphql-ui/)
-
 #### redis
 
 A [redis](https://redis.io/) instance exposed on port 6379
@@ -141,10 +129,6 @@ A [redis](https://redis.io/) instance exposed on port 6379
 #### redis commander:
 
 A [redis-commander](http://joeferner.github.io/redis-commander/) instance to query redis accessible at [http://localhost:8082](http://localhost:8082)
-
-#### postgres:
-
-A [postgresql](https://www.postgresql.org/) to support keycloak
 
 #### keycloak:
 

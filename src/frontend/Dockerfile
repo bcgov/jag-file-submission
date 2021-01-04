@@ -1,12 +1,11 @@
 # pull official base image
-FROM node:13.12.0-alpine
+FROM node:13.12.0-alpine as build
 
 ARG SERVICE_NAME
 
-COPY . .
+WORKDIR /app
 
-# set working directory
-WORKDIR /${SERVICE_NAME}
+COPY ./${SERVICE_NAME}/package.json ./${SERVICE_NAME}/yarn.lock ./
 
 # add `/node_modules/.bin` to $PATH
 ENV PATH ./node_modules/.bin:$PATH
@@ -14,8 +13,9 @@ ENV PATH ./node_modules/.bin:$PATH
 # install dependencies
 RUN yarn install
 
-# set working directory
-WORKDIR /${SERVICE_NAME}
+COPY ./${SERVICE_NAME} .
+
+RUN ls
 
 # start app
 CMD ["yarn", "start"]

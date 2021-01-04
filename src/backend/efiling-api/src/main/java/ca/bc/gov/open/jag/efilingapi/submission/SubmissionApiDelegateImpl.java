@@ -341,7 +341,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         return ResponseEntity.ok(filingPackageMapper.toApiFilingPackage(fromCacheSubmission.get().getFilingPackage()));
     }
 
-
     @Override
     @RolesAllowed("efiling-user")
     public ResponseEntity<Void> deleteSubmission(UUID submissionId, UUID xTransactionId) {

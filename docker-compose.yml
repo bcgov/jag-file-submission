@@ -14,9 +14,9 @@ services:
     ports:
       - 3000:3000
     environment:
-      - REACT_APP_KEYCLOAK_REALM=${KEYCLOAK_REALM}
+      - REACT_APP_KEYCLOAK_REALM=${KEYCLOAK_REALM:-Efiling-Hub}
       - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-frontend
-      - REACT_APP_KEYCLOAK_URL=${KEYCLOAK_URL}
+      - REACT_APP_KEYCLOAK_URL=${KEYCLOAK_URL:-http://localhost:8081/auth}
       - REACT_APP_API_BASE_URL=http://localhost:8080
       - REACT_APP_BAMBORA_REDIRECT_URL=http://localhost:3000/efilinghub
 
@@ -34,16 +34,17 @@ services:
     ports:
       - 3001:3000
     environment:
-      - REACT_APP_KEYCLOAK_REALM=${KEYCLOAK_REALM}
-      - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-demo
-      - REACT_APP_KEYCLOAK_URL=${KEYCLOAK_URL}
+      - REACT_APP_KEYCLOAK_REALM=${KEYCLOAK_REALM:-Efiling-Hub}
+      - REACT_APP_DEMO_CLIENT_ID=efiling-admin
+      - REACT_APP_KEYCLOAK_URL=${KEYCLOAK_URL:-http://localhost:8081/auth}
       - REACT_APP_API_BASE_URL=http://localhost:8080
-      - REACT_APP_DEMO_CLIENT_ID=demo-app
 
   #############################################################################################
   ###                           Efiling api backend app                                     ###
   #############################################################################################
   efiling-api:
+    container_name: efiling-api
+    hostname: efiling-api
     build:
       context: ./src/backend
       args:
@@ -55,6 +56,19 @@ services:
       - "8080:8080"
     environment:
       - MVN_PROFILE=${MVN_PROFILE}
+
+      - BAMBORA_APIPASSCODE=${BAMBORA_APIPASSCODE:-passcode}
+      - BAMBORA_MERCHANTID=${BAMBORA_MERCHANTID-merchantid}
+      - BAMBORA_PROFILE_URL=${BAMBORA_PROFILE_URL:-http://localhost:3001/efiling-demo/updatecard}
+      - BAMBORA_HASHKEY=${BAMBORA_HASHKEY:-key}
+      - BAMBORA_PROFILE_SERVICE_VERSION=${BAMBORA_PROFILE_SERVICE_VERSION}
+      - BAMBORA_URL_EXPIRY=10
+
+      - KEYCLOAK_AUTH_SERVER_URL=${KEYCLOAK_AUTH_SERVER_URL:-http://keycloak:8080/auth}
+      - KEYCLOAK_REALM=${KEYCLOAK_REALM:-Efiling-Hub}
+      - KEYCLOAK_CREDENTIALS_SECRET=${KEYCLOAK_CREDENTIALS_SECRET}
+      - KEYCLOAK_SSL_REQUIRED=${KEYCLOAK_SSL_REQUIRED:-none}
+
       - CSO_ACCOUNTFACADE_URI=${CSO_ACCOUNTFACADE_URI}
       - CSO_ACCOUNTFACADE_USERNAME=${CSO_ACCOUNTFACADE_USERNAME}
       - CSO_ACCOUNTFACADE_PASSWORD=${CSO_ACCOUNTFACADE_PASSWORD}
@@ -79,32 +93,23 @@ services:
       - CSO_SERVICEFACADE_URI=${CSO_SERVICEFACADE_URI}
       - CSO_SERVICEFACADE_USERNAME=${CSO_SERVICEFACADE_USERNAME}
       - CSO_SERVICEFACADE_PASSWORD=${CSO_SERVICEFACADE_PASSWORD}
-      - KEYCLOAK_AUTH_SERVER_URL=${KEYCLOAK_AUTH_SERVER_URL}
-      - KEYCLOAK_REALM=${KEYCLOAK_REALM}
-      - KEYCLOAK_RESOURCE=${KEYCLOAK_RESOURCE}
-      - KEYCLOAK_CREDENTIALS_SECRET=${KEYCLOAK_CREDENTIALS_SECRET}
-      - KEYCLOAK_SSL_REQUIRED=${KEYCLOAK_SSL_REQUIRED}
-      - BAMBORA_APIPASSCODE=${BAMBORA_APIPASSCODE}
-      - BAMBORA_MERCHANTID=${BAMBORA_MERCHANTID}
+
       - SFTP_KNOWNHOSTS=${SFTP_KNOWNHOSTS}
       - SFTP_REMOTELOCATION=${SFTP_REMOTELOCATION}
       - SFTP_PRIVATE_KEY=${SFTP_PRIVATE_KEY}
+
       - BCEID_SERVICE_URI=${BCEID_SERVICE_URI}
       - BCEID_SERVICE_USERNAME=${BCEID_SERVICE_USERNAME}
       - BCEID_SERVICE_PASSWORD=${BCEID_SERVICE_PASSWORD}
       - BCEID_SERVICE_ONLINE_SERVICE_ID=${BCEID_SERVICE_ONLINE_SERVICE_ID}
-      - CSO_FILE_SERVER_HOST=${CSO_FILE_SERVER_HOST}
-      - CSO_DEBUG_ENABLED=${CSO_DEBUG_ENABLED}
-      - BAMBORA_PROFILE_URL=${BAMBORA_PROFILE_URL}
-      - BAMBORA_HASHKEY=${BAMBORA_HASHKEY}
-      - BAMBORA_PROFILE_SERVICE_VERSION=${BAMBORA_PROFILE_SERVICE_VERSION}
-      - BAMBORA_URL_EXPIRY=10
+
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - REDIS_PASSWORD=admin
-      - CEIS_BASE_PATH=${CEIS_BASE_PATH}
+
       - NAVIGATION_BASE_URL=http://localhost:3000/efilinghub
       - NAVIGATION_EXPIRYTIME=10
+
       - CLAMAV_HOST=clamav
       - CLAMAV_TIMEOUT=150000
     networks:
@@ -142,51 +147,31 @@ services:
     networks:
       - fisu-net
 
-  #############################################################################################
-  ###                                        KEYCLOAK                                       ###
-  #############################################################################################
-
+  # #############################################################################################
+  # ###                                        KEYCLOAK                                       ###
+  # #############################################################################################
+  # TODO: Removed this KeyCloak as we're currently pointing to client side dev keycloak (pathfinder)
   keycloak:
-    image: jboss/keycloak
+    image: quay.io/keycloak/keycloak
     environment:
       DB_VENDOR: H2
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
       KEYCLOAK_IMPORT: /tmp/realm-export.json
-      KEYCLOAK_AUTH_SERVER_URL: http://localhost:8081/auth
-      KEYCLOAK_REALM: SpringBootKeycloak
-      KEYCLOAK_RESOURCE: efiling-api
-      KEYCLOAK_CREDENTIALS_SECRET: 3d7be270-34a5-4c4f-82cb-d0d22cb88aa8
-      # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
-      # JDBC_PARAMS: "ssl=true"
+      KEYCLOAK_FRONTEND_URL: http://localhost:8081/auth
     volumes:
-      - ./.settings/realm-export.json:/tmp/realm-export.json
+      - .settings/keycloak/realm-export.json:/tmp/realm-export.json
     ports:
       - 8081:8080
-    command: ["-Dkeycloak.profile.feature.upload_scripts=enabled"]
     networks:
       - fisu-net
 
-  #############################################################################################
-  ###                                        NGINX                                          ###
-  #############################################################################################
-  nginx:
-    image: nginx:latest
-    volumes:
-      - .settings/nginx.conf:/etc/nginx/nginx.conf
-    ports:
-      - 8083:80
-    networks:
-      - fisu-net
-
-  #############################################################################################
-  ###                             SFTP SERVER                                               ###
-  #############################################################################################
-  sftp:
-    image: atmoz/sftp
-    ports:
-      - "23:22"
-    command: admin:admin:::upload
+  keycloak-config:
+    build:
+      context: ./.settings/keycloak
+      args:
+        - KEYCLOAK_URL=http://keycloak:8080
+    command: sh -c "dockerize -wait http://keycloak:8080 -timeout 300s -wait-retry-interval 10s /tmp/createuser.sh"
     networks:
       - fisu-net
 
