@@ -92,7 +92,7 @@ export default function App() {
           <AuthenticationGuard page={{ header, confirmationPopup }} />
         </Route>
         <Route path="/efilinghub/packagereview/:packageId">
-          <AuthenticationGuard page={{ header }} />
+          <AuthenticationGuard page={{ header, confirmationPopup }} />
         </Route>
       </Switch>
     </div>

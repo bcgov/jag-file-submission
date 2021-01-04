@@ -38,7 +38,7 @@ jobs:
         env:
           DOCKER_BUILDKIT: "1"
         run: |
-          docker-compose build --parallel efiling-demo efiling-frontend efiling-api
+          docker-compose build --parallel efiling-demo efiling-frontend efiling-api keycloak keycloak-config
 
       - name: Standup Docker Pods
         env:
@@ -52,7 +52,7 @@ jobs:
           KEYCLOAK_SSL_REQUIRED: "none"
           KEYCLOAK_RESOURCE: "efiling-api"
         run: |
-          docker-compose up -d redis sftp clamav efiling-demo efiling-frontend efiling-api
+          docker-compose up -d redis sftp clamav efiling-demo efiling-frontend efiling-api keycloak keycloak-config
 
       - name: Running Integration Tests
         env:

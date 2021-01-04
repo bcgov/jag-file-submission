@@ -11,18 +11,26 @@ import ca.bc.gov.open.jag.efilingcommons.model.PaymentTransaction;
 import ca.bc.gov.open.jag.efilingcommons.payment.PaymentAdapter;
 import ca.bc.gov.open.jag.efilingcommons.service.*;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
+import ca.bc.gov.open.sftp.starter.SftpService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.math.BigDecimal;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Configuration
@@ -34,8 +42,8 @@ public class AutoConfiguration {
     public static final String TRANSACTION_STATE_APPROVED = "APP";
 
     @Bean
-    public EfilingAccountService efilingAccountService() {
-        return new EfilingAccountServiceDemoImpl();
+    public EfilingAccountService efilingAccountService(AccountDetailsCache accountDetailsCache) {
+        return new EfilingAccountServiceDemoImpl(accountDetailsCache);
     }
 
     @Bean
@@ -57,6 +65,9 @@ public class AutoConfiguration {
 
     @Bean
     public EfilingStatusService efilingStatusService() { return new EfilingStatusServiceDemoImpl(); }
+
+    @Bean
+    public AccountDetailsCache accountDetailsCache() { return new AccountDetailsCacheImpl(); }
 
     /**
      * Configures the cache manager for demo accounts
@@ -84,6 +95,51 @@ public class AutoConfiguration {
         return new Jackson2JsonRedisSerializer(AccountDetails.class);
     }
 
+    /**
+     * Configures the cache manager
+     * @param jedisConnectionFactory A jedisConnectionFactory
+     * @return
+     */
+    @Bean(name = "demoDocumentCacheManager")
+    public CacheManager demoDocumentCacheManager(
+            JedisConnectionFactory jedisConnectionFactory) {
+
+        RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
+                .disableCachingNullValues()
+                .entryTtl(Duration.ofHours(24));
+
+        redisCacheConfiguration.usePrefix();
+
+        return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(jedisConnectionFactory)
+                .cacheDefaults(redisCacheConfiguration).build();
+    }
+
+    @Bean(name = "demoSftpService")
+    @Primary
+    public SftpService sftpService() {
+        return new SftpService() {
+            @Override
+            public ByteArrayInputStream getContent(String s) {
+                return null;
+            }
+
+            @Override
+            public void moveFile(String s, String s1) {
+                // not in use in demo so left without implementation
+            }
+
+            @Override
+            @Cacheable(cacheNames = "demoDocument", key = "#s", cacheManager = "demoDocumentCacheManager", unless = "#result == null")
+            public void put(InputStream inputStream, String s) {
+                // not in use in demo so left without implementation
+            }
+
+            @Override
+            public List<String> listFiles(String s) {
+                return new ArrayList<>();
+            }
+        };
+    }
 
     @Bean
     public BCeIDAccountService bCeIDAccountService() {
