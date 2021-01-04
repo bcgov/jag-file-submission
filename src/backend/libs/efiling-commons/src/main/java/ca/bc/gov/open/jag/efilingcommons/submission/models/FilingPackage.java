@@ -64,6 +64,30 @@ public class FilingPackage {
 
     public String getApplicationCode() { return applicationCode; }
 
+    public void setSubmissionFeeAmount(BigDecimal submissionFeeAmount) {
+        this.submissionFeeAmount = submissionFeeAmount;
+    }
+
+    public void setCourt(Court court) {
+        this.court = court;
+    }
+
+    public void setDocuments(List<Document> documents) {
+        this.documents = documents;
+    }
+
+    public void setParties(List<Party> parties) {
+        this.parties = parties;
+    }
+
+    public void setRushedSubmission(boolean rushedSubmission) {
+        this.rushedSubmission = rushedSubmission;
+    }
+
+    public void setApplicationCode(String applicationCode) {
+        this.applicationCode = applicationCode;
+    }
+
     public static Builder builder() {
         return new Builder();
     }
