@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Header, Footer, Button } from "shared-components";
-import { propTypes } from "../../../types/propTypes";
 import axios from "axios";
+import { propTypes } from "../../../types/propTypes";
 
 export default function PackageReview({ page: { header, packageId } }) {
   useEffect(() => {
     console.log(packageId);
     axios
-      .get("filingpackage/" + packageId)
+      .get(`filingpackage/${packageId}`)
       .then((response) => {
         console.log(response);
       })
