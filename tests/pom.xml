@@ -187,7 +187,6 @@
         <configuration>
           <parallel>methods</parallel>
           <useUnlimitedThreads>true</useUnlimitedThreads>
-          <testFailureIgnore>true</testFailureIgnore>
           <includes>
             <include>**/*CucumberTest*.java</include>
           </includes>
