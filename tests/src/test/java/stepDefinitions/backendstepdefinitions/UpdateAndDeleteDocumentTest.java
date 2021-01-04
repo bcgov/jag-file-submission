@@ -35,7 +35,7 @@ public class UpdateAndDeleteDocumentTest extends DriverClass {
     private static final String SUBMISSION_ID = "submissionId";
     private static final String TRANSACTION_ID = "transactionId";
     private static final String GENERATE_URL_PATH_PARAM = "/generateUrl";
-    private static final String FIRST_FILE_NAME_PATH = "/test-document.pdf";
+    private static final String FIRST_FILE_NAME_PATH = "/data/test-document.pdf";
     private static final String SECOND_FILE_NAME_PATH = "/test-document-2.pdf";
     private String respUrl;
     private String userToken;
