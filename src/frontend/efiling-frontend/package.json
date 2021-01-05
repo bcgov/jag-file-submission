@@ -55,7 +55,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.12.3",
+    "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.11.5",
     "@storybook/addon-storyshots": "^6.0.19",
     "@storybook/addon-actions": "^6.1.10",
