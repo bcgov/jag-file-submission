@@ -1,12 +1,13 @@
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
 import ca.bc.gov.open.PayloadHelper;
+import ca.bc.gov.open.TestConfig;
 import ca.bc.gov.open.TokenHelper;
-import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.spring.CucumberContextConfiguration;
 import io.restassured.RestAssured;
 import io.restassured.builder.MultiPartSpecBuilder;
 import io.restassured.http.ContentType;
@@ -14,27 +15,31 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.MultiPartSpecification;
 import io.restassured.specification.RequestSpecification;
-import org.apache.http.client.utils.URIBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 import stepDefinitions.backendstepdefinitions.GenerateUrlAndSubmissionTest;
 
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.text.MessageFormat;
-import java.util.Base64;
 import java.util.UUID;
 
+@CucumberContextConfiguration
+@SpringBootTest(classes = TestConfig.class)
 public class GenerateUrlSD {
 
+    @Value("${KEYCLOAK_HOST:http://localhost:8081}")
+    private String keycloakHost;
+
+    @Value("${KEYCLOAK_REALM:Efiling-Hub}")
+    private String keycloakRealm;
 
     private static final String TEST_DOCUMENT_PDF = "test-document.pdf";
-
 
     private UUID actualTransactionId;
     private Response actualDocumentResponse;
@@ -49,10 +54,10 @@ public class GenerateUrlSD {
         actualTransactionId = UUID.randomUUID();
     }
 
-    @Given("admin account {string}:{string} that authenticated with keycloak at {string} on realm {string}")
-    public void adminAccountThatAuthenticatedWithKeycloakAtOnRealm(String username, String password, String keycloakHost, String keycloakRealm) {
+    @Given("admin account {string}:{string} that authenticated")
+    public void adminAccountThatAuthenticatedWithKeycloakOnRealm(String username, String password) {
 
-        setBearerToken(keycloakHost, keycloakRealm, username, password);
+        setBearerToken(username, password);
 
     }
 
@@ -141,7 +146,7 @@ public class GenerateUrlSD {
 
     }
 
-    private void setBearerToken(String keycloakHost, String keycloakRealm, String username, String password) {
+    private void setBearerToken(String username, String password) {
 
         logger.info("Requesting bearer token from {} issuer", keycloakHost);
 
@@ -161,6 +166,5 @@ public class GenerateUrlSD {
         actualUniversalId = tokenJsonPath.get("universal-id");
 
     }
-
 
 }
