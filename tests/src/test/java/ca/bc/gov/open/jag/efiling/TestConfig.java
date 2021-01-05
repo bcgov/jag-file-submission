@@ -1,4 +1,4 @@
-package ca.bc.gov.open;
+package ca.bc.gov.open.jag.efiling;
 
 import org.springframework.context.annotation.Configuration;
 

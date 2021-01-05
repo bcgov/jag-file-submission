@@ -1,4 +1,4 @@
-package ca.bc.gov.open;
+package ca.bc.gov.open.jag.efiling;
 
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
