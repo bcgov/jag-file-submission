@@ -53,7 +53,7 @@ jobs:
           DOCKERIZE_VERSION: v0.6.1
         run: |
 
-          sleep 30
+          sleep 15
 
           # Maven requires chrome driver.
           wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
