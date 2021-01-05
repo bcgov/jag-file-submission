@@ -44,7 +44,7 @@ jobs:
         env:
           MVN_PROFILE: demo
         run: |
-          docker-compose up -d redis sftp clamav efiling-demo efiling-frontend efiling-api keycloak keycloak-config
+          docker-compose up -d redis clamav efiling-demo efiling-frontend efiling-api keycloak keycloak-config
 
       - name: Running Integration Tests
         env:
