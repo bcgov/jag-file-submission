@@ -18,6 +18,10 @@ public class Authorizing {
     private DateTime updDtm;
     private String updUserId;
 
+    public Authorizing() {
+
+    }
+
     public BigDecimal getAccessRequestId() {
         return accessRequestId;
     }

@@ -13,6 +13,10 @@ public class PackagePayment {
     private String transactionDesc;
     private DateTime transactionDtm;
 
+    public PackagePayment() {
+
+    }
+
     public Boolean getFeeExmpt() {
         return feeExmpt;
     }

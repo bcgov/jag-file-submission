@@ -6,6 +6,7 @@ import ca.bc.gov.open.jag.efilingapi.filingpackage.mapper.FilingPackageMapper;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -34,7 +35,9 @@ public class FilingPackageServiceImpl implements FilingPackageService {
 
         FilingPackageRequest request = new FilingPackageRequest(accountDetails.getClientId(), packageNumber);
 
-        Optional<ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage> filingPackage = efilingStatusService.findStatusByPackage(request);
+        Optional<ReviewFilingPackage> filingPackage = efilingStatusService.findStatusByPackage(request);
+
+        if (!filingPackage.isPresent()) return Optional.empty();
 
         return filingPackage.map(filingPackageMapper::toResponseFilingPackage);
 

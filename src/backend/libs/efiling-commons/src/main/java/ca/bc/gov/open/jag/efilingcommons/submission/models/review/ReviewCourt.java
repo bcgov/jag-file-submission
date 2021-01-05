@@ -4,7 +4,8 @@ import java.math.BigDecimal;
 
 public class ReviewCourt {
     private String locationDescription;
-    private String location;
+    private String locationCd;
+    private String locationName;
     private String level;
     private String levelDescription;
     private String courtClass;
@@ -15,6 +16,10 @@ public class ReviewCourt {
     private BigDecimal locationId;
     private Boolean existingFileYN;
 
+    public ReviewCourt() {
+
+    }
+
     public String getLocationDescription() {
         return locationDescription;
     }
@@ -23,12 +28,12 @@ public class ReviewCourt {
         this.locationDescription = locationDescription;
     }
 
-    public String getLocation() {
-        return location;
+    public String getLocationName() {
+        return locationName;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
     }
 
     public String getLevel() {
@@ -101,5 +106,13 @@ public class ReviewCourt {
 
     public void setExistingFileYN(Boolean existingFileYN) {
         this.existingFileYN = existingFileYN;
+    }
+
+    public String getLocationCd() {
+        return locationCd;
+    }
+
+    public void setLocationCd(String locationCd) {
+        this.locationCd = locationCd;
     }
 }

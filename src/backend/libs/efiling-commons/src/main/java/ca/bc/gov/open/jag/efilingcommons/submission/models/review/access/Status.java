@@ -20,6 +20,9 @@ public class Status {
     private DateTime updDtm;
     private String updUserId;
 
+    public Status() {
+
+    }
 
     public BigDecimal getAccessRequestId() {
         return accessRequestId;

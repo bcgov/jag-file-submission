@@ -23,6 +23,8 @@ public class ReviewProcessRequest {
     private DateTime updDtm;
     private String updUserId;
 
+    public ReviewProcessRequest() {}
+
     public DateTime getClientNotificationSentDtm() {
         return clientNotificationSentDtm;
     }

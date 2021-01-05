@@ -16,6 +16,10 @@ public class Period {
     private DateTime updDtm;
     private String updUserId;
 
+    public Period() {
+
+    }
+
     public BigDecimal getAccessPeriodSeqNo() {
         return accessPeriodSeqNo;
     }

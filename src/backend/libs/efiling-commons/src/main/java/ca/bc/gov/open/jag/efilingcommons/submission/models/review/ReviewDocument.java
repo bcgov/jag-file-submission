@@ -21,6 +21,10 @@ public class ReviewDocument {
     private Boolean trialDivision;
     private Boolean xmlDoc;
 
+    public ReviewDocument() {
+
+    }
+
     public String getDocumentType() {
         return documentType;
     }

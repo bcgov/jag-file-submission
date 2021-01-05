@@ -30,6 +30,10 @@ public class ReviewPackageRequest {
     private Period accessPeriod;
     private List<Authorizing> authorizingParties;
 
+    public ReviewPackageRequest() {
+
+    }
+
     public String getAccessEntitlementCd() {
         return accessEntitlementCd;
     }
