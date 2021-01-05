@@ -33,12 +33,14 @@ import java.util.UUID;
 @SpringBootTest(classes = TestConfig.class)
 public class GenerateUrlSD {
 
+    private static final String X_TRANSACTION_ID = "X-Transaction-Id";
     @Value("${KEYCLOAK_HOST:http://localhost:8081}")
     private String keycloakHost;
 
     @Value("${KEYCLOAK_REALM:Efiling-Hub}")
     private String keycloakRealm;
 
+    private static final String X_USER_ID = "X-User-Id";
     private static final String TEST_DOCUMENT_PDF = "test-document.pdf";
 
     private UUID actualTransactionId;
@@ -76,8 +78,8 @@ public class GenerateUrlSD {
                 build();
 
         RequestSpecification request = RestAssured.given().auth().preemptive().oauth2(actualUserToken)
-                .header("X-Transaction-Id", actualTransactionId)
-                .header("X-User-Id", actualUniversalId)
+                .header(X_TRANSACTION_ID, actualTransactionId)
+                .header(X_USER_ID, actualUniversalId)
                 .multiPart(spec);
 
         actualDocumentResponse = request.when().post("http://localhost:8080/submission/documents").then()
@@ -112,8 +114,8 @@ public class GenerateUrlSD {
                 .preemptive()
                 .oauth2(actualUserToken)
                 .contentType(ContentType.JSON)
-                .header("X-Transaction-Id", actualTransactionId)
-                .header("X-User-Id", "77da92db-0791-491e-8c58-1a969e67d2fa")
+                .header(X_TRANSACTION_ID, actualTransactionId)
+                .header(X_USER_ID, actualUniversalId)
                 .body(PayloadHelper.generateUrlPayload(TEST_DOCUMENT_PDF));
 
         actualGenerateUrlResponse = request
