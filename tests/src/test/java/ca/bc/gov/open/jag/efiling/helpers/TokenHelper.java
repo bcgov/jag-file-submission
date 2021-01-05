@@ -1,8 +1,7 @@
-package ca.bc.gov.open;
+package ca.bc.gov.open.jag.efiling.helpers;
 
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
 import io.restassured.RestAssured;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.apache.http.client.utils.URIBuilder;
