@@ -1,11 +1,4 @@
-package ca.bc.gov.open;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.text.MessageFormat;
-import java.util.Map;
-import java.util.HashMap;
+package ca.bc.gov.open.jag.efiling.helpers;
 
 public class PayloadHelper {
 
