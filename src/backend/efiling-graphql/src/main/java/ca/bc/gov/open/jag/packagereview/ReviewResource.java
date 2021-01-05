@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.packagereview;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import ca.bc.gov.open.jag.packagereview.mapper.FilingPackageMapper;
 import org.eclipse.microprofile.graphql.Description;
 import org.eclipse.microprofile.graphql.GraphQLApi;
@@ -35,7 +36,7 @@ public class ReviewResource {
     public ca.bc.gov.open.jag.packagereview.model.FilingPackage getSubmission(@Name("clientId") BigDecimal clientId, @Name("packageNo") BigDecimal packageNo) {
         logger.info("GraphQl Request received");
 
-        Optional<FilingPackage> filePackage = efilingStatusService.findStatusByPackage(new FilingPackageRequest(clientId, packageNo));
+        Optional<ReviewFilingPackage> filePackage = efilingStatusService.findStatusByPackage(new FilingPackageRequest(clientId, packageNo));
 
         ca.bc.gov.open.jag.packagereview.model.FilingPackage responseFilingPackage = new ca.bc.gov.open.jag.packagereview.model.FilingPackage();
         if (filePackage.isPresent()) {

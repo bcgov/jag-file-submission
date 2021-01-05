@@ -10,6 +10,9 @@ import ca.bc.gov.open.jag.efilingcommons.model.Court;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
 import ca.bc.gov.open.jag.efilingcommons.model.Party;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewCourt;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
@@ -74,10 +77,7 @@ public class FilingPackageServiceImplTest {
         Optional<FilingPackage> result = sut.getCSOFilingPackage(TestHelpers.CASE_1, BigDecimal.ONE);
 
         Assertions.assertTrue(result.isPresent());
-        //Filing Package
-        Assertions.assertEquals(BigDecimal.ONE, result.get().getSubmissionFeeAmount());
         //Court
-        Assertions.assertEquals(BigDecimal.ONE, result.get().getCourt().getAgencyId());
         Assertions.assertEquals(CLASS_DESCRIPTION, result.get().getCourt().getClassDescription());
         Assertions.assertEquals(COURT_CLASS, result.get().getCourt().getCourtClass());
         Assertions.assertEquals(DIVISION, result.get().getCourt().getDivision());
@@ -94,13 +94,8 @@ public class FilingPackageServiceImplTest {
         Assertions.assertEquals(MIDDLE_NAME, result.get().getParties().get(0).getMiddleName());
         //Document
         Assertions.assertEquals(1, result.get().getDocuments().size());
-        Assertions.assertEquals(DATA, result.get().getDocuments().get(0).getData());
-        Assertions.assertEquals(DESCRIPTION, result.get().getDocuments().get(0).getDescription());
-        Assertions.assertFalse(result.get().getDocuments().get(0).getIsAmendment());
-        Assertions.assertTrue(result.get().getDocuments().get(0).getIsSupremeCourtScheduling());
-        Assertions.assertEquals(MIME_TYPE, result.get().getDocuments().get(0).getMimeType());
+        Assertions.assertEquals(DocumentProperties.TypeEnum.AAB, result.get().getDocuments().get(0).getType());
         Assertions.assertEquals(NAME, result.get().getDocuments().get(0).getName());
-        Assertions.assertEquals(BigDecimal.ONE, result.get().getDocuments().get(0).getStatutoryFeeAmount());
     }
 
     @Test
@@ -134,30 +129,29 @@ public class FilingPackageServiceImplTest {
                 .universalId(TestHelpers.CASE_1).create();
     }
 
-    private ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage createFilingPackage() {
-        return new ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage(
-                BigDecimal.ONE,
-                createCourt(),
-                Collections.singletonList(createDocument()),
-                Collections.singletonList(createParty()),
-                false,
-                "APPLICATION_CODE"
-        );
+    private ReviewFilingPackage createFilingPackage() {
+        ReviewFilingPackage reviewFilingPackage = new ReviewFilingPackage();
+        reviewFilingPackage.setClientFileNo("CLIENTFILENO");
+        reviewFilingPackage.setCourt(createCourt());
+        reviewFilingPackage.setDocuments(Collections.singletonList(createDocument()));
+        reviewFilingPackage.setParties(Collections.singletonList(createParty()));
+        return reviewFilingPackage;
     }
 
-    private Court createCourt() {
-        return Court.builder()
-                .agencyId(BigDecimal.ONE)
-                .classDescription(CLASS_DESCRIPTION)
-                .courtClass(COURT_CLASS)
-                .division(DIVISION)
-                .fileNumber(FILE_NUMBER)
-                .level(LEVEL)
-                .levelDescription(LEVEL_DESCRIPTION)
-                .location(LOCATION)
-                .locationDescription(LOCATION_DESCRIPTION)
-                .participatingClass(PARTICIPATING_CLASS)
-                .create();
+    private ReviewCourt createCourt() {
+        ReviewCourt reviewCourt = new ReviewCourt();
+
+        reviewCourt.setClassDescription(CLASS_DESCRIPTION);
+        reviewCourt.setCourtClass(COURT_CLASS);
+        reviewCourt.setDivision(DIVISION);
+        reviewCourt.setFileNumber(FILE_NUMBER);
+        reviewCourt.setLevel(LEVEL);
+        reviewCourt.setLevelDescription(LEVEL_DESCRIPTION);
+        reviewCourt.setLocationName(LOCATION);
+        reviewCourt.setLocationDescription(LOCATION_DESCRIPTION);
+        reviewCourt.setParticipatingClass(PARTICIPATING_CLASS);
+
+        return reviewCourt;
     }
 
     private Party createParty() {
@@ -171,18 +165,10 @@ public class FilingPackageServiceImplTest {
                 .create();
     }
 
-    private Document createDocument() {
-        return Document.builder()
-                .data(DATA)
-                .description(DESCRIPTION)
-                .isAmendment(Boolean.FALSE)
-                .isSupremeCourtScheduling(Boolean.TRUE)
-                .mimeType(MIME_TYPE)
-                .name(NAME)
-                .serverFileName(FILE_NAME)
-                .statutoryFeeAmount(BigDecimal.ONE)
-                .subType(SUB_TYPE)
-                .type(DocumentProperties.TypeEnum.AAB.getValue())
-                .create();
+    private ReviewDocument createDocument() {
+        ReviewDocument reviewDocument = new ReviewDocument();
+        reviewDocument.setFileName(NAME);
+        reviewDocument.setDocumentTypeCd(DocumentProperties.TypeEnum.AAB.getValue());
+        return reviewDocument;
     }
 }
