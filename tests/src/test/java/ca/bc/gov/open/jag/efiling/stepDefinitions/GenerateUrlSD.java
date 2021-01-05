@@ -1,8 +1,8 @@
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
-import ca.bc.gov.open.PayloadHelper;
-import ca.bc.gov.open.TestConfig;
-import ca.bc.gov.open.TokenHelper;
+import ca.bc.gov.open.jag.efiling.helpers.PayloadHelper;
+import ca.bc.gov.open.jag.efiling.TestConfig;
+import ca.bc.gov.open.jag.efiling.helpers.TokenHelper;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -33,7 +33,7 @@ import java.util.UUID;
 @SpringBootTest(classes = TestConfig.class)
 public class GenerateUrlSD {
 
-    private static final String X_TRANSACTION_ID = "X-Transaction-Id";
+
     @Value("${KEYCLOAK_HOST:http://localhost:8081}")
     private String keycloakHost;
 
@@ -42,6 +42,7 @@ public class GenerateUrlSD {
 
     private static final String X_USER_ID = "X-User-Id";
     private static final String TEST_DOCUMENT_PDF = "test-document.pdf";
+    private static final String X_TRANSACTION_ID = "X-Transaction-Id";
 
     private UUID actualTransactionId;
     private Response actualDocumentResponse;
