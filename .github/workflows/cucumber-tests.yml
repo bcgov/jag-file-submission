@@ -1,6 +1,8 @@
 name: Cucumber Tests
 
 on:
+  pull_request:
+    branches: [master]
   push:
     branches: [master]
   workflow_dispatch:
@@ -12,6 +14,10 @@ jobs:
     steps:
       - name: Pull Git repo.
         uses: actions/checkout@v2
+
+      # pulling images is faster than caching in most of the case
+      - name: pull available docker images first
+        run: docker-compose pull
 
       # In this step, this action saves a list of existing images,
       # the cache is created without them in the post run.
@@ -42,22 +48,21 @@ jobs:
 
       - name: Standup Docker Pods
         env:
-          CSO_DEBUG_ENABLED: "false"
-          KEYCLOAK_CREDENTIALS_SECRET: ${{secrets.EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}}
-          KEYCLOAK_REALM: ${{secrets.KEYCLOAK_REALM}}
-          KEYCLOAK_URL: ${{secrets.KEYCLOAK_URL}}
-          REACT_APP_KEYCLOAK_REALM: ${{secrets.EFILING_DEMO_KEYCLOAK_REALM}}
-          REACT_APP_KEYCLOAK_URL: ${{secrets.EFILING_DEMO_KEYCLOAK_URL}}
-          KEYCLOAK_AUTH_SERVER_URL: ${{secrets.EFILING_DEMO_KEYCLOAK_URL}}
-          KEYCLOAK_SSL_REQUIRED: "none"
-          KEYCLOAK_RESOURCE: "efiling-api"
+          MVN_PROFILE: demo
         run: |
-          docker-compose up -d redis sftp clamav efiling-demo efiling-frontend efiling-api keycloak keycloak-config
+          docker-compose up -d redis clamav efiling-demo efiling-frontend efiling-api keycloak
+
+      - name: Configure keycloak
+        env:
+          MVN_PROFILE: demo
+        run: |
+          docker-compose up keycloak-config
 
       - name: Running Integration Tests
         env:
           DOCKERIZE_VERSION: v0.6.1
         run: |
+
           # Maven requires chrome driver.
           wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
           sudo apt-get -y install ./google-chrome-stable_current_amd64.deb
@@ -66,7 +71,7 @@ jobs:
           wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
           tar -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
-          ./dockerize -wait http://127.0.0.1:8080/actuator/health -timeout 120s mvn verify -Pconfig -DBCEID_USERNAME=${{secrets.BCEID_USERNAME}} -DBCEID_PASSWORD=${{secrets.BCEID_PASSWORD}} -DEFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET=${{secrets.EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET}} -DKEYCLOAK_URL=${{secrets.KEYCLOAK_URL}}/realms/${{secrets.KEYCLOAK_REALM}}/protocol/openid-connect/token -DBASE_URI=${{secrets.BASE_URI}} -DBROWSER=${{secrets.BROWSER}} -DENV=${{secrets.ENV}} -f tests/pom.xml
+          ./dockerize -wait http://127.0.0.1:8080/actuator/health -timeout 120s mvn verify -f tests/pom.xml
 
       # Upload Spark report for debugging purposes
       - name: Upload Spark report for debugging purposes
