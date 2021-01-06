@@ -10,14 +10,18 @@ import ca.bc.gov.open.jag.efilingcommons.model.Court;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
 import ca.bc.gov.open.jag.efilingcommons.model.Party;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.review.PackagePayment;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewCourt;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
+import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
+import org.mapstruct.Mapping;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.core.parameters.P;
 
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -48,6 +52,10 @@ public class FilingPackageServiceImplTest {
     public static final String SUB_TYPE = "SUB_TYPE";
     public static final String TYPE = "TYPE";
     public static final Object DATA = new Object();
+    public static final String STATUS = "STATUS";
+    public static final String STATUS_CODE = "STATUSCODE";
+    public static final String COMMENT = "COMMENT";
+    public static final String PACKAGE_NO = "123";
     FilingPackageServiceImpl sut;
 
     @Mock
@@ -77,6 +85,10 @@ public class FilingPackageServiceImplTest {
         Optional<FilingPackage> result = sut.getCSOFilingPackage(TestHelpers.CASE_1, BigDecimal.ONE);
 
         Assertions.assertTrue(result.isPresent());
+        //FilingPackage
+        Assertions.assertEquals(COMMENT, result.get().getCourt().getClassDescription());
+        Assertions.assertEquals(PACKAGE_NO, result.get().getCourt().getCourtClass());
+        Assertions.assertEquals(DateTime.parse("2020-5-5").toString(), result.get().getCourt().getCourtClass());
         //Court
         Assertions.assertEquals(CLASS_DESCRIPTION, result.get().getCourt().getClassDescription());
         Assertions.assertEquals(COURT_CLASS, result.get().getCourt().getCourtClass());
@@ -99,6 +111,18 @@ public class FilingPackageServiceImplTest {
         Assertions.assertEquals(1, result.get().getDocuments().size());
         Assertions.assertEquals(DocumentProperties.TypeEnum.AAB, result.get().getDocuments().get(0).getType());
         Assertions.assertEquals(NAME, result.get().getDocuments().get(0).getName());
+        Assertions.assertEquals(STATUS, result.get().getDocuments().get(0).getStatus());
+        Assertions.assertEquals(STATUS_CODE, result.get().getDocuments().get(0).getStatusDate());
+        Assertions.assertEquals(DateTime.parse("2020-5-5").toString(), result.get().getDocuments().get(0).getStatusDate());
+        //Payments
+        Assertions.assertEquals(1, result.get().getPayments().size());
+        Assertions.assertEquals(false, result.get().getPayments().get(0).getFeeExempt());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(0).getProcessedAmount());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(0).getProcessedAmount());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(0).getServiceIdentifier());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(0).getPaymentCategory());
+        Assertions.assertEquals(DateTime.parse("2020-5-5").toString(), result.get().getPayments().get(0).getTransactionDate());
+
     }
 
     @Test
@@ -122,6 +146,7 @@ public class FilingPackageServiceImplTest {
     }
 
     private AccountDetails createAccount(BigDecimal clientId) {
+
         return AccountDetails.builder()
                 .fileRolePresent(true)
                 .accountId(BigDecimal.ONE)
@@ -130,20 +155,27 @@ public class FilingPackageServiceImplTest {
                 .universalId(UUID.randomUUID())
                 .internalClientNumber(null)
                 .universalId(TestHelpers.CASE_1).create();
+
     }
 
     private ReviewFilingPackage createFilingPackage() {
+
         ReviewFilingPackage reviewFilingPackage = new ReviewFilingPackage();
         reviewFilingPackage.setClientFileNo("CLIENTFILENO");
+        reviewFilingPackage.setFilingCommentsTxt(COMMENT);
+        reviewFilingPackage.setPackageNo(PACKAGE_NO);
+        reviewFilingPackage.setSubmittedDate(DateTime.parse("2020-5-5"));
         reviewFilingPackage.setCourt(createCourt());
         reviewFilingPackage.setDocuments(Collections.singletonList(createDocument()));
         reviewFilingPackage.setParties(Collections.singletonList(createParty()));
+        reviewFilingPackage.setPayments(Collections.singletonList(createPayment()));
         return reviewFilingPackage;
+
     }
 
     private ReviewCourt createCourt() {
-        ReviewCourt reviewCourt = new ReviewCourt();
 
+        ReviewCourt reviewCourt = new ReviewCourt();
         reviewCourt.setClassDescription(CLASS_DESCRIPTION);
         reviewCourt.setCourtClass(COURT_CLASS);
         reviewCourt.setDivision(DIVISION);
@@ -154,8 +186,8 @@ public class FilingPackageServiceImplTest {
         reviewCourt.setLocationName(LOCATION);
         reviewCourt.setLocationDescription(LOCATION_DESCRIPTION);
         reviewCourt.setParticipatingClass(PARTICIPATING_CLASS);
-
         return reviewCourt;
+
     }
 
     private Party createParty() {
@@ -170,9 +202,28 @@ public class FilingPackageServiceImplTest {
     }
 
     private ReviewDocument createDocument() {
+
         ReviewDocument reviewDocument = new ReviewDocument();
         reviewDocument.setFileName(NAME);
         reviewDocument.setDocumentTypeCd(DocumentProperties.TypeEnum.AAB.getValue());
+        reviewDocument.setStatus(STATUS);
+        reviewDocument.setStatusCode(STATUS_CODE);
+        reviewDocument.setStatusDate(DateTime.parse("2020-5-5"));
+        reviewDocument.setPaymentProcessed(true);
         return reviewDocument;
+
+    }
+
+    private PackagePayment createPayment() {
+
+        PackagePayment packagePayment = new PackagePayment();
+        packagePayment.setFeeExmpt(false);
+        packagePayment.setPaymentCategory(BigDecimal.ONE);
+        packagePayment.setProcessedAmt(BigDecimal.ONE);
+        packagePayment.setSubmittedAmt(BigDecimal.ONE);
+        packagePayment.setServiceId(BigDecimal.ONE);
+        packagePayment.setTransactionDtm(DateTime.parse("2020-5-5"));
+        return packagePayment;
+
     }
 }

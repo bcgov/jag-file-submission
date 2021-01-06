@@ -1820,6 +1820,18 @@ components:
         mimeType:
           type: string
           description: File mime type
+        status:
+          type: string
+          description: Status of document
+        statusCode:
+          type: string
+          description: Status code
+        statusDate:
+          type: string
+          description: Status date
+        paymentProcessed:
+          type: boolean
+          description: Has the payment been processed
     EfilingError:
       required:
         - error
@@ -2332,7 +2344,7 @@ components:
           type: boolean
           description: Is the fee exempt
         paymentCategory:
-          type: integer
+          type: number
           description: Category for fee
         processedAmount:
           type: number

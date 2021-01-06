@@ -33,9 +33,12 @@ public interface FilingPackageMapper {
 
     List<Document> toDocuments(List<ReviewDocument> file);
 
-    //TODO: extend document to add additional fields
     @Mapping(target = "name", source = "fileName")
     @Mapping(target = "type", source = "documentTypeCd")
+    @Mapping(target = "status", source = "status")
+    @Mapping(target = "statusCode", source = "statusCode")
+    @Mapping(target = "statusDate", source = "statusDate")
+    @Mapping(target = "paymentProcessed", source = "paymentProcessed")
     Document toDocument(ReviewDocument file);
 
     List<Party> toParties(List<ca.bc.gov.open.jag.efilingcommons.model.Party> parties);
