@@ -51,58 +51,15 @@ By default a demo mode is enabled.
 
 First create a local `.env` at the root of the repository based off [.env.template](.env.template). Below are the variables that need to be configured to get the application running in demo mode.
 
-| Variable Name                   | Description                                                      | Example                    |
-| ------------------------------- | ---------------------------------------------------------------- | -------------------------- |
-| MVN_PROFILE                     | Set the front end application to be in demo mode or default mode | demo or default            |
-| SERVER_PORT                     | Port that the API will run on                                    | 8080                       |
-| KEYCLOAK_SSL_REQUIRED           | Configure whether to use SSL when communicating with Keycloak    | none                       |
-| KEYCLOAK_RESOURCE               | The Keycloak resource that is used by the API                    | efiling-api                |
-| KEYCLOAK_URL                    | The auth URL for Keycloak                                        | http://localhost:8081/auth |
-| KEYCLOAK_REALM                  | The realm configured for your Keycloak instance                  | SpringBootKeycloak         |
-| KEYCLOAK_CREDENTIALS_SECRET     | The secret generated in your Keycloak instance                   |                            |
-| KEYCLOAK_AUTH_SERVER_URL        | The auth server URL for Keycloak                                 | http://localhost:8081/auth |
-| BAMBORA_APIPASSCODE             | Passcode required to use the Bambora API                         |                            |
-| BAMBORA_MERCHANTID              | Unique identifier requried to use the Bambora API                |                            |
-| BAMBORA_PROFILE_URL             | URL of the Bambora profile                                       |                            |
-| BAMBORA_HASHKEY                 | Specific key used with the merchant ID for generating links      |                            |
-| BAMBORA_PROFILE_SERVICE_VERSION | Bambora profile service version                                  | 1.0                        |
-| BAMBORA_URL_EXPIRY              | Bambora URL expiry time in minutes                               | 30                         |
-| SFTP_KNOWNHOSTS                 | The directory with your knownhosts file                          | /users/YOURNAME/.ssh/      |
-| SFTP_REMOTELOCATION             | Remote SFTP directory directory                                  | directory                  |
-| SFTP_PRIVATE_KEY                | Private key for SFTP server                                      |                            |
-| BCEID_SERVICE_URI               | URI for the BCEID service used by Keycloak                       |                            |
-| BCEID_SERVICE_USERNAME          | Username for the BCEID service                                   |                            |
-| BCEID_SERVICE_PASSWORD          | Password for the BCEID service                                   |                            |
-| BCEID_SERVICE_ONLINE_SERVICE_ID | Unique service ID for BCEID online service                       |                            |
-
 Configure Keycloak
-
-```bash
-docker-compose up -d --build keycloak
-```
-
-go to [Efiling-api credentials](http://localhost:8081/auth/admin/master/console/#/realms/SpringBootKeycloak/clients/b7fd5f2f-d047-4916-a35e-0f7c622dfb5d/credentials) and sign in. The default credentials to a new keycloak instance are:
-
-    username: admin
-    password: admin
-
-After signing in, click Regenerate Secret. Copy the value of the secret to the `KEYCLOAK_CREDENTIALS_SECRET` in your `.env` file
-
-Create a user [here](http://localhost:8081/auth/admin/master/console/#/create/user/SpringBootKeycloak)
-
-Click on the Credentials tab
-
-Set the password and set Temporary OFF
-
-Click Reset Password
-
-If you want to integrate with the CSO application change the `MVN_PROFILE` to `default` and fill out the other environment variables in the [.env.template](.env.template) file.
 
 run
 
 ```bash
-docker-compose up -d --build
+docker-compose up -d
 ```
+
+login at [http://localhost:3001](http://localhost:3001) with `bobross` and `changeme`
 
 To get started, access the front end application [here](http://localhost:3001) use the following username `bobross` and password `changeme`
 
