@@ -18,6 +18,8 @@ public class TokenHelper {
     private static final String USERNAME = "username";
     private static final String PASSWORD = "password";
 
+    private TokenHelper() {}
+
     public static Response getUserAccessToken(String keycloakHost, String keycloakRealm, String username, String password, String clientId) {
 
         try {

@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efiling.helpers;
 
 public class PayloadHelper {
 
+    private PayloadHelper() {}
 
     public static String generateUrlPayload(String documentName) {
 
