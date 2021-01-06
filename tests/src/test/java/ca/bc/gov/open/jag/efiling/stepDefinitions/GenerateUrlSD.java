@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
+import ca.bc.gov.open.jag.efiling.error.EfilingTestException;
 import ca.bc.gov.open.jag.efiling.helpers.PayloadHelper;
 import ca.bc.gov.open.jag.efiling.TestConfig;
 import ca.bc.gov.open.jag.efiling.helpers.TokenHelper;
@@ -159,12 +160,12 @@ public class GenerateUrlSD {
 
         JsonPath oidcTokenJsonPath = new JsonPath(response.asString());
 
-        if(oidcTokenJsonPath.get("access_token") == null) throw new RuntimeException("access_token not present in response");
+        if(oidcTokenJsonPath.get("access_token") == null) throw new EfilingTestException("access_token not present in response");
 
         actualUserToken = oidcTokenJsonPath.get("access_token");
         JsonPath tokenJsonPath = new JsonPath(TokenHelper.decodeTokenToJsonString(actualUserToken));
 
-        if(tokenJsonPath.get("universal-id") == null) throw new RuntimeException("universal-id not present in response");
+        if(tokenJsonPath.get("universal-id") == null) throw new EfilingTestException("universal-id not present in response");
 
         actualUniversalId = tokenJsonPath.get("universal-id");
 

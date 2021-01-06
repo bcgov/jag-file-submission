@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efiling.helpers;
 
+import ca.bc.gov.open.jag.efiling.error.EfilingTestException;
 import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
@@ -40,7 +41,7 @@ public class TokenHelper {
 
         } catch (MalformedURLException | URISyntaxException e) {
             e.printStackTrace();
-            throw new RuntimeException(e);
+            throw new EfilingTestException("Could not build access token url", e);
         }
 
     }
@@ -49,7 +50,7 @@ public class TokenHelper {
         String[] tokenParts = accessToken.split("\\.");
 
         if (tokenParts.length != 3) {
-            throw new RuntimeException("invalid token string");
+            throw new EfilingTestException("invalid token string");
         }
 
         return new String(Base64.getUrlDecoder().decode(tokenParts[1]));
