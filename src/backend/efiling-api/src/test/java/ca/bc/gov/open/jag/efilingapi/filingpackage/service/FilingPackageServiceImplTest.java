@@ -82,13 +82,15 @@ public class FilingPackageServiceImplTest {
         Assertions.assertEquals(COURT_CLASS, result.get().getCourt().getCourtClass());
         Assertions.assertEquals(DIVISION, result.get().getCourt().getDivision());
         Assertions.assertEquals(FILE_NUMBER, result.get().getCourt().getFileNumber());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getCourt().getAgencyId());
         Assertions.assertEquals(LEVEL, result.get().getCourt().getLevel());
         Assertions.assertEquals(LEVEL_DESCRIPTION, result.get().getCourt().getLevelDescription());
-        Assertions.assertEquals(LOCATION,result.get().getCourt().getLocation());
         Assertions.assertEquals(LOCATION_DESCRIPTION, result.get().getCourt().getLocationDescription());
         Assertions.assertEquals(PARTICIPATING_CLASS, result.get().getCourt().getParticipatingClass());
         //Party
         Assertions.assertEquals(1, result.get().getParties().size());
+        Assertions.assertEquals(ca.bc.gov.open.jag.efilingapi.api.model.Party.PartyTypeEnum.IND, result.get().getParties().get(0).getPartyType());
+        Assertions.assertEquals(ca.bc.gov.open.jag.efilingapi.api.model.Party.RoleTypeEnum.ABC, result.get().getParties().get(0).getRoleType());
         Assertions.assertEquals(FIRST_NAME, result.get().getParties().get(0).getFirstName());
         Assertions.assertEquals(LAST_NAME, result.get().getParties().get(0).getLastName());
         Assertions.assertEquals(MIDDLE_NAME, result.get().getParties().get(0).getMiddleName());
@@ -147,7 +149,7 @@ public class FilingPackageServiceImplTest {
         reviewCourt.setFileNumber(FILE_NUMBER);
         reviewCourt.setLevel(LEVEL);
         reviewCourt.setLevelDescription(LEVEL_DESCRIPTION);
-        reviewCourt.setLocationName(LOCATION);
+        reviewCourt.setLocationName("1");
         reviewCourt.setLocationDescription(LOCATION_DESCRIPTION);
         reviewCourt.setParticipatingClass(PARTICIPATING_CLASS);
 
