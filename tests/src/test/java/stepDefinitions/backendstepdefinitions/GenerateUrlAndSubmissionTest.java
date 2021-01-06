@@ -11,30 +11,17 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.restassured.RestAssured;
-import io.restassured.builder.MultiPartSpecBuilder;
-import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import io.restassured.specification.MultiPartSpecification;
 import io.restassured.specification.RequestSpecification;
-import org.apache.http.client.utils.URIBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
-import org.springframework.core.io.ClassPathResource;
 
-import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.text.MessageFormat;
-import java.util.Base64;
 import java.util.List;
-import java.util.UUID;
 
-import static io.restassured.RestAssured.enableLoggingOfRequestAndResponseIfValidationFails;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -45,51 +32,11 @@ import static org.junit.Assert.*;
 public class GenerateUrlAndSubmissionTest extends DriverClass {
 
 
-    private static final String CLIENT_ID = "client_id";
-    private static final String GRANT_TYPE = "grant_type";
-    private static final String USERNAME = "username";
-    private static final String PASSWORD = "password";
     private static final String CONTENT_TYPE = "application/json";
     private static final String SUBMISSION_ID = "submissionId";
     private static final String TRANSACTION_ID = "transactionId";
     private static final String GENERATE_URL_PATH_PARAM = "/generateUrl";
     private static final String FILE_NAME_PATH = "/data/test-document.pdf";
-    private static final String TEST_DOCUMENT_PDF = "test-document.pdf";
-    private static String PAYLOAD = "{\n" +
-            "    \"navigationUrls\": {\n" +
-            "        \"success\": \"http//somewhere.com\",\n" +
-            "        \"error\": \"http//somewhere.com\",\n" +
-            "        \"cancel\": \"http//somewhere.com\"\n" +
-            "    },\n" +
-            "    \"clientAppName\": \"my app\",\n" +
-            "    \"filingPackage\": {\n" +
-            "        \"court\": {\n" +
-            "            \"location\": \"1211\",\n" +
-            "            \"level\": \"P\",\n" +
-            "            \"courtClass\": \"F\"\n" +
-            "        },\n" +
-            "        \"documents\": [\n" +
-            "            {\n" +
-            "                \"name\": \"" + TEST_DOCUMENT_PDF + "\",\n" +
-            "                \"type\": \"AFF\",\n" +
-            "                \"statutoryFeeAmount\": 0,\n" +
-            "                \"data\": {},\n" +
-            "                \"md5\": \"string\"\n" +
-            "            }\n" +
-            "        ],\n" +
-            "        \"parties\": [\n" +
-            "            {\n" +
-            "                \"partyType\": \"IND\",\n" +
-            "                \"roleType\": \"APP\",\n" +
-            "                \"firstName\": \"first\",\n" +
-            "                \"middleName\": \"middle\",\n" +
-            "                \"lastName\": \"last\"\n" +
-            "            }\n" +
-            "        ]\n" +
-            "    }\n" +
-            "}";
-
-    private UUID actualTransactionId;
 
     private Response response;
 
@@ -98,19 +45,9 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     private JsonPath jsonPath;
     private String validExistingCSOGuid;
     private String respUrl;
-
-    private Response actualDocumentResponse;
-    private Response actualGenerateUrlResponse;
     private String actualUserToken;
-    private UUID actualSubmissionId;
-    private String actualUniversalId;
 
     public Logger logger = LogManager.getLogger(GenerateUrlAndSubmissionTest.class);
-
-    public GenerateUrlAndSubmissionTest() {
-        actualTransactionId = UUID.randomUUID();
-    }
-
 
     @Given("POST http request is made to {string} with valid existing CSO account guid and a single pdf file")
     public void postHttpRequestIsMadeToWithValidExistingCsoAccountGuidAndASinglePdfFile(String resource) throws IOException {
