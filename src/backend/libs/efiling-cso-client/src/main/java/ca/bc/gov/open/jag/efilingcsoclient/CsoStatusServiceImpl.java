@@ -6,8 +6,8 @@ import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingStatusServiceException;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +31,7 @@ public class CsoStatusServiceImpl implements EfilingStatusService {
     }
 
     @Override
-    public Optional<FilingPackage> findStatusByPackage(FilingPackageRequest filingPackageRequest) {
+    public Optional<ReviewFilingPackage> findStatusByPackage(FilingPackageRequest filingPackageRequest) {
 
         try {
 
@@ -42,7 +42,7 @@ public class CsoStatusServiceImpl implements EfilingStatusService {
 
             if (filingStatus.getFilePackages().isEmpty()) return Optional.empty();
 
-            return  Optional.of(filePackageMapper.toFilingPackage(filingStatus.getFilePackages().get(0)));
+            return Optional.of(filePackageMapper.toFilingPackage(filingStatus.getFilePackages().get(0)));
 
         } catch (NestedEjbException_Exception e) {
 

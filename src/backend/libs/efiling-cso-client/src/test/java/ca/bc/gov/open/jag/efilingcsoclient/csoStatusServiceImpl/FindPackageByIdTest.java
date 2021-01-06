@@ -7,6 +7,7 @@ import ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingStatusServiceException;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoStatusServiceImpl;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapperImpl;
@@ -71,20 +72,20 @@ public class FindPackageByIdTest {
     @DisplayName("OK: package found")
     @Test
     public void testWithFoundResult() throws DatatypeConfigurationException {
-        Optional<FilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(SUCCESS_CLIENT, SUCCESS_PACKAGE));
+        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(SUCCESS_CLIENT, SUCCESS_PACKAGE));
 
         Assertions.assertEquals(COURT_FILE_NO, result.get().getCourt().getFileNumber());
         Assertions.assertEquals(COURT_CLASS_CD, result.get().getCourt().getCourtClass());
         Assertions.assertEquals(COURT_LEVEL_CD, result.get().getCourt().getLevel());
-        Assertions.assertEquals(COURT_LOCATION_CD, result.get().getCourt().getLocation());
-        Assertions.assertEquals(COURT_LOCATION_NAME, result.get().getCourt().getLocationDescription());
+        Assertions.assertEquals(COURT_LOCATION_CD, result.get().getCourt().getLocationCd());
+        Assertions.assertEquals(COURT_LOCATION_NAME, result.get().getCourt().getLocationName());
 
     }
 
     @DisplayName("Ok: no packages found")
     @Test
     public void testWithNoResult() {
-        Optional<FilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(NOTFOUND_CLIENT, NOTFOUND_PACKAGE));
+        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(NOTFOUND_CLIENT, NOTFOUND_PACKAGE));
 
         Assertions.assertFalse(result.isPresent());
 
