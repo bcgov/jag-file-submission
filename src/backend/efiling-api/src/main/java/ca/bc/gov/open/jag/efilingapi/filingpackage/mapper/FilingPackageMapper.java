@@ -20,7 +20,8 @@ public interface FilingPackageMapper {
     @Mapping(target = "court.levelDescription", source = "court.levelDescription")
     @Mapping(target = "court.division", source = "court.division")
     @Mapping(target = "court.participatingClass", source = "court.participatingClass")
-    @Mapping(target = "court.agencyId", source = "court.locationName")
+    @Mapping(target = "court.location", source = "court.locationName")
+    @Mapping(target = "court.agencyId", source = "court.locationId")
     @Mapping(target = "court.locationDescription", source = "court.locationDescription")
     @Mapping(target = "court.classDescription", source = "court.classDescription")
     FilingPackage toResponseFilingPackage(ReviewFilingPackage filingPackage);

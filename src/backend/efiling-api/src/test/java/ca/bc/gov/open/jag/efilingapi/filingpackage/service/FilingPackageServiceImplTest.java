@@ -83,6 +83,7 @@ public class FilingPackageServiceImplTest {
         Assertions.assertEquals(DIVISION, result.get().getCourt().getDivision());
         Assertions.assertEquals(FILE_NUMBER, result.get().getCourt().getFileNumber());
         Assertions.assertEquals(BigDecimal.ONE, result.get().getCourt().getAgencyId());
+        Assertions.assertEquals(LOCATION, result.get().getCourt().getLocation());
         Assertions.assertEquals(LEVEL, result.get().getCourt().getLevel());
         Assertions.assertEquals(LEVEL_DESCRIPTION, result.get().getCourt().getLevelDescription());
         Assertions.assertEquals(LOCATION_DESCRIPTION, result.get().getCourt().getLocationDescription());
@@ -149,7 +150,8 @@ public class FilingPackageServiceImplTest {
         reviewCourt.setFileNumber(FILE_NUMBER);
         reviewCourt.setLevel(LEVEL);
         reviewCourt.setLevelDescription(LEVEL_DESCRIPTION);
-        reviewCourt.setLocationName("1");
+        reviewCourt.setLocationId(BigDecimal.ONE);
+        reviewCourt.setLocationName(LOCATION);
         reviewCourt.setLocationDescription(LOCATION_DESCRIPTION);
         reviewCourt.setParticipatingClass(PARTICIPATING_CLASS);
 
