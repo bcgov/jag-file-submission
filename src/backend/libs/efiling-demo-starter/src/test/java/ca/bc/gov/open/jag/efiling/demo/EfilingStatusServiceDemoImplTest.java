@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class EfilingStatusServiceDemoImplTest {
+    public static final String DESCRIPTION = "DESCRIPTION";
     EfilingStatusServiceDemoImpl sut;
 
     @BeforeAll
@@ -36,6 +37,12 @@ public class EfilingStatusServiceDemoImplTest {
         Assertions.assertEquals("KEL", result.get().getCourt().getLocationCd());
         Assertions.assertEquals(BigDecimal.ONE, result.get().getCourt().getLocationId());
         Assertions.assertEquals("Kelowna Law Courts", result.get().getCourt().getLocationName());
+        Assertions.assertEquals("DIVISION", result.get().getCourt().getDivision());
+        Assertions.assertEquals(DESCRIPTION, result.get().getCourt().getLocationDescription());
+        Assertions.assertEquals(DESCRIPTION, result.get().getCourt().getParticipatingClass());
+        Assertions.assertEquals(DESCRIPTION, result.get().getCourt().getLocationDescription());
+        Assertions.assertEquals(DESCRIPTION, result.get().getCourt().getLevelDescription());
+        Assertions.assertEquals(DESCRIPTION, result.get().getCourt().getClassDescription());
         Assertions.assertFalse(result.get().getCourt().getExistingFileYN());
 
         Assertions.assertEquals(1, result.get().getDocuments().size());
