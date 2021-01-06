@@ -1913,6 +1913,15 @@ components:
         submissionFeeAmount:
           type: number
           description: Package submission fee.
+        packageNumber:
+          type: number
+          description: Submitted package number
+        filingComments:
+          type: string
+          description: Filing comments
+        submittedDate:
+          type: string
+          description: Submitted date
         court:
           $ref: "#/components/schemas/Court"
         documents:
@@ -1923,6 +1932,10 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Party"
+        payments:
+          type: array
+          items:
+            $ref: "#/components/schemas/Payment"
     CourtBase:
       type: object
       description: "Court related information"
@@ -2311,3 +2324,25 @@ components:
         countryName:
           description: the address country name
           type: string
+    Payment:
+      description: payment object
+      type: object
+      properties:
+        feeExempt:
+          type: boolean
+          description: Is the fee exempt
+        paymentCategory:
+          type: integer
+          description: Category for fee
+        processedAmount:
+          type: number
+          description: Amount
+        submittedAmount:
+          type: number
+          description: Amount
+        serviceIdentifier:
+          type: number
+          description: Id of payment
+        transactionDate:
+          type: string
+          description: date time of transaction
