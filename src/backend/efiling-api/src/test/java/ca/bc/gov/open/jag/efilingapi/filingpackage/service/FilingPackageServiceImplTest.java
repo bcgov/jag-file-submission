@@ -56,6 +56,7 @@ public class FilingPackageServiceImplTest {
     public static final String STATUS_CODE = "STATUSCODE";
     public static final String COMMENT = "COMMENT";
     public static final String PACKAGE_NO = "123";
+    public static final String TEST_DATE = "May 5, 2020 12:00:00 PDT AM";
     FilingPackageServiceImpl sut;
 
     @Mock
@@ -86,9 +87,9 @@ public class FilingPackageServiceImplTest {
 
         Assertions.assertTrue(result.isPresent());
         //FilingPackage
-        Assertions.assertEquals(COMMENT, result.get().getCourt().getClassDescription());
-        Assertions.assertEquals(PACKAGE_NO, result.get().getCourt().getCourtClass());
-        Assertions.assertEquals(DateTime.parse("2020-5-5").toString(), result.get().getCourt().getCourtClass());
+        Assertions.assertEquals(COMMENT, result.get().getFilingComments());
+        Assertions.assertEquals(new BigDecimal(PACKAGE_NO), result.get().getPackageNumber());
+        Assertions.assertEquals(TEST_DATE, result.get().getSubmittedDate());
         //Court
         Assertions.assertEquals(CLASS_DESCRIPTION, result.get().getCourt().getClassDescription());
         Assertions.assertEquals(COURT_CLASS, result.get().getCourt().getCourtClass());
@@ -112,8 +113,8 @@ public class FilingPackageServiceImplTest {
         Assertions.assertEquals(DocumentProperties.TypeEnum.AAB, result.get().getDocuments().get(0).getType());
         Assertions.assertEquals(NAME, result.get().getDocuments().get(0).getName());
         Assertions.assertEquals(STATUS, result.get().getDocuments().get(0).getStatus());
-        Assertions.assertEquals(STATUS_CODE, result.get().getDocuments().get(0).getStatusDate());
-        Assertions.assertEquals(DateTime.parse("2020-5-5").toString(), result.get().getDocuments().get(0).getStatusDate());
+        Assertions.assertEquals(STATUS_CODE, result.get().getDocuments().get(0).getStatusCode());
+        Assertions.assertEquals(TEST_DATE, result.get().getDocuments().get(0).getStatusDate());
         //Payments
         Assertions.assertEquals(1, result.get().getPayments().size());
         Assertions.assertEquals(false, result.get().getPayments().get(0).getFeeExempt());
@@ -121,7 +122,7 @@ public class FilingPackageServiceImplTest {
         Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(0).getProcessedAmount());
         Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(0).getServiceIdentifier());
         Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(0).getPaymentCategory());
-        Assertions.assertEquals(DateTime.parse("2020-5-5").toString(), result.get().getPayments().get(0).getTransactionDate());
+        Assertions.assertEquals(TEST_DATE, result.get().getPayments().get(0).getTransactionDate());
 
     }
 
