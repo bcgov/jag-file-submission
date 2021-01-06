@@ -55,8 +55,6 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - MVN_PROFILE=${MVN_PROFILE}
-
       - BAMBORA_APIPASSCODE=${BAMBORA_APIPASSCODE:-passcode}
       - BAMBORA_MERCHANTID=${BAMBORA_MERCHANTID-merchantid}
       - BAMBORA_PROFILE_URL=${BAMBORA_PROFILE_URL:-http://localhost:3001/efiling-demo/updatecard}
@@ -166,6 +164,9 @@ services:
     networks:
       - fisu-net
 
+  # #############################################################################################
+  # ###                                        KEYCLOAK Config                                ###
+  # #############################################################################################
   keycloak-config:
     build:
       context: ./.settings/keycloak
