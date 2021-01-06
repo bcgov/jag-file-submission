@@ -3,11 +3,7 @@ FROM ubuntu:18.04
 ARG KEYCLOAK_URL
 ARG DOCKERIZE_VERSION=v0.6.1
 
-
 ENV KEYCLOAK_URL=$KEYCLOAK_URL
-
-# TODO: I didn't need this for my build - this needs to be verified on a windows box?
-#RUN echo "Acquire::Check-Valid-Until \"false\";\nAcquire::Check-Date \"false\";" | cat > /etc/apt/apt.conf.d/10no--check-valid-until
 
 RUN apt-get update && \
     apt-get install -y curl jq wget && \
@@ -19,5 +15,6 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
     rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
 COPY createuser.sh /tmp/createuser.sh
+RUN chmod +x /tmp/createuser.sh
 
 CMD ["/tmp/createuser.sh"]
