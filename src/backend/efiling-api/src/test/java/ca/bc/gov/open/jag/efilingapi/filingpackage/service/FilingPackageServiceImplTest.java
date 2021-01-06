@@ -56,7 +56,7 @@ public class FilingPackageServiceImplTest {
     public static final String STATUS_CODE = "STATUSCODE";
     public static final String COMMENT = "COMMENT";
     public static final String PACKAGE_NO = "123";
-    public static final String TEST_DATE = "May 5, 2020 12:00:00 PDT AM";
+    public static final String TEST_DATE = "May 5, 2020 12:00:00 -07:00 AM";
     FilingPackageServiceImpl sut;
 
     @Mock
@@ -90,6 +90,7 @@ public class FilingPackageServiceImplTest {
         Assertions.assertEquals(COMMENT, result.get().getFilingComments());
         Assertions.assertEquals(new BigDecimal(PACKAGE_NO), result.get().getPackageNumber());
         Assertions.assertEquals(TEST_DATE, result.get().getSubmittedDate());
+
         //Court
         Assertions.assertEquals(CLASS_DESCRIPTION, result.get().getCourt().getClassDescription());
         Assertions.assertEquals(COURT_CLASS, result.get().getCourt().getCourtClass());
@@ -165,7 +166,7 @@ public class FilingPackageServiceImplTest {
         reviewFilingPackage.setClientFileNo("CLIENTFILENO");
         reviewFilingPackage.setFilingCommentsTxt(COMMENT);
         reviewFilingPackage.setPackageNo(PACKAGE_NO);
-        reviewFilingPackage.setSubmittedDate(DateTime.parse("2020-5-5"));
+        reviewFilingPackage.setSubmittedDate(DateTime.parse("2020-05-05T00:00:00.000-07:00"));
         reviewFilingPackage.setCourt(createCourt());
         reviewFilingPackage.setDocuments(Collections.singletonList(createDocument()));
         reviewFilingPackage.setParties(Collections.singletonList(createParty()));
@@ -209,7 +210,7 @@ public class FilingPackageServiceImplTest {
         reviewDocument.setDocumentTypeCd(DocumentProperties.TypeEnum.AAB.getValue());
         reviewDocument.setStatus(STATUS);
         reviewDocument.setStatusCode(STATUS_CODE);
-        reviewDocument.setStatusDate(DateTime.parse("2020-5-5"));
+        reviewDocument.setStatusDate(DateTime.parse("2020-05-05T00:00:00.000-07:00"));
         reviewDocument.setPaymentProcessed(true);
         return reviewDocument;
 
@@ -223,7 +224,7 @@ public class FilingPackageServiceImplTest {
         packagePayment.setProcessedAmt(BigDecimal.ONE);
         packagePayment.setSubmittedAmt(BigDecimal.ONE);
         packagePayment.setServiceId(BigDecimal.ONE);
-        packagePayment.setTransactionDtm(DateTime.parse("2020-5-5"));
+        packagePayment.setTransactionDtm(DateTime.parse("2020-05-05T00:00:00.000-07:00"));
         return packagePayment;
 
     }
