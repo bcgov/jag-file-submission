@@ -6,9 +6,6 @@ ARG DOCKERIZE_VERSION=v0.6.1
 
 ENV KEYCLOAK_URL=$KEYCLOAK_URL
 
-# TODO: I didn't need this for my build - this needs to be verified on a windows box?
-#RUN echo "Acquire::Check-Valid-Until \"false\";\nAcquire::Check-Date \"false\";" | cat > /etc/apt/apt.conf.d/10no--check-valid-until
-
 RUN apt-get update && \
     apt-get install -y curl jq wget && \
     apt-get clean && \
