@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingapi.filingpackage.mapper;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.Document;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
+import ca.bc.gov.open.jag.efilingapi.api.model.Party;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import org.mapstruct.Mapper;
@@ -17,7 +18,11 @@ public interface FilingPackageMapper {
     @Mapping(target = "court.courtClass", source = "court.courtClass")
     @Mapping(target = "court.level", source = "court.level")
     @Mapping(target = "court.levelDescription", source = "court.levelDescription")
-    @Mapping(target = "court.location", source = "court.locationName")
+    @Mapping(target = "court.division", source = "court.division")
+    @Mapping(target = "court.participatingClass", source = "court.participatingClass")
+    @Mapping(target = "court.agencyId", source = "court.locationName")
+    @Mapping(target = "court.locationDescription", source = "court.locationDescription")
+    @Mapping(target = "court.classDescription", source = "court.classDescription")
     FilingPackage toResponseFilingPackage(ReviewFilingPackage filingPackage);
 
     List<Document> toDocuments(List<ReviewDocument> file);
@@ -26,6 +31,12 @@ public interface FilingPackageMapper {
     @Mapping(target = "name", source = "fileName")
     @Mapping(target = "type", source = "documentTypeCd")
     Document toDocument(ReviewDocument file);
+
+    List<Party> toParties(List<ca.bc.gov.open.jag.efilingcommons.model.Party> parties);
+
+    @Mapping(target = "partyType", source = "partyTypeCd")
+    @Mapping(target = "roleType", source = "roleTypeCd")
+    Party toParty(ca.bc.gov.open.jag.efilingcommons.model.Party party);
 
 
 }
