@@ -16,7 +16,6 @@ import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.net.URISyntaxException;
 import java.util.List;
 
@@ -37,7 +36,7 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
     private static final String SUBMISSION_ID = "submissionId";
     private static final String TRANSACTION_ID = "transactionId";
     private static final String PATH_PARAM = "/generateUrl";
-    private static final String FILE_NAME_PATH = "/test-document.pdf";
+    private static final String FILE_NAME_PATH = "/data/test-document.pdf";
     private String respUrl;
     private String userToken;
 
@@ -172,4 +171,5 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
         assertEquals(200, response.getStatusCode());
         assertEquals("application/octet-stream", response.getContentType());
     }
+
 }

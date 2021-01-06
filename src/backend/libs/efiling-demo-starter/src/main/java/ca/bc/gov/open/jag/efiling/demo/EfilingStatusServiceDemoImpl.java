@@ -49,6 +49,12 @@ public class EfilingStatusServiceDemoImpl implements EfilingStatusService {
         reviewCourt.setLocationId(BigDecimal.ONE);
         reviewCourt.setLocationName("Kelowna Law Courts");
         reviewCourt.setExistingFileYN(false);
+        reviewCourt.setDivision("DIVISION");
+        reviewCourt.setLocationDescription("DESCRIPTION");
+        reviewCourt.setParticipatingClass("DESCRIPTION");
+        reviewCourt.setLocationDescription("DESCRIPTION");
+        reviewCourt.setLevelDescription("DESCRIPTION");
+        reviewCourt.setClassDescription("DESCRIPTION");
         return reviewCourt;
     }
 
