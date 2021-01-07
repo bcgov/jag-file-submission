@@ -27,10 +27,9 @@ jobs:
         # Ignore the failure of a step and avoid terminating the job.
         continue-on-error: true
         with:
-          key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile*', '**/docker-compose.yml') }}
+          key: ${{ runner.os }}-docker-image-${{ hashFiles('**/Dockerfile*', '**/docker-compose.yml') }}
           restore-keys: |
-            ${{ runner.os }}-docker-
-            ${{ runner.os }}-
+            ${{ runner.os }}-docker-image-
 
       - name: Cache local Maven repository
         uses: actions/cache@v2
