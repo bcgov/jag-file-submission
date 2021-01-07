@@ -35,9 +35,9 @@ public interface FilingPackageMapper {
 
     @Mapping(target = "name", source = "fileName")
     @Mapping(target = "type", source = "documentTypeCd")
-    @Mapping(target = "status", source = "status")
-    @Mapping(target = "statusCode", source = "statusCode")
-    @Mapping(target = "statusDate", source = "statusDate")
+    @Mapping(target = "status.description", source = "status")
+    @Mapping(target = "status.code", source = "statusCode")
+    @Mapping(target = "status.date", source = "statusDate")
     @Mapping(target = "paymentProcessed", source = "paymentProcessed")
     Document toDocument(ReviewDocument file);
 
@@ -45,7 +45,7 @@ public interface FilingPackageMapper {
 
     @Mapping(target = "partyType", source = "partyTypeCd")
     @Mapping(target = "roleType", source = "roleTypeCd")
-    Party toPayments(ca.bc.gov.open.jag.efilingcommons.model.Party party);
+    Party toParty(ca.bc.gov.open.jag.efilingcommons.model.Party party);
 
 
     List<Payment> toPayments(List<PackagePayment> payments);

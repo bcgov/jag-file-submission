@@ -108,9 +108,9 @@ public class FilingPackageServiceImplTest {
         Assertions.assertEquals(1, result.get().getDocuments().size());
         Assertions.assertEquals(DocumentProperties.TypeEnum.AAB, result.get().getDocuments().get(0).getType());
         Assertions.assertEquals(NAME, result.get().getDocuments().get(0).getName());
-        Assertions.assertEquals(STATUS, result.get().getDocuments().get(0).getStatus());
-        Assertions.assertEquals(STATUS_CODE, result.get().getDocuments().get(0).getStatusCode());
-        Assertions.assertNotNull(result.get().getDocuments().get(0).getStatusDate());
+        Assertions.assertEquals(STATUS, result.get().getDocuments().get(0).getStatus().getDescription());
+        Assertions.assertEquals(STATUS_CODE, result.get().getDocuments().get(0).getStatus().getCode());
+        Assertions.assertNotNull(result.get().getDocuments().get(0).getStatus().getDate());
         //Payments
         Assertions.assertEquals(1, result.get().getPayments().size());
         Assertions.assertEquals(false, result.get().getPayments().get(0).getFeeExempt());

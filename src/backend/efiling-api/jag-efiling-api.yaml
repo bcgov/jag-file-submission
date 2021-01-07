@@ -1821,14 +1821,7 @@ components:
           type: string
           description: File mime type
         status:
-          type: string
-          description: Status of document
-        statusCode:
-          type: string
-          description: Status code
-        statusDate:
-          type: string
-          description: Status date
+          $ref: "#/components/schemas/Status"
         paymentProcessed:
           type: boolean
           description: Has the payment been processed
@@ -2358,3 +2351,16 @@ components:
         transactionDate:
           type: string
           description: date time of transaction
+    Status:
+      description: document status
+      type: object
+      properties:
+        description:
+          type: string
+          description: description of status
+        code:
+          type: string
+          description: status identifier
+        date:
+          type: string
+          description: date changed
