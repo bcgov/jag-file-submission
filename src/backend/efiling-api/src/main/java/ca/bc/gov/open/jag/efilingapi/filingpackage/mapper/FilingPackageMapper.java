@@ -3,6 +3,8 @@ package ca.bc.gov.open.jag.efilingapi.filingpackage.mapper;
 import ca.bc.gov.open.jag.efilingapi.api.model.Document;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.api.model.Party;
+import ca.bc.gov.open.jag.efilingapi.api.model.Payment;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.review.PackagePayment;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import org.mapstruct.Mapper;
@@ -24,13 +26,19 @@ public interface FilingPackageMapper {
     @Mapping(target = "court.agencyId", source = "court.locationId")
     @Mapping(target = "court.locationDescription", source = "court.locationDescription")
     @Mapping(target = "court.classDescription", source = "court.classDescription")
+    @Mapping(target = "submittedDate", source = "submittedDate")
+    @Mapping(target = "packageNumber", source = "packageNo")
+    @Mapping(target = "filingComments", source = "filingCommentsTxt")
     FilingPackage toResponseFilingPackage(ReviewFilingPackage filingPackage);
 
     List<Document> toDocuments(List<ReviewDocument> file);
 
-    //TODO: extend document to add additional fields
     @Mapping(target = "name", source = "fileName")
     @Mapping(target = "type", source = "documentTypeCd")
+    @Mapping(target = "status.description", source = "status")
+    @Mapping(target = "status.code", source = "statusCode")
+    @Mapping(target = "status.changeDate", source = "statusDate")
+    @Mapping(target = "paymentProcessed", source = "paymentProcessed")
     Document toDocument(ReviewDocument file);
 
     List<Party> toParties(List<ca.bc.gov.open.jag.efilingcommons.model.Party> parties);
@@ -39,5 +47,15 @@ public interface FilingPackageMapper {
     @Mapping(target = "roleType", source = "roleTypeCd")
     Party toParty(ca.bc.gov.open.jag.efilingcommons.model.Party party);
 
+
+    List<Payment> toPayments(List<PackagePayment> payments);
+
+    @Mapping(target = "feeExempt", source = "feeExmpt")
+    @Mapping(target = "paymentCategory", source = "paymentCategory")
+    @Mapping(target = "processedAmount", source = "processedAmt")
+    @Mapping(target = "submittedAmount", source = "submittedAmt")
+    @Mapping(target = "serviceIdentifier", source = "serviceId")
+    @Mapping(target = "transactionDate", source = "transactionDtm")
+    Payment toPayment(PackagePayment payment);
 
 }
