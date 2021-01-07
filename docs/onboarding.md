@@ -10,7 +10,7 @@ On completion of the Github issue, the user will be provided [OpenId Connect](ht
 
 First, users will want to POST against the following URL: ${keycloakBaseUrl}/realms/${keycloakRealm}/protocol/openid-connect/token
 
-- ${keycloakBaseUrl} will be the value https://sso-${ENVIRONEMENT}.pathfinder.gov.bc.ca/auth, where ${ENVIRONMENT} is either dev, test or prod
+- ${keycloakBaseUrl} will be the value https://sso-${ENVIRONMENT}.pathfinder.gov.bc.ca/auth, where ${ENVIRONMENT} is either dev, test or prod
 - ${keycloakRealm} will be provided to you by the admin after the keycloak client request has been fufilled
 
 In the request body, the following information will be required

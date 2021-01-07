@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 import Keycloak from "keycloak-js";
 import createAuthRefreshInterceptor from "axios-auth-refresh";
 import Home from "../page/home/Home";
+import PackageReview from "../page/package-review/PackageReview";
 import { propTypes } from "../../types/propTypes";
 
 const url = window.REACT_APP_KEYCLOAK_URL
@@ -38,9 +40,13 @@ keycloak.onAuthRefreshSuccess = () =>
  */
 
 export default function AuthenticationGuard({
-  page: { header, confirmationPopup, submissionId, transactionId },
+  page: { header, confirmationPopup },
 }) {
   const [authedKeycloak, setAuthedKeycloak] = useState(null);
+  const { packageId } = useParams();
+
+  const submissionId = sessionStorage.getItem("submissionId");
+  const transactionId = sessionStorage.getItem("transactionId");
 
   async function keycloakInit() {
     await keycloak
@@ -67,9 +73,22 @@ export default function AuthenticationGuard({
 
   return (
     <>
-      {authedKeycloak && (
+      {authedKeycloak && !packageId && (
         <Home
-          page={{ header, confirmationPopup, submissionId, transactionId }}
+          page={{
+            header,
+            confirmationPopup,
+            submissionId,
+            transactionId,
+          }}
+        />
+      )}
+      {authedKeycloak && packageId && (
+        <PackageReview
+          page={{
+            header,
+            packageId,
+          }}
         />
       )}
       {!authedKeycloak && null}
@@ -106,7 +125,5 @@ AuthenticationGuard.propTypes = {
   page: PropTypes.shape({
     header: propTypes.header,
     confirmationPopup: propTypes.confirmationPopup,
-    submissionId: PropTypes.string.isRequired,
-    transactionId: PropTypes.string.isRequired,
   }).isRequired,
 };

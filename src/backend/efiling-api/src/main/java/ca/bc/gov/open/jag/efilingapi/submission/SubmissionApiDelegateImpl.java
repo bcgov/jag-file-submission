@@ -74,7 +74,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    @RolesAllowed("efiling-client")
+    @RolesAllowed({"efiling-client", "efiling-admin"})
     public ResponseEntity<UploadSubmissionDocumentsResponse> uploadSubmissionDocuments(UUID xTransactionId, String xUserId, List<MultipartFile> files) {
 
         Optional<UUID> universalId = SecurityUtils.stringToUUID(xUserId);
@@ -218,7 +218,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    @RolesAllowed("efiling-client")
+    @RolesAllowed({"efiling-client", "efiling-admin"})
     public ResponseEntity<GenerateUrlResponse> generateUrl(UUID xTransactionId, String xUserId, UUID submissionId, GenerateUrlRequest generateUrlRequest) {
 
 
@@ -340,7 +340,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         return ResponseEntity.ok(filingPackageMapper.toApiFilingPackage(fromCacheSubmission.get().getFilingPackage()));
     }
-
 
     @Override
     @RolesAllowed("efiling-user")

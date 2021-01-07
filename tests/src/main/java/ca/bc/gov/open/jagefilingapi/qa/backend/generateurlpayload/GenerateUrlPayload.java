@@ -11,9 +11,8 @@ import java.util.List;
 public class GenerateUrlPayload {
 
     public static final String DIVISION = "DIVISION";
-    public static final String FILE_NUMBER = "FILENUMBER";
     public static final String LEVEL = "P";
-    public static final String LOCATION = "1211";
+    public static final String LOCATION = "4801";
     private static final String COURT_CLASS = "F";
     public static final String PARTICIPATION_CLASS = "PARTICIPATIONCLASS";
     public static final String COURT_DESCRIPTION = "TESTCOURTDESC";
@@ -81,7 +80,6 @@ public class GenerateUrlPayload {
         Court court = new Court();
 
         court.setDivision(DIVISION);
-        court.setFileNumber(FILE_NUMBER);
         court.setLevel(LEVEL);
         court.setLocation(LOCATION);
         court.setParticipatingClass(PARTICIPATION_CLASS);
@@ -97,7 +95,7 @@ public class GenerateUrlPayload {
         DocumentProperties documentProperties = new DocumentProperties();
 
         documentProperties.setName("test-document.pdf");
-        documentProperties.setType(DocumentProperties.TypeEnum.AAB);
+        documentProperties.setType(DocumentProperties.TypeEnum.AFF);
         documentProperties.setIsAmendment(true);
         documentProperties.setIsSupremeCourtScheduling(true);
         documentProperties.setData(new ObjectMapper().createObjectNode());
@@ -111,7 +109,7 @@ public class GenerateUrlPayload {
         parties.setFirstName(FIRST_NAME);
         parties.setMiddleName(MIDDLE_NAME);
         parties.setLastName(LAST_NAME);
-        parties.setRoleType(Party.RoleTypeEnum.ABC);
+        parties.setRoleType(Party.RoleTypeEnum.APP);
         parties.setPartyType(Party.PartyTypeEnum.IND);
 
         return Arrays.asList(parties);

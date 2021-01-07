@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-curly-newline, camelcase, react/jsx-props-no-spreading */
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Dropzone from "react-dropzone";
 import { v4 as uuidv4 } from "uuid";
@@ -48,43 +48,15 @@ const urlBody = {
   },
 };
 
-const setRequestHeaders = (token, transactionId) => {
+const setRequestHeaders = (transactionId) => {
   // Use interceptor to inject the transactionId and token to all requests
   axios.interceptors.request.use((request) => {
+    const token = localStorage.getItem("jwt");
     request.headers["X-Transaction-Id"] = transactionId;
     request.headers["X-User-Id"] = getJWTData()["universal-id"];
     request.headers.Authorization = `Bearer ${token}`;
     return request;
   });
-};
-
-const getToken = (
-  token,
-  setToken,
-  setErrorExists,
-  keycloakClientId,
-  keycloakBaseUrl,
-  keycloakRealm,
-  keycloakClientSecret
-) => {
-  if (token) return;
-
-  const payloadString = `client_id=${keycloakClientId}&grant_type=client_credentials&client_secret=${keycloakClientSecret}`;
-
-  axios
-    .post(
-      `${keycloakBaseUrl}/realms/${keycloakRealm}/protocol/openid-connect/token`,
-      payloadString,
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }
-    )
-    .then(({ data: { access_token } }) => {
-      setToken(access_token);
-    })
-    .catch(() => setErrorExists(true));
 };
 
 const transactionId = uuidv4();
@@ -121,15 +93,13 @@ const generatePackageData = (files, filingPackage) => {
 };
 
 const eFilePackage = (
-  token,
   files,
   setErrorExists,
   filingPackage,
   setSubmitBtnEnabled,
   setShowLoader
 ) => {
-  setRequestHeaders(token, transactionId);
-
+  setRequestHeaders(transactionId);
   const { formData, updatedUrlBody } = generatePackageData(
     files,
     filingPackage
@@ -165,35 +135,9 @@ const eFilePackage = (
 export default function Home({ page: { header } }) {
   const [errorExists, setErrorExists] = useState(false);
   const [filingPackage, setFilingPackage] = useState(null);
-  const [token, setToken] = useState(null);
   const [files, setFiles] = useState([]);
   const [submitBtnEnabled, setSubmitBtnEnabled] = useState(true);
   const [showLoader, setShowLoader] = useState(false);
-
-  const keycloakClientId = sessionStorage.getItem("apiKeycloakClientId");
-  const keycloakBaseUrl = sessionStorage.getItem("apiKeycloakUrl");
-  const keycloakRealm = sessionStorage.getItem("apiKeycloakRealm");
-  const keycloakClientSecret = sessionStorage.getItem(
-    "apiKeycloakClientSecret"
-  );
-
-  useEffect(() => {
-    getToken(
-      token,
-      setToken,
-      setErrorExists,
-      keycloakClientId,
-      keycloakBaseUrl,
-      keycloakRealm,
-      keycloakClientSecret
-    );
-  }, [
-    token,
-    keycloakBaseUrl,
-    keycloakClientId,
-    keycloakClientSecret,
-    keycloakRealm,
-  ]);
 
   return (
     <main>
@@ -245,7 +189,6 @@ export default function Home({ page: { header } }) {
               setShowLoader(true);
               setSubmitBtnEnabled(false);
               const result = eFilePackage(
-                token,
                 files,
                 setErrorExists,
                 filingPackage,

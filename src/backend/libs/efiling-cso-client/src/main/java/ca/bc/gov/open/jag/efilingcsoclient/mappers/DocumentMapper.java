@@ -6,7 +6,7 @@ import ca.bc.gov.ag.csows.filing.DocumentStatuses;
 import ca.bc.gov.ag.csows.filing.Milestones;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
-import ca.bc.gov.open.jag.efilingcommons.model.FilingPackage;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
 import ca.bc.gov.open.jag.efilingcsoclient.Keys;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

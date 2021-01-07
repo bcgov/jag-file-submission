@@ -8,12 +8,13 @@ import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.ag.csows.lookups.LookupFacadeBean;
 import ca.bc.gov.ag.csows.services.ServiceFacadeBean;
 import ca.bc.gov.open.jag.efilingcommons.model.Clients;
-import ca.bc.gov.open.jag.efilingcommons.model.SoapProperties;
+import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import ca.bc.gov.open.jag.efilingcommons.service.*;
+import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
+import ca.bc.gov.open.jag.efilingcsoclient.SoapUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.*;
 import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.*;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,28 +35,40 @@ public class AutoConfiguration {
 
     @Bean
     public AccountFacadeBean accountFacadeBean() {
-        return SoapUtils.getPort(Clients.ACCOUNT, AccountFacadeBean.class, soapProperties, csoProperties.isDebugEnabled());
+        EfilingSoapClientProperties efilingSoapClientProperties = soapProperties.findByEnum(Clients.ACCOUNT);
+        return SoapUtils.getPort(AccountFacadeBean.class, efilingSoapClientProperties, csoProperties.isDebugEnabled());
     }
 
     @Bean
     public RoleRegistryPortType roleRegistryPortType() {
-       return SoapUtils.getPort(Clients.ROLE, RoleRegistryPortType.class, soapProperties, csoProperties.isDebugEnabled());
+        EfilingSoapClientProperties efilingSoapClientProperties = soapProperties.findByEnum(Clients.ROLE);
+       return SoapUtils.getPort(RoleRegistryPortType.class, efilingSoapClientProperties, csoProperties.isDebugEnabled());
     }
 
     @Bean
-    public FilingStatusFacadeBean filingStatusFacadeBean() { return SoapUtils.getPort(Clients.STATUS, FilingStatusFacadeBean.class, soapProperties, csoProperties.isDebugEnabled()); }
+    public FilingStatusFacadeBean filingStatusFacadeBean() {
+        EfilingSoapClientProperties efilingSoapClientProperties = soapProperties.findByEnum(Clients.STATUS);
+        return SoapUtils.getPort(FilingStatusFacadeBean.class, efilingSoapClientProperties, csoProperties.isDebugEnabled()); }
 
     @Bean
-    public LookupFacadeBean lookupFacadeBean() { return SoapUtils.getPort(Clients.LOOKUP, LookupFacadeBean.class, soapProperties, csoProperties.isDebugEnabled()); }
+    public LookupFacadeBean lookupFacadeBean() {
+        EfilingSoapClientProperties efilingSoapClientProperties = soapProperties.findByEnum(Clients.LOOKUP);
+        return SoapUtils.getPort(LookupFacadeBean.class, efilingSoapClientProperties, csoProperties.isDebugEnabled()); }
 
     @Bean
-    public Csows csows() { return SoapUtils.getPort(Clients.CSOWS, Csows.class, soapProperties, csoProperties.isDebugEnabled()); }
+    public Csows csows() {
+        EfilingSoapClientProperties efilingSoapClientProperties = soapProperties.findByEnum(Clients.CSOWS);
+        return SoapUtils.getPort(Csows.class, efilingSoapClientProperties, csoProperties.isDebugEnabled()); }
 
     @Bean
-    public FilingFacadeBean filingFacadeBean() { return SoapUtils.getPort(Clients.FILING, FilingFacadeBean.class, soapProperties, csoProperties.isDebugEnabled()); }
+    public FilingFacadeBean filingFacadeBean() {
+        EfilingSoapClientProperties efilingSoapClientProperties = soapProperties.findByEnum(Clients.FILING);
+        return SoapUtils.getPort(FilingFacadeBean.class, efilingSoapClientProperties, csoProperties.isDebugEnabled()); }
 
     @Bean
-    public ServiceFacadeBean serviceFacadeBean() { return SoapUtils.getPort(Clients.SERVICE, ServiceFacadeBean.class, soapProperties, csoProperties.isDebugEnabled()); }
+    public ServiceFacadeBean serviceFacadeBean() {
+        EfilingSoapClientProperties efilingSoapClientProperties = soapProperties.findByEnum(Clients.SERVICE);
+        return SoapUtils.getPort(ServiceFacadeBean.class, efilingSoapClientProperties, csoProperties.isDebugEnabled()); }
 
     @Bean
     public AccountDetailsMapper accountDetailsMapper() {
@@ -76,6 +89,10 @@ public class AutoConfiguration {
     public FinancialTransactionMapper financialTransactionMapper() { return new FinancialTransactionMapperImpl(); }
 
     @Bean
+    public FilePackageMapper filePackageMapper() { return new FilePackageMapperImpl(); }
+
+
+    @Bean
     public DocumentMapper documentMapper() {
         return new DocumentMapperImpl();
     }
@@ -87,7 +104,6 @@ public class AutoConfiguration {
     public PackageAuthorityMapper packageAuthorityMapper() { return new PackageAuthorityMapperImpl(); }
 
     @Bean
-    @ConditionalOnMissingBean({EfilingAccountService.class})
     public EfilingAccountService efilingAccountService(AccountFacadeBean accountFacadeBean,
                                                        RoleRegistryPortType roleRegistryPortType,
                                                        AccountDetailsMapper accountDetailsMapper) {
@@ -95,25 +111,27 @@ public class AutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnMissingBean({EfilingDocumentService.class})
     public EfilingDocumentService efilingDocumentService(FilingStatusFacadeBean filingStatusFacadeBean) {
         return new CsoDocumentServiceImpl(filingStatusFacadeBean);
     }
 
     @Bean
-    @ConditionalOnMissingBean({EfilingLookupService.class})
     public EfilingLookupService efilingLookupService(LookupFacadeBean lookupFacadeBean) {
         return new CsoLookupServiceImpl(lookupFacadeBean);
     }
 
     @Bean
-    @ConditionalOnMissingBean({EfilingCourtService.class})
     public CsoCourtServiceImpl efilingCourtService(Csows csows, FilingStatusFacadeBean filingStatusFacadeBean) {
         return new CsoCourtServiceImpl(csows, filingStatusFacadeBean);
     }
 
     @Bean
-    @ConditionalOnMissingBean({EfilingSubmissionService.class})
+    public EfilingStatusService efilingStatusService(FilingStatusFacadeBean filingStatusFacadeBean) {
+        return new CsoStatusServiceImpl(filingStatusFacadeBean, new FilePackageMapperImpl());
+    }
+
+
+    @Bean
     public EfilingSubmissionService efilingSubmissionService(FilingFacadeBean filingFacadeBean,
                                                              ServiceFacadeBean serviceFacadeBean,
                                                              ServiceMapper serviceMapper,
@@ -133,7 +151,6 @@ public class AutoConfiguration {
                 documentMapper,
                 csoPartyMapper,
                 packageAuthorityMapper); }
-
 
 
 

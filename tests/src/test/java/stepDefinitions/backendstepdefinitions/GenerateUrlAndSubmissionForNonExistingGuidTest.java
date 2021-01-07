@@ -13,6 +13,7 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.Assert;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -35,7 +36,7 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
     private static final String SUBMISSION_ID = "submissionId";
     private static final String TRANSACTION_ID = "transactionId";
     private static final String PATH_PARAM = "/generateUrl";
-    private static final String FILE_NAME_PATH = "/test-document.pdf";
+    private static final String FILE_NAME_PATH = "/data/test-document.pdf";
     private String respUrl;
     private String userToken;
 
@@ -126,7 +127,6 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
     @Then("verify court details and document details are returned")
     public void verifyCourtDetailsAndDocumentDetailsAreReturned() {
         jsonPath = new JsonPath(response.asString());
-        int submissionFeeAmount = jsonPath.get("submissionFeeAmount");
 
         assertThat(jsonPath.get("court.location"), is(not(emptyString())));
         assertThat(jsonPath.get("court.level"), is(not(emptyString())));
@@ -137,7 +137,7 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
         assertThat(jsonPath.get("court.locationDescription"), is(not(emptyString())));
         assertThat(jsonPath.get("court.levelDescription"), is(not(emptyString())));
         assertThat(jsonPath.get("parties"), is(not(emptyString())));
-        assertEquals(7.00, submissionFeeAmount, 0);
+        Assert.assertEquals(Integer.valueOf(7), jsonPath.get("submissionFeeAmount"));
         log.info("Court fee and document details response have valid values");
 
         assertFalse(jsonPath.get("documents.name").toString().isEmpty());
@@ -171,4 +171,5 @@ public class GenerateUrlAndSubmissionForNonExistingGuidTest extends DriverClass 
         assertEquals(200, response.getStatusCode());
         assertEquals("application/octet-stream", response.getContentType());
     }
+
 }

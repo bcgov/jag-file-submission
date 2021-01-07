@@ -7,4 +7,6 @@ tests/logs
 .idea
 tests/test-output
 .env
-tests/src/test/resources/local.properties
+src/frontend/efiling-frontend/node_modules
+*.lock
+yarn.lock

@@ -16,6 +16,7 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.Assert;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -30,20 +31,23 @@ import static org.junit.Assert.*;
 
 public class GenerateUrlAndSubmissionTest extends DriverClass {
 
-    private Response response;
-    private GenerateUrlRequestBuilders generateUrlRequestBuilders;
-    private String submissionId;
-    private JsonPath jsonPath;
-    private String validExistingCSOGuid;
+
     private static final String CONTENT_TYPE = "application/json";
     private static final String SUBMISSION_ID = "submissionId";
     private static final String TRANSACTION_ID = "transactionId";
     private static final String GENERATE_URL_PATH_PARAM = "/generateUrl";
-    private static final String FILE_NAME_PATH = "/test-document.pdf";
-    private String respUrl;
-    private String userToken;
+    private static final String FILE_NAME_PATH = "/data/test-document.pdf";
 
-    public Logger log = LogManager.getLogger(GenerateUrlAndSubmissionTest.class);
+    private Response response;
+
+    private GenerateUrlRequestBuilders generateUrlRequestBuilders;
+    private String submissionId;
+    private JsonPath jsonPath;
+    private String validExistingCSOGuid;
+    private String respUrl;
+    private String actualUserToken;
+
+    public Logger logger = LogManager.getLogger(GenerateUrlAndSubmissionTest.class);
 
     @Given("POST http request is made to {string} with valid existing CSO account guid and a single pdf file")
     public void postHttpRequestIsMadeToWithValidExistingCsoAccountGuidAndASinglePdfFile(String resource) throws IOException {
@@ -76,7 +80,7 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
                 assertEquals(2, receivedCount);
                 break;
             default:
-                log.info("Document count did not match.");
+                logger.info("Document count did not match.");
         }
         assertNotNull(submissionId);
     }
@@ -96,7 +100,6 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
 
         respUrl = jsonPath.get("efilingUrl");
         Long expiryDate = jsonPath.get("expiryDate");
-
         List<String> respId = TestUtil.getSubmissionAndTransId(respUrl, SUBMISSION_ID, TRANSACTION_ID);
 
         assertEquals(submissionId, respId.get(0));
@@ -108,13 +111,13 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     public void userTokenisRetrievedFromTheFrontend() throws IOException, InterruptedException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         FrontendTestUtil frontendTestUtil = new FrontendTestUtil();
-        userToken = frontendTestUtil.getUserJwtToken(respUrl);
+        actualUserToken = frontendTestUtil.getUserJwtToken(respUrl);
     }
 
     @Then("{string} id is submitted with GET http request")
     public void idIsSubmittedWithGetHttpRequest(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
-        response = generateUrlRequestBuilders.requestToGetSubmissionConfig(resource, validExistingCSOGuid, submissionId, userToken);
+        response = generateUrlRequestBuilders.requestToGetSubmissionConfig(resource, validExistingCSOGuid, submissionId, actualUserToken);
     }
 
     @Then("verify clientAppName and csoBaseUrl values are returned and not empty")
@@ -123,20 +126,19 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
 
         assertThat(jsonPath.get("clientAppName"), is(not(emptyString())));
         assertThat(jsonPath.get("csoBaseUrl"), is(not(emptyString())));
-        log.info("ClientAppName and csoBaseUrl objects from the response are correct.");
+        logger.info("ClientAppName and csoBaseUrl objects from the response are correct.");
     }
 
     @Given("{string} id with filing package path is submitted with GET http request")
     public void idWithFilingPackagePathIsSubmittedWithGETHttpRequest(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToGetFilingPackage(resource,validExistingCSOGuid,
-                                                                submissionId, userToken);
+                                                                submissionId, actualUserToken);
     }
 
     @Then("verify court details and document details are returned and not empty")
     public void verifyCourtDetailsAndDocumentDetailsAreReturnedAndNotEmpty() {
         jsonPath = new JsonPath(response.asString());
-        int submissionFeeAmount = jsonPath.get("submissionFeeAmount");
 
         assertThat(jsonPath.get("court.location"), is(not(emptyString())));
         assertThat(jsonPath.get("court.level"), is(not(emptyString())));
@@ -147,8 +149,8 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
         assertThat(jsonPath.get("court.locationDescription"), is(not(emptyString())));
         assertThat(jsonPath.get("court.levelDescription"), is(not(emptyString())));
         assertThat(jsonPath.get("parties"), is(not(emptyString())));
-        assertEquals(7.00, submissionFeeAmount, 0);
-        log.info("Court fee and document details response have valid values");
+        Assert.assertEquals(Integer.valueOf(7), jsonPath.get("submissionFeeAmount"));
+        logger.info("Court fee and document details response have valid values");
 
         assertFalse(jsonPath.get("documents.name").toString().isEmpty());
         assertFalse(jsonPath.get("documents.type").toString().isEmpty());
@@ -158,7 +160,7 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
         assertFalse(jsonPath.get("documents.description").toString().isEmpty());
         assertFalse(jsonPath.get("documents.statutoryFeeAmount").toString().isEmpty());
         assertNotNull(jsonPath.get("documents.statutoryFeeAmount"));
-        log.info("Account type, description and name objects from the valid CSO account submission response have valid values");
+        logger.info("Account type, description and name objects from the valid CSO account submission response have valid values");
     }
 
     @And("verify success, error and cancel navigation urls are returned")
@@ -174,7 +176,7 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
     public void idWithFilenamePathIsSubmittedWithGETHttpRequest(String resource) throws IOException {
         generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
         response = generateUrlRequestBuilders.requestToGetDocumentUsingFileName(resource,validExistingCSOGuid,
-                                                                    submissionId, userToken);
+                                                                    submissionId, actualUserToken);
     }
 
     @Then("Verify status code is {int} and content type is not json")
@@ -196,7 +198,7 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
         APIResources resourceGet = APIResources.valueOf(resource);
 
         RequestSpecification request = given()
-                .auth().preemptive().oauth2(userToken)
+                .auth().preemptive().oauth2(actualUserToken)
                 .spec(TestUtil.requestSpecification())
                 .header("x-transaction-id", validExistingCSOGuid)
                 .body(new ObjectMapper().createObjectNode());
@@ -212,4 +214,25 @@ public class GenerateUrlAndSubmissionTest extends DriverClass {
         jsonPath = new JsonPath(response.asString());
         assertThat(jsonPath.get("packageRef"), is(not(emptyString())));
     }
+
+    @Given("{string} without court level type is submitted with GET http request")
+    public void withoutCourtLevelTypeIsSubmittedWithGETHttpRequest(String resource) throws IOException {
+        generateUrlRequestBuilders = new GenerateUrlRequestBuilders();
+        response = generateUrlRequestBuilders.requestToGetCourts(resource);
+    }
+
+    @Then("validate the court location details")
+    public void validateTheCourtLocationDetails() {
+        jsonPath = new JsonPath(response.asString());
+        Assert.assertEquals(Integer.valueOf(10264), jsonPath.get("courts.id[0]"));
+        Assert.assertEquals(Integer.valueOf(9393), jsonPath.get("courts.id[1]"));
+        Assert.assertEquals("5871", jsonPath.get("courts.identifierCode[0]"));
+        Assert.assertEquals("3561", jsonPath.get("courts.identifierCode[1]"));
+        Assert.assertEquals("OMH", jsonPath.get("courts.code[0]"));
+        Assert.assertEquals("ABB", jsonPath.get("courts.code[1]"));
+    }
+
+
+
+
 }

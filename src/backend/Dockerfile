@@ -11,12 +11,11 @@ ARG STARTERS_V
 ENV SERVICE_NAME=${SERVICE_NAME}
 ENV STARTERS_V=${STARTERS_V}
 
-RUN mkdir /root/.ssh
-RUN chmod 0700 /root/.ssh 
-RUN ssh-keyscan -t rsa localhost >> ~/.ssh/known_hosts
-
-RUN apt-get update       
-RUN apt-get install -y git
+RUN mkdir /root/.ssh && \
+    chmod 0700 /root/.ssh  && \
+    ssh-keyscan -t rsa localhost >> ~/.ssh/known_hosts  && \
+    apt-get update  && \
+    apt-get -y install git
 
 WORKDIR /libs
 
@@ -24,9 +23,8 @@ RUN git clone https://github.com/bcgov/spring-boot-starters.git
 
 WORKDIR /libs/spring-boot-starters
 
-RUN git checkout $STARTERS_V
-
-RUN mvn install -P all -f src/pom.xml
+RUN git checkout $STARTERS_V  && \
+    mvn install -P all -f src/pom.xml
 
 WORKDIR /
 

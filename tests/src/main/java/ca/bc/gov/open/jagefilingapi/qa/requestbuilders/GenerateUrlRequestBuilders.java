@@ -37,7 +37,6 @@ public class GenerateUrlRequestBuilders {
     public Response getBearerToken() {
         String resourceAPI = System.getProperty("KEYCLOAK_URL");
         String clientSecret = System.getProperty("EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET");
-
         request = RestAssured.given()
                 .formParam(CLIENT_ID, "efiling-demo")
                 .formParam(GRANT_TYPE, "client_credentials")
@@ -49,6 +48,7 @@ public class GenerateUrlRequestBuilders {
     }
 
     public Response requestWithSinglePdfDocument(String resourceValue, String accountGuid, String fileNamePath) throws IOException {
+
         payloadData = new GenerateUrlPayload();
         APIResources resourceAPI = APIResources.valueOf(resourceValue);
         String validUserid = JsonDataReader.getCsoAccountGuid().getValidUserId();
@@ -92,6 +92,22 @@ public class GenerateUrlRequestBuilders {
                 .multiPart(FILES, secondPdfFile);
 
         return request.when().post(resourceAPI.getResource()).then()
+                .spec(TestUtil.validResponseSpecification())
+                .extract().response();
+    }
+
+    public Response requestToGetCourts(String resource) throws IOException {
+        APIResources resourceGet = APIResources.valueOf(resource);
+
+        Response response = getBearerToken();
+        JsonPath jsonPath = new JsonPath(response.asString());
+
+        String accessToken = jsonPath.get(ACCESS_TOKEN);
+
+        request = RestAssured.given().auth().preemptive().oauth2(accessToken)
+                .spec(TestUtil.requestSpecification());
+        return request.when().get(resourceGet.getResource())
+                .then()
                 .spec(TestUtil.validResponseSpecification())
                 .extract().response();
     }
@@ -150,6 +166,7 @@ public class GenerateUrlRequestBuilders {
                 .spec(TestUtil.validResponseCodeSpecification())
                 .extract().response();
     }
+
 
     public Response postRequestWithPayload(String resourceValue, String accountGuid,
                                            String submissionId, String pathParam) throws IOException {

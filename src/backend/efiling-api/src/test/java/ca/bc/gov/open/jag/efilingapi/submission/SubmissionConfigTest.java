@@ -4,7 +4,6 @@ import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.fakes.CourtServiceFake;
 import ca.bc.gov.open.jag.efilingapi.fakes.DocumentServiceFake;
 import ca.bc.gov.open.jag.efilingapi.fakes.EfilingCourtServiceFake;
-import ca.bc.gov.open.jag.efilingapi.payment.BamboraPaymentAdapter;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.SubmissionMapper;
@@ -13,13 +12,13 @@ import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStoreImpl;
-import ca.bc.gov.open.jag.efilingbamboraapiclient.api.PaymentsApi;
-import ca.bc.gov.open.jag.efilingbamboraapiclient.api.handler.ApiClient;
 import ca.bc.gov.open.jag.efilingcommons.model.*;
+import ca.bc.gov.open.jag.efilingcommons.payment.PaymentAdapter;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingPaymentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
 import ca.bc.gov.open.sftp.starter.SftpService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -42,9 +41,7 @@ public class SubmissionConfigTest {
             .withUserConfiguration(
                     SubmissionConfig.class,
                     CacheProperties.class)
-            .withBean(ApiClient.class)
-            .withBean(PaymentsApi.class)
-            .withBean(BamboraPaymentAdapter.class)
+            .withBean(PaymentAdapterTest.class)
             .withBean(SftpServiceTestImpl.class)
             .withBean(EfilingLookupServiceTest.class)
             .withBean(EfilingCourtServiceFake.class)
@@ -163,5 +160,13 @@ public class SubmissionConfigTest {
             return null;
         }
     }
-    
+
+    public static class PaymentAdapterTest implements PaymentAdapter {
+
+        @Override
+        public PaymentTransaction makePayment(EfilingPayment efilingPayment) {
+            return null;
+        }
+    }
+
 }

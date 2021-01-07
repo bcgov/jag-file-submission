@@ -97,25 +97,6 @@ describe("Home", () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  test("when post to keycloak token endpoint fails, sets error", async () => {
-    mock
-      .onPost(
-        "apikeycloakexample.com/realms/apiRealm/protocol/openid-connect/token"
-      )
-      .reply(400);
-
-    const { container } = render(ui);
-
-    await waitFor(() => {});
-
-    const error = getByText(
-      container,
-      "An error occurred while eFiling your package. Please make sure you upload at least one file and try again."
-    );
-
-    expect(error).toBeInTheDocument();
-  });
-
   test("displays an error message on page on failure of generateUrl call", async () => {
     mock
       .onPost(
