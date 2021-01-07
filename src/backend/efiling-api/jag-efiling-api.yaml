@@ -2361,6 +2361,6 @@ components:
         code:
           type: string
           description: status identifier
-        date:
+        changeDate:
           type: string
           description: date changed

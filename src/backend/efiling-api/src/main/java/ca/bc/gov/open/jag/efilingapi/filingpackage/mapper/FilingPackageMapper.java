@@ -37,7 +37,7 @@ public interface FilingPackageMapper {
     @Mapping(target = "type", source = "documentTypeCd")
     @Mapping(target = "status.description", source = "status")
     @Mapping(target = "status.code", source = "statusCode")
-    @Mapping(target = "status.date", source = "statusDate")
+    @Mapping(target = "status.changeDate", source = "statusDate")
     @Mapping(target = "paymentProcessed", source = "paymentProcessed")
     Document toDocument(ReviewDocument file);
 

@@ -110,7 +110,7 @@ public class FilingPackageServiceImplTest {
         Assertions.assertEquals(NAME, result.get().getDocuments().get(0).getName());
         Assertions.assertEquals(STATUS, result.get().getDocuments().get(0).getStatus().getDescription());
         Assertions.assertEquals(STATUS_CODE, result.get().getDocuments().get(0).getStatus().getCode());
-        Assertions.assertNotNull(result.get().getDocuments().get(0).getStatus().getDate());
+        Assertions.assertNotNull(result.get().getDocuments().get(0).getStatus().getChangeDate());
         //Payments
         Assertions.assertEquals(1, result.get().getPayments().size());
         Assertions.assertEquals(false, result.get().getPayments().get(0).getFeeExempt());
