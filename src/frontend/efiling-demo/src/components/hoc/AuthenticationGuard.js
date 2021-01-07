@@ -10,9 +10,9 @@ const url = window.REACT_APP_KEYCLOAK_URL
 const realm = window.REACT_APP_KEYCLOAK_REALM
   ? window.REACT_APP_KEYCLOAK_REALM
   : process.env.REACT_APP_KEYCLOAK_REALM;
-const clientId = window.REACT_APP_DEMO_CLIENT_ID
-  ? window.REACT_APP_DEMO_CLIENT_ID
-  : process.env.REACT_APP_DEMO_CLIENT_ID;
+const clientId = window.REACT_APP_KEYCLOAK_CLIENT_ID
+  ? window.REACT_APP_KEYCLOAK_CLIENT_ID
+  : process.env.REACT_APP_KEYCLOAK_CLIENT_ID;
 
 const defaultIdentityProvider = window.REACT_APP_DEFAULT_IDENTITY_PROVIDER
   ? window.REACT_APP_DEFAULT_IDENTITY_PROVIDER
