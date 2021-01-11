@@ -4,9 +4,15 @@ Welcome to the eFiling demo!
 
 ## Running the Frontend
 
+In the project directory (`efiling-demo`):
+
 Set the required environment variables locally. Create a `.env.development` file and populate the environment variables as shown in the `.env.example` file.
 
-In the project directory (`efiling-demo`), you can run:
+In the root directory (`jag-file-submission`), run:
+
+### `docker-compose up efiling-api efiling-frontend keycloak keycloak-config redis`
+
+In the project directory (`efiling-demo`) open a new terminal and run:
 
 ### `yarn install`
 
@@ -15,7 +21,7 @@ Installs all the required dependencies to get the application up and running.
 ### `yarn start`
 
 Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:3001](http://localhost:3001) to view it in the browser.
 
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
