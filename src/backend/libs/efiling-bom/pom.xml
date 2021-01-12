@@ -13,7 +13,7 @@
         <com.github.joschi.jackson.version>2.11.3</com.github.joschi.jackson.version>
         <com.google.code.findbugs.version>3.0.2</com.google.code.findbugs.version>
         <com.brsanthu.version>2.2</com.brsanthu.version>
-        <com.fasterxml.jackson.core.version>2.11.3</com.fasterxml.jackson.core.version>
+        <com.fasterxml.jackson.core.version>2.12.1</com.fasterxml.jackson.core.version>
         <com.splunk.logging.version>1.8.0</com.splunk.logging.version>
         <io.github.openfeign.opentracing.version>0.4.1</io.github.openfeign.opentracing.version>
         <io.opentracing.contrib.version>3.2.2</io.opentracing.contrib.version>
