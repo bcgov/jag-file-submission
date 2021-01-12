@@ -14,7 +14,7 @@ public interface SubmissionService {
 
     Submission generateFromRequest(SubmissionKey submissionKey, GenerateUrlRequest generateUrlRequest);
 
-    SubmitResponse createSubmission(Submission submission, AccountDetails accountDetails);
+    SubmitResponse createSubmission(Submission submission, AccountDetails accountDetails, Boolean isEarlyAdopter);
 
     Submission updateDocuments(Submission submission, UpdateDocumentRequest updateDocumentRequest, SubmissionKey submissionKey);
 

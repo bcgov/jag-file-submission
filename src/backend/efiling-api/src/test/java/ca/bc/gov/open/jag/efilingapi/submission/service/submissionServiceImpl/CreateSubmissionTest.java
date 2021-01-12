@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingapi.submission.service.submissionServiceImpl;
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.SubmitResponse;
+import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.PartyMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
@@ -68,14 +69,15 @@ public class CreateSubmissionTest {
         Mockito.when(paymentAdapterMock.makePayment(any())).thenReturn(new PaymentTransaction());
         Mockito.when(documentStoreMock.get(any(), any())).thenReturn(new byte[]{});
         Mockito.doNothing().when(sftpServiceMock).put(any(), any());
-        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, null, new PartyMapperImpl(), efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock, paymentAdapterMock, sftpServiceMock);
+        NavigationProperties navigationProperties = new NavigationProperties();
+        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, null, new PartyMapperImpl(), efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock, paymentAdapterMock, sftpServiceMock, navigationProperties);
 
     }
 
 
     @Test
-    @DisplayName("OK: service is created")
-    public void withValidSubmissionServiceIsCreated() {
+    @DisplayName("OK: service is created without early adopter")
+    public void withValidSubmissionServiceIsCreatedNotEarlyAdopter() {
 
         SubmitResponse actual = sut.createSubmission(Submission
                 .builder()
@@ -93,8 +95,32 @@ public class CreateSubmissionTest {
                         .universalId(UUID.randomUUID())
                         .clientId(BigDecimal.TEN)
                         .internalClientNumber(INTERNAL_CLIENT_NUMBER)
-                        .create());
+                        .create(), false);
         assertEquals("aHR0cDovL2xpbms=", actual.getPackageRef());
+    }
+
+    @Test
+    @DisplayName("OK: service is created with early adopter")
+    public void withValidSubmissionServiceIsCreatedEarlyAdopter() {
+
+        SubmitResponse actual = sut.createSubmission(Submission
+                        .builder()
+                        .id(TestHelpers.CASE_1)
+                        .transactionId(TestHelpers.CASE_1)
+                        .navigationUrls(TestHelpers.createDefaultNavigation())
+                        .expiryDate(10)
+                        .clientAppName(CLIENT_APP_NAME)
+                        .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList(), TestHelpers.createPartyList()))
+                        .create(),
+                AccountDetails.builder()
+                        .fileRolePresent(true)
+                        .accountId(BigDecimal.ONE)
+                        .cardRegistered(true)
+                        .universalId(UUID.randomUUID())
+                        .clientId(BigDecimal.TEN)
+                        .internalClientNumber(INTERNAL_CLIENT_NUMBER)
+                        .create(), true);
+        assertEquals("bnVsbC9wYWNrYWdlcmV2aWV3LzEw", actual.getPackageRef());
     }
 
 }
