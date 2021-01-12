@@ -50,7 +50,7 @@ public class SecurityUtils {
         }
     }
 
-    public static boolean isBetaUser() {
+    public static boolean isEarlyAdopter() {
         return isInRole("early-adopters");
     }
 
