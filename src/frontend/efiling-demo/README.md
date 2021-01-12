@@ -4,7 +4,7 @@ Welcome to the eFiling demo!
 
 ## Running the Frontend
 
-In the project directory (`efiling-demo`):
+In the project directory `efiling-demo`:
 
 Set the required environment variables locally. Create a `.env.development` file and populate the environment variables as shown in the `.env.example` file.
 
