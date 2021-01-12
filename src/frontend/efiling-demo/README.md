@@ -16,7 +16,7 @@ docker-compose up efiling-api efiling-frontend keycloak keycloak-config redis
 
 In the project directory `efiling-demo` open a new terminal and run:
 
-```bash 
+```bash
 yarn install
 ```
 
