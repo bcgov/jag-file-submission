@@ -1,6 +1,8 @@
 server:
   port: ${SERVER_PORT:8080}
-
+logging:
+  level:
+    root: TRACE
 spring:
   redis:
     host: ${REDIS_HOST:localhost}
@@ -16,7 +18,7 @@ spring:
 keycloak:
   auth-server-url: ${KEYCLOAK_AUTH_SERVER_URL}
   realm: ${KEYCLOAK_REALM}
-  resource: ${KEYCLOAK_RESOURCE:efiling-api}
+  resource: efiling-api
   credentials:
     secret: ${KEYCLOAK_CREDENTIALS_SECRET}
   use-resource-role-mappings: true

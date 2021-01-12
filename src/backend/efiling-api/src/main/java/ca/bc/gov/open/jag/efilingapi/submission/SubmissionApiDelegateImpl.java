@@ -392,7 +392,9 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         ResponseEntity response;
         MDC.put(Keys.MDC_EFILING_SUBMISSION_ID, submissionId.toString());
         try {
+
             SubmitResponse result = submissionService.createSubmission(fromCacheSubmission.get(), accountService.getCsoAccountDetails(submissionKey.getUniversalId()));
+
             response = new ResponseEntity(result, HttpStatus.CREATED);
             logger.info("successfully submitted efiling package for transaction [{}], cso id {}", xTransactionId);
 

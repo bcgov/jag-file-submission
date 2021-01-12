@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service.submissionServiceImpl;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
+import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.PartyMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.models.GetValidPartyRoleRequest;
@@ -61,7 +62,8 @@ public class GetValidPartyRolesTest {
                 Mockito.eq("A"),
                 Mockito.eq("B"),
                 Mockito.eq("POR,ACMW"))).thenReturn(Arrays.asList(ROLE_TYPES));
-        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, null, new PartyMapperImpl(), efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock, paymentAdapterMock, sftpServiceMock);
+        NavigationProperties navigationProperties = new NavigationProperties();
+        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, null, new PartyMapperImpl(), efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock, paymentAdapterMock, sftpServiceMock, navigationProperties);
     }
 
     @Test

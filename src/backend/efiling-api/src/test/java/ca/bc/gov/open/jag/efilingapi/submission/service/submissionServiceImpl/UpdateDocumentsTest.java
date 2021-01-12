@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingapi.submission.service.submissionServiceImpl;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingapi.api.model.UpdateDocumentRequest;
+import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.PartyMapperImpl;
@@ -58,6 +59,8 @@ public class UpdateDocumentsTest {
 
         Mockito.when(documentStoreMock.getDocumentDetails(any(), any(), any())).thenReturn(documentDetails);
 
+        NavigationProperties navigationProperties = new NavigationProperties();
+
         sut = new SubmissionServiceImpl(
                 submissionStoreMock,
                 cachePropertiesMock,
@@ -68,7 +71,7 @@ public class UpdateDocumentsTest {
                 efilingSubmissionServiceMock,
                 documentStoreMock,
                 null,
-                null);
+                null, navigationProperties);
 
     }
 

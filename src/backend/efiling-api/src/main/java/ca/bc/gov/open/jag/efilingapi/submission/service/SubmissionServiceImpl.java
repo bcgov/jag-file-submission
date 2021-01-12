@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
+import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.PartyMapper;
@@ -56,6 +57,8 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private final SftpService sftpService;
 
+    private final NavigationProperties navigationProperties;
+
     public SubmissionServiceImpl(
             SubmissionStore submissionStore,
             CacheProperties cacheProperties,
@@ -66,7 +69,7 @@ public class SubmissionServiceImpl implements SubmissionService {
             EfilingSubmissionService efilingSubmissionService,
             DocumentStore documentStore,
             PaymentAdapter paymentAdapter,
-            SftpService sftpService) {
+            SftpService sftpService, NavigationProperties navigationProperties) {
         this.submissionStore = submissionStore;
         this.cacheProperties = cacheProperties;
         this.submissionMapper = submissionMapper;
@@ -77,6 +80,7 @@ public class SubmissionServiceImpl implements SubmissionService {
         this.documentStore = documentStore;
         this.paymentAdapter = paymentAdapter;
         this.sftpService = sftpService;
+        this.navigationProperties = navigationProperties;
     }
 
 
@@ -120,8 +124,15 @@ public class SubmissionServiceImpl implements SubmissionService {
                         submission.getFilingPackage(),
                         efilingPayment -> paymentAdapter.makePayment(efilingPayment));
 
-        result.setPackageRef(Base64.getEncoder().encodeToString(submitPackageResponse.getPackageLink().getBytes()));
-
+        if(SecurityUtils.isBetaUser()) {
+            result.setPackageRef(
+                    Base64.getEncoder().encodeToString(
+                            MessageFormat.format("{0}/packagereview/{1}",
+                                    navigationProperties.getBaseUrl(),
+                                    submitPackageResponse.getTransactionId()).getBytes()));
+        } else {
+            result.setPackageRef(Base64.getEncoder().encodeToString(submitPackageResponse.getPackageLink().getBytes()));
+        }
 
         logger.info("successfully submitted efiling package with cso id [{}]", submitPackageResponse.getTransactionId());
 

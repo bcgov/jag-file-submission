@@ -8,6 +8,8 @@ public class Keys {
 
     public static final String EFILING_APP = "efiling";
 
+    public static final String EFILING_API_NAME = "efiling-api";
+
     public static final String MDC_EFILING_SUBMISSION_ID =  EFILING_APP + ".submissionId";
 
     public static final String MDC_EFILING_TRANSACTION_ID = EFILING_APP + ".transactionId";
