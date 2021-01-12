@@ -42,9 +42,9 @@ const urlBody = {
     ],
   },
   navigationUrls: {
-    success: `${window.location.origin}/efiling-demo/success`,
-    error: `${window.location.origin}/efiling-demo/error`,
-    cancel: `${window.location.origin}/efiling-demo/cancel`,
+    success: `${window.location.origin}/success`,
+    error: `${window.location.origin}/error`,
+    cancel: `${window.location.origin}/cancel`,
   },
 };
 
