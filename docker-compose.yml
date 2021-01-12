@@ -57,7 +57,7 @@ services:
     environment:
       - BAMBORA_APIPASSCODE=${BAMBORA_APIPASSCODE:-passcode}
       - BAMBORA_MERCHANTID=${BAMBORA_MERCHANTID-merchantid}
-      - BAMBORA_PROFILE_URL=${BAMBORA_PROFILE_URL:-http://localhost:3001/efiling-demo/updatecard}
+      - BAMBORA_PROFILE_URL=${BAMBORA_PROFILE_URL:-http://localhost:3001/updatecard}
       - BAMBORA_HASHKEY=${BAMBORA_HASHKEY:-key}
       - BAMBORA_PROFILE_SERVICE_VERSION=${BAMBORA_PROFILE_SERVICE_VERSION}
       - BAMBORA_URL_EXPIRY=10

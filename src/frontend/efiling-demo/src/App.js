@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Switch,
-  Route,
-  Redirect,
-  useHistory,
-  useLocation,
-} from "react-router-dom";
+import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import queryString from "query-string";
 import AuthenticationGuard from "./components/hoc/AuthenticationGuard";
 import Cancel from "./components/page/cancel/Cancel";
@@ -27,20 +21,19 @@ export default function App() {
   return (
     <div>
       <Switch>
-        <Redirect exact from="/" to="/efiling-demo" />
-        <Route exact path="/efiling-demo">
+        <Route exact path="/">
           <AuthenticationGuard page={{ header }} />
         </Route>
-        <Route exact path="/efiling-demo/cancel">
+        <Route exact path="/cancel">
           <Cancel page={{ header }} />
         </Route>
-        <Route exact path="/efiling-demo/error">
+        <Route exact path="/error">
           <Error page={{ header, status, message }} />
         </Route>
-        <Route exact path="/efiling-demo/success">
+        <Route exact path="/success">
           <Success page={{ header, packageRef }} />
         </Route>
-        <Route exact path="/efiling-demo/updatecard">
+        <Route exact path="/updatecard">
           <UpdateCreditCard page={{ header }} />
         </Route>
       </Switch>
