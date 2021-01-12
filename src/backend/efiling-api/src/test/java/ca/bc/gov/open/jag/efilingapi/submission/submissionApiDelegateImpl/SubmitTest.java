@@ -86,10 +86,13 @@ public class SubmitTest {
     @Mock
     private GenerateUrlRequestValidator generateUrlRequestValidator;
 
+    @Mock
+    private AccessToken.Access resourceAccessMock;
+
     @BeforeAll
     public void setUp() {
 
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
 
         Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);
         Mockito.when(authenticationMock.getPrincipal()).thenReturn(keycloakPrincipalMock);
@@ -146,8 +149,24 @@ public class SubmitTest {
     }
 
     @Test
-    @DisplayName("201: With valid request should return created and service id")
-    public void withUserHavingValidRequestShouldReturnOk() {
+    @DisplayName("201: With valid request should return created and service id not early adopter")
+    public void withUserHavingValidRequestShouldReturnCreated() {
+
+        Map<String, Object> otherClaims = new HashMap<>();
+        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
+        Mockito.when(resourceAccessMock.isUserInRole(ArgumentMatchers.eq("early-adopters"))).thenReturn(true);
+        Mockito.when(tokenMock.getResourceAccess(ArgumentMatchers.eq(Keys.EFILING_API_NAME))).thenReturn(resourceAccessMock);
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
+        ResponseEntity<SubmitResponse> actual = sut.submit(UUID.randomUUID(), TestHelpers.CASE_1, null);
+        assertEquals(HttpStatus.CREATED, actual.getStatusCode());
+        assertEquals("packageref", actual.getBody().getPackageRef());
+
+    }
+
+    @Test
+    @DisplayName("201: With valid request should return created and service id early adopter")
+    public void withUserHavingValidRequestEarlyAdopterShouldReturnCreated() {
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
