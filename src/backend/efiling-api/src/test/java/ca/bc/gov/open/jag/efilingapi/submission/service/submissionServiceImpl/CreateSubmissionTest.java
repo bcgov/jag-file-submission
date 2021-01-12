@@ -76,8 +76,8 @@ public class CreateSubmissionTest {
 
 
     @Test
-    @DisplayName("OK: service is created")
-    public void withValidSubmissionServiceIsCreated() {
+    @DisplayName("OK: service is created without early adopter")
+    public void withValidSubmissionServiceIsCreatedNotEarlyAdopter() {
 
         SubmitResponse actual = sut.createSubmission(Submission
                 .builder()
@@ -95,8 +95,32 @@ public class CreateSubmissionTest {
                         .universalId(UUID.randomUUID())
                         .clientId(BigDecimal.TEN)
                         .internalClientNumber(INTERNAL_CLIENT_NUMBER)
-                        .create());
+                        .create(), false);
         assertEquals("aHR0cDovL2xpbms=", actual.getPackageRef());
+    }
+
+    @Test
+    @DisplayName("OK: service is created with early adopter")
+    public void withValidSubmissionServiceIsCreatedEarlyAdopter() {
+
+        SubmitResponse actual = sut.createSubmission(Submission
+                        .builder()
+                        .id(TestHelpers.CASE_1)
+                        .transactionId(TestHelpers.CASE_1)
+                        .navigationUrls(TestHelpers.createDefaultNavigation())
+                        .expiryDate(10)
+                        .clientAppName(CLIENT_APP_NAME)
+                        .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList(), TestHelpers.createPartyList()))
+                        .create(),
+                AccountDetails.builder()
+                        .fileRolePresent(true)
+                        .accountId(BigDecimal.ONE)
+                        .cardRegistered(true)
+                        .universalId(UUID.randomUUID())
+                        .clientId(BigDecimal.TEN)
+                        .internalClientNumber(INTERNAL_CLIENT_NUMBER)
+                        .create(), true);
+        assertEquals("bnVsbC9wYWNrYWdlcmV2aWV3LzEw", actual.getPackageRef());
     }
 
 }

@@ -112,7 +112,7 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     @Override
-    public SubmitResponse createSubmission(Submission submission, AccountDetails accountDetails) {
+    public SubmitResponse createSubmission(Submission submission, AccountDetails accountDetails, Boolean isEarlyAdopter) {
 
         uploadFiles(submission);
 
@@ -122,9 +122,9 @@ public class SubmissionServiceImpl implements SubmissionService {
                 .submitFilingPackage(
                         accountDetails,
                         submission.getFilingPackage(),
-                        efilingPayment -> paymentAdapter.makePayment(efilingPayment));
+                        paymentAdapter::makePayment);
 
-        if(SecurityUtils.isBetaUser()) {
+        if(isEarlyAdopter) {
             result.setPackageRef(
                     Base64.getEncoder().encodeToString(
                             MessageFormat.format("{0}/packagereview/{1}",
@@ -143,7 +143,7 @@ public class SubmissionServiceImpl implements SubmissionService {
     @Override
     public Submission updateDocuments(Submission submission, UpdateDocumentRequest updateDocumentRequest, SubmissionKey submissionKey) {
 
-        updateDocumentRequest.getDocuments().stream().forEach(documentProperties -> {
+        updateDocumentRequest.getDocuments().forEach(documentProperties -> {
             submission.getFilingPackage().addDocument(toDocument(
                     submission.getFilingPackage().getCourt().getLevel(),
                     submission.getFilingPackage().getCourt().getCourtClass(),

@@ -393,10 +393,10 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         MDC.put(Keys.MDC_EFILING_SUBMISSION_ID, submissionId.toString());
         try {
 
-            SubmitResponse result = submissionService.createSubmission(fromCacheSubmission.get(), accountService.getCsoAccountDetails(submissionKey.getUniversalId()));
+            SubmitResponse result = submissionService.createSubmission(fromCacheSubmission.get(), accountService.getCsoAccountDetails(submissionKey.getUniversalId()), SecurityUtils.isBetaUser());
 
             response = new ResponseEntity(result, HttpStatus.CREATED);
-            logger.info("successfully submitted efiling package for transaction [{}], cso id {}", xTransactionId);
+            logger.info("successfully submitted efiling package for transaction [{}], cso id {}", xTransactionId, result.getPackageRef());
 
         } catch (EfilingSubmissionServiceException e) {
             logger.error("failed package submission {}", xTransactionId);
