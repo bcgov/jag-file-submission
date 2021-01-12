@@ -8,7 +8,7 @@ In the project directory `efiling-demo`:
 
 Set the required environment variables locally. Create a `.env.development` file and populate the environment variables as shown in the `.env.example` file.
 
-In the root directory (`jag-file-submission`), run:
+In the root directory `jag-file-submission`, run:
 
 ### `docker-compose up efiling-api efiling-frontend keycloak keycloak-config redis`
 
