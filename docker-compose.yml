@@ -35,7 +35,7 @@ services:
       - 3001:3000
     environment:
       - REACT_APP_KEYCLOAK_REALM=${KEYCLOAK_REALM:-Efiling-Hub}
-      - REACT_APP_DEMO_CLIENT_ID=efiling-admin
+      - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-admin
       - REACT_APP_KEYCLOAK_URL=${KEYCLOAK_URL:-http://localhost:8081/auth}
       - REACT_APP_API_BASE_URL=http://localhost:8080
 
@@ -57,7 +57,7 @@ services:
     environment:
       - BAMBORA_APIPASSCODE=${BAMBORA_APIPASSCODE:-passcode}
       - BAMBORA_MERCHANTID=${BAMBORA_MERCHANTID-merchantid}
-      - BAMBORA_PROFILE_URL=${BAMBORA_PROFILE_URL:-http://localhost:3001/efiling-demo/updatecard}
+      - BAMBORA_PROFILE_URL=${BAMBORA_PROFILE_URL:-http://localhost:3001/updatecard}
       - BAMBORA_HASHKEY=${BAMBORA_HASHKEY:-key}
       - BAMBORA_PROFILE_SERVICE_VERSION=${BAMBORA_PROFILE_SERVICE_VERSION}
       - BAMBORA_URL_EXPIRY=10
@@ -148,7 +148,6 @@ services:
   # #############################################################################################
   # ###                                        KEYCLOAK                                       ###
   # #############################################################################################
-  # TODO: Removed this KeyCloak as we're currently pointing to client side dev keycloak (pathfinder)
   keycloak:
     image: quay.io/keycloak/keycloak
     environment:
@@ -158,7 +157,7 @@ services:
       KEYCLOAK_IMPORT: /tmp/realm-export.json
       KEYCLOAK_FRONTEND_URL: http://localhost:8081/auth
     volumes:
-      - .settings/keycloak/realm-export.json:/tmp/realm-export.json
+      - ./infrastructure/keycloak/realm-export.json:/tmp/realm-export.json
     ports:
       - 8081:8080
     networks:
@@ -169,7 +168,7 @@ services:
   # #############################################################################################
   keycloak-config:
     build:
-      context: ./.settings/keycloak
+      context: ./infrastructure/keycloak
       args:
         - KEYCLOAK_URL=http://keycloak:8080
     command: sh -c "dockerize -wait http://keycloak:8080 -timeout 300s -wait-retry-interval 10s /tmp/createuser.sh"

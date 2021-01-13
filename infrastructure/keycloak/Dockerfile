@@ -5,6 +5,9 @@ ARG DOCKERIZE_VERSION=v0.6.1
 
 ENV KEYCLOAK_URL=$KEYCLOAK_URL
 
+# Temp fix for maching have clock issue. see https://stackoverflow.com/questions/63526272/release-file-is-not-valid-yet-docker
+RUN echo "Acquire::Check-Valid-Until \"false\";\nAcquire::Check-Date \"false\";" | cat > /etc/apt/apt.conf.d/10no--check-valid-until
+
 RUN apt-get update && \
     apt-get install -y curl jq wget && \
     apt-get clean && \
