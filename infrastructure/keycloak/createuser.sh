@@ -3,6 +3,7 @@
 KEYCLOAK_REALM_URL="$KEYCLOAK_URL/auth/admin/realms/Efiling-Hub"
 USERNAME="bobross"
 ADMIN_GROUP="efiling-admin"
+EARLY_GROUP="efiling-early-adopters"
 
 # Get admin user token
 ADMIN_TOKEN=$(curl -s --location --request POST "$KEYCLOAK_URL/auth/realms/master/protocol/openid-connect/token" \
@@ -71,7 +72,7 @@ if [ -z "$ADMIN_GROUP_ID" ]; then
     exit 4
 fi
 
-# Add user to efilng admin group
+# Add user to efiling-admin group
 ADD_TO_ADMIN_STATUS=$(curl -s -o /dev/null -w '%{http_code}' \
     --request PUT "$KEYCLOAK_REALM_URL/users/$USER_ID/groups/$ADMIN_GROUP_ID" \
     --header "Authorization: Bearer $ADMIN_TOKEN" \
@@ -81,6 +82,28 @@ if [ $ADD_TO_ADMIN_STATUS -eq 204 ]; then
     echo "user added to admin group"
 else
     echo "Error adding user to admin group"
+    exit 5
+fi
+
+# Get early-adopters id
+EARLY_GROUP_ID=$(curl -s --location --request GET "$KEYCLOAK_REALM_URL/groups?search=$EARLY_GROUP" \
+--header "Authorization: Bearer $ADMIN_TOKEN" | jq -r '.[0].id') 
+
+if [ -z "$EARLY_GROUP_ID" ]; then
+    echo "admin groupd does not exists"
+    exit 4
+fi
+
+# Add user to efiling-early-adopters group
+ADD_TO_EARLY_STATUS=$(curl -s -o /dev/null -w '%{http_code}' \
+    --request PUT "$KEYCLOAK_REALM_URL/users/$USER_ID/groups/$EARLY_GROUP_ID" \
+    --header "Authorization: Bearer $ADMIN_TOKEN" \
+    --header 'Content-Type: application/json')
+
+if [ $ADD_TO_EARLY_STATUS -eq 204 ]; then
+    echo "user added to efiling-early-adopters group"
+else
+    echo "Error adding user to efiling-early-adopters group"
     exit 5
 fi
 
