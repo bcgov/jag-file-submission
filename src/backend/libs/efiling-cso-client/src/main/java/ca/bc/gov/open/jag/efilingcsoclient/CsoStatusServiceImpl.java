@@ -13,8 +13,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class CsoStatusServiceImpl implements EfilingStatusService {
 
@@ -36,7 +38,7 @@ public class CsoStatusServiceImpl implements EfilingStatusService {
 
         try {
 
-            logger.info("Calling soap service");
+            logger.info("Calling soap findStatusBySearchCriteria by client id and package service ");
 
             FilingStatus filingStatus = filingStatusFacadeBean
                     .findStatusBySearchCriteria(null, null, null, null, null, null, filingPackageRequest.getPackageNo(), filingPackageRequest.getClientId(), null, null, null, null, BigDecimal.ONE, null);
@@ -55,6 +57,21 @@ public class CsoStatusServiceImpl implements EfilingStatusService {
 
     @Override
     public List<ReviewFilingPackage> findStatusByClient(FilingPackageRequest filingPackageRequest) {
-        return null;
+        try {
+
+            logger.info("Calling soap findStatusBySearchCriteria by client id service ");
+
+            FilingStatus filingStatus = filingStatusFacadeBean
+                    .findStatusBySearchCriteria(null, null, null, null, null, null, null, filingPackageRequest.getClientId(), null, null, null, null, BigDecimal.valueOf(100), null);
+
+            if (filingStatus.getFilePackages().isEmpty()) return new ArrayList<>();
+
+            return filingStatus.getFilePackages().stream().map(filePackageMapper::toFilingPackage).collect(Collectors.toList());
+
+        } catch (NestedEjbException_Exception e) {
+
+            throw new EfilingStatusServiceException("Exception while finding status list", e.getCause());
+
+        }
     }
 }
