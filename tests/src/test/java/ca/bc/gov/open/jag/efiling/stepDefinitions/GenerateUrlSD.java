@@ -1,9 +1,9 @@
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
-import ca.bc.gov.open.jag.efiling.error.EfilingTestException;
-import ca.bc.gov.open.jag.efiling.helpers.PayloadHelper;
 import ca.bc.gov.open.jag.efiling.TestConfig;
-import ca.bc.gov.open.jag.efiling.helpers.TokenHelper;
+import ca.bc.gov.open.jag.efiling.helpers.PayloadHelper;
+import ca.bc.gov.open.jag.efiling.models.UserIdentity;
+import ca.bc.gov.open.jag.efiling.services.OauthService;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -19,7 +19,6 @@ import io.restassured.specification.RequestSpecification;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 import stepDefinitions.backendstepdefinitions.GenerateUrlAndSubmissionTest;
@@ -35,11 +34,7 @@ import java.util.UUID;
 public class GenerateUrlSD {
 
 
-    @Value("${KEYCLOAK_HOST:http://localhost:8081}")
-    private String keycloakHost;
-
-    @Value("${KEYCLOAK_REALM:Efiling-Hub}")
-    private String keycloakRealm;
+    private final OauthService oauthService;
 
     private static final String X_USER_ID = "X-User-Id";
     private static final String TEST_DOCUMENT_PDF = "test-document.pdf";
@@ -48,21 +43,20 @@ public class GenerateUrlSD {
     private UUID actualTransactionId;
     private Response actualDocumentResponse;
     private Response actualGenerateUrlResponse;
-    private String actualUserToken;
     private UUID actualSubmissionId;
-    private String actualUniversalId;
+    private UserIdentity actualUserIdentity;
 
     public Logger logger = LogManager.getLogger(GenerateUrlAndSubmissionTest.class);
 
-    public GenerateUrlSD() {
+    public GenerateUrlSD(OauthService oauthService) {
+        this.oauthService = oauthService;
         actualTransactionId = UUID.randomUUID();
     }
 
     @Given("admin account {string}:{string} that authenticated")
     public void adminAccountThatAuthenticatedWithKeycloakOnRealm(String username, String password) {
 
-        setBearerToken(username, password);
-
+        actualUserIdentity = oauthService.getUserIdentity(username,password);
     }
 
     @When("user Submit a valid pdf document")
@@ -79,9 +73,9 @@ public class GenerateUrlSD {
                 mimeType("text/application-pdf").
                 build();
 
-        RequestSpecification request = RestAssured.given().auth().preemptive().oauth2(actualUserToken)
+        RequestSpecification request = RestAssured.given().auth().preemptive().oauth2(actualUserIdentity.getAccessToken())
                 .header(X_TRANSACTION_ID, actualTransactionId)
-                .header(X_USER_ID, actualUniversalId)
+                .header(X_USER_ID, actualUserIdentity.getUniversalId())
                 .multiPart(spec);
 
         actualDocumentResponse = request.when().post("http://localhost:8080/submission/documents").then()
@@ -114,10 +108,10 @@ public class GenerateUrlSD {
                 .given()
                 .auth()
                 .preemptive()
-                .oauth2(actualUserToken)
+                .oauth2(actualUserIdentity.getAccessToken())
                 .contentType(ContentType.JSON)
                 .header(X_TRANSACTION_ID, actualTransactionId)
-                .header(X_USER_ID, actualUniversalId)
+                .header(X_USER_ID, actualUserIdentity.getUniversalId())
                 .body(PayloadHelper.generateUrlPayload(TEST_DOCUMENT_PDF));
 
         actualGenerateUrlResponse = request
@@ -150,25 +144,5 @@ public class GenerateUrlSD {
 
     }
 
-    private void setBearerToken(String username, String password) {
-
-        logger.info("Requesting bearer token from {} issuer", keycloakHost);
-
-        Response response = TokenHelper.getUserAccessToken(keycloakHost, keycloakRealm, username, password, "efiling-frontend");
-
-        logger.info("Issuer respond with http status: {}", response.getStatusCode());
-
-        JsonPath oidcTokenJsonPath = new JsonPath(response.asString());
-
-        if(oidcTokenJsonPath.get("access_token") == null) throw new EfilingTestException("access_token not present in response");
-
-        actualUserToken = oidcTokenJsonPath.get("access_token");
-        JsonPath tokenJsonPath = new JsonPath(TokenHelper.decodeTokenToJsonString(actualUserToken));
-
-        if(tokenJsonPath.get("universal-id") == null) throw new EfilingTestException("universal-id not present in response");
-
-        actualUniversalId = tokenJsonPath.get("universal-id");
-
-    }
 
 }
