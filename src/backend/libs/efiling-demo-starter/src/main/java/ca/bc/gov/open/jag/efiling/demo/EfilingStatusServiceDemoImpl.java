@@ -28,7 +28,7 @@ public class EfilingStatusServiceDemoImpl implements EfilingStatusService {
 
     @Override
     public List<ReviewFilingPackage> findStatusByClient(FilingPackageRequest filingPackageRequest) {
-        return null;
+        return Collections.singletonList(createReviewPackage());
     }
 
     private ReviewFilingPackage createReviewPackage() {
