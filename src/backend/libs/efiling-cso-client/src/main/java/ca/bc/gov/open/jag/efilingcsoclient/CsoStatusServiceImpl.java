@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 public class CsoStatusServiceImpl implements EfilingStatusService {
@@ -50,5 +51,10 @@ public class CsoStatusServiceImpl implements EfilingStatusService {
 
         }
 
+    }
+
+    @Override
+    public List<ReviewFilingPackage> findStatusByClient(FilingPackageRequest filingPackageRequest) {
+        return null;
     }
 }
