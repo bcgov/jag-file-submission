@@ -43,7 +43,7 @@ public class CsoStatusServiceImpl implements EfilingStatusService {
             FilingStatus filingStatus = filingStatusFacadeBean
                     .findStatusBySearchCriteria(null, null, null, null, null, null, filingPackageRequest.getPackageNo(), filingPackageRequest.getClientId(), null, null, null, null, BigDecimal.ONE, null);
 
-            if (filingStatus.getFilePackages().isEmpty()) return Optional.empty();
+            if (filingStatus.getFilePackages() == null || filingStatus.getFilePackages().isEmpty()) return Optional.empty();
 
             return Optional.of(filePackageMapper.toFilingPackage(filingStatus.getFilePackages().get(0)));
 
