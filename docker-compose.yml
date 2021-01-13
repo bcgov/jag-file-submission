@@ -32,7 +32,7 @@ services:
       args:
         - SERVICE_NAME=efiling-demo
     ports:
-      - 3001:3000
+      - 80:80
     environment:
       - REACT_APP_KEYCLOAK_REALM=${KEYCLOAK_REALM:-Efiling-Hub}
       - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-admin
