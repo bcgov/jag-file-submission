@@ -68,7 +68,7 @@ ADMIN_GROUP_ID=$(curl -s --location --request GET "$KEYCLOAK_REALM_URL/groups?se
 --header "Authorization: Bearer $ADMIN_TOKEN" | jq -r '.[0].id') 
 
 if [ -z "$ADMIN_GROUP_ID" ]; then
-    echo "admin groupd does not exists"
+    echo "admin group id does not exist"
     exit 4
 fi
 
@@ -90,7 +90,7 @@ EARLY_GROUP_ID=$(curl -s --location --request GET "$KEYCLOAK_REALM_URL/groups?se
 --header "Authorization: Bearer $ADMIN_TOKEN" | jq -r '.[0].id') 
 
 if [ -z "$EARLY_GROUP_ID" ]; then
-    echo "admin groupd does not exists"
+    echo "early adopters group id does not exist"
     exit 4
 fi
 
