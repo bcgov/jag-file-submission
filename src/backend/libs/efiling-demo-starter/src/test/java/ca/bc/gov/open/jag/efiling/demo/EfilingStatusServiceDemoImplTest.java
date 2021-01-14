@@ -96,4 +96,11 @@ public class EfilingStatusServiceDemoImplTest {
         Assertions.assertFalse(sut.findStatusByPackage(new FilingPackageRequest(BigDecimal.ZERO, BigDecimal.ZERO)).isPresent());
 
     }
+
+    @Test
+    @DisplayName("OK: demo returns a one element array")
+    public void withRequestReturnOneElementArray() {
+
+        Assertions.assertEquals(1, sut.findStatusByClient(new FilingPackageRequest(BigDecimal.ONE, BigDecimal.ONE)).size());
+    }
 }

@@ -26,6 +26,11 @@ public class EfilingStatusServiceDemoImpl implements EfilingStatusService {
         }
     }
 
+    @Override
+    public List<ReviewFilingPackage> findStatusByClient(FilingPackageRequest filingPackageRequest) {
+        return Collections.singletonList(createReviewPackage());
+    }
+
     private ReviewFilingPackage createReviewPackage() {
         ReviewFilingPackage reviewFilingPackage = new ReviewFilingPackage();
         reviewFilingPackage.setFirstName("Han");
