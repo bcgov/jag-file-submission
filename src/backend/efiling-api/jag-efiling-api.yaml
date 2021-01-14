@@ -1925,8 +1925,7 @@ components:
           type: string
           description: Filing comments
         submittedBy:
-          type: string
-          description: User that submitted the package
+          $ref: "#/components/schemas/Account"
         submittedDate:
           type: string
           description: Submitted date
@@ -2367,3 +2366,16 @@ components:
         changeDate:
           type: string
           description: date changed
+    Account:
+      description: account object
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: first name
+        middleName:
+          type: string
+          description: middle name
+        lastName:
+          type: string
+          description: last name

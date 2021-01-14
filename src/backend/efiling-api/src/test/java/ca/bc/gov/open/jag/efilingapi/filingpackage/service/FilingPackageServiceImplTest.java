@@ -82,7 +82,8 @@ public class FilingPackageServiceImplTest {
         Assertions.assertEquals(COMMENT, result.get().getFilingComments());
         Assertions.assertEquals(new BigDecimal(PACKAGE_NO), result.get().getPackageNumber());
         Assertions.assertNotNull(result.get().getSubmittedDate());
-        Assertions.assertEquals(MessageFormat.format("{0} {1}", FIRST_NAME, LAST_NAME), result.get().getSubmittedBy());
+        Assertions.assertEquals(FIRST_NAME, result.get().getSubmittedBy().getFirstName());
+        Assertions.assertEquals(LAST_NAME, result.get().getSubmittedBy().getLastName());
 
         //Court
         Assertions.assertEquals(CLASS_DESCRIPTION, result.get().getCourt().getClassDescription());
