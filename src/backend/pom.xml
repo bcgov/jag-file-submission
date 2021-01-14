@@ -30,7 +30,6 @@
 				<module>libs/efiling-bom</module>
 				<module>libs/efiling-demo-starter</module>
 				<module>efiling-api</module>
-				<module>efiling-graphql</module>
 			</modules>
 		</profile>
 		<profile>

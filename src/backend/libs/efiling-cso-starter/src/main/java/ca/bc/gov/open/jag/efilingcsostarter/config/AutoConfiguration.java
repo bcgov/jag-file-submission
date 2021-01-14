@@ -133,7 +133,7 @@ public class AutoConfiguration {
     }
 
     @Bean
-    public EfilingReviewService efilingStatusService(FilingStatusFacadeBean filingStatusFacadeBean) {
+    public EfilingReviewService efilingReviewService(FilingStatusFacadeBean filingStatusFacadeBean, ReportService reportService) {
         return new CsoReviewServiceImpl(filingStatusFacadeBean, reportService, new FilePackageMapperImpl());
     }
 
