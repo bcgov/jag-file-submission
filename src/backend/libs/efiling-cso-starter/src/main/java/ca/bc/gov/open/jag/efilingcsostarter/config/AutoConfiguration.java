@@ -6,6 +6,7 @@ import ca.bc.gov.ag.csows.ceis.Csows;
 import ca.bc.gov.ag.csows.filing.FilingFacadeBean;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.ag.csows.lookups.LookupFacadeBean;
+import ca.bc.gov.ag.csows.reports.ReportService;
 import ca.bc.gov.ag.csows.services.ServiceFacadeBean;
 import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
@@ -69,6 +70,12 @@ public class AutoConfiguration {
     public ServiceFacadeBean serviceFacadeBean() {
         EfilingSoapClientProperties efilingSoapClientProperties = soapProperties.findByEnum(Clients.SERVICE);
         return SoapUtils.getPort(ServiceFacadeBean.class, efilingSoapClientProperties, csoProperties.isDebugEnabled()); }
+
+    @Bean
+    public ReportService reportService() {
+        EfilingSoapClientProperties efilingSoapClientProperties = soapProperties.findByEnum(Clients.REPORT);
+        return SoapUtils.getPort(ReportService.class, efilingSoapClientProperties, csoProperties.isDebugEnabled()); }
+
 
     @Bean
     public AccountDetailsMapper accountDetailsMapper() {

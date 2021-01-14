@@ -53,7 +53,11 @@ public class AutoConfigurationTest {
                         "jag.efiling.soap.clients[6].client=SERVICE",
                         "jag.efiling.soap.clients[6].userName=username",
                         "jag.efiling.soap.clients[6].password=password",
-                        "jag.efiling.soap.clients[6].uri=http://locahost")
+                        "jag.efiling.soap.clients[6].uri=http://locahost",
+                        "jag.efiling.soap.clients[7].client=REPORT",
+                        "jag.efiling.soap.clients[7].userName=username",
+                        "jag.efiling.soap.clients[7].password=password",
+                        "jag.efiling.soap.clients[7].uri=http://locahost")
                 .withUserConfiguration(CsoProperties.class);
     }
 
