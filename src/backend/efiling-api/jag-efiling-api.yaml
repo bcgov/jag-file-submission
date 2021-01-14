@@ -2373,9 +2373,6 @@ components:
         firstName:
           type: string
           description: first name
-        middleName:
-          type: string
-          description: middle name
         lastName:
           type: string
           description: last name
