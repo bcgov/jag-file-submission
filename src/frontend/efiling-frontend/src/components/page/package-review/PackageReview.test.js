@@ -62,6 +62,36 @@ describe("PackageReview Component", () => {
   test("Api is called, missing or invalid response data", async () => {
     window.open = jest.fn();
     mock.onGet(apiRequest).reply(200, {
+      court: {},
+      submittedBy: {},
+      submittedDate: "",
+    });
+
+    const spy = jest.spyOn(axios, "get");
+
+    render(<PackageReview page={page} />);
+
+    expect(spy).toHaveBeenCalled();
+  });
+
+  test("Api is called, missing or invalid response data", async () => {
+    window.open = jest.fn();
+    mock.onGet(apiRequest).reply(200, {
+      court: courtData,
+      submittedBy: { firstName: "Bob" },
+      submittedDate: "invalidISOString",
+    });
+
+    const spy = jest.spyOn(axios, "get");
+
+    render(<PackageReview page={page} />);
+
+    expect(spy).toHaveBeenCalled();
+  });
+
+  test("Api is called, missing or invalid response data", async () => {
+    window.open = jest.fn();
+    mock.onGet(apiRequest).reply(200, {
       court: courtData,
       submittedDate: "invalidISOString",
     });
