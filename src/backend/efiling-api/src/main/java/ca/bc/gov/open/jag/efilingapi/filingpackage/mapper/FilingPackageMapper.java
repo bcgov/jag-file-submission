@@ -10,6 +10,7 @@ import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPa
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 
@@ -26,6 +27,8 @@ public interface FilingPackageMapper {
     @Mapping(target = "court.agencyId", source = "court.locationId")
     @Mapping(target = "court.locationDescription", source = "court.locationDescription")
     @Mapping(target = "court.classDescription", source = "court.classDescription")
+    @Mapping(target = "submittedBy.firstName",  source = "firstName")
+    @Mapping(target = "submittedBy.lastName",  source = "lastName")
     @Mapping(target = "submittedDate", source = "submittedDate")
     @Mapping(target = "packageNumber", source = "packageNo")
     @Mapping(target = "filingComments", source = "filingCommentsTxt")

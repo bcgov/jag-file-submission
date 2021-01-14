@@ -26,10 +26,16 @@ public class EfilingStatusServiceDemoImpl implements EfilingStatusService {
         }
     }
 
+    @Override
+    public List<ReviewFilingPackage> findStatusByClient(FilingPackageRequest filingPackageRequest) {
+        return Collections.singletonList(createReviewPackage());
+    }
+
     private ReviewFilingPackage createReviewPackage() {
         ReviewFilingPackage reviewFilingPackage = new ReviewFilingPackage();
         reviewFilingPackage.setFirstName("Han");
         reviewFilingPackage.setLastName("Solo");
+        reviewFilingPackage.setFilingCommentsTxt("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
         reviewFilingPackage.setHasChecklist(false);
         reviewFilingPackage.setHasRegistryNotice(false);
         reviewFilingPackage.setPackageNo("1");
@@ -43,6 +49,7 @@ public class EfilingStatusServiceDemoImpl implements EfilingStatusService {
 
     private ReviewCourt createCourt() {
         ReviewCourt reviewCourt = new ReviewCourt();
+        reviewCourt.setFileNumber("123");
         reviewCourt.setCourtClass("F");
         reviewCourt.setLevel("P");
         reviewCourt.setLocationCd("KEL");

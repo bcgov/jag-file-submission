@@ -129,7 +129,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                     Base64.getEncoder().encodeToString(
                             MessageFormat.format("{0}/packagereview/{1}",
                                     navigationProperties.getBaseUrl(),
-                                    submitPackageResponse.getTransactionId()).getBytes()));
+                                    submitPackageResponse.getTransactionId().toPlainString()).getBytes()));
         } else {
             result.setPackageRef(Base64.getEncoder().encodeToString(submitPackageResponse.getPackageLink().getBytes()));
         }
