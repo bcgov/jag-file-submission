@@ -16,7 +16,7 @@ public class SubmissionService {
     @Value("${EFILING_HOST:http://localhost:8080}")
     private String eFilingHost;
 
-    private static String CONFIG_PATH = "/config";
+    private static String CONFIG_PATH = "config";
 
     private Logger logger = LoggerFactory.getLogger(SubmissionService.class);
 
@@ -27,7 +27,7 @@ public class SubmissionService {
         Response documentResponse = SubmissionHelper.uploadADocumentRequest(transactionId, accessToken, universalId,
                 fileSpec, eFilingHost);
 
-        logger.info("Api response status code: {}", documentResponse.getStatusCode());
+        logger.info("documentResponse returned with http status: {}", documentResponse.getStatusCode());
 
         return documentResponse;
 
@@ -36,12 +36,12 @@ public class SubmissionService {
     public Response generateUrlResponse(UUID transactionId, String universalId, String accessToken,
                                         String documentName, String submissionId) {
 
-        logger.info("Submitting generate url request");
+        logger.info("Requesting to generate Url");
 
         Response urlResponse = SubmissionHelper.generateUrlRequest(transactionId, universalId, accessToken,
                                                      documentName, eFilingHost, submissionId);
 
-        logger.info("Api response status code: {}", urlResponse.getStatusCode());
+        logger.info("urlResponse returned with http status: {}", urlResponse.getStatusCode());
 
         return urlResponse;
 
@@ -49,12 +49,12 @@ public class SubmissionService {
 
     public Response getSubmissionDetailsResponse(String accessToken, UUID transactionId, String submissionId) {
 
-        logger.info("Submitting get submission information");
+        logger.info("Requesting submission information");
 
         Response submissionResponse = SubmissionHelper.getSubmissionDetailsRequest(accessToken, transactionId,
                  eFilingHost, submissionId, CONFIG_PATH);
 
-        logger.info("Api response status code: {}", submissionResponse.getStatusCode());
+        logger.info("submissionResponse returned with http status: {}", submissionResponse.getStatusCode());
 
         return submissionResponse;
 

@@ -28,8 +28,9 @@ public class SubmissionHelper {
                 .header(X_USER_ID, universalId)
                 .multiPart(fileSpec);
 
-       return request.when().post(eFilingHost + "/submission/documents").then()
-                .extract().response();
+       return request.when().post(MessageFormat.format("{0}/submission/documents", eFilingHost))
+               .then()
+               .extract().response();
     }
 
     public static Response generateUrlRequest(UUID transactionId, String universalId, String accessToken,
@@ -47,7 +48,7 @@ public class SubmissionHelper {
 
         return request
                 .when()
-                .post(MessageFormat.format( eFilingHost + "/submission/{0}/generateUrl", submissionId))
+                .post(MessageFormat.format( "{0}/submission/{1}/generateUrl", eFilingHost, submissionId))
                 .then()
                 .extract()
                 .response();
@@ -67,7 +68,7 @@ public class SubmissionHelper {
 
         return request
                 .when()
-                .get(MessageFormat.format( eFilingHost + "/submission/{0}" + path, submissionId))
+                .get(MessageFormat.format("{0}/submission/{1}/{2}", eFilingHost, submissionId, path))
                 .then()
                 .extract()
                 .response();
