@@ -65,7 +65,7 @@ public class CreateSubmissionTest {
     @BeforeAll
     public void setUp(){
         MockitoAnnotations.initMocks(this);
-        Mockito.when(efilingSubmissionServiceMock.submitFilingPackage(any(), any(), any())).thenReturn(SubmitPackageResponse.builder().transactionId(BigDecimal.TEN).packageLink("http://link").create());
+        Mockito.when(efilingSubmissionServiceMock.submitFilingPackage(any(), any(), any())).thenReturn(SubmitPackageResponse.builder().transactionId(BigDecimal.valueOf(11000)).packageLink("http://link").create());
         Mockito.when(paymentAdapterMock.makePayment(any())).thenReturn(new PaymentTransaction());
         Mockito.when(documentStoreMock.get(any(), any())).thenReturn(new byte[]{});
         Mockito.doNothing().when(sftpServiceMock).put(any(), any());
@@ -120,7 +120,7 @@ public class CreateSubmissionTest {
                         .clientId(BigDecimal.TEN)
                         .internalClientNumber(INTERNAL_CLIENT_NUMBER)
                         .create(), true);
-        assertEquals("bnVsbC9wYWNrYWdlcmV2aWV3LzEw", actual.getPackageRef());
+        assertEquals("bnVsbC9wYWNrYWdlcmV2aWV3LzExMDAw", actual.getPackageRef());
     }
 
 }
