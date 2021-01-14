@@ -47,7 +47,7 @@ describe("PackageReview Component", () => {
     window.open = jest.fn();
     mock.onGet(apiRequest).reply(200, {
       court: courtData,
-      submittedDate: submittedDate
+      submittedDate,
     });
 
     const spy = jest.spyOn(axios, "get");
@@ -56,12 +56,12 @@ describe("PackageReview Component", () => {
 
     expect(spy).toHaveBeenCalled();
   });
-    
+
   test("Api is called, missing or invalid response data", async () => {
     window.open = jest.fn();
     mock.onGet(apiRequest).reply(200, {
       court: courtData,
-      submittedDate: 'invalidISOString'
+      submittedDate: "invalidISOString",
     });
 
     const spy = jest.spyOn(axios, "get");
@@ -70,7 +70,7 @@ describe("PackageReview Component", () => {
 
     expect(spy).toHaveBeenCalled();
   });
-  
+
   test("Api is called, missing or invalid response data", async () => {
     window.open = jest.fn();
     mock.onGet(apiRequest).reply(200);
@@ -81,5 +81,4 @@ describe("PackageReview Component", () => {
 
     expect(spy).toHaveBeenCalled();
   });
-  
 });

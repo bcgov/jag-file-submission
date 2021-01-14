@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import moment from 'moment';
+import moment from "moment";
 import PropTypes from "prop-types";
 import { Header, Footer, Button, Table, Alert } from "shared-components";
 import { MdCancel } from "react-icons/md";
@@ -9,49 +9,97 @@ import { propTypes } from "../../../types/propTypes";
 export default function PackageReview({ page: { header, packageId } }) {
   const [error, setError] = useState(false);
   const [packageNoDetails, setPackageNoDetails] = useState([
-    { name: 'Package Number:', value: '', isNameBold: false, isValueBold: true },
-    { name: 'Submitted By:' , value: '', isNameBold: false, isValueBold: true  },
-    { name: 'Submitted Date:' , value: '', isNameBold: false, isValueBold: true  }
+    {
+      name: "Package Number:",
+      value: "",
+      isNameBold: false,
+      isValueBold: true,
+    },
+    { name: "Submitted By:", value: "", isNameBold: false, isValueBold: true },
+    {
+      name: "Submitted Date:",
+      value: "",
+      isNameBold: false,
+      isValueBold: true,
+    },
   ]);
   const [courtFileDetails, setCourtFileDetails] = useState([
-    { name: 'Court File Number:', value: '', isNameBold: false, isValueBold: true  },
-    { name: 'Submitted To:' , value: '', isNameBold: false, isValueBold: true  },
-    { name: 'Filing Comments:' , value: '', isNameBold: false, isValueBold: true  }
+    {
+      name: "Court File Number:",
+      value: "",
+      isNameBold: false,
+      isValueBold: true,
+    },
+    { name: "Submitted To:", value: "", isNameBold: false, isValueBold: true },
+    {
+      name: "Filing Comments:",
+      value: "",
+      isNameBold: false,
+      isValueBold: true,
+    },
   ]);
 
   useEffect(() => {
-    console.log(packageId);
     axios
       .get(`filingpackage/${packageId}`)
       .then((response) => {
-        try {          
-          let packageNo = response.data.packageNumber || 'n/a';
-          let submittedBy = response.data.submittedBy || 'n/a';
-          let submittedDt = 'n/a';
+        try {
+          const packageNo = response.data.packageNumber || "n/a";
+          const submittedBy = response.data.submittedBy || "n/a";
+          let submittedDt = "n/a";
           if (response.data.submittedDate) {
-            submittedDt = moment(response.data.submittedDate).format('DD-MMM-YYYY HH:MM');
+            submittedDt = moment(response.data.submittedDate).format(
+              "DD-MMM-YYYY HH:MM"
+            );
           }
-          let fileNumber = response.data.court.fileNumber || 'n/a';
-          let submittedTo = response.data.court.location || 'n/a';
-          let filingComments = response.data.court.fileNumber || 'n/a';
+          const fileNumber = response.data.court.fileNumber || "n/a";
+          const submittedTo = response.data.court.location || "n/a";
+          const filingComments = response.data.court.fileNumber || "n/a";
           setPackageNoDetails([
-            { name: 'Package Number:', value: packageNo + '', isNameBold: false, isValueBold: true },
-            { name: 'Submitted By:' , value: submittedBy, isNameBold: false, isValueBold: true  },
-            { name: 'Submitted Date:' , value: submittedDt, isNameBold: false, isValueBold: true  }
+            {
+              name: "Package Number:",
+              value: `${packageNo}`,
+              isNameBold: false,
+              isValueBold: true,
+            },
+            {
+              name: "Submitted By:",
+              value: submittedBy,
+              isNameBold: false,
+              isValueBold: true,
+            },
+            {
+              name: "Submitted Date:",
+              value: submittedDt,
+              isNameBold: false,
+              isValueBold: true,
+            },
           ]);
           setCourtFileDetails([
-            { name: 'Court File Number:', value: fileNumber + '', isNameBold: false, isValueBold: true  },
-            { name: 'Submitted To:' , value: submittedTo + '', isNameBold: false, isValueBold: true  },
-            { name: 'Filing Comments:' , value: filingComments + '', isNameBold: false, isValueBold: true  }
+            {
+              name: "Court File Number:",
+              value: `${fileNumber}`,
+              isNameBold: false,
+              isValueBold: true,
+            },
+            {
+              name: "Submitted To:",
+              value: `${submittedTo}`,
+              isNameBold: false,
+              isValueBold: true,
+            },
+            {
+              name: "Filing Comments:",
+              value: `${filingComments}`,
+              isNameBold: false,
+              isValueBold: true,
+            },
           ]);
-        }
-        catch(error) {
-          console.log(error);
+        } catch (err) {
           setError(true);
         }
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
         setError(true);
       });
   }, []);
