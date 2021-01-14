@@ -9,14 +9,14 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class EfilingStatusServiceDemoImplTest {
+public class EfilingReviewServiceDemoImplTest {
     public static final String DESCRIPTION = "DESCRIPTION";
     public static final String COMMENTS = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-    EfilingStatusServiceDemoImpl sut;
+    EfilingReviewServiceDemoImpl sut;
 
     @BeforeAll
     public void setup() {
-        sut = new EfilingStatusServiceDemoImpl();
+        sut = new EfilingReviewServiceDemoImpl();
     }
 
     @Test
