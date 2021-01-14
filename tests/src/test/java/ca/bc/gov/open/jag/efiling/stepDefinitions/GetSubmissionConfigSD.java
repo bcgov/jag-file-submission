@@ -68,7 +68,7 @@ public class GetSubmissionConfigSD {
 
         // Generate Url Response
        submissionService.generateUrlResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
-                actualUserIdentity.getAccessToken(),TEST_DOCUMENT_PDF, actualSubmissionId);
+                actualUserIdentity.getAccessToken(), actualSubmissionId);
 
 
         actualSubmissionDetailsResponse = submissionService.getSubmissionDetailsResponse(actualUserIdentity.getAccessToken(),actualTransactionId, actualSubmissionId);

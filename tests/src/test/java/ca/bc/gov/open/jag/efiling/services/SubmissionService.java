@@ -34,7 +34,7 @@ public class SubmissionService {
     }
 
     public Response generateUrlResponse(UUID transactionId, String universalId, String accessToken,
-                                        String documentName, String submissionId) {
+                                         String submissionId) {
 
         logger.info("Requesting to generate Url");
 
