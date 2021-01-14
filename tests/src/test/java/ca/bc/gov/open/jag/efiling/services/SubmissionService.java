@@ -85,6 +85,19 @@ public class SubmissionService {
 
     }
 
+    public Response getSubmissionDetailsResponse(String accessToken, UUID transactionId, String submissionId) {
+
+        logger.info("Submitting get submission information");
+
+        Response submissionResponse = SubmissionHelper.getSubmissionDetailsRequest(accessToken, transactionId,
+                 eFilingHost, submissionId, CONFIG_PATH);
+
+        logger.info("Api response status code: {}", submissionResponse.getStatusCode());
+
+        return submissionResponse;
+
+    }
+
 
     public String getSubmissionId(Response documentResponse) {
 
