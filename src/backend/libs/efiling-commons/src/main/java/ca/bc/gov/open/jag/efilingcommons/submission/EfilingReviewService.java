@@ -6,7 +6,7 @@ import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPa
 import java.util.List;
 import java.util.Optional;
 
-public interface EfilingStatusService {
+public interface EfilingReviewService {
 
     Optional<ReviewFilingPackage> findStatusByPackage(FilingPackageRequest filingPackageRequest);
 

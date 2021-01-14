@@ -7,7 +7,7 @@ import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.mapper.FilingPackageMapperImpl;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.Party;
-import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
+import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.PackagePayment;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewCourt;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument;
@@ -20,7 +20,6 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
-import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
@@ -52,7 +51,7 @@ public class FilingPackageServiceImplTest {
     FilingPackageServiceImpl sut;
 
     @Mock
-    EfilingStatusService efilingStatusServiceMock;
+    EfilingReviewService efilingReviewServiceMock;
 
     @Mock
     AccountService accountServiceMock;
@@ -66,14 +65,14 @@ public class FilingPackageServiceImplTest {
 
         Mockito.when(accountServiceMock.getCsoAccountDetails(ArgumentMatchers.eq(TestHelpers.CASE_2))).thenReturn(createAccount(null));
 
-        sut = new FilingPackageServiceImpl(efilingStatusServiceMock, accountServiceMock, new FilingPackageMapperImpl());
+        sut = new FilingPackageServiceImpl(efilingReviewServiceMock, accountServiceMock, new FilingPackageMapperImpl());
     }
 
     @Test
     @DisplayName("Ok: a filing package was returned")
     public void withValidRequestReturnFilingPackage() {
 
-        Mockito.when(efilingStatusServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.of(createFilingPackage()));
+        Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.of(createFilingPackage()));
 
         Optional<FilingPackage> result = sut.getCSOFilingPackage(TestHelpers.CASE_1, BigDecimal.ONE);
 
@@ -134,7 +133,7 @@ public class FilingPackageServiceImplTest {
     @DisplayName("Not found: no filing package")
     public void withValidRequestButMissingPackageReturnEmpty() {
 
-        Mockito.when(efilingStatusServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.empty());
+        Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.empty());
 
         Optional<FilingPackage> result = sut.getCSOFilingPackage(TestHelpers.CASE_1, BigDecimal.TEN);
 

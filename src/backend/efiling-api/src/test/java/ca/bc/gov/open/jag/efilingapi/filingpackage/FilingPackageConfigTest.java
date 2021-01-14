@@ -5,7 +5,7 @@ import ca.bc.gov.open.jag.efilingapi.api.model.CreateCsoAccountRequest;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 
-import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
+import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import org.junit.jupiter.api.DisplayName;
@@ -52,8 +52,8 @@ public class FilingPackageConfigTest {
         }
 
         @Bean
-        public EfilingStatusService efilingStatusService() {
-            return new EfilingStatusService() {
+        public EfilingReviewService efilingStatusService() {
+            return new EfilingReviewService() {
                 @Override
                 public Optional<ReviewFilingPackage> findStatusByPackage(FilingPackageRequest filingPackageRequest) {
                     return Optional.empty();

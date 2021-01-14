@@ -1,7 +1,6 @@
 package ca.bc.gov.open.jag.packagereview;
 
-import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
+import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import ca.bc.gov.open.jag.packagereview.mapper.FilingPackageMapper;
@@ -22,12 +21,12 @@ public class ReviewResource {
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
-    private final EfilingStatusService efilingStatusService;
+    private final EfilingReviewService efilingReviewService;
 
     private final FilingPackageMapper filingPackageMapper;
 
-    public ReviewResource(EfilingStatusService efilingStatusService, FilingPackageMapper filingPackageMapper) {
-        this.efilingStatusService = efilingStatusService;
+    public ReviewResource(EfilingReviewService efilingReviewService, FilingPackageMapper filingPackageMapper) {
+        this.efilingReviewService = efilingReviewService;
         this.filingPackageMapper = filingPackageMapper;
     }
 
@@ -36,7 +35,7 @@ public class ReviewResource {
     public ca.bc.gov.open.jag.packagereview.model.FilingPackage getSubmission(@Name("clientId") BigDecimal clientId, @Name("packageNo") BigDecimal packageNo) {
         logger.info("GraphQl Request received");
 
-        Optional<ReviewFilingPackage> filePackage = efilingStatusService.findStatusByPackage(new FilingPackageRequest(clientId, packageNo));
+        Optional<ReviewFilingPackage> filePackage = efilingReviewService.findStatusByPackage(new FilingPackageRequest(clientId, packageNo));
 
         ca.bc.gov.open.jag.packagereview.model.FilingPackage responseFilingPackage = new ca.bc.gov.open.jag.packagereview.model.FilingPackage();
         if (filePackage.isPresent()) {

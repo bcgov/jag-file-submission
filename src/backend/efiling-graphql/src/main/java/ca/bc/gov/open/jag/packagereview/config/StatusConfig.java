@@ -2,8 +2,8 @@ package ca.bc.gov.open.jag.packagereview.config;
 
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
-import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
-import ca.bc.gov.open.jag.efilingcsoclient.CsoStatusServiceImpl;
+import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
+import ca.bc.gov.open.jag.efilingcsoclient.CsoReviewServiceImpl;
 import ca.bc.gov.open.jag.efilingcsoclient.SoapUtils;
 import ca.bc.gov.open.jag.packagereview.mapper.FilingPackageMapper;
 
@@ -34,8 +34,8 @@ public class StatusConfig {
 
     @Produces
     @DefaultBean
-    private EfilingStatusService efilingStatusService() {
-        return new CsoStatusServiceImpl(filingStatusFacadeBean(), null);
+    private EfilingReviewService efilingStatusService() {
+        return new CsoReviewServiceImpl(filingStatusFacadeBean(), null);
     }
 
     @Produces

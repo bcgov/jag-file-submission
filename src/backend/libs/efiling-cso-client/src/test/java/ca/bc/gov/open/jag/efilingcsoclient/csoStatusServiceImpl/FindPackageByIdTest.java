@@ -5,11 +5,10 @@ import ca.bc.gov.ag.csows.filing.status.FilingStatus;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingStatusServiceException;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
-import ca.bc.gov.open.jag.efilingcsoclient.CsoStatusServiceImpl;
+import ca.bc.gov.open.jag.efilingcsoclient.CsoReviewServiceImpl;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapperImpl;
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
@@ -50,7 +49,7 @@ public class FindPackageByIdTest {
     private final BigDecimal NOTFOUND_CLIENT = BigDecimal.ZERO;
     private final BigDecimal NOTFOUND_PACKAGE = BigDecimal.ZERO;
 
-    private static CsoStatusServiceImpl sut;
+    private static CsoReviewServiceImpl sut;
 
     @BeforeAll
     public void beforeAll() throws NestedEjbException_Exception, DatatypeConfigurationException {
@@ -66,7 +65,7 @@ public class FindPackageByIdTest {
 
         Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(EXCEPTION_PACKAGE), ArgumentMatchers.eq(EXCEPTION_CLIENT), any(), any(), any(), any(), any(), any())).thenThrow(new NestedEjbException_Exception());
 
-        sut = new CsoStatusServiceImpl(filingStatusFacadeBean, new FilePackageMapperImpl());
+        sut = new CsoReviewServiceImpl(filingStatusFacadeBean, new FilePackageMapperImpl());
     }
 
     @DisplayName("OK: package found")

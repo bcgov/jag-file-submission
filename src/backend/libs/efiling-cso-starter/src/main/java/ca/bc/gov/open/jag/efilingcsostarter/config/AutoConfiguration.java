@@ -11,7 +11,7 @@ import ca.bc.gov.ag.csows.services.ServiceFacadeBean;
 import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import ca.bc.gov.open.jag.efilingcommons.service.*;
-import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
+import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import ca.bc.gov.open.jag.efilingcsoclient.SoapUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.*;
 import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
@@ -133,8 +133,8 @@ public class AutoConfiguration {
     }
 
     @Bean
-    public EfilingStatusService efilingStatusService(FilingStatusFacadeBean filingStatusFacadeBean) {
-        return new CsoStatusServiceImpl(filingStatusFacadeBean, new FilePackageMapperImpl());
+    public EfilingReviewService efilingStatusService(FilingStatusFacadeBean filingStatusFacadeBean) {
+        return new CsoReviewServiceImpl(filingStatusFacadeBean, new FilePackageMapperImpl());
     }
 
 
