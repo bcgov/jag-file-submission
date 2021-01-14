@@ -6,8 +6,6 @@ import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.mapper.FilingPackageMapperImpl;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.Court;
-import ca.bc.gov.open.jag.efilingcommons.model.Document;
 import ca.bc.gov.open.jag.efilingcommons.model.Party;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.PackagePayment;
@@ -16,14 +14,13 @@ import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
-import org.mapstruct.Mapping;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.security.core.parameters.P;
 
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
@@ -85,6 +82,7 @@ public class FilingPackageServiceImplTest {
         Assertions.assertEquals(COMMENT, result.get().getFilingComments());
         Assertions.assertEquals(new BigDecimal(PACKAGE_NO), result.get().getPackageNumber());
         Assertions.assertNotNull(result.get().getSubmittedDate());
+        Assertions.assertEquals(MessageFormat.format("{0} {1}", FIRST_NAME, LAST_NAME), result.get().getSubmittedBy());
 
         //Court
         Assertions.assertEquals(CLASS_DESCRIPTION, result.get().getCourt().getClassDescription());
@@ -161,6 +159,8 @@ public class FilingPackageServiceImplTest {
         reviewFilingPackage.setClientFileNo("CLIENTFILENO");
         reviewFilingPackage.setFilingCommentsTxt(COMMENT);
         reviewFilingPackage.setPackageNo(PACKAGE_NO);
+        reviewFilingPackage.setFirstName(FIRST_NAME);
+        reviewFilingPackage.setLastName(LAST_NAME);
         reviewFilingPackage.setSubmittedDate(DateTime.parse("2020-05-05T00:00:00.000-07:00"));
         reviewFilingPackage.setCourt(createCourt());
         reviewFilingPackage.setDocuments(Collections.singletonList(createDocument()));

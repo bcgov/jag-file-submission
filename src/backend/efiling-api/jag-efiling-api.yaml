@@ -1924,6 +1924,9 @@ components:
         filingComments:
           type: string
           description: Filing comments
+        submittedBy:
+          type: string
+          description: User that submitted the package
         submittedDate:
           type: string
           description: Submitted date
