@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [master]
   push:
-    branches: [master, qa-submission-config]
+    branches: [master]
   workflow_dispatch:
 
 jobs:
