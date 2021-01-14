@@ -46,6 +46,7 @@ public class EfilingStatusServiceDemoImplTest {
         Assertions.assertEquals(DESCRIPTION, result.get().getCourt().getLocationDescription());
         Assertions.assertEquals(DESCRIPTION, result.get().getCourt().getLevelDescription());
         Assertions.assertEquals(DESCRIPTION, result.get().getCourt().getClassDescription());
+        Assertions.assertEquals("123", result.get().getCourt().getFileNumber());
         Assertions.assertFalse(result.get().getCourt().getExistingFileYN());
 
         Assertions.assertEquals(1, result.get().getDocuments().size());

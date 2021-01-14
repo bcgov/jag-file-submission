@@ -49,6 +49,7 @@ public class EfilingStatusServiceDemoImpl implements EfilingStatusService {
 
     private ReviewCourt createCourt() {
         ReviewCourt reviewCourt = new ReviewCourt();
+        reviewCourt.setFileNumber("123");
         reviewCourt.setCourtClass("F");
         reviewCourt.setLevel("P");
         reviewCourt.setLocationCd("KEL");
