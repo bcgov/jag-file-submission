@@ -54,6 +54,26 @@ public class SubmissionHelper {
 
     }
 
+    public static Response getSubmissionDetailsRequest(String accessToken, UUID transactionId,
+                                                    String eFilingHost, String submissionId, String path) {
+
+
+        RequestSpecification request = RestAssured
+                .given()
+                .auth()
+                .preemptive()
+                .oauth2(accessToken)
+                .header(X_TRANSACTION_ID, transactionId);
+
+        return request
+                .when()
+                .get(MessageFormat.format( eFilingHost + "/submission/{0}" + path, submissionId))
+                .then()
+                .extract()
+                .response();
+
+    }
+
     public static MultiPartSpecification fileSpecBuilder(File file, String fileName, String mimeType) {
 
        return new MultiPartSpecBuilder(file).
