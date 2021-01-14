@@ -31,6 +31,11 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
         return Collections.singletonList(createReviewPackage());
     }
 
+    @Override
+    public Optional<byte[]> getSubmissionSheet(BigDecimal packageNumber) {
+        return Optional.empty();
+    }
+
     private ReviewFilingPackage createReviewPackage() {
         ReviewFilingPackage reviewFilingPackage = new ReviewFilingPackage();
         reviewFilingPackage.setFirstName("Han");
