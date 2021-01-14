@@ -45,7 +45,12 @@ export default function PackageReview({ page: { header, packageId } }) {
       .then((response) => {
         try {
           const packageNo = response.data.packageNumber || "n/a";
-          const submittedBy = response.data.submittedBy || "n/a";
+          let submittedBy = "n/a";
+          if (response.data.submittedBy.firstName) {
+            if (response.data.submittedBy.lastName) {
+              submittedBy = `${response.data.submittedBy.firstName} ${response.data.submittedBy.lastName}`;
+            }
+          }
           let submittedDt = "n/a";
           if (response.data.submittedDate) {
             submittedDt = moment(response.data.submittedDate).format(
@@ -54,7 +59,7 @@ export default function PackageReview({ page: { header, packageId } }) {
           }
           const fileNumber = response.data.court.fileNumber || "n/a";
           const submittedTo = response.data.court.location || "n/a";
-          const filingComments = response.data.court.fileNumber || "n/a";
+          const filingComments = response.data.filingComments || "n/a";
           setPackageNoDetails([
             {
               name: "Package Number:",

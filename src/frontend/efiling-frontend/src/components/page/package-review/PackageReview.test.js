@@ -15,6 +15,7 @@ describe("PackageReview Component", () => {
   const packageId = "1";
   const courtData = getCourtData();
   const submittedDate = new Date("2021-01-14T18:57:43.602Z").toISOString();
+  const submittedBy = { firstName: "Han", lastName: "Solo" };
 
   const page = {
     header,
@@ -47,6 +48,7 @@ describe("PackageReview Component", () => {
     window.open = jest.fn();
     mock.onGet(apiRequest).reply(200, {
       court: courtData,
+      submittedBy,
       submittedDate,
     });
 
