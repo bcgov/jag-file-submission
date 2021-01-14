@@ -25,7 +25,7 @@ public class SubmissionService {
         logger.info("Submitting document upload request to the host {}", eFilingHost);
 
         Response documentResponse = SubmissionHelper.uploadADocumentRequest(transactionId, accessToken, universalId,
-                fileSpec, eFilingHost);
+                fileSpec);
 
         logger.info("documentResponse returned with http status: {}", documentResponse.getStatusCode());
 
@@ -39,7 +39,7 @@ public class SubmissionService {
         logger.info("Requesting to generate Url");
 
         Response urlResponse = SubmissionHelper.generateUrlRequest(transactionId, universalId, accessToken,
-                                                     documentName, eFilingHost, submissionId);
+                                                    submissionId);
 
         logger.info("urlResponse returned with http status: {}", urlResponse.getStatusCode());
 
@@ -52,7 +52,7 @@ public class SubmissionService {
         logger.info("Requesting submission information");
 
         Response submissionResponse = SubmissionHelper.getSubmissionDetailsRequest(accessToken, transactionId,
-                 eFilingHost, submissionId, CONFIG_PATH);
+                                                                                            submissionId, CONFIG_PATH);
 
         logger.info("submissionResponse returned with http status: {}", submissionResponse.getStatusCode());
 

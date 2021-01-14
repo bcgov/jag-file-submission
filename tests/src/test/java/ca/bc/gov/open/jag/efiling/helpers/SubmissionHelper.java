@@ -19,7 +19,7 @@ public class SubmissionHelper {
     private SubmissionHelper() {}
 
     public static Response uploadADocumentRequest(UUID transactionId, String accessToken, String universalId,
-                                                  MultiPartSpecification fileSpec, String eFilingHost) {
+                                                  MultiPartSpecification fileSpec) {
 
 
         RequestSpecification request = RestAssured.given().auth().preemptive()
@@ -28,13 +28,13 @@ public class SubmissionHelper {
                 .header(X_USER_ID, universalId)
                 .multiPart(fileSpec);
 
-       return request.when().post(MessageFormat.format("{0}/submission/documents", eFilingHost))
+       return request.when().post("http://localhost:8080/submission/documents")
                .then()
                .extract().response();
     }
 
     public static Response generateUrlRequest(UUID transactionId, String universalId, String accessToken,
-                                              String documentName, String eFilingHost, String submissionId) {
+                                               String submissionId) {
 
         RequestSpecification request = RestAssured
                 .given()
@@ -44,11 +44,11 @@ public class SubmissionHelper {
                 .contentType(ContentType.JSON)
                 .header(X_TRANSACTION_ID, transactionId)
                 .header(X_USER_ID, universalId)
-                .body(PayloadHelper.generateUrlPayload(documentName));
+                .body(PayloadHelper.generateUrlPayload("test-document.pdf"));
 
         return request
                 .when()
-                .post(MessageFormat.format( "{0}/submission/{1}/generateUrl", eFilingHost, submissionId))
+                .post(MessageFormat.format("http://localhost:8080/submission/{0}/generateUrl", submissionId))
                 .then()
                 .extract()
                 .response();
@@ -56,7 +56,7 @@ public class SubmissionHelper {
     }
 
     public static Response getSubmissionDetailsRequest(String accessToken, UUID transactionId,
-                                                    String eFilingHost, String submissionId, String path) {
+                                                         String submissionId, String path) {
 
 
         RequestSpecification request = RestAssured
@@ -68,7 +68,7 @@ public class SubmissionHelper {
 
         return request
                 .when()
-                .get(MessageFormat.format("{0}/submission/{1}/{2}", eFilingHost, submissionId, path))
+                .get(MessageFormat.format("http://localhost:8080/submission/{0}/{1}", submissionId, path))
                 .then()
                 .extract()
                 .response();
