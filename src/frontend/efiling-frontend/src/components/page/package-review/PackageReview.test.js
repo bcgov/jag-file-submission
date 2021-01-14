@@ -5,6 +5,7 @@ import { render, fireEvent, getByText } from "@testing-library/react";
 
 import MockAdapter from "axios-mock-adapter";
 import PackageReview from "./PackageReview";
+import { getCourtData } from "../../../modules/test-data/courtTestData";
 
 describe("PackageReview Component", () => {
   const header = {
@@ -12,6 +13,8 @@ describe("PackageReview Component", () => {
     history: createMemoryHistory(),
   };
   const packageId = "1";
+  const courtData = getCourtData();
+  const submittedDate = new Date("2021-01-14T18:57:43.602Z").toISOString();
 
   const page = {
     header,
@@ -42,6 +45,34 @@ describe("PackageReview Component", () => {
 
   test("Api is called successfully when page loads with valid packageId", async () => {
     window.open = jest.fn();
+    mock.onGet(apiRequest).reply(200, {
+      court: courtData,
+      submittedDate: submittedDate
+    });
+
+    const spy = jest.spyOn(axios, "get");
+
+    render(<PackageReview page={page} />);
+
+    expect(spy).toHaveBeenCalled();
+  });
+    
+  test("Api is called, missing or invalid response data", async () => {
+    window.open = jest.fn();
+    mock.onGet(apiRequest).reply(200, {
+      court: courtData,
+      submittedDate: 'invalidISOString'
+    });
+
+    const spy = jest.spyOn(axios, "get");
+
+    render(<PackageReview page={page} />);
+
+    expect(spy).toHaveBeenCalled();
+  });
+  
+  test("Api is called, missing or invalid response data", async () => {
+    window.open = jest.fn();
     mock.onGet(apiRequest).reply(200);
 
     const spy = jest.spyOn(axios, "get");
@@ -50,4 +81,5 @@ describe("PackageReview Component", () => {
 
     expect(spy).toHaveBeenCalled();
   });
+  
 });
