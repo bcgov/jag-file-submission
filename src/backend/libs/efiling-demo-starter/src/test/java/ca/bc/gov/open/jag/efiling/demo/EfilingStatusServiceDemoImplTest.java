@@ -11,6 +11,7 @@ import java.util.Optional;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class EfilingStatusServiceDemoImplTest {
     public static final String DESCRIPTION = "DESCRIPTION";
+    public static final String COMMENTS = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
     EfilingStatusServiceDemoImpl sut;
 
     @BeforeAll
@@ -31,6 +32,8 @@ public class EfilingStatusServiceDemoImplTest {
         Assertions.assertFalse(result.get().getHasRegistryNotice());
         Assertions.assertEquals("1", result.get().getPackageNo());
         Assertions.assertEquals(DateTime.parse("2020-5-5"), result.get().getSubmittedDate());
+        Assertions.assertEquals(COMMENTS, result.get().getFilingCommentsTxt());
+
         //Court
         Assertions.assertEquals("F", result.get().getCourt().getCourtClass());
         Assertions.assertEquals("P", result.get().getCourt().getLevel());
