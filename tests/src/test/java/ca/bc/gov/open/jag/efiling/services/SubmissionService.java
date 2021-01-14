@@ -1,59 +1,59 @@
 package ca.bc.gov.open.jag.efiling.services;
 
-import ca.bc.gov.open.jag.efiling.models.UserIdentity;
-import io.restassured.RestAssured;
-import io.restassured.builder.MultiPartSpecBuilder;
+import ca.bc.gov.open.jag.efiling.error.EfilingTestException;
+import ca.bc.gov.open.jag.efiling.helpers.SubmissionHelper;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.MultiPartSpecification;
-import io.restassured.specification.RequestSpecification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.beans.factory.annotation.Value;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.UUID;
 
 public class SubmissionService {
 
-    private static final String TEST_DOCUMENT_PDF = "test-document.pdf";
+    @Value("${EFILING_HOST:http://localhost:8080}")
+    private String eFilingHost;
 
-    private static final String X_USER_ID = "X-User-Id";
-    private static final String X_TRANSACTION_ID = "X-Transaction-Id";
-
-    private UUID actualTransactionId;
-    private io.restassured.response.Response actualDocumentResponse;
-    private io.restassured.response.Response actualGenerateUrlResponse;
-    private UUID actualSubmissionId;
-    private UserIdentity actualUserIdentity;
     private Logger logger = LoggerFactory.getLogger(SubmissionService.class);
 
-    public Response getSubmissionId(String accessToken, String actualTransactionId) throws IOException {
+    public Response documentUploadResponse(UUID transactionId, String universalId, String accessToken, MultiPartSpecification fileSpec) {
 
-        logger.info("Submitting document upload request");
+        logger.info("Submitting document upload request to the host {}", eFilingHost);
 
-        File resource = new ClassPathResource(
-                "data/test-document.pdf").getFile();
+        Response documentResponse = SubmissionHelper.uploadADocumentRequest(transactionId, accessToken, universalId,
+                fileSpec, eFilingHost);
 
-        MultiPartSpecification spec = new MultiPartSpecBuilder(resource).
-                fileName(TEST_DOCUMENT_PDF).
-                controlName("files").
-                mimeType("text/application-pdf").
-                build();
+        logger.info("Api response status code: {}", documentResponse.getStatusCode());
 
-        RequestSpecification request = RestAssured.given().auth().preemptive().oauth2(actualUserIdentity.getAccessToken())
-                .header(X_TRANSACTION_ID, actualTransactionId)
-                .header(X_USER_ID, actualUserIdentity.getUniversalId())
-                .multiPart(spec);
+        return documentResponse;
 
-        return request.when().post("http://localhost:8080/submission/documents").then()
-                .extract().response();
+    }
+
+    public Response generateUrlResponse(UUID transactionId, String universalId, String accessToken,
+                                        String documentName, String submissionId) {
+
+        logger.info("Submitting generate url request");
+
+        Response urlResponse = SubmissionHelper.generateUrlRequest(transactionId, universalId, accessToken,
+                                                     documentName, eFilingHost, submissionId);
+
+        logger.info("Api response status code: {}", urlResponse.getStatusCode());
+
+        return urlResponse;
 
     }
 
 
+    public String getSubmissionId(Response documentResponse) {
 
-    // TEst data outside
-    // return a Response
-    // Add service for the post up date
+        JsonPath submissionIdJsonPath = new JsonPath(documentResponse.asString());
+
+        if(submissionIdJsonPath.get("submissionId") == null) throw new EfilingTestException("submissionId not present in response");
+
+        return  submissionIdJsonPath.get("submissionId");
+
+    }
+
 }
