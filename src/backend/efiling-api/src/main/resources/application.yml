@@ -29,6 +29,10 @@ jag:
       baseUrl: ${NAVIGATION_BASE_URL:http://localhost:3000/efilinghub}
       csoBaseUrl: ${CSO_BASE_URL:http://localhost/cso}
     soap:
+      proxy:
+        basePath: ${CSO_BASEPATH}
+        username: ${CSO_USERNAME}
+        password: ${CSO_PASSWORD}
       clients:
         - client: ACCOUNT
           userName: ${CSO_ACCOUNTFACADE_USERNAME}
@@ -58,6 +62,10 @@ jag:
           userName: ${CSO_SERVICEFACADE_USERNAME}
           password: ${CSO_SERVICEFACADE_PASSWORD}
           uri: ${CSO_SERVICEFACADE_URI:http://localhost:8091}
+        - client: REPORT
+          userName: ${CSO_REPORTSERVICE_USERNAME}
+          password: ${CSO_REPORTSERVICE_PASSWORD}
+          uri: ${CSO_REPORTSERVICE_URI:http://localhost:8091}
 
 ceis:
   ceisBasePath: ${CEIS_BASE_PATH}

@@ -5,7 +5,7 @@ import ca.bc.gov.open.jag.efilingapi.api.model.CreateCsoAccountRequest;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 
-import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
+import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import org.junit.jupiter.api.DisplayName;
@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -52,8 +53,8 @@ public class FilingPackageConfigTest {
         }
 
         @Bean
-        public EfilingStatusService efilingStatusService() {
-            return new EfilingStatusService() {
+        public EfilingReviewService efilingReviewService() {
+            return new EfilingReviewService() {
                 @Override
                 public Optional<ReviewFilingPackage> findStatusByPackage(FilingPackageRequest filingPackageRequest) {
                     return Optional.empty();
@@ -62,6 +63,11 @@ public class FilingPackageConfigTest {
                 @Override
                 public List<ReviewFilingPackage> findStatusByClient(FilingPackageRequest filingPackageRequest) {
                     return new ArrayList<>();
+                }
+
+                @Override
+                public Optional<byte[]> getSubmissionSheet(BigDecimal packageNumber) {
+                    return Optional.empty();
                 }
             };
 
