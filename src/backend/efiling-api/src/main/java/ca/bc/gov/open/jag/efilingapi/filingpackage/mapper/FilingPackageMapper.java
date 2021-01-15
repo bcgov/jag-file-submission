@@ -29,7 +29,7 @@ public interface FilingPackageMapper {
     @Mapping(target = "court.classDescription", source = "court.classDescription")
     @Mapping(target = "submittedBy.firstName",  source = "firstName")
     @Mapping(target = "submittedBy.lastName",  source = "lastName")
-    @Mapping(target = "submittedDate", expression = "java(filingPackage.getSubmittedDate().toDateTimeISO().toString())")
+    @Mapping(target = "submittedDate", expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.toIsoDate(filingPackage.getSubmittedDate()))")
     @Mapping(target = "packageNumber", source = "packageNo")
     @Mapping(target = "filingComments", source = "filingCommentsTxt")
     FilingPackage toResponseFilingPackage(ReviewFilingPackage filingPackage);
@@ -40,7 +40,7 @@ public interface FilingPackageMapper {
     @Mapping(target = "type", source = "documentTypeCd")
     @Mapping(target = "status.description", source = "status")
     @Mapping(target = "status.code", source = "statusCode")
-    @Mapping(target = "status.changeDate", expression = "java(reviewDocument.getStatusDate().toDateTimeISO().toString())")
+    @Mapping(target = "status.changeDate", expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.toIsoDate(reviewDocument.getStatusDate()))")
     @Mapping(target = "paymentProcessed", source = "paymentProcessed")
     Document toDocument(ReviewDocument file);
 
@@ -58,7 +58,7 @@ public interface FilingPackageMapper {
     @Mapping(target = "processedAmount", source = "processedAmt")
     @Mapping(target = "submittedAmount", source = "submittedAmt")
     @Mapping(target = "serviceIdentifier", source = "serviceId")
-    @Mapping(target = "transactionDate", expression = "java(payment.getTransactionDtm().toDateTimeISO().toString())")
+    @Mapping(target = "transactionDate", expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.toIsoDate(payment.getTransactionDtm()))")
     Payment toPayment(PackagePayment payment);
 
 }
