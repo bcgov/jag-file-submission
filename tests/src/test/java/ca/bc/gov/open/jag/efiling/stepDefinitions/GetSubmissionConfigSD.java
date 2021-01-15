@@ -12,17 +12,12 @@ import io.restassured.response.Response;
 import io.restassured.specification.MultiPartSpecification;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.Assert;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.emptyString;
-import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertNotNull;
 
 public class GetSubmissionConfigSD {
 
@@ -61,8 +56,8 @@ public class GetSubmissionConfigSD {
 
         MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource,TEST_DOCUMENT_PDF, "text/application.pdf");
 
-        actualDocumentResponse = submissionService.documentUploadResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
-                actualUserIdentity.getAccessToken(), fileSpec );
+        actualDocumentResponse = submissionService.documentUploadResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
+                actualUserIdentity.getUniversalId(), fileSpec);
 
         actualSubmissionId = submissionService.getSubmissionId(actualDocumentResponse);
 
@@ -84,12 +79,13 @@ public class GetSubmissionConfigSD {
 
         JsonPath actualSubmissionDetailsJsonPath = new JsonPath(actualSubmissionDetailsResponse.asString());
 
-        assertThat(actualSubmissionDetailsJsonPath.get("clientAppName"), is(not(emptyString())));
-        assertThat(actualSubmissionDetailsJsonPath.get("csoBaseUrl"), is(not(emptyString())));
+        Assert.assertEquals("my app", actualSubmissionDetailsJsonPath.get("clientAppName"));
+        Assert.assertEquals("http://localhost/cso", actualSubmissionDetailsJsonPath.get("csoBaseUrl"));
 
-        assertNotNull(actualSubmissionDetailsJsonPath.get("navigationUrls.success"));
-        assertNotNull(actualSubmissionDetailsJsonPath.get("navigationUrls.error"));
-        assertNotNull(actualSubmissionDetailsJsonPath.get("navigationUrls.cancel"));
+
+        Assert.assertEquals("http//somewhere.com", actualSubmissionDetailsJsonPath.get("navigationUrls.success"));
+        Assert.assertEquals("http//somewhere.com", actualSubmissionDetailsJsonPath.get("navigationUrls.error"));
+        Assert.assertEquals("http//somewhere.com", actualSubmissionDetailsJsonPath.get("navigationUrls.cancel"));
 
         logger.info("Response matched requirements");
 
