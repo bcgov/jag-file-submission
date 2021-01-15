@@ -18,7 +18,8 @@ public enum ErrorResponse {
     URL_GENERATION_FAILURE("failed to generate bambora card update url."),
     INVALID_INITIAL_SUBMISSION_PAYLOAD("Initial Submission payload invalid, find more in the details array."),
     COURT_LOCATION_ERROR("Error while retrieving court locations."),
-    FILING_PACKAGE_NOT_FOUND("Requested filing package was not found.");
+    FILING_PACKAGE_NOT_FOUND("Requested filing package was not found."),
+    SUBMISSION_SHEET_NOT_FOUND("Requested submission sheet was not found.");
 
     private final String errorMessage;
 
