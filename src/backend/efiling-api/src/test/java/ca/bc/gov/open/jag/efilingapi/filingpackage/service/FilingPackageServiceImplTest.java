@@ -48,6 +48,7 @@ public class FilingPackageServiceImplTest {
     public static final String STATUS_CODE = "STATUSCODE";
     public static final String COMMENT = "COMMENT";
     public static final String PACKAGE_NO = "123";
+    public static final String EXPECTED_ISO = "2020-05-05T00:00:00.000-07:00";
     FilingPackageServiceImpl sut;
 
     @Mock
@@ -83,6 +84,7 @@ public class FilingPackageServiceImplTest {
         Assertions.assertNotNull(result.get().getSubmittedDate());
         Assertions.assertEquals(FIRST_NAME, result.get().getSubmittedBy().getFirstName());
         Assertions.assertEquals(LAST_NAME, result.get().getSubmittedBy().getLastName());
+        Assertions.assertEquals(EXPECTED_ISO, result.get().getSubmittedDate());
 
         //Court
         Assertions.assertEquals(CLASS_DESCRIPTION, result.get().getCourt().getClassDescription());
@@ -109,6 +111,7 @@ public class FilingPackageServiceImplTest {
         Assertions.assertEquals(STATUS, result.get().getDocuments().get(0).getStatus().getDescription());
         Assertions.assertEquals(STATUS_CODE, result.get().getDocuments().get(0).getStatus().getCode());
         Assertions.assertNotNull(result.get().getDocuments().get(0).getStatus().getChangeDate());
+        Assertions.assertEquals(EXPECTED_ISO, result.get().getDocuments().get(0).getStatus().getChangeDate());
         //Payments
         Assertions.assertEquals(1, result.get().getPayments().size());
         Assertions.assertEquals(false, result.get().getPayments().get(0).getFeeExempt());
@@ -116,6 +119,7 @@ public class FilingPackageServiceImplTest {
         Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(0).getProcessedAmount());
         Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(0).getServiceIdentifier());
         Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(0).getPaymentCategory());
+        Assertions.assertEquals(EXPECTED_ISO, result.get().getPayments().get(0).getTransactionDate());
         Assertions.assertNotNull(result.get().getPayments().get(0).getTransactionDate());
 
     }
