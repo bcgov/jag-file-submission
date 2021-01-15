@@ -1,7 +1,8 @@
 import React from "react";
 import axios from "axios";
+import FileSaver from "file-saver";
 import { createMemoryHistory } from "history";
-import { render, fireEvent, getByText } from "@testing-library/react";
+import { render, waitFor, fireEvent, getByText } from "@testing-library/react";
 
 import MockAdapter from "axios-mock-adapter";
 import PackageReview from "./PackageReview";
@@ -22,6 +23,8 @@ describe("PackageReview Component", () => {
     packageId,
   };
 
+  FileSaver.saveAs = jest.fn();
+
   let mock;
   beforeEach(() => {
     mock = new MockAdapter(axios);
@@ -30,21 +33,23 @@ describe("PackageReview Component", () => {
 
   const apiRequest = `/filingpackage/${packageId}`;
 
-  test("Matches the snapshot", () => {
+  test("Matches the snapshot", async () => {
     const { asFragment } = render(<PackageReview page={page} />);
+    await waitFor(() => {});
 
     expect(asFragment()).toMatchSnapshot();
   });
 
-  test("Clicking cancel takes user back to parent app", () => {
+  test("Clicking cancel takes user back to parent app", async () => {
     const { container } = render(<PackageReview page={page} />);
+    await waitFor(() => {});
 
     fireEvent.click(getByText(container, "Cancel and Return to Parent App"));
 
     expect(window.open).toHaveBeenCalledWith("http://google.com", "_self");
   });
 
-  test("Api is called successfully when page loads with valid packageId", async () => {
+  test("Api called successfully when page loads with valid packageId", async () => {
     window.open = jest.fn();
     mock.onGet(apiRequest).reply(200, {
       court: courtData,
@@ -55,11 +60,12 @@ describe("PackageReview Component", () => {
     const spy = jest.spyOn(axios, "get");
 
     render(<PackageReview page={page} />);
+    await waitFor(() => {});
 
     expect(spy).toHaveBeenCalled();
   });
 
-  test("Api is called, missing or invalid response data", async () => {
+  test("Api called, empty response data", async () => {
     window.open = jest.fn();
     mock.onGet(apiRequest).reply(200, {
       court: {},
@@ -70,47 +76,124 @@ describe("PackageReview Component", () => {
     const spy = jest.spyOn(axios, "get");
 
     render(<PackageReview page={page} />);
+    await waitFor(() => {});
 
     expect(spy).toHaveBeenCalled();
   });
 
-  test("Api is called, missing or invalid response data", async () => {
+  test("Api called, invalid submittedBy", async () => {
     window.open = jest.fn();
     mock.onGet(apiRequest).reply(200, {
       court: courtData,
       submittedBy: { firstName: "Bob" },
-      submittedDate: "invalidISOString",
+      submittedDate,
     });
 
     const spy = jest.spyOn(axios, "get");
 
     render(<PackageReview page={page} />);
+    await waitFor(() => {});
 
     expect(spy).toHaveBeenCalled();
   });
 
-  test("Api is called, missing or invalid response data", async () => {
+  test("Api called, invalid submittedDate", async () => {
     window.open = jest.fn();
     mock.onGet(apiRequest).reply(200, {
       court: courtData,
-      submittedDate: "invalidISOString",
+      submittedDate: "123",
     });
 
     const spy = jest.spyOn(axios, "get");
 
     render(<PackageReview page={page} />);
+    await waitFor(() => {});
 
     expect(spy).toHaveBeenCalled();
   });
 
-  test("Api is called, missing or invalid response data", async () => {
+  test("Api called, missing response data", async () => {
     window.open = jest.fn();
     mock.onGet(apiRequest).reply(200);
 
     const spy = jest.spyOn(axios, "get");
 
     render(<PackageReview page={page} />);
+    await waitFor(() => {});
 
     expect(spy).toHaveBeenCalled();
+  });
+
+  test("View Submission Sheet (on click) - successful", async () => {
+    const blob = new Blob(["foo", "bar"]);
+
+    global.URL.createObjectURL = jest.fn();
+    global.URL.createObjectURL.mockReturnValueOnce("fileurl.com");
+
+    window.open = jest.fn();
+    mock.onGet(apiRequest).reply(200, {
+      court: courtData,
+      submittedBy,
+      submittedDate,
+    });
+    mock
+      .onGet(`/filingpackage/${packageId}/submissionSheet`)
+      .reply(200, { blob });
+
+    const { container } = render(<PackageReview page={page} />);
+    await waitFor(() => {});
+
+    fireEvent.click(getByText(container, "Print Submission Sheet"));
+    await waitFor(() => {});
+
+    expect(FileSaver.saveAs).toHaveBeenCalled();
+  });
+
+  test("View Submission Sheet (on keyDown) - successful", async () => {
+    const blob = new Blob(["foo", "bar"]);
+
+    global.URL.createObjectURL = jest.fn();
+    global.URL.createObjectURL.mockReturnValueOnce("fileurl.com");
+
+    window.open = jest.fn();
+    mock.onGet(apiRequest).reply(200, {
+      court: courtData,
+      submittedBy,
+      submittedDate,
+    });
+    mock
+      .onGet(`/filingpackage/${packageId}/submissionSheet`)
+      .reply(200, { blob });
+
+    const { container } = render(<PackageReview page={page} />);
+    await waitFor(() => {});
+
+    fireEvent.keyDown(getByText(container, "Print Submission Sheet"));
+    await waitFor(() => {});
+
+    expect(FileSaver.saveAs).toHaveBeenCalled();
+  });
+
+  test("View Submission Sheet (on click) - unsuccessful", async () => {
+    sessionStorage.setItem("errorUrl", "error.com");
+
+    window.open = jest.fn();
+    mock
+      .onGet(apiRequest)
+      .reply(200, { court: courtData, submittedBy, submittedDate });
+    mock
+      .onGet(`/filingpackage/${packageId}/submissionSheet`)
+      .reply(400, { message: "There was an error." });
+
+    const { container } = render(<PackageReview page={page} />);
+    await waitFor(() => {});
+
+    fireEvent.click(getByText(container, "Print Submission Sheet"));
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalledWith(
+      "error.com?status=400&message=There was an error.",
+      "_self"
+    );
   });
 });

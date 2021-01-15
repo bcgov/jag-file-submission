@@ -1,10 +1,30 @@
 import React, { useEffect, useState } from "react";
+import FileSaver from "file-saver";
 import moment from "moment";
 import PropTypes from "prop-types";
 import { Header, Footer, Button, Table, Alert } from "shared-components";
 import { MdCancel } from "react-icons/md";
 import axios from "axios";
 import { propTypes } from "../../../types/propTypes";
+import { errorRedirect } from "../../../modules/helpers/errorRedirect";
+
+import "./PackageReview.css";
+
+const downloadSubmissionSheet = (packageId) => {
+  axios
+    .get(`/filingpackage/${packageId}/submissionSheet`, {
+      responseType: "blob",
+    })
+    .then((response) => {
+      const fileData = new Blob([response.data], { type: "application/pdf" });
+      const fileUrl = URL.createObjectURL(fileData);
+
+      FileSaver.saveAs(fileUrl, "SubmissionSheet.pdf");
+    })
+    .catch((error) => {
+      errorRedirect(sessionStorage.getItem("errorUrl"), error);
+    });
+};
 
 export default function PackageReview({ page: { header, packageId } }) {
   const [error, setError] = useState(false);
@@ -113,10 +133,10 @@ export default function PackageReview({ page: { header, packageId } }) {
     <main>
       <Header header={header} />
       <div className="page">
-        <div className="content col-md-12">
+        <div className="content col-md-8">
           <h1>View Submitted Package</h1>
           {error && (
-            <div className="col-md-12">
+            <div className="col-md-8">
               <Alert
                 icon={<MdCancel size={24} />}
                 type="error"
@@ -126,7 +146,22 @@ export default function PackageReview({ page: { header, packageId } }) {
             </div>
           )}
           <br />
-          <h2>Package Details</h2>
+          <div className="row">
+            <h2 className="col-sm-6">Package Details</h2>
+            <div className="col-sm-6 text-right">
+              <span
+                  onKeyDown={() => downloadSubmissionSheet(packageId)}
+                  role="button"
+                  tabIndex={0}
+                  className="file-href"
+                  onClick={() => downloadSubmissionSheet(packageId)}
+                  data-test-id="uploaded-file"
+                >
+                Print Submission Sheet
+              </span>
+              <img src="/efilinghub/images/eye_icon.svg" height="24" width="24" className="align-icon" />
+            </div>
+          </div>
           <br />
           <div className="row">
             <div className="col-sm-12 col-lg-6">
