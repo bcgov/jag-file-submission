@@ -150,16 +150,22 @@ export default function PackageReview({ page: { header, packageId } }) {
             <h2 className="col-sm-6">Package Details</h2>
             <div className="col-sm-6 text-right">
               <span
-                  onKeyDown={() => downloadSubmissionSheet(packageId)}
-                  role="button"
-                  tabIndex={0}
-                  className="file-href"
-                  onClick={() => downloadSubmissionSheet(packageId)}
-                  data-test-id="uploaded-file"
-                >
+                onKeyDown={() => downloadSubmissionSheet(packageId)}
+                role="button"
+                tabIndex={0}
+                className="file-href"
+                onClick={() => downloadSubmissionSheet(packageId)}
+                data-test-id="uploaded-file"
+              >
                 Print Submission Sheet
               </span>
-              <img src="/efilinghub/images/eye_icon.svg" height="24" width="24" className="align-icon" />
+              <img
+                src="/efilinghub/images/eye_icon.svg"
+                alt=""
+                height="24"
+                width="24"
+                className="align-icon"
+              />
             </div>
           </div>
           <br />

@@ -104,6 +104,7 @@ exports[`Storyshots PackageReview Default 1`] = `
               Print Submission Sheet
             </span>
             <img
+              alt=""
               class="align-icon"
               height="24"
               src="/efilinghub/images/eye_icon.svg"
@@ -437,6 +438,7 @@ exports[`Storyshots PackageReview Mobile 1`] = `
               Print Submission Sheet
             </span>
             <img
+              alt=""
               class="align-icon"
               height="24"
               src="/efilinghub/images/eye_icon.svg"
