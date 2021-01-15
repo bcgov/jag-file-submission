@@ -1,3 +1,4 @@
+/* eslint-disable */
 REACT_APP_KEYCLOAK_REALM = "Efiling-Hub";
 REACT_APP_KEYCLOAK_CLIENT_ID = "efiling-frontend";
 REACT_APP_KEYCLOAK_URL = "http://localhost:8081/auth";
