@@ -407,6 +407,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FilingPackage"
+  "/filingpackage/{packageIdentifier}/submissionSheet":
+    get:
+      summary: Get submission sheet for package
+      operationId: GetSubmissionSheet
+      description: get submission sheet file from cso
+      tags:
+        - filingPackage
+      parameters:
+        - name: packageIdentifier
+          in: path
+          description: package identifier
+          required: true
+          schema:
+            type: number
+      responses:
+        "200":
+          description: File was returned
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: file not found
 components:
   securitySchemes:
     bearerAuth: # arbitrary name for the security scheme
