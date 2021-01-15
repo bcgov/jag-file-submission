@@ -31,6 +31,7 @@ public class GetSubmissionConfigSD {
 
 
     private static final String TEST_DOCUMENT_PDF = "test-document.pdf";
+    private static String CONFIG_PATH = "config";
 
     private UUID actualTransactionId;
     private Response actualDocumentResponse;
@@ -71,7 +72,8 @@ public class GetSubmissionConfigSD {
                 actualUserIdentity.getAccessToken(), actualSubmissionId);
 
 
-        actualSubmissionDetailsResponse = submissionService.getSubmissionDetailsResponse(actualUserIdentity.getAccessToken(),actualTransactionId, actualSubmissionId);
+        actualSubmissionDetailsResponse = submissionService.getSubmissionDetailsResponse(actualUserIdentity.getAccessToken(),actualTransactionId,
+                                                                                                actualSubmissionId, CONFIG_PATH);
 
         logger.info("Api response: {}", actualSubmissionDetailsResponse.asString());
 

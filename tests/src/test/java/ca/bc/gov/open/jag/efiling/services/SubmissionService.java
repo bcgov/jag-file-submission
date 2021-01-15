@@ -16,8 +16,6 @@ public class SubmissionService {
     @Value("${EFILING_HOST:http://localhost:8080}")
     private String eFilingHost;
 
-    private static String CONFIG_PATH = "config";
-
     private Logger logger = LoggerFactory.getLogger(SubmissionService.class);
 
     public Response documentUploadResponse(UUID transactionId, String universalId, String accessToken, MultiPartSpecification fileSpec) {
@@ -47,12 +45,12 @@ public class SubmissionService {
 
     }
 
-    public Response getSubmissionDetailsResponse(String accessToken, UUID transactionId, String submissionId) {
+    public Response getSubmissionDetailsResponse(String accessToken, UUID transactionId, String submissionId, String path) {
 
         logger.info("Requesting submission information");
 
         Response submissionResponse = SubmissionHelper.getSubmissionDetailsRequest(accessToken, transactionId,
-                                                                                            submissionId, CONFIG_PATH);
+                                                                                            submissionId, path);
 
         logger.info("submissionResponse returned with http status: {}", submissionResponse.getStatusCode());
 
