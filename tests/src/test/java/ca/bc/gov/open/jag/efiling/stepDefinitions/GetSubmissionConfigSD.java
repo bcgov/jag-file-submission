@@ -26,6 +26,7 @@ public class GetSubmissionConfigSD {
 
 
     private static final String TEST_DOCUMENT_PDF = "test-document.pdf";
+    private static final String RESPONSE_NAVIGATION_URL = "http//somewhere.com";
 
     private UUID actualTransactionId;
     private Response actualDocumentResponse;
@@ -83,9 +84,9 @@ public class GetSubmissionConfigSD {
         Assert.assertEquals("http://localhost/cso", actualSubmissionDetailsJsonPath.get("csoBaseUrl"));
 
 
-        Assert.assertEquals("http//somewhere.com", actualSubmissionDetailsJsonPath.get("navigationUrls.success"));
-        Assert.assertEquals("http//somewhere.com", actualSubmissionDetailsJsonPath.get("navigationUrls.error"));
-        Assert.assertEquals("http//somewhere.com", actualSubmissionDetailsJsonPath.get("navigationUrls.cancel"));
+        Assert.assertEquals(RESPONSE_NAVIGATION_URL, actualSubmissionDetailsJsonPath.get("navigationUrls.success"));
+        Assert.assertEquals(RESPONSE_NAVIGATION_URL, actualSubmissionDetailsJsonPath.get("navigationUrls.error"));
+        Assert.assertEquals(RESPONSE_NAVIGATION_URL, actualSubmissionDetailsJsonPath.get("navigationUrls.cancel"));
 
         logger.info("Response matched requirements");
 
