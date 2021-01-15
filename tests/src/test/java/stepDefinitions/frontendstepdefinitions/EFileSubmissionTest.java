@@ -7,8 +7,6 @@ import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.DocumentUploadPage;
 import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.EFileSubmissionPage;
 import ca.bc.gov.open.jagefilingapi.qa.frontend.pages.PackageConfirmationPage;
 import com.google.common.collect.ImmutableList;
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -33,14 +31,12 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
     private static final String SECOND_PDF_PATH = "/src/test/java/testdatasource/test-document-2.pdf";
     private final List<String> expectedUploadedFilesList = ImmutableList.of("data/test-document.pdf", "test-document-2.pdf");
 
-    @Before
     public void setUp() {
         TestUtil testUtil = new TestUtil();
         testUtil.restAssuredConfig();
         driverSetUp();
     }
 
-    @After
     public void tearDown(Scenario scenario) {
         if (scenario.isFailed()) {
             String testName = scenario.getName();
