@@ -8,7 +8,7 @@ import { propTypes } from "../../../types/propTypes";
 
 export default function PackageReview({ page: { header, packageId } }) {
   const [error, setError] = useState(false);
-  const [packageNoDetails, setPackageNoDetails] = useState([
+  const [packageDetails, setPackageDetails] = useState([
     {
       name: "Package Number:",
       value: "",
@@ -44,23 +44,23 @@ export default function PackageReview({ page: { header, packageId } }) {
       .get(`filingpackage/${packageId}`)
       .then((response) => {
         try {
-          const packageNo = response.data.packageNumber || "n/a";
-          let submittedBy = "n/a";
+          const packageNo = response.data.packageNumber || "";
+          let submittedBy = "";
           if (response.data.submittedBy.firstName) {
             if (response.data.submittedBy.lastName) {
               submittedBy = `${response.data.submittedBy.firstName} ${response.data.submittedBy.lastName}`;
             }
           }
-          let submittedDt = "n/a";
+          let submittedDt = "";
           if (response.data.submittedDate) {
             submittedDt = moment(response.data.submittedDate).format(
               "DD-MMM-YYYY HH:MM"
             );
           }
-          const fileNumber = response.data.court.fileNumber || "n/a";
-          const submittedTo = response.data.court.location || "n/a";
-          const filingComments = response.data.filingComments || "n/a";
-          setPackageNoDetails([
+          const fileNumber = response.data.court.fileNumber || "";
+          const submittedTo = response.data.court.location || "";
+          const filingComments = response.data.filingComments || "";
+          setPackageDetails([
             {
               name: "Package Number:",
               value: `${packageNo}`,
@@ -130,7 +130,7 @@ export default function PackageReview({ page: { header, packageId } }) {
           <br />
           <div className="row">
             <div className="col-sm-12 col-lg-6">
-              <Table elements={packageNoDetails} />
+              <Table elements={packageDetails} />
             </div>
             <div className="col-sm-12 col-lg-6">
               <Table elements={courtFileDetails} />
