@@ -37,7 +37,6 @@ public class GetSubmissionConfigSD {
     private String actualSubmissionId;
     private UserIdentity actualUserIdentity;
     private Response actualSubmissionDetailsResponse;
-    private Response actualGenerateUrlResponse;
 
     public Logger logger = LogManager.getLogger(GetSubmissionConfigSD.class);
 
@@ -67,8 +66,9 @@ public class GetSubmissionConfigSD {
 
         actualSubmissionId = submissionService.getSubmissionId(actualDocumentResponse);
 
-        actualGenerateUrlResponse = submissionService.generateUrlResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
-                actualUserIdentity.getAccessToken(),TEST_DOCUMENT_PDF, actualSubmissionId);
+        // Generate Url Response
+       submissionService.generateUrlResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
+                actualUserIdentity.getAccessToken(), actualSubmissionId);
 
 
         actualSubmissionDetailsResponse = submissionService.getSubmissionDetailsResponse(actualUserIdentity.getAccessToken(),actualTransactionId, actualSubmissionId);
