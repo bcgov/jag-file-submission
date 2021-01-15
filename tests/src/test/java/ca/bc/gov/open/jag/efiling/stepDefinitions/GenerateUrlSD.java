@@ -66,8 +66,8 @@ public class GenerateUrlSD {
 
         MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource,TEST_DOCUMENT_PDF, "text/application.pdf");
 
-        actualDocumentResponse = submissionService.documentUploadResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
-                                                                    actualUserIdentity.getAccessToken(), fileSpec );
+        actualDocumentResponse = submissionService.documentUploadResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
+                                                                                actualUserIdentity.getUniversalId(), fileSpec );
 
 
        logger.info("Api response status code: {}", actualDocumentResponse.getStatusCode());
