@@ -49,4 +49,17 @@ public class SecurityUtils {
             return Optional.empty();
         }
     }
+
+    public static boolean isEarlyAdopter() {
+        return isInRole("early-adopters");
+    }
+
+    public static boolean isInRole(String role) {
+        try {
+            return ((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+                    .getKeycloakSecurityContext().getToken().getResourceAccess(Keys.EFILING_API_NAME).isUserInRole(role);
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

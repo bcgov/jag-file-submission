@@ -9,6 +9,7 @@ services:
     container_name: efiling-frontend
     build:
       context: ./src/frontend
+      dockerfile: Dockerfile.legacy
       args:
         - SERVICE_NAME=efiling-frontend
     ports:
@@ -33,11 +34,6 @@ services:
         - SERVICE_NAME=efiling-demo
     ports:
       - 3001:3000
-    environment:
-      - REACT_APP_KEYCLOAK_REALM=${KEYCLOAK_REALM:-Efiling-Hub}
-      - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-admin
-      - REACT_APP_KEYCLOAK_URL=${KEYCLOAK_URL:-http://localhost:8081/auth}
-      - REACT_APP_API_BASE_URL=http://localhost:8080
 
   #############################################################################################
   ###                           Efiling api backend app                                     ###
@@ -148,7 +144,6 @@ services:
   # #############################################################################################
   # ###                                        KEYCLOAK                                       ###
   # #############################################################################################
-  # TODO: Removed this KeyCloak as we're currently pointing to client side dev keycloak (pathfinder)
   keycloak:
     image: quay.io/keycloak/keycloak
     environment:
@@ -158,7 +153,7 @@ services:
       KEYCLOAK_IMPORT: /tmp/realm-export.json
       KEYCLOAK_FRONTEND_URL: http://localhost:8081/auth
     volumes:
-      - .settings/keycloak/realm-export.json:/tmp/realm-export.json
+      - ./infrastructure/keycloak/realm-export.json:/tmp/realm-export.json
     ports:
       - 8081:8080
     networks:
@@ -169,7 +164,7 @@ services:
   # #############################################################################################
   keycloak-config:
     build:
-      context: ./.settings/keycloak
+      context: ./infrastructure/keycloak
       args:
         - KEYCLOAK_URL=http://keycloak:8080
     command: sh -c "dockerize -wait http://keycloak:8080 -timeout 300s -wait-retry-interval 10s /tmp/createuser.sh"

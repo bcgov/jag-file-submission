@@ -9,13 +9,14 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class EfilingStatusServiceDemoImplTest {
+public class EfilingReviewServiceDemoImplTest {
     public static final String DESCRIPTION = "DESCRIPTION";
-    EfilingStatusServiceDemoImpl sut;
+    public static final String COMMENTS = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+    EfilingReviewServiceDemoImpl sut;
 
     @BeforeAll
     public void setup() {
-        sut = new EfilingStatusServiceDemoImpl();
+        sut = new EfilingReviewServiceDemoImpl();
     }
 
     @Test
@@ -31,6 +32,8 @@ public class EfilingStatusServiceDemoImplTest {
         Assertions.assertFalse(result.get().getHasRegistryNotice());
         Assertions.assertEquals("1", result.get().getPackageNo());
         Assertions.assertEquals(DateTime.parse("2020-5-5"), result.get().getSubmittedDate());
+        Assertions.assertEquals(COMMENTS, result.get().getFilingCommentsTxt());
+
         //Court
         Assertions.assertEquals("F", result.get().getCourt().getCourtClass());
         Assertions.assertEquals("P", result.get().getCourt().getLevel());
@@ -43,6 +46,7 @@ public class EfilingStatusServiceDemoImplTest {
         Assertions.assertEquals(DESCRIPTION, result.get().getCourt().getLocationDescription());
         Assertions.assertEquals(DESCRIPTION, result.get().getCourt().getLevelDescription());
         Assertions.assertEquals(DESCRIPTION, result.get().getCourt().getClassDescription());
+        Assertions.assertEquals("123", result.get().getCourt().getFileNumber());
         Assertions.assertFalse(result.get().getCourt().getExistingFileYN());
 
         Assertions.assertEquals(1, result.get().getDocuments().size());
@@ -92,5 +96,12 @@ public class EfilingStatusServiceDemoImplTest {
 
         Assertions.assertFalse(sut.findStatusByPackage(new FilingPackageRequest(BigDecimal.ZERO, BigDecimal.ZERO)).isPresent());
 
+    }
+
+    @Test
+    @DisplayName("OK: demo returns a one element array")
+    public void withRequestReturnOneElementArray() {
+
+        Assertions.assertEquals(1, sut.findStatusByClient(new FilingPackageRequest(BigDecimal.ONE, BigDecimal.ONE)).size());
     }
 }

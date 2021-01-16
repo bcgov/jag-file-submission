@@ -3,11 +3,13 @@ package ca.bc.gov.open.jag.efiling;
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
+import org.springframework.context.annotation.ComponentScan;
 
+@ComponentScan
 @RunWith(Cucumber.class)
 @CucumberOptions(
          features = {"src/test/resources"},
-         glue ={"ca.bc.gov.open.jag.efiling.stepDefinitions"},
+         glue ={"ca.bc.gov.open.jag.efiling"},
          monochrome = true,
          plugin = {
                  "pretty",

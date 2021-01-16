@@ -2,7 +2,7 @@ package ca.bc.gov.open.jag.efilingcsostarter.config;
 
 
 import ca.bc.gov.open.jag.efilingcommons.service.*;
-import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
+import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.AccountDetailsMapper;
 import org.junit.jupiter.api.BeforeAll;
@@ -53,7 +53,11 @@ public class AutoConfigurationTest {
                         "jag.efiling.soap.clients[6].client=SERVICE",
                         "jag.efiling.soap.clients[6].userName=username",
                         "jag.efiling.soap.clients[6].password=password",
-                        "jag.efiling.soap.clients[6].uri=http://locahost")
+                        "jag.efiling.soap.clients[6].uri=http://locahost",
+                        "jag.efiling.soap.clients[7].client=REPORT",
+                        "jag.efiling.soap.clients[7].userName=username",
+                        "jag.efiling.soap.clients[7].password=password",
+                        "jag.efiling.soap.clients[7].uri=http://locahost")
                 .withUserConfiguration(CsoProperties.class);
     }
 
@@ -67,7 +71,7 @@ public class AutoConfigurationTest {
             assertThat(it).hasSingleBean(EfilingLookupService.class);
             assertThat(it).hasSingleBean(EfilingCourtService.class);
             assertThat(it).hasSingleBean(EfilingSubmissionService.class);
-            assertThat(it).hasSingleBean(EfilingStatusService.class);
+            assertThat(it).hasSingleBean(EfilingReviewService.class);
             assertThat(it).hasSingleBean(AccountDetailsMapper.class);
         });
 

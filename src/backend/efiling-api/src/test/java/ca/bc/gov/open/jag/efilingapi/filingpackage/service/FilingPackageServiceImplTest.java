@@ -6,22 +6,18 @@ import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.mapper.FilingPackageMapperImpl;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.Court;
-import ca.bc.gov.open.jag.efilingcommons.model.Document;
 import ca.bc.gov.open.jag.efilingcommons.model.Party;
-import ca.bc.gov.open.jag.efilingcommons.submission.EfilingStatusService;
+import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.PackagePayment;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewCourt;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
-import org.mapstruct.Mapping;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.security.core.parameters.P;
 
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -52,10 +48,11 @@ public class FilingPackageServiceImplTest {
     public static final String STATUS_CODE = "STATUSCODE";
     public static final String COMMENT = "COMMENT";
     public static final String PACKAGE_NO = "123";
+    public static final String EXPECTED_ISO = "2020-05-05T00:00:00.000-07:00";
     FilingPackageServiceImpl sut;
 
     @Mock
-    EfilingStatusService efilingStatusServiceMock;
+    EfilingReviewService efilingReviewServiceMock;
 
     @Mock
     AccountService accountServiceMock;
@@ -69,14 +66,14 @@ public class FilingPackageServiceImplTest {
 
         Mockito.when(accountServiceMock.getCsoAccountDetails(ArgumentMatchers.eq(TestHelpers.CASE_2))).thenReturn(createAccount(null));
 
-        sut = new FilingPackageServiceImpl(efilingStatusServiceMock, accountServiceMock, new FilingPackageMapperImpl());
+        sut = new FilingPackageServiceImpl(efilingReviewServiceMock, accountServiceMock, new FilingPackageMapperImpl());
     }
 
     @Test
     @DisplayName("Ok: a filing package was returned")
     public void withValidRequestReturnFilingPackage() {
 
-        Mockito.when(efilingStatusServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.of(createFilingPackage()));
+        Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.of(createFilingPackage()));
 
         Optional<FilingPackage> result = sut.getCSOFilingPackage(TestHelpers.CASE_1, BigDecimal.ONE);
 
@@ -85,6 +82,9 @@ public class FilingPackageServiceImplTest {
         Assertions.assertEquals(COMMENT, result.get().getFilingComments());
         Assertions.assertEquals(new BigDecimal(PACKAGE_NO), result.get().getPackageNumber());
         Assertions.assertNotNull(result.get().getSubmittedDate());
+        Assertions.assertEquals(FIRST_NAME, result.get().getSubmittedBy().getFirstName());
+        Assertions.assertEquals(LAST_NAME, result.get().getSubmittedBy().getLastName());
+        Assertions.assertEquals(EXPECTED_ISO, result.get().getSubmittedDate());
 
         //Court
         Assertions.assertEquals(CLASS_DESCRIPTION, result.get().getCourt().getClassDescription());
@@ -111,6 +111,7 @@ public class FilingPackageServiceImplTest {
         Assertions.assertEquals(STATUS, result.get().getDocuments().get(0).getStatus().getDescription());
         Assertions.assertEquals(STATUS_CODE, result.get().getDocuments().get(0).getStatus().getCode());
         Assertions.assertNotNull(result.get().getDocuments().get(0).getStatus().getChangeDate());
+        Assertions.assertEquals(EXPECTED_ISO, result.get().getDocuments().get(0).getStatus().getChangeDate());
         //Payments
         Assertions.assertEquals(1, result.get().getPayments().size());
         Assertions.assertEquals(false, result.get().getPayments().get(0).getFeeExempt());
@@ -118,6 +119,7 @@ public class FilingPackageServiceImplTest {
         Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(0).getProcessedAmount());
         Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(0).getServiceIdentifier());
         Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(0).getPaymentCategory());
+        Assertions.assertEquals(EXPECTED_ISO, result.get().getPayments().get(0).getTransactionDate());
         Assertions.assertNotNull(result.get().getPayments().get(0).getTransactionDate());
 
     }
@@ -135,7 +137,7 @@ public class FilingPackageServiceImplTest {
     @DisplayName("Not found: no filing package")
     public void withValidRequestButMissingPackageReturnEmpty() {
 
-        Mockito.when(efilingStatusServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.empty());
+        Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.empty());
 
         Optional<FilingPackage> result = sut.getCSOFilingPackage(TestHelpers.CASE_1, BigDecimal.TEN);
 
@@ -161,6 +163,8 @@ public class FilingPackageServiceImplTest {
         reviewFilingPackage.setClientFileNo("CLIENTFILENO");
         reviewFilingPackage.setFilingCommentsTxt(COMMENT);
         reviewFilingPackage.setPackageNo(PACKAGE_NO);
+        reviewFilingPackage.setFirstName(FIRST_NAME);
+        reviewFilingPackage.setLastName(LAST_NAME);
         reviewFilingPackage.setSubmittedDate(DateTime.parse("2020-05-05T00:00:00.000-07:00"));
         reviewFilingPackage.setCourt(createCourt());
         reviewFilingPackage.setDocuments(Collections.singletonList(createDocument()));

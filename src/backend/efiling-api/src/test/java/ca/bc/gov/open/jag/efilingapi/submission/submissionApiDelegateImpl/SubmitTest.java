@@ -86,10 +86,13 @@ public class SubmitTest {
     @Mock
     private GenerateUrlRequestValidator generateUrlRequestValidator;
 
+    @Mock
+    private AccessToken.Access resourceAccessMock;
+
     @BeforeAll
     public void setUp() {
 
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
 
         Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);
         Mockito.when(authenticationMock.getPrincipal()).thenReturn(keycloakPrincipalMock);
@@ -134,11 +137,11 @@ public class SubmitTest {
         result.setPackageRef("packageref");
 
         Mockito
-                .when(submissionServiceMock.createSubmission(Mockito.refEq(submissionExists), Mockito.any()))
+                .when(submissionServiceMock.createSubmission(Mockito.refEq(submissionExists), Mockito.any(), Mockito.any()))
                 .thenReturn(result);
 
-        Mockito.doThrow(EfilingSubmissionServiceException.class).when(submissionServiceMock).createSubmission(ArgumentMatchers.argThat(x -> x.getId().equals(TestHelpers.CASE_2)), Mockito.any());
-        Mockito.doThrow(EfilingPaymentException.class).when(submissionServiceMock).createSubmission(ArgumentMatchers.argThat(x -> x.getId().equals(TestHelpers.CASE_4)), Mockito.any());
+        Mockito.doThrow(EfilingSubmissionServiceException.class).when(submissionServiceMock).createSubmission(ArgumentMatchers.argThat(x -> x.getId().equals(TestHelpers.CASE_2)), Mockito.any(), Mockito.any());
+        Mockito.doThrow(EfilingPaymentException.class).when(submissionServiceMock).createSubmission(ArgumentMatchers.argThat(x -> x.getId().equals(TestHelpers.CASE_4)), Mockito.any(), Mockito.any());
 
         FilingPackageMapper filingPackageMapper = new FilingPackageMapperImpl();
         sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationPropertiesMock, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper, generateUrlRequestValidator);
@@ -146,8 +149,24 @@ public class SubmitTest {
     }
 
     @Test
-    @DisplayName("201: With valid request should return created and service id")
-    public void withUserHavingValidRequestShouldReturnOk() {
+    @DisplayName("201: With valid request should return created and service id not early adopter")
+    public void withUserHavingValidRequestShouldReturnCreated() {
+
+        Map<String, Object> otherClaims = new HashMap<>();
+        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
+        Mockito.when(resourceAccessMock.isUserInRole(ArgumentMatchers.eq("early-adopters"))).thenReturn(true);
+        Mockito.when(tokenMock.getResourceAccess(ArgumentMatchers.eq(Keys.EFILING_API_NAME))).thenReturn(resourceAccessMock);
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
+        ResponseEntity<SubmitResponse> actual = sut.submit(UUID.randomUUID(), TestHelpers.CASE_1, null);
+        assertEquals(HttpStatus.CREATED, actual.getStatusCode());
+        assertEquals("packageref", actual.getBody().getPackageRef());
+
+    }
+
+    @Test
+    @DisplayName("201: With valid request should return created and service id early adopter")
+    public void withUserHavingValidRequestEarlyAdopterShouldReturnCreated() {
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
