@@ -852,6 +852,22 @@
             "claim.name": "universal-id",
             "jsonType.label": "String"
           }
+        },
+        {
+          "id": "4ca6d182-e816-469d-8933-ab81814625ac",
+          "name": "application-code",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-hardcoded-claim-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.value": "DEMO",
+            "userinfo.token.claim": "true",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "cso-application-code",
+            "jsonType.label": "String",
+            "access.tokenResponse.claim": "false"
+          }
         }
       ],
       "defaultClientScopes": [
