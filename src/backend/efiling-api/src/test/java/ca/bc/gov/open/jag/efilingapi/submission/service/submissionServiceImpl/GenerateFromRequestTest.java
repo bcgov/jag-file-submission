@@ -44,6 +44,7 @@ import static org.mockito.ArgumentMatchers.any;
 public class GenerateFromRequestTest {
 
     public static final String CLIENT_APP_NAME = "clientAppName";
+    public static final String APP_CODE = "CODE";
 
     private SubmissionServiceImpl sut;
 
@@ -69,9 +70,9 @@ public class GenerateFromRequestTest {
     private EfilingSubmissionService efilingSubmissionServiceMock;
 
     @BeforeAll
-    public void setUp() throws DatatypeConfigurationException {
+    public void beforeAll() throws DatatypeConfigurationException {
 
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
 
         ServiceFees fee = new ServiceFees( BigDecimal.valueOf(7.00), "DCFL");
         Mockito.doReturn(fee)
@@ -109,7 +110,7 @@ public class GenerateFromRequestTest {
         Mockito.when(efilingCourtService.checkValidCourtFileNumber(any(), any(), any(), any(), any())).thenReturn(true);
         Mockito.when(efilingDocumentService.getDocumentTypes(any(), any())).thenReturn(TestHelpers.createValidDocumentTypesList());
 
-        Submission actual = sut.generateFromRequest(new SubmissionKey(TestHelpers.CASE_1, TestHelpers.CASE_1, TestHelpers.CASE_1), request);
+        Submission actual = sut.generateFromRequest(APP_CODE, new SubmissionKey(TestHelpers.CASE_1, TestHelpers.CASE_1, TestHelpers.CASE_1), request);
 
         Assertions.assertEquals(TestHelpers.ERROR_URL, actual.getNavigationUrls().getError());
         Assertions.assertEquals(TestHelpers.CANCEL_URL, actual.getNavigationUrls().getCancel());
@@ -146,6 +147,7 @@ public class GenerateFromRequestTest {
         Assertions.assertEquals(TestHelpers.PARTY_TYPE_CD, actual.getFilingPackage().getParties().get(1).getPartyTypeCd());
         Assertions.assertEquals(TestHelpers.ROLE_TYPE_CD, actual.getFilingPackage().getParties().get(1).getRoleTypeCd());
 
+
     }
 
     @Test
@@ -168,7 +170,7 @@ public class GenerateFromRequestTest {
         Mockito.when(efilingLookupService.getValidPartyRoles(any(), any(), any())).thenReturn(TestHelpers.createValidPartyRoles());
         Mockito.when(efilingDocumentService.getDocumentTypes(any(), any())).thenReturn(TestHelpers.createValidDocumentTypesList());
 
-        Submission actual = sut.generateFromRequest(new SubmissionKey(TestHelpers.CASE_1, TestHelpers.CASE_1, TestHelpers.CASE_1), request);
+        Submission actual = sut.generateFromRequest(APP_CODE, new SubmissionKey(TestHelpers.CASE_1, TestHelpers.CASE_1, TestHelpers.CASE_1), request);
 
         Assertions.assertEquals(TestHelpers.ERROR_URL, actual.getNavigationUrls().getError());
         Assertions.assertEquals(TestHelpers.CANCEL_URL, actual.getNavigationUrls().getCancel());
@@ -223,7 +225,7 @@ public class GenerateFromRequestTest {
         Mockito.when(efilingCourtService.checkValidCourtFileNumber(any(), any(), any(), any(), any())).thenReturn(true);
         Mockito.when(efilingDocumentService.getDocumentTypes(any(), any())).thenReturn(TestHelpers.createValidDocumentTypesList());
 
-        Submission actual = sut.generateFromRequest(new SubmissionKey(TestHelpers.CASE_1, TestHelpers.CASE_1, TestHelpers.CASE_1), request);
+        Submission actual = sut.generateFromRequest(APP_CODE, new SubmissionKey(TestHelpers.CASE_1, TestHelpers.CASE_1, TestHelpers.CASE_1), request);
 
         Assertions.assertEquals(TestHelpers.ERROR_URL, actual.getNavigationUrls().getError());
         Assertions.assertEquals(TestHelpers.CANCEL_URL, actual.getNavigationUrls().getCancel());
@@ -275,7 +277,7 @@ public class GenerateFromRequestTest {
         Mockito.when(efilingCourtService.checkValidCourtFileNumber(any(), any(), any(), any(), any())).thenReturn(true);
         Mockito.when(efilingDocumentService.getDocumentTypes(any(), any())).thenReturn(TestHelpers.createValidDocumentTypesList());
 
-        Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(new SubmissionKey(TestHelpers.CASE_2, TestHelpers.CASE_2, TestHelpers.CASE_2), request));
+        Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(APP_CODE, new SubmissionKey(TestHelpers.CASE_2, TestHelpers.CASE_2, TestHelpers.CASE_2), request));
     }
 
     private void configureCase1(ServiceFees fee) {
