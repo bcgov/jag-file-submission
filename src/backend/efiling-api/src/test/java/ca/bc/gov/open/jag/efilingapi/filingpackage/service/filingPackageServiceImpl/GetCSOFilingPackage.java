@@ -1,10 +1,11 @@
-package ca.bc.gov.open.jag.efilingapi.filingpackage.service;
+package ca.bc.gov.open.jag.efilingapi.filingpackage.service.filingPackageServiceImpl;
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.mapper.FilingPackageMapperImpl;
+import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageServiceImpl;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.Party;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
@@ -26,7 +27,7 @@ import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("FilePackageServiceImplTest")
-public class FilingPackageServiceImplTest {
+public class GetCSOFilingPackage {
 
     public static final String CLASS_DESCRIPTION = "CLASS_DESCRIPTION";
     public static final String COURT_CLASS = "COURT_CLASS";
