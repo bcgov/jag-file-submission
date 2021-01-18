@@ -44,7 +44,6 @@ public class FilingpackageApiDelegateImpl implements FilingpackageApiDelegate {
     }
 
     @Override
-    @RolesAllowed("efiling-user")
     public ResponseEntity<Resource> getSubmissionSheet(BigDecimal packageIdentifier) {
 
         Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();

@@ -9,11 +9,12 @@ import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import org.joda.time.DateTime;
 
+import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
 
@@ -33,7 +34,12 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
 
     @Override
     public Optional<byte[]> getSubmissionSheet(BigDecimal packageNumber) {
-        return Optional.empty();
+        Path pdfPath = Paths.get("src/main/resources/DemoFile/test-document.pdf");
+        try {
+            return Optional.of(Files.readAllBytes(pdfPath));
+        } catch (IOException e) {
+            return Optional.empty();
+        }
     }
 
     private ReviewFilingPackage createReviewPackage() {

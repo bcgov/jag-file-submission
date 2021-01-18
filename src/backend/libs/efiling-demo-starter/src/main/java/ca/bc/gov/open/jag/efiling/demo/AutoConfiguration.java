@@ -64,7 +64,7 @@ public class AutoConfiguration {
     public EfilingCourtLocationService efilingCourtLocationService() { return new EfilingCourtLocationServiceDemoImpl(); }
 
     @Bean
-    public EfilingReviewService efilingStatusService() { return new EfilingReviewServiceDemoImpl(); }
+    public EfilingReviewService efilingReviewService() { return new EfilingReviewServiceDemoImpl(); }
 
     @Bean
     public AccountDetailsCache accountDetailsCache() { return new AccountDetailsCacheImpl(); }
