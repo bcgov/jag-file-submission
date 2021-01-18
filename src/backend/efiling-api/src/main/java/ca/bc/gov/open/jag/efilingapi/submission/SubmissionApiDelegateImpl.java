@@ -21,6 +21,7 @@ import ca.bc.gov.open.jag.efilingapi.utils.Notification;
 import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
 import ca.bc.gov.open.jag.efilingapi.utils.TikaAnalysis;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.*;
+import com.sun.org.apache.regexp.internal.RE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -233,7 +234,15 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
                     HttpStatus.FORBIDDEN);
 
-        Notification validation = generateUrlRequestValidator.validate(generateUrlRequest, SecurityUtils.getApplicationCode());
+        Optional<String> applicationCode = SecurityUtils.getApplicationCode();
+
+        if (!applicationCode.isPresent())
+            return new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_APPLICATION_CODE).create(),
+                    HttpStatus.FORBIDDEN
+            );
+
+        Notification validation = generateUrlRequestValidator.validate(generateUrlRequest, applicationCode.get());
 
         if(validation.hasError())
             return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALID_INITIAL_SUBMISSION_PAYLOAD).addDetails(validation.getErrors()).create(),

@@ -183,7 +183,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                         .map(party ->  partyMapper.toParty(party))
                         .collect(Collectors.toList()))
                 .rushedSubmission(isRushedSubmission(request))
-                .applicationCode(SecurityUtils.getApplicationCode())
+                .applicationCode(SecurityUtils.getApplicationCode().get())
                 .create();
 
     }
