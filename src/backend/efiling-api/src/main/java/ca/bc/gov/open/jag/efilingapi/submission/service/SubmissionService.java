@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface SubmissionService {
 
-    Submission generateFromRequest(SubmissionKey submissionKey, GenerateUrlRequest generateUrlRequest);
+    Submission generateFromRequest(String applicationCode, SubmissionKey submissionKey, GenerateUrlRequest generateUrlRequest);
 
     SubmitResponse createSubmission(Submission submission, AccountDetails accountDetails, Boolean isEarlyAdopter);
 
