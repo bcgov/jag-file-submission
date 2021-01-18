@@ -9,4 +9,6 @@ import java.util.UUID;
 public interface FilingPackageService {
 
     Optional<FilingPackage> getCSOFilingPackage(UUID universalId, BigDecimal packageNumber);
+
+    Optional<byte[]> getSubmissionSheet(BigDecimal packageNumber);
 }
