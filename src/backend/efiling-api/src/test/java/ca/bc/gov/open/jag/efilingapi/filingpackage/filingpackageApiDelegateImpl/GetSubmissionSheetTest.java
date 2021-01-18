@@ -1,7 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.filingpackage.filingpackageApiDelegateImpl;
 
 import ca.bc.gov.open.jag.efilingapi.Keys;
-import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.FilingpackageApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import org.junit.jupiter.api.*;
@@ -45,7 +44,7 @@ public class GetSubmissionSheetTest {
     private Authentication authenticationMock;
 
     @Mock
-    private KeycloakPrincipal keycloakPrincipalMock;
+    private KeycloakPrincipal<KeycloakSecurityContext> keycloakPrincipalMock;
 
     @Mock
     private KeycloakSecurityContext keycloakSecurityContextMock;
@@ -93,7 +92,7 @@ public class GetSubmissionSheetTest {
 
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(null);
 
-        ResponseEntity actual = sut.getSubmissionSheet(BigDecimal.ONE);
+        ResponseEntity<?> actual = sut.getSubmissionSheet(BigDecimal.ONE);
 
         Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
 
