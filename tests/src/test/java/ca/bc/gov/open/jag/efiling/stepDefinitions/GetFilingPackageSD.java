@@ -19,18 +19,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.emptyString;
-import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-
 public class GetFilingPackageSD {
 
     private final OauthService oauthService;
     private final SubmissionService submissionService;
-
 
     private static final String TEST_DOCUMENT_PDF = "test-document.pdf";
     private static String FILING_PACKAGE_PATH = "filing-package";
@@ -65,19 +57,18 @@ public class GetFilingPackageSD {
 
         MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource,TEST_DOCUMENT_PDF, "text/application.pdf");
 
-        actualDocumentResponse = submissionService.documentUploadResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
-                actualUserIdentity.getAccessToken(), fileSpec );
+        actualDocumentResponse = submissionService.documentUploadResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
+                                                                                    actualUserIdentity.getUniversalId(), fileSpec);
 
         actualSubmissionId = submissionService.getSubmissionId(actualDocumentResponse);
 
         // Generate Url Response
         submissionService.generateUrlResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
-                actualUserIdentity.getAccessToken(), actualSubmissionId);
+                                                    actualUserIdentity.getAccessToken(), actualSubmissionId);
 
 
         actualFilingPackageResponse = submissionService.getSubmissionDetailsResponse(actualUserIdentity.getAccessToken(),actualTransactionId,
-                actualSubmissionId, FILING_PACKAGE_PATH);
-
+                                                                                         actualSubmissionId, FILING_PACKAGE_PATH);
 
         logger.info("Api response status code: {}", actualFilingPackageResponse.getStatusCode());
         logger.info("Api response: {}", actualFilingPackageResponse.asString());
@@ -90,26 +81,28 @@ public class GetFilingPackageSD {
 
         JsonPath filingPackageJsonPath = new JsonPath(actualFilingPackageResponse.asString());
 
-        assertThat(filingPackageJsonPath.get("court.location"), is(not(emptyString())));
-        assertThat(filingPackageJsonPath.get("court.level"), is(not(emptyString())));
-        assertThat(filingPackageJsonPath.get("court.class"), is(not(emptyString())));
-        assertThat(filingPackageJsonPath.get("court.division"), is(not(emptyString())));
-        assertThat(filingPackageJsonPath.get("court.fileNumber"), is(not(emptyString())));
-        assertThat(filingPackageJsonPath.get("court.participatingClass"), is(not(emptyString())));
-        assertThat(filingPackageJsonPath.get("court.locationDescription"), is(not(emptyString())));
-        assertThat(filingPackageJsonPath.get("court.levelDescription"), is(not(emptyString())));
-        assertThat(filingPackageJsonPath.get("parties"), is(not(emptyString())));
         Assert.assertEquals(Integer.valueOf(7), filingPackageJsonPath.get("submissionFeeAmount"));
-        logger.info("Court fee and document details response have valid values");
 
-        assertFalse(filingPackageJsonPath.get("documents.name").toString().isEmpty());
-        assertFalse(filingPackageJsonPath.get("documents.type").toString().isEmpty());
-        assertFalse(filingPackageJsonPath.get("documents.subType").toString().isEmpty());
-        assertFalse(filingPackageJsonPath.get("documents.isAmendment").toString().isEmpty());
-        assertFalse(filingPackageJsonPath.get("documents.isSupremeCourtScheduling").toString().isEmpty());
-        assertFalse(filingPackageJsonPath.get("documents.description").toString().isEmpty());
-        assertFalse(filingPackageJsonPath.get("documents.statutoryFeeAmount").toString().isEmpty());
-        assertNotNull(filingPackageJsonPath.get("documents.statutoryFeeAmount"));
+        Assert.assertEquals("1211", filingPackageJsonPath.get("court.location"));
+        Assert.assertEquals("P", filingPackageJsonPath.get("court.level"));
+        Assert.assertEquals("F", filingPackageJsonPath.get("court.courtClass"));
+        Assert.assertEquals(Integer.valueOf(10), filingPackageJsonPath.get("court.agencyId"));
+
+        Assert.assertEquals("Imma Court", filingPackageJsonPath.get("court.locationDescription"));
+        Assert.assertEquals("Imma Level", filingPackageJsonPath.get("court.levelDescription"));
+        Assert.assertEquals("Imma Class", filingPackageJsonPath.get("court.classDescription"));
+
+        Assert.assertEquals(TEST_DOCUMENT_PDF, filingPackageJsonPath.get("documents.name[0]"));
+
+        Assert.assertEquals("AFF", filingPackageJsonPath.get("documents.type[0]"));
+        Assert.assertEquals("This is a doc", filingPackageJsonPath.get("documents.description[0]"));
+        Assert.assertEquals("application/pdf", filingPackageJsonPath.get("documents.mimeType[0]"));
+        Assert.assertEquals(Integer.valueOf(7), filingPackageJsonPath.get("documents.statutoryFeeAmount[0]"));
+
+        Assert.assertEquals("first", filingPackageJsonPath.get("parties.firstName[0]"));
+        Assert.assertEquals("middle", filingPackageJsonPath.get("parties.middleName[0]"));
+        Assert.assertEquals("last", filingPackageJsonPath.get("parties.lastName[0]"));
+
         logger.info("Response matches the requirements");
 
     }

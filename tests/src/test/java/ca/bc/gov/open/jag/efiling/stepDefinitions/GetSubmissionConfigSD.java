@@ -24,9 +24,9 @@ public class GetSubmissionConfigSD {
     private final OauthService oauthService;
     private final SubmissionService submissionService;
 
-
     private static final String TEST_DOCUMENT_PDF = "test-document.pdf";
     private static final String RESPONSE_NAVIGATION_URL = "http//somewhere.com";
+    private static String CONFIG_PATH = "config";
 
     private UUID actualTransactionId;
     private Response actualDocumentResponse;
