@@ -16,7 +16,7 @@ public class EfilingReviewServiceDemoImplTest {
 
     @BeforeAll
     public void setup() {
-        sut = new EfilingReviewServiceDemoImpl(Keys.DEMO_FILE_PATH);
+        sut = new EfilingReviewServiceDemoImpl();
     }
 
     @Test
