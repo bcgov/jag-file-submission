@@ -1,7 +1,8 @@
-package ca.bc.gov.open.jag.efilingapi.filingpackage;
+package ca.bc.gov.open.jag.efilingapi.filingpackage.filingpackageApiDelegateImpl;
 
 import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
+import ca.bc.gov.open.jag.efilingapi.filingpackage.FilingpackageApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import org.junit.jupiter.api.*;
 import org.keycloak.KeycloakPrincipal;
@@ -27,7 +28,7 @@ import static org.mockito.AdditionalMatchers.eq;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("FilepackageApiDelegateImplTest")
-public class FilingpackageApiDelegateImplTest {
+public class GetFilingPackageTest {
     public static final UUID CASE_1 = UUID.randomUUID();
     public static final UUID CASE_2 = UUID.randomUUID();
 

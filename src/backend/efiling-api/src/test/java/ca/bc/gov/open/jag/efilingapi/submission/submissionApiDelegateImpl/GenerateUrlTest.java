@@ -90,9 +90,9 @@ public class GenerateUrlTest {
 
 
     @BeforeAll
-    public void setUp() {
+    public void beforeAll() {
 
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
 
         Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);
         Mockito.when(authenticationMock.getPrincipal()).thenReturn(keycloakPrincipalMock);
@@ -111,27 +111,32 @@ public class GenerateUrlTest {
 
         Mockito
                 .when(submissionServiceMock.generateFromRequest(
+                        Mockito.any(),
                         ArgumentMatchers.argThat(x -> x.getSubmissionId().equals(TestHelpers.CASE_1)),
                         Mockito.any()))
                 .thenReturn(submission);
 
         Mockito.doThrow(new CSOHasMultipleAccountException("CSOHasMultipleAccountException message"))
                 .when(submissionServiceMock).generateFromRequest(
+                Mockito.any(),
                 ArgumentMatchers.argThat(x -> x.getSubmissionId().equals(TestHelpers.CASE_2)),
                 Mockito.any());
 
         Mockito.doThrow(new InvalidAccountStateException("InvalidAccountStateException message"))
                 .when(submissionServiceMock).generateFromRequest(
+                Mockito.any(),
                 ArgumentMatchers.argThat(x -> x.getSubmissionId().equals(TestHelpers.CASE_3)),
                 Mockito.any());
 
         Mockito.doThrow(new StoreException("StoreException message"))
                 .when(submissionServiceMock).generateFromRequest(
+                Mockito.any(),
                 ArgumentMatchers.argThat(x -> x.getSubmissionId().equals(TestHelpers.CASE_4)),
                 Mockito.any());
 
         Mockito.doThrow(new EfilingDocumentServiceException("EfilingDocumentServiceException message"))
                 .when(submissionServiceMock).generateFromRequest(
+                Mockito.any(),
                 ArgumentMatchers.argThat(x -> x.getSubmissionId().equals(TestHelpers.CASE_5)),
                 Mockito.any());
 
@@ -243,6 +248,10 @@ public class GenerateUrlTest {
     public void whenCSOHasMultipleAccountExceptionShouldReturnBadRequest() {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
+        Map<String, Object> otherClaims = new HashMap<>();
+        otherClaims.put(Keys.CSO_APPLICATION_CODE, CODE);
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
         generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
         generateUrlRequest.setNavigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
         InitialPackage initialPackage = new InitialPackage();
@@ -292,6 +301,28 @@ public class GenerateUrlTest {
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
         Mockito.when(accountServiceMock.getCsoAccountDetails(any())).thenReturn(TestHelpers.createCSOAccountDetails(false));
+
+        generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
+        generateUrlRequest.setNavigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
+        InitialPackage initialPackage = new InitialPackage();
+        CourtBase court = new CourtBase();
+        court.setLocation("valid");
+        initialPackage.setCourt(court);
+        generateUrlRequest.setFilingPackage(initialPackage);
+
+        ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(transactionId, UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_1, generateUrlRequest);
+
+        Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
+    }
+
+    @Test
+    @DisplayName("403: when Application Code is not present should return FORBIDDEN")
+    public void whenApplicationCodeNotPresentShouldReturnForbidden() {
+        @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
+
+        Map<String, Object> otherClaims = new HashMap<>();
+        otherClaims.put(Keys.CSO_APPLICATION_CODE, null);
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
         generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
         generateUrlRequest.setNavigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
