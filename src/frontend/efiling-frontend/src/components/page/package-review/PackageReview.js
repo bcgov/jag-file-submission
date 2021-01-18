@@ -3,6 +3,7 @@ import FileSaver from "file-saver";
 import moment from "moment";
 import PropTypes from "prop-types";
 import { Header, Footer, Button, Table, Alert } from "shared-components";
+import { BsEyeFill } from "react-icons/bs";
 import { MdCancel } from "react-icons/md";
 import axios from "axios";
 import { propTypes } from "../../../types/propTypes";
@@ -159,13 +160,7 @@ export default function PackageReview({ page: { header, packageId } }) {
               >
                 Print Submission Sheet
               </span>
-              <img
-                src="/efilinghub/images/eye_icon.svg"
-                alt=""
-                height="24"
-                width="24"
-                className="align-icon"
-              />
+              <BsEyeFill size="24" color="#7F7F7F" className="align-icon" />
             </div>
           </div>
           <br />
