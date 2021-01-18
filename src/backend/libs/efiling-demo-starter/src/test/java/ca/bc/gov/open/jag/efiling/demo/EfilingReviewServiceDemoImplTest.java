@@ -16,7 +16,7 @@ public class EfilingReviewServiceDemoImplTest {
 
     @BeforeAll
     public void setup() {
-        sut = new EfilingReviewServiceDemoImpl();
+        sut = new EfilingReviewServiceDemoImpl(Keys.DEMO_FILE_PATH);
     }
 
     @Test
@@ -103,6 +103,7 @@ public class EfilingReviewServiceDemoImplTest {
     public void withRequestReturnOneElementArray() {
 
         Assertions.assertEquals(1, sut.findStatusByClient(new FilingPackageRequest(BigDecimal.ONE, BigDecimal.ONE)).size());
+
     }
 
     @Test
@@ -112,5 +113,7 @@ public class EfilingReviewServiceDemoImplTest {
         Optional<byte[]> result = sut.getSubmissionSheet(BigDecimal.ONE);
 
         Assertions.assertTrue(result.isPresent());
+
     }
+
 }
