@@ -19,6 +19,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.emptyString;
+import static org.hamcrest.Matchers.not;
+import static org.junit.Assert.assertNotNull;
+
 public class GetSubmissionConfigSD {
 
     private final OauthService oauthService;
