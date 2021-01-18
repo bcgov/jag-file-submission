@@ -222,7 +222,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @RolesAllowed({"efiling-client", "efiling-admin"})
     public ResponseEntity<GenerateUrlResponse> generateUrl(UUID xTransactionId, String xUserId, UUID submissionId, GenerateUrlRequest generateUrlRequest) {
 
-
         MdcUtils.setClientMDC(xTransactionId, submissionId);
 
         logger.info("Attempting to generate Url Request Received");
@@ -236,15 +235,19 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         Optional<String> applicationCode = SecurityUtils.getApplicationCode();
 
-        if (!applicationCode.isPresent())
+        if (!applicationCode.isPresent()) {
+
+            logger.error("[{}]: {}", ErrorResponse.MISSING_APPLICATION_CODE.getErrorCode(), ErrorResponse.MISSING_APPLICATION_CODE.getErrorMessage());
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_APPLICATION_CODE).create(),
                     HttpStatus.FORBIDDEN
             );
 
+        }
+
         Notification validation = generateUrlRequestValidator.validate(generateUrlRequest, applicationCode.get());
 
-        if(validation.hasError())
+        if (validation.hasError())
             return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALID_INITIAL_SUBMISSION_PAYLOAD).addDetails(validation.getErrors()).create(),
                     HttpStatus.BAD_REQUEST);
 
@@ -262,7 +265,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         try {
             response = ResponseEntity.ok(
                     generateUrlResponseMapper.toGenerateUrlResponse(
-                            submissionService.generateFromRequest(submissionKey, generateUrlRequest),
+                            submissionService.generateFromRequest(applicationCode.get(), submissionKey, generateUrlRequest),
                             navigationProperties.getBaseUrl()));
             logger.info("successfully generated return url.");
         } catch (CSOHasMultipleAccountException e) {
