@@ -22,7 +22,6 @@ public class SubmissionService {
 
     private static final String X_TRANSACTION_ID = "X-Transaction-Id";
     private static final String X_USER_ID = "X-User-Id";
-    private static String CONFIG_PATH = "config";
 
     private Logger logger = LoggerFactory.getLogger(SubmissionService.class);
 
@@ -66,7 +65,7 @@ public class SubmissionService {
 
     }
 
-    public Response getSubmissionDetailsResponse(String accessToken, UUID transactionId, String submissionId) {
+    public Response getSubmissionDetailsResponse(String accessToken, UUID transactionId, String submissionId, String path) {
 
         logger.info("Requesting submission information");
 
@@ -79,13 +78,12 @@ public class SubmissionService {
 
         return request
                 .when()
-                .get(MessageFormat.format("{0}/submission/{1}/{2}", eFilingHost,submissionId, CONFIG_PATH))
+                .get(MessageFormat.format("{0}/submission/{1}/{2}", eFilingHost,submissionId, path))
                 .then()
                 .extract()
                 .response();
 
     }
-
 
     public String getSubmissionId(Response documentResponse) {
 

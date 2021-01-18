@@ -42,4 +42,11 @@ public class FilingPackageServiceImpl implements FilingPackageService {
         return filingPackage.map(filingPackageMapper::toResponseFilingPackage);
 
     }
+
+    @Override
+    public Optional<byte[]> getSubmissionSheet(BigDecimal packageNumber) {
+
+        return efilingReviewService.getSubmissionSheet(packageNumber);
+
+    }
 }
