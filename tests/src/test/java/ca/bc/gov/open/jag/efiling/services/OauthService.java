@@ -18,7 +18,6 @@ public class OauthService {
     @Value("${KEYCLOAK_REALM:Efiling-Hub}")
     private String keycloakRealm;
 
-
     @Value("${BCEID_USERNAME:bobross}")
     private String username;
 
