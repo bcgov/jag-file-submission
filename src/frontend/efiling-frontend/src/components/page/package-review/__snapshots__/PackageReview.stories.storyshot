@@ -93,11 +93,10 @@ exports[`Storyshots PackageReview Default 1`] = `
             Package Details
           </h2>
           <div
-            class="col-sm-6 text-right"
+            class="col-sm-6 text-sm-right mt-3 mt-sm-0"
           >
             <span
               class="file-href"
-              data-test-id="uploaded-file"
               role="button"
               tabindex="0"
             >
@@ -441,11 +440,10 @@ exports[`Storyshots PackageReview Mobile 1`] = `
             Package Details
           </h2>
           <div
-            class="col-sm-6 text-right"
+            class="col-sm-6 text-sm-right mt-3 mt-sm-0"
           >
             <span
               class="file-href"
-              data-test-id="uploaded-file"
               role="button"
               tabindex="0"
             >
