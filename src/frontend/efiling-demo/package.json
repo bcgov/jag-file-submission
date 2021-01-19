@@ -8,7 +8,7 @@
     "@bcgov/bootstrap-theme": "github:bcgov/bootstrap-theme",
     "axios": "^0.21.1",
     "babel-plugin-transform-export-extensions": "^6.22.0",
-    "bootstrap": "^4.5.3",
+    "bootstrap": "^4.6.0",
     "history": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
     "keycloak-js": "^7.0.1",
