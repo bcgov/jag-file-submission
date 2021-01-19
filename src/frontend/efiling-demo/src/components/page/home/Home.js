@@ -1,10 +1,21 @@
-/* eslint-disable react/jsx-curly-newline, camelcase, react/jsx-props-no-spreading */
+/* eslint-disable react/jsx-curly-newline, camelcase, react/jsx-props-no-spreading, react/jsx-wrap-multilines, no-param-reassign */
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { MdDescription } from "react-icons/md";
+import { AiOutlineClose } from "react-icons/ai";
 import Dropzone from "react-dropzone";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
-import { Header, Footer, Textarea, Button } from "shared-components";
+import {
+  Header,
+  Footer,
+  Textarea,
+  Button,
+  DisplayBox,
+  Table,
+  Dropdown,
+} from "shared-components";
+import docTypeList from "../../../typeList.json";
 import { getJWTData } from "../../../modules/authentication-helper/authenticationHelper";
 
 import { propTypes } from "../../../types/propTypes";
@@ -14,33 +25,7 @@ import "./Home.css";
 // Note: Some of these values are temporarily hard-coded
 const urlBody = {
   clientAppName: "Demo App",
-  filingPackage: {
-    court: {
-      location: "1211",
-      level: "P",
-      courtClass: "F",
-      division: "I",
-      fileNumber: "1234",
-      participatingClass: "string",
-    },
-    documents: [
-      {
-        name: "string",
-        type: "AFF",
-        data: {},
-        md5: "string",
-      },
-    ],
-    parties: [
-      {
-        partyType: "IND",
-        roleType: "CLA",
-        firstName: "Bob",
-        middleName: "Alan",
-        lastName: "Ross",
-      },
-    ],
-  },
+  filingPackage: {},
   navigationUrls: {
     success: `${window.location.origin}/success`,
     error: `${window.location.origin}/error`,
@@ -68,16 +53,13 @@ const generatePackageData = (files, filingPackage) => {
   for (let i = 0; i < files.length; i += 1) {
     formData.append("files", files[i]);
 
-    const document = filingPackage.documents.find(
-      (doc) => doc.name === files[i].name
-    );
-    if (!document || !document.type) return {};
-
     documentData.push({
       name: files[i].name,
-      type: document.type,
-      data: document.data,
-      md5: document.md5,
+      type: files[i].data.type,
+      isSupremeCourtScheduling: files[i].data.isSupremeCourtScheduling || false,
+      isAmendment: files[i].data.isAmendment || false,
+      // data: document.data,
+      // md5: document.md5,
     });
   }
 
@@ -139,6 +121,100 @@ export default function Home({ page: { header } }) {
   const [submitBtnEnabled, setSubmitBtnEnabled] = useState(true);
   const [showLoader, setShowLoader] = useState(false);
 
+  const generateTable = (file, data) => [
+    {
+      name: (
+        <div style={{ width: "55%" }}>
+          <span
+            onKeyDown={() => {}}
+            role="button"
+            tabIndex={0}
+            className="file-href"
+            onClick={() => {}}
+            data-test-id="uploaded-file"
+          >
+            {file.name}
+          </span>
+        </div>
+      ),
+      value: (
+        <div className="d-flex justify-content-around bcgov-row">
+          {data.map((option) => (
+            <div className="d-flex align-items-center">
+              <h5 className="ml-5 mr-2 mt-3">{option.name}</h5>
+              {option.value}
+            </div>
+          ))}
+        </div>
+      ),
+    },
+  ];
+
+  const generateTableData = (file) => {
+    file.data = {};
+    const data = [
+      {
+        name: "Type:",
+        value: (
+          <Dropdown
+            items={docTypeList}
+            onSelect={(e) => {
+              file.data = { ...file.data, type: e.split(/-(.+)/)[0].trim() };
+            }}
+          />
+        ),
+        isNameBold: true,
+      },
+      {
+        name: "Supreme Court Scheduling",
+        value: (
+          <input
+            type="checkbox"
+            id="scs"
+            onChange={(e) => {
+              file.data = {
+                ...file.data,
+                isSupremeCourtScheduling: e.target.checked,
+              };
+            }}
+          />
+        ),
+        isNameBold: true,
+      },
+      {
+        name: "Ammendment",
+        value: (
+          <input
+            type="checkbox"
+            id="am"
+            onChange={(e) => {
+              file.data = { ...file.data, isAmendment: e.target.checked };
+            }}
+          />
+        ),
+        isNameBold: true,
+      },
+      {
+        name: "",
+        value: (
+          <button
+            type="submit"
+            style={{ backgroundColor: "#00000000", border: "none" }}
+          >
+            <AiOutlineClose
+              onClick={() => {
+                setFiles(files.filter((item) => item.name !== file.name));
+              }}
+              color="red"
+            />
+          </button>
+        ),
+      },
+    ];
+
+    return generateTable(file, data);
+  };
+
   return (
     <main>
       <Header header={header} />
@@ -167,19 +243,40 @@ export default function Home({ page: { header } }) {
             )}
           </Dropzone>
           <br />
+
           {files.length > 0 && (
             <>
               <h2>Uploaded Files</h2>
               <br />
               {files.map((file) => (
-                <p key={file.name}>{file.name}</p>
+                <div key={file.name}>
+                  <DisplayBox
+                    styling="bcgov-border-background bcgov-display-file"
+                    icon={
+                      <div style={{ color: "rgb(252, 186, 25)" }}>
+                        <MdDescription size={32} />
+                      </div>
+                    }
+                    element={
+                      <Table
+                        elementStyles={{
+                          columnStyle: "bcgov-vertical-middle bcgov-fill-width",
+                        }}
+                        elements={generateTableData(file)}
+                      />
+                    }
+                  />
+                  <br />
+                </div>
               ))}
             </>
           )}
+
           <br />
           <Textarea
             id="1"
             label="Provide filing package JSON data:"
+            value={urlBody}
             onChange={(val) => setFilingPackage(JSON.parse(val))}
           />
           <br />
