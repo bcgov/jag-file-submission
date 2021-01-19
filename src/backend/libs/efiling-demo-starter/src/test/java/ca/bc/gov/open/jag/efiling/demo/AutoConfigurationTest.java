@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efiling.demo;
 
 import ca.bc.gov.open.bceid.starter.account.BCeIDAccountService;
 import ca.bc.gov.open.bceid.starter.account.GetAccountRequest;
+import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.jag.efilingcommons.court.EfilingCourtLocationService;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingPayment;
 import ca.bc.gov.open.jag.efilingcommons.payment.PaymentAdapter;
@@ -66,6 +67,12 @@ public class AutoConfigurationTest {
             Assertions.assertDoesNotThrow(() -> sut.getContent("any"));
             Assertions.assertDoesNotThrow(() -> sut.listFiles("any"));
             Assertions.assertDoesNotThrow(() -> sut.moveFile("a", "b"));
+
+            ClamAvService clamAvServiceSut = it.getBean(ClamAvService.class);
+
+            Assertions.assertTrue(clamAvServiceSut.ping());
+            Assertions.assertDoesNotThrow(() -> clamAvServiceSut.scan(new ByteArrayInputStream("test".getBytes())));
+
 
 
         });

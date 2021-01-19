@@ -4,6 +4,8 @@ import ca.bc.gov.open.bceid.starter.account.BCeIDAccountService;
 import ca.bc.gov.open.bceid.starter.account.GetAccountRequest;
 import ca.bc.gov.open.bceid.starter.account.models.IndividualIdentity;
 import ca.bc.gov.open.bceid.starter.account.models.Name;
+import ca.bc.gov.open.clamav.starter.ClamAvService;
+import ca.bc.gov.open.clamav.starter.VirusDetectedException;
 import ca.bc.gov.open.jag.efilingcommons.court.EfilingCourtLocationService;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingPayment;
@@ -26,6 +28,7 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.time.Duration;
@@ -140,6 +143,23 @@ public class AutoConfiguration {
             }
         };
     }
+
+    @Bean(name = "demoClamAvService")
+    @Primary
+    public ClamAvService clamAvService() {
+        return new ClamAvService() {
+            @Override
+            public void scan(InputStream inputStream) throws VirusDetectedException {
+                // do nothing, no need to scan files on local
+            }
+
+            @Override
+            public boolean ping() throws IOException {
+                return true;
+            }
+        };
+    }
+
 
     @Bean
     public BCeIDAccountService bCeIDAccountService() {

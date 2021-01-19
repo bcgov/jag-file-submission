@@ -49,7 +49,7 @@ jobs:
         env:
           MVN_PROFILE: demo
         run: |
-          docker-compose up -d redis clamav efiling-frontend efiling-api keycloak
+          docker-compose up -d redis efiling-frontend efiling-api keycloak
 
       - name: Configure keycloak
         env:
