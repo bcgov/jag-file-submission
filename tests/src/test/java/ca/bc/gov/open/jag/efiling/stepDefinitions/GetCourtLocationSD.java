@@ -26,10 +26,10 @@ public class GetCourtLocationSD {
         this.courtService = courtService;
     }
 
-    @Given("valid user account {string}:{string} information is authenticated")
-    public void userInformationIsAuthenticated(String username, String password) {
+    @Given("valid user account information is authenticated")
+    public void userInformationIsAuthenticated() {
 
-        actualUserIdentity = oauthService.getUserIdentity(username,password);
+        actualUserIdentity = oauthService.getUserIdentity();
     }
 
     @When("user submits request to get court location information")

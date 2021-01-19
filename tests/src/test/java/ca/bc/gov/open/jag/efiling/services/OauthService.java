@@ -18,9 +18,16 @@ public class OauthService {
     @Value("${KEYCLOAK_REALM:Efiling-Hub}")
     private String keycloakRealm;
 
+
+    @Value("${BCEID_USERNAME:bobross}")
+    private String username;
+
+    @Value("${BCEID_PASSWORD:changeme}")
+    private String password;
+
     private Logger logger = LoggerFactory.getLogger(OauthService.class);
 
-    public UserIdentity getUserIdentity(String username, String password) {
+    public UserIdentity getUserIdentity() {
 
         logger.info("Requesting bearer token from {} issuer", keycloakHost);
 

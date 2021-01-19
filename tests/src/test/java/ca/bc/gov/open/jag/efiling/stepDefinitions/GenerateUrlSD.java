@@ -18,7 +18,6 @@ import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
-import stepDefinitions.backendstepdefinitions.GenerateUrlAndSubmissionTest;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +28,6 @@ import java.util.UUID;
 @CucumberContextConfiguration
 @SpringBootTest(classes = TestConfig.class)
 public class GenerateUrlSD {
-
 
     private final OauthService oauthService;
     private final SubmissionService submissionService;
@@ -42,7 +40,7 @@ public class GenerateUrlSD {
     private String actualSubmissionId;
     private UserIdentity actualUserIdentity;
 
-    public Logger logger = LogManager.getLogger(GenerateUrlAndSubmissionTest.class);
+    public Logger logger = LogManager.getLogger(GenerateUrlSD.class);
 
     public GenerateUrlSD(OauthService oauthService, SubmissionService submissionService) {
         this.oauthService = oauthService;
@@ -50,10 +48,10 @@ public class GenerateUrlSD {
         actualTransactionId = UUID.randomUUID();
     }
 
-    @Given("admin account {string}:{string} that authenticated")
-    public void adminAccountThatAuthenticatedWithKeycloakOnRealm(String username, String password) {
+    @Given("admin account is authenticated")
+    public void adminAccountThatAuthenticatedWithKeycloakOnRealm() {
 
-        actualUserIdentity = oauthService.getUserIdentity(username,password);
+        actualUserIdentity = oauthService.getUserIdentity();
     }
 
     @When("user Submit a valid pdf document")

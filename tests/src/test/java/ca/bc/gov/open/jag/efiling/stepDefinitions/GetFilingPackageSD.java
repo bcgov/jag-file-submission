@@ -41,10 +41,10 @@ public class GetFilingPackageSD {
         actualTransactionId = UUID.randomUUID();
     }
 
-    @Given("valid user account {string}:{string} is authenticated")
-    public void validAdminAccountThatAuthenticated(String username, String password) throws IOException {
+    @Given("valid user account is authenticated")
+    public void validAdminAccountThatAuthenticated() {
 
-        actualUserIdentity = oauthService.getUserIdentity(username,password);
+        actualUserIdentity = oauthService.getUserIdentity();
     }
 
     @When("user submits request to get filing package information")
