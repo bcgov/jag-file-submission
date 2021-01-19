@@ -103,5 +103,17 @@ public class EfilingReviewServiceDemoImplTest {
     public void withRequestReturnOneElementArray() {
 
         Assertions.assertEquals(1, sut.findStatusByClient(new FilingPackageRequest(BigDecimal.ONE, BigDecimal.ONE)).size());
+
     }
+
+    @Test
+    @DisplayName("OK: demo returns a document byte array")
+    public void withRequestReturnByteArray() {
+
+        Optional<byte[]> result = sut.getSubmissionSheet(BigDecimal.ONE);
+
+        Assertions.assertTrue(result.isPresent());
+
+    }
+
 }
