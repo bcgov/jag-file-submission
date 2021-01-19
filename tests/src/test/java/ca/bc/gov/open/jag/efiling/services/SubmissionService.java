@@ -85,6 +85,27 @@ public class SubmissionService {
 
     }
 
+    public Response postSubmissionResponse(String accessToken, UUID transactionId, String submissionId, String path) {
+
+        logger.info("Submitting request with submit parameters to the host {}", eFilingHost);
+
+        RequestSpecification request = RestAssured
+                .given()
+                .auth()
+                .preemptive()
+                .oauth2(accessToken)
+                .contentType(ContentType.JSON)
+                .header(X_TRANSACTION_ID, transactionId);
+
+        return request
+                .when()
+                .post(MessageFormat.format("{0}/submission/{1}/{2}", eFilingHost,submissionId, path))
+                .then()
+                .extract()
+                .response();
+
+    }
+
     public String getSubmissionId(Response documentResponse) {
 
         JsonPath submissionIdJsonPath = new JsonPath(documentResponse.asString());
