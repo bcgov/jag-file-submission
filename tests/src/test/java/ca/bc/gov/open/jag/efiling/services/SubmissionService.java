@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efiling.services;
 
 import ca.bc.gov.open.jag.efiling.error.EfilingTestException;
 import ca.bc.gov.open.jag.efiling.helpers.PayloadHelper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
@@ -95,7 +96,8 @@ public class SubmissionService {
                 .preemptive()
                 .oauth2(accessToken)
                 .contentType(ContentType.JSON)
-                .header(X_TRANSACTION_ID, transactionId);
+                .header(X_TRANSACTION_ID, transactionId)
+                .body(new ObjectMapper().createObjectNode());
 
         return request
                 .when()
