@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import FileSaver from "file-saver";
 import moment from "moment";
 import PropTypes from "prop-types";
+import Tabs from "react-bootstrap/Tabs";
+import Tab from "react-bootstrap/Tab";
 import { Header, Footer, Button, Table, Alert } from "shared-components";
 import { BsEyeFill } from "react-icons/bs";
 import { MdCancel } from "react-icons/md";
@@ -55,6 +57,7 @@ export default function PackageReview({ page: { header, packageId } }) {
       isValueBold: true,
     },
   ]);
+  const [filingComments, setFilingComments] = useState("");
 
   useEffect(() => {
     axios
@@ -110,6 +113,7 @@ export default function PackageReview({ page: { header, packageId } }) {
               isValueBold: true,
             },
           ]);
+          setFilingComments(response.data.filingComments);
         } catch (err) {
           setError(true);
         }
@@ -161,6 +165,17 @@ export default function PackageReview({ page: { header, packageId } }) {
             </div>
           </div>
           <br />
+          <Tabs defaultActiveKey="documents" id="uncontrolled-tab">
+            <Tab eventKey="documents" title="Documents">
+              <br />
+              Documents coming ...
+            </Tab>
+            <Tab eventKey="comments" title="Filing Comments">
+              <br />
+              <h4>Filing Comments</h4>
+              <div className="tabContent">{filingComments}</div>
+            </Tab>
+          </Tabs>
           <br />
           <section className="buttons pt-2">
             <Button
