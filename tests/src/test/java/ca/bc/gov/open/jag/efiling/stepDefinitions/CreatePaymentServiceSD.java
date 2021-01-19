@@ -7,6 +7,7 @@ import ca.bc.gov.open.jag.efiling.services.SubmissionService;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.MultiPartSpecification;
 import org.apache.logging.log4j.LogManager;
@@ -18,38 +19,37 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
-public class GetFileNameSD {
+public class CreatePaymentServiceSD {
 
     private final OauthService oauthService;
     private final SubmissionService submissionService;
 
     private static final String TEST_DOCUMENT_PDF = "test-document.pdf";
-    private static String FILE_NAME_PATH = "document/test-document.pdf";
+    private static String SUBMIT_PATH = "submit";
 
     private UUID actualTransactionId;
     private Response actualDocumentResponse;
     private String actualSubmissionId;
     private UserIdentity actualUserIdentity;
-    private Response actualFileNameResponse;
+    private Response actualSubmitResponse;
 
-    public Logger logger = LogManager.getLogger(GetFileNameSD.class);
+    public Logger logger = LogManager.getLogger(CreatePaymentServiceSD.class);
 
-    public GetFileNameSD(OauthService oauthService, SubmissionService submissionService) {
+    public CreatePaymentServiceSD(OauthService oauthService, SubmissionService submissionService) {
         this.oauthService = oauthService;
         this.submissionService = submissionService;
         actualTransactionId = UUID.randomUUID();
     }
 
-    @Given("valid admin user account is authenticated")
-    public void validAdminAccountThatAuthenticated() {
+    @Given("valid admin user is authenticated")
+    public void userAccountIsAuthenticated() {
 
         actualUserIdentity = oauthService.getUserIdentity();
     }
 
-    @When("user submits request to get document using filename")
-    public void fileNameRequest() throws IOException {
-        logger.info("Submitting get filing package request");
-
+    @When("request is posted to submit to create service")
+    public void submitToCreateService() throws IOException {
+        logger.info("Submitting request with submit parameters");
 
         File resource = new ClassPathResource(
                 "data/test-document.pdf").getFile();
@@ -65,21 +65,24 @@ public class GetFileNameSD {
         submissionService.generateUrlResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
                 actualUserIdentity.getAccessToken(), actualSubmissionId);
 
+        actualSubmitResponse = submissionService.postSubmissionResponse(actualUserIdentity.getAccessToken(),actualTransactionId,
+                actualSubmissionId, SUBMIT_PATH);
 
-        actualFileNameResponse = submissionService.getSubmissionDetailsResponse(actualUserIdentity.getAccessToken(),actualTransactionId,
-                actualSubmissionId, FILE_NAME_PATH);
-
-        logger.info("Api response status code: {}", actualFileNameResponse.getStatusCode());
-        logger.info("Api response: {}", actualFileNameResponse.asString());
+        logger.info("Api response status code: {}", actualSubmitResponse.getStatusCode());
+        logger.info("Api response: {}", actualSubmitResponse.asString());
     }
 
-    @Then("a valid document is returned")
-    public void getByFileNameResults() {
+    @Then("payment processing is created")
+    public void getPackageReference() {
 
-        logger.info("Asserting get filing name response");
+        logger.info("Asserting create payment service submission response");
 
-        Assert.assertEquals(200, actualFileNameResponse.getStatusCode());
-        Assert.assertEquals("application/octet-stream", actualFileNameResponse.getContentType());
+        JsonPath submitResponseJsonPath = new JsonPath(actualSubmitResponse.asString());
+
+        Assert.assertEquals(201, actualSubmitResponse.getStatusCode());
+        Assert.assertEquals("application/json", actualSubmitResponse.getContentType());
+
+        Assert.assertEquals("aHR0cDovL2xvY2FsaG9zdDozMDAwL2VmaWxpbmdodWIvcGFja2FnZXJldmlldy8xMA==", submitResponseJsonPath.get("packageRef"));
 
         logger.info("Response matches the requirements");
 
