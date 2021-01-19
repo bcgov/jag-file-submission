@@ -51,6 +51,7 @@ services:
     ports:
       - "8080:8080"
     environment:
+      - BAMBORA_APIBASEPATH=${BAMBORA_APIBASEPATH:-http://localhost:8080}
       - BAMBORA_APIPASSCODE=${BAMBORA_APIPASSCODE:-passcode}
       - BAMBORA_MERCHANTID=${BAMBORA_MERCHANTID-merchantid}
       - BAMBORA_PROFILE_URL=${BAMBORA_PROFILE_URL:-http://localhost:3001/updatecard}
