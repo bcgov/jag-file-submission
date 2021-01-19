@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-one-expression-per-line */
+
 import React, { useEffect, useState } from "react";
 import FileSaver from "file-saver";
 import moment from "moment";
@@ -30,12 +32,6 @@ const downloadSubmissionSheet = (packageId) => {
 export default function PackageReview({ page: { header, packageId } }) {
   const [error, setError] = useState(false);
   const [packageDetails, setPackageDetails] = useState([
-    {
-      name: "Package Number:",
-      value: "",
-      isNameBold: false,
-      isValueBold: true,
-    },
     { name: "Submitted By:", value: "", isNameBold: false, isValueBold: true },
     {
       name: "Submitted Date:",
@@ -43,17 +39,17 @@ export default function PackageReview({ page: { header, packageId } }) {
       isNameBold: false,
       isValueBold: true,
     },
+    { name: "Submitted To:", value: "", isNameBold: false, isValueBold: true },
   ]);
   const [courtFileDetails, setCourtFileDetails] = useState([
     {
-      name: "Court File Number:",
+      name: "Package Number:",
       value: "",
       isNameBold: false,
       isValueBold: true,
     },
-    { name: "Submitted To:", value: "", isNameBold: false, isValueBold: true },
     {
-      name: "Filing Comments:",
+      name: "Court File Number:",
       value: "",
       isNameBold: false,
       isValueBold: true,
@@ -80,14 +76,7 @@ export default function PackageReview({ page: { header, packageId } }) {
           }
           const fileNumber = response.data.court.fileNumber || "";
           const submittedTo = response.data.court.location || "";
-          const filingComments = response.data.filingComments || "";
           setPackageDetails([
-            {
-              name: "Package Number:",
-              value: `${packageNo}`,
-              isNameBold: false,
-              isValueBold: true,
-            },
             {
               name: "Submitted By:",
               value: submittedBy,
@@ -100,23 +89,23 @@ export default function PackageReview({ page: { header, packageId } }) {
               isNameBold: false,
               isValueBold: true,
             },
-          ]);
-          setCourtFileDetails([
-            {
-              name: "Court File Number:",
-              value: `${fileNumber}`,
-              isNameBold: false,
-              isValueBold: true,
-            },
             {
               name: "Submitted To:",
               value: `${submittedTo}`,
               isNameBold: false,
               isValueBold: true,
             },
+          ]);
+          setCourtFileDetails([
             {
-              name: "Filing Comments:",
-              value: `${filingComments}`,
+              name: "Package Number:",
+              value: `${packageNo}`,
+              isNameBold: false,
+              isValueBold: true,
+            },
+            {
+              name: "Court File Number:",
+              value: `${fileNumber}`,
               isNameBold: false,
               isValueBold: true,
             },
@@ -135,7 +124,7 @@ export default function PackageReview({ page: { header, packageId } }) {
       <Header header={header} />
       <div className="page">
         <div className="content col-md-8">
-          <h1>View Submitted Package</h1>
+          <h1>View Recently Submitted Package # {packageId}</h1>
           {error && (
             <div className="col-md-8">
               <Alert
