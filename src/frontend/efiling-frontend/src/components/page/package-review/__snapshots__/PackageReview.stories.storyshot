@@ -44,13 +44,13 @@ exports[`Storyshots PackageReview Default 1`] = `
       class="page"
     >
       <div
-        class="content col-md-12"
+        class="content col-md-8"
       >
         <h1>
           View Submitted Package
         </h1>
         <div
-          class="col-md-12"
+          class="col-md-8"
         >
           <div
             class="bcgov-display-box bcgov-error-background"
@@ -84,9 +84,47 @@ exports[`Storyshots PackageReview Default 1`] = `
           </div>
         </div>
         <br />
-        <h2>
-          Package Details
-        </h2>
+        <div
+          class="row"
+        >
+          <h2
+            class="col-sm-6"
+          >
+            Package Details
+          </h2>
+          <div
+            class="col-sm-6 text-sm-right mt-3 mt-sm-0"
+          >
+            <span
+              class="file-href"
+              role="button"
+              tabindex="0"
+            >
+              Print Submission Sheet
+            </span>
+            <svg
+              class="align-icon"
+              color="#7F7F7F"
+              fill="currentColor"
+              height="24"
+              stroke="currentColor"
+              stroke-width="0"
+              style="color: rgb(127, 127, 127);"
+              viewBox="0 0 16 16"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10.5 8a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
+              />
+              <path
+                clip-rule="evenodd"
+                d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 100-7 3.5 3.5 0 000 7z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </div>
+        </div>
         <br />
         <div
           class="row"
@@ -353,13 +391,13 @@ exports[`Storyshots PackageReview Mobile 1`] = `
       class="page"
     >
       <div
-        class="content col-md-12"
+        class="content col-md-8"
       >
         <h1>
           View Submitted Package
         </h1>
         <div
-          class="col-md-12"
+          class="col-md-8"
         >
           <div
             class="bcgov-display-box bcgov-error-background"
@@ -393,9 +431,47 @@ exports[`Storyshots PackageReview Mobile 1`] = `
           </div>
         </div>
         <br />
-        <h2>
-          Package Details
-        </h2>
+        <div
+          class="row"
+        >
+          <h2
+            class="col-sm-6"
+          >
+            Package Details
+          </h2>
+          <div
+            class="col-sm-6 text-sm-right mt-3 mt-sm-0"
+          >
+            <span
+              class="file-href"
+              role="button"
+              tabindex="0"
+            >
+              Print Submission Sheet
+            </span>
+            <svg
+              class="align-icon"
+              color="#7F7F7F"
+              fill="currentColor"
+              height="24"
+              stroke="currentColor"
+              stroke-width="0"
+              style="color: rgb(127, 127, 127);"
+              viewBox="0 0 16 16"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10.5 8a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
+              />
+              <path
+                clip-rule="evenodd"
+                d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 100-7 3.5 3.5 0 000 7z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </div>
+        </div>
         <br />
         <div
           class="row"
