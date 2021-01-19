@@ -18,10 +18,10 @@ public class OauthService {
     @Value("${KEYCLOAK_REALM:Efiling-Hub}")
     private String keycloakRealm;
 
-    @Value("${BCEID_USERNAME:bobross}")
+    @Value("${USERNAME_BCEID:bobross}")
     private String username;
 
-    @Value("${BCEID_PASSWORD:changeme}")
+    @Value("${PASSWORD_BCEID:changeme}")
     private String password;
 
     private Logger logger = LoggerFactory.getLogger(OauthService.class);
