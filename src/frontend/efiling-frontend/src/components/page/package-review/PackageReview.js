@@ -149,14 +149,13 @@ export default function PackageReview({ page: { header, packageId } }) {
           <br />
           <div className="row">
             <h2 className="col-sm-6">Package Details</h2>
-            <div className="col-sm-6 text-right">
+            <div className="col-sm-6 text-sm-right mt-3 mt-sm-0">
               <span
                 onKeyDown={() => downloadSubmissionSheet(packageId)}
                 role="button"
                 tabIndex={0}
                 className="file-href"
                 onClick={() => downloadSubmissionSheet(packageId)}
-                data-test-id="uploaded-file"
               >
                 Print Submission Sheet
               </span>
