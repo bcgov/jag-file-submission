@@ -20,7 +20,7 @@ public class CourtService {
                 .preemptive()
                 .oauth2(accessToken);
 
-                 return request.queryParam(courtLevel).when()
+        return request.queryParam(courtLevel).when()
                 .get(MessageFormat.format("{0}/courts", eFilingHost))
                 .then()
                 .extract()
