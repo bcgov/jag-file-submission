@@ -47,7 +47,7 @@ exports[`PackageReview Component Matches the snapshot 1`] = `
         class="content col-md-8"
       >
         <h1>
-          View Submitted Package
+          View Recently Submitted Package # 1
         </h1>
         <div
           class="col-md-8"
@@ -145,20 +145,6 @@ exports[`PackageReview Component Matches the snapshot 1`] = `
                   <div
                     class="bcgov-fill-width"
                   >
-                    Package Number:
-                  </div>
-                  <div
-                    class="bcgov-table-value "
-                  >
-                    <b />
-                  </div>
-                </div>
-                <div
-                  class="bcgov-row "
-                >
-                  <div
-                    class="bcgov-fill-width"
-                  >
                     Submitted By:
                   </div>
                   <div
@@ -174,6 +160,20 @@ exports[`PackageReview Component Matches the snapshot 1`] = `
                     class="bcgov-fill-width"
                   >
                     Submitted Date:
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    <b />
+                  </div>
+                </div>
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-fill-width"
+                  >
+                    Submitted To:
                   </div>
                   <div
                     class="bcgov-table-value "
@@ -200,35 +200,21 @@ exports[`PackageReview Component Matches the snapshot 1`] = `
                   <div
                     class="bcgov-fill-width"
                   >
+                    Package Number:
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    <b />
+                  </div>
+                </div>
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-fill-width"
+                  >
                     Court File Number:
-                  </div>
-                  <div
-                    class="bcgov-table-value "
-                  >
-                    <b />
-                  </div>
-                </div>
-                <div
-                  class="bcgov-row "
-                >
-                  <div
-                    class="bcgov-fill-width"
-                  >
-                    Submitted To:
-                  </div>
-                  <div
-                    class="bcgov-table-value "
-                  >
-                    <b />
-                  </div>
-                </div>
-                <div
-                  class="bcgov-row "
-                >
-                  <div
-                    class="bcgov-fill-width"
-                  >
-                    Filing Comments:
                   </div>
                   <div
                     class="bcgov-table-value "
