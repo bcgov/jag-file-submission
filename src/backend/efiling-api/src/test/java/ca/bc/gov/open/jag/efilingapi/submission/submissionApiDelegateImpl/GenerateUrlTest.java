@@ -51,7 +51,6 @@ public class GenerateUrlTest {
     private static final String USER_WITH_CSO_ACCOUNT = "1593769b-ac4b-43d9-9e81-38877eefcca5";
     private static final String USER_WITH_NO_CSO_ACCOUNT = "1593769b-ac4b-43d9-9e81-38877eefcca6";
 
-
     private SubmissionApiDelegateImpl sut;
 
     @Mock
@@ -380,6 +379,28 @@ public class GenerateUrlTest {
         Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode());
         Assertions.assertEquals(ErrorResponse.DOCUMENT_TYPE_ERROR.getErrorCode(), actualError.getError());
         Assertions.assertEquals(ErrorResponse.DOCUMENT_TYPE_ERROR.getErrorMessage(), actualError.getMessage());
+    }
+
+    @Test
+    @DisplayName("403: with no user id it should return forbidden")
+    public void withNoUserIdShouldReturnForbidden() {
+        @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
+
+        generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
+        generateUrlRequest.setNavigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
+        InitialPackage initialPackage = new InitialPackage();
+        CourtBase court = new CourtBase();
+        court.setLocation("valid");
+        initialPackage.setCourt(court);
+        generateUrlRequest.setFilingPackage(initialPackage);
+
+        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), "  ", TestHelpers.CASE_5, generateUrlRequest);
+
+        EfilingError actualError = (EfilingError) actual.getBody();
+
+        Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
+        Assertions.assertEquals(ErrorResponse.INVALIDUNIVERSAL.getErrorCode(), actualError.getError());
+        Assertions.assertEquals(ErrorResponse.INVALIDUNIVERSAL.getErrorMessage(), actualError.getMessage());
     }
 
 

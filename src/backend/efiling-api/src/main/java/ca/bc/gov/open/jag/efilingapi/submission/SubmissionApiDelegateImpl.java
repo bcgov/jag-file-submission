@@ -82,7 +82,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             logger.error("Universal ID is required");
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
-                    HttpStatus.BAD_REQUEST);
+                    HttpStatus.FORBIDDEN);
         }
 
         SubmissionKey submissionKey = new SubmissionKey(

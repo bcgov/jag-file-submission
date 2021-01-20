@@ -184,4 +184,25 @@ public class UploadSubmissionDocumentsTest {
         Assertions.assertEquals(DOCUMENT_STORAGE_FAILURE.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
     }
 
+    @Test
+    @DisplayName("400: with missing id should return 400")
+    public void withBlankIdShouldReturn400() throws VirusDetectedException, IOException {
+
+
+        File file = new File("src/test/resources/test.pdf");
+
+        List<MultipartFile> files = new ArrayList<>();
+        MultipartFile multipartFile = new MockMultipartFile("test.pdf", new FileInputStream(file));
+        files.add(multipartFile);
+        files.add(multipartFile);
+
+        Mockito.doThrow(VirusDetectedException.class).when(clamAvServiceMock).scan(any());
+
+        ResponseEntity actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), "  ", files);
+
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
+        Assertions.assertEquals(INVALIDUNIVERSAL.getErrorCode(), ((EfilingError)actual.getBody()).getError());
+        Assertions.assertEquals(INVALIDUNIVERSAL.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
+    }
+
 }
