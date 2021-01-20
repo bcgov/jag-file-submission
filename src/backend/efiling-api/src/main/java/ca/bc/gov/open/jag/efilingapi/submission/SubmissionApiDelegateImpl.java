@@ -45,6 +45,7 @@ import java.util.UUID;
 @EnableConfigurationProperties(NavigationProperties.class)
 public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
+    private static final String UNIVERSAL_ID_IS_REQUIRED = "universal Id is required.";
     Logger logger = LoggerFactory.getLogger(SubmissionApiDelegateImpl.class);
 
     private final SubmissionService submissionService;
@@ -79,7 +80,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     public ResponseEntity<UploadSubmissionDocumentsResponse> uploadSubmissionDocuments(UUID xTransactionId, String xUserId, List<MultipartFile> files) {
 
         if(StringUtils.isBlank(xUserId)) {
-            logger.error("Universal ID is required");
+            logger.error(UNIVERSAL_ID_IS_REQUIRED);
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
                     HttpStatus.FORBIDDEN);
@@ -113,7 +114,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         if(!universalId.isPresent()) {
 
-            logger.error("Universal ID is required");
+            logger.error(UNIVERSAL_ID_IS_REQUIRED);
 
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
@@ -149,7 +150,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         if(!universalId.isPresent()) {
 
-            logger.error("Universal ID is required");
+            logger.error(UNIVERSAL_ID_IS_REQUIRED);
 
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
@@ -202,7 +203,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         if(!universalId.isPresent()) {
 
-            logger.error("Universal ID is required");
+            logger.error(UNIVERSAL_ID_IS_REQUIRED);
 
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
@@ -235,7 +236,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         if (StringUtils.isBlank(xUserId)) {
 
-            logger.error("Universal ID is required");
+            logger.error(UNIVERSAL_ID_IS_REQUIRED);
 
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
@@ -305,7 +306,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         if (!universalId.isPresent()) {
 
-            logger.error("Universal ID is required");
+            logger.error(UNIVERSAL_ID_IS_REQUIRED);
 
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
@@ -346,7 +347,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         if(!universalId.isPresent()) {
 
-            logger.error("Universal ID is required");
+            logger.error(UNIVERSAL_ID_IS_REQUIRED);
 
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
@@ -379,7 +380,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         if(!universalId.isPresent()) {
 
-            logger.error("Universal ID is required");
+            logger.error(UNIVERSAL_ID_IS_REQUIRED);
 
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
@@ -410,7 +411,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         if(!universalId.isPresent()) {
 
-            logger.error("Universal ID is required");
+            logger.error(UNIVERSAL_ID_IS_REQUIRED);
 
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
