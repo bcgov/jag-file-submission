@@ -8,9 +8,11 @@ Welcome to the eFiling frontend!
 
 In the project directory `efiling-frontend`:
 
-Create a `.env.development` file and populate the environment variables as shown in the `.env.example` file.
+Create a `.env.development` file and populate the environment variables as
+shown in the `.env.example` file.
 
-To bring up all the backend docker containers locally, n the root directory `jag-file-submission`, run:
+To bring up all the backend docker containers locally, n the root directory
+`jag-file-submission`, run:
 
 ```bash
 docker-compose up efiling-api efiling-frontend keycloak keycloak-config redis
@@ -26,7 +28,8 @@ To continue, replace the domain in the browser URL with `http://localhost:3000/e
 
 In the project directory `efiling-frontend`:
 
-Create a `.env.development` file and populate the environment variables as shown in the `.env.env` file.
+Create a `.env.development` file and populate the environment variables as
+shown in the `.env.env` file.
 
 Run:
 
