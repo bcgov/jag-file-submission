@@ -60,7 +60,7 @@ public class GenerateUrlSD {
         logger.info("Submitting document upload request");
 
         File resource = new ClassPathResource(
-                "data/test-document.pdf").getFile();
+                MessageFormat.format("data/{0}", TEST_DOCUMENT_PDF)).getFile();
 
         MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource,TEST_DOCUMENT_PDF, "text/application.pdf");
 
@@ -79,7 +79,7 @@ public class GenerateUrlSD {
         logger.info("Asserting document upload response");
 
         JsonPath jsonPath = new JsonPath(actualDocumentResponse.asString());
-        Assert.assertEquals("File Received not don't match", new BigDecimal(1), new BigDecimal(jsonPath.get("received").toString()));
+        Assert.assertEquals("File not Received don't match", new BigDecimal(1), new BigDecimal(jsonPath.get("received").toString()));
 
         actualSubmissionId = submissionService.getSubmissionId(actualDocumentResponse);
 

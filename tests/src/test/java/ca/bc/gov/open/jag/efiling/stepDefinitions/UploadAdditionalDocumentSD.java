@@ -17,7 +17,7 @@ import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.util.UUID;
 
 public class UploadAdditionalDocumentSD {
@@ -50,10 +50,10 @@ public class UploadAdditionalDocumentSD {
 
     @When("request is made to upload additional documents")
     public void userSubmitAdditionalPdfDocument() throws IOException {
-        logger.info("Submitting request with submit parameters");
+        logger.info("Submitting request with additional document");
 
         File resource = new ClassPathResource(
-                "data/test-document.pdf").getFile();
+                MessageFormat.format("data/{0}", TEST_DOCUMENT_PDF)).getFile();
 
         MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource, TEST_DOCUMENT_PDF, "text/application.pdf");
 
