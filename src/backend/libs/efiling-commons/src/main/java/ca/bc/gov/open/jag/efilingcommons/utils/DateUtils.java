@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingcommons.utils;
 
+
 import org.joda.time.DateTime;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -31,6 +32,11 @@ public class DateUtils {
             //This will never execute
             throw new RuntimeException("Impossible");
         }
+    }
+
+    public static String toIsoDate(DateTime date) {
+        if (date == null) return null;
+        return date.toDateTimeISO().toString();
     }
 
 }

@@ -7,5 +7,6 @@ public enum Clients {
     STATUS,
     CSOWS,
     FILING,
-    SERVICE;
+    SERVICE,
+    REPORT;
 }

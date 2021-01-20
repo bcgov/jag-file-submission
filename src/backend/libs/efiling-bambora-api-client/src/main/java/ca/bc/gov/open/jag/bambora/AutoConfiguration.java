@@ -19,6 +19,9 @@ public class AutoConfiguration {
     public ApiClient apiClient(BamboraProperties bamboraProperties)  {
 
         ApiClient apiClient = new ApiClient();
+        //Setting this to null will make it use the base path
+        apiClient.setServerIndex(null);
+        apiClient.setBasePath(bamboraProperties.getApiBasePath());
         apiClient.setApiKey(MessageFormat.format("Passcode {0}", bamboraProperties.getEncodedKey()));
         return apiClient;
 

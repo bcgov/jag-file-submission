@@ -31,12 +31,12 @@ public class SecurityUtils {
         }
     }
 
-    public static String getApplicationCode() {
+    public static Optional<String> getApplicationCode() {
         try {
-            return ((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-                    .getKeycloakSecurityContext().getToken().getOtherClaims().get(Keys.CSO_APPLICATION_CODE).toString();
+            return Optional.of(((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+                    .getKeycloakSecurityContext().getToken().getOtherClaims().get(Keys.CSO_APPLICATION_CODE).toString());
         } catch (Exception e) {
-            return "unknown";
+            return Optional.empty();
         }
     }
 

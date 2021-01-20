@@ -26,5 +26,7 @@ public class Keys {
     public static final String PARTY_TYPE_CD = "CLA";
     public static final String PARTY_NAME_TYPE_CD = "CUR";
     public static final String PRIVILEGE_CD = "UPDT";
+    public static final String REPORT_NAME = "submission";
+    public static final String REPORT_PARAMETER = "prm_package_id";
 
 }

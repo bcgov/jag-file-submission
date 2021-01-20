@@ -85,7 +85,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
 
     @Override
-    public Submission generateFromRequest(SubmissionKey submissionKey, GenerateUrlRequest generateUrlRequest) {
+    public Submission generateFromRequest(String applicationCode, SubmissionKey submissionKey, GenerateUrlRequest generateUrlRequest) {
 
         Optional<Submission> cachedSubmission = submissionStore.put(
                 submissionMapper.toSubmission(
@@ -93,7 +93,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                         submissionKey.getSubmissionId(),
                         submissionKey.getTransactionId(),
                         generateUrlRequest,
-                        toFilingPackage(generateUrlRequest, submissionKey),
+                        toFilingPackage(applicationCode, generateUrlRequest, submissionKey),
                         getExpiryDate()));
 
         if (!cachedSubmission.isPresent()) throw new StoreException("exception while storing submission object");
@@ -129,7 +129,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                     Base64.getEncoder().encodeToString(
                             MessageFormat.format("{0}/packagereview/{1}",
                                     navigationProperties.getBaseUrl(),
-                                    submitPackageResponse.getTransactionId()).getBytes()));
+                                    submitPackageResponse.getTransactionId().toPlainString()).getBytes()));
         } else {
             result.setPackageRef(Base64.getEncoder().encodeToString(submitPackageResponse.getPackageLink().getBytes()));
         }
@@ -164,7 +164,7 @@ public class SubmissionServiceImpl implements SubmissionService {
         );
     }
 
-    private FilingPackage toFilingPackage(GenerateUrlRequest request, SubmissionKey submissionKey) {
+    private FilingPackage toFilingPackage(String applicationCode, GenerateUrlRequest request, SubmissionKey submissionKey) {
 
         return FilingPackage.builder()
                 .court(populateCourtDetails(request.getFilingPackage().getCourt()))
@@ -180,10 +180,10 @@ public class SubmissionServiceImpl implements SubmissionService {
                 .parties(request.getFilingPackage()
                         .getParties()
                         .stream()
-                        .map(party ->  partyMapper.toParty(party))
+                        .map(partyMapper::toParty)
                         .collect(Collectors.toList()))
                 .rushedSubmission(isRushedSubmission(request))
-                .applicationCode(SecurityUtils.getApplicationCode())
+                .applicationCode(applicationCode)
                 .create();
 
     }
