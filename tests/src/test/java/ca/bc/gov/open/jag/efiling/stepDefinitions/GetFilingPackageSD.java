@@ -17,6 +17,7 @@ import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.UUID;
 
 public class GetFilingPackageSD {
@@ -53,7 +54,7 @@ public class GetFilingPackageSD {
 
 
         File resource = new ClassPathResource(
-                "data/test-document.pdf").getFile();
+                MessageFormat.format("data/{0}", TEST_DOCUMENT_PDF)).getFile();
 
         MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource,TEST_DOCUMENT_PDF, "text/application.pdf");
 
