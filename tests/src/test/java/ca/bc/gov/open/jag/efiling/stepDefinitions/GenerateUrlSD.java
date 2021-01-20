@@ -21,7 +21,6 @@ import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.util.UUID;
 
@@ -79,7 +78,7 @@ public class GenerateUrlSD {
         logger.info("Asserting document upload response");
 
         JsonPath jsonPath = new JsonPath(actualDocumentResponse.asString());
-        Assert.assertEquals("File not Received don't match", new BigDecimal(1), new BigDecimal(jsonPath.get("received").toString()));
+        Assert.assertEquals(Integer.valueOf(1), jsonPath.get("received"));
 
         actualSubmissionId = submissionService.getSubmissionId(actualDocumentResponse);
 
