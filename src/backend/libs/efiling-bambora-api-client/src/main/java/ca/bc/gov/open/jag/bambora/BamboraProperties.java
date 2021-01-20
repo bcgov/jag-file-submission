@@ -7,9 +7,13 @@ import java.util.Base64;
 
 @ConfigurationProperties(prefix = "bambora")
 public class BamboraProperties {
+    private String apiBasePath;
     private String apiPasscode;
     private String merchantId;
 
+    public String getApiBasePath() { return apiBasePath; }
+
+    public void setApiBasePath(String apiBasePath) { this.apiBasePath = apiBasePath; }
 
     public String getApiPasscode() {
         return apiPasscode;
