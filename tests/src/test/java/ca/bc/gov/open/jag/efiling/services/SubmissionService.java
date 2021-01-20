@@ -3,7 +3,6 @@ package ca.bc.gov.open.jag.efiling.services;
 import ca.bc.gov.open.jag.efiling.error.EfilingTestException;
 import ca.bc.gov.open.jag.efiling.helpers.PayloadHelper;
 import ca.bc.gov.open.jag.efiling.helpers.SubmissionHelper;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
@@ -29,6 +28,7 @@ public class SubmissionService {
     private static final String X_TRANSACTION_ID = "X-Transaction-Id";
     private static final String X_USER_ID = "X-User-Id";
     private static final String MESSAGE_FORMAT_WITH_SUBID_AND_PATH = "{0}/submission/{1}/{2}";
+    private static final String TEST_DOCUMENT_PDF = "test-document.pdf";
 
     private Logger logger = LoggerFactory.getLogger(SubmissionService.class);
 
@@ -61,7 +61,7 @@ public class SubmissionService {
                 .contentType(ContentType.JSON)
                 .header(X_TRANSACTION_ID, transactionId)
                 .header(X_USER_ID, universalId)
-                .body(PayloadHelper.generateUrlPayload("test-document.pdf"));
+                .body(PayloadHelper.generateUrlPayload(TEST_DOCUMENT_PDF));
 
         return request
                 .when()
@@ -103,7 +103,7 @@ public class SubmissionService {
                 .oauth2(accessToken)
                 .contentType(ContentType.JSON)
                 .header(X_TRANSACTION_ID, transactionId)
-                .body(new ObjectMapper().createObjectNode());
+                .body(PayloadHelper.generateUrlPayload(TEST_DOCUMENT_PDF));
 
         return request
                 .when()
@@ -137,6 +137,28 @@ public class SubmissionService {
 
     }
 
+    public Response updateDocumentPropertiesResponse(String accessToken, UUID transactionId, String submissionId, String path) {
+
+        logger.info("Submitting request to update document properties to the host {}", eFilingHost);
+
+
+        RequestSpecification request = RestAssured
+                .given()
+                .auth()
+                .preemptive()
+                .oauth2(accessToken)
+                .contentType(ContentType.JSON)
+                .header(X_TRANSACTION_ID, transactionId)
+                .body(PayloadHelper.updateDocumentProperties(TEST_DOCUMENT_PDF));
+
+        return request
+                .when()
+                .post(MessageFormat.format(MESSAGE_FORMAT_WITH_SUBID_AND_PATH, eFilingHost,submissionId, path))
+                .then()
+                .extract()
+                .response();
+
+    }
 
     public String getSubmissionId(Response documentResponse) {
 
