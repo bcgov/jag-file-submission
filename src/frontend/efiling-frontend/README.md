@@ -22,8 +22,10 @@ Continue below with `yarn install`
 
 ### Running the Frontend against the dockerized containers on DEV (dev.justice.gov.bc.ca)
 
-It's possible to run the frontend application locally, but use keycloak, the api, and the other backend containers running on DEV.
-Note: Once in a while the backend may redirect back to the frontend running on DEV (ie. `https://dev.justice.gov.bc.ca/efilinghub?submissionId=b8219b1`...).
+It's possible to run the frontend application locally, but use keycloak,
+the api, and the other backend containers running on DEV.
+Note: Once in a while the backend may redirect back to the frontend running
+on DEV (ie. `https://dev.justice.gov.bc.ca/efilinghub?submissionId=b8219b1`...).
 To continue, replace the domain in the browser URL with `http://localhost:3000/efilinghub`...
 
 In the project directory `efiling-frontend`:
