@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efiling.services;
 import ca.bc.gov.open.jag.efiling.error.EfilingTestException;
 import ca.bc.gov.open.jag.efiling.helpers.PayloadHelper;
 import ca.bc.gov.open.jag.efiling.helpers.SubmissionHelper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
@@ -103,7 +104,7 @@ public class SubmissionService {
                 .oauth2(accessToken)
                 .contentType(ContentType.JSON)
                 .header(X_TRANSACTION_ID, transactionId)
-                .body(PayloadHelper.generateUrlPayload(TEST_DOCUMENT_PDF));
+                .body(new ObjectMapper().createObjectNode());
 
         return request
                 .when()
