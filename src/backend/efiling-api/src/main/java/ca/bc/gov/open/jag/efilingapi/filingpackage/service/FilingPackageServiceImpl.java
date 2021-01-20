@@ -10,7 +10,6 @@ import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPa
 
 import java.math.BigDecimal;
 import java.util.Optional;
-import java.util.UUID;
 
 public class FilingPackageServiceImpl implements FilingPackageService {
 
@@ -28,7 +27,8 @@ public class FilingPackageServiceImpl implements FilingPackageService {
 
 
     @Override
-    public Optional<FilingPackage> getCSOFilingPackage(UUID universalId, BigDecimal packageNumber) {
+    public Optional<FilingPackage> getCSOFilingPackage(String universalId, BigDecimal packageNumber) {
+
         AccountDetails accountDetails = accountService.getCsoAccountDetails(universalId);
 
         if (accountDetails.getClientId() == null) return Optional.empty();

@@ -184,16 +184,4 @@ public class UploadSubmissionDocumentsTest {
         Assertions.assertEquals(DOCUMENT_STORAGE_FAILURE.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
     }
 
-    @Test
-    @DisplayName("400: with invalid userId then return BAD REQUEST 400")
-    public void withInvalidUserIDThenReturnBadRequest() {
-
-        List<MultipartFile> files = new ArrayList<>();
-        files.add(multipartFileMock);
-        ResponseEntity actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), "BADUUID", files);
-
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
-        Assertions.assertEquals(INVALIDUNIVERSAL.getErrorCode(), ((EfilingError)actual.getBody()).getError());
-        Assertions.assertEquals(INVALIDUNIVERSAL.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
-    }
 }

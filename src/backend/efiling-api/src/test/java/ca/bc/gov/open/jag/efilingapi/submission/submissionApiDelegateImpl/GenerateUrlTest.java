@@ -1,7 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 
-import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.clamav.starter.ClamAvService;
+import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
@@ -36,10 +36,11 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.validation.Valid;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
-import static ca.bc.gov.open.jag.efilingapi.error.ErrorResponse.INVALIDUNIVERSAL;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("SubmissionApiDelegateImpl test suite")
@@ -47,8 +48,8 @@ public class GenerateUrlTest {
 
     private static final String CODE = "CODE";
     private static final String CLIENT_APP_NAME = "clientAppName";
-    private static final UUID USER_WITH_CSO_ACCOUNT = UUID.fromString("1593769b-ac4b-43d9-9e81-38877eefcca5");
-    private static final UUID USER_WITH_NO_CSO_ACCOUNT = UUID.fromString("1593769b-ac4b-43d9-9e81-38877eefcca6");
+    private static final String USER_WITH_CSO_ACCOUNT = "1593769b-ac4b-43d9-9e81-38877eefcca5";
+    private static final String USER_WITH_NO_CSO_ACCOUNT = "1593769b-ac4b-43d9-9e81-38877eefcca6";
 
 
     private SubmissionApiDelegateImpl sut;
@@ -379,18 +380,6 @@ public class GenerateUrlTest {
         Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode());
         Assertions.assertEquals(ErrorResponse.DOCUMENT_TYPE_ERROR.getErrorCode(), actualError.getError());
         Assertions.assertEquals(ErrorResponse.DOCUMENT_TYPE_ERROR.getErrorMessage(), actualError.getMessage());
-    }
-
-    @Test
-    @DisplayName("403: with invalid userId then return forbidden 403")
-    public void withInvalidUserIDThenReturnForbidden() {
-
-
-        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), "BADUUID", UUID.randomUUID(), null);
-
-        Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
-        Assertions.assertEquals(INVALIDUNIVERSAL.getErrorCode(), ((EfilingError)actual.getBody()).getError());
-        Assertions.assertEquals(INVALIDUNIVERSAL.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
     }
 
 

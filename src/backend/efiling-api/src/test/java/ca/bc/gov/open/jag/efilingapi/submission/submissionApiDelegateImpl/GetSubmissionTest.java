@@ -128,12 +128,12 @@ public class GetSubmissionTest {
                 .get(ArgumentMatchers.argThat(x -> x.getSubmissionId().equals(TestHelpers.CASE_4)));
 
 
-        Mockito.when(accountServiceMock.getCsoAccountDetails(Mockito.eq(TestHelpers.CASE_2)))
+        Mockito.when(accountServiceMock.getCsoAccountDetails(Mockito.eq(TestHelpers.CASE_2_STRING)))
                 .thenReturn(AccountDetails
                         .builder()
                         .clientId(BigDecimal.TEN)
                         .internalClientNumber(INTERNAL_CLIENT_NUMBER)
-                        .universalId(TestHelpers.CASE_2)
+                        .universalId(TestHelpers.CASE_2_STRING)
                         .accountId(BigDecimal.TEN)
                         .fileRolePresent(true)
                         .cardRegistered(true)
@@ -152,7 +152,9 @@ public class GetSubmissionTest {
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<GetSubmissionConfigResponse> actual = sut.getSubmissionConfig(UUID.randomUUID(), TestHelpers.CASE_1);
+        ResponseEntity<GetSubmissionConfigResponse> actual = sut.getSubmissionConfig(
+                UUID.randomUUID(), 
+                TestHelpers.CASE_1);
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
     }
 
@@ -164,7 +166,9 @@ public class GetSubmissionTest {
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_2);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<GetSubmissionConfigResponse> actual = sut.getSubmissionConfig(TestHelpers.CASE_2, TestHelpers.CASE_2);
+        ResponseEntity<GetSubmissionConfigResponse> actual = sut.getSubmissionConfig(UUID.fromString(
+                TestHelpers.CASE_2_STRING), 
+                TestHelpers.CASE_2);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigationUrls().getSuccess());
         assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigationUrls().getCancel());
@@ -182,7 +186,9 @@ public class GetSubmissionTest {
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<GetSubmissionConfigResponse> actual = sut.getSubmissionConfig(TestHelpers.CASE_3, UUID.randomUUID());
+        ResponseEntity<GetSubmissionConfigResponse> actual = sut.getSubmissionConfig(
+                TestHelpers.CASE_3, 
+                UUID.randomUUID());
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigationUrls().getSuccess());
         assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigationUrls().getCancel());
@@ -198,7 +204,9 @@ public class GetSubmissionTest {
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<GetSubmissionConfigResponse> actual = sut.getSubmissionConfig(TestHelpers.CASE_4, UUID.randomUUID());
+        ResponseEntity<GetSubmissionConfigResponse> actual = sut.getSubmissionConfig(
+                TestHelpers.CASE_4, 
+                UUID.randomUUID());
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigationUrls().getSuccess());
         assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigationUrls().getCancel());
@@ -214,8 +222,8 @@ public class GetSubmissionTest {
 
         ResponseEntity actual = sut.getSubmissionConfig(UUID.randomUUID(), TestHelpers.CASE_5);
         assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
-        assertEquals("MISSING_UNIVERSAL_ID", ((EfilingError)actual.getBody()).getError());
-        assertEquals("universal-id claim missing in jwt token.", ((EfilingError)actual.getBody()).getMessage());
+        assertEquals("MISSING_UNIVERSAL_ID", ((EfilingError) actual.getBody()).getError());
+        assertEquals("universal-id claim missing in jwt token.", ((EfilingError) actual.getBody()).getMessage());
 
 
     }

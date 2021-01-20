@@ -4,11 +4,10 @@ import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 
 import java.math.BigDecimal;
 import java.util.Optional;
-import java.util.UUID;
 
 public interface FilingPackageService {
 
-    Optional<FilingPackage> getCSOFilingPackage(UUID universalId, BigDecimal packageNumber);
+    Optional<FilingPackage> getCSOFilingPackage(String universalId, BigDecimal packageNumber);
 
     Optional<byte[]> getSubmissionSheet(BigDecimal packageNumber);
 }

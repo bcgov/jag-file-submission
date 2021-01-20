@@ -63,9 +63,9 @@ public class GetCSOFilingPackage {
 
         MockitoAnnotations.openMocks(this);
 
-        Mockito.when(accountServiceMock.getCsoAccountDetails(ArgumentMatchers.eq(TestHelpers.CASE_1))).thenReturn(createAccount(BigDecimal.ONE));
+        Mockito.when(accountServiceMock.getCsoAccountDetails(ArgumentMatchers.eq(TestHelpers.CASE_1_STRING))).thenReturn(createAccount(BigDecimal.ONE));
 
-        Mockito.when(accountServiceMock.getCsoAccountDetails(ArgumentMatchers.eq(TestHelpers.CASE_2))).thenReturn(createAccount(null));
+        Mockito.when(accountServiceMock.getCsoAccountDetails(ArgumentMatchers.eq(TestHelpers.CASE_2_STRING))).thenReturn(createAccount(null));
 
         sut = new FilingPackageServiceImpl(efilingReviewServiceMock, accountServiceMock, new FilingPackageMapperImpl());
     }
@@ -76,7 +76,7 @@ public class GetCSOFilingPackage {
 
         Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.of(createFilingPackage()));
 
-        Optional<FilingPackage> result = sut.getCSOFilingPackage(TestHelpers.CASE_1, BigDecimal.ONE);
+        Optional<FilingPackage> result = sut.getCSOFilingPackage(TestHelpers.CASE_1_STRING, BigDecimal.ONE);
 
         Assertions.assertTrue(result.isPresent());
         //FilingPackage
@@ -128,7 +128,7 @@ public class GetCSOFilingPackage {
     @Test
     @DisplayName("Not found: missing account")
     public void withValidRequestButMissingAccountReturnEmpty() {
-        Optional<FilingPackage> result = sut.getCSOFilingPackage(TestHelpers.CASE_2, BigDecimal.ONE);
+        Optional<FilingPackage> result = sut.getCSOFilingPackage(TestHelpers.CASE_2_STRING, BigDecimal.ONE);
 
         Assertions.assertFalse(result.isPresent());
     }
@@ -140,7 +140,7 @@ public class GetCSOFilingPackage {
 
         Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.empty());
 
-        Optional<FilingPackage> result = sut.getCSOFilingPackage(TestHelpers.CASE_1, BigDecimal.TEN);
+        Optional<FilingPackage> result = sut.getCSOFilingPackage(TestHelpers.CASE_1_STRING, BigDecimal.TEN);
 
         Assertions.assertFalse(result.isPresent());
     }
@@ -152,9 +152,9 @@ public class GetCSOFilingPackage {
                 .accountId(BigDecimal.ONE)
                 .clientId(clientId)
                 .cardRegistered(true)
-                .universalId(UUID.randomUUID())
+                .universalId(UUID.randomUUID().toString())
                 .internalClientNumber(null)
-                .universalId(TestHelpers.CASE_1).create();
+                .universalId(TestHelpers.CASE_1_STRING).create();
 
     }
 

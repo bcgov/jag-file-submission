@@ -6,8 +6,6 @@ import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import org.springframework.cache.annotation.Cacheable;
 
-import java.util.UUID;
-
 public class AccountServiceImpl implements AccountService {
 
     private final EfilingAccountService efilingAccountService;
@@ -20,7 +18,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Cacheable(cacheNames = "accountDetails", key = "#universalId", cacheManager = "accountDetailsCacheManager", unless = "#result == null || #result.getInternalClientNumber() == null")
-    public AccountDetails getCsoAccountDetails(UUID universalId) {
+    public AccountDetails getCsoAccountDetails(String universalId) {
         return efilingAccountService.getAccountDetails(universalId);
     }
 
@@ -31,7 +29,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Cacheable(cacheNames = "accountDetails", key = "#universalId", cacheManager = "accountDetailsCacheManager", unless = "#result == null || #result.getInternalClientNumber() == null")
-    public AccountDetails createAccount(UUID universalId, CreateCsoAccountRequest createCsoAccountRequest) {
+    public AccountDetails createAccount(String universalId, CreateCsoAccountRequest createCsoAccountRequest) {
         return efilingAccountService.createAccount(createAccountRequestMapper.toCreateAccountRequest(universalId, createCsoAccountRequest));
     }
 
