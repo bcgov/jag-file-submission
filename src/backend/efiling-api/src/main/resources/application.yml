@@ -79,7 +79,7 @@ cso:
   debugEnabled: ${CSO_DEBUG_ENABLED:false}
 
 bambora:
-  apiBasePath: ${BAMBORA_APIBASEPATH}
+  apiBasePath: ${BAMBORA_APIBASEPATH:http://localhost:8080}
   apiPasscode: ${BAMBORA_APIPASSCODE}
   merchantId: ${BAMBORA_MERCHANTID}
   hostedProfileUrl: ${BAMBORA_PROFILE_URL}
