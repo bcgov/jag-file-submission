@@ -17,6 +17,7 @@ import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.UUID;
 
 public class UploadAdditionalDocumentSD {
@@ -65,7 +66,7 @@ public class UploadAdditionalDocumentSD {
         submissionService.generateUrlResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
                 actualUserIdentity.getAccessToken(), actualSubmissionId);
 
-        actualAdditionalDocumentResponse = submissionService.postSubmissionResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
+        actualAdditionalDocumentResponse = submissionService.additionalDocumentUploadResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
                 actualSubmissionId, DOCUMENTS_PATH);
 
         logger.info("Api response status code: {}", actualAdditionalDocumentResponse.getStatusCode());
@@ -81,6 +82,9 @@ public class UploadAdditionalDocumentSD {
 
         Assert.assertEquals(200, actualAdditionalDocumentResponse.getStatusCode());
         Assert.assertEquals("application/json", actualAdditionalDocumentResponse.getContentType());
+
+        Assert.assertEquals("File Received don't match", new BigDecimal(1), new BigDecimal(additionalDocumentUploadJsonPath.get("received").toString()));
+        Assert.assertEquals(actualSubmissionId, additionalDocumentUploadJsonPath.get("submissionId"));
 
         logger.info("Response matches the requirements");
 
