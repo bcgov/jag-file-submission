@@ -28,6 +28,7 @@ public class SubmissionService {
 
     private static final String X_TRANSACTION_ID = "X-Transaction-Id";
     private static final String X_USER_ID = "X-User-Id";
+    private static final String MESSAGE_FORMAT_WITH_SUBID_AND_PATH = "{0}/submission/{1}/{2}";
 
     private Logger logger = LoggerFactory.getLogger(SubmissionService.class);
 
@@ -84,7 +85,7 @@ public class SubmissionService {
 
         return request
                 .when()
-                .get(MessageFormat.format("{0}/submission/{1}/{2}", eFilingHost,submissionId, path))
+                .get(MessageFormat.format(MESSAGE_FORMAT_WITH_SUBID_AND_PATH, eFilingHost,submissionId, path))
                 .then()
                 .extract()
                 .response();
@@ -106,7 +107,7 @@ public class SubmissionService {
 
         return request
                 .when()
-                .post(MessageFormat.format("{0}/submission/{1}/{2}", eFilingHost,submissionId, path))
+                .post(MessageFormat.format(MESSAGE_FORMAT_WITH_SUBID_AND_PATH, eFilingHost,submissionId, path))
                 .then()
                 .extract()
                 .response();
@@ -129,7 +130,7 @@ public class SubmissionService {
 
         return request
                 .when()
-                .post(MessageFormat.format("{0}/submission/{1}/{2}", eFilingHost,submissionId, path))
+                .post(MessageFormat.format(MESSAGE_FORMAT_WITH_SUBID_AND_PATH, eFilingHost,submissionId, path))
                 .then()
                 .extract()
                 .response();

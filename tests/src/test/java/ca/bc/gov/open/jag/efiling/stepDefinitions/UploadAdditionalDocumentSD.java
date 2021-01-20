@@ -83,7 +83,7 @@ public class UploadAdditionalDocumentSD {
         Assert.assertEquals(200, actualAdditionalDocumentResponse.getStatusCode());
         Assert.assertEquals("application/json", actualAdditionalDocumentResponse.getContentType());
 
-        Assert.assertEquals("File Received don't match", new BigDecimal(1), new BigDecimal(additionalDocumentUploadJsonPath.get("received").toString()));
+        Assert.assertEquals(Integer.valueOf(1), additionalDocumentUploadJsonPath.get("received"));
         Assert.assertEquals(actualSubmissionId, additionalDocumentUploadJsonPath.get("submissionId"));
 
         logger.info("Response matches the requirements");
