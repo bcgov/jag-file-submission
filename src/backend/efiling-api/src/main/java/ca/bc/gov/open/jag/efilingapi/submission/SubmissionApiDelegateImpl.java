@@ -111,10 +111,14 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
-        if(!universalId.isPresent())
+        if(!universalId.isPresent()) {
+
+            logger.error("Universal ID is required");
+
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
                     HttpStatus.FORBIDDEN);
+        }
 
         SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
 
@@ -143,10 +147,14 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
-        if(!universalId.isPresent())
+        if(!universalId.isPresent()) {
+
+            logger.error("Universal ID is required");
+
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
                     HttpStatus.FORBIDDEN);
+        }
 
         MdcUtils.setUserMDC(submissionId, xTransactionId);
 
@@ -192,10 +200,14 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
-        if(!universalId.isPresent())
+        if(!universalId.isPresent()) {
+
+            logger.error("Universal ID is required");
+
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
                     HttpStatus.FORBIDDEN);
+        }
 
         SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
 
@@ -221,10 +233,14 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         logger.info("Attempting to generate Url Request Received");
 
-        if (StringUtils.isBlank(xUserId))
+        if (StringUtils.isBlank(xUserId)) {
+
+            logger.error("Universal ID is required");
+
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
                     HttpStatus.FORBIDDEN);
+        }
 
         Optional<String> applicationCode = SecurityUtils.getApplicationCode();
 
@@ -287,8 +303,13 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
-        if (!universalId.isPresent()) return new ResponseEntity(
-                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
+        if (!universalId.isPresent()) {
+
+            logger.error("Universal ID is required");
+
+            return new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
+        }
 
         SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
 
@@ -323,10 +344,14 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
-        if(!universalId.isPresent())
+        if(!universalId.isPresent()) {
+
+            logger.error("Universal ID is required");
+
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
                     HttpStatus.FORBIDDEN);
+        }
 
         SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
 
@@ -352,10 +377,14 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
-        if(!universalId.isPresent())
+        if(!universalId.isPresent()) {
+
+            logger.error("Universal ID is required");
+
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
                     HttpStatus.FORBIDDEN);
+        }
 
         SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
 
@@ -379,10 +408,14 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
-        if(!universalId.isPresent())
+        if(!universalId.isPresent()) {
+
+            logger.error("Universal ID is required");
+
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
                     HttpStatus.FORBIDDEN);
+        }
 
         SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
 

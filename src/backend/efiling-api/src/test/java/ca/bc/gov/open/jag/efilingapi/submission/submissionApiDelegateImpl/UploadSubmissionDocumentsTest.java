@@ -185,7 +185,7 @@ public class UploadSubmissionDocumentsTest {
     }
 
     @Test
-    @DisplayName("400: with missing id should return 400")
+    @DisplayName("403: with missing id should return 403")
     public void withBlankIdShouldReturn400() throws VirusDetectedException, IOException {
 
 
@@ -200,7 +200,7 @@ public class UploadSubmissionDocumentsTest {
 
         ResponseEntity actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), "  ", files);
 
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
+        Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
         Assertions.assertEquals(INVALIDUNIVERSAL.getErrorCode(), ((EfilingError)actual.getBody()).getError());
         Assertions.assertEquals(INVALIDUNIVERSAL.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
     }
