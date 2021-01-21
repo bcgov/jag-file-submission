@@ -85,7 +85,7 @@ public class UpdateDocumentsTest {
         updateDocumentRequest.addDocumentsItem(documentProperties);
 
         Submission submission = TestHelpers.buildSubmission();
-        Submission actual = sut.updateDocuments(submission, updateDocumentRequest, new SubmissionKey(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID()));
+        Submission actual = sut.updateDocuments(submission, updateDocumentRequest, new SubmissionKey(UUID.randomUUID().toString(), UUID.randomUUID(), UUID.randomUUID()));
 
         Assertions.assertEquals(2, actual.getFilingPackage().getDocuments().size());
         Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getFilingPackage().getDocuments().get(0).getDescription());

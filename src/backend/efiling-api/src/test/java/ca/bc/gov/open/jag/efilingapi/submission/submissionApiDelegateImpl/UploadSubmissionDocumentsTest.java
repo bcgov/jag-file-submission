@@ -185,15 +185,24 @@ public class UploadSubmissionDocumentsTest {
     }
 
     @Test
-    @DisplayName("400: with invalid userId then return BAD REQUEST 400")
-    public void withInvalidUserIDThenReturnBadRequest() {
+    @DisplayName("403: with missing id should return 403")
+    public void withBlankIdShouldReturn400() throws VirusDetectedException, IOException {
+
+
+        File file = new File("src/test/resources/test.pdf");
 
         List<MultipartFile> files = new ArrayList<>();
-        files.add(multipartFileMock);
-        ResponseEntity actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), "BADUUID", files);
+        MultipartFile multipartFile = new MockMultipartFile("test.pdf", new FileInputStream(file));
+        files.add(multipartFile);
+        files.add(multipartFile);
 
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
+        Mockito.doThrow(VirusDetectedException.class).when(clamAvServiceMock).scan(any());
+
+        ResponseEntity actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), "  ", files);
+
+        Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
         Assertions.assertEquals(INVALIDUNIVERSAL.getErrorCode(), ((EfilingError)actual.getBody()).getError());
         Assertions.assertEquals(INVALIDUNIVERSAL.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
     }
+
 }

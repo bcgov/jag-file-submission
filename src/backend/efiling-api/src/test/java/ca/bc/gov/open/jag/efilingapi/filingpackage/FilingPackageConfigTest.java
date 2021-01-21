@@ -36,7 +36,7 @@ public class FilingPackageConfigTest {
             return new AccountService() {
 
                 @Override
-                public AccountDetails getCsoAccountDetails(UUID universalId) {
+                public AccountDetails getCsoAccountDetails(String universalId) {
                     return null;
                 }
 
@@ -46,7 +46,7 @@ public class FilingPackageConfigTest {
                 }
 
                 @Override
-                public AccountDetails createAccount(UUID universalId, CreateCsoAccountRequest createAccountRequest) {
+                public AccountDetails createAccount(String universalId, CreateCsoAccountRequest createAccountRequest) {
                     return null;
                 }
             };

@@ -17,6 +17,7 @@ import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.UUID;
 
 public class CreatePaymentServiceSD {
@@ -52,7 +53,7 @@ public class CreatePaymentServiceSD {
         logger.info("Submitting request with submit parameters");
 
         File resource = new ClassPathResource(
-                "data/test-document.pdf").getFile();
+                MessageFormat.format("data/{0}", TEST_DOCUMENT_PDF)).getFile();
 
         MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource,TEST_DOCUMENT_PDF, "text/application.pdf");
 
@@ -65,7 +66,8 @@ public class CreatePaymentServiceSD {
         submissionService.generateUrlResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
                 actualUserIdentity.getAccessToken(), actualSubmissionId);
 
-        actualSubmitResponse = submissionService.postSubmissionResponse(actualUserIdentity.getAccessToken(),actualTransactionId,
+
+        actualSubmitResponse = submissionService.createPaymentServiceResponse(actualUserIdentity.getAccessToken(),actualTransactionId,
                 actualSubmissionId, SUBMIT_PATH);
 
         logger.info("Api response status code: {}", actualSubmitResponse.getStatusCode());

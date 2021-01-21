@@ -3,9 +3,6 @@ package ca.bc.gov.open.jag.efilingcommons.service;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.CreateAccountRequest;
 
-import java.math.BigDecimal;
-import java.util.UUID;
-
 /**
  * Interface for getting account details based on a user GUID
  */
@@ -16,7 +13,7 @@ public interface EfilingAccountService {
      * @param universalId
      * @return
      */
-    AccountDetails getAccountDetails(UUID universalId);
+    AccountDetails getAccountDetails(String universalId);
 
     /**
      * Creates a new account

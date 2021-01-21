@@ -27,7 +27,7 @@ public class SeedAccountTest {
     @BeforeAll
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        Mockito.when(efilingAccountServiceMock.createAccount(Mockito.any())).thenReturn(AccountDetails.builder().universalId(UUID.randomUUID()).create());
+        Mockito.when(efilingAccountServiceMock.createAccount(Mockito.any())).thenReturn(AccountDetails.builder().universalId(UUID.randomUUID().toString()).create());
         sut = new SeedAccount(efilingAccountServiceMock);
     }
 

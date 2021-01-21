@@ -50,7 +50,7 @@ public class DocumentStoreImplTest {
     @DisplayName("OK: put document should return byte array")
     public void withoutCacheShouldReturnIt() {
 
-        byte[] actual = sut.put(new SubmissionKey(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID()), "filename.txt", DUMMY_CONTENT.getBytes());
+        byte[] actual = sut.put(new SubmissionKey(UUID.randomUUID().toString(), UUID.randomUUID(), UUID.randomUUID()), "filename.txt", DUMMY_CONTENT.getBytes());
 
         Assertions.assertEquals(DUMMY_CONTENT, new String(actual));
     }
@@ -58,13 +58,13 @@ public class DocumentStoreImplTest {
     @Test
     @DisplayName("OK: get document by Id should return null")
     public void withoutCacheShouldReturnNull() {
-        Assertions.assertNull(sut.get(new SubmissionKey(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID()), "filename.txt"));
+        Assertions.assertNull(sut.get(new SubmissionKey(UUID.randomUUID().toString(), UUID.randomUUID(), UUID.randomUUID()), "filename.txt"));
     }
 
     @Test
     @DisplayName("OK: evict should delete submission")
     public void withoutCacheNotThrowException() {
-        Assertions.assertDoesNotThrow(() -> sut.evict(new SubmissionKey(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID()), "filename.txt"));
+        Assertions.assertDoesNotThrow(() -> sut.evict(new SubmissionKey(UUID.randomUUID().toString(), UUID.randomUUID(), UUID.randomUUID()), "filename.txt"));
     }
 
     @Test
