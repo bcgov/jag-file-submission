@@ -157,7 +157,6 @@ export default function Home({ page: { header } }) {
 
   const generateTableData = (file) => {
     file.data = {};
-
     const data = [
       {
         name: "Type:",
