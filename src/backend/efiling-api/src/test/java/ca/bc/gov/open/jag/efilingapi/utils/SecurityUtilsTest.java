@@ -53,14 +53,14 @@ public class SecurityUtilsTest {
     @Test
     public void shouldConvertToUUID() {
 
-        UUID expectedUUID = UUID.randomUUID();
+        String expectedUUID = UUID.randomUUID().toString();
 
         Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, expectedUUID.toString().replace("-", "").toUpperCase());
+        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, expectedUUID);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
 
-        Optional<UUID> actual = SecurityUtils.getUniversalIdFromContext();
+        Optional<String> actual = SecurityUtils.getUniversalIdFromContext();
 
         Assertions.assertTrue(actual.isPresent());
         Assertions.assertEquals(expectedUUID, actual.get());

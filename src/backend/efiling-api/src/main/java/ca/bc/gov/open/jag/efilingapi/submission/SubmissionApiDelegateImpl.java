@@ -21,6 +21,7 @@ import ca.bc.gov.open.jag.efilingapi.utils.Notification;
 import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
 import ca.bc.gov.open.jag.efilingapi.utils.TikaAnalysis;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.*;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -44,6 +45,7 @@ import java.util.UUID;
 @EnableConfigurationProperties(NavigationProperties.class)
 public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
+    private static final String UNIVERSAL_ID_IS_REQUIRED = "universal Id is required.";
     Logger logger = LoggerFactory.getLogger(SubmissionApiDelegateImpl.class);
 
     private final SubmissionService submissionService;
@@ -77,26 +79,21 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @RolesAllowed({"efiling-client", "efiling-admin"})
     public ResponseEntity<UploadSubmissionDocumentsResponse> uploadSubmissionDocuments(UUID xTransactionId, String xUserId, List<MultipartFile> files) {
 
-        Optional<UUID> universalId = SecurityUtils.stringToUUID(xUserId);
-
-        if(!universalId.isPresent())
+        if(StringUtils.isBlank(xUserId)) {
+            logger.error(UNIVERSAL_ID_IS_REQUIRED);
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
-                    HttpStatus.BAD_REQUEST);
+                    HttpStatus.FORBIDDEN);
+        }
 
         SubmissionKey submissionKey = new SubmissionKey(
-                universalId.get(),
+                xUserId,
                 xTransactionId,
                 UUID.randomUUID());
 
         MdcUtils.setClientMDC(submissionKey.getSubmissionId(), xTransactionId);
 
         logger.info("attempting to upload original document [{}]", submissionKey.getSubmissionId());
-
-        if (!universalId.isPresent())
-            return new ResponseEntity(
-                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
-                    HttpStatus.FORBIDDEN);
 
         ResponseEntity response = storeDocuments(submissionKey, files);
 
@@ -113,12 +110,16 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     public ResponseEntity<UploadSubmissionDocumentsResponse> uploadAdditionalSubmissionDocuments(UUID submissionId, UUID xTransactionId, List<MultipartFile> files) {
 
 
-        Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
+        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
-        if(!universalId.isPresent())
+        if(!universalId.isPresent()) {
+
+            logger.error(UNIVERSAL_ID_IS_REQUIRED);
+
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
                     HttpStatus.FORBIDDEN);
+        }
 
         SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
 
@@ -145,12 +146,16 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     public ResponseEntity<UpdateDocumentResponse> updateDocumentProperties(UUID submissionId, UUID
             xTransactionId, UpdateDocumentRequest updateDocumentRequest) {
 
-        Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
+        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
-        if(!universalId.isPresent())
+        if(!universalId.isPresent()) {
+
+            logger.error(UNIVERSAL_ID_IS_REQUIRED);
+
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
                     HttpStatus.FORBIDDEN);
+        }
 
         MdcUtils.setUserMDC(submissionId, xTransactionId);
 
@@ -194,12 +199,16 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         logger.info("getSubmission document for transaction [{}]", xTransactionId);
 
-        Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
+        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
-        if(!universalId.isPresent())
+        if(!universalId.isPresent()) {
+
+            logger.error(UNIVERSAL_ID_IS_REQUIRED);
+
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
                     HttpStatus.FORBIDDEN);
+        }
 
         SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
 
@@ -225,12 +234,14 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         logger.info("Attempting to generate Url Request Received");
 
-        Optional<UUID> universalId = SecurityUtils.stringToUUID(xUserId);
+        if (StringUtils.isBlank(xUserId)) {
 
-        if (!universalId.isPresent())
+            logger.error(UNIVERSAL_ID_IS_REQUIRED);
+
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
                     HttpStatus.FORBIDDEN);
+        }
 
         Optional<String> applicationCode = SecurityUtils.getApplicationCode();
 
@@ -251,13 +262,13 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
                     HttpStatus.BAD_REQUEST);
 
 
-        if (accountService.getCsoAccountDetails(universalId.get()) != null &&
-                !accountService.getCsoAccountDetails(universalId.get()).isFileRolePresent())
+        if (accountService.getCsoAccountDetails(xUserId) != null &&
+                !accountService.getCsoAccountDetails(xUserId).isFileRolePresent())
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDROLE).create(),
                     HttpStatus.FORBIDDEN);
 
-        SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
+        SubmissionKey submissionKey = new SubmissionKey(xUserId, xTransactionId, submissionId);
 
         ResponseEntity response;
 
@@ -291,10 +302,15 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @RolesAllowed("efiling-user")
     public ResponseEntity<GetSubmissionConfigResponse> getSubmissionConfig(UUID submissionId, UUID xTransactionId) {
 
-        Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
+        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
-        if (!universalId.isPresent()) return new ResponseEntity(
-                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
+        if (!universalId.isPresent()) {
+
+            logger.error(UNIVERSAL_ID_IS_REQUIRED);
+
+            return new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
+        }
 
         SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
 
@@ -327,12 +343,16 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @RolesAllowed("efiling-user")
     public ResponseEntity<FilingPackage> getSubmissionFilingPackage(UUID xTransactionId, UUID submissionId) {
 
-        Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
+        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
-        if(!universalId.isPresent())
+        if(!universalId.isPresent()) {
+
+            logger.error(UNIVERSAL_ID_IS_REQUIRED);
+
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
                     HttpStatus.FORBIDDEN);
+        }
 
         SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
 
@@ -356,12 +376,16 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @RolesAllowed("efiling-user")
     public ResponseEntity<Void> deleteSubmission(UUID submissionId, UUID xTransactionId) {
 
-        Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
+        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
-        if(!universalId.isPresent())
+        if(!universalId.isPresent()) {
+
+            logger.error(UNIVERSAL_ID_IS_REQUIRED);
+
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
                     HttpStatus.FORBIDDEN);
+        }
 
         SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
 
@@ -383,12 +407,16 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @RolesAllowed("efiling-user")
     public ResponseEntity<SubmitResponse> submit(UUID xTransactionId, UUID submissionId, Object body) {
 
-        Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
+        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
-        if(!universalId.isPresent())
+        if(!universalId.isPresent()) {
+
+            logger.error(UNIVERSAL_ID_IS_REQUIRED);
+
             return new ResponseEntity(
                     EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
                     HttpStatus.FORBIDDEN);
+        }
 
         SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
 

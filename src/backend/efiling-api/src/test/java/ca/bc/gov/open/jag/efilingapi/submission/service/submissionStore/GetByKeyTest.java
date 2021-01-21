@@ -32,7 +32,7 @@ public class GetByKeyTest {
     @DisplayName("CASE 1: without cache always return empty")
     public void withExistingIdShouldReturnSubmission() {
 
-        Optional<Submission> actual = sut.get(new SubmissionKey(TestHelpers.CASE_1, UUID.randomUUID(), UUID.randomUUID()));
+        Optional<Submission> actual = sut.get(new SubmissionKey(TestHelpers.CASE_1_STRING, UUID.randomUUID(), UUID.randomUUID()));
         Assertions.assertEquals(Optional.empty(), actual);
 
     }

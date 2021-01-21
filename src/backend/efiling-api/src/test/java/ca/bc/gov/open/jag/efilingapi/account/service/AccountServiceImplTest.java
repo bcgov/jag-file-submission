@@ -39,7 +39,7 @@ public class AccountServiceImplTest {
 
 
         Mockito
-                .when(efilingAccountServiceMock.getAccountDetails(Mockito.eq(TestHelpers.CASE_1)))
+                .when(efilingAccountServiceMock.getAccountDetails(Mockito.eq(TestHelpers.CASE_1_STRING)))
                 .thenReturn(accountDetails);
 
         Mockito
@@ -59,7 +59,7 @@ public class AccountServiceImplTest {
     @DisplayName("OK: should return an account")
     public void withRequestShouldReturnAnAccount() {
 
-        AccountDetails actual = sut.getCsoAccountDetails(TestHelpers.CASE_1);
+        AccountDetails actual = sut.getCsoAccountDetails(TestHelpers.CASE_1_STRING);
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountId());
 
     }
@@ -80,7 +80,7 @@ public class AccountServiceImplTest {
     @Test
     @DisplayName("OK: should Create an account")
     public void withRequestShouldCreateAnAccount() {
-        AccountDetails actual = sut.createAccount(UUID.randomUUID(), new CreateCsoAccountRequest());
+        AccountDetails actual = sut.createAccount(UUID.randomUUID().toString(), new CreateCsoAccountRequest());
         Mockito.verify(efilingAccountServiceMock,Mockito.times(1)).createAccount(any());
 
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountId());

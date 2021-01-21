@@ -22,7 +22,7 @@ public class DeleteByKeyTest {
     @Test
     @DisplayName("OK: evict should do nothing")
     public void testEvict() {
-        Assertions.assertDoesNotThrow(() -> sut.evict(new SubmissionKey( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID())));
+        Assertions.assertDoesNotThrow(() -> sut.evict(new SubmissionKey( UUID.randomUUID().toString(), UUID.randomUUID(), UUID.randomUUID())));
     }
 
 }

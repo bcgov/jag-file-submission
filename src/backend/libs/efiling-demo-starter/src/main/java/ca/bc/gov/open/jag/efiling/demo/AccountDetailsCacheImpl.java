@@ -4,8 +4,6 @@ import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 
-import java.util.UUID;
-
 public class AccountDetailsCacheImpl implements AccountDetailsCache {
 
     @Override
@@ -16,7 +14,7 @@ public class AccountDetailsCacheImpl implements AccountDetailsCache {
 
     @Override
     @Cacheable(cacheNames = "account", key = "#userGuid", cacheManager = "demoAccountCacheManager", unless="#result == null")
-    public AccountDetails get(UUID userGuid) {
+    public AccountDetails get(String userGuid) {
         return null;
     }
 
