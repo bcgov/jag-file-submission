@@ -121,6 +121,11 @@ export default function Home({ page: { header } }) {
   const [submitBtnEnabled, setSubmitBtnEnabled] = useState(true);
   const [showLoader, setShowLoader] = useState(false);
 
+  const docTypeListIds = [];
+  for (let obj in docTypeList) {
+    docTypeListIds.push(obj.id);
+  }
+
   const generateTable = (file, data) => [
     {
       name: (
@@ -152,14 +157,15 @@ export default function Home({ page: { header } }) {
 
   const generateTableData = (file) => {
     file.data = {};
+
     const data = [
       {
         name: "Type:",
         value: (
           <Dropdown
-            items={docTypeList}
+            items={docTypeListIds}
             onSelect={(e) => {
-              file.data = { ...file.data, type: e.split(/-(.+)/)[0].trim() };
+              file.data = { ...file.data, type: e };
             }}
           />
         ),
