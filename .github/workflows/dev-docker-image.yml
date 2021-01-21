@@ -25,5 +25,4 @@ jobs:
         # docker tag jag-file-submission_efiling-admin:latest ${{ secrets.DOCKERHUB_ORG }}/efiling-admin:latest
         docker tag ${{ secrets.DOCKERHUB_ORG }}/efiling-admin:latest
         docker tag ${{ secrets.DOCKERHUB_ORG }}/efiling-admin:dev
-        docker push ${{ secrets.DOCKERHUG_ORG }}/efiling-admin:latest
-        docker push ${{ secrets.DOCKERHUG_ORG }}/efiling-admin:dev
+        docker push ${{ secrets.DOCKERHUG_ORG }}/efiling-admin
