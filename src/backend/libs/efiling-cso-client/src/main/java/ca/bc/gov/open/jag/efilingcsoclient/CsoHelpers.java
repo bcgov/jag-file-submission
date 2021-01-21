@@ -5,7 +5,6 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.UUID;
 
 /**
  * Helper class for CSO
@@ -19,8 +18,8 @@ public class CsoHelpers {
      * @param id
      * @return
      */
-    public static String formatUserGuid(UUID id) {
-        return id.toString().replace("-", "").toUpperCase();
+    public static String formatUserGuid(String id) {
+        return id.replace("-", "").toUpperCase();
     }
 
     /**

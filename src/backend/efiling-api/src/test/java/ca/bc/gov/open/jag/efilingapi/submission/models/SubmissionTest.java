@@ -16,13 +16,6 @@ public class SubmissionTest {
     private static final String CASE_1 = "CASE1";
     private static final String CANCEL = "CANCEL";
     private static final String ERROR = "ERROR";
-    private static final String TYPE = "TYPE";
-    private static final String FIRST_NAME = "firstName";
-    private static final String LAST_NAME = "lastName";
-    private static final String MIDDLE_NAME = "middleName";
-    private static final String EMAIL = "email";
-    private static final String DISPLAYNAME = "DISPLAYNAME";
-    private static final String INTERNAL_CLIENT_NUMBER = "INTERNALCLIENT";
     private static final String CLIENT_APP_NAME = "appName";
 
     @Test
@@ -32,7 +25,7 @@ public class SubmissionTest {
         Submission actual = new Submission(
                 UUID.randomUUID(),
                 UUID.randomUUID(),
-                UUID.randomUUID(),
+                UUID.randomUUID().toString(),
                 CLIENT_APP_NAME,
                 TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList(), TestHelpers.createPartyList()),
                 TestHelpers.createNavigation(CASE_1, CANCEL, ERROR),

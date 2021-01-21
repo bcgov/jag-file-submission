@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.filingpackage.filingpackageApiDelegateImpl;
 
 import ca.bc.gov.open.jag.efilingapi.Keys;
+import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.FilingpackageApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
@@ -22,15 +23,10 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
-
-import static org.mockito.AdditionalMatchers.eq;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("FilepackageApiDelegateImplTest")
 public class GetFilingPackageTest {
-    public static final UUID CASE_1 = UUID.randomUUID();
-    public static final UUID CASE_2 = UUID.randomUUID();
 
 
     FilingpackageApiDelegateImpl sut;
@@ -65,10 +61,10 @@ public class GetFilingPackageTest {
 
         SecurityContextHolder.setContext(securityContextMock);
 
-        Mockito.when(filingPackageService.getCSOFilingPackage(ArgumentMatchers.eq(CASE_1), ArgumentMatchers.eq(BigDecimal.ONE))).thenReturn(Optional.of(new FilingPackage()));
+        Mockito.when(filingPackageService.getCSOFilingPackage(ArgumentMatchers.eq(TestHelpers.CASE_1_STRING), ArgumentMatchers.eq(BigDecimal.ONE))).thenReturn(Optional.of(new FilingPackage()));
 
 
-        Mockito.when(filingPackageService.getCSOFilingPackage(ArgumentMatchers.eq(CASE_2), ArgumentMatchers.eq(BigDecimal.TEN))).thenReturn(Optional.empty());
+        Mockito.when(filingPackageService.getCSOFilingPackage(ArgumentMatchers.eq(TestHelpers.CASE_2_STRING), ArgumentMatchers.eq(BigDecimal.TEN))).thenReturn(Optional.empty());
 
         sut = new FilingpackageApiDelegateImpl(filingPackageService);
     }
@@ -78,7 +74,7 @@ public class GetFilingPackageTest {
     public void withValidRequestReturnFilingPackage() {
 
         Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, CASE_1);
+        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_1_STRING);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
         ResponseEntity<FilingPackage> result = sut.getFilingPackage(BigDecimal.ONE);
@@ -104,7 +100,7 @@ public class GetFilingPackageTest {
     public void withValidRequestFilingPackageNotFound() {
 
         Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, CASE_2);
+        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_2_STRING);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
         ResponseEntity<FilingPackage> result = sut.getFilingPackage(BigDecimal.TEN);

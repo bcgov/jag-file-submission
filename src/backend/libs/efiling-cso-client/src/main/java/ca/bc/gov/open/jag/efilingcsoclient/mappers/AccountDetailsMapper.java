@@ -5,8 +5,6 @@ import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import java.util.UUID;
-
 @Mapper
 public interface AccountDetailsMapper {
 
@@ -16,12 +14,12 @@ public interface AccountDetailsMapper {
     @Mapping(target = "fileRolePresent", source = "fileRolePresent")
     @Mapping(target = "universalId", source = "universalId")
     @Mapping(target = "cardRegistered", source = "clientProfile.client.registeredCreditCardYnBoolean")
-    AccountDetails toAccountDetails(UUID universalId, ClientProfile clientProfile, Boolean fileRolePresent);
+    AccountDetails toAccountDetails(String universalId, ClientProfile clientProfile, Boolean fileRolePresent);
 
     @Mapping(target = "accountId", defaultValue = "0")
     @Mapping(target = "clientId", defaultValue = "0")
     @Mapping(target = "fileRolePresent", defaultValue = "false")
     @Mapping(target = "universalId", source = "universalId")
-    AccountDetails toAccountDetails(UUID universalId);
+    AccountDetails toAccountDetails(String universalId);
 
 }

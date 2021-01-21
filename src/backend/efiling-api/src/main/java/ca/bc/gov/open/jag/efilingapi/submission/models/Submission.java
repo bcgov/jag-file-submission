@@ -16,7 +16,7 @@ public class Submission {
 
     private UUID transactionId;
 
-    private UUID universalId;
+    private String universalId;
 
     private long expiryDate;
 
@@ -44,7 +44,7 @@ public class Submission {
     public Submission(
             @JsonProperty("id") UUID id,
             @JsonProperty("transactionId") UUID transactionId,
-            @JsonProperty("universalId") UUID universalId,
+            @JsonProperty("universalId") String universalId,
             @JsonProperty("clientAppName") String clientAppName,
             @JsonProperty("filingPackage") FilingPackage filingPackage,
             @JsonProperty("navigationUrls") NavigationUrls navigationUrls,
@@ -62,7 +62,7 @@ public class Submission {
 
     public UUID getTransactionId() { return transactionId; }
 
-    public UUID getUniversalId() { return universalId; }
+    public String getUniversalId() { return universalId; }
 
     public String getClientAppName() { return clientAppName; }
 
@@ -80,7 +80,7 @@ public class Submission {
 
         private UUID id;
         private UUID transactionId;
-        private UUID universalId;
+        private String universalId;
         private FilingPackage filingPackage;
         private NavigationUrls navigationUrls;
         private long expiryDate;
@@ -103,7 +103,7 @@ public class Submission {
             return this;
         }
 
-        public Builder universalId(UUID universalId) {
+        public Builder universalId(String universalId) {
             this.universalId = universalId;
             return this;
         }

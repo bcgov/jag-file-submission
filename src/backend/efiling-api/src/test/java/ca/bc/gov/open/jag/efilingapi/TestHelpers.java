@@ -1,14 +1,13 @@
 package ca.bc.gov.open.jag.efilingapi;
 
 
-import ca.bc.gov.open.jag.efilingapi.api.model.*;
-import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
-import ca.bc.gov.open.jag.efilingapi.submission.models.*;
-import ca.bc.gov.open.jag.efilingcommons.model.Court;
-import ca.bc.gov.open.jag.efilingcommons.model.Document;
-import ca.bc.gov.open.jag.efilingcommons.model.DocumentType;
+import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
+import ca.bc.gov.open.jag.efilingapi.api.model.InitialPackage;
+import ca.bc.gov.open.jag.efilingapi.api.model.NavigationUrls;
+import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
+import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
+import ca.bc.gov.open.jag.efilingcommons.model.*;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
-import ca.bc.gov.open.jag.efilingcommons.model.Party;
 import com.google.gson.JsonObject;
 
 import java.math.BigDecimal;
@@ -24,6 +23,12 @@ public class TestHelpers {
     public static final UUID CASE_3 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fb");
     public static final UUID CASE_4 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fc");
     public static final UUID CASE_5 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fd");
+
+    public static final String CASE_1_STRING = CASE_1.toString();
+    public static final String CASE_2_STRING = CASE_2.toString();
+    public static final String CASE_3_STRING = CASE_3.toString();
+    public static final String CASE_4_STRING = CASE_4.toString();
+    public static final String CASE_5_STRING = CASE_5.toString();
 
     public static final String DIVISION = "DIVISION";
     public static final String FILENUMBER = "FILENUMBER";

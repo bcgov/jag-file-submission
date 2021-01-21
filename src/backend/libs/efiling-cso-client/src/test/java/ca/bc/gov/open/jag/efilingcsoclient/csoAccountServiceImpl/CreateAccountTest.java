@@ -19,7 +19,6 @@ import org.mockito.MockitoAnnotations;
 import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 
@@ -27,7 +26,7 @@ import static org.mockito.ArgumentMatchers.any;
 @DisplayName("Create Account Test Suite")
 public class CreateAccountTest {
 
-    public static final UUID UNIVERSAL_ID = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fe");
+    public static final String UNIVERSAL_ID = "77da92db-0791-491e-8c58-1a969e67d2fe";
     private static final String FIRST_NAME = "FIRSTNAME";
     private static final String LAST_NAME = "LASTNAME";
     private static final String EMAIL = "EMAIL";
