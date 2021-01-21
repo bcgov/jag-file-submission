@@ -46,7 +46,7 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
     @RolesAllowed("efiling-user")
     public ResponseEntity<CsoAccount> createAccount(UUID xTransactionId, CreateCsoAccountRequest createAccountRequest) {
         
-        Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
+        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
         if(!universalId.isPresent()) return new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
@@ -78,7 +78,7 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
     @RolesAllowed("efiling-user")
     public ResponseEntity<CsoAccount> getCsoAccount(UUID xTransactionId) {
 
-        Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
+        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
         if(!universalId.isPresent()) return new ResponseEntity(HttpStatus.FORBIDDEN);
 
@@ -95,7 +95,7 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
     @RolesAllowed("efiling-user")
     public ResponseEntity<CsoAccount> updateCsoAccount(UUID xTransactionId, CsoAccountUpdateRequest clientUpdateRequest) {
 
-        Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
+        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
         MdcUtils.setUserMDC(UUID.randomUUID(), xTransactionId);
 

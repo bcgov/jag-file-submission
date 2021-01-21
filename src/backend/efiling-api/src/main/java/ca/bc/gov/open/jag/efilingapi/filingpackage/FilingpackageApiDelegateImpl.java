@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.security.RolesAllowed;
 import java.math.BigDecimal;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class FilingpackageApiDelegateImpl implements FilingpackageApiDelegate {
@@ -30,7 +29,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackageApiDelegate {
     @RolesAllowed("efiling-user")
     public ResponseEntity<FilingPackage> getFilingPackage(BigDecimal packageIdentifier) {
 
-        Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
+        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
         if(!universalId.isPresent()) return new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
@@ -47,7 +46,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackageApiDelegate {
     @RolesAllowed("efiling-user")
     public ResponseEntity<Resource> getSubmissionSheet(BigDecimal packageIdentifier) {
 
-        Optional<UUID> universalId = SecurityUtils.getUniversalIdFromContext();
+        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
         if(!universalId.isPresent()) return new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);

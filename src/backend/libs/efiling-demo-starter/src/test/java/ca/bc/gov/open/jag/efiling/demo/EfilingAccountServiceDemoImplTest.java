@@ -9,13 +9,12 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class EfilingAccountServiceDemoImplTest {
 
-    public static final UUID ACCOUNT_ID = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fa");
-    public static final UUID ACCOUNT_ID_NOT_EXIST = UUID.fromString("17da92db-0791-491e-8c58-1a969e67d2fa");
+    public static final String ACCOUNT_ID = "77da92db-0791-491e-8c58-1a969e67d2fa";
+    public static final String ACCOUNT_ID_NOT_EXIST = "17da92db-0791-491e-8c58-1a969e67d2fa";
     public static final String FIRST_NAME = "firstName";
 
     private EfilingAccountServiceDemoImpl sut;

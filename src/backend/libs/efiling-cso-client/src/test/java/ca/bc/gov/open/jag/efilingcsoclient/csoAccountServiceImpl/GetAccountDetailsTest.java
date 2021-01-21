@@ -28,11 +28,11 @@ import java.util.UUID;
 @DisplayName("Get Account Details Test Suite")
 public class GetAccountDetailsTest {
 
-    private static final UUID USER_GUID_NO_ROLE = UUID.randomUUID();
-    private static final UUID USER_GUID_WITH_FILE_ROLE = UUID.randomUUID();
-    private static final UUID USER_GUID_WITH_NO_CSO = UUID.randomUUID();
-    private static final UUID USER_GUID_WITH_EJB_EXCEPTION = UUID.randomUUID();
-    private static final UUID USER_GUID_WITH_MULTI_PROFILE = UUID.randomUUID();
+    private static final String USER_GUID_NO_ROLE = UUID.randomUUID().toString();
+    private static final String USER_GUID_WITH_FILE_ROLE = UUID.randomUUID().toString();
+    private static final String USER_GUID_WITH_NO_CSO = UUID.randomUUID().toString();
+    private static final String USER_GUID_WITH_EJB_EXCEPTION = UUID.randomUUID().toString();
+    private static final String USER_GUID_WITH_MULTI_PROFILE = UUID.randomUUID().toString();
     public static final String DOMAIN = "Courts";
     public static final String APPLICATION = "CSO";
     public static final String IDENTIFIER_TYPE = "CAP";
@@ -106,16 +106,16 @@ public class GetAccountDetailsTest {
         Mockito.when(roleRegistryPortTypeMock.getRolesForIdentifier(DOMAIN, APPLICATION, CsoHelpers.formatUserGuid(USER_GUID_WITH_FILE_ROLE), IDENTIFIER_TYPE)).thenReturn(userRolesWithFileRole);
         Mockito.when(roleRegistryPortTypeMock.getRolesForIdentifier(DOMAIN, APPLICATION, CsoHelpers.formatUserGuid(USER_GUID_NO_ROLE), IDENTIFIER_TYPE)).thenReturn(userRolesWithoutFileRole);
 
-        AccountDetails csoUserDetailsWithRole = new AccountDetails(UUID.randomUUID(), BigDecimal.TEN, BigDecimal.TEN, INTERNAL_CLIENT_NUMBER ,true, "firstName", "lastName", "middleName", "email", true);
+        AccountDetails csoUserDetailsWithRole = new AccountDetails(UUID.randomUUID().toString(), BigDecimal.TEN, BigDecimal.TEN, INTERNAL_CLIENT_NUMBER ,true, "firstName", "lastName", "middleName", "email", true);
         Mockito.when(accountDetailsMapperMock.toAccountDetails(Mockito.any(), Mockito.any(), Mockito.eq(true))).thenReturn(csoUserDetailsWithRole);
 
-        AccountDetails csoUserDetailsWithoutRole = new AccountDetails(UUID.randomUUID(),BigDecimal.TEN, BigDecimal.TEN, INTERNAL_CLIENT_NUMBER ,false, "firstName", "lastName", "middleName","email", true);
+        AccountDetails csoUserDetailsWithoutRole = new AccountDetails(UUID.randomUUID().toString(),BigDecimal.TEN, BigDecimal.TEN, INTERNAL_CLIENT_NUMBER ,false, "firstName", "lastName", "middleName","email", true);
         Mockito.when(accountDetailsMapperMock.toAccountDetails(Mockito.any(), Mockito.any(), Mockito.eq(false))).thenReturn(csoUserDetailsWithoutRole);
     }
 
     private void initBceIdAccountMocks() {
 
-        AccountDetails accountDetailsWithNoCso = new AccountDetails(UUID.randomUUID(), BigDecimal.ZERO, BigDecimal.ZERO, INTERNAL_CLIENT_NUMBER, false, "firstName", "lastName", "middleName","email", true);
+        AccountDetails accountDetailsWithNoCso = new AccountDetails(UUID.randomUUID().toString(), BigDecimal.ZERO, BigDecimal.ZERO, INTERNAL_CLIENT_NUMBER, false, "firstName", "lastName", "middleName","email", true);
         Mockito.when(accountDetailsMapperMock.toAccountDetails(Mockito.any())).thenReturn(accountDetailsWithNoCso);
     }
 

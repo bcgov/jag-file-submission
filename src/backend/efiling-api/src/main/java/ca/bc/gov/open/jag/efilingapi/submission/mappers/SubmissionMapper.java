@@ -21,7 +21,7 @@ public interface SubmissionMapper {
     @Mapping(source = "filingPackage", target = "filingPackage")
     @Mapping(source = "expiryDate", target = "expiryDate")
     Submission toSubmission(
-            UUID universalId,
+            String universalId,
             UUID submissionId,
             UUID transactionId,
             GenerateUrlRequest generateUrlRequest,

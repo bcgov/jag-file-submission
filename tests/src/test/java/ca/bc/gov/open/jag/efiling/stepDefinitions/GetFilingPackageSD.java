@@ -17,6 +17,7 @@ import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.UUID;
 
 public class GetFilingPackageSD {
@@ -41,10 +42,10 @@ public class GetFilingPackageSD {
         actualTransactionId = UUID.randomUUID();
     }
 
-    @Given("valid user account {string}:{string} is authenticated")
-    public void validAdminAccountThatAuthenticated(String username, String password) throws IOException {
+    @Given("valid user account is authenticated")
+    public void validAdminAccountThatAuthenticated() {
 
-        actualUserIdentity = oauthService.getUserIdentity(username,password);
+        actualUserIdentity = oauthService.getUserIdentity();
     }
 
     @When("user submits request to get filing package information")
@@ -53,7 +54,7 @@ public class GetFilingPackageSD {
 
 
         File resource = new ClassPathResource(
-                "data/test-document.pdf").getFile();
+                MessageFormat.format("data/{0}", TEST_DOCUMENT_PDF)).getFile();
 
         MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource,TEST_DOCUMENT_PDF, "text/application.pdf");
 

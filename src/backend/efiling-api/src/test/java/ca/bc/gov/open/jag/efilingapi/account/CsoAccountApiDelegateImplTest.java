@@ -74,29 +74,28 @@ public class CsoAccountApiDelegateImplTest {
                 .accountId(BigDecimal.ONE)
                 .clientId(BigDecimal.TEN)
                 .cardRegistered(true)
-                .universalId(UUID.randomUUID())
                 .internalClientNumber(INTERNAL_CLIENT_NUMBER)
-                .universalId(TestHelpers.CASE_1).create();
+                .universalId(TestHelpers.CASE_1_STRING).create();
 
         Mockito
                 .doReturn(accountDetails)
                 .when(accountServiceMock)
-                .createAccount(Mockito.eq(TestHelpers.CASE_1), Mockito.any());
+                .createAccount(Mockito.eq(TestHelpers.CASE_1_STRING), Mockito.any());
 
         Mockito
                 .doReturn(accountDetails)
                 .when(accountServiceMock)
-                .getCsoAccountDetails(Mockito.eq(TestHelpers.CASE_1));
+                .getCsoAccountDetails(Mockito.eq(TestHelpers.CASE_1_STRING));
 
         Mockito
                 .doReturn(null)
                 .when(accountServiceMock)
-                .getCsoAccountDetails(Mockito.eq(TestHelpers.CASE_2));
+                .getCsoAccountDetails(Mockito.eq(TestHelpers.CASE_2_STRING));
 
         Mockito
                 .doThrow(new EfilingAccountServiceException("random"))
                 .when(accountServiceMock)
-                .createAccount(Mockito.eq(TestHelpers.CASE_2), Mockito.any());
+                .createAccount(Mockito.eq(TestHelpers.CASE_2_STRING), Mockito.any());
 
 
         Mockito.doNothing().when(accountServiceMock).updateClient(

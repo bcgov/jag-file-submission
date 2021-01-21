@@ -4,15 +4,31 @@ Welcome to the eFiling demo!
 
 ## Running the Frontend
 
+### Running against local dockerized backend
+
 In the project directory `efiling-demo`:
 
-Set the required environment variables locally. Create a `.env.development` file and populate the environment variables as shown in the `.env.example` file.
+Create a `.env.development` file and populate the environment variables as
+shown in the `.env.example` file.
 
-In the root directory `jag-file-submission`, run:
+To bring up all the backend docker containers locally, in the root directory
+`jag-file-submission`, run:
 
 ```bash
 docker-compose up efiling-api efiling-frontend keycloak keycloak-config redis
 ```
+
+Continue below with `yarn install`
+
+### Running the Frontend against the dockerized containers on DEV
+
+It's possible to run the demo application locally, but use keycloak, the api,
+and the other backend containers running on DEV (dev.justice.gov.bc.ca).
+
+In the project directory `efiling-demo`:
+
+Create a `.env.development` file and populate the environment variables as
+shown in the `.env.example` with values from OpenShift.
 
 In the project directory `efiling-demo` open a new terminal and run:
 

@@ -8,7 +8,6 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 public class EfilingAccountServiceDemoImpl implements EfilingAccountService {
 
@@ -19,7 +18,7 @@ public class EfilingAccountServiceDemoImpl implements EfilingAccountService {
     }
 
     @Cacheable(cacheNames = "account", key = "#userGuid", unless="#result == null", cacheManager = "demoAccountCacheManager")
-    public AccountDetails getAccountDetails(UUID userGuid) {
+    public AccountDetails getAccountDetails(String userGuid) {
 
         return accountDetailsCache.get(userGuid);
 
