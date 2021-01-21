@@ -15,7 +15,7 @@ public class AccountDetailsCacheImplTest {
     @DisplayName("Cache test are useles")
     public void testCache() {
         sut = new AccountDetailsCacheImpl();
-        Assertions.assertDoesNotThrow(() -> sut.get(UUID.randomUUID()));
+        Assertions.assertDoesNotThrow(() -> sut.get(UUID.randomUUID().toString()));
         Assertions.assertDoesNotThrow(() -> sut.put(AccountDetails.builder().clientId(BigDecimal.TEN).create()));
 
     }

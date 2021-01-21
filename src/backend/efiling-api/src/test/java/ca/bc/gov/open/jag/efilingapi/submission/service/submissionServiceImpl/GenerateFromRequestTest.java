@@ -110,7 +110,7 @@ public class GenerateFromRequestTest {
         Mockito.when(efilingCourtService.checkValidCourtFileNumber(any(), any(), any(), any(), any())).thenReturn(true);
         Mockito.when(efilingDocumentService.getDocumentTypes(any(), any())).thenReturn(TestHelpers.createValidDocumentTypesList());
 
-        Submission actual = sut.generateFromRequest(APP_CODE, new SubmissionKey(TestHelpers.CASE_1, TestHelpers.CASE_1, TestHelpers.CASE_1), request);
+        Submission actual = sut.generateFromRequest(APP_CODE, new SubmissionKey(TestHelpers.CASE_1_STRING, TestHelpers.CASE_1, TestHelpers.CASE_1), request);
 
         Assertions.assertEquals(TestHelpers.ERROR_URL, actual.getNavigationUrls().getError());
         Assertions.assertEquals(TestHelpers.CANCEL_URL, actual.getNavigationUrls().getCancel());
@@ -170,7 +170,7 @@ public class GenerateFromRequestTest {
         Mockito.when(efilingLookupService.getValidPartyRoles(any(), any(), any())).thenReturn(TestHelpers.createValidPartyRoles());
         Mockito.when(efilingDocumentService.getDocumentTypes(any(), any())).thenReturn(TestHelpers.createValidDocumentTypesList());
 
-        Submission actual = sut.generateFromRequest(APP_CODE, new SubmissionKey(TestHelpers.CASE_1, TestHelpers.CASE_1, TestHelpers.CASE_1), request);
+        Submission actual = sut.generateFromRequest(APP_CODE, new SubmissionKey(TestHelpers.CASE_1_STRING, TestHelpers.CASE_1, TestHelpers.CASE_1), request);
 
         Assertions.assertEquals(TestHelpers.ERROR_URL, actual.getNavigationUrls().getError());
         Assertions.assertEquals(TestHelpers.CANCEL_URL, actual.getNavigationUrls().getCancel());
@@ -225,7 +225,7 @@ public class GenerateFromRequestTest {
         Mockito.when(efilingCourtService.checkValidCourtFileNumber(any(), any(), any(), any(), any())).thenReturn(true);
         Mockito.when(efilingDocumentService.getDocumentTypes(any(), any())).thenReturn(TestHelpers.createValidDocumentTypesList());
 
-        Submission actual = sut.generateFromRequest(APP_CODE, new SubmissionKey(TestHelpers.CASE_1, TestHelpers.CASE_1, TestHelpers.CASE_1), request);
+        Submission actual = sut.generateFromRequest(APP_CODE, new SubmissionKey(TestHelpers.CASE_1_STRING, TestHelpers.CASE_1, TestHelpers.CASE_1), request);
 
         Assertions.assertEquals(TestHelpers.ERROR_URL, actual.getNavigationUrls().getError());
         Assertions.assertEquals(TestHelpers.CANCEL_URL, actual.getNavigationUrls().getCancel());
@@ -277,7 +277,7 @@ public class GenerateFromRequestTest {
         Mockito.when(efilingCourtService.checkValidCourtFileNumber(any(), any(), any(), any(), any())).thenReturn(true);
         Mockito.when(efilingDocumentService.getDocumentTypes(any(), any())).thenReturn(TestHelpers.createValidDocumentTypesList());
 
-        Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(APP_CODE, new SubmissionKey(TestHelpers.CASE_2, TestHelpers.CASE_2, TestHelpers.CASE_2), request));
+        Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(APP_CODE, new SubmissionKey(TestHelpers.CASE_2_STRING, TestHelpers.CASE_2, TestHelpers.CASE_2), request));
     }
 
     private void configureCase1(ServiceFees fee) {

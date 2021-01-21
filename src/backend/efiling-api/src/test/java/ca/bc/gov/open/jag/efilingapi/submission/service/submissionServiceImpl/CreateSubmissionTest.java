@@ -92,7 +92,7 @@ public class CreateSubmissionTest {
                         .fileRolePresent(true)
                         .accountId(BigDecimal.ONE)
                         .cardRegistered(true)
-                        .universalId(UUID.randomUUID())
+                        .universalId(UUID.randomUUID().toString())
                         .clientId(BigDecimal.TEN)
                         .internalClientNumber(INTERNAL_CLIENT_NUMBER)
                         .create(), false);
@@ -116,7 +116,7 @@ public class CreateSubmissionTest {
                         .fileRolePresent(true)
                         .accountId(BigDecimal.ONE)
                         .cardRegistered(true)
-                        .universalId(UUID.randomUUID())
+                        .universalId(UUID.randomUUID().toString())
                         .clientId(BigDecimal.TEN)
                         .internalClientNumber(INTERNAL_CLIENT_NUMBER)
                         .create(), true);

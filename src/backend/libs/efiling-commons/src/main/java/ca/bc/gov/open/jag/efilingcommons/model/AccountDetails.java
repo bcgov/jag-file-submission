@@ -4,11 +4,10 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 public class AccountDetails {
 
-    private UUID universalId;
+    private String universalId;
     private BigDecimal accountId;
     private BigDecimal clientId;
     private String internalClientNumber;
@@ -33,7 +32,7 @@ public class AccountDetails {
 
     @JsonCreator
     public AccountDetails(
-            @JsonProperty("universalId") UUID universalId,
+            @JsonProperty("universalId") String universalId,
             @JsonProperty("accountId") BigDecimal accountId,
             @JsonProperty("clientId") BigDecimal clientId,
             @JsonProperty("internalClientNumber") String internalClientNumber,
@@ -51,7 +50,7 @@ public class AccountDetails {
         this.cardRegistered = cardRegistered;
     }
 
-    public UUID getUniversalId() {
+    public String getUniversalId() {
         return universalId;
     }
 
@@ -78,7 +77,7 @@ public class AccountDetails {
 
     public static class Builder {
 
-        private UUID universalId;
+        private String universalId;
         private BigDecimal accountId;
         private BigDecimal clientId;
         private String internalClientNumber;
@@ -86,7 +85,7 @@ public class AccountDetails {
         private boolean cardRegistered;
 
 
-        public Builder universalId(UUID universalId) {
+        public Builder universalId(String universalId) {
             this.universalId = universalId;
             return this;
         }

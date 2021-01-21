@@ -43,7 +43,7 @@ public class SubmitFilingPackageTest {
     private static final DateTime PROCESS_DT = DateTime.now();
     private static final DateTime ENT_DTM = DateTime.now();
     private static final String APPROVED = "Approved";
-    private static final UUID UNIVERSAL_ID = UUID.randomUUID();
+    private static final String UNIVERSAL_ID = UUID.randomUUID().toString();
     private static final String LOCATION = "LOCATION";
     private static final String BAD_LOCATION = "BADLOCATION";
     private static final String COURT_CLASS = "courtClass";

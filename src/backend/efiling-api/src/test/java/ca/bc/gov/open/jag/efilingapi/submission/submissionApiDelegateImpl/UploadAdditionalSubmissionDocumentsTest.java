@@ -259,4 +259,28 @@ public class UploadAdditionalSubmissionDocumentsTest {
         Assertions.assertEquals(DOCUMENT_STORAGE_FAILURE.getErrorCode(), ((EfilingError)actual.getBody()).getError());
         Assertions.assertEquals(DOCUMENT_STORAGE_FAILURE.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
     }
+
+    @Test
+    @DisplayName("403: without universalId should return forbidden")
+    public void withoutUniversalIdShouldReturnForbidden() throws VirusDetectedException, IOException {
+
+        Map<String, Object> otherClaims = new HashMap<>();
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
+        File file = new File("src/test/resources/test.pdf");
+
+        List<MultipartFile> files = new ArrayList<>();
+        MultipartFile multipartFile = new MockMultipartFile("test.pdf", new FileInputStream(file));
+        files.add(multipartFile);
+        files.add(multipartFile);
+
+        Mockito.doThrow(VirusDetectedException.class).when(clamAvServiceMock).scan(any());
+
+        ResponseEntity actual = sut.uploadAdditionalSubmissionDocuments(TestHelpers.CASE_1, UUID.randomUUID(), files);
+
+        Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
+        Assertions.assertEquals(INVALIDUNIVERSAL.getErrorCode(), ((EfilingError)actual.getBody()).getError());
+        Assertions.assertEquals(INVALIDUNIVERSAL.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
+    }
+
 }

@@ -27,7 +27,7 @@ public class AccountConfigTest {
         public EfilingAccountService efilingAccountService() {
             return new EfilingAccountService() {
                 @Override
-                public AccountDetails getAccountDetails(UUID userGuid) {
+                public AccountDetails getAccountDetails(String userGuid) {
                     return null;
                 }
 

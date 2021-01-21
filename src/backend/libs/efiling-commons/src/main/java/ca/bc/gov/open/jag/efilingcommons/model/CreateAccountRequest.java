@@ -1,13 +1,11 @@
 package ca.bc.gov.open.jag.efilingcommons.model;
 
-import java.util.UUID;
-
 /**
  * Represents a request to create an account
  */
 public class CreateAccountRequest {
 
-    private UUID universalId;
+    private String universalId;
     private String firstName;
     private String lastName;
     private String middleName;
@@ -31,7 +29,7 @@ public class CreateAccountRequest {
      * Get the universalId
      * @return
      */
-    public UUID getUniversalId() {
+    public String getUniversalId() {
         return universalId;
     }
 
@@ -69,13 +67,13 @@ public class CreateAccountRequest {
 
     public static class Builder {
 
-        private UUID universalId;
+        private String universalId;
         private String firstName;
         private String lastName;
         private String middleName;
         private String email;
 
-        public Builder universalId(UUID universalId) {
+        public Builder universalId(String universalId) {
             this.universalId = universalId;
             return this;
         }
