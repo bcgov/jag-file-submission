@@ -8,18 +8,11 @@ services:
     stdin_open: true
     container_name: efiling-frontend
     build:
-      context: ./src/frontend
-      dockerfile: Dockerfile.legacy
+      context: ./src/frontend/efiling-frontend/
       args:
         - SERVICE_NAME=efiling-frontend
     ports:
       - 3000:3000
-    environment:
-      - REACT_APP_KEYCLOAK_REALM=${KEYCLOAK_REALM:-Efiling-Hub}
-      - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-frontend
-      - REACT_APP_KEYCLOAK_URL=${KEYCLOAK_URL:-http://localhost:8081/auth}
-      - REACT_APP_API_BASE_URL=http://localhost:8080
-      - REACT_APP_BAMBORA_REDIRECT_URL=http://localhost:3000/efilinghub
 
   #############################################################################################
   ###                                 EFILING DEMO                                          ###
@@ -29,7 +22,7 @@ services:
     stdin_open: true
     container_name: efiling-demo
     build:
-      context: ./src/frontend
+      context: ./src/frontend/efiling-demo/
       args:
         - SERVICE_NAME=efiling-demo
     ports:
