@@ -122,7 +122,7 @@ export default function Home({ page: { header } }) {
   const [showLoader, setShowLoader] = useState(false);
 
   const docTypeListIds = [];
-  for (let obj in docTypeList) {
+  for (let obj of docTypeList) {
     docTypeListIds.push(obj.id);
   }
 
