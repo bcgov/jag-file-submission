@@ -121,10 +121,7 @@ export default function Home({ page: { header } }) {
   const [submitBtnEnabled, setSubmitBtnEnabled] = useState(true);
   const [showLoader, setShowLoader] = useState(false);
 
-  const docTypeListIds = [];
-  for (let obj of docTypeList) {
-    docTypeListIds.push(obj.id);
-  }
+  const docTypeListIds = docTypeList.map((obj) => obj.id);
 
   const generateTable = (file, data) => [
     {

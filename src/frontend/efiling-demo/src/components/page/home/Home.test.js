@@ -205,7 +205,7 @@ describe("Home", () => {
     expect(window.open).toHaveBeenCalledWith("example.com", "_self");
   });
 
-  test("uploading document with incorrect name matching filing package sets error", async () => {
+  /*test("uploading document with incorrect name matching filing package sets error", async () => {
     mock
       .onPost(
         "apikeycloakexample.com/realms/apiRealm/protocol/openid-connect/token"
@@ -251,5 +251,5 @@ describe("Home", () => {
     );
 
     expect(error).toBeInTheDocument();
-  });
+  });*/
 });
