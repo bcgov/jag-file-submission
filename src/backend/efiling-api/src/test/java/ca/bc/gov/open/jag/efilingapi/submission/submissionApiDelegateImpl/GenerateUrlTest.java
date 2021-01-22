@@ -165,7 +165,7 @@ public class GenerateUrlTest {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.CSO_APPLICATION_CODE, CODE);
+        otherClaims.put(Keys.CSO_APPLICATION_CLAIM_KEY, CODE);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
         generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
@@ -193,7 +193,7 @@ public class GenerateUrlTest {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.CSO_APPLICATION_CODE, CODE);
+        otherClaims.put(Keys.CSO_APPLICATION_CLAIM_KEY, CODE);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
         generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
@@ -220,7 +220,7 @@ public class GenerateUrlTest {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.CSO_APPLICATION_CODE, CODE);
+        otherClaims.put(Keys.CSO_APPLICATION_CLAIM_KEY, CODE);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
         generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
@@ -249,7 +249,7 @@ public class GenerateUrlTest {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.CSO_APPLICATION_CODE, CODE);
+        otherClaims.put(Keys.CSO_APPLICATION_CLAIM_KEY, CODE);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
         generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
@@ -297,7 +297,7 @@ public class GenerateUrlTest {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.CSO_APPLICATION_CODE, CODE);
+        otherClaims.put(Keys.CSO_APPLICATION_CLAIM_KEY, CODE);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
         Mockito.when(accountServiceMock.getCsoAccountDetails(any())).thenReturn(TestHelpers.createCSOAccountDetails(false));
@@ -321,7 +321,7 @@ public class GenerateUrlTest {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.CSO_APPLICATION_CODE, null);
+        otherClaims.put(Keys.CSO_APPLICATION_CLAIM_KEY, null);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
         generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
@@ -405,4 +405,3 @@ public class GenerateUrlTest {
 
 
 }
-
