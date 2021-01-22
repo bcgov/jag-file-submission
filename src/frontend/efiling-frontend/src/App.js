@@ -1,13 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import queryString from "query-string";
-import {
-  Switch,
-  Route,
-  Redirect,
-  useHistory,
-  useLocation,
-} from "react-router-dom";
+import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import AuthenticationGuard from "./components/hoc/AuthenticationGuard";
 
 const mainButton = {
