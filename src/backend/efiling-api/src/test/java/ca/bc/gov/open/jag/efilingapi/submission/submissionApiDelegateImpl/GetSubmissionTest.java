@@ -48,6 +48,7 @@ public class GetSubmissionTest {
     private static final String SERVICE_TYPE_CD = "DCFL";
     private static final String SERVICE_TYPE_CD1 = "NOTDCFL";
     private static final String INTERNAL_CLIENT_NUMBER = "123";
+    private static final String IDENTITY_PROVIDER = "identity_provider_alias";
 
     private SubmissionApiDelegateImpl sut;
 
@@ -88,9 +89,9 @@ public class GetSubmissionTest {
     private GenerateUrlRequestValidator generateUrlRequestValidator;
 
     @BeforeAll
-    public void setUp() {
+    public void beforeAll() {
 
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
 
         Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);
         Mockito.when(authenticationMock.getPrincipal()).thenReturn(keycloakPrincipalMock);
@@ -164,6 +165,7 @@ public class GetSubmissionTest {
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_2);
+        otherClaims.put(Keys.IDENTITY_PROVIDER_CLAIM_KEY, IDENTITY_PROVIDER);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
         ResponseEntity<GetSubmissionConfigResponse> actual = sut.getSubmissionConfig(UUID.fromString(
