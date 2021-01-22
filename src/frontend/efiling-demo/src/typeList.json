@@ -210,7 +210,6 @@
     "id": "AEA",
     "desc": "Application to Recognize an ExtraProvincial Order for Guardianship"
   },
-  { "id": "PAR", "desc": "Parenting Arrangements orContact" },
   {
     "id": "ARE",
     "desc": "Application to Renew, Change or Cancel an Order (Adult Guardianship)"
