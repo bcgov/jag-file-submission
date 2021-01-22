@@ -141,8 +141,8 @@ export default function Home({ page: { header } }) {
       ),
       value: (
         <div className="d-flex justify-content-around bcgov-row">
-          {data.map((option) => (
-            <div className="d-flex align-items-center">
+          {data.map((option, index) => (
+            <div key={index} className="d-flex align-items-center">
               <h5 className="ml-5 mr-2 mt-3">{option.name}</h5>
               {option.value}
             </div>
@@ -250,8 +250,8 @@ export default function Home({ page: { header } }) {
             <>
               <h2>Uploaded Files</h2>
               <br />
-              {files.map((file) => (
-                <div key={file.name}>
+              {files.map((file, index) => (
+                <div key={index}>
                   <DisplayBox
                     styling="bcgov-border-background bcgov-display-file"
                     icon={
