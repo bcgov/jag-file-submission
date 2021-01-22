@@ -13,16 +13,13 @@ RUN npm run build
 
 # This contains some environment variables needed for the environment to work.
 # TODO: This copies the env into 2 different files because the code looks at for the full name of the env.  This is not optimal.  Can we change the route to just be env.js instead of labeling it?
-COPY ./env.js ./build/frontend-env.js
+COPY ./env.js ./build/demo-env.js
 
 #############################################################################################
 ###                                 PRODUCTION IMAGE                                      ###
 #############################################################################################
 FROM nginx:1.19-alpine
 RUN rm -rf /usr/share/nginx/html/
-# There's apparently a bug in the nginx container image where the "return 301" seems to default the root of the html files into the /etc/nginx/html/ folder.
-# bug here: https://github.com/nginx-proxy/nginx-proxy/issues/1246
-# To get around this issue I've placed the code to be served in this /etc/nginx/html/ folder.
 COPY --from=build /app/build /etc/nginx/html/efilinghub
 WORKDIR /etc/nginx/html/efilinghub
 COPY nginx.conf /etc/nginx/conf.d/default.conf
