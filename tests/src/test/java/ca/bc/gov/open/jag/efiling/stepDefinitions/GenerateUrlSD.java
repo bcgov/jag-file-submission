@@ -18,18 +18,15 @@ import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
-import stepDefinitions.backendstepdefinitions.GenerateUrlAndSubmissionTest;
 
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.util.UUID;
 
 @CucumberContextConfiguration
 @SpringBootTest(classes = TestConfig.class)
 public class GenerateUrlSD {
-
 
     private final OauthService oauthService;
     private final SubmissionService submissionService;
@@ -42,7 +39,7 @@ public class GenerateUrlSD {
     private String actualSubmissionId;
     private UserIdentity actualUserIdentity;
 
-    public Logger logger = LogManager.getLogger(GenerateUrlAndSubmissionTest.class);
+    public Logger logger = LogManager.getLogger(GenerateUrlSD.class);
 
     public GenerateUrlSD(OauthService oauthService, SubmissionService submissionService) {
         this.oauthService = oauthService;
@@ -50,10 +47,10 @@ public class GenerateUrlSD {
         actualTransactionId = UUID.randomUUID();
     }
 
-    @Given("admin account {string}:{string} that authenticated")
-    public void adminAccountThatAuthenticatedWithKeycloakOnRealm(String username, String password) {
+    @Given("admin account is authenticated")
+    public void adminAccountThatAuthenticatedWithKeycloakOnRealm() {
 
-        actualUserIdentity = oauthService.getUserIdentity(username,password);
+        actualUserIdentity = oauthService.getUserIdentity();
     }
 
     @When("user Submit a valid pdf document")
@@ -62,7 +59,7 @@ public class GenerateUrlSD {
         logger.info("Submitting document upload request");
 
         File resource = new ClassPathResource(
-                "data/test-document.pdf").getFile();
+                MessageFormat.format("data/{0}", TEST_DOCUMENT_PDF)).getFile();
 
         MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource,TEST_DOCUMENT_PDF, "text/application.pdf");
 
@@ -81,7 +78,7 @@ public class GenerateUrlSD {
         logger.info("Asserting document upload response");
 
         JsonPath jsonPath = new JsonPath(actualDocumentResponse.asString());
-        Assert.assertEquals("File Received not don't match", new BigDecimal(1), new BigDecimal(jsonPath.get("received").toString()));
+        Assert.assertEquals(Integer.valueOf(1), jsonPath.get("received"));
 
         actualSubmissionId = submissionService.getSubmissionId(actualDocumentResponse);
 

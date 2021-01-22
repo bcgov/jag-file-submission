@@ -38,7 +38,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
     }
 
     @Override
-    public AccountDetails getAccountDetails(UUID universalId) {
+    public AccountDetails getAccountDetails(String universalId) {
 
         AccountDetails accountDetails = getCsoDetails(universalId);
         return accountDetails;
@@ -107,7 +107,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         }
     }
 
-    private AccountDetails getCsoDetails(UUID universalId)  {
+    private AccountDetails getCsoDetails(String universalId)  {
 
         AccountDetails accountDetails = null;
         List<ClientProfile> profiles = new ArrayList<>();

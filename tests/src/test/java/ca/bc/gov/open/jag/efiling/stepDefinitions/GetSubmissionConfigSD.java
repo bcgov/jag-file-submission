@@ -17,13 +17,8 @@ import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.UUID;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.emptyString;
-import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertNotNull;
 
 public class GetSubmissionConfigSD {
 
@@ -48,10 +43,10 @@ public class GetSubmissionConfigSD {
         actualTransactionId = UUID.randomUUID();
     }
 
-    @Given("valid admin account {string}:{string} that authenticated")
-    public void validAdminAccountThatAuthenticated(String username, String password) {
+    @Given("valid admin account that authenticated")
+    public void validAdminAccountThatAuthenticated() {
 
-        actualUserIdentity = oauthService.getUserIdentity(username,password);
+        actualUserIdentity = oauthService.getUserIdentity();
 
     }
 
@@ -59,7 +54,7 @@ public class GetSubmissionConfigSD {
     public void aUserSubmitsRequestToGetSubmissionConfiguration() throws IOException {
 
         File resource = new ClassPathResource(
-                "data/test-document.pdf").getFile();
+                MessageFormat.format("data/{0}", TEST_DOCUMENT_PDF)).getFile();
 
         MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource,TEST_DOCUMENT_PDF, "text/application.pdf");
 

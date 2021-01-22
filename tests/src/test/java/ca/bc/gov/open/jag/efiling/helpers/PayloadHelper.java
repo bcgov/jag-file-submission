@@ -42,5 +42,21 @@ public class PayloadHelper {
 
     }
 
+    public static String updateDocumentProperties(String documentName) {
+
+        return "{\n" +
+                "        \"documents\": [\n" +
+                "            {\n" +
+                "                \"name\": \"" + documentName + "\",\n" +
+                "                \"type\": \"AAB\",\n" +
+                "                \"isAmendment\": \"true\",\n" +
+                "                \"isSupremeCourtScheduling\": \"true\",\n" +
+                "                \"data\": {},\n" +
+                "                \"md5\": \"string\"\n" +
+                "            }\n" +
+                "        ]\n" +
+                "}";
+
+    }
 
 }

@@ -1,0 +1,9 @@
+.align-icon {
+  margin-left: 10px;
+  vertical-align: text-top;
+}
+.file-href {
+  cursor: pointer;
+  color: #1a5a96;
+  text-decoration: underline;
+}
