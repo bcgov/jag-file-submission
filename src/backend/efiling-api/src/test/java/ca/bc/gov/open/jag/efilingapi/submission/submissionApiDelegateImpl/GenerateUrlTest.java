@@ -167,7 +167,6 @@ public class GenerateUrlTest {
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.CSO_APPLICATION_CODE, CODE);
-        otherClaims.put(Keys.IDENTITY_PROVIDER_MAPPING, IDENTITY_PROVIDER);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
         generateUrlRequest.setClientAppName(CLIENT_APP_NAME);

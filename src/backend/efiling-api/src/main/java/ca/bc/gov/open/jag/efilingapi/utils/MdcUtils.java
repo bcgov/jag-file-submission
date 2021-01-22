@@ -26,7 +26,7 @@ public class MdcUtils {
                 SecurityUtils.getUniversalIdFromContext().isPresent() ? SecurityUtils.getUniversalIdFromContext().get().toString() : "");
         MDC.put(Keys.MDC_EFILING_SUBMISSION_ID, submissionId.toString());
         MDC.put(Keys.MDC_EFILING_TRANSACTION_ID, transactionId.toString());
-        MDC.put(Keys.MDC_EFILING_IDENTITY_PROVIDER, SecurityUtils.getIdentityProvider());
+        MDC.put(Keys.MDC_EFILING_IDENTITY_PROVIDER, SecurityUtils.getOtherClaim(Keys.IDENTITY_PROVIDER_MAPPING).orElse(""));
     }
 
     public static void clearUserMDC() {

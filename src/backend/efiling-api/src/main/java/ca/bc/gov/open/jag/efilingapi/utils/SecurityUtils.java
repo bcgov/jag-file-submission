@@ -39,6 +39,15 @@ public class SecurityUtils {
         }
     }
 
+    public static Optional<String> getOtherClaim(String claim) {
+        try {
+            return Optional.of(((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+                    .getKeycloakSecurityContext().getToken().getOtherClaims().get(claim).toString());
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
     public static String getIdentityProvider() {
         try {
             return ((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
