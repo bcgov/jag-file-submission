@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.account;
 
+import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.account.mappers.CsoAccountMapper;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.CsoAccountApiDelegate;
@@ -46,7 +47,7 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
     @RolesAllowed("efiling-user")
     public ResponseEntity<CsoAccount> createAccount(UUID xTransactionId, CreateCsoAccountRequest createAccountRequest) {
         
-        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
+        Optional<String> universalId = SecurityUtils.getOtherClaim(Keys.UNIVERSAL_ID_CLAIM_KEY);
 
         if(!universalId.isPresent()) return new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
@@ -78,7 +79,7 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
     @RolesAllowed("efiling-user")
     public ResponseEntity<CsoAccount> getCsoAccount(UUID xTransactionId) {
 
-        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
+        Optional<String> universalId = SecurityUtils.getOtherClaim(Keys.UNIVERSAL_ID_CLAIM_KEY);
 
         if(!universalId.isPresent()) return new ResponseEntity(HttpStatus.FORBIDDEN);
 
@@ -95,7 +96,7 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
     @RolesAllowed("efiling-user")
     public ResponseEntity<CsoAccount> updateCsoAccount(UUID xTransactionId, CsoAccountUpdateRequest clientUpdateRequest) {
 
-        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
+        Optional<String> universalId = SecurityUtils.getOtherClaim(Keys.UNIVERSAL_ID_CLAIM_KEY);
 
         MdcUtils.setUserMDC(UUID.randomUUID(), xTransactionId);
 

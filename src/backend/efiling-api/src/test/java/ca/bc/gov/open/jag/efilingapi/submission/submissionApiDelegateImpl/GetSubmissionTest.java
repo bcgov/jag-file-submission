@@ -48,7 +48,7 @@ public class GetSubmissionTest {
     private static final String SERVICE_TYPE_CD = "DCFL";
     private static final String SERVICE_TYPE_CD1 = "NOTDCFL";
     private static final String INTERNAL_CLIENT_NUMBER = "123";
-    private static final String IDENTITY_PROVIDER = "test";
+    private static final String IDENTITY_PROVIDER = "identity_provider_alias";
 
     private SubmissionApiDelegateImpl sut;
 

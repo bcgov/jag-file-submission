@@ -11,31 +11,12 @@ public class SecurityUtils {
     private SecurityUtils() {
     }
 
-    public static Optional<String> getUniversalIdFromContext() {
-
-        try {
-            return Optional.of(((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-                            .getKeycloakSecurityContext().getToken().getOtherClaims().get(Keys.UNIVERSAL_ID_CLAIM_KEY).toString());
-        } catch (Exception e) {
-            return Optional.empty();
-        }
-    }
-
     public static String getClientId() {
         try {
             return ((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
                     .getKeycloakSecurityContext().getToken().getIssuedFor();
         } catch (Exception e) {
             return "unknown";
-        }
-    }
-
-    public static Optional<String> getApplicationCode() {
-        try {
-            return Optional.of(((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-                    .getKeycloakSecurityContext().getToken().getOtherClaims().get(Keys.CSO_APPLICATION_CODE).toString());
-        } catch (Exception e) {
-            return Optional.empty();
         }
     }
 
@@ -48,14 +29,6 @@ public class SecurityUtils {
         }
     }
 
-    public static String getIdentityProvider() {
-        try {
-            return ((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-                    .getKeycloakSecurityContext().getToken().getOtherClaims().get(Keys.IDENTITY_PROVIDER_MAPPING).toString();
-        } catch (Exception e) {
-            return "unknown";
-        }
-    }
 
     public static boolean isEarlyAdopter() {
         return isInRole("early-adopters");

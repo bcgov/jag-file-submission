@@ -48,7 +48,6 @@ public class GenerateUrlTest {
 
     private static final String CODE = "CODE";
     private static final String CLIENT_APP_NAME = "clientAppName";
-    private static final String IDENTITY_PROVIDER = "identity_provider_alias";
     private static final String USER_WITH_CSO_ACCOUNT = "1593769b-ac4b-43d9-9e81-38877eefcca5";
     private static final String USER_WITH_NO_CSO_ACCOUNT = "1593769b-ac4b-43d9-9e81-38877eefcca6";
 

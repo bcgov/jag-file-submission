@@ -109,7 +109,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @RolesAllowed("efiling-user")
     public ResponseEntity<UploadSubmissionDocumentsResponse> uploadAdditionalSubmissionDocuments(UUID submissionId, UUID xTransactionId, List<MultipartFile> files) {
 
-        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
+        Optional<String> universalId = SecurityUtils.getOtherClaim(Keys.UNIVERSAL_ID_CLAIM_KEY);
 
         if(!universalId.isPresent()) {
 
@@ -145,7 +145,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     public ResponseEntity<UpdateDocumentResponse> updateDocumentProperties(UUID submissionId, UUID
             xTransactionId, UpdateDocumentRequest updateDocumentRequest) {
 
-        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
+        Optional<String> universalId = SecurityUtils.getOtherClaim(Keys.UNIVERSAL_ID_CLAIM_KEY);
 
         if(!universalId.isPresent()) {
 
@@ -198,7 +198,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         logger.info("getSubmission document for transaction [{}]", xTransactionId);
 
-        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
+        Optional<String> universalId = SecurityUtils.getOtherClaim(Keys.UNIVERSAL_ID_CLAIM_KEY);
 
         if(!universalId.isPresent()) {
 
@@ -242,7 +242,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
                     HttpStatus.FORBIDDEN);
         }
 
-        Optional<String> applicationCode = SecurityUtils.getApplicationCode();
+        Optional<String> applicationCode = SecurityUtils.getOtherClaim(Keys.CSO_APPLICATION_CODE);
 
         if (!applicationCode.isPresent()) {
 
@@ -301,7 +301,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @RolesAllowed("efiling-user")
     public ResponseEntity<GetSubmissionConfigResponse> getSubmissionConfig(UUID submissionId, UUID xTransactionId) {
 
-        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
+        Optional<String> universalId = SecurityUtils.getOtherClaim(Keys.UNIVERSAL_ID_CLAIM_KEY);
 
         if (!universalId.isPresent()) {
 
@@ -342,7 +342,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @RolesAllowed("efiling-user")
     public ResponseEntity<FilingPackage> getSubmissionFilingPackage(UUID xTransactionId, UUID submissionId) {
 
-        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
+        Optional<String> universalId = SecurityUtils.getOtherClaim(Keys.UNIVERSAL_ID_CLAIM_KEY);
 
         if(!universalId.isPresent()) {
 
@@ -375,7 +375,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @RolesAllowed("efiling-user")
     public ResponseEntity<Void> deleteSubmission(UUID submissionId, UUID xTransactionId) {
 
-        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
+        Optional<String> universalId = SecurityUtils.getOtherClaim(Keys.UNIVERSAL_ID_CLAIM_KEY);
 
         if(!universalId.isPresent()) {
 
@@ -406,7 +406,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @RolesAllowed("efiling-user")
     public ResponseEntity<SubmitResponse> submit(UUID xTransactionId, UUID submissionId, Object body) {
 
-        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
+        Optional<String> universalId = SecurityUtils.getOtherClaim(Keys.UNIVERSAL_ID_CLAIM_KEY);
 
         if(!universalId.isPresent()) {
 

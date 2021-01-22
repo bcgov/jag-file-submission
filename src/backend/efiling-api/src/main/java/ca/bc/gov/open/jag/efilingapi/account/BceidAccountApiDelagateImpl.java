@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingapi.account;
 import ca.bc.gov.open.bceid.starter.account.BCeIDAccountService;
 import ca.bc.gov.open.bceid.starter.account.GetAccountRequest;
 import ca.bc.gov.open.bceid.starter.account.models.IndividualIdentity;
+import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.account.mappers.BceidAccountMapper;
 import ca.bc.gov.open.jag.efilingapi.api.BceidAccountApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.BceidAccount;
@@ -32,7 +33,7 @@ public class BceidAccountApiDelagateImpl implements BceidAccountApiDelegate {
     @RolesAllowed("efiling-user")
     public ResponseEntity<BceidAccount> getBceidAccount(UUID xTransactionId) {
 
-        Optional<String> userId = SecurityUtils.getUniversalIdFromContext();
+        Optional<String> userId = SecurityUtils.getOtherClaim(Keys.UNIVERSAL_ID_CLAIM_KEY);
 
         if(!userId.isPresent())
             return new ResponseEntity(HttpStatus.FORBIDDEN);

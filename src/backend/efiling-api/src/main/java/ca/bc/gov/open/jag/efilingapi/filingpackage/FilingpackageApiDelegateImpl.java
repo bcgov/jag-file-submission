@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.filingpackage;
 
+import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.api.FilingpackageApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
@@ -29,7 +30,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackageApiDelegate {
     @RolesAllowed("efiling-user")
     public ResponseEntity<FilingPackage> getFilingPackage(BigDecimal packageIdentifier) {
 
-        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
+        Optional<String> universalId = SecurityUtils.getOtherClaim(Keys.UNIVERSAL_ID_CLAIM_KEY);
 
         if(!universalId.isPresent()) return new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
@@ -46,7 +47,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackageApiDelegate {
     @RolesAllowed("efiling-user")
     public ResponseEntity<Resource> getSubmissionSheet(BigDecimal packageIdentifier) {
 
-        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
+        Optional<String> universalId = SecurityUtils.getOtherClaim(Keys.UNIVERSAL_ID_CLAIM_KEY);
 
         if(!universalId.isPresent()) return new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
