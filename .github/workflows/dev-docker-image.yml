@@ -22,7 +22,7 @@ jobs:
     - name: Build the Docker image
       run: |
 
-        docker-compose build efiling-demo
-        docker tag jag-file-submission_efiling-admin:latest ${{ secrets.DOCKERHUB_ORG }}/efiling-admin:latest
-        docker tag jag-file-submission_efiling-admin:latest ${{ secrets.DOCKERHUB_ORG }}/efiling-admin:dev
+        docker-compose build efiling-admin
+        docker tag efiling-admin:latest ${{ secrets.DOCKERHUB_ORG }}/efiling-admin:latest
+        docker tag efiling-admin:latest ${{ secrets.DOCKERHUB_ORG }}/efiling-admin:dev
         docker push ${{ secrets.DOCKERHUG_ORG }}/efiling-admin
