@@ -160,6 +160,7 @@ export default function Home({ page: { header } }) {
         name: "Type:",
         value: (
           <Dropdown
+            testId="type-dropdown"
             items={docTypeListIds}
             onSelect={(e) => {
               file.data = { ...file.data, type: e };

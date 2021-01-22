@@ -8,6 +8,8 @@ import {
   getByText,
   fireEvent,
   getAllByRole,
+  getByTestId,
+  getAllByTestId,
 } from "@testing-library/react";
 import Home from "./Home";
 import { generateJWTToken } from "../../../modules/authentication-helper/authenticationHelper";
@@ -229,6 +231,39 @@ describe("Home", () => {
       container,
       "An error occurred while eFiling your package. Please make sure you upload at least one file and try again."
     );
+
+    expect(error).toBeInTheDocument();
+  });
+
+  test("Show error if submission button clicked with no files dropped", async () => {
+    mock
+      .onPost(
+        "apikeycloakexample.com/realms/apiRealm/protocol/openid-connect/token"
+      )
+      .reply(200, { access_token: token });
+    mock.onPost("/submission/documents").reply(200, { submissionId });
+    mock
+      .onPost(`/submission/${submissionId}/generateUrl`)
+      .reply(200, { efilingUrl });
+
+    const { container } = render(ui);
+    const dropzone = container.querySelector('[data-testid="dropdownzone"]');
+
+    dispatchEvt(dropzone, "drop", data);
+
+    await waitFor(() => {});
+    await flushPromises(ui, container);
+
+    const dropdown = getByTestId(container, "type-dropdown");
+    const dropdownOption = getByText(container, "AFF");
+
+    fireEvent.click(dropdown);
+
+    await waitFor(() => {});
+
+    fireEvent.click(dropdownOption);
+
+    await waitFor(() => {});
 
     expect(error).toBeInTheDocument();
   });
