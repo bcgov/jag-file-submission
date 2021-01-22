@@ -22,6 +22,8 @@ import java.util.UUID;
 public class SecurityUtilsTest {
 
 
+    private static final String EXPECTED_CLAIM = "claim_value";
+
     @Mock
     private SecurityContext securityContextMock;
 
@@ -75,7 +77,20 @@ public class SecurityUtilsTest {
 
     }
 
+    @Test
+    public void shouldReturnClaim() {
 
+        Map<String, Object> otherClaims = new HashMap<>();
+        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, EXPECTED_CLAIM);
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
+
+        Optional<String> actual = SecurityUtils.getUniversalIdFromContext();
+
+        Assertions.assertTrue(actual.isPresent());
+        Assertions.assertEquals(EXPECTED_CLAIM, actual.get());
+
+    }
 
 
 }
