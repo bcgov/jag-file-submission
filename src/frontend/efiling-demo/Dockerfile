@@ -20,6 +20,9 @@ COPY ./env.js ./build/demo-env.js
 #############################################################################################
 FROM nginx:1.19-alpine
 RUN rm -rf /usr/share/nginx/html/
+# There's apparently a bug in the nginx container image where the "return 301" seems to default the root of the html files into the /etc/nginx/html/ folder.
+# bug here: https://github.com/nginx-proxy/nginx-proxy/issues/1246
+# To get around this issue I've placed the code to be served in this /etc/nginx/html/ folder on efiling frontend. It's done it here as well only for consistency.
 COPY --from=build /app/build /etc/nginx/html/efilinghub
 WORKDIR /etc/nginx/html/efilinghub
 COPY nginx.conf /etc/nginx/conf.d/default.conf
