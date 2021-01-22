@@ -62,7 +62,7 @@ public class SecurityUtilsTest {
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
 
-        Optional<String> actual = SecurityUtils.getOtherClaim(Keys.UNIVERSAL_ID_CLAIM_KEY);
+        Optional<String> actual = SecurityUtils.getUniversalIdFromContext();
 
         Assertions.assertTrue(actual.isPresent());
         Assertions.assertEquals(expectedUUID, actual.get());
@@ -85,7 +85,7 @@ public class SecurityUtilsTest {
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
 
-        Optional<String> actual = SecurityUtils.getOtherClaim(Keys.UNIVERSAL_ID_CLAIM_KEY);
+        Optional<String> actual = SecurityUtils.getUniversalIdFromContext();
 
         Assertions.assertTrue(actual.isPresent());
         Assertions.assertEquals(EXPECTED_CLAIM, actual.get());

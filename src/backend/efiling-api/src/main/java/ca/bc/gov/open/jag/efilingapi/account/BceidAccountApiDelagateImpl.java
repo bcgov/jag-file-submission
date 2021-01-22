@@ -33,7 +33,7 @@ public class BceidAccountApiDelagateImpl implements BceidAccountApiDelegate {
     @RolesAllowed("efiling-user")
     public ResponseEntity<BceidAccount> getBceidAccount(UUID xTransactionId) {
 
-        Optional<String> userId = SecurityUtils.getOtherClaim(Keys.UNIVERSAL_ID_CLAIM_KEY);
+        Optional<String> userId = SecurityUtils.getUniversalIdFromContext();
 
         if(!userId.isPresent())
             return new ResponseEntity(HttpStatus.FORBIDDEN);

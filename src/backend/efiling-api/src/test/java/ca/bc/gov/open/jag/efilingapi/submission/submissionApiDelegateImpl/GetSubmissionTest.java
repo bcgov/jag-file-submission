@@ -165,7 +165,7 @@ public class GetSubmissionTest {
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_2);
-        otherClaims.put(Keys.IDENTITY_PROVIDER_MAPPING, IDENTITY_PROVIDER);
+        otherClaims.put(Keys.IDENTITY_PROVIDER_CLAIM_KEY, IDENTITY_PROVIDER);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
         ResponseEntity<GetSubmissionConfigResponse> actual = sut.getSubmissionConfig(UUID.fromString(

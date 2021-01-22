@@ -30,7 +30,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackageApiDelegate {
     @RolesAllowed("efiling-user")
     public ResponseEntity<FilingPackage> getFilingPackage(BigDecimal packageIdentifier) {
 
-        Optional<String> universalId = SecurityUtils.getOtherClaim(Keys.UNIVERSAL_ID_CLAIM_KEY);
+        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
         if(!universalId.isPresent()) return new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
@@ -47,7 +47,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackageApiDelegate {
     @RolesAllowed("efiling-user")
     public ResponseEntity<Resource> getSubmissionSheet(BigDecimal packageIdentifier) {
 
-        Optional<String> universalId = SecurityUtils.getOtherClaim(Keys.UNIVERSAL_ID_CLAIM_KEY);
+        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
         if(!universalId.isPresent()) return new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);

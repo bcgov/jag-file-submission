@@ -20,7 +20,19 @@ public class SecurityUtils {
         }
     }
 
-    public static Optional<String> getOtherClaim(String claim) {
+    public static Optional<String> getUniversalIdFromContext() {
+        return getOtherClaim(Keys.UNIVERSAL_ID_CLAIM_KEY);
+    }
+
+    public static Optional<String> getApplicationCode() {
+        return getOtherClaim(Keys.CSO_APPLICATION_CLAIM_KEY);
+    }
+
+    public static Optional<String> getIdentityProvider() {
+        return getOtherClaim(Keys.IDENTITY_PROVIDER_CLAIM_KEY);
+    }
+
+    private static Optional<String> getOtherClaim(String claim) {
         try {
             return Optional.of(((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
                     .getKeycloakSecurityContext().getToken().getOtherClaims().get(claim).toString());
@@ -28,7 +40,6 @@ public class SecurityUtils {
             return Optional.empty();
         }
     }
-
 
     public static boolean isEarlyAdopter() {
         return isInRole("early-adopters");
