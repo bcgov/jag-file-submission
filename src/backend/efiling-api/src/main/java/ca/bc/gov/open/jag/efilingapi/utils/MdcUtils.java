@@ -26,12 +26,14 @@ public class MdcUtils {
                 SecurityUtils.getUniversalIdFromContext().isPresent() ? SecurityUtils.getUniversalIdFromContext().get().toString() : "");
         MDC.put(Keys.MDC_EFILING_SUBMISSION_ID, submissionId.toString());
         MDC.put(Keys.MDC_EFILING_TRANSACTION_ID, transactionId.toString());
+        MDC.put(Keys.MDC_EFILING_IDENTITY_PROVIDER, SecurityUtils.getIdentityProvider());
     }
 
     public static void clearUserMDC() {
         MDC.remove(Keys.MDC_EFILING_UNIVERSAL_ID);
         MDC.remove(Keys.MDC_EFILING_SUBMISSION_ID);
         MDC.remove(Keys.MDC_EFILING_TRANSACTION_ID);
+        MDC.remove(Keys.MDC_EFILING_IDENTITY_PROVIDER);
     }
 
 }

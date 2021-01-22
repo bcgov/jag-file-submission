@@ -48,6 +48,7 @@ public class GenerateUrlTest {
 
     private static final String CODE = "CODE";
     private static final String CLIENT_APP_NAME = "clientAppName";
+    private static final String IDENTITY_PROVIDER = "test";
     private static final String USER_WITH_CSO_ACCOUNT = "1593769b-ac4b-43d9-9e81-38877eefcca5";
     private static final String USER_WITH_NO_CSO_ACCOUNT = "1593769b-ac4b-43d9-9e81-38877eefcca6";
 
@@ -166,6 +167,7 @@ public class GenerateUrlTest {
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.CSO_APPLICATION_CODE, CODE);
+        otherClaims.put(Keys.IDENTITY_PROVIDER_MAPPING, IDENTITY_PROVIDER);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
         generateUrlRequest.setClientAppName(CLIENT_APP_NAME);

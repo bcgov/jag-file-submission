@@ -39,6 +39,15 @@ public class SecurityUtils {
         }
     }
 
+    public static String getIdentityProvider() {
+        try {
+            return ((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+                    .getKeycloakSecurityContext().getToken().getOtherClaims().get(Keys.IDENTITY_PROVIDER_MAPPING).toString();
+        } catch (Exception e) {
+            return "unknown";
+        }
+    }
+
     public static boolean isEarlyAdopter() {
         return isInRole("early-adopters");
     }
