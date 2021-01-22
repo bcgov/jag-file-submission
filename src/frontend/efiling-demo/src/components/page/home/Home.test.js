@@ -61,7 +61,7 @@ describe("Home", () => {
   const submissionId = "123";
   const efilingUrl = "example.com";
   const filingPackage = {
-    //documents: [files[0].file],
+    documents: [files[0].file],
   };
 
   sessionStorage.setItem("apiKeycloakUrl", "apikeycloakexample.com");
