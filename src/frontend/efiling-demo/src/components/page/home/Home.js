@@ -81,6 +81,7 @@ const eFilePackage = (
   setSubmitBtnEnabled,
   setShowLoader
 ) => {
+  if (files.length == 0) return false;
   setRequestHeaders(transactionId);
   const { formData, updatedUrlBody } = generatePackageData(
     files,

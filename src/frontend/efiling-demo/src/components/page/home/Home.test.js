@@ -61,7 +61,7 @@ describe("Home", () => {
   const submissionId = "123";
   const efilingUrl = "example.com";
   const filingPackage = {
-    documents: [files[0].file],
+    //documents: [files[0].file],
   };
 
   sessionStorage.setItem("apiKeycloakUrl", "apikeycloakexample.com");
@@ -205,7 +205,7 @@ describe("Home", () => {
     expect(window.open).toHaveBeenCalledWith("example.com", "_self");
   });
 
-  /* test("uploading document with incorrect name matching filing package sets error", async () => {
+  test("Show error if submission button clicked with no files dropped", async () => {
     mock
       .onPost(
         "apikeycloakexample.com/realms/apiRealm/protocol/openid-connect/token"
@@ -216,30 +216,10 @@ describe("Home", () => {
       .onPost(`/submission/${submissionId}/generateUrl`)
       .reply(200, { efilingUrl });
 
-    const wrongFile = new File(
-      [JSON.stringify({ ping: true })],
-      "wrongping.json",
-      {
-        type: "application/json",
-      }
-    );
-    const wrongData = mockData([wrongFile]);
-
     const { container } = render(ui);
-    const dropzone = container.querySelector('[data-testid="dropdownzone"]');
-
-    dispatchEvt(dropzone, "drop", wrongData);
-
-    await waitFor(() => {});
     await flushPromises(ui, container);
 
     const button = getByText(container, "E-File my Package");
-
-    const textbox = getAllByRole(container, "textbox");
-
-    fireEvent.change(textbox[0], {
-      target: { value: JSON.stringify(filingPackage) },
-    });
 
     fireEvent.click(button);
 
@@ -251,5 +231,5 @@ describe("Home", () => {
     );
 
     expect(error).toBeInTheDocument();
-  }); */
+  });
 });
