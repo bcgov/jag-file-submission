@@ -1,13 +1,30 @@
 export function errorRedirect(errorUrl, error) {
-  if (errorUrl && error.response && error.response.status) {
-    const errorMessage =
-      error.response.data && error.response.data.message
-        ? error.response.data.message
-        : "There was an error with your submission.";
+  if (errorUrl && error) {
+    let errorStatus;
+    if (error.status) {
+      errorStatus = error.status;
+    } else if (error.response && error.response.status) {
+      errorStatus = error.response.status;
+    } else {
+      errorStatus = "unknown";
+    }
+
+    let errorMessage;
+    if (error.message) {
+      errorMessage = error.message;
+    } else if (
+      error.response &&
+      error.response.data &&
+      error.response.data.message
+    ) {
+      errorMessage = error.response.data.message;
+    } else {
+      errorMessage = "There was an error with your submission.";
+    }
 
     sessionStorage.setItem("validExit", true);
     return window.open(
-      `${errorUrl}?status=${error.response.status}&message=${errorMessage}`,
+      `${errorUrl}?status=${errorStatus}&message=${errorMessage}`,
       "_self"
     );
   }
