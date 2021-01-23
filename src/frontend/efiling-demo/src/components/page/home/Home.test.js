@@ -3,13 +3,12 @@ import { createMemoryHistory } from "history";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import {
+  screen,
   render,
   waitFor,
   getByText,
   fireEvent,
   getAllByRole,
-  getByTestId,
-  getAllByTestId,
 } from "@testing-library/react";
 import Home from "./Home";
 import { generateJWTToken } from "../../../modules/authentication-helper/authenticationHelper";
@@ -43,6 +42,7 @@ function mockData(files) {
       items: files.map((file) => ({
         kind: "file",
         type: file.type,
+        data: file.data,
         getAsFile: () => file,
       })),
       types: ["Files"],
@@ -57,6 +57,11 @@ describe("Home", () => {
       file: {
         name: "ping.json",
         type: "json",
+        data: {
+          type: "",
+          isAmendment: false,
+          isSupremeCourtScheduling: false,
+        },
       },
     },
   ];
@@ -235,7 +240,7 @@ describe("Home", () => {
     expect(error).toBeInTheDocument();
   });
 
-  test("Show error if submission button clicked with no files dropped", async () => {
+  test("DisplayBox appears when file is dropped", async () => {
     mock
       .onPost(
         "apikeycloakexample.com/realms/apiRealm/protocol/openid-connect/token"
@@ -254,17 +259,35 @@ describe("Home", () => {
     await waitFor(() => {});
     await flushPromises(ui, container);
 
-    const dropdown = getByTestId(container, "type-dropdown");
-    const dropdownOption = getByText(container, "AFF");
+    expect(getByText(container, files[0].file.name)).toBeInTheDocument();
+  });
 
-    fireEvent.click(dropdown);
+  test("Checkboxes update value on click", async () => {
+    mock
+      .onPost(
+        "apikeycloakexample.com/realms/apiRealm/protocol/openid-connect/token"
+      )
+      .reply(200, { access_token: token });
+    mock.onPost("/submission/documents").reply(200, { submissionId });
+    mock
+      .onPost(`/submission/${submissionId}/generateUrl`)
+      .reply(200, { efilingUrl });
+
+    const { container } = render(ui);
+    const dropzone = container.querySelector('[data-testid="dropdownzone"]');
+
+    dispatchEvt(dropzone, "drop", data);
 
     await waitFor(() => {});
+    // await flushPromises(ui, container);
 
-    fireEvent.click(dropdownOption);
+    const isSupremeCourtScheduling = screen.getAllByRole("checkbox")[0];
+    fireEvent.click(isSupremeCourtScheduling);
 
-    await waitFor(() => {});
+    const isAmendment = screen.getAllByRole("checkbox")[1];
+    fireEvent.click(isAmendment);
 
-    expect(error).toBeInTheDocument();
+    expect(isSupremeCourtScheduling).toHaveProperty("checked", true);
+    expect(isAmendment).toHaveProperty("checked", true);
   });
 });
