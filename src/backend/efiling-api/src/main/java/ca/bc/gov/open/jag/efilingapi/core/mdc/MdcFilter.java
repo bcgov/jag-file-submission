@@ -46,20 +46,20 @@ public class MdcFilter implements Filter {
 
         Enumeration<String> headerNames = httpRequest.getHeaderNames();
 
-        if (headerNames != null) {
-            while (headerNames.hasMoreElements()) {
+        if (headerNames == null) return result;
 
-                String header = headerNames.nextElement();
+        while (headerNames.hasMoreElements()) {
 
-                if (StringUtils.equalsIgnoreCase("authorization", header)) continue;
+            String header = headerNames.nextElement();
 
-                String mdcKey = MessageFormat.format("{0}.{1}", Keys.MDC_EFILING_REQUEST_HEADERS, header);
-                result.add(mdcKey);
+            if (StringUtils.equalsIgnoreCase("authorization", header)) continue;
 
-                logger.debug("{}:{}", mdcKey, httpRequest.getHeader(header));
-                MDC.put(mdcKey, httpRequest.getHeader(header));
+            String mdcKey = MessageFormat.format("{0}.{1}", Keys.MDC_EFILING_REQUEST_HEADERS, header);
+            result.add(mdcKey);
 
-            }
+            logger.debug("{}:{}", mdcKey, httpRequest.getHeader(header));
+            MDC.put(mdcKey, httpRequest.getHeader(header));
+
         }
 
         return result;
