@@ -17,7 +17,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingapi.submission.validator.GenerateUrlRequestValidator;
 import ca.bc.gov.open.jag.efilingapi.utils.Notification;
-import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
+import ca.bc.gov.open.jag.efilingapi.core.security.SecurityUtils;
 import ca.bc.gov.open.jag.efilingapi.utils.TikaAnalysis;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.*;
 import org.apache.commons.lang3.StringUtils;

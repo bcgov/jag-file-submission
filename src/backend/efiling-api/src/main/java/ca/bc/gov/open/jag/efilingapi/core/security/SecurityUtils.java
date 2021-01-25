@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingapi.utils;
+package ca.bc.gov.open.jag.efilingapi.core.security;
 
 import ca.bc.gov.open.jag.efilingapi.Keys;
 import org.keycloak.KeycloakPrincipal;

@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.utils;
 
 import ca.bc.gov.open.jag.efilingapi.Keys;
+import ca.bc.gov.open.jag.efilingapi.core.security.SecurityUtils;
 import org.junit.jupiter.api.*;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;

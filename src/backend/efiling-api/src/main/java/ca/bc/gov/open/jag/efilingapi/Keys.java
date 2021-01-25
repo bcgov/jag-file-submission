@@ -16,14 +16,6 @@ public class Keys {
 
     public static final String MDC_EFILING_SUBMISSION_ID =  EFILING_APP + ".submissionId";
 
-    public static final String MDC_EFILING_TRANSACTION_ID = EFILING_APP + ".transactionId";
-
-    public static final String MDC_EFILING_UNIVERSAL_ID = EFILING_APP + ".universalId";
-
-    public static final String MDC_EFILING_CLIENT_ID = EFILING_APP + ".clientId";
-
-    public static final String MDC_EFILING_IDENTITY_PROVIDER = EFILING_APP + ".identityProvider";
-
     public static final String UNIVERSAL_ID_CLAIM_KEY = "universal-id";
 
     public static final String CSO_APPLICATION_CLAIM_KEY = "cso-application-code";

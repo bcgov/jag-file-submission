@@ -1,7 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.core.mdc;
 
 import ca.bc.gov.open.jag.efilingapi.Keys;
-import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
+import ca.bc.gov.open.jag.efilingapi.core.security.SecurityUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
