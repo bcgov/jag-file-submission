@@ -56,9 +56,9 @@ const generatePackageData = (files, filingPackage) => {
     documentData.push({
       name: files[i].name,
       type: files[i].data.type,
-      isSupremeCourtScheduling: files[i].data.isSupremeCourtScheduling || false,
-      isAmendment: files[i].data.isAmendment || false,
-      // data: document.data,
+      isSupremeCourtScheduling: files[i].data.isSupremeCourtScheduling,
+      isAmendment: files[i].data.isAmendment,
+      data: {},
       // md5: document.md5,
     });
   }
@@ -124,6 +124,26 @@ export default function Home({ page: { header } }) {
 
   const docTypeListIds = docTypeList.map((obj) => obj.id);
 
+  const onSelect = (e, file) => {
+    const newFiles = [...files];
+    newFiles.forEach((f) => {
+      if (f.name === file.name) {
+        f.data.type = e;
+      }
+    });
+    setFiles(newFiles);
+  };
+
+  const onChange = (e, key, file) => {
+    const newFiles = [...files];
+    newFiles.forEach((f) => {
+      if (f.name === file.name) {
+        f.data[key] = e.target.checked;
+      }
+    });
+    setFiles(newFiles);
+  };
+
   const generateTable = (file, data) => [
     {
       name: (
@@ -154,7 +174,6 @@ export default function Home({ page: { header } }) {
   ];
 
   const generateTableData = (file) => {
-    file.data = {};
     const data = [
       {
         name: "Type:",
@@ -162,9 +181,7 @@ export default function Home({ page: { header } }) {
           <Dropdown
             data-testid="type-dropdown"
             items={docTypeListIds}
-            onSelect={(e) => {
-              file.data = { ...file.data, type: e };
-            }}
+            onSelect={(e) => onSelect(e, file)}
           />
         ),
         isNameBold: true,
@@ -175,12 +192,7 @@ export default function Home({ page: { header } }) {
           <input
             type="checkbox"
             id="scs"
-            onChange={(e) => {
-              file.data = {
-                ...file.data,
-                isSupremeCourtScheduling: e.target.checked,
-              };
-            }}
+            onChange={(e) => onChange(e, "isSupremeCourtScheduling", file)}
           />
         ),
         isNameBold: true,
@@ -191,9 +203,7 @@ export default function Home({ page: { header } }) {
           <input
             type="checkbox"
             id="am"
-            onChange={(e) => {
-              file.data = { ...file.data, isAmendment: e.target.checked };
-            }}
+            onChange={(e) => onChange(e, "isAmmendment", file)}
           />
         ),
         isNameBold: true,
@@ -227,7 +237,17 @@ export default function Home({ page: { header } }) {
           <h1>Welcome to the eFiling Demo Client</h1>
           <br />
           <Dropzone
-            onDrop={(droppedFiles) => setFiles(files.concat(droppedFiles))}
+            onDrop={(droppedFiles) => {
+              droppedFiles.forEach(
+                (file) =>
+                  (file.data = {
+                    type: "",
+                    isSupremeCourtScheduling: false,
+                    isAmmendment: false,
+                  })
+              );
+              setFiles(files.concat(droppedFiles));
+            }}
           >
             {({ getRootProps, getInputProps }) => (
               <div
