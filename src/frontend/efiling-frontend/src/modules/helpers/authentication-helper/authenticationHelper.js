@@ -1,6 +1,14 @@
 const jwt = require("jsonwebtoken");
 
 /**
+ * Encodes/signs a payload with JWT into a JSON Web Token string.
+ * @param payload Payload to sign, could be an literal, buffer or string
+ */
+export function encodeJWT(payload) {
+  return jwt.sign(payload, "secret");
+}
+
+/**
  * Decodes a JWT token, returning the payload, or null if no payload can be found.
  * @param token a JWT token string to decode
  */

@@ -9,7 +9,7 @@ import {
   getJWTData,
   isIdentityProviderBCeID,
 } from "../../../modules/helpers/authentication-helper/authenticationHelper";
-import { getBCSCUserInfo } from "../../../domain/authentication/services/authService";
+import { getBCSCUserInfo } from "../../../domain/authentication/services/AuthService";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
 import CSOAccount from "../cso-account/CSOAccount";
 import { propTypes } from "../../../types/propTypes";
@@ -80,7 +80,7 @@ const checkCSOAccountStatus = (
           setCsoAccountStatus({ isNew: false, exists: true });
         })
         .catch((err) => {
-          if (err.response.status !== 404)
+          if (err.response === undefined || err.response.status !== 404)
             errorRedirect(sessionStorage.getItem("errorUrl"), err);
           else if (isIdentityProviderBCeID()) {
             axios

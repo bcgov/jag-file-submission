@@ -7,7 +7,7 @@ import {
 /**
  * Using the current OIDC token, request a broker token directly from Keycloak
  */
-async function getKeycloakBrokerToken() {
+export async function getKeycloakBrokerToken() {
   const oidcToken = localStorage.getItem("jwt");
 
   const response = await fetch(
@@ -23,18 +23,13 @@ async function getKeycloakBrokerToken() {
   if (!response.ok) {
     throw new Error(`HTTP error, status: ${response.status}`);
   }
-  return response
-    .json()
-    .then((data) => data.access_token)
-    .catch(() => {
-      throw new Error("Error obtaining Keycloak broker token.");
-    });
+  return response.json().then((data) => data.access_token);
 }
 
 /**
  * Using the brokerToken, fetch the userinfo JWT object from bcsc
  */
-async function getBCSCUserInfoJWT(brokerToken) {
+export async function getBCSCUserInfoJWT(brokerToken) {
   const response = await fetch(`${BCSC_USERINFO_URL}`, {
     method: "GET",
     headers: new Headers({
@@ -42,16 +37,9 @@ async function getBCSCUserInfoJWT(brokerToken) {
     }),
   });
   if (!response.ok) {
-    throw new Error(
-      `HTTP error, status: ${response.status}, type: ${response.type}`
-    );
+    throw new Error(`HTTP error, status: ${response.status}`);
   }
-  return response
-    .text()
-    .then((data) => data)
-    .catch(() => {
-      throw new Error("Could not retreive user information from BCSC.");
-    });
+  return response.text().then((data) => data);
 }
 
 /**
@@ -68,16 +56,10 @@ export async function getBCSCUserInfo() {
   const bcscToken = await getBCSCUserInfoJWT(brokerToken);
 
   const userInfo = decodeJWT(bcscToken);
-  const id = userInfo.sub;
   const firstName = userInfo.given_name;
   let middleName = userInfo.given_names;
   middleName = middleName.replace(firstName, "").trim();
   const lastName = userInfo.family_name;
 
-  return {
-    id,
-    firstName,
-    middleName,
-    lastName,
-  };
+  return { firstName, middleName, lastName };
 }

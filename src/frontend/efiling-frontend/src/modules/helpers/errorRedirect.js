@@ -10,14 +10,10 @@ export function errorRedirect(errorUrl, error) {
     }
 
     let errorMessage;
-    if (error.message) {
-      errorMessage = error.message;
-    } else if (
-      error.response &&
-      error.response.data &&
-      error.response.data.message
-    ) {
+    if (error.response && error.response.data && error.response.data.message) {
       errorMessage = error.response.data.message;
+    } else if (error.message) {
+      errorMessage = error.message;
     } else {
       errorMessage = "There was an error with your submission.";
     }
