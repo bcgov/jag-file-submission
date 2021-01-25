@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingapi.utils;
+package ca.bc.gov.open.jag.efilingapi.core.security;
 
 import ca.bc.gov.open.jag.efilingapi.Keys;
 import org.keycloak.KeycloakPrincipal;
@@ -11,12 +11,12 @@ public class SecurityUtils {
     private SecurityUtils() {
     }
 
-    public static String getClientId() {
+    public static Optional<String> getClientId() {
         try {
-            return ((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-                    .getKeycloakSecurityContext().getToken().getIssuedFor();
+            return Optional.of(((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+                    .getKeycloakSecurityContext().getToken().getIssuedFor());
         } catch (Exception e) {
-            return "unknown";
+            return Optional.empty();
         }
     }
 
