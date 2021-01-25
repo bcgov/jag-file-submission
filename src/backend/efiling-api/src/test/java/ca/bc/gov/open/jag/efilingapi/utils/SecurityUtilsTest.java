@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.utils;
 
 import ca.bc.gov.open.jag.efilingapi.Keys;
+import ca.bc.gov.open.jag.efilingapi.core.security.SecurityUtils;
 import org.junit.jupiter.api.*;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
@@ -69,11 +70,13 @@ public class SecurityUtilsTest {
 
     }
 
-    @Test void withNoClientIdShouldReturnUnknown() {
+    @Test
+    @DisplayName("No client Id should return empty")
+    public void withNoClientIdShouldReturnFalse() {
 
         Mockito.when(securityContextMock.getAuthentication()).thenThrow(new RuntimeException());
-        String actual =  SecurityUtils.getClientId();
-        Assertions.assertEquals("unknown", actual);
+        Optional<String> actual =  SecurityUtils.getClientId();
+        Assertions.assertFalse(actual.isPresent());
 
     }
 

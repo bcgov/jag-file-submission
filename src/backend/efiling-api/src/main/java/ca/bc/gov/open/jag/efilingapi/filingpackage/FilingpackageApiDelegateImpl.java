@@ -1,12 +1,11 @@
 package ca.bc.gov.open.jag.efilingapi.filingpackage;
 
-import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.api.FilingpackageApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
-import ca.bc.gov.open.jag.efilingapi.utils.SecurityUtils;
+import ca.bc.gov.open.jag.efilingapi.core.security.SecurityUtils;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
