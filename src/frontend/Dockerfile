@@ -33,5 +33,5 @@ RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/conf.d
 CMD ["nginx", "-g", "daemon off;"]
 
-RUN mkdir -p /var/cache/nginx
-RUN chown nginx:nginx /var/cache/nginx
+RUN mkdir -p /var/cache/nginx/client_temp
+RUN chown nginx:nginx /var/cache/nginx/client_temp
