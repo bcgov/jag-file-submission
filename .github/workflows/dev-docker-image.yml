@@ -23,6 +23,5 @@ jobs:
       run: |
 
         docker-compose build efiling-demo
-        docker images
         docker tag jag-file-submission_efiling-demo ${{ secrets.DOCKERHUB_ORG }}/efiling-admin:latest                     
         docker push ${{ secrets.DOCKERHUB_ORG }}/efiling-admin
