@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-curly-newline, camelcase, react/jsx-props-no-spreading, react/jsx-wrap-multilines, no-param-reassign */
+/* eslint-disable react/jsx-curly-newline, camelcase, react/jsx-props-no-spreading, react/jsx-wrap-multilines, no-param-reassign, no-return-assign */
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { MdDescription } from "react-icons/md";
