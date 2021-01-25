@@ -122,7 +122,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         if (!fromCacheSubmission.isPresent())
             return ResponseEntity.notFound().build();
 
-        logger.debug("attempting to upload new document for transaction [{}]", submissionId);
+        logger.info("attempting to upload new document for transaction [{}]", submissionId);
 
         ResponseEntity responseEntity = storeDocuments(submissionKey, files);
 
@@ -148,7 +148,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         }
 
 
-        logger.debug("attempting to add new document for transaction [{}]", submissionId);
+        logger.info("attempting to add new document for transaction [{}]", submissionId);
 
         if (updateDocumentRequest == null || updateDocumentRequest.getDocuments().isEmpty())
             return new ResponseEntity(
