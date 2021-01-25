@@ -3,6 +3,7 @@ import { createMemoryHistory } from "history";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import {
+  screen,
   render,
   waitFor,
   getByText,
@@ -41,6 +42,7 @@ function mockData(files) {
       items: files.map((file) => ({
         kind: "file",
         type: file.type,
+        data: file.data,
         getAsFile: () => file,
       })),
       types: ["Files"],
@@ -55,6 +57,11 @@ describe("Home", () => {
       file: {
         name: "ping.json",
         type: "json",
+        data: {
+          type: "",
+          isAmendment: false,
+          isSupremeCourtScheduling: false,
+        },
       },
     },
   ];
@@ -205,7 +212,7 @@ describe("Home", () => {
     expect(window.open).toHaveBeenCalledWith("example.com", "_self");
   });
 
-  test("uploading document with incorrect name matching filing package sets error", async () => {
+  test("Show error if submission button clicked with no files dropped", async () => {
     mock
       .onPost(
         "apikeycloakexample.com/realms/apiRealm/protocol/openid-connect/token"
@@ -216,30 +223,10 @@ describe("Home", () => {
       .onPost(`/submission/${submissionId}/generateUrl`)
       .reply(200, { efilingUrl });
 
-    const wrongFile = new File(
-      [JSON.stringify({ ping: true })],
-      "wrongping.json",
-      {
-        type: "application/json",
-      }
-    );
-    const wrongData = mockData([wrongFile]);
-
     const { container } = render(ui);
-    const dropzone = container.querySelector('[data-testid="dropdownzone"]');
-
-    dispatchEvt(dropzone, "drop", wrongData);
-
-    await waitFor(() => {});
     await flushPromises(ui, container);
 
     const button = getByText(container, "E-File my Package");
-
-    const textbox = getAllByRole(container, "textbox");
-
-    fireEvent.change(textbox[0], {
-      target: { value: JSON.stringify(filingPackage) },
-    });
 
     fireEvent.click(button);
 
@@ -251,5 +238,56 @@ describe("Home", () => {
     );
 
     expect(error).toBeInTheDocument();
+  });
+
+  test("DisplayBox appears when file is dropped", async () => {
+    mock
+      .onPost(
+        "apikeycloakexample.com/realms/apiRealm/protocol/openid-connect/token"
+      )
+      .reply(200, { access_token: token });
+    mock.onPost("/submission/documents").reply(200, { submissionId });
+    mock
+      .onPost(`/submission/${submissionId}/generateUrl`)
+      .reply(200, { efilingUrl });
+
+    const { container } = render(ui);
+    const dropzone = container.querySelector('[data-testid="dropdownzone"]');
+
+    dispatchEvt(dropzone, "drop", data);
+
+    await waitFor(() => {});
+    await flushPromises(ui, container);
+
+    expect(getByText(container, files[0].file.name)).toBeInTheDocument();
+  });
+
+  test("Checkboxes update value on click", async () => {
+    mock
+      .onPost(
+        "apikeycloakexample.com/realms/apiRealm/protocol/openid-connect/token"
+      )
+      .reply(200, { access_token: token });
+    mock.onPost("/submission/documents").reply(200, { submissionId });
+    mock
+      .onPost(`/submission/${submissionId}/generateUrl`)
+      .reply(200, { efilingUrl });
+
+    const { container } = render(ui);
+    const dropzone = container.querySelector('[data-testid="dropdownzone"]');
+
+    dispatchEvt(dropzone, "drop", data);
+
+    await waitFor(() => {});
+    // await flushPromises(ui, container);
+
+    const isSupremeCourtScheduling = screen.getAllByRole("checkbox")[0];
+    fireEvent.click(isSupremeCourtScheduling);
+
+    const isAmendment = screen.getAllByRole("checkbox")[1];
+    fireEvent.click(isAmendment);
+
+    expect(isSupremeCourtScheduling).toHaveProperty("checked", true);
+    expect(isAmendment).toHaveProperty("checked", true);
   });
 });
