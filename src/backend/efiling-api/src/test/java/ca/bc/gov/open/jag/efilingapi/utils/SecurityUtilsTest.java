@@ -69,11 +69,13 @@ public class SecurityUtilsTest {
 
     }
 
-    @Test void withNoClientIdShouldReturnUnknown() {
+    @Test
+    @DisplayName("No client Id should return empty")
+    public void withNoClientIdShouldReturnFalse() {
 
         Mockito.when(securityContextMock.getAuthentication()).thenThrow(new RuntimeException());
-        String actual =  SecurityUtils.getClientId();
-        Assertions.assertEquals("unknown", actual);
+        Optional<String> actual =  SecurityUtils.getClientId();
+        Assertions.assertFalse(actual.isPresent());
 
     }
 
