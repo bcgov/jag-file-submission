@@ -26,3 +26,7 @@
   color: #1a5a96;
   text-decoration: underline;
 }
+
+.bcgov-dropdown {
+  max-width: 250px;
+}
