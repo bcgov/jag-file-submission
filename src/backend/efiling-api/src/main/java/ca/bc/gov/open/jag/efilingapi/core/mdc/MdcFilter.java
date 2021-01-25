@@ -72,6 +72,7 @@ public class MdcFilter implements Filter {
         SecurityUtils.getClientId().ifPresent(value -> result.add(setJwtValue("clientId", value)));
         SecurityUtils.getUniversalIdFromContext().ifPresent(value -> result.add(setJwtValue("universalId", value)));
         SecurityUtils.getApplicationCode().ifPresent(value -> result.add(setJwtValue("applicationCode", value)));
+        SecurityUtils.getIdentityProvider().ifPresent(value -> result.add(setJwtValue("identityProvider", value)));
 
         return result;
 

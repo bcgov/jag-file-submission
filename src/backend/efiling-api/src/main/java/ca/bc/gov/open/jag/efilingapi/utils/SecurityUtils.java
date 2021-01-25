@@ -11,16 +11,6 @@ public class SecurityUtils {
     private SecurityUtils() {
     }
 
-    public static Optional<String> getUniversalIdFromContext() {
-
-        try {
-            return Optional.of(((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-                            .getKeycloakSecurityContext().getToken().getOtherClaims().get(Keys.UNIVERSAL_ID_CLAIM_KEY).toString());
-        } catch (Exception e) {
-            return Optional.empty();
-        }
-    }
-
     public static Optional<String> getClientId() {
         try {
             return Optional.of(((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
