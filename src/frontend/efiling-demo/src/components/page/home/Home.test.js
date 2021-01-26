@@ -292,31 +292,6 @@ describe("Home", () => {
     expect(isAmendment).toHaveProperty("checked", true);
   });
 
-  test("Clicking close removes DisplayBox", async () => {
-    mock
-      .onPost(
-        "apikeycloakexample.com/realms/apiRealm/protocol/openid-connect/token"
-      )
-      .reply(200, { access_token: token });
-    mock.onPost("/submission/documents").reply(200, { submissionId });
-    mock
-      .onPost(`/submission/${submissionId}/generateUrl`)
-      .reply(200, { efilingUrl });
-
-    const { container } = render(ui);
-    const dropzone = container.querySelector('[data-testid="dropdownzone"]');
-
-    dispatchEvt(dropzone, "drop", data);
-
-    await waitFor(() => {});
-    await flushPromises(ui, container);
-
-    const close = screen.getAllByTestId("close-button")[0];
-    fireEvent.click(close);
-
-    expect(close).toBeTruthy();
-  });
-
   test("Document type is updated", async () => {
     mock
       .onPost(
