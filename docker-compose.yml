@@ -39,7 +39,7 @@ services:
       - REACT_APP_API_BASE_URL=http://localhost:8080
       - REACT_APP_BAMBORA_REDIRECT_URL=http://localhost:3000/efilinghub
     ports:
-      - 3001:3000
+      - 3001:8080
 
   #############################################################################################
   ###                           Efiling api backend app                                     ###
