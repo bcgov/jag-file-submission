@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 import fetchMock from "fetch-mock-jest";
 import {
   getKeycloakBrokerToken,
