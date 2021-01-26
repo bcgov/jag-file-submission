@@ -33,4 +33,6 @@ RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/conf.d
 CMD ["nginx", "-g", "daemon off;"]
 
-USER www-data
+RUN RUN chmod g+rwx /var/cache/nginx /var/run /var/log/nginx
+
+USER nginx
