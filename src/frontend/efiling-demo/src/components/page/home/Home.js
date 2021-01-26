@@ -179,7 +179,7 @@ export default function Home({ page: { header } }) {
         name: "Type:",
         value: (
           <Dropdown
-            data-testid="type-dropdown"
+            data-testid="dropdown"
             items={docTypeListIds}
             onSelect={(e) => onSelect(e, file)}
           />
@@ -212,15 +212,14 @@ export default function Home({ page: { header } }) {
         name: "",
         value: (
           <button
+            data-testId="close-button"
             type="submit"
+            onClick={() => {
+              setFiles(files.filter((item) => item.name !== file.name));
+            }}
             style={{ backgroundColor: "#00000000", border: "none" }}
           >
-            <AiOutlineClose
-              onClick={() => {
-                setFiles(files.filter((item) => item.name !== file.name));
-              }}
-              color="red"
-            />
+            <AiOutlineClose color="red" />
           </button>
         ),
       },
