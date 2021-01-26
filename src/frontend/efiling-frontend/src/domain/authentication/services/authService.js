@@ -56,10 +56,10 @@ export async function getBCSCUserInfo() {
   const bcscToken = await getBCSCUserInfoJWT(brokerToken);
 
   const userInfo = decodeJWT(bcscToken);
-  const firstName = userInfo.given_name;
-  let middleName = userInfo.given_names;
+  const firstName = userInfo.given_name ? userInfo.given_name : "";
+  let middleName = userInfo.given_names ? userInfo.given_names : "";
   middleName = middleName.replace(firstName, "").trim();
-  const lastName = userInfo.family_name;
+  const lastName = userInfo.family_name ? userInfo.family_name : "";
 
   return { firstName, middleName, lastName };
 }

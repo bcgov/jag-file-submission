@@ -81,4 +81,30 @@ describe("Authentation Service Test Suite", () => {
     expect(response.middleName).toEqual("C");
     expect(response.lastName).toEqual("Clark");
   });
+
+  test("getBCSCUserInfo missing firstName", async () => {
+    fetchMock.get(brokerURL, JSON.stringify({ access_token: "12345" }));
+    fetchMock.get(
+      bcscURL,
+      encodeJWT({
+        given_names: "Arthur C",
+        family_name: "Clark",
+      })
+    );
+
+    const response = await getBCSCUserInfo();
+    expect(response.firstName).toEqual("");
+    expect(response.middleName).toEqual("Arthur C");
+    expect(response.lastName).toEqual("Clark");
+  });
+
+  test("getBCSCUserInfo empty", async () => {
+    fetchMock.get(brokerURL, JSON.stringify({ access_token: "12345" }));
+    fetchMock.get(bcscURL, encodeJWT({}));
+
+    const response = await getBCSCUserInfo();
+    expect(response.firstName).toEqual("");
+    expect(response.middleName).toEqual("");
+    expect(response.lastName).toEqual("");
+  });
 });
