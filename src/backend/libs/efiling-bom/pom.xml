@@ -10,7 +10,7 @@
 
     <properties>
         <ca.bc.gov.open.version>0.1.8</ca.bc.gov.open.version>
-        <com.github.joschi.jackson.version>2.11.4</com.github.joschi.jackson.version>
+        <com.github.joschi.jackson.version>2.12.1</com.github.joschi.jackson.version>
         <com.google.code.findbugs.version>3.0.2</com.google.code.findbugs.version>
         <com.brsanthu.version>2.2</com.brsanthu.version>
         <com.fasterxml.jackson.core.version>2.12.1</com.fasterxml.jackson.core.version>
