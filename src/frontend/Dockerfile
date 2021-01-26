@@ -32,7 +32,7 @@ COPY ./${SERVICE_NAME}/.env.template .env
 
 # CMD ["nginx", "-g", "daemon off;"]
 RUN chmod g+rwx /var/cache/nginx /var/run /var/log/nginx
-RUN chmod 777 /usr/share/nginx/html/
+RUN chmod g+rwx /usr/share/nginx/html/
 
 # Add bash
 RUN apk add --no-cache bash
