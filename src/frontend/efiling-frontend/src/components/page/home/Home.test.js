@@ -12,6 +12,8 @@ import { getNavigationData } from "../../../modules/test-data/navigationTestData
 import { getCourtData } from "../../../modules/test-data/courtTestData";
 import { generateJWTToken } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 
+const authService = require("../../../domain/authentication/services/AuthService");
+
 const header = {
   name: "eFiling Frontend",
   history: createMemoryHistory(),
@@ -37,6 +39,7 @@ describe("Home", () => {
   const token = generateJWTToken({
     preferred_username: "username@bceid",
     email: "username@example.com",
+    identity_provider_alias: "bceid",
   });
   localStorage.setItem("jwt", token);
 
@@ -214,5 +217,54 @@ describe("Home", () => {
     await waitFor(() => {});
 
     expect(setShow).toHaveBeenCalled();
+  });
+
+  test("When user has authenticated with BCSC with no CSO account, retrieve userInfo from BCSC - success", async () => {
+    // IDP is set to bcsc
+    const tokenAlt = generateJWTToken({
+      preferred_username: "username@bceid",
+      email: "username@example.com",
+      identity_provider_alias: "bcsc",
+    });
+    localStorage.setItem("jwt", tokenAlt);
+
+    // return 404 (no account) when querying CSO
+    mock.onGet("csoAccount").reply(404);
+
+    // stub out authService to return valid response.
+    authService.getBCSCUserInfo = jest.fn().mockImplementation(() =>
+      Promise.resolve({
+        givenNames: "Arthur C",
+        lastName: "Clark",
+      })
+    );
+
+    const { asFragment } = render(component);
+    await waitFor(() => {});
+
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  test("When user has authenticated with BCSC with no CSO account, retrieve userInfo from BCSC - error", async () => {
+    // IDP is set to bcsc
+    const tokenAlt = generateJWTToken({
+      preferred_username: "username@bceid",
+      email: "username@example.com",
+      identity_provider_alias: "bcsc",
+    });
+    localStorage.setItem("jwt", tokenAlt);
+
+    // return 404 (no account) when querying CSO
+    mock.onGet("csoAccount").reply(404);
+
+    // stub out authService to return invalid response.
+    authService.getBCSCUserInfo = jest
+      .fn()
+      .mockImplementation(() => Promise.reject(new Error("API is down")));
+
+    const { asFragment } = render(component);
+    await waitFor(() => {});
+
+    expect(asFragment()).toMatchSnapshot();
   });
 });

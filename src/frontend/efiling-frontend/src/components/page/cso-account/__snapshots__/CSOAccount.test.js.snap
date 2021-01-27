@@ -88,13 +88,11 @@ exports[`CSOAccount Component Matches the snapshot 1`] = `
                   <div
                     class="bcgov-fill-width"
                   >
-                    BCeID:
+                    BCSC:
                   </div>
                   <div
                     class="bcgov-table-value "
-                  >
-                    bobross42
-                  </div>
+                  />
                 </div>
                 <div
                   class="bcgov-row "
@@ -108,20 +106,6 @@ exports[`CSOAccount Component Matches the snapshot 1`] = `
                     class="bcgov-table-value "
                   >
                     Bob Ross
-                  </div>
-                </div>
-                <div
-                  class="bcgov-row "
-                >
-                  <div
-                    class="bcgov-fill-width"
-                  >
-                    Email Address:
-                  </div>
-                  <div
-                    class="bcgov-table-value "
-                  >
-                    bob.ross@example.com
                   </div>
                 </div>
               </div>
