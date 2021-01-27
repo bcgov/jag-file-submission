@@ -9,7 +9,7 @@ import {
   getJWTData,
   isIdentityProviderBCeID,
 } from "../../../modules/helpers/authentication-helper/authenticationHelper";
-import { getBCSCUserInfo } from "../../../domain/authentication/services/AuthService";
+import { getBCSCUserInfo } from "../../../domain/authentication/services/AuthService-1";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
 import CSOAccount from "../cso-account/CSOAccount";
 import { propTypes } from "../../../types/propTypes";
