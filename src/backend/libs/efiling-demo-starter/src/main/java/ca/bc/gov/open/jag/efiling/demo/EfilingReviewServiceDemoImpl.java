@@ -36,8 +36,6 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
     @Override
     public Optional<byte[]> getSubmissionSheet(BigDecimal packageNumber) {
 
-
-
         try {
             InputStream initialStream = getClass().getResourceAsStream("/demo-file/test-document.pdf");
             byte[] targetArray = new byte[initialStream.available()];
@@ -90,7 +88,7 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
         reviewDocument.setDocumentType("Affidavit");
         reviewDocument.setDocumentTypeCd("AFF");
         reviewDocument.setDocumentUploadStatusCd("CMPL");
-        reviewDocument.setFileName("SubmissionSheet.pdf");
+        reviewDocument.setFileName("test-document.pdf");
         reviewDocument.setInitiatingDoc(false);
         reviewDocument.setLargeFileYn("N");
         reviewDocument.setPackageId("1");
