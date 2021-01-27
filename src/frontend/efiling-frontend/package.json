@@ -59,7 +59,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.11.5",
-    "@storybook/addon-storyshots": "^6.0.19",
+    "@storybook/addon-storyshots": "^6.1.15",
     "@storybook/addon-actions": "^6.1.10",
     "@storybook/addon-links": "^6.0.19",
     "@storybook/addon-viewport": "^6.0.27",
@@ -78,7 +78,7 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-prettier": "^3.1.2",
     "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.5",
+    "enzyme-adapter-react-16": "^1.15.6",
     "eslint-plugin-react": "^7.21.4",
     "eslint-plugin-react-hooks": "^4.2.0",
     "husky": "^4.3.0",
