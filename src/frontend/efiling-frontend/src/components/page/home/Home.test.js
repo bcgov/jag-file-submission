@@ -234,8 +234,7 @@ describe("Home", () => {
     // stub out authService to return valid response.
     authService.getBCSCUserInfo = jest.fn().mockImplementation(() =>
       Promise.resolve({
-        firstName: "Arthur",
-        middleName: "C",
+        givenNames: "Arthur C",
         lastName: "Clark",
       })
     );

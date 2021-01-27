@@ -101,8 +101,8 @@ const checkCSOAccountStatus = (
             getBCSCUserInfo()
               .then((userInfo) => {
                 setRequiredState(
-                  userInfo.firstName,
-                  userInfo.middleName,
+                  "",
+                  userInfo.givenNames,
                   userInfo.lastName,
                   setApplicantInfo,
                   setShowLoader
