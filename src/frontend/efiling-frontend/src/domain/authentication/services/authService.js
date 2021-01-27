@@ -7,40 +7,42 @@ import {
 /**
  * Using the current OIDC token, request a broker token directly from Keycloak
  */
-export async function getKeycloakBrokerToken() {
-  const oidcToken = localStorage.getItem("jwt");
+export const getKeycloakBrokerToken = () => {
+  // const oidcToken = localStorage.getItem("jwt");
 
-  const response = await fetch(
-    `${KEYCLOAK.url}/realms/${KEYCLOAK.realm}/broker/bcsc/token`,
-    {
-      method: "GET",
-      headers: new Headers({
-        "Content-type": "application/json",
-        Authorization: `Bearer ${oidcToken}`,
-      }),
-    }
-  );
-  if (!response.ok) {
-    throw new Error(`HTTP error, status: ${response.status}`);
-  }
-  return response.json().then((data) => data.access_token);
-}
+  // const response = await fetch(
+  //   `${KEYCLOAK.url}/realms/${KEYCLOAK.realm}/broker/bcsc/token`,
+  //   {
+  //     method: "GET",
+  //     headers: new Headers({
+  //       "Content-type": "application/json",
+  //       Authorization: `Bearer ${oidcToken}`,
+  //     }),
+  //   }
+  // );
+  // if (!response.ok) {
+  //   throw new Error(`HTTP error, status: ${response.status}`);
+  // }
+  // return response.json().then((data) => data.access_token);
+
+  return "yeah";
+};
 
 /**
  * Using the brokerToken, fetch the userinfo JWT object from bcsc
  */
-export async function getBCSCUserInfoJWT(brokerToken) {
-  const response = await fetch(`${BCSC_USERINFO_URL}`, {
-    method: "GET",
-    headers: new Headers({
-      Authorization: `Bearer ${brokerToken}`,
-    }),
-  });
-  if (!response.ok) {
-    throw new Error(`HTTP error, status: ${response.status}`);
-  }
-  return response.text().then((data) => data);
-}
+export const getBCSCUserInfoJWT = (brokerToken) => {
+  // const response = await fetch(`${BCSC_USERINFO_URL}`, {
+  //   method: "GET",
+  //   headers: new Headers({
+  //     Authorization: `Bearer ${brokerToken}`,
+  //   }),
+  // });
+  // if (!response.ok) {
+  //   throw new Error(`HTTP error, status: ${response.status}`);
+  // }
+  return "yahooo";
+};
 
 /**
  * Retieves a userInfo object directly from BC Services:
@@ -51,15 +53,15 @@ export async function getBCSCUserInfoJWT(brokerToken) {
  *   lastName: string
  * }
  */
-export async function getBCSCUserInfo() {
-  const brokerToken = await getKeycloakBrokerToken();
-  const bcscToken = await getBCSCUserInfoJWT(brokerToken);
+export const getBCSCUserInfo = () => {
+  // const brokerToken = await getKeycloakBrokerToken();
+  // const bcscToken = await getBCSCUserInfoJWT(brokerToken);
 
-  const userInfo = decodeJWT(bcscToken);
-  const firstName = userInfo.given_name ? userInfo.given_name : "";
-  let middleName = userInfo.given_names ? userInfo.given_names : "";
-  middleName = middleName.replace(firstName, "").trim();
-  const lastName = userInfo.family_name ? userInfo.family_name : "";
+  // const userInfo = decodeJWT(bcscToken);
+  // const firstName = userInfo.given_name ? userInfo.given_name : "";
+  // let middleName = userInfo.given_names ? userInfo.given_names : "";
+  // middleName = middleName.replace(firstName, "").trim();
+  // const lastName = userInfo.family_name ? userInfo.family_name : "";
 
-  return { firstName, middleName, lastName };
-}
+  return { one: "yeah", 2: "yo", 3: "eheheh" };
+};
