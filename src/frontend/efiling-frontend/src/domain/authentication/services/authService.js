@@ -1,8 +1,8 @@
-import { decodeJWT } from "../../../modules/helpers/authentication-helper/authenticationHelper";
-import {
-  KEYCLOAK,
-  BCSC_USERINFO_URL,
-} from "../../../components/hoc/AuthenticationGuard";
+// import { decodeJWT } from "../../../modules/helpers/authentication-helper/authenticationHelper";
+// import {
+//   KEYCLOAK,
+//   BCSC_USERINFO_URL,
+// } from "../../../components/hoc/AuthenticationGuard";
 
 /**
  * Using the current OIDC token, request a broker token directly from Keycloak
@@ -25,6 +25,8 @@ export const getKeycloakBrokerToken = () => {
   // }
   // return response.json().then((data) => data.access_token);
 
+  console.log("whynot");
+
   return "yeah";
 };
 
@@ -32,6 +34,8 @@ export const getKeycloakBrokerToken = () => {
  * Using the brokerToken, fetch the userinfo JWT object from bcsc
  */
 export const getBCSCUserInfoJWT = (brokerToken) => {
+  console.log(brokerToken);
+
   // const response = await fetch(`${BCSC_USERINFO_URL}`, {
   //   method: "GET",
   //   headers: new Headers({
@@ -41,6 +45,9 @@ export const getBCSCUserInfoJWT = (brokerToken) => {
   // if (!response.ok) {
   //   throw new Error(`HTTP error, status: ${response.status}`);
   // }
+
+  console.log("whynot");
+
   return "yahooo";
 };
 
@@ -62,6 +69,8 @@ export const getBCSCUserInfo = () => {
   // let middleName = userInfo.given_names ? userInfo.given_names : "";
   // middleName = middleName.replace(firstName, "").trim();
   // const lastName = userInfo.family_name ? userInfo.family_name : "";
+
+  console.log("whynot");
 
   return { one: "yeah", 2: "yo", 3: "eheheh" };
 };
