@@ -32,8 +32,14 @@ services:
       context: ./src/frontend
       args:
         - SERVICE_NAME=efiling-demo
+    environment:
+      - REACT_APP_KEYCLOAK_REALM=Efiling-Hub
+      - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-admin
+      - REACT_APP_KEYCLOAK_URL=http://localhost:8081/auth
+      - REACT_APP_API_BASE_URL=http://localhost:8080
+      - REACT_APP_BAMBORA_REDIRECT_URL=http://localhost:3000/efilinghub
     ports:
-      - 3001:3000
+      - 3001:8080
 
   #############################################################################################
   ###                           Efiling api backend app                                     ###
