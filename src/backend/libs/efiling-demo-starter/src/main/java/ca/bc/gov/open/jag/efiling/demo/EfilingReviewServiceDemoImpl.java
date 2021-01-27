@@ -11,6 +11,7 @@ import org.joda.time.DateTime;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 
 import java.text.MessageFormat;
@@ -35,9 +36,13 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
     @Override
     public Optional<byte[]> getSubmissionSheet(BigDecimal packageNumber) {
 
+
+
         try {
             InputStream initialStream = getClass().getResourceAsStream("/demo-file/test-document.pdf");
-            return Optional.of(new byte[initialStream.available()]);
+            byte[] targetArray = new byte[initialStream.available()];
+            initialStream.read(targetArray);
+            return Optional.of(targetArray);
         } catch (IOException e) {
             return Optional.empty();
         }
@@ -85,7 +90,7 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
         reviewDocument.setDocumentType("Affidavit");
         reviewDocument.setDocumentTypeCd("AFF");
         reviewDocument.setDocumentUploadStatusCd("CMPL");
-        reviewDocument.setFileName("test-document.pdf");
+        reviewDocument.setFileName("SubmissionSheet.pdf");
         reviewDocument.setInitiatingDoc(false);
         reviewDocument.setLargeFileYn("N");
         reviewDocument.setPackageId("1");
