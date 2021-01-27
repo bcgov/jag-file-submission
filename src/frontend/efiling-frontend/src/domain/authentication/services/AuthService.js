@@ -46,8 +46,7 @@ export async function getBCSCUserInfoJWT(brokerToken) {
  * Retieves a userInfo object directly from BC Services:
  * {
  *   id: string,
- *   firstName: string,
- *   middleName: string,
+ *   givenNames: string,
  *   lastName: string
  * }
  */
