@@ -431,6 +431,30 @@ paths:
                 format: binary
         "404":
           description: file not found
+  "/filingpackages/{documentIdentifier}/submissionDocument":
+    get:
+      summary: Get submitted document
+      operationId: GetSubmittedDocument
+      description: get submitted document
+      tags:
+        - filingPackages
+      parameters:
+        - name: documentIdentifier
+          in: path
+          description: document identifier
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: File was returned
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: file not found
 components:
   securitySchemes:
     bearerAuth: # arbitrary name for the security scheme

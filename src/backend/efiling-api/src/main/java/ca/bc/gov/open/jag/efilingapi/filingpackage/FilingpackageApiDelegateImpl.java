@@ -57,4 +57,16 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.SUBMISSION_SHEET_NOT_FOUND).create(), HttpStatus.NOT_FOUND));
 
     }
+
+    @Override
+    @RolesAllowed("efiling-user")
+    public ResponseEntity<Resource> getSubmittedDocument(String documentIdentifier) {
+        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
+
+        if(!universalId.isPresent()) return new ResponseEntity(
+                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
+
+        return null;
+
+    }
 }
