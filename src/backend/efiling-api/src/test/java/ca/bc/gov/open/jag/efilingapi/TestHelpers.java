@@ -1,7 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi;
 
-
-import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
+import ca.bc.gov.open.jag.efilingapi.api.model.InitialDocument;
 import ca.bc.gov.open.jag.efilingapi.api.model.InitialPackage;
 import ca.bc.gov.open.jag.efilingapi.api.model.NavigationUrls;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
@@ -26,9 +25,6 @@ public class TestHelpers {
 
     public static final String CASE_1_STRING = CASE_1.toString();
     public static final String CASE_2_STRING = CASE_2.toString();
-    public static final String CASE_3_STRING = CASE_3.toString();
-    public static final String CASE_4_STRING = CASE_4.toString();
-    public static final String CASE_5_STRING = CASE_5.toString();
 
     public static final String DIVISION = "DIVISION";
     public static final String FILENUMBER = "FILENUMBER";
@@ -40,7 +36,6 @@ public class TestHelpers {
     public static final String COURT_DESCRIPTION = "TESTCOURTDESC";
     public static final String LEVEL_DESCRIPTION = "TESTLEVELDESC";
     public static final String CLASS_DESCRIPTION = "TESTCLASSDESC";
-    public static final String DISPLAY_NAME = "DISPLAYNAME";
 
     public static final String SUCCESS_URL = "http://success";
     public static final String CANCEL_URL = "http://cancel";
@@ -52,12 +47,12 @@ public class TestHelpers {
     public static final String NAME_TYPE_CD = "NAMECD";
     public static final String PARTY_TYPE_CD = "PARTYCD";
     public static final String ROLE_TYPE_CD = "ABC";
-    public static final DocumentProperties.TypeEnum TYPE = DocumentProperties.TypeEnum.AAB;
+    public static final InitialDocument.TypeEnum TYPE = InitialDocument.TypeEnum.AAB;
 
-    public static InitialPackage createInitalPackage(ca.bc.gov.open.jag.efilingapi.api.model.Court court, List<DocumentProperties> documentProperties) {
+    public static InitialPackage createInitalPackage(ca.bc.gov.open.jag.efilingapi.api.model.Court court, List<InitialDocument> initialDocuments) {
         InitialPackage initialPackage = new InitialPackage();
         initialPackage.setCourt(court);
-        initialPackage.setDocuments(documentProperties);
+        initialPackage.setDocuments(initialDocuments);
         return initialPackage;
     }
 
@@ -117,10 +112,10 @@ public class TestHelpers {
                 .create();
     }
 
-    public static List<DocumentProperties> createDocumentPropertiesList() {
-        DocumentProperties documentProperties = new DocumentProperties();
+    public static List<InitialDocument> createInitialDocumentsList() {
+        InitialDocument documentProperties = new InitialDocument();
         documentProperties.setName("random.txt");
-        documentProperties.setType(DocumentProperties.TypeEnum.AAB);
+        documentProperties.setType(InitialDocument.TypeEnum.AAB);
         return Arrays.asList(documentProperties);
     }
 

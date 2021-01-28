@@ -1,6 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.filingpackage;
 
-import ca.bc.gov.open.jag.efilingapi.api.FilingpackageApiDelegate;
+import ca.bc.gov.open.jag.efilingapi.api.FilingpackagesApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 @Service
-public class FilingpackageApiDelegateImpl implements FilingpackageApiDelegate {
+public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
 
     private final FilingPackageService filingPackageService;
 

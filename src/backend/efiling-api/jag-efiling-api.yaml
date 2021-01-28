@@ -473,7 +473,7 @@ components:
           type: string
         middleName:
           type: string
-    IntitalDocument:
+    InitialDocument:
       type: object
       description: Submission Metadata used to describe the submission that will be e-filled
       required:
@@ -1833,7 +1833,7 @@ components:
       type: object
       description: A Efiling Document
       allOf:
-        - $ref: "#/components/schemas/IntitalDocument"
+        - $ref: "#/components/schemas/InitialDocument"
       properties:
         description:
           type: string
@@ -1856,7 +1856,7 @@ components:
       type: object
       description: A Efiling Document
       allOf:
-        - $ref: "#/components/schemas/IntitalDocument"
+        - $ref: "#/components/schemas/InitialDocument"
       properties:
         description:
           type: string
@@ -1950,7 +1950,7 @@ components:
         documents:
           type: array
           items:
-            $ref: "#/components/schemas/IntitalDocument"
+            $ref: "#/components/schemas/InitialDocument"
         parties:
           type: array
           items:
@@ -2012,7 +2012,7 @@ components:
         documents:
           type: array
           items:
-            $ref: "#/components/schemas/Document"
+            $ref: "#/components/schemas/SubmissionDocument"
         parties:
           type: array
           items:
@@ -2291,7 +2291,7 @@ components:
         documents:
           type: array
           items:
-            $ref: "#/components/schemas/IntitalDocument"
+            $ref: "#/components/schemas/InitialDocument"
     UpdateDocumentResponse:
       description: response body for update documents
       type: object
@@ -2299,7 +2299,7 @@ components:
         documents:
           type: array
           items:
-            $ref: "#/components/schemas/Document"
+            $ref: "#/components/schemas/SubmissionDocument"
     SubmitRequest:
       description: create service request
       type: object

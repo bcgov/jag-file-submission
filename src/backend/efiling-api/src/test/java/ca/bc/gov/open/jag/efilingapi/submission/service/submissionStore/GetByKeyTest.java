@@ -2,7 +2,7 @@ package ca.bc.gov.open.jag.efilingapi.submission.service.submissionStore;
 
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
-import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
+import ca.bc.gov.open.jag.efilingapi.api.model.InitialDocument;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStoreImpl;
@@ -24,7 +24,7 @@ public class GetByKeyTest {
 
         MockitoAnnotations.initMocks(this);
 
-        DocumentProperties documentMetadata = new DocumentProperties();
+        InitialDocument documentMetadata = new InitialDocument();
         documentMetadata.setType(TestHelpers.TYPE);
     }
 

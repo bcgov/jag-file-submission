@@ -5,6 +5,7 @@ import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
+import ca.bc.gov.open.jag.efilingapi.api.model.SubmissionFilingPackage;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
@@ -112,7 +113,7 @@ public class GetPackageInformationTest {
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<FilingPackage> actual = sut.getSubmissionFilingPackage(UUID.randomUUID(), TestHelpers.CASE_1);
+        ResponseEntity<SubmissionFilingPackage> actual = sut.getSubmissionFilingPackage(UUID.randomUUID(), TestHelpers.CASE_1);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         Assertions.assertEquals(TestHelpers.DIVISION, actual.getBody().getCourt().getDivision());
         Assertions.assertEquals(TestHelpers.FILENUMBER, actual.getBody().getCourt().getFileNumber());
@@ -134,7 +135,7 @@ public class GetPackageInformationTest {
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<FilingPackage> actual = sut.getSubmissionFilingPackage(UUID.randomUUID(), TestHelpers.CASE_2);
+        ResponseEntity<SubmissionFilingPackage> actual = sut.getSubmissionFilingPackage(UUID.randomUUID(), TestHelpers.CASE_2);
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
     }
 
@@ -145,7 +146,7 @@ public class GetPackageInformationTest {
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, null);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<FilingPackage> actual = sut.getSubmissionFilingPackage(UUID.randomUUID(), TestHelpers.CASE_2);
+        ResponseEntity<SubmissionFilingPackage> actual = sut.getSubmissionFilingPackage(UUID.randomUUID(), TestHelpers.CASE_2);
         assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
     }
 
