@@ -68,11 +68,9 @@ describe("PackageReview Component", () => {
   test("Api called successfully when page loads with valid packageId", async () => {
     window.open = jest.fn();
     mock.onGet(apiRequest).reply(200, {
-      packageNumber: packageId,
       court: courtData,
       submittedBy,
       submittedDate,
-      filingComments,
     });
 
     const spy = jest.spyOn(axios, "get");
