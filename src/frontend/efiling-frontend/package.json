@@ -82,7 +82,6 @@
     "eslint-plugin-react": "^7.21.4",
     "eslint-plugin-react-hooks": "^4.2.0",
     "fetch-mock-jest": "^1.5.1",
-    "husky": "^4.3.0",
     "jest-environment-jsdom-sixteen": "^1.0.3",
     "jest-sonar-reporter": "^2.0.0",
     "prettier": "2.1.2",
