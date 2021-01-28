@@ -107,7 +107,7 @@ public class GetCSOFilingPackage {
         Assertions.assertEquals(MIDDLE_NAME, result.get().getParties().get(0).getMiddleName());
         //Document
         Assertions.assertEquals(1, result.get().getDocuments().size());
-        Assertions.assertEquals(InitialDocument.TypeEnum.AAB, result.get().getDocuments().get(0).getType());
+        Assertions.assertEquals("AAB", result.get().getDocuments().get(0).getType());
         Assertions.assertEquals(NAME, result.get().getDocuments().get(0).getName());
         Assertions.assertEquals(STATUS, result.get().getDocuments().get(0).getStatus().getDescription());
         Assertions.assertEquals(STATUS_CODE, result.get().getDocuments().get(0).getStatus().getCode());

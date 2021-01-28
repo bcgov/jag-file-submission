@@ -13,7 +13,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.security.RolesAllowed;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
+import java.net.URI;
+import java.net.URL;
 import java.util.Optional;
 
 @Service
@@ -66,7 +71,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
         if(!universalId.isPresent()) return new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
 
-        return null;
+        return ResponseEntity.ok(new ByteArrayResource("".getBytes()));
 
     }
 }
