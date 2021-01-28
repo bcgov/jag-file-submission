@@ -6,7 +6,7 @@
 
     <groupId>ca.bc.gov.open.jag</groupId>
     <artifactId>efiling-bom</artifactId>
-    <version>0.6.0-SNAPSHOT</version>
+    <version>0.6.0</version>
 
     <properties>
         <ca.bc.gov.open.version>0.1.8</ca.bc.gov.open.version>
