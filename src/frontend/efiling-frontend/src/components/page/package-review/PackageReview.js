@@ -74,7 +74,7 @@ export default function PackageReview({ page: { header, packageId } }) {
           let submittedDt = "";
           if (response.data.submittedDate) {
             submittedDt = moment(response.data.submittedDate).format(
-              "DD-MMM-YYYY HH:MM"
+              "DD-MMM-YYYY HH:mm"
             );
           }
           const fileNumber = response.data.court.fileNumber || "";
@@ -158,7 +158,7 @@ export default function PackageReview({ page: { header, packageId } }) {
           <br />
           <div className="row">
             <div className="col-sm-12 col-lg-6">
-              <Table elements={packageDetails} />
+              <Table id="packageDetails" elements={packageDetails} />
             </div>
             <div className="col-sm-12 col-lg-6">
               <Table elements={courtFileDetails} />
