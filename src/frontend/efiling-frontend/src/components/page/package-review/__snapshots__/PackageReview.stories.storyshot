@@ -227,6 +227,64 @@ exports[`Storyshots PackageReview Default 1`] = `
           </div>
         </div>
         <br />
+        <nav
+          class="nav nav-tabs"
+          role="tablist"
+        >
+          <a
+            aria-controls="uncontrolled-tab-tabpane-documents"
+            aria-selected="true"
+            class="nav-item nav-link active"
+            data-rb-event-key="documents"
+            href="#"
+            id="uncontrolled-tab-tab-documents"
+            role="tab"
+          >
+            Documents
+          </a>
+          <a
+            aria-controls="uncontrolled-tab-tabpane-comments"
+            aria-selected="false"
+            class="nav-item nav-link"
+            data-rb-event-key="comments"
+            href="#"
+            id="uncontrolled-tab-tab-comments"
+            role="tab"
+            tabindex="-1"
+          >
+            Filing Comments
+          </a>
+        </nav>
+        <div
+          class="tab-content"
+        >
+          <div
+            aria-hidden="false"
+            aria-labelledby="uncontrolled-tab-tab-documents"
+            class="fade tab-pane active show"
+            id="uncontrolled-tab-tabpane-documents"
+            role="tabpanel"
+          >
+            <br />
+            Documents coming ...
+          </div>
+          <div
+            aria-hidden="true"
+            aria-labelledby="uncontrolled-tab-tab-comments"
+            class="fade tab-pane"
+            id="uncontrolled-tab-tabpane-comments"
+            role="tabpanel"
+          >
+            <br />
+            <h4>
+              Filing Comments
+            </h4>
+            <div
+              class="tabContent"
+              id="filingComments"
+            />
+          </div>
+        </div>
         <br />
         <section
           class="buttons pt-2"
@@ -560,6 +618,64 @@ exports[`Storyshots PackageReview Mobile 1`] = `
           </div>
         </div>
         <br />
+        <nav
+          class="nav nav-tabs"
+          role="tablist"
+        >
+          <a
+            aria-controls="uncontrolled-tab-tabpane-documents"
+            aria-selected="true"
+            class="nav-item nav-link active"
+            data-rb-event-key="documents"
+            href="#"
+            id="uncontrolled-tab-tab-documents"
+            role="tab"
+          >
+            Documents
+          </a>
+          <a
+            aria-controls="uncontrolled-tab-tabpane-comments"
+            aria-selected="false"
+            class="nav-item nav-link"
+            data-rb-event-key="comments"
+            href="#"
+            id="uncontrolled-tab-tab-comments"
+            role="tab"
+            tabindex="-1"
+          >
+            Filing Comments
+          </a>
+        </nav>
+        <div
+          class="tab-content"
+        >
+          <div
+            aria-hidden="false"
+            aria-labelledby="uncontrolled-tab-tab-documents"
+            class="fade tab-pane active show"
+            id="uncontrolled-tab-tabpane-documents"
+            role="tabpanel"
+          >
+            <br />
+            Documents coming ...
+          </div>
+          <div
+            aria-hidden="true"
+            aria-labelledby="uncontrolled-tab-tab-comments"
+            class="fade tab-pane"
+            id="uncontrolled-tab-tabpane-comments"
+            role="tabpanel"
+          >
+            <br />
+            <h4>
+              Filing Comments
+            </h4>
+            <div
+              class="tabContent"
+              id="filingComments"
+            />
+          </div>
+        </div>
         <br />
         <section
           class="buttons pt-2"

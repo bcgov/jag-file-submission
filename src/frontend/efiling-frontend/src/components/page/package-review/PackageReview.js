@@ -173,7 +173,9 @@ export default function PackageReview({ page: { header, packageId } }) {
             <Tab eventKey="comments" title="Filing Comments">
               <br />
               <h4>Filing Comments</h4>
-              <div className="tabContent">{filingComments}</div>
+              <div id="filingComments" className="tabContent">
+                {filingComments}
+              </div>
             </Tab>
           </Tabs>
           <br />

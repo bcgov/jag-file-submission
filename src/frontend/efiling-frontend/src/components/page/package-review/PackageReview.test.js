@@ -17,6 +17,8 @@ describe("PackageReview Component", () => {
   const courtData = getCourtData();
   const submittedDate = new Date("2021-01-14T18:57:43.602Z").toISOString();
   const submittedBy = { firstName: "Han", lastName: "Solo" };
+  const filingComments =
+    "Lorem ipsum dolor sit amet.<script>alert('Hi');</script>\n\nDuis aute irure dolor.";
 
   const page = {
     header,
@@ -34,10 +36,24 @@ describe("PackageReview Component", () => {
   const apiRequest = `/filingpackage/${packageId}`;
 
   test("Matches the snapshot", async () => {
+    mock.onGet(apiRequest).reply(200, {
+      packageNumber: packageId,
+      court: courtData,
+      submittedBy,
+      submittedDate,
+      filingComments,
+    });
+
     const { asFragment } = render(<PackageReview page={page} />);
     await waitFor(() => {});
 
     expect(asFragment()).toMatchSnapshot();
+
+    // filingComments should have properly escaped html characters
+    const fc = asFragment().querySelector("#filingComments");
+    expect(fc.innerHTML).toEqual(
+      "Lorem ipsum dolor sit amet.&lt;script&gt;alert('Hi');&lt;/script&gt;\n\nDuis aute irure dolor."
+    );
   });
 
   test("Clicking cancel takes user back to parent app", async () => {
@@ -52,9 +68,11 @@ describe("PackageReview Component", () => {
   test("Api called successfully when page loads with valid packageId", async () => {
     window.open = jest.fn();
     mock.onGet(apiRequest).reply(200, {
+      packageNumber: packageId,
       court: courtData,
       submittedBy,
       submittedDate,
+      filingComments,
     });
 
     const spy = jest.spyOn(axios, "get");
