@@ -15,7 +15,7 @@ import "./PackageReview.css";
 
 const downloadSubmissionSheet = (packageId) => {
   axios
-    .get(`/filingpackage/${packageId}/submissionSheet`, {
+    .get(`/filingpackages/${packageId}/submissionSheet`, {
       responseType: "blob",
     })
     .then((response) => {
