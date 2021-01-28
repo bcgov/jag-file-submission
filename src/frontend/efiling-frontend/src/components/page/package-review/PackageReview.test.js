@@ -31,7 +31,7 @@ describe("PackageReview Component", () => {
     window.open = jest.fn();
   });
 
-  const apiRequest = `/filingpackage/${packageId}`;
+  const apiRequest = `/filingpackages/${packageId}`;
 
   test("Matches the snapshot", async () => {
     const { asFragment } = render(<PackageReview page={page} />);
