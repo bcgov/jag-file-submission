@@ -1832,18 +1832,19 @@ components:
         - statutoryFeeAmount
       type: object
       description: A Efiling Document
-      allOf:
-        - $ref: "#/components/schemas/InitialDocument"
       properties:
+        identifier:
+          type: string
+          description: document identifier
+        name:
+          type: string
+          description: the name of the document
+        type:
+          type: string
+          description: type of document
         description:
           type: string
           description: the description of the document
-        statutoryFeeAmount:
-          type: number
-          description: statutory fee amount
-        mimeType:
-          type: string
-          description: File mime type
         status:
           $ref: "#/components/schemas/Status"
         paymentProcessed:
