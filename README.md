@@ -1,8 +1,6 @@
-[![Maintainability](https://api.codeclimate.com/v1/badges/4078a74ee2bb4d400fd9/maintainability)](https://codeclimate.com/github/bcgov/jag-file-submission/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/4078a74ee2bb4d400fd9/test_coverage)](https://codeclimate.com/github/bcgov/jag-file-submission/test_coverage) ![Cucumber Tests](https://github.com/bcgov/jag-file-submission/workflows/Cucumber%20Tests/badge.svg)
+# EFiling Hub
 
-# jag-file-submission
-
-Generic File Submission API (to be used by the Family Law Act Application at first)
+[![img](https://img.shields.io/badge/Lifecycle-Maturing-007EC6)](https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md) [![Maintainability](https://api.codeclimate.com/v1/badges/4078a74ee2bb4d400fd9/maintainability)](https://codeclimate.com/github/bcgov/jag-file-submission/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/4078a74ee2bb4d400fd9/test_coverage)](https://codeclimate.com/github/bcgov/jag-file-submission/test_coverage) ![Cucumber Tests](https://github.com/bcgov/jag-file-submission/workflows/Cucumber%20Tests/badge.svg)
 
 ## Summary
 
