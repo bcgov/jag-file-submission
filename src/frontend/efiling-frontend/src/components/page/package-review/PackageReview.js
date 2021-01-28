@@ -4,8 +4,8 @@ import React, { useEffect, useState } from "react";
 import FileSaver from "file-saver";
 import moment from "moment";
 import PropTypes from "prop-types";
-import Tabs from "react-bootstrap/Tabs";
-import Tab from "react-bootstrap/Tab";
+import Tabs from "react-bootstrap/Tabs"; /* TODO: replace with shared-components */
+import Tab from "react-bootstrap/Tab"; /* TODO: replace with shared-components */
 import { Header, Footer, Button, Table, Alert } from "shared-components";
 import { BsEyeFill } from "react-icons/bs";
 import { MdCancel } from "react-icons/md";
