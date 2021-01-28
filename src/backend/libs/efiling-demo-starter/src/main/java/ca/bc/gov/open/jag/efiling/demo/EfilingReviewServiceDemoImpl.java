@@ -37,7 +37,9 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
 
         try {
             InputStream initialStream = getClass().getResourceAsStream("/demo-file/test-document.pdf");
-            return Optional.of(new byte[initialStream.available()]);
+            byte[] targetArray = new byte[initialStream.available()];
+            initialStream.read(targetArray);
+            return Optional.of(targetArray);
         } catch (IOException e) {
             return Optional.empty();
         }
