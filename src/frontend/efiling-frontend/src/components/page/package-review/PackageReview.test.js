@@ -5,8 +5,12 @@ import { createMemoryHistory } from "history";
 import { render, waitFor, fireEvent, getByText } from "@testing-library/react";
 
 import MockAdapter from "axios-mock-adapter";
+import moment from "moment-timezone";
 import PackageReview from "./PackageReview";
 import { getCourtData } from "../../../modules/test-data/courtTestData";
+
+// hack fix to force GitHub to run tests in BC timezone
+moment.tz.setDefault("America/Vancouver");
 
 describe("PackageReview Component", () => {
   const header = {
