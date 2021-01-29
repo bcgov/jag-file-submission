@@ -36,6 +36,7 @@ public interface FilingPackageMapper {
 
     List<Document> toDocuments(List<ReviewDocument> file);
 
+    @Mapping(target = "identifier", source = "documentId")
     @Mapping(target = "name", source = "fileName")
     @Mapping(target = "type", source = "documentTypeCd")
     @Mapping(target = "status.description", source = "status")

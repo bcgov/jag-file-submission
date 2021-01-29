@@ -104,7 +104,7 @@ public class GenerateFromRequestTest {
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setClientAppName(CLIENT_APP_NAME);
         request.setNavigationUrls(TestHelpers.createDefaultNavigation());
-        request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList()));
+        request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createInitialDocumentsList()));
 
         Mockito.when(efilingCourtService.checkValidLevelClassLocation(any(), any(), any(), any())).thenReturn(true);
         Mockito.when(efilingCourtService.checkValidCourtFileNumber(any(), any(), any(), any(), any())).thenReturn(true);
@@ -157,7 +157,7 @@ public class GenerateFromRequestTest {
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setClientAppName(CLIENT_APP_NAME);
         request.setNavigationUrls(TestHelpers.createDefaultNavigation());
-        request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList()));
+        request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createInitialDocumentsList()));
         request.getFilingPackage().getCourt().setFileNumber("");
 
         List<Party> parties = new ArrayList<>();
@@ -217,7 +217,7 @@ public class GenerateFromRequestTest {
         request.setClientAppName(CLIENT_APP_NAME);
         request.setNavigationUrls(TestHelpers.createDefaultNavigation());
 
-        InitialPackage filingPackage = TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList());
+        InitialPackage filingPackage = TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createInitialDocumentsList());
         filingPackage.getCourt().setLevel("TEST2");
         request.setFilingPackage(filingPackage);
 
@@ -271,7 +271,7 @@ public class GenerateFromRequestTest {
         GenerateUrlRequest request = new GenerateUrlRequest();
         request.setClientAppName(CLIENT_APP_NAME);
         request.setNavigationUrls(TestHelpers.createDefaultNavigation());
-        request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createDocumentPropertiesList()));
+        request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createInitialDocumentsList()));
 
         Mockito.when(efilingCourtService.checkValidLevelClassLocation(any(), any(), any(), any())).thenReturn(true);
         Mockito.when(efilingCourtService.checkValidCourtFileNumber(any(), any(), any(), any(), any())).thenReturn(true);

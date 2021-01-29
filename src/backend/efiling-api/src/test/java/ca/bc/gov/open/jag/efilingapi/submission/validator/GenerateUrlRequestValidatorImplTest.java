@@ -127,10 +127,10 @@ public class GenerateUrlRequestValidatorImplTest {
         parties.add(party2);
         initialFilingPackage.setParties(parties);
 
-        List<DocumentProperties> documentList = new ArrayList<>();
-        DocumentProperties documentProperties = new DocumentProperties();
-        documentProperties.setType(DocumentProperties.TypeEnum.ACMW);
-        documentList.add(documentProperties);
+        List<InitialDocument> documentList = new ArrayList<>();
+        InitialDocument initialDocument = new InitialDocument();
+        initialDocument.setType(InitialDocument.TypeEnum.ACMW);
+        documentList.add(initialDocument);
         initialFilingPackage.setDocuments(documentList);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
@@ -155,10 +155,10 @@ public class GenerateUrlRequestValidatorImplTest {
         initialFilingPackage.setCourt(court);
 
 
-        List<DocumentProperties> documentList = new ArrayList<>();
-        DocumentProperties documentProperties = new DocumentProperties();
-        documentProperties.setType(DocumentProperties.TypeEnum.ACMW);
-        documentList.add(documentProperties);
+        List<InitialDocument> documentList = new ArrayList<>();
+        InitialDocument initialDocument = new InitialDocument();
+        initialDocument.setType(InitialDocument.TypeEnum.ACMW);
+        documentList.add(initialDocument);
         initialFilingPackage.setDocuments(documentList);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
@@ -394,10 +394,10 @@ public class GenerateUrlRequestValidatorImplTest {
         parties.add(party2);
         initialFilingPackage.setParties(parties);
 
-        List<DocumentProperties> documentList = new ArrayList<>();
-        DocumentProperties documentProperties = new DocumentProperties();
-        documentProperties.setType(DocumentProperties.TypeEnum.TAX);
-        documentList.add(documentProperties);
+        List<InitialDocument> documentList = new ArrayList<>();
+        InitialDocument initialDocument = new InitialDocument();
+        initialDocument.setType(InitialDocument.TypeEnum.TAX);
+        documentList.add(initialDocument);
         initialFilingPackage.setDocuments(documentList);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
