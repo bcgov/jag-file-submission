@@ -24,5 +24,6 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: docker.pkg.github.com
         repository: bcgov/jag-file-submission/efiling-api
+        push: true
         tag_with_ref: true
  
