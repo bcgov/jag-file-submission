@@ -5,8 +5,12 @@ import { createMemoryHistory } from "history";
 import { render, waitFor, fireEvent, getByText } from "@testing-library/react";
 
 import MockAdapter from "axios-mock-adapter";
+import moment from "moment-timezone";
 import PackageReview from "./PackageReview";
 import { getCourtData } from "../../../modules/test-data/courtTestData";
+
+// hack fix to force GitHub to run tests in BC timezone
+moment.tz.setDefault("America/Vancouver");
 
 describe("PackageReview Component", () => {
   const header = {
@@ -17,6 +21,8 @@ describe("PackageReview Component", () => {
   const courtData = getCourtData();
   const submittedDate = new Date("2021-01-14T18:57:43.602Z").toISOString();
   const submittedBy = { firstName: "Han", lastName: "Solo" };
+  const filingComments =
+    "Lorem ipsum dolor sit amet.<script>alert('Hi');</script>\n\nDuis aute irure dolor.";
 
   const page = {
     header,
@@ -34,10 +40,24 @@ describe("PackageReview Component", () => {
   const apiRequest = `/filingpackages/${packageId}`;
 
   test("Matches the snapshot", async () => {
+    mock.onGet(apiRequest).reply(200, {
+      packageNumber: packageId,
+      court: courtData,
+      submittedBy,
+      submittedDate,
+      filingComments,
+    });
+
     const { asFragment } = render(<PackageReview page={page} />);
     await waitFor(() => {});
 
     expect(asFragment()).toMatchSnapshot();
+
+    // filingComments should have properly escaped html characters
+    const fc = asFragment().querySelector("#filingComments");
+    expect(fc.innerHTML).toEqual(
+      "Lorem ipsum dolor sit amet.&lt;script&gt;alert('Hi');&lt;/script&gt;\n\nDuis aute irure dolor."
+    );
   });
 
   test("Clicking cancel takes user back to parent app", async () => {
