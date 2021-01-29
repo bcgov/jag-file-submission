@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 
 import React, { useEffect, useState } from "react";
-import FileSaver from "file-saver";
 import moment from "moment";
 import PropTypes from "prop-types";
 import Tabs from "react-bootstrap/Tabs"; /* TODO: replace with shared-components */
@@ -9,27 +8,11 @@ import Tab from "react-bootstrap/Tab"; /* TODO: replace with shared-components *
 import { Header, Footer, Button, Table, Alert } from "shared-components";
 import { BsEyeFill } from "react-icons/bs";
 import { MdCancel } from "react-icons/md";
-import axios from "axios";
 import { propTypes } from "../../../types/propTypes";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
+import { getFilingPackage, getSubmissionSheet } from "./PackageReviewService";
 
 import "./PackageReview.css";
-
-const downloadSubmissionSheet = (packageId) => {
-  axios
-    .get(`/filingpackages/${packageId}/submissionSheet`, {
-      responseType: "blob",
-    })
-    .then((response) => {
-      const fileData = new Blob([response.data], { type: "application/pdf" });
-      const fileUrl = URL.createObjectURL(fileData);
-
-      FileSaver.saveAs(fileUrl, "SubmissionSheet.pdf");
-    })
-    .catch((error) => {
-      errorRedirect(sessionStorage.getItem("errorUrl"), error);
-    });
-};
 
 export default function PackageReview({ page: { header, packageId } }) {
   const [error, setError] = useState(false);
@@ -60,8 +43,7 @@ export default function PackageReview({ page: { header, packageId } }) {
   const [filingComments, setFilingComments] = useState("");
 
   useEffect(() => {
-    axios
-      .get(`filingpackages/${packageId}`)
+    getFilingPackage(packageId)
       .then((response) => {
         try {
           const packageNo = response.data.packageNumber || "";
@@ -121,7 +103,19 @@ export default function PackageReview({ page: { header, packageId } }) {
       .catch(() => {
         setError(true);
       });
-  }, []);
+  }, [packageId]);
+
+  function handleClick() {
+    getSubmissionSheet(packageId).catch((err) => {
+      errorRedirect(sessionStorage.getItem("errorUrl"), err);
+    });
+  }
+
+  function handleKeyDown() {
+    getSubmissionSheet(packageId).catch((err) => {
+      errorRedirect(sessionStorage.getItem("errorUrl"), err);
+    });
+  }
 
   return (
     <main>
@@ -144,11 +138,11 @@ export default function PackageReview({ page: { header, packageId } }) {
             <h2 className="col-sm-6">Package Details</h2>
             <div className="col-sm-6 text-sm-right mt-3 mt-sm-0">
               <span
-                onKeyDown={() => downloadSubmissionSheet(packageId)}
                 role="button"
                 tabIndex={0}
                 className="file-href"
-                onClick={() => downloadSubmissionSheet(packageId)}
+                onClick={handleClick}
+                onKeyDown={handleKeyDown}
               >
                 Print Submission Sheet
               </span>
