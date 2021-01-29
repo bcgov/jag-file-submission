@@ -28,7 +28,9 @@ jobs:
           STARTERS_V=v0.1.8 
         registry: docker.pkg.github.com
         repository: bcgov/jag-file-submission
-        tags: ghcr.io/bcgov/jag-file-submission/efiling-api:latest
+        tags: efiling-api:latest
+        cache-from: type=registry,ref=efiling-api:latest
+        cache-to: type=inline
         push: true
         tag_with_ref: true
  
