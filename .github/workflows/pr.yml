@@ -27,8 +27,8 @@ jobs:
           MVN_PROFILE=demo 
           STARTERS_V=v0.1.8 
         registry: docker.pkg.github.com
-        repository: bcgov/jag-file-submission/efiling-api
-        tags: latest
+        repository: bcgov/jag-file-submission
+        tags: ghcr.io/bcgov/jag-file-submission/efiling-api:latest
         push: true
         tag_with_ref: true
  
