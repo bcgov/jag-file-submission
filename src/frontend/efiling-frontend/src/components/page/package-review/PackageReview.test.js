@@ -137,7 +137,7 @@ describe("PackageReview Component", () => {
       submittedDate,
     });
     mock
-      .onGet(`/filingpackage/${packageId}/submissionSheet`)
+      .onGet(`/filingpackages/${packageId}/submissionSheet`)
       .reply(200, { blob });
 
     const { container } = render(<PackageReview page={page} />);
@@ -162,7 +162,7 @@ describe("PackageReview Component", () => {
       submittedDate,
     });
     mock
-      .onGet(`/filingpackage/${packageId}/submissionSheet`)
+      .onGet(`/filingpackages/${packageId}/submissionSheet`)
       .reply(200, { blob });
 
     const { container } = render(<PackageReview page={page} />);
@@ -182,7 +182,7 @@ describe("PackageReview Component", () => {
       .onGet(apiRequest)
       .reply(200, { court: courtData, submittedBy, submittedDate });
     mock
-      .onGet(`/filingpackage/${packageId}/submissionSheet`)
+      .onGet(`/filingpackages/${packageId}/submissionSheet`)
       .reply(400, { message: "There was an error." });
 
     const { container } = render(<PackageReview page={page} />);
