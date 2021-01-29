@@ -41,5 +41,4 @@ jobs:
         # cache-from: type=registry,ref=efiling-api:latest
         # cache-to: type=inline
         push: true
-        tag_with_sha: true
-        tag_with_ref: true
+        tags: efiling-api:latest
