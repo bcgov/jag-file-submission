@@ -58,7 +58,7 @@ export default function PackageReview({ page: { header, packageId } }) {
 
   useEffect(() => {
     axios
-      .get(`filingpackage/${packageId}`)
+      .get(`filingpackages/${packageId}`)
       .then((response) => {
         try {
           const packageNo = response.data.packageNumber || "";
