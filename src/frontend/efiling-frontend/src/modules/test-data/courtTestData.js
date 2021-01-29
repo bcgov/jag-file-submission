@@ -5,6 +5,7 @@ const court = {
   classDescription: "Class",
   level: "P",
   courtClass: "F",
+  location: "Kelowna Law Courts",
 };
 
 export function getCourtData() {
