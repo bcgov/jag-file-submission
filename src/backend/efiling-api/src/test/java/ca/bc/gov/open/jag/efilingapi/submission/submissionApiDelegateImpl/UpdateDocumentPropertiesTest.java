@@ -117,12 +117,12 @@ public class UpdateDocumentPropertiesTest {
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
         UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest();
-        DocumentProperties documentProperties = new DocumentProperties();
-        documentProperties.setType(TestHelpers.TYPE);
-        documentProperties.setName("test.txt");
-        documentProperties.setIsAmendment(true);
-        documentProperties.setIsSupremeCourtScheduling(true);
-        updateDocumentRequest.addDocumentsItem(documentProperties);
+        InitialDocument initialDocument = new InitialDocument();
+        initialDocument.setType(TestHelpers.TYPE);
+        initialDocument.setName("test.txt");
+        initialDocument.setIsAmendment(true);
+        initialDocument.setIsSupremeCourtScheduling(true);
+        updateDocumentRequest.addDocumentsItem(initialDocument);
 
         Mockito.when(submissionServiceMock.updateDocuments(any(), Mockito.refEq(updateDocumentRequest), Mockito.any())).thenReturn(Submission
                 .builder()
@@ -167,7 +167,7 @@ public class UpdateDocumentPropertiesTest {
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
         UpdateDocumentRequest errorDocumentRequest = new UpdateDocumentRequest();
-        errorDocumentRequest.addDocumentsItem(new DocumentProperties());
+        errorDocumentRequest.addDocumentsItem(new InitialDocument());
 
         Mockito.when(submissionServiceMock.updateDocuments(any(), Mockito.refEq(errorDocumentRequest), Mockito.any())).thenThrow(new EfilingDocumentServiceException("NOOOOOOO"));
 
@@ -190,7 +190,7 @@ public class UpdateDocumentPropertiesTest {
 
 
         UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest();
-        updateDocumentRequest.addDocumentsItem(new DocumentProperties());
+        updateDocumentRequest.addDocumentsItem(new InitialDocument());
         ResponseEntity actual = sut.updateDocumentProperties(TestHelpers.CASE_2, UUID.randomUUID(), updateDocumentRequest);
 
         Assertions.assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
@@ -206,7 +206,7 @@ public class UpdateDocumentPropertiesTest {
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
         UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest();
-        updateDocumentRequest.addDocumentsItem(new DocumentProperties());
+        updateDocumentRequest.addDocumentsItem(new InitialDocument());
         ResponseEntity actual = sut.updateDocumentProperties(TestHelpers.CASE_2, UUID.randomUUID(), updateDocumentRequest);
 
         assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());

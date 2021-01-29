@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission.models;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
+
+import ca.bc.gov.open.jag.efilingapi.api.model.InitialDocument;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,12 +9,12 @@ import java.util.stream.Collectors;
 
 public class GetValidPartyRoleRequest {
 
-    private List<DocumentProperties> documentPropertiesList = new ArrayList<>();
+    private List<InitialDocument> initialDocuments = new ArrayList<>();
     private String courtLevel;
     private String courtClassification;
 
-    public List<DocumentProperties> getDocumentPropertiesList() {
-        return documentPropertiesList;
+    public List<InitialDocument> getInitialDocuments() {
+        return initialDocuments;
     }
 
     public String getCourtLevel() {
@@ -25,11 +26,11 @@ public class GetValidPartyRoleRequest {
     }
 
     public String getDocumentTypesAsString() {
-        return this.documentPropertiesList.stream().map(x -> x.getType().getValue()).collect(Collectors.joining(","));
+        return this.initialDocuments.stream().map(x -> x.getType().getValue()).collect(Collectors.joining(","));
     }
 
     public GetValidPartyRoleRequest(Builder builder) {
-        this.documentPropertiesList = builder.documents;
+        this.initialDocuments = builder.documents;
         this.courtLevel = builder.courtLevel;
         this.courtClassification = builder.courtClassification;
     }
@@ -58,9 +59,9 @@ public class GetValidPartyRoleRequest {
             return this;
         }
 
-        private List<DocumentProperties> documents;
+        private List<InitialDocument> documents;
 
-        public Builder documents(List<DocumentProperties> documents) {
+        public Builder documents(List<InitialDocument> documents) {
             this.documents = documents;
             return this;
         }
