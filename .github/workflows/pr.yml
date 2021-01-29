@@ -35,10 +35,8 @@ jobs:
           SERVICE_NAME=efiling-api
           MVN_PROFILE=demo 
           STARTERS_V=v0.1.8 
-        registry: docker.pkg.github.com
-        repository: ${{ github.repository }}/efiling-api
-        cache-from: type=local,src=/tmp/.buildx-cache
-        cache-to: type=local,dest=/tmp/.buildx-cache
         push: true
         tags: docker.pkg.github.com/${{ github.repository }}/efiling-api:latest
+        cache-from: type=local,src=/tmp/.buildx-cache
+        cache-to: type=local,dest=/tmp/.buildx-cache
   
