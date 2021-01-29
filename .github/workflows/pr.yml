@@ -1,0 +1,28 @@
+name: pr-flow
+
+on:
+  push:
+    branches: [ play/workflow ] 
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Push to GitHub Packages
+      uses: docker/build-push-action@v2
+      with:
+        context: ./src/backend
+        build-args: | 
+          SERVICE_NAME=efiling-api
+          MVN_PROFILE=demo 
+          STARTERS_V=v0.1.8 
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        registry: docker.pkg.github.com
+        repository: bcgov/jag-file-submission/efiling-api
+        tag_with_ref: true
+ 
