@@ -28,6 +28,13 @@ jobs:
         registry: docker.pkg.github.com
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Cache Docker layers
+      uses: actions/cache@v2
+      with:
+        path: /tmp/.buildx-cache
+        key: ${{ runner.os }}-buildx-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-buildx-
     - name: Push to GitHub Packages
       uses: docker/build-push-action@v2
       with:
@@ -38,12 +45,8 @@ jobs:
           STARTERS_V=v0.1.8 
         registry: docker.pkg.github.com
         repository: ${{ github.repository }}/efiling-api
-        cache-from: type=registry,ref=efiling-api:latest
-        cache-to: type=inline
+        cache-from: type=local,src=/tmp/.buildx-cache
+        cache-to: type=local,dest=/tmp/.buildx-cache
         push: true
         tags: docker.pkg.github.com/${{ github.repository }}/efiling-api:latest
-    - name: whatever
-      run: |
-          docker-compose build efiling-api
-          docker tag jag-file-submission_efiling-api docker.pkg.github.com/${{ github.repository }}/efiling-api:latest
-          docker push docker.pkg.github.com/${{ github.repository }}/efiling-api:latest
+  
