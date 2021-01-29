@@ -41,7 +41,7 @@ jobs:
         cache-from: type=registry,ref=efiling-api:latest
         cache-to: type=inline
         push: true
-        tags: ${{ github.repository }}/efiling-api:latest
+        tags: docker.pkg.github.com/${{ github.repository }}/efiling-api:latest
     - name: whatever
       run: |
           docker-compose build efiling-api
