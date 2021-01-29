@@ -1829,7 +1829,12 @@ components:
     Document:
       required:
         - description
-        - statutoryFeeAmount
+        - identifier
+        - name
+        - type
+        - description
+        - status
+        - paymentProcessed
       type: object
       description: A Efiling Document
       properties:
