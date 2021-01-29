@@ -27,7 +27,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.3",
     "regenerator-runtime": "^0.13.7",
-    "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/1.0.0/shared-components-1.0.0.tgz"
+    "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/1.2.0/shared-components-1.2.0.tgz"
   },
   "scripts": {
     "start": "react-scripts start",
