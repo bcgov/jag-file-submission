@@ -45,5 +45,5 @@ jobs:
     - name: whatever
       run: |
           docker-compose build efiling-api
-          docker tag jag-file-submission_efiling-api:latest ${{ github.repository }}/efiling-api:latest
-          docker push ghcr.io/${{ github.repository }}/efiling-api:latest
+          docker tag jag-file-submission_efiling-api docker.pkg.github.com/${{ github.repository }}/efiling-api:latest
+          docker push docker.pkg.github.com/${{ github.repository }}/efiling-api:latest
