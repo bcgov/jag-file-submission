@@ -27,7 +27,7 @@ import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("FilePackageServiceImplTest")
-public class GetCSOFilingPackage {
+public class GetCSOFilingPackageTest {
 
     public static final String CLASS_DESCRIPTION = "CLASS_DESCRIPTION";
     public static final String COURT_CLASS = "COURT_CLASS";
