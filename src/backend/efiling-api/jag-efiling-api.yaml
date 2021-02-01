@@ -1858,8 +1858,12 @@ components:
           description: Computed hash value of the document content, it is used as a checksum to validate the document integrity.
     Document:
       required:
+        - identifier
+        - name
+        - type
         - description
-        - statutoryFeeAmount
+        - status
+        - paymentProcessed
       type: object
       description: A Efiling Document
       properties:
