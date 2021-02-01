@@ -33,15 +33,10 @@ exports[`Storyshots Home Account Exists 1`] = `
           class="bcgov-pointer navbar-brand nav-item nav-link"
         />
         <div
-          class="bcgov-flex-spacing"
+          class="navbar-brand"
+          id="title"
         >
-          <div
-            class="navbar-brand bcgov-vertical-center"
-            id="title"
-          >
-            E-File Submission
-          </div>
-          <div />
+          E-File Submission
         </div>
       </nav>
     </header>
@@ -635,15 +630,10 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
           class="bcgov-pointer navbar-brand nav-item nav-link"
         />
         <div
-          class="bcgov-flex-spacing"
+          class="navbar-brand"
+          id="title"
         >
-          <div
-            class="navbar-brand bcgov-vertical-center"
-            id="title"
-          >
-            E-File Submission
-          </div>
-          <div />
+          E-File Submission
         </div>
       </nav>
     </header>
@@ -1237,15 +1227,10 @@ exports[`Storyshots Home Error 1`] = `
           class="bcgov-pointer navbar-brand nav-item nav-link"
         />
         <div
-          class="bcgov-flex-spacing"
+          class="navbar-brand"
+          id="title"
         >
-          <div
-            class="navbar-brand bcgov-vertical-center"
-            id="title"
-          >
-            E-File Submission
-          </div>
-          <div />
+          E-File Submission
         </div>
       </nav>
     </header>
@@ -1412,15 +1397,10 @@ exports[`Storyshots Home Error Mobile 1`] = `
           class="bcgov-pointer navbar-brand nav-item nav-link"
         />
         <div
-          class="bcgov-flex-spacing"
+          class="navbar-brand"
+          id="title"
         >
-          <div
-            class="navbar-brand bcgov-vertical-center"
-            id="title"
-          >
-            E-File Submission
-          </div>
-          <div />
+          E-File Submission
         </div>
       </nav>
     </header>
@@ -1587,15 +1567,10 @@ exports[`Storyshots Home No Account Exists 1`] = `
           class="bcgov-pointer navbar-brand nav-item nav-link"
         />
         <div
-          class="bcgov-flex-spacing"
+          class="navbar-brand"
+          id="title"
         >
-          <div
-            class="navbar-brand bcgov-vertical-center"
-            id="title"
-          >
-            E-File Submission
-          </div>
-          <div />
+          E-File Submission
         </div>
       </nav>
     </header>
@@ -1724,15 +1699,10 @@ exports[`Storyshots Home No Account Exists Mobile 1`] = `
           class="bcgov-pointer navbar-brand nav-item nav-link"
         />
         <div
-          class="bcgov-flex-spacing"
+          class="navbar-brand"
+          id="title"
         >
-          <div
-            class="navbar-brand bcgov-vertical-center"
-            id="title"
-          >
-            E-File Submission
-          </div>
-          <div />
+          E-File Submission
         </div>
       </nav>
     </header>
