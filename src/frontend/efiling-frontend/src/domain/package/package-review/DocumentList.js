@@ -13,20 +13,21 @@ export default function DocumentList({ documents }) {
         <span className="d-none d-md-inline col-md-3">Action (s)</span>
       </div>
       <ul>
-        {documents && documents.map((document) => (
-          <li key={document.name}>
-            <span className="label col-sm-4 d-md-none">Document Type:</span>
-            <span className="col-sm-8 col-md-3">{document.type}</span>
-            <span className="label col-sm-4 d-md-none">File Name:</span>
-            <span className="col-sm-8 col-md-3">{document.name}</span>
-            <span className="label col-sm-4 d-md-none">Status:</span>
-            <span className="col-sm-8 col-md-3">
-              {document.status.description}
-            </span>
-            <span className="label col-sm-4 d-md-none">Action (s):</span>
-            <span className="col-sm-8 col-md-3">withdraw</span>
-          </li>
-        ))}
+        {documents &&
+          documents.map((document) => (
+            <li key={document.name}>
+              <span className="label col-sm-4 d-md-none">Document Type:</span>
+              <span className="col-sm-8 col-md-3">{document.type}</span>
+              <span className="label col-sm-4 d-md-none">File Name:</span>
+              <span className="col-sm-8 col-md-3">{document.name}</span>
+              <span className="label col-sm-4 d-md-none">Status:</span>
+              <span className="col-sm-8 col-md-3">
+                {document.status.description}
+              </span>
+              <span className="label col-sm-4 d-md-none">Action (s):</span>
+              <span className="col-sm-8 col-md-3">withdraw</span>
+            </li>
+          ))}
       </ul>
     </div>
   );
