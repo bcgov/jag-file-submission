@@ -33,10 +33,15 @@ exports[`Home Component matches the snapshot when error encountered 1`] = `
           class="bcgov-pointer navbar-brand nav-item nav-link"
         />
         <div
-          class="navbar-brand"
-          id="title"
+          class="bcgov-flex-spacing"
         >
-          eFiling Frontend
+          <div
+            class="navbar-brand bcgov-vertical-center"
+            id="title"
+          >
+            eFiling Frontend
+          </div>
+          <div />
         </div>
       </nav>
     </header>
@@ -203,10 +208,15 @@ exports[`Home Component matches the snapshot when error encountered, does not at
           class="bcgov-pointer navbar-brand nav-item nav-link"
         />
         <div
-          class="navbar-brand"
-          id="title"
+          class="bcgov-flex-spacing"
         >
-          eFiling Frontend
+          <div
+            class="navbar-brand bcgov-vertical-center"
+            id="title"
+          >
+            eFiling Frontend
+          </div>
+          <div />
         </div>
       </nav>
     </header>
@@ -373,10 +383,15 @@ exports[`Home Component matches the snapshot when user cso account does not exis
           class="bcgov-pointer navbar-brand nav-item nav-link"
         />
         <div
-          class="navbar-brand"
-          id="title"
+          class="bcgov-flex-spacing"
         >
-          eFiling Frontend
+          <div
+            class="navbar-brand bcgov-vertical-center"
+            id="title"
+          >
+            eFiling Frontend
+          </div>
+          <div />
         </div>
       </nav>
     </header>
@@ -1427,10 +1442,15 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
           class="bcgov-pointer navbar-brand nav-item nav-link"
         />
         <div
-          class="navbar-brand"
-          id="title"
+          class="bcgov-flex-spacing"
         >
-          eFiling Frontend
+          <div
+            class="navbar-brand bcgov-vertical-center"
+            id="title"
+          >
+            eFiling Frontend
+          </div>
+          <div />
         </div>
       </nav>
     </header>
@@ -2024,10 +2044,15 @@ exports[`Home When user has authenticated with BCSC with no CSO account, retriev
           class="bcgov-pointer navbar-brand nav-item nav-link"
         />
         <div
-          class="navbar-brand"
-          id="title"
+          class="bcgov-flex-spacing"
         >
-          eFiling Frontend
+          <div
+            class="navbar-brand bcgov-vertical-center"
+            id="title"
+          >
+            eFiling Frontend
+          </div>
+          <div />
         </div>
       </nav>
     </header>
@@ -2156,10 +2181,15 @@ exports[`Home When user has authenticated with BCSC with no CSO account, retriev
           class="bcgov-pointer navbar-brand nav-item nav-link"
         />
         <div
-          class="navbar-brand"
-          id="title"
+          class="bcgov-flex-spacing"
         >
-          eFiling Frontend
+          <div
+            class="navbar-brand bcgov-vertical-center"
+            id="title"
+          >
+            eFiling Frontend
+          </div>
+          <div />
         </div>
       </nav>
     </header>
