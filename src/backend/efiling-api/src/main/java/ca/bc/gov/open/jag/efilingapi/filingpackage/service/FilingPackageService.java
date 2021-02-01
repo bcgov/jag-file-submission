@@ -10,4 +10,6 @@ public interface FilingPackageService {
     Optional<FilingPackage> getCSOFilingPackage(String universalId, BigDecimal packageNumber);
 
     Optional<byte[]> getSubmissionSheet(BigDecimal packageNumber);
+
+    Optional<byte[]> getSubmissionDocument(BigDecimal packageNumber, String documentIdentifier);
 }

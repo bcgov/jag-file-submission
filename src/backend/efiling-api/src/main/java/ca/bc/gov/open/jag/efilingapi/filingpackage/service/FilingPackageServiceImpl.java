@@ -49,4 +49,9 @@ public class FilingPackageServiceImpl implements FilingPackageService {
         return efilingReviewService.getSubmissionSheet(packageNumber);
 
     }
+
+    @Override
+    public Optional<byte[]> getSubmissionDocument(BigDecimal packageNumber, String documentIdentifier) {
+        return Optional.empty();
+    }
 }
