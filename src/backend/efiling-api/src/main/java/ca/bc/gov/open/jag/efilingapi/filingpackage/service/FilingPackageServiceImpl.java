@@ -3,9 +3,11 @@ package ca.bc.gov.open.jag.efilingapi.filingpackage.service;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.mapper.FilingPackageMapper;
+import ca.bc.gov.open.jag.efilingapi.filingpackage.model.SubmittedDocument;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 
 import java.math.BigDecimal;
@@ -29,13 +31,7 @@ public class FilingPackageServiceImpl implements FilingPackageService {
     @Override
     public Optional<FilingPackage> getCSOFilingPackage(String universalId, BigDecimal packageNumber) {
 
-        AccountDetails accountDetails = accountService.getCsoAccountDetails(universalId);
-
-        if (accountDetails.getClientId() == null) return Optional.empty();
-
-        FilingPackageRequest request = new FilingPackageRequest(accountDetails.getClientId(), packageNumber);
-
-        Optional<ReviewFilingPackage> filingPackage = efilingReviewService.findStatusByPackage(request);
+        Optional<ReviewFilingPackage> filingPackage = getFilingPackage(universalId, packageNumber);
 
         if (!filingPackage.isPresent()) return Optional.empty();
 
@@ -51,7 +47,33 @@ public class FilingPackageServiceImpl implements FilingPackageService {
     }
 
     @Override
-    public Optional<byte[]> getSubmissionDocument(BigDecimal packageNumber, String documentIdentifier) {
-        return Optional.empty();
+    public Optional<SubmittedDocument> getSubmissionDocument(String universalId, BigDecimal packageNumber, String documentIdentifier) {
+
+        Optional<ReviewFilingPackage> filingPackage = getFilingPackage(universalId, packageNumber);
+
+        if (!filingPackage.isPresent()) return Optional.empty();
+
+        Optional<ReviewDocument> reviewDocument = filingPackage.get().getDocuments().stream().findFirst().filter(document -> document.getDocumentId().equals(documentIdentifier));
+
+        if (!reviewDocument.isPresent()) return Optional.empty();
+
+        Optional<byte[]> document = efilingReviewService.getSubmissionDocument(packageNumber, documentIdentifier);
+
+        return document.map(bytes -> SubmittedDocument.builder()
+                .name(reviewDocument.get().getFileName())
+                .data(bytes)
+                .create());
+
     }
+
+    private Optional<ReviewFilingPackage> getFilingPackage(String universalId, BigDecimal packageNumber) {
+        AccountDetails accountDetails = accountService.getCsoAccountDetails(universalId);
+
+        if (accountDetails.getClientId() == null) return Optional.empty();
+
+        FilingPackageRequest request = new FilingPackageRequest(accountDetails.getClientId(), packageNumber);
+
+        return efilingReviewService.findStatusByPackage(request);
+    }
+
 }

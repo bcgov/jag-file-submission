@@ -93,4 +93,9 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
 
         return Optional.of(result);
     }
+
+    @Override
+    public Optional<byte[]> getSubmissionDocument(BigDecimal packageNumber, String documentIdentifier) {
+        return Optional.empty();
+    }
 }

@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.filingpackage.service;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
+import ca.bc.gov.open.jag.efilingapi.filingpackage.model.SubmittedDocument;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -11,5 +12,6 @@ public interface FilingPackageService {
 
     Optional<byte[]> getSubmissionSheet(BigDecimal packageNumber);
 
-    Optional<byte[]> getSubmissionDocument(BigDecimal packageNumber, String documentIdentifier);
+    Optional<SubmittedDocument> getSubmissionDocument(String universalId, BigDecimal packageNumber, String documentIdentifier);
+
 }
