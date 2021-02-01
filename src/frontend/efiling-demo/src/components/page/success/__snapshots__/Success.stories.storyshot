@@ -33,15 +33,10 @@ exports[`Storyshots Success Default 1`] = `
           class="bcgov-pointer navbar-brand nav-item nav-link"
         />
         <div
-          class="bcgov-flex-spacing"
+          class="navbar-brand"
+          id="title"
         >
-          <div
-            class="navbar-brand bcgov-vertical-center"
-            id="title"
-          >
-            eFiling Demo Client
-          </div>
-          <div />
+          eFiling Demo Client
         </div>
       </nav>
     </header>
@@ -200,15 +195,10 @@ exports[`Storyshots Success Mobile 1`] = `
           class="bcgov-pointer navbar-brand nav-item nav-link"
         />
         <div
-          class="bcgov-flex-spacing"
+          class="navbar-brand"
+          id="title"
         >
-          <div
-            class="navbar-brand bcgov-vertical-center"
-            id="title"
-          >
-            eFiling Demo Client
-          </div>
-          <div />
+          eFiling Demo Client
         </div>
       </nav>
     </header>
