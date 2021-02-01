@@ -25,7 +25,7 @@ public class GenerateUrlPayload {
     public static final String MIDDLE_NAME = "MIDDLENAME";
     public static final String LAST_NAME = "LASTNAME";
     public static final String MD5 = "Md 5";
-    public static final DocumentProperties.TypeEnum TYPE = DocumentProperties.TypeEnum.AAB;
+    public static final InitialDocument.TypeEnum TYPE = InitialDocument.TypeEnum.AAB;
 
     public static final String SUCCESS_URL = "http://success.com";
     public static final String CANCEL_URL = "http://cancel.com";
@@ -58,7 +58,7 @@ public class GenerateUrlPayload {
         return updateDocumentRequest;
     }
 
-    public static InitialPackage generateInitialPackage(Court court, List<DocumentProperties> documentProperties, List<Party> parties) {
+    public static InitialPackage generateInitialPackage(Court court, List<InitialDocument> documentProperties, List<Party> parties) {
         InitialPackage initialPackage = new InitialPackage();
 
         initialPackage.setCourt(court);
