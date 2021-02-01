@@ -91,11 +91,11 @@ public class GenerateUrlPayload {
         return court;
     }
 
-    public static List<DocumentProperties> generateDocumentPropertiesList() {
-        DocumentProperties documentProperties = new DocumentProperties();
+    public static List<InitialDocument> generateDocumentPropertiesList() {
+        InitialDocument documentProperties = new InitialDocument();
 
         documentProperties.setName("test-document.pdf");
-        documentProperties.setType(DocumentProperties.TypeEnum.AFF);
+        documentProperties.setType(InitialDocument.TypeEnum.AFF);
         documentProperties.setIsAmendment(true);
         documentProperties.setIsSupremeCourtScheduling(true);
         documentProperties.setData(new ObjectMapper().createObjectNode());
