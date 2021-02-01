@@ -4,16 +4,19 @@ import ca.bc.gov.open.jag.efilingapi.api.FilingpackagesApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
+import ca.bc.gov.open.jag.efilingapi.filingpackage.model.SubmittedDocument;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import ca.bc.gov.open.jag.efilingapi.core.security.SecurityUtils;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.security.RolesAllowed;
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.util.Optional;
 
 @Service
@@ -67,7 +70,18 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
         if(!universalId.isPresent()) return new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
 
-        return ResponseEntity.ok(new ByteArrayResource("".getBytes()));
+        Optional<SubmittedDocument> result = filingPackageService.getSubmissionDocument(universalId.get(), packageIdentifier, documentIdentifier);
 
+        if(!result.isPresent()) return new ResponseEntity(
+                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.FILING_PACKAGE_NOT_FOUND).create(), HttpStatus.NOT_FOUND);
+
+        HttpHeaders header = new HttpHeaders();
+        header.add(HttpHeaders.CONTENT_DISPOSITION, MessageFormat.format("attachment; filename={0}",result.get().getName()));
+
+        ByteArrayResource resource = new ByteArrayResource(result.get().getData());
+
+        return ResponseEntity.ok()
+                .headers(header)
+                .body(resource);
     }
 }
