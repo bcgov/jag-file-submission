@@ -69,6 +69,11 @@ public class FilingPackageConfigTest {
                 public Optional<byte[]> getSubmissionSheet(BigDecimal packageNumber) {
                     return Optional.empty();
                 }
+
+                @Override
+                public Optional<byte[]> getSubmissionDocument(BigDecimal packageNumber, String documentIdentifier) {
+                    return Optional.empty();
+                }
             };
 
         }
