@@ -216,4 +216,27 @@ describe("PackageReview Component", () => {
       "_self"
     );
   });
+
+  test("View Submission Sheet (on keyDown) - unsuccessful", async () => {
+    sessionStorage.setItem("errorUrl", "error.com");
+
+    window.open = jest.fn();
+    mock
+      .onGet(apiRequest)
+      .reply(200, { court: courtData, submittedBy, submittedDate });
+    mock
+      .onGet(`/filingpackages/${packageId}/submissionSheet`)
+      .reply(400, { message: "There was an error." });
+
+    const { container } = render(<PackageReview page={page} />);
+    await waitFor(() => {});
+
+    fireEvent.keyDown(getByText(container, "Print Submission Sheet"));
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalledWith(
+      "error.com?status=400&message=There was an error.",
+      "_self"
+    );
+  });
 });
