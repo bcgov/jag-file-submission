@@ -431,7 +431,7 @@ paths:
                 format: binary
         "404":
           description: file not found
-  "/filingpackages/{documentIdentifier}/submissionDocument":
+  "/filingpackages/{packageIdentifier}/{documentIdentifier}/document":
     get:
       summary: Get submitted document
       operationId: GetSubmittedDocument
@@ -439,6 +439,12 @@ paths:
       tags:
         - filingPackages
       parameters:
+        - name: packageIdentifier
+          in: path
+          description: package identifier
+          required: true
+          schema:
+            type: number
         - name: documentIdentifier
           in: path
           description: document identifier
@@ -1853,12 +1859,7 @@ components:
     Document:
       required:
         - description
-        - identifier
-        - name
-        - type
-        - description
-        - status
-        - paymentProcessed
+        - statutoryFeeAmount
       type: object
       description: A Efiling Document
       properties:

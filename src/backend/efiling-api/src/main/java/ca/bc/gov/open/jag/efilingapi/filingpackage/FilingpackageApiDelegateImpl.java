@@ -65,7 +65,8 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
 
     @Override
     @RolesAllowed("efiling-user")
-    public ResponseEntity<Resource> getSubmittedDocument(String documentIdentifier) {
+    public ResponseEntity<Resource> getSubmittedDocument(BigDecimal packageIdentifier,
+                                                         String documentIdentifier) {
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
         if(!universalId.isPresent()) return new ResponseEntity(

@@ -77,7 +77,7 @@ public class GetSubmissionDocumentTest {
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, CASE_1);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<Resource> result = sut.getSubmittedDocument(FOUND_DOCUMENT_IDENTIFIER);
+        ResponseEntity<Resource> result = sut.getSubmittedDocument(BigDecimal.ONE, FOUND_DOCUMENT_IDENTIFIER);
 
         Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
 
@@ -89,7 +89,7 @@ public class GetSubmissionDocumentTest {
 
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(null);
 
-        ResponseEntity<?> actual = sut.getSubmittedDocument(NOT_FOUND_DOCUMENT_IDENTIFIER);
+        ResponseEntity<?> actual = sut.getSubmittedDocument(BigDecimal.ONE, NOT_FOUND_DOCUMENT_IDENTIFIER);
 
         Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
 
