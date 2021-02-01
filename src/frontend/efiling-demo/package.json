@@ -1,6 +1,6 @@
 {
   "name": "efiling-demo",
-  "version": "0.6.0",
+  "version": "0.7.0-preview",
   "homepage": ".",
   "private": true,
   "dependencies": {
@@ -21,7 +21,7 @@
     "react-scripts": "3.4.3",
     "react-dropzone": "^11.1.0",
     "regenerator-runtime": "^0.13.5",
-    "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/1.0.0/shared-components-1.0.0.tgz",
+    "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/1.2.0/shared-components-1.2.0.tgz",
     "uuid": "^8.3.1"
   },
   "scripts": {
@@ -57,8 +57,8 @@
     "@storybook/addons": "^6.0.26",
     "@storybook/addon-storyshots": "^6.0.26",
     "@storybook/addon-links": "^6.0.27",
-    "@storybook/addon-viewport": "^6.0.28",
-    "@storybook/addon-actions": "^6.1.10",
+    "@storybook/addon-viewport": "^6.1.15",
+    "@storybook/addon-actions": "^6.1.15",
     "@storybook/preset-create-react-app": "^3.0.0",
     "@storybook/react": "^6.1.10",
     "@testing-library/jest-dom": "^5.11.4",
@@ -74,13 +74,12 @@
     "eslint-plugin-react": "^7.21.5",
     "enzyme-to-json": "^3.6.1",
     "eslint-plugin-react-hooks": "^4.1.2",
-    "husky": "^4.3.5",
     "jest-environment-jsdom-sixteen": "^1.0.3",
     "jest-sonar-reporter": "^2.0.0",
     "prettier": "2.1.2",
     "pretty-quick": "^3.1.0",
     "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.4",
+    "enzyme-adapter-react-16": "^1.15.6",
     "react-test-renderer": "^16.12.0"
   },
   "jest": {
@@ -118,10 +117,5 @@
     "reportPath": "coverage",
     "reportFile": "test-report.xml",
     "indent": 4
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn run precommit"
-    }
   }
 }

@@ -1,3 +1,5 @@
+import { isIdentityProviderBCeID } from "./authentication-helper/authenticationHelper";
+
 export function translateApplicantInfo({
   bceid,
   lastName,
@@ -9,18 +11,30 @@ export function translateApplicantInfo({
     ? `${firstName} ${middleName} ${lastName}`
     : `${firstName} ${lastName}`;
 
+  if (isIdentityProviderBCeID()) {
+    return [
+      {
+        name: "BCeID:",
+        value: bceid,
+      },
+      {
+        name: "Full Name:",
+        value: fullName,
+      },
+      {
+        name: "Email Address:",
+        value: email,
+      },
+    ];
+  }
   return [
     {
-      name: "BCeID:",
-      value: bceid,
+      name: "BCSC:",
+      value: null,
     },
     {
       name: "Full Name:",
       value: fullName,
-    },
-    {
-      name: "Email Address:",
-      value: email,
     },
   ];
 }

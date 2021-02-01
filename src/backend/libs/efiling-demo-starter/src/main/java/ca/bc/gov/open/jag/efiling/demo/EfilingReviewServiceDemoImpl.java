@@ -37,7 +37,9 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
 
         try {
             InputStream initialStream = getClass().getResourceAsStream("/demo-file/test-document.pdf");
-            return Optional.of(new byte[initialStream.available()]);
+            byte[] targetArray = new byte[initialStream.available()];
+            initialStream.read(targetArray);
+            return Optional.of(targetArray);
         } catch (IOException e) {
             return Optional.empty();
         }
@@ -48,7 +50,7 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
         ReviewFilingPackage reviewFilingPackage = new ReviewFilingPackage();
         reviewFilingPackage.setFirstName("Han");
         reviewFilingPackage.setLastName("Solo");
-        reviewFilingPackage.setFilingCommentsTxt(MessageFormat.format( "Lorem ipsum dolor sit amet, {0} consectetur adipiscing elit, sed do eiusmod tempor incididunt {0} ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi {0} ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse {0} cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", System.lineSeparator()));
+        reviewFilingPackage.setFilingCommentsTxt(MessageFormat.format("Lorem ipsum dolor sit amet, consectetur adipiscing elit, {1} sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.{0}{0}Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", System.lineSeparator(), "<script>alert(\"Hello\");</script>"));
         reviewFilingPackage.setHasChecklist(false);
         reviewFilingPackage.setHasRegistryNotice(false);
         reviewFilingPackage.setPackageNo("1");

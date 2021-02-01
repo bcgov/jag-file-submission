@@ -1,6 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
+import ca.bc.gov.open.jag.efilingapi.api.model.InitialDocument;
 import ca.bc.gov.open.jag.efilingapi.submission.models.GetValidPartyRoleRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -20,25 +20,25 @@ public class GetValidPartyRoleRequestTest {
     @DisplayName("ok: returns a comma separated list of document types")
     public void shouldReturnAValidListOfDocumentTypes() {
 
-        List<DocumentProperties> documentPropertiesList = new ArrayList<>();
-        DocumentProperties document1 = new DocumentProperties();
-        document1.setType(DocumentProperties.TypeEnum.AAB);
-        documentPropertiesList.add(document1);
-        DocumentProperties document2 = new DocumentProperties();
-        document2.setType(DocumentProperties.TypeEnum.ACMW);
-        documentPropertiesList.add(document2);
-        DocumentProperties document3 = new DocumentProperties();
-        document3.setType(DocumentProperties.TypeEnum.TAX);
-        documentPropertiesList.add(document3);
+        List<InitialDocument> initialDocumentList = new ArrayList<>();
+        InitialDocument document1 = new InitialDocument();
+        document1.setType(InitialDocument.TypeEnum.AAB);
+        initialDocumentList.add(document1);
+        InitialDocument document2 = new InitialDocument();
+        document2.setType(InitialDocument.TypeEnum.ACMW);
+        initialDocumentList.add(document2);
+        InitialDocument document3 = new InitialDocument();
+        document3.setType(InitialDocument.TypeEnum.TAX);
+        initialDocumentList.add(document3);
 
         GetValidPartyRoleRequest actual = GetValidPartyRoleRequest.builder()
                 .courtClassification(COURT_CLASSIFICATION)
                 .courtLevel(COURT_LEVEL)
-                .documents(documentPropertiesList).create();
+                .documents(initialDocumentList).create();
 
         Assertions.assertEquals(COURT_CLASSIFICATION, actual.getCourtClassification());
         Assertions.assertEquals(COURT_LEVEL, actual.getCourtLevel());
-        Assertions.assertEquals(3, actual.getDocumentPropertiesList().size());
+        Assertions.assertEquals(3, actual.getInitialDocuments().size());
         Assertions.assertEquals("AAB,ACMW,TAX", actual.getDocumentTypesAsString());
 
 

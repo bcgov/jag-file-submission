@@ -17,12 +17,15 @@ const realm = window.REACT_APP_KEYCLOAK_REALM
 const clientId = window.REACT_APP_KEYCLOAK_CLIENT_ID
   ? window.REACT_APP_KEYCLOAK_CLIENT_ID
   : process.env.REACT_APP_KEYCLOAK_CLIENT_ID;
+export const BCSC_USERINFO_URL = window.REACT_APP_BCSC_USERINFO_URL
+  ? window.REACT_APP_BCSC_USERINFO_URL
+  : process.env.REACT_APP_BCSC_USERINFO_URL;
 
 const defaultIdentityProvider = window.REACT_APP_DEFAULT_IDENTITY_PROVIDER
   ? window.REACT_APP_DEFAULT_IDENTITY_PROVIDER
   : process.env.REACT_APP_DEFAULT_IDENTITY_PROVIDER;
 
-const KEYCLOAK = {
+export const KEYCLOAK = {
   realm,
   url,
   clientId,

@@ -5,7 +5,11 @@ import axios from "axios";
 import { MdCancel } from "react-icons/md";
 import { Header, Footer, Loader, Alert } from "shared-components";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
-import { getJWTData } from "../../../modules/helpers/authentication-helper/authenticationHelper";
+import {
+  getJWTData,
+  isIdentityProviderBCeID,
+} from "../../../modules/helpers/authentication-helper/authenticationHelper";
+import { getBCSCUserInfo } from "../../../domain/authentication/services/AuthService";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
 import CSOAccount from "../cso-account/CSOAccount";
 import { propTypes } from "../../../types/propTypes";
@@ -76,9 +80,9 @@ const checkCSOAccountStatus = (
           setCsoAccountStatus({ isNew: false, exists: true });
         })
         .catch((err) => {
-          if (err.response.status !== 404)
+          if (err.response === undefined || err.response.status !== 404)
             errorRedirect(sessionStorage.getItem("errorUrl"), err);
-          else {
+          else if (isIdentityProviderBCeID()) {
             axios
               .get("/bceidAccount")
               .then(({ data: { firstName, middleName, lastName } }) => {
@@ -93,6 +97,20 @@ const checkCSOAccountStatus = (
               .catch((e) =>
                 errorRedirect(sessionStorage.getItem("errorUrl"), e)
               );
+          } else {
+            getBCSCUserInfo()
+              .then((userInfo) => {
+                setRequiredState(
+                  "",
+                  userInfo.givenNames,
+                  userInfo.lastName,
+                  setApplicantInfo,
+                  setShowLoader
+                );
+              })
+              .catch((e) => {
+                errorRedirect(sessionStorage.getItem("errorUrl"), e);
+              });
           }
         });
     })

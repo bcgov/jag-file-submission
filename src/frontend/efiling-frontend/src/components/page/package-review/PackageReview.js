@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import FileSaver from "file-saver";
 import moment from "moment";
 import PropTypes from "prop-types";
+import Tabs from "react-bootstrap/Tabs"; /* TODO: replace with shared-components */
+import Tab from "react-bootstrap/Tab"; /* TODO: replace with shared-components */
 import { Header, Footer, Button, Table, Alert } from "shared-components";
 import { BsEyeFill } from "react-icons/bs";
 import { MdCancel } from "react-icons/md";
@@ -15,7 +17,7 @@ import "./PackageReview.css";
 
 const downloadSubmissionSheet = (packageId) => {
   axios
-    .get(`/filingpackage/${packageId}/submissionSheet`, {
+    .get(`/filingpackages/${packageId}/submissionSheet`, {
       responseType: "blob",
     })
     .then((response) => {
@@ -55,10 +57,11 @@ export default function PackageReview({ page: { header, packageId } }) {
       isValueBold: true,
     },
   ]);
+  const [filingComments, setFilingComments] = useState("");
 
   useEffect(() => {
     axios
-      .get(`filingpackage/${packageId}`)
+      .get(`filingpackages/${packageId}`)
       .then((response) => {
         try {
           const packageNo = response.data.packageNumber || "";
@@ -71,7 +74,7 @@ export default function PackageReview({ page: { header, packageId } }) {
           let submittedDt = "";
           if (response.data.submittedDate) {
             submittedDt = moment(response.data.submittedDate).format(
-              "DD-MMM-YYYY HH:MM"
+              "DD-MMM-YYYY HH:mm"
             );
           }
           const fileNumber = response.data.court.fileNumber || "";
@@ -110,6 +113,7 @@ export default function PackageReview({ page: { header, packageId } }) {
               isValueBold: true,
             },
           ]);
+          setFilingComments(response.data.filingComments);
         } catch (err) {
           setError(true);
         }
@@ -154,13 +158,26 @@ export default function PackageReview({ page: { header, packageId } }) {
           <br />
           <div className="row">
             <div className="col-sm-12 col-lg-6">
-              <Table elements={packageDetails} />
+              <Table id="packageDetails" elements={packageDetails} />
             </div>
             <div className="col-sm-12 col-lg-6">
               <Table elements={courtFileDetails} />
             </div>
           </div>
           <br />
+          <Tabs defaultActiveKey="documents" id="uncontrolled-tab">
+            <Tab eventKey="documents" title="Documents">
+              <br />
+              Documents coming ...
+            </Tab>
+            <Tab eventKey="comments" title="Filing Comments">
+              <br />
+              <h4>Filing Comments</h4>
+              <div id="filingComments" className="tabContent">
+                {filingComments}
+              </div>
+            </Tab>
+          </Tabs>
           <br />
           <section className="buttons pt-2">
             <Button

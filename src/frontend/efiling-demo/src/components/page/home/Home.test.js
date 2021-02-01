@@ -9,6 +9,7 @@ import {
   getByText,
   fireEvent,
   getAllByRole,
+  getAllByTestId,
 } from "@testing-library/react";
 import Home from "./Home";
 import { generateJWTToken } from "../../../modules/authentication-helper/authenticationHelper";
@@ -289,5 +290,28 @@ describe("Home", () => {
 
     expect(isSupremeCourtScheduling).toHaveProperty("checked", true);
     expect(isAmendment).toHaveProperty("checked", true);
+  });
+
+  test("Document type is updated", async () => {
+    mock
+      .onPost(
+        "apikeycloakexample.com/realms/apiRealm/protocol/openid-connect/token"
+      )
+      .reply(200, { access_token: token });
+    mock.onPost("/submission/documents").reply(200, { submissionId });
+    mock
+      .onPost(`/submission/${submissionId}/generateUrl`)
+      .reply(200, { efilingUrl });
+
+    const { container } = render(ui);
+    const dropzone = container.querySelector('[data-testid="dropdownzone"]');
+    dispatchEvt(dropzone, "drop", data);
+
+    await waitFor(() => {});
+    await flushPromises(ui, container);
+
+    const dropdown = getAllByTestId(container, "dropdown")[0];
+
+    fireEvent.change(dropdown, { target: { value: "AFF" } });
   });
 });

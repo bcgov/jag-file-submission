@@ -31,5 +31,5 @@ mvn clean verify -P all
 Run
 
 ```
-mvn versions:set -DartifactId=*  -DgroupId=*
+mvn -f src/backend/pom.xml versions:set -DartifactId=*  -DgroupId=*
 ```

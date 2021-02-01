@@ -2,7 +2,7 @@ name: Docker Image CI
 
 on:
   workflow_dispatch:
-    branches: [main]
+    branches: [master]
 
 jobs:
   build:
@@ -19,8 +19,6 @@ jobs:
 
       - name: Build the Docker image
         run: |
-
           docker-compose build efiling-demo
-          docker tag ${{ secrets.DOCKERHUB_ORG }}/efiling-admin:latest
-          docker tag ${{ secrets.DOCKERHUB_ORG }}/efiling-admin:dev
-          docker push ${{ secrets.DOCKERHUG_ORG }}/efiling-admin
+          docker tag jag-file-submission_efiling-demo ${{ secrets.DOCKERHUB_ORG }}/efiling-admin:latest                     
+          docker push ${{ secrets.DOCKERHUB_ORG }}/efiling-admin
