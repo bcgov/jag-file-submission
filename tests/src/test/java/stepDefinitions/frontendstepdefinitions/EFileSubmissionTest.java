@@ -49,7 +49,7 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
         log.info("Browser closed");
     }
 
-    @Given("user is on the eFiling submission page")
+    @Given("user is on the eFiling submission pages")
     public void userIsOnTheEfilingSubmissionPage() throws IOException {
         eFileSubmissionPage = new EFileSubmissionPage(driver);
         try {

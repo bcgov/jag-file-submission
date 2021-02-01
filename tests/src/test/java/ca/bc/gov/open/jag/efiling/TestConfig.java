@@ -1,6 +1,8 @@
 package ca.bc.gov.open.jag.efiling;
 
+import ca.bc.gov.open.jag.efiling.page.AuthenticationPage;
 import ca.bc.gov.open.jag.efiling.services.CourtService;
+import ca.bc.gov.open.jag.efiling.services.GenerateUrlService;
 import ca.bc.gov.open.jag.efiling.services.OauthService;
 import ca.bc.gov.open.jag.efiling.services.SubmissionService;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +24,11 @@ public class TestConfig {
     @Bean
     public CourtService courtService () {
         return new CourtService();
+    }
+
+    @Bean
+    public GenerateUrlService generateUrlService () {
+        return new GenerateUrlService(oauthService(), submissionService());
     }
 
 }
