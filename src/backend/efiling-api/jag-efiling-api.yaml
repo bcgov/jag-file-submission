@@ -431,6 +431,36 @@ paths:
                 format: binary
         "404":
           description: file not found
+  "/filingpackages/{packageIdentifier}/{documentIdentifier}/document":
+    get:
+      summary: Get submitted document
+      operationId: GetSubmittedDocument
+      description: get submitted document
+      tags:
+        - filingPackages
+      parameters:
+        - name: packageIdentifier
+          in: path
+          description: package identifier
+          required: true
+          schema:
+            type: number
+        - name: documentIdentifier
+          in: path
+          description: document identifier
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: File was returned
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: file not found
 components:
   securitySchemes:
     bearerAuth: # arbitrary name for the security scheme
@@ -1828,7 +1858,6 @@ components:
           description: Computed hash value of the document content, it is used as a checksum to validate the document integrity.
     Document:
       required:
-        - description
         - identifier
         - name
         - type
