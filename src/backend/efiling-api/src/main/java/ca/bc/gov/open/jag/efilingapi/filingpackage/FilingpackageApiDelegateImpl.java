@@ -1,6 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.filingpackage;
 
-import ca.bc.gov.open.jag.efilingapi.api.FilingpackageApiDelegate;
+import ca.bc.gov.open.jag.efilingapi.api.FilingpackagesApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 @Service
-public class FilingpackageApiDelegateImpl implements FilingpackageApiDelegate {
+public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
 
     private final FilingPackageService filingPackageService;
 
@@ -55,6 +55,19 @@ public class FilingpackageApiDelegateImpl implements FilingpackageApiDelegate {
 
         return result.<ResponseEntity<Resource>>map(bytes -> ResponseEntity.ok(new ByteArrayResource(bytes))).orElseGet(() -> new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.SUBMISSION_SHEET_NOT_FOUND).create(), HttpStatus.NOT_FOUND));
+
+    }
+
+    @Override
+    @RolesAllowed("efiling-user")
+    public ResponseEntity<Resource> getSubmittedDocument(BigDecimal packageIdentifier,
+                                                         String documentIdentifier) {
+        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
+
+        if(!universalId.isPresent()) return new ResponseEntity(
+                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
+
+        return ResponseEntity.ok(new ByteArrayResource("".getBytes()));
 
     }
 }

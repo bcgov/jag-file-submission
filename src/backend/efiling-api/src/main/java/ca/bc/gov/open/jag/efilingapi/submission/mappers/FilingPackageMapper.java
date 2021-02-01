@@ -11,6 +11,6 @@ public interface FilingPackageMapper {
 
     FilingPackage toFilingPackage(ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage filingPackage);
 
-    ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage toApiFilingPackage(FilingPackage filingPackage);
+    ca.bc.gov.open.jag.efilingapi.api.model.SubmissionFilingPackage toApiFilingPackage(FilingPackage filingPackage);
 
 }

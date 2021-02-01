@@ -25,7 +25,7 @@ public class GenerateUrlPayload {
     public static final String MIDDLE_NAME = "MIDDLENAME";
     public static final String LAST_NAME = "LASTNAME";
     public static final String MD5 = "Md 5";
-    public static final DocumentProperties.TypeEnum TYPE = DocumentProperties.TypeEnum.AAB;
+    public static final InitialDocument.TypeEnum TYPE = InitialDocument.TypeEnum.AAB;
 
     public static final String SUCCESS_URL = "http://success.com";
     public static final String CANCEL_URL = "http://cancel.com";
@@ -58,7 +58,7 @@ public class GenerateUrlPayload {
         return updateDocumentRequest;
     }
 
-    public static InitialPackage generateInitialPackage(Court court, List<DocumentProperties> documentProperties, List<Party> parties) {
+    public static InitialPackage generateInitialPackage(Court court, List<InitialDocument> documentProperties, List<Party> parties) {
         InitialPackage initialPackage = new InitialPackage();
 
         initialPackage.setCourt(court);
@@ -91,11 +91,11 @@ public class GenerateUrlPayload {
         return court;
     }
 
-    public static List<DocumentProperties> generateDocumentPropertiesList() {
-        DocumentProperties documentProperties = new DocumentProperties();
+    public static List<InitialDocument> generateDocumentPropertiesList() {
+        InitialDocument documentProperties = new InitialDocument();
 
         documentProperties.setName("test-document.pdf");
-        documentProperties.setType(DocumentProperties.TypeEnum.AFF);
+        documentProperties.setType(InitialDocument.TypeEnum.AFF);
         documentProperties.setIsAmendment(true);
         documentProperties.setIsSupremeCourtScheduling(true);
         documentProperties.setData(new ObjectMapper().createObjectNode());

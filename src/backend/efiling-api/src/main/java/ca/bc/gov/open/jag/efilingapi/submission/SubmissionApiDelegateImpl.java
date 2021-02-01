@@ -165,7 +165,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         try {
             Submission submission = submissionService.updateDocuments(fromCacheSubmission.get(), updateDocumentRequest, submissionKey);
             UpdateDocumentResponse updateDocumentResponse = new UpdateDocumentResponse();
-            FilingPackage filingPackage = filingPackageMapper.toApiFilingPackage(submission.getFilingPackage());
+            SubmissionFilingPackage filingPackage = filingPackageMapper.toApiFilingPackage(submission.getFilingPackage());
             updateDocumentResponse.setDocuments(filingPackage.getDocuments());
             logger.info("successfully added new document for transaction [{}]", submissionId);
             return ResponseEntity.ok(updateDocumentResponse);
@@ -317,7 +317,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     @Override
     @RolesAllowed("efiling-user")
-    public ResponseEntity<FilingPackage> getSubmissionFilingPackage(UUID xTransactionId, UUID submissionId) {
+    public ResponseEntity<SubmissionFilingPackage> getSubmissionFilingPackage(UUID xTransactionId, UUID submissionId) {
 
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
