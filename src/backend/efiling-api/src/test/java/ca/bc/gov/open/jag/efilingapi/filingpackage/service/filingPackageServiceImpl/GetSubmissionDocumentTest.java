@@ -2,14 +2,11 @@ package ca.bc.gov.open.jag.efilingapi.filingpackage.service.filingPackageService
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
-import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.mapper.FilingPackageMapperImpl;
+import ca.bc.gov.open.jag.efilingapi.filingpackage.model.SubmittedDocument;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageServiceImpl;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -18,7 +15,13 @@ import org.mockito.MockitoAnnotations;
 import java.math.BigDecimal;
 import java.util.Optional;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@DisplayName("FilePackageServiceImplTest")
 public class GetSubmissionDocumentTest {
+
+    private static final byte[] DOC_DATA = "TEST".getBytes();
+    private static final String DOCUMENT_NOT_FOUND = "NOT FOUND";
+
     FilingPackageServiceImpl sut;
 
     @Mock
@@ -46,19 +49,24 @@ public class GetSubmissionDocumentTest {
 
         Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.of(TestHelpers.createFilingPackage()));
 
-        Optional<FilingPackage> result = sut.getCSOFilingPackage(TestHelpers.CASE_1_STRING, BigDecimal.ONE);
+        Mockito.when(efilingReviewServiceMock.getSubmittedDocument(Mockito.any(), ArgumentMatchers.eq(TestHelpers.DOCUMENT_ID))).thenReturn(Optional.of(DOC_DATA));
+
+        Optional<SubmittedDocument> result = sut.getSubmittedDocument(TestHelpers.CASE_1_STRING, BigDecimal.ONE, TestHelpers.DOCUMENT_ID);
 
         Assertions.assertTrue(result.isPresent());
-
+        Assertions.assertEquals(TestHelpers.NAME, result.get().getName());
+        Assertions.assertEquals(DOC_DATA, result.get().getData());
 
     }
 
     @Test
     @DisplayName("Not found: missing account")
     public void withValidRequestButMissingAccountReturnEmpty() {
-        Optional<FilingPackage> result = sut.getCSOFilingPackage(TestHelpers.CASE_2_STRING, BigDecimal.ONE);
+
+        Optional<SubmittedDocument> result = sut.getSubmittedDocument(TestHelpers.CASE_2_STRING, BigDecimal.ONE, TestHelpers.DOCUMENT_ID);
 
         Assertions.assertFalse(result.isPresent());
+
     }
 
 
@@ -68,19 +76,35 @@ public class GetSubmissionDocumentTest {
 
         Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.empty());
 
-        Optional<FilingPackage> result = sut.getCSOFilingPackage(TestHelpers.CASE_1_STRING, BigDecimal.TEN);
+        Optional<SubmittedDocument> result = sut.getSubmittedDocument(TestHelpers.CASE_1_STRING, BigDecimal.TEN, TestHelpers.DOCUMENT_ID);
 
         Assertions.assertFalse(result.isPresent());
+
+    }
+
+    @Test
+    @DisplayName("Not found: document not in filing package")
+    public void withValidRequestButMissingDocumentInPackageReturnEmpty() {
+
+        Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.of(TestHelpers.createFilingPackage()));
+
+        Optional<SubmittedDocument> result = sut.getSubmittedDocument(TestHelpers.CASE_1_STRING, BigDecimal.ONE, DOCUMENT_NOT_FOUND);
+
+        Assertions.assertFalse(result.isPresent());
+
     }
 
     @Test
     @DisplayName("Not found: no document")
-    public void withValidRequestButMissingDocumentEmpty() {
+    public void withValidRequestButMissingDocumentReturnEmpty() {
 
-        Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.empty());
+        Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.of(TestHelpers.createFilingPackage()));
 
-        Optional<FilingPackage> result = sut.getCSOFilingPackage(TestHelpers.CASE_1_STRING, BigDecimal.TEN);
+        Mockito.when(efilingReviewServiceMock.getSubmittedDocument(Mockito.any(), ArgumentMatchers.eq(TestHelpers.DOCUMENT_ID))).thenReturn(Optional.empty());
+
+        Optional<SubmittedDocument> result = sut.getSubmittedDocument(TestHelpers.CASE_1_STRING, BigDecimal.TEN, TestHelpers.DOCUMENT_ID);
 
         Assertions.assertFalse(result.isPresent());
+
     }
 }

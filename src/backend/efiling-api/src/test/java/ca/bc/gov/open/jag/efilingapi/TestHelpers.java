@@ -60,10 +60,10 @@ public class TestHelpers {
     public static final String STATUS_CODE = "STATUSCODE";
     public static final String COMMENT = "COMMENT";
     public static final String PACKAGE_NO = "123";
-
-
+    public static final String DOCUMENT_ID = "DOCUMENT_ID";
 
     public static final InitialDocument.TypeEnum TYPE = InitialDocument.TypeEnum.AAB;
+
 
     public static InitialPackage createInitalPackage(ca.bc.gov.open.jag.efilingapi.api.model.Court court, List<InitialDocument> initialDocuments) {
         InitialPackage initialPackage = new InitialPackage();
@@ -260,6 +260,7 @@ public class TestHelpers {
     public static ReviewDocument createDocument() {
 
         ReviewDocument reviewDocument = new ReviewDocument();
+        reviewDocument.setDocumentId(DOCUMENT_ID);
         reviewDocument.setFileName(NAME);
         reviewDocument.setDocumentTypeCd(InitialDocument.TypeEnum.AAB.getValue());
         reviewDocument.setStatus(STATUS);
