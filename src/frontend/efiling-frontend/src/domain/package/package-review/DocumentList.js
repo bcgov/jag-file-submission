@@ -34,5 +34,13 @@ export default function DocumentList({ documents }) {
 }
 
 DocumentList.propTypes = {
-  documents: PropTypes.array.isRequired,
+  documents: PropTypes.arrayOf(
+    PropTypes.shape({
+      type: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      status: PropTypes.shape({
+        description: PropTypes.string.isRequired,
+      }),
+    })
+  ).isRequired,
 };
