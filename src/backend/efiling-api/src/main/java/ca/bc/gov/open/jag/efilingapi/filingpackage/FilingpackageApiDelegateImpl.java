@@ -62,9 +62,9 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
         if(!universalId.isPresent()) return new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
 
-        Optional<byte[]> result = filingPackageService.getSubmissionSheet(packageIdentifier);
+        Optional<Resource> result = filingPackageService.getSubmissionSheet(packageIdentifier);
 
-        return result.<ResponseEntity<Resource>>map(bytes -> ResponseEntity.ok(new ByteArrayResource(bytes))).orElseGet(() -> new ResponseEntity(
+        return result.<ResponseEntity<Resource>>map(bytes -> ResponseEntity.ok(result.get())).orElseGet(() -> new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.SUBMISSION_SHEET_NOT_FOUND).create(), HttpStatus.NOT_FOUND));
 
     }
@@ -84,7 +84,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
         Optional<SubmittedDocument> result = filingPackageService.getSubmittedDocument(universalId.get(), packageIdentifier, documentIdentifier);
 
         if(!result.isPresent()) return new ResponseEntity(
-                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.FILING_PACKAGE_NOT_FOUND).create(), HttpStatus.NOT_FOUND);
+                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_NOT_FOUND).create(), HttpStatus.NOT_FOUND);
 
         HttpHeaders header = new HttpHeaders();
         header.add(HttpHeaders.CONTENT_DISPOSITION, MessageFormat.format("attachment; filename={0}",result.get().getName()));
@@ -92,5 +92,6 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
         return ResponseEntity.ok()
                 .headers(header)
                 .body(result.get().getData());
+        
     }
 }

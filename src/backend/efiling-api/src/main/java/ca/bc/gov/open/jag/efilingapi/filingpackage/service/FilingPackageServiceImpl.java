@@ -10,6 +10,7 @@ import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -41,9 +42,11 @@ public class FilingPackageServiceImpl implements FilingPackageService {
     }
 
     @Override
-    public Optional<byte[]> getSubmissionSheet(BigDecimal packageNumber) {
+    public Optional<Resource> getSubmissionSheet(BigDecimal packageNumber) {
 
-        return efilingReviewService.getSubmissionSheet(packageNumber);
+        Optional<byte[]> result = efilingReviewService.getSubmissionSheet(packageNumber);
+
+        return result.map(ByteArrayResource::new);
 
     }
 
