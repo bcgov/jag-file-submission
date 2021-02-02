@@ -13,6 +13,7 @@ import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { getFilingPackage, getSubmissionSheet } from "./PackageReviewService";
 
 import "./PackageReview.css";
+import DocumentList from "./DocumentList";
 
 export default function PackageReview({ page: { header, packageId } }) {
   const [error, setError] = useState(false);
@@ -41,6 +42,7 @@ export default function PackageReview({ page: { header, packageId } }) {
     },
   ]);
   const [filingComments, setFilingComments] = useState("");
+  const [documents, setDocuments] = useState([]);
 
   useEffect(() => {
     getFilingPackage(packageId)
@@ -96,6 +98,7 @@ export default function PackageReview({ page: { header, packageId } }) {
             },
           ]);
           setFilingComments(response.data.filingComments);
+          setDocuments(response.data.documents);
         } catch (err) {
           setError(true);
         }
@@ -162,7 +165,7 @@ export default function PackageReview({ page: { header, packageId } }) {
           <Tabs defaultActiveKey="documents" id="uncontrolled-tab">
             <Tab eventKey="documents" title="Documents">
               <br />
-              Documents coming ...
+              <DocumentList documents={documents} />
             </Tab>
             <Tab eventKey="comments" title="Filing Comments">
               <br />
