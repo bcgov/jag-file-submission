@@ -47,7 +47,7 @@ public class FilingPackageServiceImpl implements FilingPackageService {
     }
 
     @Override
-    public Optional<SubmittedDocument> getSubmissionDocument(String universalId, BigDecimal packageNumber, String documentIdentifier) {
+    public Optional<SubmittedDocument> getSubmittedDocument(String universalId, BigDecimal packageNumber, String documentIdentifier) {
 
         Optional<ReviewFilingPackage> filingPackage = getFilingPackage(universalId, packageNumber);
 
@@ -57,7 +57,7 @@ public class FilingPackageServiceImpl implements FilingPackageService {
 
         if (!reviewDocument.isPresent()) return Optional.empty();
 
-        Optional<byte[]> document = efilingReviewService.getSubmissionDocument(packageNumber, documentIdentifier);
+        Optional<byte[]> document = efilingReviewService.getSubmittedDocument(packageNumber, documentIdentifier);
 
         return document.map(bytes -> SubmittedDocument.builder()
                 .name(reviewDocument.get().getFileName())

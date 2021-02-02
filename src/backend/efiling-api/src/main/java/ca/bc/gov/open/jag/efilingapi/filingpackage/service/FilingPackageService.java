@@ -12,6 +12,6 @@ public interface FilingPackageService {
 
     Optional<byte[]> getSubmissionSheet(BigDecimal packageNumber);
 
-    Optional<SubmittedDocument> getSubmissionDocument(String universalId, BigDecimal packageNumber, String documentIdentifier);
+    Optional<SubmittedDocument> getSubmittedDocument(String universalId, BigDecimal packageNumber, String documentIdentifier);
 
 }

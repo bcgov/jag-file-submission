@@ -15,7 +15,7 @@ public interface EfilingReviewService {
 
     Optional<byte[]> getSubmissionSheet(BigDecimal packageNumber);
 
-    Optional<byte[]> getSubmissionDocument(BigDecimal packageNumber,
-                                           String documentIdentifier);
+    Optional<byte[]> getSubmittedDocument(BigDecimal packageNumber,
+                                          String documentIdentifier);
 
 }

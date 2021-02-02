@@ -7,13 +7,15 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingcommons.model.*;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.review.PackagePayment;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewCourt;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import com.google.gson.JsonObject;
+import org.joda.time.DateTime;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class TestHelpers {
 
@@ -47,6 +49,20 @@ public class TestHelpers {
     public static final String NAME_TYPE_CD = "NAMECD";
     public static final String PARTY_TYPE_CD = "PARTYCD";
     public static final String ROLE_TYPE_CD = "ABC";
+
+    public static final String COURT_CLASS = "COURT_CLASS";
+    public static final String FILE_NUMBER = "FILE_NUMBER";
+    public static final String LOCATION_DESCRIPTION = "LOCATION_DESCRIPTION";
+    public static final String PARTICIPATING_CLASS = "PARTICIPATING_CLASS";
+    public static final String NAME_TYPE = "NAME_TYPE";
+    public static final String NAME = "NAME";
+    public static final String STATUS = "STATUS";
+    public static final String STATUS_CODE = "STATUSCODE";
+    public static final String COMMENT = "COMMENT";
+    public static final String PACKAGE_NO = "123";
+
+
+
     public static final InitialDocument.TypeEnum TYPE = InitialDocument.TypeEnum.AAB;
 
     public static InitialPackage createInitalPackage(ca.bc.gov.open.jag.efilingapi.api.model.Court court, List<InitialDocument> initialDocuments) {
@@ -183,5 +199,88 @@ public class TestHelpers {
         return createNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL);
     }
 
+    public static AccountDetails createAccount(BigDecimal clientId) {
+
+        return AccountDetails.builder()
+                .fileRolePresent(true)
+                .accountId(BigDecimal.ONE)
+                .clientId(clientId)
+                .cardRegistered(true)
+                .universalId(UUID.randomUUID().toString())
+                .internalClientNumber(null)
+                .universalId(TestHelpers.CASE_1_STRING).create();
+
+    }
+
+    public static ReviewFilingPackage createFilingPackage() {
+
+        ReviewFilingPackage reviewFilingPackage = new ReviewFilingPackage();
+        reviewFilingPackage.setClientFileNo("CLIENTFILENO");
+        reviewFilingPackage.setFilingCommentsTxt(COMMENT);
+        reviewFilingPackage.setPackageNo(PACKAGE_NO);
+        reviewFilingPackage.setFirstName(FIRST_NAME);
+        reviewFilingPackage.setLastName(LAST_NAME);
+        reviewFilingPackage.setSubmittedDate(DateTime.parse("2020-05-05T00:00:00.000-07:00"));
+        reviewFilingPackage.setCourt(createReviewCourt());
+        reviewFilingPackage.setDocuments(Collections.singletonList(createDocument()));
+        reviewFilingPackage.setParties(Collections.singletonList(createParty()));
+        reviewFilingPackage.setPayments(Collections.singletonList(createPayment()));
+        return reviewFilingPackage;
+
+    }
+
+    public static ReviewCourt createReviewCourt() {
+
+        ReviewCourt reviewCourt = new ReviewCourt();
+        reviewCourt.setClassDescription(CLASS_DESCRIPTION);
+        reviewCourt.setCourtClass(COURT_CLASS);
+        reviewCourt.setDivision(DIVISION);
+        reviewCourt.setFileNumber(FILE_NUMBER);
+        reviewCourt.setLevel(LEVEL);
+        reviewCourt.setLevelDescription(LEVEL_DESCRIPTION);
+        reviewCourt.setLocationId(BigDecimal.ONE);
+        reviewCourt.setLocationName(LOCATION);
+        reviewCourt.setLocationDescription(LOCATION_DESCRIPTION);
+        reviewCourt.setParticipatingClass(PARTICIPATING_CLASS);
+        return reviewCourt;
+
+    }
+
+    public static Party createParty() {
+        return Party.builder()
+                .firstName(FIRST_NAME)
+                .lastName(LAST_NAME)
+                .middleName(MIDDLE_NAME)
+                .nameTypeCd(NAME_TYPE)
+                .partyTypeCd(ca.bc.gov.open.jag.efilingapi.api.model.Party.PartyTypeEnum.IND.getValue())
+                .roleTypeCd(ca.bc.gov.open.jag.efilingapi.api.model.Party.RoleTypeEnum.ABC.getValue())
+                .create();
+    }
+
+    public static ReviewDocument createDocument() {
+
+        ReviewDocument reviewDocument = new ReviewDocument();
+        reviewDocument.setFileName(NAME);
+        reviewDocument.setDocumentTypeCd(InitialDocument.TypeEnum.AAB.getValue());
+        reviewDocument.setStatus(STATUS);
+        reviewDocument.setStatusCode(STATUS_CODE);
+        reviewDocument.setStatusDate(DateTime.parse("2020-05-05T00:00:00.000-07:00"));
+        reviewDocument.setPaymentProcessed(true);
+        return reviewDocument;
+
+    }
+
+    public static PackagePayment createPayment() {
+
+        PackagePayment packagePayment = new PackagePayment();
+        packagePayment.setFeeExmpt(false);
+        packagePayment.setPaymentCategory(BigDecimal.ONE);
+        packagePayment.setProcessedAmt(BigDecimal.ONE);
+        packagePayment.setSubmittedAmt(BigDecimal.ONE);
+        packagePayment.setServiceId(BigDecimal.ONE);
+        packagePayment.setTransactionDtm(DateTime.parse("2020-05-05T00:00:00.000-07:00"));
+        return packagePayment;
+
+    }
 
 }

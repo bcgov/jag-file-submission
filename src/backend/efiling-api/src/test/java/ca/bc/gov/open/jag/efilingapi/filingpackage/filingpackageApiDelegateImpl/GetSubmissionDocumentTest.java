@@ -69,13 +69,13 @@ public class GetSubmissionDocumentTest {
 
         SecurityContextHolder.setContext(securityContextMock);
 
-        Mockito.when(filingPackageService.getSubmissionDocument(Mockito.any(), ArgumentMatchers.eq(BigDecimal.ONE), Mockito.any())).thenReturn(Optional.of(SubmittedDocument.builder()
+        Mockito.when(filingPackageService.getSubmittedDocument(Mockito.any(), ArgumentMatchers.eq(BigDecimal.ONE), Mockito.any())).thenReturn(Optional.of(SubmittedDocument.builder()
                                                                                                                                                                 .data(BYTES)
                                                                                                                                                                 .name("TEST")
                                                                                                                                                                 .create()));
 
 
-        Mockito.when(filingPackageService.getSubmissionDocument(Mockito.any(), ArgumentMatchers.eq(BigDecimal.TEN), Mockito.any())).thenReturn(Optional.empty());
+        Mockito.when(filingPackageService.getSubmittedDocument(Mockito.any(), ArgumentMatchers.eq(BigDecimal.TEN), Mockito.any())).thenReturn(Optional.empty());
 
         sut = new FilingpackageApiDelegateImpl(filingPackageService);
     }

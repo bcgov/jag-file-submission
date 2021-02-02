@@ -70,7 +70,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
         if(!universalId.isPresent()) return new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
 
-        Optional<SubmittedDocument> result = filingPackageService.getSubmissionDocument(universalId.get(), packageIdentifier, documentIdentifier);
+        Optional<SubmittedDocument> result = filingPackageService.getSubmittedDocument(universalId.get(), packageIdentifier, documentIdentifier);
 
         if(!result.isPresent()) return new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.FILING_PACKAGE_NOT_FOUND).create(), HttpStatus.NOT_FOUND);
