@@ -92,6 +92,6 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
         return ResponseEntity.ok()
                 .headers(header)
                 .body(result.get().getData());
-        
+
     }
 }
