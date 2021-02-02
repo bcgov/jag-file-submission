@@ -89,10 +89,8 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
         HttpHeaders header = new HttpHeaders();
         header.add(HttpHeaders.CONTENT_DISPOSITION, MessageFormat.format("attachment; filename={0}",result.get().getName()));
 
-        ByteArrayResource resource = new ByteArrayResource(result.get().getData());
-
         return ResponseEntity.ok()
                 .headers(header)
-                .body(resource);
+                .body(result.get().getData());
     }
 }

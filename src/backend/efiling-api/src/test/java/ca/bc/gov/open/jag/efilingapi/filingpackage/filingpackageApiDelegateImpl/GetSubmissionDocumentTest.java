@@ -12,6 +12,7 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -70,7 +71,7 @@ public class GetSubmissionDocumentTest {
         SecurityContextHolder.setContext(securityContextMock);
 
         Mockito.when(filingPackageService.getSubmittedDocument(Mockito.any(), ArgumentMatchers.eq(BigDecimal.ONE), Mockito.any())).thenReturn(Optional.of(SubmittedDocument.builder()
-                                                                                                                                                                .data(BYTES)
+                                                                                                                                                                .data(new ByteArrayResource(BYTES))
                                                                                                                                                                 .name("TEST")
                                                                                                                                                                 .create()));
 

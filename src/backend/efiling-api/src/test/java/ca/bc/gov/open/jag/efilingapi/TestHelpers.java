@@ -60,7 +60,8 @@ public class TestHelpers {
     public static final String STATUS_CODE = "STATUSCODE";
     public static final String COMMENT = "COMMENT";
     public static final String PACKAGE_NO = "123";
-    public static final String DOCUMENT_ID = "DOCUMENT_ID";
+    public static final String DOCUMENT_ID_ONE = "DOCUMENT_ID_ONE";
+    public static final String DOCUMENT_ID_TWO = "DOCUMENT_ID_TWO";
 
     public static final InitialDocument.TypeEnum TYPE = InitialDocument.TypeEnum.AAB;
 
@@ -222,7 +223,7 @@ public class TestHelpers {
         reviewFilingPackage.setLastName(LAST_NAME);
         reviewFilingPackage.setSubmittedDate(DateTime.parse("2020-05-05T00:00:00.000-07:00"));
         reviewFilingPackage.setCourt(createReviewCourt());
-        reviewFilingPackage.setDocuments(Collections.singletonList(createDocument()));
+        reviewFilingPackage.setDocuments(createDocuments());
         reviewFilingPackage.setParties(Collections.singletonList(createParty()));
         reviewFilingPackage.setPayments(Collections.singletonList(createPayment()));
         return reviewFilingPackage;
@@ -257,17 +258,27 @@ public class TestHelpers {
                 .create();
     }
 
-    public static ReviewDocument createDocument() {
+    public static List<ReviewDocument> createDocuments() {
 
-        ReviewDocument reviewDocument = new ReviewDocument();
-        reviewDocument.setDocumentId(DOCUMENT_ID);
-        reviewDocument.setFileName(NAME);
-        reviewDocument.setDocumentTypeCd(InitialDocument.TypeEnum.AAB.getValue());
-        reviewDocument.setStatus(STATUS);
-        reviewDocument.setStatusCode(STATUS_CODE);
-        reviewDocument.setStatusDate(DateTime.parse("2020-05-05T00:00:00.000-07:00"));
-        reviewDocument.setPaymentProcessed(true);
-        return reviewDocument;
+        ReviewDocument reviewDocumentOne = new ReviewDocument();
+        reviewDocumentOne.setDocumentId(DOCUMENT_ID_ONE);
+        reviewDocumentOne.setFileName(NAME);
+        reviewDocumentOne.setDocumentTypeCd(InitialDocument.TypeEnum.AAB.getValue());
+        reviewDocumentOne.setStatus(STATUS);
+        reviewDocumentOne.setStatusCode(STATUS_CODE);
+        reviewDocumentOne.setStatusDate(DateTime.parse("2020-05-05T00:00:00.000-07:00"));
+        reviewDocumentOne.setPaymentProcessed(true);
+
+        ReviewDocument reviewDocumentTwo = new ReviewDocument();
+        reviewDocumentTwo.setDocumentId(DOCUMENT_ID_TWO);
+        reviewDocumentTwo.setFileName(NAME);
+        reviewDocumentTwo.setDocumentTypeCd(InitialDocument.TypeEnum.AAB.getValue());
+        reviewDocumentTwo.setStatus(STATUS);
+        reviewDocumentTwo.setStatusCode(STATUS_CODE);
+        reviewDocumentTwo.setStatusDate(DateTime.parse("2020-05-05T00:00:00.000-07:00"));
+        reviewDocumentTwo.setPaymentProcessed(true);
+
+        return Arrays.asList(reviewDocumentOne,reviewDocumentTwo);
 
     }
 

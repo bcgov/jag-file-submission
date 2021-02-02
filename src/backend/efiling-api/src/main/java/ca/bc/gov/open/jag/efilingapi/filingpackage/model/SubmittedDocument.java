@@ -1,16 +1,16 @@
 package ca.bc.gov.open.jag.efilingapi.filingpackage.model;
 
-import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
+import org.springframework.core.io.Resource;
 
 public class SubmittedDocument {
     private String name;
-    private byte[] data;
+    private Resource data;
 
     public String getName() {
         return name;
     }
 
-    public byte[] getData() {
+    public Resource getData() {
         return data;
     }
 
@@ -26,7 +26,7 @@ public class SubmittedDocument {
     public static class Builder {
 
         private String name;
-        private byte[] data;
+        private Resource data;
 
 
         public SubmittedDocument.Builder name(String name) {
@@ -34,7 +34,7 @@ public class SubmittedDocument {
             return this;
         }
 
-        public SubmittedDocument.Builder data(byte[] data) {
+        public SubmittedDocument.Builder data(Resource data) {
             this.data = data;
             return this;
         }

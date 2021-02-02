@@ -9,6 +9,7 @@ import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
+import org.springframework.core.io.ByteArrayResource;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -53,7 +54,7 @@ public class FilingPackageServiceImpl implements FilingPackageService {
 
         if (!filingPackage.isPresent()) return Optional.empty();
 
-        Optional<ReviewDocument> reviewDocument = filingPackage.get().getDocuments().stream().findFirst().filter(document -> document.getDocumentId().equals(documentIdentifier));
+        Optional<ReviewDocument> reviewDocument = filingPackage.get().getDocuments().stream().filter(document -> document.getDocumentId().equals(documentIdentifier)).findFirst();
 
         if (!reviewDocument.isPresent()) return Optional.empty();
 
@@ -61,7 +62,7 @@ public class FilingPackageServiceImpl implements FilingPackageService {
 
         return document.map(bytes -> SubmittedDocument.builder()
                 .name(reviewDocument.get().getFileName())
-                .data(bytes)
+                .data(new ByteArrayResource(bytes))
                 .create());
 
     }
