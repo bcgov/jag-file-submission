@@ -15,7 +15,6 @@ public abstract class Base {
     @Autowired
     protected WebDriverWait wait;
 
-
     @PostConstruct
     private void init() {
         PageFactory.initElements(this.driver, this);

@@ -50,7 +50,7 @@ public class EFileSubmissionTest extends ca.bc.gov.open.jagefilingapi.qa.fronten
     }
 
     @Given("user is on the eFiling submission pages")
-    public void userIsOnTheEfilingSubmissionPage() throws IOException {
+    public void userIsOnTheEfilingSubmissionPages() throws IOException {
         eFileSubmissionPage = new EFileSubmissionPage(driver);
         try {
                 GenerateUrlHelper generateUrlHelper = new GenerateUrlHelper();
