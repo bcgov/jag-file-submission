@@ -7,6 +7,9 @@ import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.model.SubmittedDocument;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import ca.bc.gov.open.jag.efilingapi.core.security.SecurityUtils;
+import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -23,6 +26,7 @@ import java.util.Optional;
 public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
 
     private final FilingPackageService filingPackageService;
+    Logger logger = LoggerFactory.getLogger(FilingpackageApiDelegateImpl.class);
 
     public FilingpackageApiDelegateImpl(FilingPackageService filingPackageService) {
         this.filingPackageService = filingPackageService;
@@ -31,6 +35,8 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
     @Override
     @RolesAllowed("efiling-user")
     public ResponseEntity<FilingPackage> getFilingPackage(BigDecimal packageIdentifier) {
+
+        logger.info("get filing package request received");
 
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
@@ -49,6 +55,8 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
     @RolesAllowed("efiling-user")
     public ResponseEntity<Resource> getSubmissionSheet(BigDecimal packageIdentifier) {
 
+        logger.info("get submission sheet request received");
+
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
         if(!universalId.isPresent()) return new ResponseEntity(
@@ -65,6 +73,9 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
     @RolesAllowed("efiling-user")
     public ResponseEntity<Resource> getSubmittedDocument(BigDecimal packageIdentifier,
                                                          String documentIdentifier) {
+
+        logger.info("get document request received");
+
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
         if(!universalId.isPresent()) return new ResponseEntity(
