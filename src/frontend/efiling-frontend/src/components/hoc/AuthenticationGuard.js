@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import Keycloak from "keycloak-js";
 import createAuthRefreshInterceptor from "axios-auth-refresh";
 import Home from "../page/home/Home";
-import PackageReview from "../page/package-review/PackageReview";
+import PackageReview from "../../domain/package/package-review/PackageReview";
 import { propTypes } from "../../types/propTypes";
 
 const url = window.REACT_APP_KEYCLOAK_URL

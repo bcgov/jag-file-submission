@@ -33,10 +33,15 @@ exports[`Cancel Component matches the snapshot 1`] = `
           class="bcgov-pointer navbar-brand nav-item nav-link"
         />
         <div
-          class="navbar-brand"
-          id="title"
+          class="bcgov-flex-spacing"
         >
-          eFiling Demo Client
+          <div
+            class="navbar-brand bcgov-vertical-center"
+            id="title"
+          >
+            eFiling Demo Client
+          </div>
+          <div />
         </div>
       </nav>
     </header>

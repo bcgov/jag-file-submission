@@ -33,10 +33,15 @@ exports[`PackageReview Component Matches the snapshot 1`] = `
           class="bcgov-pointer navbar-brand nav-item nav-link"
         />
         <div
-          class="navbar-brand"
-          id="title"
+          class="bcgov-flex-spacing"
         >
-          eFiling Frontend
+          <div
+            class="navbar-brand bcgov-vertical-center"
+            id="title"
+          >
+            eFiling Frontend
+          </div>
+          <div />
         </div>
       </nav>
     </header>

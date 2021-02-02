@@ -33,10 +33,15 @@ exports[`Storyshots PackageReview Default 1`] = `
           class="bcgov-pointer navbar-brand nav-item nav-link"
         />
         <div
-          class="navbar-brand"
-          id="title"
+          class="bcgov-flex-spacing"
         >
-          E-File Submission
+          <div
+            class="navbar-brand bcgov-vertical-center"
+            id="title"
+          >
+            E-File Submission
+          </div>
+          <div />
         </div>
       </nav>
     </header>
@@ -424,10 +429,15 @@ exports[`Storyshots PackageReview Mobile 1`] = `
           class="bcgov-pointer navbar-brand nav-item nav-link"
         />
         <div
-          class="navbar-brand"
-          id="title"
+          class="bcgov-flex-spacing"
         >
-          E-File Submission
+          <div
+            class="navbar-brand bcgov-vertical-center"
+            id="title"
+          >
+            E-File Submission
+          </div>
+          <div />
         </div>
       </nav>
     </header>
