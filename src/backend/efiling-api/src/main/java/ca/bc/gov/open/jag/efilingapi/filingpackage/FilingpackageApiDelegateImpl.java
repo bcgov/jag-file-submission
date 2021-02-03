@@ -96,6 +96,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
     }
 
     @Override
+    @RolesAllowed("efiling-user")
     public ResponseEntity<Void> deleteSubmittedDocument(BigDecimal packageIdentifier, String documentIdentifier) {
         return ResponseEntity.ok(null);
     }
