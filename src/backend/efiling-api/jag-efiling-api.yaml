@@ -431,7 +431,7 @@ paths:
                 format: binary
         "404":
           description: file not found
-  "/filingpackages/{packageIdentifier}/{documentIdentifier}/document":
+  "/filingpackages/{packageIdentifier}/document/{documentIdentifier}":
     get:
       summary: Get submitted document
       operationId: GetSubmittedDocument
@@ -461,6 +461,30 @@ paths:
                 format: binary
         "404":
           description: file not found
+    delete:
+      summary: delete submitted document
+      operationId: DeleteSubmittedDocument
+      description: Delete submitted document
+      tags:
+        - filingPackages
+      parameters:
+        - name: packageIdentifier
+          in: path
+          description: package identifier
+          required: true
+          schema:
+            type: number
+        - name: documentIdentifier
+          in: path
+          description: document identifier
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Document was deleted
+        "404":
+          description: Document not found
 components:
   securitySchemes:
     bearerAuth: # arbitrary name for the security scheme
