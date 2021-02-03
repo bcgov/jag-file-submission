@@ -19,13 +19,7 @@ public class AuthenticateAndRedirectToEfilingHubSD {
     private static final String EFILE_SUBMISSION_PAGE_TITLE = "E-File submission";
     private static final String INITIAL_DOCUMENT_NAME = "test-document.pdf";
 
-    // EFileSubmissionPage eFileSubmissionPage;
-    /*PackageConfirmationPage packageConfirmationPage;
-    private static final String EFILE_SUBMISSION_PAGE_TITLE = "E-File submission";
-    private static final String BASE_PATH = "user.dir";
-    private static final String SECOND_PDF_PATH = "/src/test/java/testdatasource/test-document-2.pdf";
-    private final List<String> expectedUploadedFilesList = ImmutableList.of("data/test-document.pdf", "test-document-2.pdf");
-*/
+
     Logger log = LogManager.getLogger(AuthenticateAndRedirectToEfilingHubSD.class);
 
     public AuthenticateAndRedirectToEfilingHubSD(AuthenticationPage authenticationPage, PackageConfirmationPage packageConfirmationPage) {
