@@ -462,7 +462,7 @@ paths:
         "404":
           description: file not found
     delete:
-      summary: delete submitted document
+      summary: delete(withdraw) submitted document
       operationId: DeleteSubmittedDocument
       description: Delete submitted document
       tags:
