@@ -25,8 +25,10 @@ describe("PackageReview Component", () => {
     "Lorem ipsum dolor sit amet.<script>alert('Hi');</script>\n\nDuis aute irure dolor.";
   const documents = [
     {
-      type: "AFF",
-      name: "test-document.pdf",
+      documentProperties: {
+        type: "AFF",
+        name: "test-document.pdf",
+      },
       status: {
         description: "Submitted",
       },
