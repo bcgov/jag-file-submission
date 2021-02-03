@@ -7,10 +7,8 @@ import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.model.SubmittedDocument;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import ca.bc.gov.open.jag.efilingapi.core.security.SecurityUtils;
-import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -31,6 +29,8 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
     public FilingpackageApiDelegateImpl(FilingPackageService filingPackageService) {
         this.filingPackageService = filingPackageService;
     }
+
+
 
     @Override
     @RolesAllowed("efiling-user")
@@ -94,4 +94,11 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
                 .body(result.get().getData());
 
     }
+
+    @Override
+    @RolesAllowed("efiling-user")
+    public ResponseEntity<Void> deleteSubmittedDocument(BigDecimal packageIdentifier, String documentIdentifier) {
+        return ResponseEntity.ok(null);
+    }
+
 }
