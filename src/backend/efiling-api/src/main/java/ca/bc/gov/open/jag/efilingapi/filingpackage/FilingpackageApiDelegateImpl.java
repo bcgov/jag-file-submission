@@ -98,7 +98,20 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
     @Override
     @RolesAllowed("efiling-user")
     public ResponseEntity<Void> deleteSubmittedDocument(BigDecimal packageIdentifier, String documentIdentifier) {
-        return ResponseEntity.ok(null);
+
+        logger.info("get document request received");
+
+        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
+
+        if(!universalId.isPresent()) return new ResponseEntity(
+                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
+
+        if (filingPackageService.deleteSubmittedDocument(universalId.get(), packageIdentifier, documentIdentifier)) {
+            return ResponseEntity.ok(null);
+        } else {
+            return new ResponseEntity(
+                   EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DELETE_DOCUMENT_ERROR).create(), HttpStatus.BAD_REQUEST);
+        }
     }
 
 }
