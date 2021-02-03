@@ -28,7 +28,17 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>ca.bc.gov.open.jag</groupId>
+				<artifactId>efiling-bom</artifactId>
+				<version>0.7.0-SNAPSHOT</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<build>
 		<plugins>
 			<plugin>
