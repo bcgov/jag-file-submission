@@ -118,8 +118,10 @@ public class UpdateDocumentPropertiesTest {
 
         UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest();
         InitialDocument initialDocument = new InitialDocument();
-        initialDocument.setType(TestHelpers.TYPE);
-        initialDocument.setName("test.txt");
+        DocumentProperties documentProperties = new DocumentProperties();
+        documentProperties.setType(TestHelpers.TYPE);
+        documentProperties.setName("test.txt");
+        initialDocument.setDocumentProperties(documentProperties);
         initialDocument.setIsAmendment(true);
         initialDocument.setIsSupremeCourtScheduling(true);
         updateDocumentRequest.addDocumentsItem(initialDocument);

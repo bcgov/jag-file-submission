@@ -22,10 +22,8 @@ public class GetByKeyTest {
     @BeforeAll
     public void setUp() {
 
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
 
-        InitialDocument documentMetadata = new InitialDocument();
-        documentMetadata.setType(TestHelpers.TYPE);
     }
 
     @Test
