@@ -99,7 +99,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
     @RolesAllowed("efiling-user")
     public ResponseEntity<Void> deleteSubmittedDocument(BigDecimal packageIdentifier, String documentIdentifier) {
 
-        logger.info("get document request received");
+        logger.info("delete document request received");
 
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 

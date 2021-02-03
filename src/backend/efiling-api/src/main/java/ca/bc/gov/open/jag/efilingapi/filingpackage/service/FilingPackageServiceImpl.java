@@ -6,11 +6,13 @@ import ca.bc.gov.open.jag.efilingapi.filingpackage.mapper.FilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.model.SubmittedDocument;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -72,7 +74,12 @@ public class FilingPackageServiceImpl implements FilingPackageService {
 
     @Override
     public boolean deleteSubmittedDocument(String universalId, BigDecimal packageNumber, String documentIdentifier) {
-        return false;
+
+        AccountDetails accountDetails = accountService.getCsoAccountDetails(universalId);
+
+        if (accountDetails.getClientId() == null) return false;
+
+        return efilingReviewService.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(accountDetails.getClientId(), packageNumber, documentIdentifier));
     }
 
     private Optional<ReviewFilingPackage> getFilingPackage(String universalId, BigDecimal packageNumber) {
