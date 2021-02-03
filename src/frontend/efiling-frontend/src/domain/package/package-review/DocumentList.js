@@ -7,25 +7,25 @@ export default function DocumentList({ documents }) {
   return (
     <div>
       <div className="header">
-        <span className="d-none d-md-inline col-md-3">Document Type</span>
-        <span className="d-none d-md-inline col-md-3">File Name</span>
-        <span className="d-none d-md-inline col-md-3">Status</span>
-        <span className="d-none d-md-inline col-md-3">Action (s)</span>
+        <span className="d-none d-lg-inline col-lg-3">Document Type</span>
+        <span className="d-none d-lg-inline col-lg-4">File Name</span>
+        <span className="d-none d-lg-inline col-lg-3">Status</span>
+        <span className="d-none d-lg-inline col-lg-2">Action (s)</span>
       </div>
       <ul>
         {documents &&
           documents.map((document) => (
             <li key={document.identifier}>
-              <span className="label col-sm-4 d-md-none">Document Type:</span>
-              <span className="col-sm-8 col-md-3">{document.type}</span>
-              <span className="label col-sm-4 d-md-none">File Name:</span>
-              <span className="col-sm-8 col-md-3">{document.name}</span>
-              <span className="label col-sm-4 d-md-none">Status:</span>
-              <span className="col-sm-8 col-md-3">
+              <span className="label col-sm-4 d-lg-none">Document Type:</span>
+              <span className="col-sm-8 col-lg-3">{document.description}</span>
+              <span className="label col-sm-4 d-lg-none">File Name:</span>
+              <span className="col-sm-8 col-lg-4">{document.name}</span>
+              <span className="label col-sm-4 d-lg-none">Status:</span>
+              <span className="col-sm-8 col-lg-3">
                 {document.status.description}
               </span>
-              <span className="label col-sm-4 d-md-none">Action (s):</span>
-              <span className="col-sm-8 col-md-3">withdraw</span>
+              <span className="label col-sm-4 d-lg-none">Action (s):</span>
+              <span className="col-sm-8 col-lg-2">withdraw</span>
             </li>
           ))}
       </ul>

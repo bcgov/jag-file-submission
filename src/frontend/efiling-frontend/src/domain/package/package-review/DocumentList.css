@@ -15,12 +15,11 @@ li {
   display: flex;
   flex-wrap: wrap;
   list-style-type: none;
-  border: 2px solid #e1bebd;
+  border: 1px solid #BFBFBF;
   padding: 10px 0px;
   margin: 10px 0px;
 }
 li span {
-  white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
 }
