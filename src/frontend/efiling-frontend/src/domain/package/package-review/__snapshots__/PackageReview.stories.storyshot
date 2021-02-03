@@ -276,22 +276,22 @@ exports[`Storyshots PackageReview Default 1`] = `
                 class="header"
               >
                 <span
-                  class="d-none d-md-inline col-md-3"
+                  class="d-none d-lg-inline col-lg-3"
                 >
                   Document Type
                 </span>
                 <span
-                  class="d-none d-md-inline col-md-3"
+                  class="d-none d-lg-inline col-lg-4"
                 >
                   File Name
                 </span>
                 <span
-                  class="d-none d-md-inline col-md-3"
+                  class="d-none d-lg-inline col-lg-3"
                 >
                   Status
                 </span>
                 <span
-                  class="d-none d-md-inline col-md-3"
+                  class="d-none d-lg-inline col-lg-2"
                 >
                   Action (s)
                 </span>
@@ -698,22 +698,22 @@ exports[`Storyshots PackageReview Mobile 1`] = `
                 class="header"
               >
                 <span
-                  class="d-none d-md-inline col-md-3"
+                  class="d-none d-lg-inline col-lg-3"
                 >
                   Document Type
                 </span>
                 <span
-                  class="d-none d-md-inline col-md-3"
+                  class="d-none d-lg-inline col-lg-4"
                 >
                   File Name
                 </span>
                 <span
-                  class="d-none d-md-inline col-md-3"
+                  class="d-none d-lg-inline col-lg-3"
                 >
                   Status
                 </span>
                 <span
-                  class="d-none d-md-inline col-md-3"
+                  class="d-none d-lg-inline col-lg-2"
                 >
                   Action (s)
                 </span>
