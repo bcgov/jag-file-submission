@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi;
 
+import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingapi.api.model.InitialDocument;
 import ca.bc.gov.open.jag.efilingapi.api.model.InitialPackage;
 import ca.bc.gov.open.jag.efilingapi.api.model.NavigationUrls;
@@ -63,7 +64,7 @@ public class TestHelpers {
     public static final String DOCUMENT_ID_ONE = "DOCUMENT_ID_ONE";
     public static final String DOCUMENT_ID_TWO = "DOCUMENT_ID_TWO";
 
-    public static final InitialDocument.TypeEnum TYPE = InitialDocument.TypeEnum.AAB;
+    public static final DocumentProperties.TypeEnum TYPE = DocumentProperties.TypeEnum.AAB;
 
 
     public static InitialPackage createInitalPackage(ca.bc.gov.open.jag.efilingapi.api.model.Court court, List<InitialDocument> initialDocuments) {
@@ -130,10 +131,12 @@ public class TestHelpers {
     }
 
     public static List<InitialDocument> createInitialDocumentsList() {
-        InitialDocument documentProperties = new InitialDocument();
+        InitialDocument initialDocument = new InitialDocument();
+        DocumentProperties documentProperties = new DocumentProperties();
         documentProperties.setName("random.txt");
-        documentProperties.setType(InitialDocument.TypeEnum.AAB);
-        return Arrays.asList(documentProperties);
+        documentProperties.setType(DocumentProperties.TypeEnum.AAB);
+        initialDocument.setDocumentProperties(documentProperties);
+        return Arrays.asList(initialDocument);
     }
 
     public static List<DocumentType> createValidDocumentTypesList() {

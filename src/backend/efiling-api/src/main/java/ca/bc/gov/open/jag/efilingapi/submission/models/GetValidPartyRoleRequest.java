@@ -26,7 +26,7 @@ public class GetValidPartyRoleRequest {
     }
 
     public String getDocumentTypesAsString() {
-        return this.initialDocuments.stream().map(x -> x.getType().getValue()).collect(Collectors.joining(","));
+        return this.initialDocuments.stream().map(x -> x.getDocumentProperties().getType().getValue()).collect(Collectors.joining(","));
     }
 
     public GetValidPartyRoleRequest(Builder builder) {

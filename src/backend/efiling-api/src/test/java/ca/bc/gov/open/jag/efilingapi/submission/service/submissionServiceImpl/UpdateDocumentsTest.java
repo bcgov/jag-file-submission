@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service.submissionServiceImpl;
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
+import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingapi.api.model.InitialDocument;
 import ca.bc.gov.open.jag.efilingapi.api.model.UpdateDocumentRequest;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
@@ -80,8 +81,10 @@ public class UpdateDocumentsTest {
     public void withValidRequestShouldreturnSubmission() {
         UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest();
         InitialDocument initialDocument = new InitialDocument();
-        initialDocument.setType(TestHelpers.TYPE);
-        initialDocument.setName("test.txt");
+        DocumentProperties documentProperties = new DocumentProperties();
+        documentProperties.setType(TestHelpers.TYPE);
+        documentProperties.setName("test.txt");
+        initialDocument.setDocumentProperties(documentProperties);
         updateDocumentRequest.addDocumentsItem(initialDocument);
 
         Submission submission = TestHelpers.buildSubmission();
