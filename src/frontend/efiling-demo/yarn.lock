@@ -13176,10 +13176,10 @@ react-color@^2.17.0:
     reactcss "^1.2.0"
     tinycolor2 "^1.4.1"
 
-react-datepicker@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/react-datepicker/-/react-datepicker-3.3.0.tgz#38dec531fd7c8e0de6860a55dfbc3a8ff803d43c"
-  integrity sha512-QnIlBxDSWEGBi2X5P1BqWzvfnPFRKhtrsgAcujUVwyWeID/VatFaAOEjEjfD1bXR9FuSYVLlLR3j/vbG19hWOA==
+react-datepicker@^3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/react-datepicker/-/react-datepicker-3.4.1.tgz#3c8e8989f1ab31a767c17170a2d1318aa3c3b9ef"
+  integrity sha512-ASyVb7UmVx1vzeITidD7Cr/EXRXhKyjjbSkBndPc1MipYq4rqQ3eMFgvRQzpsXc3JmIMFgICm7nmN6Otc1GE/Q==
   dependencies:
     classnames "^2.2.6"
     date-fns "^2.0.1"
@@ -14322,9 +14322,9 @@ shallowequal@^1.1.0:
   resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-1.1.0.tgz#188d521de95b9087404fd4dcb68b13df0ae4e7f8"
   integrity sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==
 
-"shared-components@https://github.com/bcgov/react-shared-components/releases/download/1.2.0/shared-components-1.2.0.tgz":
-  version "1.2.0"
-  resolved "https://github.com/bcgov/react-shared-components/releases/download/1.2.0/shared-components-1.2.0.tgz#ca00e9947280b1bf50862270dfb49ef554a1532c"
+"shared-components@https://github.com/bcgov/react-shared-components/releases/download/v1.2.1/shared-components-1.2.1.tgz":
+  version "1.2.1"
+  resolved "https://github.com/bcgov/react-shared-components/releases/download/v1.2.1/shared-components-1.2.1.tgz#67895ff8893862994f120864edca0e931258d030"
   dependencies:
     "@bcgov/bootstrap-theme" "github:bcgov/bootstrap-theme"
     bootstrap "^4.5.3"
@@ -14332,7 +14332,7 @@ shallowequal@^1.1.0:
     jquery "^3.5.1"
     prop-types "^15.7.2"
     react-bootstrap "^1.4.0"
-    react-datepicker "^3.3.0"
+    react-datepicker "^3.4.1"
     react-icons "^3.11.0"
     react-router-dom "^5.1.2"
     regenerator-runtime "^0.13.7"
