@@ -4,7 +4,7 @@
   "homepage": ".",
   "private": true,
   "dependencies": {
-    "@babel/preset-react": "^7.12.1",
+    "@babel/preset-react": "^7.12.13",
     "@bcgov/bootstrap-theme": "github:bcgov/bootstrap-theme",
     "axios": "^0.21.1",
     "babel-plugin-transform-export-extensions": "^6.22.0",
@@ -21,7 +21,7 @@
     "react-scripts": "3.4.3",
     "react-dropzone": "^11.1.0",
     "regenerator-runtime": "^0.13.5",
-    "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/1.2.0/shared-components-1.2.0.tgz",
+    "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/v1.2.1/shared-components-1.2.1.tgz",
     "uuid": "^8.3.1"
   },
   "scripts": {
