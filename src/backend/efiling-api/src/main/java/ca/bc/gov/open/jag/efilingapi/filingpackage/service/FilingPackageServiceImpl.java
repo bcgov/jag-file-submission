@@ -70,6 +70,11 @@ public class FilingPackageServiceImpl implements FilingPackageService {
 
     }
 
+    @Override
+    public boolean deleteSubmittedDocument(String universalId, BigDecimal packageNumber, String documentIdentifier) {
+        return false;
+    }
+
     private Optional<ReviewFilingPackage> getFilingPackage(String universalId, BigDecimal packageNumber) {
         AccountDetails accountDetails = accountService.getCsoAccountDetails(universalId);
 

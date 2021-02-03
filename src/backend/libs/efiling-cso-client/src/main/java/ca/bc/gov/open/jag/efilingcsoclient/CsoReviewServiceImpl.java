@@ -8,6 +8,7 @@ import ca.bc.gov.ag.csows.reports.Report;
 import ca.bc.gov.ag.csows.reports.ReportService;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingStatusServiceException;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapper;
@@ -98,5 +99,10 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
     public Optional<byte[]> getSubmittedDocument(BigDecimal packageNumber, String documentIdentifier) {
         // TODO: implement Object Repo Logic
         return Optional.empty();
+    }
+
+    @Override
+    public boolean deleteSubmittedDocument(DeleteSubmissionDocumentRequest deleteSubmissionDocumentRequest) {
+        return false;
     }
 }

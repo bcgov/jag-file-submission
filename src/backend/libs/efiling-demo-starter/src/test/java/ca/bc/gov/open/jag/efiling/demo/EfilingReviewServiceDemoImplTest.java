@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efiling.demo;
 
+import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import org.joda.time.DateTime;
@@ -50,7 +51,7 @@ public class EfilingReviewServiceDemoImplTest {
         Assertions.assertEquals("123", result.get().getCourt().getFileNumber());
         Assertions.assertFalse(result.get().getCourt().getExistingFileYN());
 
-        Assertions.assertEquals(1, result.get().getDocuments().size());
+        Assertions.assertEquals(7, result.get().getDocuments().size());
         Assertions.assertEquals(DateTime.parse("2020-5-5"), result.get().getDocuments().get(0).getDateFiled());
         Assertions.assertEquals("1", result.get().getDocuments().get(0).getDocumentId());
         Assertions.assertEquals("Affidavit", result.get().getDocuments().get(0).getDocumentType());
@@ -124,6 +125,16 @@ public class EfilingReviewServiceDemoImplTest {
         Optional<byte[]> result = sut.getSubmittedDocument(BigDecimal.ONE, "TEST");
 
         Assertions.assertTrue(result.isPresent());
+
+    }
+
+    @Test
+    @DisplayName("OK: demo returns a boolean")
+    public void withDocumentRequestBoolean() {
+
+        boolean result = sut.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(BigDecimal.ONE, BigDecimal.ONE, "TEST"));
+
+        Assertions.assertTrue(result);
 
     }
 

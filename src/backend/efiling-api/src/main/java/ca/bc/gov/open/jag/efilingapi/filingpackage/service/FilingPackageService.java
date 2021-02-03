@@ -15,4 +15,6 @@ public interface FilingPackageService {
 
     Optional<SubmittedDocument> getSubmittedDocument(String universalId, BigDecimal packageNumber, String documentIdentifier);
 
+    boolean deleteSubmittedDocument(String universalId, BigDecimal packageNumber, String documentIdentifier);
+
 }
