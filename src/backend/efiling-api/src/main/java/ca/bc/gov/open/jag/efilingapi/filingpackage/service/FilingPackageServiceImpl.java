@@ -80,6 +80,7 @@ public class FilingPackageServiceImpl implements FilingPackageService {
         if (accountDetails.getClientId() == null) return false;
 
         return efilingReviewService.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(accountDetails.getClientId(), packageNumber, documentIdentifier));
+
     }
 
     private Optional<ReviewFilingPackage> getFilingPackage(String universalId, BigDecimal packageNumber) {
@@ -90,6 +91,7 @@ public class FilingPackageServiceImpl implements FilingPackageService {
         FilingPackageRequest request = new FilingPackageRequest(accountDetails.getClientId(), packageNumber);
 
         return efilingReviewService.findStatusByPackage(request);
+        
     }
 
 }
