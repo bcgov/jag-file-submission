@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingapi.filingpackage.service.filingPackageService
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
+import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.api.model.InitialDocument;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.mapper.FilingPackageMapperImpl;
@@ -29,6 +30,26 @@ import java.util.UUID;
 @DisplayName("FilePackageServiceImplTest")
 public class GetCSOFilingPackageTest {
 
+    public static final String CLASS_DESCRIPTION = "CLASS_DESCRIPTION";
+    public static final String COURT_CLASS = "COURT_CLASS";
+    public static final String DIVISION = "DIVISION";
+    public static final String FILE_NUMBER = "FILE_NUMBER";
+    public static final String LEVEL = "LEVEL";
+    public static final String LEVEL_DESCRIPTION = "LEVEL_DESCRIPTION";
+    public static final String LOCATION = "LOCATION";
+    public static final String LOCATION_DESCRIPTION = "LOCATION_DESCRIPTION";
+    public static final String PARTICIPATING_CLASS = "PARTICIPATING_CLASS";
+    public static final String FIRST_NAME = "FIRST_NAME";
+    public static final String LAST_NAME = "LAST_NAME";
+    public static final String MIDDLE_NAME = "MIDDLENAME";
+    public static final String NAME_TYPE = "NAME_TYPE";
+    public static final String DESCRIPTION = "DESCRIPTION";
+    public static final String NAME = "NAME";
+    public static final String TYPE = "TYPE";
+    public static final String STATUS = "STATUS";
+    public static final String STATUS_CODE = "STATUSCODE";
+    public static final String COMMENT = "COMMENT";
+    public static final String PACKAGE_NO = "123";
     public static final String EXPECTED_ISO = "2020-05-05T00:00:00.000-07:00";
     FilingPackageServiceImpl sut;
 
@@ -43,9 +64,9 @@ public class GetCSOFilingPackageTest {
 
         MockitoAnnotations.openMocks(this);
 
-        Mockito.when(accountServiceMock.getCsoAccountDetails(ArgumentMatchers.eq(TestHelpers.CASE_1_STRING))).thenReturn(TestHelpers.createAccount(BigDecimal.ONE));
+        Mockito.when(accountServiceMock.getCsoAccountDetails(ArgumentMatchers.eq(TestHelpers.CASE_1_STRING))).thenReturn(createAccount(BigDecimal.ONE));
 
-        Mockito.when(accountServiceMock.getCsoAccountDetails(ArgumentMatchers.eq(TestHelpers.CASE_2_STRING))).thenReturn(TestHelpers.createAccount(null));
+        Mockito.when(accountServiceMock.getCsoAccountDetails(ArgumentMatchers.eq(TestHelpers.CASE_2_STRING))).thenReturn(createAccount(null));
 
         sut = new FilingPackageServiceImpl(efilingReviewServiceMock, accountServiceMock, new FilingPackageMapperImpl());
     }
@@ -54,44 +75,44 @@ public class GetCSOFilingPackageTest {
     @DisplayName("Ok: a filing package was returned")
     public void withValidRequestReturnFilingPackage() {
 
-        Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.of(TestHelpers.createFilingPackage()));
+        Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.of(createFilingPackage()));
 
         Optional<FilingPackage> result = sut.getCSOFilingPackage(TestHelpers.CASE_1_STRING, BigDecimal.ONE);
 
         Assertions.assertTrue(result.isPresent());
         //FilingPackage
-        Assertions.assertEquals(TestHelpers.COMMENT, result.get().getFilingComments());
-        Assertions.assertEquals(new BigDecimal(TestHelpers.PACKAGE_NO), result.get().getPackageNumber());
+        Assertions.assertEquals(COMMENT, result.get().getFilingComments());
+        Assertions.assertEquals(new BigDecimal(PACKAGE_NO), result.get().getPackageNumber());
         Assertions.assertNotNull(result.get().getSubmittedDate());
-        Assertions.assertEquals(TestHelpers.FIRST_NAME, result.get().getSubmittedBy().getFirstName());
-        Assertions.assertEquals(TestHelpers.LAST_NAME, result.get().getSubmittedBy().getLastName());
+        Assertions.assertEquals(FIRST_NAME, result.get().getSubmittedBy().getFirstName());
+        Assertions.assertEquals(LAST_NAME, result.get().getSubmittedBy().getLastName());
         Assertions.assertEquals(EXPECTED_ISO, result.get().getSubmittedDate());
 
         //Court
-        Assertions.assertEquals(TestHelpers.CLASS_DESCRIPTION, result.get().getCourt().getClassDescription());
-        Assertions.assertEquals(TestHelpers.COURT_CLASS, result.get().getCourt().getCourtClass());
-        Assertions.assertEquals(TestHelpers.DIVISION, result.get().getCourt().getDivision());
-        Assertions.assertEquals(TestHelpers.FILE_NUMBER, result.get().getCourt().getFileNumber());
+        Assertions.assertEquals(CLASS_DESCRIPTION, result.get().getCourt().getClassDescription());
+        Assertions.assertEquals(COURT_CLASS, result.get().getCourt().getCourtClass());
+        Assertions.assertEquals(DIVISION, result.get().getCourt().getDivision());
+        Assertions.assertEquals(FILE_NUMBER, result.get().getCourt().getFileNumber());
         Assertions.assertEquals(BigDecimal.ONE, result.get().getCourt().getAgencyId());
-        Assertions.assertEquals(TestHelpers.LOCATION, result.get().getCourt().getLocation());
-        Assertions.assertEquals(TestHelpers.LEVEL, result.get().getCourt().getLevel());
-        Assertions.assertEquals(TestHelpers.LEVEL_DESCRIPTION, result.get().getCourt().getLevelDescription());
-        Assertions.assertEquals(TestHelpers.LOCATION_DESCRIPTION, result.get().getCourt().getLocationDescription());
-        Assertions.assertEquals(TestHelpers.PARTICIPATING_CLASS, result.get().getCourt().getParticipatingClass());
+        Assertions.assertEquals(LOCATION, result.get().getCourt().getLocation());
+        Assertions.assertEquals(LEVEL, result.get().getCourt().getLevel());
+        Assertions.assertEquals(LEVEL_DESCRIPTION, result.get().getCourt().getLevelDescription());
+        Assertions.assertEquals(LOCATION_DESCRIPTION, result.get().getCourt().getLocationDescription());
+        Assertions.assertEquals(PARTICIPATING_CLASS, result.get().getCourt().getParticipatingClass());
         //Party
         Assertions.assertEquals(1, result.get().getParties().size());
         Assertions.assertEquals(ca.bc.gov.open.jag.efilingapi.api.model.Party.PartyTypeEnum.IND, result.get().getParties().get(0).getPartyType());
         Assertions.assertEquals(ca.bc.gov.open.jag.efilingapi.api.model.Party.RoleTypeEnum.ABC, result.get().getParties().get(0).getRoleType());
-        Assertions.assertEquals(TestHelpers.FIRST_NAME, result.get().getParties().get(0).getFirstName());
-        Assertions.assertEquals(TestHelpers.LAST_NAME, result.get().getParties().get(0).getLastName());
-        Assertions.assertEquals(TestHelpers.MIDDLE_NAME, result.get().getParties().get(0).getMiddleName());
+        Assertions.assertEquals(FIRST_NAME, result.get().getParties().get(0).getFirstName());
+        Assertions.assertEquals(LAST_NAME, result.get().getParties().get(0).getLastName());
+        Assertions.assertEquals(MIDDLE_NAME, result.get().getParties().get(0).getMiddleName());
         //Document
         Assertions.assertEquals(2, result.get().getDocuments().size());
-        Assertions.assertEquals("AAB", result.get().getDocuments().get(0).getType());
         Assertions.assertEquals(TestHelpers.DESCRIPTION, result.get().getDocuments().get(0).getDescription());
         Assertions.assertEquals(TestHelpers.NAME, result.get().getDocuments().get(0).getName());
         Assertions.assertEquals(TestHelpers.STATUS, result.get().getDocuments().get(0).getStatus().getDescription());
         Assertions.assertEquals(TestHelpers.STATUS_CODE, result.get().getDocuments().get(0).getStatus().getCode());
+        Assertions.assertEquals(DocumentProperties.TypeEnum.AAB, result.get().getDocuments().get(0).getDocumentProperties().getType());
         Assertions.assertNotNull(result.get().getDocuments().get(0).getStatus().getChangeDate());
         Assertions.assertEquals(EXPECTED_ISO, result.get().getDocuments().get(0).getStatus().getChangeDate());
         //Payments
@@ -156,4 +177,87 @@ public class GetCSOFilingPackageTest {
         Assertions.assertFalse(result.isPresent());
     }
 
+    private AccountDetails createAccount(BigDecimal clientId) {
+
+        return AccountDetails.builder()
+                .fileRolePresent(true)
+                .accountId(BigDecimal.ONE)
+                .clientId(clientId)
+                .cardRegistered(true)
+                .universalId(UUID.randomUUID().toString())
+                .internalClientNumber(null)
+                .universalId(TestHelpers.CASE_1_STRING).create();
+
+    }
+
+    private ReviewFilingPackage createFilingPackage() {
+
+        ReviewFilingPackage reviewFilingPackage = new ReviewFilingPackage();
+        reviewFilingPackage.setClientFileNo("CLIENTFILENO");
+        reviewFilingPackage.setFilingCommentsTxt(COMMENT);
+        reviewFilingPackage.setPackageNo(PACKAGE_NO);
+        reviewFilingPackage.setFirstName(FIRST_NAME);
+        reviewFilingPackage.setLastName(LAST_NAME);
+        reviewFilingPackage.setSubmittedDate(DateTime.parse("2020-05-05T00:00:00.000-07:00"));
+        reviewFilingPackage.setCourt(createCourt());
+        reviewFilingPackage.setDocuments(Collections.singletonList(createDocument()));
+        reviewFilingPackage.setParties(Collections.singletonList(createParty()));
+        reviewFilingPackage.setPayments(Collections.singletonList(createPayment()));
+        return reviewFilingPackage;
+
+    }
+
+    private ReviewCourt createCourt() {
+
+        ReviewCourt reviewCourt = new ReviewCourt();
+        reviewCourt.setClassDescription(CLASS_DESCRIPTION);
+        reviewCourt.setCourtClass(COURT_CLASS);
+        reviewCourt.setDivision(DIVISION);
+        reviewCourt.setFileNumber(FILE_NUMBER);
+        reviewCourt.setLevel(LEVEL);
+        reviewCourt.setLevelDescription(LEVEL_DESCRIPTION);
+        reviewCourt.setLocationId(BigDecimal.ONE);
+        reviewCourt.setLocationName(LOCATION);
+        reviewCourt.setLocationDescription(LOCATION_DESCRIPTION);
+        reviewCourt.setParticipatingClass(PARTICIPATING_CLASS);
+        return reviewCourt;
+
+    }
+
+    private Party createParty() {
+        return Party.builder()
+                .firstName(FIRST_NAME)
+                .lastName(LAST_NAME)
+                .middleName(MIDDLE_NAME)
+                .nameTypeCd(NAME_TYPE)
+                .partyTypeCd(ca.bc.gov.open.jag.efilingapi.api.model.Party.PartyTypeEnum.IND.getValue())
+                .roleTypeCd(ca.bc.gov.open.jag.efilingapi.api.model.Party.RoleTypeEnum.ABC.getValue())
+                .create();
+    }
+
+    private ReviewDocument createDocument() {
+
+        ReviewDocument reviewDocument = new ReviewDocument();
+        reviewDocument.setFileName(NAME);
+        reviewDocument.setDocumentTypeCd(DocumentProperties.TypeEnum.AAB.getValue());
+        reviewDocument.setStatus(STATUS);
+        reviewDocument.setStatusCode(STATUS_CODE);
+        reviewDocument.setStatusDate(DateTime.parse("2020-05-05T00:00:00.000-07:00"));
+        reviewDocument.setPaymentProcessed(true);
+        return reviewDocument;
+
+    }
+
+    private PackagePayment createPayment() {
+
+        PackagePayment packagePayment = new PackagePayment();
+        packagePayment.setFeeExmpt(false);
+        packagePayment.setPaymentCategory(BigDecimal.ONE);
+        packagePayment.setProcessedAmt(BigDecimal.ONE);
+        packagePayment.setSubmittedAmt(BigDecimal.ONE);
+        packagePayment.setServiceId(BigDecimal.ONE);
+        packagePayment.setTransactionDtm(DateTime.parse("2020-05-05T00:00:00.000-07:00"));
+        return packagePayment;
+
+    }
 }
