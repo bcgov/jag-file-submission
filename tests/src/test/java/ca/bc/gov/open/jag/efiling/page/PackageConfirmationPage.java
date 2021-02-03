@@ -68,6 +68,7 @@ public class PackageConfirmationPage extends Base {
     }
 
     public List<String> getUploadedFilesList() {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[@data-test-id='uploaded-file']")));
         List<String> UploadedFileList = new ArrayList<>();
         for (WebElement webElement : uploadedFiles) {
             UploadedFileList.add(webElement.getText());

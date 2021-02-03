@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efiling;
 
 import ca.bc.gov.open.jag.efiling.page.AuthenticationPage;
+import ca.bc.gov.open.jag.efiling.page.DocumentUploadPage;
 import ca.bc.gov.open.jag.efiling.page.PackageConfirmationPage;
 import ca.bc.gov.open.jag.efiling.services.CourtService;
 import ca.bc.gov.open.jag.efiling.services.GenerateUrlService;
@@ -42,16 +43,6 @@ public class TestConfig {
     }
 
     @Bean
-    public AuthenticationPage authenticationPage() {
-        return new AuthenticationPage(generateUrlService());
-    }
-
-    @Bean
-    public PackageConfirmationPage packageConfirmationPage() {
-        return new PackageConfirmationPage();
-    }
-
-    @Bean
     public WebDriver chromeDriver() {
         WebDriverManager.chromedriver().setup();
 
@@ -63,6 +54,21 @@ public class TestConfig {
     @Bean
     public WebDriverWait webDriverWait(WebDriver driver) {
         return new WebDriverWait(driver, this.timeout);
+    }
+
+    @Bean
+    public AuthenticationPage authenticationPage() {
+        return new AuthenticationPage(generateUrlService());
+    }
+
+    @Bean
+    public PackageConfirmationPage packageConfirmationPage() {
+        return new PackageConfirmationPage();
+    }
+
+    @Bean
+    public DocumentUploadPage documentUploadPage() {
+        return new DocumentUploadPage();
     }
 
 }
