@@ -11,6 +11,7 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -64,7 +65,7 @@ public class GetSubmissionSheetTest {
 
         SecurityContextHolder.setContext(securityContextMock);
 
-        Mockito.when(filingPackageService.getSubmissionSheet(ArgumentMatchers.eq(BigDecimal.ONE))).thenReturn(Optional.of(BYTES));
+        Mockito.when(filingPackageService.getSubmissionSheet(ArgumentMatchers.eq(BigDecimal.ONE))).thenReturn(Optional.of(new ByteArrayResource(BYTES)));
 
 
         Mockito.when(filingPackageService.getSubmissionSheet(ArgumentMatchers.eq(BigDecimal.TEN))).thenReturn(Optional.empty());

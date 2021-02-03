@@ -35,6 +35,18 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
     @Override
     public Optional<byte[]> getSubmissionSheet(BigDecimal packageNumber) {
 
+        return getDocument();
+
+    }
+
+    @Override
+    public Optional<byte[]> getSubmittedDocument(BigDecimal packageNumber, String documentIdentifier) {
+
+        return getDocument();
+
+    }
+
+    private Optional<byte[]> getDocument() {
         try {
             InputStream initialStream = getClass().getResourceAsStream("/demo-file/test-document.pdf");
             byte[] targetArray = new byte[initialStream.available()];
@@ -43,7 +55,6 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
         } catch (IOException e) {
             return Optional.empty();
         }
-
     }
 
     private ReviewFilingPackage createReviewPackage() {

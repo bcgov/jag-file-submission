@@ -8,6 +8,8 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 
 
 import java.math.BigDecimal;
@@ -37,10 +39,10 @@ public class GetSubmissionSheetTest {
 
         Mockito.when(efilingReviewServiceMock.getSubmissionSheet(ArgumentMatchers.any())).thenReturn(Optional.of(BYTES));
 
-        Optional<byte[]> result = sut.getSubmissionSheet(BigDecimal.ONE);
+        Optional<Resource> result = sut.getSubmissionSheet(BigDecimal.ONE);
 
         Assertions.assertTrue(result.isPresent());
-        Assertions.assertEquals(BYTES, result.get());
+        Assertions.assertEquals(new ByteArrayResource(BYTES), result.get());
 
     }
 
@@ -50,7 +52,7 @@ public class GetSubmissionSheetTest {
 
         Mockito.when(efilingReviewServiceMock.getSubmissionSheet(ArgumentMatchers.any())).thenReturn(Optional.empty());
 
-        Optional<byte[]> result = sut.getSubmissionSheet(BigDecimal.TEN);
+        Optional<Resource> result = sut.getSubmissionSheet(BigDecimal.TEN);
 
         Assertions.assertFalse(result.isPresent());
     }
