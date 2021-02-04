@@ -56,7 +56,7 @@ public class PackageConfirmationPage extends Base {
             action.moveToElement(uploadLink).click().build().perform();
 
         } catch (org.openqa.selenium.TimeoutException | org.openqa.selenium.NoSuchElementException tx) {
-            JavascriptExecutor js = (JavascriptExecutor) driver;
+            JavascriptExecutor js = (JavascriptExecutor) this.driver;
             js.executeScript("arguments[0].click();", uploadLink);
         }
     }
@@ -64,7 +64,7 @@ public class PackageConfirmationPage extends Base {
     public String verifyPageTitle() {
         wait.until(ExpectedConditions.titleIs("E-File submission"));
         log.info("Waiting for the page to load...");
-        return driver.getTitle();
+        return this.driver.getTitle();
     }
 
     public List<String> getUploadedFilesList() {

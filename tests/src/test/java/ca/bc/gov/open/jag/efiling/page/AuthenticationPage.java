@@ -35,7 +35,7 @@ public class AuthenticationPage extends Base {
         String actualGeneratedRedirectUrl = generateUrlService.getGeneratedUrl();
 
         if(actualGeneratedRedirectUrl == null) throw new EfilingTestException("Redirect url is not generated.");
-        driver.get(actualGeneratedRedirectUrl);
+        this.driver.get(actualGeneratedRedirectUrl);
 
     }
 

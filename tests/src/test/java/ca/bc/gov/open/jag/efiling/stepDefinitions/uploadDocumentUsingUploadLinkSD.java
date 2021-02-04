@@ -14,6 +14,7 @@ public class uploadDocumentUsingUploadLinkSD {
 
     private ca.bc.gov.open.jag.efiling.page.PackageConfirmationPage packageConfirmationPage;
     private ca.bc.gov.open.jag.efiling.page.DocumentUploadPage documentUploadPage;
+
     private static final String BASE_PATH = "user.dir";
     private static final String SECOND_PDF_PATH = "/src/test/resources/data/test-document-additional.pdf";
 
