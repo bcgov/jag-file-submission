@@ -19,7 +19,7 @@ public class EfilingSubmissionServiceDemoImplTest {
 
         SubmitPackageResponse actual = service.submitFilingPackage(null, null, null);
 
-        Assertions.assertEquals(BigDecimal.TEN, actual.getTransactionId());
+        Assertions.assertEquals(BigDecimal.ONE, actual.getTransactionId());
         Assertions.assertEquals("http://demo", actual.getPackageLink());
 
     }
