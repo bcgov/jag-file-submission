@@ -1,2 +1,6 @@
 server:
   port: ${SERVER_PORT:8080}
+jag:
+  efiling:
+    diligen:
+      basePath: https://bc.diligen.com
