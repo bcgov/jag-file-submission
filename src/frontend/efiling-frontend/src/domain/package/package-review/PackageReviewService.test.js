@@ -1,6 +1,10 @@
 import axios from "axios";
 import FileSaver from "file-saver";
-import { getFilingPackage, getSubmissionSheet } from "./PackageReviewService";
+import {
+  getFilingPackage,
+  getSubmissionSheet,
+  getSubmittedDocument,
+} from "./PackageReviewService";
 import { getCourtData } from "../../../modules/test-data/courtTestData";
 
 jest.mock("axios");
@@ -8,6 +12,14 @@ FileSaver.saveAs = jest.fn();
 
 describe("PackageReviewService TestSuite", () => {
   const packageId = "1";
+  const document = {
+    identifier: "1",
+    type: "AFF",
+    name: "test-document.pdf",
+    status: {
+      description: "Submitted",
+    },
+  };
   const courtData = getCourtData();
   const submittedDate = new Date("2021-01-14T18:57:43.602Z").toISOString();
   const submittedBy = { firstName: "Han", lastName: "Solo" };
@@ -15,6 +27,7 @@ describe("PackageReviewService TestSuite", () => {
     "Lorem ipsum dolor sit amet.<script>alert('Hi');</script>\n\nDuis aute irure dolor.";
   const filingPackagesURL = `/filingpackages/${packageId}`;
   const submissionSheetURL = `/filingpackages/${packageId}/submissionSheet`;
+  const submittedDocumentURL = `/filingpackages/${packageId}/document/${document.identifier}`;
   const data = {
     packageNumber: packageId,
     court: courtData,
@@ -63,5 +76,17 @@ describe("PackageReviewService TestSuite", () => {
     );
     await expect(getSubmissionSheet(packageId)).rejects.toThrow(errorMessage);
     expect(FileSaver.saveAs).not.toHaveBeenCalled();
+  });
+
+  test("getSubmittedDocument success", async () => {
+    axios.get.mockImplementationOnce(() =>
+      Promise.resolve({ status: 200, data: "blob_data" })
+    );
+
+    await expect(getSubmittedDocument(packageId, document)).resolves;
+    expect(axios.get).toHaveBeenCalledWith(submittedDocumentURL, {
+      responseType: "blob",
+    });
+    expect(FileSaver.saveAs).toHaveBeenCalled();
   });
 });

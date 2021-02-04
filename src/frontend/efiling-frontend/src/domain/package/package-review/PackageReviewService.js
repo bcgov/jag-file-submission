@@ -25,3 +25,21 @@ export const getSubmissionSheet = async (packageId) => {
   const fileUrl = URL.createObjectURL(fileData);
   FileSaver.saveAs(fileUrl, "SubmissionSheet.pdf");
 };
+
+/**
+ * Retrieves the Submission Sheet from the backend API for the given packageId.
+ *
+ * @param packageId id associated with the filing package
+ * @param document the document to retrieve. Shape must be {identifier: string, name: string}
+ */
+export const getSubmittedDocument = async (packageId, document) => {
+  const response = await axios.get(
+    `/filingpackages/${packageId}/document/${document.identifier}`,
+    {
+      responseType: "blob",
+    }
+  );
+  const fileData = new Blob([response.data], { type: "application/pdf" });
+  const fileUrl = URL.createObjectURL(fileData);
+  FileSaver.saveAs(fileUrl, `${document.name}`);
+};

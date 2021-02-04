@@ -114,10 +114,12 @@ export default function PackageReview({ page: { header, packageId } }) {
     });
   }
 
-  function handleKeyDown() {
-    getSubmissionSheet(packageId).catch((err) => {
-      errorRedirect(sessionStorage.getItem("errorUrl"), err);
-    });
+  function handleKeyDown(e) {
+    if (e && e.keyCode === 13) {
+      getSubmissionSheet(packageId).catch((err) => {
+        errorRedirect(sessionStorage.getItem("errorUrl"), err);
+      });
+    }
   }
 
   return (
@@ -165,7 +167,7 @@ export default function PackageReview({ page: { header, packageId } }) {
           <Tabs defaultActiveKey="documents" id="uncontrolled-tab">
             <Tab eventKey="documents" title="Documents">
               <br />
-              <DocumentList documents={documents} />
+              <DocumentList packageId={packageId} documents={documents} />
             </Tab>
             <Tab eventKey="comments" title="Filing Comments">
               <br />

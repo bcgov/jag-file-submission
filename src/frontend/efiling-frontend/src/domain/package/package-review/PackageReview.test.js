@@ -25,6 +25,7 @@ describe("PackageReview Component", () => {
     "Lorem ipsum dolor sit amet.<script>alert('Hi');</script>\n\nDuis aute irure dolor.";
   const documents = [
     {
+      identifier: "1",
       type: "AFF",
       name: "test-document.pdf",
       status: {
@@ -241,7 +242,10 @@ describe("PackageReview Component", () => {
     const { container } = render(<PackageReview page={page} />);
     await waitFor(() => {});
 
-    fireEvent.keyDown(getByText(container, "Print Submission Sheet"));
+    fireEvent.keyDown(getByText(container, "Print Submission Sheet"), {
+      key: "Enter",
+      keyCode: "13",
+    });
     await waitFor(() => {});
 
     expect(window.open).toHaveBeenCalledWith(
