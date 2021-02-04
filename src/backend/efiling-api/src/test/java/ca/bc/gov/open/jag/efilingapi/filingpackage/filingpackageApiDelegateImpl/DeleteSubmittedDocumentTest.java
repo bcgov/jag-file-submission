@@ -19,7 +19,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import javax.ws.rs.NotFoundException;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
