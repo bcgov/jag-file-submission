@@ -1,0 +1,1834 @@
+openapi: 3.0.3
+info:
+  title: Diligen API
+  description: |-
+    This is the documentation for the Diligen API. Authentication is done via JSON Web Tokens (JWTs).
+          The requests executed from this page will be authenticated using your JWT (which is generated when you logged in).
+          When you are using an API client (e.g. Postman, Insomnia, curl) instead of this documentation page, you will need
+          to get a JWT token from the /api/login endpoint first. The JWT is valid for 12 hours, and thereafter you will need
+          to get a fresh JWT from the /api/login endpoint again.
+  termsOfService: 'https://diligen.com/termsofservice'
+  contact:
+    name: Diligen Inc.
+  version: 2.5.1
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+  - name: Health Check
+  - name: Authentication
+  - name: Users
+  - name: Projects
+  - name: Documents
+  - name: Clauses
+  - name: Rules
+  - name: Templates
+paths:
+  /api/isServerUp:
+    get:
+      description: Check if the Diligen API is online
+      tags:
+        - Health Check
+      responses:
+        '200':
+          description: Successful operation
+  /api/login:
+    post:
+      tags:
+        - Authentication
+      description: Login for API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: you@company.com
+                password:
+                  type: string
+                  format: password
+                  example: your-login-details
+      responses:
+        '200':
+          description: Successful operation
+        '401':
+          description: Unauthorized
+        '422':
+          description: Bad request body
+  /api/users:
+    get:
+      description: Get all users
+      tags:
+        - Users
+      summary: /api/users
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+  /api/users/me:
+    get:
+      description: Get details about the user making this request
+      tags:
+        - Users
+      summary: /api/users/me
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+  /api/users/me/documentCount:
+    get:
+      description: Get the total number of documents the current user has access to.
+      tags:
+        - Users
+      summary: /api/users/me/documentCount
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+  /api/projects:
+    get:
+      description: Get all projects for this user
+      tags:
+        - Projects
+      summary: /api/projects
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+    post:
+      description: Create a project
+      tags:
+        - Projects
+      summary: api/projects
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - team
+              properties:
+                name:
+                  type: string
+                  example: Project One
+                description:
+                  type: string
+                  example: My first project
+                project_team:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      user_id:
+                        type: integer
+                        example: 2
+                      project_role:
+                        type: string
+                        enum:
+                          - project leader
+                          - team member
+                        example: project leader
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+        '401':
+          description: Unauthorized
+        '409':
+          description: Conflict creating this resource
+        '422':
+          description: Bad request body
+  '/api/projects/{projectId}':
+    get:
+      description: Get a project by ID
+      tags:
+        - Projects
+      summary: '/api/projects/{projectId}'
+      parameters:
+        - in: path
+          name: projectId
+          schema:
+            type: integer
+            example: 43
+          required: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+        '403':
+          description: Forbidden - user does not have access to this project (if it exists)
+        '404':
+          description: Not Found - projectId is likely malformed
+    patch:
+      description: Update a project's name or description
+      tags:
+        - Projects
+      summary: '/api/projects/{projectId}'
+      parameters:
+        - in: path
+          name: projectId
+          schema:
+            type: integer
+            example: 43
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Project One
+                description:
+                  type: string
+                  example: My first project
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '204':
+          description: OK (No Content)
+        '400':
+          description: Malformed request
+        '403':
+          description: Forbidden - user does not have access to this project (if it exists)
+        '404':
+          description: Not Found - projectId is likely malformed
+        '409':
+          description: Conflict creating this resource
+        '422':
+          description: Bad request body
+    delete:
+      description: Delete a project
+      tags:
+        - Projects
+      summary: '/api/projects/{projectId}'
+      parameters:
+        - in: path
+          name: projectId
+          schema:
+            type: integer
+            example: 43
+          required: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '204':
+          description: OK (No Content)
+        '403':
+          description: Forbidden
+  '/api/projects/{projectId}/documents':
+    get:
+      description: Get documents in a given project
+      tags:
+        - Projects
+      summary: '/api/projects/{projectId}/documents'
+      parameters:
+        - in: path
+          name: projectId
+          schema:
+            type: integer
+            example: 43
+          required: true
+        - in: query
+          name: sort
+          schema:
+            type: string
+            example: Added On
+          description: 'Optional sorting parameter. Prepend a `-` character to sort in reverse order. Valid sort values are clauses (e.g. `Assignment Right`, `Governing Law`), features (e.g. `Pages`, `Document Type`), or projects fields.'
+        - in: query
+          name: page
+          style: deepObject
+          explode: true
+          schema:
+            type: object
+            properties:
+              size:
+                type: integer
+                example: 10
+              number:
+                type: integer
+                example: 1
+          description: 'Options for paginating the results. By default, results are paginated with 10 documents returned at a time. To change this, adjust the `size` and to iterate over the pages, adjust the `number`.'
+        - in: query
+          name: filter
+          style: deepObject
+          explode: true
+          schema:
+            type: object
+            properties:
+              fileId:
+                type: integer
+                example: 31644
+              fileName:
+                type: string
+                example: 03 - Word Document (Contract).pdf
+              folders:
+                type: string
+                example: Folder-1
+              reviewStatuses:
+                type: string
+                enum:
+                  - Reviewed
+                  - Unreviewed
+                example: 'Reviewed,Unreviewed'
+              reviewers:
+                type: integer
+                example: '2,3'
+              unassigned:
+                type: boolean
+                example: false
+              unreviewed:
+                type: boolean
+                example: true
+              inScope:
+                type: boolean
+                example: true
+              documentTypes:
+                type: string
+                example: Contract
+              contractName:
+                type: string
+                example: Consulting Agreement
+              governingLawPlaces:
+                type: string
+                example: Delaware
+              contractMonthFrom:
+                type: integer
+                example: 1
+              contractYearFrom:
+                type: integer
+                example: 2018
+              contractMonthTo:
+                type: integer
+                example: 12
+              contractYearTo:
+                type: integer
+                example: 2020
+              parties:
+                type: string
+                example: Wonka Industries Ltd.
+              allParties:
+                type: boolean
+                example: true
+              tagIds:
+                type: integer
+                example: 13
+              allTagIds:
+                type: boolean
+                example: true
+              inverseTagIds:
+                type: boolean
+                example: true
+              clauses:
+                type: string
+                example: Assignment Right
+              allClauses:
+                type: boolean
+                example: true
+              inverseClauses:
+                type: boolean
+                example: false
+              textString:
+                type: string
+                example: The Service Commitment does not apply to any unavailability
+              textStringOnlyClauses:
+                type: boolean
+                example: true
+              projectField:
+                type: string
+                example: My Notes Field
+              projectFieldValues:
+                type: string
+                example: My notes on this document.
+          description: |-
+            Optional ways to filter the results.<p>
+            Note -  For query parameters that accept a comma-separated string of values, this version of OpenAPI does not support passing in more than one value and will return an error if more than one value is provided. The API does however support multiple values where indicated in the documentation below.<p>
+            `fileId` - filter by a document's `fileId`.<br> `fileName` - filter by file name.<br> `folders` - filter by folders from an uploaded zip file.<br><p>
+            `reviewStatuses` - filter by review status. A comma-separated string of values is accepted.<br> `reviewers` - filter by documents assigned to reviewers. A comma-separated string of `user_id` values is accepted.<br> `unassigned` - boolean to filter by unassigned documents (at the project level, not per individual user). Default is `false`.<br> `unreviewed` - boolean to filter by unreviewed documents (at the project level, not per individual user). Default is `false`.<br> `inScope` - boolean to filter by in-scope documents. Default is `false`.<br><p>
+            `documentTypes` - filter by document type. A comma-separated string of document type values is accepted.<br> `contractName` - filter by the contract name.<br> `governingLawPlaces` - filter by governing law jurisdictions. A comma-separated string of values is accepted.<br><p>
+            `contractMonthFrom` - filter by contract date (must be used with `contractYearFrom`, and optionally `contractMonthTo` and `contractYearTo`).<br> `contractYearFrom` - filter by contract date (must be used with `contractMonthFrom`, and optionally `contractMonthTo` and `contractYearTo`).<br> `contractMonthTo` - filter by contract date (must be used with `contractYearTo`, and optionally `contractMonthFrom` and `contractYearFrom`).<br> `contractYearTo` - filter by contract date (must be used with `contractMonthTo`, and optionally `contractMonthFrom` and `contractYearFrom`).<br><p>
+            `parties` - filter by contract parties. A comma-separated string of values is accepted. Use with `allParties` boolean.<br> `allParties` - boolean whether any or all `parties` must be present for documents to appear in results. Default is `false`.<br><p>
+            `tagIds` - filter by tag IDs. A comma-separated string of values is accepted. Use with `allTagIds` and `inverseTagIds` booleans.<br> `allTagIds` - boolean whether any or all `tagIds` must be present for documents to appear in results. Default is `false`.<br> `inverseTagIds` - boolean whether `tagIds` search should be for the inverse values of those passed in to the `tagIds` filter. Default is `false`.<br><p>
+            `clauses` - filter by clauses. A comma-separated string of values is accepted. Use with `allClauses` and `inverseClauses` booleans.<br> `allClauses` - boolean whether any or all `clauses` must be present for documents to appear in results. Default is `false`.<br> `inverseClauses` - boolean whether `clauses` search should be for the inverse values of those passed in to the `clauses` filter. Default is `false`.<br><p>
+            `textString` - filter documents by text string. Use with `textStringOnlyClauses` boolean.<br> `textStringOnlyClauses` - boolean whether the `textString` search should occur within the clauses listed in the `clauses` filter or within the entire document. Default search is entire document.<br><p>
+            `projectField` - filter by project field values. Use with `projectFieldValues` filter.<br> `projectFieldValues` - filter by project field values. Use with `projectField`.<br><p>
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+        '403':
+          description: Forbidden - user does not have access to this project (if it exists)
+        '404':
+          description: Not Found - projectId is likely malformed
+    post:
+      description: Upload one or more documents to a project
+      tags:
+        - Projects
+      summary: '/api/projects/{projectId}/documents'
+      parameters:
+        - in: path
+          name: projectId
+          schema:
+            type: integer
+            example: 43
+          required: true
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - project_id
+                - file_data
+              properties:
+                file_data:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                'clause_categories[]':
+                  type: array
+                  items:
+                    type: integer
+                  example:
+                    - 1
+                    - 2
+            encoding:
+              'clause_categories[]':
+                style: form
+                explode: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '204':
+          description: OK (No Content)
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '422':
+          description: Bad request body
+  '/api/projects/{projectId}/team':
+    get:
+      description: Get the team members on a project
+      tags:
+        - Projects
+      summary: '/api/projects/{projectId}/team'
+      parameters:
+        - in: path
+          name: projectId
+          schema:
+            type: integer
+            example: 43
+          required: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: API path malformed
+    post:
+      description: Set or reset the team members for a project
+      tags:
+        - Projects
+      summary: '/api/projects/{projectId}/team'
+      parameters:
+        - in: path
+          name: projectId
+          schema:
+            type: integer
+            example: 43
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - project_team
+              properties:
+                project_team:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      user_id:
+                        type: integer
+                        example: 2
+                      project_role:
+                        type: string
+                        enum:
+                          - project leader
+                          - team member
+                        example: project leader
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '204':
+          description: OK (No Content)
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: API path malformed
+        '422':
+          description: Bad request body
+  '/api/projects/{projectId}/projectFields':
+    get:
+      description: Get the project fields for a project
+      tags:
+        - Projects
+      summary: '/api/projects/{projectId}/projectFields'
+      parameters:
+        - in: path
+          name: projectId
+          schema:
+            type: integer
+            example: 43
+          required: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+        '403':
+          description: Forbidden - user does not have access to this project (if it exists)
+        '404':
+          description: Not Found - projectId is likely malformed
+  '/api/projects/{projectId}/statusOverview':
+    get:
+      description: Get the review status overview for a project
+      tags:
+        - Projects
+      summary: '/api/projects/{projectId}/statusOverview'
+      parameters:
+        - in: path
+          name: projectId
+          schema:
+            type: integer
+            example: 43
+          required: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+        '403':
+          description: Forbidden - user does not have access to this project (if it exists)
+        '404':
+          description: Not Found - projectId is likely malformed
+  '/api/projects/{projectId}/governingLawPlaces':
+    get:
+      description: Get a list of governing law jurisdictions in a given project
+      tags:
+        - Projects
+      summary: '/api/projects/{projectId}/governingLawPlaces'
+      parameters:
+        - in: path
+          name: projectId
+          schema:
+            type: integer
+            example: 43
+          required: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+        '403':
+          description: Forbidden - user does not have access to this project (if it exists)
+        '404':
+          description: Not Found - projectId is likely malformed
+  '/api/projects/{projectId}/parties':
+    get:
+      description: Get a list of parties in a given project
+      tags:
+        - Projects
+      summary: '/api/projects/{projectId}/parties'
+      parameters:
+        - in: path
+          name: projectId
+          schema:
+            type: integer
+            example: 43
+          required: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+        '403':
+          description: Forbidden - user does not have access to this project (if it exists)
+        '404':
+          description: Not Found - projectId is likely malformed
+  '/api/projects/{projectId}/documentClauses':
+    get:
+      description: Get a list of clauses present in a given project
+      tags:
+        - Projects
+      summary: '/api/projects/{projectId}/documentClauses'
+      parameters:
+        - in: path
+          name: projectId
+          schema:
+            type: integer
+            example: 43
+          required: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden - user does not have access to this project (if it exists)
+        '404':
+          description: Not Found - projectId is likely malformed
+  '/api/projects/{projectId}/tags':
+    get:
+      description: Get the tags in a given project
+      tags:
+        - Projects
+      summary: '/api/projects/{projectId}/tags'
+      parameters:
+        - in: path
+          name: projectId
+          schema:
+            type: integer
+            example: 43
+          required: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+        '403':
+          description: Forbidden - user does not have access to this project (if it exists)
+        '404':
+          description: Not Found - projectId is likely malformed
+  '/api/projects/{projectId}/fileIds':
+    get:
+      description: Get document IDs in a given project
+      tags:
+        - Projects
+      summary: '/api/projects/{projectId}/fileIds'
+      parameters:
+        - in: path
+          name: projectId
+          schema:
+            type: integer
+            example: 43
+          required: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+        '403':
+          description: Forbidden - user does not have access to this project (if it exists)
+        '404':
+          description: Not Found - projectId is likely malformed
+  '/api/projects/{projectId}/reviews':
+    get:
+      description: Get review statuses in a project
+      tags:
+        - Projects
+      summary: '/api/projects/{projectId}/reviews'
+      parameters:
+        - in: path
+          name: projectId
+          schema:
+            type: integer
+            example: 43
+          required: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+        '403':
+          description: Forbidden - user does not have access to this project (if it exists)
+        '404':
+          description: Not Found - projectId is likely malformed
+  '/api/projects/{projectId}/fileTags':
+    get:
+      description: Get file tags in a given project
+      tags:
+        - Projects
+      summary: '/api/projects/{projectId}/fileTags'
+      parameters:
+        - in: path
+          name: projectId
+          schema:
+            type: integer
+            example: 43
+          required: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+        '403':
+          description: Forbidden - user does not have access to this project (if it exists)
+        '404':
+          description: Not Found - projectId is likely malformed
+  '/api/projects/{projectId}/rulesets':
+    get:
+      description: Get the rule sets on a given project
+      tags:
+        - Rules
+      summary: '/api/projects/{projectId}/rulesets'
+      parameters:
+        - in: path
+          name: projectId
+          schema:
+            type: integer
+            example: 43
+          required: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+  '/api/documents/{fileId}/details':
+    get:
+      description: Get all details for a document
+      tags:
+        - Documents
+      summary: '/api/documents/{fileId}/details'
+      parameters:
+        - in: path
+          name: fileId
+          schema:
+            type: integer
+            example: 31644
+          required: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  '/api/documents/{fileId}/content':
+    get:
+      description: Download a file
+      tags:
+        - Documents
+      summary: '/api/documents/{fileId}/content'
+      parameters:
+        - in: path
+          name: fileId
+          schema:
+            type: integer
+            example: 31644
+          required: true
+        - in: query
+          name: converted
+          schema:
+            type: boolean
+            example: false
+        - in: query
+          name: ocred
+          schema:
+            type: boolean
+            example: true
+        - in: query
+          name: download
+          schema:
+            type: boolean
+            example: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+        '403':
+          description: Forbidden
+        '422':
+          description: Bad query parameters
+  /api/documents:
+    delete:
+      description: Delete one or more documents
+      tags:
+        - Documents
+      summary: /api/documents
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '204':
+          description: OK (No Content)
+        '401':
+          description: Unauthorized
+        '422':
+          description: Bad request body
+  '/api/documents/{fileId}/reviews':
+    get:
+      description: Get review statuses for a document
+      tags:
+        - Documents
+      summary: '/api/documents/{fileId}/reviews'
+      parameters:
+        - in: path
+          name: fileId
+          schema:
+            type: integer
+            example: 31644
+          required: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+        '403':
+          description: Forbidden - user does not have access to this project (if it exists)
+        '404':
+          description: Not Found - projectId is likely malformed
+  '/api/documents/{fileId}/reviewStatus':
+    get:
+      description: Get the current user's review status for a given document.
+      tags:
+        - Documents
+      summary: '/api/documents/{fileId}/reviewStatus'
+      parameters:
+        - in: path
+          name: fileId
+          schema:
+            type: integer
+            example: 31644
+          required: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+  '/api/documents/{fileId}/tags':
+    get:
+      description: Get the tags applied to a document
+      tags:
+        - Documents
+      summary: 'api/documents/{fileId}/tags'
+      parameters:
+        - in: path
+          name: fileId
+          schema:
+            type: integer
+            example: 31644
+          required: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+        '403':
+          description: Forbidden - user does not have access to this project (if it exists)
+        '404':
+          description: Not Found - projectId is likely malformed
+  '/api/documents/{fileId}/examples':
+    get:
+      description: Get the generated examples for a file
+      tags:
+        - Documents
+      summary: 'api/documents/{fileId}/examples'
+      parameters:
+        - in: path
+          name: fileId
+          schema:
+            type: integer
+            example: 31644
+          required: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+        '403':
+          description: Forbidden - user does not have access to this project (if it exists)
+        '404':
+          description: Not Found - projectId is likely malformed
+  '/api/documents/{fileId}/projectFields':
+    get:
+      description: Get the project fields (and values therein) for a given document
+      tags:
+        - Documents
+      summary: '/api/documents/{fileId}/projectFields'
+      parameters:
+        - in: path
+          name: fileId
+          schema:
+            type: integer
+            example: 31644
+          required: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+        '403':
+          description: Forbidden - user does not have access to this project (if it exists)
+        '404':
+          description: Not Found - projectId is likely malformed
+  '/api/documents/{fileId}/projectFields/{projectFieldId}':
+    put:
+      description: Add or update values for a project field in a document
+      tags:
+        - Documents
+      summary: '/api/documents/{fileId}/projectFields/{projectFieldId}'
+      parameters:
+        - in: path
+          name: fileId
+          schema:
+            type: integer
+            example: 31644
+          required: true
+        - in: path
+          name: projectFieldId
+          schema:
+            type: integer
+            example: 231
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - values
+              properties:
+                values:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - foo
+                    - bar
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '422':
+          description: Bad request body
+  /api/clauses:
+    get:
+      description: Get the clauses list
+      tags:
+        - Clauses
+      summary: /api/clauses
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+  /api/clauses/categories:
+    get:
+      description: Get the clause categories
+      tags:
+        - Clauses
+      summary: /api/clauses/categories
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+  /api/clauses/classify:
+    post:
+      description: Get the F1 score for a string of text for a given clause model
+      tags:
+        - Clauses
+      summary: /api/clauses/classify
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - ml_key
+                - text
+              properties:
+                ml_key:
+                  type: string
+                  example: assignment_right
+                text:
+                  type: string
+                  example: This agreement may not be assigned by the Company.
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+        '404':
+          description: Model not found
+        '422':
+          description: Bad request body
+  /api/rulesets:
+    get:
+      description: Get the rule sets across all projects.
+      tags:
+        - Rules
+      summary: /api/rulesets
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+    post:
+      description: Create a rule set
+      tags:
+        - Rules
+      summary: /api/rulesets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  properties:
+                    attributes:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: A ruleset
+                        project_id:
+                          type: integer
+                          example: 43
+                        order:
+                          type: number
+                          example: 2
+                    relationships:
+                      type: object
+                      properties:
+                        events:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              event_type:
+                                type: string
+                                enum:
+                                  - Analysis Complete
+                                  - User Edited Clause
+                                  - Reviewer Assigned
+                                  - Tag Applied
+                          uniqueItems: true
+                        rules:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              stop_on_success:
+                                type: boolean
+                                example: true
+                              conjunction:
+                                type: string
+                                enum:
+                                  - AND
+                                  - OR
+                              order:
+                                type: number
+                                example: 2
+                              name:
+                                type: string
+                                example: A rule
+                          uniqueItems: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '201':
+          description: Successful operation
+        '409':
+          description: Conflict creating this resource
+        '422':
+          description: Bad request body
+  '/api/rulesets/{ruleSetId}':
+    patch:
+      description: Update a rule set
+      tags:
+        - Rules
+      summary: '/api/rulesets/{ruleSetId}'
+      parameters:
+        - in: path
+          name: ruleSetId
+          schema:
+            type: integer
+            example: 43
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  properties:
+                    attributes:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: A ruleset
+                        project_id:
+                          type: integer
+                          example: 43
+                        order:
+                          type: number
+                          example: 2
+                    relationships:
+                      type: object
+                      properties:
+                        events:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              event_type:
+                                type: string
+                                enum:
+                                  - Analysis Complete
+                                  - User Edited Clause
+                                  - Reviewer Assigned
+                                  - Tag Applied
+                          uniqueItems: true
+                        rules:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              stop_on_success:
+                                type: boolean
+                                example: true
+                              conjunction:
+                                type: string
+                                enum:
+                                  - AND
+                                  - OR
+                              order:
+                                type: number
+                                example: 2
+                              name:
+                                type: string
+                                example: A rule
+                          uniqueItems: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+        '403':
+          description: Forbidden - user does not have access to this project (if it exists)
+        '409':
+          description: Conflict creating this resource
+        '422':
+          description: Bad request body
+    delete:
+      description: Delete a rule set
+      tags:
+        - Rules
+      summary: '/api/rulesets/{ruleSetId}'
+      parameters:
+        - in: path
+          name: ruleSetId
+          schema:
+            type: integer
+            example: 43
+          required: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '204':
+          description: OK (No Content)
+        '403':
+          description: Forbidden
+    post:
+      description: Add a rule to an existing rule set
+      tags:
+        - Rules
+      summary: '/api/rulesets/{ruleSetId}'
+      parameters:
+        - in: path
+          name: ruleSetId
+          schema:
+            type: integer
+            example: 43
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  properties:
+                    attributes:
+                      type: object
+                      properties:
+                        stop_on_success:
+                          type: boolean
+                          example: true
+                        conjunction:
+                          type: string
+                          enum:
+                            - AND
+                            - OR
+                        order:
+                          type: number
+                          example: 2
+                        name:
+                          type: string
+                          example: A rule
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '204':
+          description: OK (No Content)
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: API path malformed
+        '422':
+          description: Bad request body
+  '/api/rules/{ruleId}':
+    patch:
+      description: Update a rule
+      tags:
+        - Rules
+      summary: '/api/rules/{ruleId}'
+      parameters:
+        - in: path
+          name: ruleId
+          schema:
+            type: integer
+            example: 43
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  properties:
+                    attributes:
+                      type: object
+                      properties:
+                        stop_on_success:
+                          type: boolean
+                          example: true
+                        conjunction:
+                          type: string
+                          enum:
+                            - AND
+                            - OR
+                        order:
+                          type: number
+                          example: 2
+                        name:
+                          type: string
+                          example: A rule
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+        '403':
+          description: Forbidden - user does not have access to this project (if it exists)
+        '409':
+          description: Conflict creating this resource
+        '422':
+          description: Bad request body
+    delete:
+      description: Delete a rule
+      tags:
+        - Rules
+      summary: '/api/rules/{ruleId}'
+      parameters:
+        - in: path
+          name: ruleId
+          schema:
+            type: integer
+            example: 43
+          required: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '204':
+          description: OK (No Content)
+        '403':
+          description: Forbidden
+  '/api/rulesets/{ruleSetId}/{ruleId}/conditions':
+    post:
+      description: Create a rule condition
+      tags:
+        - Rules
+      summary: '/api/rulesets/{ruleSetId}/{ruleId}/conditions'
+      parameters:
+        - in: path
+          name: ruleSetId
+          schema:
+            type: integer
+            example: 43
+          required: true
+        - in: path
+          name: ruleId
+          schema:
+            type: integer
+            example: 43
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  properties:
+                    attributes:
+                      type: object
+                      properties:
+                        data:
+                          type: object
+                          oneOf:
+                            - type: object
+                              properties:
+                                ml_key:
+                                  type: string
+                                  example: assignment_right
+                                min_count:
+                                  type: number
+                                  example: 0
+                                max_count:
+                                  type: number
+                                  example: 1
+                            - type: object
+                              properties:
+                                ml_key:
+                                  type: string
+                                  example: assignment_right
+                                text:
+                                  type: string
+                                  example: Search text
+                                regexp:
+                                  type: boolean
+                                  example: false
+                            - type: object
+                              properties:
+                                project_field_id:
+                                  type: integer
+                                  example: 24
+                                text:
+                                  type: string
+                                  example: Search text
+                                regexp:
+                                  type: boolean
+                                  example: false
+                                values:
+                                  type: array
+                                  items:
+                                    type: string
+                                  example:
+                                    - Project field value
+                                require_all:
+                                  type: boolean
+                                  example: false
+                        condition_type:
+                          type: string
+                          enum:
+                            - ClauseContainsText
+                            - ClauseCount
+                            - FieldContainsValue
+                            - FileNameContainsText
+                        negate:
+                          type: boolean
+                          example: false
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '201':
+          description: Successful operation
+        '403':
+          description: Forbidden - user does not have access to this project (if it exists)
+        '409':
+          description: Conflict creating this resource
+        '422':
+          description: Bad request body
+  '/api/conditions/{conditionId}':
+    patch:
+      description: Update a rule condition
+      tags:
+        - Rules
+      summary: '/api/conditions/{conditionId}'
+      parameters:
+        - in: path
+          name: conditionId
+          schema:
+            type: integer
+            example: 43
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  properties:
+                    attributes:
+                      type: object
+                      properties:
+                        data:
+                          type: object
+                          oneOf:
+                            - type: object
+                              properties:
+                                ml_key:
+                                  type: string
+                                  example: assignment_right
+                                min_count:
+                                  type: number
+                                  example: 0
+                                max_count:
+                                  type: number
+                                  example: 1
+                            - type: object
+                              properties:
+                                ml_key:
+                                  type: string
+                                  example: assignment_right
+                                text:
+                                  type: string
+                                  example: Search text
+                                regexp:
+                                  type: boolean
+                                  example: false
+                            - type: object
+                              properties:
+                                project_field_id:
+                                  type: integer
+                                  example: 24
+                                text:
+                                  type: string
+                                  example: Search text
+                                regexp:
+                                  type: boolean
+                                  example: false
+                                values:
+                                  type: array
+                                  items:
+                                    type: string
+                                  example:
+                                    - Project field value
+                                require_all:
+                                  type: boolean
+                                  example: false
+                        condition_type:
+                          type: string
+                          enum:
+                            - ClauseContainsText
+                            - ClauseCount
+                            - FieldContainsValue
+                            - FileNameContainsText
+                        negate:
+                          type: boolean
+                          example: false
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+        '403':
+          description: Forbidden - user does not have access to this project (if it exists)
+        '409':
+          description: Conflict creating this resource
+        '422':
+          description: Bad request body
+    delete:
+      description: Delete a rule condition
+      tags:
+        - Rules
+      summary: '/api/conditions/{conditionId}'
+      parameters:
+        - in: path
+          name: conditionId
+          schema:
+            type: integer
+            example: 43
+          required: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '204':
+          description: OK (No Content)
+        '403':
+          description: Forbidden
+  '/api/rulesets/{ruleSetId}/{ruleId}/actions':
+    post:
+      description: Create a rule action
+      tags:
+        - Rules
+      summary: '/api/rulesets/{ruleSetId}/{ruleId}/actions'
+      parameters:
+        - in: path
+          name: ruleSetId
+          schema:
+            type: integer
+            example: 43
+          required: true
+        - in: path
+          name: ruleId
+          schema:
+            type: integer
+            example: 43
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  properties:
+                    attributes:
+                      type: object
+                      properties:
+                        data:
+                          type: object
+                          oneOf:
+                            - type: object
+                              properties:
+                                tag_ids:
+                                  type: array
+                                  items:
+                                    type: integer
+                                  example:
+                                    - 1
+                                    - 2
+                            - type: object
+                              properties:
+                                project_field_id:
+                                  type: integer
+                                  example: 5
+                                values:
+                                  type: array
+                                  items:
+                                    type: string
+                                  example:
+                                    - Project field value
+                                overwrite:
+                                  type: boolean
+                                  example: false
+                            - type: object
+                              properties:
+                                project_field_id:
+                                  type: integer
+                                  example: 5
+                                ml_key:
+                                  type: string
+                                  example: assignment_right
+                                entity_type:
+                                  type: string
+                                  enum:
+                                    - COMMERCIAL_ITEM
+                                    - DATE
+                                    - EVENT
+                                    - LOCATION
+                                    - ORGANIZATION
+                                    - OTHER
+                                    - PERSON
+                                    - QUANTITY
+                                    - TITLE
+                            - type: object
+                              properties:
+                                project_field_id:
+                                  type: integer
+                                  example: 5
+                                ml_key:
+                                  type: string
+                                  example: assignment_right
+                                regexp_filter:
+                                  type: string
+                                regexp_extractor:
+                                  type: string
+                                test_text:
+                                  type: string
+                            - type: object
+                        action_type:
+                          type: string
+                          enum:
+                            - AddReviewer
+                            - AddTag
+                            - DoNothing
+                            - ExtractEntities
+                            - FailValidation
+                            - FunnelExtractedTextToField
+                            - MarkOutOfScope
+                            - RemoveTag
+                            - WriteValuesToField
+                        order:
+                          type: number
+                          example: 2
+                    relationships:
+                      type: object
+                      properties:
+                        tags:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                                example: A tag
+                          uniqueItems: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '201':
+          description: Successful operation
+        '403':
+          description: Forbidden - user does not have access to this project (if it exists)
+        '409':
+          description: Conflict creating this resource
+        '422':
+          description: Bad request body
+  '/api/actions/{actionId}':
+    patch:
+      description: Update a rule action
+      tags:
+        - Rules
+      summary: '/api/actions/{actionId}'
+      parameters:
+        - in: path
+          name: actionId
+          schema:
+            type: integer
+            example: 43
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  properties:
+                    attributes:
+                      type: object
+                      properties:
+                        data:
+                          type: object
+                          oneOf:
+                            - type: object
+                              properties:
+                                tag_ids:
+                                  type: array
+                                  items:
+                                    type: integer
+                                  example:
+                                    - 1
+                                    - 2
+                            - type: object
+                              properties:
+                                project_field_id:
+                                  type: integer
+                                  example: 5
+                                values:
+                                  type: array
+                                  items:
+                                    type: string
+                                  example:
+                                    - Project field value
+                                overwrite:
+                                  type: boolean
+                                  example: false
+                            - type: object
+                              properties:
+                                project_field_id:
+                                  type: integer
+                                  example: 5
+                                ml_key:
+                                  type: string
+                                  example: assignment_right
+                                entity_type:
+                                  type: string
+                                  enum:
+                                    - COMMERCIAL_ITEM
+                                    - DATE
+                                    - EVENT
+                                    - LOCATION
+                                    - ORGANIZATION
+                                    - OTHER
+                                    - PERSON
+                                    - QUANTITY
+                                    - TITLE
+                            - type: object
+                              properties:
+                                project_field_id:
+                                  type: integer
+                                  example: 5
+                                ml_key:
+                                  type: string
+                                  example: assignment_right
+                                regexp_filter:
+                                  type: string
+                                regexp_extractor:
+                                  type: string
+                                test_text:
+                                  type: string
+                            - type: object
+                        action_type:
+                          type: string
+                          enum:
+                            - AddTag
+                            - DoNothing
+                            - ExtractEntities
+                            - FailValidation
+                            - FunnelExtractedTextToField
+                            - RemoveTag
+                            - WriteValuesToField
+                        order:
+                          type: number
+                          example: 2
+                    relationships:
+                      type: object
+                      properties:
+                        tags:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                                example: A tag
+                          uniqueItems: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+        '403':
+          description: Forbidden - user does not have access to this project (if it exists)
+        '409':
+          description: Conflict creating this resource
+        '422':
+          description: Bad request body
+    delete:
+      description: Delete a rule action
+      tags:
+        - Rules
+      summary: '/api/rules/{actionId}'
+      parameters:
+        - in: path
+          name: actionId
+          schema:
+            type: integer
+            example: 43
+          required: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '204':
+          description: OK (No Content)
+        '403':
+          description: Forbidden
+  /api/templates:
+    get:
+      description: Get all templates.
+      tags:
+        - Templates
+      summary: /api/templates
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+  '/api/templates/{templateId}':
+    get:
+      description: Get a template by id.
+      tags:
+        - Templates
+      summary: '/api/templates/{templateId}'
+      parameters:
+        - in: path
+          name: templateId
+          schema:
+            type: integer
+            example: 43
+          required: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful operation
+        '404':
+          description: Not Found - templateId is likely malformed
