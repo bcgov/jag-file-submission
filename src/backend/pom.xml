@@ -29,6 +29,7 @@
 				<module>libs/efiling-cso-starter</module>
 				<module>libs/efiling-bom</module>
 				<module>libs/efiling-demo-starter</module>
+				<module>libs/efiling-diligen-client</module>
 				<module>efiling-api</module>
 				<module>efiling-reviewer-api</module>
 			</modules>
