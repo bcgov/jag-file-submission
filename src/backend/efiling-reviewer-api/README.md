@@ -26,7 +26,8 @@ You should use environment variables to configure the jag efiling api
 | Environment Variable            | Type    | Description                                  | Notes                          |
 | ------------------------------- | ------- | -------------------------------------------- | ------------------------------ |
 | SERVER_PORT                     | Integer | web application server port                  | defaulted to `8080`            |
-
+| DILIGEN_HEALTH_ENABLED:true}    | Boolean | if Diligen should be monitored on healt check| defaulted to `true`            |
+| DILIGEN_BASE_PATH               | String  | Diligen api base path                        |                                |
 
 ## Backend Folder Structure
 

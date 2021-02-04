@@ -1,0 +1,25 @@
+{
+	"info": {
+		"_postman_id": "df32c5fc-3ac2-48c0-b4b9-4d07906c8167",
+		"name": "Efiling Review Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "health",
+			"item": [
+				{
+					"name": "health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
