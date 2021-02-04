@@ -9,6 +9,9 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Diligen Client configuration
+ */
 @Configuration
 @EnableConfigurationProperties(DiligenProperties.class)
 public class AutoConfiguration {
@@ -19,6 +22,9 @@ public class AutoConfiguration {
         this.diligenProperties = diligenProperties;
     }
 
+    /**
+     * @return ApiClient - a configured api client for diligen
+     */
     @Bean
     public ApiClient apiClient() {
         ApiClient apiClient = new ApiClient();
@@ -31,16 +37,23 @@ public class AutoConfiguration {
         return apiClient;
     }
 
+    /**
+     * @param apiClient - a diligen api client
+     * @return HealthCheckApi - diligen healthCheckApi client
+     */
     @Bean
     public HealthCheckApi healthCheckApi(ApiClient apiClient) {
         return new HealthCheckApi(apiClient);
     }
 
+    /**
+     * @param healthCheckApi - diligen healthcheck api
+     * @return Diligen implementation of HealthIndicator
+     */
     @Bean
     @ConditionalOnProperty(prefix = "jag.efiling.diligen", name = "health.enabled", havingValue = "true")
     public HealthIndicator diligenHealthIndictor(HealthCheckApi healthCheckApi) {
         return new DiligenHealthIndicator(healthCheckApi);
     }
-
 
 }
