@@ -149,16 +149,16 @@
                         <configuration>
                             <inputSpec>${project.basedir}/diligen.api.yaml</inputSpec>
                             <generatorName>java</generatorName>
-<!--                            <configOptions>-->
-<!--                                <dateLibrary>joda</dateLibrary>-->
-<!--                                <validateSpec>false</validateSpec>-->
-<!--                            </configOptions>-->
+                            <configOptions>
+                                <dateLibrary>joda</dateLibrary>
+                                <validateSpec>false</validateSpec>
+                            </configOptions>
                             <library>jersey2</library>
-<!--                            <apiPackage>${default-package}.api</apiPackage>-->
-<!--                            <modelPackage>${default-package}.api.model</modelPackage>-->
-<!--                            <invokerPackage>${default-package}.api.handler</invokerPackage>-->
-<!--                            <generateModelTests>false</generateModelTests>-->
-<!--                            <generateApiTests>false</generateApiTests>-->
+                            <apiPackage>${default-package}.api</apiPackage>
+                            <modelPackage>${default-package}.api.model</modelPackage>
+                            <invokerPackage>${default-package}.api.handler</invokerPackage>
+                            <generateModelTests>false</generateModelTests>
+                            <generateApiTests>false</generateApiTests>
                         </configuration>
                     </execution>
                 </executions>
