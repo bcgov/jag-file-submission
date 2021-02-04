@@ -12,7 +12,6 @@ import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.math.BigDecimal;
 import java.util.Optional;
