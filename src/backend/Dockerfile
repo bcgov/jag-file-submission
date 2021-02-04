@@ -31,7 +31,7 @@ WORKDIR /
 COPY . .
 
 RUN mvn -B clean install \
-        -P docker \
+        -P libs \
         -Dmaven.test.skip=${SKIP_TESTS}
 
 WORKDIR ${SERVICE_NAME}
