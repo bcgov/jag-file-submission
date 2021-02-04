@@ -116,6 +116,8 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
             documentStatuses.setEntDtm(DateUtils.getCurrentXmlDate());
             documentStatuses.setDocumentStatusTypeCd(Keys.WITHDRAWN_STATUS_CD);
             documentStatuses.setCreatedByPartId(deleteSubmissionDocumentRequest.getClientId());
+            documentStatuses.setEntUserId(deleteSubmissionDocumentRequest.getClientId().toEngineeringString());
+            documentStatuses.setUpdUserId(deleteSubmissionDocumentRequest.getClientId().toEngineeringString());
             documentStatuses.setStatusDtm(DateUtils.getCurrentXmlDate());
 
             filingFacadeBean.updateDocumentStatus(documentStatuses);
