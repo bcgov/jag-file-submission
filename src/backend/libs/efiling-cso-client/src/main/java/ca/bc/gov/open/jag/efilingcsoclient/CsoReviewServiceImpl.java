@@ -1,16 +1,19 @@
 package ca.bc.gov.open.jag.efilingcsoclient;
 
-
+import ca.bc.gov.ag.csows.filing.DocumentStatuses;
+import ca.bc.gov.ag.csows.filing.FilingFacadeBean;
 import ca.bc.gov.ag.csows.filing.status.FilingStatus;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
 import ca.bc.gov.ag.csows.reports.Report;
 import ca.bc.gov.ag.csows.reports.ReportService;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingReviewServiceException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingStatusServiceException;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
+import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,12 +33,15 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
 
     private final ReportService reportService;
 
+    private final FilingFacadeBean filingFacadeBean;
+
     private final FilePackageMapper filePackageMapper;
 
-    public CsoReviewServiceImpl(FilingStatusFacadeBean filingStatusFacadeBean, ReportService reportService, FilePackageMapper filePackageMapper) {
+    public CsoReviewServiceImpl(FilingStatusFacadeBean filingStatusFacadeBean, ReportService reportService, FilingFacadeBean filingFacadeBean, FilePackageMapper filePackageMapper) {
 
         this.filingStatusFacadeBean = filingStatusFacadeBean;
         this.reportService = reportService;
+        this.filingFacadeBean = filingFacadeBean;
         this.filePackageMapper = filePackageMapper;
 
     }
@@ -103,6 +109,25 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
 
     @Override
     public void deleteSubmittedDocument(DeleteSubmissionDocumentRequest deleteSubmissionDocumentRequest) {
-        //Do nothing
+        try {
+
+            DocumentStatuses documentStatuses = new DocumentStatuses();
+            documentStatuses.setDocumentId(new BigDecimal(deleteSubmissionDocumentRequest.getDocumentId()));
+            documentStatuses.setEntDtm(DateUtils.getCurrentXmlDate());
+            documentStatuses.setDocumentStatusTypeCd(Keys.WITHDRAWN_STATUS_CD);
+            documentStatuses.setCreatedByPartId(deleteSubmissionDocumentRequest.getClientId());
+            documentStatuses.setStatusDtm(DateUtils.getCurrentXmlDate());
+
+            filingFacadeBean.updateDocumentStatus(documentStatuses);
+
+            filingFacadeBean.inactivateReferrals(deleteSubmissionDocumentRequest.getClientId(), DateUtils.getCurrentXmlDate(), deleteSubmissionDocumentRequest.getDocumentId());
+
+            filingFacadeBean.removePackageParties(deleteSubmissionDocumentRequest.getPackageNo());
+
+        } catch (ca.bc.gov.ag.csows.filing.NestedEjbException_Exception e) {
+
+            throw  new EfilingReviewServiceException("Failed to delete", e.getCause());
+
+        }
     }
 }

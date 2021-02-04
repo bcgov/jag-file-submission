@@ -3,7 +3,6 @@ package ca.bc.gov.open.jag.efilingcsoclient.csoReviewServiceImpl;
 import ca.bc.gov.ag.csows.reports.ReportService;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoReviewServiceImpl;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapperImpl;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -30,7 +29,7 @@ public class GetSubmissionSheetTest {
 
         MockitoAnnotations.openMocks(this);
 
-        sut = new CsoReviewServiceImpl(null, reportServiceMock, new FilePackageMapperImpl());
+        sut = new CsoReviewServiceImpl(null, reportServiceMock, null, new FilePackageMapperImpl());
     }
 
     @DisplayName("OK: report return")
