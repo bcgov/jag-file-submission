@@ -27,7 +27,7 @@ export const getSubmissionSheet = async (packageId) => {
 };
 
 /**
- * Retrieves the Submission Sheet from the backend API for the given packageId.
+ * Retrieves the Submitted Document from the backend API for the given packageId and documentId.
  *
  * @param packageId id associated with the filing package
  * @param document the document to retrieve. Shape must be {identifier: string, name: string}
