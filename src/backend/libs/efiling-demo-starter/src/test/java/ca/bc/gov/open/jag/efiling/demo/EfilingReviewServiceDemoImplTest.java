@@ -132,9 +132,7 @@ public class EfilingReviewServiceDemoImplTest {
     @DisplayName("OK: demo returns a boolean")
     public void withDocumentRequestBoolean() {
 
-        boolean result = sut.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(BigDecimal.ONE, BigDecimal.ONE, "TEST"));
-
-        Assertions.assertTrue(result);
+        Assertions.assertDoesNotThrow(() -> sut.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(BigDecimal.ONE, BigDecimal.ONE, "TEST")));
 
     }
 

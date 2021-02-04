@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import javax.ws.rs.NotFoundException;
 import java.math.BigDecimal;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -45,11 +46,9 @@ public class DeleteSubmittedDocumentTest {
     @DisplayName("Ok: a document was deleted")
     public void withValidRequestReturnDocument() {
 
-        Mockito.when(efilingReviewServiceMock.deleteSubmittedDocument(any())).thenReturn(true);
+        Mockito.doNothing().when(efilingReviewServiceMock).deleteSubmittedDocument(any());
 
-        boolean result = sut.deleteSubmittedDocument(TestHelpers.CASE_1_STRING, BigDecimal.ONE, TestHelpers.DOCUMENT_ID_TWO);
-
-        Assertions.assertTrue(result);
+        Assertions.assertDoesNotThrow(() -> sut.deleteSubmittedDocument(TestHelpers.CASE_1_STRING, BigDecimal.ONE, TestHelpers.DOCUMENT_ID_TWO));
 
     }
 
@@ -57,9 +56,8 @@ public class DeleteSubmittedDocumentTest {
     @DisplayName("failed: missing account")
     public void withValidRequestButMissingAccountReturnEmpty() {
 
-        boolean result = sut.deleteSubmittedDocument(TestHelpers.CASE_2_STRING, BigDecimal.ONE, TestHelpers.DOCUMENT_ID_TWO);
+        Assertions.assertThrows(NotFoundException.class, () -> sut.deleteSubmittedDocument(TestHelpers.CASE_2_STRING, BigDecimal.ONE, TestHelpers.DOCUMENT_ID_TWO));
 
-        Assertions.assertFalse(result);
 
     }
 
@@ -68,11 +66,9 @@ public class DeleteSubmittedDocumentTest {
     @DisplayName("failed: nothing was deleted")
     public void withValidRequestButMissingPackageReturnEmpty() {
 
-        Mockito.when(efilingReviewServiceMock.deleteSubmittedDocument(any())).thenReturn(false);
+        Mockito.doThrow(RuntimeException.class).when(efilingReviewServiceMock).deleteSubmittedDocument(any());
 
-        boolean result = sut.deleteSubmittedDocument(TestHelpers.CASE_1_STRING, BigDecimal.TEN, TestHelpers.DOCUMENT_ID_TWO);
-
-        Assertions.assertFalse(result);
+        Assertions.assertThrows(Exception.class, () ->sut.deleteSubmittedDocument(TestHelpers.CASE_1_STRING, BigDecimal.TEN, TestHelpers.DOCUMENT_ID_TWO));
 
     }
 }

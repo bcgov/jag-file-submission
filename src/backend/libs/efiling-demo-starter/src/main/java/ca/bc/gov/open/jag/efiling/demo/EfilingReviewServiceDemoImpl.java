@@ -48,8 +48,8 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
     }
 
     @Override
-    public boolean deleteSubmittedDocument(DeleteSubmissionDocumentRequest deleteSubmissionDocumentRequest) {
-        return true;
+    public void deleteSubmittedDocument(DeleteSubmissionDocumentRequest deleteSubmissionDocumentRequest) {
+        //Do nothing
     }
 
     private Optional<byte[]> getDocument() {

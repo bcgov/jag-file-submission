@@ -102,7 +102,7 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
     }
 
     @Override
-    public boolean deleteSubmittedDocument(DeleteSubmissionDocumentRequest deleteSubmissionDocumentRequest) {
-        return false;
+    public void deleteSubmittedDocument(DeleteSubmissionDocumentRequest deleteSubmissionDocumentRequest) {
+        //Do nothing
     }
 }

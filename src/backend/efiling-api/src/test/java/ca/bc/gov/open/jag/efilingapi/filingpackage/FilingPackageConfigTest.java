@@ -77,8 +77,8 @@ public class FilingPackageConfigTest {
                 }
 
                 @Override
-                public boolean deleteSubmittedDocument(DeleteSubmissionDocumentRequest deleteSubmissionDocumentRequest) {
-                    return false;
+                public void deleteSubmittedDocument(DeleteSubmissionDocumentRequest deleteSubmissionDocumentRequest) {
+                    //Do nothing
                 }
             };
 

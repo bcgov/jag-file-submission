@@ -19,6 +19,6 @@ public interface EfilingReviewService {
     Optional<byte[]> getSubmittedDocument(BigDecimal packageNumber,
                                           String documentIdentifier);
 
-    boolean deleteSubmittedDocument(DeleteSubmissionDocumentRequest deleteSubmissionDocumentRequest);
+    void deleteSubmittedDocument(DeleteSubmissionDocumentRequest deleteSubmissionDocumentRequest);
 
 }

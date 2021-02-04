@@ -18,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import javax.ws.rs.NotFoundException;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,9 +61,11 @@ public class DeleteSubmittedDocumentTest {
 
         SecurityContextHolder.setContext(securityContextMock);
 
-        Mockito.when(filingPackageService.deleteSubmittedDocument(any(), ArgumentMatchers.eq(BigDecimal.ONE), ArgumentMatchers.eq(TestHelpers.DOCUMENT_ID_ONE))).thenReturn(true);
+        Mockito.doNothing().when(filingPackageService).deleteSubmittedDocument(any(), ArgumentMatchers.eq(BigDecimal.ONE), ArgumentMatchers.eq(TestHelpers.DOCUMENT_ID_ONE));
 
-        Mockito.when(filingPackageService.deleteSubmittedDocument(any(), ArgumentMatchers.eq(BigDecimal.ONE), ArgumentMatchers.eq(TestHelpers.DOCUMENT_ID_TWO))).thenReturn(false);
+        Mockito.doThrow(RuntimeException.class).when(filingPackageService).deleteSubmittedDocument(any(), ArgumentMatchers.eq(BigDecimal.ONE), ArgumentMatchers.eq(TestHelpers.DOCUMENT_ID_TWO));
+
+        Mockito.doThrow(NotFoundException.class).when(filingPackageService).deleteSubmittedDocument(any(), ArgumentMatchers.eq(BigDecimal.TEN), ArgumentMatchers.eq(TestHelpers.DOCUMENT_ID_TWO));
 
         sut = new FilingpackageApiDelegateImpl(filingPackageService);
     }
@@ -104,6 +107,20 @@ public class DeleteSubmittedDocumentTest {
         ResponseEntity<?> actual = sut.deleteSubmittedDocument(BigDecimal.ONE, TestHelpers.DOCUMENT_ID_TWO);
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
+
+    }
+
+    @Test
+    @DisplayName("404: when delete failed should return 404")
+    public void withDeleteAccountNotFoundFailedShouldReturn404() {
+
+        Map<String, Object> otherClaims = new HashMap<>();
+        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_1_STRING);
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
+        ResponseEntity<?> actual = sut.deleteSubmittedDocument(BigDecimal.TEN, TestHelpers.DOCUMENT_ID_TWO);
+
+        Assertions.assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
 
     }
 

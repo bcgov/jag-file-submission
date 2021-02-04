@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.security.RolesAllowed;
+import javax.ws.rs.NotFoundException;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.util.Optional;
@@ -106,11 +107,15 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
         if(!universalId.isPresent()) return new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
 
-        if (filingPackageService.deleteSubmittedDocument(universalId.get(), packageIdentifier, documentIdentifier)) {
+        try {
+            filingPackageService.deleteSubmittedDocument(universalId.get(), packageIdentifier, documentIdentifier);
             return ResponseEntity.ok(null);
-        } else {
+        } catch (NotFoundException e) {
             return new ResponseEntity(
-                   EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DELETE_DOCUMENT_ERROR).create(), HttpStatus.BAD_REQUEST);
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DELETE_DOCUMENT_ERROR).create(), HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DELETE_DOCUMENT_ERROR).create(), HttpStatus.BAD_REQUEST);
         }
     }
 
