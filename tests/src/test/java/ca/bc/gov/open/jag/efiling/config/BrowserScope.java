@@ -23,5 +23,7 @@ public class BrowserScope extends SimpleThreadScope {
 
     @Override
     public void registerDestructionCallback(String name, Runnable callback) {
+
+        // Removed logger warning
     }
 }

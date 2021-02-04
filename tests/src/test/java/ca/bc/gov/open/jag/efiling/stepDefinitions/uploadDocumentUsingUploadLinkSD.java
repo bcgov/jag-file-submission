@@ -48,8 +48,8 @@ public class uploadDocumentUsingUploadLinkSD {
     public void verifyTheDocumentIsUploaded() {
 
         List<String> uploadedFiles = this.packageConfirmationPage.getUploadedFilesList();
-        System.out.println(uploadedFiles);
         assertEquals(expectedUploadedFilesList, uploadedFiles);
+
         log.info("Additional document added to the package.");
     }
 }
