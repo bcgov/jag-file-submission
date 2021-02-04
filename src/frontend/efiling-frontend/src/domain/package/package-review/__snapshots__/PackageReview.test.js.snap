@@ -247,27 +247,29 @@ exports[`PackageReview Component Matches the snapshot 1`] = `
             role="tabpanel"
           >
             <br />
-            <div>
+            <div
+              class="document-list"
+            >
               <div
                 class="header"
               >
                 <span
-                  class="d-none d-md-inline col-md-3"
+                  class="d-none d-lg-inline col-lg-3"
                 >
                   Document Type
                 </span>
                 <span
-                  class="d-none d-md-inline col-md-3"
+                  class="d-none d-lg-inline col-lg-4"
                 >
                   File Name
                 </span>
                 <span
-                  class="d-none d-md-inline col-md-3"
+                  class="d-none d-lg-inline col-lg-3"
                 >
                   Status
                 </span>
                 <span
-                  class="d-none d-md-inline col-md-3"
+                  class="d-none d-lg-inline col-lg-2"
                 >
                   Action (s)
                 </span>
@@ -275,42 +277,40 @@ exports[`PackageReview Component Matches the snapshot 1`] = `
               <ul>
                 <li>
                   <span
-                    class="label col-sm-4 d-md-none"
+                    class="label col-sm-4 d-lg-none"
                   >
                     Document Type:
                   </span>
                   <span
-                    class="col-sm-8 col-md-3"
-                  >
-                    AFF
-                  </span>
+                    class="col-sm-8 col-lg-3"
+                  />
                   <span
-                    class="label col-sm-4 d-md-none"
+                    class="label col-sm-4 d-lg-none"
                   >
                     File Name:
                   </span>
                   <span
-                    class="col-sm-8 col-md-3"
+                    class="col-sm-8 col-lg-4"
                   >
                     test-document.pdf
                   </span>
                   <span
-                    class="label col-sm-4 d-md-none"
+                    class="label col-sm-4 d-lg-none"
                   >
                     Status:
                   </span>
                   <span
-                    class="col-sm-8 col-md-3"
+                    class="col-sm-8 col-lg-3"
                   >
                     Submitted
                   </span>
                   <span
-                    class="label col-sm-4 d-md-none"
+                    class="label col-sm-4 d-lg-none"
                   >
                     Action (s):
                   </span>
                   <span
-                    class="col-sm-8 col-md-3"
+                    class="col-sm-8 col-lg-2"
                   >
                     withdraw
                   </span>
