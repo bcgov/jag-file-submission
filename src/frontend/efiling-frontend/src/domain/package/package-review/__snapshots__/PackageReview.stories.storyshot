@@ -271,7 +271,9 @@ exports[`Storyshots PackageReview Default 1`] = `
             role="tabpanel"
           >
             <br />
-            <div>
+            <div
+              class="document-list"
+            >
               <div
                 class="header"
               >
@@ -693,7 +695,9 @@ exports[`Storyshots PackageReview Mobile 1`] = `
             role="tabpanel"
           >
             <br />
-            <div>
+            <div
+              class="document-list"
+            >
               <div
                 class="header"
               >
