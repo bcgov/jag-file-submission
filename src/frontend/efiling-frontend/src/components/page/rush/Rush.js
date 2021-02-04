@@ -14,7 +14,7 @@ import {
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import Payment from "../payment/Payment";
 
-import "./Rush.css";
+import "./Rush.scoped.css";
 
 const calloutText = `Please provide the date of when the direction was made,
 the name of the Judge who made the direction along with any additional details

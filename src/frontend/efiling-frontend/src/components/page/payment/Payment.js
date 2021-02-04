@@ -17,7 +17,7 @@ import { propTypes } from "../../../types/propTypes";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
 import { generateFileSummaryData } from "../../../modules/helpers/generateFileSummaryData";
 
-import "./Payment.css";
+import "./Payment.scoped.css";
 
 const baseCalloutText = `I have reviewed the information and the documents in this filing
 package and am prepared to submit them for filing.`;

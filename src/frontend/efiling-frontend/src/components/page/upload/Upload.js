@@ -16,7 +16,7 @@ import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { propTypes } from "../../../types/propTypes";
 
-import "./Upload.css";
+import "./Upload.scoped.css";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
 
 const filesToUpload = {

@@ -12,7 +12,7 @@ import { propTypes } from "../../../types/propTypes";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { getFilingPackage, getSubmissionSheet } from "./PackageReviewService";
 
-import "./PackageReview.css";
+import "./PackageReview.scoped.css";
 import DocumentList from "./DocumentList";
 
 export default function PackageReview({ page: { header, packageId } }) {

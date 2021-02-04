@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import "./DocumentList.css";
+import "./DocumentList.scoped.css";
 
 export default function DocumentList({ documents }) {
   return (

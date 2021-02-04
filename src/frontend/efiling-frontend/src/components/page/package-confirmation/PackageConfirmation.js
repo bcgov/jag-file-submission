@@ -17,7 +17,7 @@ import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { onBackButtonEvent } from "../../../modules/helpers/handleBackEvent";
 import { generateFileSummaryData } from "../../../modules/helpers/generateFileSummaryData";
 
-import "./PackageConfirmation.css";
+import "./PackageConfirmation.scoped.css";
 import Payment from "../payment/Payment";
 import Upload from "../upload/Upload";
 
