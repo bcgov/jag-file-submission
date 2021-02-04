@@ -4,6 +4,7 @@ import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.mapper.FilingPackageMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageServiceImpl;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
@@ -11,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import javax.ws.rs.NotFoundException;
 import java.math.BigDecimal;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -56,7 +56,7 @@ public class DeleteSubmittedDocumentTest {
     @DisplayName("failed: missing account")
     public void withValidRequestButMissingAccountReturnEmpty() {
 
-        Assertions.assertThrows(NotFoundException.class, () -> sut.deleteSubmittedDocument(TestHelpers.CASE_2_STRING, BigDecimal.ONE, TestHelpers.DOCUMENT_ID_TWO));
+        Assertions.assertThrows(EfilingAccountServiceException.class, () -> sut.deleteSubmittedDocument(TestHelpers.CASE_2_STRING, BigDecimal.ONE, TestHelpers.DOCUMENT_ID_TWO));
 
 
     }

@@ -4,6 +4,7 @@ import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.FilingpackageApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import org.junit.jupiter.api.*;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
@@ -65,7 +66,7 @@ public class DeleteSubmittedDocumentTest {
 
         Mockito.doThrow(RuntimeException.class).when(filingPackageService).deleteSubmittedDocument(any(), ArgumentMatchers.eq(BigDecimal.ONE), ArgumentMatchers.eq(TestHelpers.DOCUMENT_ID_TWO));
 
-        Mockito.doThrow(NotFoundException.class).when(filingPackageService).deleteSubmittedDocument(any(), ArgumentMatchers.eq(BigDecimal.TEN), ArgumentMatchers.eq(TestHelpers.DOCUMENT_ID_TWO));
+        Mockito.doThrow(EfilingAccountServiceException.class).when(filingPackageService).deleteSubmittedDocument(any(), ArgumentMatchers.eq(BigDecimal.TEN), ArgumentMatchers.eq(TestHelpers.DOCUMENT_ID_TWO));
 
         sut = new FilingpackageApiDelegateImpl(filingPackageService);
     }
