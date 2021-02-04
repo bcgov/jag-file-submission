@@ -247,7 +247,76 @@ exports[`PackageReview Component Matches the snapshot 1`] = `
             role="tabpanel"
           >
             <br />
-            Documents coming ...
+            <div>
+              <div
+                class="header"
+              >
+                <span
+                  class="d-none d-md-inline col-md-3"
+                >
+                  Document Type
+                </span>
+                <span
+                  class="d-none d-md-inline col-md-3"
+                >
+                  File Name
+                </span>
+                <span
+                  class="d-none d-md-inline col-md-3"
+                >
+                  Status
+                </span>
+                <span
+                  class="d-none d-md-inline col-md-3"
+                >
+                  Action (s)
+                </span>
+              </div>
+              <ul>
+                <li>
+                  <span
+                    class="label col-sm-4 d-md-none"
+                  >
+                    Document Type:
+                  </span>
+                  <span
+                    class="col-sm-8 col-md-3"
+                  >
+                    AFF
+                  </span>
+                  <span
+                    class="label col-sm-4 d-md-none"
+                  >
+                    File Name:
+                  </span>
+                  <span
+                    class="col-sm-8 col-md-3"
+                  >
+                    test-document.pdf
+                  </span>
+                  <span
+                    class="label col-sm-4 d-md-none"
+                  >
+                    Status:
+                  </span>
+                  <span
+                    class="col-sm-8 col-md-3"
+                  >
+                    Submitted
+                  </span>
+                  <span
+                    class="label col-sm-4 d-md-none"
+                  >
+                    Action (s):
+                  </span>
+                  <span
+                    class="col-sm-8 col-md-3"
+                  >
+                    withdraw
+                  </span>
+                </li>
+              </ul>
+            </div>
           </div>
           <div
             aria-hidden="true"

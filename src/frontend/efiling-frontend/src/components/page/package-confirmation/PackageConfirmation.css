@@ -2,12 +2,6 @@
   display: inline-block;
 }
 
-.file-href {
-  cursor: pointer;
-  color: #1a5a96;
-  text-decoration: underline;
-}
-
 .push-margin-left {
   margin-left: 15px;
 }

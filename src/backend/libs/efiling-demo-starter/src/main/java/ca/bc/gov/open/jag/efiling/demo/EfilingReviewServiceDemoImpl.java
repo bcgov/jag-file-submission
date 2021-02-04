@@ -35,6 +35,18 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
     @Override
     public Optional<byte[]> getSubmissionSheet(BigDecimal packageNumber) {
 
+        return getDocument();
+
+    }
+
+    @Override
+    public Optional<byte[]> getSubmittedDocument(BigDecimal packageNumber, String documentIdentifier) {
+
+        return getDocument();
+
+    }
+
+    private Optional<byte[]> getDocument() {
         try {
             InputStream initialStream = getClass().getResourceAsStream("/demo-file/test-document.pdf");
             byte[] targetArray = new byte[initialStream.available()];
@@ -43,7 +55,6 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
         } catch (IOException e) {
             return Optional.empty();
         }
-
     }
 
     private ReviewFilingPackage createReviewPackage() {
@@ -57,7 +68,7 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
         reviewFilingPackage.setSubmittedDate(DateTime.parse("2020-5-5"));
         reviewFilingPackage.setCourt(createCourt());
         reviewFilingPackage.setParties(createParty());
-        reviewFilingPackage.setDocuments(createReviewDocument());
+        reviewFilingPackage.setDocuments(createReviewDocuments());
         reviewFilingPackage.setPayments(createPayment());
         return reviewFilingPackage;
     }
@@ -80,25 +91,36 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
         return reviewCourt;
     }
 
-    private List<ReviewDocument> createReviewDocument() {
+    private List<ReviewDocument> createReviewDocuments() {
+        return Arrays.asList(createReviewDocument("1","SUB","Submitted", "test-document.pdf","1"),
+                createReviewDocument("2", "REF", "Referred", "test-document-hello.pdf","2"),
+                createReviewDocument("3", "FILE", "Filed", "File12341234.pdf","3"),
+                createReviewDocument("4", "WDRN", "Withdrawn", "Registration-of-divorce-proceedings2020265814.pdf","4"),
+                createReviewDocument("5", "CCOR", "Courtesy Correction", "loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong-filename.pdf","5"),
+                createReviewDocument("6", "RSUB", "Resubmitted", "123.pdf","6"),
+                createReviewDocument("7", "REJ", "Rejected", "rejected-document.pdf","7"));
+    }
+
+    private ReviewDocument createReviewDocument(String documentId, String statusCd, String status, String filename,
+                                                String seqNo) {
         ReviewDocument reviewDocument = new ReviewDocument();
         reviewDocument.setDateFiled(DateTime.parse("2020-5-5"));
-        reviewDocument.setDocumentId("1");
+        reviewDocument.setDocumentId(documentId);
         reviewDocument.setDocumentType("Affidavit");
         reviewDocument.setDocumentTypeCd("AFF");
         reviewDocument.setDocumentUploadStatusCd("CMPL");
-        reviewDocument.setFileName("test-document.pdf");
+        reviewDocument.setFileName(filename);
         reviewDocument.setInitiatingDoc(false);
         reviewDocument.setLargeFileYn("N");
         reviewDocument.setPackageId("1");
-        reviewDocument.setPackageSeqNo("1");
+        reviewDocument.setPackageSeqNo(seqNo);
         reviewDocument.setPaymentProcessed(false);
-        reviewDocument.setStatus("Submitted");
-        reviewDocument.setStatusCode("SUB");
+        reviewDocument.setStatus(status);
+        reviewDocument.setStatusCode(statusCd);
         reviewDocument.setStatusDate(DateTime.parse("2020-12-17"));
         reviewDocument.setTrialDivision(false);
         reviewDocument.setXmlDoc(false);
-        return Collections.singletonList(reviewDocument);
+        return reviewDocument;
     }
 
     private List<Party> createParty() {

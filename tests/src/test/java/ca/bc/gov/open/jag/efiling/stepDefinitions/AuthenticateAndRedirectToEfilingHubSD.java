@@ -19,6 +19,7 @@ public class AuthenticateAndRedirectToEfilingHubSD {
     private static final String EFILE_SUBMISSION_PAGE_TITLE = "E-File submission";
     private static final String INITIAL_DOCUMENT_NAME = "test-document.pdf";
 
+
     Logger log = LogManager.getLogger(AuthenticateAndRedirectToEfilingHubSD.class);
 
     public AuthenticateAndRedirectToEfilingHubSD(AuthenticationPage authenticationPage, PackageConfirmationPage packageConfirmationPage) {
