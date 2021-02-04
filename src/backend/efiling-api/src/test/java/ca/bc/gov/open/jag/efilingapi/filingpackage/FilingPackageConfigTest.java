@@ -6,6 +6,7 @@ import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import org.junit.jupiter.api.DisplayName;
@@ -73,6 +74,11 @@ public class FilingPackageConfigTest {
                 @Override
                 public Optional<byte[]> getSubmittedDocument(BigDecimal packageNumber, String documentIdentifier) {
                     return Optional.empty();
+                }
+
+                @Override
+                public void deleteSubmittedDocument(DeleteSubmissionDocumentRequest deleteSubmissionDocumentRequest) {
+                    //Do nothing
                 }
             };
 

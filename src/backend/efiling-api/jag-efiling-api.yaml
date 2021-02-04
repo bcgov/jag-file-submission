@@ -483,8 +483,6 @@ paths:
       responses:
         "200":
           description: Document was deleted
-        "404":
-          description: Document not found
 components:
   securitySchemes:
     bearerAuth: # arbitrary name for the security scheme

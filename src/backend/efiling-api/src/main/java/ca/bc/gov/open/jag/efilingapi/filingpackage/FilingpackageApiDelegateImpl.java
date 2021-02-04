@@ -7,6 +7,8 @@ import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.model.SubmittedDocument;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import ca.bc.gov.open.jag.efilingapi.core.security.SecurityUtils;
+
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -15,7 +17,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+
 import javax.annotation.security.RolesAllowed;
+
 import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.util.Optional;
@@ -98,7 +102,24 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
     @Override
     @RolesAllowed("efiling-user")
     public ResponseEntity<Void> deleteSubmittedDocument(BigDecimal packageIdentifier, String documentIdentifier) {
-        return ResponseEntity.ok(null);
+
+        logger.info("delete document request received");
+
+        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
+
+        if(!universalId.isPresent()) return new ResponseEntity(
+                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
+
+        try {
+            filingPackageService.deleteSubmittedDocument(universalId.get(), packageIdentifier, documentIdentifier);
+            return ResponseEntity.ok(null);
+        } catch (EfilingAccountServiceException e) {
+            return new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DELETE_DOCUMENT_ERROR).create(), HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DELETE_DOCUMENT_ERROR).create(), HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

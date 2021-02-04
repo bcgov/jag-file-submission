@@ -4,8 +4,10 @@ import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.mapper.FilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.model.SubmittedDocument;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
@@ -70,6 +72,17 @@ public class FilingPackageServiceImpl implements FilingPackageService {
 
     }
 
+    @Override
+    public void deleteSubmittedDocument(String universalId, BigDecimal packageNumber, String documentIdentifier) {
+
+        AccountDetails accountDetails = accountService.getCsoAccountDetails(universalId);
+
+        if (accountDetails.getClientId() == null) throw new EfilingAccountServiceException("Account not found");
+
+        efilingReviewService.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(accountDetails.getClientId(), packageNumber, documentIdentifier));
+
+    }
+
     private Optional<ReviewFilingPackage> getFilingPackage(String universalId, BigDecimal packageNumber) {
         AccountDetails accountDetails = accountService.getCsoAccountDetails(universalId);
 
@@ -78,6 +91,7 @@ public class FilingPackageServiceImpl implements FilingPackageService {
         FilingPackageRequest request = new FilingPackageRequest(accountDetails.getClientId(), packageNumber);
 
         return efilingReviewService.findStatusByPackage(request);
+        
     }
 
 }
