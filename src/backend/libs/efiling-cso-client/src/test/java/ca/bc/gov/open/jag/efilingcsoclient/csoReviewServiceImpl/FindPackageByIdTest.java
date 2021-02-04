@@ -65,7 +65,7 @@ public class FindPackageByIdTest {
 
         Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(EXCEPTION_PACKAGE), ArgumentMatchers.eq(EXCEPTION_CLIENT), any(), any(), any(), any(), any(), any())).thenThrow(new NestedEjbException_Exception());
 
-        sut = new CsoReviewServiceImpl(filingStatusFacadeBean, null, new FilePackageMapperImpl());
+        sut = new CsoReviewServiceImpl(filingStatusFacadeBean, null, null, new FilePackageMapperImpl());
     }
 
     @DisplayName("OK: package found")

@@ -27,7 +27,7 @@ public class GetSubmissionDocumentTest {
 
         MockitoAnnotations.openMocks(this);
 
-        sut = new CsoReviewServiceImpl(null, reportServiceMock, new FilePackageMapperImpl());
+        sut = new CsoReviewServiceImpl(null, reportServiceMock, null, new FilePackageMapperImpl());
     }
 
     @DisplayName("OK: it is working")

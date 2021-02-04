@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingcsostarter.config;
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RoleRegistryPortType;
 import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
 import ca.bc.gov.ag.csows.ceis.Csows;
+import ca.bc.gov.ag.csows.filing.FilingFacade;
 import ca.bc.gov.ag.csows.filing.FilingFacadeBean;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.ag.csows.lookups.LookupFacadeBean;
@@ -133,8 +134,8 @@ public class AutoConfiguration {
     }
 
     @Bean
-    public EfilingReviewService efilingReviewService(FilingStatusFacadeBean filingStatusFacadeBean, ReportService reportService) {
-        return new CsoReviewServiceImpl(filingStatusFacadeBean, reportService, new FilePackageMapperImpl());
+    public EfilingReviewService efilingReviewService(FilingStatusFacadeBean filingStatusFacadeBean, ReportService reportService, FilingFacadeBean filingFacadeBean) {
+        return new CsoReviewServiceImpl(filingStatusFacadeBean, reportService, filingFacadeBean, new FilePackageMapperImpl());
     }
 
 
