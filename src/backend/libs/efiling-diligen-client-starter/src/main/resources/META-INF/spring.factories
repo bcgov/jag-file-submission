@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-    AutoConfiguration
+    ca.bc.gov.open.jag.efilingdiligenclientstarter.AutoConfiguration

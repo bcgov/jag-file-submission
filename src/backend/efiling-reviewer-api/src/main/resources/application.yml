@@ -1,6 +1,12 @@
 server:
   port: ${SERVER_PORT:8080}
+management:
+  endpoint:
+    health:
+      show-details: always
 jag:
   efiling:
     diligen:
-      basePath: https://bc.diligen.com
+      health:
+        enabled: ${DILIGEN_HEALTH_ENABLED:true}
+      basePath: ${DILIGEN_BASE_PATH}

@@ -28,6 +28,26 @@ public class AutoConfigurationTest {
         context.run(it -> {
             assertThat(it).hasSingleBean(ApiClient.class);
             assertThat(it).hasSingleBean(HealthCheckApi.class);
+            assertThat(it).doesNotHaveBean(DiligenHealthIndicator.class);
+        });
+
+    }
+
+    @Test
+    @DisplayName("ok: with valid configuration and healthchecks enabled should produce beans")
+    public void validConfigurationPlusHealthCheckShouldProduceBeans() {
+
+        context = new ApplicationContextRunner()
+                .withUserConfiguration(AutoConfiguration.class)
+                .withPropertyValues(
+                        "jag.efiling.diligen.basePath=http://test.com",
+                        "jag.efiling.diligen.health.enabled=true")
+                .withUserConfiguration(DiligenProperties.class);
+
+        context.run(it -> {
+            assertThat(it).hasSingleBean(ApiClient.class);
+            assertThat(it).hasSingleBean(HealthCheckApi.class);
+            assertThat(it).hasSingleBean(DiligenHealthIndicator.class);
         });
 
     }
