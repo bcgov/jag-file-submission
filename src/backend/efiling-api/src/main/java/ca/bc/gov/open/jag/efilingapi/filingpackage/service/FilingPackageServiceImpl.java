@@ -13,6 +13,7 @@ import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPa
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 
+import javax.ws.rs.NotFoundException;
 import java.math.BigDecimal;
 import java.util.Optional;
 
@@ -72,13 +73,13 @@ public class FilingPackageServiceImpl implements FilingPackageService {
     }
 
     @Override
-    public boolean deleteSubmittedDocument(String universalId, BigDecimal packageNumber, String documentIdentifier) {
+    public void deleteSubmittedDocument(String universalId, BigDecimal packageNumber, String documentIdentifier) {
 
         AccountDetails accountDetails = accountService.getCsoAccountDetails(universalId);
 
-        if (accountDetails.getClientId() == null) return false;
+        if (accountDetails.getClientId() == null) throw new NotFoundException();
 
-        return efilingReviewService.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(accountDetails.getClientId(), packageNumber, documentIdentifier));
+        efilingReviewService.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(accountDetails.getClientId(), packageNumber, documentIdentifier));
 
     }
 
