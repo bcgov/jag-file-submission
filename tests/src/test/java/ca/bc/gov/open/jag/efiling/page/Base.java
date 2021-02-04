@@ -19,4 +19,5 @@ public abstract class Base {
     private void init() {
         PageFactory.initElements(this.driver, this);
     }
+
 }
