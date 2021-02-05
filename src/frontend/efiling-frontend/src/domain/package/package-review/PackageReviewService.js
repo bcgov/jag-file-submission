@@ -32,7 +32,7 @@ export const getSubmissionSheet = async (packageId) => {
  * @param packageId id associated with the filing package
  * @param document the document to retrieve. Shape must be {identifier: string, name: string}
  */
-export const getSubmittedDocument = async (packageId, document) => {
+export const downloadSubmittedDocument = async (packageId, document) => {
   const response = await axios.get(
     `/filingpackages/${packageId}/document/${document.identifier}`,
     {

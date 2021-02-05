@@ -31,7 +31,7 @@ describe("DocumentList Component Testsuite", () => {
 
   test("Download document (click) success", async () => {
     // stub out service to return valid response.
-    pkgRvwService.getSubmittedDocument = jest.fn(() => Promise.resolve());
+    pkgRvwService.downloadSubmittedDocument = jest.fn(() => Promise.resolve());
 
     const { container } = render(
       <DocumentList packageId={packageId} documents={documents} />
@@ -43,13 +43,13 @@ describe("DocumentList Component Testsuite", () => {
     await waitFor(() => {});
 
     expect.assertions(1);
-    expect(pkgRvwService.getSubmittedDocument()).resolves.not.toThrow();
+    expect(pkgRvwService.downloadSubmittedDocument()).resolves.not.toThrow();
   });
 
   test("Download document (click) fail", async () => {
     const errorMessage = "Network Error";
     // stub out service to return failed response.
-    pkgRvwService.getSubmittedDocument = jest.fn(() =>
+    pkgRvwService.downloadSubmittedDocument = jest.fn(() =>
       Promise.reject(new Error(errorMessage))
     );
 
@@ -63,12 +63,14 @@ describe("DocumentList Component Testsuite", () => {
     await waitFor(() => {});
 
     expect.assertions(1);
-    expect(pkgRvwService.getSubmittedDocument()).rejects.toThrow(errorMessage);
+    expect(pkgRvwService.downloadSubmittedDocument()).rejects.toThrow(
+      errorMessage
+    );
   });
 
   test("Download document (keyDown) success keyCode=13", async () => {
     // stub out service to return valid response.
-    pkgRvwService.getSubmittedDocument = jest.fn(() => Promise.resolve());
+    pkgRvwService.downloadSubmittedDocument = jest.fn(() => Promise.resolve());
 
     const { container } = render(
       <DocumentList packageId={packageId} documents={documents} />
@@ -83,12 +85,12 @@ describe("DocumentList Component Testsuite", () => {
     await waitFor(() => {});
 
     expect.assertions(1);
-    expect(pkgRvwService.getSubmittedDocument()).resolves.not.toThrow();
+    expect(pkgRvwService.downloadSubmittedDocument()).resolves.not.toThrow();
   });
 
   test("Download document (keyDown) success keyCode=32", async () => {
     // stub out service to return valid response.
-    pkgRvwService.getSubmittedDocument = jest.fn(() => Promise.resolve());
+    pkgRvwService.downloadSubmittedDocument = jest.fn(() => Promise.resolve());
 
     const { container } = render(
       <DocumentList packageId={packageId} documents={documents} />
@@ -103,13 +105,13 @@ describe("DocumentList Component Testsuite", () => {
     await waitFor(() => {});
 
     expect.assertions(1);
-    expect(pkgRvwService.getSubmittedDocument).not.toHaveBeenCalled();
+    expect(pkgRvwService.downloadSubmittedDocument).not.toHaveBeenCalled();
   });
 
   test("Download document (click) fail", async () => {
     const errorMessage = "Network Error";
     // stub out service to return failed response.
-    pkgRvwService.getSubmittedDocument = jest.fn(() =>
+    pkgRvwService.downloadSubmittedDocument = jest.fn(() =>
       Promise.reject(new Error(errorMessage))
     );
 
@@ -126,6 +128,8 @@ describe("DocumentList Component Testsuite", () => {
     await waitFor(() => {});
 
     expect.assertions(1);
-    expect(pkgRvwService.getSubmittedDocument()).rejects.toThrow(errorMessage);
+    expect(pkgRvwService.downloadSubmittedDocument()).rejects.toThrow(
+      errorMessage
+    );
   });
 });

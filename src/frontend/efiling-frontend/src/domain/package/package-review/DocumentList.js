@@ -2,19 +2,19 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
-import { getSubmittedDocument } from "./PackageReviewService";
+import { downloadSubmittedDocument } from "./PackageReviewService";
 import "./DocumentList.scoped.css";
 
 export default function DocumentList({ packageId, documents }) {
   function handleClickFile(document) {
-    getSubmittedDocument(packageId, document).catch((err) => {
+    downloadSubmittedDocument(packageId, document).catch((err) => {
       errorRedirect(sessionStorage.getItem("errorUrl"), err);
     });
   }
 
   function handleKeyDownFile(e, document) {
     if (e && e.keyCode === 13) {
-      getSubmittedDocument(packageId, document).catch((err) => {
+      downloadSubmittedDocument(packageId, document).catch((err) => {
         errorRedirect(sessionStorage.getItem("errorUrl"), err);
       });
     }

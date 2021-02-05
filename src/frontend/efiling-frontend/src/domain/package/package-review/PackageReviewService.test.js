@@ -3,7 +3,7 @@ import FileSaver from "file-saver";
 import {
   getFilingPackage,
   getSubmissionSheet,
-  getSubmittedDocument,
+  downloadSubmittedDocument,
 } from "./PackageReviewService";
 import { getCourtData } from "../../../modules/test-data/courtTestData";
 
@@ -78,12 +78,12 @@ describe("PackageReviewService TestSuite", () => {
     expect(FileSaver.saveAs).not.toHaveBeenCalled();
   });
 
-  test("getSubmittedDocument success", async () => {
+  test("downloadSubmittedDocument success", async () => {
     axios.get.mockImplementationOnce(() =>
       Promise.resolve({ status: 200, data: "blob_data" })
     );
 
-    await expect(getSubmittedDocument(packageId, document)).resolves;
+    await expect(downloadSubmittedDocument(packageId, document)).resolves;
     expect(axios.get).toHaveBeenCalledWith(submittedDocumentURL, {
       responseType: "blob",
     });
