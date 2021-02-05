@@ -119,7 +119,7 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
             DocumentStatuses documentStatuses = new DocumentStatuses();
             documentStatuses.setDocumentId(new BigDecimal(deleteSubmissionDocumentRequest.getDocumentId()));
             documentStatuses.setEntDtm(DateUtils.getCurrentXmlDate());
-            documentStatuses.setDocumentStatusTypeCd(Keys.WITHDRAWN_STATUS_CD);
+            documentStatuses.setDocumentStatusTypeCd(ca.bc.gov.open.jag.efilingcommons.Keys.WITHDRAWN_STATUS_CD);
             documentStatuses.setCreatedByPartId(deleteSubmissionDocumentRequest.getClientId());
             documentStatuses.setEntUserId(deleteSubmissionDocumentRequest.getClientId().toEngineeringString());
             documentStatuses.setUpdUserId(deleteSubmissionDocumentRequest.getClientId().toEngineeringString());
