@@ -247,9 +247,7 @@ exports[`PackageReview Component Matches the snapshot 1`] = `
             role="tabpanel"
           >
             <br />
-            <div
-              class="document-list"
-            >
+            <div>
               <div
                 class="header"
               >

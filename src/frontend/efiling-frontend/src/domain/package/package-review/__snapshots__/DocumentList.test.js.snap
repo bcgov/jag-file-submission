@@ -2,9 +2,7 @@
 
 exports[`DocumentList Component Testsuite Matches the snapshot 1`] = `
 <DocumentFragment>
-  <div
-    class="document-list"
-  >
+  <div>
     <div
       class="header"
     >

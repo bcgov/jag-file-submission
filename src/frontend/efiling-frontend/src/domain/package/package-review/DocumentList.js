@@ -21,7 +21,7 @@ export default function DocumentList({ packageId, documents }) {
   }
 
   return (
-    <div className="document-list">
+    <div>
       <div className="header">
         <span className="d-none d-lg-inline col-lg-3">Document Type</span>
         <span className="d-none d-lg-inline col-lg-4">File Name</span>
