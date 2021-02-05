@@ -27,7 +27,7 @@ export default function DocumentList({
     }
   }
 
-  function handleClickDeleteFile(document) {
+  function withdrawDocument(document) {
     deleteSubmittedDocument(packageId, document)
       .then(() => reloadDocumentList())
       .catch((err) => {
@@ -35,13 +35,13 @@ export default function DocumentList({
       });
   }
 
+  function handleClickDeleteFile(document) {
+    withdrawDocument(document);
+  }
+
   function handleKeyDownDeleteFile(e, document) {
     if (e && e.keyCode === 13) {
-      deleteSubmittedDocument(packageId, document)
-        .then(() => reloadDocumentList())
-        .catch((err) => {
-          errorRedirect(sessionStorage.getItem("errorUrl"), err);
-        });
+      withdrawDocument(document);
     }
   }
 
