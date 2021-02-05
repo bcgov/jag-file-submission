@@ -1,3 +1,4 @@
+
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
 import ca.bc.gov.open.jag.efiling.page.AuthenticationPage;
@@ -51,3 +52,4 @@ public class AuthenticateAndRedirectToEfilingHubSD {
         log.info("Continue payment button is enabled");
     }
 }
+

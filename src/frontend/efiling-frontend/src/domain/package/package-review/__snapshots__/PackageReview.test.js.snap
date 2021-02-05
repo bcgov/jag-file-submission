@@ -247,9 +247,7 @@ exports[`PackageReview Component Matches the snapshot 1`] = `
             role="tabpanel"
           >
             <br />
-            <div
-              class="document-list"
-            >
+            <div>
               <div
                 class="header"
               >
@@ -290,9 +288,15 @@ exports[`PackageReview Component Matches the snapshot 1`] = `
                     File Name:
                   </span>
                   <span
-                    class="col-sm-8 col-lg-4"
+                    class="col-sm-8 col-lg-4 file-cell"
                   >
-                    test-document.pdf
+                    <span
+                      class="file-href"
+                      role="button"
+                      tabindex="0"
+                    >
+                      test-document.pdf
+                    </span>
                   </span>
                   <span
                     class="label col-sm-4 d-lg-none"
