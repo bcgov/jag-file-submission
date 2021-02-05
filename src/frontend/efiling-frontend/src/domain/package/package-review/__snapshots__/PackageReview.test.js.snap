@@ -314,9 +314,16 @@ exports[`PackageReview Component Matches the snapshot 1`] = `
                     Action (s):
                   </span>
                   <span
-                    class="col-sm-8 col-lg-2"
+                    class="col-sm-8 col-lg-2 file-cell"
                   >
-                    withdraw
+                    <span
+                      class="file-href"
+                      id="withdraw_1"
+                      role="button"
+                      tabindex="0"
+                    >
+                      withdraw
+                    </span>
                   </span>
                 </li>
               </ul>

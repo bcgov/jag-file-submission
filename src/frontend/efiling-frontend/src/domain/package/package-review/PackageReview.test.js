@@ -9,6 +9,8 @@ import moment from "moment-timezone";
 import PackageReview from "./PackageReview";
 import { getCourtData } from "../../../modules/test-data/courtTestData";
 
+const mockHelper = require("../../../modules/helpers/mockHelper");
+
 // hack fix to force GitHub to run tests in BC timezone
 moment.tz.setDefault("America/Vancouver");
 
@@ -83,7 +85,6 @@ describe("PackageReview Component", () => {
   });
 
   test("Api called successfully when page loads with valid packageId", async () => {
-    window.open = jest.fn();
     mock.onGet(apiRequest).reply(200, {
       court: courtData,
       submittedBy,
@@ -99,7 +100,6 @@ describe("PackageReview Component", () => {
   });
 
   test("Api called, empty response data", async () => {
-    window.open = jest.fn();
     mock.onGet(apiRequest).reply(200, {
       court: {},
       submittedBy: {},
@@ -115,7 +115,6 @@ describe("PackageReview Component", () => {
   });
 
   test("Api called, invalid submittedBy", async () => {
-    window.open = jest.fn();
     mock.onGet(apiRequest).reply(200, {
       court: courtData,
       submittedBy: { firstName: "Bob" },
@@ -131,7 +130,6 @@ describe("PackageReview Component", () => {
   });
 
   test("Api called, invalid submittedDate", async () => {
-    window.open = jest.fn();
     mock.onGet(apiRequest).reply(200, {
       court: courtData,
       submittedDate: "123",
@@ -146,7 +144,6 @@ describe("PackageReview Component", () => {
   });
 
   test("Api called, missing response data", async () => {
-    window.open = jest.fn();
     mock.onGet(apiRequest).reply(200);
 
     const spy = jest.spyOn(axios, "get");
@@ -163,7 +160,6 @@ describe("PackageReview Component", () => {
     global.URL.createObjectURL = jest.fn();
     global.URL.createObjectURL.mockReturnValueOnce("fileurl.com");
 
-    window.open = jest.fn();
     mock.onGet(apiRequest).reply(200, {
       court: courtData,
       submittedBy,
@@ -188,7 +184,6 @@ describe("PackageReview Component", () => {
     global.URL.createObjectURL = jest.fn();
     global.URL.createObjectURL.mockReturnValueOnce("fileurl.com");
 
-    window.open = jest.fn();
     mock.onGet(apiRequest).reply(200, {
       court: courtData,
       submittedBy,
@@ -210,7 +205,6 @@ describe("PackageReview Component", () => {
   test("View Submission Sheet (on click) - unsuccessful", async () => {
     sessionStorage.setItem("errorUrl", "error.com");
 
-    window.open = jest.fn();
     mock
       .onGet(apiRequest)
       .reply(200, { court: courtData, submittedBy, submittedDate });
@@ -233,7 +227,6 @@ describe("PackageReview Component", () => {
   test("View Submission Sheet (on keyDown) - unsuccessful", async () => {
     sessionStorage.setItem("errorUrl", "error.com");
 
-    window.open = jest.fn();
     mock
       .onGet(apiRequest)
       .reply(200, { court: courtData, submittedBy, submittedDate });
@@ -254,5 +247,28 @@ describe("PackageReview Component", () => {
       "error.com?status=400&message=There was an error.",
       "_self"
     );
+  });
+
+  test("Reload Document trigger", async () => {
+    mock.onGet(apiRequest).reply(200, {
+      packageNumber: packageId,
+      court: courtData,
+      submittedBy,
+      submittedDate,
+      filingComments,
+      documents,
+    });
+    mock.onDelete("/filingpackages/1/document/1").reply(200);
+    const noop = jest.spyOn(mockHelper, "noop");
+
+    const { container } = render(<PackageReview page={page} />);
+    await waitFor(() => {});
+
+    // get the span wrapping the file link, click it.
+    const withdrawnLink = getByText(container, "withdraw");
+    fireEvent.click(withdrawnLink);
+    await waitFor(() => {});
+
+    expect(noop).toHaveBeenCalled();
   });
 });

@@ -43,3 +43,12 @@ export const downloadSubmittedDocument = async (packageId, document) => {
   const fileUrl = URL.createObjectURL(fileData);
   FileSaver.saveAs(fileUrl, `${document.name}`);
 };
+
+/**
+ * Withdraw a Submitted Document from the backend API for the given packageId and documentId.
+ *
+ * @param packageId id associated with the filing package
+ * @param document the document to retrieve. Shape must be {identifier: string}
+ */
+export const deleteSubmittedDocument = async (packageId, document) =>
+  axios.delete(`/filingpackages/${packageId}/document/${document.identifier}`);
