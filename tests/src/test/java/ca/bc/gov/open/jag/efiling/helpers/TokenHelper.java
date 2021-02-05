@@ -1,7 +1,6 @@
 package ca.bc.gov.open.jag.efiling.helpers;
 
 import ca.bc.gov.open.jag.efiling.error.EfilingTestException;
-import ca.bc.gov.open.jagefilingapi.qa.backendutils.TestUtil;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -35,7 +34,6 @@ public class TokenHelper {
                     .formParam(PASSWORD, password);
 
             return request.when().post(uriBuilder.build().toURL().toString()).then()
-                    .spec(TestUtil.validResponseSpecification())
                     .extract().response();
 
 
