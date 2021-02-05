@@ -114,7 +114,7 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
     public void deleteSubmittedDocument(DeleteSubmissionDocumentRequest deleteSubmissionDocumentRequest) {
         try {
 
-            logger.info("Calling soap [updateDocumentStatus] ");
+            logger.debug("Calling soap [updateDocumentStatus] ");
 
             DocumentStatuses documentStatuses = new DocumentStatuses();
             documentStatuses.setDocumentId(new BigDecimal(deleteSubmissionDocumentRequest.getDocumentId()));
@@ -127,6 +127,8 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
 
             filingFacadeBean.updateDocumentStatus(documentStatuses);
 
+            logger.info(" [updateDocumentStatus] Successful  ");
+
         } catch (ca.bc.gov.ag.csows.filing.NestedEjbException_Exception e) {
 
             logger.error("Error in [updateDocumentStatus] call");
@@ -137,9 +139,11 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
 
         try {
 
-            logger.info("Calling soap [inactivateReferrals] ");
+            logger.debug("Calling soap [inactivateReferrals] ");
 
             filingFacadeBean.inactivateReferrals(deleteSubmissionDocumentRequest.getClientId(), DateUtils.getCurrentXmlDate(), deleteSubmissionDocumentRequest.getDocumentId());
+
+            logger.info(" [updateDocumentStatus] Successful ");
 
         } catch (ca.bc.gov.ag.csows.filing.NestedEjbException_Exception e) {
 
@@ -151,9 +155,11 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
 
         try {
 
-            logger.info("Calling soap [removePackageParties] ");
+            logger.debug("Calling soap [removePackageParties] ");
 
             filingFacadeBean.removePackageParties(deleteSubmissionDocumentRequest.getPackageNo());
+
+            logger.info(" [updateDocumentStatus]  Successful ");
 
         } catch (ca.bc.gov.ag.csows.filing.NestedEjbException_Exception e) {
 
