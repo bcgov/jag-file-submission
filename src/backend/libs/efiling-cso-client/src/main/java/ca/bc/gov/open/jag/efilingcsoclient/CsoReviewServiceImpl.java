@@ -113,7 +113,9 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
     @Override
     public void deleteSubmittedDocument(DeleteSubmissionDocumentRequest deleteSubmissionDocumentRequest) {
         try {
-            logger.info("Calling soap updateDocumentStatus ");
+
+            logger.info("Calling soap [updateDocumentStatus] ");
+
             DocumentStatuses documentStatuses = new DocumentStatuses();
             documentStatuses.setDocumentId(new BigDecimal(deleteSubmissionDocumentRequest.getDocumentId()));
             documentStatuses.setEntDtm(DateUtils.getCurrentXmlDate());
@@ -135,6 +137,8 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
 
         try {
 
+            logger.info("Calling soap [inactivateReferrals] ");
+
             filingFacadeBean.inactivateReferrals(deleteSubmissionDocumentRequest.getClientId(), DateUtils.getCurrentXmlDate(), deleteSubmissionDocumentRequest.getDocumentId());
 
         } catch (ca.bc.gov.ag.csows.filing.NestedEjbException_Exception e) {
@@ -146,6 +150,8 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
         }
 
         try {
+
+            logger.info("Calling soap [removePackageParties] ");
 
             filingFacadeBean.removePackageParties(deleteSubmissionDocumentRequest.getPackageNo());
 
