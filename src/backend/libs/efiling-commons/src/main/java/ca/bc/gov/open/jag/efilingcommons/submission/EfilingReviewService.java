@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingcommons.submission;
 
+import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 
@@ -14,5 +15,10 @@ public interface EfilingReviewService {
     List<ReviewFilingPackage> findStatusByClient(FilingPackageRequest filingPackageRequest);
 
     Optional<byte[]> getSubmissionSheet(BigDecimal packageNumber);
+
+    Optional<byte[]> getSubmittedDocument(BigDecimal packageNumber,
+                                          String documentIdentifier);
+
+    void deleteSubmittedDocument(DeleteSubmissionDocumentRequest deleteSubmissionDocumentRequest);
 
 }

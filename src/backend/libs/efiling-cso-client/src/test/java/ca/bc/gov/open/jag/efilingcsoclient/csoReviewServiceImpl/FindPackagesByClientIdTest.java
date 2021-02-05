@@ -25,7 +25,7 @@ import static org.mockito.ArgumentMatchers.any;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("Review Service Test Suite")
-public class FindPackagesByClientId {
+public class FindPackagesByClientIdTest {
     public static final String CLIENT_FILE_NO = "CLIENTFILENO";
     public static final String COURT_CLASS_CD = "CLASSCD";
     public static final String COURT_FILE_NO = "FILENO";

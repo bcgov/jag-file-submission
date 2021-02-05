@@ -8,11 +8,6 @@
   margin-top: 10px;
   white-space: pre-line;
 }
-.file-href {
-  cursor: pointer;
-  color: #1a5a96;
-  text-decoration: underline;
-}
 
 /* REMOVE-ME when replacing bootstrap Tabs for common-components Tabs */
 :focus {

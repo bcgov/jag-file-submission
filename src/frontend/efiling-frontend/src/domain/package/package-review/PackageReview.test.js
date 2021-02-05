@@ -23,6 +23,15 @@ describe("PackageReview Component", () => {
   const submittedBy = { firstName: "Han", lastName: "Solo" };
   const filingComments =
     "Lorem ipsum dolor sit amet.<script>alert('Hi');</script>\n\nDuis aute irure dolor.";
+  const documents = [
+    {
+      type: "AFF",
+      name: "test-document.pdf",
+      status: {
+        description: "Submitted",
+      },
+    },
+  ];
 
   const page = {
     header,
@@ -46,6 +55,7 @@ describe("PackageReview Component", () => {
       submittedBy,
       submittedDate,
       filingComments,
+      documents,
     });
 
     const { asFragment } = render(<PackageReview page={page} />);
