@@ -280,7 +280,10 @@ public class TestHelpers {
         reviewDocumentTwo.setStatusDate(DateTime.parse("2020-05-05T00:00:00.000-07:00"));
         reviewDocumentTwo.setPaymentProcessed(true);
 
-        return Arrays.asList(reviewDocumentOne,reviewDocumentTwo);
+        ArrayList<ReviewDocument> documents = new ArrayList<>();
+        documents.add(reviewDocumentOne);
+        documents.add(reviewDocumentTwo);
+        return documents;
 
     }
 

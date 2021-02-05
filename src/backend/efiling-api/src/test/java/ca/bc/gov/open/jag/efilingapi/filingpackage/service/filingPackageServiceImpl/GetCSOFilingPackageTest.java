@@ -107,6 +107,36 @@ public class GetCSOFilingPackageTest {
     }
 
     @Test
+    @DisplayName("Ok: a filing package was returned ensure withdrawn excluded")
+    public void withValidRequestReturnFilingPackageWithWithdrawnExcluded() {
+
+        ReviewFilingPackage reviewFilingPackage = TestHelpers.createFilingPackage();
+
+        ReviewDocument withdrawnDocument = new ReviewDocument();
+        withdrawnDocument.setDocumentId("TEST");
+        withdrawnDocument.setFileName("TEST");
+        withdrawnDocument.setDocumentTypeCd(InitialDocument.TypeEnum.AAB.getValue());
+        withdrawnDocument.setDocumentType("TEST");
+        withdrawnDocument.setStatus("TEST");
+        withdrawnDocument.setStatusCode(ca.bc.gov.open.jag.efilingcommons.Keys.WITHDRAWN_STATUS_CD);
+        withdrawnDocument.setStatusDate(DateTime.parse("2020-05-05T00:00:00.000-07:00"));
+        withdrawnDocument.setPaymentProcessed(true);
+
+        reviewFilingPackage.getDocuments().add(withdrawnDocument);
+
+        Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.of(reviewFilingPackage));
+
+        Optional<FilingPackage> result = sut.getCSOFilingPackage(TestHelpers.CASE_1_STRING, BigDecimal.ONE);
+
+        Assertions.assertTrue(result.isPresent());
+        //FilingPackage
+        //Document
+        Assertions.assertEquals(2, result.get().getDocuments().size());
+
+    }
+
+
+    @Test
     @DisplayName("Not found: missing account")
     public void withValidRequestButMissingAccountReturnEmpty() {
         Optional<FilingPackage> result = sut.getCSOFilingPackage(TestHelpers.CASE_2_STRING, BigDecimal.ONE);
