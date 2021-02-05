@@ -72,6 +72,11 @@ ceis:
   ceisUsername: ${CEIS_USERNAME}
   ceisPassword: ${CEIS_PASSWORD}
 
+courtdocument:
+  basePath: ${COURT_DOCUMENT_BASE_PATH}
+  username: ${COURT_DOCUMENT_USERNAME}
+  password: ${COURT_DOCUMENT_PASSWORD}
+
 cso:
   fileServerHost: ${CSO_FILE_SERVER_HOST}
   csoBasePath: ${CSO_BASE_URL:http://localhost/cso}
