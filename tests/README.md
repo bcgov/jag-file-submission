@@ -2,16 +2,13 @@
 
 ## Folder Structure
 
-The folder structure for the automation will be as follows:
+The folder structure for test automation will be as follows:
 
 ```
 tests
 ├── src
 │    └── main
-|    |   └──pages
-|    |   └──util
 |    └── test
-|    |   └──tests
 |    |   └──resources
 ├── .gitignore
 ├── pom.xml
@@ -20,30 +17,10 @@ tests
 
 ## To run locally
 
-Set the following property values in the [local.properties file](src/test/resources/local.properties)
-
-| Name                                     | Example Value              |
-| ---------------------------------------- | -------------------------- |
-| BCEID_USERNAME                           | Bceid Username             |
-| BCEID_PASSWORD                           | Bceid Password             |
-| KEYCLOAK_URL                             | Dev Keycloak Url           |
-| EFILING_DEMO_KEYCLOAK_CREDENTIALS_SECRET | Efiling demo client secret |
-| BASE_URI                                 | http://localhost:8080      |
-| BROWSER                                  | chrome                     |
-
-## Running the maven Tests without cucumber tags
-
-[config.properties](src/test/resources/config.properties) are for CI/CD env.
-[account-data.json](src/test/java/testdatasource/account-data.json) uses demo accounts, value can be changed.
+Docker-compose up and then run mvn command from the root
 
 ```bash
-cd tests
-```
-
-Run the tests with the config profile
-
-```bash
-mvn verify -Pconfig
+mvn verify -f tests/pom.xml
 ```
 
 Running the tests create an html report [here](test-output/extent/HtmlReport/ExtentHtml.html)
@@ -51,6 +28,10 @@ Running the tests create an html report [here](test-output/extent/HtmlReport/Ext
 ## Cucumber Tags
 
 We support running the tests with the current tags:
+
+```bash
+@frontend
+```
 
 ### Tags
 
