@@ -1,0 +1,285 @@
+swagger: '2.0'
+info:
+  title: ORDS generated API for V020301
+  version: 1.0.0
+host: dev.jag.gov.bc.ca
+basePath: /ords/devd/objcendevd/V020301
+schemes:
+  - http
+produces:
+  - application/json
+paths:
+  /get/:
+    get:
+      description: description
+      responses:
+        '200':
+          description: output of the endpoint
+          schema:
+            type: object
+            properties: {}
+      parameters:
+        - name: Ticket
+          in: query
+          type: string
+          description: Implicit parameter
+        - name: print
+          in: query
+          type: string
+          description: Implicit parameter
+        - name: X-Forwarded-For
+          in: header
+          type: string
+          required: true
+  '/get/{Ticket}':
+    get:
+      description: description
+      responses:
+        '200':
+          description: output of the endpoint
+          schema:
+            type: object
+            properties: {}
+      parameters:
+        - name: Ticket
+          in: path
+          required: true
+          type: string
+          description: implicit
+          pattern: '^[^/]+$'
+        - name: print
+          in: query
+          type: string
+          description: Implicit parameter
+        - name: X-Forwarded-For
+          in: header
+          type: string
+          required: true
+  /health:
+    get:
+      description: description
+      responses:
+        '200':
+          description: output of the endpoint
+          schema:
+            type: object
+            properties: {}
+      parameters:
+        - name: X-Forwarded-For
+          in: header
+          type: string
+          required: true
+  /initialize:
+    post:
+      description: description
+      responses:
+        '200':
+          description: output of the endpoint
+          schema:
+            type: object
+            properties:
+              AppTicket:
+                type: string
+      parameters:
+        - name: X-Forwarded-For
+          in: header
+          type: string
+          required: true
+        - name: payload
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/PAYLOAD1'
+  /jam:
+    get:
+      description: description
+      responses:
+        '200':
+          description: output of the endpoint
+          schema:
+            type: object
+            properties: {}
+  /object:
+    post:
+      description: description
+      responses:
+        '200':
+          description: output of the endpoint
+          schema:
+            type: object
+            properties:
+              Object_GUID:
+                type: string
+      parameters:
+        - name: X-Forwarded-For
+          in: header
+          type: string
+          required: true
+        - name: AppTicket
+          in: header
+          type: string
+          required: true
+        - name: MimeType
+          in: header
+          type: string
+          required: true
+        - name: MimeSubType
+          in: header
+          type: string
+          required: true
+        - name: Filename
+          in: header
+          type: string
+          required: true
+        - name: RetentionPeriod
+          in: header
+          type: string
+          required: true
+        - name: payload
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/PAYLOAD2'
+  '/object/{Object_GUID}':
+    get:
+      description: description
+      responses:
+        '200':
+          description: output of the endpoint
+          schema:
+            type: object
+            properties: {}
+      parameters:
+        - name: Object_GUID
+          in: path
+          required: true
+          type: string
+          description: implicit
+          pattern: '^[^/]+$'
+        - name: X-Forwarded-For
+          in: header
+          type: string
+          required: true
+        - name: AppTicket
+          in: header
+          type: string
+          required: true
+    put:
+      description: description
+      responses:
+        '200':
+          description: output of the endpoint
+          schema:
+            type: object
+            properties: {}
+      parameters:
+        - name: Object_GUID
+          in: path
+          required: true
+          type: string
+          description: implicit
+          pattern: '^[^/]+$'
+        - name: X-Forwarded-For
+          in: header
+          type: string
+          required: true
+        - name: AppTicket
+          in: header
+          type: string
+          required: true
+        - name: payload
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/PAYLOAD3'
+  /s3Ticket:
+    get:
+      description: description
+      responses:
+        '200':
+          description: output of the endpoint
+          schema:
+            type: object
+            properties: {}
+      parameters:
+        - name: Ticket
+          in: query
+          type: string
+          description: Implicit parameter
+        - name: print
+          in: query
+          type: string
+          description: Implicit parameter
+        - name: X-Forwarded-For
+          in: header
+          type: string
+          required: true
+  '/s3Ticket/{Ticket}':
+    get:
+      description: description
+      responses:
+        '200':
+          description: output of the endpoint
+          schema:
+            type: object
+            properties: {}
+      parameters:
+        - name: Ticket
+          in: path
+          required: true
+          type: string
+          description: implicit
+          pattern: '^[^/]+$'
+        - name: print
+          in: query
+          type: string
+          description: Implicit parameter
+        - name: X-Forwarded-For
+          in: header
+          type: string
+          required: true
+definitions:
+  PAYLOAD1:
+    properties:
+      X-Forwarded-For:
+        type: string
+      AppId:
+        type: string
+      AppPwd:
+        type: string
+      TicketLifeTime:
+        type: string
+  PAYLOAD2:
+    properties:
+      X-Forwarded-For:
+        type: string
+      AppTicket:
+        type: string
+      MimeType:
+        type: string
+      MimeSubType:
+        type: string
+      Filename:
+        type: string
+      RetentionPeriod:
+        type: string
+      body:
+        type: string
+  PAYLOAD3:
+    properties:
+      X-Forwarded-For:
+        type: string
+      AppTicket:
+        type: string
+      Expiry:
+        type: string
+      Filename:
+        type: string
+      Mime:
+        type: string
+      MimeType:
+        type: string
+      MimeSubType:
+        type: string
+      RetentionPeriod:
+        type: string
