@@ -10,7 +10,10 @@ import { BsEyeFill } from "react-icons/bs";
 import { MdCancel } from "react-icons/md";
 import { propTypes } from "../../../types/propTypes";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
-import { getFilingPackage, getSubmissionSheet } from "./PackageReviewService";
+import {
+  getFilingPackage,
+  downloadSubmissionSheet,
+} from "./PackageReviewService";
 
 import "./PackageReview.scoped.css";
 import DocumentList from "./DocumentList";
@@ -109,14 +112,14 @@ export default function PackageReview({ page: { header, packageId } }) {
   }, [packageId]);
 
   function handleClick() {
-    getSubmissionSheet(packageId).catch((err) => {
+    downloadSubmissionSheet(packageId).catch((err) => {
       errorRedirect(sessionStorage.getItem("errorUrl"), err);
     });
   }
 
   function handleKeyDown(e) {
     if (e && e.keyCode === 13) {
-      getSubmissionSheet(packageId).catch((err) => {
+      downloadSubmissionSheet(packageId).catch((err) => {
         errorRedirect(sessionStorage.getItem("errorUrl"), err);
       });
     }

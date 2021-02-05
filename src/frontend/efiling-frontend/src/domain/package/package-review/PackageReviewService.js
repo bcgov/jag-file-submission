@@ -14,7 +14,7 @@ export const getFilingPackage = (packageId) =>
  *
  * @param packageId id associated with the filing package
  */
-export const getSubmissionSheet = async (packageId) => {
+export const downloadSubmissionSheet = async (packageId) => {
   const response = await axios.get(
     `/filingpackages/${packageId}/submissionSheet`,
     {

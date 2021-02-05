@@ -2,7 +2,7 @@ import axios from "axios";
 import FileSaver from "file-saver";
 import {
   getFilingPackage,
-  getSubmissionSheet,
+  downloadSubmissionSheet,
   downloadSubmittedDocument,
 } from "./PackageReviewService";
 import { getCourtData } from "../../../modules/test-data/courtTestData";
@@ -57,24 +57,26 @@ describe("PackageReviewService TestSuite", () => {
     await expect(getFilingPackage(packageId)).rejects.toThrow(errorMessage);
   });
 
-  test("getSubmissionSheet success", async () => {
+  test("downloadSubmissionSheet success", async () => {
     axios.get.mockImplementationOnce(() =>
       Promise.resolve({ status: 200, data: "blob_data" })
     );
 
-    await expect(getSubmissionSheet(packageId)).resolves;
+    await expect(downloadSubmissionSheet(packageId)).resolves;
     expect(axios.get).toHaveBeenCalledWith(submissionSheetURL, {
       responseType: "blob",
     });
     expect(FileSaver.saveAs).toHaveBeenCalled();
   });
 
-  test("getSubmissionSheet fail", async () => {
+  test("downloadSubmissionSheet fail", async () => {
     const errorMessage = "Network Error";
     axios.get.mockImplementationOnce(() =>
       Promise.reject(new Error(errorMessage))
     );
-    await expect(getSubmissionSheet(packageId)).rejects.toThrow(errorMessage);
+    await expect(downloadSubmissionSheet(packageId)).rejects.toThrow(
+      errorMessage
+    );
     expect(FileSaver.saveAs).not.toHaveBeenCalled();
   });
 
