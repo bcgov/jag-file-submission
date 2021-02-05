@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import {
   downloadSubmittedDocument,
-  deleteSubmittedDocument,
+  withdrawSubmittedDocument,
 } from "./PackageReviewService";
 import "./DocumentList.scoped.css";
 
@@ -28,7 +28,7 @@ export default function DocumentList({
   }
 
   function withdrawDocument(document) {
-    deleteSubmittedDocument(packageId, document)
+    withdrawSubmittedDocument(packageId, document)
       .then(() => reloadDocumentList())
       .catch((err) => {
         errorRedirect(sessionStorage.getItem("errorUrl"), err);

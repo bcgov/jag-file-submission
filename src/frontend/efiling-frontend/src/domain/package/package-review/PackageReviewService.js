@@ -45,10 +45,10 @@ export const downloadSubmittedDocument = async (packageId, document) => {
 };
 
 /**
- * Withdraw a Submitted Document from the backend API for the given packageId and documentId.
+ * Withdraws a Submitted Document from the backend API for the given packageId and documentId (sets the status to Withdrawn).
  *
  * @param packageId id associated with the filing package
  * @param document the document to retrieve. Shape must be {identifier: string}
  */
-export const deleteSubmittedDocument = async (packageId, document) =>
+export const withdrawSubmittedDocument = async (packageId, document) =>
   axios.delete(`/filingpackages/${packageId}/document/${document.identifier}`);
