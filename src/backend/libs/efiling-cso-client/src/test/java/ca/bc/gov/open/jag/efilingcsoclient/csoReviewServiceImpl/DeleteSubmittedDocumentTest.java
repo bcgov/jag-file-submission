@@ -47,11 +47,38 @@ public class DeleteSubmittedDocumentTest {
     }
 
 
-    @DisplayName("Exception: document not withdrawn")
+    @DisplayName("Exception: updateDocumentStatus document not withdrawn")
     @Test
-    public void testWithException() throws NestedEjbException_Exception {
+    public void testWithUpdateDocumentStatusException() throws NestedEjbException_Exception {
 
         Mockito.doThrow(NestedEjbException_Exception.class).when(filingFacadeBeanMock).updateDocumentStatus(Mockito.any());
+        Mockito.doNothing().when(filingFacadeBeanMock).inactivateReferrals(Mockito.any(), Mockito.any(), Mockito.any());
+        Mockito.doNothing().when(filingFacadeBeanMock).removePackageParties(Mockito.any());
+
+        Assertions.assertThrows(EfilingReviewServiceException.class, () -> sut.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(BigDecimal.ONE, BigDecimal.ONE, "1")));
+
+    }
+
+    @DisplayName("Exception: inactivateReferrals document not withdrawn")
+    @Test
+    public void testWithInactivateReferralsException() throws NestedEjbException_Exception {
+
+        Mockito.doNothing().when(filingFacadeBeanMock).updateDocumentStatus(Mockito.any());
+        Mockito.doThrow(NestedEjbException_Exception.class).when(filingFacadeBeanMock).inactivateReferrals(Mockito.any(), Mockito.any(), Mockito.any());
+        Mockito.doNothing().when(filingFacadeBeanMock).removePackageParties(Mockito.any());
+
+        Assertions.assertThrows(EfilingReviewServiceException.class, () -> sut.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(BigDecimal.ONE, BigDecimal.ONE, "1")));
+
+    }
+
+    @DisplayName("Exception: removePackageParties document not withdrawn")
+    @Test
+    public void testWithRemovePackagePartiesException() throws NestedEjbException_Exception {
+
+        Mockito.doNothing().when(filingFacadeBeanMock).updateDocumentStatus(Mockito.any());
+        Mockito.doNothing().when(filingFacadeBeanMock).inactivateReferrals(Mockito.any(), Mockito.any(), Mockito.any());
+        Mockito.doThrow(NestedEjbException_Exception.class).when(filingFacadeBeanMock).removePackageParties(Mockito.any());
+
         Assertions.assertThrows(EfilingReviewServiceException.class, () -> sut.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(BigDecimal.ONE, BigDecimal.ONE, "1")));
 
     }

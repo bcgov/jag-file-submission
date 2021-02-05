@@ -90,6 +90,9 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
 
     @Override
     public Optional<byte[]> getSubmissionSheet(BigDecimal packageNumber) {
+
+        logger.info("Calling soap to retrieve submission report ");
+
         Report report = new Report();
         report.setName(Keys.REPORT_NAME);
         report.getParameters().addAll(Arrays.asList(Keys.REPORT_PARAMETER, packageNumber.toPlainString()));
@@ -110,7 +113,7 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
     @Override
     public void deleteSubmittedDocument(DeleteSubmissionDocumentRequest deleteSubmissionDocumentRequest) {
         try {
-
+            logger.info("Calling soap updateDocumentStatus ");
             DocumentStatuses documentStatuses = new DocumentStatuses();
             documentStatuses.setDocumentId(new BigDecimal(deleteSubmissionDocumentRequest.getDocumentId()));
             documentStatuses.setEntDtm(DateUtils.getCurrentXmlDate());
@@ -122,14 +125,37 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
 
             filingFacadeBean.updateDocumentStatus(documentStatuses);
 
+        } catch (ca.bc.gov.ag.csows.filing.NestedEjbException_Exception e) {
+
+            logger.error("Error in [updateDocumentStatus] call");
+
+            throw  new EfilingReviewServiceException("Failed to updateDocumentStatus", e.getCause());
+
+        }
+
+        try {
+
             filingFacadeBean.inactivateReferrals(deleteSubmissionDocumentRequest.getClientId(), DateUtils.getCurrentXmlDate(), deleteSubmissionDocumentRequest.getDocumentId());
+
+        } catch (ca.bc.gov.ag.csows.filing.NestedEjbException_Exception e) {
+
+            logger.error("Error in [inactivateReferrals] call");
+
+            throw  new EfilingReviewServiceException("Failed in inactivateReferrals", e.getCause());
+
+        }
+
+        try {
 
             filingFacadeBean.removePackageParties(deleteSubmissionDocumentRequest.getPackageNo());
 
         } catch (ca.bc.gov.ag.csows.filing.NestedEjbException_Exception e) {
 
-            throw  new EfilingReviewServiceException("Failed to delete", e.getCause());
+            logger.error("Error in [removePackageParties] call");
+
+            throw  new EfilingReviewServiceException("Failed in removePackageParties", e.getCause());
 
         }
+
     }
 }
