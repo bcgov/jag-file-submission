@@ -6,7 +6,7 @@
   "dependencies": {
     "@babel/preset-react": "^7.12.1",
     "@bcgov/bootstrap-theme": "github:bcgov/bootstrap-theme",
-    "@craco/craco": "5.8.0",
+    "@craco/craco": "5.9.0",
     "axios": "^0.21.1",
     "axios-auth-refresh": "^2.2.8",
     "babel-plugin-transform-export-extensions": "^6.22.0",
