@@ -109,7 +109,7 @@ public class GetCSOFilingPackageTest {
         //Document
         Assertions.assertEquals(2, result.get().getDocuments().size());
         Assertions.assertEquals(TestHelpers.DESCRIPTION, result.get().getDocuments().get(0).getDescription());
-        Assertions.assertEquals(TestHelpers.NAME, result.get().getDocuments().get(0).getName());
+        Assertions.assertEquals(TestHelpers.NAME, result.get().getDocuments().get(0).getDocumentProperties().getName());
         Assertions.assertEquals(TestHelpers.STATUS, result.get().getDocuments().get(0).getStatus().getDescription());
         Assertions.assertEquals(TestHelpers.STATUS_CODE, result.get().getDocuments().get(0).getStatus().getCode());
         Assertions.assertEquals(DocumentProperties.TypeEnum.AAB, result.get().getDocuments().get(0).getDocumentProperties().getType());
