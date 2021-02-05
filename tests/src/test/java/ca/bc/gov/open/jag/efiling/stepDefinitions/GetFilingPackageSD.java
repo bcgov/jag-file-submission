@@ -93,10 +93,10 @@ public class GetFilingPackageSD {
         Assert.assertEquals("Imma Level", filingPackageJsonPath.get("court.levelDescription"));
         Assert.assertEquals("Imma Class", filingPackageJsonPath.get("court.classDescription"));
 
-        Assert.assertEquals(TEST_DOCUMENT_PDF, filingPackageJsonPath.get("documents.name[0]"));
+        Assert.assertEquals(TEST_DOCUMENT_PDF, filingPackageJsonPath.get("documents.documentProperties.name[0]"));
 
         Assert.assertEquals("AFF", filingPackageJsonPath.get("documents.documentProperties.type[0]"));
-        Assert.assertEquals("This is a doc", filingPackageJsonPath.get("documents.documentProperties.description[0]"));
+        Assert.assertEquals("This is a doc", filingPackageJsonPath.get("documents.description[0]"));
         Assert.assertEquals("application/pdf", filingPackageJsonPath.get("documents.mimeType[0]"));
         Assert.assertEquals(Integer.valueOf(7), filingPackageJsonPath.get("documents.statutoryFeeAmount[0]"));
 
