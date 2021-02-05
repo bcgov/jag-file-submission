@@ -28,5 +28,6 @@ public class Keys {
     public static final String PRIVILEGE_CD = "UPDT";
     public static final String REPORT_NAME = "submission";
     public static final String REPORT_PARAMETER = "prm_package_id";
+    public static final String WITHDRAWN_STATUS_CD = "WDRN";
 
 }
