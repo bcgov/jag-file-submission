@@ -119,7 +119,7 @@ public class GetCSOFilingPackageTest {
         ReviewDocument withdrawnDocument = new ReviewDocument();
         withdrawnDocument.setDocumentId("TEST");
         withdrawnDocument.setFileName("TEST");
-        withdrawnDocument.setDocumentTypeCd(InitialDocument.TypeEnum.AAB.getValue());
+        withdrawnDocument.setDocumentTypeCd(DocumentProperties.TypeEnum.AAB.getValue());
         withdrawnDocument.setDocumentType("TEST");
         withdrawnDocument.setStatus("TEST");
         withdrawnDocument.setStatusCode(ca.bc.gov.open.jag.efilingcommons.Keys.WITHDRAWN_STATUS_CD);
