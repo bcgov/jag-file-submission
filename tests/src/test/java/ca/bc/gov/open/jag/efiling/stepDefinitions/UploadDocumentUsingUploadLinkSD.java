@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class uploadDocumentUsingUploadLinkSD {
+public class UploadDocumentUsingUploadLinkSD {
 
     private ca.bc.gov.open.jag.efiling.page.PackageConfirmationPage packageConfirmationPage;
     private ca.bc.gov.open.jag.efiling.page.DocumentUploadPage documentUploadPage;
@@ -20,9 +20,9 @@ public class uploadDocumentUsingUploadLinkSD {
 
     private final List<String> expectedUploadedFilesList = ImmutableList.of("test-document.pdf", "test-document-additional.pdf");
 
-    Logger log = LogManager.getLogger(uploadDocumentUsingUploadLinkSD.class);
+    Logger log = LogManager.getLogger(UploadDocumentUsingUploadLinkSD.class);
 
-    public uploadDocumentUsingUploadLinkSD(ca.bc.gov.open.jag.efiling.page.PackageConfirmationPage packageConfirmationPage, ca.bc.gov.open.jag.efiling.page.DocumentUploadPage documentUploadPage) {
+    public UploadDocumentUsingUploadLinkSD(ca.bc.gov.open.jag.efiling.page.PackageConfirmationPage packageConfirmationPage, ca.bc.gov.open.jag.efiling.page.DocumentUploadPage documentUploadPage) {
         this.packageConfirmationPage = packageConfirmationPage;
         this.documentUploadPage = documentUploadPage;
     }

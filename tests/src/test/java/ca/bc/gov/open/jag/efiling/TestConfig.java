@@ -4,6 +4,7 @@ import ca.bc.gov.open.jag.efiling.config.BrowserScopePostProcessor;
 import ca.bc.gov.open.jag.efiling.page.AuthenticationPage;
 import ca.bc.gov.open.jag.efiling.page.DocumentUploadPage;
 import ca.bc.gov.open.jag.efiling.page.PackageConfirmationPage;
+import ca.bc.gov.open.jag.efiling.page.PackageReviewPage;
 import ca.bc.gov.open.jag.efiling.services.CourtService;
 import ca.bc.gov.open.jag.efiling.services.GenerateUrlService;
 import ca.bc.gov.open.jag.efiling.services.OauthService;
@@ -82,6 +83,12 @@ public class TestConfig {
     @Scope("prototype")
     public DocumentUploadPage documentUploadPage() {
         return new DocumentUploadPage();
+    }
+
+    @Bean
+    @Scope("prototype")
+    public PackageReviewPage packageReviewPage() {
+        return new PackageReviewPage();
     }
 
 }
