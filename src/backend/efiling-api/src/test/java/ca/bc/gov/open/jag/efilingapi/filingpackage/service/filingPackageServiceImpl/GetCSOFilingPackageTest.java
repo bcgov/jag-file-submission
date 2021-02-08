@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingapi.filingpackage.service.filingPackageService
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
+import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.api.model.InitialDocument;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.mapper.FilingPackageMapperImpl;
@@ -87,9 +88,9 @@ public class GetCSOFilingPackageTest {
         Assertions.assertEquals(TestHelpers.MIDDLE_NAME, result.get().getParties().get(0).getMiddleName());
         //Document
         Assertions.assertEquals(2, result.get().getDocuments().size());
-        Assertions.assertEquals("AAB", result.get().getDocuments().get(0).getType());
+        Assertions.assertEquals(DocumentProperties.TypeEnum.AAB, result.get().getDocuments().get(0).getDocumentProperties().getType());
         Assertions.assertEquals(TestHelpers.DESCRIPTION, result.get().getDocuments().get(0).getDescription());
-        Assertions.assertEquals(TestHelpers.NAME, result.get().getDocuments().get(0).getName());
+        Assertions.assertEquals(TestHelpers.NAME, result.get().getDocuments().get(0).getDocumentProperties().getName());
         Assertions.assertEquals(TestHelpers.STATUS, result.get().getDocuments().get(0).getStatus().getDescription());
         Assertions.assertEquals(TestHelpers.STATUS_CODE, result.get().getDocuments().get(0).getStatus().getCode());
         Assertions.assertNotNull(result.get().getDocuments().get(0).getStatus().getChangeDate());
@@ -115,7 +116,7 @@ public class GetCSOFilingPackageTest {
         ReviewDocument withdrawnDocument = new ReviewDocument();
         withdrawnDocument.setDocumentId("TEST");
         withdrawnDocument.setFileName("TEST");
-        withdrawnDocument.setDocumentTypeCd(InitialDocument.TypeEnum.AAB.getValue());
+        withdrawnDocument.setDocumentTypeCd(DocumentProperties.TypeEnum.AAB.getValue());
         withdrawnDocument.setDocumentType("TEST");
         withdrawnDocument.setStatus("TEST");
         withdrawnDocument.setStatusCode(ca.bc.gov.open.jag.efilingcommons.Keys.WITHDRAWN_STATUS_CD);

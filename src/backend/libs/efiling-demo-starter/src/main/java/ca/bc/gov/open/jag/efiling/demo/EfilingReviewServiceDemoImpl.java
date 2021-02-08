@@ -98,13 +98,18 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
     }
 
     private List<ReviewDocument> createReviewDocuments() {
-        return Arrays.asList(createReviewDocument("1","SUB","Submitted", "test-document.pdf","1"),
-                createReviewDocument("2", "REF", "Referred", "test-document-hello.pdf","2"),
-                createReviewDocument("3", "FILE", "Filed", "File12341234.pdf","3"),
-                createReviewDocument("4", "WDRN", "Withdrawn", "Registration-of-divorce-proceedings2020265814.pdf","4"),
-                createReviewDocument("5", "CCOR", "Courtesy Correction", "loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong-filename.pdf","5"),
-                createReviewDocument("6", "RSUB", "Resubmitted", "123.pdf","6"),
-                createReviewDocument("7", "REJ", "Rejected", "rejected-document.pdf","7"));
+
+        List<ReviewDocument> documents = new ArrayList<>();
+        documents.add(createReviewDocument("1","SUB","Submitted", "test-document.pdf","1"));
+        documents.add(createReviewDocument("2", "REF", "Referred", "test-document-hello.pdf","2"));
+        documents.add(createReviewDocument("3", "FILE", "Filed", "File12341234.pdf","3"));
+        documents.add(createReviewDocument("4", "WDRN", "Withdrawn", "Registration-of-divorce-proceedings2020265814.pdf","4"));
+        documents.add(createReviewDocument("5", "CCOR", "Courtesy Correction", "loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong-filename.pdf","5"));
+        documents.add(createReviewDocument("6", "RSUB", "Resubmitted", "123.pdf","6"));
+        documents.add(createReviewDocument("7", "REJ", "Rejected", "rejected-document.pdf","7"));
+
+        return documents;
+
     }
 
     private ReviewDocument createReviewDocument(String documentId, String statusCd, String status, String filename,

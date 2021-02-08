@@ -84,7 +84,7 @@ public class CreatePaymentServiceSD {
         Assert.assertEquals(201, actualSubmitResponse.getStatusCode());
         Assert.assertEquals("application/json", actualSubmitResponse.getContentType());
 
-        Assert.assertEquals("aHR0cDovL2xvY2FsaG9zdDozMDAwL2VmaWxpbmdodWIvcGFja2FnZXJldmlldy8xMA==", submitResponseJsonPath.get("packageRef"));
+        Assert.assertEquals("aHR0cDovL2xvY2FsaG9zdDozMDAwL2VmaWxpbmdodWIvcGFja2FnZXJldmlldy8x", submitResponseJsonPath.get("packageRef"));
 
         logger.info("Response matches the requirements");
 
