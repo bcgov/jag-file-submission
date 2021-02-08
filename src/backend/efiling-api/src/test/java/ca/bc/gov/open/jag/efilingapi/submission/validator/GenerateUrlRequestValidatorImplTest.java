@@ -50,7 +50,7 @@ public class GenerateUrlRequestValidatorImplTest {
     @BeforeEach
     public void setup() {
 
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
 
         Mockito.when(submissionService
                 .getValidPartyRoles(
@@ -129,7 +129,9 @@ public class GenerateUrlRequestValidatorImplTest {
 
         List<InitialDocument> documentList = new ArrayList<>();
         InitialDocument initialDocument = new InitialDocument();
-        initialDocument.setType(InitialDocument.TypeEnum.ACMW);
+        DocumentProperties documentProperties = new DocumentProperties();
+        documentProperties.setType(DocumentProperties.TypeEnum.ACMW);
+        initialDocument.setDocumentProperties(documentProperties);
         documentList.add(initialDocument);
         initialFilingPackage.setDocuments(documentList);
 
@@ -157,7 +159,9 @@ public class GenerateUrlRequestValidatorImplTest {
 
         List<InitialDocument> documentList = new ArrayList<>();
         InitialDocument initialDocument = new InitialDocument();
-        initialDocument.setType(InitialDocument.TypeEnum.ACMW);
+        DocumentProperties documentProperties = new DocumentProperties();
+        documentProperties.setType(DocumentProperties.TypeEnum.ACMW);
+        initialDocument.setDocumentProperties(documentProperties);
         documentList.add(initialDocument);
         initialFilingPackage.setDocuments(documentList);
 
@@ -396,7 +400,9 @@ public class GenerateUrlRequestValidatorImplTest {
 
         List<InitialDocument> documentList = new ArrayList<>();
         InitialDocument initialDocument = new InitialDocument();
-        initialDocument.setType(InitialDocument.TypeEnum.TAX);
+        DocumentProperties documentProperties = new DocumentProperties();
+        documentProperties.setType(DocumentProperties.TypeEnum.TAX);
+        initialDocument.setDocumentProperties(documentProperties);
         documentList.add(initialDocument);
         initialFilingPackage.setDocuments(documentList);
 
@@ -407,7 +413,5 @@ public class GenerateUrlRequestValidatorImplTest {
         Assertions.assertEquals("Document type [TAX] is invalid.", actual.getErrors().get(0));
 
     }
-
-
 
 }

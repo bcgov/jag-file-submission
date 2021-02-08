@@ -43,7 +43,7 @@ export default function DocumentList({ packageId, documents }) {
                   onClick={() => handleClickFile(document)}
                   onKeyDown={(e) => handleKeyDownFile(e, document)}
                 >
-                  {document.name}
+                  {document.documentProperties.name}
                 </span>
               </span>
               <span className="label col-sm-4 d-lg-none">Status:</span>
@@ -64,8 +64,10 @@ DocumentList.propTypes = {
   documents: PropTypes.arrayOf(
     PropTypes.shape({
       identifier: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
+      documentProperties: PropTypes.shape({
+        type: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+      }),
       status: PropTypes.shape({
         description: PropTypes.string.isRequired,
       }),

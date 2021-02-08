@@ -21,8 +21,10 @@ public class PayloadHelper {
                 "        },\n" +
                 "        \"documents\": [\n" +
                 "            {\n" +
-                "                \"name\": \"" + documentName + "\",\n" +
-                "                \"type\": \"AFF\",\n" +
+                "              \"documentProperties\": {\n" +
+                "                   \"name\": \"" + documentName + "\",\n" +
+                "                   \"type\": \"AFF\"\n" +
+                "                },\n" +
                 "                \"statutoryFeeAmount\": 0,\n" +
                 "                \"data\": {},\n" +
                 "                \"md5\": \"string\"\n" +
@@ -47,8 +49,10 @@ public class PayloadHelper {
         return "{\n" +
                 "        \"documents\": [\n" +
                 "            {\n" +
-                "                \"name\": \"" + documentName + "\",\n" +
-                "                \"type\": \"AAB\",\n" +
+                "              \"documentProperties\": {\n" +
+                "                   \"name\": \"" + documentName + "\",\n" +
+                "                   \"type\": \"AAB\"\n" +
+                "                },\n" +
                 "                \"isAmendment\": \"true\",\n" +
                 "                \"isSupremeCourtScheduling\": \"true\",\n" +
                 "                \"data\": {},\n" +
