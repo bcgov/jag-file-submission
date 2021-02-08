@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efiling.page;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -40,7 +41,7 @@ public class PackageReviewPage extends Base {
 
     public List<String> getPackageDetails() {
 
-        wait.until(ExpectedConditions.titleIs("E-File submission"));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.className("bcgov-table")));
 
         logger.info("Getting package details values");
 
