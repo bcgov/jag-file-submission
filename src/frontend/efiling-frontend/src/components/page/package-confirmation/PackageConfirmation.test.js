@@ -198,6 +198,9 @@ describe("PackageConfirmation Component", () => {
     global.URL.createObjectURL.mockReturnValueOnce("fileurl.com");
 
     mock
+      .onGet(apiRequest)
+      .reply(200, { documents, court, submissionFeeAmount });
+    mock
       .onGet(
         `/submission/${submissionId}/document/${file.documentProperties.name}`
       )
