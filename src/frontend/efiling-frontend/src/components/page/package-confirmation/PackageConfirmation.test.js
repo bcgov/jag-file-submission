@@ -167,7 +167,7 @@ describe("PackageConfirmation Component", () => {
     mock
       .onGet(apiRequest)
       .reply(200, { documents, court, submissionFeeAmount });
-      mock
+    mock
       .onGet(
         `/submission/${submissionId}/document/${file.documentProperties.name}`
       )

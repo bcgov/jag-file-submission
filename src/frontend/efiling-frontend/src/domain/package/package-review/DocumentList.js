@@ -66,7 +66,7 @@ DocumentList.propTypes = {
       identifier: PropTypes.string.isRequired,
       documentProperties: PropTypes.shape({
         type: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired
+        name: PropTypes.string.isRequired,
       }),
       status: PropTypes.shape({
         description: PropTypes.string.isRequired,

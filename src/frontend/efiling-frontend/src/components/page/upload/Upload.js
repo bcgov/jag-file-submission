@@ -168,7 +168,9 @@ const generateDropdownJSX = (items, fileName, setContinueBtnEnabled) => (
           filesToUpload.documents.forEach((f) => {
             const file = f;
             if (file.documentProperties.name === fileName) {
-              file.documentProperties.type = items.find((item) => item.description === val).type;
+              file.documentProperties.type = items.find(
+                (item) => item.description === val
+              ).type;
             }
           });
 
