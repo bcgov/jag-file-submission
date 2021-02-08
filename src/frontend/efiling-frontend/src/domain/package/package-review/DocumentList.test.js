@@ -41,7 +41,7 @@ describe("DocumentList Component Testsuite", () => {
     await waitFor(() => {});
 
     // get the span wrapping the file link, click it.
-    fireEvent.click(getByText(container, `${documents[0].name}`));
+    fireEvent.click(getByText(container, `${documents[0].documentProperties.name}`));
     await waitFor(() => {});
 
     expect.assertions(1);
