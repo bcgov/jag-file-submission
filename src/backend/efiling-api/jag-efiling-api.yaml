@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: 0.3.0
+  version: 0.7.0
   title: jag-efiling-api
   description: Efiling api
 servers:
@@ -529,12 +529,55 @@ components:
       type: object
       description: Submission Metadata used to describe the submission that will be e-filled
       required:
-        - type
-        - name
         - isAmendment
         - isSupremeCourtScheduling
         - data
         - md5
+      properties:
+        documentProperties:
+          $ref: "#/components/schemas/DocumentProperties"
+        isAmendment:
+          type: boolean
+          description: is the document an amendment to another
+        isSupremeCourtScheduling:
+          type: boolean
+          description: supreme court scheduling required
+        data:
+          type: object
+          description: store additional details
+        md5:
+          type: string
+          description: Computed hash value of the document content, it is used as a checksum to validate the document integrity.
+    Document:
+      required:
+        - identifier
+        - description
+        - status
+        - paymentProcessed
+      type: object
+      description: A Efiling Document
+      properties:
+        identifier:
+          type: string
+          description: document identifier
+        documentProperties:
+          $ref: "#/components/schemas/DocumentProperties"
+        type:
+          type: string
+          description: type of document
+        description:
+          type: string
+          description: the description of the document
+        status:
+          $ref: "#/components/schemas/Status"
+        paymentProcessed:
+          type: boolean
+          description: Has the payment been processed
+    DocumentProperties:
+      required:
+        - name
+        - type
+      description: common document properties.
       properties:
         name:
           type: string
@@ -1866,46 +1909,6 @@ components:
                 EXP,
                 NATJ,
             ]
-        isAmendment:
-          type: boolean
-          description: is the document an amendment to another
-        isSupremeCourtScheduling:
-          type: boolean
-          description: supreme court scheduling required
-        data:
-          type: object
-          description: store additional details
-        md5:
-          type: string
-          description: Computed hash value of the document content, it is used as a checksum to validate the document integrity.
-    Document:
-      required:
-        - identifier
-        - name
-        - type
-        - description
-        - status
-        - paymentProcessed
-      type: object
-      description: A Efiling Document
-      properties:
-        identifier:
-          type: string
-          description: document identifier
-        name:
-          type: string
-          description: the name of the document
-        type:
-          type: string
-          description: type of document
-        description:
-          type: string
-          description: the description of the document
-        status:
-          $ref: "#/components/schemas/Status"
-        paymentProcessed:
-          type: boolean
-          description: Has the payment been processed
     SubmissionDocument:
       required:
         - description
