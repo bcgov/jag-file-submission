@@ -9,8 +9,10 @@ describe("DocumentList Component Testsuite", () => {
   const documents = [
     {
       identifier: "1",
-      type: "AFF",
-      name: "test-document.pdf",
+      documentProperties: {
+        type: "AFF",
+        name: "test-document.pdf"
+      },
       status: {
         description: "Submitted",
       },
@@ -59,7 +61,7 @@ describe("DocumentList Component Testsuite", () => {
     await waitFor(() => {});
 
     // get the span wrapping the file link, click it.
-    fireEvent.click(getByText(container, `${documents[0].name}`));
+    fireEvent.click(getByText(container, `${documents[0].documentProperties.name}`));
     await waitFor(() => {});
 
     expect.assertions(1);
@@ -78,7 +80,7 @@ describe("DocumentList Component Testsuite", () => {
     await waitFor(() => {});
 
     // get the span wrapping the file link, click it.
-    fireEvent.keyDown(getByText(container, `${documents[0].name}`), {
+    fireEvent.keyDown(getByText(container, `${documents[0].documentProperties.name}`), {
       key: "Enter",
       keyCode: "13",
     });
@@ -98,7 +100,7 @@ describe("DocumentList Component Testsuite", () => {
     await waitFor(() => {});
 
     // get the span wrapping the file link, click it.
-    fireEvent.keyDown(getByText(container, `${documents[0].name}`), {
+    fireEvent.keyDown(getByText(container, `${documents[0].documentProperties.name}`), {
       key: "Space",
       keyCode: "32",
     });
@@ -121,7 +123,7 @@ describe("DocumentList Component Testsuite", () => {
     await waitFor(() => {});
 
     // get the span wrapping the file link, click it.
-    fireEvent.keyDown(getByText(container, `${documents[0].name}`), {
+    fireEvent.keyDown(getByText(container, `${documents[0].documentProperties.name}`), {
       key: "Enter",
       keyCode: "13",
     });
