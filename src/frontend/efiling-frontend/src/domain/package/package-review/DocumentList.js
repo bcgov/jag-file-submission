@@ -13,6 +13,10 @@ export default function DocumentList({
   documents,
   reloadDocumentList,
 }) {
+  function enterPressed(e) {
+    return e && e.keyCode === 13;
+  }
+
   function handleClickFile(document) {
     downloadSubmittedDocument(packageId, document).catch((err) =>
       errorRedirect(sessionStorage.getItem("errorUrl"), err)
@@ -20,7 +24,7 @@ export default function DocumentList({
   }
 
   function handleKeyDownFile(e, document) {
-    if (e && e.keyCode === 13) {
+    if (enterPressed(e)) {
       downloadSubmittedDocument(packageId, document).catch((err) =>
         errorRedirect(sessionStorage.getItem("errorUrl"), err)
       );
@@ -38,7 +42,7 @@ export default function DocumentList({
   }
 
   function handleKeyDownDeleteFile(e, document) {
-    if (e && e.keyCode === 13) {
+    if (enterPressed(e)) {
       withdrawDocument(document);
     }
   }
