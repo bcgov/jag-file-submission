@@ -32,7 +32,7 @@ public class ViewSubmittedPackageSD {
     @Given("user is on package review page")
     public void userIsOnPackageReviewPage() {
 
-        String packageReviewPageUrl = MessageFormat.format(packageReviewUrl + "/{0}", "1");
+        String packageReviewPageUrl = MessageFormat.format( "{0}/{1}", packageReviewUrl, "1");
         logger.info("Formatted package review page url:{}", packageReviewPageUrl);
 
         this.packageReviewPage.goTo(packageReviewPageUrl);
