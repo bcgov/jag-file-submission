@@ -14,25 +14,23 @@ export default function DocumentList({
   reloadDocumentList,
 }) {
   function handleClickFile(document) {
-    downloadSubmittedDocument(packageId, document).catch((err) => {
-      errorRedirect(sessionStorage.getItem("errorUrl"), err);
-    });
+    downloadSubmittedDocument(packageId, document).catch((err) =>
+      errorRedirect(sessionStorage.getItem("errorUrl"), err)
+    );
   }
 
   function handleKeyDownFile(e, document) {
     if (e && e.keyCode === 13) {
-      downloadSubmittedDocument(packageId, document).catch((err) => {
-        errorRedirect(sessionStorage.getItem("errorUrl"), err);
-      });
+      downloadSubmittedDocument(packageId, document).catch((err) =>
+        errorRedirect(sessionStorage.getItem("errorUrl"), err)
+      );
     }
   }
 
   function withdrawDocument(document) {
     withdrawSubmittedDocument(packageId, document)
       .then(() => reloadDocumentList())
-      .catch((err) => {
-        errorRedirect(sessionStorage.getItem("errorUrl"), err);
-      });
+      .catch((err) => errorRedirect(sessionStorage.getItem("errorUrl"), err));
   }
 
   function handleClickDeleteFile(document) {
