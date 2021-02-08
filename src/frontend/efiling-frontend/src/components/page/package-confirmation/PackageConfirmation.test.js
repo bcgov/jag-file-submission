@@ -18,9 +18,11 @@ describe("PackageConfirmation Component", () => {
   const csoAccountStatus = { isNew: false };
   const documents = getDocumentsData();
   const file = {
-    name: "file name 1",
+    documentProperties: {
+      name: "file name 1",
+      type: "file type",
+    },
     description: "file description 1",
-    type: "file type",
     statutoryFeeAmount: 40,
   };
   const court = getCourtData();
@@ -165,9 +167,13 @@ describe("PackageConfirmation Component", () => {
     mock
       .onGet(apiRequest)
       .reply(200, { documents, court, submissionFeeAmount });
-    mock.onGet(`/submission/${submissionId}/document/${file.name}`).reply(200, {
-      blob,
-    });
+      mock
+      .onGet(
+        `/submission/${submissionId}/document/${file.documentProperties.name}`
+      )
+      .reply(200, {
+        blob,
+      });
 
     const { container } = render(
       <PackageConfirmation
@@ -178,7 +184,7 @@ describe("PackageConfirmation Component", () => {
 
     await waitFor(() => {});
 
-    fireEvent.click(getByText(container, file.name));
+    fireEvent.click(getByText(container, file.documentProperties.name));
 
     await waitFor(() => {});
 
@@ -192,11 +198,12 @@ describe("PackageConfirmation Component", () => {
     global.URL.createObjectURL.mockReturnValueOnce("fileurl.com");
 
     mock
-      .onGet(apiRequest)
-      .reply(200, { documents, court, submissionFeeAmount });
-    mock.onGet(`/submission/${submissionId}/document/${file.name}`).reply(200, {
-      blob,
-    });
+      .onGet(
+        `/submission/${submissionId}/document/${file.documentProperties.name}`
+      )
+      .reply(200, {
+        blob,
+      });
 
     const { container } = render(
       <PackageConfirmation
@@ -207,7 +214,7 @@ describe("PackageConfirmation Component", () => {
 
     await waitFor(() => {});
 
-    fireEvent.keyDown(getByText(container, file.name));
+    fireEvent.keyDown(getByText(container, file.documentProperties.name));
 
     await waitFor(() => {});
 
@@ -221,7 +228,9 @@ describe("PackageConfirmation Component", () => {
       .onGet(apiRequest)
       .reply(200, { documents, court, submissionFeeAmount });
     mock
-      .onGet(`/submission/${submissionId}/document/${file.name}`)
+      .onGet(
+        `/submission/${submissionId}/document/${file.documentProperties.name}`
+      )
       .reply(400, { message: "There was an error." });
 
     const { container } = render(
@@ -233,7 +242,7 @@ describe("PackageConfirmation Component", () => {
 
     await waitFor(() => {});
 
-    fireEvent.click(getByText(container, file.name));
+    fireEvent.click(getByText(container, file.documentProperties.name));
 
     await waitFor(() => {});
 

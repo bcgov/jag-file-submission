@@ -14,8 +14,10 @@ describe("PackageReviewService TestSuite", () => {
   const packageId = "1";
   const document = {
     identifier: "1",
-    type: "AFF",
-    name: "test-document.pdf",
+    documentProperties: {
+      type: "AFF",
+      name: "test-document.pdf",
+    },
     status: {
       description: "Submitted",
     },
