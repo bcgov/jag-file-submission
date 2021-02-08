@@ -25,7 +25,7 @@ import static org.mockito.ArgumentMatchers.any;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("Review Service Test Suite")
-public class FindPackagesByClientId {
+public class FindPackagesByClientIdTest {
     public static final String CLIENT_FILE_NO = "CLIENTFILENO";
     public static final String COURT_CLASS_CD = "CLASSCD";
     public static final String COURT_FILE_NO = "FILENO";
@@ -62,7 +62,7 @@ public class FindPackagesByClientId {
 
         Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(EXCEPTION_CLIENT), any(), any(), any(), any(), any(), any())).thenThrow(new NestedEjbException_Exception());
 
-        sut = new CsoReviewServiceImpl(filingStatusFacadeBean, null, new FilePackageMapperImpl());
+        sut = new CsoReviewServiceImpl(filingStatusFacadeBean, null, null, new FilePackageMapperImpl());
     }
 
     @DisplayName("OK: packages found")

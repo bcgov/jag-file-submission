@@ -23,6 +23,16 @@ describe("PackageReview Component", () => {
   const submittedBy = { firstName: "Han", lastName: "Solo" };
   const filingComments =
     "Lorem ipsum dolor sit amet.<script>alert('Hi');</script>\n\nDuis aute irure dolor.";
+  const documents = [
+    {
+      identifier: "1",
+      type: "AFF",
+      name: "test-document.pdf",
+      status: {
+        description: "Submitted",
+      },
+    },
+  ];
 
   const page = {
     header,
@@ -46,6 +56,7 @@ describe("PackageReview Component", () => {
       submittedBy,
       submittedDate,
       filingComments,
+      documents,
     });
 
     const { asFragment } = render(<PackageReview page={page} />);
@@ -231,7 +242,10 @@ describe("PackageReview Component", () => {
     const { container } = render(<PackageReview page={page} />);
     await waitFor(() => {});
 
-    fireEvent.keyDown(getByText(container, "Print Submission Sheet"));
+    fireEvent.keyDown(getByText(container, "Print Submission Sheet"), {
+      key: "Enter",
+      keyCode: "13",
+    });
     await waitFor(() => {});
 
     expect(window.open).toHaveBeenCalledWith(

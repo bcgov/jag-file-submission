@@ -271,7 +271,33 @@ exports[`Storyshots PackageReview Default 1`] = `
             role="tabpanel"
           >
             <br />
-            Documents coming ...
+            <div>
+              <div
+                class="header"
+              >
+                <span
+                  class="d-none d-lg-inline col-lg-3"
+                >
+                  Document Type
+                </span>
+                <span
+                  class="d-none d-lg-inline col-lg-4"
+                >
+                  File Name
+                </span>
+                <span
+                  class="d-none d-lg-inline col-lg-3"
+                >
+                  Status
+                </span>
+                <span
+                  class="d-none d-lg-inline col-lg-2"
+                >
+                  Action (s)
+                </span>
+              </div>
+              <ul />
+            </div>
           </div>
           <div
             aria-hidden="true"
@@ -667,7 +693,33 @@ exports[`Storyshots PackageReview Mobile 1`] = `
             role="tabpanel"
           >
             <br />
-            Documents coming ...
+            <div>
+              <div
+                class="header"
+              >
+                <span
+                  class="d-none d-lg-inline col-lg-3"
+                >
+                  Document Type
+                </span>
+                <span
+                  class="d-none d-lg-inline col-lg-4"
+                >
+                  File Name
+                </span>
+                <span
+                  class="d-none d-lg-inline col-lg-3"
+                >
+                  Status
+                </span>
+                <span
+                  class="d-none d-lg-inline col-lg-2"
+                >
+                  Action (s)
+                </span>
+              </div>
+              <ul />
+            </div>
           </div>
           <div
             aria-hidden="true"
