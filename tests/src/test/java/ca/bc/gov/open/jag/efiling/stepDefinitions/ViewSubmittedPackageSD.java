@@ -43,7 +43,7 @@ public class ViewSubmittedPackageSD {
     @When("package details are populated")
     public void verifyPackageDetails() {
 
-        List<String> actualPackageDetails = packageReviewPage.getPackageDetails();
+        List<String> actualPackageDetails = this.packageReviewPage.getPackageDetails();
 
         Assert.assertEquals("Han Solo", actualPackageDetails.get(0));
         Assert.assertEquals("04-May-2020 17:00", actualPackageDetails.get(1));
@@ -56,15 +56,15 @@ public class ViewSubmittedPackageSD {
     @Then("documents details are available in Documents tab")
     public void verifyDocumentDetails() {
 
-        packageReviewPage.clickDocumentsTab();
-        Assert.assertTrue(packageReviewPage.verifyDocumentsPaneIsDisplayed());
+        this.packageReviewPage.clickDocumentsTab();
+        Assert.assertTrue(this.packageReviewPage.verifyDocumentsPaneIsDisplayed());
     }
 
     @And("comments are available in Filing Comments tab")
     public void verifyFilingComments() {
 
-        packageReviewPage.clickFilingCommentsTab();
-        Assert.assertTrue(packageReviewPage.verifyFilingCommentsIsDisplayed());
+        this.packageReviewPage.clickFilingCommentsTab();
+        Assert.assertTrue(this.packageReviewPage.verifyFilingCommentsIsDisplayed());
 
     }
 }
