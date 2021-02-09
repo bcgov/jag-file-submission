@@ -21,7 +21,7 @@
         <io.swagger.version>1.6.2</io.swagger.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
         <javax.xml.bind.version>2.3.1</javax.xml.bind.version>
-        <joda-time.version>2.10.8</joda-time.version>
+        <joda-time.version>2.10.10</joda-time.version>
         <net.rakugakibox.spring.boot.version>2.7.1</net.rakugakibox.spring.boot.version>
         <org.apache.cxf.version>3.4.1</org.apache.cxf.version>
         <org.apache.tika.version>1.24.1</org.apache.tika.version>
