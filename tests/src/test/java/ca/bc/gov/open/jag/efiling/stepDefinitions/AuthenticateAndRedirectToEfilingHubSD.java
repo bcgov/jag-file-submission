@@ -32,7 +32,7 @@ public class AuthenticateAndRedirectToEfilingHubSD {
     public void userIsOnTheEfilingSubmissionPage() throws IOException {
 
         this.authenticationPage.goTo();
-        this.authenticationPage.signInWithBceid("bobross", "changeme");
+        this.authenticationPage.signInWithBceid();
         log.info("user is authenticated with keycloak");
     }
 

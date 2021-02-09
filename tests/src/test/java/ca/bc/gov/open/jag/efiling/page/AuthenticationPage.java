@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.IOException;
 
@@ -14,12 +15,18 @@ public class AuthenticationPage extends Base {
 
     Logger log = LogManager.getLogger(AuthenticationPage.class);
 
+    @Value("${USERNAME_BCEID:bobross}")
+    private String username;
+
+    @Value("${PASSWORD_BCEID:changeme}")
+    private String password;
+
     //Page Objects:
     @FindBy(id = "username")
     WebElement userName;
 
     @FindBy(id = "password")
-    WebElement password;
+    WebElement passwordField;
 
     @FindBy(id = "kc-login")
     WebElement signIn;
@@ -39,11 +46,11 @@ public class AuthenticationPage extends Base {
 
     }
 
-    public void signInWithBceid(String userNm, String pwd) {
+    public void signInWithBceid() {
         wait.until(ExpectedConditions.titleIs("Sign in to Efiling Hub"));
         log.info("Waiting for the page to load...");
-        userName.sendKeys(userNm);
-        password.sendKeys(pwd);
+        userName.sendKeys(username);
+        passwordField.sendKeys(password);
         signIn.click();
     }
 }

@@ -22,6 +22,8 @@ public class ViewSubmittedPackageSD {
     private AuthenticationPage authenticationPage;
     private PackageReviewPage packageReviewPage;
 
+    private static final int packageId = 1;
+
     private Logger logger = LoggerFactory.getLogger(ViewSubmittedPackageSD.class);
 
     public ViewSubmittedPackageSD(AuthenticationPage authenticationPage, PackageReviewPage packageReviewPage) {
@@ -29,14 +31,14 @@ public class ViewSubmittedPackageSD {
         this.packageReviewPage = packageReviewPage;
     }
 
-    @Given("user is on package review page")
-    public void userIsOnPackageReviewPage() {
+    @Given("user is on package review page with package id {int}")
+    public void userIsOnPackageReviewPage(int packageId) {
 
-        String packageReviewPageUrl = MessageFormat.format( "{0}/{1}", packageReviewUrl, "1");
+        String packageReviewPageUrl = MessageFormat.format( "{0}/{1}", packageReviewUrl, packageId);
         logger.info("Formatted package review page url:{}", packageReviewPageUrl);
 
         this.packageReviewPage.goTo(packageReviewPageUrl);
-        this.authenticationPage.signInWithBceid("bobross", "changeme");
+        this.authenticationPage.signInWithBceid();
 
     }
 
@@ -45,12 +47,18 @@ public class ViewSubmittedPackageSD {
 
         List<String> actualPackageDetails = packageReviewPage.getPackageDetails();
 
+        System.out.println(packageReviewPage.getPackageDetails());
+
         Assert.assertEquals("Han Solo", actualPackageDetails.get(0));
+        Assert.assertEquals("04-May-2020 17:00", actualPackageDetails.get(1));
         //Date problem between local times eg. git runs on utc
         Assert.assertNotNull(actualPackageDetails.get(1));
         Assert.assertEquals("Kelowna Law Courts", actualPackageDetails.get(2));
+        System.out.println(actualPackageDetails.get(2));
         Assert.assertEquals("1", actualPackageDetails.get(3));
+        System.out.println(actualPackageDetails.get(3));
         Assert.assertEquals("123", actualPackageDetails.get(4));
+        System.out.println(actualPackageDetails.get(4));
 
     }
 
