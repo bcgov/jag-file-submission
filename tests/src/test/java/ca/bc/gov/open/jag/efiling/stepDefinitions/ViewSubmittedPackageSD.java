@@ -45,8 +45,9 @@ public class ViewSubmittedPackageSD {
 
         List<String> actualPackageDetails = packageReviewPage.getPackageDetails();
 
+        logger.info("There are {} elements", actualPackageDetails.size());
+
         Assert.assertEquals("Han Solo", actualPackageDetails.get(0));
-        //Date problem between local times eg. git runs on utc
         Assert.assertNotNull(actualPackageDetails.get(1));
         Assert.assertEquals("Kelowna Law Courts", actualPackageDetails.get(2));
         Assert.assertEquals("1", actualPackageDetails.get(3));
