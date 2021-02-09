@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class PackageReviewPage extends Base {
 
@@ -42,6 +43,8 @@ public class PackageReviewPage extends Base {
     public List<String> getPackageDetails() {
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.className("bcgov-row")));
+        
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
         logger.info("Getting package details values");
 
