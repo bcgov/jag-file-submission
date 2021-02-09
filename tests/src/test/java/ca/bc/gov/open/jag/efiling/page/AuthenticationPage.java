@@ -23,7 +23,7 @@ public class AuthenticationPage extends Base {
 
     //Page Objects:
     @FindBy(id = "username")
-    WebElement userName;
+    WebElement usernameField;
 
     @FindBy(id = "password")
     WebElement passwordField;
@@ -49,7 +49,7 @@ public class AuthenticationPage extends Base {
     public void signInWithBceid() {
         wait.until(ExpectedConditions.titleIs("Sign in to Efiling Hub"));
         log.info("Waiting for the page to load...");
-        userName.sendKeys(username);
+        usernameField.sendKeys(username);
         passwordField.sendKeys(password);
         signIn.click();
     }
