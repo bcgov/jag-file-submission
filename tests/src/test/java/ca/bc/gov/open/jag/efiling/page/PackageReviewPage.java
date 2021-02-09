@@ -43,13 +43,14 @@ public class PackageReviewPage extends Base {
     public List<String> getPackageDetails() {
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.className("bcgov-row")));
-        
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
         logger.info("Getting package details values");
 
         List<String> packageDetails = new ArrayList<>();
         packageValueDetails.forEach(webElement -> {
+            logger.info("Is it visible: {}", webElement.isDisplayed());
+            logger.info("Is it enabled: {}", webElement.isEnabled());
+
             packageDetails.add(webElement.getText());
         });
         return packageDetails;
