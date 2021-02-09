@@ -18,7 +18,7 @@ public class PackageReviewPage extends Base {
     @FindBy(className = "bcgov-fill-width")
     private List<WebElement> packageKeyDetails;
 
-    @FindBy(className = "bcgov-table-value")
+    @FindBy(xpath = "//*[contains(@class,'bcgov-table-value')]/b")
     private List<WebElement> packageValueDetails;
 
     @FindBy(id = "uncontrolled-tab-tab-documents")
@@ -47,7 +47,8 @@ public class PackageReviewPage extends Base {
 
         List<String> packageDetails = new ArrayList<>();
         packageValueDetails.forEach(webElement -> {
-            packageDetails.add(webElement.getAttribute("innerText"));
+            packageDetails.add(webElement.getText());
+            System.out.println(packageDetails);
         });
         return packageDetails;
     }
