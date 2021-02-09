@@ -4,6 +4,7 @@ import {
   getFilingPackage,
   downloadSubmissionSheet,
   downloadSubmittedDocument,
+  withdrawSubmittedDocument,
 } from "./PackageReviewService";
 import { getCourtData } from "../../../modules/test-data/courtTestData";
 
@@ -42,6 +43,7 @@ describe("PackageReviewService TestSuite", () => {
 
   beforeEach(() => {
     axios.get.mockReset();
+    axios.delete.mockReset();
     FileSaver.saveAs.mockReset();
   });
 
@@ -92,5 +94,26 @@ describe("PackageReviewService TestSuite", () => {
       responseType: "blob",
     });
     expect(FileSaver.saveAs).toHaveBeenCalled();
+  });
+
+  test("withdrawSubmittedDocument success", async () => {
+    axios.delete.mockImplementationOnce(() => Promise.resolve({ status: 200 }));
+
+    await expect(
+      withdrawSubmittedDocument(packageId, document)
+    ).resolves.not.toThrow();
+    expect(axios.delete).toHaveBeenCalledWith(submittedDocumentURL);
+  });
+
+  test("withdrawSubmittedDocument fail", async () => {
+    const errorMessage = "Network Error";
+    axios.delete.mockImplementationOnce(() =>
+      Promise.reject(new Error(errorMessage))
+    );
+
+    await expect(
+      withdrawSubmittedDocument(packageId, document)
+    ).rejects.toThrow(errorMessage);
+    expect(axios.delete).toHaveBeenCalledWith(submittedDocumentURL);
   });
 });
