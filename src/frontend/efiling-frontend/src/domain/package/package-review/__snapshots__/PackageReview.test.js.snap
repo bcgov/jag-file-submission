@@ -1,0 +1,457 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PackageReview Component Matches the snapshot 1`] = `
+<DocumentFragment>
+  <main>
+    <header
+      class="bcgov-header"
+    >
+      <nav
+        aria-label="Header"
+        class="container-fluid navbar navbar-expand-lg navbar-dark"
+      >
+        <div
+          aria-labelledby="title"
+          class="navbar-brand bcgov-pointer"
+        />
+        <img
+          alt="B.C. Government Logo"
+          class="img-fluid d-none d-md-block bcgov-pointer"
+          height="44"
+          src="undefined/images/bcid-logo-rev-en.svg"
+          width="181"
+        />
+        <img
+          alt="B.C. Government Logo"
+          class="img-fluid d-md-none bcgov-pointer"
+          height="44"
+          src="undefined/images/bcid-symbol-rev.svg"
+          width="64"
+        />
+        <div
+          aria-labelledby="title"
+          class="bcgov-pointer navbar-brand nav-item nav-link"
+        />
+        <div
+          class="bcgov-flex-spacing"
+        >
+          <div
+            class="navbar-brand bcgov-vertical-center"
+            id="title"
+          >
+            eFiling Frontend
+          </div>
+          <div />
+        </div>
+      </nav>
+    </header>
+    <div
+      class="page"
+    >
+      <div
+        class="content col-md-8"
+      >
+        <h1>
+          View Recently Submitted Package # 1
+        </h1>
+        <br />
+        <div
+          class="row"
+        >
+          <h2
+            class="col-sm-6"
+          >
+            Package Details
+          </h2>
+          <div
+            class="col-sm-6 text-sm-right mt-3 mt-sm-0"
+          >
+            <span
+              class="file-href"
+              role="button"
+              tabindex="0"
+            >
+              Print Submission Sheet
+            </span>
+            <svg
+              class="align-icon"
+              color="#7F7F7F"
+              fill="currentColor"
+              height="24"
+              stroke="currentColor"
+              stroke-width="0"
+              style="color: rgb(127, 127, 127);"
+              viewBox="0 0 16 16"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10.5 8a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
+              />
+              <path
+                clip-rule="evenodd"
+                d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 100-7 3.5 3.5 0 000 7z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </div>
+        </div>
+        <br />
+        <div
+          class="row"
+        >
+          <div
+            class="col-sm-12 col-lg-6"
+          >
+            <div
+              class="bcgov-table "
+            >
+              <b />
+              <div
+                class="bcgov-table-body"
+              >
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-fill-width"
+                  >
+                    Submitted By:
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    <b>
+                      Han Solo
+                    </b>
+                  </div>
+                </div>
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-fill-width"
+                  >
+                    Submitted Date:
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    <b>
+                      14-Jan-2021 10:57
+                    </b>
+                  </div>
+                </div>
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-fill-width"
+                  >
+                    Submitted To:
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    <b>
+                      Kelowna Law Courts
+                    </b>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-sm-12 col-lg-6"
+          >
+            <div
+              class="bcgov-table "
+            >
+              <b />
+              <div
+                class="bcgov-table-body"
+              >
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-fill-width"
+                  >
+                    Package Number:
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    <b>
+                      1
+                    </b>
+                  </div>
+                </div>
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-fill-width"
+                  >
+                    Court File Number:
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    <b>
+                      Court file number
+                    </b>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <nav
+          class="nav nav-tabs"
+          role="tablist"
+        >
+          <a
+            aria-controls="uncontrolled-tab-tabpane-documents"
+            aria-selected="true"
+            class="nav-item nav-link active"
+            data-rb-event-key="documents"
+            href="#"
+            id="uncontrolled-tab-tab-documents"
+            role="tab"
+          >
+            Documents
+          </a>
+          <a
+            aria-controls="uncontrolled-tab-tabpane-comments"
+            aria-selected="false"
+            class="nav-item nav-link"
+            data-rb-event-key="comments"
+            href="#"
+            id="uncontrolled-tab-tab-comments"
+            role="tab"
+            tabindex="-1"
+          >
+            Filing Comments
+          </a>
+        </nav>
+        <div
+          class="tab-content"
+        >
+          <div
+            aria-hidden="false"
+            aria-labelledby="uncontrolled-tab-tab-documents"
+            class="fade tab-pane active show"
+            id="uncontrolled-tab-tabpane-documents"
+            role="tabpanel"
+          >
+            <br />
+            <div>
+              <div
+                class="header"
+              >
+                <span
+                  class="d-none d-lg-inline col-lg-3"
+                >
+                  Document Type
+                </span>
+                <span
+                  class="d-none d-lg-inline col-lg-4"
+                >
+                  File Name
+                </span>
+                <span
+                  class="d-none d-lg-inline col-lg-3"
+                >
+                  Status
+                </span>
+                <span
+                  class="d-none d-lg-inline col-lg-2"
+                >
+                  Action (s)
+                </span>
+              </div>
+              <ul>
+                <li>
+                  <span
+                    class="label col-sm-4 d-lg-none"
+                  >
+                    Document Type:
+                  </span>
+                  <span
+                    class="col-sm-8 col-lg-3"
+                  />
+                  <span
+                    class="label col-sm-4 d-lg-none"
+                  >
+                    File Name:
+                  </span>
+                  <span
+                    class="col-sm-8 col-lg-4 file-cell"
+                  >
+                    <span
+                      class="file-href"
+                      role="button"
+                      tabindex="0"
+                    >
+                      test-document.pdf
+                    </span>
+                  </span>
+                  <span
+                    class="label col-sm-4 d-lg-none"
+                  >
+                    Status:
+                  </span>
+                  <span
+                    class="col-sm-8 col-lg-3"
+                  >
+                    Submitted
+                  </span>
+                  <span
+                    class="label col-sm-4 d-lg-none"
+                  >
+                    Action (s):
+                  </span>
+                  <span
+                    class="col-sm-8 col-lg-2 file-cell"
+                  >
+                    <span
+                      class="file-href"
+                      id="withdraw_1"
+                      role="button"
+                      tabindex="0"
+                    >
+                      withdraw
+                    </span>
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div
+            aria-hidden="true"
+            aria-labelledby="uncontrolled-tab-tab-comments"
+            class="fade tab-pane"
+            id="uncontrolled-tab-tabpane-comments"
+            role="tabpanel"
+          >
+            <br />
+            <h4>
+              Filing Comments
+            </h4>
+            <div
+              class="tabContent"
+              id="filingComments"
+            >
+              Lorem ipsum dolor sit amet.&lt;script&gt;alert('Hi');&lt;/script&gt;
+
+Duis aute irure dolor.
+            </div>
+          </div>
+        </div>
+        <br />
+        <section
+          class="buttons pt-2"
+        >
+          <button
+            class="bcgov-button normal-white btn"
+            data-test-id=""
+            type="button"
+          >
+            Cancel and Return to Parent App
+          </button>
+        </section>
+      </div>
+    </div>
+    <footer
+      class="bcgov-footer"
+    >
+      <nav
+        aria-label="Footer"
+        class="navbar navbar-expand-sm navbar-dark justify-content-end"
+      >
+        <button
+          class="navbar-toggler"
+          data-target="#footerBar"
+          data-toggle="collapse"
+          type="button"
+        >
+          <span
+            class="navbar-toggler-icon"
+          />
+        </button>
+        <div
+          class="collapse navbar-collapse flex-grow-0"
+          id="footerBar"
+        >
+          <ul
+            class="navbar-nav text-right"
+          >
+            <li
+              class="nav-item m-1"
+            >
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                BC Government
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
+            >
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Disclaimer
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
+            >
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/privacy"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Privacy
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
+            >
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/accessibility"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Accessibility
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
+            >
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/copyright"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Copyright
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </footer>
+  </main>
+</DocumentFragment>
+`;

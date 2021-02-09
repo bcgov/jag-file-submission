@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service.submissionServiceImpl;
 
+import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingapi.api.model.InitialDocument;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
@@ -73,10 +74,14 @@ public class GetValidPartyRolesTest {
 
         List<InitialDocument> documents = new ArrayList<>();
         InitialDocument document1 = new InitialDocument();
-        document1.setType(InitialDocument.TypeEnum.POR);
+        DocumentProperties documentProperties1 = new DocumentProperties();
+        documentProperties1.setType(DocumentProperties.TypeEnum.POR);
+        document1.setDocumentProperties(documentProperties1);
         documents.add(document1);
         InitialDocument document2 = new InitialDocument();
-        document2.setType(InitialDocument.TypeEnum.ACMW);
+        DocumentProperties documentProperties2 = new DocumentProperties();
+        documentProperties2.setType(DocumentProperties.TypeEnum.ACMW);
+        document2.setDocumentProperties(documentProperties2);
         documents.add(document2);
         GetValidPartyRoleRequest getValidPartyRoleRequest = GetValidPartyRoleRequest
                 .builder()

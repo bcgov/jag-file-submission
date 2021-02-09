@@ -1,8 +1,11 @@
 package ca.bc.gov.open.jag.efilingapi.submission.mappers;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.InitialPackage;
+import ca.bc.gov.open.jag.efilingapi.api.model.SubmissionDocument;
+import ca.bc.gov.open.jag.efilingcommons.model.Document;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper
 public interface FilingPackageMapper {
@@ -13,4 +16,7 @@ public interface FilingPackageMapper {
 
     ca.bc.gov.open.jag.efilingapi.api.model.SubmissionFilingPackage toApiFilingPackage(FilingPackage filingPackage);
 
+    @Mapping(target = "documentProperties.name", source = "name")
+    @Mapping(target = "documentProperties.type", source = "type")
+    SubmissionDocument documentToSubmissionDocument(Document file);
 }

@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service;
 
+import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingapi.api.model.InitialDocument;
 import ca.bc.gov.open.jag.efilingapi.submission.models.GetValidPartyRoleRequest;
 import org.junit.jupiter.api.Assertions;
@@ -22,13 +23,19 @@ public class GetValidPartyRoleRequestTest {
 
         List<InitialDocument> initialDocumentList = new ArrayList<>();
         InitialDocument document1 = new InitialDocument();
-        document1.setType(InitialDocument.TypeEnum.AAB);
+        DocumentProperties documentProperties1 = new DocumentProperties();
+        documentProperties1.setType(DocumentProperties.TypeEnum.AAB);
+        document1.setDocumentProperties(documentProperties1);
         initialDocumentList.add(document1);
         InitialDocument document2 = new InitialDocument();
-        document2.setType(InitialDocument.TypeEnum.ACMW);
+        DocumentProperties documentProperties2 = new DocumentProperties();
+        documentProperties2.setType(DocumentProperties.TypeEnum.ACMW);
+        document2.setDocumentProperties(documentProperties2);
         initialDocumentList.add(document2);
         InitialDocument document3 = new InitialDocument();
-        document3.setType(InitialDocument.TypeEnum.TAX);
+        DocumentProperties documentProperties3 = new DocumentProperties();
+        documentProperties3.setType(DocumentProperties.TypeEnum.TAX);
+        document3.setDocumentProperties(documentProperties3);
         initialDocumentList.add(document3);
 
         GetValidPartyRoleRequest actual = GetValidPartyRoleRequest.builder()

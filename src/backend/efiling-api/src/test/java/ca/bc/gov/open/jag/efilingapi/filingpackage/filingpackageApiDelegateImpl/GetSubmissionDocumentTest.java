@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingapi.filingpackage.filingpackageApiDelegateImpl
 
 import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.FilingpackageApiDelegateImpl;
+import ca.bc.gov.open.jag.efilingapi.filingpackage.model.SubmittedDocument;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import org.junit.jupiter.api.*;
 import org.keycloak.KeycloakPrincipal;
@@ -11,6 +12,7 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +35,8 @@ public class GetSubmissionDocumentTest {
     public static  final String FOUND_DOCUMENT_IDENTIFIER = "found";
 
     public static  final String NOT_FOUND_DOCUMENT_IDENTIFIER = "notfound";
+
+    public static final byte[] BYTES = "TEST".getBytes();
 
     FilingpackageApiDelegateImpl sut;
 
@@ -66,6 +70,14 @@ public class GetSubmissionDocumentTest {
 
         SecurityContextHolder.setContext(securityContextMock);
 
+        Mockito.when(filingPackageService.getSubmittedDocument(Mockito.any(), ArgumentMatchers.eq(BigDecimal.ONE), Mockito.any())).thenReturn(Optional.of(SubmittedDocument.builder()
+                                                                                                                                                                .data(new ByteArrayResource(BYTES))
+                                                                                                                                                                .name("TEST")
+                                                                                                                                                                .create()));
+
+
+        Mockito.when(filingPackageService.getSubmittedDocument(Mockito.any(), ArgumentMatchers.eq(BigDecimal.TEN), Mockito.any())).thenReturn(Optional.empty());
+
         sut = new FilingpackageApiDelegateImpl(filingPackageService);
     }
 
@@ -92,6 +104,20 @@ public class GetSubmissionDocumentTest {
         ResponseEntity<?> actual = sut.getSubmittedDocument(BigDecimal.ONE, NOT_FOUND_DOCUMENT_IDENTIFIER);
 
         Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
+
+    }
+
+    @Test
+    @DisplayName("404: when no document should return 404")
+    public void withNoDocumentShouldReturn404() {
+
+        Map<String, Object> otherClaims = new HashMap<>();
+        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, CASE_1);
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
+        ResponseEntity<?> actual = sut.getSubmittedDocument(BigDecimal.TEN, NOT_FOUND_DOCUMENT_IDENTIFIER);
+
+        Assertions.assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
 
     }
 

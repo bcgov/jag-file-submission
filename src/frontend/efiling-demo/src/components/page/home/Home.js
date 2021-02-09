@@ -22,6 +22,24 @@ import { propTypes } from "../../../types/propTypes";
 import "../page.css";
 import "./Home.css";
 
+const defaultJson = {
+  court: {
+    location: "4801",
+    level: "P",
+    courtClass: "F",
+    division: "I",
+  },
+  parties: [
+    {
+      partyType: "IND",
+      roleType: "APP",
+      firstName: "efile",
+      middleName: "test",
+      lastName: "qa",
+    },
+  ],
+};
+
 // Note: Some of these values are temporarily hard-coded
 const urlBody = {
   clientAppName: "Demo App",
@@ -54,12 +72,14 @@ const generatePackageData = (files, filingPackage) => {
     formData.append("files", files[i]);
 
     documentData.push({
-      name: files[i].name,
-      type: files[i].data.type,
+      documentProperties: {
+        name: files[i].name,
+        type: files[i].data.type,
+      },
       isSupremeCourtScheduling: files[i].data.isSupremeCourtScheduling,
       isAmendment: files[i].data.isAmendment,
       data: {},
-      // md5: document.md5,
+      md5: document.md5,
     });
   }
 
@@ -117,7 +137,7 @@ const eFilePackage = (
 
 export default function Home({ page: { header } }) {
   const [errorExists, setErrorExists] = useState(false);
-  const [filingPackage, setFilingPackage] = useState(null);
+  const [filingPackage, setFilingPackage] = useState(defaultJson);
   const [files, setFiles] = useState([]);
   const [submitBtnEnabled, setSubmitBtnEnabled] = useState(true);
   const [showLoader, setShowLoader] = useState(false);
@@ -299,7 +319,6 @@ export default function Home({ page: { header } }) {
           <Textarea
             id="1"
             label="Provide filing package JSON data:"
-            value={urlBody}
             onChange={(val) => setFilingPackage(JSON.parse(val))}
           />
           <br />

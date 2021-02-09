@@ -17,20 +17,21 @@ import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { onBackButtonEvent } from "../../../modules/helpers/handleBackEvent";
 import { generateFileSummaryData } from "../../../modules/helpers/generateFileSummaryData";
 
-import "./PackageConfirmation.css";
+import "./PackageConfirmation.scoped.css";
 import Payment from "../payment/Payment";
 import Upload from "../upload/Upload";
 
 const downloadFile = (file, submissionId) => {
+  const fileName = file.documentProperties.name;
   axios
-    .get(`/submission/${submissionId}/document/${file.name}`, {
+    .get(`/submission/${submissionId}/document/${fileName}`, {
       responseType: "blob",
     })
     .then((response) => {
       const fileData = new Blob([response.data], { type: file.mimeType });
       const fileUrl = URL.createObjectURL(fileData);
 
-      FileSaver.saveAs(fileUrl, file.name);
+      FileSaver.saveAs(fileUrl, fileName);
     })
     .catch((error) => {
       errorRedirect(sessionStorage.getItem("errorUrl"), error);
@@ -49,7 +50,7 @@ const generateTable = (file, data, submissionId) => [
           onClick={() => downloadFile(file, submissionId)}
           data-test-id="uploaded-file"
         >
-          {file.name}
+          {file.documentProperties.name}
         </span>
       </div>
     ),
@@ -183,7 +184,7 @@ export default function PackageConfirmation({
         <br />
         <br />
         {files.map((file) => (
-          <div key={file.name}>
+          <div key={file.documentProperties.name}>
             <DisplayBox
               styling="bcgov-border-background bcgov-display-file"
               icon={

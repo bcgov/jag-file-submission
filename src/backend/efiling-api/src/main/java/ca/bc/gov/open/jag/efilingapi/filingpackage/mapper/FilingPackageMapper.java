@@ -37,8 +37,9 @@ public interface FilingPackageMapper {
     List<Document> toDocuments(List<ReviewDocument> file);
 
     @Mapping(target = "identifier", source = "documentId")
-    @Mapping(target = "name", source = "fileName")
-    @Mapping(target = "type", source = "documentTypeCd")
+    @Mapping(target = "documentProperties.name", source = "fileName")
+    @Mapping(target = "documentProperties.type", source = "documentTypeCd")
+    @Mapping(target = "description", source = "documentType")
     @Mapping(target = "status.description", source = "status")
     @Mapping(target = "status.code", source = "statusCode")
     @Mapping(target = "status.changeDate", expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.toIsoDate(reviewDocument.getStatusDate()))")
