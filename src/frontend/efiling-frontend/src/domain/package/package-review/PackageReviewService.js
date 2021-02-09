@@ -41,7 +41,7 @@ export const downloadSubmittedDocument = async (packageId, document) => {
   );
   const fileData = new Blob([response.data], { type: "application/pdf" });
   const fileUrl = URL.createObjectURL(fileData);
-  FileSaver.saveAs(fileUrl, `${document.name}`);
+  FileSaver.saveAs(fileUrl, `${document.documentProperties.name}`);
 };
 
 /**

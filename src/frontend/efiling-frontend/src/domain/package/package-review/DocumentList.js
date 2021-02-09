@@ -13,37 +13,19 @@ export default function DocumentList({
   documents,
   reloadDocumentList,
 }) {
-  function enterPressed(e) {
-    return e && e.keyCode === 13;
-  }
-
-  function handleClickFile(document) {
-    downloadSubmittedDocument(packageId, document).catch((err) =>
-      errorRedirect(sessionStorage.getItem("errorUrl"), err)
-    );
-  }
-
-  function handleKeyDownFile(e, document) {
-    if (enterPressed(e)) {
+  function handleDownloadFileEvent(e, document) {
+    if (e && (e.type === "click" || e.keyCode === 13)) {
       downloadSubmittedDocument(packageId, document).catch((err) =>
         errorRedirect(sessionStorage.getItem("errorUrl"), err)
       );
     }
   }
 
-  function withdrawDocument(document) {
-    withdrawSubmittedDocument(packageId, document)
-      .then(() => reloadDocumentList())
-      .catch((err) => errorRedirect(sessionStorage.getItem("errorUrl"), err));
-  }
-
-  function handleClickDeleteFile(document) {
-    withdrawDocument(document);
-  }
-
-  function handleKeyDownDeleteFile(e, document) {
-    if (enterPressed(e)) {
-      withdrawDocument(document);
+  function handleWithdrawFileEvent(e, document) {
+    if (e && (e.type === "click" || e.keyCode === 13)) {
+      withdrawSubmittedDocument(packageId, document)
+        .then(() => reloadDocumentList())
+        .catch((err) => errorRedirect(sessionStorage.getItem("errorUrl"), err));
     }
   }
 
@@ -67,8 +49,8 @@ export default function DocumentList({
                   className="file-href"
                   role="button"
                   tabIndex={0}
-                  onClick={() => handleClickFile(document)}
-                  onKeyDown={(e) => handleKeyDownFile(e, document)}
+                  onClick={(e) => handleDownloadFileEvent(e, document)}
+                  onKeyDown={(e) => handleDownloadFileEvent(e, document)}
                 >
                   {document.documentProperties.name}
                 </span>
@@ -84,8 +66,8 @@ export default function DocumentList({
                   className="file-href"
                   role="button"
                   tabIndex={0}
-                  onClick={() => handleClickDeleteFile(document)}
-                  onKeyDown={(e) => handleKeyDownDeleteFile(e, document)}
+                  onClick={(e) => handleWithdrawFileEvent(e, document)}
+                  onKeyDown={(e) => handleWithdrawFileEvent(e, document)}
                 >
                   withdraw
                 </span>
