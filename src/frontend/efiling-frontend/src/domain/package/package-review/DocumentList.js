@@ -13,8 +13,16 @@ export default function DocumentList({
   documents,
   reloadDocumentList,
 }) {
+  function isClick(e) {
+    return e && e.type === "click";
+  }
+
+  function isEnter(e) {
+    return e && e.type === "keydown" && e.keyCode === 13;
+  }
+
   function handleDownloadFileEvent(e, document) {
-    if (e && (e.type === "click" || e.keyCode === 13)) {
+    if (isClick(e) || isEnter(e)) {
       downloadSubmittedDocument(packageId, document).catch((err) =>
         errorRedirect(sessionStorage.getItem("errorUrl"), err)
       );
@@ -22,7 +30,7 @@ export default function DocumentList({
   }
 
   function handleWithdrawFileEvent(e, document) {
-    if (e && (e.type === "click" || e.keyCode === 13)) {
+    if (isClick(e) || isEnter(e)) {
       withdrawSubmittedDocument(packageId, document)
         .then(() => reloadDocumentList())
         .catch((err) => errorRedirect(sessionStorage.getItem("errorUrl"), err));
