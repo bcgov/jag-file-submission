@@ -18,7 +18,7 @@
     "react-app-polyfill": "^2.0.0",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.3",
+    "react-scripts": "4.0.2",
     "react-dropzone": "^11.1.0",
     "regenerator-runtime": "^0.13.5",
     "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/v1.2.1/shared-components-1.2.1.tgz",
