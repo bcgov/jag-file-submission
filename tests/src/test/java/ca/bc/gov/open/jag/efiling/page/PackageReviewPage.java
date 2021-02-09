@@ -41,8 +41,8 @@ public class PackageReviewPage extends Base {
 
     public List<String> getPackageDetails() {
 
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.className("bcgov-row")));
-
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("uncontrolled-tab-tabpane-documents")));
+        
         logger.info("Getting package details values");
 
         List<String> packageDetails = new ArrayList<>();
