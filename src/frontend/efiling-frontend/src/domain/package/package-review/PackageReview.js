@@ -14,6 +14,7 @@ import {
   getFilingPackage,
   downloadSubmissionSheet,
 } from "./PackageReviewService";
+import { noop } from "../../../modules/helpers/mockHelper";
 
 import "./PackageReview.scoped.css";
 import DocumentList from "./DocumentList";
@@ -45,6 +46,7 @@ export default function PackageReview({ page: { header, packageId } }) {
     },
   ]);
   const [filingComments, setFilingComments] = useState("");
+  const [reloadTrigger, setReloadTrigger] = useState(false);
   const [documents, setDocuments] = useState([]);
 
   useEffect(() => {
@@ -109,7 +111,13 @@ export default function PackageReview({ page: { header, packageId } }) {
       .catch(() => {
         setError(true);
       });
-  }, [packageId]);
+  }, [packageId, reloadTrigger]);
+
+  /** Whenever this function is called, it'll trigger a reload of the document list. */
+  function reloadDocumentList() {
+    setReloadTrigger(!reloadTrigger);
+    noop();
+  }
 
   function handleClick() {
     downloadSubmissionSheet(packageId).catch((err) => {
@@ -170,7 +178,11 @@ export default function PackageReview({ page: { header, packageId } }) {
           <Tabs defaultActiveKey="documents" id="uncontrolled-tab">
             <Tab eventKey="documents" title="Documents">
               <br />
-              <DocumentList packageId={packageId} documents={documents} />
+              <DocumentList
+                packageId={packageId}
+                documents={documents}
+                reloadDocumentList={reloadDocumentList}
+              />
             </Tab>
             <Tab eventKey="comments" title="Filing Comments">
               <br />

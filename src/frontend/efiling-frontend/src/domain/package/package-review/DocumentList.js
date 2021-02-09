@@ -2,21 +2,38 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
-import { downloadSubmittedDocument } from "./PackageReviewService";
+import {
+  downloadSubmittedDocument,
+  withdrawSubmittedDocument,
+} from "./PackageReviewService";
 import "./DocumentList.scoped.css";
 
-export default function DocumentList({ packageId, documents }) {
-  function handleClickFile(document) {
-    downloadSubmittedDocument(packageId, document).catch((err) => {
-      errorRedirect(sessionStorage.getItem("errorUrl"), err);
-    });
+export default function DocumentList({
+  packageId,
+  documents,
+  reloadDocumentList,
+}) {
+  function isClick(e) {
+    return e && e.type === "click";
   }
 
-  function handleKeyDownFile(e, document) {
-    if (e && e.keyCode === 13) {
-      downloadSubmittedDocument(packageId, document).catch((err) => {
-        errorRedirect(sessionStorage.getItem("errorUrl"), err);
-      });
+  function isEnter(e) {
+    return e && e.type === "keydown" && e.keyCode === 13;
+  }
+
+  function handleDownloadFileEvent(e, document) {
+    if (isClick(e) || isEnter(e)) {
+      downloadSubmittedDocument(packageId, document).catch((err) =>
+        errorRedirect(sessionStorage.getItem("errorUrl"), err)
+      );
+    }
+  }
+
+  function handleWithdrawFileEvent(e, document) {
+    if (isClick(e) || isEnter(e)) {
+      withdrawSubmittedDocument(packageId, document)
+        .then(() => reloadDocumentList())
+        .catch((err) => errorRedirect(sessionStorage.getItem("errorUrl"), err));
     }
   }
 
@@ -40,8 +57,8 @@ export default function DocumentList({ packageId, documents }) {
                   className="file-href"
                   role="button"
                   tabIndex={0}
-                  onClick={() => handleClickFile(document)}
-                  onKeyDown={(e) => handleKeyDownFile(e, document)}
+                  onClick={(e) => handleDownloadFileEvent(e, document)}
+                  onKeyDown={(e) => handleDownloadFileEvent(e, document)}
                 >
                   {document.documentProperties.name}
                 </span>
@@ -51,7 +68,18 @@ export default function DocumentList({ packageId, documents }) {
                 {document.status.description}
               </span>
               <span className="label col-sm-4 d-lg-none">Action (s):</span>
-              <span className="col-sm-8 col-lg-2">withdraw</span>
+              <span className="col-sm-8 col-lg-2 file-cell">
+                <span
+                  id={`withdraw_${document.identifier}`}
+                  className="file-href"
+                  role="button"
+                  tabIndex={0}
+                  onClick={(e) => handleWithdrawFileEvent(e, document)}
+                  onKeyDown={(e) => handleWithdrawFileEvent(e, document)}
+                >
+                  withdraw
+                </span>
+              </span>
             </li>
           ))}
       </ul>
@@ -73,4 +101,5 @@ DocumentList.propTypes = {
       }),
     })
   ).isRequired,
+  reloadDocumentList: PropTypes.func.isRequired,
 };
