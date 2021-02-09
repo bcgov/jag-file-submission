@@ -43,7 +43,6 @@ public class ViewSubmittedPackageSD {
     @When("package details are populated")
     public void verifyPackageDetails() {
 
-        packageReviewPage.clickDocumentsTab();
         List<String> actualPackageDetails = packageReviewPage.getPackageDetails();
 
         logger.info("There are {} elements", actualPackageDetails.size());
