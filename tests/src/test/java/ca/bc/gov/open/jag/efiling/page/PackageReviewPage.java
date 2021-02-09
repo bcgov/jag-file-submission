@@ -48,7 +48,6 @@ public class PackageReviewPage extends Base {
         List<String> packageDetails = new ArrayList<>();
         packageValueDetails.forEach(webElement -> {
             packageDetails.add(webElement.getText());
-            System.out.println(packageDetails);
         });
         return packageDetails;
     }
