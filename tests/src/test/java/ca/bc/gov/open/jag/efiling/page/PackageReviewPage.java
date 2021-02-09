@@ -50,7 +50,7 @@ public class PackageReviewPage extends Base {
         packageValueDetails.forEach(webElement -> {
             logger.info("Is it visible: {}", webElement.isDisplayed());
             logger.info("Is it enabled: {}", webElement.isEnabled());
-
+            logger.info("The value is: {}", webElement.getText());
             packageDetails.add(webElement.getText());
         });
         return packageDetails;
