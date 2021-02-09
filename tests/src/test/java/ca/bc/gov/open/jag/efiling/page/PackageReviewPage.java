@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class PackageReviewPage extends Base {
 
@@ -42,16 +41,12 @@ public class PackageReviewPage extends Base {
 
     public List<String> getPackageDetails() {
 
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.className("bcgov-row")));
-        documentsTab.click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("uncontrolled-tab-tabpane-documents")));
         
         logger.info("Getting package details values");
 
         List<String> packageDetails = new ArrayList<>();
         packageValueDetails.forEach(webElement -> {
-            logger.info("Is it visible: {}", webElement.isDisplayed());
-            logger.info("Is it enabled: {}", webElement.isEnabled());
-            logger.info("The value is: {}", webElement.getText());
             packageDetails.add(webElement.getText());
         });
         return packageDetails;
