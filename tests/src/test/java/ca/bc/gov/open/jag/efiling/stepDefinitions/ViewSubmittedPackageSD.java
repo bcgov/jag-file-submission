@@ -47,18 +47,16 @@ public class ViewSubmittedPackageSD {
 
         List<String> actualPackageDetails = packageReviewPage.getPackageDetails();
 
-        System.out.println(packageReviewPage.getPackageDetails());
-
         Assert.assertEquals("Han Solo", actualPackageDetails.get(0));
+<<<<<<< refs/remotes/origin/qa-package-review
         Assert.assertEquals("04-May-2020 17:00", actualPackageDetails.get(1));
         //Date problem between local times eg. git runs on utc
+=======
+>>>>>>> fixed conflicts
         Assert.assertNotNull(actualPackageDetails.get(1));
         Assert.assertEquals("Kelowna Law Courts", actualPackageDetails.get(2));
-        System.out.println(actualPackageDetails.get(2));
         Assert.assertEquals("1", actualPackageDetails.get(3));
-        System.out.println(actualPackageDetails.get(3));
         Assert.assertEquals("123", actualPackageDetails.get(4));
-        System.out.println(actualPackageDetails.get(4));
 
     }
 
