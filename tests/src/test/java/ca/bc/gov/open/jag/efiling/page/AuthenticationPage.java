@@ -29,8 +29,9 @@ public class AuthenticationPage extends BasePage {
 
     public void signInWithBceid() {
 
-        wait.until(ExpectedConditions.titleIs("Sign in to Efiling Hub"));
         logger.info("Waiting for the page to load...");
+        wait.until(ExpectedConditions.titleIs("Sign in to Efiling Hub"));
+
         usernameField.sendKeys(username);
         passwordField.sendKeys(password);
         signIn.click();
