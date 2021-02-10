@@ -9,6 +9,7 @@ describe("DocumentList Component Testsuite", () => {
   const documents = [
     {
       identifier: "1",
+      filingDate: "2020-05-05T00:00:00.000Z",
       documentProperties: {
         type: "AFF",
         name: "test-document.pdf",
@@ -16,7 +17,6 @@ describe("DocumentList Component Testsuite", () => {
       status: {
         description: "Submitted",
       },
-      filingDate: "2020-05-05T00:00:00.000Z",
     },
   ];
   const reloadDocumentList = jest.fn();
