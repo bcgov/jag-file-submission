@@ -43,7 +43,7 @@ jobs:
         env:
           DOCKER_BUILDKIT: "1"
         run: |
-          docker-compose build -q --parallel efiling-frontend efiling-api keycloak-config
+          docker-compose build --quiet --parallel efiling-frontend efiling-api keycloak-config
 
       - name: Standup Docker Pods
         env:
