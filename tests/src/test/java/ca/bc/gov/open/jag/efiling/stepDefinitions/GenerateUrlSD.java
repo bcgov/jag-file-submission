@@ -33,7 +33,7 @@ public class GenerateUrlSD {
 
     private static final String TEST_DOCUMENT_PDF = "test-document.pdf";
 
-    private UUID actualTransactionId;
+    private final UUID actualTransactionId;
     private Response actualDocumentResponse;
     private Response actualGenerateUrlResponse;
     private String actualSubmissionId;
@@ -61,14 +61,13 @@ public class GenerateUrlSD {
         File resource = new ClassPathResource(
                 MessageFormat.format("data/{0}", TEST_DOCUMENT_PDF)).getFile();
 
-        MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource,TEST_DOCUMENT_PDF, "text/application.pdf");
+        MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource, TEST_DOCUMENT_PDF, "text/application.pdf");
 
         actualDocumentResponse = submissionService.documentUploadResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
-                                                                                actualUserIdentity.getUniversalId(), fileSpec );
+                actualUserIdentity.getUniversalId(), fileSpec);
 
 
-       logger.info("Api response status code: {}", actualDocumentResponse.getStatusCode());
-       logger.info("Api response: {}", actualDocumentResponse.asString());
+        logger.info("Api response status code: {}", actualDocumentResponse.getStatusCode());
 
     }
 
@@ -90,7 +89,7 @@ public class GenerateUrlSD {
     public void userRequestASubmissionUrl() {
 
         actualGenerateUrlResponse = submissionService.generateUrlResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
-                                                                                 actualUserIdentity.getAccessToken(), actualSubmissionId);
+                actualUserIdentity.getAccessToken(), actualSubmissionId);
 
         logger.info("Api response status code: {}", actualGenerateUrlResponse.getStatusCode());
 
@@ -104,7 +103,7 @@ public class GenerateUrlSD {
 
         logger.info("Asserting generateUrl response");
 
-        String expectedEfilingHubUrl = MessageFormat.format("http://localhost:3000/efilinghub?submissionId={0}&transactionId={1}", actualSubmissionId, actualTransactionId );
+        String expectedEfilingHubUrl = MessageFormat.format("http://localhost:3000/efilinghub?submissionId={0}&transactionId={1}", actualSubmissionId, actualTransactionId);
 
         JsonPath actualJson = new JsonPath(actualGenerateUrlResponse.asString());
 
