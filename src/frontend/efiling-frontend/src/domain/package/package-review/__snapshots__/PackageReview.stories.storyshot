@@ -255,7 +255,6 @@ exports[`Storyshots PackageReview Default 1`] = `
             href="#"
             id="uncontrolled-tab-tab-comments"
             role="tab"
-            tabindex="-1"
           >
             Filing Comments
           </a>
@@ -677,7 +676,6 @@ exports[`Storyshots PackageReview Mobile 1`] = `
             href="#"
             id="uncontrolled-tab-tab-comments"
             role="tab"
-            tabindex="-1"
           >
             Filing Comments
           </a>
