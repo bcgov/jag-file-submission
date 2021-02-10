@@ -1,4 +1,4 @@
-.documentList {
+.ct-document-list {
   .header {
     display: flex;
     flex-wrap: wrap;
@@ -30,8 +30,6 @@
   .hidden {
     display: none;
   }
-}
-.dl-modal {
   .modal-body p,
   .modal-body .row div {
     text-overflow: ellipsis;

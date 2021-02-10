@@ -522,7 +522,7 @@ exports[`PackageReview Component Reload Document trigger 1`] = `
       </nav>
     </header>
     <div
-      class="page"
+      class="ct-package-review page"
     >
       <div
         class="content col-md-8"
@@ -575,6 +575,7 @@ exports[`PackageReview Component Reload Document trigger 1`] = `
         <br />
         <div
           class="row"
+          data-test-id="detailsTable"
         >
           <div
             class="col-sm-12 col-lg-6"
@@ -723,7 +724,7 @@ exports[`PackageReview Component Reload Document trigger 1`] = `
           >
             <br />
             <div
-              class="documentList"
+              class="ct-document-list"
             >
               <div
                 class="header"
@@ -993,7 +994,7 @@ exports[`PackageReview Component Withdraw document network error 1`] = `
       </nav>
     </header>
     <div
-      class="page"
+      class="ct-package-review page"
     >
       <div
         class="content col-md-8"
@@ -1046,6 +1047,7 @@ exports[`PackageReview Component Withdraw document network error 1`] = `
         <br />
         <div
           class="row"
+          data-test-id="detailsTable"
         >
           <div
             class="col-sm-12 col-lg-6"
@@ -1194,7 +1196,7 @@ exports[`PackageReview Component Withdraw document network error 1`] = `
           >
             <br />
             <div
-              class="documentList"
+              class="ct-document-list"
             >
               <div
                 class="header"

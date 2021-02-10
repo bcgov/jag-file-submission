@@ -121,7 +121,11 @@ export default function DocumentList({
           ))}
       </ul>
 
-      <Modal show={showModal} onHide={handleModalClose} className="dl-modal">
+      <Modal
+        show={showModal}
+        onHide={handleModalClose}
+        className="ct-document-list"
+      >
         <Modal.Header closeButton>
           <Modal.Title>Withdraw Document</Modal.Title>
         </Modal.Header>
