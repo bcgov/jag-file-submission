@@ -57,8 +57,8 @@ public class TestConfig {
         WebDriverManager.chromedriver().setup();
 
         ChromeOptions options = new ChromeOptions();
-        options.setHeadless(false);
-        options.addArguments("--start-maximized");
+        options.setHeadless(true);
+        options.addArguments("--window-size=1920,1080");
         return new ChromeDriver(options);
 
     }
