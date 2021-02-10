@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { MdHelp } from "react-icons/md";
 
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import {
@@ -7,6 +8,7 @@ import {
   withdrawSubmittedDocument,
 } from "./PackageReviewService";
 import "./DocumentList.scoped.css";
+import BcGovTooltip from "./tooltip/Tooltip";
 
 export default function DocumentList({
   packageId,
@@ -36,6 +38,23 @@ export default function DocumentList({
         .catch((err) => errorRedirect(sessionStorage.getItem("errorUrl"), err));
     }
   }
+
+  const tooltipContent = (
+    <>
+      <p>
+        The withdraw link will change the status of the document from submitted
+        to withdrawn and the document will not be processed by court registry
+        staff.
+      </p>
+      <br />
+      <p>
+        <b>Note: </b>
+        If there are multiple documents in your package, you would need to
+        withdraw each document to remove the package from the court registry
+        processing queue
+      </p>
+    </>
+  );
 
   return (
     <div>
@@ -79,6 +98,18 @@ export default function DocumentList({
                 >
                   withdraw
                 </span>
+                <MdHelp
+                  style={{
+                    fontSize: "20px",
+                    marginLeft: "10px",
+                    color: "#7598ca",
+                  }}
+                  id="withdraw-tooltip"
+                />
+                <BcGovTooltip
+                  target={`withdraw-tooltip`}
+                  content={tooltipContent}
+                />
               </span>
             </li>
           ))}
