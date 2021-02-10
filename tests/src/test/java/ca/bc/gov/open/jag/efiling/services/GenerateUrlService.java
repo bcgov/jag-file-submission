@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efiling.services;
 
+import ca.bc.gov.open.jag.efiling.error.EfilingTestException;
 import ca.bc.gov.open.jag.efiling.helpers.SubmissionHelper;
 import ca.bc.gov.open.jag.efiling.models.UserIdentity;
 import io.restassured.path.json.JsonPath;
@@ -23,10 +24,6 @@ public class GenerateUrlService {
     private static final String TEST_DOCUMENT_PDF = "test-document.pdf";
 
     private UUID actualTransactionId;
-    private Response actualDocumentResponse;
-    private Response actualGenerateUrlResponse;
-    private String actualSubmissionId;
-    private UserIdentity actualUserIdentity;
 
     public Logger logger = LogManager.getLogger(GenerateUrlService.class);
 
@@ -36,27 +33,34 @@ public class GenerateUrlService {
         actualTransactionId = UUID.randomUUID();
     }
 
-    public String getGeneratedUrl() throws IOException {
+    public String getGeneratedUrl() {
 
-        actualUserIdentity = oauthService.getUserIdentity();
+        UserIdentity actualUserIdentity = oauthService.getUserIdentity();
 
         logger.info("Submitting document upload request");
 
-        File resource = new ClassPathResource(
-                MessageFormat.format("data/{0}", TEST_DOCUMENT_PDF)).getFile();
+        File resource = null;
+
+        try {
+            resource = new ClassPathResource(
+                    MessageFormat.format("data/{0}", TEST_DOCUMENT_PDF)).getFile();
+        } catch (IOException e) {
+            logger.error("Exception while getting test file");
+            throw new EfilingTestException("Exception while getting test file", e);
+        }
 
         MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource, TEST_DOCUMENT_PDF, "text/application.pdf");
 
-        actualDocumentResponse = submissionService.documentUploadResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
+        Response actualDocumentResponse = submissionService.documentUploadResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
                 actualUserIdentity.getUniversalId(), fileSpec);
 
         logger.info("Api response status code: {}", actualDocumentResponse.getStatusCode());
         logger.info("Api response: {}", actualDocumentResponse.asString());
 
 
-        actualSubmissionId = submissionService.getSubmissionId(actualDocumentResponse);
+        String actualSubmissionId = submissionService.getSubmissionId(actualDocumentResponse);
 
-        actualGenerateUrlResponse = submissionService.generateUrlResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
+        Response actualGenerateUrlResponse = submissionService.generateUrlResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
                 actualUserIdentity.getAccessToken(), actualSubmissionId);
 
         logger.info("Api response status code: {}", actualDocumentResponse.getStatusCode());
@@ -66,7 +70,9 @@ public class GenerateUrlService {
 
         JsonPath actualJson = new JsonPath(actualGenerateUrlResponse.asString());
 
+        //  TODO: asserts should only be in TEST
         Assert.assertEquals(200, actualGenerateUrlResponse.getStatusCode());
+
         return actualJson.getString("efilingUrl");
 
     }
