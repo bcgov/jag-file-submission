@@ -32,4 +32,4 @@ jobs:
           docker push ${{ secrets.DOCKERHUB_ORG }}/efiling-admin
           
           docker tag jag-file-submission_efiling-demo ${{ secrets.OPENSHIFT_INTERNAL_REGISTRY }}/${{ OPENSHIFT_TOOLS_NAMESPACE }}/efiling-admin-test:latest
-          docker push ${{ secrets.OPENSHIFT_INTERNAL_REGISTRY }}/${{ OPENSHIFT_TOOLS_NAMESPACE }}/efiling-admin-test:latest
+          docker push ${{ secrets.OPENSHIFT_INTERNAL_REGISTRY }}/${{ secrets.OPENSHIFT_TOOLS_NAMESPACE }}/efiling-admin-test:latest
