@@ -59,6 +59,7 @@ public class TestConfig {
         ChromeOptions options = new ChromeOptions();
         options.setHeadless(true);
         return new ChromeDriver(options);
+
     }
 
     @Bean
@@ -70,7 +71,7 @@ public class TestConfig {
     @Bean
     @Scope("prototype")
     public AuthenticationPage authenticationPage() {
-        return new AuthenticationPage(generateUrlService());
+        return new AuthenticationPage();
     }
 
     @Bean

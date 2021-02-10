@@ -26,11 +26,9 @@ public class CreatePaymentServiceSD {
     private final SubmissionService submissionService;
 
     private static final String TEST_DOCUMENT_PDF = "test-document.pdf";
-    private static String SUBMIT_PATH = "submit";
+    private static final String SUBMIT_PATH = "submit";
+    private final UUID actualTransactionId;
 
-    private UUID actualTransactionId;
-    private Response actualDocumentResponse;
-    private String actualSubmissionId;
     private UserIdentity actualUserIdentity;
     private Response actualSubmitResponse;
 
@@ -57,10 +55,10 @@ public class CreatePaymentServiceSD {
 
         MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource,TEST_DOCUMENT_PDF, "text/application.pdf");
 
-        actualDocumentResponse = submissionService.documentUploadResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
+        Response actualDocumentResponse = submissionService.documentUploadResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
                 actualUserIdentity.getUniversalId(), fileSpec);
 
-        actualSubmissionId = submissionService.getSubmissionId(actualDocumentResponse);
+        String actualSubmissionId = submissionService.getSubmissionId(actualDocumentResponse);
 
         // Generate Url Response
         submissionService.generateUrlResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
