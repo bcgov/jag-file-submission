@@ -554,25 +554,26 @@ components:
         - description
         - status
         - paymentProcessed
+        - filingDate
       type: object
       description: A Efiling Document
       properties:
         identifier:
           type: string
           description: document identifier
-        documentProperties:
-          $ref: "#/components/schemas/DocumentProperties"
-        type:
+        filingDate:
           type: string
-          description: type of document
+          description: date of document filing
         description:
           type: string
-          description: the description of the document
-        status:
-          $ref: "#/components/schemas/Status"
+          description: document description
         paymentProcessed:
           type: boolean
           description: Has the payment been processed
+        documentProperties:
+          $ref: "#/components/schemas/DocumentProperties"
+        status:
+          $ref: "#/components/schemas/Status"
     DocumentProperties:
       required:
         - name
