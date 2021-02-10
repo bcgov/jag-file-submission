@@ -28,3 +28,13 @@
     padding-top: 1px;
   }
 }
+.hidden {
+  display: none;
+}
+.modal-body p, .modal-body .row div {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.modal-body .data {
+  font-weight: bold;
+}

@@ -1,7 +1,11 @@
-import React from "react";
+/* eslint-disable react/jsx-one-expression-per-line */
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { MdHelp } from "react-icons/md";
+import moment from "moment";
 
+import Modal from "react-bootstrap/Modal";
+import { Button } from "shared-components";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { withdrawTooltipData } from "../../../modules/test-data/withdrawTooltipData";
 import {
@@ -16,6 +20,25 @@ export default function DocumentList({
   documents,
   reloadDocumentList,
 }) {
+  const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState({
+    description: "",
+    documentProperties: {
+      name: "",
+    },
+    filingDate: "",
+    status: "",
+  });
+
+  const handleModalClose = () => setShowModal(false);
+  const handleModalConfirm = () => {
+    setShowModal(false);
+
+    withdrawSubmittedDocument(packageId, modalData)
+      .then(() => reloadDocumentList())
+      .catch((err) => errorRedirect(sessionStorage.getItem("errorUrl"), err));
+  };
+
   function isClick(e) {
     return e && e.type === "click";
   }
@@ -34,9 +57,8 @@ export default function DocumentList({
 
   function handleWithdrawFileEvent(e, document) {
     if (isClick(e) || isEnter(e)) {
-      withdrawSubmittedDocument(packageId, document)
-        .then(() => reloadDocumentList())
-        .catch((err) => errorRedirect(sessionStorage.getItem("errorUrl"), err));
+      setModalData(document);
+      setShowModal(true);
     }
   }
 
@@ -98,6 +120,59 @@ export default function DocumentList({
             </li>
           ))}
       </ul>
+
+      <Modal show={showModal} onHide={handleModalClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Withdraw Document</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <p className="modalBody">
+            Please confirm the withdrawl of document{" "}
+            {modalData.documentProperties.name} from your latest submission.
+            This will remove the document permanently from your submitted
+            package number
+            {packageId}.
+          </p>
+
+          <div className="row">
+            <div className="col-sm-4">Package Number:</div>
+            <div className="col-sm-8 data">{packageId}</div>
+          </div>
+          <div className="row">
+            <div className="col-sm-4">Document Status:</div>
+            <div className="col-sm-8 data">{modalData.status.description}</div>
+          </div>
+          <div className="row">
+            <div className="col-sm-4">Date Filed:</div>
+            <div className="col-sm-8 data">
+              {moment(modalData.filingDate).format("DD-MMM-YYYY")}
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-sm-4">Document Type:</div>
+            <div className="col-sm-8 data">{modalData.description}</div>
+          </div>
+          <div className="row">
+            <div className="col-sm-4">File Name:</div>
+            <div className="col-sm-8 data">
+              {modalData.documentProperties.name}
+            </div>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            onClick={handleModalClose}
+            label="Cancel"
+            styling="btn btn-secondary"
+          />
+          <Button
+            onClick={handleModalConfirm}
+            label="Confirm"
+            styling="btn btn-primary"
+          />
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
