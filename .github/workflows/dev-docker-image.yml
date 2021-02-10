@@ -2,7 +2,7 @@ name: Docker Image CI
 
 on:
   workflow_dispatch:
-    branches: [master, akroon3r-patch-1]
+    branches: [master]
 
 jobs:
   build:
