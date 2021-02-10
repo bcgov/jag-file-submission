@@ -24,14 +24,12 @@ public class GetSubmissionConfigSD {
 
     private final OauthService oauthService;
     private final SubmissionService submissionService;
+    private final UUID actualTransactionId;
 
     private static final String TEST_DOCUMENT_PDF = "test-document.pdf";
     private static final String RESPONSE_NAVIGATION_URL = "http//somewhere.com";
     private static String CONFIG_PATH = "config";
 
-    private UUID actualTransactionId;
-    private Response actualDocumentResponse;
-    private String actualSubmissionId;
     private UserIdentity actualUserIdentity;
     private Response actualSubmissionDetailsResponse;
 
@@ -58,10 +56,10 @@ public class GetSubmissionConfigSD {
 
         MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource,TEST_DOCUMENT_PDF, "text/application.pdf");
 
-        actualDocumentResponse = submissionService.documentUploadResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
+        Response actualDocumentResponse = submissionService.documentUploadResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
                 actualUserIdentity.getUniversalId(), fileSpec);
 
-        actualSubmissionId = submissionService.getSubmissionId(actualDocumentResponse);
+        String actualSubmissionId = submissionService.getSubmissionId(actualDocumentResponse);
 
         // Generate Url Response
        submissionService.generateUrlResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
@@ -69,7 +67,7 @@ public class GetSubmissionConfigSD {
 
 
         actualSubmissionDetailsResponse = submissionService.getSubmissionDetailsResponse(actualUserIdentity.getAccessToken(),actualTransactionId,
-                                                                                                actualSubmissionId, CONFIG_PATH);
+                actualSubmissionId, CONFIG_PATH);
 
         logger.info("Api response: {}", actualSubmissionDetailsResponse.asString());
 
