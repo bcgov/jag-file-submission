@@ -1,6 +1,5 @@
 package ca.bc.gov.open.jag.efiling.page;
 
-import ca.bc.gov.open.jag.efiling.services.GenerateUrlService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebElement;
@@ -27,12 +26,6 @@ public class AuthenticationPage extends BasePage {
 
     @FindBy(id = "kc-login")
     private WebElement signIn;
-
-    private final GenerateUrlService generateUrlService;
-
-    public AuthenticationPage(GenerateUrlService generateUrlService) {
-        this.generateUrlService = generateUrlService;
-    }
 
     public void signInWithBceid() {
 
