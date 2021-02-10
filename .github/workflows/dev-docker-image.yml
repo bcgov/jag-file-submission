@@ -21,7 +21,7 @@ jobs:
 
       - name: Login to Openshift Docker
         run : |
-          docker login docker-registry.pathfinder.gov.bc.ca -u $(oc whoami) -p ${{ secrets.OPENSHIFT_SA_PASSWORD }}
+          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }} -u $(oc whoami) -p ${{ secrets.OPENSHIFT_SA_PASSWORD }}
 
       - name: Build the Docker image
         run: |          
@@ -31,5 +31,5 @@ jobs:
           docker tag jag-file-submission_efiling-demo ${{ secrets.DOCKERHUB_ORG }}/efiling-admin:latest                     
           docker push ${{ secrets.DOCKERHUB_ORG }}/efiling-admin
           
-          docker tag jag-file-submission_efiling-demo ${{ secrets.OPENSHIFT_INTERNAL_REGISTRY }}/${{ secrets.OPENSHIFT_TOOLS_NAMESPACE }}/efiling-admin-test:latest
-          docker push ${{ secrets.OPENSHIFT_INTERNAL_REGISTRY }}/${{ secrets.OPENSHIFT_TOOLS_NAMESPACE }}/efiling-admin-test:latest
+          docker tag jag-file-submission_efiling-demo ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_TOOLS_NAMESPACE }}/efiling-admin-test:latest
+          docker push ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_TOOLS_NAMESPACE }}/efiling-admin-test:latest
