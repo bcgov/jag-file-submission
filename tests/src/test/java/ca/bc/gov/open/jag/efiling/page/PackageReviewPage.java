@@ -42,6 +42,7 @@ public class PackageReviewPage extends Base {
     public List<String> getPackageDetails() {
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.id("uncontrolled-tab-tabpane-documents")));
+        documentsTab.click();
         
         logger.info("Getting package details values");
 
