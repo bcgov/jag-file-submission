@@ -10,7 +10,9 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PackageReviewPage extends Base {
+public class PackageReviewPage extends BasePage {
+
+    private Logger logger = LoggerFactory.getLogger(PackageReviewPage.class);
 
     @FindBy(className = "bcgov-row")
     private List<WebElement> packageDetailsRow;
@@ -33,17 +35,11 @@ public class PackageReviewPage extends Base {
     @FindBy(id = "filingComments")
     private WebElement filingCommentsTextBox;
 
-    Logger logger = LoggerFactory.getLogger(PackageReviewPage.class);
-
-    public void goTo(String url) {
-        this.driver.get(url);
-    }
-
     public List<String> getPackageDetails() {
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.id("uncontrolled-tab-tabpane-documents")));
         documentsTab.click();
-        
+
         logger.info("Getting package details values");
 
         List<String> packageDetails = new ArrayList<>();

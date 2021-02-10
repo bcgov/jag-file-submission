@@ -14,28 +14,29 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PackageConfirmationPage extends Base {
+public class PackageConfirmationPage extends BasePage {
 
-    Logger log = LogManager.getLogger(PackageConfirmationPage.class);
+    private Logger logger = LogManager.getLogger(PackageConfirmationPage.class);
 
     //Page Objects:
     @FindBy(xpath = "//button[@data-test-id='continue-btn']")
-    WebElement continuePaymentBtn;
+    private WebElement continuePaymentBtn;
 
     @FindBy(xpath = "//*[@data-test-id='upload-link']")
-    WebElement uploadLink;
+    private WebElement uploadLink;
 
     @FindBy(xpath = "//span[@data-test-id='uploaded-file']")
-    WebElement uploadedInitialFile;
+    private WebElement uploadedInitialFile;
 
     @FindBy(xpath = "//span[@data-test-id='uploaded-file']")
-    List<WebElement> uploadedFiles;
+    private List<WebElement> uploadedFiles;
 
     //Actions:
     public boolean verifyContinuePaymentBtnIsEnabled() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@data-test-id='continue-btn']")));
 
-        if(!continuePaymentBtn.isDisplayed()) throw new EfilingTestException("User may not have a CSO account created");
+        if (!continuePaymentBtn.isDisplayed())
+            throw new EfilingTestException("User may not have a CSO account created");
         return continuePaymentBtn.isEnabled();
     }
 
@@ -63,7 +64,7 @@ public class PackageConfirmationPage extends Base {
 
     public String verifyPageTitle() {
         wait.until(ExpectedConditions.titleIs("E-File submission"));
-        log.info("Waiting for the page to load...");
+        logger.info("Waiting for the page to load...");
         return this.driver.getTitle();
     }
 
