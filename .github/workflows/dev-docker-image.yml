@@ -21,7 +21,7 @@ jobs:
 
       - name: Login to Openshift Docker
         run : |
-          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }} -u $(oc whoami) -p ${{ secrets.OPENSHIFT_SA_PASSWORD }}
+          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }} -u ${{ secrets.OPENSHIFT_SA_USERNAME }} -p ${{ secrets.OPENSHIFT_SA_PASSWORD }}
 
       - name: Build the Docker image
         run: |          
