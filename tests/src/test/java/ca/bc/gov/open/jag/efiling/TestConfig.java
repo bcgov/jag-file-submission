@@ -71,7 +71,7 @@ public class TestConfig {
     @Bean
     @Scope("prototype")
     public AuthenticationPage authenticationPage() {
-        return new AuthenticationPage(generateUrlService());
+        return new AuthenticationPage();
     }
 
     @Bean
