@@ -40,6 +40,7 @@ public interface FilingPackageMapper {
     @Mapping(target = "documentProperties.name", source = "fileName")
     @Mapping(target = "documentProperties.type", source = "documentTypeCd")
     @Mapping(target = "description", source = "documentType")
+    @Mapping(target = "filingDate", expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.toIsoDate(file.getDateFiled()))")
     @Mapping(target = "status.description", source = "status")
     @Mapping(target = "status.code", source = "statusCode")
     @Mapping(target = "status.changeDate", expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.toIsoDate(reviewDocument.getStatusDate()))")
