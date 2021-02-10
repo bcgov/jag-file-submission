@@ -28,8 +28,5 @@ jobs:
           
           docker-compose build efiling-demo
           
-          docker tag jag-file-submission_efiling-demo ${{ secrets.DOCKERHUB_ORG }}/efiling-admin:latest                     
-          docker push ${{ secrets.DOCKERHUB_ORG }}/efiling-admin
-          
           docker tag jag-file-submission_efiling-demo ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_TOOLS_NAMESPACE }}/efiling-admin-test:latest
           docker push ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_TOOLS_NAMESPACE }}/efiling-admin-test:latest
