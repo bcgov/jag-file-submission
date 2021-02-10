@@ -14,8 +14,8 @@ import java.io.IOException;
 
 public class AuthenticateAndRedirectToEfilingHubSD {
 
-    private AuthenticationPage authenticationPage;
-    private PackageConfirmationPage packageConfirmationPage;
+    private final AuthenticationPage authenticationPage;
+    private final PackageConfirmationPage packageConfirmationPage;
 
     private static final String EFILE_SUBMISSION_PAGE_TITLE = "E-File submission";
     private static final String INITIAL_DOCUMENT_NAME = "test-document.pdf";

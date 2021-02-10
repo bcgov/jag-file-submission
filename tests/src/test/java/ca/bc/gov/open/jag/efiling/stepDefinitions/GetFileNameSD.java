@@ -23,13 +23,12 @@ public class GetFileNameSD {
 
     private final OauthService oauthService;
     private final SubmissionService submissionService;
+    private final UUID actualTransactionId;
 
     private static final String TEST_DOCUMENT_PDF = "test-document.pdf";
     private static String FILE_NAME_PATH = "document/test-document.pdf";
 
-    private UUID actualTransactionId;
-    private Response actualDocumentResponse;
-    private String actualSubmissionId;
+
     private UserIdentity actualUserIdentity;
     private Response actualFileNameResponse;
 
@@ -57,10 +56,10 @@ public class GetFileNameSD {
 
         MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource,TEST_DOCUMENT_PDF, "text/application.pdf");
 
-        actualDocumentResponse = submissionService.documentUploadResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
+        Response actualDocumentResponse = submissionService.documentUploadResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
                 actualUserIdentity.getUniversalId(), fileSpec);
 
-        actualSubmissionId = submissionService.getSubmissionId(actualDocumentResponse);
+        String actualSubmissionId = submissionService.getSubmissionId(actualDocumentResponse);
 
         // Generate Url Response
         submissionService.generateUrlResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
@@ -71,7 +70,7 @@ public class GetFileNameSD {
                 actualSubmissionId, FILE_NAME_PATH);
 
         logger.info("Api response status code: {}", actualFileNameResponse.getStatusCode());
-        logger.info("Api response: {}", actualFileNameResponse.asString());
+
     }
 
     @Then("a valid document is returned")

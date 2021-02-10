@@ -23,10 +23,6 @@ public class GenerateUrlService {
     private static final String TEST_DOCUMENT_PDF = "test-document.pdf";
 
     private UUID actualTransactionId;
-    private Response actualDocumentResponse;
-    private Response actualGenerateUrlResponse;
-    private String actualSubmissionId;
-    private UserIdentity actualUserIdentity;
 
     public Logger logger = LogManager.getLogger(GenerateUrlService.class);
 
@@ -38,7 +34,7 @@ public class GenerateUrlService {
 
     public String getGeneratedUrl() throws IOException {
 
-        actualUserIdentity = oauthService.getUserIdentity();
+        UserIdentity actualUserIdentity = oauthService.getUserIdentity();
 
         logger.info("Submitting document upload request");
 
@@ -47,16 +43,16 @@ public class GenerateUrlService {
 
         MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource, TEST_DOCUMENT_PDF, "text/application.pdf");
 
-        actualDocumentResponse = submissionService.documentUploadResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
+        Response actualDocumentResponse = submissionService.documentUploadResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
                 actualUserIdentity.getUniversalId(), fileSpec);
 
         logger.info("Api response status code: {}", actualDocumentResponse.getStatusCode());
         logger.info("Api response: {}", actualDocumentResponse.asString());
 
 
-        actualSubmissionId = submissionService.getSubmissionId(actualDocumentResponse);
+        String actualSubmissionId = submissionService.getSubmissionId(actualDocumentResponse);
 
-        actualGenerateUrlResponse = submissionService.generateUrlResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
+        Response actualGenerateUrlResponse = submissionService.generateUrlResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
                 actualUserIdentity.getAccessToken(), actualSubmissionId);
 
         logger.info("Api response status code: {}", actualDocumentResponse.getStatusCode());
@@ -66,7 +62,9 @@ public class GenerateUrlService {
 
         JsonPath actualJson = new JsonPath(actualGenerateUrlResponse.asString());
 
+        //  TODO: asserts should only be in TEST
         Assert.assertEquals(200, actualGenerateUrlResponse.getStatusCode());
+
         return actualJson.getString("efilingUrl");
 
     }
