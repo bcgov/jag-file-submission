@@ -270,6 +270,7 @@ public class TestHelpers {
         reviewDocumentOne.setDocumentType(DESCRIPTION);
         reviewDocumentOne.setStatus(STATUS);
         reviewDocumentOne.setStatusCode(STATUS_CODE);
+        reviewDocumentOne.setDateFiled(DateTime.parse("2020-05-05T00:00:00.000-07:00"));
         reviewDocumentOne.setStatusDate(DateTime.parse("2020-05-05T00:00:00.000-07:00"));
         reviewDocumentOne.setPaymentProcessed(true);
 
@@ -280,6 +281,7 @@ public class TestHelpers {
         reviewDocumentTwo.setDocumentType(DESCRIPTION);
         reviewDocumentTwo.setStatus(STATUS);
         reviewDocumentTwo.setStatusCode(STATUS_CODE);
+        reviewDocumentTwo.setDateFiled(DateTime.parse("2020-05-05T00:00:00.000-07:00"));
         reviewDocumentTwo.setStatusDate(DateTime.parse("2020-05-05T00:00:00.000-07:00"));
         reviewDocumentTwo.setPaymentProcessed(true);
 
