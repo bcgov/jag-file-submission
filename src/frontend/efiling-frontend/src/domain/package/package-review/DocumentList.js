@@ -1,12 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { MdHelp } from "react-icons/md";
 
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
+import { withdrawTooltipData } from "../../../modules/test-data/withdrawTooltipData";
 import {
   downloadSubmittedDocument,
   withdrawSubmittedDocument,
 } from "./PackageReviewService";
 import "./DocumentList.scoped.css";
+import BcGovTooltip from "./tooltip/Tooltip";
 
 export default function DocumentList({
   packageId,
@@ -79,6 +82,18 @@ export default function DocumentList({
                 >
                   withdraw
                 </span>
+                <MdHelp
+                  style={{
+                    fontSize: "20px",
+                    marginLeft: "10px",
+                    color: "#7598ca",
+                  }}
+                  id="withdraw-tooltip"
+                />
+                <BcGovTooltip
+                  target={`withdraw-tooltip`}
+                  content={withdrawTooltipData}
+                />
               </span>
             </li>
           ))}
