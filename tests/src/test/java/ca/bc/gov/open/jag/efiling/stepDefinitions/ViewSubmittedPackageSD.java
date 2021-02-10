@@ -19,8 +19,8 @@ public class ViewSubmittedPackageSD {
     @Value("${PACKAGE_REVIEW_URL:http://localhost:3000/efilinghub/packagereview}")
     private String packageReviewUrl;
 
-    private AuthenticationPage authenticationPage;
-    private PackageReviewPage packageReviewPage;
+    private final AuthenticationPage authenticationPage;
+    private final PackageReviewPage packageReviewPage;
 
     private Logger logger = LoggerFactory.getLogger(ViewSubmittedPackageSD.class);
 

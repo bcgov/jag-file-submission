@@ -1,8 +1,10 @@
 
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
+import ca.bc.gov.open.jag.efiling.error.EfilingTestException;
 import ca.bc.gov.open.jag.efiling.page.AuthenticationPage;
 import ca.bc.gov.open.jag.efiling.page.PackageConfirmationPage;
+import ca.bc.gov.open.jag.efiling.services.GenerateUrlService;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -14,8 +16,9 @@ import java.io.IOException;
 
 public class AuthenticateAndRedirectToEfilingHubSD {
 
-    private AuthenticationPage authenticationPage;
-    private PackageConfirmationPage packageConfirmationPage;
+    private final AuthenticationPage authenticationPage;
+    private final PackageConfirmationPage packageConfirmationPage;
+    private final GenerateUrlService generateUrlService;
 
     private static final String EFILE_SUBMISSION_PAGE_TITLE = "E-File submission";
     private static final String INITIAL_DOCUMENT_NAME = "test-document.pdf";
@@ -23,15 +26,20 @@ public class AuthenticateAndRedirectToEfilingHubSD {
 
     Logger log = LogManager.getLogger(AuthenticateAndRedirectToEfilingHubSD.class);
 
-    public AuthenticateAndRedirectToEfilingHubSD(AuthenticationPage authenticationPage, PackageConfirmationPage packageConfirmationPage) {
+    public AuthenticateAndRedirectToEfilingHubSD(AuthenticationPage authenticationPage, PackageConfirmationPage packageConfirmationPage, GenerateUrlService generateUrlService) {
         this.authenticationPage = authenticationPage;
         this.packageConfirmationPage = packageConfirmationPage;
+        this.generateUrlService = generateUrlService;
     }
 
     @Given("user is on the eFiling submission page")
     public void userIsOnTheEfilingSubmissionPage() throws IOException {
 
-        this.authenticationPage.goTo();
+        String actualGeneratedRedirectUrl = generateUrlService.getGeneratedUrl();
+
+        if(actualGeneratedRedirectUrl == null) throw new EfilingTestException("Redirect url is not generated.");
+
+        this.authenticationPage.goTo(actualGeneratedRedirectUrl);
         this.authenticationPage.signInWithBceid();
         log.info("user is authenticated with keycloak");
     }
