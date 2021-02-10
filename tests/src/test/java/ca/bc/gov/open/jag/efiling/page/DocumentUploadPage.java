@@ -8,27 +8,27 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class DocumentUploadPage extends Base {
+public class DocumentUploadPage extends BasePage {
 
-    Logger log = LogManager.getLogger(DocumentUploadPage.class);
+    private Logger logger = LogManager.getLogger(DocumentUploadPage.class);
 
     @FindBy(xpath = "//*[@data-testid='dropdownzone']/div/input")
-    WebElement selectFile;
+    private WebElement selectFile;
 
     @FindBy(xpath = "//label[@for='yes-isAmendment-test-document-additional.pdf']")
-    WebElement isAmendmentRadioBtn;
+    private WebElement isAmendmentRadioBtn;
 
     @FindBy(xpath = "//label[@for='no-isSupremeCourtScheduling-test-document-additional.pdf']")
-    WebElement isSupremeCourtRadioBtn;
+    private WebElement isSupremeCourtRadioBtn;
 
     @FindBy(xpath = "//button[@data-test-id='continue-upload-btn']")
-    WebElement continueBtn;
+    private WebElement continueBtn;
 
     @FindBy(xpath = "//button[@data-test-id='cancel-upload-btn']")
-    WebElement cancelUpload;
+    private WebElement cancelUpload;
 
     @FindBy(xpath = "//button[@data-testid='remove-icon']")
-    WebElement removeFileIcon;
+    private WebElement removeFileIcon;
 
     //Actions:
     public void selectFileToUpload(String file) {

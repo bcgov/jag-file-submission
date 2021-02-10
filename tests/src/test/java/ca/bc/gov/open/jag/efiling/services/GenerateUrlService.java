@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efiling.services;
 
+import ca.bc.gov.open.jag.efiling.error.EfilingTestException;
 import ca.bc.gov.open.jag.efiling.helpers.SubmissionHelper;
 import ca.bc.gov.open.jag.efiling.models.UserIdentity;
 import io.restassured.path.json.JsonPath;
@@ -32,14 +33,21 @@ public class GenerateUrlService {
         actualTransactionId = UUID.randomUUID();
     }
 
-    public String getGeneratedUrl() throws IOException {
+    public String getGeneratedUrl() {
 
         UserIdentity actualUserIdentity = oauthService.getUserIdentity();
 
         logger.info("Submitting document upload request");
 
-        File resource = new ClassPathResource(
-                MessageFormat.format("data/{0}", TEST_DOCUMENT_PDF)).getFile();
+        File resource = null;
+
+        try {
+            resource = new ClassPathResource(
+                    MessageFormat.format("data/{0}", TEST_DOCUMENT_PDF)).getFile();
+        } catch (IOException e) {
+            logger.error("Exception while getting test file");
+            throw new EfilingTestException("Exception while getting test file", e);
+        }
 
         MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource, TEST_DOCUMENT_PDF, "text/application.pdf");
 

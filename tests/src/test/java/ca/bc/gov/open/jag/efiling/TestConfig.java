@@ -57,8 +57,9 @@ public class TestConfig {
         WebDriverManager.chromedriver().setup();
 
         ChromeOptions options = new ChromeOptions();
-        options.setHeadless(true);
+        options.setHeadless(false);
         return new ChromeDriver(options);
+
     }
 
     @Bean
