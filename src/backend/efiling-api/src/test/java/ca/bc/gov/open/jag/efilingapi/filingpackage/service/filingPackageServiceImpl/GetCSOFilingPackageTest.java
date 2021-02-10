@@ -95,6 +95,7 @@ public class GetCSOFilingPackageTest {
         Assertions.assertEquals(TestHelpers.STATUS_CODE, result.get().getDocuments().get(0).getStatus().getCode());
         Assertions.assertNotNull(result.get().getDocuments().get(0).getStatus().getChangeDate());
         Assertions.assertEquals(EXPECTED_ISO, result.get().getDocuments().get(0).getStatus().getChangeDate());
+        Assertions.assertEquals(EXPECTED_ISO, result.get().getDocuments().get(0).getFilingDate());
         //Payments
         Assertions.assertEquals(1, result.get().getPayments().size());
         Assertions.assertEquals(false, result.get().getPayments().get(0).getFeeExempt());

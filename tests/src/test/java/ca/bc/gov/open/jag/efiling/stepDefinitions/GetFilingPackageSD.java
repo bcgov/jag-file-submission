@@ -24,13 +24,11 @@ public class GetFilingPackageSD {
 
     private final OauthService oauthService;
     private final SubmissionService submissionService;
+    private final UUID actualTransactionId;
 
     private static final String TEST_DOCUMENT_PDF = "test-document.pdf";
     private static String FILING_PACKAGE_PATH = "filing-package";
 
-    private UUID actualTransactionId;
-    private Response actualDocumentResponse;
-    private String actualSubmissionId;
     private UserIdentity actualUserIdentity;
     private Response actualFilingPackageResponse;
 
@@ -58,10 +56,10 @@ public class GetFilingPackageSD {
 
         MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource,TEST_DOCUMENT_PDF, "text/application.pdf");
 
-        actualDocumentResponse = submissionService.documentUploadResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
-                                                                                    actualUserIdentity.getUniversalId(), fileSpec);
+        Response actualDocumentResponse = submissionService.documentUploadResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
+                actualUserIdentity.getUniversalId(), fileSpec);
 
-        actualSubmissionId = submissionService.getSubmissionId(actualDocumentResponse);
+        String actualSubmissionId = submissionService.getSubmissionId(actualDocumentResponse);
 
         // Generate Url Response
         submissionService.generateUrlResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
@@ -69,7 +67,7 @@ public class GetFilingPackageSD {
 
 
         actualFilingPackageResponse = submissionService.getSubmissionDetailsResponse(actualUserIdentity.getAccessToken(),actualTransactionId,
-                                                                                         actualSubmissionId, FILING_PACKAGE_PATH);
+                actualSubmissionId, FILING_PACKAGE_PATH);
 
         logger.info("Api response status code: {}", actualFilingPackageResponse.getStatusCode());
         logger.info("Api response: {}", actualFilingPackageResponse.asString());
