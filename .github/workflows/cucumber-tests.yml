@@ -17,7 +17,7 @@ jobs:
 
       # pulling images is faster than caching in most of the case
       - name: pull available docker images first
-        run: docker-compose pull
+        run: docker-compose pull -q
 
       # In this step, this action saves a list of existing images,
       # the cache is created without them in the post run.
@@ -43,7 +43,7 @@ jobs:
         env:
           DOCKER_BUILDKIT: "1"
         run: |
-          docker-compose build --parallel efiling-frontend efiling-api keycloak-config
+          docker-compose build -q --parallel efiling-frontend efiling-api keycloak-config
 
       - name: Standup Docker Pods
         env:
