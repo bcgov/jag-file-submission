@@ -121,13 +121,13 @@ export default function DocumentList({
           ))}
       </ul>
 
-      <Modal show={showModal} onHide={handleModalClose}>
+      <Modal show={showModal} onHide={handleModalClose} className="dl-modal">
         <Modal.Header closeButton>
           <Modal.Title>Withdraw Document</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-          <p className="modalBody">
+          <p>
             Please confirm the withdrawl of document{" "}
             {modalData.documentProperties.name} from your latest submission.
             This will remove the document permanently from your submitted
@@ -164,12 +164,12 @@ export default function DocumentList({
           <Button
             onClick={handleModalClose}
             label="Cancel"
-            styling="btn btn-secondary"
+            styling="btn btn-secondary pull-left"
           />
           <Button
             onClick={handleModalConfirm}
             label="Confirm"
-            styling="btn btn-primary"
+            styling="btn btn-primary pull-right"
           />
         </Modal.Footer>
       </Modal>

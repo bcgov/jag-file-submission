@@ -723,7 +723,9 @@ exports[`PackageReview Component Reload Document trigger 1`] = `
             role="tabpanel"
           >
             <br />
-            <div>
+            <div
+              class="documentList"
+            >
               <div
                 class="header"
               >
@@ -1175,7 +1177,9 @@ exports[`PackageReview Component Withdraw document network error 1`] = `
             role="tabpanel"
           >
             <br />
-            <div>
+            <div
+              class="documentList"
+            >
               <div
                 class="header"
               >
