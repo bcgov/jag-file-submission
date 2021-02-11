@@ -6,7 +6,11 @@ import "./Tooltip.scss";
 export default function BcGovTooltip({ content, styling, target }) {
   return (
     <div className={`bcgov-withdraw-tooltip ${styling}`}>
-      <UncontrolledTooltip placement="right" target={target} className="ct-tooltip">
+      <UncontrolledTooltip
+        placement="right"
+        target={target}
+        className="ct-tooltip"
+      >
         {content}
       </UncontrolledTooltip>
     </div>

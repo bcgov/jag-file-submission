@@ -115,7 +115,7 @@
     ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|PNG|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga|pdf)$": "<rootDir>/src/AssetsTransformer.js",
-      "\\.(css|less)$": "<rootDir>/src/AssetsTransformer.js"
+      "\\.(css|less|scss)$": "<rootDir>/src/AssetsTransformer.js"
     },
     "verbose": true,
     "testResultsProcessor": "jest-sonar-reporter",

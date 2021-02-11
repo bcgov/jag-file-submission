@@ -3,7 +3,7 @@
 exports[`PackageConfirmation Component Matches the existing account snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="page"
+    class="ct-package-confirmation page"
   >
     <div
       class="content col-md-8"
@@ -473,7 +473,7 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
 exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="page"
+    class="ct-package-confirmation page"
   >
     <div
       class="content col-md-8"
@@ -1176,7 +1176,7 @@ exports[`PackageConfirmation Component On click of Upload them now text, it redi
 exports[`PackageConfirmation Component On click of continue to payment button, it redirects to the payment page 1`] = `
 <DocumentFragment>
   <div
-    class="page"
+    class="ct-payment page"
   >
     <div
       class="content col-md-8"
@@ -1872,7 +1872,7 @@ exports[`PackageConfirmation Component On keydown of Upload them now text, it re
 exports[`PackageConfirmation Component take user directly to payment page when coming from bambora redirect 1`] = `
 <DocumentFragment>
   <div
-    class="page"
+    class="ct-payment page"
   >
     <div
       class="content col-md-8"
