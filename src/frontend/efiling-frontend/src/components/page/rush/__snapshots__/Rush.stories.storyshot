@@ -3,7 +3,7 @@
 exports[`Storyshots Rush Default 1`] = `
 <DocumentFragment>
   <div
-    class="page"
+    class="ct-rush page"
   >
     <div
       class="content col-md-8"
@@ -537,7 +537,7 @@ you feel are necessary.
 exports[`Storyshots Rush Mobile 1`] = `
 <DocumentFragment>
   <div
-    class="page"
+    class="ct-rush page"
   >
     <div
       class="content col-md-8"

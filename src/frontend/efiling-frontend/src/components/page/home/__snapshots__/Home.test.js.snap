@@ -1455,7 +1455,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
       </nav>
     </header>
     <div
-      class="page"
+      class="ct-package-confirmation page"
     >
       <div
         class="content col-md-8"

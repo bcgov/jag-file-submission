@@ -3,7 +3,7 @@
 exports[`Storyshots PackageConfirmation Existing Account 1`] = `
 <DocumentFragment>
   <div
-    class="page"
+    class="ct-package-confirmation page"
   >
     <div
       class="content col-md-8"
@@ -473,7 +473,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
 exports[`Storyshots PackageConfirmation Mobile 1`] = `
 <DocumentFragment>
   <div
-    class="page"
+    class="ct-package-confirmation page"
   >
     <div
       class="content col-md-8"
@@ -943,7 +943,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
 exports[`Storyshots PackageConfirmation New Account 1`] = `
 <DocumentFragment>
   <div
-    class="page"
+    class="ct-package-confirmation page"
   >
     <div
       class="content col-md-8"

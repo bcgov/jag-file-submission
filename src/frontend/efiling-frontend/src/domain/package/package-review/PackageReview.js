@@ -16,7 +16,7 @@ import {
 } from "./PackageReviewService";
 import { noop } from "../../../modules/helpers/mockHelper";
 
-import "./PackageReview.scoped.css";
+import "./PackageReview.scss";
 import DocumentList from "./DocumentList";
 
 export default function PackageReview({ page: { header, packageId } }) {
@@ -136,7 +136,7 @@ export default function PackageReview({ page: { header, packageId } }) {
   return (
     <main>
       <Header header={header} />
-      <div className="page">
+      <div className="ct-package-review page">
         <div className="content col-md-8">
           <h1>View Recently Submitted Package # {packageId}</h1>
           {error && (

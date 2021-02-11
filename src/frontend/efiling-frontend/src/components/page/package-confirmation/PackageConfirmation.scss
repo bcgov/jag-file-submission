@@ -1,0 +1,15 @@
+.ct-package-confirmation {
+  .inline-block {
+    display: inline-block;
+  }
+
+  .push-margin-left {
+    margin-left: 15px;
+  }
+
+  @media (min-width: 1200px) {
+    .near-half-width {
+      width: 60% !important;
+    }
+  }
+}

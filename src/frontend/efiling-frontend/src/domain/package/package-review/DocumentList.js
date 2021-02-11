@@ -1,14 +1,18 @@
-import React from "react";
+/* eslint-disable react/jsx-one-expression-per-line */
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { MdHelp } from "react-icons/md";
+import moment from "moment";
 
+import Modal from "react-bootstrap/Modal";
+import { Button } from "shared-components";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { withdrawTooltipData } from "../../../modules/test-data/withdrawTooltipData";
 import {
   downloadSubmittedDocument,
   withdrawSubmittedDocument,
 } from "./PackageReviewService";
-import "./DocumentList.scoped.css";
+import "./DocumentList.scss";
 import BcGovTooltip from "./tooltip/Tooltip";
 
 export default function DocumentList({
@@ -16,6 +20,25 @@ export default function DocumentList({
   documents,
   reloadDocumentList,
 }) {
+  const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState({
+    description: "",
+    documentProperties: {
+      name: "",
+    },
+    filingDate: "",
+    status: "",
+  });
+
+  const handleModalClose = () => setShowModal(false);
+  const handleModalConfirm = () => {
+    setShowModal(false);
+
+    withdrawSubmittedDocument(packageId, modalData)
+      .then(() => reloadDocumentList())
+      .catch((err) => errorRedirect(sessionStorage.getItem("errorUrl"), err));
+  };
+
   function isClick(e) {
     return e && e.type === "click";
   }
@@ -34,14 +57,13 @@ export default function DocumentList({
 
   function handleWithdrawFileEvent(e, document) {
     if (isClick(e) || isEnter(e)) {
-      withdrawSubmittedDocument(packageId, document)
-        .then(() => reloadDocumentList())
-        .catch((err) => errorRedirect(sessionStorage.getItem("errorUrl"), err));
+      setModalData(document);
+      setShowModal(true);
     }
   }
 
   return (
-    <div>
+    <div className="ct-document-list">
       <div className="header">
         <span className="d-none d-lg-inline col-lg-3">Document Type</span>
         <span className="d-none d-lg-inline col-lg-4">File Name</span>
@@ -98,6 +120,63 @@ export default function DocumentList({
             </li>
           ))}
       </ul>
+
+      <Modal
+        show={showModal}
+        onHide={handleModalClose}
+        className="ct-document-list"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Withdraw Document</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <p>
+            Please confirm the withdrawl of document{" "}
+            {modalData.documentProperties.name} from your latest submission.
+            This will remove the document permanently from your submitted
+            package number
+            {packageId}.
+          </p>
+
+          <div className="row">
+            <div className="col-sm-4">Package Number:</div>
+            <div className="col-sm-8 data">{packageId}</div>
+          </div>
+          <div className="row">
+            <div className="col-sm-4">Document Status:</div>
+            <div className="col-sm-8 data">{modalData.status.description}</div>
+          </div>
+          <div className="row">
+            <div className="col-sm-4">Date Filed:</div>
+            <div className="col-sm-8 data">
+              {moment(modalData.filingDate).format("DD-MMM-YYYY")}
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-sm-4">Document Type:</div>
+            <div className="col-sm-8 data">{modalData.description}</div>
+          </div>
+          <div className="row">
+            <div className="col-sm-4">File Name:</div>
+            <div className="col-sm-8 data">
+              {modalData.documentProperties.name}
+            </div>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            onClick={handleModalClose}
+            label="Cancel"
+            styling="btn btn-secondary pull-left"
+          />
+          <Button
+            onClick={handleModalConfirm}
+            label="Confirm"
+            styling="btn btn-primary pull-right"
+          />
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
