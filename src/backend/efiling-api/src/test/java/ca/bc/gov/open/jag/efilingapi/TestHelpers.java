@@ -65,6 +65,8 @@ public class TestHelpers {
     public static final String DOCUMENT_ID_TWO = "DOCUMENT_ID_TWO";
 
     public static final DocumentProperties.TypeEnum TYPE = DocumentProperties.TypeEnum.AAB;
+    public static final String PARTY_TYPE_DESC = "PARTY_TYPE_DESC";
+    public static final String ROLE_TYPE_DESC = "ROLE_TYPE_DESC";
 
 
     public static InitialPackage createInitalPackage(ca.bc.gov.open.jag.efilingapi.api.model.Court court, List<InitialDocument> initialDocuments) {
@@ -257,7 +259,9 @@ public class TestHelpers {
                 .middleName(MIDDLE_NAME)
                 .nameTypeCd(NAME_TYPE)
                 .partyTypeCd(ca.bc.gov.open.jag.efilingapi.api.model.Party.PartyTypeEnum.IND.getValue())
+                .partyTypeDesc(PARTY_TYPE_DESC)
                 .roleTypeCd(ca.bc.gov.open.jag.efilingapi.api.model.Party.RoleTypeEnum.ABC.getValue())
+                .roleTypeDesc(ROLE_TYPE_DESC)
                 .create();
     }
 

@@ -135,13 +135,28 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
     }
 
     private List<Party> createParty() {
-        return Collections.singletonList(Party.builder()
-                .firstName("Efile")
-                .middleName("test")
-                .lastName("QA")
+
+        Party partyOne = Party.builder()
+                .firstName("Bob")
+                .middleName("Q")
+                .lastName("Ross")
                 .roleTypeCd("APP")
+                .roleTypeDesc("Applicant")
                 .partyTypeCd("IND")
-                .create());
+                .partyTypeDesc("Individual")
+                .create();
+
+        Party partyTwo = Party.builder()
+                .firstName("Han")
+                .middleName("Q")
+                .lastName("Solo")
+                .roleTypeCd("APP")
+                .roleTypeDesc("Applicant")
+                .partyTypeCd("IND")
+                .partyTypeDesc("Individual")
+                .create();
+
+        return Arrays.asList(partyOne, partyTwo);
 
     }
 
