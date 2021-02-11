@@ -37,7 +37,7 @@ public class PackageReviewPage extends BasePage {
 
     public List<String> getPackageDetails() {
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-test-id='detailsTab']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-test-id='detailsTable']")));
 
         logger.info("Getting package details values");
 
