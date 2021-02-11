@@ -10,7 +10,6 @@ import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPa
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import java.text.MessageFormat;
 import java.util.List;
 
 
@@ -50,7 +49,9 @@ public interface FilingPackageMapper {
     List<Party> toParties(List<ca.bc.gov.open.jag.efilingcommons.model.Party> parties);
 
     @Mapping(target = "partyType", source = "partyTypeCd")
+    @Mapping(target = "partyDescription", source = "partyTypeDesc")
     @Mapping(target = "roleType", source = "roleTypeCd")
+    @Mapping(target = "roleDescription", source = "roleTypeDesc")
     Party toParty(ca.bc.gov.open.jag.efilingcommons.model.Party party);
 
 
