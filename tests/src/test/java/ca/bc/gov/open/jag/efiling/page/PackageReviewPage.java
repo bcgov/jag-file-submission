@@ -44,6 +44,7 @@ public class PackageReviewPage extends BasePage {
         List<String> packageDetails = new ArrayList<>();
         packageValueDetails.forEach(webElement -> {
             if (!webElement.isDisplayed()) {
+                logger.info("WebElement is still not visible. Waiting for all rows to be present: {}", webElement.isDisplayed());
                 wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//*[contains(@class,'bcgov-table-value')]/b")));
             }
             logger.info("Is it visible: {}", webElement.isDisplayed());
