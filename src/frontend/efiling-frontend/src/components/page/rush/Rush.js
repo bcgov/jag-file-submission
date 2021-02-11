@@ -55,20 +55,13 @@ export default function Rush({ payment }) {
           id="rule-85"
           name="rush-reason"
           label="The attached application is made under Rule 8-5 (1) SCR."
-          onSelect={(val) => console.log(val)}
         />
         <Radio
           id="court-directed"
           name="rush-reason"
           label="The court directed that the order be processed on an urgent basis."
-          onSelect={(val) => console.log(val)}
         />
-        <Radio
-          id="other"
-          name="rush-reason"
-          label="Other (please explain)."
-          onSelect={(val) => console.log(val)}
-        />
+        <Radio id="other" name="rush-reason" label="Other (please explain)." />
         <Callout text={calloutText} />
         <DatePick
           label="Date"
@@ -81,61 +74,45 @@ export default function Rush({ payment }) {
           id="detailed-reason"
           isRequired
           label="Clear and detailed reason(s)"
-          onChange={(val) => console.log(val)}
         />
         <p>
           I understand the registry has the discretion to reject this request.
         </p>
         <div className="form-parent">
-          {generateInputField(
-            {
-              ...input,
-              label: "Last Name",
-              id: "lastName",
-            },
-            () => console.log("lastname")
-          )}
-          {generateInputField(
-            {
-              ...input,
-              label: "Organization",
-              id: "org",
-              isRequired: false,
-            },
-            () => console.log("org")
-          )}
+          {generateInputField({
+            ...input,
+            label: "Last Name",
+            id: "lastName",
+          })}
+          {generateInputField({
+            ...input,
+            label: "Organization",
+            id: "org",
+            isRequired: false,
+          })}
         </div>
         <div className="form-parent">
-          {generateInputField(
-            {
-              ...input,
-              label: "First Name",
-              id: "firstName",
-            },
-            () => console.log("firstname")
-          )}
-          {generateInputField(
-            {
-              ...input,
-              label: "Contact Country",
-              id: "country",
-              isRequired: false,
-            },
-            () => console.log("country")
-          )}
+          {generateInputField({
+            ...input,
+            label: "First Name",
+            id: "firstName",
+          })}
+          {generateInputField({
+            ...input,
+            label: "Contact Country",
+            id: "country",
+            isRequired: false,
+          })}
         </div>
         <div className="form-parent">
-          {generateInputField(
-            {
-              ...input,
-              label: "Phone Number",
-              id: "phoneNumber",
-            },
-            () => console.log("phone")
-          )}
+          {generateInputField({
+            ...input,
+            label: "Phone Number",
+            id: "phoneNumber",
+          })}
         </div>
         <br />
-        <Dropzone onDrop={(droppedFiles) => console.log(droppedFiles)}>
+        <Dropzone>
           {({ getRootProps, getInputProps }) => (
             <div
               data-testid="dropdownzone"
@@ -171,11 +148,7 @@ export default function Rush({ payment }) {
             onClick={() => setShowPayment(true)}
             styling="bcgov-normal-white btn"
           />
-          <Button
-            label="Submit Request"
-            onClick={() => console.log("submit rush")}
-            styling="bcgov-normal-blue btn"
-          />
+          <Button label="Submit Request" styling="bcgov-normal-blue btn" />
         </section>
       </div>
       <div className="sidecard">
