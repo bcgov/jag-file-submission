@@ -16,7 +16,7 @@ import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { propTypes } from "../../../types/propTypes";
 
-import "./Upload.scoped.css";
+import "./Upload.scss";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
 
 const filesToUpload = {
@@ -86,7 +86,7 @@ const generateFileJSX = (
   const fileLink = generateFileLink(file);
 
   return (
-    <div className="center-alignment fill-space">
+    <div className="ct-upload center-alignment fill-space">
       <div style={{ color: "rgb(252, 186, 25)" }}>
         <MdDescription size={32} />
       </div>

@@ -8,7 +8,7 @@ import {
   downloadSubmittedDocument,
   withdrawSubmittedDocument,
 } from "./PackageReviewService";
-import "./DocumentList.scoped.css";
+import "./DocumentList.scss";
 import BcGovTooltip from "./tooltip/Tooltip";
 
 export default function DocumentList({
@@ -41,7 +41,7 @@ export default function DocumentList({
   }
 
   return (
-    <div>
+    <div className="ct-document-list">
       <div className="header">
         <span className="d-none d-lg-inline col-lg-3">Document Type</span>
         <span className="d-none d-lg-inline col-lg-4">File Name</span>

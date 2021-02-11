@@ -17,7 +17,7 @@ import { propTypes } from "../../../types/propTypes";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
 import { generateFileSummaryData } from "../../../modules/helpers/generateFileSummaryData";
 
-import "./Payment.scoped.css";
+import "./Payment.scss";
 
 const baseCalloutText = `I have reviewed the information and the documents in this filing
 package and am prepared to submit them for filing.`;
@@ -159,7 +159,7 @@ export default function Payment({
   }
 
   return (
-    <div className="page">
+    <div className="ct-payment page">
       <div className="content col-md-8">
         <h1>Payment</h1>
         {creditCardAlert}
