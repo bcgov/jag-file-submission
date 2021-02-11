@@ -9,6 +9,7 @@ describe("DocumentList Component Testsuite", () => {
   const documents = [
     {
       identifier: "1",
+      filingDate: "2020-05-05T00:00:00.000Z",
       documentProperties: {
         type: "AFF",
         name: "test-document.pdf",
@@ -173,7 +174,7 @@ describe("DocumentList Component Testsuite", () => {
     );
   });
 
-  test("Delete document (click) success", async () => {
+  test("Withdraw document (click) success", async () => {
     // stub out service to return valid response.
     pkgRvwService.withdrawSubmittedDocument = jest.fn(() => Promise.resolve());
 
@@ -194,7 +195,7 @@ describe("DocumentList Component Testsuite", () => {
     expect(pkgRvwService.withdrawSubmittedDocument()).resolves.not.toThrow();
   });
 
-  test("Delete document (click) fail", async () => {
+  test("Withdraw document (click) fail", async () => {
     const errorMessage = "Network Error";
     // stub out service to return failed response.
     pkgRvwService.withdrawSubmittedDocument = jest.fn(() =>
@@ -220,7 +221,7 @@ describe("DocumentList Component Testsuite", () => {
     );
   });
 
-  test("Delete document (keyDown=13) success", async () => {
+  test("Withdraw document (keyDown=13) success", async () => {
     // stub out service to return valid response.
     pkgRvwService.withdrawSubmittedDocument = jest.fn(() => Promise.resolve());
 
@@ -251,7 +252,7 @@ describe("DocumentList Component Testsuite", () => {
     expect(pkgRvwService.withdrawSubmittedDocument()).resolves.not.toThrow();
   });
 
-  test("Delete document (keyDown) fail", async () => {
+  test("Withdraw document (keyDown) fail", async () => {
     const errorMessage = "Network Error";
     // stub out service to return failed response.
     pkgRvwService.withdrawSubmittedDocument = jest.fn(() =>

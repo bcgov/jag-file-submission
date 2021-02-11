@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import FileSaver from "file-saver";
 import { createMemoryHistory } from "history";
-import { render, waitFor, fireEvent, getByText } from "@testing-library/react";
+import { render, waitFor, fireEvent } from "@testing-library/react";
 
 import MockAdapter from "axios-mock-adapter";
 import moment from "moment-timezone";
@@ -35,6 +35,7 @@ describe("PackageReview Component", () => {
       status: {
         description: "Submitted",
       },
+      filingDate: "2020-05-05T00:00:00.000Z",
     },
   ];
 
@@ -76,10 +77,10 @@ describe("PackageReview Component", () => {
   });
 
   test("Clicking cancel takes user back to parent app", async () => {
-    const { container } = render(<PackageReview page={page} />);
+    const { getByText } = render(<PackageReview page={page} />);
     await waitFor(() => {});
 
-    fireEvent.click(getByText(container, "Cancel and Return to Parent App"));
+    fireEvent.click(getByText("Cancel and Return to Parent App"));
 
     expect(window.open).toHaveBeenCalledWith("http://google.com", "_self");
   });
@@ -169,10 +170,10 @@ describe("PackageReview Component", () => {
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
       .reply(200, { blob });
 
-    const { container } = render(<PackageReview page={page} />);
+    const { getByText } = render(<PackageReview page={page} />);
     await waitFor(() => {});
 
-    fireEvent.click(getByText(container, "Print Submission Sheet"));
+    fireEvent.click(getByText("Print Submission Sheet"));
     await waitFor(() => {});
 
     expect(FileSaver.saveAs).toHaveBeenCalled();
@@ -193,10 +194,10 @@ describe("PackageReview Component", () => {
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
       .reply(200, { blob });
 
-    const { container } = render(<PackageReview page={page} />);
+    const { getByText } = render(<PackageReview page={page} />);
     await waitFor(() => {});
 
-    fireEvent.keyDown(getByText(container, "Print Submission Sheet"));
+    fireEvent.keyDown(getByText("Print Submission Sheet"));
     await waitFor(() => {});
 
     expect(FileSaver.saveAs).toHaveBeenCalled();
@@ -212,10 +213,10 @@ describe("PackageReview Component", () => {
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
       .reply(400, { message: "There was an error." });
 
-    const { container } = render(<PackageReview page={page} />);
+    const { getByText } = render(<PackageReview page={page} />);
     await waitFor(() => {});
 
-    fireEvent.click(getByText(container, "Print Submission Sheet"));
+    fireEvent.click(getByText("Print Submission Sheet"));
     await waitFor(() => {});
 
     expect(window.open).toHaveBeenCalledWith(
@@ -234,10 +235,10 @@ describe("PackageReview Component", () => {
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
       .reply(400, { message: "There was an error." });
 
-    const { container } = render(<PackageReview page={page} />);
+    const { getByText } = render(<PackageReview page={page} />);
     await waitFor(() => {});
 
-    fireEvent.keyDown(getByText(container, "Print Submission Sheet"), {
+    fireEvent.keyDown(getByText("Print Submission Sheet"), {
       key: "Enter",
       keyCode: "13",
     });
@@ -260,12 +261,56 @@ describe("PackageReview Component", () => {
     mock.onDelete("/filingpackages/1/document/1").reply(200);
     const noop = jest.spyOn(mockHelper, "noop");
 
-    const { container } = render(<PackageReview page={page} />);
+    const { getByText } = render(<PackageReview page={page} />);
     await waitFor(() => {});
 
     // get the span wrapping the file link, click it.
-    const withdrawnLink = getByText(container, "withdraw");
+    const withdrawnLink = getByText("withdraw");
     fireEvent.click(withdrawnLink);
+    await waitFor(() => {});
+
+    // there should now be a modal popup
+    const { asFragment } = render(<PackageReview page={page} />);
+    await waitFor(() => {});
+    expect(asFragment()).toMatchSnapshot();
+    const confirmBtn = getByText("Confirm");
+    expect(confirmBtn).toBeInTheDocument();
+
+    // click Confirm
+    fireEvent.click(confirmBtn);
+    await waitFor(() => {});
+
+    expect(noop).toHaveBeenCalled();
+  });
+
+  test("Withdraw document network error", async () => {
+    mock.onGet(apiRequest).reply(200, {
+      packageNumber: packageId,
+      court: courtData,
+      submittedBy,
+      submittedDate,
+      documents,
+    });
+    mock.onDelete("/filingpackages/1/document/1").reply(404);
+    const noop = jest.spyOn(mockHelper, "noop");
+
+    const { getByText } = render(<PackageReview page={page} />);
+    await waitFor(() => {});
+
+    // get the span wrapping the file link, click it.
+    const withdrawnLink = getByText("withdraw");
+    fireEvent.click(withdrawnLink);
+    await waitFor(() => {});
+
+    // there should now be a modal popup
+    const { asFragment } = render(<PackageReview page={page} />);
+    await waitFor(() => {});
+    expect(asFragment()).toMatchSnapshot();
+    const confirmBtn = getByText("Confirm");
+    expect(confirmBtn).toBeInTheDocument();
+
+    // click Confirm
+    fireEvent.click(confirmBtn);
     await waitFor(() => {});
 
     expect(noop).toHaveBeenCalled();
