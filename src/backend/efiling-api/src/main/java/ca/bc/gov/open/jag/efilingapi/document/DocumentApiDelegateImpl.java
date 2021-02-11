@@ -1,7 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.document;
 
 import ca.bc.gov.open.jag.efilingapi.Keys;
-import ca.bc.gov.open.jag.efilingapi.api.DocumentsApi;
+import ca.bc.gov.open.jag.efilingapi.api.DocumentsApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
 import java.util.stream.Collectors;
 
 @Service
-public class DocumentApiDelegateImpl implements DocumentsApi {
+public class DocumentApiDelegateImpl implements DocumentsApiDelegate {
     Logger logger = LoggerFactory.getLogger(DocumentApiDelegateImpl.class);
 
     private final DocumentStore documentStore;
