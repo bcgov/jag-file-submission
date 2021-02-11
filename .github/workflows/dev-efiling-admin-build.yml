@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Build Efiling Admin Docker Image and Push to Openshift Image Registry
 
 on:
   workflow_dispatch:
