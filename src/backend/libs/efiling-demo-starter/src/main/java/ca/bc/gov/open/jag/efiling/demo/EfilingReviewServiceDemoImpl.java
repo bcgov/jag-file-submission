@@ -147,9 +147,9 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
                 .create();
 
         Party partyTwo = Party.builder()
-                .firstName("Han")
+                .firstName("Looooooongname")
                 .middleName("Q")
-                .lastName("Solo")
+                .lastName("Loooooooooong-Looooooooooonglast")
                 .roleTypeCd("APP")
                 .roleTypeDesc("Applicant")
                 .partyTypeCd("IND")
