@@ -133,6 +133,7 @@ exports[`Storyshots PackageReview Default 1`] = `
         <br />
         <div
           class="row"
+          data-test-id="detailsTable"
         >
           <div
             class="col-sm-12 col-lg-6"
@@ -255,7 +256,6 @@ exports[`Storyshots PackageReview Default 1`] = `
             href="#"
             id="uncontrolled-tab-tab-comments"
             role="tab"
-            tabindex="-1"
           >
             Filing Comments
           </a>
@@ -555,6 +555,7 @@ exports[`Storyshots PackageReview Mobile 1`] = `
         <br />
         <div
           class="row"
+          data-test-id="detailsTable"
         >
           <div
             class="col-sm-12 col-lg-6"
@@ -677,7 +678,6 @@ exports[`Storyshots PackageReview Mobile 1`] = `
             href="#"
             id="uncontrolled-tab-tab-comments"
             role="tab"
-            tabindex="-1"
           >
             Filing Comments
           </a>

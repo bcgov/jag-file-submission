@@ -1,0 +1,4 @@
+.tooltip .arrow::before, .tooltip .arrow {
+  content: unset !important;
+  display: none !important;
+}
