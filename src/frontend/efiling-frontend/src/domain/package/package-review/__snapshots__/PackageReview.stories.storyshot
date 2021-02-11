@@ -133,6 +133,7 @@ exports[`Storyshots PackageReview Default 1`] = `
         <br />
         <div
           class="row"
+          data-test-id="detailsTab"
         >
           <div
             class="col-sm-12 col-lg-6"
@@ -554,6 +555,7 @@ exports[`Storyshots PackageReview Mobile 1`] = `
         <br />
         <div
           class="row"
+          data-test-id="detailsTab"
         >
           <div
             class="col-sm-12 col-lg-6"

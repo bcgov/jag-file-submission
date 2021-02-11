@@ -43,14 +43,12 @@ public class PackageReviewPage extends BasePage {
 
         List<String> packageDetails = new ArrayList<>();
         packageValueDetails.forEach(webElement -> {
-            if(!webElement.isDisplayed())
-                wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.className("bcgov-row")));
-
-                logger.info("Is it visible: {}", webElement.isDisplayed());
-                logger.info("Is it visible: {}", webElement.getTagName());
-                logger.info("Is it enabled: {}", webElement.isEnabled());
-                logger.info("The value is: {}", webElement.getText());
-                packageDetails.add(webElement.getText());
+            if (!webElement.isDisplayed()) {
+                wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//*[contains(@class,'bcgov-table-value')]/b")));
+            }
+            logger.info("Is it visible: {}", webElement.isDisplayed());
+            logger.info("Is it enabled: {}", webElement.isEnabled());
+            packageDetails.add(webElement.getText());
         });
         return packageDetails;
     }

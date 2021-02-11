@@ -99,6 +99,7 @@ exports[`PackageReview Component Matches the snapshot 1`] = `
         <br />
         <div
           class="row"
+          data-test-id="detailsTab"
         >
           <div
             class="col-sm-12 col-lg-6"
