@@ -2352,6 +2352,12 @@ components:
         lastName:
           type: string
           description: last name
+        roleDescription:
+          type: string
+          description: description of role
+        partyDescription:
+          type: string
+          description: description of party
     CreateCsoAccountRequest:
       description: represents a request to create a user
       required:

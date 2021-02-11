@@ -1,13 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { UncontrolledTooltip } from "reactstrap";
-import "./Tooltip.scoped.css";
-import "./Tooltip.css";
+import "./Tooltip.scss";
 
 export default function BcGovTooltip({ content, styling, target }) {
   return (
     <div className={`bcgov-withdraw-tooltip ${styling}`}>
-      <UncontrolledTooltip placement="right" target={target}>
+      <UncontrolledTooltip
+        placement="right"
+        target={target}
+        className="ct-tooltip"
+      >
         {content}
       </UncontrolledTooltip>
     </div>

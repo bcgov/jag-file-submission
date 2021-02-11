@@ -46,7 +46,7 @@ exports[`Storyshots Home Account Exists 1`] = `
       </nav>
     </header>
     <div
-      class="page"
+      class="ct-package-confirmation page"
     >
       <div
         class="content col-md-8"
@@ -648,7 +648,7 @@ exports[`Storyshots Home Account Exists Mobile 1`] = `
       </nav>
     </header>
     <div
-      class="page"
+      class="ct-package-confirmation page"
     >
       <div
         class="content col-md-8"

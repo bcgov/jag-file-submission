@@ -69,12 +69,14 @@ public class EfilingReviewServiceDemoImplTest {
         Assertions.assertFalse(result.get().getDocuments().get(0).getTrialDivision());
         Assertions.assertFalse(result.get().getDocuments().get(0).getXmlDoc());
 
-        Assertions.assertEquals(1, result.get().getParties().size());
-        Assertions.assertEquals("Efile", result.get().getParties().get(0).getFirstName());
-        Assertions.assertEquals("test", result.get().getParties().get(0).getMiddleName());
-        Assertions.assertEquals("QA", result.get().getParties().get(0).getLastName());
+        Assertions.assertEquals(2, result.get().getParties().size());
+        Assertions.assertEquals("Bob", result.get().getParties().get(0).getFirstName());
+        Assertions.assertEquals("Q", result.get().getParties().get(0).getMiddleName());
+        Assertions.assertEquals("Ross", result.get().getParties().get(0).getLastName());
         Assertions.assertEquals("APP", result.get().getParties().get(0).getRoleTypeCd());
+        Assertions.assertEquals("Applicant", result.get().getParties().get(0).getRoleTypeDesc());
         Assertions.assertEquals("IND", result.get().getParties().get(0).getPartyTypeCd());
+        Assertions.assertEquals("Individual", result.get().getParties().get(0).getPartyTypeDesc());
 
         Assertions.assertEquals(2, result.get().getPayments().size());
         Assertions.assertFalse(result.get().getPayments().get(0).getFeeExmpt());
