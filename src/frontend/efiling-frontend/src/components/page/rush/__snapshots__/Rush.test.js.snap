@@ -3,7 +3,7 @@
 exports[`Rush Component Clicking on cancel request takes user back to payment page 1`] = `
 <DocumentFragment>
   <div
-    class="page"
+    class="ct-payment page"
   >
     <div
       class="content col-md-8"
@@ -495,7 +495,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
 exports[`Rush Component Matches the snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="page"
+    class="ct-rush page"
   >
     <div
       class="content col-md-8"

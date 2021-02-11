@@ -3,7 +3,7 @@
 exports[`Storyshots Payment Mobile 1`] = `
 <DocumentFragment>
   <div
-    class="page"
+    class="ct-payment page"
   >
     <div
       class="content col-md-8"
@@ -497,7 +497,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
 exports[`Storyshots Payment With Fees 1`] = `
 <DocumentFragment>
   <div
-    class="page"
+    class="ct-payment page"
   >
     <div
       class="content col-md-8"
@@ -991,7 +991,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
 exports[`Storyshots Payment Without Fees 1`] = `
 <DocumentFragment>
   <div
-    class="page"
+    class="ct-payment page"
   >
     <div
       class="content col-md-8"
