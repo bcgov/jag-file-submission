@@ -2,7 +2,7 @@ name: Build Efiling API Image and Push to Openshift Registry
 
 on:
   workflow_dispatch:
-    branches: [master, akroon3r-patch-2]
+    branches: [master]
 
 jobs:
   build:
