@@ -166,7 +166,7 @@ export default function PackageReview({ page: { header, packageId } }) {
             </div>
           </div>
           <br />
-          <div className="row">
+          <div className="row" data-test-id="detailsTab">
             <div className="col-sm-12 col-lg-6">
               <Table id="packageDetails" elements={packageDetails} />
             </div>
