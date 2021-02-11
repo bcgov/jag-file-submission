@@ -37,13 +37,18 @@ public class PackageReviewPage extends BasePage {
 
     public List<String> getPackageDetails() {
 
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("uncontrolled-tab-tabpane-documents")));
-        documentsTab.click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-test-id='detailsTable']")));
 
         logger.info("Getting package details values");
 
         List<String> packageDetails = new ArrayList<>();
         packageValueDetails.forEach(webElement -> {
+            if (!webElement.isDisplayed()) {
+                logger.info("WebElement is still not visible. Waiting for all rows to be present: {}", webElement.isDisplayed());
+                wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//*[contains(@class,'bcgov-table-value')]/b")));
+            }
+            logger.info("Is it visible: {}", webElement.isDisplayed());
+            logger.info("Is it enabled: {}", webElement.isEnabled());
             packageDetails.add(webElement.getText());
         });
         return packageDetails;
