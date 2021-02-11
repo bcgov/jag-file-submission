@@ -14,7 +14,7 @@ import {
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import Payment from "../payment/Payment";
 
-import "./Rush.scoped.css";
+import "./Rush.scss";
 
 const calloutText = `Please provide the date of when the direction was made,
 the name of the Judge who made the direction along with any additional details
@@ -43,7 +43,7 @@ export default function Rush({ payment }) {
   }
 
   return (
-    <div className="page">
+    <div className="ct-rush page">
       <div className="content col-md-8">
         <h1>Request Rush/Urgent Submission</h1>
         <p>

@@ -3,7 +3,7 @@
 exports[`Payment Component Click on request rush submission opens rush submission page 1`] = `
 <DocumentFragment>
   <div
-    class="page"
+    class="ct-rush page"
   >
     <div
       class="content col-md-8"
@@ -535,7 +535,7 @@ you feel are necessary.
 exports[`Payment Component Matches the snapshot with existing credit card 1`] = `
 <DocumentFragment>
   <div
-    class="page"
+    class="ct-payment page"
   >
     <div
       class="content col-md-8"
@@ -1027,7 +1027,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
 exports[`Payment Component Matches the snapshot with no credit card 1`] = `
 <DocumentFragment>
   <div
-    class="page"
+    class="ct-payment page"
   >
     <div
       class="content col-md-8"
@@ -1520,7 +1520,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
 exports[`Payment Component On back click, it redirects back to the package confirmation page 1`] = `
 <DocumentFragment>
   <div
-    class="page"
+    class="ct-package-confirmation page"
   >
     <div
       class="content col-md-8"

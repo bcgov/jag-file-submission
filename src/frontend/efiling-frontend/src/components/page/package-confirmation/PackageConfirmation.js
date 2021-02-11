@@ -17,7 +17,7 @@ import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { onBackButtonEvent } from "../../../modules/helpers/handleBackEvent";
 import { generateFileSummaryData } from "../../../modules/helpers/generateFileSummaryData";
 
-import "./PackageConfirmation.scoped.css";
+import "./PackageConfirmation.scss";
 import Payment from "../payment/Payment";
 import Upload from "../upload/Upload";
 
@@ -158,7 +158,7 @@ export default function PackageConfirmation({
     return <Upload upload={{ confirmationPopup, submissionId, courtData }} />;
 
   return (
-    <div className="page">
+    <div className="ct-package-confirmation page">
       <div className="content col-md-8">
         {isNew && (
           <>

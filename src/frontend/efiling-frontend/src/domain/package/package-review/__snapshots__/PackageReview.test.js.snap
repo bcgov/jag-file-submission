@@ -46,7 +46,7 @@ exports[`PackageReview Component Matches the snapshot 1`] = `
       </nav>
     </header>
     <div
-      class="page"
+      class="ct-package-review page"
     >
       <div
         class="content col-md-8"
@@ -247,7 +247,9 @@ exports[`PackageReview Component Matches the snapshot 1`] = `
             role="tabpanel"
           >
             <br />
-            <div>
+            <div
+              class="ct-document-list"
+            >
               <div
                 class="header"
               >
