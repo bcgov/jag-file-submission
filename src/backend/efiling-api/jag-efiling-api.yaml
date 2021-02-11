@@ -315,26 +315,27 @@ paths:
                 $ref: "#/components/schemas/BceidAccount"
         "404":
           description: Account not found
-  "/lookup/documentTypes/{courtLevel}/{courtClass}":
+  "/documents/types":
     get:
       summary: Get document types
       operationId: GetDocumentTypes
       description: A list of document types
       tags:
         - lookup
+        - clientEndpoints
       parameters:
         - name: courtLevel
-          in: path
+          in: query
           description: court level
           required: true
           schema:
-            type: string
-        - name: courtClass
-          in: path
-          description: court class
+            $ref: "#/components/schemas/CourtLevel"
+        - name: courtClassification
+          in: query
+          description: court classification
           required: true
           schema:
-            type: string
+            $ref: "#/components/schemas/CourtClassification"
       responses:
         "200":
           description: List of document types
@@ -525,6 +526,32 @@ components:
           type: string
         middleName:
           type: string
+    CourtClassification:
+      type: string
+      enum: [B, C, D, E, F, H, L, M, N, O, P, S, V]
+      description: >
+        court classification:
+          * `B` - Bankruptcy
+          * `C` - Small Claims
+          * `D` - Divorce
+          * `E` - Family Law Proceedings
+          * `F` - Family
+          * `H` - Foreclosure
+          * `L` - Enforcement/Legislated Statute
+          * `M` - Motor Vehicle Accidents
+          * `N` - Adoption
+          * `O` - Appeal Civil
+          * `P` - Probate
+          * `S` - Supreme Civil (General)
+          * `V` - Caveat
+    CourtLevel:
+      type: string
+      enum: [A, P, S]
+      description: >
+        court level:
+          * `A` - Appeal
+          * `P` - Provincial
+          * `S` - Supreme
     InitialDocument:
       type: object
       description: Submission Metadata used to describe the submission that will be e-filled

@@ -1,8 +1,8 @@
-package ca.bc.gov.open.jag.efilingapi.lookup;
+package ca.bc.gov.open.jag.efilingapi.document;
 
-import ca.bc.gov.open.jag.efilingapi.api.LookupApiDelegate;
+import ca.bc.gov.open.jag.efilingapi.Keys;
+import ca.bc.gov.open.jag.efilingapi.api.DocumentsApi;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
-import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
 import org.slf4j.Logger;
@@ -12,26 +12,26 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.security.RolesAllowed;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.stream.Collectors;
 
 @Service
-public class LookupApiDelegateImpl implements LookupApiDelegate {
-    Logger logger = LoggerFactory.getLogger(LookupApiDelegateImpl.class);
+public class DocumentApiDelegateImpl implements DocumentsApi {
+    Logger logger = LoggerFactory.getLogger(DocumentApiDelegateImpl.class);
 
     private final DocumentStore documentStore;
 
-    public LookupApiDelegateImpl(DocumentStore documentStore) {
+    public DocumentApiDelegateImpl(DocumentStore documentStore) {
         this.documentStore = documentStore;
     }
 
-
     @Override
-    @RolesAllowed("efiling-user")
-    public ResponseEntity<DocumentTypes> getDocumentTypes(String courtLevel, String courtClass) {
-
+    @RolesAllowed({Keys.EFILING_USER_ROLE, Keys.EFILING_CLIENT_ROLE})
+    public ResponseEntity<DocumentTypes> getDocumentTypes(@NotNull @Valid CourtLevel courtLevel, @NotNull @Valid CourtClassification courtClassification) {
         try {
             DocumentTypes result = new DocumentTypes();
-            result.setDocumentTypes(documentStore.getDocumentTypes(courtLevel, courtClass).stream()
+            result.setDocumentTypes(documentStore.getDocumentTypes(courtLevel.getValue(), courtClassification.getValue()).stream()
                     .map(documentType -> toDocumentType(documentType)).collect(Collectors.toList()));
             return ResponseEntity.ok(result);
         } catch (EfilingDocumentServiceException e) {

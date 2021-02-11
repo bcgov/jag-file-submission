@@ -2,8 +2,6 @@ package ca.bc.gov.open.jag.efilingapi;
 
 public class Keys {
 
-
-
     protected Keys() {}
 
     public static final String EFILING_APP = "efiling";
@@ -21,5 +19,9 @@ public class Keys {
     public static final String CSO_APPLICATION_CLAIM_KEY = "cso-application-code";
 
     public static final String IDENTITY_PROVIDER_CLAIM_KEY = "identityProviderAlias";
+
+    public static final String EFILING_CLIENT_ROLE = "efiling-client";
+
+    public static final String EFILING_USER_ROLE = "efiling-user";
 
 }
