@@ -32,6 +32,8 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Build the Docker image
+        env:
+          MVN_PROFILE: openshift
         run: |          
           
           docker-compose build efiling-api
