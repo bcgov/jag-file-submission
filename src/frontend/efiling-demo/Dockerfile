@@ -5,20 +5,18 @@ ARG SERVICE_NAME
 
 WORKDIR /app
 
-COPY ./${SERVICE_NAME}/package.json ./${SERVICE_NAME}/yarn.lock ./
+COPY ./package.json ./yarn.lock ./
 
-RUN yarn install --production
+RUN yarn install --production=true
 
-COPY ./${SERVICE_NAME} .
+COPY . .
 
-RUN npm run build
+RUN yarn build --production=true
 
 #############################################################################################
 ###                                 PRODUCTION IMAGE                                      ###
 #############################################################################################
 FROM nginx:1.19-alpine
-
-ARG SERVICE_NAME
 
 RUN rm -rf /usr/share/nginx/html/
 COPY --from=build /app/build /usr/share/nginx/html
@@ -28,7 +26,7 @@ RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/conf.d
 
 COPY ./env.sh .
-COPY ./${SERVICE_NAME}/.env.template .env
+COPY ./.env.template .env
 
 # CMD ["nginx", "-g", "daemon off;"]
 RUN chmod g+rwx /var/cache/nginx /var/run /var/log/nginx

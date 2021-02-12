@@ -26,9 +26,7 @@ services:
     stdin_open: true
     container_name: efiling-demo
     build:
-      context: ./src/frontend
-      args:
-        - SERVICE_NAME=efiling-demo
+      context: ./src/frontend/efiling-demo
     environment:
       - REACT_APP_KEYCLOAK_REALM=Efiling-Hub
       - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-admin
