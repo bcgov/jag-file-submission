@@ -16,6 +16,7 @@ import { propTypes } from "../../../types/propTypes";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { onBackButtonEvent } from "../../../modules/helpers/handleBackEvent";
 import { generateFileSummaryData } from "../../../modules/helpers/generateFileSummaryData";
+import { isClick, isEnter } from "../../../modules/helpers/eventUtil";
 
 import "./PackageConfirmation.scss";
 import Payment from "../payment/Payment";
@@ -38,16 +39,22 @@ const downloadFile = (file, submissionId) => {
     });
 };
 
+const handleDownloadFile = (e, file, submissionId) => {
+  if (isClick(e) || isEnter(e)) {
+    downloadFile(file, submissionId);
+  }
+};
+
 const generateTable = (file, data, submissionId) => [
   {
     name: (
       <div style={{ width: "80%" }}>
         <span
-          onKeyDown={() => downloadFile(file, submissionId)}
+          onKeyDown={(e) => handleDownloadFile(e, file, submissionId)}
           role="button"
           tabIndex={0}
           className="file-href"
-          onClick={() => downloadFile(file, submissionId)}
+          onClick={(e) => handleDownloadFile(e, file, submissionId)}
           data-test-id="uploaded-file"
         >
           {file.documentProperties.name}
@@ -140,6 +147,12 @@ export default function PackageConfirmation({
     );
   }, [files, submissionId]);
 
+  function handleUploadFile(e) {
+    if (isClick(e) || isEnter(e)) {
+      setShowUpload(true);
+    }
+  }
+
   if (showPayment) {
     return (
       <Payment
@@ -207,12 +220,12 @@ export default function PackageConfirmation({
         <h2>
           Do you have additional documents to upload?&nbsp;
           <span
-            onKeyDown={() => setShowUpload(true)}
+            onKeyDown={(e) => handleUploadFile(e)}
             role="button"
             tabIndex={0}
             className="file-href"
             data-test-id="upload-link"
-            onClick={() => setShowUpload(true)}
+            onClick={(e) => handleUploadFile(e)}
           >
             Upload them now.
           </span>
