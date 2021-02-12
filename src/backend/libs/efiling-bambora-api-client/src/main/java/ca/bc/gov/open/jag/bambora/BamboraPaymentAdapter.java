@@ -30,6 +30,8 @@ public class BamboraPaymentAdapter implements PaymentAdapter {
     public PaymentTransaction makePayment(EfilingPayment efilingPayment) {
         PaymentTransaction result = new PaymentTransaction();
 
+        logger.info("Making payment call");
+
         try {
 
             PaymentRequest payload = buildPaymentRequest(efilingPayment);
