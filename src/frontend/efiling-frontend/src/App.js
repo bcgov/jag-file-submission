@@ -87,10 +87,11 @@ export default function App() {
   return (
     <div>
       <Switch>
-        <Route exact path="/">
+        <Redirect exact from="/" to="/efilinghub" />
+        <Route exact path="/efilinghub">
           <AuthenticationGuard page={{ header, confirmationPopup }} />
         </Route>
-        <Route path="/packagereview/:packageId">
+        <Route path="/efilinghub/packagereview/:packageId">
           <AuthenticationGuard page={{ header, confirmationPopup }} />
         </Route>
       </Switch>
