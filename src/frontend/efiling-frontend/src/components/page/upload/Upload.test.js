@@ -18,6 +18,8 @@ import { generateJWTToken } from "../../../modules/helpers/authentication-helper
 
 import Upload, { uploadDocuments } from "./Upload";
 
+jest.mock("../../../domain/documents/DocumentService");
+
 function flushPromises(ui, container) {
   return new Promise((resolve) =>
     setImmediate(() => {
@@ -69,15 +71,6 @@ describe("Upload Component", () => {
   let mock;
   beforeEach(() => {
     mock = new MockAdapter(axios);
-    mock
-      .onGet(`/lookup/documentTypes/${court.level}/${court.courtClass}`)
-      .reply(200, {
-        documentTypes: [
-          { type: "AFF", description: "Affidavit" },
-          { type: "AAS", description: "Affidavit of Attempted Service" },
-          { type: "CCB", description: "Case Conference Brief" },
-        ],
-      });
 
     window.open = jest.fn();
     global.URL.createObjectURL = jest.fn();
@@ -131,11 +124,23 @@ describe("Upload Component", () => {
   });
 
   test("redirects to error page if fail to generate dropdown elements", async () => {
-    mock
-      .onGet(`/lookup/documentTypes/${court.level}/${court.courtClass}`)
-      .reply(400, { message: "There was an error." });
+    const court2 = {
+      locationDescription: "Court location",
+      fileNumber: "Court file number",
+      levelDescription: "Level",
+      classDescription: "Class",
+      level: "A",
+      courtClass: "A",
+      location: "Kelowna Law Courts",
+    };
 
-    render(<Upload upload={upload} />);
+    const upload2 = {
+      confirmationPopup,
+      submissionId,
+      courtData: court2,
+    };
+
+    render(<Upload upload={upload2} />);
 
     await waitFor(() => {});
 

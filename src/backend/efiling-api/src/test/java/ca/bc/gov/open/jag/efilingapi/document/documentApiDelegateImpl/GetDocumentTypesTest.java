@@ -1,11 +1,13 @@
-package ca.bc.gov.open.jag.efilingapi.lookup.lookupApiDelegateImpl;
+package ca.bc.gov.open.jag.efilingapi.document.documentApiDelegateImpl;
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
+import ca.bc.gov.open.jag.efilingapi.api.model.CourtClassification;
+import ca.bc.gov.open.jag.efilingapi.api.model.CourtLevel;
 import ca.bc.gov.open.jag.efilingapi.api.model.DocumentTypes;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
+import ca.bc.gov.open.jag.efilingapi.document.DocumentApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
-import ca.bc.gov.open.jag.efilingapi.lookup.LookupApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentType;
 import org.junit.jupiter.api.*;
@@ -23,10 +25,11 @@ import java.util.List;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("LookupApiDelegateImpl test suite")
 public class GetDocumentTypesTest {
-    private static final String CLASS = "CLASS";
-    private static final String BAD = "BAD";
-    private static final String LEVEL = "LEVEL";
-    LookupApiDelegateImpl sut;
+
+    private static final String CLASS_STRING = "S";
+    private static final String LEVEL_STRING = "A";
+    private static final String CLASS_STRING_ERROR = "M";
+    DocumentApiDelegateImpl sut;
 
     @Mock
     private DocumentStore documentStoreMock;
@@ -37,16 +40,16 @@ public class GetDocumentTypesTest {
         MockitoAnnotations.initMocks(this);
         List<DocumentType> documentTypes = Arrays.asList(new DocumentType(TestHelpers.DESCRIPTION, TestHelpers.TYPE.getValue(), true));
 
-        Mockito.when(documentStoreMock.getDocumentTypes(LEVEL, CLASS)).thenReturn(documentTypes);
-        Mockito.when(documentStoreMock.getDocumentTypes(BAD, BAD)).thenThrow(new EfilingDocumentServiceException("NOOOOOOO"));
-        sut = new LookupApiDelegateImpl(documentStoreMock);
+        Mockito.when(documentStoreMock.getDocumentTypes(LEVEL_STRING, CLASS_STRING)).thenReturn(documentTypes);
+        Mockito.when(documentStoreMock.getDocumentTypes(LEVEL_STRING, CLASS_STRING_ERROR)).thenThrow(new EfilingDocumentServiceException("NOOOOOOO"));
+        sut = new DocumentApiDelegateImpl(documentStoreMock);
     }
 
     @Test
     @DisplayName("200")
     public void withValidParamtersReturnDocumentProperties() {
 
-        ResponseEntity<DocumentTypes> actual = sut.getDocumentTypes(LEVEL, CLASS);
+        ResponseEntity<DocumentTypes> actual = sut.getDocumentTypes(CourtLevel.A, CourtClassification.S);
 
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
         Assertions.assertEquals(1, actual.getBody().getDocumentTypes().size());
@@ -57,7 +60,7 @@ public class GetDocumentTypesTest {
     @Test
     @DisplayName("500")
     public void withExceptionThrownFromSoapInternalServerError() {
-        ResponseEntity actual = sut.getDocumentTypes(BAD, BAD);
+        ResponseEntity actual = sut.getDocumentTypes(CourtLevel.A, CourtClassification.M);
 
         Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode());
         Assertions.assertEquals(ErrorResponse.DOCUMENT_TYPE_ERROR.getErrorCode(), ((EfilingError)actual.getBody()).getError());
