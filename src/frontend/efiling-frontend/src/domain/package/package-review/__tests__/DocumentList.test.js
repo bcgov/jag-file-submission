@@ -1,8 +1,8 @@
 import React from "react";
 import { render, waitFor, fireEvent, getByText } from "@testing-library/react";
-import DocumentList from "./DocumentList";
+import DocumentList from "../DocumentList";
 
-const pkgRvwService = require("./PackageReviewService");
+const pkgRvwService = require("../PackageReviewService");
 
 describe("DocumentList Component Testsuite", () => {
   const packageId = "1";

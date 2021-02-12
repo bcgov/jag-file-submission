@@ -6,10 +6,10 @@ import { render, waitFor, fireEvent } from "@testing-library/react";
 
 import MockAdapter from "axios-mock-adapter";
 import moment from "moment-timezone";
-import PackageReview from "./PackageReview";
-import { getCourtData } from "../../../modules/test-data/courtTestData";
+import PackageReview from "../PackageReview";
+import { getCourtData } from "../../../../modules/test-data/courtTestData";
 
-const mockHelper = require("../../../modules/helpers/mockHelper");
+const mockHelper = require("../../../../modules/helpers/mockHelper");
 
 // hack fix to force GitHub to run tests in BC timezone
 moment.tz.setDefault("America/Vancouver");
