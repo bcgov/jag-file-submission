@@ -13,6 +13,8 @@ import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.*;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigDecimal;
@@ -22,6 +24,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
+
+    Logger logger = LoggerFactory.getLogger(CsoSubmissionServiceImpl.class);
 
     private final FilingFacadeBean filingFacadeBean;
     private final ServiceFacadeBean serviceFacadeBean;
@@ -61,6 +65,8 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         if (accountDetails.getClientId() == null) throw new IllegalArgumentException("Client id is required.");
         if (efilingPackage == null) throw new IllegalArgumentException("EfilingPackage is required.");
         if (StringUtils.isBlank(efilingPackage.getApplicationCode())) throw new IllegalArgumentException("Application Type code is required.");
+
+        logger.info("Beginning submission process");
 
         ServiceSession serviceSession = getServiceSession(accountDetails.getClientId().toString());
 
@@ -196,6 +202,9 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     }
 
     private ServiceSession getServiceSession(String clientId) {
+
+        logger.info("Getting session");
+
         try {
             UserSession userSession = serviceFacadeBean.createUserSession(clientId);
             return serviceFacadeBean.createServiceSession(userSession, "request");
@@ -205,6 +214,8 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     }
 
     private Service createEfilingService(FilingPackage efilingPackage, AccountDetails accountDetails, ServiceSession serviceSession) {
+
+        logger.info("Creating service");
 
         Service serviceToCreate = serviceMapper.toCreateService(efilingPackage, accountDetails, serviceSession);
 
@@ -216,6 +227,8 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     }
 
     private void updatePaymentForService(Service service, Boolean feePaid, FinancialTransaction financialTransaction) {
+
+        logger.info("Update payment");
 
         service.setFeePaidYn(String.valueOf(feePaid));
         service.getTransactions().add(financialTransaction);
@@ -230,6 +243,8 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
     private FinancialTransaction createPayment(EfilingPaymentService paymentService, Service service, BigDecimal submissionFeeAmount, String internalClientNumber) {
 
+        logger.info("Create payment");
+
         EfilingPayment efilingPayment = new EfilingPayment(service.getServiceId(), submissionFeeAmount, generateInvoiceNumber(Keys.INVOICE_PREFIX), internalClientNumber);
         PaymentTransaction payment = paymentService.makePayment(efilingPayment);
         return financialTransactionMapper.toTransaction(payment, service);
@@ -237,6 +252,8 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     }
 
     private BigDecimal filePackage(ca.bc.gov.ag.csows.filing.FilingPackage csoFilingPackage) {
+
+        logger.info("Submit filing");
 
         try {
             return filingFacadeBean.submitFiling(csoFilingPackage);
@@ -247,6 +264,8 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     }
 
     private void updateServiceComplete(Service service) {
+
+        logger.info("Update service");
 
         service.setServiceReceivedDtm(DateUtils.getCurrentXmlDate());
         try {
@@ -260,7 +279,6 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     private XMLGregorianCalendar getComputedSubmittedDate(String location) {
 
         try {
-
             return filingFacadeBean.calculateSubmittedDate(DateUtils.getCurrentXmlDate(), location);
         } catch (NestedEjbException_Exception e) {
             throw new EfilingSubmissionServiceException("Exception while retrieving submitted date", e.getCause());
