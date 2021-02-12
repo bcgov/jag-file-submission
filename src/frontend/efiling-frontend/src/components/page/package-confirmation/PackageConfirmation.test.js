@@ -272,10 +272,10 @@ describe("PackageConfirmation Component", () => {
         csoAccountStatus={csoAccountStatus}
       />
     );
-
     await waitFor(() => {});
 
     fireEvent.click(getByText(container, "Upload them now."));
+    await waitFor(() => {});
 
     // here the [6] of calls denotes the popstate call of the mock
     // the [0] denotes the index of arguments passed to that call (popstate function)
