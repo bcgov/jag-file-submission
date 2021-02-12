@@ -5,17 +5,12 @@
  * @param lastName if specified, the family name of an individual
  */
 export const formatFullName = ({ firstName, middleName, lastName }) => {
-  let fullName = lastName || "";
-  if (firstName || middleName) {
-    if (fullName.length > 0) {
-      fullName += ",";
-    }
-    if (firstName) {
-      fullName += " " + firstName;
-    }
-    if (middleName) {
-      fullName += " " + middleName;
-    }
-  }
+  const fn = firstName || "";
+  const mn = middleName || "";
+  const ln = lastName || "";
+  let fullName = `${ln}, ${fn} ${mn}`;
+  fullName = fullName.replace(/^\s*,/, ""); // leading comma
+  fullName = fullName.replace(/,\s*$/, ""); // trailing comma
+  fullName = fullName.replace(/\s+/g, " "); // extra whitespace
   return fullName.trim();
 };
