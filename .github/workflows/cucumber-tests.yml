@@ -27,13 +27,18 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
+      - name: Standup Docker Pods
+        run: |
+          docker-compose up -d redis clamav keycloak
+
+
       - name: Build Docker Images
         run: |
           docker-compose build --quiet --parallel efiling-frontend efiling-api keycloak-config
 
       - name: Standup Docker Pods
         run: |
-          docker-compose up -d redis clamav efiling-frontend efiling-api keycloak
+          docker-compose up -d efiling-frontend efiling-api
 
       - name: Configure keycloak
         run: |
