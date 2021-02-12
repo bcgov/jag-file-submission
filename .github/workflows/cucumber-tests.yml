@@ -19,18 +19,6 @@ jobs:
       - name: pull available docker images first
         run: docker-compose pull -q
 
-      # In this step, this action saves a list of existing images,
-      # the cache is created without them in the post run.
-      # It also restores the cache if it exists.
-      - name: Pull the previously cached images.
-        uses: satackey/action-docker-layer-caching@v0.0.11
-        # Ignore the failure of a step and avoid terminating the job.
-        continue-on-error: true
-        with:
-          key: ${{ runner.os }}-docker-image-${{ hashFiles('**/Dockerfile*', '**/docker-compose.yml') }}
-          restore-keys: |
-            ${{ runner.os }}-docker-image-
-
       - name: Cache local Maven repository
         uses: actions/cache@v2
         with:
@@ -40,8 +28,6 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Build Docker Images
-        env:
-          DOCKER_BUILDKIT: "1"
         run: |
           docker-compose build --quiet --parallel efiling-frontend efiling-api keycloak-config
 
