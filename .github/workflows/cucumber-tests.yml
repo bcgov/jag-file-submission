@@ -19,27 +19,15 @@ jobs:
       - name: pull available docker images first
         run: docker-compose pull -q
 
-      - name: Cache local Maven repository
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-
       - name: Build Docker Images
         run: |
           docker-compose build --quiet --parallel efiling-frontend efiling-api keycloak-config
 
       - name: Standup Docker Pods
-        env:
-          MVN_PROFILE: demo
         run: |
           docker-compose up -d redis clamav efiling-frontend efiling-api keycloak
 
       - name: Configure keycloak
-        env:
-          MVN_PROFILE: demo
         run: |
           docker-compose up keycloak-config
 
