@@ -249,6 +249,17 @@ exports[`Storyshots PackageReview Default 1`] = `
             Documents
           </a>
           <a
+            aria-controls="uncontrolled-tab-tabpane-parties"
+            aria-selected="false"
+            class="nav-item nav-link"
+            data-rb-event-key="parties"
+            href="#"
+            id="uncontrolled-tab-tab-parties"
+            role="tab"
+          >
+            Parties
+          </a>
+          <a
             aria-controls="uncontrolled-tab-tabpane-comments"
             aria-selected="false"
             class="nav-item nav-link"
@@ -296,6 +307,39 @@ exports[`Storyshots PackageReview Default 1`] = `
                   class="d-none d-lg-inline col-lg-2"
                 >
                   Action (s)
+                </span>
+              </div>
+              <ul />
+            </div>
+          </div>
+          <div
+            aria-hidden="true"
+            aria-labelledby="uncontrolled-tab-tab-parties"
+            class="fade tab-pane"
+            id="uncontrolled-tab-tabpane-parties"
+            role="tabpanel"
+          >
+            <br />
+            <div
+              class="ct-party-list"
+            >
+              <div
+                class="header"
+              >
+                <span
+                  class="d-none d-lg-inline col-lg-6"
+                >
+                  Name
+                </span>
+                <span
+                  class="d-none d-lg-inline col-lg-3"
+                >
+                  Party Role
+                </span>
+                <span
+                  class="d-none d-lg-inline col-lg-3"
+                >
+                  Party Type
                 </span>
               </div>
               <ul />
@@ -673,6 +717,17 @@ exports[`Storyshots PackageReview Mobile 1`] = `
             Documents
           </a>
           <a
+            aria-controls="uncontrolled-tab-tabpane-parties"
+            aria-selected="false"
+            class="nav-item nav-link"
+            data-rb-event-key="parties"
+            href="#"
+            id="uncontrolled-tab-tab-parties"
+            role="tab"
+          >
+            Parties
+          </a>
+          <a
             aria-controls="uncontrolled-tab-tabpane-comments"
             aria-selected="false"
             class="nav-item nav-link"
@@ -720,6 +775,39 @@ exports[`Storyshots PackageReview Mobile 1`] = `
                   class="d-none d-lg-inline col-lg-2"
                 >
                   Action (s)
+                </span>
+              </div>
+              <ul />
+            </div>
+          </div>
+          <div
+            aria-hidden="true"
+            aria-labelledby="uncontrolled-tab-tab-parties"
+            class="fade tab-pane"
+            id="uncontrolled-tab-tabpane-parties"
+            role="tabpanel"
+          >
+            <br />
+            <div
+              class="ct-party-list"
+            >
+              <div
+                class="header"
+              >
+                <span
+                  class="d-none d-lg-inline col-lg-6"
+                >
+                  Name
+                </span>
+                <span
+                  class="d-none d-lg-inline col-lg-3"
+                >
+                  Party Role
+                </span>
+                <span
+                  class="d-none d-lg-inline col-lg-3"
+                >
+                  Party Type
                 </span>
               </div>
               <ul />
