@@ -18,6 +18,7 @@ import { noop } from "../../../modules/helpers/mockHelper";
 
 import "./PackageReview.scss";
 import DocumentList from "./DocumentList";
+import ParyList from "./PartyList";
 
 export default function PackageReview({ page: { header, packageId } }) {
   const [error, setError] = useState(false);
@@ -48,6 +49,7 @@ export default function PackageReview({ page: { header, packageId } }) {
   const [filingComments, setFilingComments] = useState("");
   const [reloadTrigger, setReloadTrigger] = useState(false);
   const [documents, setDocuments] = useState([]);
+  const [parties, setParties] = useState([]);
 
   useEffect(() => {
     getFilingPackage(packageId)
@@ -104,6 +106,7 @@ export default function PackageReview({ page: { header, packageId } }) {
           ]);
           setFilingComments(response.data.filingComments);
           setDocuments(response.data.documents);
+          setParties(response.data.parties);
         } catch (err) {
           setError(true);
         }
@@ -183,6 +186,10 @@ export default function PackageReview({ page: { header, packageId } }) {
                 documents={documents}
                 reloadDocumentList={reloadDocumentList}
               />
+            </Tab>
+            <Tab eventKey="parties" title="Parties">
+              <br />
+              <ParyList parties={parties} />
             </Tab>
             <Tab eventKey="comments" title="Filing Comments">
               <br />
