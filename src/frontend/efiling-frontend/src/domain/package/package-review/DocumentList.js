@@ -8,6 +8,7 @@ import Modal from "react-bootstrap/Modal";
 import { Button } from "shared-components";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { withdrawTooltipData } from "../../../modules/test-data/withdrawTooltipData";
+import { isClick, isEnter } from "../../../modules/helpers/eventUtil";
 import {
   downloadSubmittedDocument,
   withdrawSubmittedDocument,
@@ -38,14 +39,6 @@ export default function DocumentList({
       .then(() => reloadDocumentList())
       .catch((err) => errorRedirect(sessionStorage.getItem("errorUrl"), err));
   };
-
-  function isClick(e) {
-    return e && e.type === "click";
-  }
-
-  function isEnter(e) {
-    return e && e.type === "keydown" && e.keyCode === 13;
-  }
 
   function handleDownloadFileEvent(e, document) {
     if (isClick(e) || isEnter(e)) {
