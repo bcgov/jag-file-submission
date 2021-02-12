@@ -1113,4 +1113,6 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
 </DocumentFragment>
 `;
 
+exports[`Upload Component removing uploaded file works as expected 1`] = `<DocumentFragment />`;
+
 exports[`Upload Component successful document upload works as expected 1`] = `<DocumentFragment />`;
