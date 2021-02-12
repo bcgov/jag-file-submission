@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { formatFullName } from "../../../modules/helpers/StringUtil";
 import "./PartyList.scss";
 
+const hash = require("object-hash");
+
 export default function ParyList({ parties }) {
   return (
     <div className="ct-party-list">
@@ -14,7 +16,7 @@ export default function ParyList({ parties }) {
       <ul>
         {parties &&
           parties.map((party) => (
-            <li key={party.firstName}>
+            <li key={hash(party)}>
               <span className="label col-sm-4 d-lg-none">Name:</span>
               <span className="col-sm-8 col-lg-6">{formatFullName(party)}</span>
               <span className="label col-sm-4 d-lg-none">Party Role:</span>
