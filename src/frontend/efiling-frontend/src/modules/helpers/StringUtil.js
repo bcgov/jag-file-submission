@@ -11,17 +11,11 @@ export const formatFullName = ({ firstName, middleName, lastName }) => {
       fullName += ",";
     }
     if (firstName) {
-      if (fullName.length > 0) {
-        fullName += " ";
-      }
-      fullName += firstName;
+      fullName += " " + firstName;
     }
     if (middleName) {
-      if (fullName.length > 0) {
-        fullName += " ";
-      }
-      fullName += middleName;
+      fullName += " " + middleName;
     }
   }
-  return fullName;
+  return fullName.trim();
 };
