@@ -27,7 +27,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: pull efiling-frontend image
-        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend || true
+        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:latest || true
       - name: build efiling-frontend image
         run: docker build ./src/frontend/efiling-frontend -t efiling-frontend --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend
       - name: tag & push efiling-frontend to git container registry
