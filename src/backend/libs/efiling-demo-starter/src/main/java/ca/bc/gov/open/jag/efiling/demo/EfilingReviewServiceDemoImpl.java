@@ -178,6 +178,6 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
         packagePaymentThree.setPaymentCategory(BigDecimal.TEN);
         packagePaymentThree.setSubmittedAmt(BigDecimal.ONE);
         packagePaymentThree.setTransactionDesc("Affidavit");
-        return Arrays.asList(packagePaymentOne, packagePaymentTwo);
+        return Arrays.asList(packagePaymentOne, packagePaymentTwo, packagePaymentThree);
     }
 }
