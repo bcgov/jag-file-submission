@@ -9,7 +9,7 @@ Welcome to the eFiling frontend!
 In the project directory `efiling-frontend`:
 
 Create a `.env.development` file and populate the environment variables as
-shown in the `.env.example` file.
+shown in the `.env.template` file.
 
 To bring up all the backend docker containers locally, n the root directory
 `jag-file-submission`, run:
