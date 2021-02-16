@@ -8,8 +8,6 @@ servers:
 tags:
   - name: document
     description: Endpoints exposed to review document
-security:
-  - bearerAuth: []
 paths:
   "/documents/extract":
     post:
@@ -37,11 +35,6 @@ paths:
               schema:
                 $ref: "#/components/schemas/DocumentExtractResponse"
 components:
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
   parameters:
     xTransactionId:
       name: X-Transaction-Id
