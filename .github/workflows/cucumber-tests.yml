@@ -26,11 +26,11 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: pull image
+      - name: pull efiling-frontend image
         run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend || true
-      - name: build image
+      - name: build efiling-frontend image
         run: docker build ./src/frontend/efiling-frontend -t efiling-frontend --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend
-      - name: tag & push
+      - name: tag & push efiling-frontend to git container registry
         run: docker tag efiling-frontend docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend
 
       - name: Cache local Maven repository
