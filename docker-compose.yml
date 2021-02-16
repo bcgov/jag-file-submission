@@ -8,12 +8,9 @@ services:
     stdin_open: true
     container_name: efiling-frontend
     build:
-      context: ./src/frontend
-      dockerfile: Dockerfile.legacy
-      args:
-        - SERVICE_NAME=efiling-frontend
+      context: ./src/frontend/efiling-frontend
     ports:
-      - 3000:3000
+      - 3000:8080
     environment:
       - REACT_APP_KEYCLOAK_REALM=${KEYCLOAK_REALM:-Efiling-Hub}
       - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-frontend
@@ -29,9 +26,7 @@ services:
     stdin_open: true
     container_name: efiling-demo
     build:
-      context: ./src/frontend
-      args:
-        - SERVICE_NAME=efiling-demo
+      context: ./src/frontend/efiling-demo
     environment:
       - REACT_APP_KEYCLOAK_REALM=Efiling-Hub
       - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-admin
