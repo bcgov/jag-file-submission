@@ -86,9 +86,13 @@
 	</dependencyManagement>
 	<build>
 		<plugins>
+			<!--spring boot build-->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>ca.bc.gov.open.jag.efilingreviewerapi.EfilingReviewerApiApplication</mainClass>
+				</configuration>
 			</plugin>
 			<!--openapi server autogen-->
 			<plugin>
