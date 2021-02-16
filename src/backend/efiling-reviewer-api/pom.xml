@@ -15,6 +15,7 @@
 	<description>api project for ai reviewer</description>
 	<properties>
 		<java.version>1.8</java.version>
+		<default-package>ca.bc.gov.open.jag.efilingreviewerapi</default-package>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -56,6 +57,32 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<!--openapi server autogen-->
+			<plugin>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<version>4.3.1</version>
+				<executions>
+					<execution>
+						<id>spring-boot-api</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<inputSpec>${project.basedir}/jag-reviewer-api.yaml</inputSpec>
+							<generatorName>spring</generatorName>
+							<configOptions>
+								<dateLibrary>joda</dateLibrary>
+								<delegatePattern>true</delegatePattern>
+							</configOptions>
+							<library>spring-boot</library>
+							<apiPackage>${default-package}.api</apiPackage>
+							<modelPackage>${default-package}.api.model</modelPackage>
+							<invokerPackage>${default-package}.api.handler</invokerPackage>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
