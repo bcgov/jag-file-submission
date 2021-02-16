@@ -5,8 +5,8 @@ import {
   downloadSubmissionSheet,
   downloadSubmittedDocument,
   withdrawSubmittedDocument,
-} from "./PackageReviewService";
-import { getCourtData } from "../../../modules/test-data/courtTestData";
+} from "../PackageReviewService";
+import { getCourtData } from "../../../../modules/test-data/courtTestData";
 
 jest.mock("axios");
 FileSaver.saveAs = jest.fn();
