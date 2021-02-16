@@ -49,9 +49,9 @@ services:
     hostname: efiling-api
     build:
       context: ./src/backend
+      dockerfile: Dockerfile.efiling-api
       args:
-        - SERVICE_NAME=efiling-api
-        - MVN_PROFILE=${MVN_PROFILE:-demo}
+        - MVN_PROFILE=${MVN_PROFILE:-efiling-api}
         - SKIP_TESTS=true
         - STARTERS_V=v0.1.8
     ports:
@@ -112,6 +112,24 @@ services:
 
       - CLAMAV_HOST=clamav
       - CLAMAV_TIMEOUT=150000
+    networks:
+      - fisu-net
+
+  #############################################################################################
+  ###                           Efiling api backend app                                     ###
+  #############################################################################################
+  efiling-reviewer-api:
+    container_name: efiling-reviewer-api
+    hostname: efiling-reviewer-api
+    build:
+      context: ./src/backend
+      dockerfile: Dockerfile.efiling-reviewer-api
+      args:
+        - SKIP_TESTS=true
+    ports:
+      - "8090:8080"
+    environment:
+      - DILIGEN_BASE_PATH=$DILIGEN_BASE_API
     networks:
       - fisu-net
 
