@@ -5,11 +5,13 @@ WORKDIR /app
 
 COPY ./package.json ./yarn.lock ./
 
-RUN yarn install --production=true
+ENV NODE_ENV=production
+
+RUN yarn install
 
 COPY . .
 
-RUN yarn build --production=true
+RUN yarn build
 
 #############################################################################################
 ###                                 PRODUCTION IMAGE                                      ###
