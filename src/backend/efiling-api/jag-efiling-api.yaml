@@ -2510,6 +2510,9 @@ components:
         paymentCategory:
           type: number
           description: Category for fee
+        paymentDescription:
+          type: string
+          description: a description of the payment
         processedAmount:
           type: number
           description: Amount
