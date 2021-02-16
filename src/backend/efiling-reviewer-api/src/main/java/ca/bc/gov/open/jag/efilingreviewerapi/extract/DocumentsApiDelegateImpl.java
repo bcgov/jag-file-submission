@@ -9,6 +9,6 @@ import java.util.UUID;
 public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
     @Override
     public ResponseEntity<Object> extractDocumentFormData(UUID xTransactionId, String xDocumentType, MultipartFile file) {
-        return null;
+        return ResponseEntity.ok("Hello");
     }
 }
