@@ -8,21 +8,21 @@ import Home from "../page/home/Home";
 import PackageReview from "../../domain/package/package-review/PackageReview";
 import { propTypes } from "../../types/propTypes";
 
-const url = window.REACT_APP_KEYCLOAK_URL
-  ? window.REACT_APP_KEYCLOAK_URL
+const url = window.env
+  ? window.env.REACT_APP_KEYCLOAK_URL
   : process.env.REACT_APP_KEYCLOAK_URL;
-const realm = window.REACT_APP_KEYCLOAK_REALM
-  ? window.REACT_APP_KEYCLOAK_REALM
+const realm = window.env
+  ? window.env.REACT_APP_KEYCLOAK_REALM
   : process.env.REACT_APP_KEYCLOAK_REALM;
-const clientId = window.REACT_APP_KEYCLOAK_CLIENT_ID
-  ? window.REACT_APP_KEYCLOAK_CLIENT_ID
+const clientId = window.env
+  ? window.env.REACT_APP_KEYCLOAK_CLIENT_ID
   : process.env.REACT_APP_KEYCLOAK_CLIENT_ID;
-export const BCSC_USERINFO_URL = window.REACT_APP_BCSC_USERINFO_URL
-  ? window.REACT_APP_BCSC_USERINFO_URL
+export const BCSC_USERINFO_URL = window.env
+  ? window.env.REACT_APP_BCSC_USERINFO_URL
   : process.env.REACT_APP_BCSC_USERINFO_URL;
 
-const defaultIdentityProvider = window.REACT_APP_DEFAULT_IDENTITY_PROVIDER
-  ? window.REACT_APP_DEFAULT_IDENTITY_PROVIDER
+const defaultIdentityProvider = window.env
+  ? window.env.REACT_APP_DEFAULT_IDENTITY_PROVIDER
   : process.env.REACT_APP_DEFAULT_IDENTITY_PROVIDER;
 
 export const KEYCLOAK = {

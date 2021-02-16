@@ -3,7 +3,6 @@ package ca.bc.gov.open.jag.efilingapi.document.documentApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.CourtClassification;
 import ca.bc.gov.open.jag.efilingapi.api.model.CourtLevel;
-import ca.bc.gov.open.jag.efilingapi.api.model.DocumentTypes;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
@@ -49,12 +48,12 @@ public class GetDocumentTypesTest {
     @DisplayName("200")
     public void withValidParamtersReturnDocumentProperties() {
 
-        ResponseEntity<DocumentTypes> actual = sut.getDocumentTypes(CourtLevel.A, CourtClassification.S);
+        ResponseEntity<List<ca.bc.gov.open.jag.efilingapi.api.model.DocumentType>> actual = sut.getDocumentTypes(CourtLevel.A, CourtClassification.S);
 
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
-        Assertions.assertEquals(1, actual.getBody().getDocumentTypes().size());
-        Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getBody().getDocumentTypes().get(0).getDescription());
-        Assertions.assertEquals(TestHelpers.TYPE.getValue(), actual.getBody().getDocumentTypes().get(0).getType());
+        Assertions.assertEquals(1, actual.getBody().size());
+        Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getBody().get(0).getDescription());
+        Assertions.assertEquals(TestHelpers.TYPE.getValue(), actual.getBody().get(0).getType());
     }
 
     @Test

@@ -1,67 +1,1966 @@
 openapi: 3.0.0
 info:
   version: 0.7.0
-  title: jag-reviewer-api
-  description: Efiling AI Reviewer api
+  title: jag-efiling-api
+  description: Efiling api
 servers:
   - url: "http://localhost:8080"
 tags:
-  - name: document
-    description: Endpoints exposed to review document
+  - name: clientEndpoints
+    description: Endpoints that are exposed to external client
+  - name: submission
+    description: Submission Api
+  - name: courts
+    description: Courts
+  - name: filingPackages
+    description: File Packages
+security:
+  - bearerAuth: []
 paths:
-  "/documents/extract":
+  "/submission/documents":
     post:
-      summary: Extract document form data
-      operationId: ExtractDocumentFormData
+      summary: Initial documents upload
+      operationId: UploadSubmissionDocuments
       tags:
-        - document
+        - submission
+        - clientEndpoints
       parameters:
         - $ref: "#/components/parameters/xTransactionId"
-        - $ref: "#/components/parameters/xDocumentType"
+        - $ref: "#/components/parameters/xUserId"
       requestBody:
         content:
           multipart/form-data:
             schema:
               type: object
               properties:
-                file:
-                  type: string
-                  format: binary
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
       responses:
         "200":
-          description: Document Form Data successfully extracted
+          description: File successfully received
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DocumentExtractResponse"
-        "400":
-          description: Request is not valid
+                $ref: "#/components/schemas/UploadSubmissionDocumentsResponse"
+  "/submission/{submissionId}":
+    parameters:
+      - $ref: "#/components/parameters/submissionId"
+      - $ref: "#/components/parameters/xTransactionId"
+    delete:
+      summary: Delete a submission by id
+      operationId: DeleteSubmission
+      tags:
+        - submission
+      responses:
+        "200":
+          description: submission deleted
+  "/submission/{submissionId}/documents":
+    post:
+      summary: Additional documents upload
+      operationId: UploadAdditionalSubmissionDocuments
+      tags:
+        - submission
+      parameters:
+        - $ref: "#/components/parameters/submissionId"
+        - $ref: "#/components/parameters/xTransactionId"
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        "200":
+          description: File successfully received
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiError"
+                $ref: "#/components/schemas/UploadSubmissionDocumentsResponse"
+        "404":
+          description: Submission not found
+  "/submission/{submissionId}/update-documents":
+    post:
+      summary: Additional documents properties
+      operationId: UpdateDocumentProperties
+      tags:
+        - submission
+      parameters:
+        - $ref: "#/components/parameters/submissionId"
+        - $ref: "#/components/parameters/xTransactionId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateDocumentRequest"
+      responses:
+        "200":
+          description: Document properties updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateDocumentResponse"
+        "404":
+          description: Submission not found
+  "/submission/{submissionId}/config":
+    parameters:
+      - $ref: "#/components/parameters/submissionId"
+      - $ref: "#/components/parameters/xTransactionId"
+    get:
+      summary: Get configuration for a given submission
+      operationId: GetSubmissionConfig
+      tags:
+        - submission
+      responses:
+        "200":
+          description: Config found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetSubmissionConfigResponse"
+        "404":
+          description: Config not found
+  "/submission/{submissionId}/generateUrl":
+    post:
+      summary: Generates a secure URL for e-filing submission
+      operationId: GenerateUrl
+      tags:
+        - submission
+        - clientEndpoints
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+        - $ref: "#/components/parameters/xUserId"
+        - $ref: "#/components/parameters/submissionId"
+      requestBody:
+        description: requested parameters to generate a url
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenerateUrlRequest"
+      responses:
+        "200":
+          description: File successfully received
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenerateUrlResponse"
+        "403":
+          description: Request does not meet the required criteria
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EfilingError"
+  "/submission/{submissionId}/submit":
+    post:
+      summary: Create service for payment processing
+      operationId: submit
+      tags:
+        - submission
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+        - $ref: "#/components/parameters/submissionId"
+      requestBody:
+        description: filing submit parameters
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubmitRequest"
+      responses:
+        "201":
+          description: Service created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SubmitResponse"
+        "403":
+          description: Request does not meet the required criteria
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EfilingError"
+  "/submission/{submissionId}/filing-package":
+    get:
+      summary: Get filing package information
+      operationId: GetSubmissionFilingPackage
+      tags:
+        - submission
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+        - $ref: "#/components/parameters/submissionId"
+      responses:
+        "200":
+          description: Filing Package Information found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SubmissionFilingPackage"
+        "404":
+          description: Filing Package Information not found
+  "/submission/{submissionId}/document/{filename}":
+    get:
+      summary: Get document by name
+      operationId: GetSubmissionDocument
+      tags:
+        - submission
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+        - $ref: "#/components/parameters/submissionId"
+        - name: filename
+          in: path
+          description: A document name
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Filing Package Information found
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: Document not found
+  "/csoAccount":
+    post:
+      summary: Create a CSO account
+      operationId: CreateAccount
+      description: In order to create an account, an item with type BCeID is required in the accounts field.
+      tags:
+        - account
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+      requestBody:
+        description: cso account details
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCsoAccountRequest"
+      responses:
+        "201":
+          description: Account Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CsoAccount"
+    get:
+      summary: Get user CSO account
+      operationId: GetCsoAccount
+      description: Get a user cso account.
+      tags:
+        - account
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+      responses:
+        "200":
+          description: A CSO Account
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CsoAccount"
+        "404":
+          description: Cso Account not found
+    put:
+      summary: Update CSO account internal client number
+      operationId: updateCsoAccount
+      tags:
+        - account
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+      requestBody:
+        description: update client details parameters
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CsoAccountUpdateRequest"
+      responses:
+        "200":
+          description: Client updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CsoAccount"
+        "403":
+          description: Request does not meet the required criteria
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EfilingError"
+  "/bceidAccount":
+    get:
+      summary: Get a BCeID account
+      operationId: GetBceidAccount
+      description: Retrieve BCeID user account information
+      tags:
+        - account
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+      responses:
+        "200":
+          description: Account Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BceidAccount"
+        "404":
+          description: Account not found
+  "/documents/types":
+    get:
+      summary: Get document types
+      operationId: GetDocumentTypes
+      description: A list of document types
+      tags:
+        - lookup
+        - clientEndpoints
+      parameters:
+        - name: courtLevel
+          in: query
+          description: court level
+          required: true
+          schema:
+            $ref: "#/components/schemas/CourtLevel"
+        - name: courtClassification
+          in: query
+          description: court classification
+          required: true
+          schema:
+            $ref: "#/components/schemas/CourtClassification"
+      responses:
+        "200":
+          description: List of document types
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DocumentTypes"
+  "/courts":
+    get:
+      summary: Get court locations
+      operationId: GetCourtLocations
+      description: get court information by court name
+      tags:
+        - courts
+      parameters:
+        - name: courtLevel
+          in: query
+          description: court type filter
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Information of a court
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CourtLocations"
+  "/payment/generate-update-card":
+    post:
+      summary: Update card on bambora
+      operationId: UpdateCreditCard
+      description: For expired credit card get url to update
+      tags:
+        - payment
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+      requestBody:
+        description: card update params
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenerateCardUrlRequest"
+      responses:
+        "200":
+          description: Card url generated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenerateCardUrlResponse"
+  "/filingpackages/{packageIdentifier}":
+    get:
+      summary: Get filing package
+      operationId: GetFilingPackage
+      description: get filing package details from cso
+      tags:
+        - filingPackages
+      parameters:
+        - name: packageIdentifier
+          in: path
+          description: package identifier
+          required: true
+          schema:
+            type: number
+      responses:
+        "200":
+          description: All filing package details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FilingPackage"
+  "/filingpackages/{packageIdentifier}/submissionSheet":
+    get:
+      summary: Get submission sheet for package
+      operationId: GetSubmissionSheet
+      description: get submission sheet file from cso
+      tags:
+        - filingPackages
+      parameters:
+        - name: packageIdentifier
+          in: path
+          description: package identifier
+          required: true
+          schema:
+            type: number
+      responses:
+        "200":
+          description: File was returned
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: file not found
+  "/filingpackages/{packageIdentifier}/document/{documentIdentifier}":
+    get:
+      summary: Get submitted document
+      operationId: GetSubmittedDocument
+      description: get submitted document
+      tags:
+        - filingPackages
+      parameters:
+        - name: packageIdentifier
+          in: path
+          description: package identifier
+          required: true
+          schema:
+            type: number
+        - name: documentIdentifier
+          in: path
+          description: document identifier
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: File was returned
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: file not found
+    delete:
+      summary: delete(withdraw) submitted document
+      operationId: DeleteSubmittedDocument
+      description: Delete submitted document
+      tags:
+        - filingPackages
+      parameters:
+        - name: packageIdentifier
+          in: path
+          description: package identifier
+          required: true
+          schema:
+            type: number
+        - name: documentIdentifier
+          in: path
+          description: document identifier
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Document was deleted
 components:
+  securitySchemes:
+    bearerAuth: # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   parameters:
     xTransactionId:
       name: X-Transaction-Id
       in: header
-      required: true
-      description: A unique Transaction Id generated by AI Reviewer clients
       schema:
         type: string
         format: uuid
-    xDocumentType:
-      name: X-Document-Type
+      required: true
+      description: A unique Transaction Id generated by FilingHub clients
+    xUserId:
+      name: X-User-Id
       in: header
-      description: A document type
+      schema:
+        type: string
+        format: string
+      required: true
+      description: A unique BCeID universal id passed to initial calls
+    submissionId:
+      name: submissionId
+      in: path
+      description: A submission id
       required: true
       schema:
         type: string
+        format: uuid
   schemas:
-    DocumentExtractResponse:
+    BceidAccount:
       type: object
-      description: Review upload response
-    ApiError:
+      description: BCeID account details
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        middleName:
+          type: string
+    CourtClassification:
+      type: string
+      enum: [B, C, D, E, F, H, L, M, N, O, P, S, V]
+      description: >
+        court classification:
+          * `B` - Bankruptcy
+          * `C` - Small Claims
+          * `D` - Divorce
+          * `E` - Family Law Proceedings
+          * `F` - Family
+          * `H` - Foreclosure
+          * `L` - Enforcement/Legislated Statute
+          * `M` - Motor Vehicle Accidents
+          * `N` - Adoption
+          * `O` - Appeal Civil
+          * `P` - Probate
+          * `S` - Supreme Civil (General)
+          * `V` - Caveat
+    CourtLevel:
+      type: string
+      enum: [A, P, S]
+      description: >
+        court level:
+          * `A` - Appeal
+          * `P` - Provincial
+          * `S` - Supreme
+    InitialDocument:
+      type: object
+      description: Submission Metadata used to describe the submission that will be e-filled
+      required:
+        - isAmendment
+        - isSupremeCourtScheduling
+        - data
+        - md5
+      properties:
+        documentProperties:
+          $ref: "#/components/schemas/DocumentProperties"
+        isAmendment:
+          type: boolean
+          description: is the document an amendment to another
+        isSupremeCourtScheduling:
+          type: boolean
+          description: supreme court scheduling required
+        data:
+          type: object
+          description: store additional details
+        md5:
+          type: string
+          description: Computed hash value of the document content, it is used as a checksum to validate the document integrity.
+    Document:
+      required:
+        - identifier
+        - description
+        - status
+        - paymentProcessed
+        - filingDate
+      type: object
+      description: A Efiling Document
+      properties:
+        identifier:
+          type: string
+          description: document identifier
+        filingDate:
+          type: string
+          description: date of document filing
+        description:
+          type: string
+          description: document description
+        paymentProcessed:
+          type: boolean
+          description: Has the payment been processed
+        documentProperties:
+          $ref: "#/components/schemas/DocumentProperties"
+        status:
+          $ref: "#/components/schemas/Status"
+    DocumentProperties:
+      required:
+        - name
+        - type
+      description: common document properties.
+      properties:
+        name:
+          type: string
+          description: the name of the document
+        type:
+          type: string
+          description: >
+            submission type
+               * `ABP` - Abandonment/Settlement (Partial)
+               * `ABRV` - Abandonment/Settlement (Review/Vary)
+               * `ABA` - Abandonment/Settlement of Appeal
+               * `ABCA` - Abandonment/Settlement of Cross Appeal
+               * `AFF` - Affidavit
+               * `AFI` - Affidavit in Support of Indigent Application
+               * `AFS` - Affidavit of Service
+               * `ABS` - Appeal Book - Supplementary
+               * `AAB` - Appeal Book of Appellant
+               * `ABJ` - Appeal Book of Joint
+               * `ABR` - Appeal Book of Respondent
+               * `ARO` - Appeal Record - Other
+               * `ARSA` - Appeal Record - Stand Alone
+               * `ARSU` - Appeal Record - Supplementary
+               * `APP` - Appearance
+               * `FAR` - Appellan'ts Reply Factum
+               * `ATAA` - Appellant Appeal Authorities
+               * `ATAC` - Appellant Chambers Authorities
+               * `FA` - Appellant Factum
+               * `FACA` - Appellant Factum on Cross Appeal (& Reply)
+               * `MBAL` - Applicant Leave and/or Stay Motion Book
+               * `MBAV` - Applicant Review/Vary Motion Book
+               * `APTA` - Appointment Assessment
+               * `APTB` - Appointment Settle Books
+               * `APTO` - Appointment Settle Order
+               * `APTS` - Appointment Settle Order and Assessment
+               * `OTA` - Authorities - Other
+               * `BOC` - Bill of Costs
+               * `COS` - Certificate of Cost
+               * `CRD` - Certificate of Readiness
+               * `CBA` - Condensed Book - Appellant
+               * `CBI` - Condensed Book - Intervenor
+               * `CBJ` - Condensed Book - Joint
+               * `CBO` - Condensed Book - Other
+               * `CBR` - Condensed Book - Respondent
+               * `COR` - Consent Order
+               * `CNAC` - Counsel (Address Change)
+               * `CNAT` - Counsel (Change/Appointment)
+               * `CNWD` - Counsel (Withdrawl)
+               * `EFSA` - Electronic Filing Statement - Appeal
+               * `FCA` - Factum - Amicus Curiae
+               * `ATFS` - Further Submissions Authorities
+               * `ATIA` - Intervenor Appeal Authorities
+               * `ATIC` - Intervenor Chambers Authorities
+               * `FAI` - Intervenor Factum
+               * `FIR` - Invervenor's Reply Factum
+               * `ATJ` - Joint Authorities
+               * `LA` - Leave to Appeal
+               * `LAA` - Leave to Appeal (Amended)
+               * `LPC` - Letter - Court Proceeding via Teleconference
+               * `LPV` - Letter - Court Proceeding via Videoconference
+               * `LT` - Letter General
+              LT5J  Letter Request for 5 Judges
+               * `MEMA` - Memorandum of Appellant
+               * `MEMI` - Memorandum of Intervenor
+               * `MEMO` - Memorandum of Other
+               * `MEMR` - Memorandum of Respondent
+               * `MBO` - Motion Book - Other
+               * `MCH` - Motion Chambers
+               * `MCT` - Motion Court
+               * `NAAM` - Notice of Appeal (Amended)
+               * `NASC` - Notice of Appeal (Supreme Court of Canada)
+               * `NAA` - Notice of Appeal - Court of Appeal
+               * `NCQ` - Notice of Constitutional Question
+               * `NCA` - Notice of Cross Appeal
+               * `NCAA` - Notice of Cross Appeal (Amended)
+               * `NCAL` - Notice of Cross Appeal (Leave To)
+               * `NHA` - Notice of Hearing of Appeal
+               * `NIAP` - Notice of Intention to Act in Person
+               * `ORSE` - Order for Submitted for Entry
+               * `REQ` - Requisition
+               * `FRR` - Responden'ts Reply Factum
+               * `ATRA` - Respondent Appeal Authorities
+               * `ATRC` - Respondent Chambers Authorities
+               * `FR` - Respondent Factum
+               * `FRAC` - Respondent Factum on Appeal & Cross Appeal
+               * `MBRL` - Respondent Reply Leave and/or Stay Motion Book
+               * `FSU` - Supplementary Factum
+               * `TCAC` - Transcript - Chambers
+               * `TCC` - Transcript - Civil (with required cd/disk)
+               * `TCAD` - Transcript - Court
+               * `TS` - Transcript - Supplementery
+               * `TEA` - Transcript Extracts - Appellant
+               * `TEJ` - Transcript Extracts - Joint
+               * `TES` - Transcript Extracts - Supplementary
+               * `ACK` - Acknowledgement of Payment
+               * `AFT` - Affidavit in Support of Garnishing Order After Judgment
+               * `AAS` - Affidavit of Attempted Service
+               * `AGR` - Agreement
+               * `APL` - Application (Form 5)
+               * `APE` - Application for Exemption (Civil Resolution Tribunal)
+               * `APU` - Application for Urgent Hearing (ADM880)
+               * `ATC` - Application to Court (Local Government Act)
+               * `APF` - Application to Garnish Federal Monies
+               * `APJ` - Application to a Judge
+               * `APR` - Application to a Registrar
+               * `BPT` - Bankruptcy Assignment
+               * `CRTO` - Certificate - Opens File
+               * `CRA` - Certificate of Attempted Service
+               * `COJ` - Certificate of Judgment
+               * `CSV` - Certificate of Service
+               * `CS` - Company Search
+               * `CPO` - Consent to Payment Out
+               * `COP` - Consumer Proposal
+               * `CRP` - Correspondence
+               * `DAR` - Decisions and Reasons (Residential Tenancy)
+               * `EOS` - Endorsed Order for Seizure and Sale
+               * `FS` - Financial Statement/Statement of Finances
+               * `EFSP` - Form 28 - Electronic Filing Statement - Provincial
+               * `GO` - Garnishing Order
+               * `GOAA` - Garnishing Order Absolute
+               * `GOA` - Garnishing Order After Judgment
+               * `GOB` - Garnishing Order Before Judgment
+               * `HDS` - Hearing/Trial Details Attachment Sheet
+               * `IRA` - Information for Remote Appearance
+               * `DSP` - Letter of Dispute from Garnishee
+               * `NAT` - Notice - Appearance by Telephone Conference
+               * `NCD` - Notice of Change of Address for Delivery
+               * `NHR` - Notice of Hearing (Form 8)
+               * `NID` - Notice of Intent to Dispute Monies Paid into Court
+               * `NPI` - Notice of Payment Into Court
+               * `NPO` - Notice of Payment Out
+               * `NWOA` - Notice of Warrant of Arrest
+               * `NWD` - Notice of Withdrawal
+               * `NPH` - Notice of a Payment Hearing
+               * `ORD` - Order
+               * `ODT` - Order (Form 7)
+               * `ORO` - Order (opens file)/Enforcement Order
+               * `OAW` - Order Following an Appearance on a Warrant
+               * `ORP` - Order for Attendance of a Prisoner in a Civil or Family Matter
+               * `OSS` - Order for Seizure and Sale
+               * `OTH` - Other Document
+               * `PO` - Payment Order
+               * `POD` - Payment Order (By Default)
+               * `RFJ` - Reasons For Judgment
+               * `RER` - Referral for Review (Form 1)
+               * `RERA` - Referral for Review Affidavit (Form 2)
+               * `RCPT` - Registry Correspondence to a Party - Administrative
+               * `RRLT` - Registry Rejection Letter - Administrative
+               * `RTC` - Reply to a Counterclaim
+               * `RPO` - Request for Payment Out
+               * `REO` - Requisition - Opens File
+               * `RSR` - Response to Referral (Form 3)
+               * `RSRA` - Response to Referral Affidavit (Form 4)
+               * `RETM` - Returned Mailing to Registry - Administrative
+               * `SCL` - Sheriff Cover Letter - Administrative
+               * `SPH` - Summons to Payment Hearing
+               * `SDH` - Summons to a Default Hearing
+               * `TRN` - Transcript
+               * `WOA` - Warrant of Arrest / Notice of Warrant of Arrest
+               * `WOI` - Warrant of Imprisonment
+               * `AFJ` - Affidavit Section 51
+               * `APS` - Affidavit of Personal Service
+               * `AMM` - Agreement Made In a Facilitated Planning Meeting or Mediation
+               * `AEO` - Application Respecting Existing Orders or Agreements
+               * `AXP` - Application about Extraordinary Parenting Matter (Victoria only)
+               * `AAP` - Application about a Protection Order
+               * `ACMO` - Application for Case Management Order with Notice (Victoria only)
+               * `ACMW` - Application for Case Management Order without Notice
+               * `AFET` - Application for Enforcement (Victoria Only)
+               * `AFCO` - Application for Family Law Matter Consent Order (Victoria only)
+               * `APRC` - Application for Order Prohibiting the Relocation of a Child (Victoria only)
+               * `AFO` - Application for an Order - CFCSA
+               * `APC` - Application to Change/Cancel Order
+               * `AEC` - Application to Enforce a Custody Order
+               * `APO` - Application to Obtain an Order
+               * `ARD` - Application to Re-Set Court Date
+               * `ARC` - Application to Recognize a Custody or Access Order made by an Extra-provincial Tribunal
+               * `AEA` - Application to Recognize an ExtraProvincial Order for Guardianship, Parenting Arrangements orContact
+               * `ARE` - Application to Renew, Change or Cancel an Order (Adult Guardianship)
+               * `ASJ` - Assignment of Judgment
+               * `CCB` - Case Conference Brief (CFCSA)
+               * `CCR` - Case Conference Record
+               * `CRDF` - Certificate - Notice of Default Fee
+               * `COEA` - Certificate of Enforceability and Arrears (ISO)
+               * `CRF` - Certificate of Fitness
+               * `COI` - Certificate of Incapability (Form 2 AGA)
+               * `CILA` - Certificate of Independent Legal Advice
+               * `COT` - Consent (Form 19)
+               * `CONA` - Consent Adjournment - FLA & FMEA
+               * `CRQ` - Consent Requisition (CFCSA & COVID-19)
+               * `CPR` - Consent for Child Protection Record Check
+               * `CCA` - Consent to Court Date
+               * `CUR` - Currency Certificate
+               * `CAR` - Custody and Access Report/Views of Child Report
+               * `DPO` - Default Payment Order
+               * `DOR` - Desk Order
+               * `DET` - Determination
+               * `ERC` - Early Resolution Completion Certificate (Victoria only)
+               * `ESNR` - Expedited Change Support (COVID) Scheduling Information - No Reply
+               * `ESWR` - Expedited Change Support (COVID) Scheduling Information - With Reply
+               * `FRCC` - FMEP Request for Certified Copies
+               * `FCR` - Family Case Conference Record (FLA)
+               * `FLC` - Family Law Matter Claim (Victoria only)
+               * `FSUM` - File Summary (Victoria only)
+               * `FSUA` - File Summary Addendum (Victoria only)
+               * `FSA` - Financial Statement COVID 19 Addendum
+               * `FAC` - Form A - Circumstances that caused removal
+               * `FBW` - Form B - Withdrawal by Director
+               * `FFS` - Form F - Section 29.1 Application for Supervision Order report
+               * `FULL` - Full Report - FLA s.211
+               * `HCL` - Hague Convention Letter - Article 16
+               * `IPR` - Internal Pre-Trial Conference Record
+               * `LOD` - List of Documents
+               * `NOA` - Notice of Appeal
+               * `NA` - Notice of Attachment
+               * `NCS` - Notice of Change of Solicitor
+               * `NFC` - Notice of Family Claim
+               * `NFMC` - Notice of Family Management Case Conference
+               * `NOF` - Notice of Filing (FMEP)
+               * `NOH` - Notice of Hearing or Conference
+               * `NIC` - Notice of Intention to Change Existing Child or Spousal Support - COVID
+               * `NPR` - Notice of Intention to Proceed
+               * `NM` - Notice of Motion
+               * `NME` - Notice of Motion in Maintenance Enforcement Proceedings
+               * `NRP` - Notice of Protection/Restraining Order
+               * `NRG` - Notice of Registration
+               * `NRO` - Notice of Restraining Order (PFA 806)
+               * `NWS` - Notice of Withdrawal of Lawyer/Solicitor
+               * `NTR` - Notice to Appear (Adult Guardianship Act)
+               * `NTD` - Notice to Debtor
+               * `NTRF` - Notice to Resolve a Family Law Matter (Victoria only)
+               * `OTP` - Order Terminating a Protection Order
+               * `OA` - Order for Attendence of a Prisoner
+               * `OFD` - Order for Discharge of a Person in Custody
+               * `ORNA` - Order without notice/appearance
+               * `PAS` - Parenting After Separation Certificate
+               * `PASE` - Parenting After Separation Exemption
+               * `PAR` - Parenting Arrangement Report
+               * `POC` - Plan of Care
+               * `REP` - Presentation Report
+               * `PTS` - Proposed terms of Supervision
+               * `POR` - Protection Order
+               * `PVO` - Provisional Order
+               * `RCF` - Record Check Results - s.51 Child Protection (MCFD)
+               * `RCR` - Record Check Results - s.51 Protection Order Registry
+               * `REF` - Referral Request
+               * `RO` - Release  (FRA)
+               * `RPL` - Reply
+               * `RPC` - Reply with Counterclaim
+               * `RQT` - Request (Form 18)
+               * `RCE` - Request for Court Enforcement
+               * `RPS` - Request for Protection Order Registry Search
+               * `RFS` - Request for Service of Documents
+               * `RFT` - Request for Teleconference (PFA 893)
+               * `RFR` - Request for s.211 Report - FLA
+               * `RGW` - Request to Adjourn Generally or Withdraw Application
+               * `RSA` - Respondent's Answer to Application - ISO Form N/L
+               * `RSO` - Restraining Order
+               * `ROR` - Restraining Order under Family Maintenance Enforcement Act
+               * `SNR` - Scheduling Instructions - No Reply
+               * `SWR` - Scheduling Instructions - With Reply
+               * `SR` - Search Request
+               * `SRR` - Search Request Response from Locate Services
+               * `SA` - Separation Agreement
+               * `SOA` - Statement of Arrears
+               * `SRO` - Statement of Recalculation
+               * `SUB` - Submissions
+               * `STW` - Subpoena/Summons to Witness
+               * `SUM` - Summons
+               * `SCH` - Summons to a Committal Hearing
+               * `SAP` - Support Application
+               * `SVA` - Support Variation Application
+               * `TC` - Transfer Consent
+               * `VOC` - Views of the Child Report - FLA s.211
+               * `WAV` - Waiver (Notification period CFCSA)
+               * `WCL` - Warrant Cancellation
+               * `WFA` - Warrant for Arrest
+               * `WAW` - Warrant for Witness
+               * `WOC` - Warrant of Committal
+               * `WAE` - Warrant of Execution
+               * `WAA` - Warrant to Arrest
+               * `HCLW` - Withdrawal of Hague Convention Letter - Article 16
+               * `WNC` - Without Notice Application Checklist
+               * `WRT` - Writ of Summons
+               * `WAG` - Written Agreement
+               * `WCT` - Written Consent
+               * `ACO` - Acceptance of Offer to Settle
+               * `ACS` - Acknowledgement of Service
+               * `AFBA` - Affidavit in Support of Garnishing Order Before Action
+               * `AFB` - Affidavit in Support of Garnishing Order Before Judgment
+               * `AFWF` - Affidavit in Support of Order to Waive Fees
+               * `ACD` - Affidavit in Support to Cancel Dismissal or Default Order
+               * `AFM` - Affidavit of Attainment of Majority
+               * `AFC` - Affidavit of Non-Compliance
+               * `ADO` - Application for Default Order
+               * `ARG` - Argument
+               * `CRT` - Certificate
+               * `CLG` - Consent of Litigation Guardian
+               * `CTA` - Consent to Adjourn Settlement Conference or Mediation Appointment
+               * `CTC` - Consent to Adjourn Trial Conference
+               * `DO` - Default Order
+               * `MA` - Mediation Agreement
+               * `MCO` - Mediation Compensation Order
+               * `NCC` - Notice of Civil Claim
+               * `NCR` - Notice of Civil Resolution Tribunal Claim
+               * `NCL` - Notice of Claim
+               * `NMS` - Notice of Mediation Session
+               * `NOPC` - Notice of Pre-Trial Conference
+               * `NSC` - Notice of Settlement Conference
+               * `NSI` - Notice of Simplified Trial
+               * `NSU` - Notice of Summary Trial for Financial Debt
+               * `NOT` - Notice of Trial / Pre-Trial Conference
+               * `NCF` - Notice of Trial Conference
+               * `NTM` - Notice to Mediate
+               * `NMO` - Notice to Mediate for Claims between $10,000 and $35,000
+               * `NMU` - Notice to Mediate for Claims under $10,000
+               * `NCT` - Notice to the Claimant
+               * `ORW` - Order to Waive Fees
+               * `PET` - Petition
+               * `TPR` - Reply to Third Party Notice
+               * `RAG` - Reply with Agreement to pay
+               * `RJD` - Request for Judgment or Dismissal
+               * `ROM` - Result of Mediation
+               * `SCR` - Settlement Conference Record (SCL 018)
+               * `SMD` - Summary Trial Documents
+               * `TPN` - Third Party Notice
+               * `TCR` - Trial Conference Record (SCL 052)
+               * `TRS` - Trial Statement
+               * `VDT` - Verification of Default
+               * `VNA` - Verification of Non-Attendance
+               * `WPP` - Withdrawal of Application
+               * `WRC` - Writ of Summons/Statement of Claim
+               * `ABO` - Absolute Order
+               * `APD` - Application for Deposit (CRT)
+               * `CET` - Certificate - Section 56.2 CRTA
+               * `COC` - Certificate of Compliance (CRT)
+               * `FEDE` - Fee Declaration (Mediation)
+               * `INN` - Initiating Notice from CRT
+               * `NRR` - Notice that CRT refuses to resolve claim
+               * `NTS` - Notice to Suspend Proceedings
+               * `RCT` - Response made under Sec 7 CRTA
+               * `WR` - Warrant of Remand
+               * `WRD` - Writ of Delivery
+               * `RBK` - 170 Reports for Bankruptcy
+               * `AFY` - Affidavit of Consent of Child 12 years or older
+               * `AFG` - Affidavit of Consent of Guardian
+               * `ARS` - Application Response
+               * `ATD` - Application for a Trial Date
+               * `APT` - Appointment
+               * `BPA` - Birth Parent Expenses Affidavit
+               * `BON` - Bond
+               * `CMCO` - Case Management Conference Order - Rule 68
+               * `CP` - Case Management Plan
+               * `CMP` - Case Management Program
+               * `CMR` - Case Management Requisition - Rule 68
+               * `CAV` - Caveat (probate)
+               * `COF` - Certificate of Fees
+               * `CPL` - Certificate of Pending Litigation
+               * `CRS` - Certificate of Result of Sale
+               * `CON` - Consent
+               * `DDD` - Demand
+               * `DOA` - Desk Order Application
+               * `EFSS` - Electronic Filing Statement - Supreme
+               * `ESO` - Endorsement on Originating Process for Service outside British Columbia (Form 11)
+               * `EXR` - Examiner's Report
+               * `IDP` - Identification Particulars of Adopted Person
+               * `LST` - List of Witnesses
+               * `LIP` - Litigation Plan
+               * `MEM` - Memorandum
+               * `NTJ` - Notice Requiring Trial by Jury
+               * `NAM` - Notice of Appeal - Master or Registrar
+               * `NAP` - Notice of Application
+               * `NACS` - Notice of Appointment or Change of Lawyer/Solicitor
+               * `NDT` - Notice of Discontinuance
+               * `NDP` - Notice of Discontinuance in Part
+               * `NDW` - Notice of Discontinuance in Whole
+               * `NH` - Notice of Hearing
+               * `NIWS` - Notice of Intention to Withdraw as Lawyer/Solicitor
+               * `NT` - Notice of Trial
+               * `NTA` - Notice to Admit
+               * `NFS` - Notice to File Financial Statement
+               * `NTP` - Notice to Produce
+               * `ORC` - Order of Commital
+               * `OTL` - Outline
+               * `PPR` - Post Placement Report
+               * `PTC` - Pre Trial Conference
+               * `RRT` - Registrar's Report
+               * `RLB` - Registration of a Live Birth
+               * `ROS` - Release
+               * `RCV` - Report on Younger Child's Views
+               * `RCO` - Requisition for Consent Order or for Order without Notice (Form 31)
+               * `RES` - Response
+               * `RESP` - Response to Petition
+               * `SC` - Statement of Claim
+               * `SD` - Statement of Defence
+               * `SDC` - Statement of Defence and Counterclaim
+               * `STD` - Subpoena to Debtor
+               * `AFP` - Supplemental Affidavit
+               * `TCHB` - Telephone Conference Hearing Brief - COVID
+               * `TB` - Trial Brief
+               * `TRC` - Trial Certificate
+               * `TR` - Trial Record
+               * `UT` - Undertaking
+               * `WRP` - Writ of Possession
+               * `WSS` - Writ of Seizure and Sale
+               * `WRS` - Writ of Sequestration
+               * `AOD` - Absolute Order of Discharge
+               * `APB` - Application for a Bankruptcy Order
+               * `AOT` - Application of Trustee for Discharge
+               * `ASC` - Assessment Certificate
+               * `ASB` - Assignment
+               * `BRF` - Brief
+               * `COA` - Certificate of Appointment
+               * `CTS` - Certificate of Assignment (Section 57)
+               * `CEA` - Certificate of Automatic Discharge
+               * `CSE` - Certificate of Change in Status of Estate
+               * `CRC` - Certificate of Compliance and Deemed Discharge of Trustee (or Administrator)
+               * `CED` - Certificate of Discharge
+               * `CFD` - Certificate of Distribution
+               * `CFP` - Certificate of Filing a Proposal
+               * `CFB` - Certificate of Filing of a Bankruptcy Order
+               * `CIP` - Certificate of Filing of a Notice of Intention to make a Proposal
+               * `CRFP` - Certificate of Full Performance of Proposal
+               * `CRTX` - Certificate of Taxation
+               * `CRTT` - Certificate of Trustee on Solicitor's Bill of Costs
+               * `CDO` - Conditional Order of Discharge
+               * `FTW` - Consent to Withdraw from Fast Track Litigation
+               * `CAB` - Consumer Application for Bankruptcy
+               * `CRB` - Corporate Application for Bankruptcy
+               * `DR` - Directors Resolution
+               * `EWE` - Endorsed Writ of Execution
+               * `EIS` - Estate Information Summary
+               * `ES` - Executive Summary
+               * `IDS` - Impact Data Entry Sheet - Initial filing
+               * `IES` - Income and Expense Statement
+               * `INS` - Insolvency Name Search
+               * `INM` - Inspector's Minutes
+               * `IRPT` - Inspector's Report
+               * `INR` - Inspector's Resolution
+               * `MTM` - Meeting Minutes
+               * `MMD` - Minutes of Meeting of the Directors
+               * `MOS` - Minutes of Settlement
+               * `MOF` - Minutes of first meeting with Creditors
+               * `MSM` - Minutes of the Second Meeting of Inspectors
+               * `MON` - Monitor's Report
+               * `NAB` - Notice of Abandonment of Appeal
+               * `NOC` - Notice of Adjourned First Meeting of Creditors
+               * `NAD` - Notice of Appeal from Disallowance of claim by trustee
+               * `NAAC` - Notice of Application for Appointment of Committee
+               * `NBY` - Notice of Bankruptcy
+               * `NBD` - Notice of Bankruptcy and of Impending Automatic Discharge
+               * `NPT` - Notice of Creditors of Passing of Trustee Accounts
+               * `NTT` - Notice of Deemed Taxation of Trustee's Accounts
+               * `NDA` - Notice of Deemed Taxation of Trustee's Accounts & Deemed Discharge of Trustee
+               * `NOD` - Notice of Default in the Performance of a Proposal
+               * `NDO` - Notice of Dispute of payment out of court
+               * `FTN` - Notice of Enrollment into Fast Track Litigation
+               * `NFD` - Notice of Final Dividend and Application for Discharge of Trustee
+               * `NIO` - Notice of Intended Opposition to Discharge of Bankrupt
+               * `NOP` - Notice of Opposition
+               * `NPC` - Notice of Proposal to Creditors (Form 92)
+               * `NOS` - Notice of Satisfaction
+               * `NSP` - Notice of Stay of Proceedings
+               * `NIFP` - Notice of intention to file a proposal
+               * `NFM` - Notice of the First Meeting of Inspectors
+               * `NBC` - Notice to Bankrupt of Meeting of Creditors
+               * `NCB` - Notice to Creditors of Bankrupt's Application for Discharge
+               * `NRT` - Notice to Creditors of Renumeration of Trustee in the Amended Proposal Administration
+               * `RRP` - Official Receivers Report Section 161
+               * `OAB` - Ordinary Application for Bankruptcy
+               * `PCF` - Projected Cash-Flow Statement
+               * `PPL` - Proposal
+               * `RBD` - Report of Trustee on Bankrupt's Application for Discharge
+               * `RTP` - Report of Trustee on Proposal
+               * `RTR` - Report of Trustee on Refusal by Creditors to Approve Proposal
+               * `RFP` - Report on Cash-Flow Statement by the Person making the proposal
+               * `RAJ` - Request for Assignment of Trial Judge
+               * `RMT` - Request for Mediation Made by Trustee (Form 60)
+               * `RFM` - Request of a First Meeting of Creditors
+               * `RRL` - Resolution Refusing Proposal
+               * `STA` - Statement
+               * `SAF` - Statement of Affairs
+               * `SAG` - Statement of Argument
+               * `STI` - Summary of Trustee's Time Incurred
+               * `SUC` - Superintendent's Comments
+               * `SRB` - Superintendent's Report for Bankruptcy
+               * `SPO` - Suspended Order
+               * `TAX` - Taxation (Bankruptcy)
+               * `TRD` - Transcript from Examination for Discovery
+               * `TA` - Trial Agenda
+               * `TBW` - Trial Brief Warning
+               * `TPC` - Trustee's Preliminary Report to Creditors
+               * `TRF` - Trustee's Report on Cash Flow Statement
+               * `RAD` - Trustee's Statement of Receipts and Disbursements
+               * `WOO` - Withdrawal of Opposition
+               * `NPA` - Notice (Section 112 EAA)
+               * `NDIS` - Notice of Dispute
+               * `NOI` - Notice of Interest
+               * `NOW` - Notice of Objection to Withdrawal of Solicitor
+               * `NTC` - Notice to Caveator
+               * `ORND` - Order for Removal of Notice of Dispute
+               * `POA` - Power of Attorney
+               * `WIT` - Withdrawal of Caveat
+               * `WDN` - Withdrawal of Notice of Dispute
+               * `AFDO` - Affidavit - Desk Order Divorce
+               * `ANS` - Answer
+               * `COD` - Certificate of Divorce
+               * `CNA` - Certificate of No Appeal
+               * `CSS` - Certificate of Service by Sheriff
+               * `CSA` - Child Support Affidavit
+               * `CLR` - Clearance Certificate
+               * `CNF` - Confirmation
+               * `CC` - Counterclaim
+               * `FCC` - Counterclaim - Family
+               * `DIS` - Disposition Report
+               * `OFI` - Final Order
+               * `JPE` - Joint Petition
+               * `WRJ` - Joint Writ
+               * `MC` - Marriage Certificate
+               * `MR` - Marriage Registration
+               * `NCV` - Name Change Form - Vital Statistics
+               * `OWN` - Order Made Without Notice
+               * `ORA` - Order Made after Application
+               * `RCRT` - Registrar's Certificate
+               * `RCP` - Registrar's Certificate of Pleadings - Family Law
+               * `RDP` - Registration of Divorce Proceeding
+               * `JCC` - Request for Judicial Case Conference
+               * `RFO` - Requisition for Final Order (Form F35)
+               * `RFC` - Response to Family Claim
+               * `RD` - Review document
+               * `AFSA` - Affidavit in Support of Application
+               * `AFD` - Affidavit of Delivery
+               * `AFK` - Affidavit of Kindred and Fortune
+               * `AOS` - Affidavit of Ordinary Service
+               * `AFW` - Affidavit to Lead Warrant
+               * `CAO` - Case Plan Order
+               * `CPP` - Case Plan Proposal
+               * `CAS` - Caveat (ship)
+               * `CCP` - Certificate of Commencement of Proceedings
+               * `COM` - Certificate of Mediation
+               * `CTF` - Compensation Transfer Form
+               * `CQN` - Constitutional Question Act Notice
+               * `DEC` - Declaration
+               * `DJ` - Default Judgment
+               * `DJC` - Default Judgment Bill of Costs
+               * `CWS` - Form A - Compensation Action Writ of Summons & Statement of Claim
+               * `CAD` - Form B - Compensation Action Appearance & Statement of Defence
+               * `JRS` - Jurisdictional Response
+               * `NSD` - Notice and Summary of Document
+               * `NOAS` - Notice of Address for Service
+               * `NASD` - Notice of Appeal - Standard Directions
+               * `NADR` - Notice of Appeal if Directions Required
+               * `NAFC` - Notice of Application for Committal
+               * `NCP` - Notice of Case Planning Conference
+               * `NCCP` - Notice of Civil Claim - Admiralty(In Rem and In Personam)
+               * `NCCA` - Notice of Civil Claim - Admiralty(In Rem)
+               * `NDF` - Notice of Default
+               * `NFT` - Notice of Fast Track Action
+               * `NHS` - Notice of Hearing of Stated Case
+               * `NMC` - Notice of Motion for Committal
+               * `NOO` - Notice of Order
+               * `NPS` - Notice of Proceedings
+               * `NSO` - Notice of Sealing Order
+               * `NDC` - Notice to Defendant by Counterclaim
+               * `ORT` - Order after Trial
+               * `ORI` - Order for Indigent Status
+               * `ORFJ` - Order to Register Foreign Judgment
+               * `PTT` - Petition to the Court
+               * `RLS` - Release (Ship)
+               * `RST` - Request for Service Abroad of Judicial or Extrajudicial Documents
+               * `RCC` - Response to Civil Claim
+               * `REC` - Response to Counterclaim
+               * `RPN` - Response to Third Party Notice
+               * `SCS` - Show Cause Summons
+               * `STC` - Stated Case
+               * `SAT` - Statement of Account - Form 136A
+               * `SLE` - Statement of Claim of Lien
+               * `SUO` - Subpoena
+               * `WAS` - Warrant to Arrest (Ship)
+               * `WDS` - Withdrawal of Caveat (Ship)
+               * `AFTL` - Affidavit of Translator
+               * `AAI` - Agreement as to Annual Income
+               * `ADC` - Application for Divorce Under the Civil Marriage Act
+               * `AED` - Appointment to Examine for Discovery
+               * `CER` - Certificate (New Form 14/F14)
+               * `CPOR` - Change of Protection Order
+               * `DDP` - Duplicate Divorce Proceeding (Notice from CDR)
+               * `ITE` - Instructions to Examiner
+               * `INT` - Interrogatories
+               * `SCJ` - Joint Statement of Claim - Form 128A Family Law Proceeding
+               * `WSJ` - Joint Writ of Summons - Form 127A Family Law Proceeding
+               * `LOE` - List of Expenses
+               * `MRA` - Media Request Access to Exhibit - No Protocol Implemented (Form 2)
+               * `FNAP` - Notice of Application - Family
+               * `NIW` - Notice of Intention to Call Adverse Party as a Witness
+               * `NJF` - Notice of Joint Family Claim
+               * `NJC` - Notice of Judicial Case Conference
+               * `NWJ` - Notice of Withdrawal from Joint Family Law Case
+               * `NWF` - Notice of Withdrawal in Family Law Case in which a Divorce is Claimed
+               * `NTE` - Notice to Cross-Examine
+               * `ORJ` - Order Made at Judicial Case Conference
+               * `PCH` - Protection Order (Changed - Form 54.1)
+               * `RPM` - Request to Implement Protocol for Media Access to Exihibit (Form 1)
+               * `REW` - Requisition - Arbitration Award (Form F17.3)
+               * `REA` - Requisition - Form F17.1 (Agreements)
+               * `RED` - Requisition - Form F17.2 (Determinations)
+               * `WAR` - Warrant - Contempt
+               * `WCJ` - Writ/Claim Joint
+               * `AFPA` - Affidavit in Support of Application to Pass Accounts
+               * `SOT` - State of Title Certificate
+               * `SOR` - Statement of Relief Sought
+               * `SMA` - Summary Accounting
+               * `AFSG` - Affidavit in Support of Application for Estate Grant
+               * `AFSR` - Affidavit in Support of Application for Resealing
+               * `AFA` - Affidavit of Administrator
+               * `AFAN` - Affidavit of Applicant for Ancillary Grant of Administration without Will Annexed
+               * `AFAA` - Affidavit of Applicant for Ancillary Grant of Probate or Administration with Will Annexed
+               * `AFGN` - Affidavit of Applicant for Grant of Administration without will Annexed
+               * `AFGS` - Affidavit of Applicant for Grant of Probate or Administration with will Annexed (Form P3)
+               * `AFGL` - Affidavit of Applicant for Grant of Probate or Administration with will Annexed (Form P4)
+               * `AFRN` - Affidavit of Applicant for Resealing of Grant of Administration without Will Annexed
+               * `AFRS` - Affidavit of Applicant for Resealing of Grant of Probate or Administration with Will Annexed
+               * `AFLD` - Affidavit of Assets and Liabilities for Domiciled Estate Grant
+               * `AFLN` - Affidavit of Assets and Liabilities for Non-Domiciled Estate Grant
+               * `AFAR` - Affidavit of Assets and Liabilities for Resealing
+               * `AFDR` - Affidavit of Deemed Renunciation
+               * `AFE` - Affidavit of Executor or Executrix
+               * `AFIE` - Affidavit of Interlineation, Erasure, Obliteration or Other Alteration
+               * `AFN` - Affidavit of Notice
+               * `GRAT` - Ancillary Grant
+               * `AUT` - Authorization to Obtain Estate Information
+               * `AOR` - Authorization to Obtain Resealing Information
+               * `CRRS` - Certificate - Form P28
+               * `CES` - Cessate Probate
+               * `CIT` - Citation
+               * `CDL` - Codicil
+               * `CFA` - Compensation/Fee Agreement
+               * `CSR` - Consent and Renunciation
+               * `CTR` - Correction Record
+               * `DCR` - Death Certificate
+               * `DPG` - Direction of Public Guardian and Trustee
+               * `FOR` - Foreign Grant
+               * `GAA` - Grant of Admin Ad Collagenda
+               * `GAP` - Grant of Admin Pendente Lite
+               * `GWA` - Grant of Admin Will Annexed
+               * `GWD` - Grant of Admin Will Annexed de Bonis non
+               * `GAD` - Grant of Admin de Bonis non
+               * `GOM` - Grant of Administration
+               * `GDP` - Grant of Double Probate
+               * `GRP` - Grant of Probate
+               * `NOAH` - Notice of Application (Spousal Home or Deficiencies in Will)
+               * `NORM` - Notice of Renunciation
+               * `NOR` - Notice of Resealing
+               * `NNK` - Notice to Next of Kin
+               * `PGTC` - Public Guardian and Trustee Comments
+               * `REN` - Renunciation
+               * `REFS` - Requisition for Subpoena
+               * `GOR` - Reseal Grant
+               * `SOAA` - Statement of Account Affidavit
+               * `SBR` - Submission for Resealing
+               * `SFG` - Submissions for Estate Grant
+               * `SAFA` - Supplemental Affidavit of Assets and Liabilities for Domiciled Estate Grant
+               * `SAFN` - Supplemental Affidavit of Assets and Liabilities for Non-Domiciled Estate Grant
+               * `SAFR` - Supplemental Affidavit of Assets and Liabilities for Resealing
+               * `WAP` - Warrant after Subpoena
+               * `WIL` - Will
+               * `WSN` - Wills Search Notice
+               * `EXP` - Expert Report
+               * `NATJ` - Notice of Assignment of Trial Judge
+          enum:
+            [
+                ABP,
+                ABRV,
+                ABA,
+                ABCA,
+                AFF,
+                AFI,
+                AFS,
+                ABS,
+                AAB,
+                ABJ,
+                ABR,
+                ARO,
+                ARSA,
+                ARSU,
+                APP,
+                FAR,
+                ATAA,
+                ATAC,
+                FA,
+                FACA,
+                MBAL,
+                MBAV,
+                APTA,
+                APTB,
+                APTO,
+                APTS,
+                OTA,
+                BOC,
+                COS,
+                CRD,
+                CBA,
+                CBI,
+                CBJ,
+                CBO,
+                CBR,
+                COR,
+                CNAC,
+                CNAT,
+                CNWD,
+                EFSA,
+                FCA,
+                ATFS,
+                ATIA,
+                ATIC,
+                FAI,
+                FIR,
+                ATJ,
+                LA,
+                LAA,
+                LPC,
+                LPV,
+                LT,
+                LT5J,
+                MEMA,
+                MEMI,
+                MEMO,
+                MEMR,
+                MBO,
+                MCH,
+                MCT,
+                NAAM,
+                NASC,
+                NAA,
+                NCQ,
+                NCA,
+                NCAA,
+                NCAL,
+                NHA,
+                NIAP,
+                ORSE,
+                REQ,
+                FRR,
+                ATRA,
+                ATRC,
+                FR,
+                FRAC,
+                MBRL,
+                FSU,
+                TCAC,
+                TCC,
+                TCAD,
+                TS,
+                TEA,
+                TEJ,
+                TES,
+                ACK,
+                AFT,
+                AAS,
+                AGR,
+                APL,
+                APE,
+                APU,
+                ATC,
+                APF,
+                APJ,
+                APR,
+                BPT,
+                CRTO,
+                CRA,
+                COJ,
+                CSV,
+                CS,
+                CPO,
+                COP,
+                CRP,
+                DAR,
+                EOS,
+                FS,
+                EFSP,
+                GO,
+                GOAA,
+                GOA,
+                GOB,
+                HDS,
+                IRA,
+                DSP,
+                NAT,
+                NCD,
+                NHR,
+                NID,
+                NPI,
+                NPO,
+                NWOA,
+                NWD,
+                NPH,
+                ORD,
+                ODT,
+                ORO,
+                OAW,
+                ORP,
+                OSS,
+                OTH,
+                PO,
+                POD,
+                RFJ,
+                RER,
+                RERA,
+                RCPT,
+                RRLT,
+                RTC,
+                RPO,
+                REO,
+                RSR,
+                RSRA,
+                RETM,
+                SCL,
+                SPH,
+                SDH,
+                TRN,
+                WOA,
+                WOI,
+                AFJ,
+                APS,
+                AMM,
+                AEO,
+                AXP,
+                AAP,
+                ACMO,
+                ACMW,
+                AFET,
+                AFCO,
+                APRC,
+                AFO,
+                APC,
+                AEC,
+                APO,
+                ARD,
+                ARC,
+                AEA,
+                ARE,
+                ASJ,
+                CCB,
+                CCR,
+                CRDF,
+                COEA,
+                CRF,
+                COI,
+                CILA,
+                COT,
+                CONA,
+                CRQ,
+                CPR,
+                CCA,
+                CUR,
+                CAR,
+                DPO,
+                DOR,
+                DET,
+                ERC,
+                ESNR,
+                ESWR,
+                FRCC,
+                FCR,
+                FLC,
+                FSUM,
+                FSUA,
+                FSA,
+                FAC,
+                FBW,
+                FFS,
+                FULL,
+                HCL,
+                IPR,
+                LOD,
+                NOA,
+                NA,
+                NCS,
+                NFC,
+                NFMC,
+                NOF,
+                NOH,
+                NIC,
+                NPR,
+                NM,
+                NME,
+                NRP,
+                NRG,
+                NRO,
+                NWS,
+                NTR,
+                NTD,
+                NTRF,
+                OTP,
+                OA,
+                OFD,
+                ORNA,
+                PAS,
+                PASE,
+                PAR,
+                POC,
+                REP,
+                PTS,
+                POR,
+                PVO,
+                RCF,
+                RCR,
+                REF,
+                RO,
+                RPL,
+                RPC,
+                RQT,
+                RCE,
+                RPS,
+                RFS,
+                RFT,
+                RFR,
+                RGW,
+                RSA,
+                RSO,
+                ROR,
+                SNR,
+                SWR,
+                SR,
+                SRR,
+                SA,
+                SOA,
+                SRO,
+                SUB,
+                STW,
+                SUM,
+                SCH,
+                SAP,
+                SVA,
+                TC,
+                VOC,
+                WAV,
+                WCL,
+                WFA,
+                WAW,
+                WOC,
+                WAE,
+                WAA,
+                HCLW,
+                WNC,
+                WRT,
+                WAG,
+                WCT,
+                ACO,
+                ACS,
+                AFBA,
+                AFB,
+                AFWF,
+                ACD,
+                AFM,
+                AFC,
+                ADO,
+                ARG,
+                CRT,
+                CLG,
+                CTA,
+                CTC,
+                DO,
+                MA,
+                MCO,
+                NCC,
+                NCR,
+                NCL,
+                NMS,
+                NOPC,
+                NSC,
+                NSI,
+                NSU,
+                NOT,
+                NCF,
+                NTM,
+                NMO,
+                NMU,
+                NCT,
+                ORW,
+                PET,
+                TPR,
+                RAG,
+                RJD,
+                ROM,
+                SCR,
+                SMD,
+                TPN,
+                TCR,
+                TRS,
+                VDT,
+                VNA,
+                WPP,
+                WRC,
+                ABO,
+                APD,
+                CET,
+                COC,
+                FEDE,
+                INN,
+                NRR,
+                NTS,
+                RCT,
+                WR,
+                WRD,
+                RBK,
+                AFY,
+                AFG,
+                ARS,
+                ATD,
+                APT,
+                BPA,
+                BON,
+                CMCO,
+                CP,
+                CMP,
+                CMR,
+                CAV,
+                COF,
+                CPL,
+                CRS,
+                CON,
+                DDD,
+                DOA,
+                EFSS,
+                ESO,
+                EXR,
+                IDP,
+                LST,
+                LIP,
+                MEM,
+                NTJ,
+                NAM,
+                NAP,
+                NACS,
+                NDT,
+                NDP,
+                NDW,
+                NH,
+                NIWS,
+                NT,
+                NTA,
+                NFS,
+                NTP,
+                ORC,
+                OTL,
+                PPR,
+                PTC,
+                RRT,
+                RLB,
+                ROS,
+                RCV,
+                RCO,
+                RES,
+                RESP,
+                SC,
+                SD,
+                SDC,
+                STD,
+                AFP,
+                TCHB,
+                TB,
+                TRC,
+                TR,
+                UT,
+                WRP,
+                WSS,
+                WRS,
+                AOD,
+                APB,
+                AOT,
+                ASC,
+                ASB,
+                BRF,
+                COA,
+                CTS,
+                CEA,
+                CSE,
+                CRC,
+                CED,
+                CFD,
+                CFP,
+                CFB,
+                CIP,
+                CRFP,
+                CRTX,
+                CRTT,
+                CDO,
+                FTW,
+                CAB,
+                CRB,
+                DR,
+                EWE,
+                EIS,
+                ES,
+                IDS,
+                IES,
+                INS,
+                INM,
+                IRPT,
+                INR,
+                MTM,
+                MMD,
+                MOS,
+                MOF,
+                MSM,
+                MON,
+                NAB,
+                NOC,
+                NAD,
+                NAAC,
+                NBY,
+                NBD,
+                NPT,
+                NTT,
+                NDA,
+                NOD,
+                NDO,
+                FTN,
+                NFD,
+                NIO,
+                NOP,
+                NPC,
+                NOS,
+                NSP,
+                NIFP,
+                NFM,
+                NBC,
+                NCB,
+                NRT,
+                RRP,
+                OAB,
+                PCF,
+                PPL,
+                RBD,
+                RTP,
+                RTR,
+                RFP,
+                RAJ,
+                RMT,
+                RFM,
+                RRL,
+                STA,
+                SAF,
+                SAG,
+                STI,
+                SUC,
+                SRB,
+                SPO,
+                TAX,
+                TRD,
+                TA,
+                TBW,
+                TPC,
+                TRF,
+                RAD,
+                WOO,
+                NPA,
+                NDIS,
+                NOI,
+                NOW,
+                NTC,
+                ORND,
+                POA,
+                WIT,
+                WDN,
+                AFDO,
+                ANS,
+                COD,
+                CNA,
+                CSS,
+                CSA,
+                CLR,
+                CNF,
+                CC,
+                FCC,
+                DIS,
+                OFI,
+                JPE,
+                WRJ,
+                MC,
+                MR,
+                NCV,
+                OWN,
+                ORA,
+                RCRT,
+                RCP,
+                RDP,
+                JCC,
+                RFO,
+                RFC,
+                RD,
+                AFSA,
+                AFD,
+                AFK,
+                AOS,
+                AFW,
+                CAO,
+                CPP,
+                CAS,
+                CCP,
+                COM,
+                CTF,
+                CQN,
+                DEC,
+                DJ,
+                DJC,
+                CWS,
+                CAD,
+                JRS,
+                NSD,
+                NOAS,
+                NASD,
+                NADR,
+                NAFC,
+                NCP,
+                NCCP,
+                NCCA,
+                NDF,
+                NFT,
+                NHS,
+                NMC,
+                NOO,
+                NPS,
+                NSO,
+                NDC,
+                ORT,
+                ORI,
+                ORFJ,
+                PTT,
+                RLS,
+                RST,
+                RCC,
+                REC,
+                RPN,
+                SCS,
+                STC,
+                SAT,
+                SLE,
+                SUO,
+                WAS,
+                WDS,
+                AFTL,
+                AAI,
+                ADC,
+                AED,
+                CER,
+                CPOR,
+                DDP,
+                ITE,
+                INT,
+                SCJ,
+                WSJ,
+                LOE,
+                MRA,
+                FNAP,
+                NIW,
+                NJF,
+                NJC,
+                NWJ,
+                NWF,
+                NTE,
+                ORJ,
+                PCH,
+                RPM,
+                REW,
+                REA,
+                RED,
+                WAR,
+                WCJ,
+                AFPA,
+                SOT,
+                SOR,
+                SMA,
+                AFSG,
+                AFSR,
+                AFA,
+                AFAN,
+                AFAA,
+                AFGN,
+                AFGS,
+                AFGL,
+                AFRN,
+                AFRS,
+                AFLD,
+                AFLN,
+                AFAR,
+                AFDR,
+                AFE,
+                AFIE,
+                AFN,
+                GRAT,
+                AUT,
+                AOR,
+                CRRS,
+                CES,
+                CIT,
+                CDL,
+                CFA,
+                CSR,
+                CTR,
+                DCR,
+                DPG,
+                FOR,
+                GAA,
+                GAP,
+                GWA,
+                GWD,
+                GAD,
+                GOM,
+                GDP,
+                GRP,
+                NOAH,
+                NORM,
+                NOR,
+                NNK,
+                PGTC,
+                REN,
+                REFS,
+                GOR,
+                SOAA,
+                SBR,
+                SFG,
+                SAFA,
+                SAFN,
+                SAFR,
+                WAP,
+                WIL,
+                WSN,
+                EXP,
+                NATJ,
+            ]
+    SubmissionDocument:
+      required:
+        - description
+        - statutoryFeeAmount
+      type: object
+      description: A Efiling Document
+      allOf:
+        - $ref: "#/components/schemas/InitialDocument"
+      properties:
+        description:
+          type: string
+          description: the description of the document
+        statutoryFeeAmount:
+          type: number
+          description: statutory fee amount
+        mimeType:
+          type: string
+          description: File mime type
+        status:
+          $ref: "#/components/schemas/Status"
+        paymentProcessed:
+          type: boolean
+          description: Has the payment been processed
+    EfilingError:
       required:
         - error
         - message
@@ -74,3 +1973,581 @@ components:
           type: array
           items:
             type: string
+    GenerateUrlRequest:
+      description: details about the required transaction
+      required:
+        - clientApplication
+        - filingPackage
+        - navigationUrls
+      properties:
+        clientAppName:
+          type: string
+          description: Name of the application to be displayed
+        filingPackage:
+          $ref: "#/components/schemas/InitialPackage"
+        navigationUrls:
+          $ref: "#/components/schemas/NavigationUrls"
+    GenerateUrlResponse:
+      description: A temporary url for uploading submission
+      properties:
+        expiryDate:
+          type: integer
+          format: int64
+        efilingUrl:
+          type: string
+    GetSubmissionConfigResponse:
+      type: object
+      required:
+        - navigation
+        - clientAppName
+        - csoBaseUrl
+      properties:
+        navigationUrls:
+          $ref: "#/components/schemas/NavigationUrls"
+        clientAppName:
+          type: string
+          description: the client app name
+        csoBaseUrl:
+          type: string
+          description: the CSO base Url
+    NavigationUrls:
+      required:
+        - success
+        - error
+        - cancel
+      properties:
+        success:
+          type: string
+          description: where user should be redirected on success
+        error:
+          type: string
+          description: where user should be redirected on error
+        cancel:
+          type: string
+          description: where user should be redirected on cancel
+    InitialPackage:
+      type: object
+      description: A filing package can contain one or multiple documents that have or are being submitted electronically for new or existing court file.
+      required:
+        - documents
+        - court
+        - parties
+      properties:
+        court:
+          $ref: "#/components/schemas/CourtBase"
+        documents:
+          type: array
+          items:
+            $ref: "#/components/schemas/InitialDocument"
+        parties:
+          type: array
+          items:
+            $ref: "#/components/schemas/Party"
+    FilingPackage:
+      type: object
+      description: A filing package can contain one or multiple documents that have or are being submitted electronically for new or existing court file.
+      required:
+        - documents
+      properties:
+        packageNumber:
+          type: number
+          description: Submitted package number
+        filingComments:
+          type: string
+          description: Filing comments
+        submittedBy:
+          $ref: "#/components/schemas/Account"
+        submittedDate:
+          type: string
+          description: Submitted date
+        court:
+          $ref: "#/components/schemas/Court"
+        documents:
+          type: array
+          items:
+            $ref: "#/components/schemas/Document"
+        parties:
+          type: array
+          items:
+            $ref: "#/components/schemas/Party"
+        payments:
+          type: array
+          items:
+            $ref: "#/components/schemas/Payment"
+    SubmissionFilingPackage:
+      type: object
+      description: Submitted
+      required:
+        - submissionFeeAmount
+        - documents
+      properties:
+        submissionFeeAmount:
+          type: number
+          description: Package submission fee.
+        packageNumber:
+          type: number
+          description: Submitted package number
+        filingComments:
+          type: string
+          description: Filing comments
+        submittedBy:
+          $ref: "#/components/schemas/Account"
+        submittedDate:
+          type: string
+          description: Submitted date
+        court:
+          $ref: "#/components/schemas/Court"
+        documents:
+          type: array
+          items:
+            $ref: "#/components/schemas/SubmissionDocument"
+        parties:
+          type: array
+          items:
+            $ref: "#/components/schemas/Party"
+        payments:
+          type: array
+          items:
+            $ref: "#/components/schemas/Payment"
+    CourtBase:
+      type: object
+      description: "Court related information"
+      required:
+        - location
+        - level
+        - courtClass
+        - division
+      properties:
+        location:
+          type: string
+          description: the court location
+        level:
+          type: string
+          description: the court level
+        courtClass:
+          type: string
+          description: the court class
+        division:
+          type: string
+          description: the court division
+        fileNumber:
+          type: string
+          description: the file number if case already exists
+        participatingClass:
+          type: string
+    Court:
+      type: object
+      description: "Court related information"
+      allOf:
+        - $ref: "#/components/schemas/CourtBase"
+      required:
+        - locationDescription
+      properties:
+        agencyId:
+          type: number
+          description: the agancy identifier
+        locationDescription:
+          type: string
+          description: the court location description
+        levelDescription:
+          type: string
+          description: the court location description
+        classDescription:
+          type: string
+          description: the court location description
+    CsoAccount:
+      type: object
+      description: a CsoAccount
+      required:
+        - clientId
+        - accountId
+        - internalClientNumber
+        - fileRolePresent
+      properties:
+        clientId:
+          type: string
+          description: the user cso clientId
+        accountId:
+          type: string
+          description: the user cso accountId
+        internalClientNumber:
+          type: string
+          description: the user cso internal client number
+        fileRolePresent:
+          type: boolean
+          description: if the user as file role
+    DocumentType:
+      type: object
+      required:
+        - type
+        - description
+      properties:
+        type:
+          type: string
+          description: code value
+        description:
+          type: string
+          description: human readable value
+    DocumentTypes:
+      type: object
+      properties:
+        documentTypes:
+          type: array
+          items:
+            $ref: "#/components/schemas/DocumentType"
+    UploadSubmissionDocumentsResponse:
+      description: represents upload document response
+      type: object
+      required:
+        - submissionId
+      properties:
+        submissionId:
+          type: string
+          format: uuid
+          description: a unique identifier for the submission
+        received:
+          type: number
+          description: the number of document received
+    Party:
+      description: party related to filing package
+      required:
+        - roleType
+        - partyType
+      properties:
+        partyType:
+          type: string
+          description: party type code
+          enum: [IND, ORG]
+        roleType:
+          type: string
+          description: >
+            role type code
+               * `ABC` - Aboriginal Community
+               * `ADJ` - Adjudicator
+               * `ADP` - Adoptee
+               * `APL` - Appellant
+               * `APP` - Applicant
+               * `ANT` - Aunt
+               * `AUT` - Authority
+               * `BKP` - Bankrupt
+               * `BKS` - Bankrupts (Spouse)
+               * `CAV` - Caveator
+               * `CHD` - Child
+               * `COF` - Child on File
+               * `CIT` - Citator
+               * `CLA` - Claimant
+               * `CLA1` - Claimant 1
+               * `CLA2` - Claimant 2
+               * `CLI` - Client
+               * `CI` - Court Issued
+               * `CRD` - Creditor
+               * `DBT` - Debtor
+               * `DEC` - Deceased
+               * `DEF` - Defendant
+               * `DEO` - Defendant by Counterclaim
+               * `DIS` - Disputant
+               * `FTH` - Father
+               * `FNA` - First Nation
+               * `GRF` - Grandfather
+               * `GRM` - Grandmother
+               * `GUA` - Guardian
+               * `HSB` - Husband - Divorce
+               * `INB` - Indian Band
+               * `INC` - Indigenous Community
+               * `ITV` - Intervener
+               * `MOT` - Mother
+               * `NIS` - Nisga'a Lisims Government
+               * `PAR1` - Party 1
+               * `PA1` - Party 1 Joint Divorce Form127A
+               * `PAR2` - Party 2
+               * `PA2` - Party 2 Joint Divorce Form127A
+               * `PAR3` - Party 3
+               * `PAR4` - Party 4
+               * `PAR5` - Party 5
+               * `PET` - Petitioner
+               * `PLA` - Plaintiff
+               * `RES` - Respondent
+               * `REO` - Respondent by way of Counterclaim
+               * `SOL` - Solicitor
+               * `SP1` - Spouse 1- Divorce
+               * `SP2` - Spouse 2 - Divorce
+               * `SFH` - Step-Father
+               * `SMH` - Step-Mother
+               * `TST` - Testator
+               * `TSX` - Testatrix
+               * `THR` - Third Party
+               * `TFN` - Treaty First Nation
+               * `TRU` - Trustee
+               * `UNC` - Uncle
+               * `WIF` - Wife - Divorce
+               * `WIT` - Witness
+          enum:
+            [
+                ABC,
+                ADJ,
+                ADP,
+                APL,
+                APP,
+                ANT,
+                AUT,
+                BKP,
+                BKS,
+                CAV,
+                CHD,
+                COF,
+                CIT,
+                CLA,
+                CLA1,
+                CLA2,
+                CLI,
+                CI,
+                CRD,
+                DBT,
+                DEC,
+                DEF,
+                DEO,
+                DIS,
+                FTH,
+                FNA,
+                GRF,
+                GRM,
+                GUA,
+                HSB,
+                INB,
+                INC,
+                ITV,
+                MOT,
+                NIS,
+                PAR1,
+                PA1,
+                PAR2,
+                PA2,
+                PAR3,
+                PAR4,
+                PAR5,
+                PET,
+                PLA,
+                RES,
+                REO,
+                SOL,
+                SP1,
+                SP2,
+                SFH,
+                SMH,
+                TST,
+                TSX,
+                THR,
+                TFN,
+                TRU,
+                UNC,
+                WIF,
+                WIT,
+            ]
+        firstName:
+          type: string
+          description: first name
+        middleName:
+          type: string
+          description: middle name
+        lastName:
+          type: string
+          description: last name
+        roleDescription:
+          type: string
+          description: description of role
+        partyDescription:
+          type: string
+          description: description of party
+    CreateCsoAccountRequest:
+      description: represents a request to create a user
+      required:
+        - firstName
+        - lastName
+        - middleName
+        - email
+      properties:
+        firstName:
+          type: string
+          description: the user first name
+        lastName:
+          type: string
+          description: the user last name
+        middleName:
+          type: string
+          description: the user middle name
+        email:
+          type: string
+          description: the user email address
+    UpdateDocumentRequest:
+      description: request body for update documents
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: "#/components/schemas/InitialDocument"
+    UpdateDocumentResponse:
+      description: response body for update documents
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: "#/components/schemas/SubmissionDocument"
+    SubmitRequest:
+      description: create service request
+      type: object
+    SubmitResponse:
+      description: result of submit filing package
+      type: object
+      required:
+        - packageRef
+      properties:
+        packageRef:
+          type: string
+          description: base64 encoded package reference url
+    GenerateCardUrlRequest:
+      description: create service request
+      type: object
+      required:
+        - internalClientNumber
+        - redirectUrl
+      properties:
+        internalClientNumber:
+          type: string
+          description: client id for request to bambora
+        redirectUrl:
+          type: string
+          description: url bambora return from
+    GenerateCardUrlResponse:
+      description: result generate url
+      type: object
+      required:
+        - bamboraUrl
+      properties:
+        bamboraUrl:
+          type: string
+          description: redirect url
+    CsoAccountUpdateRequest:
+      description: update client details
+      type: object
+      required:
+        - internalClientNumber
+      properties:
+        internalClientNumber:
+          type: string
+          description: internal client number for request to bambora
+    CourtLocation:
+      type: object
+      description: "Court related information"
+      required:
+        - id
+        - name
+        - code
+        - identifierCode
+        - isSupremeCourt
+        - address
+      properties:
+        id:
+          type: number
+          description: the court id
+        identifierCode:
+          type: string
+          description: the court id code
+        name:
+          type: string
+          description: the court name
+        code:
+          type: string
+          description: the court code
+        isSupremeCourt:
+          type: boolean
+          description: the court supreme
+        address:
+          $ref: "#/components/schemas/Address"
+    CourtLocations:
+      description: resposne body for courtlocations
+      type: object
+      properties:
+        courts:
+          type: array
+          items:
+            $ref: "#/components/schemas/CourtLocation"
+    Address:
+      description: address object
+      type: object
+      required:
+        - addressLine1
+        - cityName
+        - provinceName
+        - countryName
+      properties:
+        addressLine1:
+          type: string
+          description: the court address line one
+        addressLine2:
+          type: string
+          description: the court address line two
+        addressLine3:
+          type: string
+          description: the court address line three
+        postalCode:
+          type: string
+          description: the court postal code
+        cityName:
+          description: the court city name
+          type: string
+        provinceName:
+          type: string
+          description: the court province name
+        countryName:
+          description: the address country name
+          type: string
+    Payment:
+      description: payment object
+      type: object
+      properties:
+        feeExempt:
+          type: boolean
+          description: Is the fee exempt
+        paymentCategory:
+          type: number
+          description: Category for fee
+        paymentDescription:
+          type: string
+          description: a description of the payment
+        processedAmount:
+          type: number
+          description: Amount
+        submittedAmount:
+          type: number
+          description: Amount
+        serviceIdentifier:
+          type: number
+          description: Id of payment
+        transactionDate:
+          type: string
+          description: date time of transaction
+    Status:
+      description: document status
+      type: object
+      properties:
+        description:
+          type: string
+          description: description of status
+        code:
+          type: string
+          description: status identifier
+        changeDate:
+          type: string
+          description: date changed
+    Account:
+      description: account object
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: first name
+        lastName:
+          type: string
+          description: last name
