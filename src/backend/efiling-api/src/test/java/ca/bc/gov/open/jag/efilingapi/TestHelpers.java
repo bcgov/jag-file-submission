@@ -67,6 +67,7 @@ public class TestHelpers {
     public static final DocumentProperties.TypeEnum TYPE = DocumentProperties.TypeEnum.AAB;
     public static final String PARTY_TYPE_DESC = "PARTY_TYPE_DESC";
     public static final String ROLE_TYPE_DESC = "ROLE_TYPE_DESC";
+    public static final String TRANSACTION_DESC = "TRANSACTION_DESC";
 
 
     public static InitialPackage createInitalPackage(ca.bc.gov.open.jag.efilingapi.api.model.Court court, List<InitialDocument> initialDocuments) {
@@ -304,6 +305,7 @@ public class TestHelpers {
         packagePayment.setProcessedAmt(BigDecimal.ONE);
         packagePayment.setSubmittedAmt(BigDecimal.ONE);
         packagePayment.setServiceId(BigDecimal.ONE);
+        packagePayment.setTransactionDesc(TRANSACTION_DESC);
         packagePayment.setTransactionDtm(DateTime.parse("2020-05-05T00:00:00.000-07:00"));
         return packagePayment;
 
