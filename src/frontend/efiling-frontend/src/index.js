@@ -9,12 +9,12 @@ import "@bcgov/bootstrap-theme/dist/css/bootstrap-theme.min.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
-axios.defaults.baseURL = window.REACT_APP_API_BASE_URL
-  ? window.REACT_APP_API_BASE_URL
+axios.defaults.baseURL = window.env
+  ? window.env.REACT_APP_API_BASE_URL
   : process.env.REACT_APP_API_BASE_URL;
 
-const bamboraRedirectUrl = window.REACT_APP_BAMBORA_REDIRECT_URL
-  ? window.REACT_APP_BAMBORA_REDIRECT_URL
+const bamboraRedirectUrl = window.env
+  ? window.env.REACT_APP_BAMBORA_REDIRECT_URL
   : process.env.REACT_APP_BAMBORA_REDIRECT_URL;
 
 sessionStorage.setItem("bamboraRedirectUrl", bamboraRedirectUrl);
