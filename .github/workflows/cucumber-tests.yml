@@ -26,6 +26,13 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: pull image
+        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend || true
+      - name: build image
+        run: docker build ./src/frontend/efiling-frontend -t efiling-frontend --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend
+      - name: tag & push
+        run: docker tag efiling-frontend docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend
+
       - name: Cache local Maven repository
         uses: actions/cache@v2
         with:
