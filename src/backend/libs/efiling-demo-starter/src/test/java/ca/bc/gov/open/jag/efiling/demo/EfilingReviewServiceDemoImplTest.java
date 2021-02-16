@@ -87,7 +87,7 @@ public class EfilingReviewServiceDemoImplTest {
         Assertions.assertEquals(DateTime.parse("2020-12-17"), result.get().getPayments().get(0).getTransactionDtm());
 
         Assertions.assertTrue(result.get().getPayments().get(1).getFeeExmpt());
-        Assertions.assertEquals(BigDecimal.TEN, result.get().getPayments().get(1).getPaymentCategory());
+        Assertions.assertEquals(new BigDecimal(3), result.get().getPayments().get(1).getPaymentCategory());
         Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(1).getSubmittedAmt());
         Assertions.assertEquals("Affidavit", result.get().getPayments().get(1).getTransactionDesc());
 

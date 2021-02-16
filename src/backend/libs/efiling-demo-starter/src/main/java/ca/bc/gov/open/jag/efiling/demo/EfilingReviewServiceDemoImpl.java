@@ -170,12 +170,12 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
         packagePaymentOne.setTransactionDtm(DateTime.parse("2020-12-17"));
         PackagePayment packagePaymentTwo = new PackagePayment();
         packagePaymentTwo.setFeeExmpt(true);
-        packagePaymentTwo.setPaymentCategory(BigDecimal.TEN);
+        packagePaymentTwo.setPaymentCategory(new BigDecimal(3));
         packagePaymentTwo.setSubmittedAmt(BigDecimal.ONE);
         packagePaymentTwo.setTransactionDesc("Affidavit");
         PackagePayment packagePaymentThree = new PackagePayment();
         packagePaymentThree.setFeeExmpt(true);
-        packagePaymentThree.setPaymentCategory(BigDecimal.TEN);
+        packagePaymentThree.setPaymentCategory(new BigDecimal(3));
         packagePaymentThree.setSubmittedAmt(BigDecimal.ONE);
         packagePaymentThree.setTransactionDesc("Affidavit");
         return Arrays.asList(packagePaymentOne, packagePaymentTwo, packagePaymentThree);
