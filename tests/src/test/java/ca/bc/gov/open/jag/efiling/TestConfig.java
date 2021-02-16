@@ -5,10 +5,7 @@ import ca.bc.gov.open.jag.efiling.page.AuthenticationPage;
 import ca.bc.gov.open.jag.efiling.page.DocumentUploadPage;
 import ca.bc.gov.open.jag.efiling.page.PackageConfirmationPage;
 import ca.bc.gov.open.jag.efiling.page.PackageReviewPage;
-import ca.bc.gov.open.jag.efiling.services.CourtService;
-import ca.bc.gov.open.jag.efiling.services.GenerateUrlService;
-import ca.bc.gov.open.jag.efiling.services.OauthService;
-import ca.bc.gov.open.jag.efiling.services.SubmissionService;
+import ca.bc.gov.open.jag.efiling.services.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -44,6 +41,11 @@ public class TestConfig {
     @Bean
     public GenerateUrlService generateUrlService() {
         return new GenerateUrlService(oauthService(), submissionService());
+    }
+
+    @Bean
+    public FilingPackageService filingPackageService() {
+        return new FilingPackageService();
     }
 
     @Bean
