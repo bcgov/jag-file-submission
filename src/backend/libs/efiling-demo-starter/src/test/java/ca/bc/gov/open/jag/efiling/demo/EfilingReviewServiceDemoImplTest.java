@@ -78,16 +78,16 @@ public class EfilingReviewServiceDemoImplTest {
         Assertions.assertEquals("IND", result.get().getParties().get(0).getPartyTypeCd());
         Assertions.assertEquals("Individual", result.get().getParties().get(0).getPartyTypeDesc());
 
-        Assertions.assertEquals(2, result.get().getPayments().size());
+        Assertions.assertEquals(3, result.get().getPayments().size());
         Assertions.assertFalse(result.get().getPayments().get(0).getFeeExmpt());
         Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(0).getPaymentCategory());
-        Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(0).getProcessedAmt());
+        Assertions.assertEquals(new BigDecimal(7), result.get().getPayments().get(0).getProcessedAmt());
         Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(0).getServiceId());
-        Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(0).getSubmittedAmt());
+        Assertions.assertEquals(new BigDecimal(7), result.get().getPayments().get(0).getSubmittedAmt());
         Assertions.assertEquals(DateTime.parse("2020-12-17"), result.get().getPayments().get(0).getTransactionDtm());
 
         Assertions.assertTrue(result.get().getPayments().get(1).getFeeExmpt());
-        Assertions.assertEquals(BigDecimal.TEN, result.get().getPayments().get(1).getPaymentCategory());
+        Assertions.assertEquals(new BigDecimal(3), result.get().getPayments().get(1).getPaymentCategory());
         Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(1).getSubmittedAmt());
         Assertions.assertEquals("Affidavit", result.get().getPayments().get(1).getTransactionDesc());
 
