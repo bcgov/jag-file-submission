@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Party {
 
     private String partyTypeCd;
+    private String partyTypeDesc;
     private String roleTypeCd;
+    private String roleTypeDesc;
     private String firstName;
     private String middleName;
     private String lastName;
@@ -15,13 +17,17 @@ public class Party {
     @JsonCreator
     public Party(
             @JsonProperty("partyTypeCd") String partyTypeCd,
+            @JsonProperty("partyTypeDesc") String partyTypeDesc,
             @JsonProperty("roleTypeCd") String roleTypeCd,
+            @JsonProperty("roleTypeDesc") String roleTypeDesc,
             @JsonProperty("firstName") String firstName,
             @JsonProperty("middleName") String middleName,
             @JsonProperty("lastName") String lastName,
             @JsonProperty("nameTypeCd") String nameTypeCd) {
         this.partyTypeCd = partyTypeCd;
+        this.partyTypeDesc = partyTypeDesc;
         this.roleTypeCd = roleTypeCd;
+        this.roleTypeDesc = roleTypeDesc;
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
@@ -30,7 +36,9 @@ public class Party {
 
     public Party(Builder builder) {
         this.partyTypeCd = builder.partyTypeCd;
+        this.partyTypeDesc = builder.partyTypeDesc;
         this.roleTypeCd = builder.roleTypeCd;
+        this.roleTypeDesc = builder.roleTypeDesc;
         this.firstName = builder.firstName;
         this.middleName = builder.middleName;
         this.lastName = builder.lastName;
@@ -41,8 +49,16 @@ public class Party {
         return partyTypeCd;
     }
 
+    public String getPartyTypeDesc() {
+        return partyTypeDesc;
+    }
+
     public String getRoleTypeCd() {
         return roleTypeCd;
+    }
+
+    public String getRoleTypeDesc() {
+        return roleTypeDesc;
     }
 
     public String getFirstName() {
@@ -68,7 +84,9 @@ public class Party {
     public static class Builder {
 
         private String partyTypeCd;
+        private String partyTypeDesc;
         private String roleTypeCd;
+        private String roleTypeDesc;
         private String firstName;
         private String middleName;
         private String lastName;
@@ -79,8 +97,18 @@ public class Party {
             return this;
         }
 
+        public Builder partyTypeDesc(String partyTypeDesc) {
+            this.partyTypeDesc = partyTypeDesc;
+            return this;
+        }
+
         public Builder roleTypeCd(String roleTypeCd) {
             this.roleTypeCd = roleTypeCd;
+            return this;
+        }
+
+        public Builder roleTypeDesc(String roleTypeDesc) {
+            this.roleTypeDesc = roleTypeDesc;
             return this;
         }
 

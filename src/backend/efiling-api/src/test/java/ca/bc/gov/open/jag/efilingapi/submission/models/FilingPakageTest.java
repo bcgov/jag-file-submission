@@ -32,9 +32,10 @@ public class FilingPakageTest {
     public static final String DESCRIPTION = "description";
     public static final BigDecimal STATUTORY_FEE_AMOUNT = BigDecimal.TEN;
     public static final String MIME_TYPE = "mimeType";
-    public static final BigDecimal PARTY_ID = BigDecimal.ONE;
     public static final String PARTY_TYPE_CD = "partyTypeCd";
     public static final String ROLE_TYPE_CD = "roleTypeCd";
+    public static final String PARTY_TYPE_DESC = "partyTypeDesc";
+    public static final String ROLE_TYPE_DESC = "roleTypeDesc";
     public static final String FIRST_NAME = "firstName";
     public static final String MIDDLE_NAME = "middleName";
     public static final String LAST_NAME = "lastName";
@@ -98,7 +99,9 @@ public class FilingPakageTest {
         List<Party> parties = new ArrayList<>();
         Party party = new Party(
                 PARTY_TYPE_CD,
+                PARTY_TYPE_DESC,
                 ROLE_TYPE_CD,
+                ROLE_TYPE_DESC,
                 FIRST_NAME,
                 MIDDLE_NAME,
                 LAST_NAME,

@@ -18,6 +18,7 @@ import { propTypes } from "../../../types/propTypes";
 
 import "./Upload.scss";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
+import { getDocumentTypes } from "../../../domain/documents/DocumentService";
 
 const filesToUpload = {
   documents: [],
@@ -39,12 +40,9 @@ const checkValidityOfUploadedFiles = () => {
   return false;
 };
 
-const setDropdownItems = ({ level, courtClass }, setItems, items) => {
-  if (items.length > 0) return;
-
-  axios
-    .get(`/lookup/documentTypes/${level}/${courtClass}`)
-    .then(({ data: { documentTypes } }) => setItems(documentTypes))
+const setDropdownItems = ({ level, courtClass }, setItems) => {
+  getDocumentTypes(level, courtClass)
+    .then((documentTypes) => setItems(documentTypes))
     .catch((error) => errorRedirect(sessionStorage.getItem("errorUrl"), error));
 };
 
@@ -307,11 +305,8 @@ export default function Upload({
   useEffect(() => {
     sessionStorage.setItem("currentPage", "upload");
     window.history.pushState(null, null, window.location.href);
+    setDropdownItems(courtData, setItems);
   }, []);
-
-  useEffect(() => {
-    setDropdownItems(courtData, setItems, items);
-  }, [items, courtData]);
 
   if (showPackageConfirmation) {
     return (

@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PartyList Component Matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="ct-party-list"
+  >
+    <div
+      class="header"
+    >
+      <span
+        class="d-none d-lg-inline col-lg-6"
+      >
+        Name
+      </span>
+      <span
+        class="d-none d-lg-inline col-lg-3"
+      >
+        Party Role
+      </span>
+      <span
+        class="d-none d-lg-inline col-lg-3"
+      >
+        Party Type
+      </span>
+    </div>
+    <ul>
+      <li>
+        <span
+          class="label col-sm-4 d-lg-none"
+        >
+          Name:
+        </span>
+        <span
+          class="col-sm-8 col-lg-6"
+        >
+          Ross, Bob Q
+        </span>
+        <span
+          class="label col-sm-4 d-lg-none"
+        >
+          Party Role:
+        </span>
+        <span
+          class="col-sm-8 col-lg-3"
+        >
+          Applicant
+        </span>
+        <span
+          class="label col-sm-4 d-lg-none"
+        >
+          Party Type:
+        </span>
+        <span
+          class="col-sm-8 col-lg-3"
+        >
+          Individual
+        </span>
+      </li>
+    </ul>
+  </div>
+</DocumentFragment>
+`;
