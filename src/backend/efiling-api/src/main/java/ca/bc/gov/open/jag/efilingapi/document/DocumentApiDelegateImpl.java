@@ -15,6 +15,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.stream.Collectors;
+import java.util.List;
 
 @Service
 public class DocumentApiDelegateImpl implements DocumentsApiDelegate {
@@ -28,12 +29,10 @@ public class DocumentApiDelegateImpl implements DocumentsApiDelegate {
 
     @Override
     @RolesAllowed({Keys.EFILING_USER_ROLE, Keys.EFILING_CLIENT_ROLE})
-    public ResponseEntity<DocumentTypes> getDocumentTypes(@NotNull @Valid CourtLevel courtLevel, @NotNull @Valid CourtClassification courtClassification) {
+    public ResponseEntity<List<DocumentType>> getDocumentTypes(@NotNull @Valid CourtLevel courtLevel, @NotNull @Valid CourtClassification courtClassification) {
         try {
-            DocumentTypes result = new DocumentTypes();
-            result.setDocumentTypes(documentStore.getDocumentTypes(courtLevel.getValue(), courtClassification.getValue()).stream()
+            return ResponseEntity.ok(documentStore.getDocumentTypes(courtLevel.getValue(), courtClassification.getValue()).stream()
                     .map(documentType -> toDocumentType(documentType)).collect(Collectors.toList()));
-            return ResponseEntity.ok(result);
         } catch (EfilingDocumentServiceException e) {
             logger.warn(e.getMessage(), e);
             EfilingError response = new EfilingError();
