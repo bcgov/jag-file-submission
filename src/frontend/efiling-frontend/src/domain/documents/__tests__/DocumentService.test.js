@@ -13,13 +13,11 @@ describe("Document service test suite", () => {
       courtClassification: "B",
     };
 
-    mock.onGet(`/documents/types`, params).reply(200, {
-      documentTypes: [
+    mock.onGet(`/documents/types`, params).reply(200, [
         { type: "AFF", description: "Affidavit" },
         { type: "AAS", description: "Affidavit of Attempted Service" },
         { type: "CCB", description: "Case Conference Brief" },
-      ],
-    });
+      ]);
   });
 
   test("OK: service should return a list of documents", async () => {

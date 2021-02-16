@@ -2189,12 +2189,9 @@ components:
           type: string
           description: human readable value
     DocumentTypes:
-      type: object
-      properties:
-        documentTypes:
-          type: array
-          items:
-            $ref: "#/components/schemas/DocumentType"
+      type: array
+      items:
+        $ref: "#/components/schemas/DocumentType"
     UploadSubmissionDocumentsResponse:
       description: represents upload document response
       type: object
