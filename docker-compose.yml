@@ -46,7 +46,7 @@ services:
       context: ./src/backend
       dockerfile: Dockerfile.efiling-api
       args:
-        - MVN_PROFILE=${MVN_PROFILE:-efiling-api}
+        - MVN_PROFILE=${MVN_PROFILE:-efiling-api-demo}
         - SKIP_TESTS=true
         - STARTERS_V=v0.1.8
     ports:
