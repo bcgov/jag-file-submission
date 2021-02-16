@@ -19,6 +19,8 @@ public class GetFilingPackageByIdSD {
     private UserIdentity actualUserIdentity;
     private FilingPackageService filingPackageService;
 
+    private static final String DESCRIPTION = "DESCRIPTION";
+
     private Response actualFilingPackageResponse;
     private JsonPath actualFilingPackageResponseJsonPath;
 
@@ -75,11 +77,11 @@ public class GetFilingPackageByIdSD {
         Assert.assertEquals("F", actualFilingPackageResponseJsonPath.get("court.courtClass"));
         Assert.assertEquals("DIVISION", actualFilingPackageResponseJsonPath.get("court.division"));
         Assert.assertEquals("123", actualFilingPackageResponseJsonPath.get("court.fileNumber"));
-        Assert.assertEquals("DESCRIPTION", actualFilingPackageResponseJsonPath.get("court.participatingClass"));
+        Assert.assertEquals(DESCRIPTION, actualFilingPackageResponseJsonPath.get("court.participatingClass"));
         Assert.assertEquals(Integer.valueOf(1), actualFilingPackageResponseJsonPath.get("court.agencyId"));
-        Assert.assertEquals("DESCRIPTION", actualFilingPackageResponseJsonPath.get("court.locationDescription"));
-        Assert.assertEquals("DESCRIPTION", actualFilingPackageResponseJsonPath.get("court.levelDescription"));
-        Assert.assertEquals("DESCRIPTION", actualFilingPackageResponseJsonPath.get("court.classDescription"));
+        Assert.assertEquals(DESCRIPTION, actualFilingPackageResponseJsonPath.get("court.locationDescription"));
+        Assert.assertEquals(DESCRIPTION, actualFilingPackageResponseJsonPath.get("court.levelDescription"));
+        Assert.assertEquals(DESCRIPTION, actualFilingPackageResponseJsonPath.get("court.classDescription"));
 
         //Documents
         Assert.assertEquals("1", actualFilingPackageResponseJsonPath.get("documents.identifier[0]"));
