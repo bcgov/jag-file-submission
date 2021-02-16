@@ -29,7 +29,7 @@ paths:
                   format: binary
       responses:
         "200":
-          description: Document successfully received
+          description: Document Form Data successfully extracted
           content:
             application/json:
               schema:
