@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 import Keycloak from "keycloak-js";
 import createAuthRefreshInterceptor from "axios-auth-refresh";
-import Home from "../page/home/Home";
-import PackageReview from "../../domain/package/package-review/PackageReview";
-import { propTypes } from "../../types/propTypes";
 
 const url = window.env
   ? window.env.REACT_APP_KEYCLOAK_URL
@@ -41,13 +37,9 @@ keycloak.onAuthRefreshSuccess = () =>
 /**
  * @constant authenticationGuard - a higher order component that checks for user authorization and returns the wrapped component if the user is authenticated
  */
-
-export default function AuthenticationGuard({ page: { confirmationPopup } }) {
+export default function AuthenticationGuard(props) {
+  const { children } = props;
   const [authedKeycloak, setAuthedKeycloak] = useState(null);
-  const { packageId } = useParams();
-
-  const submissionId = sessionStorage.getItem("submissionId");
-  const transactionId = sessionStorage.getItem("transactionId");
 
   async function keycloakInit() {
     await keycloak
@@ -74,22 +66,7 @@ export default function AuthenticationGuard({ page: { confirmationPopup } }) {
 
   return (
     <>
-      {authedKeycloak && !packageId && (
-        <Home
-          page={{
-            confirmationPopup,
-            submissionId,
-            transactionId,
-          }}
-        />
-      )}
-      {authedKeycloak && packageId && (
-        <PackageReview
-          page={{
-            packageId,
-          }}
-        />
-      )}
+      {authedKeycloak && children}
       {!authedKeycloak && null}
     </>
   );
@@ -121,7 +98,5 @@ function refreshAuthLogic(failedRequest) {
 createAuthRefreshInterceptor(axios, refreshAuthLogic);
 
 AuthenticationGuard.propTypes = {
-  page: PropTypes.shape({
-    confirmationPopup: propTypes.confirmationPopup,
-  }).isRequired,
+  children: PropTypes.node.isRequired,
 };
