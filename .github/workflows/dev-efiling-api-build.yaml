@@ -33,7 +33,7 @@ jobs:
 
       - name: Build the Docker image
         env:
-          MVN_PROFILE: openshift
+          MVN_PROFILE: efiling-api
         run: |          
           
           docker-compose build efiling-api
