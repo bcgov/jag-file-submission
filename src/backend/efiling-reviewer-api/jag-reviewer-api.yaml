@@ -34,6 +34,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DocumentExtractResponse"
+        "400":
+          description: Request is not valid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
 components:
   parameters:
     xTransactionId:
@@ -55,3 +61,16 @@ components:
     DocumentExtractResponse:
       type: object
       description: Review upload response
+    ApiError:
+      required:
+        - error
+        - message
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: string
