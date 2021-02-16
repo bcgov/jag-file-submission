@@ -113,7 +113,7 @@ public class GetFilingPackageByIdSD {
 
         //Payments
         Assert.assertTrue(actualFilingPackageResponseJsonPath.get("payments.feeExempt[1]"));
-        Assert.assertEquals(Integer.valueOf(10), actualFilingPackageResponseJsonPath.get("payments.paymentCategory[1]"));
+        Assert.assertEquals(Integer.valueOf(3), actualFilingPackageResponseJsonPath.get("payments.paymentCategory[1]"));
         Assert.assertNull(actualFilingPackageResponseJsonPath.get("payments.processedAmount[1]"));
         Assert.assertEquals(Integer.valueOf(1), actualFilingPackageResponseJsonPath.get("payments.submittedAmount[1]"));
         Assert.assertNull(actualFilingPackageResponseJsonPath.get("payments.serviceIdentifier[1]"));
