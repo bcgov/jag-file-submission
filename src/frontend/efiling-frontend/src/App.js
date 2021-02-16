@@ -8,6 +8,7 @@ import {
   useHistory,
   useLocation,
 } from "react-router-dom";
+import { Header, Footer } from "shared-components";
 import AuthenticationGuard from "./components/hoc/AuthenticationGuard";
 
 const mainButton = {
@@ -86,15 +87,17 @@ export default function App() {
 
   return (
     <div>
+      <Header header={header} />
       <Switch>
         <Redirect exact from="/" to="/efilinghub" />
         <Route exact path="/efilinghub">
-          <AuthenticationGuard page={{ header, confirmationPopup }} />
+          <AuthenticationGuard page={{ confirmationPopup }} />
         </Route>
         <Route path="/efilinghub/packagereview/:packageId">
-          <AuthenticationGuard page={{ header, confirmationPopup }} />
+          <AuthenticationGuard page={{ confirmationPopup }} />
         </Route>
       </Switch>
+      <Footer />
     </div>
   );
 }
