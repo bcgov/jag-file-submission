@@ -11,5 +11,5 @@ export const getDocumentTypes = async (courtLevel, courtClassification) => {
 
   const response = await axios.get(`/documents/types`, { params });
 
-  return response.data.documentTypes;
+  return response.data;
 };

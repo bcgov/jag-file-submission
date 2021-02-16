@@ -59,6 +59,7 @@ public interface FilingPackageMapper {
 
     @Mapping(target = "feeExempt", source = "feeExmpt")
     @Mapping(target = "paymentCategory", source = "paymentCategory")
+    @Mapping(target = "paymentDescription", source = "transactionDesc")
     @Mapping(target = "processedAmount", source = "processedAmt")
     @Mapping(target = "submittedAmount", source = "submittedAmt")
     @Mapping(target = "serviceIdentifier", source = "serviceId")
