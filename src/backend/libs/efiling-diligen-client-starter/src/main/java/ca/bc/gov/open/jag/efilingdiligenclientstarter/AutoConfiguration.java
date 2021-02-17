@@ -1,5 +1,7 @@
 package ca.bc.gov.open.jag.efilingdiligenclientstarter;
 
+import ca.bc.gov.open.efilingdiligenclient.diligen.*;
+import ca.bc.gov.open.jag.efilingdiligenclient.api.AuthenticationApi;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.HealthCheckApi;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.ApiClient;
 import org.apache.commons.lang3.StringUtils;
@@ -8,6 +10,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * Diligen Client configuration
@@ -54,6 +57,17 @@ public class AutoConfiguration {
     @ConditionalOnProperty(prefix = "jag.efiling.diligen", name = "health.enabled", havingValue = "true")
     public HealthIndicator diligenHealthIndicator(HealthCheckApi healthCheckApi) {
         return new DiligenHealthIndicator(healthCheckApi);
+    }
+
+    @Bean
+    public DiligenAuthService diligenAuthService(ApiClient apiClient) {
+        AuthenticationApi authenticationApi = new AuthenticationApi(apiClient);
+        return new DiligenAuthServiceImpl(authenticationApi);
+    }
+
+    @Bean
+    public DiligenService diligenService(DiligenAuthService diligenAuthService) {
+        return new DiligenServiceImpl(new RestTemplate(), diligenProperties, diligenAuthService);
     }
 
 }

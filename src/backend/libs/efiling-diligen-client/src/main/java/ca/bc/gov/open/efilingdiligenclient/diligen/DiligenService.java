@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingreviewerapi.diligen;
+package ca.bc.gov.open.efilingdiligenclient.diligen;
 
 import org.springframework.web.multipart.MultipartFile;
 
