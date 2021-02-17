@@ -45,6 +45,9 @@ services:
     build:
       context: ./src/backend
       dockerfile: Dockerfile.efiling-api
+      cache_from:
+        - docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder
+        - docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo
       args:
         - MVN_PROFILE=${MVN_PROFILE:-efiling-api-demo}
         - SKIP_TESTS=true

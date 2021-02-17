@@ -49,6 +49,7 @@ jobs:
           --build-arg SERVICE_NAME=efiling-api
           --build-arg MVN_PROFILE=efiling-api-demo
           --build-arg STARTERS_V=v0.1.8
+          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo
       - name: tag & push efiling-api to git container registry
         run: docker tag efiling-api:demo docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo
@@ -79,7 +80,14 @@ jobs:
         run: |
           docker-compose up -d redis clamav keycloak
 
+      - name: Pull efiling-api-builder
+        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder || true
 
+
+      - name: Build Docker Images
+        run: |
+          docker-compose build --quiet --parallel efiling-api
+      
       - name: Build Docker Images
         run: |
           docker-compose build --quiet --parallel efiling-frontend efiling-api keycloak-config
