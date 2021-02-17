@@ -103,6 +103,8 @@ jobs:
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo
 
       - name: Build Docker Images
+        env:
+          COMPOSE_DOCKER_CLI_BUILD: 1
         run: |
           docker-compose build --quiet --parallel efiling-frontend keycloak-config
 
