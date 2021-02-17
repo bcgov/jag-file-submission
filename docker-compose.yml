@@ -49,6 +49,9 @@ services:
         - MVN_PROFILE=${MVN_PROFILE:-efiling-api-demo}
         - SKIP_TESTS=true
         - STARTERS_V=v0.1.8
+      cache_from:
+        - docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder
+        - docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo
     ports:
       - "8080:8080"
     environment:
