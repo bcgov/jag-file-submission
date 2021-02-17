@@ -1,8 +1,5 @@
-import { decodeJWT } from "../../../modules/helpers/authentication-helper/authenticationHelper";
-import {
-  KEYCLOAK,
-  BCSC_USERINFO_URL,
-} from "../../../components/hoc/AuthenticationGuard";
+import { decodeJWT } from "../../modules/helpers/authentication-helper/authenticationHelper";
+import { KEYCLOAK, BCSC_USERINFO_URL } from "./AuthenticationGuard";
 
 /**
  * Using the current OIDC token, request a broker token directly from Keycloak

@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 import FileSaver from "file-saver";
-import { createMemoryHistory } from "history";
 import { render, waitFor, fireEvent } from "@testing-library/react";
 
 import MockAdapter from "axios-mock-adapter";
@@ -11,14 +10,15 @@ import { getCourtData } from "../../../../modules/test-data/courtTestData";
 
 const mockHelper = require("../../../../modules/helpers/mockHelper");
 
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useParams: jest.fn().mockReturnValue({ packageId: 1 }),
+}));
+
 // hack fix to force GitHub to run tests in BC timezone
 moment.tz.setDefault("America/Vancouver");
 
 describe("PackageReview Component", () => {
-  const header = {
-    name: "eFiling Frontend",
-    history: createMemoryHistory(),
-  };
   const packageId = "1";
   const courtData = getCourtData();
   const submittedDate = new Date("2021-01-14T18:57:43.602Z").toISOString();
@@ -38,11 +38,6 @@ describe("PackageReview Component", () => {
       filingDate: "2020-05-05T00:00:00.000Z",
     },
   ];
-
-  const page = {
-    header,
-    packageId,
-  };
 
   FileSaver.saveAs = jest.fn();
 
@@ -64,7 +59,7 @@ describe("PackageReview Component", () => {
       documents,
     });
 
-    const { asFragment } = render(<PackageReview page={page} />);
+    const { asFragment } = render(<PackageReview />);
     await waitFor(() => {});
 
     expect(asFragment()).toMatchSnapshot();
@@ -77,7 +72,7 @@ describe("PackageReview Component", () => {
   });
 
   test("Clicking cancel takes user back to parent app", async () => {
-    const { getByText } = render(<PackageReview page={page} />);
+    const { getByText } = render(<PackageReview />);
     await waitFor(() => {});
 
     fireEvent.click(getByText("Cancel and Return to Parent App"));
@@ -94,7 +89,7 @@ describe("PackageReview Component", () => {
 
     const spy = jest.spyOn(axios, "get");
 
-    render(<PackageReview page={page} />);
+    render(<PackageReview />);
     await waitFor(() => {});
 
     expect(spy).toHaveBeenCalled();
@@ -109,7 +104,7 @@ describe("PackageReview Component", () => {
 
     const spy = jest.spyOn(axios, "get");
 
-    render(<PackageReview page={page} />);
+    render(<PackageReview />);
     await waitFor(() => {});
 
     expect(spy).toHaveBeenCalled();
@@ -124,7 +119,7 @@ describe("PackageReview Component", () => {
 
     const spy = jest.spyOn(axios, "get");
 
-    render(<PackageReview page={page} />);
+    render(<PackageReview />);
     await waitFor(() => {});
 
     expect(spy).toHaveBeenCalled();
@@ -138,7 +133,7 @@ describe("PackageReview Component", () => {
 
     const spy = jest.spyOn(axios, "get");
 
-    render(<PackageReview page={page} />);
+    render(<PackageReview />);
     await waitFor(() => {});
 
     expect(spy).toHaveBeenCalled();
@@ -149,7 +144,7 @@ describe("PackageReview Component", () => {
 
     const spy = jest.spyOn(axios, "get");
 
-    render(<PackageReview page={page} />);
+    render(<PackageReview />);
     await waitFor(() => {});
 
     expect(spy).toHaveBeenCalled();
@@ -170,7 +165,7 @@ describe("PackageReview Component", () => {
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
       .reply(200, { blob });
 
-    const { getByText } = render(<PackageReview page={page} />);
+    const { getByText } = render(<PackageReview />);
     await waitFor(() => {});
 
     fireEvent.click(getByText("Print Submission Sheet"));
@@ -194,7 +189,7 @@ describe("PackageReview Component", () => {
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
       .reply(200, { blob });
 
-    const { getByText } = render(<PackageReview page={page} />);
+    const { getByText } = render(<PackageReview />);
     await waitFor(() => {});
 
     fireEvent.keyDown(getByText("Print Submission Sheet"));
@@ -213,7 +208,7 @@ describe("PackageReview Component", () => {
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
       .reply(400, { message: "There was an error." });
 
-    const { getByText } = render(<PackageReview page={page} />);
+    const { getByText } = render(<PackageReview />);
     await waitFor(() => {});
 
     fireEvent.click(getByText("Print Submission Sheet"));
@@ -235,7 +230,7 @@ describe("PackageReview Component", () => {
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
       .reply(400, { message: "There was an error." });
 
-    const { getByText } = render(<PackageReview page={page} />);
+    const { getByText } = render(<PackageReview />);
     await waitFor(() => {});
 
     fireEvent.keyDown(getByText("Print Submission Sheet"), {
@@ -261,7 +256,7 @@ describe("PackageReview Component", () => {
     mock.onDelete("/filingpackages/1/document/1").reply(200);
     const noop = jest.spyOn(mockHelper, "noop");
 
-    const { getByText } = render(<PackageReview page={page} />);
+    const { getByText } = render(<PackageReview />);
     await waitFor(() => {});
 
     // get the span wrapping the file link, click it.
@@ -270,7 +265,7 @@ describe("PackageReview Component", () => {
     await waitFor(() => {});
 
     // there should now be a modal popup
-    const { asFragment } = render(<PackageReview page={page} />);
+    const { asFragment } = render(<PackageReview />);
     await waitFor(() => {});
     expect(asFragment()).toMatchSnapshot();
     const confirmBtn = getByText("Confirm");
@@ -294,7 +289,7 @@ describe("PackageReview Component", () => {
     mock.onDelete("/filingpackages/1/document/1").reply(404);
     const noop = jest.spyOn(mockHelper, "noop");
 
-    const { getByText } = render(<PackageReview page={page} />);
+    const { getByText } = render(<PackageReview />);
     await waitFor(() => {});
 
     // get the span wrapping the file link, click it.
@@ -303,7 +298,7 @@ describe("PackageReview Component", () => {
     await waitFor(() => {});
 
     // there should now be a modal popup
-    const { asFragment } = render(<PackageReview page={page} />);
+    const { asFragment } = render(<PackageReview />);
     await waitFor(() => {});
     expect(asFragment()).toMatchSnapshot();
     const confirmBtn = getByText("Confirm");

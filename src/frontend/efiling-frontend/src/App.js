@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React from "react";
 import queryString from "query-string";
 import {
   Switch,
@@ -9,22 +8,9 @@ import {
   useLocation,
 } from "react-router-dom";
 import { Header, Footer } from "shared-components";
-import AuthenticationGuard from "./components/hoc/AuthenticationGuard";
-
-const mainButton = {
-  label: "Cancel",
-  styling: "bcgov-normal-white btn",
-};
-
-const confirmButton = {
-  label: "Yes, cancel E-File Submission",
-  styling: "bcgov-normal-blue btn bcgov-consistent-width",
-};
-
-const cancelButton = {
-  label: "No, resume E-File Submission",
-  styling: "bcgov-normal-white btn bcgov-consistent-width",
-};
+import AuthenticationGuard from "./domain/authentication/AuthenticationGuard";
+import Home from "./components/page/home/Home";
+import PackageReview from "./domain/package/package-review/PackageReview";
 
 export default function App() {
   const location = useLocation();
@@ -56,48 +42,21 @@ export default function App() {
     history: useHistory(),
   };
 
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  const handleConfirm = () => {
-    sessionStorage.setItem("validExit", true);
-    sessionStorage.removeItem("isBamboraRedirect");
-    const cancelUrl = sessionStorage.getItem("cancelUrl");
-
-    if (cancelUrl) {
-      axios
-        .delete(`submission/${sessionStorage.getItem("submissionId")}`)
-        .then(() => window.open(cancelUrl, "_self"))
-        .catch(() => window.open(cancelUrl, "_self"));
-    }
-  };
-
-  const modal = {
-    show,
-    title: "Cancel E-File Submission?",
-  };
-
-  const confirmationPopup = {
-    modal,
-    mainButton: { ...mainButton, onClick: handleShow },
-    confirmButton: { ...confirmButton, onClick: handleConfirm },
-    cancelButton: { ...cancelButton, onClick: handleClose },
-  };
-
   return (
-    <div>
+    <main>
       <Header header={header} />
-      <Switch>
-        <Redirect exact from="/" to="/efilinghub" />
-        <Route exact path="/efilinghub">
-          <AuthenticationGuard page={{ confirmationPopup }} />
-        </Route>
-        <Route path="/efilinghub/packagereview/:packageId">
-          <AuthenticationGuard page={{ confirmationPopup }} />
-        </Route>
-      </Switch>
+      <AuthenticationGuard>
+        <Switch>
+          <Redirect exact from="/" to="/efilinghub" />
+          <Route exact path="/efilinghub">
+            <Home />
+          </Route>
+          <Route path="/efilinghub/packagereview/:packageId">
+            <PackageReview />
+          </Route>
+        </Switch>
+      </AuthenticationGuard>
       <Footer />
-    </div>
+    </main>
   );
 }
