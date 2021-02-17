@@ -1,7 +1,7 @@
 #############################################################################################
 ###              Stage where Docker is building spring boot app using maven               ###
 #############################################################################################
-FROM maven:3.6.3-jdk-8-slim as build
+FROM maven:3.6.3-jdk-8 as build
 
 ARG MVN_PROFILE
 ARG SERVICE_NAME=efiling-api
