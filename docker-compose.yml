@@ -4,8 +4,6 @@ services:
   ###                                 EFILING FRONTEND                                      ###
   #############################################################################################
   efiling-frontend:
-    # need stdin_open:true because there is an issue with container being auto exited after startup with react-scripts 3.4.1
-    stdin_open: true
     container_name: efiling-frontend
     build:
       context: ./src/frontend/efiling-frontend
@@ -22,8 +20,6 @@ services:
   ###                                 EFILING DEMO                                          ###
   #############################################################################################
   efiling-demo:
-    # need stdin_open:true because there is an issue with container being auto exited after startup with react-scripts 3.4.1
-    stdin_open: true
     container_name: efiling-demo
     build:
       context: ./src/frontend/efiling-demo
