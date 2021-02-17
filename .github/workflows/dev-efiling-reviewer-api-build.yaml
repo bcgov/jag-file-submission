@@ -1,6 +1,8 @@
 name: Build Efiling Reviewer API Image and Push to Openshift Registry
 
 on:
+  push:
+    branches: [master]
   workflow_dispatch:
     branches: [master]
 
