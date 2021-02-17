@@ -31,7 +31,7 @@ jobs:
 
       - name: Build efiling-api-builder
         run: docker build ./src/backend
-          -f Dockerfile.efling-api
+          -f Dockerfile.efiling-api
           --target build
           -t efiling-api:builder
           --build-arg SERVICE_NAME=efiling-api
@@ -47,6 +47,7 @@ jobs:
       
       - name: Build efiling-api
         run: docker build ./src/backend
+          -f Dockerfile.efiling-api
           -t efiling-api:demo 
           --build-arg SERVICE_NAME=efiling-api 
           --build-arg MVN_PROFILE=demo 
@@ -101,7 +102,7 @@ jobs:
 
       - name: Build efiling-api
         run: docker build ./src/backend
-          -f Dockerfile.efling-api
+          -f Dockerfile.efiling-api
           -t efiling-api:demo 
           --build-arg SERVICE_NAME=efiling-api 
           --build-arg MVN_PROFILE=demo 
