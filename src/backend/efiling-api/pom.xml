@@ -208,7 +208,7 @@
 
         <profile>
 
-            <id>openshift</id>
+            <id>efiling-api</id>
 
             <repositories>
                 <repository>
@@ -249,7 +249,7 @@
         </profile>
 
         <profile>
-            <id>demo</id>
+            <id>efiling-api-demo</id>
             <dependencies>
                 <dependency>
                     <groupId>ca.bc.gov.open.jag</groupId>

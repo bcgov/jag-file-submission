@@ -42,9 +42,7 @@ keycloak.onAuthRefreshSuccess = () =>
  * @constant authenticationGuard - a higher order component that checks for user authorization and returns the wrapped component if the user is authenticated
  */
 
-export default function AuthenticationGuard({
-  page: { header, confirmationPopup },
-}) {
+export default function AuthenticationGuard({ page: { confirmationPopup } }) {
   const [authedKeycloak, setAuthedKeycloak] = useState(null);
   const { packageId } = useParams();
 
@@ -79,7 +77,6 @@ export default function AuthenticationGuard({
       {authedKeycloak && !packageId && (
         <Home
           page={{
-            header,
             confirmationPopup,
             submissionId,
             transactionId,
@@ -89,7 +86,6 @@ export default function AuthenticationGuard({
       {authedKeycloak && packageId && (
         <PackageReview
           page={{
-            header,
             packageId,
           }}
         />
@@ -126,7 +122,6 @@ createAuthRefreshInterceptor(axios, refreshAuthLogic);
 
 AuthenticationGuard.propTypes = {
   page: PropTypes.shape({
-    header: propTypes.header,
     confirmationPopup: propTypes.confirmationPopup,
   }).isRequired,
 };
