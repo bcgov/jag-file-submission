@@ -26,12 +26,12 @@ jobs:
       - name: Pull efiling-api-builder
         run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder || true
       - name: build efiling-api-builder
-        run: docker build ./src/backend \
-          --target build \
-          -t efiling-api:builder \
-          --build-arg SERVICE_NAME=efiling-api \
-          --build-arg MVN_PROFILE=demo \
-          --build-arg STARTERS_V=v0.1.8 \
+        run: docker build ./src/backend
+          --target build
+          -t efiling-api:builder
+          --build-arg SERVICE_NAME=efiling-api
+          --build-arg MVN_PROFILE=demo
+          --build-arg STARTERS_V=v0.1.8
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder
       - name: tag & push efiling-api to git container registry
         run: docker tag efiling-api:builder docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder
