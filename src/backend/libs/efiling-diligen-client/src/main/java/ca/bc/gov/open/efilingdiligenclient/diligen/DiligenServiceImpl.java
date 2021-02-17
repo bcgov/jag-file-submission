@@ -4,8 +4,6 @@ import ca.bc.gov.open.efilingdiligenclient.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -16,8 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
-import java.util.Arrays;
-import java.util.Collections;
 
 @Service
 public class DiligenServiceImpl implements DiligenService {

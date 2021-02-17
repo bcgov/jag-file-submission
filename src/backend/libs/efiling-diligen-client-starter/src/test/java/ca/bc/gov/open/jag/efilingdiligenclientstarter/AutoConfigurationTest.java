@@ -23,7 +23,10 @@ public class AutoConfigurationTest {
         context = new ApplicationContextRunner()
                 .withUserConfiguration(AutoConfiguration.class)
                 .withPropertyValues(
-                        "jag.efiling.diligen.basePath=http://test.com")
+                        "jag.efiling.diligen.basePath=http://test.com " +
+                        "jag.efiling.diligen.usename=test " +
+                        "jag.efiling.diligen.password=test " +
+                        "jag.efiling.diligen.projectIdentifier=2")
                 .withUserConfiguration(DiligenProperties.class);
 
         context.run(it -> {
