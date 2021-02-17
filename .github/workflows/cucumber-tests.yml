@@ -29,6 +29,7 @@ jobs:
 
       - name: build efiling-api-builder
         run: docker build ./src/backend
+          -f ./src/backend/Dockerfile.efiling-api
           --target build
           -t efiling-api:builder
           --build-arg SERVICE_NAME=efiling-api
