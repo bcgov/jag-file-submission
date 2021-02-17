@@ -45,7 +45,7 @@ public class DiligenServiceImpl implements DiligenService {
         try {
             body
                     = new LinkedMultiValueMap<>();
-            body.add("file_data", new ByteArrayResource(file.getBytes()));
+            body.add("file_data", new FileSystemResource(file.getBytes(), file.getOriginalFilename()));
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -61,6 +61,20 @@ public class DiligenServiceImpl implements DiligenService {
 
     private String constructUrl(String basePath, String path) {
         return MessageFormat.format("{0}{1}", basePath, path);
+    }
+
+    public static class FileSystemResource extends ByteArrayResource {
+
+        private String fileName;
+
+        public FileSystemResource(byte[] byteArray , String filename) {
+            super(byteArray);
+            this.fileName = filename;
+        }
+
+        public String getFilename() { return fileName; }
+        public void setFilename(String fileName) { this.fileName= fileName; }
+
     }
 
 }
