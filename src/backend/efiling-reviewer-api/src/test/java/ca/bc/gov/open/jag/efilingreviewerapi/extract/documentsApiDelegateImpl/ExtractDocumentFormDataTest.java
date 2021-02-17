@@ -1,10 +1,9 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.extract.documentsApiDelegateImpl;
 
-import ca.bc.gov.open.jag.efilingreviewerapi.diligen.DiligenService;
+import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.DocumentsApiDelegateImpl;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;

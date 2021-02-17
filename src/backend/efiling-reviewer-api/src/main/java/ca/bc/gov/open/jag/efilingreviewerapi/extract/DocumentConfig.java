@@ -1,10 +1,11 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.extract;
 
 import ca.bc.gov.open.jag.efilingdiligenclientstarter.DiligenProperties;
-import ca.bc.gov.open.jag.efilingreviewerapi.diligen.DiligenService;
-import ca.bc.gov.open.jag.efilingreviewerapi.diligen.DiligenServiceImpl;
+import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
+import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class DocumentConfig {
@@ -17,7 +18,7 @@ public class DocumentConfig {
 
     @Bean
     public DiligenService diligenService() {
-        return new DiligenServiceImpl(diligenProperties);
+        return new DiligenServiceImpl(diligenProperties, new RestTemplate());
     }
 
 }

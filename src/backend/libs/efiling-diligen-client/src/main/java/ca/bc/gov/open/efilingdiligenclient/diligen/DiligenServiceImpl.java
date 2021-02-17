@@ -4,7 +4,6 @@ import ca.bc.gov.open.jag.efilingdiligenclient.api.AuthenticationApi;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.ProjectsApi;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.ApiClient;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.ApiException;
-import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.auth.ApiKeyAuth;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.auth.Authentication;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.auth.HttpBearerAuth;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.model.InlineObject;
@@ -14,6 +13,7 @@ import ca.bc.gov.open.jag.efilingreviewerapi.util.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -28,8 +28,11 @@ public class DiligenServiceImpl implements DiligenService {
 
     private final DiligenProperties diligenProperties;
 
-    public DiligenServiceImpl(DiligenProperties diligenProperties) {
+    private final RestTemplate restTemplate;
+
+    public DiligenServiceImpl(DiligenProperties diligenProperties, RestTemplate restTemplate) {
         this.diligenProperties = diligenProperties;
+        this.restTemplate = restTemplate;
     }
 
 
