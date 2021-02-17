@@ -1,18 +1,25 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.diligen;
 
 import ca.bc.gov.open.jag.efilingdiligenclient.api.AuthenticationApi;
+import ca.bc.gov.open.jag.efilingdiligenclient.api.ProjectsApi;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.ApiClient;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.ApiException;
-import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.ApiResponse;
+import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.auth.ApiKeyAuth;
+import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.auth.Authentication;
+import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.auth.HttpBearerAuth;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.model.InlineObject;
+import ca.bc.gov.open.jag.efilingdiligenclient.api.model.InlineResponse2001;
 import ca.bc.gov.open.jag.efilingdiligenclientstarter.DiligenProperties;
-import ca.bc.gov.open.jag.efilingreviewerapi.extract.DocumentsApiDelegateImpl;
+import ca.bc.gov.open.jag.efilingreviewerapi.util.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.*;
 
 @Service
 public class DiligenServiceImpl implements DiligenService {
@@ -28,7 +35,35 @@ public class DiligenServiceImpl implements DiligenService {
 
     @Override
     public BigDecimal postDocument(String documentType, MultipartFile file) {
-        return null;
+        try {
+            File outBoundFile = FileUtils.convert(file);
+            List<File> files = Collections.singletonList(outBoundFile);
+            postDiligenDocument(files);
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        return BigDecimal.ONE;
+    }
+
+    private void postDiligenDocument(List<File> files) {
+       // ApiKeyAuth apiKeyAuth = new ApiKeyAuth("header", "bearer");
+        //apiKeyAuth.setApiKey(getDiligenJWT());
+
+        HttpBearerAuth httpBearerAuth = new HttpBearerAuth("bearer");
+        httpBearerAuth.setBearerToken(getDiligenJWT());
+
+        Map<String, Authentication> authMap = new HashMap<>();
+        authMap.put("ApiAuthKey", httpBearerAuth);
+
+        ApiClient apiClient = new ApiClient(authMap);
+        apiClient.setBasePath(diligenProperties.getBasePath());
+
+        ProjectsApi projectsApi = new ProjectsApi(apiClient);
+        try {
+            projectsApi.apiProjectsProjectIdDocumentsPost(diligenProperties.getProjectIdentifier(), files, null);
+        } catch (ApiException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     private String getDiligenJWT() {
@@ -44,8 +79,15 @@ public class DiligenServiceImpl implements DiligenService {
         loginParams.setEmail(diligenProperties.getUsername());
         loginParams.setPassword(diligenProperties.getPassword());
         try {
-            ApiResponse<?> result = authenticationApi.apiLoginPostWithHttpInfo(loginParams);
-            return "nothing it is void but why though";
+
+            InlineResponse2001 result = authenticationApi.apiLoginPost(loginParams);
+
+            if (result.getData() == null) throw new RuntimeException("No login data");
+
+            logger.info("diligen login complete");
+
+            return result.getData().getJwt();
+
         } catch (ApiException e) {
             throw new RuntimeException(e.getMessage());
         }

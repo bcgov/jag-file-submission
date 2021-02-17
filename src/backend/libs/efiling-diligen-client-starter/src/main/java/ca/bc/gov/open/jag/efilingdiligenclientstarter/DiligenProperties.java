@@ -12,6 +12,7 @@ public class DiligenProperties {
     private String basePath;
     private String username;
     private String password;
+    private Integer projectIdentifier;
 
     public String getBasePath() {
         return basePath;
@@ -28,4 +29,9 @@ public class DiligenProperties {
     public String getPassword() { return password; }
 
     public void setPassword(String password) { this.password = password; }
+
+    public Integer getProjectIdentifier() { return projectIdentifier; }
+
+    public void setProjectIdentifier(Integer projectIdentifier) { this.projectIdentifier = projectIdentifier; }
+
 }

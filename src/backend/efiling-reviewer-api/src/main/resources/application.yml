@@ -12,3 +12,4 @@ jag:
       basePath: ${DILIGEN_BASE_PATH}
       username: ${DILIGEN_USERNAME}
       password: ${DILIGEN_PASSWORD}
+      projectIdentifier: ${DILIGEN_PROJECT_IDENTIFIER}

@@ -150,9 +150,9 @@
                             <inputSpec>${project.basedir}/diligen.api.yaml</inputSpec>
                             <generatorName>java</generatorName>
                             <configOptions>
+                                <disallowAdditionalPropertiesIfNotPresent>false</disallowAdditionalPropertiesIfNotPresent>
                                 <dateLibrary>joda</dateLibrary>
                                 <validateSpec>false</validateSpec>
-                                <returnResponse>true</returnResponse>
                             </configOptions>
                             <library>jersey2</library>
                             <apiPackage>${default-package}.api</apiPackage>
