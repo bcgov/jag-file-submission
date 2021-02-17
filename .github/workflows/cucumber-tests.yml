@@ -39,8 +39,7 @@ jobs:
       - name: Pull efiling-api
         run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:latest || true
       - name: build efiling-api
-        run: |
-          docker build ./src/backend
+        run: docker build ./src/backend
           -t efiling-api:latest 
           --build-arg SERVICE_NAME=efiling-api 
           --build-arg MVN_PROFILE=demo 
