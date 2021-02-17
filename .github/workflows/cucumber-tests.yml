@@ -24,8 +24,8 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
       
-      - name: Pull efiling-api-builder
-        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder || true
+      # - name: Pull efiling-api-builder
+      #   run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder || true
 
       - name: Build efiling-api-builder
         run: docker build ./src/backend
@@ -40,8 +40,8 @@ jobs:
       - name: Tag & Push efiling-api builder to gcr
         run: docker tag efiling-api:builder docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder
 
-      - name: Pull efiling-api
-        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo || true
+      # - name: Pull efiling-api
+      #   run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo || true
       
       - name: Build efiling-api
         run: docker build ./src/backend
