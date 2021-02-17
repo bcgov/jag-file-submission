@@ -30,7 +30,8 @@ jobs:
         run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder || true
 
       - name: Build efiling-api-builder
-        run: docker build ./src/backend/Dockerfile.efling-api
+        run: docker build ./src/backend
+          -f Dockerfile.efling-api
           --target build
           -t efiling-api:builder
           --build-arg SERVICE_NAME=efiling-api
@@ -99,7 +100,8 @@ jobs:
         run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder || true
 
       - name: Build efiling-api
-        run: docker build ./src/backend/Dockerfile.efling-api
+        run: docker build ./src/backend
+          -f Dockerfile.efling-api
           -t efiling-api:demo 
           --build-arg SERVICE_NAME=efiling-api 
           --build-arg MVN_PROFILE=demo 
