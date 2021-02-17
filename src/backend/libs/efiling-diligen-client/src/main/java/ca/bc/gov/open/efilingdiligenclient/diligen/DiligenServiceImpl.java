@@ -43,8 +43,7 @@ public class DiligenServiceImpl implements DiligenService {
 
         MultiValueMap<String, Object> body;
         try {
-            body
-                    = new LinkedMultiValueMap<>();
+            body = new LinkedMultiValueMap<>();
             body.add("file_data", new FileSystemResource(file.getBytes(), file.getOriginalFilename()));
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
@@ -73,7 +72,6 @@ public class DiligenServiceImpl implements DiligenService {
         }
 
         public String getFilename() { return fileName; }
-        public void setFilename(String fileName) { this.fileName= fileName; }
 
     }
 

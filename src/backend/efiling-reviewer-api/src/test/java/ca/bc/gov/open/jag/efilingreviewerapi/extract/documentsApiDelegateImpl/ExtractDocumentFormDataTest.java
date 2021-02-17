@@ -4,15 +4,19 @@ import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.DocumentsApiDelegateImpl;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("DocumentsApiDelegateImpl test suite")
@@ -31,13 +35,15 @@ public class ExtractDocumentFormDataTest {
         sut = new DocumentsApiDelegateImpl(diligenService);
 
     }
-    //@Test
+    @Test
     @DisplayName("200: Assert something returned")
     public void withUserHavingValidRequestShouldReturnCreated() {
 
+        Mockito.when(diligenService.postDocument(any(), any())).thenReturn(BigDecimal.ONE);
+
         ResponseEntity<?> result = sut.extractDocumentFormData(UUID.randomUUID(), "TYPE", null);
         assertEquals(HttpStatus.OK, result.getStatusCode());
-        assertEquals("Hello", result.getBody());
+        assertEquals(BigDecimal.ONE, result.getBody());
 
     }
 }
