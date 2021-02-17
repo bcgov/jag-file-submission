@@ -12,12 +12,16 @@ jobs:
   efiling-api-gcr:
     name: Build efiling api image
     runs-on: ubuntu-latest
-    env:
-      DOCKER_BUILDKIT: 1
-      COMPOSE_DOCKER_CLI_BUILD: 1
+
     steps:
       - name: Pull Git repo.
         uses: actions/checkout@v2
+
+      -
+        uses: docker/setup-buildx-action@v1
+        id: buildx
+        with:
+          install: true
         
       - name: Login to Github Container Registry
         uses: docker/login-action@v1
