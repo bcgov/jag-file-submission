@@ -94,6 +94,8 @@ jobs:
         run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder || true
 
       - name: Build efiling-api
+        env:
+          DOCKER_BUILDKIT: 1
         run: docker build ./src/backend
           -t efiling-api:demo 
           --build-arg SERVICE_NAME=efiling-api 
@@ -102,6 +104,13 @@ jobs:
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder 
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo
 
+
+      - name: Standup Docker Pods
+        env:
+          COMPOSE_DOCKER_CLI_BUILD: 1
+        run: |
+          docker-compose up -d efiling-api
+
       - name: Build Docker Images
         env:
           COMPOSE_DOCKER_CLI_BUILD: 1
@@ -109,6 +118,8 @@ jobs:
           docker-compose build --quiet --parallel efiling-frontend keycloak-config
 
       - name: Standup Docker Pods
+        env:
+          COMPOSE_DOCKER_CLI_BUILD: 1
         run: |
           docker-compose up -d efiling-frontend efiling-api
 
