@@ -35,7 +35,7 @@ keycloak.onAuthRefreshSuccess = () =>
   localStorage.setItem("jwt", keycloak.token);
 
 /**
- * @constant authenticationGuard - a higher order component that checks for user authorization and returns the wrapped component if the user is authenticated
+ * A higher order component that checks for user authorization and returns the wrapped component if the user is authenticated
  */
 export default function AuthenticationGuard(props) {
   const { children } = props;
