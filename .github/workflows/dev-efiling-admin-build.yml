@@ -1,6 +1,8 @@
 name: Build Efiling Admin Docker Image and Push to Openshift Image Registry
 
 on:
+  push:
+    branches: [master]
   workflow_dispatch:
     branches: [master]
 
