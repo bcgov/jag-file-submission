@@ -47,7 +47,7 @@ jobs:
       
       - name: Build efiling-api
         run: docker build ./src/backend
-          -f ./src/backend.Dockerfile.efiling-api
+          -f ./src/backend/Dockerfile.efiling-api
           -t efiling-api:demo 
           --build-arg SERVICE_NAME=efiling-api 
           --build-arg MVN_PROFILE=demo 
