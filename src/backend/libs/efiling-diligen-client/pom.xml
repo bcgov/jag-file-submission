@@ -152,6 +152,7 @@
                             <configOptions>
                                 <dateLibrary>joda</dateLibrary>
                                 <validateSpec>false</validateSpec>
+                                <returnResponse>true</returnResponse>
                             </configOptions>
                             <library>jersey2</library>
                             <apiPackage>${default-package}.api</apiPackage>
