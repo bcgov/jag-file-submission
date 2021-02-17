@@ -1,27 +1,19 @@
 import React from "react";
-import { createMemoryHistory } from "history";
 import axios from "axios";
-import { render, waitFor, fireEvent, getByText } from "@testing-library/react";
+import { render, waitFor, fireEvent } from "@testing-library/react";
 import MockAdapter from "axios-mock-adapter";
 
 import Home, { saveUrlsToSessionStorage } from "./Home";
-import { getTestData } from "../../../modules/test-data/confirmationPopupTestData";
 import { getUserDetails } from "../../../modules/test-data/userDetailsTestData";
 import { getDocumentsData } from "../../../modules/test-data/documentTestData";
 import { getNavigationData } from "../../../modules/test-data/navigationTestData";
 import { getCourtData } from "../../../modules/test-data/courtTestData";
 import { generateJWTToken } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 
-const authService = require("../../../domain/authentication/services/AuthService");
+const authService = require("../../../domain/authentication/AuthenticationService");
 
-const header = {
-  name: "eFiling Frontend",
-  history: createMemoryHistory(),
-};
-const confirmationPopup = getTestData();
 const submissionId = "abc123";
 const transactionId = "trans123";
-const page = { header, confirmationPopup, submissionId, transactionId };
 
 describe("Home", () => {
   const apiRequest = `/submission/${submissionId}/config`;
@@ -52,9 +44,11 @@ describe("Home", () => {
       csoBaseUrl,
     });
     sessionStorage.clear();
+    sessionStorage.setItem("submissionId", submissionId);
+    sessionStorage.setItem("transactionId", transactionId);
   });
 
-  const component = <Home page={page} />;
+  const component = <Home />;
 
   test("Component matches the snapshot when user cso account exists", async () => {
     mock.onGet("/csoAccount").reply(200, {
@@ -184,8 +178,8 @@ describe("Home", () => {
     );
   });
 
-  test("clicking cancel opens confirmation popup and clicking confirm takes user back to client app", async () => {
-    mock.onGet("csoAccount").reply(200, {
+  test("clicking cancel opens confirmation popup and clicking confirm takes user back to client app, success", async () => {
+    mock.onGet("/csoAccount").reply(200, {
       clientId: userDetails.clientId,
       internalClientNumber: userDetails.internalClientNumber,
     });
@@ -194,29 +188,54 @@ describe("Home", () => {
       lastName: "Name",
       middleName: null,
     });
+    mock.onDelete(`/submission/${submissionId}`).reply(200);
 
-    const setShow = jest.fn();
-
-    const newConfirmationPopup = {
-      ...confirmationPopup,
-      mainButton: {
-        onClick: setShow,
-        label: "Click to open confirmation popup",
-        styling: "normal-blue btn",
-      },
-    };
-
-    const { container } = render(
-      <Home page={{ ...page, confirmationPopup: newConfirmationPopup }} />
-    );
-
+    const { getByText } = render(<Home />);
+    await waitFor(() => {});
+    const cancelBtn = getByText("Cancel");
+    expect(cancelBtn).toBeInTheDocument();
+    fireEvent.click(cancelBtn);
     await waitFor(() => {});
 
-    fireEvent.click(getByText(container, "Click to open confirmation popup"));
-
+    // there should now be a modal popup
+    render(<Home />);
+    await waitFor(() => {});
+    const confirmBtn = getByText("Yes, cancel E-File Submission");
+    expect(confirmBtn).toBeInTheDocument();
+    fireEvent.click(confirmBtn);
     await waitFor(() => {});
 
-    expect(setShow).toHaveBeenCalled();
+    expect(sessionStorage.getItem("validExit")).toEqual("true");
+  });
+
+  test("clicking cancel opens confirmation popup and clicking confirm takes user back to client app, fail", async () => {
+    mock.onGet("/csoAccount").reply(200, {
+      clientId: userDetails.clientId,
+      internalClientNumber: userDetails.internalClientNumber,
+    });
+    mock.onGet("/bceidAccount").reply(200, {
+      firstName: "User",
+      lastName: "Name",
+      middleName: null,
+    });
+    mock.onDelete(`/submission/${submissionId}`).reply(404);
+
+    const { getByText } = render(<Home />);
+    await waitFor(() => {});
+    const cancelBtn = getByText("Cancel");
+    expect(cancelBtn).toBeInTheDocument();
+    fireEvent.click(cancelBtn);
+    await waitFor(() => {});
+
+    // there should now be a modal popup
+    render(<Home />);
+    await waitFor(() => {});
+    const confirmBtn = getByText("Yes, cancel E-File Submission");
+    expect(confirmBtn).toBeInTheDocument();
+    fireEvent.click(confirmBtn);
+    await waitFor(() => {});
+
+    expect(sessionStorage.getItem("validExit")).toEqual("true");
   });
 
   test("When user has authenticated with BCSC with no CSO account, retrieve userInfo from BCSC - success", async () => {
