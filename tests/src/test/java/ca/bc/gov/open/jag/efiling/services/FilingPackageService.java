@@ -1,8 +1,6 @@
 package ca.bc.gov.open.jag.efiling.services;
 
 import io.restassured.RestAssured;
-import io.restassured.filter.log.RequestLoggingFilter;
-import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,8 +28,6 @@ public class FilingPackageService {
     }
 
     public Response getSubmissionSheet(String accessToken, int packageId) {
-
-        RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
 
         RequestSpecification request = RestAssured
                 .given()
