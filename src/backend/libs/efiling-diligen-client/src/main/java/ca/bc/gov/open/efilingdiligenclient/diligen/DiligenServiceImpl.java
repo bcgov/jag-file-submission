@@ -3,6 +3,7 @@ package ca.bc.gov.open.efilingdiligenclient.diligen;
 import ca.bc.gov.open.efilingdiligenclient.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -10,6 +11,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -37,10 +39,15 @@ public class DiligenServiceImpl implements DiligenService {
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
         headers.setBearerAuth(diligenAuthService.getDiligenJWT(diligenProperties.getUsername(), diligenProperties.getPassword()));
 
-        MultiValueMap<String, Object> body
-                = new LinkedMultiValueMap<>();
-        body.add("file_data", Collections.singletonList(file));
 
+        MultiValueMap<String, Object> body;
+        try {
+            body
+                    = new LinkedMultiValueMap<>();
+            body.add("file_data", new FileSystemResource(file.getBytes(), file.getOriginalFilename()));
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage());
+        }
         HttpEntity<MultiValueMap<String, Object>> requestEntity
                 = new HttpEntity<>(body, headers);
 
