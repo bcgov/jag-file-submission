@@ -26,20 +26,19 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: pull efiling-frontend image
-        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend || true
-      - name: build efiling-frontend image
-        run: docker build ./src/frontend/efiling-frontend -t efiling-frontend --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend
-      - name: tag & push efiling-frontend to git container registry
-        run: docker tag efiling-frontend docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend
+#       - name: pull efiling-frontend image
+#         run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend || true
+#       - name: build efiling-frontend image
+#         run: docker build ./src/frontend/efiling-frontend -t efiling-frontend --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend
+#       - name: tag & push efiling-frontend to git container registry
+#         run: docker tag efiling-frontend docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend
 
       - name: pull efiling-api image
         run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api || true
       - name: build efiling-api image
-        run: docker build ./src/backend/efiling-api -t efiling-api --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api
+        run: docker build ./src/backend -t efiling-api --build-arg SERVICE_NAME=efiling-api --build-arg MVN_PROFILE=demo --build-arg STARTERS_V=v0.1.8 --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api
       - name: tag & push efiling-api to git container registry
         run: docker tag efiling-api docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api
-
 
       - name: Cache local Maven repository
         uses: actions/cache@v2
