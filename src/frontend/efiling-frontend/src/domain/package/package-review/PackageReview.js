@@ -5,10 +5,9 @@ import moment from "moment";
 import PropTypes from "prop-types";
 import Tabs from "react-bootstrap/Tabs"; /* TODO: replace with shared-components */
 import Tab from "react-bootstrap/Tab"; /* TODO: replace with shared-components */
-import { Header, Footer, Button, Table, Alert } from "shared-components";
+import { Button, Table, Alert } from "shared-components";
 import { BsEyeFill } from "react-icons/bs";
 import { MdCancel } from "react-icons/md";
-import { propTypes } from "../../../types/propTypes";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import {
   getFilingPackage,
@@ -20,7 +19,7 @@ import "./PackageReview.scss";
 import DocumentList from "./DocumentList";
 import ParyList from "./PartyList";
 
-export default function PackageReview({ page: { header, packageId } }) {
+export default function PackageReview({ page: { packageId } }) {
   const [error, setError] = useState(false);
   const [packageDetails, setPackageDetails] = useState([
     { name: "Submitted By:", value: "", isNameBold: false, isValueBold: true },
@@ -138,7 +137,6 @@ export default function PackageReview({ page: { header, packageId } }) {
 
   return (
     <main>
-      <Header header={header} />
       <div className="ct-package-review page">
         <div className="content col-md-8">
           <h1>View Recently Submitted Package # {packageId}</h1>
@@ -209,14 +207,12 @@ export default function PackageReview({ page: { header, packageId } }) {
           </section>
         </div>
       </div>
-      <Footer />
     </main>
   );
 }
 
 PackageReview.propTypes = {
   page: PropTypes.shape({
-    header: propTypes.header,
     packageId: PropTypes.string.isRequired,
   }).isRequired,
 };

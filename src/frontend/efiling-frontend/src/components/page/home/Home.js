@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { MdCancel } from "react-icons/md";
-import { Header, Footer, Loader, Alert } from "shared-components";
+import { Loader, Alert } from "shared-components";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import {
   getJWTData,
@@ -124,7 +124,7 @@ const checkCSOAccountStatus = (
 };
 
 export default function Home({
-  page: { header, confirmationPopup, submissionId, transactionId },
+  page: { confirmationPopup, submissionId, transactionId },
 }) {
   const [showLoader, setShowLoader] = useState(true);
   const [csoAccountStatus, setCsoAccountStatus] = useState({
@@ -167,7 +167,6 @@ export default function Home({
 
   return (
     <main>
-      <Header header={header} />
       {showLoader && <Loader page />}
       {!showLoader && error && (
         <div className="page">
@@ -197,14 +196,12 @@ export default function Home({
           csoAccountStatus={csoAccountStatus}
         />
       )}
-      <Footer />
     </main>
   );
 }
 
 Home.propTypes = {
   page: PropTypes.shape({
-    header: propTypes.header,
     confirmationPopup: propTypes.confirmationPopup,
     submissionId: PropTypes.string.isRequired,
     transactionId: PropTypes.string.isRequired,
