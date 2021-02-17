@@ -3,7 +3,9 @@ package ca.bc.gov.open.efilingdiligenclient.diligen;
 import ca.bc.gov.open.efilingdiligenclient.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -39,12 +41,11 @@ public class DiligenServiceImpl implements DiligenService {
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
         headers.setBearerAuth(diligenAuthService.getDiligenJWT(diligenProperties.getUsername(), diligenProperties.getPassword()));
 
-
         MultiValueMap<String, Object> body;
         try {
             body
                     = new LinkedMultiValueMap<>();
-            body.add("file_data", new FileSystemResource(file.getBytes(), file.getOriginalFilename()));
+            body.add("file_data", new ByteArrayResource(file.getBytes()));
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
