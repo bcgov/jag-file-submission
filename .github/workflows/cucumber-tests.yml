@@ -39,6 +39,22 @@ jobs:
       - name: tag & push efiling-api to git container registry
         run: docker tag efiling-api:builder docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder
 
+      - name: Pull efiling-api-demo
+        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo || true
+
+      - name: build efiling-api-demo
+        run: docker build ./src/backend
+          -f ./src/backend/Dockerfile.efiling-api
+          -t efiling-api:demo
+          --build-arg SERVICE_NAME=efiling-api
+          --build-arg MVN_PROFILE=efiling-api-demo
+          --build-arg STARTERS_V=v0.1.8
+          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo
+      - name: tag & push efiling-api to git container registry
+        run: docker tag efiling-api:demo docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo
+
+
+
   cucumber-tests:
     name: Runs cucumber-tests
     runs-on: ubuntu-latest
