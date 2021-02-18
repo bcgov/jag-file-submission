@@ -22,23 +22,25 @@ export default function PaymentList({ payments }) {
     let csoStat = Dinero({ amount: 0 });
     let csoToDate = Dinero({ amount: 0 });
 
-    payments.forEach((payment) => {
-      if (payment.paymentCategory === 1 || payment.paymentCategory === 2) {
-        csoStat = csoStat.add(
-          Dinero({ amount: payment.submittedAmount * 100 })
-        );
-        csoToDate = csoToDate.add(
-          Dinero({ amount: payment.processedAmount * 100 })
-        );
-      } else if (!payment.feeExempt) {
-        subStat = subStat.add(
-          Dinero({ amount: payment.submittedAmount * 100 })
-        );
-        subToDate = subToDate.add(
-          Dinero({ amount: payment.processedAmount * 100 || 0 })
-        );
-      }
-    });
+    if (payments) {
+      payments.forEach((payment) => {
+        if (payment.paymentCategory === 1 || payment.paymentCategory === 2) {
+          csoStat = csoStat.add(
+            Dinero({ amount: payment.submittedAmount * 100 })
+          );
+          csoToDate = csoToDate.add(
+            Dinero({ amount: payment.processedAmount * 100 })
+          );
+        } else if (!payment.feeExempt) {
+          subStat = subStat.add(
+            Dinero({ amount: payment.submittedAmount * 100 })
+          );
+          subToDate = subToDate.add(
+            Dinero({ amount: payment.processedAmount * 100 || 0 })
+          );
+        }
+      });
+    }
     setSubtotal({ stat: subStat, toDate: subToDate });
     setCsoTotal({ stat: csoStat, toDate: csoToDate });
     setTotal({ stat: subStat.add(csoStat), toDate: subToDate.add(csoToDate) });

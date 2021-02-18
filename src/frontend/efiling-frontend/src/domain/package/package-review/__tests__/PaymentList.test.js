@@ -13,7 +13,7 @@ describe("PartyList Component", () => {
         processedAmount: 7,
         submittedAmount: 7,
         serviceIdentifier: 0,
-        transactionDate: null
+        transactionDate: null,
       },
       {
         feeExempt: true,
@@ -21,7 +21,7 @@ describe("PartyList Component", () => {
         processedAmount: 7,
         submittedAmount: null,
         serviceIdentifier: 0,
-        transactionDate: null
+        transactionDate: null,
       },
       {
         feeExempt: false,
@@ -29,7 +29,7 @@ describe("PartyList Component", () => {
         processedAmount: 7,
         submittedAmount: 7,
         serviceIdentifier: 0,
-        transactionDate: null
+        transactionDate: null,
       },
       {
         feeExempt: false,
@@ -37,8 +37,8 @@ describe("PartyList Component", () => {
         processedAmount: null,
         submittedAmount: 7,
         serviceIdentifier: 0,
-        transactionDate: null
-      }
+        transactionDate: null,
+      },
     ];
     const { asFragment } = render(<PaymentList payments={payments} />);
     waitFor(() => {});
