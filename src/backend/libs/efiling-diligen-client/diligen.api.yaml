@@ -68,6 +68,20 @@ paths:
       responses:
         '200':
           description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      redirect_url:
+                        type: string
+                      me:
+                        type: object
+                      jwt:
+                        type: string
         '401':
           description: Unauthorized
         '422':

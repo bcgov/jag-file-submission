@@ -7,6 +7,7 @@ import MockAdapter from "axios-mock-adapter";
 import moment from "moment-timezone";
 import PackageReview from "../PackageReview";
 import { getCourtData } from "../../../../modules/test-data/courtTestData";
+import { generateJWTToken } from "../../../../modules/helpers/authentication-helper/authenticationHelper";
 
 const mockHelper = require("../../../../modules/helpers/mockHelper");
 
@@ -43,6 +44,14 @@ describe("PackageReview Component", () => {
 
   let mock;
   beforeEach(() => {
+    // IDP is set in the session
+    const token = generateJWTToken({
+      preferred_username: "username@bceid",
+      email: "username@example.com",
+      identity_provider_alias: "bcsc",
+    });
+    localStorage.setItem("jwt", token);
+
     mock = new MockAdapter(axios);
     window.open = jest.fn();
   });
