@@ -36,7 +36,7 @@ public class GetCourtLocationSD {
     public void getCourtsRequest() {
         logger.info("Submitting get court location request");
 
-        actualCourtLocationResponse = courtService.GetCourtsResponse(actualUserIdentity.getAccessToken(), "s");
+        actualCourtLocationResponse = courtService.getCourtsResponse(actualUserIdentity.getAccessToken(), "s");
 
         logger.info("Api response status code: {}", actualCourtLocationResponse.getStatusCode());
         logger.info("Api response: {}", actualCourtLocationResponse.asString());
