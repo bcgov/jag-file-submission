@@ -29,8 +29,17 @@ public class PackageReviewPage extends BasePage {
     @FindBy(id = "uncontrolled-tab-tab-comments")
     private WebElement filingCommentsTab;
 
+    @FindBy(id = "uncontrolled-tab-tab-payment")
+    private WebElement paymentStatusTab;
+
     @FindBy(id = "uncontrolled-tab-tabpane-documents")
     private WebElement documentPane;
+
+    @FindBy(className = "ct-document-list")
+    private List<WebElement> documentList;
+
+    @FindBy(id = "uncontrolled-tab-tabpane-payment")
+    private WebElement paymentPane;
 
     @FindBy(id = "filingComments")
     private WebElement filingCommentsTextBox;
@@ -62,13 +71,41 @@ public class PackageReviewPage extends BasePage {
         filingCommentsTab.click();
     }
 
+    public void clickPaymentStatusTab() {
+        paymentStatusTab.click();
+    }
+
     public boolean verifyDocumentsPaneIsDisplayed() {
         wait.until(ExpectedConditions.visibilityOf(documentPane));
         return documentPane.isDisplayed();
     }
 
+    public List<String> getDocumentList() {
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-test-id='detailsTable']")));
+
+        logger.info("Getting package details values");
+
+        List<String> packageDetails = new ArrayList<>();
+        packageValueDetails.forEach(webElement -> {
+            if (!webElement.isDisplayed()) {
+                logger.info("WebElement is still not visible. Waiting for all rows to be present: {}", webElement.isDisplayed());
+                wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//*[contains(@class,'bcgov-table-value')]/b")));
+            }
+            logger.info("Is it visible: {}", webElement.isDisplayed());
+            logger.info("Is it enabled: {}", webElement.isEnabled());
+            packageDetails.add(webElement.getText());
+        });
+        return packageDetails;
+    }
+
     public boolean verifyFilingCommentsIsDisplayed() {
         wait.until(ExpectedConditions.visibilityOf(filingCommentsTextBox));
         return filingCommentsTextBox.isDisplayed();
+    }
+
+    public boolean verifyPaymentStatusIsDisplayed() {
+        wait.until(ExpectedConditions.visibilityOf(paymentPane));
+        return paymentPane.isDisplayed();
     }
 }

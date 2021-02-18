@@ -69,4 +69,11 @@ public class ViewSubmittedPackageSD {
         Assert.assertTrue(packageReviewPage.verifyFilingCommentsIsDisplayed());
 
     }
+
+    @And("payment status information is correct")
+    public void verifyPaymentStatus() {
+
+        packageReviewPage.clickPaymentStatusTab();
+        Assert.assertTrue(packageReviewPage.verifyPaymentStatusIsDisplayed());
+    }
 }

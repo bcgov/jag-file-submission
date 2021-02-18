@@ -64,7 +64,7 @@ public class TestConfig {
         WebDriverManager.chromedriver().setup();
 
         ChromeOptions options = new ChromeOptions();
-        options.setHeadless(true);
+        options.setHeadless(false);
         options.addArguments("--window-size=1920,1080");
         return new ChromeDriver(options);
 
