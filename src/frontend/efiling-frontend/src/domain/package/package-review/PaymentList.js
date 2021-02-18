@@ -23,7 +23,7 @@ export default function PaymentList({ payments }) {
     let csoToDate = Dinero({ amount: 0 });
 
     payments.forEach((payment) => {
-      if (payment.paymentCategory === 1) {
+      if (payment.paymentCategory === 1 || payment.paymentCategory === 2) {
         csoStat = csoStat.add(
           Dinero({ amount: payment.submittedAmount * 100 })
         );
@@ -61,9 +61,12 @@ export default function PaymentList({ payments }) {
         <tbody>
           {payments &&
             payments
-              .filter((payment) => payment.paymentCategory !== 1)
-              .map((payment, index) => (
-                <tr key={index}>
+              .filter(
+                (payment) =>
+                  payment.paymentCategory !== 1 && payment.paymentCategory !== 2
+              )
+              .map((payment) => (
+                <tr key={payment}>
                   <td>{payment.paymentDescription}</td>
                   <td className=" text-right">
                     {payment.feeExempt
