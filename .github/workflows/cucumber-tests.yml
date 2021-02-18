@@ -111,7 +111,7 @@ jobs:
       
       - name: build efiling-frontend-builder
         run: docker build ./infrastructure/keycloak
-          -t efiling-frontend:demo
+          -t keycloak-config:demo
           --build-arg KEYCLOAK_URL=http://keycloak:8080
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/keycloak-config:demo
       
