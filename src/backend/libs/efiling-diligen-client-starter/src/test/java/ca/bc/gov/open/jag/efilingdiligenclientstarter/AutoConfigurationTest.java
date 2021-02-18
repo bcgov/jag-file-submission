@@ -1,6 +1,5 @@
 package ca.bc.gov.open.jag.efilingdiligenclientstarter;
 
-import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenProperties;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.HealthCheckApi;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.ApiClient;
 import org.junit.jupiter.api.DisplayName;

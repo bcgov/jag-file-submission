@@ -1,4 +1,4 @@
-package ca.bc.gov.open.efilingdiligenclient.diligen;
+package ca.bc.gov.open.jag.efilingdiligenclientstarter;
 
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
