@@ -52,7 +52,7 @@ public class DiligenServiceImpl implements DiligenService {
         HttpEntity<MultiValueMap<String, Object>> requestEntity
                 = new HttpEntity<>(body, headers);
 
-        ResponseEntity<String> response = restTemplate.postForEntity(constructUrl(diligenProperties.getBasePath(), MessageFormat.format(Keys.POST_DOCUMENT_PATH,diligenProperties.getProjectIdentifier())), requestEntity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(constructUrl(), requestEntity, String.class);
 
         if (!response.getStatusCode().is2xxSuccessful()) throw new DiligenDocumentException(response.getStatusCode().toString());
 
@@ -62,11 +62,13 @@ public class DiligenServiceImpl implements DiligenService {
 
     }
 
-    private String constructUrl(String basePath, String path) {
-        return MessageFormat.format("{0}{1}", basePath, path);
+    private String constructUrl() {
+
+        return MessageFormat.format("{0}{1}", diligenProperties.getBasePath(), MessageFormat.format(Keys.POST_DOCUMENT_PATH,diligenProperties.getProjectIdentifier()));
+
     }
 
-    public static class FileSystemResource extends ByteArrayResource {
+    private static class FileSystemResource extends ByteArrayResource {
 
         private String fileName;
 
