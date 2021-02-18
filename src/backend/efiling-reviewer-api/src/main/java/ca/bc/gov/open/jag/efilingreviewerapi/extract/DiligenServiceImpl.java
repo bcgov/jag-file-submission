@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingreviewerapi.extract;
 import ca.bc.gov.open.efilingdiligenclient.Keys;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenAuthService;
 import ca.bc.gov.open.jag.efilingdiligenclientstarter.DiligenProperties;
+import ca.bc.gov.open.jag.efilingreviewerapi.exception.DiligenDocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ByteArrayResource;
@@ -35,6 +36,9 @@ public class DiligenServiceImpl implements DiligenService {
     }
     @Override
     public BigDecimal postDocument(String documentType, MultipartFile file) {
+
+        logger.debug("posting document to diligen");
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
         headers.setBearerAuth(diligenAuthService.getDiligenJWT(diligenProperties.getUsername(), diligenProperties.getPassword()));
@@ -44,14 +48,17 @@ public class DiligenServiceImpl implements DiligenService {
             body = new LinkedMultiValueMap<>();
             body.add("file_data", new FileSystemResource(file.getBytes(), file.getOriginalFilename()));
         } catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new DiligenDocumentException(e.getMessage());
         }
         HttpEntity<MultiValueMap<String, Object>> requestEntity
                 = new HttpEntity<>(body, headers);
 
         ResponseEntity<String> response = restTemplate.postForEntity(constructUrl(diligenProperties.getBasePath(), MessageFormat.format(Keys.POST_DOCUMENT_PATH,diligenProperties.getProjectIdentifier())), requestEntity, String.class);
 
-        if (!response.getStatusCode().is2xxSuccessful()) throw new RuntimeException(response.getStatusCode().toString());
+        if (!response.getStatusCode().is2xxSuccessful()) throw new DiligenDocumentException(response.getStatusCode().toString());
+
+        logger.info("document posted to diligen");
+
         return BigDecimal.ONE;
 
     }

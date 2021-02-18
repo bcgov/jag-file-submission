@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DiligenAuthServiceImpl implements DiligenAuthService {
-    Logger logger = LoggerFactory.getLogger(DiligenServiceImpl.class);
+    Logger logger = LoggerFactory.getLogger(DiligenAuthServiceImpl.class);
 
     private final AuthenticationApi authenticationApi;
 
