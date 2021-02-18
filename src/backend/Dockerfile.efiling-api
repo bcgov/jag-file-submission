@@ -4,7 +4,7 @@
 FROM maven:3.6.3-jdk-8 as build
 
 ARG MVN_PROFILE
-ARG SERVICE_NAME
+ARG SERVICE_NAME=efiling-api
 ARG SKIP_TESTS=false
 ARG STARTERS_V
 
@@ -31,12 +31,6 @@ WORKDIR /
 COPY . .
 
 RUN mvn -B clean install \
-        -P docker \
-        -Dmaven.test.skip=${SKIP_TESTS}
-
-WORKDIR ${SERVICE_NAME}
-
-RUN mvn -B clean package \
         -P ${MVN_PROFILE} \
         -Dmaven.test.skip=${SKIP_TESTS}
 
@@ -48,7 +42,7 @@ RUN mvn -B clean package \
 FROM openjdk:8-jdk-slim
 
 # ARG MVN_PROFILES
-ARG SERVICE_NAME
+ARG SERVICE_NAME=efiling-api
 
 COPY --from=build ./${SERVICE_NAME}/target/${SERVICE_NAME}-*.jar /app/service.jar
 
