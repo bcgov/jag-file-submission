@@ -18,6 +18,7 @@ import { noop } from "../../../modules/helpers/mockHelper";
 import "./PackageReview.scss";
 import DocumentList from "./DocumentList";
 import ParyList from "./PartyList";
+import PaymentList from "./PaymentList";
 
 export default function PackageReview() {
   const { packageId } = useParams();
@@ -50,6 +51,7 @@ export default function PackageReview() {
   const [reloadTrigger, setReloadTrigger] = useState(false);
   const [documents, setDocuments] = useState([]);
   const [parties, setParties] = useState([]);
+  const [payments, setPayments] = useState([]);
 
   useEffect(() => {
     getFilingPackage(packageId)
@@ -107,6 +109,7 @@ export default function PackageReview() {
           setFilingComments(response.data.filingComments);
           setDocuments(response.data.documents);
           setParties(response.data.parties);
+          setPayments(response.data.payments);
         } catch (err) {
           setError(true);
         }
@@ -189,6 +192,10 @@ export default function PackageReview() {
             <Tab eventKey="parties" title="Parties">
               <br />
               <ParyList parties={parties} />
+            </Tab>
+            <Tab eventKey="payment" title="Payment Status">
+              <br />
+              <PaymentList payments={payments} />
             </Tab>
             <Tab eventKey="comments" title="Filing Comments">
               <br />
