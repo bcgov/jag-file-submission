@@ -19,3 +19,12 @@ services:
         - MVN_PROFILE=${MVN_PROFILE:-efiling-api-demo}
         - SKIP_TESTS=true
         - STARTERS_V=v0.1.8
+
+  # #############################################################################################
+  # ###                                        KEYCLOAK Config                                ###
+  # #############################################################################################
+  keycloak-config:
+    build:
+      context: ./infrastructure/keycloak
+      args:
+        - KEYCLOAK_URL=http://keycloak:8080

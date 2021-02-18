@@ -15,11 +15,5 @@ services:
   # #############################################################################################
   # ###                                        KEYCLOAK Config                                ###
   # #############################################################################################
-  # keycloak-config:
-  #   build:
-  #     context: ./infrastructure/keycloak
-  #     args:
-  #       - KEYCLOAK_URL=http://keycloak:8080
-  #   command: sh -c "dockerize -wait http://keycloak:8080 -timeout 300s /tmp/createuser.sh"
-  #   networks:
-  #     - fisu-net
+  keycloak-config:
+    image: docker.pkg.github.com/bcgov/jag-file-submission/keycloak-config:demo
