@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Value;
 
 import java.text.MessageFormat;
 
-public class CourtService {
+public class DocumentService {
 
     @Value("${EFILING_HOST:http://localhost:8080}")
     private String eFilingHost;
 
-    public Response getCourtsResponse(String accessToken, String courtLevel) {
+    public Response getDocumentTypesResponse(String accessToken, String courtLevel, String courtClassification) {
 
         RequestSpecification request = RestAssured
                 .given()
@@ -20,11 +20,14 @@ public class CourtService {
                 .preemptive()
                 .oauth2(accessToken);
 
-        return request.queryParam(courtLevel).when()
-                .get(MessageFormat.format("{0}/courts", eFilingHost))
+        return request.queryParam("courtLevel", courtLevel)
+                .queryParam("courtClassification", courtClassification)
+                .when()
+                .get(MessageFormat.format("{0}/documents/types", eFilingHost))
                 .then()
                 .extract()
                 .response();
+
     }
 
 }
