@@ -2,11 +2,16 @@ version: "3.7"
 services:
 
   #############################################################################################
+  ###                                 EFILING FRONTEND                                      ###
+  #############################################################################################
+  efiling-frontend:
+    build:
+      context: ./src/frontend/efiling-frontend
+
+  #############################################################################################
   ###                           Efiling api backend app                                     ###
   #############################################################################################
   efiling-api:
-    container_name: efiling-api
-    hostname: efiling-api
     build:
       context: ./src/backend
       dockerfile: Dockerfile.efiling-api

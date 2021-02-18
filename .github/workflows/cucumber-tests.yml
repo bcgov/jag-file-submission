@@ -9,16 +9,19 @@ on:
 
 jobs:
 
-  efiling-api-gcr:
+  efiling-frontend-gcr:
     name: Efiling Api GCR
     runs-on: ubuntu-latest 
-    env:
-      DOCKER_BUILDKIT: 1
-      COMPOSE_DOCKER_CLI_BUILD: 1
     steps:
       - name: Pull Git repo.
         uses: actions/checkout@v2
-        
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+        id: buildx
+        with:
+          install: true
+      
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
@@ -26,60 +29,96 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
       
-      # -
-      #   name: Set up Docker Buildx
-      #   uses: docker/setup-buildx-action@v1
-      #   id: buildx
-      #   with:
-      #     install: true
-
-      - name: Pull efiling-api-builder
-        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder || true
-
-      - name: build efiling-api-builder
+      - name: Pull efiling-frontend-builder
+        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:builder || true
+      
+      - name: build efiling-frontend-builder
         run: docker build ./src/backend
-          -f ./src/backend/Dockerfile.efiling-api
+          -f ./src/backend/Dockerfile.efiling-frontend
           --target build
-          -t efiling-api:builder
-          --build-arg SERVICE_NAME=efiling-api
-          --build-arg MVN_PROFILE=efiling-api-demo
+          -t efiling-frontend:builder
+          --build-arg SERVICE_NAME=efiling-frontend
+          --build-arg MVN_PROFILE=efiling-frontend-demo
           --build-arg STARTERS_V=v0.1.8
-          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder
-      - name: tag & push efiling-api to git container registry
-        run: docker tag efiling-api:builder docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder
-
-      - name: Pull efiling-api-demo
-        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo || true
-
-      - name: build efiling-api-demo
+          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:builder
+      
+      - name: tag & push efiling-frontend to git container registry
+        run: docker tag efiling-frontend:builder docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:builder && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:builder
+      
+      - name: Pull efiling-frontend-demo
+        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:demo || true
+      
+      - name: build efiling-frontend-demo
         run: docker build ./src/backend
-          -f ./src/backend/Dockerfile.efiling-api
-          -t efiling-api:demo
-          --build-arg SERVICE_NAME=efiling-api
-          --build-arg MVN_PROFILE=efiling-api-demo
+          -f ./src/backend/Dockerfile.efiling-frontend
+          -t efiling-frontend:demo
+          --build-arg SERVICE_NAME=efiling-frontend
+          --build-arg MVN_PROFILE=efiling-frontend-demo
           --build-arg STARTERS_V=v0.1.8
-          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder
-          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo
-      - name: tag & push efiling-api to git container registry
-        run: docker tag efiling-api:demo docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo
+          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:builder
+          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:demo
+      
+      - name: tag & push efiling-frontend to git container registry
+        run: docker tag efiling-frontend:demo docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:demo && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:demo
+
+  efiling-frontend-gcr:
+    name: Efiling Frontend GCR
+    runs-on: ubuntu-latest 
+    steps:
+      - name: Pull Git repo.
+        uses: actions/checkout@v2
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+        id: buildx
+        with:
+          install: true
+      
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          registry: docker.pkg.github.com
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Pull efiling-frontend-builder
+        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:builder || true
+      
+      - name: build efiling-frontend-builder
+        run: docker build ./src/frontend/efiling-frontend
+          --target build
+          -t efiling-frontend:builder
+          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:builder
+      
+      - name: tag & push efiling-frontend to git container registry
+        run: docker tag efiling-frontend:builder docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:builder && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:builder
+      
+      - name: Pull efiling-frontend-demo
+        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:demo || true
+      
+      - name: build efiling-frontend-demo
+        run: docker build ./src/frontend/efiling-frontend
+          -t efiling-frontend:builder
+          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:builder
+          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:demo
+      
+      - name: tag & push efiling-frontend to git container registry
+        run: docker tag efiling-frontend:demo docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:demo && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:demo
 
   cucumber-tests:
     name: Runs cucumber-tests
     runs-on: ubuntu-latest
-    needs: [efiling-api-gcr]
-    env:
-      DOCKER_BUILDKIT: 1
-      COMPOSE_DOCKER_CLI_BUILD: 1
+    needs: [efiling-frontend-gcr]
     steps:
-      - name: Pull Git repo.
+      - 
+        name: Pull Git repo.
         uses: actions/checkout@v2
-
-      # -
-      #   name: Set up Docker Buildx
-      #   uses: docker/setup-buildx-action@v1
-      #   id: buildx
-      #   with:
-      #     install: true
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+        id: buildx
+        with:
+          install: true
 
       # pulling images is faster than caching in most of the case
       - name: pull available docker images first
@@ -92,10 +131,6 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build Docker Images
-        run: |
-          docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up efiling-api
-
       - name: Cache local Maven repository
         uses: actions/cache@v2
         with:
@@ -107,16 +142,14 @@ jobs:
       - name: Standup Docker Pods
         run: |
           docker-compose up -d redis clamav keycloak
-
       
+      - name: Standup Docker Pods
+        run: |
+          docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up -d efiling-api efiling-frontend redis clamav keycloak  
       
       - name: Build Docker Images
         run: |
-          docker-compose build --quiet --parallel efiling-frontend efiling-api keycloak-config
-
-      - name: Standup Docker Pods
-        run: |
-          docker-compose up -d efiling-frontend efiling-api
+          docker-compose build keycloak-config
 
       - name: Configure keycloak
         run: |
@@ -131,7 +164,7 @@ jobs:
           wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
           sudo apt-get -qq -y install ./google-chrome-stable_current_amd64.deb
 
-          # We need to test if efiling-api pod and service is running before we can proceed.  Using dockerize to proceed only after efiling-demo:8080 can be reached.
+          # We need to test if efiling-frontend pod and service is running before we can proceed.  Using dockerize to proceed only after efiling-demo:8080 can be reached.
           wget -q https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
           tar -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
