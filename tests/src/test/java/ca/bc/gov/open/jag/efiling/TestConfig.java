@@ -49,6 +49,11 @@ public class TestConfig {
     }
 
     @Bean
+    public DocumentService documentService() {
+        return new DocumentService();
+    }
+
+    @Bean
     public static BeanFactoryPostProcessor beanFactoryPostProcessor() {
         return new BrowserScopePostProcessor();
     }

@@ -4,11 +4,12 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import Tabs from "react-bootstrap/Tabs"; /* TODO: replace with shared-components */
 import Tab from "react-bootstrap/Tab"; /* TODO: replace with shared-components */
-import { Button, Table, Alert } from "shared-components";
+import { Alert, Button, Sidecard, Table } from "shared-components";
 import { BsEyeFill } from "react-icons/bs";
 import { MdCancel } from "react-icons/md";
 import { useParams } from "react-router-dom";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
+import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import {
   getFilingPackage,
   downloadSubmissionSheet,
@@ -52,6 +53,8 @@ export default function PackageReview() {
   const [documents, setDocuments] = useState([]);
   const [parties, setParties] = useState([]);
   const [payments, setPayments] = useState([]);
+  const aboutCsoSidecard = getSidecardData().aboutCso;
+  const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
 
   useEffect(() => {
     getFilingPackage(packageId)
@@ -213,6 +216,10 @@ export default function PackageReview() {
               styling="normal-white btn"
             />
           </section>
+        </div>
+        <div className="sidecard">
+          <Sidecard sideCard={csoAccountDetailsSidecard} />
+          <Sidecard sideCard={aboutCsoSidecard} />
         </div>
       </div>
     </>
