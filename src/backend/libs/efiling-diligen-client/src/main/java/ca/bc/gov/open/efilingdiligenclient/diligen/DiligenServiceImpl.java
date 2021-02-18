@@ -1,9 +1,8 @@
-package ca.bc.gov.open.jag.efilingreviewerapi.extract;
+package ca.bc.gov.open.efilingdiligenclient.diligen;
 
 import ca.bc.gov.open.efilingdiligenclient.Keys;
-import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenAuthService;
-import ca.bc.gov.open.jag.efilingdiligenclientstarter.DiligenProperties;
-import ca.bc.gov.open.jag.efilingreviewerapi.exception.DiligenDocumentException;
+import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenProperties;
+import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ByteArrayResource;

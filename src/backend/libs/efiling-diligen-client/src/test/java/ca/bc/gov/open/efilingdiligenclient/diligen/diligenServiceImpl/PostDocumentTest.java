@@ -1,33 +1,28 @@
-package ca.bc.gov.open.jag.efilingreviewerapi.extract.diligenServiceImpl;
+package ca.bc.gov.open.efilingdiligenclient.diligen.diligenServiceImpl;
 
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenAuthService;
-import ca.bc.gov.open.jag.efilingdiligenclientstarter.DiligenProperties;
-import ca.bc.gov.open.jag.efilingreviewerapi.exception.DiligenDocumentException;
-import ca.bc.gov.open.jag.efilingreviewerapi.extract.DiligenServiceImpl;
-
+import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenProperties;
+import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenServiceImpl;
+import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
 import org.junit.jupiter.api.*;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.client.RestTemplate;
 
-import java.awt.*;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.net.URI;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("DiligenServiceImpl test suite")
-public class postDocumentTest {
+public class PostDocumentTest {
     public static final String USERNAME = "USERNAME";
     public static final String PASSWORD = "PASSWORD";
     public static final String DOCUMENT_TYPE = "DOCUMENT_TYPE";

@@ -15,7 +15,7 @@ import static org.mockito.ArgumentMatchers.any;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("DiligenAuthServiceImpl test suite")
-public class getDiligenJWTTest {
+public class GetDiligenJWTTest {
 
     public static final String JWT = "IMMAJWT";
     public static final String USERNAME = "USERNAME";

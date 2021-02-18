@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingreviewerapi.exception;
+package ca.bc.gov.open.efilingdiligenclient.exception;
 
 public class DiligenDocumentException extends RuntimeException {
 

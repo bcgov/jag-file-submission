@@ -1,6 +1,6 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.extract.documentsApiDelegateImpl;
 
-import ca.bc.gov.open.jag.efilingreviewerapi.extract.DiligenService;
+import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.DocumentsApiDelegateImpl;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;

@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * Diligen Client configuration
@@ -62,6 +63,16 @@ public class AutoConfiguration {
     public DiligenAuthService diligenAuthService(ApiClient apiClient) {
         AuthenticationApi authenticationApi = new AuthenticationApi(apiClient);
         return new DiligenAuthServiceImpl(authenticationApi);
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+
+    @Bean
+    public DiligenService diligenService(DiligenAuthService diligenAuthService, RestTemplate restTemplate) {
+        return new DiligenServiceImpl(restTemplate, diligenProperties, diligenAuthService);
     }
 
 }
