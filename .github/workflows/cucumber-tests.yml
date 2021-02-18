@@ -146,11 +146,11 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Standup Docker Pods
-        run: docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up -d efiling-api efiling-frontend keycloak-config redis clamav keycloak
+        run: docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up -d efiling-api efiling-frontend redis clamav keycloak
 
       - name: Configure keycloak
         run: |
-          docker-compose up keycloak-config
+          docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up keycloak-config
 
       - name: Running Integration Tests
         env:
