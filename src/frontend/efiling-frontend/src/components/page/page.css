@@ -40,13 +40,13 @@ main {
 
 @media (min-width: 576px) {
   footer {
-    bottom: 0;
+    bottom: 0px;
     left: 0;
     width: 100%;
     position: absolute;
   }
   .page {
-    padding-bottom: 100px;
+    padding-bottom: 63px;
   }
 }
 
