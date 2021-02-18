@@ -3,15 +3,12 @@ import {
   getKeycloakBrokerToken,
   getBCSCUserInfoJWT,
   getBCSCUserInfo,
-} from "./AuthService";
+} from "../AuthenticationService";
 import {
   generateJWTToken,
   encodeJWT,
 } from "../../../modules/helpers/authentication-helper/authenticationHelper";
-import {
-  KEYCLOAK,
-  BCSC_USERINFO_URL,
-} from "../../../components/hoc/AuthenticationGuard";
+import { KEYCLOAK, BCSC_USERINFO_URL } from "../AuthenticationGuard";
 
 const brokerURL = `${KEYCLOAK.url}/realms/${KEYCLOAK.realm}/broker/bcsc/token`;
 const bcscURL = `${BCSC_USERINFO_URL}`;

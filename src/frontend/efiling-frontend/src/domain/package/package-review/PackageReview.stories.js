@@ -1,26 +1,19 @@
 import React from "react";
-import { createMemoryHistory } from "history";
 import PackageReview from "./PackageReview";
+
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useParams: jest.fn().mockReturnValue({ packageId: 1 }),
+}));
 
 export default {
   title: "PackageReview",
   component: PackageReview,
 };
 
-const header = {
-  name: "E-File Submission",
-  history: createMemoryHistory(),
-};
-const packageId = "1";
+export const Default = () => <PackageReview />;
 
-const page = {
-  header,
-  packageId,
-};
-
-export const Default = () => <PackageReview page={page} />;
-
-export const Mobile = () => <PackageReview page={page} />;
+export const Mobile = () => <PackageReview />;
 
 Mobile.parameters = {
   viewport: {

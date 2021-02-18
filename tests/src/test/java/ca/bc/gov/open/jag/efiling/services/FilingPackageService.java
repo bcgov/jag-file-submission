@@ -26,4 +26,34 @@ public class FilingPackageService {
                 .extract()
                 .response();
     }
+
+    public Response getSubmissionSheet(String accessToken, int packageId) {
+
+        RequestSpecification request = RestAssured
+                .given()
+                .auth()
+                .preemptive()
+                .oauth2(accessToken);
+
+        return request.when()
+                .get(MessageFormat.format("{0}/filingpackages/{1}/submissionSheet", eFilingHost, packageId))
+                .then()
+                .extract()
+                .response();
+    }
+
+    public Response getDocumentById(String accessToken, int packageId, int documentId) {
+
+        RequestSpecification request = RestAssured
+                .given()
+                .auth()
+                .preemptive()
+                .oauth2(accessToken);
+
+        return request.when()
+                .get(MessageFormat.format("{0}/filingpackages/{1}/document/{2}", eFilingHost, packageId, documentId))
+                .then()
+                .extract()
+                .response();
+    }
 }

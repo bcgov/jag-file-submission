@@ -1,6 +1,5 @@
 /* eslint-disable camelcase, react/jsx-one-expression-per-line */
 import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
 import axios from "axios";
 import { MdCancel } from "react-icons/md";
 import { Loader, Alert } from "shared-components";
@@ -9,12 +8,26 @@ import {
   getJWTData,
   isIdentityProviderBCeID,
 } from "../../../modules/helpers/authentication-helper/authenticationHelper";
-import { getBCSCUserInfo } from "../../../domain/authentication/services/AuthService";
+import { getBCSCUserInfo } from "../../../domain/authentication/AuthenticationService";
 import PackageConfirmation from "../package-confirmation/PackageConfirmation";
 import CSOAccount from "../cso-account/CSOAccount";
-import { propTypes } from "../../../types/propTypes";
 
 import "../page.css";
+
+const mainButton = {
+  label: "Cancel",
+  styling: "bcgov-normal-white btn",
+};
+
+const confirmButton = {
+  label: "Yes, cancel E-File Submission",
+  styling: "bcgov-normal-blue btn bcgov-consistent-width",
+};
+
+const cancelButton = {
+  label: "No, resume E-File Submission",
+  styling: "bcgov-normal-white btn bcgov-consistent-width",
+};
 
 const setRequestHeaders = (transactionId) => {
   // Use interceptor to inject the transactionId to all requests
@@ -123,9 +136,7 @@ const checkCSOAccountStatus = (
     });
 };
 
-export default function Home({
-  page: { confirmationPopup, submissionId, transactionId },
-}) {
+export default function Home() {
   const [showLoader, setShowLoader] = useState(true);
   const [csoAccountStatus, setCsoAccountStatus] = useState({
     exists: false,
@@ -134,6 +145,38 @@ export default function Home({
   const [applicantInfo, setApplicantInfo] = useState({});
   const [error, setError] = useState(false);
   const [clientApplicationName, setClientApplicationName] = useState("");
+
+  const submissionId = sessionStorage.getItem("submissionId");
+  const transactionId = sessionStorage.getItem("transactionId");
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const handleConfirm = () => {
+    sessionStorage.setItem("validExit", true);
+    sessionStorage.removeItem("isBamboraRedirect");
+    const cancelUrl = sessionStorage.getItem("cancelUrl");
+
+    if (cancelUrl) {
+      axios
+        .delete(`submission/${sessionStorage.getItem("submissionId")}`)
+        .then(() => window.open(cancelUrl, "_self"))
+        .catch(() => window.open(cancelUrl, "_self"));
+    }
+  };
+
+  const modal = {
+    show,
+    title: "Cancel E-File Submission?",
+  };
+
+  const confirmationPopup = {
+    modal,
+    mainButton: { ...mainButton, onClick: handleShow },
+    confirmButton: { ...confirmButton, onClick: handleConfirm },
+    cancelButton: { ...cancelButton, onClick: handleClose },
+  };
 
   setRequestHeaders(transactionId);
 
@@ -166,7 +209,7 @@ export default function Home({
   };
 
   return (
-    <main>
+    <>
       {showLoader && <Loader page />}
       {!showLoader && error && (
         <div className="page">
@@ -196,14 +239,6 @@ export default function Home({
           csoAccountStatus={csoAccountStatus}
         />
       )}
-    </main>
+    </>
   );
 }
-
-Home.propTypes = {
-  page: PropTypes.shape({
-    confirmationPopup: propTypes.confirmationPopup,
-    submissionId: PropTypes.string.isRequired,
-    transactionId: PropTypes.string.isRequired,
-  }).isRequired,
-};
