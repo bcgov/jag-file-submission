@@ -4,11 +4,7 @@ services:
   ###                                 EFILING FRONTEND                                      ###
   #############################################################################################
   efiling-frontend:
-    # need stdin_open:true because there is an issue with container being auto exited after startup with react-scripts 3.4.1
-    stdin_open: true
     container_name: efiling-frontend
-    build:
-      context: ./src/frontend/efiling-frontend
     ports:
       - 3000:8080
     environment:
@@ -22,8 +18,6 @@ services:
   ###                                 EFILING DEMO                                          ###
   #############################################################################################
   efiling-demo:
-    # need stdin_open:true because there is an issue with container being auto exited after startup with react-scripts 3.4.1
-    stdin_open: true
     container_name: efiling-demo
     build:
       context: ./src/frontend/efiling-demo
@@ -42,13 +36,6 @@ services:
   efiling-api:
     container_name: efiling-api
     hostname: efiling-api
-    build:
-      context: ./src/backend
-      dockerfile: Dockerfile.efiling-api
-      args:
-        - MVN_PROFILE=${MVN_PROFILE:-efiling-api-demo}
-        - SKIP_TESTS=true
-        - STARTERS_V=v0.1.8
     ports:
       - "8080:8080"
     environment:
@@ -182,10 +169,6 @@ services:
   # ###                                        KEYCLOAK Config                                ###
   # #############################################################################################
   keycloak-config:
-    build:
-      context: ./infrastructure/keycloak
-      args:
-        - KEYCLOAK_URL=http://keycloak:8080
     command: sh -c "dockerize -wait http://keycloak:8080 -timeout 300s /tmp/createuser.sh"
     networks:
       - fisu-net
