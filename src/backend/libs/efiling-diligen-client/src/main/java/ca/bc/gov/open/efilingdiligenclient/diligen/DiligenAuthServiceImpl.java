@@ -1,5 +1,6 @@
 package ca.bc.gov.open.efilingdiligenclient.diligen;
 
+import ca.bc.gov.open.efilingdiligenclient.exception.DiligenAuthenticationException;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.AuthenticationApi;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.ApiException;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.model.InlineObject;
@@ -27,14 +28,14 @@ public class DiligenAuthServiceImpl implements DiligenAuthService {
 
             InlineResponse2001 result = authenticationApi.apiLoginPost(loginParams);
 
-            if (result.getData() == null) throw new RuntimeException("No login data");
+            if (result.getData() == null) throw new DiligenAuthenticationException("No login data");
 
             logger.info("diligen login complete");
 
             return result.getData().getJwt();
 
         } catch (ApiException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new DiligenAuthenticationException(e.getMessage());
         }
     }
 }

@@ -1,6 +1,7 @@
 package ca.bc.gov.open.efilingdiligenclient.diligen.diligenAuthServiceImpl;
 
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenAuthServiceImpl;
+import ca.bc.gov.open.efilingdiligenclient.exception.DiligenAuthenticationException;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.AuthenticationApi;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.ApiException;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.model.InlineResponse2001;
@@ -63,7 +64,7 @@ public class GetDiligenJWTTest {
 
         Mockito.when(authenticationApiMock.apiLoginPost(any())).thenThrow(new ApiException());
 
-        Assertions.assertThrows(RuntimeException.class, () -> sut.getDiligenJWT(FAILURE_USERNAME, FAILURE_PASSWORD));
+        Assertions.assertThrows(DiligenAuthenticationException.class, () -> sut.getDiligenJWT(FAILURE_USERNAME, FAILURE_PASSWORD));
 
     }
 
@@ -74,7 +75,7 @@ public class GetDiligenJWTTest {
         InlineResponse2001 noDataResponse2001 = new InlineResponse2001();
         Mockito.when(authenticationApiMock.apiLoginPost(any())).thenReturn(noDataResponse2001);
 
-        Assertions.assertThrows(RuntimeException.class, () -> sut.getDiligenJWT(NO_DATA_USERNAME, NO_DATA_PASSWORD));
+        Assertions.assertThrows(DiligenAuthenticationException.class, () -> sut.getDiligenJWT(NO_DATA_USERNAME, NO_DATA_PASSWORD));
 
     }
 }
