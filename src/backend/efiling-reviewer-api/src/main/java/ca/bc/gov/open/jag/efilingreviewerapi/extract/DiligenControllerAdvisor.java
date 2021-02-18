@@ -18,7 +18,7 @@ public class DiligenControllerAdvisor {
 
     @ExceptionHandler(DiligenAuthenticationException.class)
     public ResponseEntity<Object> handleDiligenAuthenticationException(DiligenAuthenticationException ex, WebRequest request) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

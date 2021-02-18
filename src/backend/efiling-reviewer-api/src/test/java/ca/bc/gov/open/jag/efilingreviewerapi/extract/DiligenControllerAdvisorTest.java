@@ -28,6 +28,7 @@ public class DiligenControllerAdvisorTest {
     }
 
     @Test
+    @DisplayName("400: Assert bad request returned")
     public void testDiligenDocumentException() {
 
         ResponseEntity<Object> result = sut.handleDiligenDocumentException(new DiligenDocumentException("Something went wrong"), webRequestMock);
@@ -38,11 +39,12 @@ public class DiligenControllerAdvisorTest {
     }
 
     @Test
+    @DisplayName("500: Assert internal server error returned")
     public void testDiligenAuthenticationException() {
 
         ResponseEntity<Object> result = sut.handleDiligenAuthenticationException(new DiligenAuthenticationException("Not authorized"), webRequestMock);
 
-        Assertions.assertEquals(HttpStatus.UNAUTHORIZED, result.getStatusCode());
+        Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
         Assertions.assertEquals("Not authorized", result.getBody());
 
     }
