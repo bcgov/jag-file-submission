@@ -5,6 +5,8 @@ import Dinero from "dinero.js";
 import { MdPrint } from "react-icons/md";
 import "./PaymentList.scss";
 
+const hash = require("object-hash");
+
 export default function PaymentList({ payments }) {
   const dineroInit = {
     stat: Dinero({ amount: 0 }),
@@ -68,7 +70,7 @@ export default function PaymentList({ payments }) {
                   payment.paymentCategory !== 1 && payment.paymentCategory !== 2
               )
               .map((payment) => (
-                <tr key={payment}>
+                <tr key={hash(payment)}>
                   <td>{payment.paymentDescription}</td>
                   <td className=" text-right">
                     {payment.feeExempt
@@ -130,5 +132,9 @@ export default function PaymentList({ payments }) {
 }
 
 PaymentList.propTypes = {
-  payments: PropTypes.arrayOf(PropTypes.object).isRequired,
+  payments: PropTypes.arrayOf(PropTypes.object),
+};
+
+PaymentList.defaultProps = {
+  payments: null,
 };

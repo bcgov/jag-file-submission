@@ -39,6 +39,27 @@ describe("PackageReview Component", () => {
       filingDate: "2020-05-05T00:00:00.000Z",
     },
   ];
+  const parties = [
+    {
+      partyType: "IND",
+      roleType: "APP",
+      firstName: "Bob",
+      middleName: "Q",
+      lastName: "Ross",
+      roleDescription: "Applicant",
+      partyDescription: "Individual",
+    },
+  ];
+  const payments = [
+    {
+      feeExempt: false,
+      paymentCategory: 1,
+      processedAmount: 7,
+      submittedAmount: 7,
+      serviceIdentifier: 0,
+      transactionDate: null,
+    },
+  ];
 
   FileSaver.saveAs = jest.fn();
 
@@ -66,6 +87,8 @@ describe("PackageReview Component", () => {
       submittedDate,
       filingComments,
       documents,
+      parties,
+      payments,
     });
 
     const { asFragment } = render(<PackageReview />);
