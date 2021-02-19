@@ -42,6 +42,7 @@ public class CreateAccountTest {
     public static final String DOMAIN = "Courts";
     public static final String APPLICATION = "CSO";
     public static final String IDENTIFIER_TYPE = "CAP";
+    public static final String BCEID = "BCEID";
 
     @Mock
     AccountFacadeBean accountFacadeBeanMock;
@@ -101,6 +102,7 @@ public class CreateAccountTest {
                 .email(EMAIL)
                 .middleName(MIDDLE_NAME)
                 .universalId(UNIVERSAL_ID)
+                .identityProvider(BCEID)
                 .create();
     }
 

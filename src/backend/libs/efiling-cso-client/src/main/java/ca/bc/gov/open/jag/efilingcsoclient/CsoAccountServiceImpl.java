@@ -156,11 +156,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         XMLGregorianCalendar date =  CsoHelpers.date2XMLGregorian(new Date());
 
         client.setAuthenticatedClientGuid(CsoHelpers.formatUserGuid(createAccountRequest.getUniversalId()));
-        try {
-            client.setAuthoritativePartyId(Keys.IDENTITY_PROVIDERS.get(createAccountRequest.getIdentityProvider()));
-        } catch (Exception e) {
-            throw new EfilingAccountServiceException("Invalid identity provider ", e);
-        }
+        client.setAuthoritativePartyId(Keys.IDENTITY_PROVIDERS.get(createAccountRequest.getIdentityProvider()));
         client.setClientPrefixTxt("CS");
         client.setClientStatusCd("ACT");
         client.setEmailTxt(createAccountRequest.getEmail());
