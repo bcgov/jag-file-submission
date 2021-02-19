@@ -7,6 +7,7 @@ import MockAdapter from "axios-mock-adapter";
 import moment from "moment-timezone";
 import PackageReview from "../PackageReview";
 import { getCourtData } from "../../../../modules/test-data/courtTestData";
+import * as packageReviewTestData from "../../../../modules/test-data/packageReviewTestData";
 import { generateJWTToken } from "../../../../modules/helpers/authentication-helper/authenticationHelper";
 
 const mockHelper = require("../../../../modules/helpers/mockHelper");
@@ -26,40 +27,9 @@ describe("PackageReview Component", () => {
   const submittedBy = { firstName: "Han", lastName: "Solo" };
   const filingComments =
     "Lorem ipsum dolor sit amet.<script>alert('Hi');</script>\n\nDuis aute irure dolor.";
-  const documents = [
-    {
-      identifier: "1",
-      documentProperties: {
-        type: "AFF",
-        name: "test-document.pdf",
-      },
-      status: {
-        description: "Submitted",
-      },
-      filingDate: "2020-05-05T00:00:00.000Z",
-    },
-  ];
-  const parties = [
-    {
-      partyType: "IND",
-      roleType: "APP",
-      firstName: "Bob",
-      middleName: "Q",
-      lastName: "Ross",
-      roleDescription: "Applicant",
-      partyDescription: "Individual",
-    },
-  ];
-  const payments = [
-    {
-      feeExempt: false,
-      paymentCategory: 1,
-      processedAmount: 7,
-      submittedAmount: 7,
-      serviceIdentifier: 0,
-      transactionDate: null,
-    },
-  ];
+  const { documents } = packageReviewTestData;
+  const { parties } = packageReviewTestData;
+  const { payments } = packageReviewTestData;
 
   FileSaver.saveAs = jest.fn();
 
