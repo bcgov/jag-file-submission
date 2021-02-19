@@ -35,14 +35,12 @@ public class PackageReviewPage extends BasePage {
     @FindBy(id = "uncontrolled-tab-tabpane-documents")
     private WebElement documentPane;
 
-    @FindBy(className = "ct-document-list")
-    private List<WebElement> documentList;
-
     @FindBy(id = "uncontrolled-tab-tabpane-payment")
     private WebElement paymentPane;
 
     @FindBy(id = "filingComments")
     private WebElement filingCommentsTextBox;
+
 
     public List<String> getPackageDetails() {
 
@@ -78,25 +76,6 @@ public class PackageReviewPage extends BasePage {
     public boolean verifyDocumentsPaneIsDisplayed() {
         wait.until(ExpectedConditions.visibilityOf(documentPane));
         return documentPane.isDisplayed();
-    }
-
-    public List<String> getDocumentList() {
-
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-test-id='detailsTable']")));
-
-        logger.info("Getting package details values");
-
-        List<String> packageDetails = new ArrayList<>();
-        packageValueDetails.forEach(webElement -> {
-            if (!webElement.isDisplayed()) {
-                logger.info("WebElement is still not visible. Waiting for all rows to be present: {}", webElement.isDisplayed());
-                wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//*[contains(@class,'bcgov-table-value')]/b")));
-            }
-            logger.info("Is it visible: {}", webElement.isDisplayed());
-            logger.info("Is it enabled: {}", webElement.isEnabled());
-            packageDetails.add(webElement.getText());
-        });
-        return packageDetails;
     }
 
     public boolean verifyFilingCommentsIsDisplayed() {
