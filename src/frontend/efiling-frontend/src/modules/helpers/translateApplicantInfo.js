@@ -30,7 +30,7 @@ export function translateApplicantInfo({
   return [
     {
       name: "BCSC:",
-      value: null,
+      value: "",
     },
     {
       name: "Full Name:",
