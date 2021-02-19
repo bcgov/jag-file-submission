@@ -35,7 +35,7 @@ jobs:
 
       - name: Build the Docker image
         env:
-          MVN_PROFILE: efiling-api, splunk
+          MVN_PROFILE: efiling-api,splunk
         run: |          
           
           docker-compose build efiling-api
