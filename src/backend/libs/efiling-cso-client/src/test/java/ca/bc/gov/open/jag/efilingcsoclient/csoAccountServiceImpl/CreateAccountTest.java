@@ -71,15 +71,62 @@ public class CreateAccountTest {
     }
 
     @Test
-    @DisplayName("No account details")
-    public void withInvalidRequestThrowIllegalArgument() {
+    @DisplayName("No account details missing first name")
+    public void withMissingFirstNameThrowIllegalArgument() {
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> sut.createAccount(CreateAccountRequest.builder().create()));
 
     }
 
     @Test
-    @DisplayName("Success account created")
+    @DisplayName("No account details missing last name")
+    public void withMissingLastNameRequestThrowIllegalArgument() {
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.createAccount(CreateAccountRequest.builder()
+                .firstName(FIRST_NAME)
+                .create()));
+
+    }
+
+    @Test
+    @DisplayName("No account details missing email")
+    public void withMissingEmalRequestThrowIllegalArgument() {
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.createAccount(CreateAccountRequest.builder()
+                .firstName(FIRST_NAME)
+                .lastName(LAST_NAME)
+                .create()));
+
+    }
+
+    @Test
+    @DisplayName("No account details universal id")
+    public void withMissingUniversalIdRequestThrowIllegalArgument() {
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.createAccount(CreateAccountRequest.builder()
+                .firstName(FIRST_NAME)
+                .lastName(LAST_NAME)
+                .email(EMAIL)
+                .create()));
+
+    }
+
+    @Test
+    @DisplayName("No account details missing identity provider")
+    public void withMissingIdentityProviderRequestThrowIllegalArgument() {
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.createAccount(CreateAccountRequest.builder()
+                .firstName(FIRST_NAME)
+                .lastName(LAST_NAME)
+                .email(EMAIL)
+                .middleName(MIDDLE_NAME)
+                .universalId(UNIVERSAL_ID)
+                .create()));
+
+    }
+
+    @Test
+    @DisplayName("Success account created ")
     public void withValidAccountRequestAccountCreated() {
         AccountDetails result = sut.createAccount(createAccountRequest());
         Assertions.assertEquals(UNIVERSAL_ID, result.getUniversalId());
