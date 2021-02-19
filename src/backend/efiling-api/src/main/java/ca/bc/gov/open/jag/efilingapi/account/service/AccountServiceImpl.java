@@ -29,8 +29,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Cacheable(cacheNames = "accountDetails", key = "#universalId", cacheManager = "accountDetailsCacheManager", unless = "#result == null || #result.getInternalClientNumber() == null")
-    public AccountDetails createAccount(String universalId, CreateCsoAccountRequest createCsoAccountRequest) {
-        return efilingAccountService.createAccount(createAccountRequestMapper.toCreateAccountRequest(universalId, createCsoAccountRequest));
+    public AccountDetails createAccount(String universalId, String identityProvider, CreateCsoAccountRequest createAccountRequest) {
+        return efilingAccountService.createAccount(createAccountRequestMapper.toCreateAccountRequest(universalId, identityProvider, createAccountRequest));
     }
 
 }

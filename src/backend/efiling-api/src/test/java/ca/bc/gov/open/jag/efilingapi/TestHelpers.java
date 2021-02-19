@@ -29,6 +29,7 @@ public class TestHelpers {
     public static final String CASE_1_STRING = CASE_1.toString();
     public static final String CASE_2_STRING = CASE_2.toString();
 
+    public static final String IDENTITY_PROVIDER = "IDENTITY_PROVIDER";
     public static final String DIVISION = "DIVISION";
     public static final String FILENUMBER = "FILENUMBER";
     public static final String LEVEL = "LEVEL";

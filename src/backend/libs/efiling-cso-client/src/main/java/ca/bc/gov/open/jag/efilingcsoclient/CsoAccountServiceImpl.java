@@ -16,11 +16,9 @@ import org.apache.commons.lang3.StringUtils;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.WebServiceException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 public class CsoAccountServiceImpl implements EfilingAccountService {
 
@@ -49,12 +47,11 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
     public AccountDetails createAccount(CreateAccountRequest createAccountRequest)  {
 
         // Validate the incoming data
-        if (StringUtils.isEmpty(createAccountRequest.getFirstName()) ||
-                StringUtils.isEmpty(createAccountRequest.getLastName()) ||
-                StringUtils.isEmpty(createAccountRequest.getEmail()) ||
-                StringUtils.isEmpty(createAccountRequest.getUniversalId().toString())) {
-            throw new IllegalArgumentException("First Name, Last Name, Email, and Universal ID are required");
-        }
+        if (StringUtils.isEmpty(createAccountRequest.getFirstName())) throw new IllegalArgumentException("First Name is required");
+        if (StringUtils.isEmpty(createAccountRequest.getLastName())) throw new IllegalArgumentException("Last Name is required");
+        if (StringUtils.isEmpty(createAccountRequest.getEmail())) throw new IllegalArgumentException("Email is required");
+        if (StringUtils.isEmpty(createAccountRequest.getUniversalId())) throw new IllegalArgumentException("Universal ID is required");
+        if (StringUtils.isEmpty(createAccountRequest.getIdentityProvider()) || Keys.IDENTITY_PROVIDERS.get(createAccountRequest.getIdentityProvider().toUpperCase()) == null) throw new IllegalArgumentException("Valid identity provider is required");
 
         AccountDetails accountDetails = null;
 
@@ -158,7 +155,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         XMLGregorianCalendar date =  CsoHelpers.date2XMLGregorian(new Date());
 
         client.setAuthenticatedClientGuid(CsoHelpers.formatUserGuid(createAccountRequest.getUniversalId()));
-        client.setAuthoritativePartyId(BigDecimal.ONE);
+        client.setAuthoritativePartyId(Keys.IDENTITY_PROVIDERS.get(createAccountRequest.getIdentityProvider().toUpperCase()));
         client.setClientPrefixTxt("CS");
         client.setClientStatusCd("ACT");
         client.setEmailTxt(createAccountRequest.getEmail());

@@ -50,11 +50,16 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
         if(!universalId.isPresent()) return new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
 
+        Optional<String> identityProvider = SecurityUtils.getIdentityProvider();
+
+        if(!identityProvider.isPresent()) return new ResponseEntity(
+                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_IDENTITY_PROVIDER).create(), HttpStatus.FORBIDDEN);
+
         try {
 
             logger.debug("attempting to create a cso account");
             
-            AccountDetails accountDetails = accountService.createAccount(universalId.get(), createAccountRequest);
+            AccountDetails accountDetails = accountService.createAccount(universalId.get(), identityProvider.get(),createAccountRequest);
 
             logger.info("Account successfully created");
 
