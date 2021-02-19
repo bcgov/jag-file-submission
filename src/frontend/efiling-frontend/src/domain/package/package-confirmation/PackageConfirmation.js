@@ -19,8 +19,8 @@ import { generateFileSummaryData } from "../../../modules/helpers/generateFileSu
 import { isClick, isEnter } from "../../../modules/helpers/eventUtil";
 
 import "./PackageConfirmation.scss";
-import Payment from "../payment/Payment";
-import Upload from "../upload/Upload";
+import Payment from "../../payment/Payment";
+import Upload from "../../../components/page/upload/Upload";
 
 const hash = require("object-hash");
 

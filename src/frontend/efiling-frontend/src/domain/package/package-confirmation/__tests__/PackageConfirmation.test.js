@@ -3,12 +3,12 @@ import axios from "axios";
 import FileSaver from "file-saver";
 import MockAdapter from "axios-mock-adapter";
 import { render, waitFor, fireEvent, getByText } from "@testing-library/react";
-import { getTestData } from "../../../modules/test-data/confirmationPopupTestData";
-import { getDocumentsData } from "../../../modules/test-data/documentTestData";
-import { getCourtData } from "../../../modules/test-data/courtTestData";
-import { generateJWTToken } from "../../../modules/helpers/authentication-helper/authenticationHelper";
+import { getTestData } from "../../../../modules/test-data/confirmationPopupTestData";
+import { getDocumentsData } from "../../../../modules/test-data/documentTestData";
+import { getCourtData } from "../../../../modules/test-data/courtTestData";
+import { generateJWTToken } from "../../../../modules/helpers/authentication-helper/authenticationHelper";
 
-import PackageConfirmation from "./PackageConfirmation";
+import PackageConfirmation from "../PackageConfirmation";
 
 describe("PackageConfirmation Component", () => {
   const confirmationPopup = getTestData();
