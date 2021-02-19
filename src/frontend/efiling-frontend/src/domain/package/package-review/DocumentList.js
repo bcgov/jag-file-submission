@@ -175,7 +175,7 @@ export default function DocumentList({
 }
 
 DocumentList.propTypes = {
-  packageId: PropTypes.string.isRequired,
+  packageId: PropTypes.number.isRequired,
   documents: PropTypes.arrayOf(
     PropTypes.shape({
       identifier: PropTypes.string.isRequired,
@@ -187,6 +187,10 @@ DocumentList.propTypes = {
         description: PropTypes.string.isRequired,
       }),
     })
-  ).isRequired,
+  ),
   reloadDocumentList: PropTypes.func.isRequired,
+};
+
+DocumentList.defaultProps = {
+  documents: [],
 };

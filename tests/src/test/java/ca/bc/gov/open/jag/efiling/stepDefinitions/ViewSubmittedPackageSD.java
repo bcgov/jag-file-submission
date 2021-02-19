@@ -32,7 +32,7 @@ public class ViewSubmittedPackageSD {
     @Given("user is on package review page with package id {int}")
     public void userIsOnPackageReviewPage(int packageId) {
 
-        String packageReviewPageUrl = MessageFormat.format( "{0}/{1}", packageReviewUrl, packageId);
+        String packageReviewPageUrl = MessageFormat.format("{0}/{1}", packageReviewUrl, packageId);
         logger.info("Formatted package review page url:{}", packageReviewPageUrl);
 
         this.packageReviewPage.goTo(packageReviewPageUrl);
@@ -57,16 +57,20 @@ public class ViewSubmittedPackageSD {
 
     @Then("documents details are available in Documents tab")
     public void verifyDocumentDetails() {
-
         packageReviewPage.clickDocumentsTab();
         Assert.assertTrue(packageReviewPage.verifyDocumentsPaneIsDisplayed());
     }
 
     @And("comments are available in Filing Comments tab")
     public void verifyFilingComments() {
-
         packageReviewPage.clickFilingCommentsTab();
         Assert.assertTrue(packageReviewPage.verifyFilingCommentsIsDisplayed());
 
+    }
+
+    @And("payment status information is correct")
+    public void verifyPaymentStatus() {
+        packageReviewPage.clickPaymentStatusTab();
+        Assert.assertTrue(packageReviewPage.verifyPaymentStatusIsDisplayed());
     }
 }
