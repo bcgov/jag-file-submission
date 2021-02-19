@@ -18,7 +18,7 @@ import { noop } from "../../../modules/helpers/mockHelper";
 
 import "./PackageReview.scss";
 import DocumentList from "./DocumentList";
-import ParyList from "./PartyList";
+import PartyList from "./PartyList";
 import PaymentList from "./PaymentList";
 
 export default function PackageReview() {
@@ -194,7 +194,7 @@ export default function PackageReview() {
             </Tab>
             <Tab eventKey="parties" title="Parties">
               <br />
-              <ParyList parties={parties} />
+              <PartyList parties={parties} />
             </Tab>
             <Tab eventKey="payment" title="Payment Status">
               <br />

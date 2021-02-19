@@ -22,6 +22,8 @@ import "./PackageConfirmation.scss";
 import Payment from "../payment/Payment";
 import Upload from "../upload/Upload";
 
+const hash = require("object-hash");
+
 const downloadFile = (file, submissionId) => {
   const fileName = file.documentProperties.name;
   axios
@@ -57,7 +59,7 @@ const generateTable = (file, data, submissionId) => [
           onClick={(e) => handleDownloadFile(e, file, submissionId)}
           data-test-id="uploaded-file"
         >
-          {file.documentProperties.name}
+          {file.documentProperties && file.documentProperties.name}
         </span>
       </div>
     ),
@@ -197,7 +199,7 @@ export default function PackageConfirmation({
         <br />
         <br />
         {files.map((file) => (
-          <div key={file.documentProperties.name}>
+          <div key={hash(file)}>
             <DisplayBox
               styling="bcgov-border-background bcgov-display-file"
               icon={
