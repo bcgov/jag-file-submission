@@ -260,12 +260,8 @@
                 <version>${org.mockito.mockito-core.version}</version>
                 <scope>test</scope>
             </dependency>
-
-
-
         </dependencies>
     </dependencyManagement>
-
 
     <build>
         <plugins>
@@ -279,6 +275,5 @@
             </plugin>
         </plugins>
     </build>
-
 
 </project>
