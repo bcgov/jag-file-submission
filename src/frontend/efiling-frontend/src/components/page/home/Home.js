@@ -209,6 +209,14 @@ export default function Home() {
   };
 
   return (
+    <CSOAccount
+      confirmationPopup={{ ...confirmationPopup, modal: updatedModal }}
+      applicantInfo={applicantInfo}
+      setCsoAccountStatus={setCsoAccountStatus}
+    />
+  );
+
+  return (
     <>
       {showLoader && <Loader page />}
       {!showLoader && error && (

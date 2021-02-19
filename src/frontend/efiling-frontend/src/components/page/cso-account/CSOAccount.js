@@ -1,4 +1,4 @@
-/* eslint-disable react/require-default-props */
+/* eslint-disable react/require-default-props, jsx-a11y/label-has-associated-control */
 import React, { useState, useEffect } from "react";
 import { MdPerson, MdError } from "react-icons/md";
 import axios from "axios";
@@ -10,11 +10,13 @@ import ConfirmationPopup, {
   Alert,
   Sidecard,
 } from "shared-components";
+import validator from "validator";
 import { getContent } from "../../../modules/helpers/csoAccountAgreementContent";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import { translateApplicantInfo } from "../../../modules/helpers/translateApplicantInfo";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { propTypes } from "../../../types/propTypes";
+import "./CSOAccount.scss";
 
 const content = getContent();
 
@@ -27,16 +29,55 @@ export default function CSOAccount({
   const [termsAccepted, acceptTerms] = useState(false);
   const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
+  const [emailInput, setEmailInput] = useState({ email: "", confEmail: "" });
+  const [emailInputErrors, setEmailInputErrors] = useState({
+    emailError: "",
+    confEmailError: "",
+  });
 
   useEffect(() => {
-    if (termsAccepted) {
+    const emailErrors = () =>
+      !(
+        validator.isEmail(emailInput.email) &&
+        emailInput.email === emailInput.confEmail
+      );
+
+    if (emailInput.email !== emailInput.confEmail && emailInput.confEmail) {
+      setEmailInputErrors({
+        ...emailInputErrors,
+        confEmailError: "Email and confirmation email must match.",
+      });
+    } else {
+      setEmailInputErrors({ ...emailInputErrors, confEmailError: "" });
+    }
+
+    if (termsAccepted && !emailErrors()) {
       setContinueBtnEnabled(true);
     } else {
       setContinueBtnEnabled(false);
     }
-  }, [termsAccepted]);
+  }, [termsAccepted, emailInput.email, emailInput.confEmail]);
 
-  const createCSOAccount = ({ firstName, lastName, email }) => {
+  const handleOnChange = (e) => {
+    const input = e.target.value;
+
+    setEmailInput({ ...emailInput, [e.target.name]: input });
+
+    if (e.target.name === "email" && !validator.isEmail(input)) {
+      setEmailInputErrors({
+        ...emailInputErrors,
+        emailError: "Must be a valid email.",
+      });
+    } else if (e.target.name === "email" && validator.isEmail(input)) {
+      setEmailInputErrors({ ...emailInputErrors, emailError: "" });
+    }
+  };
+
+  const createCSOAccount = ({
+    firstName,
+    lastName,
+    email = emailInput.email,
+  }) => {
     setShowLoader(true);
     setContinueBtnEnabled(false);
 
@@ -64,7 +105,7 @@ export default function CSOAccount({
 
   return (
     <div className="page">
-      <div className="content col-md-8">
+      <div className="content col-md-8 ct-cso-account">
         <div className="non-printable">
           <h1>Create a Court Services Online (CSO) Account</h1>
           <Alert
@@ -79,6 +120,14 @@ export default function CSOAccount({
           </p>
           <DisplayBox icon={icon} element={applicantTable} />
           <br />
+
+          <label>Email: </label>
+          <input type="textarea" name="email" onChange={handleOnChange} />
+          <label>Confirm Email: </label>
+          <input type="textarea" name="confEmail" onChange={handleOnChange} />
+          <br />
+          <span className="mr-5 error">{emailInputErrors.emailError}</span>
+          <span className="ml-5 error">{emailInputErrors.confEmailError}</span>
         </div>
 
         <TermsOfUse
