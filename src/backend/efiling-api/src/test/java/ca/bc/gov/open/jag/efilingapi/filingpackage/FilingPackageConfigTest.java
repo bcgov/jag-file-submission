@@ -47,7 +47,7 @@ public class FilingPackageConfigTest {
                 }
 
                 @Override
-                public AccountDetails createAccount(String universalId, CreateCsoAccountRequest createAccountRequest) {
+                public AccountDetails createAccount(String universalId, String identityProvider ,CreateCsoAccountRequest createAccountRequest) {
                     return null;
                 }
             };

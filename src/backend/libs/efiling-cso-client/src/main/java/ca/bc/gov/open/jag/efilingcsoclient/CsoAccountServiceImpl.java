@@ -16,11 +16,9 @@ import org.apache.commons.lang3.StringUtils;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.WebServiceException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 public class CsoAccountServiceImpl implements EfilingAccountService {
 
@@ -158,7 +156,11 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         XMLGregorianCalendar date =  CsoHelpers.date2XMLGregorian(new Date());
 
         client.setAuthenticatedClientGuid(CsoHelpers.formatUserGuid(createAccountRequest.getUniversalId()));
-        client.setAuthoritativePartyId(BigDecimal.ONE);
+        try {
+            client.setAuthoritativePartyId(Keys.IDENTITY_PROVIDERS.get(createAccountRequest.getIdentityProvider()));
+        } catch (Exception e) {
+            throw new EfilingAccountServiceException("Invalid identity provider ", e);
+        }
         client.setClientPrefixTxt("CS");
         client.setClientStatusCd("ACT");
         client.setEmailTxt(createAccountRequest.getEmail());

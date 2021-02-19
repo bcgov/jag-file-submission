@@ -7,6 +7,6 @@ import org.mapstruct.Mapper;
 @Mapper
 public interface CreateAccountRequestMapper {
 
-    CreateAccountRequest toCreateAccountRequest(String universalId, CreateCsoAccountRequest createCsoAccountRequest);
+    CreateAccountRequest toCreateAccountRequest(String universalId, String identityProvider,CreateCsoAccountRequest createCsoAccountRequest);
 
 }

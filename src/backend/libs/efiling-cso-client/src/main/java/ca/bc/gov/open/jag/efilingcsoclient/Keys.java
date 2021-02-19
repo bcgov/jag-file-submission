@@ -1,5 +1,11 @@
 package ca.bc.gov.open.jag.efilingcsoclient;
 
+import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class Keys {
 
     private Keys() {}
@@ -25,5 +31,9 @@ public class Keys {
     public static final String PRIVILEGE_CD = "UPDT";
     public static final String REPORT_NAME = "submission";
     public static final String REPORT_PARAMETER = "prm_package_id";
+    public static final Map<String, BigDecimal> IDENTITY_PROVIDERS = Collections.unmodifiableMap(new HashMap<String, BigDecimal>() {{
+        put("BCEID", BigDecimal.ONE);
+        put("BCSC", new BigDecimal(2));
+    }});
 
 }

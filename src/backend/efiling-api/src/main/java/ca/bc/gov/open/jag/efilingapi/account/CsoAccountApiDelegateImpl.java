@@ -54,7 +54,7 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
 
             logger.debug("attempting to create a cso account");
             
-            AccountDetails accountDetails = accountService.createAccount(universalId.get(), createAccountRequest);
+            AccountDetails accountDetails = accountService.createAccount(universalId.get(), SecurityUtils.getIdentityProvider().get(),createAccountRequest);
 
             logger.info("Account successfully created");
 
