@@ -4,16 +4,14 @@ import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.Register
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RoleRegistry;
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RoleRegistryPortType;
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.UserRoles;
-import ca.bc.gov.ag.csows.accounts.AccountFacade;
-import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
-import ca.bc.gov.ag.csows.accounts.ClientProfile;
-import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
+import ca.bc.gov.ag.csows.accounts.*;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.CSOHasMultipleAccountException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoAccountServiceImpl;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoHelpers;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.AccountDetailsMapper;
+import ca.bc.gov.open.jag.efilingcsoclient.mappers.AccountDetailsMapperImpl;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -52,18 +50,19 @@ public class GetAccountDetailsTest {
     @Mock
     RoleRegistryPortType roleRegistryPortTypeMock;
 
-    @Mock
-    AccountDetailsMapper accountDetailsMapperMock;
+    AccountDetailsMapper accountDetailsMapper;
 
     @BeforeEach
-    public void init() throws NestedEjbException_Exception {
+    public void beforeEach() throws NestedEjbException_Exception {
 
         MockitoAnnotations.openMocks(this);
         initAccountFacadeMocks();
         initRoleRegistryMocks();
-        initBceIdAccountMocks();
 
-        sut = new CsoAccountServiceImpl(accountFacadeBeanMock, roleRegistryPortTypeMock, accountDetailsMapperMock);
+        accountDetailsMapper = new AccountDetailsMapperImpl();
+
+        sut = new CsoAccountServiceImpl(accountFacadeBeanMock, roleRegistryPortTypeMock, accountDetailsMapper);
+
     }
 
     private void initAccountFacadeMocks() throws NestedEjbException_Exception {
@@ -73,20 +72,24 @@ public class GetAccountDetailsTest {
         ClientProfile profile =  new ClientProfile();
         profile.setAccountId(BigDecimal.TEN);
         profile.setClientId(BigDecimal.TEN);
+        Client client = new Client();
+        client.setInternalClientNo(INTERNAL_CLIENT_NUMBER);
+        profile.setClient(client);
+
         List<ClientProfile> profiles = new ArrayList<ClientProfile>();
         profiles.add(profile);
 
-        Mockito.when(accountFacadeBeanMock.findProfiles(CsoHelpers.formatUserGuid(USER_GUID_NO_ROLE))).thenReturn(profiles);
-        Mockito.when(accountFacadeBeanMock.findProfiles(CsoHelpers.formatUserGuid(USER_GUID_WITH_FILE_ROLE))).thenReturn(profiles);
+        Mockito.when(accountFacadeBeanMock.findProfiles(Mockito.eq(CsoHelpers.formatUserGuid(USER_GUID_NO_ROLE)))).thenReturn(profiles);
+        Mockito.when(accountFacadeBeanMock.findProfiles(Mockito.eq(CsoHelpers.formatUserGuid(USER_GUID_WITH_FILE_ROLE)))).thenReturn(profiles);
 
         List<ClientProfile> emptyProfiles = new ArrayList<ClientProfile>();
-        Mockito.when(accountFacadeBeanMock.findProfiles(CsoHelpers.formatUserGuid(USER_GUID_WITH_NO_CSO))).thenReturn(emptyProfiles);
-        Mockito.when(accountFacadeBeanMock.findProfiles(CsoHelpers.formatUserGuid(USER_GUID_WITH_EJB_EXCEPTION))).thenThrow(new NestedEjbException_Exception("random"));
+        Mockito.when(accountFacadeBeanMock.findProfiles(Mockito.eq(CsoHelpers.formatUserGuid(USER_GUID_WITH_NO_CSO)))).thenReturn(emptyProfiles);
+        Mockito.when(accountFacadeBeanMock.findProfiles(Mockito.eq(CsoHelpers.formatUserGuid(USER_GUID_WITH_EJB_EXCEPTION)))).thenThrow(new NestedEjbException_Exception("random"));
 
         List<ClientProfile> multiProfiles = new ArrayList<>();
         multiProfiles.add(profile);
         multiProfiles.add(profile);
-        Mockito.when(accountFacadeBeanMock.findProfiles(CsoHelpers.formatUserGuid(USER_GUID_WITH_MULTI_PROFILE))).thenReturn(multiProfiles);
+        Mockito.when(accountFacadeBeanMock.findProfiles(Mockito.eq(CsoHelpers.formatUserGuid(USER_GUID_WITH_MULTI_PROFILE)))).thenReturn(multiProfiles);
 
     }
 
@@ -106,17 +109,6 @@ public class GetAccountDetailsTest {
         Mockito.when(roleRegistryPortTypeMock.getRolesForIdentifier(DOMAIN, APPLICATION, CsoHelpers.formatUserGuid(USER_GUID_WITH_FILE_ROLE), IDENTIFIER_TYPE)).thenReturn(userRolesWithFileRole);
         Mockito.when(roleRegistryPortTypeMock.getRolesForIdentifier(DOMAIN, APPLICATION, CsoHelpers.formatUserGuid(USER_GUID_NO_ROLE), IDENTIFIER_TYPE)).thenReturn(userRolesWithoutFileRole);
 
-        AccountDetails csoUserDetailsWithRole = new AccountDetails(UUID.randomUUID().toString(), BigDecimal.TEN, BigDecimal.TEN, INTERNAL_CLIENT_NUMBER ,true, "firstName", "lastName", "middleName", "email", true);
-        Mockito.when(accountDetailsMapperMock.toAccountDetails(Mockito.any(), Mockito.any(), Mockito.eq(true))).thenReturn(csoUserDetailsWithRole);
-
-        AccountDetails csoUserDetailsWithoutRole = new AccountDetails(UUID.randomUUID().toString(),BigDecimal.TEN, BigDecimal.TEN, INTERNAL_CLIENT_NUMBER ,false, "firstName", "lastName", "middleName","email", true);
-        Mockito.when(accountDetailsMapperMock.toAccountDetails(Mockito.any(), Mockito.any(), Mockito.eq(false))).thenReturn(csoUserDetailsWithoutRole);
-    }
-
-    private void initBceIdAccountMocks() {
-
-        AccountDetails accountDetailsWithNoCso = new AccountDetails(UUID.randomUUID().toString(), BigDecimal.ZERO, BigDecimal.ZERO, INTERNAL_CLIENT_NUMBER, false, "firstName", "lastName", "middleName","email", true);
-        Mockito.when(accountDetailsMapperMock.toAccountDetails(Mockito.any())).thenReturn(accountDetailsWithNoCso);
     }
 
     @DisplayName("OK: getAccountDetails called with userGuid with file role")

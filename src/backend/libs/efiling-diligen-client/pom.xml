@@ -11,7 +11,7 @@
     <properties>
         <default-package>ca.bc.gov.open.jag.efilingdiligenclient</default-package>
         <java.version>1.8</java.version>
-        <org.mapstruct.version>1.3.1.Final</org.mapstruct.version>
+        <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
     </properties>
 
