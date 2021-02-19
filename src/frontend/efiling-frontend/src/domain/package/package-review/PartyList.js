@@ -5,7 +5,7 @@ import "./PartyList.scss";
 
 const hash = require("object-hash");
 
-export default function ParyList({ parties }) {
+export default function PartyList({ parties }) {
   return (
     <div className="ct-party-list">
       <div className="header">
@@ -32,7 +32,7 @@ export default function ParyList({ parties }) {
   );
 }
 
-ParyList.propTypes = {
+PartyList.propTypes = {
   parties: PropTypes.arrayOf(
     PropTypes.shape({
       partyType: PropTypes.string,
@@ -43,5 +43,9 @@ ParyList.propTypes = {
       middleName: PropTypes.string,
       lastName: PropTypes.string,
     })
-  ).isRequired,
+  ),
+};
+
+PartyList.defaultProps = {
+  parties: [],
 };

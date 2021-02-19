@@ -7,6 +7,7 @@ import MockAdapter from "axios-mock-adapter";
 import moment from "moment-timezone";
 import PackageReview from "../PackageReview";
 import { getCourtData } from "../../../../modules/test-data/courtTestData";
+import * as packageReviewTestData from "../../../../modules/test-data/packageReviewTestData";
 import { generateJWTToken } from "../../../../modules/helpers/authentication-helper/authenticationHelper";
 
 const mockHelper = require("../../../../modules/helpers/mockHelper");
@@ -26,19 +27,9 @@ describe("PackageReview Component", () => {
   const submittedBy = { firstName: "Han", lastName: "Solo" };
   const filingComments =
     "Lorem ipsum dolor sit amet.<script>alert('Hi');</script>\n\nDuis aute irure dolor.";
-  const documents = [
-    {
-      identifier: "1",
-      documentProperties: {
-        type: "AFF",
-        name: "test-document.pdf",
-      },
-      status: {
-        description: "Submitted",
-      },
-      filingDate: "2020-05-05T00:00:00.000Z",
-    },
-  ];
+  const { documents } = packageReviewTestData;
+  const { parties } = packageReviewTestData;
+  const { payments } = packageReviewTestData;
 
   FileSaver.saveAs = jest.fn();
 
@@ -66,6 +57,8 @@ describe("PackageReview Component", () => {
       submittedDate,
       filingComments,
       documents,
+      parties,
+      payments,
     });
 
     const { asFragment } = render(<PackageReview />);
