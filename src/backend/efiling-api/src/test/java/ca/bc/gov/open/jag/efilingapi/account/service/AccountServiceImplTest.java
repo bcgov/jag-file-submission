@@ -22,6 +22,7 @@ public class AccountServiceImplTest {
 
     private static final String INTERNAL_CLIENT_NUMBER = "123456";
     private static final String FAIL_INTERNAL_CLIENT_NUMBER = "234567";
+    public static final String BCEID = "BCEID";
 
     private AccountServiceImpl sut;
 
@@ -80,7 +81,7 @@ public class AccountServiceImplTest {
     @Test
     @DisplayName("OK: should Create an account")
     public void withRequestShouldCreateAnAccount() {
-        AccountDetails actual = sut.createAccount(UUID.randomUUID().toString(), new CreateCsoAccountRequest());
+        AccountDetails actual = sut.createAccount(UUID.randomUUID().toString(), BCEID, new CreateCsoAccountRequest());
         Mockito.verify(efilingAccountServiceMock,Mockito.times(1)).createAccount(any());
 
         Assertions.assertEquals(BigDecimal.TEN, actual.getAccountId());

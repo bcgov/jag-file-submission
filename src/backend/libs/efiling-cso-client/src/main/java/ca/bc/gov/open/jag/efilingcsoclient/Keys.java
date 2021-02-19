@@ -1,5 +1,10 @@
 package ca.bc.gov.open.jag.efilingcsoclient;
 
+import java.math.BigDecimal;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public class Keys {
 
     private Keys() {}
@@ -25,5 +30,9 @@ public class Keys {
     public static final String PRIVILEGE_CD = "UPDT";
     public static final String REPORT_NAME = "submission";
     public static final String REPORT_PARAMETER = "prm_package_id";
+    public static final Map<String, BigDecimal> IDENTITY_PROVIDERS = Stream.of(
+                new AbstractMap.SimpleImmutableEntry<>( "BCEID", BigDecimal.ONE ),
+                new AbstractMap.SimpleImmutableEntry<>( "BCSC",  new BigDecimal(2) ))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
 }
