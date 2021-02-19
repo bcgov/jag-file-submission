@@ -157,7 +157,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         XMLGregorianCalendar date =  CsoHelpers.date2XMLGregorian(new Date());
 
         client.setAuthenticatedClientGuid(CsoHelpers.formatUserGuid(createAccountRequest.getUniversalId()));
-        client.setAuthoritativePartyId(Keys.IDENTITY_PROVIDERS.get(createAccountRequest.getIdentityProvider()));
+        client.setAuthoritativePartyId(Keys.IDENTITY_PROVIDERS.get(createAccountRequest.getIdentityProvider().toUpperCase()));
         client.setClientPrefixTxt("CS");
         client.setClientStatusCd("ACT");
         client.setEmailTxt(createAccountRequest.getEmail());
