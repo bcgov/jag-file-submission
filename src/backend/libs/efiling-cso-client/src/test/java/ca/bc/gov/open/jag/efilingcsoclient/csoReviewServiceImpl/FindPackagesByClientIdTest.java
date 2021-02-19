@@ -16,6 +16,7 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.web.client.RestTemplate;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
@@ -37,8 +38,12 @@ public class FindPackagesByClientIdTest {
     public static final String LAST_NAME = "LASTNAME";
     public static final String PACKAGE_NO = "PACKAGENO";
     public static final DateTime SUBMITED_DATE = new DateTime(2020, 12, 12, 1, 1);
+
     @Mock
     FilingStatusFacadeBean filingStatusFacadeBean;
+
+    @Mock
+    private RestTemplate restTemplateMock;
 
     private final BigDecimal SUCCESS_CLIENT = BigDecimal.ONE;
 
@@ -62,7 +67,7 @@ public class FindPackagesByClientIdTest {
 
         Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(EXCEPTION_CLIENT), any(), any(), any(), any(), any(), any())).thenThrow(new NestedEjbException_Exception());
 
-        sut = new CsoReviewServiceImpl(filingStatusFacadeBean, null, null, new FilePackageMapperImpl());
+        sut = new CsoReviewServiceImpl(filingStatusFacadeBean, null, null, new FilePackageMapperImpl(), restTemplateMock);
     }
 
     @DisplayName("OK: packages found")

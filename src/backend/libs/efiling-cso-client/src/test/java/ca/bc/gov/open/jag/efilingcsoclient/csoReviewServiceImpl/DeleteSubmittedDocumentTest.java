@@ -4,16 +4,14 @@ import ca.bc.gov.ag.csows.filing.FilingFacadeBean;
 import ca.bc.gov.ag.csows.filing.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingReviewServiceException;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoReviewServiceImpl;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapperImpl;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.web.client.RestTemplate;
 
-import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
 
 
@@ -25,13 +23,16 @@ public class DeleteSubmittedDocumentTest {
 
     private static CsoReviewServiceImpl sut;
 
+    @Mock
+    private RestTemplate restTemplateMock;
+
     @BeforeAll
     public void beforeAll() {
 
         MockitoAnnotations.openMocks(this);
 
 
-        sut = new CsoReviewServiceImpl(null, null, filingFacadeBeanMock, new FilePackageMapperImpl());
+        sut = new CsoReviewServiceImpl(null, null, filingFacadeBeanMock, new FilePackageMapperImpl(), restTemplateMock);
     }
 
     @DisplayName("OK: document withdrawn")

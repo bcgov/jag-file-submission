@@ -124,7 +124,7 @@ public class EfilingReviewServiceDemoImplTest {
     @DisplayName("OK: demo returns a document byte array")
     public void withDocumentRequestReturnByteArray() {
 
-        Optional<byte[]> result = sut.getSubmittedDocument(BigDecimal.ONE, "TEST");
+        Optional<byte[]> result = sut.getSubmittedDocument(BigDecimal.ONE);
 
         Assertions.assertTrue(result.isPresent());
 
