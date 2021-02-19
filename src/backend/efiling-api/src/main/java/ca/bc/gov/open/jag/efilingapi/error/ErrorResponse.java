@@ -15,6 +15,7 @@ public enum ErrorResponse {
     UPDATE_CLIENT_EXCEPTION("Error Updating CSO client account."),
     CACHE_ERROR("Cache related error."),
     MISSING_UNIVERSAL_ID("universal-id claim missing in jwt token."),
+    MISSING_IDENTITY_PROVIDER("identityProviderAlias claim missing in jwt token."),
     URL_GENERATION_FAILURE("failed to generate bambora card update url."),
     INVALID_INITIAL_SUBMISSION_PAYLOAD("Initial Submission payload invalid, find more in the details array."),
     COURT_LOCATION_ERROR("Error while retrieving court locations."),

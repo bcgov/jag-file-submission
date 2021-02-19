@@ -186,6 +186,20 @@ public class CsoAccountApiDelegateImplTest {
     }
 
     @Test
+    @DisplayName("403: when creating account identity provider is missing should return 403")
+    public void createAccountWithUserNotHavingIdentityProviderShouldReturn403() {
+
+        Map<String, Object> otherClaims = new HashMap<>();
+        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_2);
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
+        ResponseEntity<CsoAccount> actual = sut.createAccount(TestHelpers.CASE_3, null);
+
+        Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
+
+    }
+
+    @Test
     @DisplayName("200: should return a cso account")
     public void getAccountWithExistingAccountShouldReturnAccount() {
 
