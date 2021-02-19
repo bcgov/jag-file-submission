@@ -16,10 +16,4 @@ public interface AccountDetailsMapper {
     @Mapping(target = "cardRegistered", source = "clientProfile.client.registeredCreditCardYnBoolean")
     AccountDetails toAccountDetails(String universalId, ClientProfile clientProfile, Boolean fileRolePresent);
 
-    @Mapping(target = "accountId", defaultValue = "0")
-    @Mapping(target = "clientId", defaultValue = "0")
-    @Mapping(target = "fileRolePresent", defaultValue = "false")
-    @Mapping(target = "universalId", source = "universalId")
-    AccountDetails toAccountDetails(String universalId);
-
 }

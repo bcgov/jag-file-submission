@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingcommons.model;
 
+
 /**
  * Represents a request to create an account
  */
@@ -10,6 +11,7 @@ public class CreateAccountRequest {
     private String lastName;
     private String middleName;
     private String email;
+    private String identityProvider;
 
     protected CreateAccountRequest(CreateAccountRequest.Builder builder) {
 
@@ -18,6 +20,7 @@ public class CreateAccountRequest {
         this.lastName = builder.lastName;
         this.middleName = builder.middleName;
         this.email = builder.email;
+        this.identityProvider = builder.identityProvider;
 
     }
 
@@ -65,6 +68,12 @@ public class CreateAccountRequest {
         return email;
     }
 
+    /**
+     * Get the identity provider
+     * @return
+     */
+    public String getIdentityProvider() { return identityProvider; }
+
     public static class Builder {
 
         private String universalId;
@@ -72,6 +81,7 @@ public class CreateAccountRequest {
         private String lastName;
         private String middleName;
         private String email;
+        private String identityProvider;
 
         public Builder universalId(String universalId) {
             this.universalId = universalId;
@@ -98,6 +108,10 @@ public class CreateAccountRequest {
             return this;
         }
 
+        public Builder identityProvider(String identityProvider) {
+            this.identityProvider = identityProvider;
+            return this;
+        }
 
         public CreateAccountRequest create() {
             return new CreateAccountRequest(this);

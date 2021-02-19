@@ -80,7 +80,7 @@ public class CsoAccountApiDelegateImplTest {
         Mockito
                 .doReturn(accountDetails)
                 .when(accountServiceMock)
-                .createAccount(Mockito.eq(TestHelpers.CASE_1_STRING), Mockito.any());
+                .createAccount(Mockito.eq(TestHelpers.CASE_1_STRING), Mockito.any(), Mockito.any());
 
         Mockito
                 .doReturn(accountDetails)
@@ -95,7 +95,7 @@ public class CsoAccountApiDelegateImplTest {
         Mockito
                 .doThrow(new EfilingAccountServiceException("random"))
                 .when(accountServiceMock)
-                .createAccount(Mockito.eq(TestHelpers.CASE_2_STRING), Mockito.any());
+                .createAccount(Mockito.eq(TestHelpers.CASE_2_STRING), Mockito.any(), Mockito.any());
 
 
         Mockito.doNothing().when(accountServiceMock).updateClient(
@@ -126,6 +126,7 @@ public class CsoAccountApiDelegateImplTest {
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_1);
+        otherClaims.put(Keys.IDENTITY_PROVIDER_CLAIM_KEY, TestHelpers.IDENTITY_PROVIDER);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
         CreateCsoAccountRequest request = new CreateCsoAccountRequest();
@@ -170,6 +171,7 @@ public class CsoAccountApiDelegateImplTest {
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_2);
+        otherClaims.put(Keys.IDENTITY_PROVIDER_CLAIM_KEY, TestHelpers.IDENTITY_PROVIDER);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
         CreateCsoAccountRequest request = new CreateCsoAccountRequest();
@@ -180,6 +182,20 @@ public class CsoAccountApiDelegateImplTest {
         ResponseEntity actual = sut.createAccount(TestHelpers.CASE_2, request);
 
         Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode());
+
+    }
+
+    @Test
+    @DisplayName("403: when creating account identity provider is missing should return 403")
+    public void createAccountWithUserNotHavingIdentityProviderShouldReturn403() {
+
+        Map<String, Object> otherClaims = new HashMap<>();
+        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_2);
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
+        ResponseEntity<CsoAccount> actual = sut.createAccount(TestHelpers.CASE_3, null);
+
+        Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
 
     }
 
