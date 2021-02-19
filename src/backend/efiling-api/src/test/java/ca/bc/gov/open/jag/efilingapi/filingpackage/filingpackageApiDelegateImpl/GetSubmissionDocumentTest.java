@@ -32,9 +32,9 @@ public class GetSubmissionDocumentTest {
     public static final UUID CASE_1 = UUID.randomUUID();
     public static final UUID CASE_2 = UUID.randomUUID();
 
-    public static  final String FOUND_DOCUMENT_IDENTIFIER = "found";
+    public static  final BigDecimal FOUND_DOCUMENT_IDENTIFIER = BigDecimal.ONE;
 
-    public static  final String NOT_FOUND_DOCUMENT_IDENTIFIER = "notfound";
+    public static  final BigDecimal NOT_FOUND_DOCUMENT_IDENTIFIER = BigDecimal.TEN;
 
     public static final byte[] BYTES = "TEST".getBytes();
 

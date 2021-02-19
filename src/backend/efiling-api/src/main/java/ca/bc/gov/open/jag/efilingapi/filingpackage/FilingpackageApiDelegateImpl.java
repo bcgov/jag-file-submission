@@ -52,7 +52,6 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
 
         return result.map(ResponseEntity::ok).orElseGet(() -> new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.FILING_PACKAGE_NOT_FOUND).create(), HttpStatus.NOT_FOUND));
-
     }
 
     @Override
@@ -76,7 +75,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
     @Override
     @RolesAllowed("efiling-user")
     public ResponseEntity<Resource> getSubmittedDocument(BigDecimal packageIdentifier,
-                                                         String documentIdentifier) {
+                                                         BigDecimal documentIdentifier) {
 
         logger.info("get document request received");
 

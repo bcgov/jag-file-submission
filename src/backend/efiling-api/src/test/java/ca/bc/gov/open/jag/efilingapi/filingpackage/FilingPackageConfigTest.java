@@ -4,7 +4,6 @@ import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.CreateCsoAccountRequest;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
-
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
@@ -20,7 +19,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -72,7 +70,7 @@ public class FilingPackageConfigTest {
                 }
 
                 @Override
-                public Optional<byte[]> getSubmittedDocument(BigDecimal packageNumber, String documentIdentifier) {
+                public Optional<byte[]> getSubmittedDocument(BigDecimal documentIdentifier) {
                     return Optional.empty();
                 }
 

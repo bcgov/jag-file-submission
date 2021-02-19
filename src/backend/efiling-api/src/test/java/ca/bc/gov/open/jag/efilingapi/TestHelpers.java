@@ -62,8 +62,10 @@ public class TestHelpers {
     public static final String STATUS_CODE = "STATUSCODE";
     public static final String COMMENT = "COMMENT";
     public static final String PACKAGE_NO = "123";
-    public static final String DOCUMENT_ID_ONE = "DOCUMENT_ID_ONE";
-    public static final String DOCUMENT_ID_TWO = "DOCUMENT_ID_TWO";
+    public static final String DOCUMENT_ID_ONE = "1";
+    public static final BigDecimal DOCUMENT_ID_ONE_BD = new BigDecimal(1);
+    public static final String DOCUMENT_ID_TWO = "2";
+    public static final BigDecimal DOCUMENT_ID_TWO_BD = new BigDecimal(2);
 
     public static final DocumentProperties.TypeEnum TYPE = DocumentProperties.TypeEnum.AAB;
     public static final String PARTY_TYPE_DESC = "PARTY_TYPE_DESC";

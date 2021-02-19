@@ -41,7 +41,7 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
     }
 
     @Override
-    public Optional<byte[]> getSubmittedDocument(BigDecimal packageNumber, String documentIdentifier) {
+    public Optional<byte[]> getSubmittedDocument(BigDecimal documentIdentifier) {
 
         return getDocument();
 

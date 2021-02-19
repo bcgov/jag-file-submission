@@ -16,6 +16,7 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.web.client.RestTemplate;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
@@ -40,6 +41,9 @@ public class FindPackageByIdTest {
     @Mock
     FilingStatusFacadeBean filingStatusFacadeBean;
 
+    @Mock
+    private RestTemplate restTemplateMock;
+
     private final BigDecimal SUCCESS_CLIENT = BigDecimal.ONE;
     private final BigDecimal SUCCESS_PACKAGE = BigDecimal.ONE;
 
@@ -50,6 +54,7 @@ public class FindPackageByIdTest {
     private final BigDecimal NOTFOUND_PACKAGE = BigDecimal.ZERO;
 
     private static CsoReviewServiceImpl sut;
+
 
     @BeforeAll
     public void beforeAll() throws NestedEjbException_Exception, DatatypeConfigurationException {
@@ -65,12 +70,13 @@ public class FindPackageByIdTest {
 
         Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(EXCEPTION_PACKAGE), ArgumentMatchers.eq(EXCEPTION_CLIENT), any(), any(), any(), any(), any(), any())).thenThrow(new NestedEjbException_Exception());
 
-        sut = new CsoReviewServiceImpl(filingStatusFacadeBean, null, null, new FilePackageMapperImpl());
+        sut = new CsoReviewServiceImpl(filingStatusFacadeBean, null, null, new FilePackageMapperImpl(), restTemplateMock);
     }
 
     @DisplayName("OK: package found")
     @Test
     public void testWithFoundResult() throws DatatypeConfigurationException {
+
         Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(SUCCESS_CLIENT, SUCCESS_PACKAGE));
 
         Assertions.assertEquals(COURT_FILE_NO, result.get().getCourt().getFileNumber());
@@ -84,8 +90,8 @@ public class FindPackageByIdTest {
     @DisplayName("Ok: no packages found")
     @Test
     public void testWithNoResult() {
-        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(NOTFOUND_CLIENT, NOTFOUND_PACKAGE));
 
+        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(NOTFOUND_CLIENT, NOTFOUND_PACKAGE));
         Assertions.assertFalse(result.isPresent());
 
     }

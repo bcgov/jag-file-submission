@@ -451,7 +451,8 @@ paths:
           description: document identifier
           required: true
           schema:
-            type: string
+            type: number
+            format: int
       responses:
         "200":
           description: File was returned
