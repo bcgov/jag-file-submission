@@ -3,6 +3,7 @@ import axios from "axios";
 import { MdCreditCard } from "react-icons/md";
 import { Alert } from "shared-components";
 import { errorRedirect } from "./errorRedirect";
+import { isEnter } from "./eventUtil";
 
 const registerCard = () => {
   const data = {
@@ -36,7 +37,11 @@ const existingCreditCard = () => (
         <br />
         <span
           onClick={() => registerCard()}
-          onKeyDown={() => registerCard()}
+          onKeyDown={(e) => {
+            if (isEnter(e)) {
+              registerCard();
+            }
+          }}
           className="file-href"
           role="button"
           tabIndex={0}
@@ -64,7 +69,11 @@ const noCreditCard = () => (
         <br />
         <span
           onClick={() => registerCard()}
-          onKeyDown={() => registerCard()}
+          onKeyDown={(e) => {
+            if (isEnter(e)) {
+              registerCard();
+            }
+          }}
           className="file-href"
           role="button"
           tabIndex={0}
@@ -92,7 +101,11 @@ const failedUpdateCreditCard = () => (
         <br />
         <span
           onClick={() => registerCard()}
-          onKeyDown={() => registerCard()}
+          onKeyDown={(e) => {
+            if (isEnter(e)) {
+              registerCard();
+            }
+          }}
           className="file-href"
           role="button"
           tabIndex={0}
