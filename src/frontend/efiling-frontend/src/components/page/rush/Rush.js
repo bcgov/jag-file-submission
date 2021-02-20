@@ -12,7 +12,7 @@ import {
   Sidecard,
 } from "shared-components";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
-import Payment from "../payment/Payment";
+import Payment from "../../../domain/payment/Payment";
 
 import "./Rush.scss";
 
