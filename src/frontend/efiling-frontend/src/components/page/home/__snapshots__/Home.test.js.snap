@@ -196,48 +196,11 @@ exports[`Home Component matches the snapshot when user cso account does not exis
                     User Name
                   </div>
                 </div>
-                <div
-                  class="bcgov-row "
-                >
-                  <div
-                    class="bcgov-fill-width"
-                  >
-                    Email Address:
-                  </div>
-                  <div
-                    class="bcgov-table-value "
-                  >
-                    username@example.com
-                  </div>
-                </div>
               </div>
             </div>
           </div>
         </div>
         <br />
-        <label>
-          Email: 
-        </label>
-        <input
-          data-testid="email"
-          name="email"
-          type="textarea"
-        />
-        <label>
-          Confirm Email: 
-        </label>
-        <input
-          data-testid="conf-email"
-          name="confEmail"
-          type="textarea"
-        />
-        <br />
-        <span
-          class="mr-5 error"
-        />
-        <span
-          class="ml-5 error"
-        />
       </div>
       <div>
         <div
@@ -1616,34 +1579,25 @@ exports[`Home When user has authenticated with BCSC with no CSO account, retriev
                      Arthur C Clark
                   </div>
                 </div>
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-fill-width"
+                  >
+                    Email Address:
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    username@example.com
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
         <br />
-        <label>
-          Email: 
-        </label>
-        <input
-          data-testid="email"
-          name="email"
-          type="textarea"
-        />
-        <label>
-          Confirm Email: 
-        </label>
-        <input
-          data-testid="conf-email"
-          name="confEmail"
-          type="textarea"
-        />
-        <br />
-        <span
-          class="mr-5 error"
-        />
-        <span
-          class="ml-5 error"
-        />
       </div>
       <div>
         <div

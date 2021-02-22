@@ -108,34 +108,25 @@ exports[`Storyshots CSOAccount Default 1`] = `
                     Bob Ross
                   </div>
                 </div>
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-fill-width"
+                  >
+                    Email Address:
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    bob.ross@example.com
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
         <br />
-        <label>
-          Email: 
-        </label>
-        <input
-          data-testid="email"
-          name="email"
-          type="textarea"
-        />
-        <label>
-          Confirm Email: 
-        </label>
-        <input
-          data-testid="conf-email"
-          name="confEmail"
-          type="textarea"
-        />
-        <br />
-        <span
-          class="mr-5 error"
-        />
-        <span
-          class="ml-5 error"
-        />
       </div>
       <div>
         <div
@@ -1042,34 +1033,25 @@ exports[`Storyshots CSOAccount Mobile 1`] = `
                     Bob Ross
                   </div>
                 </div>
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-fill-width"
+                  >
+                    Email Address:
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    bob.ross@example.com
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
         <br />
-        <label>
-          Email: 
-        </label>
-        <input
-          data-testid="email"
-          name="email"
-          type="textarea"
-        />
-        <label>
-          Confirm Email: 
-        </label>
-        <input
-          data-testid="conf-email"
-          name="confEmail"
-          type="textarea"
-        />
-        <br />
-        <span
-          class="mr-5 error"
-        />
-        <span
-          class="ml-5 error"
-        />
       </div>
       <div>
         <div

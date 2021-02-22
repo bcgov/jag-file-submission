@@ -16,6 +16,7 @@ import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import { translateApplicantInfo } from "../../../modules/helpers/translateApplicantInfo";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { propTypes } from "../../../types/propTypes";
+import { isIdentityProviderBCeID } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 import "./CSOAccount.scss";
 
 const content = getContent();
@@ -34,6 +35,7 @@ export default function CSOAccount({
     emailError: "",
     confEmailError: "",
   });
+  const isBCeID = isIdentityProviderBCeID();
 
   useEffect(() => {
     const emailErrors = () =>
@@ -119,25 +121,34 @@ export default function CSOAccount({
             The following information will be used to create your CSO account.
           </p>
           <DisplayBox icon={icon} element={applicantTable} />
-          <br />
 
-          <label>Email: </label>
-          <input
-            type="textarea"
-            name="email"
-            data-testid="email"
-            onChange={handleOnChange}
-          />
-          <label>Confirm Email: </label>
-          <input
-            type="textarea"
-            name="confEmail"
-            data-testid="conf-email"
-            onChange={handleOnChange}
-          />
+          {/* if BCSC and missing email, show email input fields. */}
+          {!isBCeID && !applicantInfo.email && (
+            <div>
+              <label>Email: </label>
+              <input
+                type="textarea"
+                name="email"
+                data-testid="email"
+                onChange={handleOnChange}
+              />
+              <label>Confirm Email: </label>
+              <input
+                type="textarea"
+                name="confEmail"
+                data-testid="conf-email"
+                onChange={handleOnChange}
+              />
+              <br />
+              <span className="mr-5 error" data-testid="email-error">
+                {emailInputErrors.emailError}
+              </span>
+              <span className="ml-5 error" data-testid="conf-email-error">
+                {emailInputErrors.confEmailError}
+              </span>
+            </div>
+          )}
           <br />
-          <span className="mr-5 error">{emailInputErrors.emailError}</span>
-          <span className="ml-5 error">{emailInputErrors.confEmailError}</span>
         </div>
 
         <TermsOfUse
