@@ -48,8 +48,6 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
             throw new DiligenDocumentException("File is corrupt");
         }
 
-
-
         BigDecimal response = diligenService.postDocument(xDocumentType, file);
 
         DocumentExtractResponse documentExtractResponse = new DocumentExtractResponse();
