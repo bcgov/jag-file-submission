@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingreviewerapi.extract;
 
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenAuthenticationException;
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
+import ca.bc.gov.open.jag.efilingreviewerapi.exceptions.DocumentExtractVirusFoundException;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -48,4 +49,16 @@ public class DiligenControllerAdvisorTest {
         Assertions.assertEquals("Not authorized", result.getBody());
 
     }
+
+    @Test
+    @DisplayName("502: Assert bad gateway returned")
+    public void testDocumentExtractVirusFoundException() {
+
+        ResponseEntity<Object> result = sut.handleDocumentExtractVirusFoundException(new DocumentExtractVirusFoundException("Virus found"), webRequestMock);
+
+        Assertions.assertEquals(HttpStatus.BAD_GATEWAY, result.getStatusCode());
+        Assertions.assertEquals("Virus found", result.getBody());
+
+    }
+
 }
