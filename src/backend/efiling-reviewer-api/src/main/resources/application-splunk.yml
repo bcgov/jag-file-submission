@@ -1,3 +1,3 @@
 logging:
   config:
-    "classpath:logback-splunk.xml"
+    "classpath:logback-spring.xml"
