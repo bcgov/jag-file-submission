@@ -18,7 +18,7 @@ beforeEach(() => {
   const token = generateJWTToken({
     preferred_username: "username@bceid",
     email: "username@example.com",
-    identity_provider_alias: "bcsc",
+    identityProviderAlias: "bcsc",
   });
   localStorage.setItem("jwt", token);
 
