@@ -5,6 +5,7 @@ import ca.bc.gov.open.clamav.starter.VirusDetectedException;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentExtractResponse;
+import ca.bc.gov.open.jag.efilingreviewerapi.exceptions.DocumentExtractVirusFoundException;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.DocumentsApiDelegateImpl;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
@@ -121,7 +122,7 @@ public class ExtractDocumentFormDataTest {
         MultipartFile multipartFile = new MockMultipartFile(CASE_1,
                 CASE_1, APPLICATION_PDF, Files.readAllBytes(path));
 
-        Assertions.assertThrows(DiligenDocumentException.class,() -> sut.extractDocumentFormData(transactionId, "TYPE", multipartFile));
+        Assertions.assertThrows(DocumentExtractVirusFoundException.class,() -> sut.extractDocumentFormData(transactionId, "TYPE", multipartFile));
 
     }
 
