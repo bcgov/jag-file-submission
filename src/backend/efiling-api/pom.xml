@@ -210,14 +210,6 @@
 
             <id>efiling-api</id>
 
-            <repositories>
-                <repository>
-                    <id>splunk-artifactory</id>
-                    <name>Splunk Releases</name>
-                    <url>https://splunk.jfrog.io/splunk/ext-releases-local</url>
-                </repository>
-            </repositories>
-
             <dependencies>
 
                 <dependency>

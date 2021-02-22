@@ -8,14 +8,14 @@ import ConfirmationPopup, {
   Table,
   Callout,
 } from "shared-components";
-import Rush from "../rush/Rush";
-import { getSidecardData } from "../../../modules/helpers/sidecardData";
-import { getCreditCardAlerts } from "../../../modules/helpers/creditCardAlerts";
-import { errorRedirect } from "../../../modules/helpers/errorRedirect";
-import { getJWTData } from "../../../modules/helpers/authentication-helper/authenticationHelper";
-import { propTypes } from "../../../types/propTypes";
-import PackageConfirmation from "../package-confirmation/PackageConfirmation";
-import { generateFileSummaryData } from "../../../modules/helpers/generateFileSummaryData";
+import Rush from "../../components/page/rush/Rush";
+import { getSidecardData } from "../../modules/helpers/sidecardData";
+import { getCreditCardAlerts } from "../../modules/helpers/creditCardAlerts";
+import { errorRedirect } from "../../modules/helpers/errorRedirect";
+import { getJWTData } from "../../modules/helpers/authentication-helper/authenticationHelper";
+import { propTypes } from "../../types/propTypes";
+import PackageConfirmation from "../package/package-confirmation/PackageConfirmation";
+import { generateFileSummaryData } from "../../modules/helpers/generateFileSummaryData";
 
 import "./Payment.scss";
 

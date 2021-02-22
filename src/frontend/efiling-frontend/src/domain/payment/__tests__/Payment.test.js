@@ -13,7 +13,7 @@ import { getDocumentsData } from "../../../modules/test-data/documentTestData";
 import { getCourtData } from "../../../modules/test-data/courtTestData";
 import { generateJWTToken } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 
-import Payment from "./Payment";
+import Payment from "../Payment";
 
 describe("Payment Component", () => {
   let realDate;
@@ -78,16 +78,34 @@ describe("Payment Component", () => {
     expect(window.open).toHaveBeenCalledWith("bambora.com", "_self");
   });
 
-  test("Keydown on register a credit card when no card exists and bambora error exists takes user to bambora", async () => {
+  test("Keydown on register a credit card when no card exists and bambora error exists takes user to bambora, enter", async () => {
     sessionStorage.setItem("internalClientNumber", null);
 
     const { container } = render(<Payment payment={payment} />);
 
-    fireEvent.keyDown(getByText(container, "Register a Credit Card now"));
+    fireEvent.keyDown(getByText(container, "Register a Credit Card now"), {
+      key: "Enter",
+      keyCode: "13",
+    });
 
     await waitFor(() => {});
 
     expect(window.open).toHaveBeenCalledWith("bambora.com", "_self");
+  });
+
+  test("Keydown on register a credit card when no card exists and bambora error exists takes user to bambora, tab", async () => {
+    sessionStorage.setItem("internalClientNumber", null);
+
+    const { container } = render(<Payment payment={payment} />);
+
+    fireEvent.keyDown(getByText(container, "Register a Credit Card now"), {
+      key: "Tab",
+      keyCode: "9",
+    });
+
+    await waitFor(() => {});
+
+    expect(window.open).not.toHaveBeenCalledWith("bambora.com", "_self");
   });
 
   test("Click on register a new credit card when card exists takes user to bambora", async () => {
@@ -103,17 +121,36 @@ describe("Payment Component", () => {
     expect(window.open).toHaveBeenCalledWith("bambora.com", "_self");
   });
 
-  test("Keydown on register a new credit card when card exists takes user to bambora", async () => {
+  test("Keydown on register a new credit card when card exists takes user to bambora, enter", async () => {
     sessionStorage.setItem("internalClientNumber", "ABC123");
     sessionStorage.setItem("bamboraErrorExists", false);
 
     const { container } = render(<Payment payment={payment} />);
 
-    fireEvent.keyDown(getByText(container, "Register a new Credit Card."));
+    fireEvent.keyDown(getByText(container, "Register a new Credit Card."), {
+      key: "Enter",
+      keyCode: "13",
+    });
 
     await waitFor(() => {});
 
     expect(window.open).toHaveBeenCalledWith("bambora.com", "_self");
+  });
+
+  test("Keydown on register a new credit card when card exists takes user to bambora, tab", async () => {
+    sessionStorage.setItem("internalClientNumber", "ABC123");
+    sessionStorage.setItem("bamboraErrorExists", false);
+
+    const { container } = render(<Payment payment={payment} />);
+
+    fireEvent.keyDown(getByText(container, "Register a new Credit Card."), {
+      key: "Tab",
+      keyCode: "9",
+    });
+
+    await waitFor(() => {});
+
+    expect(window.open).not.toHaveBeenCalledWith("bambora.com", "_self");
   });
 
   test("Click on register a new credit card on failed update takes user to bambora", async () => {
@@ -129,17 +166,36 @@ describe("Payment Component", () => {
     expect(window.open).toHaveBeenCalledWith("bambora.com", "_self");
   });
 
-  test("Keydown on register a new credit card on failed update takes user to bambora", async () => {
+  test("Keydown on register a new credit card on failed update takes user to bambora, enter", async () => {
     sessionStorage.setItem("internalClientNumber", "ABC123");
     sessionStorage.setItem("bamboraErrorExists", true);
 
     const { container } = render(<Payment payment={payment} />);
 
-    fireEvent.keyDown(getByText(container, "Register a new Credit Card."));
+    fireEvent.keyDown(getByText(container, "Register a new Credit Card."), {
+      key: "Enter",
+      keyCode: "13",
+    });
 
     await waitFor(() => {});
 
     expect(window.open).toHaveBeenCalledWith("bambora.com", "_self");
+  });
+
+  test("Keydown on register a new credit card on failed update takes user to bambora, tab", async () => {
+    sessionStorage.setItem("internalClientNumber", "ABC123");
+    sessionStorage.setItem("bamboraErrorExists", true);
+
+    const { container } = render(<Payment payment={payment} />);
+
+    fireEvent.keyDown(getByText(container, "Register a new Credit Card."), {
+      key: "Tab",
+      keyCode: "9",
+    });
+
+    await waitFor(() => {});
+
+    expect(window.open).not.toHaveBeenCalledWith("bambora.com", "_self");
   });
 
   test("Click on register a credit card takes user to error page when call fails", async () => {
@@ -151,7 +207,10 @@ describe("Payment Component", () => {
 
     const { container } = render(<Payment payment={payment} />);
 
-    fireEvent.keyDown(getByText(container, "Register a new Credit Card."));
+    fireEvent.keyDown(getByText(container, "Register a new Credit Card."), {
+      key: "Enter",
+      keyCode: "13",
+    });
 
     await waitFor(() => {});
 
