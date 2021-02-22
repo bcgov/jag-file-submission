@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingapi.submission.service.submissionServiceImpl;
 
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
+import ca.bc.gov.open.jag.efilingapi.api.model.Court;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.InitialPackage;
 import ca.bc.gov.open.jag.efilingapi.api.model.Party;
@@ -15,6 +16,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtServiceException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
@@ -79,8 +81,12 @@ public class GenerateFromRequestTest {
                 .when(efilingLookupService)
                 .getServiceFee(any());
 
-        Mockito.when(efilingCourtService.getCourtDescription(any(), any(), any()))
+        Mockito.when(efilingCourtService.getCourtDescription(Mockito.eq("1211"), any(), any()))
                 .thenReturn(Optional.of(new CourtDetails(BigDecimal.TEN, TestHelpers.COURT_DESCRIPTION, TestHelpers.CLASS_DESCRIPTION, TestHelpers.LEVEL_DESCRIPTION)));
+
+        Mockito.when(efilingCourtService.getCourtDescription(Mockito.eq("661"), any(), any()))
+                .thenReturn(Optional.empty());
+
 
         configureCase1(fee);
         configureCase2();
@@ -279,6 +285,31 @@ public class GenerateFromRequestTest {
         Mockito.when(efilingDocumentService.getDocumentTypes(any(), any())).thenReturn(TestHelpers.createValidDocumentTypesList());
 
         Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(APP_CODE, new SubmissionKey(TestHelpers.CASE_2_STRING, TestHelpers.CASE_2, TestHelpers.CASE_2), request));
+    }
+
+
+    @Test
+    @DisplayName("Exception: with null courtDetails should throw an exception")
+    public void withEmptyCourtDescriptionShouldThrowException() {
+
+        GenerateUrlRequest request = new GenerateUrlRequest();
+        request.setClientAppName(CLIENT_APP_NAME);
+        request.setNavigationUrls(TestHelpers.createDefaultNavigation());
+
+        Court apiCourt = TestHelpers.createApiCourt("661");
+
+        request.setFilingPackage(TestHelpers.createInitalPackage(apiCourt, TestHelpers.createInitialDocumentsList()));
+
+        Mockito.when(efilingCourtService.checkValidLevelClassLocation(any(), any(), any(), any())).thenReturn(true);
+        Mockito.when(efilingCourtService.checkValidCourtFileNumber(any(), any(), any(), any(), any())).thenReturn(true);
+        Mockito.when(efilingDocumentService.getDocumentTypes(any(), any())).thenReturn(TestHelpers.createValidDocumentTypesList());
+
+
+        Assertions.assertThrows(
+                EfilingCourtServiceException.class,
+                () -> sut.generateFromRequest(APP_CODE, new SubmissionKey(TestHelpers.CASE_1_STRING, TestHelpers.CASE_1, TestHelpers.CASE_1), request));
+
+
     }
 
     private void configureCase1(ServiceFees fee) {
