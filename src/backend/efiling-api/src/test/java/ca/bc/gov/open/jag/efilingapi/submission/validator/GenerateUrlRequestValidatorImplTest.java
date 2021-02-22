@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class GenerateUrlRequestValidatorImplTest {
@@ -60,8 +61,9 @@ public class GenerateUrlRequestValidatorImplTest {
         CourtDetails courtDetails = new CourtDetails(COURT_ID, COURT_DESCRIPTION, CLASS_DESCRIPTION, LEVEL_DESCRIPTION);
 
         Mockito
-                .doReturn(courtDetails)
-                .when(courtServiceMock).getCourtDetails(ArgumentMatchers.argThat(x -> x.getCourtLocation().equals(CASE_1)));
+                .doReturn(Optional.of(courtDetails))
+                .when(courtServiceMock)
+                .getCourtDetails(ArgumentMatchers.argThat(x -> x.getCourtLocation().equals(CASE_1)));
 
         Mockito
                 .doReturn(true)
@@ -70,7 +72,7 @@ public class GenerateUrlRequestValidatorImplTest {
         CourtDetails courtDetails2 = new CourtDetails(COURT_ID_2, COURT_DESCRIPTION, CLASS_DESCRIPTION, LEVEL_DESCRIPTION);
 
         Mockito
-                .doReturn(courtDetails2)
+                .doReturn(Optional.of(courtDetails2))
                 .when(courtServiceMock)
                 .getCourtDetails(ArgumentMatchers.argThat(x -> x.getCourtLocation().equals(CASE_2)));
 

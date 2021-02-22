@@ -79,7 +79,8 @@ public class GenerateFromRequestTest {
                 .when(efilingLookupService)
                 .getServiceFee(any());
 
-        Mockito.when(efilingCourtService.getCourtDescription(any(), any(), any())).thenReturn(new CourtDetails(BigDecimal.TEN, TestHelpers.COURT_DESCRIPTION, TestHelpers.CLASS_DESCRIPTION, TestHelpers.LEVEL_DESCRIPTION));
+        Mockito.when(efilingCourtService.getCourtDescription(any(), any(), any()))
+                .thenReturn(Optional.of(new CourtDetails(BigDecimal.TEN, TestHelpers.COURT_DESCRIPTION, TestHelpers.CLASS_DESCRIPTION, TestHelpers.LEVEL_DESCRIPTION)));
 
         configureCase1(fee);
         configureCase2();

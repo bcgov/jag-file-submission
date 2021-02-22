@@ -8,6 +8,7 @@ import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import org.apache.commons.lang3.StringUtils;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 
 public class CsoCourtServiceImpl implements EfilingCourtService {
@@ -21,18 +22,16 @@ public class CsoCourtServiceImpl implements EfilingCourtService {
     }
 
     @Override
-    public CourtDetails getCourtDescription(String agencyIdentifierCd, String courtLevel, String courtClass) {
+    public Optional<CourtDetails> getCourtDescription(String agencyIdentifierCd, String courtLevel, String courtClass) {
+
         if (StringUtils.isBlank(agencyIdentifierCd)) throw new IllegalArgumentException("Agency identifier is required");
         if (StringUtils.isBlank(courtLevel)) throw new IllegalArgumentException("Level identifier is required");
         if (StringUtils.isBlank(courtClass)) throw new IllegalArgumentException("Class identifier is required");
 
-        CsoAgencyArr csoAgencyArr = csows.getCourtLocations();
-
-        return csoAgencyArr.getArray().stream()
+        return csows.getCourtLocations().getArray().stream()
                 .filter(court -> court.getAgenAgencyIdentifierCd().equals(agencyIdentifierCd))
                 .findFirst()
-                .map(court -> new CourtDetails(court.getAgenId(), court.getAgenAgencyNm(), getClassDescription(courtClass), getCourLevelDescription(courtLevel)))
-                .orElseThrow(() -> new EfilingCourtServiceException("Court not found"));
+                .map(court -> new CourtDetails(court.getAgenId(), court.getAgenAgencyNm(), getClassDescription(courtClass), getCourLevelDescription(courtLevel)));
     }
 
     @Override
