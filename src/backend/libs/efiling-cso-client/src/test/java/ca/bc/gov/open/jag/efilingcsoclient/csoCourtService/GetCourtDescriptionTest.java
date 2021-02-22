@@ -13,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 
@@ -95,12 +96,12 @@ public class GetCourtDescriptionTest {
     @Test
     public void withValidStringAndExistingLocationReturnDescriptions() {
 
-        CourtDetails result = sut.getCourtDescription(AGEN_AGENCY_IDENTIFIER_CD, LEVELCD_1, CLASSCD_1);
+        CourtDetails actual = sut.getCourtDescription(AGEN_AGENCY_IDENTIFIER_CD, LEVELCD_1, CLASSCD_1).get();
 
-        Assertions.assertEquals(AGEN_AGENCY_NM, result.getCourtDescription());
-        Assertions.assertEquals(BigDecimal.TEN, result.getCourtId());
-        Assertions.assertEquals(CLASS_1, result.getClassDescription());
-        Assertions.assertEquals(LEVEL_1, result.getLevelDescription());
+        Assertions.assertEquals(AGEN_AGENCY_NM, actual.getCourtDescription());
+        Assertions.assertEquals(BigDecimal.TEN, actual.getCourtId());
+        Assertions.assertEquals(CLASS_1, actual.getClassDescription());
+        Assertions.assertEquals(LEVEL_1, actual.getLevelDescription());
 
     }
 
@@ -120,11 +121,13 @@ public class GetCourtDescriptionTest {
 
     }
 
-    @DisplayName("Exception: with no result should throw EfilingLookupServiceException")
+    @DisplayName("Ok: with no result should return Empty")
     @Test
-    public void withNoFoundResultShouldThrowEfilingLookupServiceException() {
+    public void withNoFoundResultShouldReturnEmpty() {
 
-        Assertions.assertThrows(EfilingCourtServiceException.class, () -> sut.getCourtDescription(NOVALUE, COURT_LEVEL, COURT_CLASS));
+        Optional<CourtDetails> actual = sut.getCourtDescription(NOVALUE, COURT_LEVEL, COURT_CLASS);
+
+        Assertions.assertFalse(actual.isPresent());
 
     }
 

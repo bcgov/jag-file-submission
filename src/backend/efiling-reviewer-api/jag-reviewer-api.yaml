@@ -61,6 +61,43 @@ components:
     DocumentExtractResponse:
       type: object
       description: Review upload response
+      required:
+        - extract
+        - document
+      properties:
+        extract:
+          $ref: "#/components/schemas/Extract"
+        document:
+          $ref: "#/components/schemas/Document"
+    Document:
+      type: object
+      required:
+        - type
+        - fileName
+        - size
+        - contentType
+      properties:
+        type:
+          type: string
+        fileName:
+          type: string
+        size:
+          type: number
+          format: integer
+        contentType:
+          type: string
+    Extract:
+      type: object
+      required:
+        - id
+        - transactioniId
+      properties:
+        id:
+          type: string
+          format: uuid
+        transactioniId:
+          type: string
+          format: uuid
     ApiError:
       required:
         - error

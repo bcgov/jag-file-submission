@@ -3,7 +3,6 @@ package ca.bc.gov.open.jag.efilingcsostarter.config;
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RoleRegistryPortType;
 import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
 import ca.bc.gov.ag.csows.ceis.Csows;
-import ca.bc.gov.ag.csows.filing.FilingFacade;
 import ca.bc.gov.ag.csows.filing.FilingFacadeBean;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.ag.csows.lookups.LookupFacadeBean;
@@ -20,6 +19,7 @@ import ca.bc.gov.open.jag.efilingcsoclient.mappers.*;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
 
 @Configuration
@@ -33,6 +33,11 @@ public class AutoConfiguration {
     public AutoConfiguration(SoapProperties soapProperties, SpringCsoProperties csoProperties) {
         this.soapProperties = soapProperties;
         this.csoProperties = csoProperties;
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 
     @Bean
@@ -134,8 +139,8 @@ public class AutoConfiguration {
     }
 
     @Bean
-    public EfilingReviewService efilingReviewService(FilingStatusFacadeBean filingStatusFacadeBean, ReportService reportService, FilingFacadeBean filingFacadeBean) {
-        return new CsoReviewServiceImpl(filingStatusFacadeBean, reportService, filingFacadeBean, new FilePackageMapperImpl());
+    public EfilingReviewService efilingReviewService(FilingStatusFacadeBean filingStatusFacadeBean, ReportService reportService, FilingFacadeBean filingFacadeBean, RestTemplate restTemplate) {
+        return new CsoReviewServiceImpl(filingStatusFacadeBean, reportService, filingFacadeBean, new FilePackageMapperImpl(), restTemplate);
     }
 
 

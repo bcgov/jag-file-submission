@@ -29,6 +29,7 @@ public class TestHelpers {
     public static final String CASE_1_STRING = CASE_1.toString();
     public static final String CASE_2_STRING = CASE_2.toString();
 
+    public static final String IDENTITY_PROVIDER = "IDENTITY_PROVIDER";
     public static final String DIVISION = "DIVISION";
     public static final String FILENUMBER = "FILENUMBER";
     public static final String LEVEL = "LEVEL";
@@ -61,8 +62,9 @@ public class TestHelpers {
     public static final String STATUS_CODE = "STATUSCODE";
     public static final String COMMENT = "COMMENT";
     public static final String PACKAGE_NO = "123";
-    public static final String DOCUMENT_ID_ONE = "DOCUMENT_ID_ONE";
-    public static final String DOCUMENT_ID_TWO = "DOCUMENT_ID_TWO";
+    public static final String DOCUMENT_ID_ONE = "1";
+    public static final String DOCUMENT_ID_TWO = "2";
+    public static final BigDecimal DOCUMENT_ID_TWO_BD = new BigDecimal(2);
 
     public static final DocumentProperties.TypeEnum TYPE = DocumentProperties.TypeEnum.AAB;
     public static final String PARTY_TYPE_DESC = "PARTY_TYPE_DESC";
@@ -91,6 +93,21 @@ public class TestHelpers {
         court.setFileNumber(FILENUMBER);
         court.setLevel(LEVEL);
         court.setLocation(LOCATION);
+        court.setParticipatingClass(PARTICIPATIONCLASS);
+        court.setCourtClass(PROPERTYCLASS);
+        court.setAgencyId(BigDecimal.TEN);
+        court.setLevelDescription(LEVEL_DESCRIPTION);
+        court.setClassDescription(CLASS_DESCRIPTION);
+        court.setLocationDescription(COURT_DESCRIPTION);
+        return court;
+    }
+
+    public static ca.bc.gov.open.jag.efilingapi.api.model.Court createApiCourt(String location) {
+        ca.bc.gov.open.jag.efilingapi.api.model.Court court = new ca.bc.gov.open.jag.efilingapi.api.model.Court();
+        court.setDivision(DIVISION);
+        court.setFileNumber(FILENUMBER);
+        court.setLevel(LEVEL);
+        court.setLocation(location);
         court.setParticipatingClass(PARTICIPATIONCLASS);
         court.setCourtClass(PROPERTYCLASS);
         court.setAgencyId(BigDecimal.TEN);

@@ -56,17 +56,17 @@ public class FilingPackageServiceImpl implements FilingPackageService {
     }
 
     @Override
-    public Optional<SubmittedDocument> getSubmittedDocument(String universalId, BigDecimal packageNumber, String documentIdentifier) {
+    public Optional<SubmittedDocument> getSubmittedDocument(String universalId, BigDecimal packageNumber, BigDecimal documentIdentifier) {
 
         Optional<ReviewFilingPackage> filingPackage = getFilingPackage(universalId, packageNumber);
 
         if (!filingPackage.isPresent()) return Optional.empty();
 
-        Optional<ReviewDocument> reviewDocument = filingPackage.get().getDocuments().stream().filter(document -> document.getDocumentId().equals(documentIdentifier)).findFirst();
+        Optional<ReviewDocument> reviewDocument = filingPackage.get().getDocuments().stream().filter(document -> document.getDocumentId().equals(documentIdentifier.toString())).findFirst();
 
         if (!reviewDocument.isPresent()) return Optional.empty();
 
-        Optional<byte[]> document = efilingReviewService.getSubmittedDocument(packageNumber, documentIdentifier);
+        Optional<byte[]> document = efilingReviewService.getSubmittedDocument(documentIdentifier);
 
         return document.map(bytes -> SubmittedDocument.builder()
                 .name(reviewDocument.get().getFileName())

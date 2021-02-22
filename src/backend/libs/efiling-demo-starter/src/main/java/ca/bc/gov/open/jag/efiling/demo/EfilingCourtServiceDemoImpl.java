@@ -4,11 +4,12 @@ import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 public class EfilingCourtServiceDemoImpl implements EfilingCourtService {
     @Override
-    public CourtDetails getCourtDescription(String agencyIdentifierCd, String courtLevel, String courtClass) {
-        return new CourtDetails(BigDecimal.TEN, "Imma Court", "Imma Class", "Imma Level");
+    public Optional<CourtDetails> getCourtDescription(String agencyIdentifierCd, String courtLevel, String courtClass) {
+        return Optional.of(new CourtDetails(BigDecimal.TEN, "Imma Court", "Imma Class", "Imma Level"));
     }
 
     @Override

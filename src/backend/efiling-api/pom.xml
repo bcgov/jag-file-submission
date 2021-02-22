@@ -16,7 +16,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <org.mapstruct.version>1.3.1.Final</org.mapstruct.version>
+        <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
         <default-package>ca.bc.gov.open.jag.efilingapi</default-package>
     </properties>
     <dependencies>
@@ -210,14 +210,6 @@
 
             <id>efiling-api</id>
 
-            <repositories>
-                <repository>
-                    <id>splunk-artifactory</id>
-                    <name>Splunk Releases</name>
-                    <url>https://splunk.jfrog.io/splunk/ext-releases-local</url>
-                </repository>
-            </repositories>
-
             <dependencies>
 
                 <dependency>
@@ -238,12 +230,28 @@
                     <version>0.7.0-SNAPSHOT</version>
                 </dependency>
 
+            </dependencies>
+
+        </profile>
+
+        <profile>
+
+            <id>splunk</id>
+
+            <repositories>
+                <repository>
+                    <id>splunk-artifactory</id>
+                    <name>Splunk Releases</name>
+                    <url>https://splunk.jfrog.io/splunk/ext-releases-local</url>
+                </repository>
+            </repositories>
+
+            <dependencies>
                 <dependency>
                     <groupId>com.splunk.logging</groupId>
                     <artifactId>splunk-library-javalogging</artifactId>
                     <version>1.8.0</version>
                 </dependency>
-
             </dependencies>
 
         </profile>

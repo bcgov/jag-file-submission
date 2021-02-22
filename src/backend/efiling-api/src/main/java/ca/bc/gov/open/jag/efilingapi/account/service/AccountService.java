@@ -9,6 +9,6 @@ public interface AccountService {
 
     void updateClient(AccountDetails accountDetails);
 
-    AccountDetails createAccount(String universalId, CreateCsoAccountRequest createAccountRequest);
+    AccountDetails createAccount(String universalId, String identityProvider,CreateCsoAccountRequest createAccountRequest);
 
 }

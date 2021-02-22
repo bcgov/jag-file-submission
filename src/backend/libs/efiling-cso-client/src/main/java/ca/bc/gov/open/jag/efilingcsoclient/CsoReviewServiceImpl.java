@@ -17,6 +17,11 @@ import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -37,13 +42,15 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
 
     private final FilePackageMapper filePackageMapper;
 
-    public CsoReviewServiceImpl(FilingStatusFacadeBean filingStatusFacadeBean, ReportService reportService, FilingFacadeBean filingFacadeBean, FilePackageMapper filePackageMapper) {
+    private final RestTemplate restTemplate;
+
+    public CsoReviewServiceImpl(FilingStatusFacadeBean filingStatusFacadeBean, ReportService reportService, FilingFacadeBean filingFacadeBean, FilePackageMapper filePackageMapper, RestTemplate restTemplate) {
 
         this.filingStatusFacadeBean = filingStatusFacadeBean;
         this.reportService = reportService;
         this.filingFacadeBean = filingFacadeBean;
         this.filePackageMapper = filePackageMapper;
-
+        this.restTemplate = restTemplate;
     }
 
     @Override
@@ -105,9 +112,24 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
     }
 
     @Override
-    public Optional<byte[]> getSubmittedDocument(BigDecimal packageNumber, String documentIdentifier) {
-        // TODO: implement Object Repo Logic
-        return Optional.empty();
+    public Optional<byte[]> getSubmittedDocument(BigDecimal documentIdentifier) {
+
+        String url = "";
+
+        try {
+            url = filingFacadeBean.getActiveDocumentURL(documentIdentifier);
+        } catch (ca.bc.gov.ag.csows.filing.NestedEjbException_Exception e) {
+            logger.error("Error in [updateDocumentStatus] call");
+            throw new EfilingReviewServiceException("Failed to retrieved document", e.getCause());
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_PDF));
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        ResponseEntity<byte[]> response = restTemplate.getForEntity(url, byte[].class, entity);
+
+        return Optional.of(response.getBody());
+
     }
 
     @Override

@@ -358,7 +358,40 @@ exports[`PackageReview Component Matches the snapshot 1`] = `
                 Party Type
               </span>
             </div>
-            <ul />
+            <ul>
+              <li>
+                <span
+                  class="label col-sm-4 d-lg-none"
+                >
+                  Name:
+                </span>
+                <span
+                  class="col-sm-8 col-lg-6"
+                >
+                  Ross, Bob Q
+                </span>
+                <span
+                  class="label col-sm-4 d-lg-none"
+                >
+                  Party Role:
+                </span>
+                <span
+                  class="col-sm-8 col-lg-3"
+                >
+                  Applicant
+                </span>
+                <span
+                  class="label col-sm-4 d-lg-none"
+                >
+                  Party Type:
+                </span>
+                <span
+                  class="col-sm-8 col-lg-3"
+                >
+                  Individual
+                </span>
+              </li>
+            </ul>
           </div>
         </div>
         <div
@@ -396,7 +429,62 @@ exports[`PackageReview Component Matches the snapshot 1`] = `
                   </th>
                 </tr>
               </thead>
-              <tbody />
+              <tbody>
+                <tr>
+                  <td
+                    class="text-right"
+                  >
+                    Subtotal: 
+                  </td>
+                  <td
+                    class="sub-table top-border"
+                  >
+                    $0.00
+                  </td>
+                  <td
+                    class="sub-table top-border"
+                  >
+                    $0.00
+                  </td>
+                  <td />
+                </tr>
+                <tr>
+                  <td
+                    class="text-right"
+                  >
+                    CSO Fees: 
+                  </td>
+                  <td
+                    class="sub-table"
+                  >
+                    $7.00
+                  </td>
+                  <td
+                    class="sub-table"
+                  >
+                    $7.00
+                  </td>
+                  <td />
+                </tr>
+                <tr>
+                  <td
+                    class="text-right"
+                  >
+                    Total Fees: 
+                  </td>
+                  <td
+                    class="sub-table"
+                  >
+                    $7.00
+                  </td>
+                  <td
+                    class="sub-table"
+                  >
+                    $7.00
+                  </td>
+                  <td />
+                </tr>
+              </tbody>
             </table>
             <div
               class="d-flex justify-content-end"

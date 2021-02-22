@@ -8,7 +8,7 @@
 	<artifactId>jag-efiling-backend</artifactId>
 	<version>0.7.0-SNAPSHOT</version>
 
-	<description>FLA Document Upload</description>
+	<description>EfilingHub Backend services</description>
 
 	<name>jag-efiling-backend</name>
 	<packaging>pom</packaging>
@@ -79,5 +79,18 @@
 			</modules>
 		</profile>
 	</profiles>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>
