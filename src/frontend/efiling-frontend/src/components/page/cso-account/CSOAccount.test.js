@@ -159,7 +159,7 @@ describe("CSOAccount Component", () => {
     );
   });
 
-  test("email fields should not appear for BCeID accounts", async () => {
+  test("email fields should not appear if email is already specified", async () => {
     // IDP is set to bceid
     const altToken = generateJWTToken({
       preferred_username: "username@bceid",

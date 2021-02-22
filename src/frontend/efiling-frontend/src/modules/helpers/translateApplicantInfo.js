@@ -30,8 +30,8 @@ export function translateApplicantInfo({
     value: fullName,
   });
 
-  // if BCSC, don't show missing email, we'll show input fields instead.
-  if (!isBCeID && email) {
+  // don't show missing email, we'll show input fields instead.
+  if (email) {
     data.push({
       name: "Email Address:",
       value: email,

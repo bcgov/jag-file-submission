@@ -35,7 +35,6 @@ export default function CSOAccount({
     emailError: "",
     confEmailError: "",
   });
-  const isBCeID = isIdentityProviderBCeID();
 
   useEffect(() => {
     const emailErrors = () =>
@@ -122,8 +121,8 @@ export default function CSOAccount({
           </p>
           <DisplayBox icon={icon} element={applicantTable} />
 
-          {/* if BCSC and missing email, show email input fields. */}
-          {!isBCeID && !applicantInfo.email && (
+          {/* if missing email, show email input fields. */}
+          {!applicantInfo.email && (
             <div>
               <label>Email: </label>
               <input
