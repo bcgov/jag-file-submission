@@ -102,6 +102,21 @@ public class TestHelpers {
         return court;
     }
 
+    public static ca.bc.gov.open.jag.efilingapi.api.model.Court createApiCourt(String location) {
+        ca.bc.gov.open.jag.efilingapi.api.model.Court court = new ca.bc.gov.open.jag.efilingapi.api.model.Court();
+        court.setDivision(DIVISION);
+        court.setFileNumber(FILENUMBER);
+        court.setLevel(LEVEL);
+        court.setLocation(location);
+        court.setParticipatingClass(PARTICIPATIONCLASS);
+        court.setCourtClass(PROPERTYCLASS);
+        court.setAgencyId(BigDecimal.TEN);
+        court.setLevelDescription(LEVEL_DESCRIPTION);
+        court.setClassDescription(CLASS_DESCRIPTION);
+        court.setLocationDescription(COURT_DESCRIPTION);
+        return court;
+    }
+
     public static Court createCourt() {
         return Court.builder()
                 .division(DIVISION)

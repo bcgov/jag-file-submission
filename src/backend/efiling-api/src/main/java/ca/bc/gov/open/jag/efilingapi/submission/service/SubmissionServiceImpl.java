@@ -10,6 +10,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.GetValidPartyRoleRequest;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.utils.FileUtils;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtServiceException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.Court;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
@@ -189,7 +190,11 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private Court populateCourtDetails(CourtBase courtBase) {
 
-        CourtDetails courtDetails = efilingCourtService.getCourtDescription(courtBase.getLocation(), courtBase.getLevel(), courtBase.getCourtClass());
+        Optional<CourtDetails> courtDetails = efilingCourtService.getCourtDescription(courtBase.getLocation(), courtBase.getLevel(), courtBase.getCourtClass());
+
+        if(!courtDetails.isPresent()) {
+            throw new EfilingCourtServiceException("Failed to retrieve Efiling exception");
+        }
 
         return Court
                 .builder()
@@ -198,10 +203,10 @@ public class SubmissionServiceImpl implements SubmissionService {
                 .courtClass(courtBase.getCourtClass())
                 .division(courtBase.getDivision())
                 .fileNumber(courtBase.getFileNumber())
-                .agencyId(courtDetails.getCourtId())
-                .locationDescription(courtDetails.getCourtDescription())
-                .classDescription(courtDetails.getClassDescription())
-                .levelDescription(courtDetails.getLevelDescription())
+                .agencyId(courtDetails.get().getCourtId())
+                .locationDescription(courtDetails.get().getCourtDescription())
+                .classDescription(courtDetails.get().getClassDescription())
+                .levelDescription(courtDetails.get().getLevelDescription())
                 .create();
     }
 
