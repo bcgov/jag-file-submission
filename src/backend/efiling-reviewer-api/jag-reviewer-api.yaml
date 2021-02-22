@@ -74,10 +74,17 @@ components:
       required:
         - type
         - fileName
+        - size
+        - contentType
       properties:
         type:
           type: string
         fileName:
+          type: string
+        size:
+          type: number
+          format: integer
+        contentType:
           type: string
     Extract:
       type: object
