@@ -31,7 +31,7 @@ describe("Home", () => {
   const token = generateJWTToken({
     preferred_username: "username@bceid",
     email: "username@example.com",
-    identity_provider_alias: "bceid",
+    identityProviderAlias: "bceid",
   });
   localStorage.setItem("jwt", token);
 
@@ -243,7 +243,7 @@ describe("Home", () => {
     const tokenAlt = generateJWTToken({
       preferred_username: "username@bceid",
       email: "username@example.com",
-      identity_provider_alias: "bcsc",
+      identityProviderAlias: "bcsc",
     });
     localStorage.setItem("jwt", tokenAlt);
 
@@ -269,7 +269,7 @@ describe("Home", () => {
     const tokenAlt = generateJWTToken({
       preferred_username: "username@bceid",
       email: "username@example.com",
-      identity_provider_alias: "bcsc",
+      identityProviderAlias: "bcsc",
     });
     localStorage.setItem("jwt", tokenAlt);
 
