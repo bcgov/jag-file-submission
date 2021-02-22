@@ -6,7 +6,7 @@ exports[`Storyshots CSOAccount Default 1`] = `
     class="page"
   >
     <div
-      class="content col-md-8"
+      class="content col-md-8 ct-cso-account"
     >
       <div
         class="non-printable"
@@ -113,6 +113,29 @@ exports[`Storyshots CSOAccount Default 1`] = `
           </div>
         </div>
         <br />
+        <label>
+          Email: 
+        </label>
+        <input
+          data-testid="email"
+          name="email"
+          type="textarea"
+        />
+        <label>
+          Confirm Email: 
+        </label>
+        <input
+          data-testid="conf-email"
+          name="confEmail"
+          type="textarea"
+        />
+        <br />
+        <span
+          class="mr-5 error"
+        />
+        <span
+          class="ml-5 error"
+        />
       </div>
       <div>
         <div
@@ -917,7 +940,7 @@ exports[`Storyshots CSOAccount Mobile 1`] = `
     class="page"
   >
     <div
-      class="content col-md-8"
+      class="content col-md-8 ct-cso-account"
     >
       <div
         class="non-printable"
@@ -1024,6 +1047,29 @@ exports[`Storyshots CSOAccount Mobile 1`] = `
           </div>
         </div>
         <br />
+        <label>
+          Email: 
+        </label>
+        <input
+          data-testid="email"
+          name="email"
+          type="textarea"
+        />
+        <label>
+          Confirm Email: 
+        </label>
+        <input
+          data-testid="conf-email"
+          name="confEmail"
+          type="textarea"
+        />
+        <br />
+        <span
+          class="mr-5 error"
+        />
+        <span
+          class="ml-5 error"
+        />
       </div>
       <div>
         <div

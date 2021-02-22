@@ -92,7 +92,7 @@ exports[`Home Component matches the snapshot when user cso account does not exis
     class="page"
   >
     <div
-      class="content col-md-8"
+      class="content col-md-8 ct-cso-account"
     >
       <div
         class="non-printable"
@@ -215,6 +215,29 @@ exports[`Home Component matches the snapshot when user cso account does not exis
           </div>
         </div>
         <br />
+        <label>
+          Email: 
+        </label>
+        <input
+          data-testid="email"
+          name="email"
+          type="textarea"
+        />
+        <label>
+          Confirm Email: 
+        </label>
+        <input
+          data-testid="conf-email"
+          name="confEmail"
+          type="textarea"
+        />
+        <br />
+        <span
+          class="mr-5 error"
+        />
+        <span
+          class="ml-5 error"
+        />
       </div>
       <div>
         <div
@@ -1491,7 +1514,7 @@ exports[`Home When user has authenticated with BCSC with no CSO account, retriev
     class="page"
   >
     <div
-      class="content col-md-8"
+      class="content col-md-8 ct-cso-account"
     >
       <div
         class="non-printable"
@@ -1598,6 +1621,29 @@ exports[`Home When user has authenticated with BCSC with no CSO account, retriev
           </div>
         </div>
         <br />
+        <label>
+          Email: 
+        </label>
+        <input
+          data-testid="email"
+          name="email"
+          type="textarea"
+        />
+        <label>
+          Confirm Email: 
+        </label>
+        <input
+          data-testid="conf-email"
+          name="confEmail"
+          type="textarea"
+        />
+        <br />
+        <span
+          class="mr-5 error"
+        />
+        <span
+          class="ml-5 error"
+        />
       </div>
       <div>
         <div

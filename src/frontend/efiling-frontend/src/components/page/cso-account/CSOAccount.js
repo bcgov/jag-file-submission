@@ -122,9 +122,19 @@ export default function CSOAccount({
           <br />
 
           <label>Email: </label>
-          <input type="textarea" name="email" onChange={handleOnChange} />
+          <input
+            type="textarea"
+            name="email"
+            data-testid="email"
+            onChange={handleOnChange}
+          />
           <label>Confirm Email: </label>
-          <input type="textarea" name="confEmail" onChange={handleOnChange} />
+          <input
+            type="textarea"
+            name="confEmail"
+            data-testid="conf-email"
+            onChange={handleOnChange}
+          />
           <br />
           <span className="mr-5 error">{emailInputErrors.emailError}</span>
           <span className="ml-5 error">{emailInputErrors.confEmailError}</span>
@@ -146,6 +156,7 @@ export default function CSOAccount({
           />
           <Button
             label="Create CSO Account"
+            id="create-cso-btn"
             testId="create-cso-btn"
             onClick={() => createCSOAccount(applicantInfo)}
             styling="bcgov-normal-blue btn"

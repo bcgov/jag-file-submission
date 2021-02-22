@@ -5,6 +5,7 @@ import {
   getByText,
   getByRole,
   fireEvent,
+  getByTestId,
 } from "@testing-library/react";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
@@ -62,6 +63,15 @@ describe("CSOAccount Component", () => {
 
     expect(getByText(container, "Create CSO Account").disabled).toBeTruthy();
     fireEvent.click(getByRole(container, "checkbox"));
+
+    const emailInput = getByTestId(container, "email");
+    const confEmailInput = getByTestId(container, "conf-email");
+
+    fireEvent.change(emailInput, { target: { value: "cso@cso.com" } });
+    await waitFor(() => {});
+    fireEvent.change(confEmailInput, { target: { value: "cso@cso.com" } });
+    await waitFor(() => {});
+
     expect(getByText(container, "Create CSO Account").disabled).toBeFalsy();
 
     fireEvent.click(getByText(container, "Create CSO Account"));
@@ -86,6 +96,15 @@ describe("CSOAccount Component", () => {
 
     expect(getByText(container, "Create CSO Account").disabled).toBeTruthy();
     fireEvent.click(getByRole(container, "checkbox"));
+
+    const emailInput = getByTestId(container, "email");
+    const confEmailInput = getByTestId(container, "conf-email");
+
+    fireEvent.change(emailInput, { target: { value: "cso@cso.com" } });
+    await waitFor(() => {});
+    fireEvent.change(confEmailInput, { target: { value: "cso@cso.com" } });
+    await waitFor(() => {});
+
     expect(getByText(container, "Create CSO Account").disabled).toBeFalsy();
 
     fireEvent.click(getByText(container, "Create CSO Account"));
