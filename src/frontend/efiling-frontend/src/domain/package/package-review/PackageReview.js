@@ -22,7 +22,8 @@ import PartyList from "./PartyList";
 import PaymentList from "./PaymentList";
 
 export default function PackageReview() {
-  const { packageId } = useParams();
+  const params = useParams();
+  const packageId = Number(params.packageId);
   const [error, setError] = useState(false);
   const [packageDetails, setPackageDetails] = useState([
     { name: "Submitted By:", value: "", isNameBold: false, isValueBold: true },
@@ -73,7 +74,8 @@ export default function PackageReview() {
               "DD-MMM-YYYY HH:mm"
             );
           }
-          const fileNumber = response.data.court.fileNumber || "";
+          const fileNumber =
+            response.data.court.fileNumber || "Not Assigned Yet";
           const submittedTo = response.data.court.location || "";
           setPackageDetails([
             {
