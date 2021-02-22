@@ -17,7 +17,7 @@ import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { propTypes } from "../../../types/propTypes";
 
 import "./Upload.scss";
-import PackageConfirmation from "../package-confirmation/PackageConfirmation";
+import PackageConfirmation from "../../../domain/package/package-confirmation/PackageConfirmation";
 import { getDocumentTypes } from "../../../domain/documents/DocumentService";
 
 const filesToUpload = {

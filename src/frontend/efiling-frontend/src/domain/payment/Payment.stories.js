@@ -1,7 +1,7 @@
 import React from "react";
-import { getDocumentsData } from "../../../modules/test-data/documentTestData";
-import { getTestData } from "../../../modules/test-data/confirmationPopupTestData";
-import { getCourtData } from "../../../modules/test-data/courtTestData";
+import { getDocumentsData } from "../../modules/test-data/documentTestData";
+import { getTestData } from "../../modules/test-data/confirmationPopupTestData";
+import { getCourtData } from "../../modules/test-data/courtTestData";
 
 import Payment from "./Payment";
 
