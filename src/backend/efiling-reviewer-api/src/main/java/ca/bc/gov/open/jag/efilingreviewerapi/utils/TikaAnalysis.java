@@ -14,18 +14,13 @@ public class TikaAnalysis {
 
     private TikaAnalysis() { }
 
-    public static Boolean isPdf(MultipartFile multipartFile) {
+    public static Boolean isPdf(MultipartFile multipartFile) throws IOException {
 
         Detector detector = new DefaultDetector();
         Metadata metadata = new Metadata();
 
-        try {
-            MediaType mediaType = detector.detect(new ByteArrayInputStream(multipartFile.getBytes()), metadata);
-            return StringUtils.equals("application/pdf", mediaType.toString());
-        } catch (IOException e) {
-            return false;
-        }
-
+        MediaType mediaType = detector.detect(new ByteArrayInputStream(multipartFile.getBytes()), metadata);
+        return StringUtils.equals("application/pdf", mediaType.toString());
 
     }
 

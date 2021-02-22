@@ -41,15 +41,15 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
 
         try {
             clamAvService.scan(new ByteArrayInputStream(file.getBytes()));
+            if (!TikaAnalysis.isPdf(file)) throw new DiligenDocumentException("Invalid file type");
         } catch (VirusDetectedException e) {
             throw new DiligenDocumentException("Virus found in document");
         } catch (IOException e) {
             throw new DiligenDocumentException("File is corrupt");
         }
 
-        if (!TikaAnalysis.isPdf(file)) throw new DiligenDocumentException("Invalid file type");
 
-        return ResponseEntity.ok(diligenService.postDocument(xDocumentType, file));
+
         BigDecimal response = diligenService.postDocument(xDocumentType, file);
 
         DocumentExtractResponse documentExtractResponse = new DocumentExtractResponse();
