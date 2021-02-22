@@ -61,6 +61,11 @@ components:
     DocumentExtractResponse:
       type: object
       description: Review upload response
+      required:
+        - documentIdentifier
+      properties:
+        documentIdentifier:
+          type: number
     ApiError:
       required:
         - error
