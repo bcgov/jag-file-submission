@@ -446,7 +446,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
                 } catch (VirusDetectedException e) {
                     return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_STORAGE_FAILURE).create(),
                             HttpStatus.BAD_GATEWAY);
-                }
+
 
                 if (!TikaAnalysis.isPdf(file))
                     return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.FILE_TYPE_ERROR).create(),
