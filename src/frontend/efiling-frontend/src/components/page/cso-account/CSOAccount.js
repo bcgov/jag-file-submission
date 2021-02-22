@@ -16,7 +16,6 @@ import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import { translateApplicantInfo } from "../../../modules/helpers/translateApplicantInfo";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { propTypes } from "../../../types/propTypes";
-import { isIdentityProviderBCeID } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 import "./CSOAccount.scss";
 
 const content = getContent();
