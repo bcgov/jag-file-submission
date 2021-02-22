@@ -13,3 +13,9 @@ jag:
       username: ${DILIGEN_USERNAME}
       password: ${DILIGEN_PASSWORD}
       projectIdentifier: ${DILIGEN_PROJECT_IDENTIFIER}
+
+bcgov:
+  clamav:
+    host: ${CLAMAV_HOST:localhost}
+    port: ${CLAMAV_PORT:3310}
+    timeout: ${CLAMAV_TIMEOUT:50000}
