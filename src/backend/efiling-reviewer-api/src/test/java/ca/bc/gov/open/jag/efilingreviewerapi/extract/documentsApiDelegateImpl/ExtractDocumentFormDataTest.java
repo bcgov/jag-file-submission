@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.extract.documentsApiDelegateImpl;
 
+import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentExtractResponse;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.DocumentsApiDelegateImpl;
@@ -31,12 +32,15 @@ public class ExtractDocumentFormDataTest {
     @Mock
     DiligenService diligenService;
 
+    @Mock
+    ClamAvService clamAvService;
+
     @BeforeAll
     public void beforeAll() {
 
         MockitoAnnotations.openMocks(this);
 
-        sut = new DocumentsApiDelegateImpl(diligenService);
+        sut = new DocumentsApiDelegateImpl(diligenService, clamAvService);
 
     }
     @Test

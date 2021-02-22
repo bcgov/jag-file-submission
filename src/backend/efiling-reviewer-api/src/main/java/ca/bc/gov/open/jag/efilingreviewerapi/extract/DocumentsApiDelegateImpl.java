@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.extract;
 
+import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.DocumentsApiDelegate;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.Document;
@@ -20,8 +21,11 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
 
     private final DiligenService diligenService;
 
-    public DocumentsApiDelegateImpl(DiligenService diligenService) {
+    private final ClamAvService clamAvService;
+
+    public DocumentsApiDelegateImpl(DiligenService diligenService, ClamAvService clamAvService) {
         this.diligenService = diligenService;
+        this.clamAvService = clamAvService;
     }
 
     @Override
