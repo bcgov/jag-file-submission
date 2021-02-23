@@ -169,6 +169,7 @@ describe("CSOAccount Component", () => {
     const bceidInfo = {
       bceid: "bobross42",
       firstName: "Bob",
+      middleName: "Painter",
       lastName: "Ross",
       email: "",
     };
