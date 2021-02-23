@@ -6,7 +6,7 @@ exports[`Storyshots CSOAccount Default 1`] = `
     class="page"
   >
     <div
-      class="content col-md-8"
+      class="content col-md-8 ct-cso-account"
     >
       <div
         class="non-printable"
@@ -106,6 +106,20 @@ exports[`Storyshots CSOAccount Default 1`] = `
                     class="bcgov-table-value "
                   >
                     Bob Ross
+                  </div>
+                </div>
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-fill-width"
+                  >
+                    Email Address:
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    bob.ross@example.com
                   </div>
                 </div>
               </div>
@@ -917,7 +931,7 @@ exports[`Storyshots CSOAccount Mobile 1`] = `
     class="page"
   >
     <div
-      class="content col-md-8"
+      class="content col-md-8 ct-cso-account"
     >
       <div
         class="non-printable"
@@ -1017,6 +1031,20 @@ exports[`Storyshots CSOAccount Mobile 1`] = `
                     class="bcgov-table-value "
                   >
                     Bob Ross
+                  </div>
+                </div>
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-fill-width"
+                  >
+                    Email Address:
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    bob.ross@example.com
                   </div>
                 </div>
               </div>

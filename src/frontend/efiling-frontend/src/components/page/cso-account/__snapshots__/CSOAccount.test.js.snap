@@ -6,7 +6,7 @@ exports[`CSOAccount Component Matches the snapshot 1`] = `
     class="page"
   >
     <div
-      class="content col-md-8"
+      class="content col-md-8 ct-cso-account"
     >
       <div
         class="non-printable"
@@ -106,6 +106,20 @@ exports[`CSOAccount Component Matches the snapshot 1`] = `
                     class="bcgov-table-value "
                   >
                     Bob Ross
+                  </div>
+                </div>
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-fill-width"
+                  >
+                    Email Address:
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    bob.ross@example.com
                   </div>
                 </div>
               </div>
