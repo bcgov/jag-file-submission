@@ -69,7 +69,7 @@ public class ViewSubmittedPackageSD {
     }
 
     @And("document can be downloaded")
-    public void verifyDocumentDownload() throws IOException {
+    public void verifyDocumentDownload() throws IOException, InterruptedException {
         packageReviewPage.clickToDownloadDocument();
 
         File folder = new File(DOWNLOADED_FILES_PATH);

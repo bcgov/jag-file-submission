@@ -26,6 +26,9 @@ public class PackageReviewPage extends BasePage {
     @FindBy(id = "uncontrolled-tab-tab-documents")
     private WebElement documentsTab;
 
+    @FindBy(xpath = "//*[@data-testid='file-to-download']")
+    private WebElement downloadButton;
+
     @FindBy(id = "uncontrolled-tab-tab-comments")
     private WebElement filingCommentsTab;
 
@@ -59,6 +62,15 @@ public class PackageReviewPage extends BasePage {
             packageDetails.add(webElement.getText());
         });
         return packageDetails;
+    }
+
+    public void clickToDownloadDocument() throws InterruptedException {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-testid='file-to-download']")));
+
+        logger.info("Download button is enabled: {}", downloadButton.isEnabled());
+        logger.info("Downloaded file name is: {}", downloadButton.getText());
+        downloadButton.click();
+        Thread.sleep(1500L);
     }
 
     public void clickDocumentsTab() {
