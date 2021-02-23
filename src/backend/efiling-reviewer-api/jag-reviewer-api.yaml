@@ -90,12 +90,12 @@ components:
       type: object
       required:
         - id
-        - transactioniId
+        - transactionId
       properties:
         id:
           type: string
           format: uuid
-        transactioniId:
+        transactionId:
           type: string
           format: uuid
     ApiError:

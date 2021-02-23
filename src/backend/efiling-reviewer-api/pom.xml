@@ -15,6 +15,7 @@
 	<description>api project for ai reviewer</description>
 	<properties>
 		<java.version>1.8</java.version>
+		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
 		<default-package>ca.bc.gov.open.jag.efilingreviewerapi</default-package>
 	</properties>
 	<dependencies>
@@ -83,6 +84,27 @@
 			<artifactId>jackson-databind-nullable</artifactId>
 		</dependency>
 
+		<!-- Redis -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+		</dependency>
+
+		<!--mapStruct-->
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+		</dependency>
+
+
 		<!-- Logging -->
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
@@ -141,6 +163,24 @@
 
 	<build>
 		<plugins>
+
+			<!--mapstruct mapper autogen-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.mapstruct</groupId>
+							<artifactId>mapstruct-processor</artifactId>
+							<version>${org.mapstruct.version}</version>
+						</path>
+					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+
 			<!--spring boot build-->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
