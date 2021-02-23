@@ -32,7 +32,7 @@ export const propTypes = {
     firstName: PropTypes.string.isRequired,
     middleName: PropTypes.string,
     lastName: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
+    email: PropTypes.string,
   }).isRequired,
   setState: PropTypes.func.isRequired,
 };
