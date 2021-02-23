@@ -1,8 +1,14 @@
 package ca.bc.gov.open.efilingdiligenclient.diligen;
 
 import ca.bc.gov.open.efilingdiligenclient.Keys;
-import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenProperties;
+import ca.bc.gov.open.efilingdiligenclient.diligen.model.DiligenDocument;
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
+import ca.bc.gov.open.jag.efilingdiligenclient.api.ProjectsApi;
+import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.ApiException;
+import ca.bc.gov.open.jag.efilingdiligenclient.api.model.Filter;
+import ca.bc.gov.open.jag.efilingdiligenclient.api.model.InlineResponse2002;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ByteArrayResource;
@@ -28,10 +34,16 @@ public class DiligenServiceImpl implements DiligenService {
 
     private final DiligenAuthService diligenAuthService;
 
-    public DiligenServiceImpl(RestTemplate restTemplate, DiligenProperties diligenProperties, DiligenAuthService diligenAuthService) {
+    private final ProjectsApi projectsApi;
+
+    private final ObjectMapper objectMapper;
+
+    public DiligenServiceImpl(RestTemplate restTemplate, DiligenProperties diligenProperties, DiligenAuthService diligenAuthService, ProjectsApi projectsApi, ObjectMapper objectMapper) {
         this.restTemplate = restTemplate;
         this.diligenProperties = diligenProperties;
         this.diligenAuthService = diligenAuthService;
+        this.projectsApi = projectsApi;
+        this.objectMapper = objectMapper;
     }
     @Override
     public BigDecimal postDocument(String documentType, MultipartFile file) {
@@ -40,7 +52,8 @@ public class DiligenServiceImpl implements DiligenService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-        headers.setBearerAuth(diligenAuthService.getDiligenJWT(diligenProperties.getUsername(), diligenProperties.getPassword()));
+        String apiKey = diligenAuthService.getDiligenJWT(diligenProperties.getUsername(), diligenProperties.getPassword());
+        headers.setBearerAuth(apiKey);
 
         MultiValueMap<String, Object> body;
         try {
@@ -58,7 +71,22 @@ public class DiligenServiceImpl implements DiligenService {
 
         logger.info("document posted to diligen");
 
-        return BigDecimal.ONE;
+        projectsApi.getApiClient().setBearerToken(apiKey);
+
+        Filter filter = new Filter();
+        filter.fileName(file.getOriginalFilename());
+
+        try {
+            InlineResponse2002 documentSearchResult = projectsApi.apiProjectsProjectIdDocumentsGet(diligenProperties.getProjectIdentifier(), null, null, filter);
+            Object diligenDocument = documentSearchResult.getData().getDocuments().stream()
+                    .findFirst()
+                    .orElseThrow(() -> new DiligenDocumentException("Document not found"));
+            objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+            DiligenDocument document = objectMapper.convertValue(diligenDocument, DiligenDocument.class);
+            return document.getFileId();
+        } catch (ApiException e) {
+            throw new DiligenDocumentException(e.getMessage());
+        }
 
     }
 
