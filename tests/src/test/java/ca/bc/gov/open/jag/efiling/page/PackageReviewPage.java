@@ -26,7 +26,8 @@ public class PackageReviewPage extends BasePage {
     @FindBy(id = "uncontrolled-tab-tab-documents")
     private WebElement documentsTab;
 
-    @FindBy(xpath = "//*[@data-testid='file-to-download']")
+    @FindBy(xpath = "//*[@data-testid='btn-download-document']")
+
     private WebElement downloadButton;
 
     @FindBy(id = "uncontrolled-tab-tab-comments")
