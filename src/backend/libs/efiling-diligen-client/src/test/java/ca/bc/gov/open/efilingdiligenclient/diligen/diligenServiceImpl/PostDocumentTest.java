@@ -149,7 +149,7 @@ public class PostDocumentTest {
 
         BigDecimal result = sut.postDocument(DOCUMENT_TYPE, mockMultipartFile);
 
-        assertEquals(BigDecimal.ONE, result);
+        assertEquals(new BigDecimal(810), result);
 
     }
 
