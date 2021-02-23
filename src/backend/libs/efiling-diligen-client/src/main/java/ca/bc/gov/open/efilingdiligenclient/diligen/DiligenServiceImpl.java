@@ -45,8 +45,7 @@ public class DiligenServiceImpl implements DiligenService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-        String apiKey = diligenAuthService.getDiligenJWT(diligenProperties.getUsername(), diligenProperties.getPassword());
-        headers.setBearerAuth(apiKey);
+        headers.setBearerAuth(diligenAuthService.getDiligenJWT(diligenProperties.getUsername(), diligenProperties.getPassword()));
 
         MultiValueMap<String, Object> body;
         try {
@@ -64,11 +63,17 @@ public class DiligenServiceImpl implements DiligenService {
 
         logger.info("document posted to diligen");
 
+        return getFileId(headers, file.getOriginalFilename());
+
+    }
+
+    private BigDecimal getFileId(HttpHeaders headers, String fileName) {
         try {
+            HttpEntity<String> entity = new HttpEntity<>(null, headers);
 
-            ResponseEntity<String> searchResponse = restTemplate.exchange(constructUrl(MessageFormat.format(Keys.GET_DOCUMENT_PATH,diligenProperties.getProjectIdentifier(), file.getOriginalFilename())), HttpMethod.GET, requestEntity, String.class);
+            ResponseEntity<String> searchResponse = restTemplate.exchange(constructUrl(MessageFormat.format(Keys.GET_DOCUMENT_PATH,diligenProperties.getProjectIdentifier(), fileName)), HttpMethod.GET, entity, String.class);
 
-            if (!searchResponse.getStatusCode().is2xxSuccessful()) throw new DiligenDocumentException(response.getStatusCode().toString());
+            if (!searchResponse.getStatusCode().is2xxSuccessful()) throw new DiligenDocumentException(searchResponse.getStatusCode().toString());
 
             DiligenResponse diligenResponse = objectMapper.readValue(searchResponse.getBody(), DiligenResponse.class);
 
@@ -80,7 +85,6 @@ public class DiligenServiceImpl implements DiligenService {
             //Using the exceptions message can contain PII data. It is safer to just say it failed for now.
             throw new DiligenDocumentException("Failed in object deserialization");
         }
-
     }
 
     private String constructUrl(String path) {
