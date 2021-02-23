@@ -2,7 +2,7 @@ package ca.bc.gov.open.jag.efilingreviewerapi.extract;
 
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenAuthenticationException;
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
-import ca.bc.gov.open.jag.efilingreviewerapi.exceptions.DocumentExtractVirusFoundException;
+import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerVirusFoundException;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.ApiError;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerCacheException;
 import org.junit.jupiter.api.*;
@@ -57,10 +57,11 @@ public class DiligenControllerAdvisorTest {
     @DisplayName("502: Assert bad gateway returned")
     public void testDocumentExtractVirusFoundException() {
 
-        ResponseEntity<Object> result = sut.handleDocumentExtractVirusFoundException(new DocumentExtractVirusFoundException("Virus found"), webRequestMock);
+        ResponseEntity<Object> result = sut.handleDocumentExtractVirusFoundException(new AiReviewerVirusFoundException("Virus found"), webRequestMock);
 
         Assertions.assertEquals(HttpStatus.BAD_GATEWAY, result.getStatusCode());
-        Assertions.assertEquals("Virus found", result.getBody());
+        Assertions.assertEquals("VIRUS_FOUND", ((ApiError)result.getBody()).getError());
+        Assertions.assertEquals("Virus found", ((ApiError)result.getBody()).getMessage());
     }
       
     @DisplayName("500: Assert cache exception")

@@ -2,7 +2,7 @@ package ca.bc.gov.open.jag.efilingreviewerapi.extract;
 
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenAuthenticationException;
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
-import ca.bc.gov.open.jag.efilingreviewerapi.exceptions.DocumentExtractVirusFoundException;
+import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerVirusFoundException;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.ApiError;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerCacheException;
 
@@ -25,9 +25,12 @@ public class DiligenControllerAdvisor {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(DocumentExtractVirusFoundException.class)
-    public ResponseEntity<Object> handleDocumentExtractVirusFoundException(DocumentExtractVirusFoundException ex, WebRequest request) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_GATEWAY);
+    @ExceptionHandler(AiReviewerVirusFoundException.class)
+    public ResponseEntity<Object> handleDocumentExtractVirusFoundException(AiReviewerVirusFoundException ex, WebRequest request) {
+        ApiError apiError = new ApiError();
+        apiError.setError(ex.getErrorCode());
+        apiError.setMessage(ex.getMessage());
+        return new ResponseEntity<>(apiError, HttpStatus.BAD_GATEWAY);
     }
   
     @ExceptionHandler(AiReviewerCacheException.class)
