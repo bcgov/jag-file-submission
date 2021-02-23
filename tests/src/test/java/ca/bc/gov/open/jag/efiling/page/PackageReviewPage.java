@@ -66,7 +66,8 @@ public class PackageReviewPage extends BasePage {
     }
 
     public void clickToDownloadDocument() throws InterruptedException {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-testid='file-to-download']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-testid='btn-download-document']")));
+
 
         logger.info("Download button is enabled: {}", downloadButton.isEnabled());
         logger.info("Downloaded file name is: {}", downloadButton.getText());
