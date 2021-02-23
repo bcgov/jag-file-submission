@@ -2,7 +2,13 @@ package ca.bc.gov.open.jag.efilingreviewerapi.extract.documentsApiDelegateImpl;
 
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentExtractResponse;
+import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerCacheException;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.DocumentsApiDelegateImpl;
+import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractMapperImpl;
+import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapper;
+import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapperImpl;
+import ca.bc.gov.open.jag.efilingreviewerapi.extract.mocks.ExtractRequestMockFactory;
+import ca.bc.gov.open.jag.efilingreviewerapi.extract.store.ExtractStore;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -17,6 +23,7 @@ import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -31,12 +38,19 @@ public class ExtractDocumentFormDataTest {
     @Mock
     DiligenService diligenService;
 
+    @Mock
+    private ExtractStore extractStore;
+
     @BeforeAll
     public void beforeAll() {
 
         MockitoAnnotations.openMocks(this);
 
-        sut = new DocumentsApiDelegateImpl(diligenService);
+        Mockito.when(extractStore.put(Mockito.eq(BigDecimal.ONE), Mockito.any())).thenReturn(Optional.of(ExtractRequestMockFactory.mock()));
+        Mockito.when(extractStore.put(Mockito.eq(BigDecimal.TEN), Mockito.any())).thenReturn(Optional.empty());
+
+        ExtractRequestMapper extractRequestMapper = new ExtractRequestMapperImpl(new ExtractMapperImpl());
+        sut = new DocumentsApiDelegateImpl(diligenService, extractRequestMapper, extractStore);
 
     }
     @Test
@@ -52,15 +66,34 @@ public class ExtractDocumentFormDataTest {
         MultipartFile multipartFile = new MockMultipartFile(CASE_1,
                 CASE_1, APPLICATION_PDF, Files.readAllBytes(path));
 
-
         ResponseEntity<DocumentExtractResponse> actual = sut.extractDocumentFormData(transactionId, "TYPE", multipartFile);
 
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
-        Assertions.assertEquals(APPLICATION_PDF, actual.getBody().getDocument().getContentType());
-        Assertions.assertEquals(CASE_1, actual.getBody().getDocument().getFileName());
-        Assertions.assertEquals(new BigDecimal(58101), actual.getBody().getDocument().getSize());
-        Assertions.assertNotNull(actual.getBody().getExtract().getId());
-        Assertions.assertEquals(transactionId, actual.getBody().getExtract().getTransactioniId());
+        Assertions.assertEquals(ExtractRequestMockFactory.EXPECTED_DOCUMENT_CONTENT_TYPE, actual.getBody().getDocument().getContentType());
+        Assertions.assertEquals(ExtractRequestMockFactory.EXPECTED_DOCUMENT_FILE_NAME, actual.getBody().getDocument().getFileName());
+        Assertions.assertEquals(ExtractRequestMockFactory.EXPECTED_DOCUMENT_SIZE, actual.getBody().getDocument().getSize());
+        Assertions.assertEquals(ExtractRequestMockFactory.EXPECTED_EXTRACT_ID, actual.getBody().getExtract().getId());
+        Assertions.assertEquals(ExtractRequestMockFactory.EXPECTED_EXTRACT_TRANSACTION_ID, actual.getBody().getExtract().getTransactionId());
+
+    }
+
+
+    @Test
+    @DisplayName("200: Assert something returned")
+    public void withUserHavingValidRequestShouldReturnCredfated() throws IOException {
+
+        Mockito.when(diligenService.postDocument(Mockito.any(), Mockito.any())).thenReturn(BigDecimal.TEN);
+
+        Path path = Paths.get("src/test/resources/" + CASE_1);
+
+        UUID transactionId = UUID.randomUUID();
+
+        MultipartFile multipartFile = new MockMultipartFile(CASE_1,
+                CASE_1, APPLICATION_PDF, Files.readAllBytes(path));
+
+        Assertions.assertThrows(AiReviewerCacheException.class,
+                () -> sut.extractDocumentFormData(transactionId, "TYPE", multipartFile)
+        );
 
     }
 }
