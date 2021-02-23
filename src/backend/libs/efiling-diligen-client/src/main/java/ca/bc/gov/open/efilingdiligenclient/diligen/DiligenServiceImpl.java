@@ -1,14 +1,9 @@
 package ca.bc.gov.open.efilingdiligenclient.diligen;
 
 import ca.bc.gov.open.efilingdiligenclient.Keys;
-import ca.bc.gov.open.efilingdiligenclient.diligen.model.DiligenDocument;
 import ca.bc.gov.open.efilingdiligenclient.diligen.model.DiligenResponse;
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
-import ca.bc.gov.open.jag.efilingdiligenclient.api.ProjectsApi;
-import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.ApiException;
-import ca.bc.gov.open.jag.efilingdiligenclient.api.model.Filter;
-import ca.bc.gov.open.jag.efilingdiligenclient.api.model.InlineResponse2002;
-import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,15 +30,12 @@ public class DiligenServiceImpl implements DiligenService {
 
     private final DiligenAuthService diligenAuthService;
 
-    private final ProjectsApi projectsApi;
-
     private final ObjectMapper objectMapper;
 
-    public DiligenServiceImpl(RestTemplate restTemplate, DiligenProperties diligenProperties, DiligenAuthService diligenAuthService, ProjectsApi projectsApi, ObjectMapper objectMapper) {
+    public DiligenServiceImpl(RestTemplate restTemplate, DiligenProperties diligenProperties, DiligenAuthService diligenAuthService, ObjectMapper objectMapper) {
         this.restTemplate = restTemplate;
         this.diligenProperties = diligenProperties;
         this.diligenAuthService = diligenAuthService;
-        this.projectsApi = projectsApi;
         this.objectMapper = objectMapper;
     }
     @Override
@@ -73,12 +65,20 @@ public class DiligenServiceImpl implements DiligenService {
         logger.info("document posted to diligen");
 
         try {
+
             ResponseEntity<String> searchResponse = restTemplate.exchange(constructUrl(MessageFormat.format(Keys.GET_DOCUMENT_PATH,diligenProperties.getProjectIdentifier(), file.getOriginalFilename())), HttpMethod.GET, requestEntity, String.class);
-            objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+
+            if (!searchResponse.getStatusCode().is2xxSuccessful()) throw new DiligenDocumentException(response.getStatusCode().toString());
+
             DiligenResponse diligenResponse = objectMapper.readValue(searchResponse.getBody(), DiligenResponse.class);
+
+            if (diligenResponse.getData().getDocuments().isEmpty()) throw new DiligenDocumentException("No documents of that name found");
+
             return diligenResponse.getData().getDocuments().get(0).getFileId();
-        } catch (Exception e) {
-            throw new DiligenDocumentException(e.getMessage());
+
+        } catch (JsonProcessingException e) {
+            //Using the exceptions message can contain PII data. It is safer to just say it failed for now.
+            throw new DiligenDocumentException("Failed in object deserialization");
         }
 
     }

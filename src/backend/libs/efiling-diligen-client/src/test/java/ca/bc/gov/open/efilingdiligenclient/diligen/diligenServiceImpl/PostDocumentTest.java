@@ -4,11 +4,6 @@ import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenAuthService;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenProperties;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenServiceImpl;
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
-import ca.bc.gov.open.jag.efilingdiligenclient.api.ProjectsApi;
-import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.ApiClient;
-import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.ApiException;
-import ca.bc.gov.open.jag.efilingdiligenclient.api.model.InlineResponse2002;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
@@ -113,13 +108,8 @@ public class PostDocumentTest {
     @Mock
     DiligenAuthService diligenAuthServiceMock;
 
-    @Mock
-    ProjectsApi projectsApiMock;
-
-    ObjectMapper objectMapper = new ObjectMapper();
-
-    @BeforeAll
-    public void beforeAll() {
+    @BeforeEach
+    public void beforeEach() {
 
         MockitoAnnotations.openMocks(this);
 
@@ -131,19 +121,20 @@ public class PostDocumentTest {
 
         Mockito.when(diligenAuthServiceMock.getDiligenJWT(any(), any())).thenReturn(JWT);
 
-        sut = new DiligenServiceImpl(restTemplateMock, diligenProperties, diligenAuthServiceMock, projectsApiMock, new ObjectMapper());
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+
+        sut = new DiligenServiceImpl(restTemplateMock, diligenProperties, diligenAuthServiceMock, objectMapper);
 
     }
 
     @Test
     @DisplayName("Ok: document was submitted")
-    public void withValidDocumentSuccessfulDocumentSubmission() throws ApiException, JsonProcessingException {
+    public void withValidDocumentSuccessfulDocumentSubmission() {
 
         MockMultipartFile mockMultipartFile = new MockMultipartFile("test", "test.pdf", MediaType.MULTIPART_FORM_DATA.getType(), "TEST".getBytes());
 
         Mockito.when(restTemplateMock.postForEntity(any(String.class), any(HttpEntity.class), any(Class.class))).thenReturn(ResponseEntity.noContent().build());
-
-        objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
         Mockito.when(restTemplateMock.exchange(any(String.class), any(HttpMethod.class), any(HttpEntity.class), any(Class.class))).thenReturn(ResponseEntity.ok(DILIGEN_RESPONSE));
 
@@ -176,4 +167,50 @@ public class PostDocumentTest {
         Assertions.assertThrows(DiligenDocumentException.class, () -> sut.postDocument(DOCUMENT_TYPE, mockMultipartFile));
 
     }
+
+    @Test
+    @DisplayName("Error: deserialization issue ")
+    public void withValidDocumentDiligenReturnsCorrupt() {
+
+        MockMultipartFile mockMultipartFile = new MockMultipartFile("test", "test.pdf", MediaType.MULTIPART_FORM_DATA.getType(), "TEST".getBytes());
+
+        Mockito.when(restTemplateMock.postForEntity(any(String.class), any(HttpEntity.class), any(Class.class))).thenReturn(ResponseEntity.noContent().build());
+
+        Mockito.when(restTemplateMock.exchange(any(String.class), any(HttpMethod.class), any(HttpEntity.class), any(Class.class))).thenReturn(ResponseEntity.ok("GARBAGE"));
+
+        Assertions.assertThrows(DiligenDocumentException.class, () -> sut.postDocument(DOCUMENT_TYPE, mockMultipartFile));
+
+    }
+
+    @Test
+    @DisplayName("Error: diligen return error ")
+    public void withValidDocumentDiligenReturnsError() {
+
+        MockMultipartFile mockMultipartFile = new MockMultipartFile("test", "test.pdf", MediaType.MULTIPART_FORM_DATA.getType(), "TEST".getBytes());
+
+        Mockito.when(restTemplateMock.postForEntity(any(String.class), any(HttpEntity.class), any(Class.class))).thenReturn(ResponseEntity.noContent().build());
+
+        Mockito.when(restTemplateMock.exchange(any(String.class), any(HttpMethod.class), any(HttpEntity.class), any(Class.class))).thenReturn(ResponseEntity.badRequest().build());
+
+        Assertions.assertThrows(DiligenDocumentException.class, () -> sut.postDocument(DOCUMENT_TYPE, mockMultipartFile));
+
+    }
+
+    @Test
+    @DisplayName("Error: diligen returns no documents ")
+    public void withValidDocumentDiligenReturnsNoDocuments() {
+
+        MockMultipartFile mockMultipartFile = new MockMultipartFile("test", "test.pdf", MediaType.MULTIPART_FORM_DATA.getType(), "TEST".getBytes());
+
+        Mockito.when(restTemplateMock.postForEntity(any(String.class), any(HttpEntity.class), any(Class.class))).thenReturn(ResponseEntity.noContent().build());
+
+        Mockito.when(restTemplateMock.exchange(any(String.class), any(HttpMethod.class), any(HttpEntity.class), any(Class.class))).thenReturn(ResponseEntity.ok("{\n" +
+                "{   \"data\": {\n" +
+                "        \"documents\": []" +
+                "}}"));
+
+        Assertions.assertThrows(DiligenDocumentException.class, () -> sut.postDocument(DOCUMENT_TYPE, mockMultipartFile));
+
+    }
+
 }

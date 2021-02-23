@@ -5,6 +5,7 @@ import ca.bc.gov.open.jag.efilingdiligenclient.api.AuthenticationApi;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.HealthCheckApi;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.ProjectsApi;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.ApiClient;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.actuate.health.HealthIndicator;
@@ -74,7 +75,9 @@ public class AutoConfiguration {
 
     @Bean
     public DiligenService diligenService(DiligenAuthService diligenAuthService, RestTemplate restTemplate, ApiClient apiClient) {
-        return new DiligenServiceImpl(restTemplate, diligenProperties, diligenAuthService, new ProjectsApi(apiClient), new ObjectMapper());
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        return new DiligenServiceImpl(restTemplate, diligenProperties, diligenAuthService, objectMapper);
     }
 
 }
