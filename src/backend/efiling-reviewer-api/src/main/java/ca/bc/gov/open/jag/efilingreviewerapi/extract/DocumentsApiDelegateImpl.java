@@ -2,9 +2,10 @@ package ca.bc.gov.open.jag.efilingreviewerapi.extract;
 
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.DocumentsApiDelegate;
-import ca.bc.gov.open.jag.efilingreviewerapi.api.model.Document;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentExtractResponse;
-import ca.bc.gov.open.jag.efilingreviewerapi.api.model.Extract;
+import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapper;
+import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractRequest;
+import ca.bc.gov.open.jag.efilingreviewerapi.extract.store.ExtractStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 import java.util.UUID;
 @Service
 public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
@@ -19,9 +21,13 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
     Logger logger = LoggerFactory.getLogger(DocumentsApiDelegateImpl.class);
 
     private final DiligenService diligenService;
+    private final ExtractRequestMapper extractRequestMapper;
+    private final ExtractStore extractStore;
 
-    public DocumentsApiDelegateImpl(DiligenService diligenService) {
+    public DocumentsApiDelegateImpl(DiligenService diligenService, ExtractRequestMapper extractRequestMapper, ExtractStore extractStore) {
         this.diligenService = diligenService;
+        this.extractRequestMapper = extractRequestMapper;
+        this.extractStore = extractStore;
     }
 
     @Override
@@ -29,23 +35,13 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
 
         logger.info("document extract request received");
 
+        ExtractRequest extractRequest = extractRequestMapper.toExtractRequest(xTransactionId, xDocumentType, file);
+
         BigDecimal response = diligenService.postDocument(xDocumentType, file);
 
-        DocumentExtractResponse documentExtractResponse = new DocumentExtractResponse();
+        Optional<ExtractRequest> extractRequestCached = extractStore.put(response, extractRequest);
 
-        Document document = new Document();
-        document.setFileName(file.getName());
-        document.setType(xDocumentType);
-        document.setSize(new BigDecimal(file.getSize()));
-        document.setContentType(file.getContentType());
-
-        documentExtractResponse.setDocument(document);
-        Extract extract = new Extract();
-        extract.setId(UUID.randomUUID());
-        extract.setTransactioniId(xTransactionId);
-        documentExtractResponse.setExtract(extract);
-
-        return ResponseEntity.ok(documentExtractResponse);
+        return ResponseEntity.ok(extractRequestMapper.toDocumentExtractResponse(extractRequestCached.get()));
 
     }
 }

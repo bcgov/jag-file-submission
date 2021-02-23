@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingreviewerapi.extract;
+package ca.bc.gov.open.jag.efilingreviewerapi.error;
 
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenAuthenticationException;
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;

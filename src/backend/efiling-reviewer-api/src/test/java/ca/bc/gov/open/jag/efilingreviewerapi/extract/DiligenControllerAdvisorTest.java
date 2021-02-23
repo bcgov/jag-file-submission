@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingreviewerapi.extract;
 
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenAuthenticationException;
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
+import ca.bc.gov.open.jag.efilingreviewerapi.error.DiligenControllerAdvisor;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
