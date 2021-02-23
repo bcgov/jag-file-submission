@@ -74,7 +74,7 @@ export default function DocumentList({
                 <span
                   className="file-href"
                   role="button"
-                  data-testid="file-to-download"
+                  data-testid="btn-download-document"
                   tabIndex={0}
                   onClick={(e) => handleDownloadFileEvent(e, document)}
                   onKeyDown={(e) => handleDownloadFileEvent(e, document)}
