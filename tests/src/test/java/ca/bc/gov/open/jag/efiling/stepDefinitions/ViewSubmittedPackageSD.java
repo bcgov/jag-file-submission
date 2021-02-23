@@ -1,7 +1,6 @@
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
 import ca.bc.gov.open.jag.efiling.error.EfilingTestException;
-import ca.bc.gov.open.jag.efiling.helpers.DeleteFileHelper;
 import ca.bc.gov.open.jag.efiling.page.AuthenticationPage;
 import ca.bc.gov.open.jag.efiling.page.PackageReviewPage;
 import io.cucumber.java.en.And;
@@ -15,7 +14,6 @@ import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.*;
 import java.text.MessageFormat;
 import java.util.List;
 
@@ -82,9 +80,7 @@ public class ViewSubmittedPackageSD {
                 Assert.assertTrue(file.length() > 0);
                 logger.info("Files successfully downloaded");
 
-                Path pathToDelete = Paths.get(DOWNLOADED_FILES_PATH);
-                DeleteFileHelper.deleteDownloadedFile(pathToDelete);
-                logger.info("Files deleted after validation");
+                logger.info("Files deleted after validation: {}", file.delete());
 
             }
             Assert.assertEquals(0, file.length());
