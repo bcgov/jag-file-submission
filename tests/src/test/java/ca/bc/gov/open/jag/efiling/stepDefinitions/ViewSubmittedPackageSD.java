@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
+import ca.bc.gov.open.jag.efiling.error.EfilingTestException;
 import ca.bc.gov.open.jag.efiling.page.AuthenticationPage;
 import ca.bc.gov.open.jag.efiling.page.PackageReviewPage;
 import io.cucumber.java.en.And;
@@ -11,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.List;
 
@@ -21,6 +24,8 @@ public class ViewSubmittedPackageSD {
 
     private final AuthenticationPage authenticationPage;
     private final PackageReviewPage packageReviewPage;
+
+    private static final String DOWNLOADED_FILES_PATH = System.getProperty("user.dir") + File.separator + "downloadedFiles";
 
     private Logger logger = LoggerFactory.getLogger(ViewSubmittedPackageSD.class);
 
@@ -59,6 +64,27 @@ public class ViewSubmittedPackageSD {
     public void verifyDocumentDetails() {
         packageReviewPage.clickDocumentsTab();
         Assert.assertTrue(packageReviewPage.verifyDocumentsPaneIsDisplayed());
+    }
+
+    @And("document can be downloaded")
+    public void verifyDocumentDownload() throws IOException, InterruptedException {
+        packageReviewPage.clickToDownloadDocument();
+
+        File folder = new File(DOWNLOADED_FILES_PATH);
+        File[] listOfFiles = folder.listFiles();
+
+        if (listOfFiles == null) throw new EfilingTestException("Downloaded file is not present");
+        for (File file : listOfFiles) {
+            if (file.isFile()) {
+                logger.info("Downloaded file name is: {}", file.getName());
+                Assert.assertTrue(file.length() > 0);
+                logger.info("Files successfully downloaded");
+
+                logger.info("Files deleted after validation: {}", file.delete());
+
+            }
+            Assert.assertEquals(0, file.length());
+        }
     }
 
     @And("comments are available in Filing Comments tab")
