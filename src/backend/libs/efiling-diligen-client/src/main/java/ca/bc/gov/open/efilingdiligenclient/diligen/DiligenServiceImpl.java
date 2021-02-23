@@ -2,6 +2,7 @@ package ca.bc.gov.open.efilingdiligenclient.diligen;
 
 import ca.bc.gov.open.efilingdiligenclient.Keys;
 import ca.bc.gov.open.efilingdiligenclient.diligen.model.DiligenDocument;
+import ca.bc.gov.open.efilingdiligenclient.diligen.model.DiligenResponse;
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.ProjectsApi;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.ApiException;
@@ -65,34 +66,26 @@ public class DiligenServiceImpl implements DiligenService {
         HttpEntity<MultiValueMap<String, Object>> requestEntity
                 = new HttpEntity<>(body, headers);
 
-        ResponseEntity<String> response = restTemplate.postForEntity(constructUrl(), requestEntity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(constructUrl(MessageFormat.format(Keys.POST_DOCUMENT_PATH,diligenProperties.getProjectIdentifier())), requestEntity, String.class);
 
         if (!response.getStatusCode().is2xxSuccessful()) throw new DiligenDocumentException(response.getStatusCode().toString());
 
         logger.info("document posted to diligen");
 
-        projectsApi.getApiClient().setBearerToken(apiKey);
-
-        Filter filter = new Filter();
-        filter.fileName(file.getOriginalFilename());
-
         try {
-            InlineResponse2002 documentSearchResult = projectsApi.apiProjectsProjectIdDocumentsGet(diligenProperties.getProjectIdentifier(), null, null, filter);
-            Object diligenDocument = documentSearchResult.getData().getDocuments().stream()
-                    .findFirst()
-                    .orElseThrow(() -> new DiligenDocumentException("Document not found"));
+            ResponseEntity<String> searchResponse = restTemplate.exchange(constructUrl(MessageFormat.format(Keys.GET_DOCUMENT_PATH,diligenProperties.getProjectIdentifier(), file.getOriginalFilename())), HttpMethod.GET, requestEntity, String.class);
             objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-            DiligenDocument document = objectMapper.convertValue(diligenDocument, DiligenDocument.class);
-            return document.getFileId();
-        } catch (ApiException e) {
+            DiligenResponse diligenResponse = objectMapper.readValue(searchResponse.getBody(), DiligenResponse.class);
+            return diligenResponse.getData().getDocuments().get(0).getFileId();
+        } catch (Exception e) {
             throw new DiligenDocumentException(e.getMessage());
         }
 
     }
 
-    private String constructUrl() {
+    private String constructUrl(String path) {
 
-        return MessageFormat.format("{0}{1}", diligenProperties.getBasePath(), MessageFormat.format(Keys.POST_DOCUMENT_PATH,diligenProperties.getProjectIdentifier()));
+        return MessageFormat.format("{0}{1}", diligenProperties.getBasePath(), path);
 
     }
 

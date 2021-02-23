@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
@@ -144,8 +145,7 @@ public class PostDocumentTest {
 
         objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
-        Mockito.when(projectsApiMock.getApiClient()).thenReturn(new ApiClient());
-        Mockito.when(projectsApiMock.apiProjectsProjectIdDocumentsGet(any(), any(), any(), any())).thenReturn(objectMapper.readValue(DILIGEN_RESPONSE, InlineResponse2002.class));
+        Mockito.when(restTemplateMock.exchange(any(String.class), any(HttpMethod.class), any(HttpEntity.class), any(Class.class))).thenReturn(ResponseEntity.ok(DILIGEN_RESPONSE));
 
         BigDecimal result = sut.postDocument(DOCUMENT_TYPE, mockMultipartFile);
 
