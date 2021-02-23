@@ -2,9 +2,7 @@ package ca.bc.gov.open.jag.efilingreviewerapi.cache;
 
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractRequest;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -24,15 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-@EnableConfigurationProperties(CacheProperties.class)
+
 @EnableCaching
 public class CacheConfig {
 
-    private final CacheProperties cacheProperties;
-
-    public CacheConfig(CacheProperties cacheProperties) {
-        this.cacheProperties = cacheProperties;
-    }
     /**
      * Configure the JedisConnectionFactory
      * @param properties The redis properties

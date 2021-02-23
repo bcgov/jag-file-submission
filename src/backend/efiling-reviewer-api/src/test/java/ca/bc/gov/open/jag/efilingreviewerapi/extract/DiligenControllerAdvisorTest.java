@@ -2,7 +2,8 @@ package ca.bc.gov.open.jag.efilingreviewerapi.extract;
 
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenAuthenticationException;
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
-import ca.bc.gov.open.jag.efilingreviewerapi.error.DiligenControllerAdvisor;
+import ca.bc.gov.open.jag.efilingreviewerapi.api.model.ApiError;
+import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerCacheException;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -49,4 +50,17 @@ public class DiligenControllerAdvisorTest {
         Assertions.assertEquals("Not authorized", result.getBody());
 
     }
+
+    @Test
+    @DisplayName("500: Assert cache exception")
+    public void testAiReviewerCacheException() {
+
+        ResponseEntity<Object> result = sut.handleAiReviewerCacheException(new AiReviewerCacheException("Cache Error"), webRequestMock);
+
+        Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
+        Assertions.assertEquals("CACHE_UNAVAILABLE", ((ApiError)result.getBody()).getError());
+        Assertions.assertEquals("Cache Error", ((ApiError)result.getBody()).getMessage());
+
+    }
+
 }

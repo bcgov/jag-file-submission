@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingreviewerapi.extract.documentsApiDelegateImpl;
 
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentExtractResponse;
+import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerCacheException;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.DocumentsApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractMapperImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapper;
@@ -45,7 +46,8 @@ public class ExtractDocumentFormDataTest {
 
         MockitoAnnotations.openMocks(this);
 
-        Mockito.when(extractStore.put(Mockito.any(), Mockito.any())).thenReturn(Optional.of(ExtractRequestMockFactory.mock()));
+        Mockito.when(extractStore.put(Mockito.eq(BigDecimal.ONE), Mockito.any())).thenReturn(Optional.of(ExtractRequestMockFactory.mock()));
+        Mockito.when(extractStore.put(Mockito.eq(BigDecimal.TEN), Mockito.any())).thenReturn(Optional.empty());
 
         ExtractRequestMapper extractRequestMapper = new ExtractRequestMapperImpl(new ExtractMapperImpl());
         sut = new DocumentsApiDelegateImpl(diligenService, extractRequestMapper, extractStore);
@@ -72,6 +74,26 @@ public class ExtractDocumentFormDataTest {
         Assertions.assertEquals(ExtractRequestMockFactory.EXPECTED_DOCUMENT_SIZE, actual.getBody().getDocument().getSize());
         Assertions.assertEquals(ExtractRequestMockFactory.EXPECTED_EXTRACT_ID, actual.getBody().getExtract().getId());
         Assertions.assertEquals(ExtractRequestMockFactory.EXPECTED_EXTRACT_TRANSACTION_ID, actual.getBody().getExtract().getTransactionId());
+
+    }
+
+
+    @Test
+    @DisplayName("200: Assert something returned")
+    public void withUserHavingValidRequestShouldReturnCredfated() throws IOException {
+
+        Mockito.when(diligenService.postDocument(Mockito.any(), Mockito.any())).thenReturn(BigDecimal.TEN);
+
+        Path path = Paths.get("src/test/resources/" + CASE_1);
+
+        UUID transactionId = UUID.randomUUID();
+
+        MultipartFile multipartFile = new MockMultipartFile(CASE_1,
+                CASE_1, APPLICATION_PDF, Files.readAllBytes(path));
+
+        Assertions.assertThrows(AiReviewerCacheException.class,
+                () -> sut.extractDocumentFormData(transactionId, "TYPE", multipartFile)
+        );
 
     }
 }

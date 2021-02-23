@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingreviewerapi.extract;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.DocumentsApiDelegate;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentExtractResponse;
+import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerCacheException;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapper;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractRequest;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.store.ExtractStore;
@@ -40,6 +41,9 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
         BigDecimal response = diligenService.postDocument(xDocumentType, file);
 
         Optional<ExtractRequest> extractRequestCached = extractStore.put(response, extractRequest);
+
+        if(!extractRequestCached.isPresent())
+            throw new AiReviewerCacheException("Could not cache extract request");
 
         return ResponseEntity.ok(extractRequestMapper.toDocumentExtractResponse(extractRequestCached.get()));
 
