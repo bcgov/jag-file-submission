@@ -1,8 +1,10 @@
 package ca.bc.gov.open.efilingdiligenclient.diligen;
 
 import ca.bc.gov.open.efilingdiligenclient.Keys;
-import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenProperties;
+import ca.bc.gov.open.efilingdiligenclient.diligen.model.DiligenResponse;
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ByteArrayResource;
@@ -28,10 +30,13 @@ public class DiligenServiceImpl implements DiligenService {
 
     private final DiligenAuthService diligenAuthService;
 
-    public DiligenServiceImpl(RestTemplate restTemplate, DiligenProperties diligenProperties, DiligenAuthService diligenAuthService) {
+    private final ObjectMapper objectMapper;
+
+    public DiligenServiceImpl(RestTemplate restTemplate, DiligenProperties diligenProperties, DiligenAuthService diligenAuthService, ObjectMapper objectMapper) {
         this.restTemplate = restTemplate;
         this.diligenProperties = diligenProperties;
         this.diligenAuthService = diligenAuthService;
+        this.objectMapper = objectMapper;
     }
     @Override
     public BigDecimal postDocument(String documentType, MultipartFile file) {
@@ -52,19 +57,39 @@ public class DiligenServiceImpl implements DiligenService {
         HttpEntity<MultiValueMap<String, Object>> requestEntity
                 = new HttpEntity<>(body, headers);
 
-        ResponseEntity<String> response = restTemplate.postForEntity(constructUrl(), requestEntity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(constructUrl(MessageFormat.format(Keys.POST_DOCUMENT_PATH,diligenProperties.getProjectIdentifier())), requestEntity, String.class);
 
         if (!response.getStatusCode().is2xxSuccessful()) throw new DiligenDocumentException(response.getStatusCode().toString());
 
         logger.info("document posted to diligen");
 
-        return BigDecimal.ONE;
+        return getFileId(headers, file.getOriginalFilename());
 
     }
 
-    private String constructUrl() {
+    private BigDecimal getFileId(HttpHeaders headers, String fileName) {
+        try {
+            HttpEntity<String> entity = new HttpEntity<>(null, headers);
 
-        return MessageFormat.format("{0}{1}", diligenProperties.getBasePath(), MessageFormat.format(Keys.POST_DOCUMENT_PATH,diligenProperties.getProjectIdentifier()));
+            ResponseEntity<String> searchResponse = restTemplate.exchange(constructUrl(MessageFormat.format(Keys.GET_DOCUMENT_PATH,diligenProperties.getProjectIdentifier(), fileName)), HttpMethod.GET, entity, String.class);
+
+            if (!searchResponse.getStatusCode().is2xxSuccessful()) throw new DiligenDocumentException(searchResponse.getStatusCode().toString());
+
+            DiligenResponse diligenResponse = objectMapper.readValue(searchResponse.getBody(), DiligenResponse.class);
+
+            if (diligenResponse.getData().getDocuments().isEmpty()) throw new DiligenDocumentException("No documents of that name found");
+
+            return diligenResponse.getData().getDocuments().get(0).getFileId();
+
+        } catch (JsonProcessingException e) {
+            //Using the exceptions message can contain PII data. It is safer to just say it failed for now.
+            throw new DiligenDocumentException("Failed in object deserialization");
+        }
+    }
+
+    private String constructUrl(String path) {
+
+        return MessageFormat.format("{0}{1}", diligenProperties.getBasePath(), path);
 
     }
 
