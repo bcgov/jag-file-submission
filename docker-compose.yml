@@ -98,7 +98,7 @@ services:
       - fisu-net
 
   #############################################################################################
-  ###                           Efiling api backend app                                     ###
+  ###                           Efiling reviewer backend app                                ###
   #############################################################################################
   efiling-reviewer-api:
     container_name: efiling-reviewer-api
@@ -112,6 +112,12 @@ services:
       - "8090:8080"
     environment:
       - DILIGEN_BASE_PATH=$DILIGEN_BASE_API
+      - DILIGEN_USERNAME=$DILIGEN_USERNAME
+      - DILIGEN_PASSWORD=$DILIGEN_PASSWORD
+      - DILIGEN_PROJECT_IDENTIFIER=$DILIGEN_PROJECT_IDENTIFIER
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=admin
     networks:
       - fisu-net
 

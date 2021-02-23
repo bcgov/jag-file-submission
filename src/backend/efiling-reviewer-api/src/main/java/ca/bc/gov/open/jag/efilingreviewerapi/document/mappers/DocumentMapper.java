@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 public interface DocumentMapper {
 
     @Mapping(target = "type", source = "documentType")
-    @Mapping(target = "fileName", source = "multipartFile.name")
+    @Mapping(target = "fileName", source = "multipartFile.originalFilename")
     @Mapping(target = "size", source = "multipartFile.size")
     @Mapping(target = "contentType", source = "multipartFile.contentType")
     Document toDocument(String documentType, MultipartFile multipartFile);

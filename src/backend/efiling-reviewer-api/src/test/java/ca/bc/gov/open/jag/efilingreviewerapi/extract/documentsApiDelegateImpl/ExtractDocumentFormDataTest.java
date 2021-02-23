@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingreviewerapi.extract.documentsApiDelegateImpl;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentExtractResponse;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.DocumentsApiDelegateImpl;
+import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractMapperImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapper;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapperImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mocks.ExtractRequestMockFactory;
@@ -46,7 +47,7 @@ public class ExtractDocumentFormDataTest {
 
         Mockito.when(extractStore.put(Mockito.any(), Mockito.any())).thenReturn(Optional.of(ExtractRequestMockFactory.mock()));
 
-        ExtractRequestMapper extractRequestMapper = new ExtractRequestMapperImpl();
+        ExtractRequestMapper extractRequestMapper = new ExtractRequestMapperImpl(new ExtractMapperImpl());
         sut = new DocumentsApiDelegateImpl(diligenService, extractRequestMapper, extractStore);
 
     }
