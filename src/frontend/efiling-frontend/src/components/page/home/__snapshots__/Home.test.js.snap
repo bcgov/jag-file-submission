@@ -92,7 +92,7 @@ exports[`Home Component matches the snapshot when user cso account does not exis
     class="page"
   >
     <div
-      class="content col-md-8"
+      class="content col-md-8 ct-cso-account"
     >
       <div
         class="non-printable"
@@ -1491,7 +1491,7 @@ exports[`Home When user has authenticated with BCSC with no CSO account, retriev
     class="page"
   >
     <div
-      class="content col-md-8"
+      class="content col-md-8 ct-cso-account"
     >
       <div
         class="non-printable"
@@ -1590,7 +1590,21 @@ exports[`Home When user has authenticated with BCSC with no CSO account, retriev
                   <div
                     class="bcgov-table-value "
                   >
-                     Arthur C Clark
+                    Arthur C Clark
+                  </div>
+                </div>
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-fill-width"
+                  >
+                    Email Address:
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    username@example.com
                   </div>
                 </div>
               </div>
