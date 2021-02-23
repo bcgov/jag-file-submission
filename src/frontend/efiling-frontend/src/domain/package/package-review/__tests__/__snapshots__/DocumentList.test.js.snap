@@ -49,7 +49,7 @@ exports[`DocumentList Component Testsuite Matches the snapshot 1`] = `
         >
           <span
             class="file-href"
-            data-testid="file-to-download"
+            data-testid="btn-download-document"
             role="button"
             tabindex="0"
           >
