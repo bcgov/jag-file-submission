@@ -1,5 +1,7 @@
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
+import ca.bc.gov.open.jag.efiling.error.EfilingTestException;
+import ca.bc.gov.open.jag.efiling.helpers.DeleteFileHelper;
 import ca.bc.gov.open.jag.efiling.page.AuthenticationPage;
 import ca.bc.gov.open.jag.efiling.page.PackageReviewPage;
 import io.cucumber.java.en.And;
@@ -12,6 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.*;
 import java.text.MessageFormat;
 import java.util.List;
 
@@ -22,6 +26,8 @@ public class ViewSubmittedPackageSD {
 
     private final AuthenticationPage authenticationPage;
     private final PackageReviewPage packageReviewPage;
+
+    private static final String DOWNLOADED_FILES_PATH = System.getProperty("user.dir") + File.separator + "downloadedFiles";
 
     private Logger logger = LoggerFactory.getLogger(ViewSubmittedPackageSD.class);
 
@@ -63,10 +69,10 @@ public class ViewSubmittedPackageSD {
     }
 
     @And("document can be downloaded")
-    public void verifyDocumentDownload() throws InterruptedException {
+    public void verifyDocumentDownload() throws IOException {
         packageReviewPage.clickToDownloadDocument();
 
-        File folder = new File(System.getProperty("user.dir") + File.separator + "downloadedFiles");
+        File folder = new File(DOWNLOADED_FILES_PATH);
         File[] listOfFiles = folder.listFiles();
 
         if (listOfFiles == null) throw new EfilingTestException("Downloaded file is not present");
@@ -76,11 +82,13 @@ public class ViewSubmittedPackageSD {
                 Assert.assertTrue(file.length() > 0);
                 logger.info("Files successfully downloaded");
 
-                logger.info("Files deleted after validation: {}", file.delete());
-                Assert.assertEquals(0, file.length());
-            }
-        }
+                Path pathToDelete = Paths.get(DOWNLOADED_FILES_PATH);
+                DeleteFileHelper.deleteDownloadedFile(pathToDelete);
+                logger.info("Files deleted after validation");
 
+            }
+            Assert.assertEquals(0, file.length());
+        }
     }
 
     @And("comments are available in Filing Comments tab")
