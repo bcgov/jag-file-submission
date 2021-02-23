@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.io.File;
 import java.text.MessageFormat;
 import java.util.List;
 
@@ -59,6 +60,27 @@ public class ViewSubmittedPackageSD {
     public void verifyDocumentDetails() {
         packageReviewPage.clickDocumentsTab();
         Assert.assertTrue(packageReviewPage.verifyDocumentsPaneIsDisplayed());
+    }
+
+    @And("document can be downloaded")
+    public void verifyDocumentDownload() throws InterruptedException {
+        packageReviewPage.clickToDownloadDocument();
+
+        File folder = new File(System.getProperty("user.dir") + File.separator + "downloadedFiles");
+        File[] listOfFiles = folder.listFiles();
+
+        if (listOfFiles == null) throw new EfilingTestException("Downloaded file is not present");
+        for (File file : listOfFiles) {
+            if (file.isFile()) {
+                logger.info("Downloaded file name is: {}", file.getName());
+                Assert.assertTrue(file.length() > 0);
+                logger.info("Files successfully downloaded");
+
+                logger.info("Files deleted after validation: {}", file.delete());
+                Assert.assertEquals(0, file.length());
+            }
+        }
+
     }
 
     @And("comments are available in Filing Comments tab")
