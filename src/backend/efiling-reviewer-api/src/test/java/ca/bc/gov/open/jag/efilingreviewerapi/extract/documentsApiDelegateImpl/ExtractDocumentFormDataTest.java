@@ -48,6 +48,7 @@ public class ExtractDocumentFormDataTest {
     @Mock
     ClamAvService clamAvService;
 
+    @Mock
     private ExtractStore extractStore;
 
     @BeforeAll
