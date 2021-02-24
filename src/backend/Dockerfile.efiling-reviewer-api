@@ -5,7 +5,7 @@ FROM maven:3.6.3-jdk-8 as build
 
 ARG SERVICE_NAME=efiling-reviewer-api
 ARG SKIP_TESTS=false
-ARG MVN_PROFILES=default
+ARG MVN_PROFILE=default
 
 ENV SERVICE_NAME=${SERVICE_NAME}
 
@@ -22,7 +22,6 @@ RUN mvn -B clean install \
 #############################################################################################
 FROM openjdk:8-jdk-slim
 
-# ARG MVN_PROFILES
 ARG SERVICE_NAME=efiling-reviewer-api
 
 COPY --from=build ./${SERVICE_NAME}/target/${SERVICE_NAME}-*.jar /app/service.jar
