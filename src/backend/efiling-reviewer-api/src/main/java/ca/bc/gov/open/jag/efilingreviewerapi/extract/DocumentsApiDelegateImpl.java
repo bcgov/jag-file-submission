@@ -6,6 +6,7 @@ import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.DocumentsApiDelegate;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentExtractResponse;
+import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerVirusFoundException;
 import ca.bc.gov.open.jag.efilingreviewerapi.utils.TikaAnalysis;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerCacheException;
@@ -49,11 +50,11 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
 
         try {
             clamAvService.scan(new ByteArrayInputStream(file.getBytes()));
-            if (!TikaAnalysis.isPdf(file)) throw new DiligenDocumentException("Invalid file type");
+            if (!TikaAnalysis.isPdf(file)) throw new AiReviewerDocumentException("Invalid file type");
         } catch (VirusDetectedException e) {
             throw new AiReviewerVirusFoundException("Virus found in document");
         } catch (IOException e) {
-            throw new DiligenDocumentException("File is corrupt");
+            throw new AiReviewerDocumentException("File is corrupt");
         }
 
         ExtractRequest extractRequest = extractRequestMapper.toExtractRequest(xTransactionId, xDocumentType, file);

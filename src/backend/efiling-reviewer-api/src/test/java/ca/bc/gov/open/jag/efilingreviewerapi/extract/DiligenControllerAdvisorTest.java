@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingreviewerapi.extract;
 
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenAuthenticationException;
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
+import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerVirusFoundException;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.ApiError;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerCacheException;
@@ -38,6 +39,18 @@ public class DiligenControllerAdvisorTest {
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
         Assertions.assertEquals("Something went wrong", result.getBody());
+
+    }
+
+    @Test
+    @DisplayName("400: Assert bad request returned")
+    public void testAiReviewerDocumentException() {
+
+        ResponseEntity<Object> result = sut.handleAiReviewerDocumentException(new AiReviewerDocumentException("Issue with file"), webRequestMock);
+
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
+        Assertions.assertEquals("DOCUMENT_VALIDATION", ((ApiError)result.getBody()).getError());
+        Assertions.assertEquals("Issue with file", ((ApiError)result.getBody()).getMessage());
 
     }
 

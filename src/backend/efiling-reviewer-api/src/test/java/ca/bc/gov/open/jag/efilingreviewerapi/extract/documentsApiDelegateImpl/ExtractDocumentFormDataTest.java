@@ -5,6 +5,7 @@ import ca.bc.gov.open.clamav.starter.VirusDetectedException;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentExtractResponse;
+import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerVirusFoundException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerCacheException;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.DocumentsApiDelegateImpl;
@@ -123,7 +124,7 @@ public class ExtractDocumentFormDataTest {
         MultipartFile multipartFile = new MockMultipartFile(CASE_1,
                 CASE_1, APPLICATION_PDF, Files.readAllBytes(path));
 
-        Assertions.assertThrows(DiligenDocumentException.class,() -> sut.extractDocumentFormData(transactionId, "TYPE", multipartFile));
+        Assertions.assertThrows(AiReviewerDocumentException.class,() -> sut.extractDocumentFormData(transactionId, "TYPE", multipartFile));
 
     }
 
@@ -139,7 +140,7 @@ public class ExtractDocumentFormDataTest {
         MockMultipartFile mockMultipartFileException = Mockito.mock(MockMultipartFile.class);
         Mockito.when(mockMultipartFileException.getBytes()).thenThrow(IOException.class);
 
-        Assertions.assertThrows(DiligenDocumentException.class,() -> sut.extractDocumentFormData(transactionId, "TYPE", mockMultipartFileException));
+        Assertions.assertThrows(AiReviewerDocumentException.class,() -> sut.extractDocumentFormData(transactionId, "TYPE", mockMultipartFileException));
 
     }
 
