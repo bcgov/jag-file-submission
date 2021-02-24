@@ -72,6 +72,8 @@ public class DiligenServiceImpl implements DiligenService {
         BigDecimal result = BigDecimal.ZERO;
         int attempt = 0;
 
+        logger.debug("attempting to retrieve document Id");
+
         while(attempt < 5 && result.equals(BigDecimal.ZERO)) {
 
             try {
@@ -84,10 +86,8 @@ public class DiligenServiceImpl implements DiligenService {
 
                 DiligenResponse diligenResponse = objectMapper.readValue(searchResponse.getBody(), DiligenResponse.class);
 
-                if (diligenResponse.getData().getDocuments().isEmpty())
-                    throw new DiligenDocumentException("No documents of that name found");
-
-                result = diligenResponse.getData().getDocuments().get(0).getFileId();
+                if (!diligenResponse.getData().getDocuments().isEmpty())
+                    result = diligenResponse.getData().getDocuments().get(0).getFileId();
 
             } catch (JsonProcessingException e) {
                 //Using the exceptions message can contain PII data. It is safer to just say it failed for now.
