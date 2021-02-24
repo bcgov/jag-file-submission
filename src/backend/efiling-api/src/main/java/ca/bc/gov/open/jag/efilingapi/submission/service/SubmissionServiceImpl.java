@@ -105,7 +105,7 @@ public class SubmissionServiceImpl implements SubmissionService {
     private boolean isRushedSubmission(GenerateUrlRequest generateUrlRequest) {
 
         for (InitialDocument initialDocument : generateUrlRequest.getFilingPackage().getDocuments()) {
-            DocumentDetails documentDetails = documentStore.getDocumentDetails(generateUrlRequest.getFilingPackage().getCourt().getLevel(), generateUrlRequest.getFilingPackage().getCourt().getCourtClass(), initialDocument.getType().getValue());
+            DocumentDetails documentDetails = documentStore.getDocumentDetails(generateUrlRequest.getFilingPackage().getCourt().getLevel(), generateUrlRequest.getFilingPackage().getCourt().getCourtClass(), initialDocument.getType());
             if (documentDetails.isRushRequired()) return true;
         }
         return false;
@@ -212,13 +212,13 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private Document toDocument(String courtLevel, String courtClass,  InitialDocument initialDocument, SubmissionKey submissionKey) {
 
-        DocumentDetails details = documentStore.getDocumentDetails(courtLevel, courtClass, initialDocument.getType().getValue());
+        DocumentDetails details = documentStore.getDocumentDetails(courtLevel, courtClass, initialDocument.getType());
 
         return
                 Document.builder()
                         .description(details.getDescription())
                         .statutoryFeeAmount(details.getStatutoryFeeAmount())
-                        .type(initialDocument.getType().getValue())
+                        .type(initialDocument.getType())
                         .name(initialDocument.getName())
                         .serverFileName(MessageFormat.format("fh_{0}_{1}_{2}",submissionKey.getSubmissionId(), submissionKey.getTransactionId(), initialDocument.getName()))
                         .mimeType(FileUtils.guessContentTypeFromName(initialDocument.getName()))

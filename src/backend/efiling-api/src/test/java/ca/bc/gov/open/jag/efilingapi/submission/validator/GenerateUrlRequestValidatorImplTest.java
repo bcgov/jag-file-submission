@@ -131,7 +131,7 @@ public class GenerateUrlRequestValidatorImplTest {
 
         List<InitialDocument> documentList = new ArrayList<>();
         InitialDocument initialDocument = new InitialDocument();
-        initialDocument.setType(InitialDocument.TypeEnum.ACMW);
+        initialDocument.setType("ACMW");
         documentList.add(initialDocument);
         initialFilingPackage.setDocuments(documentList);
 
@@ -159,7 +159,7 @@ public class GenerateUrlRequestValidatorImplTest {
 
         List<InitialDocument> documentList = new ArrayList<>();
         InitialDocument initialDocument = new InitialDocument();
-        initialDocument.setType(InitialDocument.TypeEnum.ACMW);
+        initialDocument.setType("ACMW");
         documentList.add(initialDocument);
         initialFilingPackage.setDocuments(documentList);
 
@@ -398,7 +398,7 @@ public class GenerateUrlRequestValidatorImplTest {
 
         List<InitialDocument> documentList = new ArrayList<>();
         InitialDocument initialDocument = new InitialDocument();
-        initialDocument.setType(InitialDocument.TypeEnum.TAX);
+        initialDocument.setType("TAX");
         documentList.add(initialDocument);
         initialFilingPackage.setDocuments(documentList);
 

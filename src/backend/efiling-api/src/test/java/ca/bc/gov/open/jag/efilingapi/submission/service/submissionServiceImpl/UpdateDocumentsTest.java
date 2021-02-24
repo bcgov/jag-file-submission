@@ -81,7 +81,7 @@ public class UpdateDocumentsTest {
     public void withValidRequestShouldreturnSubmission() {
         UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest();
         InitialDocument initialDocument = new InitialDocument();
-        initialDocument.setType(InitialDocument.TypeEnum.AAB);
+        initialDocument.setType("AAB");
         initialDocument.setName("test.txt");
         updateDocumentRequest.addDocumentsItem(initialDocument);
 

@@ -121,7 +121,7 @@ public class GetPackageInformationTest {
         Assertions.assertEquals(TestHelpers.LOCATION, actual.getBody().getCourt().getLocation());
         Assertions.assertEquals(TestHelpers.PARTICIPATIONCLASS, actual.getBody().getCourt().getParticipatingClass());
         Assertions.assertEquals(TestHelpers.PROPERTYCLASS, actual.getBody().getCourt().getCourtClass());
-        Assertions.assertEquals(TestHelpers.TYPE.getValue(), actual.getBody().getDocuments().get(0).getType().getValue());
+        Assertions.assertEquals(TestHelpers.TYPE.getValue(), actual.getBody().getDocuments().get(0).getType());
         Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getBody().getDocuments().get(0).getDescription());
         Assertions.assertNull(actual.getBody().getDocuments().get(0).getIsAmendment());
         Assertions.assertNull(actual.getBody().getDocuments().get(0).getIsSupremeCourtScheduling());

@@ -23,13 +23,13 @@ public class GetValidPartyRoleRequestTest {
 
         List<InitialDocument> initialDocumentList = new ArrayList<>();
         InitialDocument document1 = new InitialDocument();
-        document1.setType(InitialDocument.TypeEnum.AAB);
+        document1.setType("AAB");
         initialDocumentList.add(document1);
         InitialDocument document2 = new InitialDocument();
-        document2.setType(InitialDocument.TypeEnum.ACMW);
+        document2.setType("ACMW");
         initialDocumentList.add(document2);
         InitialDocument document3 = new InitialDocument();
-        document3.setType(InitialDocument.TypeEnum.TAX);
+        document3.setType("TAX");
         initialDocumentList.add(document3);
 
         GetValidPartyRoleRequest actual = GetValidPartyRoleRequest.builder()
