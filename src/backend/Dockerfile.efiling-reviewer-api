@@ -6,8 +6,11 @@ FROM maven:3.6.3-jdk-8 as build
 ARG SERVICE_NAME=efiling-reviewer-api
 ARG SKIP_TESTS=false
 ARG MVN_PROFILE=default
+ARG STARTERS_V
+
 
 ENV SERVICE_NAME=${SERVICE_NAME}
+ENV STARTERS_V=${STARTERS_V}
 
 WORKDIR /libs
 
