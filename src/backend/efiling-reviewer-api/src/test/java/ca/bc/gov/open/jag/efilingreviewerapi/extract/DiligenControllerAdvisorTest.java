@@ -2,6 +2,8 @@ package ca.bc.gov.open.jag.efilingreviewerapi.extract;
 
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenAuthenticationException;
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
+import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentException;
+import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerVirusFoundException;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.ApiError;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerCacheException;
 import org.junit.jupiter.api.*;
@@ -41,6 +43,18 @@ public class DiligenControllerAdvisorTest {
     }
 
     @Test
+    @DisplayName("400: Assert bad request returned")
+    public void testAiReviewerDocumentException() {
+
+        ResponseEntity<Object> result = sut.handleAiReviewerDocumentException(new AiReviewerDocumentException("Issue with file"), webRequestMock);
+
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
+        Assertions.assertEquals("DOCUMENT_VALIDATION", ((ApiError)result.getBody()).getError());
+        Assertions.assertEquals("Issue with file", ((ApiError)result.getBody()).getMessage());
+
+    }
+
+    @Test
     @DisplayName("500: Assert internal server error returned")
     public void testDiligenAuthenticationException() {
 
@@ -52,6 +66,17 @@ public class DiligenControllerAdvisorTest {
     }
 
     @Test
+
+    @DisplayName("502: Assert bad gateway returned")
+    public void testDocumentExtractVirusFoundException() {
+
+        ResponseEntity<Object> result = sut.handleDocumentExtractVirusFoundException(new AiReviewerVirusFoundException("Virus found"), webRequestMock);
+
+        Assertions.assertEquals(HttpStatus.BAD_GATEWAY, result.getStatusCode());
+        Assertions.assertEquals("VIRUS_FOUND", ((ApiError)result.getBody()).getError());
+        Assertions.assertEquals("Virus found", ((ApiError)result.getBody()).getMessage());
+    }
+      
     @DisplayName("500: Assert cache exception")
     public void testAiReviewerCacheException() {
 

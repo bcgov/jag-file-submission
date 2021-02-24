@@ -1,7 +1,12 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.extract.documentsApiDelegateImpl;
 
+import ca.bc.gov.open.clamav.starter.ClamAvService;
+import ca.bc.gov.open.clamav.starter.VirusDetectedException;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
+import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentExtractResponse;
+import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentException;
+import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerVirusFoundException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerCacheException;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.DocumentsApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractMapperImpl;
@@ -26,6 +31,8 @@ import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.UUID;
 
+import static org.mockito.ArgumentMatchers.any;
+
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("DocumentsApiDelegateImpl test suite")
@@ -33,10 +40,14 @@ public class ExtractDocumentFormDataTest {
 
     private static final String APPLICATION_PDF = "application/pdf";
     private static final String CASE_1 = "test-document.pdf";
+    private static final String CASE_2 = "test.txt";
     private DocumentsApiDelegateImpl sut;
 
     @Mock
     DiligenService diligenService;
+
+    @Mock
+    ClamAvService clamAvService;
 
     @Mock
     private ExtractStore extractStore;
@@ -50,12 +61,12 @@ public class ExtractDocumentFormDataTest {
         Mockito.when(extractStore.put(Mockito.eq(BigDecimal.TEN), Mockito.any())).thenReturn(Optional.empty());
 
         ExtractRequestMapper extractRequestMapper = new ExtractRequestMapperImpl(new ExtractMapperImpl());
-        sut = new DocumentsApiDelegateImpl(diligenService, extractRequestMapper, extractStore);
+        sut = new DocumentsApiDelegateImpl(diligenService, extractRequestMapper, extractStore, clamAvService);
 
     }
     @Test
     @DisplayName("200: Assert something returned")
-    public void withUserHavingValidRequestShouldReturnCreated() throws IOException {
+    public void withUserHavingValidRequestShouldReturnCreated() throws IOException, VirusDetectedException {
 
         Mockito.when(diligenService.postDocument(Mockito.any(), Mockito.any())).thenReturn(BigDecimal.ONE);
 
@@ -65,6 +76,8 @@ public class ExtractDocumentFormDataTest {
 
         MultipartFile multipartFile = new MockMultipartFile(CASE_1,
                 CASE_1, APPLICATION_PDF, Files.readAllBytes(path));
+
+        Mockito.doNothing().when(clamAvService).scan(any());
 
         ResponseEntity<DocumentExtractResponse> actual = sut.extractDocumentFormData(transactionId, "TYPE", multipartFile);
 
@@ -96,4 +109,56 @@ public class ExtractDocumentFormDataTest {
         );
 
     }
+
+    @Test
+    @DisplayName("Error: non pdf throws exception")
+    public void withNonPdfFilesShouldReturnOk() throws IOException, VirusDetectedException {
+
+        Mockito.when(diligenService.postDocument(Mockito.any(), Mockito.any())).thenReturn(BigDecimal.ONE);
+        Mockito.doNothing().when(clamAvService).scan(any());
+
+        Path path = Paths.get("src/test/resources/" + CASE_2);
+
+        UUID transactionId = UUID.randomUUID();
+
+        MultipartFile multipartFile = new MockMultipartFile(CASE_1,
+                CASE_1, APPLICATION_PDF, Files.readAllBytes(path));
+
+        Assertions.assertThrows(AiReviewerDocumentException.class,() -> sut.extractDocumentFormData(transactionId, "TYPE", multipartFile));
+
+    }
+
+    @Test
+    @DisplayName("Error: IO exception")
+    public void withScanFailureThrowException() throws VirusDetectedException, IOException {
+
+        Mockito.doNothing().when(clamAvService).scan(any());
+        Path path = Paths.get("src/test/resources/" + CASE_1);
+
+        UUID transactionId = UUID.randomUUID();
+
+        MockMultipartFile mockMultipartFileException = Mockito.mock(MockMultipartFile.class);
+        Mockito.when(mockMultipartFileException.getBytes()).thenThrow(IOException.class);
+
+        Assertions.assertThrows(AiReviewerDocumentException.class,() -> sut.extractDocumentFormData(transactionId, "TYPE", mockMultipartFileException));
+
+    }
+
+
+    @Test
+    @DisplayName("Error: fails virus scan")
+    public void withScanFailureShouldReturnBadGateway() throws VirusDetectedException, IOException {
+
+        Mockito.doThrow(VirusDetectedException.class).when(clamAvService).scan(any());
+        Path path = Paths.get("src/test/resources/" + CASE_1);
+
+        UUID transactionId = UUID.randomUUID();
+
+        MultipartFile multipartFile = new MockMultipartFile(CASE_1,
+                CASE_1, APPLICATION_PDF, Files.readAllBytes(path));
+
+        Assertions.assertThrows(AiReviewerVirusFoundException.class,() -> sut.extractDocumentFormData(transactionId, "TYPE", multipartFile));
+
+    }
+
 }
