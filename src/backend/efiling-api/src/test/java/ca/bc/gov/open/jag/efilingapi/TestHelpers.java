@@ -152,10 +152,8 @@ public class TestHelpers {
 
     public static List<InitialDocument> createInitialDocumentsList() {
         InitialDocument initialDocument = new InitialDocument();
-        DocumentProperties documentProperties = new DocumentProperties();
-        documentProperties.setName("random.txt");
-        documentProperties.setType(DocumentProperties.TypeEnum.AAB);
-        initialDocument.setDocumentProperties(documentProperties);
+        initialDocument.setName("random.txt");
+        initialDocument.setType(InitialDocument.TypeEnum.AAB);
         return Arrays.asList(initialDocument);
     }
 

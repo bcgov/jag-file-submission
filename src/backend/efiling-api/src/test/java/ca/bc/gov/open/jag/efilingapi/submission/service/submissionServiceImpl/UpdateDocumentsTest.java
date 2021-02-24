@@ -81,10 +81,8 @@ public class UpdateDocumentsTest {
     public void withValidRequestShouldreturnSubmission() {
         UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest();
         InitialDocument initialDocument = new InitialDocument();
-        DocumentProperties documentProperties = new DocumentProperties();
-        documentProperties.setType(TestHelpers.TYPE);
-        documentProperties.setName("test.txt");
-        initialDocument.setDocumentProperties(documentProperties);
+        initialDocument.setType(InitialDocument.TypeEnum.AAB);
+        initialDocument.setName("test.txt");
         updateDocumentRequest.addDocumentsItem(initialDocument);
 
         Submission submission = TestHelpers.buildSubmission();

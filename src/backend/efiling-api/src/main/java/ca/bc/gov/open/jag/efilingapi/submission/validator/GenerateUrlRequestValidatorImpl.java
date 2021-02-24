@@ -149,7 +149,7 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
 
         return initialPackage.getDocuments()
                 .stream()
-                .map(x -> x.getDocumentProperties().getType().getValue())
+                .map(x -> x.getType().getValue())
                 .filter(x -> !validDocumentTypes.contains(x))
                 .map(invalidType -> MessageFormat.format("Document type [{0}] is invalid.", invalidType))
                 .collect(Collectors.toList());
