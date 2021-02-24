@@ -68,23 +68,46 @@ public class DiligenServiceImpl implements DiligenService {
     }
 
     private BigDecimal getFileId(HttpHeaders headers, String fileName) {
-        try {
-            HttpEntity<String> entity = new HttpEntity<>(null, headers);
 
-            ResponseEntity<String> searchResponse = restTemplate.exchange(constructUrl(MessageFormat.format(Keys.GET_DOCUMENT_PATH,diligenProperties.getProjectIdentifier(), fileName)), HttpMethod.GET, entity, String.class);
+        BigDecimal result = BigDecimal.ZERO;
+        int attempt = 0;
 
-            if (!searchResponse.getStatusCode().is2xxSuccessful()) throw new DiligenDocumentException(searchResponse.getStatusCode().toString());
+        while(attempt < 5 && result.equals(BigDecimal.ZERO)) {
 
-            DiligenResponse diligenResponse = objectMapper.readValue(searchResponse.getBody(), DiligenResponse.class);
+            try {
+                HttpEntity<String> entity = new HttpEntity<>(null, headers);
 
-            if (diligenResponse.getData().getDocuments().isEmpty()) throw new DiligenDocumentException("No documents of that name found");
+                ResponseEntity<String> searchResponse = restTemplate.exchange(constructUrl(MessageFormat.format(Keys.GET_DOCUMENT_PATH, diligenProperties.getProjectIdentifier(), fileName)), HttpMethod.GET, entity, String.class);
 
-            return diligenResponse.getData().getDocuments().get(0).getFileId();
+                if (!searchResponse.getStatusCode().is2xxSuccessful())
+                    throw new DiligenDocumentException(searchResponse.getStatusCode().toString());
 
-        } catch (JsonProcessingException e) {
-            //Using the exceptions message can contain PII data. It is safer to just say it failed for now.
-            throw new DiligenDocumentException("Failed in object deserialization");
+                DiligenResponse diligenResponse = objectMapper.readValue(searchResponse.getBody(), DiligenResponse.class);
+
+                if (diligenResponse.getData().getDocuments().isEmpty())
+                    throw new DiligenDocumentException("No documents of that name found");
+
+                result = diligenResponse.getData().getDocuments().get(0).getFileId();
+
+            } catch (JsonProcessingException e) {
+                //Using the exceptions message can contain PII data. It is safer to just say it failed for now.
+                throw new DiligenDocumentException("Failed in object deserialization");
+            }
+
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            attempt++;
+
         }
+
+        if(result.equals(BigDecimal.ZERO)) throw new DiligenDocumentException("Failed getting the document id after 5 attempts");
+
+        return result;
+        
     }
 
     private String constructUrl(String path) {
