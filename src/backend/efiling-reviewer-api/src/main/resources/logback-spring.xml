@@ -22,9 +22,9 @@
             <appender name="splunk" class="com.splunk.logging.HttpEventCollectorLogbackAppender">
                 <url>${SPLUNK_URL}</url>
                 <token>${SPLUNK_TOKEN}</token>
-                <source>${SPLUNK_SOURCE}</source>
+                <source>efiling_reviewer-api</source>
                 <host>${HOSTNAME}</host>
-                <sourcetype>application-logs</sourcetype>
+                <sourcetype>app-logs</sourcetype>
                 <middleware>HttpEventCollectorUnitTestMiddleware</middleware>
                 <disableCertificateValidation>true</disableCertificateValidation>
                 <batch_size_count>1</batch_size_count>
@@ -32,19 +32,6 @@
                     <pattern>%msg</pattern>
                 </layout>
             </appender>
-            <appender name="http" class="com.splunk.logging.HttpEventCollectorLogbackAppender">
-                <url>${SPLUNK_URL}</url>
-                <token>${SPLUNK_TOKEN}</token>
-                <source>${SPLUNK_SOURCE}</source>
-                <sourcetype>efiling_reviewer-access-logs</sourcetype>
-                <middleware>HttpEventCollectorUnitTestMiddleware</middleware>
-                <disableCertificateValidation>true</disableCertificateValidation>
-                <batch_size_count>1</batch_size_count>
-                <layout class="ch.qos.logback.access.PatternLayout">
-                    <pattern>combined</pattern>
-                </layout>
-            </appender>
-
         </then>
     </if>
 
