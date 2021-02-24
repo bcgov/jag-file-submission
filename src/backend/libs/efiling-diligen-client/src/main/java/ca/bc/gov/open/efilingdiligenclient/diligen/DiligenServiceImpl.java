@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
+import java.util.Optional;
 
 @Service
 public class DiligenServiceImpl implements DiligenService {
@@ -63,55 +64,65 @@ public class DiligenServiceImpl implements DiligenService {
 
         logger.info("document posted to diligen");
 
-        return getFileId(headers, file.getOriginalFilename());
+        Optional<BigDecimal> fileId = tryGetFileId(headers, file.getOriginalFilename(), 5);
+
+        if(!fileId.isPresent()) {
+            throw new DiligenDocumentException("Failed getting the document id after 5 attempts");
+        }
+
+        return fileId.get();
 
     }
 
-    private BigDecimal getFileId(HttpHeaders headers, String fileName) {
+    private Optional<BigDecimal> tryGetFileId(HttpHeaders headers, String fileName, int maxAttempt) {
 
-        BigDecimal result = BigDecimal.ZERO;
+        // BigDecimal result = BigDecimal.ZERO;
         int attempt = 0;
 
         logger.debug("attempting to retrieve document Id");
 
-        while(attempt < 5 && result.equals(BigDecimal.ZERO)) {
+        while(attempt < maxAttempt) {
 
-            try {
-                HttpEntity<String> entity = new HttpEntity<>(null, headers);
-
-                ResponseEntity<String> searchResponse = restTemplate.exchange(constructUrl(MessageFormat.format(Keys.GET_DOCUMENT_PATH, diligenProperties.getProjectIdentifier(), fileName)), HttpMethod.GET, entity, String.class);
-
-                if (!searchResponse.getStatusCode().is2xxSuccessful())
-                    throw new DiligenDocumentException(searchResponse.getStatusCode().toString());
-
-                DiligenResponse diligenResponse = objectMapper.readValue(searchResponse.getBody(), DiligenResponse.class);
-
-                if (!diligenResponse.getData().getDocuments().isEmpty()) {
-                    result = diligenResponse.getData().getDocuments().get(0).getFileId();
-                    logger.debug("successfully retrieved document id {}", result);
-                } else {
-                    logger.debug("attempt {} to retrieve document id failed, waiting 2s", attempt);
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            } catch (JsonProcessingException e) {
-                //Using the exceptions message can contain PII data. It is safer to just say it failed for now.
-                throw new DiligenDocumentException("Failed in object deserialization");
-            }
-
-
-
+            Optional<BigDecimal> result = getFileId(headers, fileName);
+            if(result.isPresent()) return result;
             attempt++;
 
         }
 
-        if(result.equals(BigDecimal.ZERO)) throw new DiligenDocumentException("Failed getting the document id after 5 attempts");
-
-        return result;
+        return Optional.empty();
         
+    }
+
+    private Optional<BigDecimal> getFileId(HttpHeaders headers, String fileName) {
+
+        try {
+            HttpEntity<String> entity = new HttpEntity<>(null, headers);
+
+            ResponseEntity<String> searchResponse = restTemplate.exchange(constructUrl(MessageFormat.format(Keys.GET_DOCUMENT_PATH, diligenProperties.getProjectIdentifier(), fileName)), HttpMethod.GET, entity, String.class);
+
+            if (!searchResponse.getStatusCode().is2xxSuccessful())
+                throw new DiligenDocumentException(searchResponse.getStatusCode().toString());
+
+            DiligenResponse diligenResponse = objectMapper.readValue(searchResponse.getBody(), DiligenResponse.class);
+
+            if (!diligenResponse.getData().getDocuments().isEmpty()) {
+                BigDecimal result = diligenResponse.getData().getDocuments().get(0).getFileId();
+                logger.debug("successfully retrieved document id {}", result);
+                return Optional.of(result);
+            } else {
+                logger.debug("attempt {} to retrieve document id failed, waiting 2s");
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (JsonProcessingException e) {
+            //Using the exceptions message can contain PII data. It is safer to just say it failed for now.
+            throw new DiligenDocumentException("Failed in object deserialization");
+        }
+
+        return Optional.empty();
     }
 
     private String constructUrl(String path) {
