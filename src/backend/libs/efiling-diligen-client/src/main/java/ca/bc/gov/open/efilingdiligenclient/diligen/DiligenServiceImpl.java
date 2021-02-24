@@ -86,19 +86,23 @@ public class DiligenServiceImpl implements DiligenService {
 
                 DiligenResponse diligenResponse = objectMapper.readValue(searchResponse.getBody(), DiligenResponse.class);
 
-                if (!diligenResponse.getData().getDocuments().isEmpty())
+                if (!diligenResponse.getData().getDocuments().isEmpty()) {
                     result = diligenResponse.getData().getDocuments().get(0).getFileId();
-
+                    logger.debug("successfully retrieved document id {}", result);
+                } else {
+                    logger.debug("attempt {} to retrieve document id failed, waiting 2s", attempt);
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             } catch (JsonProcessingException e) {
                 //Using the exceptions message can contain PII data. It is safer to just say it failed for now.
                 throw new DiligenDocumentException("Failed in object deserialization");
             }
 
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+
 
             attempt++;
 
