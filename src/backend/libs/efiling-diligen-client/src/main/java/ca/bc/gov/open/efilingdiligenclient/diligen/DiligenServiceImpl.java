@@ -76,7 +76,7 @@ public class DiligenServiceImpl implements DiligenService {
 
     private Optional<BigDecimal> tryGetFileId(HttpHeaders headers, String fileName, int maxAttempt) {
 
-        // BigDecimal result = BigDecimal.ZERO;
+        
         int attempt = 0;
 
         logger.debug("attempting to retrieve document Id");
