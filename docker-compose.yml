@@ -108,6 +108,7 @@ services:
       dockerfile: Dockerfile.efiling-reviewer-api
       args:
         - SKIP_TESTS=true
+        - MVN_PROFILE=${MVN_PROFILE:-efiling-reviewer}
     ports:
       - "8090:8080"
     environment:
