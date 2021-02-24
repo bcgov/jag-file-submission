@@ -9,6 +9,17 @@ ARG MVN_PROFILE=default
 
 ENV SERVICE_NAME=${SERVICE_NAME}
 
+WORKDIR /libs
+
+RUN git clone https://github.com/bcgov/spring-boot-starters.git
+
+WORKDIR /libs/spring-boot-starters
+
+RUN git checkout $STARTERS_V  && \
+    mvn install -P all -f src/pom.xml
+
+WORKDIR /
+
 COPY . .
 
 RUN mvn -B clean install \
