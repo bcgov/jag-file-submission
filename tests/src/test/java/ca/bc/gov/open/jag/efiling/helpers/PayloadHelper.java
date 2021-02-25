@@ -21,10 +21,8 @@ public class PayloadHelper {
                 "        },\n" +
                 "        \"documents\": [\n" +
                 "            {\n" +
-                "              \"documentProperties\": {\n" +
-                "                   \"name\": \"" + documentName + "\",\n" +
-                "                   \"type\": \"AFF\"\n" +
-                "                },\n" +
+                "                \"name\": \"" + documentName + "\",\n" +
+                "                \"type\": \"AFF\",\n" +
                 "                \"statutoryFeeAmount\": 0,\n" +
                 "                \"data\": {},\n" +
                 "                \"md5\": \"string\"\n" +
