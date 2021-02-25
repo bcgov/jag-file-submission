@@ -2,7 +2,6 @@ package ca.bc.gov.open.jag.efilingapi.submission.service.submissionServiceImpl;
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
-import ca.bc.gov.open.jag.efilingapi.api.model.InitialDocument;
 import ca.bc.gov.open.jag.efilingapi.api.model.UpdateDocumentRequest;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
@@ -80,7 +79,7 @@ public class UpdateDocumentsTest {
     @DisplayName("OK: with valid request should return submission")
     public void withValidRequestShouldreturnSubmission() {
         UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest();
-        InitialDocument initialDocument = new InitialDocument();
+        DocumentProperties initialDocument = new DocumentProperties();
         initialDocument.setType("AAB");
         initialDocument.setName("test.txt");
         updateDocumentRequest.addDocumentsItem(initialDocument);
