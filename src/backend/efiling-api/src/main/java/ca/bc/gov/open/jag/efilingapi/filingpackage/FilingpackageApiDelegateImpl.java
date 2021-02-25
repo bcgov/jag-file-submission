@@ -87,7 +87,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
         Optional<Resource> result = filingPackageService.getPaymentReceipt(packageIdentifier);
 
         if(!result.isPresent()) return new ResponseEntity(
-                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_NOT_FOUND).create(), HttpStatus.NOT_FOUND);
+                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.PAYMENT_RECEIPT_NOT_FOUND).create(), HttpStatus.NOT_FOUND);
 
         HttpHeaders header = new HttpHeaders();
         header.add(HttpHeaders.CONTENT_DISPOSITION, MessageFormat.format("attachment; filename={0}", Keys.EFILING_PAYMENT_RECEIPT_FILENAME));
