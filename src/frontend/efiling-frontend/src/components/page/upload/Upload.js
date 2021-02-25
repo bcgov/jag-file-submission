@@ -63,7 +63,7 @@ const removeUploadedFile = (
   setContinueBtnEnabled
 ) => {
   filesToUpload.documents = filesToUpload.documents.filter(
-    (doc) => doc.documentProperties.name !== fileName
+    (doc) => doc.name !== fileName
   );
 
   setAcceptedFiles(acceptedFiles.filter((f) => f.name !== fileName));
@@ -119,7 +119,7 @@ const identifySelectedFile = (fileName) => {
   let file;
 
   filesToUpload.documents.forEach((f) => {
-    if (f.documentProperties.name === fileName) {
+    if (f.name === fileName) {
       file = f;
     }
   });
@@ -165,10 +165,8 @@ const generateDropdownJSX = (items, fileName, setContinueBtnEnabled) => (
         onSelect={(val) => {
           filesToUpload.documents.forEach((f) => {
             const file = f;
-            if (file.documentProperties.name === fileName) {
-              file.documentProperties.type = items.find(
-                (item) => item.description === val
-              ).type;
+            if (file.name === fileName) {
+              file.type = items.find((item) => item.description === val).type;
             }
           });
 
@@ -187,14 +185,8 @@ const generateTable = (
   setAcceptedFiles,
   setContinueBtnEnabled
 ) => {
-  if (
-    !filesToUpload.documents.some(
-      (f) => f.documentProperties.name === file.name
-    )
-  ) {
-    filesToUpload.documents.push({
-      documentProperties: { name: file.name, type: "AFF" },
-    });
+  if (!filesToUpload.documents.some((f) => f.name === file.name)) {
+    filesToUpload.documents.push({ name: file.name, type: "AFF" });
     setContinueBtnEnabled(checkValidityOfUploadedFiles());
   }
 

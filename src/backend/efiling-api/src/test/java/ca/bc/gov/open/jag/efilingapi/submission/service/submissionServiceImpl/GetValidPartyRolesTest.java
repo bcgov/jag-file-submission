@@ -74,14 +74,10 @@ public class GetValidPartyRolesTest {
 
         List<InitialDocument> documents = new ArrayList<>();
         InitialDocument document1 = new InitialDocument();
-        DocumentProperties documentProperties1 = new DocumentProperties();
-        documentProperties1.setType(DocumentProperties.TypeEnum.POR);
-        document1.setDocumentProperties(documentProperties1);
+        document1.setType("POR");
         documents.add(document1);
         InitialDocument document2 = new InitialDocument();
-        DocumentProperties documentProperties2 = new DocumentProperties();
-        documentProperties2.setType(DocumentProperties.TypeEnum.ACMW);
-        document2.setDocumentProperties(documentProperties2);
+        document2.setType("ACMW");
         documents.add(document2);
         GetValidPartyRoleRequest getValidPartyRoleRequest = GetValidPartyRoleRequest
                 .builder()
