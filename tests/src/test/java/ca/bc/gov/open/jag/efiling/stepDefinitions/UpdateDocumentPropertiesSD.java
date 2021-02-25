@@ -85,7 +85,7 @@ public class UpdateDocumentPropertiesSD {
         Assert.assertEquals(200, actualUpdatedDocumentPropertiesResponse.getStatusCode());
         Assert.assertEquals("application/json", actualUpdatedDocumentPropertiesResponse.getContentType());
 
-        Assert.assertEquals("AAB", additionalDocumentUploadJsonPath.get("documents.documentProperties.type[1]"));
+        Assert.assertEquals("AAB", additionalDocumentUploadJsonPath.get("documents.type[1]"));
         Assert.assertTrue( additionalDocumentUploadJsonPath.get("documents.isAmendment[1]"));
         Assert.assertTrue( additionalDocumentUploadJsonPath.get("documents.isSupremeCourtScheduling[1]"));
 
