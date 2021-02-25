@@ -70,6 +70,11 @@ public class FilingPackageConfigTest {
                 }
 
                 @Override
+                public Optional<byte[]> getPaymentReceipt(BigDecimal packageNumber) {
+                    return Optional.empty();
+                }
+
+                @Override
                 public Optional<byte[]> getSubmittedDocument(BigDecimal documentIdentifier) {
                     return Optional.empty();
                 }

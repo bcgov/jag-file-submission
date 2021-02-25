@@ -112,6 +112,11 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
     }
 
     @Override
+    public Optional<byte[]> getPaymentReceipt(BigDecimal packageNumber) {
+        return Optional.empty();
+    }
+
+    @Override
     public Optional<byte[]> getSubmittedDocument(BigDecimal documentIdentifier) {
 
         String url = "";
