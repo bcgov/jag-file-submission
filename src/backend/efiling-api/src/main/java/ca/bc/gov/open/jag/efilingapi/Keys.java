@@ -24,4 +24,6 @@ public class Keys {
 
     public static final String EFILING_USER_ROLE = "efiling-user";
 
+    public static final String EFILING_PAYMENT_RECEIPT_FILENAME = "payment-receipt.pdf";
+
 }

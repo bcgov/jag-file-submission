@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.filingpackage;
 
+import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.api.FilingpackagesApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
@@ -85,8 +86,15 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
 
         Optional<Resource> result = filingPackageService.getPaymentReceipt(packageIdentifier);
 
-        return result.map(bytes -> ResponseEntity.ok(result.get())).orElseGet(() -> new ResponseEntity(
-                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.PAYMENT_RECEIPT_NOT_FOUND).create(), HttpStatus.NOT_FOUND));
+        if(!result.isPresent()) return new ResponseEntity(
+                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_NOT_FOUND).create(), HttpStatus.NOT_FOUND);
+
+        HttpHeaders header = new HttpHeaders();
+        header.add(HttpHeaders.CONTENT_DISPOSITION, MessageFormat.format("attachment; filename={0}", Keys.EFILING_PAYMENT_RECEIPT_FILENAME));
+
+        return ResponseEntity.ok()
+                .headers(header)
+                .body(result.get());
 
     }
 
