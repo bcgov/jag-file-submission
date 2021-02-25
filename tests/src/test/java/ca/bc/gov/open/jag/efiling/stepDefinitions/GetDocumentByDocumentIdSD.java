@@ -12,6 +12,8 @@ import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.charset.StandardCharsets;
+
 public class GetDocumentByDocumentIdSD {
 
     private OauthService oauthService;
@@ -39,7 +41,7 @@ public class GetDocumentByDocumentIdSD {
         actualDocumentResponse = filingPackageService.getDocumentById(actualUserIdentity.getAccessToken(), 1, 1);
 
         logger.info("Api response status code: {}", actualDocumentResponse.getStatusCode());
-        logger.info("Api response: {}", actualDocumentResponse.asString());
+        logger.info("Api response: {}", actualDocumentResponse.asString().getBytes(StandardCharsets.UTF_8).length);
     }
 
     @Then("valid document is returned")
