@@ -1,6 +1,5 @@
 package ca.bc.gov.open.jag.efilingapi;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingapi.api.model.InitialDocument;
 import ca.bc.gov.open.jag.efilingapi.api.model.InitialPackage;
 import ca.bc.gov.open.jag.efilingapi.api.model.NavigationUrls;
@@ -66,7 +65,7 @@ public class TestHelpers {
     public static final String DOCUMENT_ID_TWO = "2";
     public static final BigDecimal DOCUMENT_ID_TWO_BD = new BigDecimal(2);
 
-    public static final DocumentProperties.TypeEnum TYPE = DocumentProperties.TypeEnum.AAB;
+    public static final String TYPE = "AAB";
     public static final String PARTY_TYPE_DESC = "PARTY_TYPE_DESC";
     public static final String ROLE_TYPE_DESC = "ROLE_TYPE_DESC";
     public static final String TRANSACTION_DESC = "TRANSACTION_DESC";
@@ -152,15 +151,13 @@ public class TestHelpers {
 
     public static List<InitialDocument> createInitialDocumentsList() {
         InitialDocument initialDocument = new InitialDocument();
-        DocumentProperties documentProperties = new DocumentProperties();
-        documentProperties.setName("random.txt");
-        documentProperties.setType(DocumentProperties.TypeEnum.AAB);
-        initialDocument.setDocumentProperties(documentProperties);
+        initialDocument.setName("random.txt");
+        initialDocument.setType("AAB");
         return Arrays.asList(initialDocument);
     }
 
     public static List<DocumentType> createValidDocumentTypesList() {
-        DocumentType documentType = new DocumentType(DESCRIPTION, TYPE.getValue(), false);
+        DocumentType documentType = new DocumentType(DESCRIPTION, TYPE, false);
         return Arrays.asList(documentType);
     }
 
@@ -188,7 +185,7 @@ public class TestHelpers {
                 .description(DESCRIPTION)
                 .statutoryFeeAmount(BigDecimal.TEN)
                 .name("random.txt")
-                .type(TYPE.getValue())
+                .type(TYPE)
                 .subType(SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD)
                 .mimeType("application/txt")
                 .isSupremeCourtScheduling(true)
@@ -288,7 +285,7 @@ public class TestHelpers {
         ReviewDocument reviewDocumentOne = new ReviewDocument();
         reviewDocumentOne.setDocumentId(DOCUMENT_ID_ONE);
         reviewDocumentOne.setFileName(NAME);
-        reviewDocumentOne.setDocumentTypeCd(DocumentProperties.TypeEnum.AAB.getValue());
+        reviewDocumentOne.setDocumentTypeCd("AAB");
         reviewDocumentOne.setDocumentType(DESCRIPTION);
         reviewDocumentOne.setStatus(STATUS);
         reviewDocumentOne.setStatusCode(STATUS_CODE);
@@ -299,7 +296,7 @@ public class TestHelpers {
         ReviewDocument reviewDocumentTwo = new ReviewDocument();
         reviewDocumentTwo.setDocumentId(DOCUMENT_ID_TWO);
         reviewDocumentTwo.setFileName(NAME);
-        reviewDocumentTwo.setDocumentTypeCd(DocumentProperties.TypeEnum.AAB.getValue());
+        reviewDocumentTwo.setDocumentTypeCd("AAB");
         reviewDocumentTwo.setDocumentType(DESCRIPTION);
         reviewDocumentTwo.setStatus(STATUS);
         reviewDocumentTwo.setStatusCode(STATUS_CODE);

@@ -161,6 +161,8 @@ jobs:
       - name: Running Integration Tests
         env:
           DOCKERIZE_VERSION: v0.6.1
+        continue-on-error: true
+        id: cucumber-test
         run: |
 
           # Maven requires chrome driver.
@@ -186,3 +188,7 @@ jobs:
         with:
           name: cucumber-json-report
           path: ./tests/target/cucumber-reports/CucumberTestReport.json
+
+      - name: Set action status
+        if: steps.cucumber-test.outcome != 'success'
+        run: exit 1

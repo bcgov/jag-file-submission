@@ -4,7 +4,6 @@ import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
-import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.api.model.SubmissionFilingPackage;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
@@ -12,12 +11,12 @@ import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMapper;
-import ca.bc.gov.open.jag.efilingapi.submission.validator.GenerateUrlRequestValidator;
-import ca.bc.gov.open.jag.efilingcommons.model.Document;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
+import ca.bc.gov.open.jag.efilingapi.submission.validator.GenerateUrlRequestValidator;
+import ca.bc.gov.open.jag.efilingcommons.model.Document;
 import com.google.gson.JsonObject;
 import org.junit.jupiter.api.*;
 import org.keycloak.KeycloakPrincipal;
@@ -121,7 +120,7 @@ public class GetPackageInformationTest {
         Assertions.assertEquals(TestHelpers.LOCATION, actual.getBody().getCourt().getLocation());
         Assertions.assertEquals(TestHelpers.PARTICIPATIONCLASS, actual.getBody().getCourt().getParticipatingClass());
         Assertions.assertEquals(TestHelpers.PROPERTYCLASS, actual.getBody().getCourt().getCourtClass());
-        Assertions.assertEquals(TestHelpers.TYPE, actual.getBody().getDocuments().get(0).getDocumentProperties().getType());
+        Assertions.assertEquals(TestHelpers.TYPE, actual.getBody().getDocuments().get(0).getType());
         Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getBody().getDocuments().get(0).getDescription());
         Assertions.assertNull(actual.getBody().getDocuments().get(0).getIsAmendment());
         Assertions.assertNull(actual.getBody().getDocuments().get(0).getIsSupremeCourtScheduling());
@@ -157,7 +156,7 @@ public class GetPackageInformationTest {
                 .description(TestHelpers.DESCRIPTION)
                 .statutoryFeeAmount(BigDecimal.TEN)
                 .name("random.txt")
-                .type(TestHelpers.TYPE.getValue())
+                .type(TestHelpers.TYPE)
                 .subType(SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD)
                 .mimeType("application/txt")
                 .isSupremeCourtScheduling(null)
