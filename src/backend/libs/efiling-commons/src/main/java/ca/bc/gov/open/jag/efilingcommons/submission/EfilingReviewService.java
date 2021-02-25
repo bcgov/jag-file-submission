@@ -16,6 +16,8 @@ public interface EfilingReviewService {
 
     Optional<byte[]> getSubmissionSheet(BigDecimal packageNumber);
 
+    Optional<byte[]> getPaymentReceipt(BigDecimal packageNumber);
+
     Optional<byte[]> getSubmittedDocument(BigDecimal documentIdentifier);
 
     void deleteSubmittedDocument(DeleteSubmissionDocumentRequest deleteSubmissionDocumentRequest);

@@ -121,6 +121,16 @@ public class EfilingReviewServiceDemoImplTest {
     }
 
     @Test
+    @DisplayName("OK: demo returns a receipt byte array")
+    public void withRequestReturnReceiptByteArray() {
+
+        Optional<byte[]> result = sut.getSubmissionSheet(BigDecimal.ONE);
+
+        Assertions.assertTrue(result.isPresent());
+
+    }
+
+    @Test
     @DisplayName("OK: demo returns a document byte array")
     public void withDocumentRequestReturnByteArray() {
 
