@@ -10,6 +10,8 @@ import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import ca.bc.gov.open.jag.efilingapi.core.security.SecurityUtils;
 
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportRequest;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportsTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -61,15 +63,10 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
 
         logger.info("get submission sheet request received");
 
-        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
-
-        if(!universalId.isPresent()) return new ResponseEntity(
-                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
-
-        Optional<Resource> result = filingPackageService.getSubmissionSheet(packageIdentifier);
-
-        return result.<ResponseEntity<Resource>>map(bytes -> ResponseEntity.ok(result.get())).orElseGet(() -> new ResponseEntity(
-                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.SUBMISSION_SHEET_NOT_FOUND).create(), HttpStatus.NOT_FOUND));
+        return getReport(ReportRequest.builder()
+                .report(ReportsTypes.SUBMISSION_SHEET)
+                .packageId(packageIdentifier)
+                .fileName(Keys.EFILING_SUBMISSION_SHEET_FILENAME).create());
 
     }
 
@@ -79,18 +76,26 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
 
         logger.info("get payment receipt request received");
 
+        return getReport(ReportRequest.builder()
+                        .report(ReportsTypes.PAYMENT_RECEIPT)
+                        .packageId(packageIdentifier)
+                        .fileName(Keys.EFILING_PAYMENT_RECEIPT_FILENAME).create());
+
+    }
+
+    private ResponseEntity<Resource> getReport(ReportRequest reportRequest) {
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
         if(!universalId.isPresent()) return new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
 
-        Optional<Resource> result = filingPackageService.getPaymentReceipt(packageIdentifier);
+        Optional<Resource> result = filingPackageService.getReport(reportRequest);
 
         if(!result.isPresent()) return new ResponseEntity(
-                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.PAYMENT_RECEIPT_NOT_FOUND).create(), HttpStatus.NOT_FOUND);
+                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.REPORT_NOT_FOUND).create(), HttpStatus.NOT_FOUND);
 
         HttpHeaders header = new HttpHeaders();
-        header.add(HttpHeaders.CONTENT_DISPOSITION, MessageFormat.format("attachment; filename={0}", Keys.EFILING_PAYMENT_RECEIPT_FILENAME));
+        header.add(HttpHeaders.CONTENT_DISPOSITION, MessageFormat.format("attachment; filename={0}", result.get().getFilename()));
 
         return ResponseEntity.ok()
                 .headers(header)

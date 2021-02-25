@@ -12,6 +12,7 @@ import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingStatusServiceExceptio
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapper;
@@ -96,20 +97,33 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
     }
 
     @Override
-    public Optional<byte[]> getSubmissionSheet(BigDecimal packageNumber) {
+    public Optional<byte[]> getReport(ReportRequest reportRequest) {
+        String reportName;
+        String parameterName;
+        switch (reportRequest.getReport()) {
+            case SUBMISSION_SHEET:
+                reportName = Keys.SUBMISSION_REPORT_NAME;
+                parameterName = Keys.SUBMISSION_REPORT_PARAMETER;
+                break;
+            case PAYMENT_RECEIPT:
+                reportName = Keys.RECEIPT_REPORT_NAME;
+                parameterName = Keys.PARAM_REPORT_PARAMETER;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + reportRequest.getReport());
+        }
 
-        logger.info("Calling soap to retrieve submission report ");
+        logger.info("Calling soap to retrieve {} report ", reportName);
 
-        return executeReport(Keys.SUBMISSION_REPORT_NAME, Keys.SUBMISSION_REPORT_PARAMETER, packageNumber.toPlainString());
+        Report report = new Report();
+        report.setName(reportName);
+        report.getParameters().addAll(Arrays.asList(parameterName, reportRequest.getPackageId().toPlainString()));
 
-    }
+        byte[] result = reportService.runReport(report);
 
-    @Override
-    public Optional<byte[]> getPaymentReceipt(BigDecimal packageNumber) {
+        if (result == null || result.length == 0) return Optional.empty();
 
-       logger.info("Calling soap to retrieve receipt report ");
-
-        return executeReport(Keys.RECEIPT_REPORT_NAME, Keys.PARAM_REPORT_PARAMETER, packageNumber.toPlainString());
+        return Optional.of(result);
 
     }
 
@@ -194,20 +208,5 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
         }
 
     }
-
-    private Optional<byte[]> executeReport(String reportName, String parameterName, String reportParameter) {
-
-        Report report = new Report();
-        report.setName(reportName);
-        report.getParameters().addAll(Arrays.asList(parameterName, reportParameter));
-
-        byte[] result = reportService.runReport(report);
-
-        if (result == null || result.length == 0) return Optional.empty();
-
-        return Optional.of(result);
-
-    }
-
 
 }

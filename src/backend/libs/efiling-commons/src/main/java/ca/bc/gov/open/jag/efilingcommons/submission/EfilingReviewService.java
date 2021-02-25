@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingcommons.submission;
 
 import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 
 import java.math.BigDecimal;
@@ -14,9 +15,7 @@ public interface EfilingReviewService {
 
     List<ReviewFilingPackage> findStatusByClient(FilingPackageRequest filingPackageRequest);
 
-    Optional<byte[]> getSubmissionSheet(BigDecimal packageNumber);
-
-    Optional<byte[]> getPaymentReceipt(BigDecimal packageNumber);
+    Optional<byte[]> getReport(ReportRequest reportRequest);
 
     Optional<byte[]> getSubmittedDocument(BigDecimal documentIdentifier);
 

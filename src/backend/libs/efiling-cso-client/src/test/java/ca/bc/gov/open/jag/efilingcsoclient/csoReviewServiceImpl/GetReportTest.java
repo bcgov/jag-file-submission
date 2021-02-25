@@ -1,6 +1,8 @@
 package ca.bc.gov.open.jag.efilingcsoclient.csoReviewServiceImpl;
 
 import ca.bc.gov.ag.csows.reports.ReportService;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportRequest;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportsTypes;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoReviewServiceImpl;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapperImpl;
 import org.junit.jupiter.api.*;
@@ -16,7 +18,8 @@ import static org.mockito.ArgumentMatchers.any;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("GetPaymentReceiptTest")
-public class GetPaymentReceiptTest {
+public class GetReportTest {
+    public static final String FILE_NAME = "TEST";
     @Mock
     ReportService reportServiceMock;
 
@@ -35,13 +38,26 @@ public class GetPaymentReceiptTest {
         sut = new CsoReviewServiceImpl(null, reportServiceMock, null, new FilePackageMapperImpl(), restTemplateMock);
     }
 
-    @DisplayName("OK: receipt return")
+    @DisplayName("OK: submission sheet return")
     @Test
-    public void testWithFoundResult() {
+    public void testWithSubmissionSheetFoundResult() {
 
         Mockito.when(reportServiceMock.runReport(any())).thenReturn(SUCCESS);
 
-        Optional<byte[]> result = sut.getPaymentReceipt(BigDecimal.ONE);
+        Optional<byte[]> result = sut.getReport(ReportRequest.builder().fileName(FILE_NAME).packageId(BigDecimal.ONE).report(ReportsTypes.SUBMISSION_SHEET).create());
+
+        Assertions.assertTrue(result.isPresent());
+        Assertions.assertEquals(SUCCESS, result.get());
+
+    }
+
+    @DisplayName("OK: receipt return")
+    @Test
+    public void testWithReceiptFoundResult() {
+
+        Mockito.when(reportServiceMock.runReport(any())).thenReturn(SUCCESS);
+
+        Optional<byte[]> result = sut.getReport(ReportRequest.builder().fileName(FILE_NAME).packageId(BigDecimal.ONE).report(ReportsTypes.PAYMENT_RECEIPT).create());
 
         Assertions.assertTrue(result.isPresent());
         Assertions.assertEquals(SUCCESS, result.get());
@@ -53,7 +69,7 @@ public class GetPaymentReceiptTest {
     public void testWithNullResult() {
         Mockito.when(reportServiceMock.runReport(any())).thenReturn(null);
 
-        Optional<byte[]> result = sut.getSubmissionSheet(BigDecimal.ONE);
+        Optional<byte[]> result = sut.getReport(ReportRequest.builder().fileName(FILE_NAME).packageId(BigDecimal.ONE).report(ReportsTypes.PAYMENT_RECEIPT).create());
 
         Assertions.assertFalse(result.isPresent());
     }
@@ -63,7 +79,7 @@ public class GetPaymentReceiptTest {
     public void testWithExceptionResult() {
         Mockito.when(reportServiceMock.runReport(any())).thenReturn(new byte[0]);
 
-        Optional<byte[]> result = sut.getSubmissionSheet(BigDecimal.ONE);
+        Optional<byte[]> result = sut.getReport(ReportRequest.builder().fileName(FILE_NAME).packageId(BigDecimal.ONE).report(ReportsTypes.PAYMENT_RECEIPT).create());
 
         Assertions.assertFalse(result.isPresent());
 

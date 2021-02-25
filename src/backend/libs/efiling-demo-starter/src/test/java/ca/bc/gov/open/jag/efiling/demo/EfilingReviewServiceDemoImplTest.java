@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efiling.demo;
 
 import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
@@ -114,17 +115,7 @@ public class EfilingReviewServiceDemoImplTest {
     @DisplayName("OK: demo returns a document byte array")
     public void withRequestReturnByteArray() {
 
-        Optional<byte[]> result = sut.getSubmissionSheet(BigDecimal.ONE);
-
-        Assertions.assertTrue(result.isPresent());
-
-    }
-
-    @Test
-    @DisplayName("OK: demo returns a receipt byte array")
-    public void withRequestReturnReceiptByteArray() {
-
-        Optional<byte[]> result = sut.getSubmissionSheet(BigDecimal.ONE);
+        Optional<byte[]> result = sut.getReport(ReportRequest.builder().create());
 
         Assertions.assertTrue(result.isPresent());
 
