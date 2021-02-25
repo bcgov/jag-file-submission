@@ -69,17 +69,14 @@ public class GetPaymentReceiptTest {
 
         SecurityContextHolder.setContext(securityContextMock);
 
-        Mockito.when(filingPackageService.getPaymentReceipt(ArgumentMatchers.eq(BigDecimal.ONE))).thenReturn(Optional.of(new ByteArrayResource(BYTES)));
-
-
-        Mockito.when(filingPackageService.getPaymentReceipt(ArgumentMatchers.eq(BigDecimal.TEN))).thenReturn(Optional.empty());
-
         sut = new FilingpackageApiDelegateImpl(filingPackageService);
     }
 
     @Test
     @DisplayName("200: ok url was generated")
     public void withValidRequestReturnFilingPackage() {
+
+        Mockito.when(filingPackageService.getReport(Mockito.any())).thenReturn(Optional.of(new ByteArrayResource(BYTES)));
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, CASE_1);
@@ -106,6 +103,8 @@ public class GetPaymentReceiptTest {
     @Test
     @DisplayName("404: when no filling package is found return 404")
     public void withValidRequestFilingPackageNotFound() {
+
+        Mockito.when(filingPackageService.getReport(Mockito.any())).thenReturn(Optional.empty());
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, CASE_2);
