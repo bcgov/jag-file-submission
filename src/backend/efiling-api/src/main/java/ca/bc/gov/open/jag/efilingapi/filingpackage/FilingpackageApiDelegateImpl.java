@@ -74,6 +74,24 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
 
     @Override
     @RolesAllowed("efiling-user")
+    public ResponseEntity<Resource> getPaymentReceipt(BigDecimal packageIdentifier) {
+
+        logger.info("get payment receipt request received");
+
+        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
+
+        if(!universalId.isPresent()) return new ResponseEntity(
+                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
+
+        Optional<Resource> result = filingPackageService.getPaymentReceipt(packageIdentifier);
+
+        return result.map(bytes -> ResponseEntity.ok(result.get())).orElseGet(() -> new ResponseEntity(
+                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.PAYMENT_RECEIPT_NOT_FOUND).create(), HttpStatus.NOT_FOUND));
+
+    }
+
+    @Override
+    @RolesAllowed("efiling-user")
     public ResponseEntity<Resource> getSubmittedDocument(BigDecimal packageIdentifier,
                                                          BigDecimal documentIdentifier) {
 

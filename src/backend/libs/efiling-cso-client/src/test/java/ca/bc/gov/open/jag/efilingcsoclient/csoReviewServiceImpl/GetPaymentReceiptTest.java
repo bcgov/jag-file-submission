@@ -3,10 +3,7 @@ package ca.bc.gov.open.jag.efilingcsoclient.csoReviewServiceImpl;
 import ca.bc.gov.ag.csows.reports.ReportService;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoReviewServiceImpl;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapperImpl;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -17,7 +14,8 @@ import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 
-
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@DisplayName("GetPaymentReceiptTest")
 public class GetPaymentReceiptTest {
     @Mock
     ReportService reportServiceMock;

@@ -56,6 +56,15 @@ public class FilingPackageServiceImpl implements FilingPackageService {
     }
 
     @Override
+    public Optional<Resource> getPaymentReceipt(BigDecimal packageNumber) {
+
+        Optional<byte[]> result = efilingReviewService.getPaymentReceipt(packageNumber);
+
+        return result.map(ByteArrayResource::new);
+
+    }
+
+    @Override
     public Optional<SubmittedDocument> getSubmittedDocument(String universalId, BigDecimal packageNumber, BigDecimal documentIdentifier) {
 
         Optional<ReviewFilingPackage> filingPackage = getFilingPackage(universalId, packageNumber);

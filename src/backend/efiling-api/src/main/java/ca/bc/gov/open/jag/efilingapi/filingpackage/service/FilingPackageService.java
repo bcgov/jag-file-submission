@@ -13,6 +13,8 @@ public interface FilingPackageService {
 
     Optional<Resource> getSubmissionSheet(BigDecimal packageNumber);
 
+    Optional<Resource> getPaymentReceipt(BigDecimal packageNumber);
+
     Optional<SubmittedDocument> getSubmittedDocument(String universalId, BigDecimal packageNumber, BigDecimal documentIdentifier);
 
     void deleteSubmittedDocument(String universalId, BigDecimal packageNumber, String documentIdentifier);

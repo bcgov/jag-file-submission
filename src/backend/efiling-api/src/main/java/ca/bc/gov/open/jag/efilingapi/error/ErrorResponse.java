@@ -22,6 +22,7 @@ public enum ErrorResponse {
     MISSING_APPLICATION_CODE("Missing application code claim. Contact administrator"),
     FILING_PACKAGE_NOT_FOUND("Requested filing package was not found."),
     SUBMISSION_SHEET_NOT_FOUND("Requested submission sheet was not found."),
+    PAYMENT_RECEIPT_NOT_FOUND("Requested payment receipt was not found."),
     DOCUMENT_NOT_FOUND("Requested document was not found."),
     DELETE_DOCUMENT_ERROR("Document deletion failed");
 
