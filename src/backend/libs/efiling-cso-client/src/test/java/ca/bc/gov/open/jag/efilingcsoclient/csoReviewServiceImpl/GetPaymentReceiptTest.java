@@ -39,7 +39,6 @@ public class GetPaymentReceiptTest {
     @DisplayName("OK: receipt return")
     @Test
     public void testWithFoundResult() {
-        Mockito.when(reportServiceMock.runReport(any())).thenReturn(SUCCESS);
 
         Optional<byte[]> result = sut.getPaymentReceipt(BigDecimal.ONE);
 
