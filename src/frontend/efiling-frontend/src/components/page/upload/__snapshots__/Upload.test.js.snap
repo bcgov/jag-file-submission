@@ -3,7 +3,7 @@
 exports[`Upload Component Matches the snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="page"
+    class="ct-upload page"
   >
     <div
       class="content col-md-8"
@@ -673,7 +673,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
 exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
 <DocumentFragment>
   <div
-    class="page"
+    class="ct-upload page"
   >
     <div
       class="content col-md-8"
@@ -745,7 +745,7 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
                     class="bcgov-fill-width"
                   >
                     <div
-                      class="ct-upload center-alignment fill-space"
+                      class="center-alignment fill-space"
                     >
                       <div
                         style="color: rgb(252, 186, 25);"

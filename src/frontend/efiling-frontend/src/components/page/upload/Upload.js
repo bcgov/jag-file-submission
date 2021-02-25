@@ -84,7 +84,7 @@ const generateFileJSX = (
   const fileLink = generateFileLink(file);
 
   return (
-    <div className="ct-upload center-alignment fill-space">
+    <div className="center-alignment fill-space">
       <div style={{ color: "rgb(252, 186, 25)" }}>
         <MdDescription size={32} />
       </div>
@@ -310,7 +310,7 @@ export default function Upload({
   }
 
   return (
-    <div className="page">
+    <div className="ct-upload page">
       <div className="content col-md-8">
         <h1>Document Upload</h1>
         <Dropzone

@@ -3,7 +3,7 @@
 exports[`Storyshots Upload Default 1`] = `
 <DocumentFragment>
   <div
-    class="page"
+    class="ct-upload page"
   >
     <div
       class="content col-md-8"
@@ -205,7 +205,7 @@ exports[`Storyshots Upload Default 1`] = `
 exports[`Storyshots Upload Mobile 1`] = `
 <DocumentFragment>
   <div
-    class="page"
+    class="ct-upload page"
   >
     <div
       class="content col-md-8"
