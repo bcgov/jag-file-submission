@@ -974,7 +974,7 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
 exports[`PackageConfirmation Component On click of Upload them now text, it redirects to the upload page 1`] = `
 <DocumentFragment>
   <div
-    class="page"
+    class="ct-upload page"
   >
     <div
       class="content col-md-8"
