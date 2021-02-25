@@ -166,9 +166,7 @@ const generateDropdownJSX = (items, fileName, setContinueBtnEnabled) => (
           filesToUpload.documents.forEach((f) => {
             const file = f;
             if (file.name === fileName) {
-              file.type = items.find(
-                (item) => item.description === val
-              ).type;
+              file.type = items.find((item) => item.description === val).type;
             }
           });
 
@@ -187,11 +185,7 @@ const generateTable = (
   setAcceptedFiles,
   setContinueBtnEnabled
 ) => {
-  if (
-    !filesToUpload.documents.some(
-      (f) => f.name === file.name
-    )
-  ) {
+  if (!filesToUpload.documents.some((f) => f.name === file.name)) {
     filesToUpload.documents.push({ name: file.name, type: "AFF" });
     setContinueBtnEnabled(checkValidityOfUploadedFiles());
   }
