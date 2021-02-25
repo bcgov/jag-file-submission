@@ -190,5 +190,5 @@ jobs:
           path: ./tests/target/cucumber-reports/CucumberTestReport.json
 
       - name: Set action status
-        if: steps.cucumber-test != 'success'
+        if: steps.cucumber-test.outcome != 'success'
         run: exit 1
