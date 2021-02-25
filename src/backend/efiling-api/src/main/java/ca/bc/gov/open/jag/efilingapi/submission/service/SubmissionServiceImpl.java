@@ -210,22 +210,21 @@ public class SubmissionServiceImpl implements SubmissionService {
                 .create();
     }
 
-    private Document toDocument(String courtLevel, String courtClass,  InitialDocument initialDocument, SubmissionKey submissionKey) {
+    private Document toDocument(String courtLevel, String courtClass, DocumentProperties documentProperties, SubmissionKey submissionKey) {
 
-        DocumentDetails details = documentStore.getDocumentDetails(courtLevel, courtClass, initialDocument.getType());
+        DocumentDetails details = documentStore.getDocumentDetails(courtLevel, courtClass, documentProperties.getType());
 
         return
                 Document.builder()
                         .description(details.getDescription())
                         .statutoryFeeAmount(details.getStatutoryFeeAmount())
-                        .type(initialDocument.getType())
-                        .name(initialDocument.getName())
-                        .serverFileName(MessageFormat.format("fh_{0}_{1}_{2}",submissionKey.getSubmissionId(), submissionKey.getTransactionId(), initialDocument.getName()))
-                        .mimeType(FileUtils.guessContentTypeFromName(initialDocument.getName()))
-                        .isAmendment(initialDocument.getIsAmendment())
-                        .isSupremeCourtScheduling(initialDocument.getIsSupremeCourtScheduling())
+                        .type(documentProperties.getType())
+                        .name(documentProperties.getName())
+                        .serverFileName(MessageFormat.format("fh_{0}_{1}_{2}",submissionKey.getSubmissionId(), submissionKey.getTransactionId(), documentProperties.getName()))
+                        .mimeType(FileUtils.guessContentTypeFromName(documentProperties.getName()))
+                        .isAmendment(documentProperties.getIsAmendment())
+                        .isSupremeCourtScheduling(documentProperties.getIsSupremeCourtScheduling())
                         .subType(details.getOrderDocument() ? SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD : SubmissionConstants.SUBMISSION_ODOC_DOCUMENT_SUB_TYPE_CD)
-                        .data(initialDocument.getData())
                         .create();
 
     }
