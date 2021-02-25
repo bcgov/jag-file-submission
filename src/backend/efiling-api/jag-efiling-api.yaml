@@ -432,6 +432,30 @@ paths:
                 format: binary
         "404":
           description: file not found
+  "/filingpackages/{packageIdentifier}/paymentReceipt":
+    get:
+      summary: Get submission payment receipt
+      operationId: GetPaymentReceipt
+      description: get payment receipt file from cso
+      tags:
+        - filingPackages
+      parameters:
+        - name: packageIdentifier
+          in: path
+          description: package identifier
+          required: true
+          schema:
+            type: number
+      responses:
+        "200":
+          description: File was returned
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: file not found
   "/filingpackages/{packageIdentifier}/document/{documentIdentifier}":
     get:
       summary: Get submitted document

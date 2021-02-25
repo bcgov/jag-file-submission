@@ -8,11 +8,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.util.Optional;
+
+import static org.mockito.ArgumentMatchers.any;
 
 
 public class GetPaymentReceiptTest {
@@ -38,10 +41,33 @@ public class GetPaymentReceiptTest {
     @Test
     public void testWithFoundResult() {
 
+        Mockito.when(reportServiceMock.runReport(any())).thenReturn(SUCCESS);
+
         Optional<byte[]> result = sut.getPaymentReceipt(BigDecimal.ONE);
+
+        Assertions.assertTrue(result.isPresent());
+        Assertions.assertEquals(SUCCESS, result.get());
+
+    }
+
+    @DisplayName("OK: null result ")
+    @Test
+    public void testWithNullResult() {
+        Mockito.when(reportServiceMock.runReport(any())).thenReturn(null);
+
+        Optional<byte[]> result = sut.getSubmissionSheet(BigDecimal.ONE);
+
+        Assertions.assertFalse(result.isPresent());
+    }
+
+    @DisplayName("OK: empty ")
+    @Test
+    public void testWithExceptionResult() {
+        Mockito.when(reportServiceMock.runReport(any())).thenReturn(new byte[0]);
+
+        Optional<byte[]> result = sut.getSubmissionSheet(BigDecimal.ONE);
 
         Assertions.assertFalse(result.isPresent());
 
     }
-
 }

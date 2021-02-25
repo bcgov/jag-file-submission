@@ -100,20 +100,17 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
 
         logger.info("Calling soap to retrieve submission report ");
 
-        Report report = new Report();
-        report.setName(Keys.REPORT_NAME);
-        report.getParameters().addAll(Arrays.asList(Keys.REPORT_PARAMETER, packageNumber.toPlainString()));
+        return executeReport(Keys.SUBMISSION_REPORT_NAME, Keys.SUBMISSION_REPORT_PARAMETER, packageNumber.toPlainString());
 
-        byte[] result = reportService.runReport(report);
-
-        if (result == null || result.length == 0) return Optional.empty();
-
-        return Optional.of(result);
     }
 
     @Override
     public Optional<byte[]> getPaymentReceipt(BigDecimal packageNumber) {
-        return Optional.empty();
+
+       logger.info("Calling soap to retrieve receipt report ");
+
+        return executeReport(Keys.RECEIPT_REPORT_NAME, Keys.PARAM_REPORT_PARAMETER, packageNumber.toPlainString());
+
     }
 
     @Override
@@ -197,4 +194,20 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
         }
 
     }
+
+    private Optional<byte[]> executeReport(String reportName, String parameterName, String reportParameter) {
+
+        Report report = new Report();
+        report.setName(reportName);
+        report.getParameters().addAll(Arrays.asList(parameterName, reportParameter));
+
+        byte[] result = reportService.runReport(report);
+
+        if (result == null || result.length == 0) return Optional.empty();
+
+        return Optional.of(result);
+
+    }
+
+
 }
