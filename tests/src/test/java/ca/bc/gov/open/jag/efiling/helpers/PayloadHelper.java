@@ -49,7 +49,7 @@ public class PayloadHelper {
                 "        \"documents\": [" +
                 "            {" +
                 "                \"name\": \"" + documentName + "\"," +
-                "                \"type\": \"AAB\"" +
+                "                \"type\": \"AAB\"," +
                 "                \"isAmendment\": \"true\"," +
                 "                \"isSupremeCourtScheduling\": \"true\"" +
                 "            }" +
