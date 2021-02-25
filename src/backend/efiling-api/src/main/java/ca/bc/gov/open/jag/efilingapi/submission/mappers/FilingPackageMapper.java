@@ -16,5 +16,7 @@ public interface FilingPackageMapper {
 
     ca.bc.gov.open.jag.efilingapi.api.model.SubmissionFilingPackage toApiFilingPackage(FilingPackage filingPackage);
 
+    @Mapping(target = "documentProperties.name", source = "name")
+    @Mapping(target = "documentProperties.type", source = "type")
     SubmissionDocument documentToSubmissionDocument(Document file);
 }
