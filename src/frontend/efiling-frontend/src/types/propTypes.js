@@ -35,4 +35,12 @@ export const propTypes = {
     email: PropTypes.string,
   }).isRequired,
   setState: PropTypes.func.isRequired,
+  file: PropTypes.shape({
+    mimeType: PropTypes.string.isRequired,
+    statutoryFeeAmount: PropTypes.number,
+    documentProperties: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+    }),
+  }),
 };

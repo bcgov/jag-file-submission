@@ -5,6 +5,7 @@ import { downloadFile } from "./PackageConfirmationService";
 import { isClick, isEnter } from "../../../modules/helpers/eventUtil";
 import { formatCurrency } from "../../../modules/helpers/CurrencyUtil";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
+import { propTypes } from "../../../types/propTypes";
 
 const hash = require("object-hash");
 
@@ -42,12 +43,5 @@ export default function FileListItem({ submissionId, file }) {
 
 FileListItem.propTypes = {
   submissionId: PropTypes.string.isRequired,
-  file: PropTypes.shape({
-    mimeType: PropTypes.string.isRequired,
-    statutoryFeeAmount: PropTypes.number,
-    documentProperties: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-    }),
-  }).isRequired,
+  file: propTypes.file.isRequired,
 };

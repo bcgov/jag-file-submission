@@ -24,7 +24,7 @@ describe("PackageConfirmation Component", () => {
     },
     description: "file description 1",
     statutoryFeeAmount: 40,
-    mimeType: "application/pdf"
+    mimeType: "application/pdf",
   };
   const court = getCourtData();
   const submissionFeeAmount = 25.5;

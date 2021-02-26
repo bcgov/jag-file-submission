@@ -1,4 +1,4 @@
-import { formatCurrency } from "../CurrencyUtil.js";
+import { formatCurrency } from "../CurrencyUtil";
 
 describe("CurrencyUtil Testsuite", () => {
   beforeEach(() => {});

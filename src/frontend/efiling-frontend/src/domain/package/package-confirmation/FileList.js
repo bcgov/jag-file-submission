@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import FileListItem from "./FileListItem";
+import { propTypes } from "../../../types/propTypes";
 
 import "./FileList.scss";
 
@@ -23,14 +24,5 @@ export default function FileList({ submissionId, files }) {
 
 FileList.propTypes = {
   submissionId: PropTypes.string.isRequired,
-  files: PropTypes.arrayOf(
-    PropTypes.shape({
-      mimeType: PropTypes.string.isRequired,
-      statutoryFeeAmount: PropTypes.number,
-      documentProperties: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
-      }),
-    }).isRequired
-  ).isRequired,
+  files: PropTypes.arrayOf(propTypes.file.isRequired).isRequired,
 };

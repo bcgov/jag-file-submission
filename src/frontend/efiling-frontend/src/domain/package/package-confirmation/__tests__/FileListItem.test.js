@@ -1,6 +1,6 @@
 import React from "react";
-import FileListItem from "../FileListItem";
 import { render, waitFor, fireEvent } from "@testing-library/react";
+import FileListItem from "../FileListItem";
 import { getDocumentsData } from "../../../../modules/test-data/documentTestData";
 
 const service = require("../PackageConfirmationService");
@@ -47,7 +47,7 @@ describe("FileListItem Testsuite", () => {
     expect(service.downloadFile).toHaveBeenCalled();
     expect(error.errorRedirect).toHaveBeenCalled();
   });
-  
+
   test("download document success (on keypress Enter)", async () => {
     // stub out service to return valid response.
     service.downloadFile = jest.fn(() => Promise.resolve());
@@ -59,15 +59,15 @@ describe("FileListItem Testsuite", () => {
 
     const fileLink = getByText(files[0].documentProperties.name);
     fireEvent.keyDown(fileLink, {
-        key: "Enter",
-        keyCode: "13",
-      });
+      key: "Enter",
+      keyCode: "13",
+    });
     await waitFor(() => {});
 
     expect(service.downloadFile).toHaveBeenCalled();
     expect(error.errorRedirect).not.toHaveBeenCalled();
   });
-  
+
   test("download document success (on keypress Tab)", async () => {
     // stub out service to return valid response.
     service.downloadFile = jest.fn(() => Promise.resolve());
@@ -79,15 +79,15 @@ describe("FileListItem Testsuite", () => {
 
     const fileLink = getByText(files[0].documentProperties.name);
     fireEvent.keyDown(fileLink, {
-        key: "Enter",
-        keyCode: "9",
-      });
+      key: "Enter",
+      keyCode: "9",
+    });
     await waitFor(() => {});
 
     expect(service.downloadFile).not.toHaveBeenCalled();
     expect(error.errorRedirect).not.toHaveBeenCalled();
   });
-  
+
   test("download document failure (on keypress Enter)", async () => {
     // stub out service to return valid response.
     service.downloadFile = jest.fn(() => Promise.reject());
@@ -99,9 +99,9 @@ describe("FileListItem Testsuite", () => {
 
     const fileLink = getByText(files[0].documentProperties.name);
     fireEvent.keyDown(fileLink, {
-        key: "Enter",
-        keyCode: "13",
-      });
+      key: "Enter",
+      keyCode: "13",
+    });
     await waitFor(() => {});
 
     expect(service.downloadFile).toHaveBeenCalled();
