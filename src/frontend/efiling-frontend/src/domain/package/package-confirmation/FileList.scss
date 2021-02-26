@@ -1,0 +1,33 @@
+.ct-file-list {
+  border: 1px solid #bfbfbf;
+  padding: 10px;
+
+  .header {
+    display: flex;
+    flex-wrap: wrap;
+    font-weight: bold;
+  }
+  .label {
+    font-weight: bold;
+    margin-bottom: 0px;
+  }
+  ul {
+    margin: 5px 0px;
+    padding: 0px;
+  }
+  li {
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    border: 1px solid #bfbfbf;
+    padding: 10px 0px;
+    margin: 10px 0px;
+  }
+  li span {
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  li span.file-cell {
+    padding-top: 1px;
+  }
+}
