@@ -1,10 +1,10 @@
-package ca.bc.gov.open.jag.efilingreviewerapi.extract;
+package ca.bc.gov.open.jag.efilingreviewerapi.document;
 
 import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.clamav.starter.VirusDetectedException;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
-import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.DocumentsApiDelegate;
+import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentEvent;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentExtractResponse;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerVirusFoundException;
@@ -15,6 +15,7 @@ import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractRequest;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.store.ExtractStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -67,6 +68,14 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
             throw new AiReviewerCacheException("Could not cache extract request");
 
         return ResponseEntity.ok(extractRequestMapper.toDocumentExtractResponse(extractRequestCached.get()));
+
+    }
+
+    @Override
+    public ResponseEntity<Void> documentEvent(UUID xTransactionId, DocumentEvent documentEvent) {
+
+        logger.info("document {} status has changed to {}", documentEvent.getDocumentId(), documentEvent.getStatus());
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
 }
