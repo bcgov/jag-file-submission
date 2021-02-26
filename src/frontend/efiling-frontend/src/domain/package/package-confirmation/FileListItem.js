@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { MdDescription } from "react-icons/md";
-import { downloadFile } from "./PackageConfirmationService";
+import { downloadFileByName } from "../../documents/DocumentService";
 import { isClick, isEnter } from "../../../modules/helpers/eventUtil";
 import { formatCurrency } from "../../../modules/helpers/CurrencyUtil";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
@@ -12,7 +12,7 @@ const hash = require("object-hash");
 export default function FileListItem({ submissionId, file }) {
   const handleDownloadFile = (e) => {
     if (isClick(e) || isEnter(e)) {
-      downloadFile(submissionId, file).catch((error) => {
+      downloadFileByName(submissionId, file).catch((error) => {
         errorRedirect(sessionStorage.getItem("errorUrl"), error);
       });
     }

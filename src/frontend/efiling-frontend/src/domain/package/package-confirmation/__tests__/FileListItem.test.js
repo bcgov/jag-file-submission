@@ -3,7 +3,7 @@ import { render, waitFor, fireEvent } from "@testing-library/react";
 import FileListItem from "../FileListItem";
 import { getDocumentsData } from "../../../../modules/test-data/documentTestData";
 
-const service = require("../PackageConfirmationService");
+const service = require("../../../documents/DocumentService");
 const error = require("../../../../modules/helpers/errorRedirect");
 
 describe("FileListItem Testsuite", () => {
@@ -16,7 +16,7 @@ describe("FileListItem Testsuite", () => {
 
   test("download document success (on click)", async () => {
     // stub out service to return valid response.
-    service.downloadFile = jest.fn(() => Promise.resolve());
+    service.downloadFileByName = jest.fn(() => Promise.resolve());
 
     const { getByText } = render(
       <FileListItem submissionId={submissionId} file={files[0]} />
@@ -27,13 +27,13 @@ describe("FileListItem Testsuite", () => {
     fireEvent.click(fileLink);
     await waitFor(() => {});
 
-    expect(service.downloadFile).toHaveBeenCalled();
+    expect(service.downloadFileByName).toHaveBeenCalled();
     expect(error.errorRedirect).not.toHaveBeenCalled();
   });
 
   test("download document failure (on click)", async () => {
     // stub out service to return valid response.
-    service.downloadFile = jest.fn(() => Promise.reject());
+    service.downloadFileByName = jest.fn(() => Promise.reject());
 
     const { getByText } = render(
       <FileListItem submissionId={submissionId} file={files[0]} />
@@ -44,13 +44,13 @@ describe("FileListItem Testsuite", () => {
     fireEvent.click(fileLink);
     await waitFor(() => {});
 
-    expect(service.downloadFile).toHaveBeenCalled();
+    expect(service.downloadFileByName).toHaveBeenCalled();
     expect(error.errorRedirect).toHaveBeenCalled();
   });
 
   test("download document success (on keypress Enter)", async () => {
     // stub out service to return valid response.
-    service.downloadFile = jest.fn(() => Promise.resolve());
+    service.downloadFileByName = jest.fn(() => Promise.resolve());
 
     const { getByText } = render(
       <FileListItem submissionId={submissionId} file={files[0]} />
@@ -64,13 +64,13 @@ describe("FileListItem Testsuite", () => {
     });
     await waitFor(() => {});
 
-    expect(service.downloadFile).toHaveBeenCalled();
+    expect(service.downloadFileByName).toHaveBeenCalled();
     expect(error.errorRedirect).not.toHaveBeenCalled();
   });
 
   test("download document success (on keypress Tab)", async () => {
     // stub out service to return valid response.
-    service.downloadFile = jest.fn(() => Promise.resolve());
+    service.downloadFileByName = jest.fn(() => Promise.resolve());
 
     const { getByText } = render(
       <FileListItem submissionId={submissionId} file={files[0]} />
@@ -84,13 +84,13 @@ describe("FileListItem Testsuite", () => {
     });
     await waitFor(() => {});
 
-    expect(service.downloadFile).not.toHaveBeenCalled();
+    expect(service.downloadFileByName).not.toHaveBeenCalled();
     expect(error.errorRedirect).not.toHaveBeenCalled();
   });
 
   test("download document failure (on keypress Enter)", async () => {
     // stub out service to return valid response.
-    service.downloadFile = jest.fn(() => Promise.reject());
+    service.downloadFileByName = jest.fn(() => Promise.reject());
 
     const { getByText } = render(
       <FileListItem submissionId={submissionId} file={files[0]} />
@@ -104,7 +104,7 @@ describe("FileListItem Testsuite", () => {
     });
     await waitFor(() => {});
 
-    expect(service.downloadFile).toHaveBeenCalled();
+    expect(service.downloadFileByName).toHaveBeenCalled();
     expect(error.errorRedirect).toHaveBeenCalled();
   });
 });
