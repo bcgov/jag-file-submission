@@ -1602,7 +1602,7 @@ exports[`Payment Component On back click, it redirects back to the package confi
             <span
               class="col-md-5 col-lg-3"
             >
-              file type
+              file description 1
             </span>
           </li>
           <li>
@@ -1647,7 +1647,7 @@ exports[`Payment Component On back click, it redirects back to the package confi
             <span
               class="col-md-5 col-lg-3"
             >
-              file type
+              file description 2
             </span>
           </li>
         </ul>

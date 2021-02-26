@@ -36,7 +36,7 @@ export default function FileListItem({ submissionId, file }) {
         {formatCurrency(file.statutoryFeeAmount)}
       </span>
       <span className="col-md-5 d-lg-none">Document Type:</span>
-      <span className="col-md-5 col-lg-3">{file.documentProperties.type}</span>
+      <span className="col-md-5 col-lg-3">{file.description}</span>
     </li>
   );
 }

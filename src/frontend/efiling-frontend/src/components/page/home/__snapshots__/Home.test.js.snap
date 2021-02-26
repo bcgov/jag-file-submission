@@ -1098,7 +1098,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
             <span
               class="col-md-5 col-lg-3"
             >
-              file type
+              file description 1
             </span>
           </li>
           <li>
@@ -1143,7 +1143,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
             <span
               class="col-md-5 col-lg-3"
             >
-              file type
+              file description 2
             </span>
           </li>
         </ul>

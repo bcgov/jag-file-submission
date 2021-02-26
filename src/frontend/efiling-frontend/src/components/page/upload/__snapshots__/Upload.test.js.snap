@@ -287,7 +287,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
             <span
               class="col-md-5 col-lg-3"
             >
-              file type
+              file description 1
             </span>
           </li>
           <li>
@@ -332,7 +332,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
             <span
               class="col-md-5 col-lg-3"
             >
-              file type
+              file description 2
             </span>
           </li>
         </ul>

@@ -85,7 +85,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
             <span
               class="col-md-5 col-lg-3"
             >
-              file type
+              file description 1
             </span>
           </li>
           <li>
@@ -130,7 +130,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
             <span
               class="col-md-5 col-lg-3"
             >
-              file type
+              file description 2
             </span>
           </li>
         </ul>
@@ -474,7 +474,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
             <span
               class="col-md-5 col-lg-3"
             >
-              file type
+              file description 1
             </span>
           </li>
           <li>
@@ -519,7 +519,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
             <span
               class="col-md-5 col-lg-3"
             >
-              file type
+              file description 2
             </span>
           </li>
         </ul>
@@ -894,7 +894,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
             <span
               class="col-md-5 col-lg-3"
             >
-              file type
+              file description 1
             </span>
           </li>
           <li>
@@ -939,7 +939,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
             <span
               class="col-md-5 col-lg-3"
             >
-              file type
+              file description 2
             </span>
           </li>
         </ul>
