@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { MdDescription, MdCheckBox } from "react-icons/md";
+import { MdCheckBox } from "react-icons/md";
 import ConfirmationPopup, {
   Alert,
   Button,
   Sidecard,
-  DisplayBox,
   Table,
 } from "shared-components";
-import FileSaver from "file-saver";
-import Dinero from "dinero.js";
 import axios from "axios";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import { propTypes } from "../../../types/propTypes";
@@ -21,73 +18,7 @@ import { isClick, isEnter } from "../../../modules/helpers/eventUtil";
 import "./PackageConfirmation.scss";
 import Payment from "../../payment/Payment";
 import Upload from "../../../components/page/upload/Upload";
-
-const hash = require("object-hash");
-
-const downloadFile = (file, submissionId) => {
-  const fileName = file.documentProperties.name;
-  axios
-    .get(`/submission/${submissionId}/document/${fileName}`, {
-      responseType: "blob",
-    })
-    .then((response) => {
-      const fileData = new Blob([response.data], { type: file.mimeType });
-      const fileUrl = URL.createObjectURL(fileData);
-
-      FileSaver.saveAs(fileUrl, fileName);
-    })
-    .catch((error) => {
-      errorRedirect(sessionStorage.getItem("errorUrl"), error);
-    });
-};
-
-const handleDownloadFile = (e, file, submissionId) => {
-  if (isClick(e) || isEnter(e)) {
-    downloadFile(file, submissionId);
-  }
-};
-
-const generateTable = (file, data, submissionId) => [
-  {
-    name: (
-      <div style={{ width: "80%" }}>
-        <span
-          onKeyDown={(e) => handleDownloadFile(e, file, submissionId)}
-          role="button"
-          tabIndex={0}
-          className="file-href"
-          onClick={(e) => handleDownloadFile(e, file, submissionId)}
-          data-test-id="uploaded-file"
-        >
-          {file.documentProperties && file.documentProperties.name}
-        </span>
-      </div>
-    ),
-    value: <Table elements={data} />,
-  },
-];
-
-const generateTableData = (file, submissionId) => {
-  const data = [
-    {
-      name: "Description:",
-      value: file.description,
-      isValueBold: true,
-    },
-  ];
-
-  if (file.statutoryFeeAmount > 0) {
-    data.push({
-      name: "Statutory Fee:",
-      value: Dinero({
-        amount: parseInt((file.statutoryFeeAmount * 100).toFixed(0), 10),
-      }).toFormat("$0,0.00"),
-      isValueBold: true,
-    });
-  }
-
-  return generateTable(file, data, submissionId);
-};
+import FileList from "./FileList";
 
 const getFilingPackageData = (
   submissionId,
@@ -198,28 +129,9 @@ export default function PackageConfirmation({
         </span>
         <br />
         <br />
-        {files.map((file) => (
-          <div key={hash(file)}>
-            <DisplayBox
-              styling="bcgov-border-background bcgov-display-file"
-              icon={
-                <div style={{ color: "rgb(252, 186, 25)" }}>
-                  <MdDescription size={32} />
-                </div>
-              }
-              element={
-                <Table
-                  elementStyles={{
-                    columnStyle: "bcgov-vertical-middle bcgov-fill-width",
-                  }}
-                  elements={generateTableData(file, submissionId)}
-                />
-              }
-            />
-            <br />
-          </div>
-        ))}
-        <h2>
+        {<FileList submissionId={submissionId} files={files} />}
+        <br />
+        <h4>
           Do you have additional documents to upload?&nbsp;
           <span
             onKeyDown={(e) => handleUploadFile(e)}
@@ -231,8 +143,7 @@ export default function PackageConfirmation({
           >
             Upload them now.
           </span>
-        </h2>
-        <br />
+        </h4>
         <br />
         <h2>Summary</h2>
         <p />

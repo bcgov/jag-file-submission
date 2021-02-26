@@ -24,6 +24,7 @@ describe("PackageConfirmation Component", () => {
     },
     description: "file description 1",
     statutoryFeeAmount: 40,
+    mimeType: "application/pdf",
   };
   const court = getCourtData();
   const submissionFeeAmount = 25.5;
@@ -39,12 +40,11 @@ describe("PackageConfirmation Component", () => {
   localStorage.setItem("jwt", token);
   sessionStorage.setItem("csoBaseUrl", "https://dev.justice.gov.bc.ca/cso");
 
-  FileSaver.saveAs = jest.fn();
-
   let mock;
   beforeEach(() => {
     mock = new MockAdapter(axios);
     window.open = jest.fn();
+    FileSaver.saveAs = jest.fn();
   });
 
   test("Matches the existing account snapshot", async () => {
@@ -158,11 +158,10 @@ describe("PackageConfirmation Component", () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  test("Successfully downloads the file when get document call succeeds (on click)", async () => {
-    const blob = new Blob(["foo", "bar"]);
-
+  test("Succeeds to open the file in new window when get document call", async () => {
     global.URL.createObjectURL = jest.fn();
     global.URL.createObjectURL.mockReturnValueOnce("fileurl.com");
+    sessionStorage.setItem("errorUrl", "error.com");
 
     mock
       .onGet(apiRequest)
@@ -171,9 +170,7 @@ describe("PackageConfirmation Component", () => {
       .onGet(
         `/submission/${submissionId}/document/${file.documentProperties.name}`
       )
-      .reply(200, {
-        blob,
-      });
+      .reply(200);
 
     const { container } = render(
       <PackageConfirmation
@@ -184,47 +181,16 @@ describe("PackageConfirmation Component", () => {
 
     await waitFor(() => {});
 
-    fireEvent.click(getByText(container, file.documentProperties.name));
-
-    await waitFor(() => {});
-
-    expect(FileSaver.saveAs).toHaveBeenCalled();
-  });
-
-  test("Successfully downloads the file when get document call succeeds (on keydown)", async () => {
-    const blob = new Blob(["foo", "bar"]);
-
-    global.URL.createObjectURL = jest.fn();
-    global.URL.createObjectURL.mockReturnValueOnce("fileurl.com");
-
-    mock
-      .onGet(apiRequest)
-      .reply(200, { documents, court, submissionFeeAmount });
-    mock
-      .onGet(
-        `/submission/${submissionId}/document/${file.documentProperties.name}`
-      )
-      .reply(200, {
-        blob,
-      });
-
-    const { container } = render(
-      <PackageConfirmation
-        packageConfirmation={packageConfirmation}
-        csoAccountStatus={csoAccountStatus}
-      />
-    );
-
-    await waitFor(() => {});
-
-    fireEvent.keyDown(getByText(container, file.documentProperties.name));
-
+    const fileLink = getByText(container, file.documentProperties.name);
+    fireEvent.click(fileLink);
     await waitFor(() => {});
 
     expect(FileSaver.saveAs).toHaveBeenCalled();
   });
 
   test("Fails to open the file in new window when get document call fails", async () => {
+    global.URL.createObjectURL = jest.fn();
+    global.URL.createObjectURL.mockReturnValueOnce("fileurl.com");
     sessionStorage.setItem("errorUrl", "error.com");
 
     mock
@@ -245,7 +211,8 @@ describe("PackageConfirmation Component", () => {
 
     await waitFor(() => {});
 
-    fireEvent.click(getByText(container, file.documentProperties.name));
+    const fileLink = getByText(container, file.documentProperties.name);
+    fireEvent.click(fileLink);
 
     await waitFor(() => {});
 
