@@ -35,6 +35,8 @@ import java.util.stream.Collectors;
 
 public class CsoReviewServiceImpl implements EfilingReviewService {
 
+
+
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final FilingStatusFacadeBean filingStatusFacadeBean;
@@ -71,7 +73,7 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
 
             if (filingStatus.getFilePackages() == null || filingStatus.getFilePackages().isEmpty()) return Optional.empty();
 
-            return Optional.of(filePackageMapper.toFilingPackage(filingStatus.getFilePackages().get(0), MessageFormat.format("{0}/pacakgeRewiew", csoProperties.getCsoPackagePath())));
+            return Optional.of(filePackageMapper.toFilingPackage(filingStatus.getFilePackages().get(0), getViewAllPackagesUrl()));
 
         } catch (NestedEjbException_Exception e) {
 
@@ -92,7 +94,7 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
 
             if (filingStatus.getFilePackages().isEmpty()) return new ArrayList<>();
 
-            return filingStatus.getFilePackages().stream().map(filePackage -> filePackageMapper.toFilingPackage(filePackage, MessageFormat.format("{0}/pacakgeRewiew", csoProperties.getCsoPackagePath()))).collect(Collectors.toList());
+            return filingStatus.getFilePackages().stream().map(filePackage -> filePackageMapper.toFilingPackage(filePackage, getViewAllPackagesUrl())).collect(Collectors.toList());
 
         } catch (NestedEjbException_Exception e) {
 
@@ -212,6 +214,10 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
 
         }
 
+    }
+
+    private String getViewAllPackagesUrl() {
+        return MessageFormat.format("{0}/{1}", csoProperties.getCsoBasePath(),  Keys.VIEW_ALL_PACKAGE_SUBPATH);
     }
 
 }

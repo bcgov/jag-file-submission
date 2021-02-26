@@ -167,4 +167,12 @@ public class ReviewFilingPackage {
     public void setSubmittedDate(DateTime submittedDate) {
         this.submittedDate = submittedDate;
     }
+
+    public PackageLinks getPackageLinks() {
+        return packageLinks;
+    }
+
+    public void setPackageLinks(PackageLinks packageLinks) {
+        this.packageLinks = packageLinks;
+    }
 }
