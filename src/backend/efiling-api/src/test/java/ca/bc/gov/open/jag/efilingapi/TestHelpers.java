@@ -7,10 +7,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingcommons.model.*;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.review.PackagePayment;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewCourt;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.review.*;
 import com.google.gson.JsonObject;
 import org.joda.time.DateTime;
 
@@ -246,6 +243,7 @@ public class TestHelpers {
         reviewFilingPackage.setDocuments(createDocuments());
         reviewFilingPackage.setParties(Collections.singletonList(createParty()));
         reviewFilingPackage.setPayments(Collections.singletonList(createPayment()));
+        reviewFilingPackage.setPackageLinks(PackageLinks.builder().packageHistoryUrl("http://localhost:8080/showmustgoon").create());
         return reviewFilingPackage;
 
     }

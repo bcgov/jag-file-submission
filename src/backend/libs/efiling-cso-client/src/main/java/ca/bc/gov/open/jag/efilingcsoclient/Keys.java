@@ -36,5 +36,6 @@ public class Keys {
                 new AbstractMap.SimpleImmutableEntry<>( "BCEID", BigDecimal.ONE ),
                 new AbstractMap.SimpleImmutableEntry<>( "BCSC",  new BigDecimal(2) ))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    public static final String VIEW_ALL_PACKAGE_SUBPATH = "filing/status/display.do?actionType=filterStatus&useFilter=ALL";
 
 }

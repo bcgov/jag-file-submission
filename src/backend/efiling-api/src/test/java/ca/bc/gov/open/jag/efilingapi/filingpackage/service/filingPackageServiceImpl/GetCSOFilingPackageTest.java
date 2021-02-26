@@ -100,6 +100,8 @@ public class GetCSOFilingPackageTest {
         Assertions.assertEquals(TestHelpers.TRANSACTION_DESC, result.get().getPayments().get(0).getPaymentDescription());
         Assertions.assertEquals(EXPECTED_ISO, result.get().getPayments().get(0).getTransactionDate());
 
+        Assertions.assertEquals("http://localhost:8080/showmustgoon", result.get().getLinks().getPackageHistoryUrl());
+
     }
 
     @Test
