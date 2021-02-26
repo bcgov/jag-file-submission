@@ -28,6 +28,7 @@ public class ReviewFilingPackage {
     private List<PackagePayment> payments;
     //TODO: protected RushOrderRequest procRequest;
     private DateTime submittedDate;
+    private PackageLinks packageLinks;
 
     public ReviewFilingPackage() { }
 

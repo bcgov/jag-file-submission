@@ -15,6 +15,7 @@ import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
+import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,14 +45,17 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
 
     private final FilePackageMapper filePackageMapper;
 
+    private final CsoProperties csoProperties;
+
     private final RestTemplate restTemplate;
 
-    public CsoReviewServiceImpl(FilingStatusFacadeBean filingStatusFacadeBean, ReportService reportService, FilingFacadeBean filingFacadeBean, FilePackageMapper filePackageMapper, RestTemplate restTemplate) {
+    public CsoReviewServiceImpl(FilingStatusFacadeBean filingStatusFacadeBean, ReportService reportService, FilingFacadeBean filingFacadeBean, FilePackageMapper filePackageMapper, CsoProperties csoProperties, RestTemplate restTemplate) {
 
         this.filingStatusFacadeBean = filingStatusFacadeBean;
         this.reportService = reportService;
         this.filingFacadeBean = filingFacadeBean;
         this.filePackageMapper = filePackageMapper;
+        this.csoProperties = csoProperties;
         this.restTemplate = restTemplate;
     }
 
@@ -66,7 +71,7 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
 
             if (filingStatus.getFilePackages() == null || filingStatus.getFilePackages().isEmpty()) return Optional.empty();
 
-            return Optional.of(filePackageMapper.toFilingPackage(filingStatus.getFilePackages().get(0)));
+            return Optional.of(filePackageMapper.toFilingPackage(filingStatus.getFilePackages().get(0), MessageFormat.format("{0}/pacakgeRewiew", csoProperties.getCsoPackagePath())));
 
         } catch (NestedEjbException_Exception e) {
 
@@ -87,7 +92,7 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
 
             if (filingStatus.getFilePackages().isEmpty()) return new ArrayList<>();
 
-            return filingStatus.getFilePackages().stream().map(filePackageMapper::toFilingPackage).collect(Collectors.toList());
+            return filingStatus.getFilePackages().stream().map(filePackage -> filePackageMapper.toFilingPackage(filePackage, MessageFormat.format("{0}/pacakgeRewiew", csoProperties.getCsoPackagePath()))).collect(Collectors.toList());
 
         } catch (NestedEjbException_Exception e) {
 
