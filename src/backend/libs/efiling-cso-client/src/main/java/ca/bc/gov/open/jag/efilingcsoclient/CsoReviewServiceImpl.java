@@ -12,6 +12,7 @@ import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingStatusServiceExceptio
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapper;
@@ -96,24 +97,34 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
     }
 
     @Override
-    public Optional<byte[]> getSubmissionSheet(BigDecimal packageNumber) {
+    public Optional<byte[]> getReport(ReportRequest reportRequest) {
+        String reportName;
+        String parameterName;
+        switch (reportRequest.getReport()) {
+            case SUBMISSION_SHEET:
+                reportName = Keys.SUBMISSION_REPORT_NAME;
+                parameterName = Keys.SUBMISSION_REPORT_PARAMETER;
+                break;
+            case PAYMENT_RECEIPT:
+                reportName = Keys.RECEIPT_REPORT_NAME;
+                parameterName = Keys.PARAM_REPORT_PARAMETER;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + reportRequest.getReport());
+        }
 
-        logger.info("Calling soap to retrieve submission report ");
+        logger.info("Calling soap to retrieve {} report ", reportName);
 
         Report report = new Report();
-        report.setName(Keys.REPORT_NAME);
-        report.getParameters().addAll(Arrays.asList(Keys.REPORT_PARAMETER, packageNumber.toPlainString()));
+        report.setName(reportName);
+        report.getParameters().addAll(Arrays.asList(parameterName, reportRequest.getPackageId().toPlainString()));
 
         byte[] result = reportService.runReport(report);
 
         if (result == null || result.length == 0) return Optional.empty();
 
         return Optional.of(result);
-    }
 
-    @Override
-    public Optional<byte[]> getPaymentReceipt(BigDecimal packageNumber) {
-        return Optional.empty();
     }
 
     @Override
@@ -197,4 +208,5 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
         }
 
     }
+
 }

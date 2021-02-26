@@ -395,12 +395,7 @@ paths:
       tags:
         - filingPackages
       parameters:
-        - name: packageIdentifier
-          in: path
-          description: package identifier
-          required: true
-          schema:
-            type: number
+        - $ref: "#/components/parameters/packageIdentifier"
       responses:
         "200":
           description: All filing package details
@@ -416,12 +411,26 @@ paths:
       tags:
         - filingPackages
       parameters:
-        - name: packageIdentifier
-          in: path
-          description: package identifier
-          required: true
-          schema:
-            type: number
+        - $ref: "#/components/parameters/packageIdentifier"
+      responses:
+        "200":
+          description: File was returned
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: file not found
+  "/filingpackages/{packageIdentifier}/paymentReceipt":
+    get:
+      summary: Get submission payment receipt
+      operationId: GetPaymentReceipt
+      description: get payment receipt file from cso
+      tags:
+        - filingPackages
+      parameters:
+        - $ref: "#/components/parameters/packageIdentifier"
       responses:
         "200":
           description: File was returned
@@ -440,12 +449,7 @@ paths:
       tags:
         - filingPackages
       parameters:
-        - name: packageIdentifier
-          in: path
-          description: package identifier
-          required: true
-          schema:
-            type: number
+        - $ref: "#/components/parameters/packageIdentifier"
         - name: documentIdentifier
           in: path
           description: document identifier
@@ -470,12 +474,7 @@ paths:
       tags:
         - filingPackages
       parameters:
-        - name: packageIdentifier
-          in: path
-          description: package identifier
-          required: true
-          schema:
-            type: number
+        - $ref: "#/components/parameters/packageIdentifier"
         - name: documentIdentifier
           in: path
           description: document identifier
@@ -516,6 +515,13 @@ components:
       schema:
         type: string
         format: uuid
+    packageIdentifier:
+      name: packageIdentifier
+      in: path
+      description: package identifier
+      required: true
+      schema:
+        type: number
   schemas:
     BceidAccount:
       type: object

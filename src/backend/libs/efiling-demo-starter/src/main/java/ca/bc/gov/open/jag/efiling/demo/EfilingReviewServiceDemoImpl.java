@@ -4,6 +4,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.Party;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.PackagePayment;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewCourt;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument;
@@ -34,14 +35,7 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
     }
 
     @Override
-    public Optional<byte[]> getSubmissionSheet(BigDecimal packageNumber) {
-
-        return getDocument();
-
-    }
-
-    @Override
-    public Optional<byte[]> getPaymentReceipt(BigDecimal packageNumber) {
+    public Optional<byte[]> getReport(ReportRequest reportRequest) {
 
         return getDocument();
 
