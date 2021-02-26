@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingapi.submission.validator;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.InitialDocument;
 import ca.bc.gov.open.jag.efilingapi.api.model.InitialPackage;
+import ca.bc.gov.open.jag.efilingapi.api.model.NavigationUrls;
 import ca.bc.gov.open.jag.efilingapi.court.models.GetCourtDetailsRequest;
 import ca.bc.gov.open.jag.efilingapi.court.models.IsValidCourtFileNumberRequest;
 import ca.bc.gov.open.jag.efilingapi.court.models.IsValidCourtRequest;
@@ -46,6 +47,8 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
             return notification;
         }
 
+        notification.addError(validateNavigationUrls(generateUrlRequest.getNavigationUrls()));
+
         Optional<CourtDetails> courtDetails = this.courtService.getCourtDetails(GetCourtDetailsRequest
                 .builder()
                 .courtLocation(generateUrlRequest.getFilingPackage().getCourt().getLocation())
@@ -70,6 +73,23 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
         notification.addError(validateDocumentTypes(generateUrlRequest.getFilingPackage()));
 
         return notification;
+
+    }
+
+    private List<String> validateNavigationUrls(NavigationUrls navigationUrls) {
+
+        List<String> result = new ArrayList<>();
+
+        if(navigationUrls == null)   {
+            result.add("Navigation Urls are required.");
+            return result;
+        }
+
+        if(StringUtils.isBlank(navigationUrls.getError())) result.add("Error url is required.");
+        if(StringUtils.isBlank(navigationUrls.getCancel())) result.add("Cancel url is required.");
+        if(StringUtils.isBlank(navigationUrls.getSuccess())) result.add("Success url is required.");
+
+        return result;
 
     }
 
