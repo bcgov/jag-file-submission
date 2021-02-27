@@ -744,7 +744,13 @@ components:
       type: object
       description: A filing package can contain one or multiple documents that have or are being submitted electronically for new or existing court file.
       required:
+        - packageNumber
         - documents
+        - submittedBy
+        - submittedDate
+        - links
+        - parties
+        - court
       properties:
         packageNumber:
           type: number
@@ -771,6 +777,12 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Payment"
+        links:
+          type: object
+          properties:
+            packageHistoryUrl:
+              type: string
+              description: a link to view all submitted package
     SubmissionFilingPackage:
       type: object
       description: Submitted

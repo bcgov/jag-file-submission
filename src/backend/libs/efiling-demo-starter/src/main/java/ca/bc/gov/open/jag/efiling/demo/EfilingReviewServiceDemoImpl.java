@@ -5,10 +5,7 @@ import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportRequest;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.review.PackagePayment;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewCourt;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.review.*;
 import org.joda.time.DateTime;
 
 import java.io.IOException;
@@ -77,6 +74,7 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
         reviewFilingPackage.setParties(createParty());
         reviewFilingPackage.setDocuments(createReviewDocuments());
         reviewFilingPackage.setPayments(createPayment());
+        reviewFilingPackage.setPackageLinks(PackageLinks.builder().packageHistoryUrl("http://localhost:8080/wherearemypackage").create());
         return reviewFilingPackage;
     }
 
