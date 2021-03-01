@@ -114,8 +114,8 @@ const checkCSOAccountStatus = (
             getBCSCUserInfo()
               .then((userInfo) => {
                 setRequiredState(
-                  userInfo.givenNames,
                   "",
+                  userInfo.givenNames,
                   userInfo.lastName,
                   setApplicantInfo,
                   setShowLoader
@@ -207,7 +207,7 @@ export default function Home() {
     confirmationPopup: { ...confirmationPopup, modal: updatedModal },
     submissionId,
   };
-
+  
   return (
     <>
       {showLoader && <Loader page />}
