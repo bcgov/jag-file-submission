@@ -5,6 +5,7 @@ import ca.bc.gov.ag.csows.filing.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingReviewServiceException;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoReviewServiceImpl;
+import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapperImpl;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
@@ -32,7 +33,9 @@ public class DeleteSubmittedDocumentTest {
         MockitoAnnotations.openMocks(this);
 
 
-        sut = new CsoReviewServiceImpl(null, null, filingFacadeBeanMock, new FilePackageMapperImpl(), restTemplateMock);
+        CsoProperties csoProperties = new CsoProperties();
+        csoProperties.setCsoBasePath("http://locahost:8080");
+        sut = new CsoReviewServiceImpl(null, null, filingFacadeBeanMock, new FilePackageMapperImpl(), csoProperties, restTemplateMock);
     }
 
     @DisplayName("OK: document withdrawn")

@@ -4,6 +4,7 @@ import ca.bc.gov.ag.csows.reports.ReportService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportsTypes;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoReviewServiceImpl;
+import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapperImpl;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
@@ -35,7 +36,10 @@ public class GetReportTest {
 
         MockitoAnnotations.openMocks(this);
 
-        sut = new CsoReviewServiceImpl(null, reportServiceMock, null, new FilePackageMapperImpl(), restTemplateMock);
+        CsoProperties csoProperties = new CsoProperties();
+        csoProperties.setCsoBasePath("http://locahost:8080");
+
+        sut = new CsoReviewServiceImpl(null, reportServiceMock, null, new FilePackageMapperImpl(), csoProperties, restTemplateMock);
     }
 
     @DisplayName("OK: submission sheet return")

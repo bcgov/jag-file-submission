@@ -31,6 +31,7 @@ public interface FilingPackageMapper {
     @Mapping(target = "submittedDate", expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.toIsoDate(filingPackage.getSubmittedDate()))")
     @Mapping(target = "packageNumber", source = "packageNo")
     @Mapping(target = "filingComments", source = "filingCommentsTxt")
+    @Mapping(target = "links.packageHistoryUrl", source = "packageLinks.packageHistoryUrl")
     FilingPackage toResponseFilingPackage(ReviewFilingPackage filingPackage);
 
     List<Document> toDocuments(List<ReviewDocument> file);

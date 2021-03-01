@@ -92,6 +92,8 @@ public class EfilingReviewServiceDemoImplTest {
         Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(1).getSubmittedAmt());
         Assertions.assertEquals("Affidavit", result.get().getPayments().get(1).getTransactionDesc());
 
+        Assertions.assertEquals("http://localhost:8080/wherearemypackage", result.get().getPackageLinks().getPackageHistoryUrl());
+
     }
 
 
