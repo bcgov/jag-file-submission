@@ -1,11 +1,8 @@
-package ca.bc.gov.open.jag.efilingreviewerapi.extract;
+package ca.bc.gov.open.jag.efilingreviewerapi.error;
 
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenAuthenticationException;
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
-import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentException;
-import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerVirusFoundException;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.ApiError;
-import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerCacheException;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -16,9 +13,9 @@ import org.springframework.web.context.request.WebRequest;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("DiligenControllerAdvisor test suite")
-public class DiligenControllerAdvisorTest {
+public class AiReviewerControllerAdvisorTest {
 
-    public DiligenControllerAdvisor sut;
+    public AiReviewerControllerAdvisor sut;
 
     @Mock
     private WebRequest webRequestMock;
@@ -27,7 +24,7 @@ public class DiligenControllerAdvisorTest {
     public void beforeEach() {
         MockitoAnnotations.openMocks(this);
 
-        sut = new DiligenControllerAdvisor();
+        sut = new AiReviewerControllerAdvisor();
 
     }
 
