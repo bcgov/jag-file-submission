@@ -3,6 +3,10 @@ package ca.bc.gov.open.efilingdiligenclient.diligen;
 import ca.bc.gov.open.efilingdiligenclient.Keys;
 import ca.bc.gov.open.efilingdiligenclient.diligen.model.DiligenResponse;
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
+import ca.bc.gov.open.jag.efilingdiligenclient.api.DocumentsApi;
+import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.ApiClient;
+import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.ApiException;
+import ca.bc.gov.open.jag.efilingdiligenclient.api.model.InlineResponse2003;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -33,11 +37,14 @@ public class DiligenServiceImpl implements DiligenService {
 
     private final ObjectMapper objectMapper;
 
-    public DiligenServiceImpl(RestTemplate restTemplate, DiligenProperties diligenProperties, DiligenAuthService diligenAuthService, ObjectMapper objectMapper) {
+    private final ApiClient apiClient;
+
+    public DiligenServiceImpl(RestTemplate restTemplate, DiligenProperties diligenProperties, DiligenAuthService diligenAuthService, ObjectMapper objectMapper, ApiClient apiClient) {
         this.restTemplate = restTemplate;
         this.diligenProperties = diligenProperties;
         this.diligenAuthService = diligenAuthService;
         this.objectMapper = objectMapper;
+        this.apiClient = apiClient;
     }
     @Override
     public BigDecimal postDocument(String documentType, MultipartFile file) {
@@ -71,6 +78,28 @@ public class DiligenServiceImpl implements DiligenService {
         }
 
         return fileId.get();
+
+    }
+
+    @Override
+    public Object getDocumentDetails(BigDecimal documentId) {
+
+        logger.debug("getting document details from diligen");
+
+        apiClient.setBearerToken(diligenAuthService.getDiligenJWT(diligenProperties.getUsername(), diligenProperties.getPassword()));
+        DocumentsApi documentsApi = new DocumentsApi(apiClient);
+        try {
+            InlineResponse2003 result = documentsApi.apiDocumentsFileIdDetailsGet(documentId.intValue());
+
+            logger.info("detail retrieved");
+
+            if (!result.getData().getFileDetails().getFileStatus().equals("PROCESSED")) throw new DiligenDocumentException(MessageFormat.format("Document not in processed status. Document in status {}", result.getData().getFileDetails().getFileStatus()));
+
+            return result.getData().getFileDetails().getMlJson();
+
+        } catch (ApiException e) {
+            throw new DiligenDocumentException("Failed getting the document details");
+        }
 
     }
 

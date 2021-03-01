@@ -124,7 +124,7 @@ public class PostDocumentTest {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
-        sut = new DiligenServiceImpl(restTemplateMock, diligenProperties, diligenAuthServiceMock, objectMapper);
+        sut = new DiligenServiceImpl(restTemplateMock, diligenProperties, diligenAuthServiceMock, objectMapper, null);
 
     }
 
