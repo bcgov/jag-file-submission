@@ -9,7 +9,7 @@ import {
   isIdentityProviderBCeID,
 } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 import { getBCSCUserInfo } from "../../../domain/authentication/AuthenticationService";
-import PackageConfirmation from "../package-confirmation/PackageConfirmation";
+import PackageConfirmation from "../../../domain/package/package-confirmation/PackageConfirmation";
 import CSOAccount from "../cso-account/CSOAccount";
 
 import "../page.css";

@@ -21,7 +21,7 @@ import java.util.Optional;
 public class GetSubmissionDocumentTest {
 
     private static final byte[] DOC_DATA = "TEST".getBytes();
-    private static final String DOCUMENT_NOT_FOUND = "NOT FOUND";
+    private static final BigDecimal DOCUMENT_NOT_FOUND = new BigDecimal(50);
 
     FilingPackageServiceImpl sut;
 
@@ -50,9 +50,9 @@ public class GetSubmissionDocumentTest {
 
         Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.of(TestHelpers.createFilingPackage()));
 
-        Mockito.when(efilingReviewServiceMock.getSubmittedDocument(Mockito.any(), ArgumentMatchers.eq(TestHelpers.DOCUMENT_ID_TWO))).thenReturn(Optional.of(DOC_DATA));
+        Mockito.when(efilingReviewServiceMock.getSubmittedDocument(Mockito.eq(TestHelpers.DOCUMENT_ID_TWO_BD))).thenReturn(Optional.of(DOC_DATA));
 
-        Optional<SubmittedDocument> result = sut.getSubmittedDocument(TestHelpers.CASE_1_STRING, BigDecimal.ONE, TestHelpers.DOCUMENT_ID_TWO);
+        Optional<SubmittedDocument> result = sut.getSubmittedDocument(TestHelpers.CASE_1_STRING, BigDecimal.ONE, TestHelpers.DOCUMENT_ID_TWO_BD);
 
         Assertions.assertTrue(result.isPresent());
         Assertions.assertEquals(TestHelpers.NAME, result.get().getName());
@@ -64,8 +64,7 @@ public class GetSubmissionDocumentTest {
     @DisplayName("Not found: missing account")
     public void withValidRequestButMissingAccountReturnEmpty() {
 
-        Optional<SubmittedDocument> result = sut.getSubmittedDocument(TestHelpers.CASE_2_STRING, BigDecimal.ONE, TestHelpers.DOCUMENT_ID_TWO);
-
+        Optional<SubmittedDocument> result = sut.getSubmittedDocument(TestHelpers.CASE_2_STRING, BigDecimal.ONE, TestHelpers.DOCUMENT_ID_TWO_BD);
         Assertions.assertFalse(result.isPresent());
 
     }
@@ -77,7 +76,7 @@ public class GetSubmissionDocumentTest {
 
         Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.empty());
 
-        Optional<SubmittedDocument> result = sut.getSubmittedDocument(TestHelpers.CASE_1_STRING, BigDecimal.TEN, TestHelpers.DOCUMENT_ID_TWO);
+        Optional<SubmittedDocument> result = sut.getSubmittedDocument(TestHelpers.CASE_1_STRING, BigDecimal.TEN, TestHelpers.DOCUMENT_ID_TWO_BD);
 
         Assertions.assertFalse(result.isPresent());
 
@@ -101,9 +100,9 @@ public class GetSubmissionDocumentTest {
 
         Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.of(TestHelpers.createFilingPackage()));
 
-        Mockito.when(efilingReviewServiceMock.getSubmittedDocument(Mockito.any(), ArgumentMatchers.eq(TestHelpers.DOCUMENT_ID_TWO))).thenReturn(Optional.empty());
+        Mockito.when(efilingReviewServiceMock.getSubmittedDocument(Mockito.eq(TestHelpers.DOCUMENT_ID_TWO_BD))).thenReturn(Optional.empty());
 
-        Optional<SubmittedDocument> result = sut.getSubmittedDocument(TestHelpers.CASE_1_STRING, BigDecimal.TEN, TestHelpers.DOCUMENT_ID_TWO);
+        Optional<SubmittedDocument> result = sut.getSubmittedDocument(TestHelpers.CASE_1_STRING, BigDecimal.TEN, TestHelpers.DOCUMENT_ID_TWO_BD);
 
         Assertions.assertFalse(result.isPresent());
 

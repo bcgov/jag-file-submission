@@ -16,6 +16,7 @@ import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import { translateApplicantInfo } from "../../../modules/helpers/translateApplicantInfo";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { propTypes } from "../../../types/propTypes";
+import { isIdentityProviderBCeID } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 import "./CSOAccount.scss";
 
 const content = getContent();
@@ -34,6 +35,7 @@ export default function CSOAccount({
     emailError: "",
     confEmailError: "",
   });
+  const isBCeID = isIdentityProviderBCeID();
 
   useEffect(() => {
     const emailErrors = () =>
@@ -120,43 +122,48 @@ export default function CSOAccount({
           </p>
           <DisplayBox icon={icon} element={applicantTable} />
 
-          <form className="email-form">
-            <div className="row">
-              <label className="cso-label">
-                Email Address
-                <span className="red">*</span>
-              </label>
-            </div>
-            <div className="email-input row">
-              <input
-                type="textarea"
-                className="cso-input"
-                name="email"
-                data-testid="email"
-                onChange={handleOnChange}
-              />
-              <span className="error red">{emailInputErrors.emailError}</span>
-            </div>
-            <div className="row">
-              <label className="cso-label">
-                Please Confirm Your Email Address
-                <span className="red">*</span>
-              </label>
-            </div>
-            <div className="row">
-              <input
-                type="textarea"
-                className="cso-input"
-                name="confEmail"
-                data-testid="conf-email"
-                onChange={handleOnChange}
-              />
-              <span className="error red">
-                {emailInputErrors.confEmailError}
-              </span>
-            </div>
-          </form>
-          
+          {/* if BCSC and missing email, show email input fields. */}
+          {!isBCeID && !applicantInfo.email && (
+            <form className="email-form">
+              <div className="row">
+                <label className="cso-label">
+                  Email Address
+                  <span className="red">*</span>
+                </label>
+              </div>
+              <div className="email-input row">
+                <input
+                  type="textarea"
+                  className="cso-input"
+                  name="email"
+                  data-testid="email"
+                  onChange={handleOnChange}
+                />
+                <span className="error red" data-testid="email-error">
+                  {emailInputErrors.emailError}
+                </span>
+              </div>
+              <div className="row">
+                <label className="cso-label">
+                  Please Confirm Your Email Address
+                  <span className="red">*</span>
+                </label>
+              </div>
+              <div className="row">
+                <input
+                  type="textarea"
+                  className="cso-input"
+                  name="confEmail"
+                  data-testid="conf-email"
+                  onChange={handleOnChange}
+                />
+                <span className="error red" data-testid="conf-email-error">
+                  {emailInputErrors.confEmailError}
+                </span>
+              </div>
+            </form>
+          )}
+
           <br />
         </div>
 

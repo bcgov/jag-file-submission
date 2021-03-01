@@ -10,31 +10,32 @@ export function translateApplicantInfo({
   const fullName = middleName
     ? `${firstName} ${middleName} ${lastName}`
     : `${firstName} ${lastName}`;
+  const isBCeID = isIdentityProviderBCeID();
 
-  if (isIdentityProviderBCeID()) {
-    return [
-      {
-        name: "BCeID:",
-        value: bceid,
-      },
-      {
-        name: "Full Name:",
-        value: fullName,
-      },
-      {
-        name: "Email Address:",
-        value: email,
-      },
-    ];
-  }
-  return [
-    {
+  const data = [];
+  if (isBCeID) {
+    data.push({
+      name: "BCeID:",
+      value: bceid,
+    });
+  } else {
+    data.push({
       name: "BCSC:",
-      value: null,
-    },
-    {
-      name: "Full Name:",
-      value: fullName,
-    },
-  ];
+      value: "",
+    });
+  }
+
+  data.push({
+    name: "Full Name:",
+    value: fullName,
+  });
+
+  // if BCSC, don't show missing email, we'll show input fields instead.
+  if (!isBCeID && email) {
+    data.push({
+      name: "Email Address:",
+      value: email,
+    });
+  }
+  return data;
 }

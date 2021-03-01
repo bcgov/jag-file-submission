@@ -196,82 +196,10 @@ exports[`Home Component matches the snapshot when user cso account does not exis
                     User Name
                   </div>
                 </div>
-                <div
-                  class="bcgov-row "
-                >
-                  <div
-                    class="bcgov-fill-width"
-                  >
-                    Email Address:
-                  </div>
-                  <div
-                    class="bcgov-table-value "
-                  >
-                    username@example.com
-                  </div>
-                </div>
               </div>
             </div>
           </div>
         </div>
-        <form
-          class="email-form"
-        >
-          <div
-            class="row"
-          >
-            <label
-              class="cso-label"
-            >
-              Email Address
-              <span
-                class="red"
-              >
-                *
-              </span>
-            </label>
-          </div>
-          <div
-            class="email-input row"
-          >
-            <input
-              class="cso-input"
-              data-testid="email"
-              name="email"
-              type="textarea"
-            />
-            <span
-              class="error red"
-            />
-          </div>
-          <div
-            class="row"
-          >
-            <label
-              class="cso-label"
-            >
-              Please Confirm Your Email Address
-              <span
-                class="red"
-              >
-                *
-              </span>
-            </label>
-          </div>
-          <div
-            class="row"
-          >
-            <input
-              class="cso-input"
-              data-testid="conf-email"
-              name="confEmail"
-              type="textarea"
-            />
-            <span
-              class="error red"
-            />
-          </div>
-        </form>
         <br />
       </div>
       <div>
@@ -1651,68 +1579,24 @@ exports[`Home When user has authenticated with BCSC with no CSO account, retriev
                      Arthur C Clark
                   </div>
                 </div>
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-fill-width"
+                  >
+                    Email Address:
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    username@example.com
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <form
-          class="email-form"
-        >
-          <div
-            class="row"
-          >
-            <label
-              class="cso-label"
-            >
-              Email Address
-              <span
-                class="red"
-              >
-                *
-              </span>
-            </label>
-          </div>
-          <div
-            class="email-input row"
-          >
-            <input
-              class="cso-input"
-              data-testid="email"
-              name="email"
-              type="textarea"
-            />
-            <span
-              class="error red"
-            />
-          </div>
-          <div
-            class="row"
-          >
-            <label
-              class="cso-label"
-            >
-              Please Confirm Your Email Address
-              <span
-                class="red"
-              >
-                *
-              </span>
-            </label>
-          </div>
-          <div
-            class="row"
-          >
-            <input
-              class="cso-input"
-              data-testid="conf-email"
-              name="confEmail"
-              type="textarea"
-            />
-            <span
-              class="error red"
-            />
-          </div>
-        </form>
         <br />
       </div>
       <div>

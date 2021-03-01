@@ -31,7 +31,7 @@ describe("Home", () => {
   const token = generateJWTToken({
     preferred_username: "username@bceid",
     email: "username@example.com",
-    identity_provider_alias: "bceid",
+    identityProviderAlias: "bceid",
   });
   localStorage.setItem("jwt", token);
 
@@ -241,9 +241,9 @@ describe("Home", () => {
   test("When user has authenticated with BCSC with no CSO account, retrieve userInfo from BCSC - success", async () => {
     // IDP is set to bcsc
     const tokenAlt = generateJWTToken({
-      preferred_username: "username@bceid",
+      preferred_username: "username@bcsc",
       email: "username@example.com",
-      identity_provider_alias: "bcsc",
+      identityProviderAlias: "bcsc",
     });
     localStorage.setItem("jwt", tokenAlt);
 
@@ -269,7 +269,7 @@ describe("Home", () => {
     const tokenAlt = generateJWTToken({
       preferred_username: "username@bceid",
       email: "username@example.com",
-      identity_provider_alias: "bcsc",
+      identityProviderAlias: "bcsc",
     });
     localStorage.setItem("jwt", tokenAlt);
 

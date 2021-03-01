@@ -5,7 +5,7 @@ import DocumentList from "../DocumentList";
 const pkgRvwService = require("../PackageReviewService");
 
 describe("DocumentList Component Testsuite", () => {
-  const packageId = "1";
+  const packageId = 1;
   const documents = [
     {
       identifier: "1",

@@ -35,5 +35,5 @@ export function generateJWTToken(payload) {
  */
 export function isIdentityProviderBCeID() {
   const token = getJWTData();
-  return token.identity_provider_alias === "bceid";
+  return token.identityProviderAlias === "bceid";
 }

@@ -18,6 +18,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValidator {
@@ -43,25 +44,25 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
             return notification;
         }
 
-        CourtDetails courtDetails = this.courtService.getCourtDetails(GetCourtDetailsRequest
+        Optional<CourtDetails> courtDetails = this.courtService.getCourtDetails(GetCourtDetailsRequest
                 .builder()
                 .courtLocation(generateUrlRequest.getFilingPackage().getCourt().getLocation())
                 .courtLevel(generateUrlRequest.getFilingPackage().getCourt().getLevel())
                 .courtClassification(generateUrlRequest.getFilingPackage().getCourt().getCourtClass())
                 .create());
 
-        if(courtDetails == null) {
+        if(!courtDetails.isPresent()) {
             notification.addError(MessageFormat.format("Court with Location: [{0}], Level: [{1}], Classification: [{2}] is not a valid court.",
                     generateUrlRequest.getFilingPackage().getCourt().getLocation(), generateUrlRequest.getFilingPackage().getCourt().getLevel(), generateUrlRequest.getFilingPackage().getCourt().getCourtClass()));
             return notification;
         }
 
-        notification.addError(validateCourt(generateUrlRequest.getFilingPackage(), courtDetails, applicationCode));
+        notification.addError(validateCourt(generateUrlRequest.getFilingPackage(), courtDetails.get(), applicationCode));
 
         notification.addError(validateParties(generateUrlRequest.getFilingPackage()));
 
         if(!isNewSubmission(generateUrlRequest.getFilingPackage())) {
-            notification.addError(validateCourtFileNumber(generateUrlRequest.getFilingPackage(), courtDetails, applicationCode));
+            notification.addError(validateCourtFileNumber(generateUrlRequest.getFilingPackage(), courtDetails.get(), applicationCode));
         }
 
         notification.addError(validateDocumentTypes(generateUrlRequest.getFilingPackage()));

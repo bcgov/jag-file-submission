@@ -29,11 +29,18 @@ public class PackageReviewPage extends BasePage {
     @FindBy(id = "uncontrolled-tab-tab-comments")
     private WebElement filingCommentsTab;
 
+    @FindBy(id = "uncontrolled-tab-tab-payment")
+    private WebElement paymentStatusTab;
+
     @FindBy(id = "uncontrolled-tab-tabpane-documents")
     private WebElement documentPane;
 
+    @FindBy(id = "uncontrolled-tab-tabpane-payment")
+    private WebElement paymentPane;
+
     @FindBy(id = "filingComments")
     private WebElement filingCommentsTextBox;
+
 
     public List<String> getPackageDetails() {
 
@@ -62,6 +69,10 @@ public class PackageReviewPage extends BasePage {
         filingCommentsTab.click();
     }
 
+    public void clickPaymentStatusTab() {
+        paymentStatusTab.click();
+    }
+
     public boolean verifyDocumentsPaneIsDisplayed() {
         wait.until(ExpectedConditions.visibilityOf(documentPane));
         return documentPane.isDisplayed();
@@ -70,5 +81,10 @@ public class PackageReviewPage extends BasePage {
     public boolean verifyFilingCommentsIsDisplayed() {
         wait.until(ExpectedConditions.visibilityOf(filingCommentsTextBox));
         return filingCommentsTextBox.isDisplayed();
+    }
+
+    public boolean verifyPaymentStatusIsDisplayed() {
+        wait.until(ExpectedConditions.visibilityOf(paymentPane));
+        return paymentPane.isDisplayed();
     }
 }

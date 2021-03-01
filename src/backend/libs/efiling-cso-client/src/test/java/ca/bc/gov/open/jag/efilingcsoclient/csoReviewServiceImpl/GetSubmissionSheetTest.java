@@ -7,6 +7,7 @@ import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.web.client.RestTemplate;
 
 
 import java.math.BigDecimal;
@@ -17,8 +18,12 @@ import static org.mockito.ArgumentMatchers.any;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("Review Service Test Suite")
 public class GetSubmissionSheetTest {
+
     @Mock
     ReportService reportServiceMock;
+
+    @Mock
+    private RestTemplate restTemplateMock;
 
     private static final byte[] SUCCESS = "TEST".getBytes();
 
@@ -29,7 +34,7 @@ public class GetSubmissionSheetTest {
 
         MockitoAnnotations.openMocks(this);
 
-        sut = new CsoReviewServiceImpl(null, reportServiceMock, null, new FilePackageMapperImpl());
+        sut = new CsoReviewServiceImpl(null, reportServiceMock, null, new FilePackageMapperImpl(), restTemplateMock);
     }
 
     @DisplayName("OK: report return")

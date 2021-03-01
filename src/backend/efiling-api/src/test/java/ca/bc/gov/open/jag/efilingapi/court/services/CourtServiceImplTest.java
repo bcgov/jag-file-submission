@@ -11,6 +11,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CourtServiceImplTest {
@@ -40,7 +41,7 @@ public class CourtServiceImplTest {
         Mockito.when(efilingCourtServiceMock.getCourtDescription(
                 Mockito.eq(COURT_LOCATION),
                 Mockito.eq(COURT_LEVEL),
-                Mockito.eq(COURT_CLASSIFICATION))).thenReturn(courtDetails);
+                Mockito.eq(COURT_CLASSIFICATION))).thenReturn(Optional.of(courtDetails));
 
         Mockito.when(efilingCourtServiceMock
                 .checkValidLevelClassLocation(
@@ -90,7 +91,7 @@ public class CourtServiceImplTest {
                 .courtClassification(COURT_CLASSIFICATION)
                 .courtLevel(COURT_LEVEL)
                 .courtLocation(COURT_LOCATION)
-                .create());
+                .create()).get();
 
         Assertions.assertEquals(COURT_ID, actual.getCourtId());
         Assertions.assertEquals(CLASS_DESCRIPTION, actual.getClassDescription());

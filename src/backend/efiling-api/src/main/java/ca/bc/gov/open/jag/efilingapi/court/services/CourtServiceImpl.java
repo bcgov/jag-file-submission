@@ -6,6 +6,8 @@ import ca.bc.gov.open.jag.efilingapi.court.models.IsValidCourtRequest;
 import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 
+import java.util.Optional;
+
 public class CourtServiceImpl implements CourtService {
 
     private final EfilingCourtService efilingCourtService;
@@ -25,7 +27,7 @@ public class CourtServiceImpl implements CourtService {
     }
 
     @Override
-    public CourtDetails getCourtDetails(GetCourtDetailsRequest getCourtDetailsRequest) {
+    public Optional<CourtDetails> getCourtDetails(GetCourtDetailsRequest getCourtDetailsRequest) {
 
         return this.efilingCourtService.getCourtDescription(
                 getCourtDetailsRequest.getCourtLocation(),
