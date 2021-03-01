@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efiling.demo;
 
 import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
@@ -91,6 +92,8 @@ public class EfilingReviewServiceDemoImplTest {
         Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(1).getSubmittedAmt());
         Assertions.assertEquals("Affidavit", result.get().getPayments().get(1).getTransactionDesc());
 
+        Assertions.assertEquals("http://localhost:8080/wherearemypackage", result.get().getPackageLinks().getPackageHistoryUrl());
+
     }
 
 
@@ -114,7 +117,7 @@ public class EfilingReviewServiceDemoImplTest {
     @DisplayName("OK: demo returns a document byte array")
     public void withRequestReturnByteArray() {
 
-        Optional<byte[]> result = sut.getSubmissionSheet(BigDecimal.ONE);
+        Optional<byte[]> result = sut.getReport(ReportRequest.builder().create());
 
         Assertions.assertTrue(result.isPresent());
 

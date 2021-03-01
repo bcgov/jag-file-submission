@@ -47,11 +47,11 @@ describe("CSOAccount Component", () => {
 
   test("On success, setCsoAccountStatus exists and isNew to true", async () => {
     // IDP is set to bcsc
-    const jwtToken = generateJWTToken({
+    const altToken = generateJWTToken({
       preferred_username: "username@bcsc",
       identityProviderAlias: "bcsc",
     });
-    localStorage.setItem("jwt", jwtToken);
+    localStorage.setItem("jwt", altToken);
     const bcscInfo = {
       bceid: "",
       firstName: "Bob",
@@ -115,11 +115,11 @@ describe("CSOAccount Component", () => {
 
   test("On failed account creation, should redirect to parent application", async () => {
     // IDP is set to bcsc
-    const jwtToken = generateJWTToken({
+    const altToken = generateJWTToken({
       preferred_username: "username@bcsc",
       identityProviderAlias: "bcsc",
     });
-    localStorage.setItem("jwt", jwtToken);
+    localStorage.setItem("jwt", altToken);
     const bcscInfo = {
       bceid: "",
       firstName: "Bob",
@@ -159,13 +159,45 @@ describe("CSOAccount Component", () => {
     );
   });
 
-  test("email fields should not appear for BCeID accounts", async () => {
+  test("email fields should appear if email is blank", async () => {
     // IDP is set to bceid
-    const jwtToken = generateJWTToken({
+    const altToken = generateJWTToken({
       preferred_username: "username@bceid",
       identityProviderAlias: "bceid",
     });
-    localStorage.setItem("jwt", jwtToken);
+    localStorage.setItem("jwt", altToken);
+    const bceidInfo = {
+      bceid: "bobross42",
+      firstName: "Bob",
+      middleName: "Painter",
+      lastName: "Ross",
+      email: "",
+    };
+
+    mock.onPost(API_REQUEST).reply(201, {
+      internalClientNumber: "ABC123",
+      clientId: "123",
+    });
+
+    const { container } = render(
+      <CSOAccount
+        confirmationPopup={confirmationPopup}
+        applicantInfo={bceidInfo}
+        setCsoAccountStatus={setCsoAccountStatus}
+      />
+    );
+
+    const emailInput = queryByTestId(container, "email");
+    expect(emailInput).not.toBeNull();
+  });
+
+  test("email fields should not appear if email is already specified", async () => {
+    // IDP is set to bceid
+    const altToken = generateJWTToken({
+      preferred_username: "username@bceid",
+      identityProviderAlias: "bceid",
+    });
+    localStorage.setItem("jwt", altToken);
     const bceidInfo = {
       bceid: "bobross42",
       firstName: "Bob",

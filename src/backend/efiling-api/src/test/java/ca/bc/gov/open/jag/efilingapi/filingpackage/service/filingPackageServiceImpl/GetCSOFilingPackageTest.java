@@ -2,16 +2,10 @@ package ca.bc.gov.open.jag.efilingapi.filingpackage.service.filingPackageService
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
-import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
-import ca.bc.gov.open.jag.efilingapi.api.model.InitialDocument;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.mapper.FilingPackageMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageServiceImpl;
-import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.Party;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.review.PackagePayment;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewCourt;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import org.joda.time.DateTime;
@@ -22,9 +16,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.Optional;
-import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("FilePackageServiceImplTest")
@@ -90,7 +82,7 @@ public class GetCSOFilingPackageTest {
         Assertions.assertEquals(TestHelpers.MIDDLE_NAME, result.get().getParties().get(0).getMiddleName());
         //Document
         Assertions.assertEquals(2, result.get().getDocuments().size());
-        Assertions.assertEquals(DocumentProperties.TypeEnum.AAB, result.get().getDocuments().get(0).getDocumentProperties().getType());
+        Assertions.assertEquals("AAB", result.get().getDocuments().get(0).getDocumentProperties().getType());
         Assertions.assertEquals(TestHelpers.DESCRIPTION, result.get().getDocuments().get(0).getDescription());
         Assertions.assertEquals(TestHelpers.NAME, result.get().getDocuments().get(0).getDocumentProperties().getName());
         Assertions.assertEquals(TestHelpers.STATUS, result.get().getDocuments().get(0).getStatus().getDescription());
@@ -108,6 +100,8 @@ public class GetCSOFilingPackageTest {
         Assertions.assertEquals(TestHelpers.TRANSACTION_DESC, result.get().getPayments().get(0).getPaymentDescription());
         Assertions.assertEquals(EXPECTED_ISO, result.get().getPayments().get(0).getTransactionDate());
 
+        Assertions.assertEquals("http://localhost:8080/showmustgoon", result.get().getLinks().getPackageHistoryUrl());
+
     }
 
     @Test
@@ -119,7 +113,7 @@ public class GetCSOFilingPackageTest {
         ReviewDocument withdrawnDocument = new ReviewDocument();
         withdrawnDocument.setDocumentId("TEST");
         withdrawnDocument.setFileName("TEST");
-        withdrawnDocument.setDocumentTypeCd(DocumentProperties.TypeEnum.AAB.getValue());
+        withdrawnDocument.setDocumentTypeCd("AAB");
         withdrawnDocument.setDocumentType("TEST");
         withdrawnDocument.setStatus("TEST");
         withdrawnDocument.setStatusCode(ca.bc.gov.open.jag.efilingcommons.Keys.WITHDRAWN_STATUS_CD);

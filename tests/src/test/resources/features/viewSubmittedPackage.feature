@@ -10,6 +10,7 @@ Feature: Recently submitted package details can be viewed
 
   Scenario: Validate document details are correct in submitted package
     Then documents details are available in Documents tab
+    And document can be downloaded
 
   Scenario: Validate Filing Comments are correct in submitted package
     And comments are available in Filing Comments tab

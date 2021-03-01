@@ -1,8 +1,10 @@
 package ca.bc.gov.open.efilingdiligenclient.diligen;
 
 import ca.bc.gov.open.efilingdiligenclient.Keys;
-import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenProperties;
+import ca.bc.gov.open.efilingdiligenclient.diligen.model.DiligenResponse;
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ByteArrayResource;
@@ -16,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
+import java.util.Optional;
 
 @Service
 public class DiligenServiceImpl implements DiligenService {
@@ -28,10 +31,13 @@ public class DiligenServiceImpl implements DiligenService {
 
     private final DiligenAuthService diligenAuthService;
 
-    public DiligenServiceImpl(RestTemplate restTemplate, DiligenProperties diligenProperties, DiligenAuthService diligenAuthService) {
+    private final ObjectMapper objectMapper;
+
+    public DiligenServiceImpl(RestTemplate restTemplate, DiligenProperties diligenProperties, DiligenAuthService diligenAuthService, ObjectMapper objectMapper) {
         this.restTemplate = restTemplate;
         this.diligenProperties = diligenProperties;
         this.diligenAuthService = diligenAuthService;
+        this.objectMapper = objectMapper;
     }
     @Override
     public BigDecimal postDocument(String documentType, MultipartFile file) {
@@ -52,19 +58,76 @@ public class DiligenServiceImpl implements DiligenService {
         HttpEntity<MultiValueMap<String, Object>> requestEntity
                 = new HttpEntity<>(body, headers);
 
-        ResponseEntity<String> response = restTemplate.postForEntity(constructUrl(), requestEntity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(constructUrl(MessageFormat.format(Keys.POST_DOCUMENT_PATH,diligenProperties.getProjectIdentifier())), requestEntity, String.class);
 
         if (!response.getStatusCode().is2xxSuccessful()) throw new DiligenDocumentException(response.getStatusCode().toString());
 
         logger.info("document posted to diligen");
 
-        return BigDecimal.ONE;
+        Optional<BigDecimal> fileId = tryGetFileId(headers, file.getOriginalFilename(), 5);
+
+        if(!fileId.isPresent()) {
+            throw new DiligenDocumentException("Failed getting the document id after 5 attempts");
+        }
+
+        return fileId.get();
 
     }
 
-    private String constructUrl() {
+    private Optional<BigDecimal> tryGetFileId(HttpHeaders headers, String fileName, int maxAttempt) {
 
-        return MessageFormat.format("{0}{1}", diligenProperties.getBasePath(), MessageFormat.format(Keys.POST_DOCUMENT_PATH,diligenProperties.getProjectIdentifier()));
+        
+        int attempt = 0;
+
+        logger.debug("attempting to retrieve document Id");
+
+        while(attempt < maxAttempt) {
+
+            Optional<BigDecimal> result = getFileId(headers, fileName);
+            if(result.isPresent()) return result;
+            attempt++;
+
+        }
+
+        return Optional.empty();
+        
+    }
+
+    private Optional<BigDecimal> getFileId(HttpHeaders headers, String fileName) {
+
+        try {
+            HttpEntity<String> entity = new HttpEntity<>(null, headers);
+
+            ResponseEntity<String> searchResponse = restTemplate.exchange(constructUrl(MessageFormat.format(Keys.GET_DOCUMENT_PATH, diligenProperties.getProjectIdentifier(), fileName)), HttpMethod.GET, entity, String.class);
+
+            if (!searchResponse.getStatusCode().is2xxSuccessful())
+                throw new DiligenDocumentException(searchResponse.getStatusCode().toString());
+
+            DiligenResponse diligenResponse = objectMapper.readValue(searchResponse.getBody(), DiligenResponse.class);
+
+            if (!diligenResponse.getData().getDocuments().isEmpty()) {
+                BigDecimal result = diligenResponse.getData().getDocuments().get(0).getFileId();
+                logger.debug("successfully retrieved document id {}", result);
+                return Optional.of(result);
+            } else {
+                logger.debug("attempt {} to retrieve document id failed, waiting 2s");
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (JsonProcessingException e) {
+            //Using the exceptions message can contain PII data. It is safer to just say it failed for now.
+            throw new DiligenDocumentException("Failed in object deserialization");
+        }
+
+        return Optional.empty();
+    }
+
+    private String constructUrl(String path) {
+
+        return MessageFormat.format("{0}{1}", diligenProperties.getBasePath(), path);
 
     }
 

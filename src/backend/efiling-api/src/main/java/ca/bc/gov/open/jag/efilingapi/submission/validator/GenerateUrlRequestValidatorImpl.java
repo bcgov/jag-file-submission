@@ -1,7 +1,9 @@
 package ca.bc.gov.open.jag.efilingapi.submission.validator;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
+import ca.bc.gov.open.jag.efilingapi.api.model.InitialDocument;
 import ca.bc.gov.open.jag.efilingapi.api.model.InitialPackage;
+import ca.bc.gov.open.jag.efilingapi.api.model.NavigationUrls;
 import ca.bc.gov.open.jag.efilingapi.court.models.GetCourtDetailsRequest;
 import ca.bc.gov.open.jag.efilingapi.court.models.IsValidCourtFileNumberRequest;
 import ca.bc.gov.open.jag.efilingapi.court.models.IsValidCourtRequest;
@@ -12,6 +14,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.GetValidPartyRoleRequest;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.utils.Notification;
 import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentType;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.MessageFormat;
@@ -44,6 +47,8 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
             return notification;
         }
 
+        notification.addError(validateNavigationUrls(generateUrlRequest.getNavigationUrls()));
+
         Optional<CourtDetails> courtDetails = this.courtService.getCourtDetails(GetCourtDetailsRequest
                 .builder()
                 .courtLocation(generateUrlRequest.getFilingPackage().getCourt().getLocation())
@@ -68,6 +73,23 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
         notification.addError(validateDocumentTypes(generateUrlRequest.getFilingPackage()));
 
         return notification;
+
+    }
+
+    private List<String> validateNavigationUrls(NavigationUrls navigationUrls) {
+
+        List<String> result = new ArrayList<>();
+
+        if(navigationUrls == null)   {
+            result.add("Navigation Urls are required.");
+            return result;
+        }
+
+        if(StringUtils.isBlank(navigationUrls.getError())) result.add("Error url is required.");
+        if(StringUtils.isBlank(navigationUrls.getCancel())) result.add("Cancel url is required.");
+        if(StringUtils.isBlank(navigationUrls.getSuccess())) result.add("Success url is required.");
+
+        return result;
 
     }
 
@@ -145,11 +167,11 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
         List<String> validDocumentTypes = this.documentService.getValidDocumentTypes(GetValidDocumentTypesRequest.builder()
                 .courtClassification(initialPackage.getCourt().getCourtClass())
                 .courtLevel(initialPackage.getCourt().getLevel())
-                .create()).stream().map(x -> x.getType()).collect(Collectors.toList());
+                .create()).stream().map(DocumentType::getType).collect(Collectors.toList());
 
         return initialPackage.getDocuments()
                 .stream()
-                .map(x -> x.getDocumentProperties().getType().getValue())
+                .map(InitialDocument::getType)
                 .filter(x -> !validDocumentTypes.contains(x))
                 .map(invalidType -> MessageFormat.format("Document type [{0}] is invalid.", invalidType))
                 .collect(Collectors.toList());

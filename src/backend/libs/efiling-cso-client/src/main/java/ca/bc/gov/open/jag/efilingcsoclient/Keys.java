@@ -28,11 +28,14 @@ public class Keys {
     public static final String PARTY_TYPE_CD = "CLA";
     public static final String PARTY_NAME_TYPE_CD = "CUR";
     public static final String PRIVILEGE_CD = "UPDT";
-    public static final String REPORT_NAME = "submission";
-    public static final String REPORT_PARAMETER = "prm_package_id";
+    public static final String SUBMISSION_REPORT_NAME = "submission";
+    public static final String RECEIPT_REPORT_NAME = "receipt";
+    public static final String SUBMISSION_REPORT_PARAMETER = "prm_package_id";
+    public static final String PARAM_REPORT_PARAMETER = "param1";
     public static final Map<String, BigDecimal> IDENTITY_PROVIDERS = Stream.of(
                 new AbstractMap.SimpleImmutableEntry<>( "BCEID", BigDecimal.ONE ),
                 new AbstractMap.SimpleImmutableEntry<>( "BCSC",  new BigDecimal(2) ))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    public static final String VIEW_ALL_PACKAGE_SUBPATH = "filing/status/display.do?actionType=filterStatus&useFilter=ALL";
 
 }

@@ -17,11 +17,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
 @Configuration
 public class TestConfig {
 
     @Value("${default.timeout:30}")
     private int timeout;
+
+    private static final String DOWNLOADED_FILES_PATH = System.getProperty("user.dir") + File.separator + "downloadedFiles";
 
     @Bean
     public OauthService oauthService() {
@@ -63,7 +69,12 @@ public class TestConfig {
     public WebDriver chromeDriver() {
         WebDriverManager.chromedriver().setup();
 
+        Map<String, Object> prefs = new HashMap<String, Object>();
+        prefs.put("profile.default_content_settings.popups", 0);
+        prefs.put("download.default_directory", DOWNLOADED_FILES_PATH );
+
         ChromeOptions options = new ChromeOptions();
+        options.setExperimentalOption("prefs", prefs);
         options.setHeadless(true);
         options.addArguments("--window-size=1920,1080");
         return new ChromeDriver(options);

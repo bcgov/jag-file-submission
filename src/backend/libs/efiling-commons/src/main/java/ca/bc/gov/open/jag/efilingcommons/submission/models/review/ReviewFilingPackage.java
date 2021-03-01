@@ -28,6 +28,7 @@ public class ReviewFilingPackage {
     private List<PackagePayment> payments;
     //TODO: protected RushOrderRequest procRequest;
     private DateTime submittedDate;
+    private PackageLinks packageLinks;
 
     public ReviewFilingPackage() { }
 
@@ -165,5 +166,13 @@ public class ReviewFilingPackage {
 
     public void setSubmittedDate(DateTime submittedDate) {
         this.submittedDate = submittedDate;
+    }
+
+    public PackageLinks getPackageLinks() {
+        return packageLinks;
+    }
+
+    public void setPackageLinks(PackageLinks packageLinks) {
+        this.packageLinks = packageLinks;
     }
 }

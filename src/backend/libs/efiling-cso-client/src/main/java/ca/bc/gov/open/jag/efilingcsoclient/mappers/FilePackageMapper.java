@@ -15,13 +15,14 @@ import java.util.List;
 @Mapper
 public interface FilePackageMapper {
 
-    @Mapping(target = "court.courtClass", source = "courtClassCd")
-    @Mapping(target = "court.fileNumber", source = "courtFileNo")
-    @Mapping(target = "court.level", source = "courtLevelCd")
-    @Mapping(target = "court.locationCd", source = "courtLocationCd")
-    @Mapping(target = "court.locationName", source = "courtLocationName")
-    @Mapping(target = "documents", source = "files")
-    ReviewFilingPackage toFilingPackage(ca.bc.gov.ag.csows.filing.status.FilePackage filePackage);
+    @Mapping(target = "court.courtClass", source = "filePackage.courtClassCd")
+    @Mapping(target = "court.fileNumber", source = "filePackage.courtFileNo")
+    @Mapping(target = "court.level", source = "filePackage.courtLevelCd")
+    @Mapping(target = "court.locationCd", source = "filePackage.courtLocationCd")
+    @Mapping(target = "court.locationName", source = "filePackage.courtLocationName")
+    @Mapping(target = "documents", source = "filePackage.files")
+    @Mapping(target = "packageLinks.packageHistoryUrl", source = "csoHistoryLink")
+    ReviewFilingPackage toFilingPackage(ca.bc.gov.ag.csows.filing.status.FilePackage filePackage, String csoHistoryLink);
 
     List<ReviewDocument> toDocuments(List<File> file);
 

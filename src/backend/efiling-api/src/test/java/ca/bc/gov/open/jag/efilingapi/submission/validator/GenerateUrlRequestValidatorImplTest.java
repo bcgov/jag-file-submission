@@ -131,11 +131,15 @@ public class GenerateUrlRequestValidatorImplTest {
 
         List<InitialDocument> documentList = new ArrayList<>();
         InitialDocument initialDocument = new InitialDocument();
-        DocumentProperties documentProperties = new DocumentProperties();
-        documentProperties.setType(DocumentProperties.TypeEnum.ACMW);
-        initialDocument.setDocumentProperties(documentProperties);
+        initialDocument.setType("ACMW");
         documentList.add(initialDocument);
         initialFilingPackage.setDocuments(documentList);
+
+        NavigationUrls navigationUrls = new NavigationUrls();
+        navigationUrls.setError("http://error");
+        navigationUrls.setCancel("http://cancel");
+        navigationUrls.setSuccess("http://success");
+        generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
         Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
@@ -161,18 +165,102 @@ public class GenerateUrlRequestValidatorImplTest {
 
         List<InitialDocument> documentList = new ArrayList<>();
         InitialDocument initialDocument = new InitialDocument();
-        DocumentProperties documentProperties = new DocumentProperties();
-        documentProperties.setType(DocumentProperties.TypeEnum.ACMW);
-        initialDocument.setDocumentProperties(documentProperties);
+        initialDocument.setType("ACMW");
+        documentList.add(initialDocument);
+        initialFilingPackage.setDocuments(documentList);
+
+        NavigationUrls navigationUrls = new NavigationUrls();
+        navigationUrls.setError("http://error");
+        navigationUrls.setCancel("http://cancel");
+        navigationUrls.setSuccess("http://success");
+        generateUrlRequest.setNavigationUrls(navigationUrls);
+
+        generateUrlRequest.setFilingPackage(initialFilingPackage);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+
+        Assertions.assertFalse(actual.hasError());
+
+    }
+
+
+    @Test
+    @DisplayName("error: with no navigation urls should return error")
+    public void newSubmissionWithoutNavigationUrlsShouldReturnError() {
+
+        GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
+        InitialPackage initialFilingPackage = new InitialPackage();
+
+        CourtBase court = new CourtBase();
+        court.setLevel(COURT_LEVEL);
+        court.setCourtClass(COURT_CLASSIFICATION);
+        court.setLocation(CASE_1);
+        initialFilingPackage.setCourt(court);
+
+        List<Party> parties = new ArrayList<>();
+        Party party = new Party();
+        party.setRoleType(Party.RoleTypeEnum.ADJ);
+        parties.add(party);
+        Party party2 = new Party();
+        party2.setRoleType(Party.RoleTypeEnum.CIT);
+        parties.add(party2);
+        initialFilingPackage.setParties(parties);
+
+        List<InitialDocument> documentList = new ArrayList<>();
+        InitialDocument initialDocument = new InitialDocument();
+        initialDocument.setType("ACMW");
         documentList.add(initialDocument);
         initialFilingPackage.setDocuments(documentList);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
         Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
 
+        Assertions.assertTrue(actual.hasError());
+        Assertions.assertEquals("Navigation Urls are required.", actual.getErrors().get(0));
+
+    }
+
+    @Test
+    @DisplayName("error: with blank navigation urls should return error")
+    public void newSubmissionWithBlankNavigationUrlsShouldReturnError() {
+
+        GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
+        InitialPackage initialFilingPackage = new InitialPackage();
+
+        CourtBase court = new CourtBase();
+        court.setLevel(COURT_LEVEL);
+        court.setCourtClass(COURT_CLASSIFICATION);
+        court.setLocation(CASE_1);
+        initialFilingPackage.setCourt(court);
+
+        List<Party> parties = new ArrayList<>();
+        Party party = new Party();
+        party.setRoleType(Party.RoleTypeEnum.ADJ);
+        parties.add(party);
+        Party party2 = new Party();
+        party2.setRoleType(Party.RoleTypeEnum.CIT);
+        parties.add(party2);
+        initialFilingPackage.setParties(parties);
+
+        List<InitialDocument> documentList = new ArrayList<>();
+        InitialDocument initialDocument = new InitialDocument();
+        initialDocument.setType("ACMW");
+        documentList.add(initialDocument);
+        initialFilingPackage.setDocuments(documentList);
+
+        generateUrlRequest.setFilingPackage(initialFilingPackage);
+
+        NavigationUrls navigationUrls = new NavigationUrls();
+        navigationUrls.setError(" ");
+        navigationUrls.setCancel("         ");
+        generateUrlRequest.setNavigationUrls(navigationUrls);
+
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
 
 
-        Assertions.assertFalse(actual.hasError());
+        Assertions.assertTrue(actual.hasError());
+        Assertions.assertEquals("Error url is required.", actual.getErrors().get(0));
+        Assertions.assertEquals("Cancel url is required.", actual.getErrors().get(1));
+        Assertions.assertEquals("Success url is required.", actual.getErrors().get(2));
 
     }
 
@@ -193,6 +281,12 @@ public class GenerateUrlRequestValidatorImplTest {
         Party party = new Party();
         parties.add(party);
         initialFilingPackage.setParties(parties);
+
+        NavigationUrls navigationUrls = new NavigationUrls();
+        navigationUrls.setError("http://error");
+        navigationUrls.setCancel("http://cancel");
+        navigationUrls.setSuccess("http://success");
+        generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
         Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
@@ -215,6 +309,12 @@ public class GenerateUrlRequestValidatorImplTest {
         court.setLocation(CASE_1);
         court.setFileNumber(FILE_NUMBER_ERROR);
         initialFilingPackage.setCourt(court);
+
+        NavigationUrls navigationUrls = new NavigationUrls();
+        navigationUrls.setError("http://error");
+        navigationUrls.setCancel("http://cancel");
+        navigationUrls.setSuccess("http://success");
+        generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
         Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
@@ -245,6 +345,12 @@ public class GenerateUrlRequestValidatorImplTest {
         party2.setRoleType(Party.RoleTypeEnum.CIT);
         parties.add(party2);
         initialFilingPackage.setParties(parties);
+
+        NavigationUrls navigationUrls = new NavigationUrls();
+        navigationUrls.setError("http://error");
+        navigationUrls.setCancel("http://cancel");
+        navigationUrls.setSuccess("http://success");
+        generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
         Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
@@ -281,6 +387,12 @@ public class GenerateUrlRequestValidatorImplTest {
         court.setCourtClass(COURT_CLASSIFICATION);
         initialFilingPackage.setCourt(court);
 
+        NavigationUrls navigationUrls = new NavigationUrls();
+        navigationUrls.setError("http://error");
+        navigationUrls.setCancel("http://cancel");
+        navigationUrls.setSuccess("http://success");
+        generateUrlRequest.setNavigationUrls(navigationUrls);
+
         generateUrlRequest.setFilingPackage(initialFilingPackage);
         Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
 
@@ -310,6 +422,12 @@ public class GenerateUrlRequestValidatorImplTest {
         party2.setRoleType(Party.RoleTypeEnum.DEO);
         parties.add(party2);
         initialFilingPackage.setParties(parties);
+
+        NavigationUrls navigationUrls = new NavigationUrls();
+        navigationUrls.setError("http://error");
+        navigationUrls.setCancel("http://cancel");
+        navigationUrls.setSuccess("http://success");
+        generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
         Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
@@ -343,6 +461,12 @@ public class GenerateUrlRequestValidatorImplTest {
         parties.add(party2);
         initialFilingPackage.setParties(parties);
 
+        NavigationUrls navigationUrls = new NavigationUrls();
+        navigationUrls.setError("http://error");
+        navigationUrls.setCancel("http://cancel");
+        navigationUrls.setSuccess("http://success");
+        generateUrlRequest.setNavigationUrls(navigationUrls);
+
         generateUrlRequest.setFilingPackage(initialFilingPackage);
         Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
 
@@ -369,6 +493,12 @@ public class GenerateUrlRequestValidatorImplTest {
         Party party = new Party();
         parties.add(party);
         initialFilingPackage.setParties(parties);
+
+        NavigationUrls navigationUrls = new NavigationUrls();
+        navigationUrls.setError("http://error");
+        navigationUrls.setCancel("http://cancel");
+        navigationUrls.setSuccess("http://success");
+        generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
         Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
@@ -402,11 +532,15 @@ public class GenerateUrlRequestValidatorImplTest {
 
         List<InitialDocument> documentList = new ArrayList<>();
         InitialDocument initialDocument = new InitialDocument();
-        DocumentProperties documentProperties = new DocumentProperties();
-        documentProperties.setType(DocumentProperties.TypeEnum.TAX);
-        initialDocument.setDocumentProperties(documentProperties);
+        initialDocument.setType("TAX");
         documentList.add(initialDocument);
         initialFilingPackage.setDocuments(documentList);
+
+        NavigationUrls navigationUrls = new NavigationUrls();
+        navigationUrls.setError("http://error");
+        navigationUrls.setCancel("http://cancel");
+        navigationUrls.setSuccess("http://success");
+        generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
         Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);

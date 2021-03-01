@@ -9,6 +9,7 @@ import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoReviewServiceImpl;
+import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapperImpl;
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
@@ -67,7 +68,9 @@ public class FindPackagesByClientIdTest {
 
         Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(EXCEPTION_CLIENT), any(), any(), any(), any(), any(), any())).thenThrow(new NestedEjbException_Exception());
 
-        sut = new CsoReviewServiceImpl(filingStatusFacadeBean, null, null, new FilePackageMapperImpl(), restTemplateMock);
+        CsoProperties csoProperties = new CsoProperties();
+        csoProperties.setCsoBasePath("http://locahost:8080");
+        sut = new CsoReviewServiceImpl(filingStatusFacadeBean, null, null, new FilePackageMapperImpl(), csoProperties, restTemplateMock);
     }
 
     @DisplayName("OK: packages found")
@@ -81,6 +84,7 @@ public class FindPackagesByClientIdTest {
         Assertions.assertEquals(COURT_LEVEL_CD, result.get(0).getCourt().getLevel());
         Assertions.assertEquals(COURT_LOCATION_CD, result.get(0).getCourt().getLocationCd());
         Assertions.assertEquals(COURT_LOCATION_NAME, result.get(0).getCourt().getLocationName());
+        Assertions.assertEquals("http://locahost:8080/filing/status/display.do?actionType=filterStatus&useFilter=ALL", result.get(0).getPackageLinks().getPackageHistoryUrl());
 
     }
 
