@@ -119,25 +119,45 @@ export default function CSOAccount({
             The following information will be used to create your CSO account.
           </p>
           <DisplayBox icon={icon} element={applicantTable} />
-          <br />
 
-          <label>Email: </label>
-          <input
-            type="textarea"
-            name="email"
-            data-testid="email"
-            onChange={handleOnChange}
-          />
-          <label>Confirm Email: </label>
-          <input
-            type="textarea"
-            name="confEmail"
-            data-testid="conf-email"
-            onChange={handleOnChange}
-          />
+          <form className="email-form">
+            <div className="row">
+              <label className="cso-label">
+                Email Address
+                <span className="red">*</span>
+              </label>
+            </div>
+            <div className="email-input row">
+              <input
+                type="textarea"
+                className="cso-input"
+                name="email"
+                data-testid="email"
+                onChange={handleOnChange}
+              />
+              <span className="error red">{emailInputErrors.emailError}</span>
+            </div>
+            <div className="row">
+              <label className="cso-label">
+                Please Confirm Your Email Address
+                <span className="red">*</span>
+              </label>
+            </div>
+            <div className="row">
+              <input
+                type="textarea"
+                className="cso-input"
+                name="confEmail"
+                data-testid="conf-email"
+                onChange={handleOnChange}
+              />
+              <span className="error red">
+                {emailInputErrors.confEmailError}
+              </span>
+            </div>
+          </form>
+          
           <br />
-          <span className="mr-5 error">{emailInputErrors.emailError}</span>
-          <span className="ml-5 error">{emailInputErrors.confEmailError}</span>
         </div>
 
         <TermsOfUse

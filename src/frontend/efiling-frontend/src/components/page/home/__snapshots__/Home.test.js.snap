@@ -214,30 +214,65 @@ exports[`Home Component matches the snapshot when user cso account does not exis
             </div>
           </div>
         </div>
+        <form
+          class="email-form"
+        >
+          <div
+            class="row"
+          >
+            <label
+              class="cso-label"
+            >
+              Email Address
+              <span
+                class="red"
+              >
+                *
+              </span>
+            </label>
+          </div>
+          <div
+            class="email-input row"
+          >
+            <input
+              class="cso-input"
+              data-testid="email"
+              name="email"
+              type="textarea"
+            />
+            <span
+              class="error red"
+            />
+          </div>
+          <div
+            class="row"
+          >
+            <label
+              class="cso-label"
+            >
+              Please Confirm Your Email Address
+              <span
+                class="red"
+              >
+                *
+              </span>
+            </label>
+          </div>
+          <div
+            class="row"
+          >
+            <input
+              class="cso-input"
+              data-testid="conf-email"
+              name="confEmail"
+              type="textarea"
+            />
+            <span
+              class="error red"
+            />
+          </div>
+        </form>
         <br />
-        <label>
-          Email: 
-        </label>
-        <input
-          data-testid="email"
-          name="email"
-          type="textarea"
-        />
-        <label>
-          Confirm Email: 
-        </label>
-        <input
-          data-testid="conf-email"
-          name="confEmail"
-          type="textarea"
-        />
-        <br />
-        <span
-          class="mr-5 error"
-        />
-        <span
-          class="ml-5 error"
-        />
       </div>
       <div>
         <div
@@ -1620,30 +1655,65 @@ exports[`Home When user has authenticated with BCSC with no CSO account, retriev
             </div>
           </div>
         </div>
+        <form
+          class="email-form"
+        >
+          <div
+            class="row"
+          >
+            <label
+              class="cso-label"
+            >
+              Email Address
+              <span
+                class="red"
+              >
+                *
+              </span>
+            </label>
+          </div>
+          <div
+            class="email-input row"
+          >
+            <input
+              class="cso-input"
+              data-testid="email"
+              name="email"
+              type="textarea"
+            />
+            <span
+              class="error red"
+            />
+          </div>
+          <div
+            class="row"
+          >
+            <label
+              class="cso-label"
+            >
+              Please Confirm Your Email Address
+              <span
+                class="red"
+              >
+                *
+              </span>
+            </label>
+          </div>
+          <div
+            class="row"
+          >
+            <input
+              class="cso-input"
+              data-testid="conf-email"
+              name="confEmail"
+              type="textarea"
+            />
+            <span
+              class="error red"
+            />
+          </div>
+        </form>
         <br />
-        <label>
-          Email: 
-        </label>
-        <input
-          data-testid="email"
-          name="email"
-          type="textarea"
-        />
-        <label>
-          Confirm Email: 
-        </label>
-        <input
-          data-testid="conf-email"
-          name="confEmail"
-          type="textarea"
-        />
-        <br />
-        <span
-          class="mr-5 error"
-        />
-        <span
-          class="ml-5 error"
-        />
       </div>
       <div>
         <div
