@@ -122,29 +122,44 @@ export default function CSOAccount({
 
           {/* if missing email, show email input fields. */}
           {!applicantInfo.email && (
-            <div>
-              <label>Email: </label>
-              <input
-                type="textarea"
-                name="email"
-                data-testid="email"
-                onChange={handleOnChange}
-              />
-              <label>Confirm Email: </label>
-              <input
-                type="textarea"
-                name="confEmail"
-                data-testid="conf-email"
-                onChange={handleOnChange}
-              />
-              <br />
-              <span className="mr-5 error" data-testid="email-error">
-                {emailInputErrors.emailError}
-              </span>
-              <span className="ml-5 error" data-testid="conf-email-error">
-                {emailInputErrors.confEmailError}
-              </span>
-            </div>
+            <form className="email-form">
+              <div className="row">
+                <label className="cso-label">
+                  Email Address
+                  <span className="red">*</span>
+                </label>
+              </div>
+              <div className="email-input row">
+                <input
+                  type="textarea"
+                  className="cso-input"
+                  name="email"
+                  data-testid="email"
+                  onChange={handleOnChange}
+                />
+                <span className="error red" data-testid="email-error">
+                  {emailInputErrors.emailError}
+                </span>
+              </div>
+              <div className="row">
+                <label className="cso-label">
+                  Please Confirm Your Email Address
+                  <span className="red">*</span>
+                </label>
+              </div>
+              <div className="row">
+                <input
+                  type="textarea"
+                  className="cso-input"
+                  name="confEmail"
+                  data-testid="conf-email"
+                  onChange={handleOnChange}
+                />
+                <span className="error red" data-testid="conf-email-error">
+                  {emailInputErrors.confEmailError}
+                </span>
+              </div>
+            </form>
           )}
           <br />
         </div>
