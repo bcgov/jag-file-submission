@@ -37,14 +37,14 @@ public class DiligenServiceImpl implements DiligenService {
 
     private final ObjectMapper objectMapper;
 
-    private final ApiClient apiClient;
+    private final DocumentsApi documentsApi;
 
-    public DiligenServiceImpl(RestTemplate restTemplate, DiligenProperties diligenProperties, DiligenAuthService diligenAuthService, ObjectMapper objectMapper, ApiClient apiClient) {
+    public DiligenServiceImpl(RestTemplate restTemplate, DiligenProperties diligenProperties, DiligenAuthService diligenAuthService, ObjectMapper objectMapper, DocumentsApi documentsApi) {
         this.restTemplate = restTemplate;
         this.diligenProperties = diligenProperties;
         this.diligenAuthService = diligenAuthService;
         this.objectMapper = objectMapper;
-        this.apiClient = apiClient;
+        this.documentsApi = documentsApi;
     }
     @Override
     public BigDecimal postDocument(String documentType, MultipartFile file) {
@@ -86,14 +86,14 @@ public class DiligenServiceImpl implements DiligenService {
 
         logger.debug("getting document details from diligen");
 
-        apiClient.setBearerToken(diligenAuthService.getDiligenJWT(diligenProperties.getUsername(), diligenProperties.getPassword()));
-        DocumentsApi documentsApi = new DocumentsApi(apiClient);
+        documentsApi.getApiClient().setBearerToken(diligenAuthService.getDiligenJWT(diligenProperties.getUsername(), diligenProperties.getPassword()));
+
         try {
             InlineResponse2003 result = documentsApi.apiDocumentsFileIdDetailsGet(documentId.intValue());
 
             logger.info("detail retrieved");
 
-            if (!result.getData().getFileDetails().getFileStatus().equals("PROCESSED")) throw new DiligenDocumentException(MessageFormat.format("Document not in processed status. Document in status {}", result.getData().getFileDetails().getFileStatus()));
+            if (!result.getData().getFileDetails().getFileStatus().equals("PROCESSED")) throw new DiligenDocumentException(MessageFormat.format("Document not in processed status. Document in status {0}", result.getData().getFileDetails().getFileStatus()));
 
             return result.getData().getFileDetails().getMlJson();
 
