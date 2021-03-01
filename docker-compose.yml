@@ -217,6 +217,10 @@ services:
     networks:
       - fisu-net
 
+  #############################################################################################
+  ###                             skywalking-oap-server                                     ###
+  #############################################################################################
+
   skywalking-oap-server:
     image: apache/skywalking-oap-server:8.4.0-es7
     container_name: skywalking-oap-server
@@ -234,8 +238,12 @@ services:
       SW_HEALTH_CHECKER: default
     networks:
       - fisu-net
+  
+  #############################################################################################
+  ###                             skywalking-ui                                    ###
+  #############################################################################################
 
-  ui:
+  skywalking-ui:
     image: apache/skywalking-ui:8.4.0
     container_name: skywalking-ui
     depends_on:
