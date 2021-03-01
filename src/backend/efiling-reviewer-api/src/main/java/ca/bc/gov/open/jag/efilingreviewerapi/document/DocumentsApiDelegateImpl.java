@@ -75,6 +75,9 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
     public ResponseEntity<Void> documentEvent(UUID xTransactionId, DocumentEvent documentEvent) {
 
         logger.info("document {} status has changed to {}", documentEvent.getDocumentId(), documentEvent.getStatus());
+        //We won't do anything with this for now
+        Object result = diligenService.getDocumentDetails(documentEvent.getDocumentId());
+
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }

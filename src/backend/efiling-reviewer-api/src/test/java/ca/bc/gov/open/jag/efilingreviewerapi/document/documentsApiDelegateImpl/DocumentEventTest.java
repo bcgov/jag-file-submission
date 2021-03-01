@@ -10,7 +10,9 @@ import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMappe
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapperImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.store.ExtractStore;
 import org.junit.jupiter.api.*;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,8 @@ import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class DocumentEventTest {
+
+    private static final Object RESULT_OBJECT = "{ \"test\":\"test\" }";
 
     private DocumentsApiDelegateImpl sut;
     @Mock
@@ -36,6 +40,9 @@ public class DocumentEventTest {
 
         ExtractMapper extractMapper = new ExtractMapperImpl();
         ExtractRequestMapper extratRequestMapper = new ExtractRequestMapperImpl(extractMapper);
+
+        Mockito.when(diligenServiceMock.getDocumentDetails(ArgumentMatchers.eq(BigDecimal.ONE))).thenReturn(RESULT_OBJECT);
+
         sut = new DocumentsApiDelegateImpl(diligenServiceMock, extratRequestMapper, extractStoreMock, clamAvServiceMock);
 
     }
