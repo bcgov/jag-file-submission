@@ -1,14 +1,13 @@
-package ca.bc.gov.open.jag.efilingreviewerapi.extract.documentsApiDelegateImpl;
+package ca.bc.gov.open.jag.efilingreviewerapi.document.documentsApiDelegateImpl;
 
 import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.clamav.starter.VirusDetectedException;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
-import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentExtractResponse;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerVirusFoundException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerCacheException;
-import ca.bc.gov.open.jag.efilingreviewerapi.extract.DocumentsApiDelegateImpl;
+import ca.bc.gov.open.jag.efilingreviewerapi.document.DocumentsApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractMapperImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapper;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapperImpl;
