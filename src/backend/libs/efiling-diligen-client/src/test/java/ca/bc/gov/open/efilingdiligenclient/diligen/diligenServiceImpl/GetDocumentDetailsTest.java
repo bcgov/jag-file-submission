@@ -92,7 +92,7 @@ public class GetDocumentDetailsTest {
         InlineResponse2003 inlineResponse2003 = new InlineResponse2003();
         InlineResponse2003Data data = new InlineResponse2003Data();
         InlineResponse2003DataFileDetails fileDetails = new InlineResponse2003DataFileDetails();
-        fileDetails.setMlJson(JSON_OBJECT);
+        fileDetails.setExtractedDocument(JSON_OBJECT);
         fileDetails.setFileStatus(status);
         data.setFileDetails(fileDetails);
         inlineResponse2003.setData(data);
