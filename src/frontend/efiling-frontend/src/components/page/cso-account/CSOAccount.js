@@ -41,21 +41,17 @@ export default function CSOAccount({
 
   useEffect(() => {
     if (applicantInfo.email && validator.isEmail(applicantInfo.email)) {
-      setApplicantDetails[
-        {
-          firstName: applicantInfo.firstName,
-          lastName: applicantInfo.lastName,
-          email: applicantInfo.email,
-        }
-      ];
+      setApplicantDetails({
+        firstName: applicantInfo.firstName,
+        lastName: applicantInfo.lastName,
+        email: applicantInfo.email,
+      });
     } else {
-      setApplicantDetails[
-        {
-          firstName: applicantInfo.firstName,
-          lastName: applicantInfo.lastName,
-          email: "",
-        }
-      ];
+      setApplicantDetails({
+        firstName: applicantInfo.firstName,
+        lastName: applicantInfo.lastName,
+        email: "",
+      });
     }
   }, []);
 
