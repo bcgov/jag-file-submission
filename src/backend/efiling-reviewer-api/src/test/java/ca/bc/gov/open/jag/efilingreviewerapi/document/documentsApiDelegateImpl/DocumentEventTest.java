@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingreviewerapi.document.documentsApiDelegateImpl;
 
 import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
+import ca.bc.gov.open.efilingdiligenclient.diligen.model.DiligenDocumentDetails;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentEvent;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.DocumentsApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractMapper;
@@ -23,7 +24,6 @@ import java.util.UUID;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class DocumentEventTest {
 
-    private static final Object RESULT_OBJECT = "{ \"test\":\"test\" }";
 
     private DocumentsApiDelegateImpl sut;
     @Mock
@@ -41,7 +41,7 @@ public class DocumentEventTest {
         ExtractMapper extractMapper = new ExtractMapperImpl();
         ExtractRequestMapper extratRequestMapper = new ExtractRequestMapperImpl(extractMapper);
 
-        Mockito.when(diligenServiceMock.getDocumentDetails(ArgumentMatchers.eq(BigDecimal.ONE))).thenReturn(RESULT_OBJECT);
+        Mockito.when(diligenServiceMock.getDocumentDetails(ArgumentMatchers.eq(BigDecimal.ONE))).thenReturn(DiligenDocumentDetails.builder().create());
 
         sut = new DocumentsApiDelegateImpl(diligenServiceMock, extratRequestMapper, extractStoreMock, clamAvServiceMock);
 
