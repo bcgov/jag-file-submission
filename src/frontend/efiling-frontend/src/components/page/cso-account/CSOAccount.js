@@ -11,6 +11,7 @@ import ConfirmationPopup, {
   Sidecard,
 } from "shared-components";
 import validator from "validator";
+import { isIdentityProviderBCeID } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 import { getContent } from "../../../modules/helpers/csoAccountAgreementContent";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import { translateApplicantInfo } from "../../../modules/helpers/translateApplicantInfo";
@@ -51,7 +52,10 @@ export default function CSOAccount({
       setEmailInputErrors({ ...emailInputErrors, confEmailError: "" });
     }
 
-    if (termsAccepted && !emailErrors()) {
+    if (
+      (termsAccepted && !emailErrors()) ||
+      (termsAccepted && isIdentityProviderBCeID())
+    ) {
       setContinueBtnEnabled(true);
     } else {
       setContinueBtnEnabled(false);
