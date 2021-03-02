@@ -11,11 +11,11 @@ import {
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 
-import { getTestData } from "../../../modules/test-data/confirmationPopupTestData";
-import { getApplicantInfo } from "../../../modules/test-data/applicantInfoTestData";
-import { generateJWTToken } from "../../../modules/helpers/authentication-helper/authenticationHelper";
+import { getTestData } from "../../../../modules/test-data/confirmationPopupTestData";
+import { getApplicantInfo } from "../../../../modules/test-data/applicantInfoTestData";
+import { generateJWTToken } from "../../../../modules/helpers/authentication-helper/authenticationHelper";
 
-import CSOAccount from "./CSOAccount";
+import CSOAccount from "../CSOAccount";
 
 describe("CSOAccount Component", () => {
   const confirmationPopup = getTestData();
@@ -159,36 +159,26 @@ describe("CSOAccount Component", () => {
     );
   });
 
-  test("email fields should appear if email is blank", async () => {
-    // IDP is set to bceid
-    const altToken = generateJWTToken({
-      preferred_username: "username@bceid",
-      identityProviderAlias: "bceid",
-    });
-    localStorage.setItem("jwt", altToken);
-    const bceidInfo = {
-      bceid: "bobross42",
+  test("email fields should appear if email is blank", async () => {  
+
+    const mockApplicantInfo = {
       firstName: "Bob",
       middleName: "Painter",
       lastName: "Ross",
       email: "",
     };
 
-    mock.onPost(API_REQUEST).reply(201, {
-      internalClientNumber: "ABC123",
-      clientId: "123",
-    });
-
     const { container } = render(
       <CSOAccount
         confirmationPopup={confirmationPopup}
-        applicantInfo={bceidInfo}
+        applicantInfo={mockApplicantInfo}
         setCsoAccountStatus={setCsoAccountStatus}
       />
     );
 
     const emailInput = queryByTestId(container, "email");
     expect(emailInput).not.toBeNull();
+
   });
 
   test("email fields should not appear if email is already specified", async () => {

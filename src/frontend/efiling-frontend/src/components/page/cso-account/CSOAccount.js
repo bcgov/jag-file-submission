@@ -37,7 +37,12 @@ export default function CSOAccount({
     emailError: "",
     confEmailError: "",
   });
-  const [applicantDetails, setApplicantDetails] = useState();
+  const [applicantDetails, setApplicantDetails] = useState(
+    {
+      firstName: "",
+      lastName: "",
+      email: null,
+    });
 
   useEffect(() => {
     if (applicantInfo.email && validator.isEmail(applicantInfo.email)) {
@@ -142,7 +147,7 @@ export default function CSOAccount({
           <DisplayBox icon={icon} element={applicantTable} />
 
           {/* if missing email, show email input fields. */}
-          {applicantDetails.email && (
+          { !applicantDetails.email && (
             <form className="email-form">
               <div className="row">
                 <label className="cso-label">
