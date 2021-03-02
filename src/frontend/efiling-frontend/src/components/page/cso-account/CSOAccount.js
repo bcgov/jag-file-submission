@@ -31,7 +31,7 @@ export default function CSOAccount({
   const [showLoader, setShowLoader] = useState(false);
   const [emailInput, setEmailInput] = useState({
     email: "",
-    confEmail: ""
+    confEmail: "",
   });
   const [emailInputErrors, setEmailInputErrors] = useState({
     emailError: "",
@@ -40,34 +40,39 @@ export default function CSOAccount({
   const [applicantDetails, setApplicantDetails] = useState();
 
   useEffect(() => {
-
     if (applicantInfo.email && validator.isEmail(applicantInfo.email)) {
-      setApplicantDetails[{ firstName: applicantInfo.firstName, lastName: applicantInfo.lastName, email: applicantInfo.email }]
+      setApplicantDetails[
+        {
+          firstName: applicantInfo.firstName,
+          lastName: applicantInfo.lastName,
+          email: applicantInfo.email,
+        }
+      ];
     } else {
-      setApplicantDetails[{ firstName: applicantInfo.firstName, lastName: applicantInfo.lastName, email: "" }]
+      setApplicantDetails[
+        {
+          firstName: applicantInfo.firstName,
+          lastName: applicantInfo.lastName,
+          email: "",
+        }
+      ];
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
+    const emailIsValid = () =>
+      applicantDetails.email &&
+      emailInputErrors.emailError === "" &&
+      emailInputErrors.confEmailError === "";
 
-    const emailIsValid = () => (
-      applicantDetails.email
-      && emailInputErrors.emailError === ""
-      && emailInputErrors.confEmailError === ""
-    );
-
-    if (
-      (termsAccepted && emailIsValid())
-    ) {
+    if (termsAccepted && emailIsValid()) {
       setContinueBtnEnabled(true);
     } else {
       setContinueBtnEnabled(false);
     }
-
   }, [termsAccepted, emailInput.email, emailInput.confEmail]);
 
   const handleOnEmailChange = (e) => {
-
     const input = e.target.value;
 
     if (!validator.isEmail(input)) {
@@ -80,12 +85,10 @@ export default function CSOAccount({
     }
 
     setEmailInput({ ...emailInput, email: input });
-    setApplicantDetails({ ...applicantDetails, email = input });
-
+    setApplicantDetails({ ...applicantDetails, email: input });
   };
 
   const handleOnEmailConfChange = (e) => {
-
     const input = e.target.value;
 
     if (input !== emailInput.email) {
@@ -98,11 +101,9 @@ export default function CSOAccount({
     }
 
     setEmailInput({ ...emailInput, emailConf: input });
-
-  }
+  };
 
   const createCSOAccount = () => {
-
     setShowLoader(true);
     setContinueBtnEnabled(false);
 
