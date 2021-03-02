@@ -46,17 +46,14 @@ describe("CSOAccount Component", () => {
   });
 
   test("On success, setCsoAccountStatus exists and isNew to true", async () => {
-    // IDP is set to bcsc
-    const altToken = generateJWTToken({
-      preferred_username: "username@bcsc",
-      identityProviderAlias: "bcsc",
-    });
-    localStorage.setItem("jwt", altToken);
-    const bcscInfo = {
-      bceid: "",
+    
+    const mockApplicantInfo = {
       firstName: "Bob",
+      middleName: "Painter",
       lastName: "Ross",
+      email: "bob.ross@paintit.com",
     };
+
     sessionStorage.setItem("csoAccountId", null);
     sessionStorage.setItem("internalClientNumber", null);
 
@@ -68,12 +65,13 @@ describe("CSOAccount Component", () => {
     const { container } = render(
       <CSOAccount
         confirmationPopup={confirmationPopup}
-        applicantInfo={bcscInfo}
+        applicantInfo={mockApplicantInfo}
         setCsoAccountStatus={setCsoAccountStatus}
       />
     );
 
     expect(getByText(container, "Create CSO Account").disabled).toBeTruthy();
+
     fireEvent.click(getByRole(container, "checkbox"));
 
     const emailInput = getByTestId(container, "email");
