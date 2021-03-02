@@ -46,8 +46,58 @@ describe("CSOAccount Component", () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
+  test("Initial rendering: with no email should display email input form", async () => {
+
+    const bceidInfo = {
+      bceid: "bobross42",
+      firstName: "Bob",
+      lastName: "Ross",
+      email: "bob.ross@example.com",
+    };
+
+    const { container } = render(
+      <CSOAccount
+        confirmationPopup={confirmationPopup}
+        applicantInfo={bceidInfo}
+        setCsoAccountStatus={setCsoAccountStatus}
+      />
+    );
+
+    const emailInput = getByTestId(container, "email");
+    const emailConfInput = getByTestId(container, "conf-email");
+
+    expect(emailInput).toBeNull();
+    expect(emailConfInput).toBeNull();
+    
+  });
+
+  test("Initial rendering: with email should not display email input form", async () => {
+
+    const bceidInfo = {
+      bceid: "bobross42",
+      firstName: "Bob",
+      lastName: "Ross",
+      email: "",
+    };
+
+    const { container } = render(
+      <CSOAccount
+        confirmationPopup={confirmationPopup}
+        applicantInfo={bceidInfo}
+        setCsoAccountStatus={setCsoAccountStatus}
+      />
+    );
+
+    const emailInput = getByTestId(container, "email");
+    const emailConfInput = getByTestId(container, "conf-email");
+    
+    expect(emailInput).not.toBeNull();
+    expect(emailConfInput).not.toBeNull();
+    
+  });
+
   
-  test("Test email Validation: invalid email", async () => {
+  test("Validation: invalid email should render client error", async () => {
     
     const mockApplicantInfo = {
       firstName: "Bob",
@@ -80,7 +130,7 @@ describe("CSOAccount Component", () => {
   
   });
 
-  test("Test email confirmation validation: different email", async ()=> {
+  test("Validation: different email inputs should render client error", async ()=> {
     
     const mockApplicantInfo = {
       firstName: "Bob",
@@ -111,7 +161,7 @@ describe("CSOAccount Component", () => {
     );
   })
 
-  test("Test email confirmation validation: valid emails", async () => {
+  test("Validation: valide emails should not render any error", async () => {
     
     const mockApplicantInfo = {
       firstName: "Bob",
@@ -144,7 +194,7 @@ describe("CSOAccount Component", () => {
 
   })
 
-  test("On success, setCsoAccountStatus exists and isNew to true", async () => {
+  test("Success Account Creation: setCsoAccountStatus exists and isNew to true", async () => {
     
     const mockApplicantInfo = {
       firstName: "Bob",
@@ -183,19 +233,12 @@ describe("CSOAccount Component", () => {
 
   });
 
-  test("On failed account creation, should redirect to parent application", async () => {
+  test("Failed Account Creation: should redirect to parent application", async () => {
     
-    // IDP is set to bcsc
-    const altToken = generateJWTToken({
-      preferred_username: "username@bcsc",
-      identityProviderAlias: "bcsc",
-    });
-    localStorage.setItem("jwt", altToken);
-    
-    const bcscInfo = {
-      bceid: "",
+    const mockApplicantInfo = {
       firstName: "Bob",
       lastName: "Ross",
+      email: "bob.ross@paintit.com"
     };
 
     mock.onPost(API_REQUEST).reply(400, { message: "There was a problem." });
@@ -204,21 +247,13 @@ describe("CSOAccount Component", () => {
     const { container } = render(
       <CSOAccount
         confirmationPopup={confirmationPopup}
-        applicantInfo={bcscInfo}
+        applicantInfo={mockApplicantInfo}
         setCsoAccountStatus={setCsoAccountStatus}
       />
     );
 
     expect(getByText(container, "Create CSO Account").disabled).toBeTruthy();
     fireEvent.click(getByRole(container, "checkbox"));
-
-    const emailInput = getByTestId(container, "email");
-    const confEmailInput = getByTestId(container, "conf-email");
-
-    fireEvent.change(emailInput, { target: { value: "cso@cso.com" } });
-    await waitFor(() => {});
-    fireEvent.change(confEmailInput, { target: { value: "cso@cso.com" } });
-    await waitFor(() => {});
 
     expect(getByText(container, "Create CSO Account").disabled).toBeFalsy();
 
@@ -253,34 +288,5 @@ describe("CSOAccount Component", () => {
 
   });
 
-  test("email fields should not appear if email is already specified", async () => {
-    // IDP is set to bceid
-    const altToken = generateJWTToken({
-      preferred_username: "username@bceid",
-      identityProviderAlias: "bceid",
-    });
-    localStorage.setItem("jwt", altToken);
-    const bceidInfo = {
-      bceid: "bobross42",
-      firstName: "Bob",
-      lastName: "Ross",
-      email: "bob.ross@example.com",
-    };
-
-    mock.onPost(API_REQUEST).reply(201, {
-      internalClientNumber: "ABC123",
-      clientId: "123",
-    });
-
-    const { container } = render(
-      <CSOAccount
-        confirmationPopup={confirmationPopup}
-        applicantInfo={bceidInfo}
-        setCsoAccountStatus={setCsoAccountStatus}
-      />
-    );
-
-    const emailInput = queryByTestId(container, "email");
-    expect(emailInput).toBeNull();
-  });
+  
 });
