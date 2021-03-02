@@ -30,6 +30,7 @@ describe("CSOAccount Component", () => {
   const token = generateJWTToken({
     preferred_username: "username@bceid",
   });
+
   localStorage.setItem("jwt", token);
   sessionStorage.setItem("csoBaseUrl", "https://dev.justice.gov.bc.ca/cso");
 
@@ -43,20 +44,21 @@ describe("CSOAccount Component", () => {
     );
 
     expect(asFragment()).toMatchSnapshot();
+
   });
 
   test("Initial rendering: with no email should display email input form", async () => {
-    const bceidInfo = {
+    
+    const mockApplicantInfo = {
       bceid: "bobross42",
       firstName: "Bob",
-      lastName: "Ross",
-      email: "bob.ross@example.com",
+      lastName: "Ross"
     };
 
     const { container } = render(
       <CSOAccount
         confirmationPopup={confirmationPopup}
-        applicantInfo={bceidInfo}
+        applicantInfo={mockApplicantInfo}
         setCsoAccountStatus={setCsoAccountStatus}
       />
     );
@@ -64,22 +66,24 @@ describe("CSOAccount Component", () => {
     const emailInput = getByTestId(container, "email");
     const emailConfInput = getByTestId(container, "conf-email");
 
-    expect(emailInput).toBeNull();
-    expect(emailConfInput).toBeNull();
+    expect(emailInput).not.toBeNull();
+    expect(emailConfInput).not.toBeNull();
+
   });
 
   test("Initial rendering: with email should not display email input form", async () => {
-    const bceidInfo = {
+    
+    const mockApplicantInfo = {
       bceid: "bobross42",
       firstName: "Bob",
       lastName: "Ross",
-      email: "",
+      email: "bob.ross@paintit.com",
     };
 
     const { container } = render(
       <CSOAccount
         confirmationPopup={confirmationPopup}
-        applicantInfo={bceidInfo}
+        applicantInfo={mockApplicantInfo}
         setCsoAccountStatus={setCsoAccountStatus}
       />
     );
@@ -87,11 +91,12 @@ describe("CSOAccount Component", () => {
     const emailInput = queryByTestId(container, "email");
     const emailConfInput = queryByTestId(container, "conf-email");
 
-    expect(emailInput).not.toBeNull();
-    expect(emailConfInput).not.toBeNull();
+    expect(emailInput).toBeNull();
+    expect(emailConfInput).toBeNull();
   });
 
   test("Validation: invalid email should render client error", async () => {
+    
     const mockApplicantInfo = {
       firstName: "Bob",
       middleName: "Painter",
@@ -123,11 +128,11 @@ describe("CSOAccount Component", () => {
   });
 
   test("Validation: different email inputs should render client error", async () => {
+    
     const mockApplicantInfo = {
       firstName: "Bob",
       middleName: "Painter",
-      lastName: "Ross",
-      email: "",
+      lastName: "Ross"
     };
 
     const { container } = render(
@@ -152,7 +157,7 @@ describe("CSOAccount Component", () => {
     );
   });
 
-  test("Validation: valide emails should not render any error", async () => {
+  test("Validation: valid emails should not render any error", async () => {
     const mockApplicantInfo = {
       firstName: "Bob",
       middleName: "Painter",
