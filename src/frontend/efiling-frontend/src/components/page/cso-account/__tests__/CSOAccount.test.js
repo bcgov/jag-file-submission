@@ -84,8 +84,8 @@ describe("CSOAccount Component", () => {
       />
     );
 
-    const emailInput = getByTestId(container, "email");
-    const emailConfInput = getByTestId(container, "conf-email");
+    const emailInput = queryByTestId(container, "email");
+    const emailConfInput = queryByTestId(container, "conf-email");
 
     expect(emailInput).not.toBeNull();
     expect(emailConfInput).not.toBeNull();
