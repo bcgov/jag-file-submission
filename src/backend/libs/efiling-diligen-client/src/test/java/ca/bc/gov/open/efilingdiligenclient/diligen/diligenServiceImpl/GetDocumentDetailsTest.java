@@ -3,6 +3,8 @@ package ca.bc.gov.open.efilingdiligenclient.diligen.diligenServiceImpl;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenAuthService;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenProperties;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenServiceImpl;
+import ca.bc.gov.open.efilingdiligenclient.diligen.mapper.DiligenDocumentDetailsMapperImpl;
+import ca.bc.gov.open.efilingdiligenclient.diligen.model.DiligenDocumentDetails;
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.DocumentsApi;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.ApiClient;
@@ -17,6 +19,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import java.math.BigDecimal;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 
@@ -27,6 +30,10 @@ public class GetDocumentDetailsTest {
     private static final String PASSWORD = "PASSWORD";
     private static final String JWT = "IMMAJWT";
     private static final Object JSON_OBJECT = "{ \"garbage\":\"garbage\" }";
+    public static final String FILE_NAME = "FILE_NAME";
+    public static final String EXECUTION_STATUS = "EXECUTION_STATUS";
+    public static final String STATUS = "PROCESSED";
+    public static final String NOT_PROCESSED = "NOT_PROCESSED";
 
     DiligenServiceImpl sut;
 
@@ -51,13 +58,13 @@ public class GetDocumentDetailsTest {
 
         Mockito.when(documentsApiMock.getApiClient()).thenReturn(new ApiClient());
 
-        Mockito.when(documentsApiMock.apiDocumentsFileIdDetailsGet(ArgumentMatchers.eq(BigDecimal.ONE.intValue()))).thenReturn(getMockData("PROCESSED"));
+        Mockito.when(documentsApiMock.apiDocumentsFileIdDetailsGet(ArgumentMatchers.eq(BigDecimal.ONE.intValue()))).thenReturn(getMockData(STATUS));
 
-        Mockito.when(documentsApiMock.apiDocumentsFileIdDetailsGet(ArgumentMatchers.eq(BigDecimal.TEN.intValue()))).thenReturn(getMockData("NOT_PROCESSED"));
+        Mockito.when(documentsApiMock.apiDocumentsFileIdDetailsGet(ArgumentMatchers.eq(BigDecimal.TEN.intValue()))).thenReturn(getMockData(NOT_PROCESSED));
 
         Mockito.when(documentsApiMock.apiDocumentsFileIdDetailsGet(ArgumentMatchers.eq(BigDecimal.ZERO.intValue()))).thenThrow(new ApiException());
 
-        sut = new DiligenServiceImpl(null, diligenProperties, diligenAuthServiceMock, null, documentsApiMock);
+        sut = new DiligenServiceImpl(null, diligenProperties, diligenAuthServiceMock, null, documentsApiMock, new DiligenDocumentDetailsMapperImpl());
 
     }
 
@@ -65,9 +72,16 @@ public class GetDocumentDetailsTest {
     @DisplayName("Ok: document was returned")
     public void withValidDocumentIdDocumentSubmissionReturned() {
 
-        Object result = sut.getDocumentDetails(BigDecimal.ONE);
+        DiligenDocumentDetails result = sut.getDocumentDetails(BigDecimal.ONE);
 
-       assertEquals(JSON_OBJECT, result);
+       assertEquals(JSON_OBJECT, result.getMlJson());
+       assertEquals(EXECUTION_STATUS, result.getExecutionStatus());
+       assertEquals(FILE_NAME, result.getFileName());
+       assertEquals(STATUS, result.getFileStatus());
+       assertTrue(result.getOcr());
+       assertTrue(result.getConverted());
+       assertEquals(BigDecimal.ONE, result.getOutOfScope());
+       assertEquals(JSON_OBJECT, result.getExtractedDocument());
 
     }
 
@@ -93,7 +107,13 @@ public class GetDocumentDetailsTest {
         InlineResponse2003Data data = new InlineResponse2003Data();
         InlineResponse2003DataFileDetails fileDetails = new InlineResponse2003DataFileDetails();
         fileDetails.setExtractedDocument(JSON_OBJECT);
+        fileDetails.setMlJson(JSON_OBJECT);
         fileDetails.setFileStatus(status);
+        fileDetails.setFileName(FILE_NAME);
+        fileDetails.setExecutionStatus(EXECUTION_STATUS);
+        fileDetails.setIsOcr(true);
+        fileDetails.setIsConverted(true);
+        fileDetails.setOutOfScope(BigDecimal.ONE);
         data.setFileDetails(fileDetails);
         inlineResponse2003.setData(data);
 
