@@ -44,15 +44,13 @@ describe("CSOAccount Component", () => {
     );
 
     expect(asFragment()).toMatchSnapshot();
-
   });
 
   test("Initial rendering: with no email should display email input form", async () => {
-    
     const mockApplicantInfo = {
       bceid: "bobross42",
       firstName: "Bob",
-      lastName: "Ross"
+      lastName: "Ross",
     };
 
     const { container } = render(
@@ -68,11 +66,9 @@ describe("CSOAccount Component", () => {
 
     expect(emailInput).not.toBeNull();
     expect(emailConfInput).not.toBeNull();
-
   });
 
   test("Initial rendering: with email should not display email input form", async () => {
-    
     const mockApplicantInfo = {
       bceid: "bobross42",
       firstName: "Bob",
@@ -96,7 +92,6 @@ describe("CSOAccount Component", () => {
   });
 
   test("Validation: invalid email should render client error", async () => {
-    
     const mockApplicantInfo = {
       firstName: "Bob",
       middleName: "Painter",
@@ -128,11 +123,10 @@ describe("CSOAccount Component", () => {
   });
 
   test("Validation: different email inputs should render client error", async () => {
-    
     const mockApplicantInfo = {
       firstName: "Bob",
       middleName: "Painter",
-      lastName: "Ross"
+      lastName: "Ross",
     };
 
     const { container } = render(
