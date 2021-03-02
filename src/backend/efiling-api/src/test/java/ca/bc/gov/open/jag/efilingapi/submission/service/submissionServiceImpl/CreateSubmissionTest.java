@@ -82,6 +82,7 @@ public class CreateSubmissionTest {
         SubmitResponse actual = sut.createSubmission(Submission
                 .builder()
                 .id(TestHelpers.CASE_1)
+                .universalId(UUID.randomUUID().toString())
                 .transactionId(TestHelpers.CASE_1)
                 .navigationUrls(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
@@ -107,6 +108,7 @@ public class CreateSubmissionTest {
                         .builder()
                         .id(TestHelpers.CASE_1)
                         .transactionId(TestHelpers.CASE_1)
+                        .universalId(UUID.randomUUID().toString())
                         .navigationUrls(TestHelpers.createDefaultNavigation())
                         .expiryDate(10)
                         .clientAppName(CLIENT_APP_NAME)
