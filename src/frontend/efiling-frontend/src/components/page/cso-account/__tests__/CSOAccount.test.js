@@ -18,7 +18,6 @@ import { generateJWTToken } from "../../../../modules/helpers/authentication-hel
 import CSOAccount from "../CSOAccount";
 
 describe("CSOAccount Component", () => {
-  
   const confirmationPopup = getTestData();
   const applicantInfo = getApplicantInfo();
   const setCsoAccountStatus = jest.fn();
@@ -47,7 +46,6 @@ describe("CSOAccount Component", () => {
   });
 
   test("Initial rendering: with no email should display email input form", async () => {
-
     const bceidInfo = {
       bceid: "bobross42",
       firstName: "Bob",
@@ -68,11 +66,9 @@ describe("CSOAccount Component", () => {
 
     expect(emailInput).toBeNull();
     expect(emailConfInput).toBeNull();
-    
   });
 
   test("Initial rendering: with email should not display email input form", async () => {
-
     const bceidInfo = {
       bceid: "bobross42",
       firstName: "Bob",
@@ -90,20 +86,17 @@ describe("CSOAccount Component", () => {
 
     const emailInput = getByTestId(container, "email");
     const emailConfInput = getByTestId(container, "conf-email");
-    
+
     expect(emailInput).not.toBeNull();
     expect(emailConfInput).not.toBeNull();
-    
   });
 
-  
   test("Validation: invalid email should render client error", async () => {
-    
     const mockApplicantInfo = {
       firstName: "Bob",
       middleName: "Painter",
       lastName: "Ross",
-      email: ""
+      email: "",
     };
 
     const { container } = render(
@@ -127,16 +120,14 @@ describe("CSOAccount Component", () => {
 
     const emailError = getByTestId(container, "email-error");
     expect(emailError.innerHTML).toEqual("Must be a valid email.");
-  
   });
 
-  test("Validation: different email inputs should render client error", async ()=> {
-    
+  test("Validation: different email inputs should render client error", async () => {
     const mockApplicantInfo = {
       firstName: "Bob",
       middleName: "Painter",
       lastName: "Ross",
-      email: ""
+      email: "",
     };
 
     const { container } = render(
@@ -146,7 +137,7 @@ describe("CSOAccount Component", () => {
         setCsoAccountStatus={setCsoAccountStatus}
       />
     );
-    
+
     const emailInput = getByTestId(container, "email");
     const confEmailInput = getByTestId(container, "conf-email");
 
@@ -159,15 +150,14 @@ describe("CSOAccount Component", () => {
     expect(confEmailError.innerHTML).toEqual(
       "Email and confirmation email must match."
     );
-  })
+  });
 
   test("Validation: valide emails should not render any error", async () => {
-    
     const mockApplicantInfo = {
       firstName: "Bob",
       middleName: "Painter",
       lastName: "Ross",
-      email: ""
+      email: "",
     };
 
     const { container } = render(
@@ -180,7 +170,7 @@ describe("CSOAccount Component", () => {
 
     const emailInput = getByTestId(container, "email");
     const confEmailInput = getByTestId(container, "conf-email");
-    
+
     // happy path, both valid emails, both match
     fireEvent.change(emailInput, { target: { value: "cso@cso.com" } });
     await waitFor(() => {});
@@ -191,16 +181,14 @@ describe("CSOAccount Component", () => {
     expect(emailError.innerHTML).toEqual("");
     const confEmailError = getByTestId(container, "conf-email-error");
     expect(confEmailError.innerHTML).toEqual("");
-
-  })
+  });
 
   test("Success Account Creation: setCsoAccountStatus exists and isNew to true", async () => {
-    
     const mockApplicantInfo = {
       firstName: "Bob",
       middleName: "Painter",
       lastName: "Ross",
-      email: "bob.ross@paintit.com"
+      email: "bob.ross@paintit.com",
     };
 
     sessionStorage.setItem("csoAccountId", null);
@@ -230,15 +218,13 @@ describe("CSOAccount Component", () => {
     expect(setCsoAccountStatus).toHaveBeenCalled();
     expect(sessionStorage.getItem("csoAccountId")).toEqual("123");
     expect(sessionStorage.getItem("internalClientNumber")).toEqual("ABC123");
-
   });
 
   test("Failed Account Creation: should redirect to parent application", async () => {
-    
     const mockApplicantInfo = {
       firstName: "Bob",
       lastName: "Ross",
-      email: "bob.ross@paintit.com"
+      email: "bob.ross@paintit.com",
     };
 
     mock.onPost(API_REQUEST).reply(400, { message: "There was a problem." });
@@ -267,7 +253,6 @@ describe("CSOAccount Component", () => {
   });
 
   test("email fields should appear if email is blank", async () => {
-    
     const mockApplicantInfo = {
       firstName: "Bob",
       middleName: "Painter",
@@ -285,8 +270,5 @@ describe("CSOAccount Component", () => {
 
     const emailInput = queryByTestId(container, "email");
     expect(emailInput).not.toBeNull();
-
   });
-
-  
 });
