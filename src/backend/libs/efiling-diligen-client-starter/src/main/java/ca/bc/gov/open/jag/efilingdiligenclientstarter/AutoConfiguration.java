@@ -74,10 +74,15 @@ public class AutoConfiguration {
     }
 
     @Bean
-    public DiligenService diligenService(DiligenAuthService diligenAuthService, RestTemplate restTemplate, ApiClient apiClient) {
+    public DocumentsApi documentsApi(ApiClient apiClient) {
+        return new DocumentsApi(apiClient);
+    }
+
+    @Bean
+    public DiligenService diligenService(DiligenAuthService diligenAuthService, RestTemplate restTemplate, DocumentsApi documentsApi) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-        return new DiligenServiceImpl(restTemplate, diligenProperties, diligenAuthService, objectMapper, new DocumentsApi(apiClient));
+        return new DiligenServiceImpl(restTemplate, diligenProperties, diligenAuthService, objectMapper, documentsApi);
     }
 
 }
