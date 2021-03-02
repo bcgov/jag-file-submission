@@ -91,3 +91,5 @@ A [redis-commander](http://joeferner.github.io/redis-commander/) instance to que
 A [keycloak](https://www.keycloak.org/) instance accessible at [http://localhost:8081/auth](http://localhost:8081/auth)
 
 ## Github action
+
+YO
