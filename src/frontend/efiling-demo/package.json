@@ -59,7 +59,7 @@
     "@storybook/addon-links": "^6.0.27",
     "@storybook/addon-viewport": "^6.1.15",
     "@storybook/addon-actions": "^6.1.15",
-    "@storybook/preset-create-react-app": "^3.0.0",
+    "@storybook/preset-create-react-app": "^3.1.6",
     "@storybook/react": "^6.1.10",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
