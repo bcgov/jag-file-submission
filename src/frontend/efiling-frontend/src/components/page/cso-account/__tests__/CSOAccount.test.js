@@ -18,6 +18,7 @@ import { generateJWTToken } from "../../../../modules/helpers/authentication-hel
 import CSOAccount from "../CSOAccount";
 
 describe("CSOAccount Component", () => {
+  
   const confirmationPopup = getTestData();
   const applicantInfo = getApplicantInfo();
   const setCsoAccountStatus = jest.fn();
@@ -45,13 +46,111 @@ describe("CSOAccount Component", () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
+  
+  test("Test email Validation: invalid email", async () => {
+    
+    const mockApplicantInfo = {
+      firstName: "Bob",
+      middleName: "Painter",
+      lastName: "Ross",
+      email: ""
+    };
+
+    const { container } = render(
+      <CSOAccount
+        confirmationPopup={confirmationPopup}
+        applicantInfo={mockApplicantInfo}
+        setCsoAccountStatus={setCsoAccountStatus}
+      />
+    );
+
+    // click on the acceptTerms checkbox
+    fireEvent.click(getByRole(container, "checkbox"));
+
+    await waitFor(() => {});
+
+    const emailInput = getByTestId(container, "email");
+
+    fireEvent.change(emailInput, { target: { value: "not-an-email" } });
+
+    await waitFor(() => {});
+
+    const emailError = getByTestId(container, "email-error");
+    expect(emailError.innerHTML).toEqual("Must be a valid email.");
+  
+  });
+
+  test("Test email confirmation validation: different email", async ()=> {
+    
+    const mockApplicantInfo = {
+      firstName: "Bob",
+      middleName: "Painter",
+      lastName: "Ross",
+      email: ""
+    };
+
+    const { container } = render(
+      <CSOAccount
+        confirmationPopup={confirmationPopup}
+        applicantInfo={mockApplicantInfo}
+        setCsoAccountStatus={setCsoAccountStatus}
+      />
+    );
+    
+    const emailInput = getByTestId(container, "email");
+    const confEmailInput = getByTestId(container, "conf-email");
+
+    // Assert confirmation email must match
+    fireEvent.change(emailInput, { target: { value: "cso@cso.com" } });
+    await waitFor(() => {});
+    fireEvent.change(confEmailInput, { target: { value: "other@cso.com" } });
+    await waitFor(() => {});
+    const confEmailError = getByTestId(container, "conf-email-error");
+    expect(confEmailError.innerHTML).toEqual(
+      "Email and confirmation email must match."
+    );
+  })
+
+  test("Test email confirmation validation: valid emails", async () => {
+    
+    const mockApplicantInfo = {
+      firstName: "Bob",
+      middleName: "Painter",
+      lastName: "Ross",
+      email: ""
+    };
+
+    const { container } = render(
+      <CSOAccount
+        confirmationPopup={confirmationPopup}
+        applicantInfo={mockApplicantInfo}
+        setCsoAccountStatus={setCsoAccountStatus}
+      />
+    );
+
+    const emailInput = getByTestId(container, "email");
+    const confEmailInput = getByTestId(container, "conf-email");
+    
+    // happy path, both valid emails, both match
+    fireEvent.change(emailInput, { target: { value: "cso@cso.com" } });
+    await waitFor(() => {});
+    fireEvent.change(confEmailInput, { target: { value: "cso@cso.com" } });
+    await waitFor(() => {});
+
+    const emailError = getByTestId(container, "email-error");
+    expect(emailError.innerHTML).toEqual("");
+    const confEmailError = getByTestId(container, "conf-email-error");
+    expect(confEmailError.innerHTML).toEqual("");
+
+  })
+
   test("On success, setCsoAccountStatus exists and isNew to true", async () => {
     
     const mockApplicantInfo = {
       firstName: "Bob",
       middleName: "Painter",
       lastName: "Ross",
-      email: "bob.ross@paintit.com",
+      email: "bob.ross@paintit.com"
     };
 
     sessionStorage.setItem("csoAccountId", null);
@@ -70,35 +169,7 @@ describe("CSOAccount Component", () => {
       />
     );
 
-    expect(getByText(container, "Create CSO Account").disabled).toBeTruthy();
-
     fireEvent.click(getByRole(container, "checkbox"));
-
-    const emailInput = getByTestId(container, "email");
-    const confEmailInput = getByTestId(container, "conf-email");
-
-    // Assert email validation
-    fireEvent.change(emailInput, { target: { value: "not-an-email" } });
-    await waitFor(() => {});
-    fireEvent.change(confEmailInput, { target: { value: "cso@cso.com" } });
-    await waitFor(() => {});
-    const emailError = getByTestId(container, "email-error");
-    expect(emailError.innerHTML).toEqual("Must be a valid email.");
-
-    // Assert confirmation email must match
-    fireEvent.change(emailInput, { target: { value: "cso@cso.com" } });
-    await waitFor(() => {});
-    fireEvent.change(confEmailInput, { target: { value: "other@cso.com" } });
-    await waitFor(() => {});
-    const confEmailError = getByTestId(container, "conf-email-error");
-    expect(confEmailError.innerHTML).toEqual(
-      "Email and confirmation email must match."
-    );
-
-    // happy path, both valid emails, both match
-    fireEvent.change(emailInput, { target: { value: "cso@cso.com" } });
-    await waitFor(() => {});
-    fireEvent.change(confEmailInput, { target: { value: "cso@cso.com" } });
     await waitFor(() => {});
 
     expect(getByText(container, "Create CSO Account").disabled).toBeFalsy();
@@ -109,15 +180,18 @@ describe("CSOAccount Component", () => {
     expect(setCsoAccountStatus).toHaveBeenCalled();
     expect(sessionStorage.getItem("csoAccountId")).toEqual("123");
     expect(sessionStorage.getItem("internalClientNumber")).toEqual("ABC123");
+
   });
 
   test("On failed account creation, should redirect to parent application", async () => {
+    
     // IDP is set to bcsc
     const altToken = generateJWTToken({
       preferred_username: "username@bcsc",
       identityProviderAlias: "bcsc",
     });
     localStorage.setItem("jwt", altToken);
+    
     const bcscInfo = {
       bceid: "",
       firstName: "Bob",
@@ -157,8 +231,8 @@ describe("CSOAccount Component", () => {
     );
   });
 
-  test("email fields should appear if email is blank", async () => {  
-
+  test("email fields should appear if email is blank", async () => {
+    
     const mockApplicantInfo = {
       firstName: "Bob",
       middleName: "Painter",

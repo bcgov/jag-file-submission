@@ -30,39 +30,17 @@ export default function CSOAccount({
   const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
   const [emailInput, setEmailInput] = useState({
-    email: "",
-    confEmail: "",
+    email: applicantInfo.email,
+    confEmail: applicantInfo.email,
   });
   const [emailInputErrors, setEmailInputErrors] = useState({
     emailError: "",
     confEmailError: "",
   });
-  const [applicantDetails, setApplicantDetails] = useState(
-    {
-      firstName: "",
-      lastName: "",
-      email: null,
-    });
-
-  useEffect(() => {
-    if (applicantInfo.email && validator.isEmail(applicantInfo.email)) {
-      setApplicantDetails({
-        firstName: applicantInfo.firstName,
-        lastName: applicantInfo.lastName,
-        email: applicantInfo.email,
-      });
-    } else {
-      setApplicantDetails({
-        firstName: applicantInfo.firstName,
-        lastName: applicantInfo.lastName,
-        email: "",
-      });
-    }
-  }, []);
 
   useEffect(() => {
     const emailIsValid = () =>
-      applicantDetails.email &&
+      emailInput.email &&
       emailInputErrors.emailError === "" &&
       emailInputErrors.confEmailError === "";
 
@@ -86,7 +64,6 @@ export default function CSOAccount({
     }
 
     setEmailInput({ ...emailInput, email: input });
-    setApplicantDetails({ ...applicantDetails, email: input });
   };
 
   const handleOnEmailConfChange = (e) => {
@@ -107,6 +84,12 @@ export default function CSOAccount({
   const createCSOAccount = () => {
     setShowLoader(true);
     setContinueBtnEnabled(false);
+
+    const applicantDetails = {
+      firstName: applicantInfo.firstName,
+      lastName: applicantInfo.lastName,
+      email: emailInput.email,
+    };
 
     axios
       .post("/csoAccount", applicantDetails)
@@ -147,7 +130,7 @@ export default function CSOAccount({
           <DisplayBox icon={icon} element={applicantTable} />
 
           {/* if missing email, show email input fields. */}
-          { !applicantDetails.email && (
+          {!applicantInfo.email && (
             <form className="email-form">
               <div className="row">
                 <label className="cso-label">
