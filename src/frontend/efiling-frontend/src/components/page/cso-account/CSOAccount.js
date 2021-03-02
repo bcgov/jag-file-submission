@@ -11,7 +11,6 @@ import ConfirmationPopup, {
   Sidecard,
 } from "shared-components";
 import validator from "validator";
-import { isIdentityProviderBCeID } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 import { getContent } from "../../../modules/helpers/csoAccountAgreementContent";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import { translateApplicantInfo } from "../../../modules/helpers/translateApplicantInfo";
@@ -30,20 +29,66 @@ export default function CSOAccount({
   const [termsAccepted, acceptTerms] = useState(false);
   const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
-  const [emailInput, setEmailInput] = useState({ email: "", confEmail: "" });
+  const [emailInput, setEmailInput] = useState({
+    email: "",
+    confEmail: ""
+  });
   const [emailInputErrors, setEmailInputErrors] = useState({
     emailError: "",
     confEmailError: "",
   });
+  const [applicantDetails, setApplicantDetails] = useState();
 
   useEffect(() => {
-    const emailErrors = () =>
-      !(
-        validator.isEmail(emailInput.email) &&
-        emailInput.email === emailInput.confEmail
-      );
 
-    if (emailInput.email !== emailInput.confEmail && emailInput.confEmail) {
+    if (applicantInfo.email && validator.isEmail(applicantInfo.email)) {
+      setApplicantDetails[{ firstName: applicantInfo.firstName, lastName: applicantInfo.lastName, email: applicantInfo.email }]
+    } else {
+      setApplicantDetails[{ firstName: applicantInfo.firstName, lastName: applicantInfo.lastName, email: "" }]
+    }
+  }, [])
+
+  useEffect(() => {
+
+    const emailIsValid = () => (
+      applicantDetails.email
+      && emailInputErrors.emailError === ""
+      && emailInputErrors.confEmailError === ""
+    );
+
+    if (
+      (termsAccepted && emailIsValid())
+    ) {
+      setContinueBtnEnabled(true);
+    } else {
+      setContinueBtnEnabled(false);
+    }
+
+  }, [termsAccepted, emailInput.email, emailInput.confEmail]);
+
+  const handleOnEmailChange = (e) => {
+
+    const input = e.target.value;
+
+    if (!validator.isEmail(input)) {
+      setEmailInputErrors({
+        ...emailInputErrors,
+        emailError: "Must be a valid email.",
+      });
+    } else {
+      setEmailInputErrors({ ...emailInputErrors, emailError: "" });
+    }
+
+    setEmailInput({ ...emailInput, email: input });
+    setApplicantDetails({ ...applicantDetails, email = input });
+
+  };
+
+  const handleOnEmailConfChange = (e) => {
+
+    const input = e.target.value;
+
+    if (input !== emailInput.email) {
       setEmailInputErrors({
         ...emailInputErrors,
         confEmailError: "Email and confirmation email must match.",
@@ -52,40 +97,15 @@ export default function CSOAccount({
       setEmailInputErrors({ ...emailInputErrors, confEmailError: "" });
     }
 
-    if (
-      (termsAccepted && !emailErrors()) ||
-      (termsAccepted && isIdentityProviderBCeID())
-    ) {
-      setContinueBtnEnabled(true);
-    } else {
-      setContinueBtnEnabled(false);
-    }
-  }, [termsAccepted, emailInput.email, emailInput.confEmail]);
+    setEmailInput({ ...emailInput, emailConf: input });
 
-  const handleOnChange = (e) => {
-    const input = e.target.value;
+  }
 
-    setEmailInput({ ...emailInput, [e.target.name]: input });
+  const createCSOAccount = () => {
 
-    if (e.target.name === "email" && !validator.isEmail(input)) {
-      setEmailInputErrors({
-        ...emailInputErrors,
-        emailError: "Must be a valid email.",
-      });
-    } else if (e.target.name === "email" && validator.isEmail(input)) {
-      setEmailInputErrors({ ...emailInputErrors, emailError: "" });
-    }
-  };
-
-  const createCSOAccount = ({
-    firstName,
-    lastName,
-    email = emailInput.email,
-  }) => {
     setShowLoader(true);
     setContinueBtnEnabled(false);
 
-    const applicantDetails = { firstName, lastName, email };
     axios
       .post("/csoAccount", applicantDetails)
       .then(({ data: { clientId, internalClientNumber } }) => {
@@ -125,7 +145,7 @@ export default function CSOAccount({
           <DisplayBox icon={icon} element={applicantTable} />
 
           {/* if missing email, show email input fields. */}
-          {!applicantInfo.email && (
+          {applicantDetails.email && (
             <form className="email-form">
               <div className="row">
                 <label className="cso-label">
@@ -139,7 +159,7 @@ export default function CSOAccount({
                   className="cso-input"
                   name="email"
                   data-testid="email"
-                  onChange={handleOnChange}
+                  onChange={handleOnEmailChange}
                 />
                 <span className="error red" data-testid="email-error">
                   {emailInputErrors.emailError}
@@ -157,7 +177,7 @@ export default function CSOAccount({
                   className="cso-input"
                   name="confEmail"
                   data-testid="conf-email"
-                  onChange={handleOnChange}
+                  onChange={handleOnEmailConfChange}
                 />
                 <span className="error red" data-testid="conf-email-error">
                   {emailInputErrors.confEmailError}
