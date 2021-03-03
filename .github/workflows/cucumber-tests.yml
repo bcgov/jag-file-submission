@@ -24,7 +24,22 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: debugging
-        run: echo $GITHUB_REPOSITORY
+        run: | 
+          echo $GITHUB_REPOSITORY
+          echo $GITHUB_ACTION
+          echo $GITHUB_ACTIONS
+          echo $GITHUB_ACTOR
+          echo $GITHUB_REPOSITORY
+          echo $GITHUB_EVENT_NAME
+          echo $GITHUB_EVENT_PATH
+          echo $GITHUB_WORKSPACE
+          echo $GITHUB_SHA
+          echo $GITHUB_REF
+          echo $GITHUB_HEAD_REF
+          echo $GITHUB_BASE_REF
+          echo $GITHUB_SERVER_URL
+          echo $GITHUB_API_URL
+          echo $GITHUB_GRAPHQL_URL
 
       - name: Pull efiling-api-builder
         run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder || true
@@ -53,6 +68,8 @@ jobs:
           --build-arg STARTERS_V=v0.1.8
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo
+      
+      # Optional only for branch on repo
       - name: tag & push efiling-api to git container registry
         run: docker tag efiling-api:demo docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo
 
