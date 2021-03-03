@@ -20,8 +20,8 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: docker.pkg.github.com
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: ${{ secrets.GCR_USER }}
+          password: ${{ secrets.GCR_PAT }}
 
       - name: Pull efiling-api-builder
         run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder || true
@@ -65,8 +65,8 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: docker.pkg.github.com
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: ${{ secrets.GCR_USER }}
+          password: ${{ secrets.GCR_PAT }}
       
       - name: Pull efiling-frontend-builder
         run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:builder || true
@@ -103,8 +103,8 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: docker.pkg.github.com
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: ${{ secrets.GCR_USER }}
+          password: ${{ secrets.GCR_PAT }}
       
       - name: Pull efiling-frontend-builder
         run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/keycloak-config:demo || true
