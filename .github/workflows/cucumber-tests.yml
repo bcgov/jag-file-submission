@@ -24,7 +24,10 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: debugging
+        env:
+          - REPO_NAME = github.event.pull_request.head.repo.full_name
         run: | 
+          echo $REPO_NAME
           echo $GITHUB_REPOSITORY
           echo $GITHUB_ACTION
           echo $GITHUB_ACTIONS
