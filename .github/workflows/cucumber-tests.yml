@@ -58,7 +58,7 @@ jobs:
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder
 
       - name: tag & push efiling-api to git container registry
-        if: ${{ github.event.pull_request.head.repo.full_name }} == $GITHUB_REPOSITORY
+        if: github.event.pull_request.head.repo.full_name == github.repository
         run: docker tag efiling-api:builder docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder
 
       - name: Pull efiling-api-demo
@@ -76,7 +76,7 @@ jobs:
       
       # Optional only for branch on repo
       - name: tag & push efiling-api to git container registry
-        if: ${{ github.event.pull_request.head.repo.full_name }} == $GITHUB_REPOSITORY
+        if: github.event.pull_request.head.repo.full_name == github.repository
         run: docker tag efiling-api:demo docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo
 
 
@@ -104,7 +104,7 @@ jobs:
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:builder
       
       - name: tag & push efiling-frontend to git container registry
-        if: ${{ github.event.pull_request.head.repo.full_name }} == $GITHUB_REPOSITORY
+        if: github.event.pull_request.head.repo.full_name == github.repository
         run: docker tag efiling-frontend:builder docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:builder && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:builder
       
       - name: Pull efiling-frontend-demo
@@ -117,7 +117,7 @@ jobs:
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:demo
       
       - name: tag & push efiling-frontend to git container registry
-        if: ${{ github.event.pull_request.head.repo.full_name }} == $GITHUB_REPOSITORY
+        if: github.event.pull_request.head.repo.full_name == github.repository
         run: docker tag efiling-frontend:demo docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:demo && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:demo
 
   keycloak-config-gcr:
@@ -144,7 +144,7 @@ jobs:
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/keycloak-config:demo
       
       - name: tag & push keycloak-config to git container registry
-        if: ${{ github.event.pull_request.head.repo.full_name }} == $GITHUB_REPOSITORY
+        if: github.event.pull_request.head.repo.full_name == github.repository
         run: docker tag keycloak-config:demo docker.pkg.github.com/$GITHUB_REPOSITORY/keycloak-config:demo && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/keycloak-config:demo
 
   cucumber-tests:
