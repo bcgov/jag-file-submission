@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.cache;
 
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractRequest;
+import ca.bc.gov.open.jag.efilingreviewerapi.queue.Receiver;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.cache.CacheManager;
@@ -10,11 +11,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
-import org.springframework.data.redis.connection.RedisClusterConfiguration;
-import org.springframework.data.redis.connection.RedisNode;
-import org.springframework.data.redis.connection.RedisSentinelConfiguration;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.*;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 
@@ -103,5 +102,14 @@ public class CacheConfig {
         return new Jackson2JsonRedisSerializer(ExtractRequest.class);
     }
 
+    @Bean
+    public StringRedisTemplate stringRedisTemplate(JedisConnectionFactory jedisConnectionFactory) {
+        return new StringRedisTemplate(jedisConnectionFactory);
+    }
+
+    @Bean
+    public Receiver receiver(StringRedisTemplate stringRedisTemplate) {
+        return new Receiver(stringRedisTemplate);
+    }
 
 }
