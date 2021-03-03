@@ -10,7 +10,6 @@ import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractMapperImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapper;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapperImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.store.ExtractStore;
-import ca.bc.gov.open.jag.efilingreviewerapi.queue.Receiver;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;

@@ -18,6 +18,7 @@ import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
@@ -53,7 +54,7 @@ public class ExtractDocumentFormDataTest {
     private ExtractStore extractStore;
 
     @Mock
-    private Receiver receiverMock;
+    private StringRedisTemplate stringRedisTemplateMock;
 
     @BeforeAll
     public void beforeAll() {
@@ -63,8 +64,10 @@ public class ExtractDocumentFormDataTest {
         Mockito.when(extractStore.put(Mockito.eq(BigDecimal.ONE), Mockito.any())).thenReturn(Optional.of(ExtractRequestMockFactory.mock()));
         Mockito.when(extractStore.put(Mockito.eq(BigDecimal.TEN), Mockito.any())).thenReturn(Optional.empty());
 
+        Mockito.doNothing().when(stringRedisTemplateMock).convertAndSend(any(), any());
+
         ExtractRequestMapper extractRequestMapper = new ExtractRequestMapperImpl(new ExtractMapperImpl());
-        sut = new DocumentsApiDelegateImpl(diligenService, extractRequestMapper, extractStore, receiverMock, clamAvService);
+        sut = new DocumentsApiDelegateImpl(diligenService, extractRequestMapper, extractStore, stringRedisTemplateMock, clamAvService);
 
     }
     @Test
@@ -81,8 +84,6 @@ public class ExtractDocumentFormDataTest {
                 CASE_1, APPLICATION_PDF, Files.readAllBytes(path));
 
         Mockito.doNothing().when(clamAvService).scan(any());
-
-        Mockito.doNothing().when(receiverMock).receiveMessage(any());
 
         ResponseEntity<DocumentExtractResponse> actual = sut.extractDocumentFormData(transactionId, "TYPE", multipartFile);
 
