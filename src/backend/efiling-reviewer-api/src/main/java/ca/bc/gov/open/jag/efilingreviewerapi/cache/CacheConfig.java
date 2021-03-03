@@ -1,13 +1,6 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.cache;
 
-import ca.bc.gov.open.clamav.starter.ClamAvService;
-import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
-import ca.bc.gov.open.jag.efilingreviewerapi.api.DocumentsApiDelegate;
-import ca.bc.gov.open.jag.efilingreviewerapi.document.DocumentsApiDelegateImpl;
-import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapper;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractRequest;
-import ca.bc.gov.open.jag.efilingreviewerapi.extract.store.ExtractStore;
-import ca.bc.gov.open.jag.efilingreviewerapi.queue.Receiver;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.cache.CacheManager;
@@ -19,10 +12,6 @@ import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.*;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.listener.PatternTopic;
-import org.springframework.data.redis.listener.RedisMessageListenerContainer;
-import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 
