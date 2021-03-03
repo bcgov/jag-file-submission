@@ -111,31 +111,4 @@ public class CacheConfig {
         return new Jackson2JsonRedisSerializer(ExtractRequest.class);
     }
 
-
-    @Bean
-    RedisMessageListenerContainer container(JedisConnectionFactory jedisConnectionFactory,
-                                            MessageListenerAdapter listenerAdapter) {
-
-        RedisMessageListenerContainer container = new RedisMessageListenerContainer();
-        container.setConnectionFactory(jedisConnectionFactory);
-        container.addMessageListener(listenerAdapter, new PatternTopic("documentWait"));
-
-        return container;
-    }
-
-    @Bean
-    MessageListenerAdapter listenerAdapter(Receiver receiver) {
-        return new MessageListenerAdapter(receiver, "receiveMessage");
-    }
-
-    @Bean
-    public StringRedisTemplate stringRedisTemplate(JedisConnectionFactory jedisConnectionFactory) {
-        return new StringRedisTemplate(jedisConnectionFactory);
-    }
-
-    @Bean
-    public Receiver receiver(DiligenService diligenService, ExtractRequestMapper extractRequestMapper, ExtractStore extractStore, StringRedisTemplate stringRedisTemplate, ClamAvService clamAvService) {
-        return new Receiver(new DocumentsApiDelegateImpl(diligenService, extractRequestMapper, extractStore, stringRedisTemplate, clamAvService));
-    }
-
 }
