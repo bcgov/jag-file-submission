@@ -15,11 +15,14 @@ public class Receiver {
 
     private final UUID queueGuid = UUID.fromString("b40e9014-024f-481b-a1b9-a84cb99e9c9d");
 
+    private final Integer waitTime;
+
     private final DocumentsApiDelegate documentsApiDelegate;
 
     private final AtomicInteger counter = new AtomicInteger();
 
-    public Receiver(DocumentsApiDelegate documentsApiDelegate) {
+    public Receiver(Integer waitTime, DocumentsApiDelegate documentsApiDelegate) {
+        this.waitTime = waitTime;
         this.documentsApiDelegate = documentsApiDelegate;
     }
 
@@ -32,7 +35,7 @@ public class Receiver {
         documentEvent.setStatus("PROCESSED");
 
         try {
-           TimeUnit.MINUTES.sleep(2);
+           TimeUnit.SECONDS.sleep(waitTime);
            logger.info("Calling document event");
            documentsApiDelegate.documentEvent(queueGuid, documentEvent);
         } catch (InterruptedException e) {

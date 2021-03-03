@@ -1,12 +1,10 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.queue;
 
 import ca.bc.gov.open.jag.efilingreviewerapi.api.DocumentsApiDelegate;
-import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentEvent;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -29,7 +27,7 @@ public class ReceiverTest {
 
         Mockito.when(documentsApiDelegateMock.documentEvent(any(), any())).thenReturn(new ResponseEntity<>(HttpStatus.NO_CONTENT));
 
-        sut = new Receiver(documentsApiDelegateMock);
+        sut = new Receiver(1, documentsApiDelegateMock);
 
     }
 
