@@ -165,7 +165,7 @@ jobs:
 
       - name: Standup Docker Pods (FORK only)
         if: github.event.pull_request.head.repo.full_name != github.repository
-        run: docker-compose -f docker-compose.yml up -d efiling-api efiling-frontend
+        run: docker-compose up -d efiling-api efiling-frontend
 
       - name: Configure keycloak (Local REPO only)
         if: github.event.pull_request.head.repo.full_name == github.repository
@@ -175,7 +175,7 @@ jobs:
       - name: Configure keycloak (FORK only)
         if: github.event.pull_request.head.repo.full_name != github.repository
         run: |
-          docker-compose -f docker-compose.yml up keycloak-config
+          docker-compose up keycloak-config
 
       - name: Running Integration Tests
         env:
