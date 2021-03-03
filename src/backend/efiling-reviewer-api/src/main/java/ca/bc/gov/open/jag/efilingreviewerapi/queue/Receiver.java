@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Receiver {
@@ -29,7 +30,14 @@ public class Receiver {
 
         documentEvent.setDocumentId(new BigDecimal(event));
         documentEvent.setStatus("PROCESSED");
-        documentsApiDelegate.documentEvent(queueGuid, documentEvent);
+
+        try {
+           TimeUnit.MINUTES.sleep(2);
+           logger.info("Calling document event");
+           documentsApiDelegate.documentEvent(queueGuid, documentEvent);
+        } catch (InterruptedException e) {
+            logger.error("Temporary code should have slept for two minutes");
+        }
     }
 
     public int getCount() {

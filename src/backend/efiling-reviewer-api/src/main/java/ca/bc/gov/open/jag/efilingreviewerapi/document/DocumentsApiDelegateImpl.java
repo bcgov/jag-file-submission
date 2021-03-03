@@ -80,11 +80,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
 
     @Override
     public ResponseEntity<Void> documentEvent(UUID xTransactionId, DocumentEvent documentEvent) {
-        try {
-            if (xTransactionId.equals(UUID.fromString("b40e9014-024f-481b-a1b9-a84cb99e9c9d"))) TimeUnit.MINUTES.sleep(2);
-        } catch (InterruptedException e) {
-            logger.error("Temporary code should have slept for two minutes");
-        }
+
 
         logger.info("document {} status has changed to {}", documentEvent.getDocumentId(), documentEvent.getStatus());
         //We won't do anything with this for now
