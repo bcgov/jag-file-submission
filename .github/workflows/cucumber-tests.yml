@@ -23,27 +23,6 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: debugging
-        env:
-          REPO_NAME: ${{ github.event.pull_request.head.repo.full_name }}
-        run: | 
-          echo $REPO_NAME
-          echo $GITHUB_REPOSITORY
-          echo $GITHUB_ACTION
-          echo $GITHUB_ACTIONS
-          echo $GITHUB_ACTOR
-          echo $GITHUB_REPOSITORY
-          echo $GITHUB_EVENT_NAME
-          echo $GITHUB_EVENT_PATH
-          echo $GITHUB_WORKSPACE
-          echo $GITHUB_SHA
-          echo $GITHUB_REF
-          echo $GITHUB_HEAD_REF
-          echo $GITHUB_BASE_REF
-          echo $GITHUB_SERVER_URL
-          echo $GITHUB_API_URL
-          echo $GITHUB_GRAPHQL_URL
-
       - name: Pull efiling-api-builder
         run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder || true
 
@@ -78,7 +57,6 @@ jobs:
       - name: tag & push efiling-api to git container registry
         if: github.event.pull_request.head.repo.full_name == github.repository
         run: docker tag efiling-api:demo docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo
-
 
   efiling-frontend-gcr:
     name: Efiling Frontend GCR
@@ -177,15 +155,27 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: Pull images
-        run: docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml pull --parallel -q efiling-api efiling-frontend
+      - name: Pull images (Local REPO only)
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        run: docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml pull --parallel -q efiling-api efiling-frontend keycloak-config
 
-      - name: Standup Docker Pods
+      - name: Standup Docker Pods (Local REPO only)
+        if: github.event.pull_request.head.repo.full_name == github.repository
         run: docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up -d efiling-api efiling-frontend
 
-      - name: Configure keycloak
+      - name: Standup Docker Pods (FORK only)
+        if: github.event.pull_request.head.repo.full_name != github.repository
+        run: docker-compose -f docker-compose.yml up -d efiling-api efiling-frontend
+
+      - name: Configure keycloak (Local REPO only)
+        if: github.event.pull_request.head.repo.full_name == github.repository
         run: |
           docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up keycloak-config
+      
+      - name: Configure keycloak (FORK only)
+        if: github.event.pull_request.head.repo.full_name != github.repository
+        run: |
+          docker-compose -f docker-compose.yml up keycloak-config
 
       - name: Running Integration Tests
         env:
