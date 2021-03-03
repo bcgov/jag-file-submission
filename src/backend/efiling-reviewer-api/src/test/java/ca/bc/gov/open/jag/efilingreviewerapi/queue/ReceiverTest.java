@@ -7,12 +7,14 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import static org.mockito.ArgumentMatchers.any;
 
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@DisplayName("DocumentsApiDelegateImpl test suite")
+@DisplayName("Receiver test suite")
 public class ReceiverTest {
 
     Receiver sut;
@@ -25,7 +27,7 @@ public class ReceiverTest {
 
         MockitoAnnotations.openMocks(this);
 
-        Mockito.doNothing().when(documentsApiDelegateMock).documentEvent(any(), any());
+        Mockito.when(documentsApiDelegateMock.documentEvent(any(), any())).thenReturn(new ResponseEntity<>(HttpStatus.NO_CONTENT));
 
         sut = new Receiver(documentsApiDelegateMock);
 
@@ -34,6 +36,7 @@ public class ReceiverTest {
     @Test
     @DisplayName("Ok: Message added")
     public void withMessageAddedToRedis() {
+
         sut.receiveMessage("2");
 
         Assertions.assertEquals(1, sut.getCount());
