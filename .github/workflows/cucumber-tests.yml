@@ -25,7 +25,7 @@ jobs:
 
       - name: debugging
         env:
-          - REPO_NAME = github.event.pull_request.head.repo.full_name
+          REPO_NAME: github.event.pull_request.head.repo.full_name
         run: | 
           echo $REPO_NAME
           echo $GITHUB_REPOSITORY
