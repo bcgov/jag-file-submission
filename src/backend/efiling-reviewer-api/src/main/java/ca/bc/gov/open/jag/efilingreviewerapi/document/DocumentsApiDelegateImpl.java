@@ -8,6 +8,7 @@ import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentEvent;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentExtractResponse;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerVirusFoundException;
+import ca.bc.gov.open.jag.efilingreviewerapi.queue.Receiver;
 import ca.bc.gov.open.jag.efilingreviewerapi.utils.TikaAnalysis;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerCacheException;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapper;
@@ -33,14 +34,15 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
     private final DiligenService diligenService;
     private final ExtractRequestMapper extractRequestMapper;
     private final ExtractStore extractStore;
-
+    private final Receiver receiver;
 
     private final ClamAvService clamAvService;
 
-    public DocumentsApiDelegateImpl(DiligenService diligenService, ExtractRequestMapper extractRequestMapper, ExtractStore extractStore, ClamAvService clamAvService) {
+    public DocumentsApiDelegateImpl(DiligenService diligenService, ExtractRequestMapper extractRequestMapper, ExtractStore extractStore, Receiver receiver, ClamAvService clamAvService) {
         this.diligenService = diligenService;
         this.extractRequestMapper = extractRequestMapper;
         this.extractStore = extractStore;
+        this.receiver = receiver;
         this.clamAvService = clamAvService;
     }
 
@@ -61,6 +63,8 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
         ExtractRequest extractRequest = extractRequestMapper.toExtractRequest(xTransactionId, xDocumentType, file);
 
         BigDecimal response = diligenService.postDocument(xDocumentType, file);
+
+        receiver.receiveMessage(response.toPlainString());
 
         Optional<ExtractRequest> extractRequestCached = extractStore.put(response, extractRequest);
 

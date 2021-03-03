@@ -13,6 +13,7 @@ import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMappe
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapperImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mocks.ExtractRequestMockFactory;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.store.ExtractStore;
+import ca.bc.gov.open.jag.efilingreviewerapi.queue.Receiver;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -51,6 +52,9 @@ public class ExtractDocumentFormDataTest {
     @Mock
     private ExtractStore extractStore;
 
+    @Mock
+    private Receiver receiverMock;
+
     @BeforeAll
     public void beforeAll() {
 
@@ -60,7 +64,7 @@ public class ExtractDocumentFormDataTest {
         Mockito.when(extractStore.put(Mockito.eq(BigDecimal.TEN), Mockito.any())).thenReturn(Optional.empty());
 
         ExtractRequestMapper extractRequestMapper = new ExtractRequestMapperImpl(new ExtractMapperImpl());
-        sut = new DocumentsApiDelegateImpl(diligenService, extractRequestMapper, extractStore, clamAvService);
+        sut = new DocumentsApiDelegateImpl(diligenService, extractRequestMapper, extractStore, receiverMock, clamAvService);
 
     }
     @Test
@@ -77,6 +81,8 @@ public class ExtractDocumentFormDataTest {
                 CASE_1, APPLICATION_PDF, Files.readAllBytes(path));
 
         Mockito.doNothing().when(clamAvService).scan(any());
+
+        Mockito.doNothing().when(receiverMock).receiveMessage(any());
 
         ResponseEntity<DocumentExtractResponse> actual = sut.extractDocumentFormData(transactionId, "TYPE", multipartFile);
 

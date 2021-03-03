@@ -10,6 +10,7 @@ import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractMapperImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapper;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapperImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.store.ExtractStore;
+import ca.bc.gov.open.jag.efilingreviewerapi.queue.Receiver;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
@@ -26,10 +27,13 @@ public class DocumentEventTest {
 
 
     private DocumentsApiDelegateImpl sut;
+
     @Mock
     private DiligenService diligenServiceMock;
+
     @Mock
     private ExtractStore extractStoreMock;
+
     @Mock
     private ClamAvService clamAvServiceMock;
 
@@ -43,7 +47,7 @@ public class DocumentEventTest {
 
         Mockito.when(diligenServiceMock.getDocumentDetails(ArgumentMatchers.eq(BigDecimal.ONE))).thenReturn(DiligenDocumentDetails.builder().create());
 
-        sut = new DocumentsApiDelegateImpl(diligenServiceMock, extratRequestMapper, extractStoreMock, clamAvServiceMock);
+        sut = new DocumentsApiDelegateImpl(diligenServiceMock, extratRequestMapper, extractStoreMock, null, clamAvServiceMock);
 
     }
 

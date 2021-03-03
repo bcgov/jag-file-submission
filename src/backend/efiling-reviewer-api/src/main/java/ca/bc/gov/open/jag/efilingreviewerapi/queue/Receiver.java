@@ -7,7 +7,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Receiver {
-    Logger logger = LoggerFactory.getLogger(Receiver.class);
+    private final Logger logger = LoggerFactory.getLogger(Receiver.class);
 
     private final StringRedisTemplate stringRedisTemplate;
 
