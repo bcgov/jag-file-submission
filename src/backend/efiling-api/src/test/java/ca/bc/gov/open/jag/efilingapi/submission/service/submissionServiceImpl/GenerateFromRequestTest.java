@@ -2,10 +2,7 @@ package ca.bc.gov.open.jag.efilingapi.submission.service.submissionServiceImpl;
 
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
-import ca.bc.gov.open.jag.efilingapi.api.model.Court;
-import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
-import ca.bc.gov.open.jag.efilingapi.api.model.InitialPackage;
-import ca.bc.gov.open.jag.efilingapi.api.model.Party;
+import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
@@ -167,8 +164,8 @@ public class GenerateFromRequestTest {
         request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createInitialDocumentsList()));
         request.getFilingPackage().getCourt().setFileNumber("");
 
-        List<Party> parties = new ArrayList<>();
-        Party party = new Party();
+        List<Individual> parties = new ArrayList<>();
+        Individual party = new Individual();
         party.setRoleType(Party.RoleTypeEnum.ABC);
         parties.add(party);
         request.getFilingPackage().setParties(parties);

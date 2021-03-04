@@ -49,7 +49,6 @@ public interface FilingPackageMapper {
 
     List<Party> toParties(List<ca.bc.gov.open.jag.efilingcommons.model.Party> parties);
 
-    @Mapping(target = "partyType", source = "partyTypeCd")
     @Mapping(target = "partyDescription", source = "partyTypeDesc")
     @Mapping(target = "roleType", source = "roleTypeCd")
     @Mapping(target = "roleDescription", source = "roleTypeDesc")

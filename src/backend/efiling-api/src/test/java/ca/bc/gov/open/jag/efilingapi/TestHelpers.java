@@ -271,7 +271,6 @@ public class TestHelpers {
                 .lastName(LAST_NAME)
                 .middleName(MIDDLE_NAME)
                 .nameTypeCd(NAME_TYPE)
-                .partyTypeCd(ca.bc.gov.open.jag.efilingapi.api.model.Party.PartyTypeEnum.IND.getValue())
                 .partyTypeDesc(PARTY_TYPE_DESC)
                 .roleTypeCd(ca.bc.gov.open.jag.efilingapi.api.model.Party.RoleTypeEnum.ABC.getValue())
                 .roleTypeDesc(ROLE_TYPE_DESC)
