@@ -4073,7 +4073,7 @@ boolbase@^1.0.0, boolbase@~1.0.0:
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
 
-bootstrap@^4.5.3:
+bootstrap@^4.5.3, bootstrap@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.6.0.tgz#97b9f29ac98f98dfa43bf7468262d84392552fd7"
   integrity sha512-Io55IuQY3kydzHtbGvQya3H+KorS/M9rSNyfCGCg9WZ4pyT/lCxIlpJgG1GXW/PswzC84Tr2fBYi+7+jFVQQBw==
@@ -13712,12 +13712,12 @@ shallowequal@^1.1.0:
   resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-1.1.0.tgz#188d521de95b9087404fd4dcb68b13df0ae4e7f8"
   integrity sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==
 
-"shared-components@https://github.com/bcgov/react-shared-components/releases/download/v1.2.1/shared-components-1.2.1.tgz":
-  version "1.2.1"
-  resolved "https://github.com/bcgov/react-shared-components/releases/download/v1.2.1/shared-components-1.2.1.tgz#67895ff8893862994f120864edca0e931258d030"
+"shared-components@https://github.com/bcgov/react-shared-components/releases/download/v1.2.2/shared-components-1.2.2.tgz":
+  version "1.2.2"
+  resolved "https://github.com/bcgov/react-shared-components/releases/download/v1.2.2/shared-components-1.2.2.tgz#eb7e1935938e5f9931624d9e12844559cbed3752"
   dependencies:
     "@bcgov/bootstrap-theme" "github:bcgov/bootstrap-theme"
-    bootstrap "^4.5.3"
+    bootstrap "^4.6.0"
     history "^5.0.0"
     jquery "^3.5.1"
     prop-types "^15.7.2"
