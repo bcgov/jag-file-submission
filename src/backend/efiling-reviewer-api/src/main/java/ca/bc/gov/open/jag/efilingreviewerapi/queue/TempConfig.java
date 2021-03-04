@@ -41,6 +41,6 @@ public class TempConfig {
 
     @Bean
     public Receiver receiver(DiligenService diligenService, ExtractRequestMapper extractRequestMapper, ExtractStore extractStore, StringRedisTemplate stringRedisTemplate, ClamAvService clamAvService) {
-        return new Receiver(120, new DocumentsApiDelegateImpl(diligenService, extractRequestMapper, extractStore, stringRedisTemplate, clamAvService));
+        return new Receiver(2, new DocumentsApiDelegateImpl(diligenService, extractRequestMapper, extractStore, stringRedisTemplate, clamAvService), diligenService, stringRedisTemplate);
     }
 }

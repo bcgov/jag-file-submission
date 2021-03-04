@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingreviewerapi.document;
 import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.clamav.starter.VirusDetectedException;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
+import ca.bc.gov.open.jag.efilingreviewerapi.Keys;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.DocumentsApiDelegate;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentEvent;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentExtractResponse;
@@ -26,7 +27,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
@@ -81,10 +81,11 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
     @Override
     public ResponseEntity<Void> documentEvent(UUID xTransactionId, DocumentEvent documentEvent) {
 
-
         logger.info("document {} status has changed to {}", documentEvent.getDocumentId(), documentEvent.getStatus());
         //We won't do anything with this for now
-        diligenService.getDocumentDetails(documentEvent.getDocumentId());
+        if (documentEvent.getStatus().equalsIgnoreCase(Keys.PROCESSED_STATUS)) {
+            diligenService.getDocumentDetails(documentEvent.getDocumentId());
+        }
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
