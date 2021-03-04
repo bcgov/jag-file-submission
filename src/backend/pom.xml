@@ -67,6 +67,7 @@
 				<module>libs/efiling-bambora-api-client</module>
 				<module>libs/efiling-ceis-api-client</module>
 				<module>libs/efiling-cso-client</module>
+				<module>libs/efiling-cso-client-preview</module>
 				<module>libs/efiling-cso-starter</module>
 				<module>efiling-api</module>
 			</modules>
