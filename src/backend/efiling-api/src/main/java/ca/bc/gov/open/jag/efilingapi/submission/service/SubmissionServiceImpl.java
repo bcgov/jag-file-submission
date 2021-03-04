@@ -269,7 +269,7 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     private BigDecimal getSubmissionFeeAmount() {
-        // TODO: fix with the mapper ApplicationCode to ServiceTypeCode;d
+        // TODO: fix with the mapper ApplicationCode to ServiceTypeCode
         ServiceFees fee = efilingLookupService.getServiceFee(SubmissionConstants.SUBMISSION_FEE_TYPE);
         return fee == null ? BigDecimal.ZERO : fee.getFeeAmount();
     }
