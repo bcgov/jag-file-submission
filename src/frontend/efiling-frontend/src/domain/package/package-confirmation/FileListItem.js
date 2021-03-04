@@ -7,8 +7,6 @@ import { formatCurrency } from "../../../modules/helpers/CurrencyUtil";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { propTypes } from "../../../types/propTypes";
 
-const hash = require("object-hash");
-
 export default function FileListItem({ submissionId, file }) {
   const handleDownloadFile = (e) => {
     if (isClick(e) || isEnter(e)) {
@@ -19,7 +17,7 @@ export default function FileListItem({ submissionId, file }) {
   };
 
   return (
-    <li key={hash(file)}>
+    <li>
       <span
         className="file-href col-md-12 col-lg-6"
         role="button"
