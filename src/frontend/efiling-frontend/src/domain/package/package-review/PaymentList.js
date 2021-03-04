@@ -9,7 +9,6 @@ import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 
 const hash = require("object-hash");
 
-
 export default function PaymentList({ payments, packageId }) {
   const dineroInit = {
     stat: Dinero({ amount: 0 }),
@@ -55,7 +54,7 @@ export default function PaymentList({ payments, packageId }) {
     downloadPaymentReceipt(packageId).catch((err) => {
       errorRedirect(sessionStorage.getItem("errorUrl"), err);
     });
-  }
+  };
 
   const handleKeyDown = (e) => {
     if (e && e.keyCode === 13) {
@@ -63,7 +62,7 @@ export default function PaymentList({ payments, packageId }) {
         errorRedirect(sessionStorage.getItem("errorUrl"), err);
       });
     }
-  }
+  };
 
   return (
     <div className="ct-payment-list">
@@ -139,7 +138,13 @@ export default function PaymentList({ payments, packageId }) {
         </tbody>
       </table>
       <div className="d-flex justify-content-end">
-        <span className="file-href" role="button" onClick={handleClick} onKeyDown={handleKeyDown}>
+        <span
+          className="file-href"
+          role="button"
+          tabIndex={0}
+          onClick={handleClick}
+          onKeyDown={handleKeyDown}
+        >
           View Receipt
         </span>
         <MdPrint size="24" color="#7F7F7F" className="align-icon" />
@@ -150,7 +155,7 @@ export default function PaymentList({ payments, packageId }) {
 
 PaymentList.propTypes = {
   payments: PropTypes.arrayOf(PropTypes.object),
-  packageid: PropTypes.number.isRequired
+  packageId: PropTypes.number.isRequired,
 };
 
 PaymentList.defaultProps = {

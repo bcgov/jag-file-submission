@@ -1,16 +1,15 @@
 import React from "react";
 import { render, waitFor, fireEvent } from "@testing-library/react";
-import PaymentList from "../PaymentList";
 import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 import FileSaver from "file-saver";
+import PaymentList from "../PaymentList";
 import { generateJWTToken } from "../../../../modules/helpers/authentication-helper/authenticationHelper";
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useParams: jest.fn().mockReturnValue({ packageId: 1 }),
 }));
-
 
 describe("PartyList Component", () => {
   const payments = [
@@ -48,7 +47,7 @@ describe("PartyList Component", () => {
     },
   ];
 
-  const packageId = "1"
+  const packageId = "1";
 
   FileSaver.saveAs = jest.fn();
 
@@ -67,7 +66,9 @@ describe("PartyList Component", () => {
   });
 
   test("Matches snapshot", () => {
-    const { asFragment } = render(<PaymentList payments={payments} packageId={packageId}/>);
+    const { asFragment } = render(
+      <PaymentList payments={payments} packageId={packageId} />
+    );
     waitFor(() => {});
 
     expect(asFragment()).toMatchSnapshot();
@@ -83,7 +84,9 @@ describe("PartyList Component", () => {
       .onGet(`/filingpackages/${packageId}/paymentReceipt`)
       .reply(200, { blob });
 
-    const { getByText } = render(<PaymentList payments={payments} packageId={packageId}/>);
+    const { getByText } = render(
+      <PaymentList payments={payments} packageId={packageId} />
+    );
     await waitFor(() => {});
 
     fireEvent.click(getByText("View Receipt"));
@@ -102,7 +105,9 @@ describe("PartyList Component", () => {
       .onGet(`/filingpackages/${packageId}/paymentReceipt`)
       .reply(200, { blob });
 
-    const { getByText } = render(<PaymentList payments={payments} packageId={packageId}/>);
+    const { getByText } = render(
+      <PaymentList payments={payments} packageId={packageId} />
+    );
     await waitFor(() => {});
 
     fireEvent.keyDown(getByText("View Receipt"));
@@ -116,12 +121,14 @@ describe("PartyList Component", () => {
 
     global.URL.createObjectURL = jest.fn();
     global.URL.createObjectURL.mockReturnValueOnce("fileurl.com");
-    
+
     mock
       .onGet(`/filingpackages/${packageId}/paymentReceipt`)
       .reply(404, { message: "There was an error." });
 
-    const { getByText } = render(<PaymentList payments={payments} packageId={packageId}/>);
+    const { getByText } = render(
+      <PaymentList payments={payments} packageId={packageId} />
+    );
     await waitFor(() => {});
 
     fireEvent.keyDown(getByText("View Receipt"), {
@@ -136,16 +143,17 @@ describe("PartyList Component", () => {
 
     global.URL.createObjectURL = jest.fn();
     global.URL.createObjectURL.mockReturnValueOnce("fileurl.com");
-    
+
     mock
       .onGet(`/filingpackages/${packageId}/paymentReceipt`)
       .reply(404, { message: "There was an error." });
 
-    const { getByText } = render(<PaymentList payments={payments} packageId={packageId}/>);
+    const { getByText } = render(
+      <PaymentList payments={payments} packageId={packageId} />
+    );
     await waitFor(() => {});
 
     fireEvent.click(getByText("View Receipt"));
     await waitFor(() => {});
   });
-
 });
