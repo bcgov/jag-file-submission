@@ -124,7 +124,7 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
      */
     private List<String> validateParties(InitialPackage initialPackage) {
 
-        if (StringUtils.isBlank(initialPackage.getCourt().getFileNumber()) && initialPackage.getParties().isEmpty()) {
+        if (StringUtils.isBlank(initialPackage.getCourt().getFileNumber()) && (initialPackage.getParties() == null || initialPackage.getParties().isEmpty())) {
             return Arrays.asList("At least 1 party is required for new submission.");
         }
 

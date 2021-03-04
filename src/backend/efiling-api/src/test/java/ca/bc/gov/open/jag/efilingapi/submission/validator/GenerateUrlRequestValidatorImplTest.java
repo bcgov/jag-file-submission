@@ -150,7 +150,7 @@ public class GenerateUrlRequestValidatorImplTest {
 
     @Test
     @DisplayName("ok: returning submission without error should return a notification without error")
-    public void returningSubmissionwithoutErrorShouldReturnNoError() {
+    public void returningSubmissionWithoutErrorShouldReturnNoError() {
 
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
         InitialPackage initialFilingPackage = new InitialPackage();
@@ -174,6 +174,11 @@ public class GenerateUrlRequestValidatorImplTest {
         navigationUrls.setCancel("http://cancel");
         navigationUrls.setSuccess("http://success");
         generateUrlRequest.setNavigationUrls(navigationUrls);
+
+        List<Individual> parties = new ArrayList<>();
+        Individual party = new Individual();
+        party.setRoleType(Party.RoleTypeEnum.APP);
+        initialFilingPackage.setParties(parties);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
         Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
@@ -315,6 +320,11 @@ public class GenerateUrlRequestValidatorImplTest {
         navigationUrls.setCancel("http://cancel");
         navigationUrls.setSuccess("http://success");
         generateUrlRequest.setNavigationUrls(navigationUrls);
+
+        List<Individual> parties = new ArrayList<>();
+        Individual party = new Individual();
+        party.setRoleType(Party.RoleTypeEnum.APP);
+        initialFilingPackage.setParties(parties);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
         Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);

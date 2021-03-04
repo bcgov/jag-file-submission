@@ -72,6 +72,7 @@ public class TestHelpers {
         InitialPackage initialPackage = new InitialPackage();
         initialPackage.setCourt(court);
         initialPackage.setDocuments(initialDocuments);
+        initialPackage.setParties(new ArrayList<>());
         return initialPackage;
     }
 
