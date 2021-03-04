@@ -141,7 +141,6 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
                 .lastName("Ross")
                 .roleTypeCd("APP")
                 .roleTypeDesc("Applicant")
-                .partyTypeCd("IND")
                 .partyTypeDesc("Individual")
                 .create();
 
@@ -151,7 +150,6 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
                 .lastName("Loooooooooong-Looooooooooonglast")
                 .roleTypeCd("APP")
                 .roleTypeDesc("Applicant")
-                .partyTypeCd("IND")
                 .partyTypeDesc("Individual")
                 .create();
 
