@@ -32,7 +32,6 @@ public class FilingPakageTest {
     public static final String DESCRIPTION = "description";
     public static final BigDecimal STATUTORY_FEE_AMOUNT = BigDecimal.TEN;
     public static final String MIME_TYPE = "mimeType";
-    public static final String PARTY_TYPE_CD = "partyTypeCd";
     public static final String ROLE_TYPE_CD = "roleTypeCd";
     public static final String PARTY_TYPE_DESC = "partyTypeDesc";
     public static final String ROLE_TYPE_DESC = "roleTypeDesc";
@@ -62,7 +61,6 @@ public class FilingPakageTest {
     }
 
     private void assertParties(FilingPackage actual) {
-        Assertions.assertEquals(PARTY_TYPE_CD, actual.getParties().get(0).getPartyTypeCd());
         Assertions.assertEquals(ROLE_TYPE_CD, actual.getParties().get(0).getRoleTypeCd());
         Assertions.assertEquals(FIRST_NAME, actual.getParties().get(0).getFirstName());
         Assertions.assertEquals(MIDDLE_NAME, actual.getParties().get(0).getMiddleName());
@@ -98,7 +96,6 @@ public class FilingPakageTest {
     private List<Individual> getParties() {
         List<Individual> parties = new ArrayList<>();
         Individual individual = new Individual(
-                PARTY_TYPE_CD,
                 PARTY_TYPE_DESC,
                 ROLE_TYPE_CD,
                 ROLE_TYPE_DESC,
