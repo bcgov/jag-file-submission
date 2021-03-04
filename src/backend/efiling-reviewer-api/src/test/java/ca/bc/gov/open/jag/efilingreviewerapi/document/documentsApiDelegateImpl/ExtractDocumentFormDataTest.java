@@ -13,10 +13,12 @@ import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMappe
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapperImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mocks.ExtractRequestMockFactory;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.store.ExtractStore;
+import ca.bc.gov.open.jag.efilingreviewerapi.queue.Receiver;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
@@ -51,6 +53,9 @@ public class ExtractDocumentFormDataTest {
     @Mock
     private ExtractStore extractStore;
 
+    @Mock
+    private StringRedisTemplate stringRedisTemplateMock;
+
     @BeforeAll
     public void beforeAll() {
 
@@ -59,8 +64,10 @@ public class ExtractDocumentFormDataTest {
         Mockito.when(extractStore.put(Mockito.eq(BigDecimal.ONE), Mockito.any())).thenReturn(Optional.of(ExtractRequestMockFactory.mock()));
         Mockito.when(extractStore.put(Mockito.eq(BigDecimal.TEN), Mockito.any())).thenReturn(Optional.empty());
 
+        Mockito.doNothing().when(stringRedisTemplateMock).convertAndSend(any(), any());
+
         ExtractRequestMapper extractRequestMapper = new ExtractRequestMapperImpl(new ExtractMapperImpl());
-        sut = new DocumentsApiDelegateImpl(diligenService, extractRequestMapper, extractStore, clamAvService);
+        sut = new DocumentsApiDelegateImpl(diligenService, extractRequestMapper, extractStore, stringRedisTemplateMock, clamAvService);
 
     }
     @Test

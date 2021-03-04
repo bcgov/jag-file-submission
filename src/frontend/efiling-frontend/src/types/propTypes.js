@@ -28,7 +28,7 @@ export const propTypes = {
     }).isRequired,
   }).isRequired,
   applicantInfo: PropTypes.shape({
-    bceid: PropTypes.string.isRequired,
+    bceid: PropTypes.string,
     firstName: PropTypes.string.isRequired,
     middleName: PropTypes.string,
     lastName: PropTypes.string.isRequired,

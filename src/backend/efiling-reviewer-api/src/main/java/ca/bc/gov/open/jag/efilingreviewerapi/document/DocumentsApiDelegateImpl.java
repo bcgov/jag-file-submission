@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingreviewerapi.document;
 import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.clamav.starter.VirusDetectedException;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
+import ca.bc.gov.open.jag.efilingreviewerapi.Keys;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.DocumentsApiDelegate;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentEvent;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentExtractResponse;
@@ -15,6 +16,7 @@ import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractRequest;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.store.ExtractStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.UUID;
+
 @Service
 public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
 
@@ -33,14 +36,15 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
     private final DiligenService diligenService;
     private final ExtractRequestMapper extractRequestMapper;
     private final ExtractStore extractStore;
-
+    private final StringRedisTemplate stringRedisTemplate;
 
     private final ClamAvService clamAvService;
 
-    public DocumentsApiDelegateImpl(DiligenService diligenService, ExtractRequestMapper extractRequestMapper, ExtractStore extractStore, ClamAvService clamAvService) {
+    public DocumentsApiDelegateImpl(DiligenService diligenService, ExtractRequestMapper extractRequestMapper, ExtractStore extractStore, StringRedisTemplate stringRedisTemplate, ClamAvService clamAvService) {
         this.diligenService = diligenService;
         this.extractRequestMapper = extractRequestMapper;
         this.extractStore = extractStore;
+        this.stringRedisTemplate = stringRedisTemplate;
         this.clamAvService = clamAvService;
     }
 
@@ -62,6 +66,9 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
 
         BigDecimal response = diligenService.postDocument(xDocumentType, file);
 
+        //Temporary
+        stringRedisTemplate.convertAndSend("documentWait", response.toPlainString());
+
         Optional<ExtractRequest> extractRequestCached = extractStore.put(response, extractRequest);
 
         if(!extractRequestCached.isPresent())
@@ -75,6 +82,11 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
     public ResponseEntity<Void> documentEvent(UUID xTransactionId, DocumentEvent documentEvent) {
 
         logger.info("document {} status has changed to {}", documentEvent.getDocumentId(), documentEvent.getStatus());
+        //We won't do anything with this for now
+        if (documentEvent.getStatus().equalsIgnoreCase(Keys.PROCESSED_STATUS)) {
+            diligenService.getDocumentDetails(documentEvent.getDocumentId());
+        }
+
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
