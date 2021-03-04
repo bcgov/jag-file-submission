@@ -135,7 +135,7 @@ exports[`PartyList Component Matches snapshot 1`] = `
         class="file-href"
         role="button"
       >
-        View receipt
+        View Receipt
       </span>
       <svg
         class="align-icon"

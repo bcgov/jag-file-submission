@@ -4,10 +4,13 @@ import PropTypes from "prop-types";
 import Dinero from "dinero.js";
 import { MdPrint } from "react-icons/md";
 import "./PaymentList.scss";
+import { downloadPaymentReceipt } from "./PaymentListService";
+import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 
 const hash = require("object-hash");
 
-export default function PaymentList({ payments }) {
+
+export default function PaymentList({ payments, packageId }) {
   const dineroInit = {
     stat: Dinero({ amount: 0 }),
     toDate: Dinero({ amount: 0 }),
@@ -47,6 +50,20 @@ export default function PaymentList({ payments }) {
     setCsoTotal({ stat: csoStat, toDate: csoToDate });
     setTotal({ stat: subStat.add(csoStat), toDate: subToDate.add(csoToDate) });
   }, [payments]);
+
+  const handleClick = () => {
+    downloadPaymentReceipt(packageId).catch((err) => {
+      errorRedirect(sessionStorage.getItem("errorUrl"), err);
+    });
+  }
+
+  const handleKeyDown = (e) => {
+    if (e && e.keyCode === 13) {
+      downloadPaymentReceipt(packageId).catch((err) => {
+        errorRedirect(sessionStorage.getItem("errorUrl"), err);
+      });
+    }
+  }
 
   return (
     <div className="ct-payment-list">
@@ -122,8 +139,8 @@ export default function PaymentList({ payments }) {
         </tbody>
       </table>
       <div className="d-flex justify-content-end">
-        <span className="file-href" role="button">
-          View receipt
+        <span className="file-href" role="button" onClick={handleClick} onKeyDown={handleKeyDown}>
+          View Receipt
         </span>
         <MdPrint size="24" color="#7F7F7F" className="align-icon" />
       </div>
@@ -133,6 +150,7 @@ export default function PaymentList({ payments }) {
 
 PaymentList.propTypes = {
   payments: PropTypes.arrayOf(PropTypes.object),
+  packageid: PropTypes.number.isRequired
 };
 
 PaymentList.defaultProps = {

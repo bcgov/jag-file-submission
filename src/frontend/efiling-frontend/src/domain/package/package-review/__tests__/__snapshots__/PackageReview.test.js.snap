@@ -494,7 +494,7 @@ exports[`PackageReview Component Matches the snapshot 1`] = `
                 class="file-href"
                 role="button"
               >
-                View receipt
+                View Receipt
               </span>
               <svg
                 class="align-icon"
@@ -1109,7 +1109,7 @@ exports[`PackageReview Component Reload Document trigger 1`] = `
                 class="file-href"
                 role="button"
               >
-                View receipt
+                View Receipt
               </span>
               <svg
                 class="align-icon"
@@ -1720,7 +1720,7 @@ exports[`PackageReview Component Withdraw document network error 1`] = `
                 class="file-href"
                 role="button"
               >
-                View receipt
+                View Receipt
               </span>
               <svg
                 class="align-icon"
