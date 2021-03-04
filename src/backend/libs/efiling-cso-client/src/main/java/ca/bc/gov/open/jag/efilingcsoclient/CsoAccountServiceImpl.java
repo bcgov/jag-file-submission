@@ -39,8 +39,8 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
     @Override
     public AccountDetails getAccountDetails(String universalId) {
 
-        AccountDetails accountDetails = getCsoDetails(universalId);
-        return accountDetails;
+        return getCsoDetails(universalId);
+
     }
 
     @Override
