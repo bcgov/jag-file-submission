@@ -35,9 +35,7 @@ public class ReceiverTest {
     @DisplayName("Ok: Message added")
     public void withMessageAddedToRedis() {
 
-        sut.receiveMessage("2");
-
-        Assertions.assertEquals(1, sut.getCount());
+        Assertions.assertDoesNotThrow(() -> sut.receiveMessage("2"));
 
     }
 
