@@ -140,7 +140,7 @@ public class DiligenServiceImpl implements DiligenService {
                 logger.debug("successfully retrieved document id {}", result);
                 return Optional.of(result);
             } else {
-                logger.debug("attempt {} to retrieve document id failed, waiting 2s");
+                logger.debug("attempt to retrieve document id failed, waiting 2s");
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {

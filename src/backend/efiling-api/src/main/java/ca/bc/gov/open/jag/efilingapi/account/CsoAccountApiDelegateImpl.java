@@ -9,7 +9,6 @@ import ca.bc.gov.open.jag.efilingapi.api.model.CsoAccountUpdateRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
-import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.core.security.SecurityUtils;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
@@ -29,7 +28,7 @@ import java.util.UUID;
 @Service
 public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
 
-    Logger logger = LoggerFactory.getLogger(SubmissionApiDelegateImpl.class);
+    Logger logger = LoggerFactory.getLogger(CsoAccountApiDelegateImpl.class);
 
     private final AccountService accountService;
     private final CsoAccountMapper csoAccountMapper;

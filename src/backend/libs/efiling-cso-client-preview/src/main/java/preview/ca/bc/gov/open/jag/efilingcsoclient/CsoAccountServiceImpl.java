@@ -1,17 +1,20 @@
-package ca.bc.gov.open.jag.efilingcsoclient;
+package preview.ca.bc.gov.open.jag.efilingcsoclient;
 
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RegisteredRole;
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.RoleRegistryPortType;
 import brooks.roleregistry_source_roleregistry_ws_provider.roleregistry.UserRoles;
-import ca.bc.gov.ag.csows.accounts.*;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.CSOHasMultipleAccountException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.CreateAccountRequest;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
+import ca.bc.gov.open.jag.efilingcsoclient.CsoHelpers;
+import ca.bc.gov.open.jag.efilingcsoclient.Keys;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.AccountDetailsMapper;
 import org.apache.commons.lang3.StringUtils;
+import preview.ca.bc.gov.ag.csows.accounts.*;
+import preview.ca.bc.gov.open.jag.efilingcsoclient.mappers.ClientProfileMapper;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -25,22 +28,23 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
     private final AccountFacadeBean accountFacadeBean;
     private final RoleRegistryPortType roleRegistryPortType;
     private final AccountDetailsMapper accountDetailsMapper;
+    private final ClientProfileMapper clientProfileMapper;
 
     public CsoAccountServiceImpl(AccountFacadeBean accountFacadeBean,
                                  RoleRegistryPortType roleRegistryPortType,
-                                 AccountDetailsMapper accountDetailsMapper) {
+                                 AccountDetailsMapper accountDetailsMapper, ClientProfileMapper clientProfileMapper) {
 
         this.accountFacadeBean = accountFacadeBean;
         this.roleRegistryPortType = roleRegistryPortType;
         this.accountDetailsMapper = accountDetailsMapper;
-
+        this.clientProfileMapper = clientProfileMapper;
     }
 
     @Override
     public AccountDetails getAccountDetails(String universalId) {
 
-        return getCsoDetails(universalId);
-
+        AccountDetails accountDetails = getCsoDetails(universalId);
+        return accountDetails;
     }
 
     @Override
@@ -61,10 +65,12 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
             Client client = setCreateAccountClientDetails(createAccountRequest);
             List<RoleAssignment> roles = setCreateAccountRoles();
             ClientProfile clientProfile = accountFacadeBean.createAccount(account, client, roles);
+
+
             if (null != clientProfile) {
                 accountDetails = accountDetailsMapper.toAccountDetails(
                         createAccountRequest.getUniversalId(),
-                        clientProfile,
+                        clientProfileMapper.toClientProfile(clientProfile),
                         hasFileRole(CsoHelpers.formatUserGuid(createAccountRequest.getUniversalId())));
             }
         }
@@ -116,7 +122,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         }
         // An account must have only one profile associated with it to proceed
         if (profiles.size() == 1) {
-            accountDetails = accountDetailsMapper.toAccountDetails(universalId, profiles.get(0), hasFileRole(CsoHelpers.formatUserGuid(universalId)));
+            accountDetails = accountDetailsMapper.toAccountDetails(universalId, clientProfileMapper.toClientProfile(profiles.get(0)), hasFileRole(CsoHelpers.formatUserGuid(universalId)));
         }
         else if (profiles.size() > 1) {
             throw new CSOHasMultipleAccountException(profiles.get(0).getClientId().toString());
@@ -155,6 +161,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         XMLGregorianCalendar date =  CsoHelpers.date2XMLGregorian(new Date());
 
         client.setAuthenticatedClientGuid(CsoHelpers.formatUserGuid(createAccountRequest.getUniversalId()));
+        client.setAuthoritativePartyId(Keys.IDENTITY_PROVIDERS.get(createAccountRequest.getIdentityProvider().toUpperCase()));
         client.setClientPrefixTxt("CS");
         client.setClientStatusCd("ACT");
         client.setEmailTxt(createAccountRequest.getEmail());
