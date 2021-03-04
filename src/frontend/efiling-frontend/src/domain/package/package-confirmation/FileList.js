@@ -5,6 +5,8 @@ import { propTypes } from "../../../types/propTypes";
 
 import "./FileList.scss";
 
+const hash = require("object-hash");
+
 export default function FileList({ submissionId, files }) {
   return (
     <div className="ct-file-list ">
@@ -15,7 +17,7 @@ export default function FileList({ submissionId, files }) {
       </div>
       <ul>
         {files.map((file) => (
-          <FileListItem submissionId={submissionId} file={file} />
+          <FileListItem submissionId={submissionId} file={file} key={hash(file)} />
         ))}
       </ul>
     </div>
