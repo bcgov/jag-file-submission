@@ -139,7 +139,7 @@ public class TestHelpers {
     public static FilingPackage createPackage(
             Court court,
             List<Document> documents,
-            List<Party> parties) {
+            List<Individual> parties) {
         return FilingPackage.builder()
                 .court(court)
                 .documents(documents)
@@ -191,21 +191,20 @@ public class TestHelpers {
                 .data(new JsonObject()).create());
     }
 
-    public static List<Party> createPartyList() {
+    public static List<Individual> createPartyList() {
 
-        Party partyOne = buildParty(BigDecimal.ONE);
+        Individual individualOne = buildParty(BigDecimal.ONE);
 
-        Party partyTwo = buildParty(BigDecimal.TEN);
-        return Arrays.asList(partyOne, partyTwo);
+        Individual individualTwo = buildParty(BigDecimal.TEN);
+        return Arrays.asList(individualOne, individualTwo);
     }
 
-    private static Party buildParty(BigDecimal partyId) {
-        return Party.builder()
+    private static Individual buildParty(BigDecimal partyId) {
+        return Individual.builder()
                 .firstName(FIRST_NAME)
                 .middleName(MIDDLE_NAME)
                 .lastName(LAST_NAME)
                 .nameTypeCd(NAME_TYPE_CD)
-                .partyTypeCd(PARTY_TYPE_CD)
                 .roleTypeCd(ROLE_TYPE_CD)
                 .create();
     }
@@ -266,8 +265,8 @@ public class TestHelpers {
 
     }
 
-    public static Party createParty() {
-        return Party.builder()
+    public static Individual createParty() {
+        return Individual.builder()
                 .firstName(FIRST_NAME)
                 .lastName(LAST_NAME)
                 .middleName(MIDDLE_NAME)

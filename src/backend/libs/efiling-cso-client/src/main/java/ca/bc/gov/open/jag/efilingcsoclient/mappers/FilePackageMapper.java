@@ -2,7 +2,7 @@ package ca.bc.gov.open.jag.efilingcsoclient.mappers;
 
 import ca.bc.gov.ag.csows.filing.status.File;
 import ca.bc.gov.ag.csows.filing.status.PackageParties;
-import ca.bc.gov.open.jag.efilingcommons.model.Party;
+import ca.bc.gov.open.jag.efilingcommons.model.Individual;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 
@@ -29,9 +29,9 @@ public interface FilePackageMapper {
     //TODO: extend document to add additional fields
     ReviewDocument toDocument(File file);
 
-    List<Party> toParties(List<PackageParties> packageParties);
+    List<Individual> toParties(List<PackageParties> packageParties);
 
     @Mapping(target = "middleName", source = "secondName")
     @Mapping(target = "lastName", source = "surname")
-    Party toParty(PackageParties packageParties);
+    Individual toParty(PackageParties packageParties);
 }

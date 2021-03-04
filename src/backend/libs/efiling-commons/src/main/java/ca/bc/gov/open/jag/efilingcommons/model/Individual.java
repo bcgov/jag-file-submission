@@ -3,9 +3,8 @@ package ca.bc.gov.open.jag.efilingcommons.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Party {
+public class Individual {
 
-    private String partyTypeCd;
     private String partyTypeDesc;
     private String roleTypeCd;
     private String roleTypeDesc;
@@ -15,8 +14,7 @@ public class Party {
     private String nameTypeCd;
 
     @JsonCreator
-    public Party(
-            @JsonProperty("partyTypeCd") String partyTypeCd,
+    public Individual(
             @JsonProperty("partyTypeDesc") String partyTypeDesc,
             @JsonProperty("roleTypeCd") String roleTypeCd,
             @JsonProperty("roleTypeDesc") String roleTypeDesc,
@@ -24,7 +22,6 @@ public class Party {
             @JsonProperty("middleName") String middleName,
             @JsonProperty("lastName") String lastName,
             @JsonProperty("nameTypeCd") String nameTypeCd) {
-        this.partyTypeCd = partyTypeCd;
         this.partyTypeDesc = partyTypeDesc;
         this.roleTypeCd = roleTypeCd;
         this.roleTypeDesc = roleTypeDesc;
@@ -34,8 +31,7 @@ public class Party {
         this.nameTypeCd = nameTypeCd;
     }
 
-    public Party(Builder builder) {
-        this.partyTypeCd = builder.partyTypeCd;
+    public Individual(Builder builder) {
         this.partyTypeDesc = builder.partyTypeDesc;
         this.roleTypeCd = builder.roleTypeCd;
         this.roleTypeDesc = builder.roleTypeDesc;
@@ -43,10 +39,6 @@ public class Party {
         this.middleName = builder.middleName;
         this.lastName = builder.lastName;
         this.nameTypeCd = builder.nameTypeCd;
-    }
-
-    public String getPartyTypeCd() {
-        return partyTypeCd;
     }
 
     public String getPartyTypeDesc() {
@@ -83,7 +75,6 @@ public class Party {
 
     public static class Builder {
 
-        private String partyTypeCd;
         private String partyTypeDesc;
         private String roleTypeCd;
         private String roleTypeDesc;
@@ -91,11 +82,6 @@ public class Party {
         private String middleName;
         private String lastName;
         private String nameTypeCd;
-
-        public Builder partyTypeCd(String partyTypeCd) {
-            this.partyTypeCd = partyTypeCd;
-            return this;
-        }
 
         public Builder partyTypeDesc(String partyTypeDesc) {
             this.partyTypeDesc = partyTypeDesc;
@@ -132,8 +118,8 @@ public class Party {
             return this;
         }
 
-        public Party create() {
-            return new Party(this);
+        public Individual create() {
+            return new Individual(this);
         }
 
     }

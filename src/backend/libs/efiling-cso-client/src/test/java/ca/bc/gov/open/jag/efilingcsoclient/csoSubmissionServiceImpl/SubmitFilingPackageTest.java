@@ -282,6 +282,15 @@ public class SubmitFilingPackageTest {
                                 .isSupremeCourtScheduling(IS_SUPREME_COURT_SCHEDULING)
                                 .subType(TYPE)
                                 .create()))
+                        .parties(Arrays.asList(
+                                Individual.builder()
+                                .firstName("TEST")
+                                .middleName("TEST")
+                                .lastName("TEST")
+                                .nameTypeCd("TYPE")
+                                .roleTypeCd("CODE")
+                                .create()
+                        ))
                         .create(),
                 efilingPaymentServiceMock);
 

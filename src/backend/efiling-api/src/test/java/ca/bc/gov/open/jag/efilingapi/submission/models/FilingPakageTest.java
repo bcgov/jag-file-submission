@@ -2,8 +2,8 @@ package ca.bc.gov.open.jag.efilingapi.submission.models;
 
 import ca.bc.gov.open.jag.efilingcommons.model.Court;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
+import ca.bc.gov.open.jag.efilingcommons.model.Individual;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
-import ca.bc.gov.open.jag.efilingcommons.model.Party;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -95,9 +95,9 @@ public class FilingPakageTest {
         Assertions.assertEquals(PARTICIPATING_CLASS, actual.getCourt().getParticipatingClass());
     }
 
-    private List<Party> getParties() {
-        List<Party> parties = new ArrayList<>();
-        Party party = new Party(
+    private List<Individual> getParties() {
+        List<Individual> parties = new ArrayList<>();
+        Individual individual = new Individual(
                 PARTY_TYPE_CD,
                 PARTY_TYPE_DESC,
                 ROLE_TYPE_CD,
@@ -106,7 +106,7 @@ public class FilingPakageTest {
                 MIDDLE_NAME,
                 LAST_NAME,
                 NAME_TYPE_CD);
-        parties.add(party);
+        parties.add(individual);
         return parties;
     }
 

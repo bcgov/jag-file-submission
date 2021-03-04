@@ -2,7 +2,7 @@ package ca.bc.gov.open.jag.efilingcommons.submission.models;
 
 import ca.bc.gov.open.jag.efilingcommons.model.Court;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
-import ca.bc.gov.open.jag.efilingcommons.model.Party;
+import ca.bc.gov.open.jag.efilingcommons.model.Individual;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
@@ -14,7 +14,7 @@ public class FilingPackage {
     private BigDecimal submissionFeeAmount;
     private Court court;
     private List<Document> documents = new ArrayList<>();
-    private List<Party> parties = new ArrayList<>();
+    private List<Individual> parties = new ArrayList<>();
     private boolean rushedSubmission = false;
     private String applicationCode;
 
@@ -22,7 +22,7 @@ public class FilingPackage {
             @JsonProperty("submissionFeeAmount") BigDecimal submissionFeeAmount,
             @JsonProperty("court") Court court,
             @JsonProperty("documents") List<Document> documents,
-            @JsonProperty("parties") List<Party> parties,
+            @JsonProperty("parties") List<Individual> parties,
             @JsonProperty("rushedSubmission") boolean rushedSubmission,
             @JsonProperty("applicationCode") String applicationCode
     ) {
@@ -56,7 +56,7 @@ public class FilingPackage {
         return documents;
     }
 
-    public List<Party> getParties() {
+    public List<Individual> getParties() {
         return parties;
     }
 
@@ -76,7 +76,7 @@ public class FilingPackage {
         this.documents = documents;
     }
 
-    public void setParties(List<Party> parties) {
+    public void setParties(List<Individual> parties) {
         this.parties = parties;
     }
 
@@ -102,7 +102,7 @@ public class FilingPackage {
         private BigDecimal submissionFeeAmount;
         private Court court;
         private List<Document> documents = new ArrayList<>();
-        private List<Party> parties = new ArrayList<>();
+        private List<Individual> parties = new ArrayList<>();
         private String applicationCode;
         private boolean rushedSubmission;
 
@@ -131,7 +131,7 @@ public class FilingPackage {
             return this;
         }
 
-        public Builder parties(List<Party> parties) {
+        public Builder parties(List<Individual> parties) {
             this.parties = parties;
             return this;
         }

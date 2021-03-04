@@ -1,6 +1,6 @@
 package ca.bc.gov.open.jag.efilingcommons.submission.models.review;
 
-import ca.bc.gov.open.jag.efilingcommons.model.Party;
+import ca.bc.gov.open.jag.efilingcommons.model.Individual;
 
 import org.joda.time.DateTime;
 
@@ -14,7 +14,7 @@ public class ReviewFilingPackage {
     private BigDecimal submissionFeeAmount;
     private ReviewCourt court;
     private List<ReviewDocument> documents = new ArrayList<>();
-    private List<Party> parties = new ArrayList<>();
+    private List<Individual> parties = new ArrayList<>();
     private boolean rushedSubmission = false;
     private String applicationCode;
     private Boolean existingCourtFileYN;
@@ -44,7 +44,7 @@ public class ReviewFilingPackage {
         return documents;
     }
 
-    public List<Party> getParties() {
+    public List<Individual> getParties() {
         return parties;
     }
 
@@ -116,7 +116,7 @@ public class ReviewFilingPackage {
         this.documents = documents;
     }
 
-    public void setParties(List<Party> parties) {
+    public void setParties(List<Individual> parties) {
         this.parties = parties;
     }
 

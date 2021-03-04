@@ -1,6 +1,6 @@
 package ca.bc.gov.open.jag.efiling.demo;
 
-import ca.bc.gov.open.jag.efilingcommons.model.Party;
+import ca.bc.gov.open.jag.efilingcommons.model.Individual;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
@@ -133,9 +133,9 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
         return reviewDocument;
     }
 
-    private List<Party> createParty() {
+    private List<Individual> createParty() {
 
-        Party partyOne = Party.builder()
+        Individual individualOne = Individual.builder()
                 .firstName("Bob")
                 .middleName("Q")
                 .lastName("Ross")
@@ -145,7 +145,7 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
                 .partyTypeDesc("Individual")
                 .create();
 
-        Party partyTwo = Party.builder()
+        Individual individualTwo = Individual.builder()
                 .firstName("Looooooongname")
                 .middleName("Q")
                 .lastName("Loooooooooong-Looooooooooonglast")
@@ -155,7 +155,7 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
                 .partyTypeDesc("Individual")
                 .create();
 
-        return Arrays.asList(partyOne, partyTwo);
+        return Arrays.asList(individualOne, individualTwo);
 
     }
 

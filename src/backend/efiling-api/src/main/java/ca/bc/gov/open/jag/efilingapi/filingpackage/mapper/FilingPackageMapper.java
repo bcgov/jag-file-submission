@@ -44,12 +44,12 @@ public interface FilingPackageMapper {
     @Mapping(target = "paymentProcessed", source = "paymentProcessed")
     Document toDocument(ReviewDocument file);
 
-    List<Individual> toParties(List<ca.bc.gov.open.jag.efilingcommons.model.Party> parties);
+    List<Individual> toParties(List<ca.bc.gov.open.jag.efilingcommons.model.Individual> parties);
 
     @Mapping(target = "partyDescription", source = "partyTypeDesc")
     @Mapping(target = "roleType", source = "roleTypeCd")
     @Mapping(target = "roleDescription", source = "roleTypeDesc")
-    Individual toParty(ca.bc.gov.open.jag.efilingcommons.model.Party party);
+    Individual toParty(ca.bc.gov.open.jag.efilingcommons.model.Individual individual);
 
 
     List<Payment> toPayments(List<PackagePayment> payments);

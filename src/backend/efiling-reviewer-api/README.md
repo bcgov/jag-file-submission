@@ -13,7 +13,7 @@ mvn install -P openshift
 
 ### Demo
 
-This profile self isolate the application from any third party dependencies
+This profile self isolate the application from any third individual dependencies
 
 ```bash
 mvn install -P demo
