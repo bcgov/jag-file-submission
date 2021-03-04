@@ -17,7 +17,11 @@ export default function FileList({ submissionId, files }) {
       </div>
       <ul>
         {files.map((file) => (
-          <FileListItem submissionId={submissionId} file={file} key={hash(file)} />
+          <FileListItem
+            submissionId={submissionId}
+            file={file}
+            key={hash(file)}
+          />
         ))}
       </ul>
     </div>
