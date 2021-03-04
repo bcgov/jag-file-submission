@@ -55,8 +55,8 @@ describe("PartyList Component", () => {
   beforeEach(() => {
     // IDP is set in the session
     const token = generateJWTToken({
-      preferred_username: "username@bceid",
-      email: "username@example.com",
+      preferred_username: "user@bceid",
+      email: "user@example.com",
       identityProviderAlias: "bcsc",
     });
     localStorage.setItem("jwt", token);
