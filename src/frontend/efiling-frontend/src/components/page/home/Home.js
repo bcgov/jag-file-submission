@@ -6,13 +6,14 @@ import { Loader, Alert } from "shared-components";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import {
   getJWTData,
-  isIdentityProviderBCeID,
+  getIdentityProviderAlias,
 } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 import { getBCSCUserInfo } from "../../../domain/authentication/AuthenticationService";
 import PackageConfirmation from "../../../domain/package/package-confirmation/PackageConfirmation";
 import CSOAccount from "../cso-account/CSOAccount";
 
 import "../page.css";
+import { IDP_BCEID, IDP_BCSC } from "../../../Config";
 
 const mainButton = {
   label: "Cancel",
@@ -93,9 +94,9 @@ const checkCSOAccountStatus = (
           setCsoAccountStatus({ isNew: false, exists: true });
         })
         .catch((err) => {
-          if (err.response === undefined || err.response.status !== 404)
+          if (err.response === undefined || err.response.status !== 404) {
             errorRedirect(sessionStorage.getItem("errorUrl"), err);
-          else if (isIdentityProviderBCeID()) {
+          } else if (getIdentityProviderAlias() === IDP_BCEID) {
             axios
               .get("/bceidAccount")
               .then(({ data: { firstName, middleName, lastName } }) => {
@@ -110,7 +111,7 @@ const checkCSOAccountStatus = (
               .catch((e) =>
                 errorRedirect(sessionStorage.getItem("errorUrl"), e)
               );
-          } else {
+          } else if (getIdentityProviderAlias() === IDP_BCSC) {
             getBCSCUserInfo()
               .then((userInfo) => {
                 setRequiredState(
@@ -124,6 +125,11 @@ const checkCSOAccountStatus = (
               .catch((e) => {
                 errorRedirect(sessionStorage.getItem("errorUrl"), e);
               });
+          } else {
+            errorRedirect(sessionStorage.getItem("errorUrl"), {
+              status: 401,
+              message: "Not authorized.",
+            });
           }
         });
     })
@@ -158,7 +164,7 @@ export default function Home() {
     sessionStorage.removeItem("isBamboraRedirect");
     const cancelUrl = sessionStorage.getItem("cancelUrl");
 
-    if (cancelUrl) {
+    if (cancelUrl && cancelUrl !== "undefined") {
       axios
         .delete(`submission/${sessionStorage.getItem("submissionId")}`)
         .then(() => window.open(cancelUrl, "_self"))

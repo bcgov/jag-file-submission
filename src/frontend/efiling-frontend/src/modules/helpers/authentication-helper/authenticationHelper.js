@@ -31,9 +31,9 @@ export function generateJWTToken(payload) {
 }
 
 /**
- * Returns true if the current user is authenticated against BCeID
+ * Returns the identity provider of the current user.
  */
-export function isIdentityProviderBCeID() {
+export function getIdentityProviderAlias() {
   const token = getJWTData();
-  return token.identityProviderAlias === "bceid";
+  return token.identityProviderAlias;
 }
