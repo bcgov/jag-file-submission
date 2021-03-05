@@ -21,6 +21,7 @@ import DocumentList from "./DocumentList";
 import PartyList from "./PartyList";
 import PaymentList from "./PaymentList";
 import { isClick, isEnter } from "../../../modules/helpers/eventUtil";
+import { redirectToParentApp } from "../../../modules/helpers/RoutingUtil";
 
 export default function PackageReview() {
   const params = useParams();
@@ -234,9 +235,9 @@ export default function PackageReview() {
           </span>
           <section className="buttons pt-2">
             <Button
-              label="Cancel and Return to Parent App"
-              onClick={() => window.open("http://google.com", "_self")}
-              styling="normal-white btn"
+              label="Return to Parent App"
+              onClick={() => redirectToParentApp()}
+              styling="bcgov-normal-white btn"
             />
           </section>
         </div>
