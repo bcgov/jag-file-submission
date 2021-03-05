@@ -27,6 +27,7 @@
         <org.apache.cxf.version>3.4.1</org.apache.cxf.version>
         <org.apache.tika.version>1.24.1</org.apache.tika.version>
         <org.apache.commons.version>3.11</org.apache.commons.version>
+        <org.apache.commons.collections.collections.version>4.2</org.apache.commons.collections.collections.version>
         <org.junit.jupiter.version>5.7.1</org.junit.jupiter.version>
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
         <org.mockito.mockito-all.version>1.10.19</org.mockito.mockito-all.version>
@@ -253,6 +254,12 @@
                 <artifactId>janino</artifactId>
                 <version>${org.codehaus.janino}</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${org.apache.commons.collections.collections.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

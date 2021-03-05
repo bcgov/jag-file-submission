@@ -14,6 +14,8 @@ import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtServiceException
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.Court;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
+import ca.bc.gov.open.jag.efilingcommons.model.Individual;
+import ca.bc.gov.open.jag.efilingcommons.model.Organization;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.model.*;
 import ca.bc.gov.open.jag.efilingcommons.payment.PaymentAdapter;
@@ -21,6 +23,7 @@ import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import ca.bc.gov.open.sftp.starter.SftpService;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
@@ -177,13 +180,13 @@ public class SubmissionServiceImpl implements SubmissionService {
                                 request.getFilingPackage().getCourt().getCourtClass(),
                                 documentProperties, submissionKey))
                         .collect(Collectors.toList()))
-                .parties(request.getFilingPackage()
-                        .getParties()
+                .parties(CollectionUtils.emptyIfNull(request.getFilingPackage()
+                        .getParties())
                         .stream()
                         .map(partyMapper::toIndividual)
                         .collect(Collectors.toList()))
-                .organizations(request.getFilingPackage()
-                        .getOrganizationParties()
+                .organizations(CollectionUtils.emptyIfNull(request.getFilingPackage()
+                        .getOrganizationParties())
                         .stream()
                         .map(partyMapper::toOrganization)
                         .collect(Collectors.toList()))
@@ -282,5 +285,7 @@ public class SubmissionServiceImpl implements SubmissionService {
     private long getExpiryDate() {
         return System.currentTimeMillis() + cacheProperties.getRedis().getTimeToLive().toMillis();
     }
+
+
 
 }
