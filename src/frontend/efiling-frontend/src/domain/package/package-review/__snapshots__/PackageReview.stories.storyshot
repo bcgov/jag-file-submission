@@ -411,8 +411,9 @@ exports[`Storyshots PackageReview Default 1`] = `
               <span
                 class="file-href"
                 role="button"
+                tabindex="0"
               >
-                View receipt
+                View Receipt
               </span>
               <svg
                 class="align-icon"
@@ -1030,8 +1031,9 @@ exports[`Storyshots PackageReview Mobile 1`] = `
               <span
                 class="file-href"
                 role="button"
+                tabindex="0"
               >
-                View receipt
+                View Receipt
               </span>
               <svg
                 class="align-icon"
