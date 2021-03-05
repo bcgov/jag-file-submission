@@ -200,7 +200,7 @@ export default function PackageReview() {
             </Tab>
             <Tab eventKey="payment" title="Payment Status">
               <br />
-              <PaymentList payments={payments} />
+              <PaymentList payments={payments} packageId={packageId} />
             </Tab>
             <Tab eventKey="comments" title="Filing Comments">
               <br />
