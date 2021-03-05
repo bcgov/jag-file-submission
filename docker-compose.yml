@@ -94,6 +94,10 @@ services:
 
       - CLAMAV_HOST=clamav
       - CLAMAV_TIMEOUT=150000
+
+      - SW_AGENT_NAME=efiling-api
+      - SW_AGENT_COLLECTOR_BACKEND_SERVICES=skywalking-oap-server:11800
+
     networks:
       - fisu-net
 

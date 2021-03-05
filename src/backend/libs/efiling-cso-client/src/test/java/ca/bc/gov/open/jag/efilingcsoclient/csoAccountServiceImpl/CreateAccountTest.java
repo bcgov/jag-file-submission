@@ -36,13 +36,12 @@ public class CreateAccountTest {
     private static final Date DATE = new Date();
     private static final String CLIENT_PREFIX_TXT = "CS";
     private static final String CLIENT_STATUS_CD = "ACT";
-    private static final String REGISTERED_CLIENT_ROLE_CD = "IND";
-    private static final String REGISTERED_CLIENT_ROLE_CD1 = "CAEF";
     private static final String REGISTERED_CLIENT_ROLE_CD2 = "FILE";
     public static final String DOMAIN = "Courts";
     public static final String APPLICATION = "CSO";
     public static final String IDENTIFIER_TYPE = "CAP";
     public static final String BCEID = "BCEID";
+    public static final String BCSC = "BCSC";
     public static final String IDENTITY_PROVIDER = "TEST";
 
     @Mock
@@ -56,7 +55,7 @@ public class CreateAccountTest {
 
     private CsoAccountServiceImpl sut;
 
-    @BeforeAll
+    @BeforeEach
     public void setUp() throws NestedEjbException_Exception, DatatypeConfigurationException {
 
         MockitoAnnotations.openMocks(this);
@@ -142,9 +141,19 @@ public class CreateAccountTest {
     }
 
     @Test
-    @DisplayName("Success account created ")
-    public void withValidAccountRequestAccountCreated() {
-        AccountDetails result = sut.createAccount(createAccountRequest());
+    @DisplayName("Success bceid account created ")
+    public void withValidBCEIDAccountRequestAccountCreated() {
+        AccountDetails result = sut.createAccount(createAccountRequest(BCEID));
+        Assertions.assertEquals(UNIVERSAL_ID, result.getUniversalId());
+        Assertions.assertTrue(result.isFileRolePresent());
+        Assertions.assertEquals(BigDecimal.TEN, result.getAccountId());
+        Assertions.assertEquals(BigDecimal.TEN, result.getClientId());
+    }
+
+    @Test
+    @DisplayName("Success bcsc account created ")
+    public void withValidBCSCAccountRequestAccountCreated() {
+        AccountDetails result = sut.createAccount(createAccountRequest(BCSC));
         Assertions.assertEquals(UNIVERSAL_ID, result.getUniversalId());
         Assertions.assertTrue(result.isFileRolePresent());
         Assertions.assertEquals(BigDecimal.TEN, result.getAccountId());
@@ -155,17 +164,17 @@ public class CreateAccountTest {
     @DisplayName("Facade throws exception")
     public void withValidValuesFacadeThrowsException() throws NestedEjbException_Exception {
         Mockito.when(accountFacadeBeanMock.createAccount(any(), any(), any())).thenThrow(NestedEjbException_Exception.class);
-        Assertions.assertThrows(EfilingAccountServiceException.class, () -> sut.createAccount(createAccountRequest()));
+        Assertions.assertThrows(EfilingAccountServiceException.class, () -> sut.createAccount(createAccountRequest(BCSC)));
     }
 
-    private CreateAccountRequest createAccountRequest() {
+    private CreateAccountRequest createAccountRequest(String identityProvider) {
         return CreateAccountRequest.builder()
                 .firstName(FIRST_NAME)
                 .lastName(LAST_NAME)
                 .email(EMAIL)
                 .middleName(MIDDLE_NAME)
                 .universalId(UNIVERSAL_ID)
-                .identityProvider(BCEID)
+                .identityProvider(identityProvider)
                 .create();
     }
 
