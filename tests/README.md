@@ -30,11 +30,12 @@ Tests can be run with BCEID and BC Services card on dev
 Assign value to the "AUTH_PROVIDER" env variable as below
 
 ```bash
-AUTH_PROVIDER: "bceid"
+AUTH_PROVIDER:bceid
 ```
 or 
+
 ```bash
-AUTH_PROVIDER: "bcsc"
+AUTH_PROVIDER:bcsc
 ```
 
 Running the tests create an html report [here](test-output/extent/HtmlReport/ExtentHtml.html)
