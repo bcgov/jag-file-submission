@@ -8,3 +8,9 @@ Feature: User account is validated and redirected to E-Filing hub
     Given user is on the eFiling submission page
     Then Package information is displayed
     And continue to payment button is enabled
+
+#  @frontend
+#  Scenario: Validate user with valid BCSC and CSO accounts is redirected E-Filing hub
+#    Given user is on the eFiling submission page
+#    Then Package information is displayed
+#    And continue to payment button is enabled

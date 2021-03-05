@@ -6,11 +6,22 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PackageReviewPage extends BasePage {
+
+    @Value("${PACKAGE_REVIEW_URL:http://localhost:3000/efilinghub/packagereview}")
+    private String packageReviewUrl;
+
+    @Value("${USERNAME_BCEID:bobross}")
+    private String username;
+
+    @Value("${PASSWORD_BCEID:changeme}")
+    private String password;
 
     private Logger logger = LoggerFactory.getLogger(PackageReviewPage.class);
 
@@ -45,6 +56,15 @@ public class PackageReviewPage extends BasePage {
     @FindBy(id = "filingComments")
     private WebElement filingCommentsTextBox;
 
+    @FindBy(id = "username")
+    private WebElement usernameField;
+
+    @FindBy(id = "password")
+    private WebElement passwordField;
+
+    @FindBy(id = "kc-login")
+    private WebElement signIn;
+
 
     public List<String> getPackageDetails() {
 
@@ -67,7 +87,6 @@ public class PackageReviewPage extends BasePage {
 
     public void clickToDownloadDocument() throws InterruptedException {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-testid='btn-download-document']")));
-
 
         logger.info("Download button is enabled: {}", downloadButton.isEnabled());
         logger.info("Downloaded file name is: {}", downloadButton.getText());
@@ -100,5 +119,19 @@ public class PackageReviewPage extends BasePage {
     public boolean verifyPaymentStatusIsDisplayed() {
         wait.until(ExpectedConditions.visibilityOf(paymentPane));
         return paymentPane.isDisplayed();
+    }
+
+    public void signIn(int packageId) {
+        String packageReviewPageUrl = MessageFormat.format("{0}/{1}", packageReviewUrl, packageId);
+        logger.info("Formatted package review page url:{}", packageReviewPageUrl);
+
+        this.driver.get(packageReviewPageUrl);
+        logger.info("Waiting for the page to load...");
+        wait.until(ExpectedConditions.titleIs("Sign in to Efiling Hub"));
+
+        usernameField.sendKeys(username);
+        passwordField.sendKeys(password);
+        signIn.click();
+
     }
 }

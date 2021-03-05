@@ -1,10 +1,8 @@
 
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
-import ca.bc.gov.open.jag.efiling.error.EfilingTestException;
 import ca.bc.gov.open.jag.efiling.page.AuthenticationPage;
 import ca.bc.gov.open.jag.efiling.page.PackageConfirmationPage;
-import ca.bc.gov.open.jag.efiling.services.GenerateUrlService;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -18,7 +16,6 @@ public class AuthenticateAndRedirectToEfilingHubSD {
 
     private final AuthenticationPage authenticationPage;
     private final PackageConfirmationPage packageConfirmationPage;
-    private final GenerateUrlService generateUrlService;
 
     private static final String EFILE_SUBMISSION_PAGE_TITLE = "E-File submission";
     private static final String INITIAL_DOCUMENT_NAME = "test-document.pdf";
@@ -26,21 +23,14 @@ public class AuthenticateAndRedirectToEfilingHubSD {
 
     Logger log = LogManager.getLogger(AuthenticateAndRedirectToEfilingHubSD.class);
 
-    public AuthenticateAndRedirectToEfilingHubSD(AuthenticationPage authenticationPage, PackageConfirmationPage packageConfirmationPage, GenerateUrlService generateUrlService) {
-        this.authenticationPage = authenticationPage;
+    public AuthenticateAndRedirectToEfilingHubSD(AuthenticationPage authenticationPages, PackageConfirmationPage packageConfirmationPage) {
         this.packageConfirmationPage = packageConfirmationPage;
-        this.generateUrlService = generateUrlService;
+        this.authenticationPage = authenticationPages;
     }
 
     @Given("user is on the eFiling submission page")
     public void userIsOnTheEfilingSubmissionPage() throws IOException {
-
-        String actualGeneratedRedirectUrl = generateUrlService.getGeneratedUrl();
-
-        if(actualGeneratedRedirectUrl == null) throw new EfilingTestException("Redirect url is not generated.");
-
-        this.authenticationPage.goTo(actualGeneratedRedirectUrl);
-        this.authenticationPage.signInWithBceid();
+        this.authenticationPage.signIn();
         log.info("user is authenticated with keycloak");
     }
 
@@ -60,4 +50,3 @@ public class AuthenticateAndRedirectToEfilingHubSD {
         log.info("Continue payment button is enabled");
     }
 }
-

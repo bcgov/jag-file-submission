@@ -1,12 +1,10 @@
 package ca.bc.gov.open.jag.efiling;
 
 import ca.bc.gov.open.jag.efiling.config.BrowserScopePostProcessor;
-import ca.bc.gov.open.jag.efiling.page.AuthenticationPage;
-import ca.bc.gov.open.jag.efiling.page.DocumentUploadPage;
-import ca.bc.gov.open.jag.efiling.page.PackageConfirmationPage;
-import ca.bc.gov.open.jag.efiling.page.PackageReviewPage;
+import ca.bc.gov.open.jag.efiling.page.*;
 import ca.bc.gov.open.jag.efiling.services.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -18,7 +16,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Configuration
@@ -26,6 +26,9 @@ public class TestConfig {
 
     @Value("${default.timeout:30}")
     private int timeout;
+
+    @Value("${TEST:bceid}")
+    private String provider;
 
     private static final String DOWNLOADED_FILES_PATH = System.getProperty("user.dir") + File.separator + "downloadedFiles";
 
@@ -71,11 +74,11 @@ public class TestConfig {
 
         Map<String, Object> prefs = new HashMap<String, Object>();
         prefs.put("profile.default_content_settings.popups", 0);
-        prefs.put("download.default_directory", DOWNLOADED_FILES_PATH );
+        prefs.put("download.default_directory", DOWNLOADED_FILES_PATH);
 
         ChromeOptions options = new ChromeOptions();
         options.setExperimentalOption("prefs", prefs);
-        options.setHeadless(true);
+        options.setHeadless(false);
         options.addArguments("--window-size=1920,1080");
         return new ChromeDriver(options);
 
@@ -90,7 +93,21 @@ public class TestConfig {
     @Bean
     @Scope("prototype")
     public AuthenticationPage authenticationPage() {
-        return new AuthenticationPage();
+        List<AuthenticationPage> authenticationPages = new ArrayList<>();
+        authenticationPages.add(bceidAuthenticationPage());
+        authenticationPages.add(bcscAuthenticationPage());
+        return authenticationPages.stream().filter(x -> StringUtils.equals(provider,
+                x.getName())).findFirst().get();
+    }
+
+
+    public AuthenticationPage bceidAuthenticationPage() {
+        return new BceidAuthenticationPage(generateUrlService());
+    }
+
+
+    public AuthenticationPage bcscAuthenticationPage() {
+        return new BcscAuthenticationPage();
     }
 
     @Bean
