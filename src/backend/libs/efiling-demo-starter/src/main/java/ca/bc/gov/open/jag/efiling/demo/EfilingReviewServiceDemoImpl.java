@@ -76,6 +76,7 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
         reviewFilingPackage.setDocuments(createReviewDocuments());
         reviewFilingPackage.setPayments(createPayment());
         reviewFilingPackage.setPackageLinks(PackageLinks.builder().packageHistoryUrl("http://localhost:8080/wherearemypackage").create());
+        reviewFilingPackage.setOrganizations(createOrganizations());
         return reviewFilingPackage;
     }
 
