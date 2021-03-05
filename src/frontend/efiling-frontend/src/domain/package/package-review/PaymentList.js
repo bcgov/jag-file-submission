@@ -7,6 +7,7 @@ import "./PaymentList.scss";
 import { downloadPaymentReceipt } from "./PaymentListService";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { isEnter } from "../../../modules/helpers/eventUtil";
+import { formatCurrency } from "../../../modules/helpers/CurrencyUtil";
 
 const hash = require("object-hash");
 
@@ -91,18 +92,14 @@ export default function PaymentList({ payments, packageId }) {
                   <td>{payment.paymentDescription}</td>
                   <td className=" text-right">
                     {payment.feeExempt
-                      ? Dinero({ amount: 0 }).toFormat(format)
-                      : Dinero({
-                          amount: payment.submittedAmount * 100,
-                        }).toFormat(format)}
+                      ? formatCurrency(0)
+                      : formatCurrency(payment.submittedAmount)}
                   </td>
                   <td className="text-right">
                     {payment.feeExempt
                       ? "Exempt"
                       : payment.processedAmount
-                      ? Dinero({
-                          amount: payment.processedAmount * 100,
-                        }).toFormat(format)
+                      ? formatCurrency(payment.processedAmount)
                       : "Pending"}
                   </td>
                   <td />

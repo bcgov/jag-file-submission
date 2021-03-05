@@ -13,7 +13,7 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe("PaymentList Component", () => {
-  const packageId = "1";
+  const packageId = 1;
 
   FileSaver.saveAs = jest.fn();
 
