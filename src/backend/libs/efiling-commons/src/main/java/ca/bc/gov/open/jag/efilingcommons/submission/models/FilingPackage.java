@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingcommons.submission.models;
 import ca.bc.gov.open.jag.efilingcommons.model.Court;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
 import ca.bc.gov.open.jag.efilingcommons.model.Individual;
+import ca.bc.gov.open.jag.efilingcommons.model.Organization;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
@@ -15,6 +16,7 @@ public class FilingPackage {
     private Court court;
     private List<Document> documents = new ArrayList<>();
     private List<Individual> parties = new ArrayList<>();
+    private List<Organization> organizations = new ArrayList<>();
     private boolean rushedSubmission = false;
     private String applicationCode;
 
@@ -23,6 +25,7 @@ public class FilingPackage {
             @JsonProperty("court") Court court,
             @JsonProperty("documents") List<Document> documents,
             @JsonProperty("parties") List<Individual> parties,
+            @JsonProperty("organizations") List<Organization> organizations,
             @JsonProperty("rushedSubmission") boolean rushedSubmission,
             @JsonProperty("applicationCode") String applicationCode
     ) {
@@ -31,6 +34,7 @@ public class FilingPackage {
         this.court = court;
         this.documents.addAll(documents);
         this.parties.addAll(parties);
+        this.organizations.addAll(organizations);
         this.applicationCode = applicationCode;
         this.rushedSubmission = rushedSubmission;
     }
@@ -40,6 +44,7 @@ public class FilingPackage {
         this.court = builder.court;
         this.documents.addAll(builder.documents);
         this.parties.addAll(builder.parties);
+        this.organizations.addAll(builder.organizations);
         this.applicationCode = builder.applicationCode;
         this.rushedSubmission = builder.rushedSubmission;
     }
@@ -60,6 +65,10 @@ public class FilingPackage {
         return parties;
     }
 
+    public List<Organization> getOrganizations() {
+        return organizations;
+    }
+
     public boolean isRushedSubmission() { return rushedSubmission; }
 
     public String getApplicationCode() { return applicationCode; }
@@ -78,6 +87,10 @@ public class FilingPackage {
 
     public void setParties(List<Individual> parties) {
         this.parties = parties;
+    }
+
+    public void setOrganizations(List<Organization> organizations) {
+        this.organizations = organizations;
     }
 
     public void setRushedSubmission(boolean rushedSubmission) {
@@ -103,6 +116,7 @@ public class FilingPackage {
         private Court court;
         private List<Document> documents = new ArrayList<>();
         private List<Individual> parties = new ArrayList<>();
+        private List<Organization> organizations = new ArrayList<>();
         private String applicationCode;
         private boolean rushedSubmission;
 
@@ -133,6 +147,11 @@ public class FilingPackage {
 
         public Builder parties(List<Individual> parties) {
             this.parties = parties;
+            return this;
+        }
+
+        public Builder organizations(List<Organization> organizations) {
+            this.organizations = organizations;
             return this;
         }
 

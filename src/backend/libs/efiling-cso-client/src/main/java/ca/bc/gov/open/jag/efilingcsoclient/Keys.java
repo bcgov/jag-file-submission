@@ -22,7 +22,8 @@ public class Keys {
     public static final String PAYMENT_STATUS_CD = "NREQ";
     public static final String XML_DOCUMENT_INSTANCE_YN = "false";
     public static final String DOCUMENT_SUB_TYPE_CD = "ODOC";
-    public static final String PARTY_ROLE_TYPE_CD = "IND";
+    public static final String INDIVIDUAL_ROLE_TYPE_CD = "IND";
+    public static final String ORGANIZATION_ROLE_TYPE_CD = "ORG";
     public static final String PARTY_TYPE_CD = "CLA";
     public static final String PARTY_NAME_TYPE_CD = "CUR";
     public static final String PRIVILEGE_CD = "UPDT";
