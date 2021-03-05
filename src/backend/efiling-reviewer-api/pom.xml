@@ -127,14 +127,12 @@
 		<dependency>
 			<groupId>org.apache.skywalking</groupId>
 			<artifactId>apm-toolkit-trace</artifactId>
-			<version>8.4.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.skywalking/apm-toolkit-logback-1.x -->
 		<dependency>
 			<groupId>org.apache.skywalking</groupId>
 			<artifactId>apm-toolkit-logback-1.x</artifactId>
-			<version>8.4.0</version>
 		</dependency>
 
 
