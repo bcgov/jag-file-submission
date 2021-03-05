@@ -8,16 +8,13 @@ import "./index.css";
 import "@bcgov/bootstrap-theme/dist/css/bootstrap-theme.min.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import { BAMBORA_REDIRECT_URL } from "./Config";
 
 axios.defaults.baseURL = window.env
   ? window.env.REACT_APP_API_BASE_URL
   : process.env.REACT_APP_API_BASE_URL;
 
-const bamboraRedirectUrl = window.env
-  ? window.env.REACT_APP_BAMBORA_REDIRECT_URL
-  : process.env.REACT_APP_BAMBORA_REDIRECT_URL;
-
-sessionStorage.setItem("bamboraRedirectUrl", bamboraRedirectUrl);
+sessionStorage.setItem("bamboraRedirectUrl", BAMBORA_REDIRECT_URL);
 
 // prevent user from leaving site and losing saved data
 window.addEventListener("beforeunload", (e) => {
