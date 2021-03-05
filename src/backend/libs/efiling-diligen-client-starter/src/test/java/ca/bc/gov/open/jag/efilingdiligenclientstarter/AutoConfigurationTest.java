@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingdiligenclientstarter;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenAuthService;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenProperties;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
+import ca.bc.gov.open.jag.efilingdiligenclient.api.DocumentsApi;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.HealthCheckApi;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.ApiClient;
 import org.junit.jupiter.api.DisplayName;
@@ -39,6 +40,7 @@ public class AutoConfigurationTest {
             assertThat(it).hasSingleBean(RestTemplate.class);
             assertThat(it).hasSingleBean(DiligenAuthService.class);
             assertThat(it).hasSingleBean(DiligenService.class);
+            assertThat(it).hasSingleBean(DocumentsApi.class);
         });
 
     }

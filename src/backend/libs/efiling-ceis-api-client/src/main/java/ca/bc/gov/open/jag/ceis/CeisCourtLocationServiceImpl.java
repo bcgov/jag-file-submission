@@ -30,12 +30,11 @@ public class CeisCourtLocationServiceImpl implements EfilingCourtLocationService
     public List<InternalCourtLocation> getCourtLocations(String courtType) {
 
         try {
-            List<InternalCourtLocation> courtLocationList = defaultApi.courtLocationsGet().getCourtlocations().stream()
+            return defaultApi.courtLocationsGet().getCourtlocations().stream()
                     .filter(courtLocation -> isSearchedType(courtLocation.getIssupremecourt(), courtLocation.getIsprovincialcourt(), courtType))
                     .map(ceisCourtLocationMapper::toCourtLocation)
                     .collect(Collectors.toList());
 
-            return courtLocationList;
         } catch (ApiException e) {
             logger.error(e.getMessage(), e);
             throw new EfilingCourtLocationServiceException("Exception while retrieving court location", e);

@@ -1,8 +1,13 @@
 package ca.bc.gov.open.efilingdiligenclient.diligen;
 
 import ca.bc.gov.open.efilingdiligenclient.Keys;
+import ca.bc.gov.open.efilingdiligenclient.diligen.mapper.DiligenDocumentDetailsMapper;
+import ca.bc.gov.open.efilingdiligenclient.diligen.model.DiligenDocumentDetails;
 import ca.bc.gov.open.efilingdiligenclient.diligen.model.DiligenResponse;
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
+import ca.bc.gov.open.jag.efilingdiligenclient.api.DocumentsApi;
+import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.ApiException;
+import ca.bc.gov.open.jag.efilingdiligenclient.api.model.InlineResponse2003;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -33,11 +38,17 @@ public class DiligenServiceImpl implements DiligenService {
 
     private final ObjectMapper objectMapper;
 
-    public DiligenServiceImpl(RestTemplate restTemplate, DiligenProperties diligenProperties, DiligenAuthService diligenAuthService, ObjectMapper objectMapper) {
+    private final DocumentsApi documentsApi;
+
+    private final DiligenDocumentDetailsMapper diligenDocumentDetailsMapper;
+
+    public DiligenServiceImpl(RestTemplate restTemplate, DiligenProperties diligenProperties, DiligenAuthService diligenAuthService, ObjectMapper objectMapper, DocumentsApi documentsApi, DiligenDocumentDetailsMapper diligenDocumentDetailsMapper) {
         this.restTemplate = restTemplate;
         this.diligenProperties = diligenProperties;
         this.diligenAuthService = diligenAuthService;
         this.objectMapper = objectMapper;
+        this.documentsApi = documentsApi;
+        this.diligenDocumentDetailsMapper = diligenDocumentDetailsMapper;
     }
     @Override
     public BigDecimal postDocument(String documentType, MultipartFile file) {
@@ -74,8 +85,27 @@ public class DiligenServiceImpl implements DiligenService {
 
     }
 
-    private Optional<BigDecimal> tryGetFileId(HttpHeaders headers, String fileName, int maxAttempt) {
+    @Override
+    public DiligenDocumentDetails getDocumentDetails(BigDecimal documentId) {
 
+        logger.debug("getting document details from diligen");
+
+        documentsApi.getApiClient().setBearerToken(diligenAuthService.getDiligenJWT(diligenProperties.getUsername(), diligenProperties.getPassword()));
+
+        try {
+            InlineResponse2003 result = documentsApi.apiDocumentsFileIdDetailsGet(documentId.intValue());
+
+            logger.info("detail retrieved");
+
+            return diligenDocumentDetailsMapper.toDiligenDocumentDetails(result.getData().getFileDetails());
+
+        } catch (ApiException e) {
+            throw new DiligenDocumentException("Failed getting the document details");
+        }
+
+    }
+
+    private Optional<BigDecimal> tryGetFileId(HttpHeaders headers, String fileName, int maxAttempt) {
         
         int attempt = 0;
 
@@ -110,7 +140,7 @@ public class DiligenServiceImpl implements DiligenService {
                 logger.debug("successfully retrieved document id {}", result);
                 return Optional.of(result);
             } else {
-                logger.debug("attempt {} to retrieve document id failed, waiting 2s");
+                logger.debug("attempt to retrieve document id failed, waiting 2s");
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {

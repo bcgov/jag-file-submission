@@ -74,7 +74,7 @@ public class CsoCourtServiceImpl implements EfilingCourtService {
         return levels.getArray().stream()
                 .filter(court -> court.getLevelCd().equals(courtLevel))
                 .findFirst()
-                .map(court -> court.getLevelDsc())
+                .map(CsoCourtLevelRec::getLevelDsc)
                 .orElseThrow(() -> new EfilingCourtServiceException("Level not found"));
     }
 
@@ -83,7 +83,7 @@ public class CsoCourtServiceImpl implements EfilingCourtService {
         return classes.getArray().stream()
                 .filter(court -> court.getClassCd().equals(courtClass))
                 .findFirst()
-                .map(court -> court.getClassDsc())
+                .map(CsoCourtClassRec::getClassDsc)
                 .orElseThrow(() -> new EfilingCourtServiceException("Class not found"));
     }
 

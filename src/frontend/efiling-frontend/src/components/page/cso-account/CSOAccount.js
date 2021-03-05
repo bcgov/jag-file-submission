@@ -29,20 +29,47 @@ export default function CSOAccount({
   const [termsAccepted, acceptTerms] = useState(false);
   const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
-  const [emailInput, setEmailInput] = useState({ email: "", confEmail: "" });
+  const [emailInput, setEmailInput] = useState({
+    email: applicantInfo.email,
+    confEmail: applicantInfo.email,
+  });
   const [emailInputErrors, setEmailInputErrors] = useState({
     emailError: "",
     confEmailError: "",
   });
 
   useEffect(() => {
-    const emailErrors = () =>
-      !(
-        validator.isEmail(emailInput.email) &&
-        emailInput.email === emailInput.confEmail
-      );
+    const emailIsValid = () =>
+      emailInput.email &&
+      emailInputErrors.emailError === "" &&
+      emailInputErrors.confEmailError === "";
 
-    if (emailInput.email !== emailInput.confEmail && emailInput.confEmail) {
+    if (termsAccepted && emailIsValid()) {
+      setContinueBtnEnabled(true);
+    } else {
+      setContinueBtnEnabled(false);
+    }
+  }, [termsAccepted, emailInput.email, emailInput.confEmail]);
+
+  const handleOnEmailChange = (e) => {
+    const input = e.target.value;
+
+    if (!validator.isEmail(input)) {
+      setEmailInputErrors({
+        ...emailInputErrors,
+        emailError: "Must be a valid email.",
+      });
+    } else {
+      setEmailInputErrors({ ...emailInputErrors, emailError: "" });
+    }
+
+    setEmailInput({ ...emailInput, email: input });
+  };
+
+  const handleOnEmailConfChange = (e) => {
+    const input = e.target.value;
+
+    if (input !== emailInput.email) {
       setEmailInputErrors({
         ...emailInputErrors,
         confEmailError: "Email and confirmation email must match.",
@@ -51,37 +78,19 @@ export default function CSOAccount({
       setEmailInputErrors({ ...emailInputErrors, confEmailError: "" });
     }
 
-    if (termsAccepted && !emailErrors()) {
-      setContinueBtnEnabled(true);
-    } else {
-      setContinueBtnEnabled(false);
-    }
-  }, [termsAccepted, emailInput.email, emailInput.confEmail]);
-
-  const handleOnChange = (e) => {
-    const input = e.target.value;
-
-    setEmailInput({ ...emailInput, [e.target.name]: input });
-
-    if (e.target.name === "email" && !validator.isEmail(input)) {
-      setEmailInputErrors({
-        ...emailInputErrors,
-        emailError: "Must be a valid email.",
-      });
-    } else if (e.target.name === "email" && validator.isEmail(input)) {
-      setEmailInputErrors({ ...emailInputErrors, emailError: "" });
-    }
+    setEmailInput({ ...emailInput, emailConf: input });
   };
 
-  const createCSOAccount = ({
-    firstName,
-    lastName,
-    email = emailInput.email,
-  }) => {
+  const createCSOAccount = () => {
     setShowLoader(true);
     setContinueBtnEnabled(false);
 
-    const applicantDetails = { firstName, lastName, email };
+    const applicantDetails = {
+      firstName: applicantInfo.firstName,
+      lastName: applicantInfo.lastName,
+      email: emailInput.email,
+    };
+
     axios
       .post("/csoAccount", applicantDetails)
       .then(({ data: { clientId, internalClientNumber } }) => {
@@ -122,29 +131,44 @@ export default function CSOAccount({
 
           {/* if missing email, show email input fields. */}
           {!applicantInfo.email && (
-            <div>
-              <label>Email: </label>
-              <input
-                type="textarea"
-                name="email"
-                data-testid="email"
-                onChange={handleOnChange}
-              />
-              <label>Confirm Email: </label>
-              <input
-                type="textarea"
-                name="confEmail"
-                data-testid="conf-email"
-                onChange={handleOnChange}
-              />
-              <br />
-              <span className="mr-5 error" data-testid="email-error">
-                {emailInputErrors.emailError}
-              </span>
-              <span className="ml-5 error" data-testid="conf-email-error">
-                {emailInputErrors.confEmailError}
-              </span>
-            </div>
+            <form className="email-form">
+              <div className="row">
+                <label className="cso-label">
+                  Email Address
+                  <span className="red">*</span>
+                </label>
+              </div>
+              <div className="email-input row">
+                <input
+                  type="textarea"
+                  className="cso-input"
+                  name="email"
+                  data-testid="email"
+                  onChange={handleOnEmailChange}
+                />
+                <span className="error red" data-testid="email-error">
+                  {emailInputErrors.emailError}
+                </span>
+              </div>
+              <div className="row">
+                <label className="cso-label">
+                  Please Confirm Your Email Address
+                  <span className="red">*</span>
+                </label>
+              </div>
+              <div className="row">
+                <input
+                  type="textarea"
+                  className="cso-input"
+                  name="confEmail"
+                  data-testid="conf-email"
+                  onChange={handleOnEmailConfChange}
+                />
+                <span className="error red" data-testid="conf-email-error">
+                  {emailInputErrors.confEmailError}
+                </span>
+              </div>
+            </form>
           )}
           <br />
         </div>

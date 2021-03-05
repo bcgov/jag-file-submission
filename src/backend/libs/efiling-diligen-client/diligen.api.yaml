@@ -773,6 +773,33 @@ paths:
       responses:
         '200':
           description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      file_details:
+                        type: object
+                        properties:
+                          file_status:
+                            type: string
+                          ml_json:
+                            type: object
+                          file_name:
+                            type: string
+                          is_ocr:
+                            type: boolean
+                          is_converted:
+                            type: boolean
+                          execution_status:
+                            type: string
+                          extracted_document:
+                            type: object
+                          out_of_scope:
+                            type: number
         '401':
           description: Unauthorized
         '403':
