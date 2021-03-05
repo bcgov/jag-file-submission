@@ -6,6 +6,7 @@ import { MdPrint } from "react-icons/md";
 import "./PaymentList.scss";
 import { downloadPaymentReceipt } from "./PaymentListService";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
+import { isEnter } from "../../../modules/helpers/eventUtil";
 
 const hash = require("object-hash");
 
@@ -57,7 +58,7 @@ export default function PaymentList({ payments, packageId }) {
   };
 
   const handleKeyDown = (e) => {
-    if (e && e.keyCode === 13) {
+    if (isEnter(e)) {
       downloadPaymentReceipt(packageId).catch((err) => {
         errorRedirect(sessionStorage.getItem("errorUrl"), err);
       });

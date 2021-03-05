@@ -5,65 +5,33 @@ import axios from "axios";
 import FileSaver from "file-saver";
 import PaymentList from "../PaymentList";
 import { generateJWTToken } from "../../../../modules/helpers/authentication-helper/authenticationHelper";
+import {payments} from "../../../../modules/test-data/paymentListData"
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useParams: jest.fn().mockReturnValue({ packageId: 1 }),
 }));
 
-describe("PartyList Component", () => {
-  const payments = [
-    {
-      feeExempt: false,
-      paymentCategory: 1,
-      processedAmount: 7,
-      submittedAmount: 7,
-      serviceIdentifier: 0,
-      transactionDate: null,
-    },
-    {
-      feeExempt: true,
-      paymentCategory: 3,
-      processedAmount: 7,
-      submittedAmount: null,
-      serviceIdentifier: 0,
-      transactionDate: null,
-    },
-    {
-      feeExempt: false,
-      paymentCategory: 3,
-      processedAmount: 7,
-      submittedAmount: 7,
-      serviceIdentifier: 0,
-      transactionDate: null,
-    },
-    {
-      feeExempt: false,
-      paymentCategory: 3,
-      processedAmount: null,
-      submittedAmount: 7,
-      serviceIdentifier: 0,
-      transactionDate: null,
-    },
-  ];
-
+describe("PaymentList Component", () => {
   const packageId = "1";
 
   FileSaver.saveAs = jest.fn();
 
   let mock;
   beforeEach(() => {
+    jest.clearAllMocks()
     // IDP is set in the session
     const token = generateJWTToken({
       preferred_username: "user@bceid",
       email: "user@example.com",
-      identityProviderAlias: "bcsc",
+      identityProviderAlias: "bceid",
     });
     localStorage.setItem("jwt", token);
 
     mock = new MockAdapter(axios);
     window.open = jest.fn();
   });
+
 
   test("Matches snapshot", () => {
     const { asFragment } = render(
@@ -110,7 +78,10 @@ describe("PartyList Component", () => {
     );
     await waitFor(() => {});
 
-    fireEvent.keyDown(getByText("View Receipt"));
+    fireEvent.keyDown(getByText("View Receipt"), {
+      key: "Enter",
+      keyCode: "13",
+    });
     await waitFor(() => {});
 
     expect(FileSaver.saveAs).toHaveBeenCalled();
@@ -119,12 +90,9 @@ describe("PartyList Component", () => {
   test("View Payment Receipt (on keydown) - unsuccessful", async () => {
     sessionStorage.setItem("errorUrl", "error.com");
 
-    global.URL.createObjectURL = jest.fn();
-    global.URL.createObjectURL.mockReturnValueOnce("fileurl.com");
-
     mock
       .onGet(`/filingpackages/${packageId}/paymentReceipt`)
-      .reply(404, { message: "There was an error." });
+      .reply(400, { message: "There was an error." });
 
     const { getByText } = render(
       <PaymentList payments={payments} packageId={packageId} />
@@ -136,17 +104,17 @@ describe("PartyList Component", () => {
       keyCode: "13",
     });
     await waitFor(() => {});
+
+    expect(FileSaver.saveAs).not.toHaveBeenCalled()
+
   });
 
   test("View Payment Receipt (on click) - unsuccessful", async () => {
     sessionStorage.setItem("errorUrl", "error.com");
 
-    global.URL.createObjectURL = jest.fn();
-    global.URL.createObjectURL.mockReturnValueOnce("fileurl.com");
-
     mock
       .onGet(`/filingpackages/${packageId}/paymentReceipt`)
-      .reply(404, { message: "There was an error." });
+      .reply(400, { message: "There was an error." });
 
     const { getByText } = render(
       <PaymentList payments={payments} packageId={packageId} />
@@ -155,5 +123,8 @@ describe("PartyList Component", () => {
 
     fireEvent.click(getByText("View Receipt"));
     await waitFor(() => {});
+
+    expect(FileSaver.saveAs).not.toHaveBeenCalled()
+
   });
 });
