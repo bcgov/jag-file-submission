@@ -16,10 +16,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Configuration
 public class TestConfig {
@@ -78,7 +75,7 @@ public class TestConfig {
 
         ChromeOptions options = new ChromeOptions();
         options.setExperimentalOption("prefs", prefs);
-        options.setHeadless(false);
+        options.setHeadless(true);
         options.addArguments("--window-size=1920,1080");
         return new ChromeDriver(options);
 
@@ -97,8 +94,9 @@ public class TestConfig {
         authenticationPages.add(bceidAuthenticationPageImpl());
         authenticationPages.add(bcscAuthenticationPageImpl());
         authenticationPages.add(keycloakAuthenticationPageImpl());
-        return authenticationPages.stream().filter(x -> StringUtils.equals(provider,
-                x.getName())).findFirst().get();
+
+      return authenticationPages.stream().filter(x -> StringUtils.equals(provider,
+        x.getName())).findFirst().get();
     }
 
     public AuthenticationPage bceidAuthenticationPageImpl() {
@@ -129,6 +127,12 @@ public class TestConfig {
     @Scope("prototype")
     public PackageReviewPage packageReviewPage() {
         return new PackageReviewPage();
+    }
+
+    @Bean
+    @Scope("prototype")
+    public EfilingAdminHomePage efilingAdminHomePage() {
+        return new EfilingAdminHomePage();
     }
 
 }

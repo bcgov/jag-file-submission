@@ -4,10 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.springframework.beans.factory.annotation.Value;
-
-import java.io.File;
 
 public class BcscAuthenticationPageImpl extends BasePage implements AuthenticationPage {
 
@@ -20,8 +17,6 @@ public class BcscAuthenticationPageImpl extends BasePage implements Authenticati
     @Value("${BCSC_PASSCODE}")
     private String bcscPasscode;
 
-    @Value("classpath:data/test-document.pdf")
-    private File pdfDocumentToUpload;
 
     //Page Objects:
     @FindBy(id = "zocial-bcsc")
@@ -48,32 +43,6 @@ public class BcscAuthenticationPageImpl extends BasePage implements Authenticati
     @FindBy(id = "form_setConfirmation")
     private WebElement personalIdentitySection;
 
-    @FindBy(xpath = "//*[@data-testid='dropdownzone']/div/input")
-    private WebElement fileUploadInput;
-
-    @FindBy(xpath = "//button[@data-test-id='generate-url-btn']")
-    private WebElement filingPackageButton;
-
-    public void redirectToEfilingHubUsingBcsc() {
-        uploadAPdfOnDemoClient();
-        selectDocumentTypeAndSubmit();
-    }
-
-    public void uploadAPdfOnDemoClient() {
-        try {
-            wait.until(ExpectedConditions.visibilityOf(fileUploadInput)).sendKeys(pdfDocumentToUpload.getPath());
-        } catch (org.openqa.selenium.TimeoutException ex) {
-            fileUploadInput.sendKeys(pdfDocumentToUpload.getPath());
-            System.out.println(pdfDocumentToUpload.getPath());
-        }
-    }
-
-    public void selectDocumentTypeAndSubmit() {
-        Select selectDocumentType = new Select(this.driver.findElement(By.id("dropdown")));
-        selectDocumentType.selectByValue("AFF");
-        filingPackageButton.click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@data-test-id='continue-btn']")));
-    }
 
     public void accessBcscLogIn() {
         wait.until(ExpectedConditions.titleContains("Log in to Family Law Act Application"));
@@ -141,6 +110,5 @@ public class BcscAuthenticationPageImpl extends BasePage implements Authenticati
         enterBcscCardNumber();
         enterBcscPasscode();
         submitBcscCredentials();
-        redirectToEfilingHubUsingBcsc();
     }
 }
