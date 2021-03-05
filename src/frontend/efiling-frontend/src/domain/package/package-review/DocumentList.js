@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { MdHelp } from "react-icons/md";
+import { MdHelp, MdDescription } from "react-icons/md";
 import moment from "moment";
 
 import Modal from "react-bootstrap/Modal";
@@ -58,8 +58,8 @@ export default function DocumentList({
   return (
     <div className="ct-document-list">
       <div className="header">
-        <span className="d-none d-lg-inline col-lg-3">Document Type</span>
         <span className="d-none d-lg-inline col-lg-4">File Name</span>
+        <span className="d-none d-lg-inline col-lg-3">Document Type</span>
         <span className="d-none d-lg-inline col-lg-3">Status</span>
         <span className="d-none d-lg-inline col-lg-2">Action (s)</span>
       </div>
@@ -67,10 +67,9 @@ export default function DocumentList({
         {documents &&
           documents.map((document) => (
             <li key={document.identifier}>
-              <span className="label col-sm-4 d-lg-none">Document Type:</span>
-              <span className="col-sm-8 col-lg-3">{document.description}</span>
               <span className="label col-sm-4 d-lg-none">File Name:</span>
               <span className="col-sm-8 col-lg-4 file-cell">
+                <MdDescription size={30} color="#FCBA19" />
                 <span
                   className="file-href"
                   role="button"
@@ -82,6 +81,8 @@ export default function DocumentList({
                   {document.documentProperties.name}
                 </span>
               </span>
+              <span className="label col-sm-4 d-lg-none">Document Type:</span>
+              <span className="col-sm-8 col-lg-3">{document.description}</span>
               <span className="label col-sm-4 d-lg-none">Status:</span>
               <span className="col-sm-8 col-lg-3">
                 {document.status.description}
