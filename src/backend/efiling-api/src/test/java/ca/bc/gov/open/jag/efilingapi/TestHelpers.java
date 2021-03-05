@@ -73,6 +73,7 @@ public class TestHelpers {
         initialPackage.setCourt(court);
         initialPackage.setDocuments(initialDocuments);
         initialPackage.setParties(new ArrayList<>());
+        initialPackage.setOrganizationParties(new ArrayList<>());
         return initialPackage;
     }
 
@@ -131,7 +132,7 @@ public class TestHelpers {
     public static Submission buildSubmission() {
         return Submission
                 .builder()
-                .filingPackage(createPackage(createCourt(), createDocumentList(), createPartyList()))
+                .filingPackage(createPackage(createCourt(), createDocumentList(), createPartyList(), createOrganizationList()))
                 .navigationUrls(createNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL))
                 .create();
     }
@@ -139,11 +140,13 @@ public class TestHelpers {
     public static FilingPackage createPackage(
             Court court,
             List<Document> documents,
-            List<Individual> parties) {
+            List<Individual> parties,
+            List<Organization> organizations) {
         return FilingPackage.builder()
                 .court(court)
                 .documents(documents)
                 .parties(parties)
+                .organizations(organizations)
                 .create();
     }
 
@@ -193,17 +196,33 @@ public class TestHelpers {
 
     public static List<Individual> createPartyList() {
 
-        Individual individualOne = buildParty(BigDecimal.ONE);
+        Individual individualOne = buildParty();
 
-        Individual individualTwo = buildParty(BigDecimal.TEN);
+        Individual individualTwo = buildParty();
         return Arrays.asList(individualOne, individualTwo);
     }
 
-    private static Individual buildParty(BigDecimal partyId) {
+    public static List<Organization> createOrganizationList() {
+
+        Organization orgOne = buildOrganization();
+
+        Organization orgTwo = buildOrganization();
+        return Arrays.asList(orgOne, orgTwo);
+    }
+
+    private static Individual buildParty() {
         return Individual.builder()
                 .firstName(FIRST_NAME)
                 .middleName(MIDDLE_NAME)
                 .lastName(LAST_NAME)
+                .nameTypeCd(NAME_TYPE_CD)
+                .roleTypeCd(ROLE_TYPE_CD)
+                .create();
+    }
+
+    private static Organization buildOrganization() {
+        return Organization.builder()
+                .name(NAME)
                 .nameTypeCd(NAME_TYPE_CD)
                 .roleTypeCd(ROLE_TYPE_CD)
                 .create();

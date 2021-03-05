@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingapi.submission.models;
 import ca.bc.gov.open.jag.efilingcommons.model.Court;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
 import ca.bc.gov.open.jag.efilingcommons.model.Individual;
+import ca.bc.gov.open.jag.efilingcommons.model.Organization;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -51,6 +52,7 @@ public class FilingPakageTest {
                 getCourt(),
                 getDocuments(),
                 getParties(),
+                getOrganization(),
                 true,
                 "TEST");
 
@@ -58,6 +60,7 @@ public class FilingPakageTest {
         assertCourt(actual);
         assertDocuments(actual);
         assertParties(actual);
+        assertOrganizations(actual);
     }
 
     private void assertParties(FilingPackage actual) {
@@ -66,6 +69,12 @@ public class FilingPakageTest {
         Assertions.assertEquals(MIDDLE_NAME, actual.getParties().get(0).getMiddleName());
         Assertions.assertEquals(LAST_NAME, actual.getParties().get(0).getLastName());
         Assertions.assertEquals(NAME_TYPE_CD, actual.getParties().get(0).getNameTypeCd());
+    }
+
+    private void assertOrganizations(FilingPackage actual) {
+        Assertions.assertEquals(ROLE_TYPE_CD, actual.getOrganizations().get(0).getRoleTypeCd());
+        Assertions.assertEquals(NAME, actual.getOrganizations().get(0).getName());
+        Assertions.assertEquals(NAME_TYPE_CD, actual.getOrganizations().get(0).getNameTypeCd());
     }
 
     private void assertDocuments(FilingPackage actual) {
@@ -105,6 +114,18 @@ public class FilingPakageTest {
                 NAME_TYPE_CD);
         parties.add(individual);
         return parties;
+    }
+
+    private List<Organization> getOrganization() {
+        List<Organization> organizations = new ArrayList<>();
+        Organization organization = new Organization(
+                PARTY_TYPE_DESC,
+                ROLE_TYPE_CD,
+                ROLE_TYPE_DESC,
+                NAME,
+                NAME_TYPE_CD);
+        organizations.add(organization);
+        return organizations;
     }
 
     private List<Document> getDocuments() {

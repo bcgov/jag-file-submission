@@ -319,7 +319,7 @@ public class GenerateFromRequestTest {
                 .transactionId(TestHelpers.CASE_1)
                 .navigationUrls(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
-                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList(), TestHelpers.createPartyList()))
+                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList(), TestHelpers.createPartyList(), TestHelpers.createOrganizationList()))
                 .create();
 
         Mockito
