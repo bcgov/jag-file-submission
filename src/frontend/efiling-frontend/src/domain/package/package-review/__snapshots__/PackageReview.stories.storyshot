@@ -257,14 +257,14 @@ exports[`Storyshots PackageReview Default 1`] = `
               class="header"
             >
               <span
-                class="d-none d-lg-inline col-lg-3"
-              >
-                Document Type
-              </span>
-              <span
                 class="d-none d-lg-inline col-lg-4"
               >
                 File Name
+              </span>
+              <span
+                class="d-none d-lg-inline col-lg-3"
+              >
+                Document Type
               </span>
               <span
                 class="d-none d-lg-inline col-lg-3"
@@ -876,14 +876,14 @@ exports[`Storyshots PackageReview Mobile 1`] = `
               class="header"
             >
               <span
-                class="d-none d-lg-inline col-lg-3"
-              >
-                Document Type
-              </span>
-              <span
                 class="d-none d-lg-inline col-lg-4"
               >
                 File Name
+              </span>
+              <span
+                class="d-none d-lg-inline col-lg-3"
+              >
+                Document Type
               </span>
               <span
                 class="d-none d-lg-inline col-lg-3"
