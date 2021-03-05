@@ -173,23 +173,23 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         List<RoleAssignment> roles = new ArrayList<>();
         RoleAssignment roleInd = new RoleAssignment();
         roleInd.setActiveYn(true);
-        roleInd.setRegisteredClientRoleCd("IND");
+        roleInd.setRegisteredClientRoleCd(Keys.CSO_USER_ROLE_IND);
         roles.add(roleInd);
 
         RoleAssignment roleCaef = new RoleAssignment();
         roleCaef.setActiveYn(true);
-        roleCaef.setRegisteredClientRoleCd("CAEF");
+        roleCaef.setRegisteredClientRoleCd(Keys.CSO_USER_ROLE_CAEF);
         roles.add(roleCaef);
 
         RoleAssignment roleFile = new RoleAssignment();
         roleFile.setActiveYn(true);
-        roleFile.setRegisteredClientRoleCd("FILE");
+        roleFile.setRegisteredClientRoleCd(Keys.CSO_USER_ROLE_FILE);
         roles.add(roleFile);
 
-        if (identityProvider.equalsIgnoreCase("BCSC")) {
+        if (identityProvider.equalsIgnoreCase(Keys.BCSC_IDENTITY_PROVIDER)) {
             RoleAssignment roleVind = new RoleAssignment();
             roleVind.setActiveYn(true);
-            roleVind.setRegisteredClientRoleCd("VIND");
+            roleVind.setRegisteredClientRoleCd(Keys.CSO_USER_ROLE_VIND);
             roles.add(roleVind);
         }
 
