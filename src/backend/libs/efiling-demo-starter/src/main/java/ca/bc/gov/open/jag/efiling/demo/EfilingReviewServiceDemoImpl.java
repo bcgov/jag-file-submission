@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efiling.demo;
 
 import ca.bc.gov.open.jag.efilingcommons.model.Individual;
+import ca.bc.gov.open.jag.efilingcommons.model.Organization;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
@@ -154,6 +155,26 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
                 .create();
 
         return Arrays.asList(individualOne, individualTwo);
+
+    }
+
+    private List<Organization> createOrganizations() {
+
+        Organization organizationOne = Organization.builder()
+                .name("The Organization Org.")
+                .roleTypeCd("APP")
+                .roleTypeDesc("Applicant")
+                .partyTypeDesc("Organization")
+                .create();
+
+        Organization organizationTwo = Organization.builder()
+                .name("This is a very very very very loooooong organization name")
+                .roleTypeCd("APP")
+                .roleTypeDesc("Applicant")
+                .partyTypeDesc("Organization")
+                .create();
+
+        return Arrays.asList(organizationOne, organizationTwo);
 
     }
 
