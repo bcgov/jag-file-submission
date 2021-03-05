@@ -86,6 +86,30 @@ describe("PaymentList Component", () => {
     expect(FileSaver.saveAs).toHaveBeenCalled();
   });
 
+  test("View Payment Receipt (on keydown) - successful - not Enter", async () => {
+    const blob = new Blob(["foo", "bar"]);
+
+    global.URL.createObjectURL = jest.fn();
+    global.URL.createObjectURL.mockReturnValueOnce("fileurl.com");
+
+    mock
+      .onGet(`/filingpackages/${packageId}/paymentReceipt`)
+      .reply(200, { blob });
+
+    const { getByText } = render(
+      <PaymentList payments={payments} packageId={packageId} />
+    );
+    await waitFor(() => {});
+
+    fireEvent.keyDown(getByText("View Receipt"), {
+      key: "Enter",
+      keyCode: "9",
+    });
+    await waitFor(() => {});
+
+    expect(FileSaver.saveAs).not.toHaveBeenCalled();
+  });
+
   test("View Payment Receipt (on keydown) - unsuccessful", async () => {
     sessionStorage.setItem("errorUrl", "error.com");
 
