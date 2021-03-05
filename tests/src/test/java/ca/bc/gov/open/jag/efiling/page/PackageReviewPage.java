@@ -17,11 +17,14 @@ public class PackageReviewPage extends BasePage {
     @Value("${PACKAGE_REVIEW_URL:http://localhost:3000/efilinghub/packagereview}")
     private String packageReviewUrl;
 
-    @Value("${USERNAME_BCEID:bobross}")
+    @Value("${USERNAME_KEYCLOAK:bobross}")
     private String username;
 
-    @Value("${PASSWORD_BCEID:changeme}")
+    @Value("${PASSWORD_KEYCLOAK:changeme}")
     private String password;
+
+    @Value("${PACKAGE_ID:1}")
+    private String packageId;
 
     private Logger logger = LoggerFactory.getLogger(PackageReviewPage.class);
 
@@ -38,7 +41,6 @@ public class PackageReviewPage extends BasePage {
     private WebElement documentsTab;
 
     @FindBy(xpath = "//*[@data-testid='btn-download-document']")
-
     private WebElement downloadButton;
 
     @FindBy(id = "uncontrolled-tab-tab-comments")
@@ -121,7 +123,7 @@ public class PackageReviewPage extends BasePage {
         return paymentPane.isDisplayed();
     }
 
-    public void signIn(int packageId) {
+    public void signIn() {
         String packageReviewPageUrl = MessageFormat.format("{0}/{1}", packageReviewUrl, packageId);
         logger.info("Formatted package review page url:{}", packageReviewPageUrl);
 
@@ -132,6 +134,5 @@ public class PackageReviewPage extends BasePage {
         usernameField.sendKeys(username);
         passwordField.sendKeys(password);
         signIn.click();
-
     }
 }

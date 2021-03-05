@@ -27,7 +27,7 @@ public class TestConfig {
     @Value("${default.timeout:30}")
     private int timeout;
 
-    @Value("${TEST:bceid}")
+    @Value("${TEST:keycloak}")
     private String provider;
 
     private static final String DOWNLOADED_FILES_PATH = System.getProperty("user.dir") + File.separator + "downloadedFiles";
@@ -94,20 +94,23 @@ public class TestConfig {
     @Scope("prototype")
     public AuthenticationPage authenticationPage() {
         List<AuthenticationPage> authenticationPages = new ArrayList<>();
-        authenticationPages.add(bceidAuthenticationPage());
-        authenticationPages.add(bcscAuthenticationPage());
+        authenticationPages.add(bceidAuthenticationPageImpl());
+        authenticationPages.add(bcscAuthenticationPageImpl());
+        authenticationPages.add(keycloakAuthenticationPageImpl());
         return authenticationPages.stream().filter(x -> StringUtils.equals(provider,
                 x.getName())).findFirst().get();
     }
 
-
-    public AuthenticationPage bceidAuthenticationPage() {
-        return new BceidAuthenticationPage(generateUrlService());
+    public AuthenticationPage bceidAuthenticationPageImpl() {
+        return new BceidAuthenticationPageImpl();
     }
 
+    public AuthenticationPage bcscAuthenticationPageImpl() {
+        return new BcscAuthenticationPageImpl();
+    }
 
-    public AuthenticationPage bcscAuthenticationPage() {
-        return new BcscAuthenticationPage();
+    public AuthenticationPage keycloakAuthenticationPageImpl() {
+        return new KeycloakAuthenticationPageImpl(generateUrlService());
     }
 
     @Bean

@@ -18,10 +18,10 @@ public class OauthService {
     @Value("${KEYCLOAK_REALM:Efiling-Hub}")
     private String keycloakRealm;
 
-    @Value("${USERNAME_BCEID:bobross}")
+    @Value("${USERNAME_KEYCLOAK:bobross}")
     private String username;
 
-    @Value("${PASSWORD_BCEID:changeme}")
+    @Value("${PASSWORD_KEYCLOAK:changeme}")
     private String password;
 
     private Logger logger = LoggerFactory.getLogger(OauthService.class);
@@ -36,12 +36,14 @@ public class OauthService {
 
         JsonPath oidcTokenJsonPath = new JsonPath(response.asString());
 
-        if(oidcTokenJsonPath.get("access_token") == null) throw new EfilingTestException("access_token not present in response");
+        if (oidcTokenJsonPath.get("access_token") == null)
+            throw new EfilingTestException("access_token not present in response");
 
         String actualUserToken = oidcTokenJsonPath.get("access_token");
         JsonPath tokenJsonPath = new JsonPath(TokenHelper.decodeTokenToJsonString(actualUserToken));
 
-        if(tokenJsonPath.get("universal-id") == null) throw new EfilingTestException("universal-id not present in response");
+        if (tokenJsonPath.get("universal-id") == null)
+            throw new EfilingTestException("universal-id not present in response");
 
 
         return new UserIdentity(actualUserToken, tokenJsonPath.get("universal-id"));

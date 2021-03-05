@@ -1,7 +1,5 @@
 package ca.bc.gov.open.jag.efiling.page;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,22 +9,19 @@ import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;
 
-public class BcscAuthenticationPage extends BasePage implements AuthenticationPage {
+public class BcscAuthenticationPageImpl extends BasePage implements AuthenticationPage {
 
-    private Logger logger = LogManager.getLogger(BcscAuthenticationPage.class);
-
-    @Value("${EFILING_ADMIN:}")
+    @Value("${EFILING_ADMIN}")
     private String efilingAdminUrl;
 
-    @Value("${BCSC_CARD_NUMBER:}")
+    @Value("${BCSC_CARD_NUMBER}")
     private String bcscCardNumber;
 
-    @Value("${BCSC_PASSCODE:}")
+    @Value("${BCSC_PASSCODE}")
     private String bcscPasscode;
 
     @Value("classpath:data/test-document.pdf")
     private File pdfDocumentToUpload;
-
 
     //Page Objects:
     @FindBy(id = "zocial-bcsc")
@@ -147,6 +142,5 @@ public class BcscAuthenticationPage extends BasePage implements AuthenticationPa
         enterBcscPasscode();
         submitBcscCredentials();
         redirectToEfilingHubUsingBcsc();
-
     }
 }

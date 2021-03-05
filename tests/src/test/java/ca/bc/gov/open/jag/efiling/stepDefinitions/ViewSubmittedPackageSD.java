@@ -26,9 +26,9 @@ public class ViewSubmittedPackageSD {
         this.packageReviewPage = packageReviewPage;
     }
 
-    @Given("user is on package review page with package id {int}")
-    public void userIsOnPackageReviewPage(int packageId) {
-        this.packageReviewPage.signIn(packageId);
+    @Given("user is on package review page with package id")
+    public void userIsOnPackageReviewPage() {
+        this.packageReviewPage.signIn();
 
     }
 
