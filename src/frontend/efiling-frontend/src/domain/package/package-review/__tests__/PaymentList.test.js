@@ -5,7 +5,7 @@ import axios from "axios";
 import FileSaver from "file-saver";
 import PaymentList from "../PaymentList";
 import { generateJWTToken } from "../../../../modules/helpers/authentication-helper/authenticationHelper";
-import {payments} from "../../../../modules/test-data/paymentListData"
+import { payments } from "../../../../modules/test-data/paymentListData";
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -19,7 +19,7 @@ describe("PaymentList Component", () => {
 
   let mock;
   beforeEach(() => {
-    jest.clearAllMocks()
+    jest.clearAllMocks();
     // IDP is set in the session
     const token = generateJWTToken({
       preferred_username: "user@bceid",
@@ -31,7 +31,6 @@ describe("PaymentList Component", () => {
     mock = new MockAdapter(axios);
     window.open = jest.fn();
   });
-
 
   test("Matches snapshot", () => {
     const { asFragment } = render(
@@ -105,8 +104,7 @@ describe("PaymentList Component", () => {
     });
     await waitFor(() => {});
 
-    expect(FileSaver.saveAs).not.toHaveBeenCalled()
-
+    expect(FileSaver.saveAs).not.toHaveBeenCalled();
   });
 
   test("View Payment Receipt (on click) - unsuccessful", async () => {
@@ -124,7 +122,6 @@ describe("PaymentList Component", () => {
     fireEvent.click(getByText("View Receipt"));
     await waitFor(() => {});
 
-    expect(FileSaver.saveAs).not.toHaveBeenCalled()
-
+    expect(FileSaver.saveAs).not.toHaveBeenCalled();
   });
 });
