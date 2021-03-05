@@ -6,6 +6,7 @@ tests/logs
 *.log
 .idea
 tests/test-output
+tests/src/test/resources/application.properties
 .env
 src/frontend/.vscode/
 src/frontend/efiling-frontend/.vscode/
