@@ -1,11 +1,11 @@
-# new feature
-# Tags: optional
+## new feature
+## Tags: optional
 
 @frontend
 Feature: Recently submitted package details can be viewed
 
   Background:
-    Given user is on package review page with package id 1
+    Given user is on package review page with package id
     When package details are populated
 
   Scenario: Validate document details are correct in submitted package
