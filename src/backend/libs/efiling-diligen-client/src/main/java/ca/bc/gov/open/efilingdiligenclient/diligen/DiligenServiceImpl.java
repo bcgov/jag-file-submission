@@ -97,8 +97,6 @@ public class DiligenServiceImpl implements DiligenService {
 
             logger.info("detail retrieved");
 
-            if (!result.getData().getFileDetails().getFileStatus().equals("PROCESSED")) throw new DiligenDocumentException(MessageFormat.format("Document not in processed status. Document in status {0}", result.getData().getFileDetails().getFileStatus()));
-
             return diligenDocumentDetailsMapper.toDiligenDocumentDetails(result.getData().getFileDetails());
 
         } catch (ApiException e) {
@@ -142,7 +140,7 @@ public class DiligenServiceImpl implements DiligenService {
                 logger.debug("successfully retrieved document id {}", result);
                 return Optional.of(result);
             } else {
-                logger.debug("attempt {} to retrieve document id failed, waiting 2s");
+                logger.debug("attempt to retrieve document id failed, waiting 2s");
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {

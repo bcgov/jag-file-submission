@@ -60,8 +60,6 @@ public class GetDocumentDetailsTest {
 
         Mockito.when(documentsApiMock.apiDocumentsFileIdDetailsGet(ArgumentMatchers.eq(BigDecimal.ONE.intValue()))).thenReturn(getMockData(STATUS));
 
-        Mockito.when(documentsApiMock.apiDocumentsFileIdDetailsGet(ArgumentMatchers.eq(BigDecimal.TEN.intValue()))).thenReturn(getMockData(NOT_PROCESSED));
-
         Mockito.when(documentsApiMock.apiDocumentsFileIdDetailsGet(ArgumentMatchers.eq(BigDecimal.ZERO.intValue()))).thenThrow(new ApiException());
 
         sut = new DiligenServiceImpl(null, diligenProperties, diligenAuthServiceMock, null, documentsApiMock, new DiligenDocumentDetailsMapperImpl());
@@ -90,14 +88,6 @@ public class GetDocumentDetailsTest {
     public void withInvalidDocumentIoException() {
 
         Assertions.assertThrows(DiligenDocumentException.class, () -> sut.getDocumentDetails(BigDecimal.ZERO));
-
-    }
-
-    @Test
-    @DisplayName("Error: Status was not processed")
-    public void withValidDocumentDiligenFailed() {
-
-        Assertions.assertThrows(DiligenDocumentException.class, () -> sut.getDocumentDetails(BigDecimal.TEN));
 
     }
 
