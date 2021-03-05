@@ -59,7 +59,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
 
             Account account = setCreateAccountDetails(createAccountRequest);
             Client client = setCreateAccountClientDetails(createAccountRequest);
-            List<RoleAssignment> roles = setCreateAccountRoles();
+            List<RoleAssignment> roles = setCreateAccountRoles(createAccountRequest.getIdentityProvider());
             ClientProfile clientProfile = accountFacadeBean.createAccount(account, client, roles);
             if (null != clientProfile) {
                 accountDetails = accountDetailsMapper.toAccountDetails(
@@ -168,7 +168,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         return client;
     }
 
-    private List<RoleAssignment> setCreateAccountRoles() {
+    private List<RoleAssignment> setCreateAccountRoles(String identityProvider) {
 
         List<RoleAssignment> roles = new ArrayList<>();
         RoleAssignment roleInd = new RoleAssignment();
@@ -185,6 +185,13 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         roleFile.setActiveYn(true);
         roleFile.setRegisteredClientRoleCd("FILE");
         roles.add(roleFile);
+
+        if (identityProvider.equalsIgnoreCase("BCSC")) {
+            RoleAssignment roleVind = new RoleAssignment();
+            roleVind.setActiveYn(true);
+            roleVind.setRegisteredClientRoleCd("VIND");
+            roles.add(roleVind);
+        }
 
         return roles;
     }
