@@ -51,6 +51,12 @@ public interface FilingPackageMapper {
     @Mapping(target = "roleDescription", source = "roleTypeDesc")
     Individual toParty(ca.bc.gov.open.jag.efilingcommons.model.Individual individual);
 
+    List<Organization> toOrganizations(List<ca.bc.gov.open.jag.efilingcommons.model.Organization> organizations);
+
+    @Mapping(target = "partyDescription", source = "partyTypeDesc")
+    @Mapping(target = "roleType", source = "roleTypeCd")
+    @Mapping(target = "roleDescription", source = "roleTypeDesc")
+    Organization toOrganization(ca.bc.gov.open.jag.efilingcommons.model.Organization organization);
 
     List<Payment> toPayments(List<PackagePayment> payments);
 
