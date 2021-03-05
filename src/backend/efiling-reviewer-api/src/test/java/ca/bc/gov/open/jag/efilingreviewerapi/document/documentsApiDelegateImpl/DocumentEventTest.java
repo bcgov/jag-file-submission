@@ -26,10 +26,13 @@ public class DocumentEventTest {
 
 
     private DocumentsApiDelegateImpl sut;
+
     @Mock
     private DiligenService diligenServiceMock;
+
     @Mock
     private ExtractStore extractStoreMock;
+
     @Mock
     private ClamAvService clamAvServiceMock;
 
@@ -43,7 +46,7 @@ public class DocumentEventTest {
 
         Mockito.when(diligenServiceMock.getDocumentDetails(ArgumentMatchers.eq(BigDecimal.ONE))).thenReturn(DiligenDocumentDetails.builder().create());
 
-        sut = new DocumentsApiDelegateImpl(diligenServiceMock, extratRequestMapper, extractStoreMock, clamAvServiceMock);
+        sut = new DocumentsApiDelegateImpl(diligenServiceMock, extratRequestMapper, extractStoreMock, null, clamAvServiceMock);
 
     }
 

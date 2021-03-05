@@ -97,8 +97,6 @@ public class DiligenServiceImpl implements DiligenService {
 
             logger.info("detail retrieved");
 
-            if (!result.getData().getFileDetails().getFileStatus().equals("PROCESSED")) throw new DiligenDocumentException(MessageFormat.format("Document not in processed status. Document in status {0}", result.getData().getFileDetails().getFileStatus()));
-
             return diligenDocumentDetailsMapper.toDiligenDocumentDetails(result.getData().getFileDetails());
 
         } catch (ApiException e) {
