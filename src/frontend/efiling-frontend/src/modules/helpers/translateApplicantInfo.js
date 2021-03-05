@@ -1,4 +1,5 @@
-import { isIdentityProviderBCeID } from "./authentication-helper/authenticationHelper";
+import { IDP_BCEID, IDP_BCSC } from "../../Config";
+import { getIdentityProviderAlias } from "./authentication-helper/authenticationHelper";
 
 export function translateApplicantInfo({
   bceid,
@@ -10,15 +11,15 @@ export function translateApplicantInfo({
   const fullName = middleName
     ? `${firstName} ${middleName} ${lastName}`
     : `${firstName} ${lastName}`;
-  const isBCeID = isIdentityProviderBCeID();
+  const idp = getIdentityProviderAlias();
 
   const data = [];
-  if (isBCeID) {
+  if (idp === IDP_BCEID) {
     data.push({
       name: "BCeID:",
       value: bceid,
     });
-  } else {
+  } else if (idp === IDP_BCSC) {
     data.push({
       name: "BCSC:",
       value: "",
