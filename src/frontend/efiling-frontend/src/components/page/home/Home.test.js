@@ -45,7 +45,7 @@ describe("Home", () => {
     });
     sessionStorage.clear();
     sessionStorage.setItem("submissionId", submissionId);
-    sessionStorage.setItem("transactionId", transactionId); 
+    sessionStorage.setItem("transactionId", transactionId);
   });
 
   const component = <Home />;
@@ -207,7 +207,7 @@ describe("Home", () => {
 
     expect(sessionStorage.getItem("validExit")).toEqual("true");
   });
-  
+
   test("clicking cancel opens confirmation popup, missing cancelurl, success", async () => {
     mock.onGet(apiRequest).reply(200, {
       navigationUrls: {
@@ -246,7 +246,7 @@ describe("Home", () => {
     expect(sessionStorage.getItem("validExit")).toEqual("true");
   });
 
-  test("clicking cancel opens confirmation popup and clicking confirm takes user back to client app, fail", async () => {    
+  test("clicking cancel opens confirmation popup and clicking confirm takes user back to client app, fail", async () => {
     mock.onGet("/csoAccount").reply(200, {
       clientId: userDetails.clientId,
       internalClientNumber: userDetails.internalClientNumber,
@@ -325,7 +325,7 @@ describe("Home", () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  test("When user has authenticated with a non BCeID nor BCSC account - fail", async () => {    
+  test("When user has authenticated with a non BCeID nor BCSC account - fail", async () => {
     sessionStorage.setItem("errorUrl", "error.com");
 
     // IDP is set to google
@@ -339,7 +339,7 @@ describe("Home", () => {
     // return 404 (no account) when querying CSO
     mock.onGet("csoAccount").reply(404);
 
-    const { asFragment } = render(component);
+    render(component);
     await waitFor(() => {});
 
     expect(window.open).toHaveBeenCalledWith(
