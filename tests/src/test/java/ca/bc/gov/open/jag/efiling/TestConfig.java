@@ -95,8 +95,10 @@ public class TestConfig {
         authenticationPages.add(bcscAuthenticationPageImpl());
         authenticationPages.add(keycloakAuthenticationPageImpl());
 
-      return authenticationPages.stream().filter(x -> StringUtils.equals(provider,
-        x.getName())).findFirst().get();
+        Optional<AuthenticationPage> specifiedIdProvider = Optional.of(authenticationPages.stream().filter(x -> StringUtils.equals(provider,
+                x.getName())).findFirst().get());
+
+        return specifiedIdProvider.orElseGet(this::keycloakAuthenticationPageImpl);
     }
 
     public AuthenticationPage bceidAuthenticationPageImpl() {
