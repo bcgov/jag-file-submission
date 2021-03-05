@@ -20,8 +20,4 @@ public abstract class BasePage {
         PageFactory.initElements(this.driver, this);
     }
 
-    public void goTo(String url) {
-        this.driver.get(url);
-    }
-
 }
