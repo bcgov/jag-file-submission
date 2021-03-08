@@ -1,6 +1,7 @@
 package ca.bc.gov.open.efilingdiligenclient.diligen.model;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class DiligenDocumentDetails {
     private String fileStatus;
@@ -11,6 +12,7 @@ public class DiligenDocumentDetails {
     private String executionStatus;
     private Object extractedDocument;
     private BigDecimal outOfScope;
+    private List<DiligenAnswerField> answers;
 
     public String getFileStatus() {  return fileStatus; }
 
