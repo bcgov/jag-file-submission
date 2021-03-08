@@ -1,9 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.validator;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
-import ca.bc.gov.open.jag.efilingapi.api.model.InitialDocument;
-import ca.bc.gov.open.jag.efilingapi.api.model.InitialPackage;
-import ca.bc.gov.open.jag.efilingapi.api.model.NavigationUrls;
+import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.court.models.GetCourtDetailsRequest;
 import ca.bc.gov.open.jag.efilingapi.court.models.IsValidCourtFileNumberRequest;
 import ca.bc.gov.open.jag.efilingapi.court.models.IsValidCourtRequest;
@@ -136,19 +133,25 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
                 .documents(initialPackage.getDocuments())
                 .create());
 
-        List <String> validationResult = CollectionUtils.emptyIfNull(initialPackage
-                .getParties())
-                .stream()
-                .filter(party -> party.getRoleType() == null || !validPartyRoles.contains(party.getRoleType().toString()))
-                .map(party -> MessageFormat.format("Role type [{0}] is invalid.", party.getRoleType()))
-                .collect(Collectors.toList());
+        List<String> validationResult = new ArrayList<>();
 
-        validationResult.addAll(CollectionUtils.emptyIfNull(initialPackage
-                .getOrganizationParties())
-                .stream()
-                .filter(party -> party.getRoleType() == null || !validPartyRoles.contains(party.getRoleType().toString()))
-                .map(party -> MessageFormat.format("Role type [{0}] is invalid.", party.getRoleType()))
-                .collect(Collectors.toList()));
+        for (Individual individual : CollectionUtils.emptyIfNull(initialPackage.getParties())) {
+            if (individual.getRoleType() == null || !validPartyRoles.contains(individual.getRoleType().toString())) {
+                validationResult.add(MessageFormat.format("Individual role type [{0}] is invalid.", individual.getRoleType()));
+            }
+            if (StringUtils.isBlank(individual.getLastName())) {
+                validationResult.add("Individual last name is required.");
+            }
+        }
+
+        for (Organization organization : CollectionUtils.emptyIfNull(initialPackage.getOrganizationParties())) {
+            if (organization.getRoleType() == null || !validPartyRoles.contains(organization.getRoleType().toString())) {
+                validationResult.add(MessageFormat.format("Organization role type [{0}] is invalid.", organization.getRoleType()));
+            }
+            if (StringUtils.isBlank(organization.getName())) {
+                validationResult.add("Organization name is required.");
+            }
+        }
 
         return validationResult;
 
