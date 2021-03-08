@@ -728,7 +728,6 @@ components:
       required:
         - documents
         - court
-        - parties
       properties:
         court:
           $ref: "#/components/schemas/CourtBase"
@@ -739,7 +738,11 @@ components:
         parties:
           type: array
           items:
-            $ref: "#/components/schemas/Party"
+            $ref: "#/components/schemas/Individual"
+        organizationParties:
+          type: array
+          items:
+            $ref: "#/components/schemas/Organization"
     FilingPackage:
       type: object
       description: A filing package can contain one or multiple documents that have or are being submitted electronically for new or existing court file.
@@ -749,7 +752,6 @@ components:
         - submittedBy
         - submittedDate
         - links
-        - parties
         - court
       properties:
         packageNumber:
@@ -772,7 +774,11 @@ components:
         parties:
           type: array
           items:
-            $ref: "#/components/schemas/Party"
+            $ref: "#/components/schemas/Individual"
+        organizationParties:
+          type: array
+          items:
+            $ref: "#/components/schemas/Organization"
         payments:
           type: array
           items:
@@ -813,7 +819,11 @@ components:
         parties:
           type: array
           items:
-            $ref: "#/components/schemas/Party"
+            $ref: "#/components/schemas/Individual"
+        organizationParties:
+          type: array
+          items:
+            $ref: "#/components/schemas/Organization"
         payments:
           type: array
           items:
@@ -918,12 +928,7 @@ components:
       description: party related to filing package
       required:
         - roleType
-        - partyType
       properties:
-        partyType:
-          type: string
-          description: party type code
-          enum: [IND, ORG]
         roleType:
           type: string
           description: >
@@ -1049,6 +1054,20 @@ components:
                 WIF,
                 WIT,
             ]
+        roleDescription:
+          type: string
+          description: description of role
+        partyDescription:
+          type: string
+          description: description of party
+    Individual:
+      description: Individual party type
+      allOf:
+        - $ref: "#/components/schemas/Party"
+      required:
+        - firstName
+        - lastName
+      properties:
         firstName:
           type: string
           description: first name
@@ -1058,12 +1077,16 @@ components:
         lastName:
           type: string
           description: last name
-        roleDescription:
+    Organization:
+      description: Organization party type
+      allOf:
+        - $ref: "#/components/schemas/Party"
+      required:
+        - name
+      properties:
+        name:
           type: string
-          description: description of role
-        partyDescription:
-          type: string
-          description: description of party
+          description: organization name
     CreateCsoAccountRequest:
       description: represents a request to create a user
       required:
