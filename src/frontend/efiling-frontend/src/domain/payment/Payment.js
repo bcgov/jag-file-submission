@@ -129,6 +129,7 @@ export default function Payment({
 
     sessionStorage.setItem("currentPage", "payment");
     window.history.pushState(null, null, window.location.href);
+    window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
