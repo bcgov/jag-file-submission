@@ -279,7 +279,7 @@
             </xs:complexType>
             <xs:complexType name="csoParty">
                 <xs:complexContent>
-                    <xs:extension base="tns:individual">
+                    <xs:extension base="tns:party">
                         <xs:sequence>
                             <xs:element maxOccurs="unbounded" minOccurs="0" name="additionalDtls" nillable="true" type="tns:additionalPartyDetail"/>
                             <xs:element maxOccurs="unbounded" minOccurs="0" name="legalReps" nillable="true" type="tns:legalRepresentative"/>
@@ -287,7 +287,7 @@
                     </xs:extension>
                 </xs:complexContent>
             </xs:complexType>
-            <xs:complexType name="individual">
+            <xs:complexType name="party">
                 <xs:sequence>
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="additionalNames" nillable="true" type="tns:identificationDetail"/>
                     <xs:element minOccurs="0" name="current" type="tns:identificationDetail"/>
@@ -325,7 +325,7 @@
                 <xs:sequence>
                     <xs:element minOccurs="0" name="entDtm" type="xs:dateTime"/>
                     <xs:element minOccurs="0" name="entUserId" type="xs:string"/>
-                    <xs:element minOccurs="0" name="legalRepParty" type="tns:individual"/>
+                    <xs:element minOccurs="0" name="legalRepParty" type="tns:party"/>
                     <xs:element minOccurs="0" name="legalRepPartyId" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="legalRepresentativeTypeCd" type="xs:string"/>
                     <xs:element minOccurs="0" name="partyId" type="xs:decimal"/>
@@ -873,7 +873,7 @@
             </xs:complexType>
             <xs:complexType name="findPartiesByPackageResponse">
                 <xs:sequence>
-                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:individual"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:party"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="findDocumentById">
