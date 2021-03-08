@@ -73,7 +73,6 @@ public class GetCSOFilingPackageTest {
         Assertions.assertEquals(TestHelpers.PARTICIPATING_CLASS, result.get().getCourt().getParticipatingClass());
         //Party
         Assertions.assertEquals(1, result.get().getParties().size());
-        Assertions.assertEquals(ca.bc.gov.open.jag.efilingapi.api.model.Party.PartyTypeEnum.IND, result.get().getParties().get(0).getPartyType());
         Assertions.assertEquals(TestHelpers.PARTY_TYPE_DESC, result.get().getParties().get(0).getPartyDescription());
         Assertions.assertEquals(ca.bc.gov.open.jag.efilingapi.api.model.Party.RoleTypeEnum.ABC, result.get().getParties().get(0).getRoleType());
         Assertions.assertEquals(TestHelpers.ROLE_TYPE_DESC, result.get().getParties().get(0).getRoleDescription());

@@ -24,7 +24,7 @@ public class TestConfig {
     @Value("${default.timeout:30}")
     private int timeout;
 
-    @Value("${TEST:keycloak}")
+    @Value("${AUTH_PROVIDER:keycloak}")
     private String provider;
 
     private static final String DOWNLOADED_FILES_PATH = System.getProperty("user.dir") + File.separator + "downloadedFiles";
