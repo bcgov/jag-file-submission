@@ -4,17 +4,17 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class DiligenAnswerField {
-    private BigDecimal id;
+    private Integer id;
     private String name;
-    private BigDecimal createdBy;
+    private Integer createdBy;
     private DiligenAnswerFieldType fieldType;
     private List<String> values;
 
-    public BigDecimal getId() {  return id;  }
+    public Integer getId() {  return id;  }
 
     public String getName() {  return name;   }
 
-    public BigDecimal getCreatedBy() {  return createdBy;  }
+    public Integer getCreatedBy() {  return createdBy;  }
 
     public DiligenAnswerFieldType getFieldType() {  return fieldType;  }
 
@@ -34,14 +34,14 @@ public class DiligenAnswerField {
 
     public static class Builder {
 
-        private BigDecimal id;
+        private Integer id;
         private String name;
-        private BigDecimal createdBy;
+        private Integer createdBy;
         private DiligenAnswerFieldType fieldType;
         private List<String> values;
 
 
-        public DiligenAnswerField.Builder id(BigDecimal id) {
+        public DiligenAnswerField.Builder id(Integer id) {
             this.id = id;
             return this;
         }
@@ -51,7 +51,7 @@ public class DiligenAnswerField {
             return this;
         }
 
-        public DiligenAnswerField.Builder createdBy(BigDecimal createdBy) {
+        public DiligenAnswerField.Builder createdBy(Integer createdBy) {
             this.createdBy = createdBy;
             return this;
         }

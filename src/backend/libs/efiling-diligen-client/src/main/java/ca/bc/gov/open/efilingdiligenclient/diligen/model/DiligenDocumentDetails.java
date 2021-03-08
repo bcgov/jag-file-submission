@@ -30,6 +30,8 @@ public class DiligenDocumentDetails {
 
     public BigDecimal getOutOfScope() { return outOfScope; }
 
+    public List<DiligenAnswerField> getAnswers() { return answers;  }
+
     public DiligenDocumentDetails(DiligenDocumentDetails.Builder builder) {
         this.fileStatus = builder.fileStatus;
         this.mlJson = builder.mlJson;
@@ -39,6 +41,7 @@ public class DiligenDocumentDetails {
         this.executionStatus = builder.executionStatus;
         this.extractedDocument = builder.extractedDocument;
         this.outOfScope = builder.outOfScope;
+        this.answers = builder.answers;
     }
 
     public static DiligenDocumentDetails.Builder builder() {
@@ -55,6 +58,7 @@ public class DiligenDocumentDetails {
         private String executionStatus;
         private Object extractedDocument;
         private BigDecimal outOfScope;
+        private List<DiligenAnswerField> answers;
 
 
         public DiligenDocumentDetails.Builder fileStatus(String fileStatus) {
@@ -94,6 +98,11 @@ public class DiligenDocumentDetails {
 
         public DiligenDocumentDetails.Builder outOfScope(BigDecimal outOfScope) {
             this.outOfScope = outOfScope;
+            return this;
+        }
+
+        public DiligenDocumentDetails.Builder answers(List<DiligenAnswerField> answers) {
+            this.answers = answers;
             return this;
         }
 
