@@ -59,7 +59,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
 
             Account account = setCreateAccountDetails(createAccountRequest);
             Client client = setCreateAccountClientDetails(createAccountRequest);
-            List<RoleAssignment> roles = setCreateAccountRoles();
+            List<RoleAssignment> roles = setCreateAccountRoles(createAccountRequest.getIdentityProvider());
             ClientProfile clientProfile = accountFacadeBean.createAccount(account, client, roles);
             if (null != clientProfile) {
                 accountDetails = accountDetailsMapper.toAccountDetails(
@@ -168,23 +168,30 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         return client;
     }
 
-    private List<RoleAssignment> setCreateAccountRoles() {
+    private List<RoleAssignment> setCreateAccountRoles(String identityProvider) {
 
         List<RoleAssignment> roles = new ArrayList<>();
         RoleAssignment roleInd = new RoleAssignment();
         roleInd.setActiveYn(true);
-        roleInd.setRegisteredClientRoleCd("IND");
+        roleInd.setRegisteredClientRoleCd(Keys.CSO_USER_ROLE_IND);
         roles.add(roleInd);
 
         RoleAssignment roleCaef = new RoleAssignment();
         roleCaef.setActiveYn(true);
-        roleCaef.setRegisteredClientRoleCd("CAEF");
+        roleCaef.setRegisteredClientRoleCd(Keys.CSO_USER_ROLE_CAEF);
         roles.add(roleCaef);
 
         RoleAssignment roleFile = new RoleAssignment();
         roleFile.setActiveYn(true);
-        roleFile.setRegisteredClientRoleCd("FILE");
+        roleFile.setRegisteredClientRoleCd(Keys.CSO_USER_ROLE_FILE);
         roles.add(roleFile);
+
+        if (identityProvider.equalsIgnoreCase(Keys.BCSC_IDENTITY_PROVIDER)) {
+            RoleAssignment roleVind = new RoleAssignment();
+            roleVind.setActiveYn(true);
+            roleVind.setRegisteredClientRoleCd(Keys.CSO_USER_ROLE_VIND);
+            roles.add(roleVind);
+        }
 
         return roles;
     }

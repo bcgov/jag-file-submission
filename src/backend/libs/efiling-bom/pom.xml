@@ -37,6 +37,7 @@
         <org.springdoc.version>1.5.3</org.springdoc.version>
         <org.threeten.version>1.5.0</org.threeten.version>
         <org.codehaus.janino>3.1.3</org.codehaus.janino>
+        <org.apache.skywalking.version>8.4.0</org.apache.skywalking.version>
     </properties>
 
     <repositories>
@@ -258,6 +259,19 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-collections4</artifactId>
                 <version>${org.apache.commons.collections.collections.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.apache.skywalking/apm-toolkit-trace -->
+            <dependency>
+                <groupId>org.apache.skywalking</groupId>
+                <artifactId>apm-toolkit-trace</artifactId>
+                <version>${org.apache.skywalking.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.skywalking/apm-toolkit-logback-1.x -->
+            <dependency>
+                <groupId>org.apache.skywalking</groupId>
+                <artifactId>apm-toolkit-logback-1.x</artifactId>
+                <version>${org.apache.skywalking.version}</version>
             </dependency>
 
         </dependencies>
