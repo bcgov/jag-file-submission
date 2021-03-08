@@ -314,6 +314,69 @@ public class SubmitFilingPackageTest {
         Assertions.assertEquals("http://cso/accounts/bceidNotification.do?packageNo=10", actual.getPackageLink());
     }
 
+    @DisplayName("OK: with statutory fee change payment status")
+    @Test
+    public void withSubmissionFeeShouldSuccessfully() throws DatatypeConfigurationException, ca.bc.gov.ag.csows.filing.NestedEjbException_Exception, NestedEjbException_Exception {
+
+        Mockito.when(filingFacadeBeanMock.submitFiling(any())).thenReturn(BigDecimal.TEN);
+        Mockito.when(serviceFacadeBean.addService(any())).thenReturn(TestHelpers.createService());
+        Mockito.when(efilingPaymentServiceMock.makePayment(any())).thenReturn(createTransaction());
+        Mockito.doNothing().when(serviceFacadeBean).updateService(any());
+
+        AccountDetails accountDetails = getAccountDetails();
+
+        SubmitPackageResponse actual = sut.submitFilingPackage(accountDetails,
+                FilingPackage.builder()
+                        .applicationCode(APP_CODE)
+                        .court(
+                                Court.builder()
+                                        .location(LOCATION)
+                                        .agencyId(AGENCY_ID)
+                                        .courtClass(COURT_CLASS)
+                                        .division(DIVISION)
+                                        .level(LEVEL)
+                                        .fileNumber(FILE_NUMBER)
+                                        .create())
+                        .documents(Arrays.asList(Document.builder()
+                                .name(DOCUMENT)
+                                .statutoryFeeAmount(BigDecimal.TEN)
+                                .serverFileName(SERVERFILENAME)
+                                .isAmendment(IS_AMENDMENT)
+                                .isSupremeCourtScheduling(IS_SUPREME_COURT_SCHEDULING)
+                                .subType(TYPE)
+                                .create()))
+                        .parties(Collections.singletonList(
+                                Individual.builder()
+                                        .firstName("TEST")
+                                        .middleName("TEST")
+                                        .lastName("TEST")
+                                        .nameTypeCd("TYPE")
+                                        .roleTypeCd("CODE")
+                                        .create()))
+                        .organizations(Collections.singletonList(
+                                Organization.builder()
+                                        .name("TEST")
+                                        .nameTypeCd("TYPE")
+                                        .roleTypeCd("CODE")
+                                        .create()
+                        ))
+                        .create(),
+                efilingPaymentServiceMock);
+
+        Mockito.verify(filingFacadeBeanMock, Mockito.times(1))
+                .submitFiling(ArgumentMatchers.argThat(filingPackage ->
+                        filingPackage.getCourtFileNo().equals(FILE_NUMBER) &&
+                                filingPackage.getLdcxCourtClassCd().equals(COURT_CLASS) &&
+                                filingPackage.getLdcxCourtDivisionCd().equals(DIVISION) &&
+                                filingPackage.getLdcxCourtLevelCd().equals(LEVEL) &&
+                                filingPackage.getSubmittedToAgenId().equals(AGENCY_ID) &&
+                                filingPackage.getDocuments().get(0).getPayments().get(0).getStatutoryFeeAmt().equals(BigDecimal.TEN) &&
+                                filingPackage.getDocuments().get(0).getPayments().get(0).getPaymentStatusCd().equals(Keys.NOT_PROCESSED_PAYMENT_STATUS_CD)));
+
+        Assertions.assertEquals(BigDecimal.TEN, actual.getTransactionId());
+        Assertions.assertEquals("http://cso/accounts/bceidNotification.do?packageNo=10", actual.getPackageLink());
+    }
+
     @DisplayName("OK: submitFilingPackage called with any non-empty submissionId")
     @Test
     public void testWithPopulatedSubmissionIdBigDecimalValue() throws DatatypeConfigurationException, ca.bc.gov.ag.csows.filing.NestedEjbException_Exception, NestedEjbException_Exception {

@@ -19,7 +19,8 @@ public class Keys {
     public static final String SERVICE_TYPE_CD = "DCFL";
     public static final String SUBMISSION_UPLOAD_STATE_CD = "CMPL";
     public static final String SUBMISSION_DOCUMENT_STATUS_TYPE_CD = "SUB";
-    public static final String PAYMENT_STATUS_CD = "NREQ";
+    public static final String NOT_REQUIRED_PAYMENT_STATUS_CD = "NREQ";
+    public static final String NOT_PROCESSED_PAYMENT_STATUS_CD = "NOPR";
     public static final String XML_DOCUMENT_INSTANCE_YN = "false";
     public static final String DOCUMENT_SUB_TYPE_CD = "ODOC";
     public static final String INDIVIDUAL_ROLE_TYPE_CD = "IND";
