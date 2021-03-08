@@ -9,13 +9,15 @@ import PackageReview from "../PackageReview";
 import { getCourtData } from "../../../../modules/test-data/courtTestData";
 import * as packageReviewTestData from "../../../../modules/test-data/packageReviewTestData";
 import { generateJWTToken } from "../../../../modules/helpers/authentication-helper/authenticationHelper";
-import { getNavigationData } from "../../../../modules/test-data/navigationTestData";
 
 const mockHelper = require("../../../../modules/helpers/mockHelper");
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useParams: jest.fn().mockReturnValue({ packageId: 1 }),
+  useLocation: jest
+    .fn()
+    .mockReturnValue({ search: "?returnUrl=http://www.google.com" }),
 }));
 
 // hack fix to force GitHub to run tests in BC timezone
@@ -25,7 +27,6 @@ describe("PackageReview Component", () => {
   const packageId = "1";
   const links = { packageHistoryUrl: "http://google.com" };
   const courtData = getCourtData();
-  const navigationUrls = getNavigationData();
   const submittedDate = new Date("2021-01-14T18:57:43.602Z").toISOString();
   const submittedBy = { firstName: "Han", lastName: "Solo" };
   const filingComments =
@@ -77,15 +78,12 @@ describe("PackageReview Component", () => {
   });
 
   test("Clicking cancel takes user back to parent app", async () => {
-    const parentAppUrl = navigationUrls.cancel;
-    sessionStorage.setItem("cancelUrl", parentAppUrl);
-
     const { getByText } = render(<PackageReview />);
     await waitFor(() => {});
 
     fireEvent.click(getByText("Return to Parent App"));
 
-    expect(window.open).toHaveBeenCalledWith(parentAppUrl, "_self");
+    expect(window.open).toHaveBeenCalledWith("http://www.google.com", "_self");
   });
 
   test("Api called successfully when page loads with valid packageId", async () => {

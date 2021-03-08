@@ -7,7 +7,8 @@ import Tab from "react-bootstrap/Tab"; /* TODO: replace with shared-components *
 import { Alert, Button, Sidecard, Table } from "shared-components";
 import { BsEyeFill } from "react-icons/bs";
 import { MdCancel } from "react-icons/md";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
+import queryString from "query-string";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import {
@@ -26,6 +27,11 @@ import { redirectToParentApp } from "../../../modules/helpers/RoutingUtil";
 export default function PackageReview() {
   const params = useParams();
   const packageId = Number(params.packageId);
+
+  const location = useLocation();
+  const queryParams = queryString.parse(location.search);
+  const { returnUrl } = queryParams;
+
   const [error, setError] = useState(false);
   const [packageDetails, setPackageDetails] = useState([
     { name: "Submitted By:", value: "", isNameBold: false, isValueBold: true },
@@ -233,13 +239,18 @@ export default function PackageReview() {
           >
             view all your previously submitted packages.
           </span>
-          <section className="buttons pt-2">
-            <Button
-              label="Return to Parent App"
-              onClick={() => redirectToParentApp()}
-              styling="bcgov-normal-white btn"
-            />
-          </section>
+          {returnUrl && (
+            <>
+              <br />
+              <section className="buttons pt-2">
+                <Button
+                  label="Return to Parent App"
+                  onClick={() => window.open(returnUrl, "_self")}
+                  styling="bcgov-normal-white btn"
+                />
+              </section>
+            </>
+          )}
         </div>
         <div className="sidecard">
           <Sidecard sideCard={csoAccountDetailsSidecard} />
