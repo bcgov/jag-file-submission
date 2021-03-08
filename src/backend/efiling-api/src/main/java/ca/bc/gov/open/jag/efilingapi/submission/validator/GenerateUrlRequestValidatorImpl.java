@@ -1,9 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.validator;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
-import ca.bc.gov.open.jag.efilingapi.api.model.InitialDocument;
-import ca.bc.gov.open.jag.efilingapi.api.model.InitialPackage;
-import ca.bc.gov.open.jag.efilingapi.api.model.NavigationUrls;
+import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.court.models.GetCourtDetailsRequest;
 import ca.bc.gov.open.jag.efilingapi.court.models.IsValidCourtFileNumberRequest;
 import ca.bc.gov.open.jag.efilingapi.court.models.IsValidCourtRequest;
@@ -15,6 +12,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.utils.Notification;
 import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentType;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.MessageFormat;
@@ -118,13 +116,13 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
      *
      * if court file number is empty then at least 1 party is required
      *
-     * Party types must be valid based on the document types submitted
+     * Party(Organization or Individual) types must be valid based on the document types submitted
      *
      * @param initialPackage
      */
     private List<String> validateParties(InitialPackage initialPackage) {
 
-        if (StringUtils.isBlank(initialPackage.getCourt().getFileNumber()) && (initialPackage.getParties() == null || initialPackage.getParties().isEmpty())) {
+        if (StringUtils.isBlank(initialPackage.getCourt().getFileNumber()) && (CollectionUtils.emptyIfNull(initialPackage.getParties()).isEmpty() && CollectionUtils.emptyIfNull(initialPackage.getOrganizationParties()).isEmpty())) {
             return Arrays.asList("At least 1 party is required for new submission.");
         }
 
@@ -135,12 +133,27 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
                 .documents(initialPackage.getDocuments())
                 .create());
 
-        return initialPackage
-                .getParties()
-                .stream()
-                .filter(party -> party.getRoleType() == null || !validPartyRoles.contains(party.getRoleType().toString()))
-                .map(party -> MessageFormat.format("Role type [{0}] is invalid.", party.getRoleType()))
-                .collect(Collectors.toList());
+        List<String> validationResult = new ArrayList<>();
+
+        for (Individual individual : CollectionUtils.emptyIfNull(initialPackage.getParties())) {
+            if (individual.getRoleType() == null || !validPartyRoles.contains(individual.getRoleType().toString())) {
+                validationResult.add(MessageFormat.format("Individual role type [{0}] is invalid.", individual.getRoleType()));
+            }
+            if (StringUtils.isBlank(individual.getLastName())) {
+                validationResult.add("Individual last name is required.");
+            }
+        }
+
+        for (Organization organization : CollectionUtils.emptyIfNull(initialPackage.getOrganizationParties())) {
+            if (organization.getRoleType() == null || !validPartyRoles.contains(organization.getRoleType().toString())) {
+                validationResult.add(MessageFormat.format("Organization role type [{0}] is invalid.", organization.getRoleType()));
+            }
+            if (StringUtils.isBlank(organization.getName())) {
+                validationResult.add("Organization name is required.");
+            }
+        }
+
+        return validationResult;
 
     }
 
