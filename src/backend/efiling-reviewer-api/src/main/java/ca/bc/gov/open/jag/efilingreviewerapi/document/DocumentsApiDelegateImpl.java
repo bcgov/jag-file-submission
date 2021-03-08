@@ -83,22 +83,22 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
     @Override
     public ResponseEntity<Void> documentEvent(UUID xTransactionId, DocumentEvent documentEvent) {
 
-
-        Optional<ExtractRequest> extractRequestCached = extractStore.get(documentEvent.getDocumentId());
-
-        if(extractRequestCached.isPresent()) {
-
-            ExtractRequest extractRequest = extractRequestCached.get();
-            extractRequest.updateProcessedTimeMillis();
-            logger.info("document processing time: [{}]", extractRequest.getProcessingTimeMillis());
-            extractStore.put(documentEvent.getDocumentId(), extractRequest);
-
-        }
-
         logger.info("document {} status has changed to {}", documentEvent.getDocumentId(), documentEvent.getStatus());
         //We won't do anything with this for now
         if (documentEvent.getStatus().equalsIgnoreCase(Keys.PROCESSED_STATUS)) {
             diligenService.getDocumentDetails(documentEvent.getDocumentId());
+
+            Optional<ExtractRequest> extractRequestCached = extractStore.get(documentEvent.getDocumentId())
+
+            if (extractRequestCached.isPresent()) {
+
+                ExtractRequest extractRequest = extractRequestCached.get();
+                extractRequest.updateProcessedTimeMillis();
+                logger.info("document processing time: [{}]", extractRequest.getProcessingTimeMillis());
+                extractStore.put(documentEvent.getDocumentId(), extractRequest);
+
+            }
+        
         }
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
