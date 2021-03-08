@@ -11,12 +11,6 @@ info:
   contact:
     name: Diligen Inc.
   version: 2.5.1
-components:
-  securitySchemes:
-    ApiKeyAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
 tags:
   - name: Health Check
   - name: Authentication
@@ -961,15 +955,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      fields:
-                        type: array
-                        items:
-                          type: object
+                $ref: "#/components/schemas/projectFieldsResponse"
         '403':
           description: Forbidden - user does not have access to this project (if it exists)
         '404':
@@ -1703,3 +1689,47 @@ paths:
           description: Successful operation
         '404':
           description: Not Found - templateId is likely malformed
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    projectFieldsResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            fields:
+              type: array
+              items:
+                $ref: "#/components/schemas/field"
+    field:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        created_by:
+          type: integer
+        field_type:
+          $ref: "#/components/schemas/fieldType"
+        values:
+          type: array
+          items:
+            type: string
+    fieldType:
+      type: object
+      properties:
+        type:
+          type: string
+        multi:
+          type: boolean
+        options:
+          type: array
+          items:
+            type: string
