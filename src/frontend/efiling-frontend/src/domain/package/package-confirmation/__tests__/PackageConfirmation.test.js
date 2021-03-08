@@ -39,6 +39,7 @@ describe("PackageConfirmation Component", () => {
   });
   localStorage.setItem("jwt", token);
   sessionStorage.setItem("csoBaseUrl", "https://dev.justice.gov.bc.ca/cso");
+  window.scrollTo = jest.fn();
 
   let mock;
   beforeEach(() => {
