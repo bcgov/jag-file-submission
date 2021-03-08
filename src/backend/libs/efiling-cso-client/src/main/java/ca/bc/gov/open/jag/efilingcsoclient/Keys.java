@@ -37,5 +37,11 @@ public class Keys {
                 new AbstractMap.SimpleImmutableEntry<>( "BCSC",  new BigDecimal(2) ))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     public static final String VIEW_ALL_PACKAGE_SUBPATH = "filing/status/display.do?actionType=filterStatus&useFilter=ALL";
+    public static final String CSO_USER_ROLE_VIND = "VIND";
+    public static final String CSO_USER_ROLE_FILE = "FILE";
+    public static final String CSO_USER_ROLE_CAEF = "CAEF";
+    public static final String CSO_USER_ROLE_IND = "IND";
+    public static final String BCSC_IDENTITY_PROVIDER = "BCSC";
+
 
 }
