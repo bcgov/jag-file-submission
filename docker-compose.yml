@@ -1,136 +1,7 @@
 version: "3.7"
 services:
-  #############################################################################################
-  ###                                 EFILING FRONTEND                                      ###
-  #############################################################################################
-  efiling-frontend:
-    container_name: efiling-frontend
-    ports:
-      - 3000:8080
-    environment:
-      - REACT_APP_KEYCLOAK_REALM=${KEYCLOAK_REALM:-Efiling-Hub}
-      - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-frontend
-      - REACT_APP_KEYCLOAK_URL=${KEYCLOAK_URL:-http://localhost:8081/auth}
-      - REACT_APP_API_BASE_URL=http://localhost:8080
-      - REACT_APP_BAMBORA_REDIRECT_URL=http://localhost:3000/efilinghub
-
-  #############################################################################################
-  ###                                 EFILING DEMO                                          ###
-  #############################################################################################
-  efiling-demo:
-    container_name: efiling-demo
-    build:
-      context: ./src/frontend/efiling-demo
-    environment:
-      - REACT_APP_KEYCLOAK_REALM=Efiling-Hub
-      - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-admin
-      - REACT_APP_KEYCLOAK_URL=http://localhost:8081/auth
-      - REACT_APP_API_BASE_URL=http://localhost:8080
-      - REACT_APP_BAMBORA_REDIRECT_URL=http://localhost:3000/efilinghub
-    ports:
-      - 3001:8080
-
-  #############################################################################################
-  ###                           Efiling api backend app                                     ###
-  #############################################################################################
-  efiling-api:
-    container_name: efiling-api
-    hostname: efiling-api
-    ports:
-      - "8080:8080"
-    environment:
-      - BAMBORA_APIPASSCODE=${BAMBORA_APIPASSCODE:-passcode}
-      - BAMBORA_MERCHANTID=${BAMBORA_MERCHANTID-merchantid}
-      - BAMBORA_PROFILE_URL=${BAMBORA_PROFILE_URL:-http://localhost:3001/updatecard}
-      - BAMBORA_HASHKEY=${BAMBORA_HASHKEY:-key}
-      - BAMBORA_PROFILE_SERVICE_VERSION=${BAMBORA_PROFILE_SERVICE_VERSION}
-      - BAMBORA_URL_EXPIRY=10
-
-      - KEYCLOAK_AUTH_SERVER_URL=${KEYCLOAK_AUTH_SERVER_URL:-http://keycloak:8080/auth}
-      - KEYCLOAK_REALM=${KEYCLOAK_REALM:-Efiling-Hub}
-      - KEYCLOAK_CREDENTIALS_SECRET=${KEYCLOAK_CREDENTIALS_SECRET}
-      - KEYCLOAK_SSL_REQUIRED=${KEYCLOAK_SSL_REQUIRED:-none}
-
-      - CSO_ACCOUNTFACADE_URI=${CSO_ACCOUNTFACADE_URI}
-      - CSO_ACCOUNTFACADE_USERNAME=${CSO_ACCOUNTFACADE_USERNAME}
-      - CSO_ACCOUNTFACADE_PASSWORD=${CSO_ACCOUNTFACADE_PASSWORD}
-      - CSO_ROLEREGISTRY_USERNAME=${CSO_ROLEREGISTRY_USERNAME}
-      - CSO_ROLEREGISTRY_PASSWORD=${CSO_ROLEREGISTRY_PASSWORD}
-      - CSO_ROLEREGISTRY_URI=${CSO_ROLEREGISTRY_URI}
-      - CSO_LOOKUPFACADE_USERNAME=${CSO_LOOKUPFACADE_USERNAME}
-      - CSO_LOOKUPFACADE_PASSWORD=${CSO_LOOKUPFACADE_PASSWORD}
-      - CSO_LOOKUPFACADE_URI=${CSO_LOOKUPFACADE_URI}
-      - CSO_BCEIDSERVICE_URI=${CSO_BCEIDSERVICE_URI}
-      - CSO_FILINGSTATSFACADE_URI=${CSO_FILINGSTATSFACADE_URI}
-      - CSO_FILINGSTATSFACADE_USERNAME=${CSO_FILINGSTATSFACADE_USERNAME}
-      - CSO_FILINGSTATSFACADE_PASSWORD=${CSO_FILINGSTATSFACADE_PASSWORD}
-      - CSO_BCEIDSERVICE_USERNAME=${CSO_BCEIDSERVICE_USERNAME}
-      - CSO_BCEIDSERVICE_PASSWORD=${CSO_BCEIDSERVICE_PASSWORD}
-      - CSOWS_USERNAME=${CSOWS_USERNAME}
-      - CSOWS_PASSWORD=${CSOWS_PASSWORD}
-      - CSOWS_URI=${CSOWS_URI}
-      - CSO_FILINGFACADE_URI=${CSO_FILINGFACADE_URI}
-      - CSO_FILINGFACADE_PASSWORD=${CSO_FILINGFACADE_PASSWORD}
-      - CSO_FILINGFACADE_USERNAME=${CSO_FILINGFACADE_USERNAME}
-      - CSO_SERVICEFACADE_URI=${CSO_SERVICEFACADE_URI}
-      - CSO_SERVICEFACADE_USERNAME=${CSO_SERVICEFACADE_USERNAME}
-      - CSO_SERVICEFACADE_PASSWORD=${CSO_SERVICEFACADE_PASSWORD}
-
-      - SFTP_KNOWNHOSTS=${SFTP_KNOWNHOSTS}
-      - SFTP_REMOTELOCATION=${SFTP_REMOTELOCATION}
-      - SFTP_PRIVATE_KEY=${SFTP_PRIVATE_KEY}
-
-      - BCEID_SERVICE_URI=${BCEID_SERVICE_URI}
-      - BCEID_SERVICE_USERNAME=${BCEID_SERVICE_USERNAME}
-      - BCEID_SERVICE_PASSWORD=${BCEID_SERVICE_PASSWORD}
-      - BCEID_SERVICE_ONLINE_SERVICE_ID=${BCEID_SERVICE_ONLINE_SERVICE_ID}
-
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - REDIS_PASSWORD=admin
-
-      - NAVIGATION_BASE_URL=http://localhost:3000/efilinghub
-      - NAVIGATION_EXPIRYTIME=10
-
-      - CLAMAV_HOST=clamav
-      - CLAMAV_TIMEOUT=150000
-
-      - SW_AGENT_NAME=efiling-api
-      - SW_AGENT_COLLECTOR_BACKEND_SERVICES=skywalking-oap-server:11800
-
-    networks:
-      - fisu-net
-
-  #############################################################################################
-  ###                           Efiling reviewer backend app                                ###
-  #############################################################################################
-  efiling-reviewer-api:
-    container_name: efiling-reviewer-api
-    hostname: efiling-reviewer-api
-    build:
-      context: ./src/backend
-      dockerfile: Dockerfile.efiling-reviewer-api
-      args:
-        - SKIP_TESTS=true
-        - MVN_PROFILE=${MVN_PROFILE:-efiling-reviewer}
-        - STARTERS_V=v0.1.8
-    ports:
-      - "8090:8080"
-    environment:
-      - DILIGEN_BASE_PATH=$DILIGEN_BASE_PATH
-      - DILIGEN_USERNAME=$DILIGEN_USERNAME
-      - DILIGEN_PASSWORD=$DILIGEN_PASSWORD
-      - DILIGEN_PROJECT_IDENTIFIER=$DILIGEN_PROJECT_IDENTIFIER
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - REDIS_PASSWORD=admin
-      - CLAMAV_HOST=clamav
-      - CLAMAV_PORT=3310
-      - CLAMAV_TIMEOUT=50000
-      - SW_AGENT_NAME=ai-reviewer-api
-      - SW_AGENT_COLLECTOR_BACKEND_SERVICES=skywalking-oap-server:11800
-    networks:
-      - fisu-net
+  
+  # Application Service are located in docker-compose.override.yml
 
   #############################################################################################
   ###                                 REDIS SERVER                                          ###
@@ -182,14 +53,6 @@ services:
     networks:
       - fisu-net
 
-  # #############################################################################################
-  # ###                                        KEYCLOAK Config                                ###
-  # #############################################################################################
-  keycloak-config:
-    command: sh -c "dockerize -wait http://keycloak:8080 -timeout 300s /tmp/createuser.sh"
-    networks:
-      - fisu-net
-
   #############################################################################################
   ###                             CLAMAV                                                    ###
   #############################################################################################
@@ -201,44 +64,16 @@ services:
       - fisu-net
 
   #############################################################################################
-  ###                             Elastic Search                                            ###
-  #############################################################################################
-
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.1
-    container_name: elasticsearch
-    environment:
-      - discovery.type=single-node
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - data01:/usr/share/elasticsearch/data
-    ports:
-      - 9200:9200
-    networks:
-      - fisu-net
-
-  #############################################################################################
   ###                             skywalking-oap-server                                     ###
   #############################################################################################
-
   skywalking-oap-server:
     image: apache/skywalking-oap-server:8.4.0-es7
     container_name: skywalking-oap-server
-    depends_on:
-      - elasticsearch
-    links:
-      - elasticsearch
     restart: always
     ports:
       - 11800:11800
       - 12800:12800
     environment:
-      SW_STORAGE: elasticsearch7
-      SW_STORAGE_ES_CLUSTER_NODES: elasticsearch:9200
       SW_HEALTH_CHECKER: default
     networks:
       - fisu-net
@@ -246,7 +81,6 @@ services:
   #############################################################################################
   ###                             skywalking-ui                                              ###
   #############################################################################################
-
   skywalking-ui:
     image: apache/skywalking-ui:8.4.0
     container_name: skywalking-ui
@@ -264,8 +98,6 @@ services:
 
 volumes:
   data-redis:
-    driver: local
-  data01:
     driver: local
 
 networks:
