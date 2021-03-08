@@ -33,7 +33,6 @@ public class GenerateUrlRequestValidatorImplTest {
     private static final String CASE_1 = "CASE1";
     private static final String CASE_2 = "case2";
     private static final BigDecimal COURT_ID_2 = BigDecimal.TEN;
-    private static final String COURT_LOCATION = "court location";
     public static final String FILE_NUMBER_SUCCESS = "filenumber";
     public static final String FILE_NUMBER_ERROR = "file_number_error";
 
@@ -560,4 +559,74 @@ public class GenerateUrlRequestValidatorImplTest {
 
     }
 
+    @Test
+    @DisplayName("error: with null parties should return notification with Error")
+    public void withNullPartiesShouldReturnNotificationWithError() {
+
+        GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
+        InitialPackage initialFilingPackage = new InitialPackage();
+
+        CourtBase court = new CourtBase();
+        court.setLevel(COURT_LEVEL);
+        court.setCourtClass(COURT_CLASSIFICATION);
+        court.setLocation(CASE_1);
+        initialFilingPackage.setCourt(court);
+
+        List<InitialDocument> documentList = new ArrayList<>();
+        InitialDocument initialDocument = new InitialDocument();
+        initialDocument.setType("TAX");
+        documentList.add(initialDocument);
+        initialFilingPackage.setDocuments(documentList);
+
+        NavigationUrls navigationUrls = new NavigationUrls();
+        navigationUrls.setError("http://error");
+        navigationUrls.setCancel("http://cancel");
+        navigationUrls.setSuccess("http://success");
+        generateUrlRequest.setNavigationUrls(navigationUrls);
+
+        generateUrlRequest.setFilingPackage(initialFilingPackage);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+
+        Assertions.assertTrue(actual.hasError());
+        Assertions.assertEquals("At least 1 party is required for new submission.", actual.getErrors().get(0));
+
+    }
+
+    @Test
+    @DisplayName("error: with role type not in list and with fileNumber should return multiple errors")
+    public void withOrganizeationRoleTypeNotInListAnFileNumberSetShouldReturnMultipleErrors() {
+
+        GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
+        InitialPackage initialFilingPackage = new InitialPackage();
+
+        CourtBase court = new CourtBase();
+        court.setLocation(CASE_1);
+        court.setLevel(COURT_LEVEL);
+        court.setCourtClass(COURT_CLASSIFICATION);
+        court.setFileNumber(FILE_NUMBER_SUCCESS);
+        initialFilingPackage.setCourt(court);
+
+        List<Organization> orgs = new ArrayList<>();
+        Organization org1 = new Organization();
+        org1.setRoleType(Party.RoleTypeEnum.CAV);
+        orgs.add(org1);
+        Organization org2 = new Organization();
+        org2.setRoleType(Party.RoleTypeEnum.DEO);
+        orgs.add(org2);
+        initialFilingPackage.setOrganizationParties(orgs);
+
+        NavigationUrls navigationUrls = new NavigationUrls();
+        navigationUrls.setError("http://error");
+        navigationUrls.setCancel("http://cancel");
+        navigationUrls.setSuccess("http://success");
+        generateUrlRequest.setNavigationUrls(navigationUrls);
+
+        generateUrlRequest.setFilingPackage(initialFilingPackage);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+
+        Assertions.assertTrue(actual.hasError());
+        Assertions.assertEquals("Role type [CAV] is invalid.", actual.getErrors().get(0));
+        Assertions.assertEquals("Role type [DEO] is invalid.", actual.getErrors().get(1));
+
+    }
 }

@@ -15,6 +15,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.utils.Notification;
 import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentType;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.MessageFormat;
@@ -118,13 +119,13 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
      *
      * if court file number is empty then at least 1 party is required
      *
-     * Party types must be valid based on the document types submitted
+     * Party(Organization or Individual) types must be valid based on the document types submitted
      *
      * @param initialPackage
      */
     private List<String> validateParties(InitialPackage initialPackage) {
 
-        if (StringUtils.isBlank(initialPackage.getCourt().getFileNumber()) && (initialPackage.getParties() == null || initialPackage.getParties().isEmpty())) {
+        if (StringUtils.isBlank(initialPackage.getCourt().getFileNumber()) && (CollectionUtils.emptyIfNull(initialPackage.getParties()).isEmpty() && CollectionUtils.emptyIfNull(initialPackage.getOrganizationParties()).isEmpty())) {
             return Arrays.asList("At least 1 party is required for new submission.");
         }
 
@@ -135,12 +136,21 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
                 .documents(initialPackage.getDocuments())
                 .create());
 
-        return initialPackage
-                .getParties()
+        List <String> validationResult = CollectionUtils.emptyIfNull(initialPackage
+                .getParties())
                 .stream()
                 .filter(party -> party.getRoleType() == null || !validPartyRoles.contains(party.getRoleType().toString()))
                 .map(party -> MessageFormat.format("Role type [{0}] is invalid.", party.getRoleType()))
                 .collect(Collectors.toList());
+
+        validationResult.addAll(CollectionUtils.emptyIfNull(initialPackage
+                .getOrganizationParties())
+                .stream()
+                .filter(party -> party.getRoleType() == null || !validPartyRoles.contains(party.getRoleType().toString()))
+                .map(party -> MessageFormat.format("Role type [{0}] is invalid.", party.getRoleType()))
+                .collect(Collectors.toList()));
+
+        return validationResult;
 
     }
 
