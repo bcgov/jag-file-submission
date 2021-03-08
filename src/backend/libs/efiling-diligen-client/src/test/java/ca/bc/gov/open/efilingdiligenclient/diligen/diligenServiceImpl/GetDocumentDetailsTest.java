@@ -9,15 +9,15 @@ import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.DocumentsApi;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.ApiClient;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.ApiException;
-import ca.bc.gov.open.jag.efilingdiligenclient.api.model.InlineResponse2003;
-import ca.bc.gov.open.jag.efilingdiligenclient.api.model.InlineResponse2003Data;
-import ca.bc.gov.open.jag.efilingdiligenclient.api.model.InlineResponse2003DataFileDetails;
+import ca.bc.gov.open.jag.efilingdiligenclient.api.model.*;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,6 +34,9 @@ public class GetDocumentDetailsTest {
     public static final String EXECUTION_STATUS = "EXECUTION_STATUS";
     public static final String STATUS = "PROCESSED";
     public static final String NOT_PROCESSED = "NOT_PROCESSED";
+    public static final String NAME = "NAME";
+    public static final String TYPE = "TYPE";
+    public static final String STRING = "STRING";
 
     DiligenServiceImpl sut;
 
@@ -60,6 +63,12 @@ public class GetDocumentDetailsTest {
 
         Mockito.when(documentsApiMock.apiDocumentsFileIdDetailsGet(ArgumentMatchers.eq(BigDecimal.ONE.intValue()))).thenReturn(getMockData(STATUS));
 
+        Mockito.when(documentsApiMock.apiDocumentsFileIdProjectFieldsGet(ArgumentMatchers.eq(BigDecimal.ONE.intValue()))).thenReturn(getMockAnswers());
+
+        Mockito.when(documentsApiMock.apiDocumentsFileIdDetailsGet(ArgumentMatchers.eq(BigDecimal.TEN.intValue()))).thenReturn(getMockData(STATUS));
+
+        Mockito.when(documentsApiMock.apiDocumentsFileIdProjectFieldsGet(ArgumentMatchers.eq(BigDecimal.TEN.intValue()))).thenThrow(new ApiException());
+
         Mockito.when(documentsApiMock.apiDocumentsFileIdDetailsGet(ArgumentMatchers.eq(BigDecimal.ZERO.intValue()))).thenThrow(new ApiException());
 
         sut = new DiligenServiceImpl(null, diligenProperties, diligenAuthServiceMock, null, documentsApiMock, new DiligenDocumentDetailsMapperImpl());
@@ -81,13 +90,32 @@ public class GetDocumentDetailsTest {
        assertEquals(BigDecimal.ONE, result.getOutOfScope());
        assertEquals(JSON_OBJECT, result.getExtractedDocument());
 
+       assertEquals(1, result.getAnswers().size());
+       assertEquals(NAME, result.getAnswers().get(0).getName());
+       assertEquals(1, result.getAnswers().get(0).getCreatedBy());
+       assertEquals(1, result.getAnswers().get(0).getId());
+       assertEquals(TYPE, result.getAnswers().get(0).getFieldType().getType());
+       assertTrue(result.getAnswers().get(0).getFieldType().isMulti());
+       assertEquals(1, result.getAnswers().get(0).getFieldType().getOptions().size());
+       assertEquals(STRING, result.getAnswers().get(0).getFieldType().getOptions().get(0));
+       assertEquals(1, result.getAnswers().get(0).getValues().size());
+       assertEquals(STRING, result.getAnswers().get(0).getValues().get(0));
+
     }
 
     @Test
-    @DisplayName("Error: API Exception thrown")
-    public void withInvalidDocumentIoException() {
+    @DisplayName("Error: API Exception thrown retrieving details")
+    public void withApiErrorInDetailApiException() {
 
         Assertions.assertThrows(DiligenDocumentException.class, () -> sut.getDocumentDetails(BigDecimal.ZERO));
+
+    }
+
+    @Test
+    @DisplayName("Error: API Exception thrown retrieving answers")
+    public void withApiErrorInAnswersApiException() {
+
+        Assertions.assertThrows(DiligenDocumentException.class, () -> sut.getDocumentDetails(BigDecimal.TEN));
 
     }
 
@@ -109,6 +137,33 @@ public class GetDocumentDetailsTest {
 
         return inlineResponse2003;
 
+    }
+
+    private ProjectFieldsResponse getMockAnswers() {
+        ProjectFieldsResponse projectFieldsResponse = new ProjectFieldsResponse();
+        ProjectFieldsResponseData projectFieldsResponseData = new ProjectFieldsResponseData();
+
+        List<Field> fields = new ArrayList<>();
+        Field field = new Field();
+        field.setId(1);
+        field.setCreatedBy(1);
+        field.setName(NAME);
+
+        FieldType fieldType = new FieldType();
+        fieldType.setMulti(true);
+        fieldType.setType(TYPE);
+        List<String> strings = new ArrayList<>();
+        strings.add(STRING);
+        fieldType.setOptions(strings);
+        field.setFieldType(fieldType);
+        field.setValues(strings);
+
+        fields.add(field);
+
+        projectFieldsResponseData.setFields(fields);
+        projectFieldsResponse.setData(projectFieldsResponseData);
+
+        return projectFieldsResponse;
     }
 
 }

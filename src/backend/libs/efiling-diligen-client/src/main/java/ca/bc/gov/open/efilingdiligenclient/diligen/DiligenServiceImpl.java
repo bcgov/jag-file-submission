@@ -8,6 +8,7 @@ import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.DocumentsApi;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.ApiException;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.model.InlineResponse2003;
+import ca.bc.gov.open.jag.efilingdiligenclient.api.model.ProjectFieldsResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -97,7 +98,11 @@ public class DiligenServiceImpl implements DiligenService {
 
             logger.info("detail retrieved");
 
-            return diligenDocumentDetailsMapper.toDiligenDocumentDetails(result.getData().getFileDetails());
+            ProjectFieldsResponse answersResponse = documentsApi.apiDocumentsFileIdProjectFieldsGet(documentId.intValue());
+
+            logger.info("answers retrieved");
+
+            return diligenDocumentDetailsMapper.toDiligenDocumentDetails(result.getData().getFileDetails(), answersResponse.getData().getFields());
 
         } catch (ApiException e) {
             throw new DiligenDocumentException("Failed getting the document details");
