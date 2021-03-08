@@ -21,6 +21,7 @@ import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
@@ -146,11 +147,12 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         List<CivilDocument> documents = new ArrayList<>();
 
         for (int i = 0; i < efilingPackage.getDocuments().size(); i++) {
-
-            List<DocumentPayments> payments = Arrays.asList(documentMapper.toEfilingDocumentPayment(efilingPackage.getDocuments().get(i), accountDetails));
+            List<DocumentPayments> payments = Collections.singletonList(documentMapper.toEfilingDocumentPayment(efilingPackage.getDocuments().get(i), accountDetails,
+                    ((efilingPackage.getDocuments().get(i).getStatutoryFeeAmount() == null || efilingPackage.getDocuments().get(i).getStatutoryFeeAmount().equals(BigDecimal.ZERO))
+                            ? Keys.NOT_REQUIRED_PAYMENT_STATUS_CD : Keys.NOT_PROCESSED_PAYMENT_STATUS_CD)));
             List<Milestones> milestones = Arrays.asList(documentMapper.toActualSubmittedDate(accountDetails),
                     documentMapper.toComputedSubmittedDate(accountDetails, submittedDate));
-            List<DocumentStatuses> statuses = Arrays.asList(documentMapper.toEfilingDocumentStatus(efilingPackage.getDocuments().get(i), accountDetails));
+            List<DocumentStatuses> statuses = Collections.singletonList(documentMapper.toEfilingDocumentStatus(efilingPackage.getDocuments().get(i), accountDetails));
 
             documents.add(documentMapper.toEfilingDocument(
                     i + 1,
