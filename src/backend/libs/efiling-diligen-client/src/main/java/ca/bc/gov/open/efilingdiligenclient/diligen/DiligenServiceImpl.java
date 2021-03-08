@@ -95,6 +95,7 @@ public class DiligenServiceImpl implements DiligenService {
         try {
             InlineResponse2003 result = documentsApi.apiDocumentsFileIdDetailsGet(documentId.intValue());
 
+
             logger.info("detail retrieved");
 
             return diligenDocumentDetailsMapper.toDiligenDocumentDetails(result.getData().getFileDetails());
