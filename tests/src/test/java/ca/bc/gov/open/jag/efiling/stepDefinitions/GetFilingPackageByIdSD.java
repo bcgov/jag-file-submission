@@ -103,7 +103,6 @@ public class GetFilingPackageByIdSD {
         logger.info("Asserting parties and payment details in get filing package by id response");
 
         //Parties
-        Assert.assertEquals("IND", actualFilingPackageResponseJsonPath.get("parties.partyType[0]"));
         Assert.assertEquals("APP", actualFilingPackageResponseJsonPath.get("parties.roleType[0]"));
         Assert.assertEquals("Bob", actualFilingPackageResponseJsonPath.get("parties.firstName[0]"));
         Assert.assertEquals("Q", actualFilingPackageResponseJsonPath.get("parties.middleName[0]"));
