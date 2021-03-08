@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class GetValidPartyRolesTest {
+public class GetValidIndividualRolesTest {
 
     private static String[] ROLE_TYPES = new String[] {"role1", "role2", "role3", "role4", "role5"};
 

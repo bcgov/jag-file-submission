@@ -120,11 +120,11 @@ public class GenerateUrlRequestValidatorImplTest {
         court.setLocation(CASE_1);
         initialFilingPackage.setCourt(court);
 
-        List<Party> parties = new ArrayList<>();
-        Party party = new Party();
+        List<Individual> parties = new ArrayList<>();
+        Individual party = new Individual();
         party.setRoleType(Party.RoleTypeEnum.ADJ);
         parties.add(party);
-        Party party2 = new Party();
+        Individual party2 = new Individual();
         party2.setRoleType(Party.RoleTypeEnum.CIT);
         parties.add(party2);
         initialFilingPackage.setParties(parties);
@@ -150,7 +150,7 @@ public class GenerateUrlRequestValidatorImplTest {
 
     @Test
     @DisplayName("ok: returning submission without error should return a notification without error")
-    public void returningSubmissionwithoutErrorShouldReturnNoError() {
+    public void returningSubmissionWithoutErrorShouldReturnNoError() {
 
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
         InitialPackage initialFilingPackage = new InitialPackage();
@@ -175,6 +175,11 @@ public class GenerateUrlRequestValidatorImplTest {
         navigationUrls.setSuccess("http://success");
         generateUrlRequest.setNavigationUrls(navigationUrls);
 
+        List<Individual> parties = new ArrayList<>();
+        Individual party = new Individual();
+        party.setRoleType(Party.RoleTypeEnum.APP);
+        initialFilingPackage.setParties(parties);
+
         generateUrlRequest.setFilingPackage(initialFilingPackage);
         Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
 
@@ -196,11 +201,11 @@ public class GenerateUrlRequestValidatorImplTest {
         court.setLocation(CASE_1);
         initialFilingPackage.setCourt(court);
 
-        List<Party> parties = new ArrayList<>();
-        Party party = new Party();
+        List<Individual> parties = new ArrayList<>();
+        Individual party = new Individual();
         party.setRoleType(Party.RoleTypeEnum.ADJ);
         parties.add(party);
-        Party party2 = new Party();
+        Individual party2 = new Individual();
         party2.setRoleType(Party.RoleTypeEnum.CIT);
         parties.add(party2);
         initialFilingPackage.setParties(parties);
@@ -232,11 +237,11 @@ public class GenerateUrlRequestValidatorImplTest {
         court.setLocation(CASE_1);
         initialFilingPackage.setCourt(court);
 
-        List<Party> parties = new ArrayList<>();
-        Party party = new Party();
+        List<Individual> parties = new ArrayList<>();
+        Individual party = new Individual();
         party.setRoleType(Party.RoleTypeEnum.ADJ);
         parties.add(party);
-        Party party2 = new Party();
+        Individual party2 = new Individual();
         party2.setRoleType(Party.RoleTypeEnum.CIT);
         parties.add(party2);
         initialFilingPackage.setParties(parties);
@@ -277,8 +282,8 @@ public class GenerateUrlRequestValidatorImplTest {
         court.setCourtClass(COURT_CLASSIFICATION);
         initialFilingPackage.setCourt(court);
 
-        List<Party> parties = new ArrayList<>();
-        Party party = new Party();
+        List<Individual> parties = new ArrayList<>();
+        Individual party = new Individual();
         parties.add(party);
         initialFilingPackage.setParties(parties);
 
@@ -316,6 +321,11 @@ public class GenerateUrlRequestValidatorImplTest {
         navigationUrls.setSuccess("http://success");
         generateUrlRequest.setNavigationUrls(navigationUrls);
 
+        List<Individual> parties = new ArrayList<>();
+        Individual party = new Individual();
+        party.setRoleType(Party.RoleTypeEnum.APP);
+        initialFilingPackage.setParties(parties);
+
         generateUrlRequest.setFilingPackage(initialFilingPackage);
         Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
 
@@ -337,11 +347,11 @@ public class GenerateUrlRequestValidatorImplTest {
         court.setLocation(CASE_2);
         initialFilingPackage.setCourt(court);
 
-        List<Party> parties = new ArrayList<>();
-        Party party = new Party();
+        List<Individual> parties = new ArrayList<>();
+        Individual party = new Individual();
         party.setRoleType(Party.RoleTypeEnum.ADJ);
         parties.add(party);
-        Party party2 = new Party();
+        Individual party2 = new Individual();
         party2.setRoleType(Party.RoleTypeEnum.CIT);
         parties.add(party2);
         initialFilingPackage.setParties(parties);
@@ -414,11 +424,11 @@ public class GenerateUrlRequestValidatorImplTest {
         court.setCourtClass(COURT_CLASSIFICATION);
         initialFilingPackage.setCourt(court);
 
-        List<Party> parties = new ArrayList<>();
-        Party party = new Party();
+        List<Individual> parties = new ArrayList<>();
+        Individual party = new Individual();
         party.setRoleType(Party.RoleTypeEnum.CAV);
         parties.add(party);
-        Party party2 = new Party();
+        Individual party2 = new Individual();
         party2.setRoleType(Party.RoleTypeEnum.DEO);
         parties.add(party2);
         initialFilingPackage.setParties(parties);
@@ -452,11 +462,11 @@ public class GenerateUrlRequestValidatorImplTest {
         court.setFileNumber(FILE_NUMBER_SUCCESS);
         initialFilingPackage.setCourt(court);
 
-        List<Party> parties = new ArrayList<>();
-        Party party = new Party();
+        List<Individual> parties = new ArrayList<>();
+        Individual party = new Individual();
         party.setRoleType(Party.RoleTypeEnum.CAV);
         parties.add(party);
-        Party party2 = new Party();
+        Individual party2 = new Individual();
         party2.setRoleType(Party.RoleTypeEnum.DEO);
         parties.add(party2);
         initialFilingPackage.setParties(parties);
@@ -489,8 +499,8 @@ public class GenerateUrlRequestValidatorImplTest {
         court.setCourtClass(COURT_CLASSIFICATION);
         initialFilingPackage.setCourt(court);
 
-        List<Party> parties = new ArrayList<>();
-        Party party = new Party();
+        List<Individual> parties = new ArrayList<>();
+        Individual party = new Individual();
         parties.add(party);
         initialFilingPackage.setParties(parties);
 
@@ -521,11 +531,11 @@ public class GenerateUrlRequestValidatorImplTest {
         court.setLocation(CASE_1);
         initialFilingPackage.setCourt(court);
 
-        List<Party> parties = new ArrayList<>();
-        Party party = new Party();
+        List<Individual> parties = new ArrayList<>();
+        Individual party = new Individual();
         party.setRoleType(Party.RoleTypeEnum.ADJ);
         parties.add(party);
-        Party party2 = new Party();
+        Individual party2 = new Individual();
         party2.setRoleType(Party.RoleTypeEnum.CIT);
         parties.add(party2);
         initialFilingPackage.setParties(parties);

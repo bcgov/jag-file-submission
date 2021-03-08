@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class GetValidPartyRoleRequestTest {
+public class GetValidIndividualRoleRequestTest {
 
     public static final String COURT_CLASSIFICATION = "A";
     public static final String COURT_LEVEL = "B";

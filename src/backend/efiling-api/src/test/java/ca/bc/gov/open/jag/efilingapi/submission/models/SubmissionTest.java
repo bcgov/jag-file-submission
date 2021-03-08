@@ -27,7 +27,7 @@ public class SubmissionTest {
                 UUID.randomUUID(),
                 UUID.randomUUID().toString(),
                 CLIENT_APP_NAME,
-                TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList(), TestHelpers.createPartyList()),
+                TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList(), TestHelpers.createPartyList(), TestHelpers.createOrganizationList()),
                 TestHelpers.createNavigation(CASE_1, CANCEL, ERROR),
                 1);
 

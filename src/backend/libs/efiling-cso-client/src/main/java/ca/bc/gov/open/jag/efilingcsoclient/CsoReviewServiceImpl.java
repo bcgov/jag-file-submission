@@ -73,7 +73,17 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
 
             if (filingStatus.getFilePackages() == null || filingStatus.getFilePackages().isEmpty()) return Optional.empty();
 
-            return Optional.of(filePackageMapper.toFilingPackage(filingStatus.getFilePackages().get(0), getViewAllPackagesUrl()));
+            return Optional.of(filePackageMapper.toFilingPackage(
+                    filingStatus.getFilePackages().get(0),
+                    getViewAllPackagesUrl(),
+                    filingStatus.getFilePackages().get(0).getParties().stream()
+                            .filter(individual -> individual.getPartyTypeCd().equalsIgnoreCase(Keys.INDIVIDUAL_ROLE_TYPE_CD))
+                            .map(filePackageMapper::toParty)
+                            .collect(Collectors.toList()),
+                    filingStatus.getFilePackages().get(0).getParties().stream()
+                            .filter(individual -> individual.getPartyTypeCd().equalsIgnoreCase(Keys.ORGANIZATION_ROLE_TYPE_CD))
+                            .map(filePackageMapper::toOrganization)
+                            .collect(Collectors.toList())));
 
         } catch (NestedEjbException_Exception e) {
 
@@ -94,7 +104,17 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
 
             if (filingStatus.getFilePackages().isEmpty()) return new ArrayList<>();
 
-            return filingStatus.getFilePackages().stream().map(filePackage -> filePackageMapper.toFilingPackage(filePackage, getViewAllPackagesUrl())).collect(Collectors.toList());
+            return filingStatus.getFilePackages().stream().map(filePackage -> filePackageMapper.toFilingPackage(filePackage,
+                    getViewAllPackagesUrl(),
+                    filePackage.getParties().stream()
+                            .filter(individual -> individual.getPartyTypeCd().equalsIgnoreCase(Keys.INDIVIDUAL_ROLE_TYPE_CD))
+                            .map(filePackageMapper::toParty)
+                            .collect(Collectors.toList()),
+                    filePackage.getParties().stream()
+                            .filter(individual -> individual.getPartyTypeCd().equalsIgnoreCase(Keys.ORGANIZATION_ROLE_TYPE_CD))
+                            .map(filePackageMapper::toOrganization)
+                            .collect(Collectors.toList())
+                    )).collect(Collectors.toList());
 
         } catch (NestedEjbException_Exception e) {
 
