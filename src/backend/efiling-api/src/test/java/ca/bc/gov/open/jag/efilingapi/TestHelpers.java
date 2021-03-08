@@ -72,6 +72,8 @@ public class TestHelpers {
         InitialPackage initialPackage = new InitialPackage();
         initialPackage.setCourt(court);
         initialPackage.setDocuments(initialDocuments);
+        initialPackage.setParties(new ArrayList<>());
+        initialPackage.setOrganizationParties(new ArrayList<>());
         return initialPackage;
     }
 
@@ -130,7 +132,7 @@ public class TestHelpers {
     public static Submission buildSubmission() {
         return Submission
                 .builder()
-                .filingPackage(createPackage(createCourt(), createDocumentList(), createPartyList()))
+                .filingPackage(createPackage(createCourt(), createDocumentList(), createPartyList(), createOrganizationList()))
                 .navigationUrls(createNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL))
                 .create();
     }
@@ -138,11 +140,13 @@ public class TestHelpers {
     public static FilingPackage createPackage(
             Court court,
             List<Document> documents,
-            List<Party> parties) {
+            List<Individual> parties,
+            List<Organization> organizations) {
         return FilingPackage.builder()
                 .court(court)
                 .documents(documents)
                 .parties(parties)
+                .organizations(organizations)
                 .create();
     }
 
@@ -190,21 +194,36 @@ public class TestHelpers {
                 .data(new JsonObject()).create());
     }
 
-    public static List<Party> createPartyList() {
+    public static List<Individual> createPartyList() {
 
-        Party partyOne = buildParty(BigDecimal.ONE);
+        Individual individualOne = buildParty();
 
-        Party partyTwo = buildParty(BigDecimal.TEN);
-        return Arrays.asList(partyOne, partyTwo);
+        Individual individualTwo = buildParty();
+        return Arrays.asList(individualOne, individualTwo);
     }
 
-    private static Party buildParty(BigDecimal partyId) {
-        return Party.builder()
+    public static List<Organization> createOrganizationList() {
+
+        Organization orgOne = buildOrganization();
+
+        Organization orgTwo = buildOrganization();
+        return Arrays.asList(orgOne, orgTwo);
+    }
+
+    private static Individual buildParty() {
+        return Individual.builder()
                 .firstName(FIRST_NAME)
                 .middleName(MIDDLE_NAME)
                 .lastName(LAST_NAME)
                 .nameTypeCd(NAME_TYPE_CD)
-                .partyTypeCd(PARTY_TYPE_CD)
+                .roleTypeCd(ROLE_TYPE_CD)
+                .create();
+    }
+
+    private static Organization buildOrganization() {
+        return Organization.builder()
+                .name(NAME)
+                .nameTypeCd(NAME_TYPE_CD)
                 .roleTypeCd(ROLE_TYPE_CD)
                 .create();
     }
@@ -265,13 +284,12 @@ public class TestHelpers {
 
     }
 
-    public static Party createParty() {
-        return Party.builder()
+    public static Individual createParty() {
+        return Individual.builder()
                 .firstName(FIRST_NAME)
                 .lastName(LAST_NAME)
                 .middleName(MIDDLE_NAME)
                 .nameTypeCd(NAME_TYPE)
-                .partyTypeCd(ca.bc.gov.open.jag.efilingapi.api.model.Party.PartyTypeEnum.IND.getValue())
                 .partyTypeDesc(PARTY_TYPE_DESC)
                 .roleTypeCd(ca.bc.gov.open.jag.efilingapi.api.model.Party.RoleTypeEnum.ABC.getValue())
                 .roleTypeDesc(ROLE_TYPE_DESC)

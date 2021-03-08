@@ -76,8 +76,13 @@ public class EfilingReviewServiceDemoImplTest {
         Assertions.assertEquals("Ross", result.get().getParties().get(0).getLastName());
         Assertions.assertEquals("APP", result.get().getParties().get(0).getRoleTypeCd());
         Assertions.assertEquals("Applicant", result.get().getParties().get(0).getRoleTypeDesc());
-        Assertions.assertEquals("IND", result.get().getParties().get(0).getPartyTypeCd());
         Assertions.assertEquals("Individual", result.get().getParties().get(0).getPartyTypeDesc());
+
+        Assertions.assertEquals(2, result.get().getOrganizations().size());
+        Assertions.assertEquals("The Organization Org.", result.get().getOrganizations().get(0).getName());
+        Assertions.assertEquals("APP", result.get().getOrganizations().get(0).getRoleTypeCd());
+        Assertions.assertEquals("Applicant", result.get().getOrganizations().get(0).getRoleTypeDesc());
+        Assertions.assertEquals("Organization", result.get().getOrganizations().get(0).getPartyTypeDesc());
 
         Assertions.assertEquals(3, result.get().getPayments().size());
         Assertions.assertFalse(result.get().getPayments().get(0).getFeeExmpt());

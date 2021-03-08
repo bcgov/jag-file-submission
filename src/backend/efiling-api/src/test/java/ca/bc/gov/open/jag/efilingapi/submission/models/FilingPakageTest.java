@@ -2,8 +2,9 @@ package ca.bc.gov.open.jag.efilingapi.submission.models;
 
 import ca.bc.gov.open.jag.efilingcommons.model.Court;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
+import ca.bc.gov.open.jag.efilingcommons.model.Individual;
+import ca.bc.gov.open.jag.efilingcommons.model.Organization;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
-import ca.bc.gov.open.jag.efilingcommons.model.Party;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -32,7 +33,6 @@ public class FilingPakageTest {
     public static final String DESCRIPTION = "description";
     public static final BigDecimal STATUTORY_FEE_AMOUNT = BigDecimal.TEN;
     public static final String MIME_TYPE = "mimeType";
-    public static final String PARTY_TYPE_CD = "partyTypeCd";
     public static final String ROLE_TYPE_CD = "roleTypeCd";
     public static final String PARTY_TYPE_DESC = "partyTypeDesc";
     public static final String ROLE_TYPE_DESC = "roleTypeDesc";
@@ -52,6 +52,7 @@ public class FilingPakageTest {
                 getCourt(),
                 getDocuments(),
                 getParties(),
+                getOrganization(),
                 true,
                 "TEST");
 
@@ -59,15 +60,21 @@ public class FilingPakageTest {
         assertCourt(actual);
         assertDocuments(actual);
         assertParties(actual);
+        assertOrganizations(actual);
     }
 
     private void assertParties(FilingPackage actual) {
-        Assertions.assertEquals(PARTY_TYPE_CD, actual.getParties().get(0).getPartyTypeCd());
         Assertions.assertEquals(ROLE_TYPE_CD, actual.getParties().get(0).getRoleTypeCd());
         Assertions.assertEquals(FIRST_NAME, actual.getParties().get(0).getFirstName());
         Assertions.assertEquals(MIDDLE_NAME, actual.getParties().get(0).getMiddleName());
         Assertions.assertEquals(LAST_NAME, actual.getParties().get(0).getLastName());
         Assertions.assertEquals(NAME_TYPE_CD, actual.getParties().get(0).getNameTypeCd());
+    }
+
+    private void assertOrganizations(FilingPackage actual) {
+        Assertions.assertEquals(ROLE_TYPE_CD, actual.getOrganizations().get(0).getRoleTypeCd());
+        Assertions.assertEquals(NAME, actual.getOrganizations().get(0).getName());
+        Assertions.assertEquals(NAME_TYPE_CD, actual.getOrganizations().get(0).getNameTypeCd());
     }
 
     private void assertDocuments(FilingPackage actual) {
@@ -95,10 +102,9 @@ public class FilingPakageTest {
         Assertions.assertEquals(PARTICIPATING_CLASS, actual.getCourt().getParticipatingClass());
     }
 
-    private List<Party> getParties() {
-        List<Party> parties = new ArrayList<>();
-        Party party = new Party(
-                PARTY_TYPE_CD,
+    private List<Individual> getParties() {
+        List<Individual> parties = new ArrayList<>();
+        Individual individual = new Individual(
                 PARTY_TYPE_DESC,
                 ROLE_TYPE_CD,
                 ROLE_TYPE_DESC,
@@ -106,8 +112,20 @@ public class FilingPakageTest {
                 MIDDLE_NAME,
                 LAST_NAME,
                 NAME_TYPE_CD);
-        parties.add(party);
+        parties.add(individual);
         return parties;
+    }
+
+    private List<Organization> getOrganization() {
+        List<Organization> organizations = new ArrayList<>();
+        Organization organization = new Organization(
+                PARTY_TYPE_DESC,
+                ROLE_TYPE_CD,
+                ROLE_TYPE_DESC,
+                NAME,
+                NAME_TYPE_CD);
+        organizations.add(organization);
+        return organizations;
     }
 
     private List<Document> getDocuments() {

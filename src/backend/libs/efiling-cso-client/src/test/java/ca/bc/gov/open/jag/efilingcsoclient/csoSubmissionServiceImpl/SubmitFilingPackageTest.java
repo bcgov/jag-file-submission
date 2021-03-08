@@ -22,6 +22,7 @@ import org.mockito.MockitoAnnotations;
 import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -282,6 +283,21 @@ public class SubmitFilingPackageTest {
                                 .isSupremeCourtScheduling(IS_SUPREME_COURT_SCHEDULING)
                                 .subType(TYPE)
                                 .create()))
+                        .parties(Collections.singletonList(
+                                Individual.builder()
+                                        .firstName("TEST")
+                                        .middleName("TEST")
+                                        .lastName("TEST")
+                                        .nameTypeCd("TYPE")
+                                        .roleTypeCd("CODE")
+                                        .create()))
+                        .organizations(Collections.singletonList(
+                                Organization.builder()
+                                        .name("TEST")
+                                        .nameTypeCd("TYPE")
+                                        .roleTypeCd("CODE")
+                                        .create()
+                        ))
                         .create(),
                 efilingPaymentServiceMock);
 
