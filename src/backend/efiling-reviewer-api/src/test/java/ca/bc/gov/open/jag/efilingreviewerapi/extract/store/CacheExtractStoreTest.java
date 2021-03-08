@@ -5,6 +5,7 @@ import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractRequest;
 import org.junit.jupiter.api.*;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CacheExtractStoreTest {
@@ -32,6 +33,14 @@ public class CacheExtractStoreTest {
         Assertions.assertEquals(ExtractRequestMockFactory.EXPECTED_DOCUMENT_SIZE, expectedExtractRequest.getDocument().getSize());
         Assertions.assertEquals(ExtractRequestMockFactory.EXPECTED_DOCUMENT_TYPE, expectedExtractRequest.getDocument().getType());
 
+    }
+
+    @DisplayName("ok: should retrieve null when extract is not stored")
+    @Test
+    public void shouldRetrieveAnExtract() {
+
+        Optional<ExtractRequest> extractRequest = sut.get(BigDecimal.ONE);
+        Assertions.assertFalse(extractRequest.isPresent());
 
     }
 
