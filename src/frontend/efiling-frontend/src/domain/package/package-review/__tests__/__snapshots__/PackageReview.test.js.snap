@@ -588,9 +588,11 @@ Duis aute irure dolor.
         </div>
       </div>
       <br />
-      <b>
+      <span
+        class="fw-bold"
+      >
         Please Note: 
-      </b>
+      </span>
        Visit your CSO account to 
       <span
         class="file-href"
@@ -1262,9 +1264,11 @@ exports[`PackageReview Component Reload 1`] = `
         </div>
       </div>
       <br />
-      <b>
+      <span
+        class="fw-bold"
+      >
         Please Note: 
-      </b>
+      </span>
        Visit your CSO account to 
       <span
         class="file-href"
@@ -1936,9 +1940,11 @@ exports[`PackageReview Component Withdraw document network error 1`] = `
         </div>
       </div>
       <br />
-      <b>
+      <span
+        class="fw-bold"
+      >
         Please Note: 
-      </b>
+      </span>
        Visit your CSO account to 
       <span
         class="file-href"

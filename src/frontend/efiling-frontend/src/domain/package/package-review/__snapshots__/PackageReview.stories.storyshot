@@ -453,9 +453,11 @@ exports[`Storyshots PackageReview Default 1`] = `
         </div>
       </div>
       <br />
-      <b>
+      <span
+        class="fw-bold"
+      >
         Please Note: 
-      </b>
+      </span>
        Visit your CSO account to 
       <span
         class="file-href"
@@ -1086,9 +1088,11 @@ exports[`Storyshots PackageReview Mobile 1`] = `
         </div>
       </div>
       <br />
-      <b>
+      <span
+        class="fw-bold"
+      >
         Please Note: 
-      </b>
+      </span>
        Visit your CSO account to 
       <span
         class="file-href"
