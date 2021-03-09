@@ -172,6 +172,15 @@ The `organizationParties` array represents a list of organization parties for th
 | roleType   | string | true     | the party role, see [Party Role](data.md#Party-Role)                                            |
 | name       | string | true     | the organization name                                                                            |
 
+### Package Review
+
+The efiling Package Review screen shows the details of a submitted package.
+
+https://dev.justice.gov.bc.ca/efilinghub/packagereview/:packageId?returnUrl=
+
+The returnUrl parameter is optional, but if an encoded URL is supplied, the page will render with a button 
+that will return the user to the given URL (i.e., parent application).
+
 ### Api Documentation
 
 eFiling API is documented using [openapi](http://editor.swagger.io/?url=https://raw.githubusercontent.com/bcgov/jag-file-submission/master/src/backend/efiling-api/jag-efiling-api.yaml) and we have a [postman collection](https://raw.githubusercontent.com/bcgov/jag-file-submission/master/src/backend/jag-efiling-api/src/test/jag-efiling-api.postman_collection.json) that you can use to test the eFiling API
