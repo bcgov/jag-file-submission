@@ -20,6 +20,7 @@ import "./PackageReview.scss";
 import DocumentList from "./DocumentList";
 import PartyList from "./PartyList";
 import PaymentList from "./PaymentList";
+import { isClick, isEnter } from "../../../modules/helpers/eventUtil";
 
 export default function PackageReview() {
   const params = useParams();
@@ -54,6 +55,7 @@ export default function PackageReview() {
   const [documents, setDocuments] = useState([]);
   const [parties, setParties] = useState([]);
   const [payments, setPayments] = useState([]);
+  const [submissionHistoryLink, setSubmissionHistoryLink] = useState("");
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
 
@@ -115,6 +117,7 @@ export default function PackageReview() {
           setDocuments(response.data.documents);
           setParties(response.data.parties);
           setPayments(response.data.payments);
+          setSubmissionHistoryLink(response.data.links.packageHistoryUrl);
         } catch (err) {
           setError(true);
         }
@@ -141,6 +144,12 @@ export default function PackageReview() {
       downloadSubmissionSheet(packageId).catch((err) => {
         errorRedirect(sessionStorage.getItem("errorUrl"), err);
       });
+    }
+  }
+
+  function handleCsoLink(e) {
+    if (submissionHistoryLink && (isClick(e) || isEnter(e))) {
+      window.open(submissionHistoryLink, "_self");
     }
   }
 
@@ -211,6 +220,18 @@ export default function PackageReview() {
             </Tab>
           </Tabs>
           <br />
+          <span className="fw-bold">Please Note: </span> Visit your CSO account
+          to{" "}
+          <span
+            role="button"
+            data-testid="cso-link"
+            tabIndex={0}
+            className="file-href"
+            onClick={handleCsoLink}
+            onKeyDown={handleCsoLink}
+          >
+            view all your previously submitted packages.
+          </span>
           <section className="buttons pt-2">
             <Button
               label="Cancel and Return to Parent App"
