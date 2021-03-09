@@ -452,6 +452,18 @@ exports[`Storyshots PackageReview Default 1`] = `
         </div>
       </div>
       <br />
+      <b>
+        Please Note: 
+      </b>
+       Visit your CSO account to 
+      <span
+        class="file-href"
+        data-testid="cso-link"
+        role="button"
+        tabindex="0"
+      >
+        view all your previously submitted packages.
+      </span>
       <section
         class="buttons pt-2"
       >
@@ -1072,6 +1084,18 @@ exports[`Storyshots PackageReview Mobile 1`] = `
         </div>
       </div>
       <br />
+      <b>
+        Please Note: 
+      </b>
+       Visit your CSO account to 
+      <span
+        class="file-href"
+        data-testid="cso-link"
+        role="button"
+        tabindex="0"
+      >
+        view all your previously submitted packages.
+      </span>
       <section
         class="buttons pt-2"
       >

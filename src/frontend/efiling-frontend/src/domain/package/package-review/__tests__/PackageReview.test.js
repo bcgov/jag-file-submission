@@ -22,6 +22,7 @@ moment.tz.setDefault("America/Vancouver");
 
 describe("PackageReview Component", () => {
   const packageId = "1";
+  const link = "http://google.com"
   const courtData = getCourtData();
   const submittedDate = new Date("2021-01-14T18:57:43.602Z").toISOString();
   const submittedBy = { firstName: "Han", lastName: "Solo" };
@@ -312,4 +313,25 @@ describe("PackageReview Component", () => {
 
     expect(noop).toHaveBeenCalled();
   });
+
+  test("Redirects to CSO Submission History", async () => {
+    mock.onGet(apiRequest).reply(200, {
+      packageNumber: packageId,
+      court: courtData,
+      submittedBy,
+      submittedDate,
+      documents,
+      links: {
+        packageHistoryUrl: link,
+      }
+    });
+
+    const { getByTestId } = render(<PackageReview />)
+    const button = getByTestId("cso-link")
+
+    fireEvent.click(button)
+    await waitFor(() => {})
+
+    //expect(window.open).toHaveBeenCalled()
+  })
 });

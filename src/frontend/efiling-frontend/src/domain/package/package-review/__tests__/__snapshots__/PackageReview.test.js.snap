@@ -11,6 +11,40 @@ exports[`PackageReview Component Matches the snapshot 1`] = `
       <h1>
         View Recently Submitted Package # 1
       </h1>
+      <div
+        class="col-md-8"
+      >
+        <div
+          class="bcgov-display-box bcgov-error-background"
+        >
+          <div
+            class="bcgov-display-icon"
+          >
+            <div
+              style="color: rgb(216, 41, 47);"
+            >
+              <svg
+                fill="currentColor"
+                height="24"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"
+                />
+              </svg>
+            </div>
+          </div>
+          <div
+            class="bcgov-display-right-element"
+          >
+            There was a problem with your request.
+          </div>
+        </div>
+      </div>
       <br />
       <div
         class="row"
@@ -553,6 +587,18 @@ Duis aute irure dolor.
         </div>
       </div>
       <br />
+      <b>
+        Please Note: 
+      </b>
+       Visit your CSO account to 
+      <span
+        class="file-href"
+        data-testid="cso-link"
+        role="button"
+        tabindex="0"
+      >
+        view all your previously submitted packages.
+      </span>
       <section
         class="buttons pt-2"
       >
@@ -730,6 +776,40 @@ exports[`PackageReview Component Reload Document trigger 1`] = `
       <h1>
         View Recently Submitted Package # 1
       </h1>
+      <div
+        class="col-md-8"
+      >
+        <div
+          class="bcgov-display-box bcgov-error-background"
+        >
+          <div
+            class="bcgov-display-icon"
+          >
+            <div
+              style="color: rgb(216, 41, 47);"
+            >
+              <svg
+                fill="currentColor"
+                height="24"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"
+                />
+              </svg>
+            </div>
+          </div>
+          <div
+            class="bcgov-display-right-element"
+          >
+            There was a problem with your request.
+          </div>
+        </div>
+      </div>
       <br />
       <div
         class="row"
@@ -1180,6 +1260,18 @@ exports[`PackageReview Component Reload Document trigger 1`] = `
         </div>
       </div>
       <br />
+      <b>
+        Please Note: 
+      </b>
+       Visit your CSO account to 
+      <span
+        class="file-href"
+        data-testid="cso-link"
+        role="button"
+        tabindex="0"
+      >
+        view all your previously submitted packages.
+      </span>
       <section
         class="buttons pt-2"
       >
@@ -1357,6 +1449,40 @@ exports[`PackageReview Component Withdraw document network error 1`] = `
       <h1>
         View Recently Submitted Package # 1
       </h1>
+      <div
+        class="col-md-8"
+      >
+        <div
+          class="bcgov-display-box bcgov-error-background"
+        >
+          <div
+            class="bcgov-display-icon"
+          >
+            <div
+              style="color: rgb(216, 41, 47);"
+            >
+              <svg
+                fill="currentColor"
+                height="24"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"
+                />
+              </svg>
+            </div>
+          </div>
+          <div
+            class="bcgov-display-right-element"
+          >
+            There was a problem with your request.
+          </div>
+        </div>
+      </div>
       <br />
       <div
         class="row"
@@ -1807,6 +1933,18 @@ exports[`PackageReview Component Withdraw document network error 1`] = `
         </div>
       </div>
       <br />
+      <b>
+        Please Note: 
+      </b>
+       Visit your CSO account to 
+      <span
+        class="file-href"
+        data-testid="cso-link"
+        role="button"
+        tabindex="0"
+      >
+        view all your previously submitted packages.
+      </span>
       <section
         class="buttons pt-2"
       >
