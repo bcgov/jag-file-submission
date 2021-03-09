@@ -88,7 +88,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
         if (documentEvent.getStatus().equalsIgnoreCase(Keys.PROCESSED_STATUS)) {
             diligenService.getDocumentDetails(documentEvent.getDocumentId());
 
-            Optional<ExtractRequest> extractRequestCached = extractStore.get(documentEvent.getDocumentId())
+            Optional<ExtractRequest> extractRequestCached = extractStore.get(documentEvent.getDocumentId());
 
             if (extractRequestCached.isPresent()) {
 
