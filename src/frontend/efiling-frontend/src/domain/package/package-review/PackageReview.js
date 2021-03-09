@@ -23,7 +23,6 @@ import DocumentList from "./DocumentList";
 import PartyList from "./PartyList";
 import PaymentList from "./PaymentList";
 import { isClick, isEnter } from "../../../modules/helpers/eventUtil";
-import { redirectToParentApp } from "../../../modules/helpers/RoutingUtil";
 
 export default function PackageReview() {
   const params = useParams();

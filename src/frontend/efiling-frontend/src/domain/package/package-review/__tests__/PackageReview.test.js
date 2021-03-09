@@ -95,7 +95,9 @@ describe("PackageReview Component", () => {
     const encodedUrlWithParams = encodeURIComponent(
       "https://www.google.ca/search?q=bob+ross&tbm=isch"
     );
-    expect(encodedUrlWithParams).toEqual("https%3A%2F%2Fwww.google.ca%2Fsearch%3Fq%3Dbob%2Bross%26tbm%3Disch");
+    expect(encodedUrlWithParams).toEqual(
+      "https%3A%2F%2Fwww.google.ca%2Fsearch%3Fq%3Dbob%2Bross%26tbm%3Disch"
+    );
     routerDom.useLocation = jest
       .fn()
       .mockReturnValue({ search: `?returnUrl=${encodedUrlWithParams}` });
@@ -105,7 +107,10 @@ describe("PackageReview Component", () => {
 
     fireEvent.click(getByText("Return to Parent App"));
 
-    expect(window.open).toHaveBeenCalledWith(decodeURIComponent(encodedUrlWithParams), "_self");
+    expect(window.open).toHaveBeenCalledWith(
+      decodeURIComponent(encodedUrlWithParams),
+      "_self"
+    );
   });
 
   test("Clicking cancel takes user back to parent app, invalid URL", async () => {

@@ -602,6 +602,7 @@ Duis aute irure dolor.
       >
         view all your previously submitted packages.
       </span>
+      <br />
       <section
         class="buttons pt-2"
       >
@@ -1278,6 +1279,7 @@ exports[`PackageReview Component Reload 1`] = `
       >
         view all your previously submitted packages.
       </span>
+      <br />
       <section
         class="buttons pt-2"
       >
@@ -1954,6 +1956,7 @@ exports[`PackageReview Component Withdraw document network error 1`] = `
       >
         view all your previously submitted packages.
       </span>
+      <br />
       <section
         class="buttons pt-2"
       >

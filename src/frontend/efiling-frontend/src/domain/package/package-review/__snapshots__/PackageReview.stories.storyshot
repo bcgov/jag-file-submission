@@ -467,6 +467,7 @@ exports[`Storyshots PackageReview Default 1`] = `
       >
         view all your previously submitted packages.
       </span>
+      <br />
       <section
         class="buttons pt-2"
       >
@@ -1102,6 +1103,7 @@ exports[`Storyshots PackageReview Mobile 1`] = `
       >
         view all your previously submitted packages.
       </span>
+      <br />
       <section
         class="buttons pt-2"
       >
