@@ -21,7 +21,7 @@ public class ExtractTest {
                 Extract.builder().id(UUID.randomUUID()).transactionId(UUID.randomUUID()).create(),
                 Document.builder().fileName("test").create(), 1l, 3l);
 
-        Assertions.assertEquals(2l, sut.getProcessingTimeMillis());
+        Assertions.assertEquals(2l, sut.getProcessedTimeMillis());
 
     }
 

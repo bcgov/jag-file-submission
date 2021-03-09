@@ -94,7 +94,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
 
                 ExtractRequest extractRequest = extractRequestCached.get();
                 extractRequest.updateProcessedTimeMillis();
-                logger.info("document processing time: [{}]", extractRequest.getProcessingTimeMillis());
+                logger.info("document processing time: [{}]", extractRequest.getProcessedTimeMillis());
                 extractStore.put(documentEvent.getDocumentId(), extractRequest);
 
             }
