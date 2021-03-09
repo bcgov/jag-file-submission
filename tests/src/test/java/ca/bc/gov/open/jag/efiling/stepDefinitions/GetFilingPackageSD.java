@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
+import ca.bc.gov.open.jag.efiling.Keys;
 import ca.bc.gov.open.jag.efiling.helpers.SubmissionHelper;
 import ca.bc.gov.open.jag.efiling.models.UserIdentity;
 import ca.bc.gov.open.jag.efiling.services.OauthService;
@@ -10,9 +11,9 @@ import io.cucumber.java.en.When;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.MultiPartSpecification;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
@@ -26,13 +27,12 @@ public class GetFilingPackageSD {
     private final SubmissionService submissionService;
     private final UUID actualTransactionId;
 
-    private static final String TEST_DOCUMENT_PDF = "test-document.pdf";
     private static String FILING_PACKAGE_PATH = "filing-package";
 
     private UserIdentity actualUserIdentity;
     private Response actualFilingPackageResponse;
 
-    public Logger logger = LogManager.getLogger(GetFilingPackageSD.class);
+    public Logger logger = LoggerFactory.getLogger(GetFilingPackageSD.class);
 
     public GetFilingPackageSD(OauthService oauthService, SubmissionService submissionService) {
         this.oauthService = oauthService;
@@ -52,9 +52,9 @@ public class GetFilingPackageSD {
 
 
         File resource = new ClassPathResource(
-                MessageFormat.format("data/{0}", TEST_DOCUMENT_PDF)).getFile();
+                MessageFormat.format("data/{0}", Keys.TEST_DOCUMENT_PDF)).getFile();
 
-        MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource,TEST_DOCUMENT_PDF, "text/application.pdf");
+        MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource, Keys.TEST_DOCUMENT_PDF, "text/application.pdf");
 
         Response actualDocumentResponse = submissionService.documentUploadResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
                 actualUserIdentity.getUniversalId(), fileSpec);
@@ -91,7 +91,7 @@ public class GetFilingPackageSD {
         Assert.assertEquals("Imma Level", filingPackageJsonPath.get("court.levelDescription"));
         Assert.assertEquals("Imma Class", filingPackageJsonPath.get("court.classDescription"));
 
-        Assert.assertEquals(TEST_DOCUMENT_PDF, filingPackageJsonPath.get("documents.documentProperties.name[0]"));
+        Assert.assertEquals(Keys.TEST_DOCUMENT_PDF, filingPackageJsonPath.get("documents.documentProperties.name[0]"));
 
         Assert.assertEquals("AFF", filingPackageJsonPath.get("documents.documentProperties.type[0]"));
         Assert.assertEquals("This is a doc", filingPackageJsonPath.get("documents.description[0]"));
