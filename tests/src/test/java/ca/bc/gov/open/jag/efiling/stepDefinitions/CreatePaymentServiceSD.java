@@ -1,6 +1,6 @@
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
-import ca.bc.gov.open.jag.efiling.CommonKeys;
+import ca.bc.gov.open.jag.efiling.Keys;
 import ca.bc.gov.open.jag.efiling.helpers.SubmissionHelper;
 import ca.bc.gov.open.jag.efiling.models.UserIdentity;
 import ca.bc.gov.open.jag.efiling.services.OauthService;
@@ -50,9 +50,9 @@ public class CreatePaymentServiceSD {
         logger.info("Submitting request with submit parameters");
 
         File resource = new ClassPathResource(
-                MessageFormat.format("data/{0}", CommonKeys.TEST_DOCUMENT_PDF)).getFile();
+                MessageFormat.format("data/{0}", Keys.TEST_DOCUMENT_PDF)).getFile();
 
-        MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource,CommonKeys.TEST_DOCUMENT_PDF, "text/application.pdf");
+        MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource, Keys.TEST_DOCUMENT_PDF, "text/application.pdf");
 
         Response actualDocumentResponse = submissionService.documentUploadResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
                 actualUserIdentity.getUniversalId(), fileSpec);

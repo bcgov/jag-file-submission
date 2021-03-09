@@ -1,6 +1,6 @@
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
-import ca.bc.gov.open.jag.efiling.CommonKeys;
+import ca.bc.gov.open.jag.efiling.Keys;
 import ca.bc.gov.open.jag.efiling.helpers.SubmissionHelper;
 import ca.bc.gov.open.jag.efiling.models.UserIdentity;
 import ca.bc.gov.open.jag.efiling.services.OauthService;
@@ -52,9 +52,9 @@ public class GetFilingPackageSD {
 
 
         File resource = new ClassPathResource(
-                MessageFormat.format("data/{0}", CommonKeys.TEST_DOCUMENT_PDF)).getFile();
+                MessageFormat.format("data/{0}", Keys.TEST_DOCUMENT_PDF)).getFile();
 
-        MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource,CommonKeys.TEST_DOCUMENT_PDF, "text/application.pdf");
+        MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource, Keys.TEST_DOCUMENT_PDF, "text/application.pdf");
 
         Response actualDocumentResponse = submissionService.documentUploadResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
                 actualUserIdentity.getUniversalId(), fileSpec);
@@ -91,7 +91,7 @@ public class GetFilingPackageSD {
         Assert.assertEquals("Imma Level", filingPackageJsonPath.get("court.levelDescription"));
         Assert.assertEquals("Imma Class", filingPackageJsonPath.get("court.classDescription"));
 
-        Assert.assertEquals(CommonKeys.TEST_DOCUMENT_PDF, filingPackageJsonPath.get("documents.documentProperties.name[0]"));
+        Assert.assertEquals(Keys.TEST_DOCUMENT_PDF, filingPackageJsonPath.get("documents.documentProperties.name[0]"));
 
         Assert.assertEquals("AFF", filingPackageJsonPath.get("documents.documentProperties.type[0]"));
         Assert.assertEquals("This is a doc", filingPackageJsonPath.get("documents.description[0]"));

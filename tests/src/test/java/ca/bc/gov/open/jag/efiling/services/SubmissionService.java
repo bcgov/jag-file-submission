@@ -1,6 +1,6 @@
 package ca.bc.gov.open.jag.efiling.services;
 
-import ca.bc.gov.open.jag.efiling.CommonKeys;
+import ca.bc.gov.open.jag.efiling.Keys;
 import ca.bc.gov.open.jag.efiling.error.EfilingTestException;
 import ca.bc.gov.open.jag.efiling.helpers.PayloadHelper;
 import ca.bc.gov.open.jag.efiling.helpers.SubmissionHelper;
@@ -62,7 +62,7 @@ public class SubmissionService {
                 .contentType(ContentType.JSON)
                 .header(X_TRANSACTION_ID, transactionId)
                 .header(X_USER_ID, universalId)
-                .body(PayloadHelper.generateUrlPayload(CommonKeys.TEST_DOCUMENT_PDF));
+                .body(PayloadHelper.generateUrlPayload(Keys.TEST_DOCUMENT_PDF));
 
         return request
                 .when()
@@ -150,7 +150,7 @@ public class SubmissionService {
                 .oauth2(accessToken)
                 .contentType(ContentType.JSON)
                 .header(X_TRANSACTION_ID, transactionId)
-                .body(PayloadHelper.updateDocumentProperties(CommonKeys.TEST_DOCUMENT_PDF));
+                .body(PayloadHelper.updateDocumentProperties(Keys.TEST_DOCUMENT_PDF));
 
         return request
                 .when()

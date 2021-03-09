@@ -1,7 +1,7 @@
 
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
-import ca.bc.gov.open.jag.efiling.CommonKeys;
+import ca.bc.gov.open.jag.efiling.Keys;
 import ca.bc.gov.open.jag.efiling.page.AuthenticationPage;
 import ca.bc.gov.open.jag.efiling.page.EfilingAdminHomePage;
 import ca.bc.gov.open.jag.efiling.page.PackageConfirmationPage;
@@ -46,7 +46,7 @@ public class AuthenticateAndRedirectToEfilingHubSD {
         Assert.assertEquals(EFILE_SUBMISSION_PAGE_TITLE, this.packageConfirmationPage.verifyPageTitle());
         logger.info("Efiling submission page title is verified");
 
-        Assert.assertEquals(CommonKeys.TEST_DOCUMENT_PDF, this.packageConfirmationPage.getInitialDocumentName());
+        Assert.assertEquals(Keys.TEST_DOCUMENT_PDF, this.packageConfirmationPage.getInitialDocumentName());
         logger.info("Actual document name matches the uploaded document name");
 
     }

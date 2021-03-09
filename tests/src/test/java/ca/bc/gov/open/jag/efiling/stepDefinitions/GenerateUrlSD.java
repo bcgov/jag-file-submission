@@ -1,6 +1,6 @@
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
-import ca.bc.gov.open.jag.efiling.CommonKeys;
+import ca.bc.gov.open.jag.efiling.Keys;
 import ca.bc.gov.open.jag.efiling.TestConfig;
 import ca.bc.gov.open.jag.efiling.helpers.SubmissionHelper;
 import ca.bc.gov.open.jag.efiling.models.UserIdentity;
@@ -58,9 +58,9 @@ public class GenerateUrlSD {
         logger.info("Submitting document upload request");
 
         File resource = new ClassPathResource(
-                MessageFormat.format("data/{0}", CommonKeys.TEST_DOCUMENT_PDF)).getFile();
+                MessageFormat.format("data/{0}", Keys.TEST_DOCUMENT_PDF)).getFile();
 
-        MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource, CommonKeys.TEST_DOCUMENT_PDF, "text/application.pdf");
+        MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource, Keys.TEST_DOCUMENT_PDF, "text/application.pdf");
 
         actualDocumentResponse = submissionService.documentUploadResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
                 actualUserIdentity.getUniversalId(), fileSpec);
