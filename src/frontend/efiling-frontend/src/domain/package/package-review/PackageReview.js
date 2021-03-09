@@ -220,7 +220,7 @@ export default function PackageReview() {
             </Tab>
           </Tabs>
           <br />
-          <b>Please Note: </b> Visit your CSO account to{" "}
+          <span className="fw-bold">Please Note: </span> Visit your CSO account to{" "}
           <span
             role="button"
             data-testid="cso-link"
