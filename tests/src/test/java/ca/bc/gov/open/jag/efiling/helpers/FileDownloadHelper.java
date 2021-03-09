@@ -15,6 +15,7 @@ public class FileDownloadHelper {
 
         if (listOfFiles == null) throw new EfilingTestException("Downloaded file is not present");
         for (File file : listOfFiles) {
+            // Grabbing the first file
             if (file.isFile()) {
                 actualFile = file;
                 break;
