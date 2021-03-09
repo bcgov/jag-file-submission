@@ -35,7 +35,9 @@ jobs:
           --build-arg MVN_PROFILE=efiling-api-demo
           --build-arg STARTERS_V=v0.1.8
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder
+
       - name: tag & push efiling-api to git container registry
+        if: github.event.pull_request.head.repo.full_name == github.repository
         run: docker tag efiling-api:builder docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder
 
       - name: Pull efiling-api-demo
@@ -50,9 +52,11 @@ jobs:
           --build-arg STARTERS_V=v0.1.8
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo
+      
+      # Optional only for branch on repo
       - name: tag & push efiling-api to git container registry
+        if: github.event.pull_request.head.repo.full_name == github.repository
         run: docker tag efiling-api:demo docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo
-
 
   efiling-frontend-gcr:
     name: Efiling Frontend GCR
@@ -78,6 +82,7 @@ jobs:
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:builder
       
       - name: tag & push efiling-frontend to git container registry
+        if: github.event.pull_request.head.repo.full_name == github.repository
         run: docker tag efiling-frontend:builder docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:builder && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:builder
       
       - name: Pull efiling-frontend-demo
@@ -90,6 +95,7 @@ jobs:
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:demo
       
       - name: tag & push efiling-frontend to git container registry
+        if: github.event.pull_request.head.repo.full_name == github.repository
         run: docker tag efiling-frontend:demo docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:demo && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:demo
 
   keycloak-config-gcr:
@@ -116,6 +122,7 @@ jobs:
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/keycloak-config:demo
       
       - name: tag & push keycloak-config to git container registry
+        if: github.event.pull_request.head.repo.full_name == github.repository
         run: docker tag keycloak-config:demo docker.pkg.github.com/$GITHUB_REPOSITORY/keycloak-config:demo && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/keycloak-config:demo
 
   cucumber-tests:
@@ -148,15 +155,27 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: Pull images
-        run: docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml pull --parallel -q efiling-api efiling-frontend
+      - name: Pull images (Local REPO only)
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        run: docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml pull --parallel -q efiling-api efiling-frontend keycloak-config
 
-      - name: Standup Docker Pods
+      - name: Standup Docker Pods (Local REPO only)
+        if: github.event.pull_request.head.repo.full_name == github.repository
         run: docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up -d efiling-api efiling-frontend
 
-      - name: Configure keycloak
+      - name: Standup Docker Pods (FORK only)
+        if: github.event.pull_request.head.repo.full_name != github.repository
+        run: docker-compose up -d efiling-api efiling-frontend
+
+      - name: Configure keycloak (Local REPO only)
+        if: github.event.pull_request.head.repo.full_name == github.repository
         run: |
           docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up keycloak-config
+      
+      - name: Configure keycloak (FORK only)
+        if: github.event.pull_request.head.repo.full_name != github.repository
+        run: |
+          docker-compose up keycloak-config
 
       - name: Running Integration Tests
         env:
