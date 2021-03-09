@@ -9,6 +9,7 @@ import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractMapper;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractMapperImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapper;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapperImpl;
+import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractRequest;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.store.ExtractStore;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
@@ -19,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -45,6 +47,7 @@ public class DocumentEventTest {
         ExtractRequestMapper extratRequestMapper = new ExtractRequestMapperImpl(extractMapper);
 
         Mockito.when(diligenServiceMock.getDocumentDetails(ArgumentMatchers.eq(BigDecimal.ONE))).thenReturn(DiligenDocumentDetails.builder().create());
+        Mockito.when(extractStoreMock.get(Mockito.eq(BigDecimal.ONE))).thenReturn(Optional.of(ExtractRequest.builder().create()));
 
         sut = new DocumentsApiDelegateImpl(diligenServiceMock, extratRequestMapper, extractStoreMock, null, clamAvServiceMock);
 

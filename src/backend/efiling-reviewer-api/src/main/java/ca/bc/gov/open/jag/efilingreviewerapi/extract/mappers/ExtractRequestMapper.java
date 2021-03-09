@@ -15,7 +15,8 @@ public interface ExtractRequestMapper {
 
     @Mapping(target = "extract", source = "transactionId")
     @Mapping(target = "document", source = "multipartFile", qualifiedByName = "multipartFileToDocument")
-    ExtractRequest toExtractRequest(UUID transactionId, @Context String documentType, MultipartFile multipartFile);
+    @Mapping(target = "receivedTimeMillis", source = "receivedTimeMillis")
+    ExtractRequest toExtractRequest(UUID transactionId, @Context String documentType, MultipartFile multipartFile, long receivedTimeMillis);
 
     @Named("multipartFileToDocument")
     static Document multipartFileToDocument(MultipartFile multipartFile, @Context String documentType) {

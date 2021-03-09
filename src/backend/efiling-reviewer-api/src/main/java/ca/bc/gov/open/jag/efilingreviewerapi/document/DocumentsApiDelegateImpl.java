@@ -51,6 +51,8 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
     @Override
     public ResponseEntity<DocumentExtractResponse> extractDocumentFormData(UUID xTransactionId, String xDocumentType, MultipartFile file) {
 
+        long receivedTimeMillis = System.currentTimeMillis();
+
         logger.info("document extract request received");
 
         try {
@@ -62,7 +64,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
             throw new AiReviewerDocumentException("File is corrupt");
         }
 
-        ExtractRequest extractRequest = extractRequestMapper.toExtractRequest(xTransactionId, xDocumentType, file);
+        ExtractRequest extractRequest = extractRequestMapper.toExtractRequest(xTransactionId, xDocumentType, file, receivedTimeMillis);
 
         BigDecimal response = diligenService.postDocument(xDocumentType, file);
 
@@ -85,6 +87,18 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
         //We won't do anything with this for now
         if (documentEvent.getStatus().equalsIgnoreCase(Keys.PROCESSED_STATUS)) {
             diligenService.getDocumentDetails(documentEvent.getDocumentId());
+
+            Optional<ExtractRequest> extractRequestCached = extractStore.get(documentEvent.getDocumentId());
+
+            if (extractRequestCached.isPresent()) {
+
+                ExtractRequest extractRequest = extractRequestCached.get();
+                extractRequest.updateProcessedTimeMillis();
+                logger.info("document processing time: [{}]", extractRequest.getProcessedTimeMillis());
+                extractStore.put(documentEvent.getDocumentId(), extractRequest);
+
+            }
+        
         }
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
