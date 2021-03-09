@@ -24,16 +24,21 @@ public class ExtractRequest {
     public ExtractRequest(Builder builder) {
         this.document = builder.document;
         this.extract = builder.extract;
+        this.receivedTimeMillis = builder.receivedTimeMillis;
     }
 
     public void updateProcessedTimeMillis() {
         this.processedTimeMillis = System.currentTimeMillis();
     }
 
-    public long getProcessingTimeMillis() {
+    public Long getReceivedTimeMillis() {
+        return receivedTimeMillis;
+    }
 
-        if(processedTimeMillis == null || receivedTimeMillis == null) {
-            return -1l;
+    public long getProcessedTimeMillis() {
+
+        if (processedTimeMillis == null || receivedTimeMillis == null) {
+            return -1L;
         }
 
         return processedTimeMillis -  receivedTimeMillis;
