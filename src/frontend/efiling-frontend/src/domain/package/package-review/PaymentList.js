@@ -139,6 +139,7 @@ export default function PaymentList({ payments, packageId }) {
         <span
           className="file-href"
           role="button"
+          data-testid="btn-view-receipt"
           tabIndex={0}
           onClick={handleClick}
           onKeyDown={handleKeyDown}

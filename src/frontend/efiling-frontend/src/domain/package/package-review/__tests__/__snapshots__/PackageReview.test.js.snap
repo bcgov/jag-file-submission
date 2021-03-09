@@ -541,6 +541,7 @@ exports[`PackageReview Component Matches the snapshot 1`] = `
             >
               <span
                 class="file-href"
+                data-testid="btn-view-receipt"
                 role="button"
                 tabindex="0"
               >
@@ -1218,6 +1219,7 @@ exports[`PackageReview Component Reload Document trigger 1`] = `
             >
               <span
                 class="file-href"
+                data-testid="btn-view-receipt"
                 role="button"
                 tabindex="0"
               >
@@ -1891,6 +1893,7 @@ exports[`PackageReview Component Withdraw document network error 1`] = `
             >
               <span
                 class="file-href"
+                data-testid="btn-view-receipt"
                 role="button"
                 tabindex="0"
               >
