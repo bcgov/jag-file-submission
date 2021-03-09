@@ -240,7 +240,7 @@
                 <dependency>
                     <groupId>ca.bc.gov.open.jag</groupId>
                     <artifactId>efiling-bambora-api-client</artifactId>
-                    <version>0.0.1-SNAPSHOT</version>
+                    <version>0.7.0-SNAPSHOT</version>
                 </dependency>
 
                 <dependency>
