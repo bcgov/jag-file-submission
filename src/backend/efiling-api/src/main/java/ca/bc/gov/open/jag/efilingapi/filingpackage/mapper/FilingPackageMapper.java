@@ -29,6 +29,7 @@ public interface FilingPackageMapper {
     @Mapping(target = "packageNumber", source = "packageNo")
     @Mapping(target = "filingComments", source = "filingCommentsTxt")
     @Mapping(target = "links.packageHistoryUrl", source = "packageLinks.packageHistoryUrl")
+    @Mapping(target = "organizationParties", source = "organizations")
     FilingPackage toResponseFilingPackage(ReviewFilingPackage filingPackage);
 
     List<Document> toDocuments(List<ReviewDocument> file);
@@ -51,7 +52,7 @@ public interface FilingPackageMapper {
     @Mapping(target = "roleDescription", source = "roleTypeDesc")
     Individual toParty(ca.bc.gov.open.jag.efilingcommons.model.Individual individual);
 
-    List<Organization> toOrganizations(List<ca.bc.gov.open.jag.efilingcommons.model.Organization> organizations);
+    List<Organization> toOrganizationParties(List<ca.bc.gov.open.jag.efilingcommons.model.Organization> organizations);
 
     @Mapping(target = "partyDescription", source = "partyTypeDesc")
     @Mapping(target = "roleType", source = "roleTypeCd")
