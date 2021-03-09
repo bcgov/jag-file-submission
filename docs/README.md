@@ -178,8 +178,9 @@ The efiling Package Review screen shows the details of a submitted package.
 
 https://dev.justice.gov.bc.ca/efilinghub/packagereview/:packageId?returnUrl=
 
-The returnUrl parameter is optional, but if an encoded URL is supplied, the page will render with a button 
-that will return the user to the given URL (i.e., parent application).
+The returnUrl parameter is optional, but if an encoded URL is supplied, the
+page will render with a button that will return the user to the given URL
+(i.e., parent application).
 
 ### Api Documentation
 
