@@ -9,4 +9,6 @@ public interface ExtractStore {
 
     Optional<ExtractRequest> put(BigDecimal id, ExtractRequest documentExtractRequest);
 
+    Optional<ExtractRequest> get(BigDecimal id);
+
 }
