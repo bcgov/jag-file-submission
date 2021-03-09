@@ -149,7 +149,7 @@ export default function PackageReview() {
 
   function handleCsoLink(e) {
     if (submissionHistoryLink && (isClick(e) || isEnter(e))) {
-      window.open(submissionHistoryLink, "_self")
+      window.open(submissionHistoryLink, "_self");
     }
   }
 
@@ -221,7 +221,14 @@ export default function PackageReview() {
           </Tabs>
           <br />
           <b>Please Note: </b> Visit your CSO account to{" "}
-          <span role="button" data-testid="cso-link" tabIndex={0} className="file-href" onClick={handleCsoLink} onKeyDown={handleCsoLink}>
+          <span
+            role="button"
+            data-testid="cso-link"
+            tabIndex={0}
+            className="file-href"
+            onClick={handleCsoLink}
+            onKeyDown={handleCsoLink}
+          >
             view all your previously submitted packages.
           </span>
           <section className="buttons pt-2">
