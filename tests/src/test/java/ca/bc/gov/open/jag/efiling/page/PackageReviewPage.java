@@ -55,6 +55,9 @@ public class PackageReviewPage extends BasePage {
     @FindBy(id = "uncontrolled-tab-tabpane-payment")
     private WebElement paymentPane;
 
+    @FindBy(xpath = "//*[@data-testid='btn-view-receipt']")
+    private WebElement viewReceiptButton;
+
     @FindBy(id = "filingComments")
     private WebElement filingCommentsTextBox;
 
@@ -122,6 +125,15 @@ public class PackageReviewPage extends BasePage {
         wait.until(ExpectedConditions.visibilityOf(paymentPane));
         return paymentPane.isDisplayed();
     }
+
+    public void clickToDownloadReceipt() throws InterruptedException {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-testid='btn-view-receipt']")));
+        logger.info("Download button is enabled: {}", viewReceiptButton.isEnabled());
+
+        viewReceiptButton.click();
+        Thread.sleep(1500L);
+    }
+
 
     public void signIn() {
         String packageReviewPageUrl = MessageFormat.format("{0}/{1}", packageReviewUrl, packageId);

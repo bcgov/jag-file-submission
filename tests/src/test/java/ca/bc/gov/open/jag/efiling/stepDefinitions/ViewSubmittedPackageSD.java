@@ -1,6 +1,6 @@
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
-import ca.bc.gov.open.jag.efiling.error.EfilingTestException;
+import ca.bc.gov.open.jag.efiling.helpers.FileDownloadHelper;
 import ca.bc.gov.open.jag.efiling.page.PackageReviewPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 public class ViewSubmittedPackageSD {
@@ -54,24 +53,20 @@ public class ViewSubmittedPackageSD {
     }
 
     @And("document can be downloaded")
-    public void verifyDocumentDownload() throws IOException, InterruptedException {
+    public void verifyDocumentDownload() throws InterruptedException {
         packageReviewPage.clickToDownloadDocument();
 
-        File folder = new File(DOWNLOADED_FILES_PATH);
-        File[] listOfFiles = folder.listFiles();
+        FileDownloadHelper fileDownloadHelper = new FileDownloadHelper();
+        File downloadedFile = fileDownloadHelper.downloadFile(DOWNLOADED_FILES_PATH);
 
-        if (listOfFiles == null) throw new EfilingTestException("Downloaded file is not present");
-        for (File file : listOfFiles) {
-            if (file.isFile()) {
-                logger.info("Downloaded file name is: {}", file.getName());
-                Assert.assertTrue(file.length() > 0);
-                logger.info("Files successfully downloaded");
+        logger.info("Downloaded file name is: {}", downloadedFile.getName());
+        Assert.assertEquals("test-document.pdf", downloadedFile.getName());
 
-                logger.info("Files deleted after validation: {}", file.delete());
+        Assert.assertTrue(downloadedFile.length() > 0);
+        logger.info("Files successfully downloaded");
 
-            }
-            Assert.assertEquals(0, file.length());
-        }
+        logger.info("Files deleted after validation: {}", downloadedFile.delete());
+        Assert.assertEquals(0, downloadedFile.length());
     }
 
     @And("comments are available in Filing Comments tab")
