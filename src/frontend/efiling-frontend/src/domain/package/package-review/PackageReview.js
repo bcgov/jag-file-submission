@@ -9,6 +9,7 @@ import { BsEyeFill } from "react-icons/bs";
 import { MdCancel } from "react-icons/md";
 import { useLocation, useParams } from "react-router-dom";
 import queryString from "query-string";
+import validator from "validator";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import {
@@ -239,7 +240,7 @@ export default function PackageReview() {
           >
             view all your previously submitted packages.
           </span>
-          {returnUrl && (
+          {returnUrl && validator.isURL(returnUrl) && (
             <>
               <br />
               <section className="buttons pt-2">
