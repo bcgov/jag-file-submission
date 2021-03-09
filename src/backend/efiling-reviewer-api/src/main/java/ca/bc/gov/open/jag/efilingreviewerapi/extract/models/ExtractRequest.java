@@ -7,17 +7,37 @@ public class ExtractRequest {
 
     private Extract extract;
     private Document document;
+    private Long receivedTimeMillis;
+    private Long processedTimeMillis;
 
     public ExtractRequest(
             @JsonProperty("extract") Extract extract,
-            @JsonProperty("document") Document document) {
+            @JsonProperty("document") Document document,
+            @JsonProperty("receivedTimeMillis") Long receivedTimeMillis,
+            @JsonProperty("processedTimeMillis") Long processedTimeMillis) {
         this.extract = extract;
         this.document = document;
+        this.receivedTimeMillis = receivedTimeMillis;
+        this.processedTimeMillis = processedTimeMillis;
     }
 
     public ExtractRequest(Builder builder) {
         this.document = builder.document;
         this.extract = builder.extract;
+    }
+
+    public void updateProcessedTimeMillis() {
+        this.processedTimeMillis = System.currentTimeMillis();
+    }
+
+    public long getProcessingTimeMillis() {
+
+        if(processedTimeMillis == null || receivedTimeMillis == null) {
+            return -1l;
+        }
+
+        return processedTimeMillis -  receivedTimeMillis;
+
     }
 
     public static Builder builder() {
@@ -27,16 +47,21 @@ public class ExtractRequest {
     public static class Builder {
 
         private Extract extract;
+        private Document document;
+        private long receivedTimeMillis;
 
         public Builder extract(Extract extract) {
             this.extract = extract;
             return this;
         }
 
-        private Document document;
-
         public Builder document(Document document) {
             this.document = document;
+            return this;
+        }
+
+        public Builder receivedTimeMillis(long receivedTimeMillis) {
+            this.receivedTimeMillis = receivedTimeMillis;
             return this;
         }
 

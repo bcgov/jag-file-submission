@@ -20,7 +20,9 @@ public class ExtractRequestMockFactory {
 
         return new ExtractRequest(
                 new Extract(EXPECTED_EXTRACT_ID, EXPECTED_EXTRACT_TRANSACTION_ID),
-                new Document(EXPECTED_DOCUMENT_TYPE, EXPECTED_DOCUMENT_FILE_NAME, EXPECTED_DOCUMENT_SIZE, EXPECTED_DOCUMENT_CONTENT_TYPE));
+                new Document(EXPECTED_DOCUMENT_TYPE, EXPECTED_DOCUMENT_FILE_NAME, EXPECTED_DOCUMENT_SIZE, EXPECTED_DOCUMENT_CONTENT_TYPE),
+                10l,
+                15l);
 
     }
 
