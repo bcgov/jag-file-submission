@@ -22,7 +22,7 @@ moment.tz.setDefault("America/Vancouver");
 
 describe("PackageReview Component", () => {
   const packageId = "1";
-  const link = "http://google.com";
+  const links = { packageHistoryUrl: "http://google.com"};
   const courtData = getCourtData();
   const submittedDate = new Date("2021-01-14T18:57:43.602Z").toISOString();
   const submittedBy = { firstName: "Han", lastName: "Solo" };
@@ -163,18 +163,26 @@ describe("PackageReview Component", () => {
       court: courtData,
       submittedBy,
       submittedDate,
+      links,
     });
     mock
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
       .reply(200, { blob });
 
-    const { getByText } = render(<PackageReview />);
+    const { getByText, getByTestId } = render(<PackageReview />);
     await waitFor(() => {});
 
     fireEvent.click(getByText("Print Submission Sheet"));
     await waitFor(() => {});
 
     expect(FileSaver.saveAs).toHaveBeenCalled();
+
+    const button = getByTestId("cso-link");
+
+    fireEvent.click(button);
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalled()
   });
 
   test("View Submission Sheet (on keyDown) - successful", async () => {
@@ -248,7 +256,7 @@ describe("PackageReview Component", () => {
     );
   });
 
-  test("Reload Document trigger", async () => {
+  test("Reload", async () => {
     mock.onGet(apiRequest).reply(200, {
       packageNumber: packageId,
       court: courtData,
@@ -259,7 +267,7 @@ describe("PackageReview Component", () => {
     mock.onDelete("/filingpackages/1/document/1").reply(200);
     const noop = jest.spyOn(mockHelper, "noop");
 
-    const { getByText } = render(<PackageReview />);
+    const { getByText} = render(<PackageReview />);
     await waitFor(() => {});
 
     // get the span wrapping the file link, click it.
@@ -279,6 +287,7 @@ describe("PackageReview Component", () => {
     await waitFor(() => {});
 
     expect(noop).toHaveBeenCalled();
+
   });
 
   test("Withdraw document network error", async () => {
@@ -314,24 +323,4 @@ describe("PackageReview Component", () => {
     expect(noop).toHaveBeenCalled();
   });
 
-  test("Redirects to CSO Submission History", async () => {
-    mock.onGet(apiRequest).reply(200, {
-      packageNumber: packageId,
-      court: courtData,
-      submittedBy,
-      submittedDate,
-      documents,
-      links: {
-        packageHistoryUrl: link,
-      },
-    });
-
-    const { getByTestId } = render(<PackageReview />);
-    const button = getByTestId("cso-link");
-
-    fireEvent.click(button);
-    await waitFor(() => {});
-
-    // expect(window.open).toHaveBeenCalled()
-  });
 });
