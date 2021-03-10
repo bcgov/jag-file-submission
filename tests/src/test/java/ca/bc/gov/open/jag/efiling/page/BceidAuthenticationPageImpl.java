@@ -7,9 +7,6 @@ import org.springframework.beans.factory.annotation.Value;
 
 public class BceidAuthenticationPageImpl extends BasePage implements AuthenticationPage {
 
-    @Value("${EFILING_ADMIN}")
-    private String efilingAdminUrl;
-
     @Value("${USERNAME_BCEID}")
     private String bceidUsername;
 
@@ -40,18 +37,12 @@ public class BceidAuthenticationPageImpl extends BasePage implements Authenticat
     }
 
     @Override
-    public void goTo(String url) {
-        this.driver.get(url);
-    }
-
-    @Override
     public String getName() {
         return "bceid";
     }
 
     @Override
     public void signIn() {
-        goTo(efilingAdminUrl);
         loginWithBceid();
     }
 }
