@@ -612,15 +612,16 @@ Duis aute irure dolor.
       >
         view all your previously submitted packages.
       </span>
+      <br />
       <section
         class="buttons pt-2"
       >
         <button
-          class="bcgov-button normal-white btn"
+          class="bcgov-button bcgov-normal-white btn"
           data-test-id=""
           type="button"
         >
-          Cancel and Return to Parent App
+          Return to Parent App
         </button>
       </section>
     </div>
@@ -1288,15 +1289,16 @@ exports[`PackageReview Component Reload 1`] = `
       >
         view all your previously submitted packages.
       </span>
+      <br />
       <section
         class="buttons pt-2"
       >
         <button
-          class="bcgov-button normal-white btn"
+          class="bcgov-button bcgov-normal-white btn"
           data-test-id=""
           type="button"
         >
-          Cancel and Return to Parent App
+          Return to Parent App
         </button>
       </section>
     </div>
@@ -1964,15 +1966,16 @@ exports[`PackageReview Component Withdraw document network error 1`] = `
       >
         view all your previously submitted packages.
       </span>
+      <br />
       <section
         class="buttons pt-2"
       >
         <button
-          class="bcgov-button normal-white btn"
+          class="bcgov-button bcgov-normal-white btn"
           data-test-id=""
           type="button"
         >
-          Cancel and Return to Parent App
+          Return to Parent App
         </button>
       </section>
     </div>

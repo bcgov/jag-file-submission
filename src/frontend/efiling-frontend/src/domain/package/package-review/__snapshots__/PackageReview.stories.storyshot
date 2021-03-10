@@ -467,15 +467,16 @@ exports[`Storyshots PackageReview Default 1`] = `
       >
         view all your previously submitted packages.
       </span>
+      <br />
       <section
         class="buttons pt-2"
       >
         <button
-          class="bcgov-button normal-white btn"
+          class="bcgov-button bcgov-normal-white btn"
           data-test-id=""
           type="button"
         >
-          Cancel and Return to Parent App
+          Return to Parent App
         </button>
       </section>
     </div>
@@ -1102,15 +1103,16 @@ exports[`Storyshots PackageReview Mobile 1`] = `
       >
         view all your previously submitted packages.
       </span>
+      <br />
       <section
         class="buttons pt-2"
       >
         <button
-          class="bcgov-button normal-white btn"
+          class="bcgov-button bcgov-normal-white btn"
           data-test-id=""
           type="button"
         >
-          Cancel and Return to Parent App
+          Return to Parent App
         </button>
       </section>
     </div>
