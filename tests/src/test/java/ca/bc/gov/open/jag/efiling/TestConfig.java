@@ -108,7 +108,7 @@ public class TestConfig {
     }
 
     public AuthenticationPage keycloakAuthenticationPageImpl() {
-        return new KeycloakAuthenticationPageImpl(generateUrlService());
+        return new KeycloakAuthenticationPageImpl();
     }
 
     @Bean

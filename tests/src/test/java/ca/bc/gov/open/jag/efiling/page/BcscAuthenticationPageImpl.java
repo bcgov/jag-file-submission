@@ -8,15 +8,11 @@ import org.springframework.beans.factory.annotation.Value;
 
 public class BcscAuthenticationPageImpl extends BasePage implements AuthenticationPage {
 
-    @Value("${EFILING_ADMIN}")
-    private String efilingAdminUrl;
-
     @Value("${BCSC_CARD_NUMBER}")
     private String bcscCardNumber;
 
     @Value("${BCSC_PASSCODE}")
     private String bcscPasscode;
-
 
     //Page Objects:
     @FindBy(id = "zocial-bcsc")
@@ -94,18 +90,12 @@ public class BcscAuthenticationPageImpl extends BasePage implements Authenticati
     }
 
     @Override
-    public void goTo(String url) {
-        this.driver.get(url);
-    }
-
-    @Override
     public String getName() {
         return "bcsc";
     }
 
     @Override
     public void signIn() {
-        goTo(efilingAdminUrl);
         accessBcscLogIn();
         enterBcscCardNumber();
         enterBcscPasscode();
