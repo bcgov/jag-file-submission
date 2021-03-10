@@ -190,8 +190,23 @@ services:
     networks:
       - fisu-net
 
+  #############################################################################################
+  ###                             MONGO DB                                                  ###
+  #############################################################################################
+  mongodb:
+    image: 'mongo:latest'
+    container_name: 'mongodb'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
+    volumes:
+      - mongo-volume:/data/db
+    ports:
+      - 27017:27017
+
 volumes:
   data-redis:
+  mongo-volume:
 
 networks:
   fisu-net:
