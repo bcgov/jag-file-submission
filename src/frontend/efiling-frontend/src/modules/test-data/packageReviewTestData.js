@@ -24,6 +24,14 @@ export const parties = [
   },
 ];
 
+export const organizationParties = [
+  {
+    name: "The Q Continuum",
+    roleDescription: "Applicant",
+    partyDescription: "Organization",
+  },
+];
+
 export const payments = [
   {
     feeExempt: false,
