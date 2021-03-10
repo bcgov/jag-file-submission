@@ -51,7 +51,7 @@ public class Receiver {
                TimeUnit.SECONDS.sleep(waitTime);
                stringRedisTemplate.convertAndSend("documentWait", documentId.toPlainString());
            } else {
-               logger.info("existing on status {}", diligenDocumentDetails.getFileStatus());
+               logger.info("exiting on status {}", diligenDocumentDetails.getFileStatus());
            }
         } catch (InterruptedException e) {
             logger.error("Temporary code should have slept for two seconds");
