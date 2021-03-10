@@ -207,10 +207,6 @@ services:
   skywalking-oap-server:
     image: apache/skywalking-oap-server:8.4.0-es7
     container_name: skywalking-oap-server
-    depends_on:
-      - elasticsearch
-    links:
-      - elasticsearch
     restart: always
     ports:
       - 11800:11800
