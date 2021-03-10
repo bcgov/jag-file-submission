@@ -61,6 +61,7 @@ export default function PackageReview() {
   const [reloadTrigger, setReloadTrigger] = useState(false);
   const [documents, setDocuments] = useState([]);
   const [parties, setParties] = useState([]);
+  const [organizationParties, setOrganizationParties] = useState([]);
   const [payments, setPayments] = useState([]);
   const [submissionHistoryLink, setSubmissionHistoryLink] = useState("");
   const aboutCsoSidecard = getSidecardData().aboutCso;
@@ -123,6 +124,7 @@ export default function PackageReview() {
           setFilingComments(response.data.filingComments);
           setDocuments(response.data.documents);
           setParties(response.data.parties);
+          setOrganizationParties(response.data.organizationParties);
           setPayments(response.data.payments);
           setSubmissionHistoryLink(response.data.links.packageHistoryUrl);
         } catch (err) {
@@ -212,7 +214,10 @@ export default function PackageReview() {
             </Tab>
             <Tab eventKey="parties" title="Parties">
               <br />
-              <PartyList parties={parties} />
+              <PartyList
+                parties={parties}
+                organizationParties={organizationParties}
+              />
             </Tab>
             <Tab eventKey="payment" title="Payment Status">
               <br />
