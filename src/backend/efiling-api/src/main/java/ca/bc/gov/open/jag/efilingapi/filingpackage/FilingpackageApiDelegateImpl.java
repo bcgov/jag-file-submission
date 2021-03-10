@@ -83,6 +83,18 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
 
     }
 
+    @Override
+    public ResponseEntity<Resource> getRegistryNotice(BigDecimal packageIdentifier) {
+
+        logger.info("get payment receipt request received");
+
+        return getReport(ReportRequest.builder()
+                .report(ReportsTypes.REGISTRY_NOTICE)
+                .packageId(packageIdentifier)
+                .fileName(Keys.EFILING_REGISTRY_NOTICE_FILENAME).create());
+
+    }
+
     private ResponseEntity<Resource> getReport(ReportRequest reportRequest) {
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
