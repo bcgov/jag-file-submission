@@ -1,0 +1,93 @@
+version: "3.7"
+services:
+
+  #############################################################################################
+  ###                           Efiling api backend app                                     ###
+  #############################################################################################
+  efiling-api:
+    container_name: efiling-api
+    build:
+      context: ./src/backend
+      dockerfile: Dockerfile.efiling-api
+      args:
+        - MVN_PROFILE=${MVN_PROFILE:-efiling-api-demo}
+        - SKIP_TESTS=true
+        - STARTERS_V=v0.1.8
+    ports:
+      - "8080:8080"
+    environment:
+      - BAMBORA_APIPASSCODE=${BAMBORA_APIPASSCODE:-passcode}
+      - BAMBORA_MERCHANTID=${BAMBORA_MERCHANTID-merchantid}
+      - BAMBORA_PROFILE_URL=${BAMBORA_PROFILE_URL:-http://localhost:3001/updatecard}
+      - BAMBORA_HASHKEY=${BAMBORA_HASHKEY:-key}
+      - BAMBORA_PROFILE_SERVICE_VERSION=${BAMBORA_PROFILE_SERVICE_VERSION}
+      - BAMBORA_URL_EXPIRY=10
+
+      - KEYCLOAK_AUTH_SERVER_URL=${KEYCLOAK_AUTH_SERVER_URL:-http://keycloak:8080/auth}
+      - KEYCLOAK_REALM=${KEYCLOAK_REALM:-Efiling-Hub}
+      - KEYCLOAK_CREDENTIALS_SECRET=${KEYCLOAK_CREDENTIALS_SECRET}
+      - KEYCLOAK_SSL_REQUIRED=${KEYCLOAK_SSL_REQUIRED:-none}
+
+      - REDIS_HOST=redis
+
+      - NAVIGATION_BASE_URL=http://localhost:3000/efilinghub
+      - NAVIGATION_EXPIRYTIME=10
+
+      - CLAMAV_HOST=clamav
+
+      - SW_AGENT_NAME=efiling-api
+      - SW_AGENT_COLLECTOR_BACKEND_SERVICES=skywalking-oap-server:11800
+
+    networks:
+      - fisu-net
+
+  #############################################################################################
+  ###                           Efiling reviewer backend app                                ###
+  #############################################################################################
+  efiling-reviewer-api:
+    container_name: efiling-reviewer-api
+    hostname: efiling-reviewer-api
+    build:
+      context: ./src/backend
+      dockerfile: Dockerfile.efiling-reviewer-api
+      args:
+        - SKIP_TESTS=true
+        - MVN_PROFILE=${MVN_PROFILE:-efiling-reviewer}
+        - STARTERS_V=v0.1.8
+    ports:
+      - "8090:8080"
+    environment:
+      - DILIGEN_BASE_PATH=$DILIGEN_BASE_PATH
+      - DILIGEN_USERNAME=$DILIGEN_USERNAME
+      - DILIGEN_PASSWORD=$DILIGEN_PASSWORD
+      - DILIGEN_PROJECT_IDENTIFIER=$DILIGEN_PROJECT_IDENTIFIER
+      - REDIS_HOST=redis
+      - CLAMAV_HOST=clamav
+      - SW_AGENT_NAME=ai-reviewer-api
+      - SW_AGENT_COLLECTOR_BACKEND_SERVICES=skywalking-oap-server:11800
+    networks:
+      - fisu-net
+
+  #############################################################################################
+  ###                                        KEYCLOAK Config                                ###
+  #############################################################################################
+  keycloak-config:
+    build:
+      context: ./infrastructure/keycloak
+      args:
+        - KEYCLOAK_URL=http://keycloak:8080
+    command: sh -c "dockerize -wait http://keycloak:8080 -timeout 300s /tmp/createuser.sh"
+    networks:
+      - fisu-net
+
+  frontend-dev-container:
+    build:
+      context: ./src/frontend/.devcontainer
+    volumes:
+        # Update this to wherever you want VS Code to mount the folder of your project
+        - .:/workspace:cached
+    command: /bin/sh -c "while sleep 1000; do :; done"
+    # tail -f /dev/null
+    networks:
+      - fisu-net
+    

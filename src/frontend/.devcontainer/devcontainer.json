@@ -1,0 +1,31 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.158.0/containers/javascript-node
+{
+	"name": "Node.js",
+	
+	"dockerComposeFile": ["../../../docker-compose.yml", "docker-compose.devcontainer.yml"],
+  	"service": "frontend-dev-container",
+
+	// Set *default* container specific settings.json values on container create.
+	"settings": { 
+		"terminal.integrated.shell.linux": "/bin/bash"
+	},
+
+	"shutdownAction": "none",
+
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"dbaeumer.vscode-eslint"
+	],
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+ //	"postCreateCommand": "yarn -cwd efiling-demo install && yarn -cwd efiling-frontend install && cp efiling-demo/env.local efiling/demo/.env",
+
+ 	"postCreateCommand": "efiling-demo/scritps/install-dev-tools.sh",
+
+	"workspaceFolder": "/workspace/src/frontend"
+
+}
