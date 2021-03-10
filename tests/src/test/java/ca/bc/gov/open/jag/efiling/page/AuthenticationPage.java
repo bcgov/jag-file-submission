@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 
 public interface AuthenticationPage {
 
-    void goTo(String url);
     String getName();
+
     void signIn() throws FileNotFoundException;
 }
