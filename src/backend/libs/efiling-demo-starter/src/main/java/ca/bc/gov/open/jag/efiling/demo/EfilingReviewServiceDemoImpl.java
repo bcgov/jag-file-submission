@@ -1,13 +1,12 @@
 package ca.bc.gov.open.jag.efiling.demo;
 
-import ca.bc.gov.open.jag.efilingcommons.model.Party;
+import ca.bc.gov.open.jag.efilingcommons.model.Individual;
+import ca.bc.gov.open.jag.efilingcommons.model.Organization;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.review.PackagePayment;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewCourt;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportRequest;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.review.*;
 import org.joda.time.DateTime;
 
 import java.io.IOException;
@@ -34,7 +33,7 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
     }
 
     @Override
-    public Optional<byte[]> getSubmissionSheet(BigDecimal packageNumber) {
+    public Optional<byte[]> getReport(ReportRequest reportRequest) {
 
         return getDocument();
 
@@ -76,6 +75,9 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
         reviewFilingPackage.setParties(createParty());
         reviewFilingPackage.setDocuments(createReviewDocuments());
         reviewFilingPackage.setPayments(createPayment());
+        reviewFilingPackage.setPackageLinks(PackageLinks.builder().packageHistoryUrl("http://localhost:8080/wherearemypackage").create());
+        reviewFilingPackage.setOrganizations(createOrganizations());
+        reviewFilingPackage.setHasRegistryNotice(true);
         return reviewFilingPackage;
     }
 
@@ -134,29 +136,47 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
         return reviewDocument;
     }
 
-    private List<Party> createParty() {
+    private List<Individual> createParty() {
 
-        Party partyOne = Party.builder()
+        Individual individualOne = Individual.builder()
                 .firstName("Bob")
                 .middleName("Q")
                 .lastName("Ross")
                 .roleTypeCd("APP")
                 .roleTypeDesc("Applicant")
-                .partyTypeCd("IND")
                 .partyTypeDesc("Individual")
                 .create();
 
-        Party partyTwo = Party.builder()
+        Individual individualTwo = Individual.builder()
                 .firstName("Looooooongname")
                 .middleName("Q")
                 .lastName("Loooooooooong-Looooooooooonglast")
                 .roleTypeCd("APP")
                 .roleTypeDesc("Applicant")
-                .partyTypeCd("IND")
                 .partyTypeDesc("Individual")
                 .create();
 
-        return Arrays.asList(partyOne, partyTwo);
+        return Arrays.asList(individualOne, individualTwo);
+
+    }
+
+    private List<Organization> createOrganizations() {
+
+        Organization organizationOne = Organization.builder()
+                .name("The Organization Org.")
+                .roleTypeCd("APP")
+                .roleTypeDesc("Applicant")
+                .partyTypeDesc("Organization")
+                .create();
+
+        Organization organizationTwo = Organization.builder()
+                .name("This is a very very very very loooooong organization name")
+                .roleTypeCd("APP")
+                .roleTypeDesc("Applicant")
+                .partyTypeDesc("Organization")
+                .create();
+
+        return Arrays.asList(organizationOne, organizationTwo);
 
     }
 

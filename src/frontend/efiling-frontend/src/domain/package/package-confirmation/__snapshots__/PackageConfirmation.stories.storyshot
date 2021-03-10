@@ -20,203 +20,123 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
       </span>
       <br />
       <br />
-      <div>
+      <div
+        class="ct-file-list "
+      >
         <div
-          class="bcgov-display-box bcgov-border-background bcgov-display-file"
+          class="header"
         >
-          <div
-            class="bcgov-display-icon"
+          <span
+            class="d-none d-lg-inline col-lg-6"
           >
-            <div
-              style="color: rgb(252, 186, 25);"
+            Document Name
+          </span>
+          <span
+            class="d-none d-lg-inline col-lg-3"
+          >
+            Statutory Fee
+          </span>
+          <span
+            class="d-none d-lg-inline col-lg-3"
+          >
+            Document Type
+          </span>
+        </div>
+        <ul>
+          <li>
+            <span
+              class="file-href col-md-12 col-lg-6"
+              data-test-id="uploaded-file"
+              role="button"
+              tabindex="0"
             >
               <svg
+                color="#FCBA19"
                 fill="currentColor"
-                height="32"
+                height="30"
                 stroke="currentColor"
                 stroke-width="0"
+                style="color: rgb(252, 186, 25);"
                 viewBox="0 0 24 24"
-                width="32"
+                width="30"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
                   d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
                 />
               </svg>
-            </div>
-          </div>
-          <div
-            class="bcgov-display-right-element"
-          >
-            <div
-              class="bcgov-table "
+              file name 1
+            </span>
+            <span
+              class="col-md-5 d-lg-none"
             >
-              <b />
-              <div
-                class="bcgov-table-body"
-              >
-                <div
-                  class="bcgov-row "
-                >
-                  <div
-                    class="bcgov-vertical-middle bcgov-fill-width"
-                  >
-                    <div
-                      style="width: 80%;"
-                    >
-                      <span
-                        class="file-href"
-                        data-test-id="uploaded-file"
-                        role="button"
-                        tabindex="0"
-                      >
-                        file name 1
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    class="bcgov-table-value "
-                  >
-                    <div
-                      class="bcgov-table "
-                    >
-                      <b />
-                      <div
-                        class="bcgov-table-body"
-                      >
-                        <div
-                          class="bcgov-row "
-                        >
-                          <div
-                            class="bcgov-fill-width"
-                          >
-                            Description:
-                          </div>
-                          <div
-                            class="bcgov-table-value "
-                          >
-                            <b>
-                              file description 1
-                            </b>
-                          </div>
-                        </div>
-                        <div
-                          class="bcgov-row "
-                        >
-                          <div
-                            class="bcgov-fill-width"
-                          >
-                            Statutory Fee:
-                          </div>
-                          <div
-                            class="bcgov-table-value "
-                          >
-                            <b>
-                              $40.00
-                            </b>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <br />
-      </div>
-      <div>
-        <div
-          class="bcgov-display-box bcgov-border-background bcgov-display-file"
-        >
-          <div
-            class="bcgov-display-icon"
-          >
-            <div
-              style="color: rgb(252, 186, 25);"
+              Statutory Fee:
+            </span>
+            <span
+              class="col-md-5 col-lg-3"
+            >
+              $40.00
+            </span>
+            <span
+              class="col-md-5 d-lg-none"
+            >
+              Document Type:
+            </span>
+            <span
+              class="col-md-5 col-lg-3"
+            >
+              file description 1
+            </span>
+          </li>
+          <li>
+            <span
+              class="file-href col-md-12 col-lg-6"
+              data-test-id="uploaded-file"
+              role="button"
+              tabindex="0"
             >
               <svg
+                color="#FCBA19"
                 fill="currentColor"
-                height="32"
+                height="30"
                 stroke="currentColor"
                 stroke-width="0"
+                style="color: rgb(252, 186, 25);"
                 viewBox="0 0 24 24"
-                width="32"
+                width="30"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
                   d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
                 />
               </svg>
-            </div>
-          </div>
-          <div
-            class="bcgov-display-right-element"
-          >
-            <div
-              class="bcgov-table "
+              file name 2
+            </span>
+            <span
+              class="col-md-5 d-lg-none"
             >
-              <b />
-              <div
-                class="bcgov-table-body"
-              >
-                <div
-                  class="bcgov-row "
-                >
-                  <div
-                    class="bcgov-vertical-middle bcgov-fill-width"
-                  >
-                    <div
-                      style="width: 80%;"
-                    >
-                      <span
-                        class="file-href"
-                        data-test-id="uploaded-file"
-                        role="button"
-                        tabindex="0"
-                      >
-                        file name 2
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    class="bcgov-table-value "
-                  >
-                    <div
-                      class="bcgov-table "
-                    >
-                      <b />
-                      <div
-                        class="bcgov-table-body"
-                      >
-                        <div
-                          class="bcgov-row "
-                        >
-                          <div
-                            class="bcgov-fill-width"
-                          >
-                            Description:
-                          </div>
-                          <div
-                            class="bcgov-table-value "
-                          >
-                            <b>
-                              file description 2
-                            </b>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <br />
+              Statutory Fee:
+            </span>
+            <span
+              class="col-md-5 col-lg-3"
+            >
+              $0.00
+            </span>
+            <span
+              class="col-md-5 d-lg-none"
+            >
+              Document Type:
+            </span>
+            <span
+              class="col-md-5 col-lg-3"
+            >
+              file description 2
+            </span>
+          </li>
+        </ul>
       </div>
-      <h2>
+      <br />
+      <h4>
         Do you have additional documents to upload? 
         <span
           class="file-href"
@@ -226,8 +146,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
         >
           Upload them now.
         </span>
-      </h2>
-      <br />
+      </h4>
       <br />
       <h2>
         Summary
@@ -490,203 +409,123 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
       </span>
       <br />
       <br />
-      <div>
+      <div
+        class="ct-file-list "
+      >
         <div
-          class="bcgov-display-box bcgov-border-background bcgov-display-file"
+          class="header"
         >
-          <div
-            class="bcgov-display-icon"
+          <span
+            class="d-none d-lg-inline col-lg-6"
           >
-            <div
-              style="color: rgb(252, 186, 25);"
+            Document Name
+          </span>
+          <span
+            class="d-none d-lg-inline col-lg-3"
+          >
+            Statutory Fee
+          </span>
+          <span
+            class="d-none d-lg-inline col-lg-3"
+          >
+            Document Type
+          </span>
+        </div>
+        <ul>
+          <li>
+            <span
+              class="file-href col-md-12 col-lg-6"
+              data-test-id="uploaded-file"
+              role="button"
+              tabindex="0"
             >
               <svg
+                color="#FCBA19"
                 fill="currentColor"
-                height="32"
+                height="30"
                 stroke="currentColor"
                 stroke-width="0"
+                style="color: rgb(252, 186, 25);"
                 viewBox="0 0 24 24"
-                width="32"
+                width="30"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
                   d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
                 />
               </svg>
-            </div>
-          </div>
-          <div
-            class="bcgov-display-right-element"
-          >
-            <div
-              class="bcgov-table "
+              file name 1
+            </span>
+            <span
+              class="col-md-5 d-lg-none"
             >
-              <b />
-              <div
-                class="bcgov-table-body"
-              >
-                <div
-                  class="bcgov-row "
-                >
-                  <div
-                    class="bcgov-vertical-middle bcgov-fill-width"
-                  >
-                    <div
-                      style="width: 80%;"
-                    >
-                      <span
-                        class="file-href"
-                        data-test-id="uploaded-file"
-                        role="button"
-                        tabindex="0"
-                      >
-                        file name 1
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    class="bcgov-table-value "
-                  >
-                    <div
-                      class="bcgov-table "
-                    >
-                      <b />
-                      <div
-                        class="bcgov-table-body"
-                      >
-                        <div
-                          class="bcgov-row "
-                        >
-                          <div
-                            class="bcgov-fill-width"
-                          >
-                            Description:
-                          </div>
-                          <div
-                            class="bcgov-table-value "
-                          >
-                            <b>
-                              file description 1
-                            </b>
-                          </div>
-                        </div>
-                        <div
-                          class="bcgov-row "
-                        >
-                          <div
-                            class="bcgov-fill-width"
-                          >
-                            Statutory Fee:
-                          </div>
-                          <div
-                            class="bcgov-table-value "
-                          >
-                            <b>
-                              $40.00
-                            </b>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <br />
-      </div>
-      <div>
-        <div
-          class="bcgov-display-box bcgov-border-background bcgov-display-file"
-        >
-          <div
-            class="bcgov-display-icon"
-          >
-            <div
-              style="color: rgb(252, 186, 25);"
+              Statutory Fee:
+            </span>
+            <span
+              class="col-md-5 col-lg-3"
+            >
+              $40.00
+            </span>
+            <span
+              class="col-md-5 d-lg-none"
+            >
+              Document Type:
+            </span>
+            <span
+              class="col-md-5 col-lg-3"
+            >
+              file description 1
+            </span>
+          </li>
+          <li>
+            <span
+              class="file-href col-md-12 col-lg-6"
+              data-test-id="uploaded-file"
+              role="button"
+              tabindex="0"
             >
               <svg
+                color="#FCBA19"
                 fill="currentColor"
-                height="32"
+                height="30"
                 stroke="currentColor"
                 stroke-width="0"
+                style="color: rgb(252, 186, 25);"
                 viewBox="0 0 24 24"
-                width="32"
+                width="30"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
                   d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
                 />
               </svg>
-            </div>
-          </div>
-          <div
-            class="bcgov-display-right-element"
-          >
-            <div
-              class="bcgov-table "
+              file name 2
+            </span>
+            <span
+              class="col-md-5 d-lg-none"
             >
-              <b />
-              <div
-                class="bcgov-table-body"
-              >
-                <div
-                  class="bcgov-row "
-                >
-                  <div
-                    class="bcgov-vertical-middle bcgov-fill-width"
-                  >
-                    <div
-                      style="width: 80%;"
-                    >
-                      <span
-                        class="file-href"
-                        data-test-id="uploaded-file"
-                        role="button"
-                        tabindex="0"
-                      >
-                        file name 2
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    class="bcgov-table-value "
-                  >
-                    <div
-                      class="bcgov-table "
-                    >
-                      <b />
-                      <div
-                        class="bcgov-table-body"
-                      >
-                        <div
-                          class="bcgov-row "
-                        >
-                          <div
-                            class="bcgov-fill-width"
-                          >
-                            Description:
-                          </div>
-                          <div
-                            class="bcgov-table-value "
-                          >
-                            <b>
-                              file description 2
-                            </b>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <br />
+              Statutory Fee:
+            </span>
+            <span
+              class="col-md-5 col-lg-3"
+            >
+              $0.00
+            </span>
+            <span
+              class="col-md-5 d-lg-none"
+            >
+              Document Type:
+            </span>
+            <span
+              class="col-md-5 col-lg-3"
+            >
+              file description 2
+            </span>
+          </li>
+        </ul>
       </div>
-      <h2>
+      <br />
+      <h4>
         Do you have additional documents to upload? 
         <span
           class="file-href"
@@ -696,8 +535,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
         >
           Upload them now.
         </span>
-      </h2>
-      <br />
+      </h4>
       <br />
       <h2>
         Summary
@@ -991,203 +829,123 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
       </span>
       <br />
       <br />
-      <div>
+      <div
+        class="ct-file-list "
+      >
         <div
-          class="bcgov-display-box bcgov-border-background bcgov-display-file"
+          class="header"
         >
-          <div
-            class="bcgov-display-icon"
+          <span
+            class="d-none d-lg-inline col-lg-6"
           >
-            <div
-              style="color: rgb(252, 186, 25);"
+            Document Name
+          </span>
+          <span
+            class="d-none d-lg-inline col-lg-3"
+          >
+            Statutory Fee
+          </span>
+          <span
+            class="d-none d-lg-inline col-lg-3"
+          >
+            Document Type
+          </span>
+        </div>
+        <ul>
+          <li>
+            <span
+              class="file-href col-md-12 col-lg-6"
+              data-test-id="uploaded-file"
+              role="button"
+              tabindex="0"
             >
               <svg
+                color="#FCBA19"
                 fill="currentColor"
-                height="32"
+                height="30"
                 stroke="currentColor"
                 stroke-width="0"
+                style="color: rgb(252, 186, 25);"
                 viewBox="0 0 24 24"
-                width="32"
+                width="30"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
                   d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
                 />
               </svg>
-            </div>
-          </div>
-          <div
-            class="bcgov-display-right-element"
-          >
-            <div
-              class="bcgov-table "
+              file name 1
+            </span>
+            <span
+              class="col-md-5 d-lg-none"
             >
-              <b />
-              <div
-                class="bcgov-table-body"
-              >
-                <div
-                  class="bcgov-row "
-                >
-                  <div
-                    class="bcgov-vertical-middle bcgov-fill-width"
-                  >
-                    <div
-                      style="width: 80%;"
-                    >
-                      <span
-                        class="file-href"
-                        data-test-id="uploaded-file"
-                        role="button"
-                        tabindex="0"
-                      >
-                        file name 1
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    class="bcgov-table-value "
-                  >
-                    <div
-                      class="bcgov-table "
-                    >
-                      <b />
-                      <div
-                        class="bcgov-table-body"
-                      >
-                        <div
-                          class="bcgov-row "
-                        >
-                          <div
-                            class="bcgov-fill-width"
-                          >
-                            Description:
-                          </div>
-                          <div
-                            class="bcgov-table-value "
-                          >
-                            <b>
-                              file description 1
-                            </b>
-                          </div>
-                        </div>
-                        <div
-                          class="bcgov-row "
-                        >
-                          <div
-                            class="bcgov-fill-width"
-                          >
-                            Statutory Fee:
-                          </div>
-                          <div
-                            class="bcgov-table-value "
-                          >
-                            <b>
-                              $40.00
-                            </b>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <br />
-      </div>
-      <div>
-        <div
-          class="bcgov-display-box bcgov-border-background bcgov-display-file"
-        >
-          <div
-            class="bcgov-display-icon"
-          >
-            <div
-              style="color: rgb(252, 186, 25);"
+              Statutory Fee:
+            </span>
+            <span
+              class="col-md-5 col-lg-3"
+            >
+              $40.00
+            </span>
+            <span
+              class="col-md-5 d-lg-none"
+            >
+              Document Type:
+            </span>
+            <span
+              class="col-md-5 col-lg-3"
+            >
+              file description 1
+            </span>
+          </li>
+          <li>
+            <span
+              class="file-href col-md-12 col-lg-6"
+              data-test-id="uploaded-file"
+              role="button"
+              tabindex="0"
             >
               <svg
+                color="#FCBA19"
                 fill="currentColor"
-                height="32"
+                height="30"
                 stroke="currentColor"
                 stroke-width="0"
+                style="color: rgb(252, 186, 25);"
                 viewBox="0 0 24 24"
-                width="32"
+                width="30"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
                   d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
                 />
               </svg>
-            </div>
-          </div>
-          <div
-            class="bcgov-display-right-element"
-          >
-            <div
-              class="bcgov-table "
+              file name 2
+            </span>
+            <span
+              class="col-md-5 d-lg-none"
             >
-              <b />
-              <div
-                class="bcgov-table-body"
-              >
-                <div
-                  class="bcgov-row "
-                >
-                  <div
-                    class="bcgov-vertical-middle bcgov-fill-width"
-                  >
-                    <div
-                      style="width: 80%;"
-                    >
-                      <span
-                        class="file-href"
-                        data-test-id="uploaded-file"
-                        role="button"
-                        tabindex="0"
-                      >
-                        file name 2
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    class="bcgov-table-value "
-                  >
-                    <div
-                      class="bcgov-table "
-                    >
-                      <b />
-                      <div
-                        class="bcgov-table-body"
-                      >
-                        <div
-                          class="bcgov-row "
-                        >
-                          <div
-                            class="bcgov-fill-width"
-                          >
-                            Description:
-                          </div>
-                          <div
-                            class="bcgov-table-value "
-                          >
-                            <b>
-                              file description 2
-                            </b>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <br />
+              Statutory Fee:
+            </span>
+            <span
+              class="col-md-5 col-lg-3"
+            >
+              $0.00
+            </span>
+            <span
+              class="col-md-5 d-lg-none"
+            >
+              Document Type:
+            </span>
+            <span
+              class="col-md-5 col-lg-3"
+            >
+              file description 2
+            </span>
+          </li>
+        </ul>
       </div>
-      <h2>
+      <br />
+      <h4>
         Do you have additional documents to upload? 
         <span
           class="file-href"
@@ -1197,8 +955,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
         >
           Upload them now.
         </span>
-      </h2>
-      <br />
+      </h4>
       <br />
       <h2>
         Summary

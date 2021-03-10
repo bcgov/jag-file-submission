@@ -2,7 +2,8 @@ package ca.bc.gov.open.jag.efiling.helpers;
 
 public class PayloadHelper {
 
-    private PayloadHelper() {}
+    private PayloadHelper() {
+    }
 
     public static String generateUrlPayload(String documentName) {
 
@@ -21,10 +22,8 @@ public class PayloadHelper {
                 "        },\n" +
                 "        \"documents\": [\n" +
                 "            {\n" +
-                "              \"documentProperties\": {\n" +
-                "                   \"name\": \"" + documentName + "\",\n" +
-                "                   \"type\": \"AFF\"\n" +
-                "                },\n" +
+                "                \"name\": \"" + documentName + "\",\n" +
+                "                \"type\": \"AFF\",\n" +
                 "                \"statutoryFeeAmount\": 0,\n" +
                 "                \"data\": {},\n" +
                 "                \"md5\": \"string\"\n" +
@@ -46,19 +45,15 @@ public class PayloadHelper {
 
     public static String updateDocumentProperties(String documentName) {
 
-        return "{\n" +
-                "        \"documents\": [\n" +
-                "            {\n" +
-                "              \"documentProperties\": {\n" +
-                "                   \"name\": \"" + documentName + "\",\n" +
-                "                   \"type\": \"AAB\"\n" +
-                "                },\n" +
-                "                \"isAmendment\": \"true\",\n" +
-                "                \"isSupremeCourtScheduling\": \"true\",\n" +
-                "                \"data\": {},\n" +
-                "                \"md5\": \"string\"\n" +
-                "            }\n" +
-                "        ]\n" +
+        return "{" +
+                "        \"documents\": [" +
+                "            {" +
+                "                \"name\": \"" + documentName + "\"," +
+                "                \"type\": \"AAB\"," +
+                "                \"isAmendment\": \"true\"," +
+                "                \"isSupremeCourtScheduling\": \"true\"" +
+                "            }" +
+                "        ]" +
                 "}";
 
     }

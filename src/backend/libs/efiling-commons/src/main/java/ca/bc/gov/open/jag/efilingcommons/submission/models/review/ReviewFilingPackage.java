@@ -1,7 +1,8 @@
 package ca.bc.gov.open.jag.efilingcommons.submission.models.review;
 
-import ca.bc.gov.open.jag.efilingcommons.model.Party;
+import ca.bc.gov.open.jag.efilingcommons.model.Individual;
 
+import ca.bc.gov.open.jag.efilingcommons.model.Organization;
 import org.joda.time.DateTime;
 
 import java.math.BigDecimal;
@@ -14,7 +15,8 @@ public class ReviewFilingPackage {
     private BigDecimal submissionFeeAmount;
     private ReviewCourt court;
     private List<ReviewDocument> documents = new ArrayList<>();
-    private List<Party> parties = new ArrayList<>();
+    private List<Individual> parties = new ArrayList<>();
+    private List<Organization> organizations = new ArrayList<>();
     private boolean rushedSubmission = false;
     private String applicationCode;
     private Boolean existingCourtFileYN;
@@ -28,6 +30,7 @@ public class ReviewFilingPackage {
     private List<PackagePayment> payments;
     //TODO: protected RushOrderRequest procRequest;
     private DateTime submittedDate;
+    private PackageLinks packageLinks;
 
     public ReviewFilingPackage() { }
 
@@ -43,7 +46,7 @@ public class ReviewFilingPackage {
         return documents;
     }
 
-    public List<Party> getParties() {
+    public List<Individual> getParties() {
         return parties;
     }
 
@@ -115,7 +118,7 @@ public class ReviewFilingPackage {
         this.documents = documents;
     }
 
-    public void setParties(List<Party> parties) {
+    public void setParties(List<Individual> parties) {
         this.parties = parties;
     }
 
@@ -166,4 +169,16 @@ public class ReviewFilingPackage {
     public void setSubmittedDate(DateTime submittedDate) {
         this.submittedDate = submittedDate;
     }
+
+    public PackageLinks getPackageLinks() {
+        return packageLinks;
+    }
+
+    public void setPackageLinks(PackageLinks packageLinks) {
+        this.packageLinks = packageLinks;
+    }
+
+    public List<Organization> getOrganizations() { return organizations; }
+
+    public void setOrganizations(List<Organization> organizations) { this.organizations = organizations; }
 }

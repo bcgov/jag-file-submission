@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PartyList Component Matches snapshot 1`] = `
+exports[`PaymentList Component Matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="ct-payment-list"
@@ -133,9 +133,11 @@ exports[`PartyList Component Matches snapshot 1`] = `
     >
       <span
         class="file-href"
+        data-testid="btn-view-receipt"
         role="button"
+        tabindex="0"
       >
-        View receipt
+        View Receipt
       </span>
       <svg
         class="align-icon"

@@ -6,7 +6,9 @@ import { propTypes } from "../../../types/propTypes";
 export default function Success({ page: { header, packageRef } }) {
   const openPackageRef = () => {
     const buff = Buffer.from(packageRef, "base64");
-    const url = buff.toString("ascii");
+    const returnUrl =
+      "https%3A%2F%2Fwww.google.ca%2Fsearch%3Fq%3Dbob%2Bross%26tbm%3Disch";
+    const url = `${buff.toString("ascii")}?returnUrl=${returnUrl}`;
     window.open(url);
   };
 

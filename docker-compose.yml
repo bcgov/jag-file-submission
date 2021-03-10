@@ -94,6 +94,10 @@ services:
 
       - CLAMAV_HOST=clamav
       - CLAMAV_TIMEOUT=150000
+
+      - SW_AGENT_NAME=efiling-api
+      - SW_AGENT_COLLECTOR_BACKEND_SERVICES=skywalking-oap-server:11800
+
     networks:
       - fisu-net
 
@@ -109,16 +113,22 @@ services:
       args:
         - SKIP_TESTS=true
         - MVN_PROFILE=${MVN_PROFILE:-efiling-reviewer}
+        - STARTERS_V=v0.1.8
     ports:
       - "8090:8080"
     environment:
-      - DILIGEN_BASE_PATH=$DILIGEN_BASE_API
+      - DILIGEN_BASE_PATH=$DILIGEN_BASE_PATH
       - DILIGEN_USERNAME=$DILIGEN_USERNAME
       - DILIGEN_PASSWORD=$DILIGEN_PASSWORD
       - DILIGEN_PROJECT_IDENTIFIER=$DILIGEN_PROJECT_IDENTIFIER
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - REDIS_PASSWORD=admin
+      - CLAMAV_HOST=clamav
+      - CLAMAV_PORT=3310
+      - CLAMAV_TIMEOUT=50000
+      - SW_AGENT_NAME=ai-reviewer-api
+      - SW_AGENT_COLLECTOR_BACKEND_SERVICES=skywalking-oap-server:11800
     networks:
       - fisu-net
 
@@ -189,7 +199,48 @@ services:
       - "3310:3310"
     networks:
       - fisu-net
+      
+  #############################################################################################
+  ###                             skywalking-oap-server                                     ###
+  #############################################################################################
 
+  skywalking-oap-server:
+    image: apache/skywalking-oap-server:8.4.0-es7
+    container_name: skywalking-oap-server
+    depends_on:
+      - elasticsearch
+    links:
+      - elasticsearch
+    restart: always
+    ports:
+      - 11800:11800
+      - 12800:12800
+    environment:
+      SW_STORAGE: elasticsearch7
+      SW_STORAGE_ES_CLUSTER_NODES: elasticsearch:9200
+      SW_HEALTH_CHECKER: default
+    networks:
+      - fisu-net
+  
+  #############################################################################################
+  ###                             skywalking-ui                                              ###
+  #############################################################################################
+
+  skywalking-ui:
+    image: apache/skywalking-ui:8.4.0
+    container_name: skywalking-ui
+    depends_on:
+      - skywalking-oap-server
+    links:
+      - skywalking-oap-server
+    restart: always
+    ports:
+      - 8070:8080
+    environment:
+      SW_OAP_ADDRESS: skywalking-oap-server:12800
+    networks:
+      - fisu-net 
+ 
   #############################################################################################
   ###                             MONGO DB                                                  ###
   #############################################################################################
@@ -206,6 +257,9 @@ services:
 
 volumes:
   data-redis:
+    driver: local
+  data01:
+    driver: local
   mongo-volume:
 
 networks:

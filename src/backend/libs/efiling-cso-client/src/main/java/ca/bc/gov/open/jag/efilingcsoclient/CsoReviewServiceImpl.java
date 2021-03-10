@@ -12,8 +12,10 @@ import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingStatusServiceExceptio
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
+import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +26,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,6 +34,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class CsoReviewServiceImpl implements EfilingReviewService {
+
+
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -42,14 +47,17 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
 
     private final FilePackageMapper filePackageMapper;
 
+    private final CsoProperties csoProperties;
+
     private final RestTemplate restTemplate;
 
-    public CsoReviewServiceImpl(FilingStatusFacadeBean filingStatusFacadeBean, ReportService reportService, FilingFacadeBean filingFacadeBean, FilePackageMapper filePackageMapper, RestTemplate restTemplate) {
+    public CsoReviewServiceImpl(FilingStatusFacadeBean filingStatusFacadeBean, ReportService reportService, FilingFacadeBean filingFacadeBean, FilePackageMapper filePackageMapper, CsoProperties csoProperties, RestTemplate restTemplate) {
 
         this.filingStatusFacadeBean = filingStatusFacadeBean;
         this.reportService = reportService;
         this.filingFacadeBean = filingFacadeBean;
         this.filePackageMapper = filePackageMapper;
+        this.csoProperties = csoProperties;
         this.restTemplate = restTemplate;
     }
 
@@ -65,7 +73,17 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
 
             if (filingStatus.getFilePackages() == null || filingStatus.getFilePackages().isEmpty()) return Optional.empty();
 
-            return Optional.of(filePackageMapper.toFilingPackage(filingStatus.getFilePackages().get(0)));
+            return Optional.of(filePackageMapper.toFilingPackage(
+                    filingStatus.getFilePackages().get(0),
+                    getViewAllPackagesUrl(),
+                    filingStatus.getFilePackages().get(0).getParties().stream()
+                            .filter(individual -> individual.getPartyTypeCd().equalsIgnoreCase(Keys.INDIVIDUAL_ROLE_TYPE_CD))
+                            .map(filePackageMapper::toParty)
+                            .collect(Collectors.toList()),
+                    filingStatus.getFilePackages().get(0).getParties().stream()
+                            .filter(individual -> individual.getPartyTypeCd().equalsIgnoreCase(Keys.ORGANIZATION_ROLE_TYPE_CD))
+                            .map(filePackageMapper::toOrganization)
+                            .collect(Collectors.toList())));
 
         } catch (NestedEjbException_Exception e) {
 
@@ -86,7 +104,17 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
 
             if (filingStatus.getFilePackages().isEmpty()) return new ArrayList<>();
 
-            return filingStatus.getFilePackages().stream().map(filePackageMapper::toFilingPackage).collect(Collectors.toList());
+            return filingStatus.getFilePackages().stream().map(filePackage -> filePackageMapper.toFilingPackage(filePackage,
+                    getViewAllPackagesUrl(),
+                    filePackage.getParties().stream()
+                            .filter(individual -> individual.getPartyTypeCd().equalsIgnoreCase(Keys.INDIVIDUAL_ROLE_TYPE_CD))
+                            .map(filePackageMapper::toParty)
+                            .collect(Collectors.toList()),
+                    filePackage.getParties().stream()
+                            .filter(individual -> individual.getPartyTypeCd().equalsIgnoreCase(Keys.ORGANIZATION_ROLE_TYPE_CD))
+                            .map(filePackageMapper::toOrganization)
+                            .collect(Collectors.toList())
+                    )).collect(Collectors.toList());
 
         } catch (NestedEjbException_Exception e) {
 
@@ -96,19 +124,34 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
     }
 
     @Override
-    public Optional<byte[]> getSubmissionSheet(BigDecimal packageNumber) {
+    public Optional<byte[]> getReport(ReportRequest reportRequest) {
+        String reportName;
+        String parameterName;
+        switch (reportRequest.getReport()) {
+            case SUBMISSION_SHEET:
+                reportName = Keys.SUBMISSION_REPORT_NAME;
+                parameterName = Keys.SUBMISSION_REPORT_PARAMETER;
+                break;
+            case PAYMENT_RECEIPT:
+                reportName = Keys.RECEIPT_REPORT_NAME;
+                parameterName = Keys.PARAM_REPORT_PARAMETER;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + reportRequest.getReport());
+        }
 
-        logger.info("Calling soap to retrieve submission report ");
+        logger.info("Calling soap to retrieve {} report ", reportName);
 
         Report report = new Report();
-        report.setName(Keys.REPORT_NAME);
-        report.getParameters().addAll(Arrays.asList(Keys.REPORT_PARAMETER, packageNumber.toPlainString()));
+        report.setName(reportName);
+        report.getParameters().addAll(Arrays.asList(parameterName, reportRequest.getPackageId().toPlainString()));
 
         byte[] result = reportService.runReport(report);
 
         if (result == null || result.length == 0) return Optional.empty();
 
         return Optional.of(result);
+
     }
 
     @Override
@@ -192,4 +235,9 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
         }
 
     }
+
+    private String getViewAllPackagesUrl() {
+        return MessageFormat.format("{0}/{1}", csoProperties.getCsoBasePath(),  Keys.VIEW_ALL_PACKAGE_SUBPATH);
+    }
+
 }

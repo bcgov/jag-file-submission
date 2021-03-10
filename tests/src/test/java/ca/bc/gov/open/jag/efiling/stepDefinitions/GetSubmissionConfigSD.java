@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
+import ca.bc.gov.open.jag.efiling.Keys;
 import ca.bc.gov.open.jag.efiling.helpers.SubmissionHelper;
 import ca.bc.gov.open.jag.efiling.models.UserIdentity;
 import ca.bc.gov.open.jag.efiling.services.OauthService;
@@ -26,7 +27,6 @@ public class GetSubmissionConfigSD {
     private final SubmissionService submissionService;
     private final UUID actualTransactionId;
 
-    private static final String TEST_DOCUMENT_PDF = "test-document.pdf";
     private static final String RESPONSE_NAVIGATION_URL = "http//somewhere.com";
     private static String CONFIG_PATH = "config";
 
@@ -52,9 +52,9 @@ public class GetSubmissionConfigSD {
     public void aUserSubmitsRequestToGetSubmissionConfiguration() throws IOException {
 
         File resource = new ClassPathResource(
-                MessageFormat.format("data/{0}", TEST_DOCUMENT_PDF)).getFile();
+                MessageFormat.format("data/{0}", Keys.TEST_DOCUMENT_PDF)).getFile();
 
-        MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource,TEST_DOCUMENT_PDF, "text/application.pdf");
+        MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource, Keys.TEST_DOCUMENT_PDF, "text/application.pdf");
 
         Response actualDocumentResponse = submissionService.documentUploadResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
                 actualUserIdentity.getUniversalId(), fileSpec);

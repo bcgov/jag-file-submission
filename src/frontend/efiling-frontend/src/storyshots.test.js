@@ -13,6 +13,7 @@ const runTest = async (story, context) => {
     return;
   }
 
+  window.scrollTo = jest.fn();
   const storyElement = story.render();
 
   const { asFragment } = render(storyElement);

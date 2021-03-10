@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ca.bc.gov.open.jag</groupId>
 	<artifactId>efiling-bambora-api-client</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.7.0-SNAPSHOT</version>
 	<name>efiling-bambora-api-client</name>
 	<description>Client for Bambora</description>
 

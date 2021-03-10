@@ -1,9 +1,10 @@
 package ca.bc.gov.open.jag.efilingdiligenclientstarter;
 
 import ca.bc.gov.open.efilingdiligenclient.diligen.*;
+import ca.bc.gov.open.efilingdiligenclient.diligen.mapper.DiligenDocumentDetailsMapperImpl;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.AuthenticationApi;
+import ca.bc.gov.open.jag.efilingdiligenclient.api.DocumentsApi;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.HealthCheckApi;
-import ca.bc.gov.open.jag.efilingdiligenclient.api.ProjectsApi;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.ApiClient;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -74,10 +75,15 @@ public class AutoConfiguration {
     }
 
     @Bean
-    public DiligenService diligenService(DiligenAuthService diligenAuthService, RestTemplate restTemplate, ApiClient apiClient) {
+    public DocumentsApi documentsApi(ApiClient apiClient) {
+        return new DocumentsApi(apiClient);
+    }
+
+    @Bean
+    public DiligenService diligenService(DiligenAuthService diligenAuthService, RestTemplate restTemplate, DocumentsApi documentsApi) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-        return new DiligenServiceImpl(restTemplate, diligenProperties, diligenAuthService, objectMapper);
+        return new DiligenServiceImpl(restTemplate, diligenProperties, diligenAuthService, objectMapper, documentsApi, new DiligenDocumentDetailsMapperImpl());
     }
 
 }

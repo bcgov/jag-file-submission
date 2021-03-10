@@ -4,10 +4,14 @@ import PropTypes from "prop-types";
 import Dinero from "dinero.js";
 import { MdPrint } from "react-icons/md";
 import "./PaymentList.scss";
+import { downloadPaymentReceipt } from "./PaymentListService";
+import { errorRedirect } from "../../../modules/helpers/errorRedirect";
+import { isEnter } from "../../../modules/helpers/eventUtil";
+import { formatCurrency } from "../../../modules/helpers/CurrencyUtil";
 
 const hash = require("object-hash");
 
-export default function PaymentList({ payments }) {
+export default function PaymentList({ payments, packageId }) {
   const dineroInit = {
     stat: Dinero({ amount: 0 }),
     toDate: Dinero({ amount: 0 }),
@@ -48,6 +52,20 @@ export default function PaymentList({ payments }) {
     setTotal({ stat: subStat.add(csoStat), toDate: subToDate.add(csoToDate) });
   }, [payments]);
 
+  const handleClick = () => {
+    downloadPaymentReceipt(packageId).catch((err) => {
+      errorRedirect(sessionStorage.getItem("errorUrl"), err);
+    });
+  };
+
+  const handleKeyDown = (e) => {
+    if (isEnter(e)) {
+      downloadPaymentReceipt(packageId).catch((err) => {
+        errorRedirect(sessionStorage.getItem("errorUrl"), err);
+      });
+    }
+  };
+
   return (
     <div className="ct-payment-list">
       <table className="payment-table table table-borderless">
@@ -74,18 +92,14 @@ export default function PaymentList({ payments }) {
                   <td>{payment.paymentDescription}</td>
                   <td className=" text-right">
                     {payment.feeExempt
-                      ? Dinero({ amount: 0 }).toFormat(format)
-                      : Dinero({
-                          amount: payment.submittedAmount * 100,
-                        }).toFormat(format)}
+                      ? formatCurrency(0)
+                      : formatCurrency(payment.submittedAmount)}
                   </td>
                   <td className="text-right">
                     {payment.feeExempt
                       ? "Exempt"
                       : payment.processedAmount
-                      ? Dinero({
-                          amount: payment.processedAmount * 100,
-                        }).toFormat(format)
+                      ? formatCurrency(payment.processedAmount)
                       : "Pending"}
                   </td>
                   <td />
@@ -122,8 +136,15 @@ export default function PaymentList({ payments }) {
         </tbody>
       </table>
       <div className="d-flex justify-content-end">
-        <span className="file-href" role="button">
-          View receipt
+        <span
+          className="file-href"
+          role="button"
+          data-testid="btn-view-receipt"
+          tabIndex={0}
+          onClick={handleClick}
+          onKeyDown={handleKeyDown}
+        >
+          View Receipt
         </span>
         <MdPrint size="24" color="#7F7F7F" className="align-icon" />
       </div>
@@ -133,6 +154,7 @@ export default function PaymentList({ payments }) {
 
 PaymentList.propTypes = {
   payments: PropTypes.arrayOf(PropTypes.object),
+  packageId: PropTypes.number.isRequired,
 };
 
 PaymentList.defaultProps = {

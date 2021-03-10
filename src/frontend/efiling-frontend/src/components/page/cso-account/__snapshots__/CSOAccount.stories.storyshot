@@ -88,18 +88,6 @@ exports[`Storyshots CSOAccount Default 1`] = `
                   <div
                     class="bcgov-fill-width"
                   >
-                    BCSC:
-                  </div>
-                  <div
-                    class="bcgov-table-value "
-                  />
-                </div>
-                <div
-                  class="bcgov-row "
-                >
-                  <div
-                    class="bcgov-fill-width"
-                  >
                     Full Name:
                   </div>
                   <div
@@ -1007,18 +995,6 @@ exports[`Storyshots CSOAccount Mobile 1`] = `
               <div
                 class="bcgov-table-body"
               >
-                <div
-                  class="bcgov-row "
-                >
-                  <div
-                    class="bcgov-fill-width"
-                  >
-                    BCSC:
-                  </div>
-                  <div
-                    class="bcgov-table-value "
-                  />
-                </div>
                 <div
                   class="bcgov-row "
                 >

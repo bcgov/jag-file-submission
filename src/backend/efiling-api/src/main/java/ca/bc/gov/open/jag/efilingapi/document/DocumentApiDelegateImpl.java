@@ -32,7 +32,7 @@ public class DocumentApiDelegateImpl implements DocumentsApiDelegate {
     public ResponseEntity<List<DocumentType>> getDocumentTypes(@NotNull @Valid CourtLevel courtLevel, @NotNull @Valid CourtClassification courtClassification) {
         try {
             return ResponseEntity.ok(documentStore.getDocumentTypes(courtLevel.getValue(), courtClassification.getValue()).stream()
-                    .map(documentType -> toDocumentType(documentType)).collect(Collectors.toList()));
+                    .map(this::toDocumentType).collect(Collectors.toList()));
         } catch (EfilingDocumentServiceException e) {
             logger.warn(e.getMessage(), e);
             EfilingError response = new EfilingError();

@@ -1,9 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.filingpackage.mapper;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.Document;
-import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
-import ca.bc.gov.open.jag.efilingapi.api.model.Party;
-import ca.bc.gov.open.jag.efilingapi.api.model.Payment;
+import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.PackagePayment;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
@@ -31,6 +28,8 @@ public interface FilingPackageMapper {
     @Mapping(target = "submittedDate", expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.toIsoDate(filingPackage.getSubmittedDate()))")
     @Mapping(target = "packageNumber", source = "packageNo")
     @Mapping(target = "filingComments", source = "filingCommentsTxt")
+    @Mapping(target = "links.packageHistoryUrl", source = "packageLinks.packageHistoryUrl")
+    @Mapping(target = "organizationParties", source = "organizations")
     FilingPackage toResponseFilingPackage(ReviewFilingPackage filingPackage);
 
     List<Document> toDocuments(List<ReviewDocument> file);
@@ -46,14 +45,19 @@ public interface FilingPackageMapper {
     @Mapping(target = "paymentProcessed", source = "paymentProcessed")
     Document toDocument(ReviewDocument file);
 
-    List<Party> toParties(List<ca.bc.gov.open.jag.efilingcommons.model.Party> parties);
+    List<Individual> toParties(List<ca.bc.gov.open.jag.efilingcommons.model.Individual> parties);
 
-    @Mapping(target = "partyType", source = "partyTypeCd")
     @Mapping(target = "partyDescription", source = "partyTypeDesc")
     @Mapping(target = "roleType", source = "roleTypeCd")
     @Mapping(target = "roleDescription", source = "roleTypeDesc")
-    Party toParty(ca.bc.gov.open.jag.efilingcommons.model.Party party);
+    Individual toParty(ca.bc.gov.open.jag.efilingcommons.model.Individual individual);
 
+    List<Organization> toOrganizationParties(List<ca.bc.gov.open.jag.efilingcommons.model.Organization> organizations);
+
+    @Mapping(target = "partyDescription", source = "partyTypeDesc")
+    @Mapping(target = "roleType", source = "roleTypeCd")
+    @Mapping(target = "roleDescription", source = "roleTypeDesc")
+    Organization toOrganization(ca.bc.gov.open.jag.efilingcommons.model.Organization organization);
 
     List<Payment> toPayments(List<PackagePayment> payments);
 

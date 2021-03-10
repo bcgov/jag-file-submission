@@ -12,6 +12,8 @@ import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.charset.StandardCharsets;
+
 public class getSubmissionSheetSD {
 
     private OauthService oauthService;
@@ -40,7 +42,7 @@ public class getSubmissionSheetSD {
         actualSubmissionSheetResponse = filingPackageService.getSubmissionSheet(actualUserIdentity.getAccessToken(), 1);
 
         logger.info("Api response status code: {}", actualSubmissionSheetResponse.getStatusCode());
-        logger.info("Api response: {}", actualSubmissionSheetResponse.asString());
+        logger.info("Api response: {}", actualSubmissionSheetResponse.asString().getBytes(StandardCharsets.UTF_8).length);
 
     }
 

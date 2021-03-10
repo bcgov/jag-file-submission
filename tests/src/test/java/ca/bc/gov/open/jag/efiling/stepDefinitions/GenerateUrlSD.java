@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
+import ca.bc.gov.open.jag.efiling.Keys;
 import ca.bc.gov.open.jag.efiling.TestConfig;
 import ca.bc.gov.open.jag.efiling.helpers.SubmissionHelper;
 import ca.bc.gov.open.jag.efiling.models.UserIdentity;
@@ -13,9 +14,9 @@ import io.cucumber.spring.CucumberContextConfiguration;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.MultiPartSpecification;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 
@@ -30,16 +31,14 @@ public class GenerateUrlSD {
 
     private final OauthService oauthService;
     private final SubmissionService submissionService;
-
-    private static final String TEST_DOCUMENT_PDF = "test-document.pdf";
-
     private final UUID actualTransactionId;
+
     private Response actualDocumentResponse;
     private Response actualGenerateUrlResponse;
     private String actualSubmissionId;
     private UserIdentity actualUserIdentity;
 
-    public Logger logger = LogManager.getLogger(GenerateUrlSD.class);
+    public Logger logger = LoggerFactory.getLogger(GenerateUrlSD.class);
 
     public GenerateUrlSD(OauthService oauthService, SubmissionService submissionService) {
         this.oauthService = oauthService;
@@ -59,9 +58,9 @@ public class GenerateUrlSD {
         logger.info("Submitting document upload request");
 
         File resource = new ClassPathResource(
-                MessageFormat.format("data/{0}", TEST_DOCUMENT_PDF)).getFile();
+                MessageFormat.format("data/{0}", Keys.TEST_DOCUMENT_PDF)).getFile();
 
-        MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource, TEST_DOCUMENT_PDF, "text/application.pdf");
+        MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource, Keys.TEST_DOCUMENT_PDF, "text/application.pdf");
 
         actualDocumentResponse = submissionService.documentUploadResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
                 actualUserIdentity.getUniversalId(), fileSpec);

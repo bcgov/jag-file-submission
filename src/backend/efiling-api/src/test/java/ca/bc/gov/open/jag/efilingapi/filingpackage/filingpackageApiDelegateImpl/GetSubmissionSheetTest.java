@@ -3,6 +3,8 @@ package ca.bc.gov.open.jag.efilingapi.filingpackage.filingpackageApiDelegateImpl
 import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.FilingpackageApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportRequest;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportsTypes;
 import org.junit.jupiter.api.*;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
@@ -54,7 +56,7 @@ public class GetSubmissionSheetTest {
     private AccessToken tokenMock;
 
     @BeforeAll
-    public void beforeAll() {
+    public void beforeEach() {
 
         MockitoAnnotations.openMocks(this);
 
@@ -65,17 +67,14 @@ public class GetSubmissionSheetTest {
 
         SecurityContextHolder.setContext(securityContextMock);
 
-        Mockito.when(filingPackageService.getSubmissionSheet(ArgumentMatchers.eq(BigDecimal.ONE))).thenReturn(Optional.of(new ByteArrayResource(BYTES)));
-
-
-        Mockito.when(filingPackageService.getSubmissionSheet(ArgumentMatchers.eq(BigDecimal.TEN))).thenReturn(Optional.empty());
-
         sut = new FilingpackageApiDelegateImpl(filingPackageService);
     }
 
     @Test
     @DisplayName("200: ok url was generated")
     public void withValidRequestReturnFilingPackage() {
+
+        Mockito.when(filingPackageService.getReport(Mockito.any())).thenReturn(Optional.of(new ByteArrayResource(BYTES)));
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, CASE_1);
@@ -102,6 +101,8 @@ public class GetSubmissionSheetTest {
     @Test
     @DisplayName("404: when no filling package is found return 404")
     public void withValidRequestFilingPackageNotFound() {
+
+        Mockito.when(filingPackageService.getReport(Mockito.any())).thenReturn(Optional.empty());
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, CASE_2);

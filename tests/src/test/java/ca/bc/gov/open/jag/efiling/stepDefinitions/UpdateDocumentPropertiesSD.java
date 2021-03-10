@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
+import ca.bc.gov.open.jag.efiling.Keys;
 import ca.bc.gov.open.jag.efiling.helpers.SubmissionHelper;
 import ca.bc.gov.open.jag.efiling.models.UserIdentity;
 import ca.bc.gov.open.jag.efiling.services.OauthService;
@@ -10,9 +11,9 @@ import io.cucumber.java.en.When;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.MultiPartSpecification;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
@@ -26,13 +27,12 @@ public class UpdateDocumentPropertiesSD {
     private final SubmissionService submissionService;
     private final UUID actualTransactionId;
 
-    private static final String TEST_DOCUMENT_PDF = "test-document.pdf";
     private static String UPDATE_DOCUMENTS_PATH = "update-documents";
 
     private UserIdentity actualUserIdentity;
     private Response actualUpdatedDocumentPropertiesResponse;
 
-    public Logger logger = LogManager.getLogger(UpdateDocumentPropertiesSD.class);
+    public Logger logger = LoggerFactory.getLogger(UpdateDocumentPropertiesSD.class);
 
     public UpdateDocumentPropertiesSD(OauthService oauthService, SubmissionService submissionService) {
         this.oauthService = oauthService;
@@ -53,9 +53,9 @@ public class UpdateDocumentPropertiesSD {
         logger.info("Submitting request to update document properties");
 
         File resource = new ClassPathResource(
-                MessageFormat.format("data/{0}", TEST_DOCUMENT_PDF)).getFile();
+                MessageFormat.format("data/{0}", Keys.TEST_DOCUMENT_PDF)).getFile();
 
-        MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource, TEST_DOCUMENT_PDF, "text/application.pdf");
+        MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource, Keys.TEST_DOCUMENT_PDF, "text/application.pdf");
 
         Response actualDocumentResponse = submissionService.documentUploadResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
                 actualUserIdentity.getUniversalId(), fileSpec);
@@ -85,7 +85,7 @@ public class UpdateDocumentPropertiesSD {
         Assert.assertEquals(200, actualUpdatedDocumentPropertiesResponse.getStatusCode());
         Assert.assertEquals("application/json", actualUpdatedDocumentPropertiesResponse.getContentType());
 
-        Assert.assertEquals("AAB", additionalDocumentUploadJsonPath.get("documents.documentProperties.type[1]"));
+        Assert.assertEquals("AAB", additionalDocumentUploadJsonPath.get("documents.type[1]"));
         Assert.assertTrue( additionalDocumentUploadJsonPath.get("documents.isAmendment[1]"));
         Assert.assertTrue( additionalDocumentUploadJsonPath.get("documents.isSupremeCourtScheduling[1]"));
 

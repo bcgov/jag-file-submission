@@ -82,11 +82,12 @@ public class CreateSubmissionTest {
         SubmitResponse actual = sut.createSubmission(Submission
                 .builder()
                 .id(TestHelpers.CASE_1)
+                .universalId(UUID.randomUUID().toString())
                 .transactionId(TestHelpers.CASE_1)
                 .navigationUrls(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
                 .clientAppName(CLIENT_APP_NAME)
-                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList(), TestHelpers.createPartyList()))
+                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList(), TestHelpers.createPartyList(), TestHelpers.createOrganizationList()))
                 .create(),
                 AccountDetails.builder()
                         .fileRolePresent(true)
@@ -107,10 +108,11 @@ public class CreateSubmissionTest {
                         .builder()
                         .id(TestHelpers.CASE_1)
                         .transactionId(TestHelpers.CASE_1)
+                        .universalId(UUID.randomUUID().toString())
                         .navigationUrls(TestHelpers.createDefaultNavigation())
                         .expiryDate(10)
                         .clientAppName(CLIENT_APP_NAME)
-                        .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList(), TestHelpers.createPartyList()))
+                        .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList(), TestHelpers.createPartyList(), TestHelpers.createOrganizationList()))
                         .create(),
                 AccountDetails.builder()
                         .fileRolePresent(true)

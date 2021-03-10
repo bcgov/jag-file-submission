@@ -1,6 +1,5 @@
 package ca.bc.gov.open.jag.efilingapi;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingapi.api.model.InitialDocument;
 import ca.bc.gov.open.jag.efilingapi.api.model.InitialPackage;
 import ca.bc.gov.open.jag.efilingapi.api.model.NavigationUrls;
@@ -8,10 +7,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingcommons.model.*;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.review.PackagePayment;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewCourt;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.review.*;
 import com.google.gson.JsonObject;
 import org.joda.time.DateTime;
 
@@ -66,7 +62,7 @@ public class TestHelpers {
     public static final String DOCUMENT_ID_TWO = "2";
     public static final BigDecimal DOCUMENT_ID_TWO_BD = new BigDecimal(2);
 
-    public static final DocumentProperties.TypeEnum TYPE = DocumentProperties.TypeEnum.AAB;
+    public static final String TYPE = "AAB";
     public static final String PARTY_TYPE_DESC = "PARTY_TYPE_DESC";
     public static final String ROLE_TYPE_DESC = "ROLE_TYPE_DESC";
     public static final String TRANSACTION_DESC = "TRANSACTION_DESC";
@@ -76,6 +72,8 @@ public class TestHelpers {
         InitialPackage initialPackage = new InitialPackage();
         initialPackage.setCourt(court);
         initialPackage.setDocuments(initialDocuments);
+        initialPackage.setParties(new ArrayList<>());
+        initialPackage.setOrganizationParties(new ArrayList<>());
         return initialPackage;
     }
 
@@ -134,7 +132,7 @@ public class TestHelpers {
     public static Submission buildSubmission() {
         return Submission
                 .builder()
-                .filingPackage(createPackage(createCourt(), createDocumentList(), createPartyList()))
+                .filingPackage(createPackage(createCourt(), createDocumentList(), createPartyList(), createOrganizationList()))
                 .navigationUrls(createNavigation(SUCCESS_URL, CANCEL_URL, ERROR_URL))
                 .create();
     }
@@ -142,25 +140,25 @@ public class TestHelpers {
     public static FilingPackage createPackage(
             Court court,
             List<Document> documents,
-            List<Party> parties) {
+            List<Individual> parties,
+            List<Organization> organizations) {
         return FilingPackage.builder()
                 .court(court)
                 .documents(documents)
                 .parties(parties)
+                .organizations(organizations)
                 .create();
     }
 
     public static List<InitialDocument> createInitialDocumentsList() {
         InitialDocument initialDocument = new InitialDocument();
-        DocumentProperties documentProperties = new DocumentProperties();
-        documentProperties.setName("random.txt");
-        documentProperties.setType(DocumentProperties.TypeEnum.AAB);
-        initialDocument.setDocumentProperties(documentProperties);
+        initialDocument.setName("random.txt");
+        initialDocument.setType("AAB");
         return Arrays.asList(initialDocument);
     }
 
     public static List<DocumentType> createValidDocumentTypesList() {
-        DocumentType documentType = new DocumentType(DESCRIPTION, TYPE.getValue(), false);
+        DocumentType documentType = new DocumentType(DESCRIPTION, TYPE, false);
         return Arrays.asList(documentType);
     }
 
@@ -188,7 +186,7 @@ public class TestHelpers {
                 .description(DESCRIPTION)
                 .statutoryFeeAmount(BigDecimal.TEN)
                 .name("random.txt")
-                .type(TYPE.getValue())
+                .type(TYPE)
                 .subType(SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD)
                 .mimeType("application/txt")
                 .isSupremeCourtScheduling(true)
@@ -196,21 +194,36 @@ public class TestHelpers {
                 .data(new JsonObject()).create());
     }
 
-    public static List<Party> createPartyList() {
+    public static List<Individual> createPartyList() {
 
-        Party partyOne = buildParty(BigDecimal.ONE);
+        Individual individualOne = buildParty();
 
-        Party partyTwo = buildParty(BigDecimal.TEN);
-        return Arrays.asList(partyOne, partyTwo);
+        Individual individualTwo = buildParty();
+        return Arrays.asList(individualOne, individualTwo);
     }
 
-    private static Party buildParty(BigDecimal partyId) {
-        return Party.builder()
+    public static List<Organization> createOrganizationList() {
+
+        Organization orgOne = buildOrganization();
+
+        Organization orgTwo = buildOrganization();
+        return Arrays.asList(orgOne, orgTwo);
+    }
+
+    private static Individual buildParty() {
+        return Individual.builder()
                 .firstName(FIRST_NAME)
                 .middleName(MIDDLE_NAME)
                 .lastName(LAST_NAME)
                 .nameTypeCd(NAME_TYPE_CD)
-                .partyTypeCd(PARTY_TYPE_CD)
+                .roleTypeCd(ROLE_TYPE_CD)
+                .create();
+    }
+
+    private static Organization buildOrganization() {
+        return Organization.builder()
+                .name(NAME)
+                .nameTypeCd(NAME_TYPE_CD)
                 .roleTypeCd(ROLE_TYPE_CD)
                 .create();
     }
@@ -249,6 +262,7 @@ public class TestHelpers {
         reviewFilingPackage.setDocuments(createDocuments());
         reviewFilingPackage.setParties(Collections.singletonList(createParty()));
         reviewFilingPackage.setPayments(Collections.singletonList(createPayment()));
+        reviewFilingPackage.setPackageLinks(PackageLinks.builder().packageHistoryUrl("http://localhost:8080/showmustgoon").create());
         return reviewFilingPackage;
 
     }
@@ -270,13 +284,12 @@ public class TestHelpers {
 
     }
 
-    public static Party createParty() {
-        return Party.builder()
+    public static Individual createParty() {
+        return Individual.builder()
                 .firstName(FIRST_NAME)
                 .lastName(LAST_NAME)
                 .middleName(MIDDLE_NAME)
                 .nameTypeCd(NAME_TYPE)
-                .partyTypeCd(ca.bc.gov.open.jag.efilingapi.api.model.Party.PartyTypeEnum.IND.getValue())
                 .partyTypeDesc(PARTY_TYPE_DESC)
                 .roleTypeCd(ca.bc.gov.open.jag.efilingapi.api.model.Party.RoleTypeEnum.ABC.getValue())
                 .roleTypeDesc(ROLE_TYPE_DESC)
@@ -288,7 +301,7 @@ public class TestHelpers {
         ReviewDocument reviewDocumentOne = new ReviewDocument();
         reviewDocumentOne.setDocumentId(DOCUMENT_ID_ONE);
         reviewDocumentOne.setFileName(NAME);
-        reviewDocumentOne.setDocumentTypeCd(DocumentProperties.TypeEnum.AAB.getValue());
+        reviewDocumentOne.setDocumentTypeCd("AAB");
         reviewDocumentOne.setDocumentType(DESCRIPTION);
         reviewDocumentOne.setStatus(STATUS);
         reviewDocumentOne.setStatusCode(STATUS_CODE);
@@ -299,7 +312,7 @@ public class TestHelpers {
         ReviewDocument reviewDocumentTwo = new ReviewDocument();
         reviewDocumentTwo.setDocumentId(DOCUMENT_ID_TWO);
         reviewDocumentTwo.setFileName(NAME);
-        reviewDocumentTwo.setDocumentTypeCd(DocumentProperties.TypeEnum.AAB.getValue());
+        reviewDocumentTwo.setDocumentTypeCd("AAB");
         reviewDocumentTwo.setDocumentType(DESCRIPTION);
         reviewDocumentTwo.setStatus(STATUS);
         reviewDocumentTwo.setStatusCode(STATUS_CODE);

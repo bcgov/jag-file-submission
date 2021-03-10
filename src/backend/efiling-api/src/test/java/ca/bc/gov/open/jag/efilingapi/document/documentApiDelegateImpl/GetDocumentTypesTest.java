@@ -37,7 +37,7 @@ public class GetDocumentTypesTest {
     @BeforeAll
     public void setUp() throws IOException {
         MockitoAnnotations.initMocks(this);
-        List<DocumentType> documentTypes = Arrays.asList(new DocumentType(TestHelpers.DESCRIPTION, TestHelpers.TYPE.getValue(), true));
+        List<DocumentType> documentTypes = Arrays.asList(new DocumentType(TestHelpers.DESCRIPTION, TestHelpers.TYPE, true));
 
         Mockito.when(documentStoreMock.getDocumentTypes(LEVEL_STRING, CLASS_STRING)).thenReturn(documentTypes);
         Mockito.when(documentStoreMock.getDocumentTypes(LEVEL_STRING, CLASS_STRING_ERROR)).thenThrow(new EfilingDocumentServiceException("NOOOOOOO"));
@@ -53,7 +53,7 @@ public class GetDocumentTypesTest {
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
         Assertions.assertEquals(1, actual.getBody().size());
         Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getBody().get(0).getDescription());
-        Assertions.assertEquals(TestHelpers.TYPE.getValue(), actual.getBody().get(0).getType());
+        Assertions.assertEquals(TestHelpers.TYPE, actual.getBody().get(0).getType());
     }
 
     @Test
