@@ -104,16 +104,6 @@
             <artifactId>validation-api</artifactId>
         </dependency>
 
-        <!-- Open Tracing -->
-        <dependency>
-            <groupId>io.opentracing.contrib</groupId>
-            <artifactId>opentracing-spring-jaeger-web-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.github.openfeign.opentracing</groupId>
-            <artifactId>feign-opentracing</artifactId>
-        </dependency>
-
         <!-- Logging -->
         <dependency>
             <groupId>ch.qos.logback</groupId>
