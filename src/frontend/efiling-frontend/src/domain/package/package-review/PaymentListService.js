@@ -10,5 +10,5 @@ export const downloadPaymentReceipt = async (packageId) => {
   );
   const fileData = new Blob([response.data], { type: "application/pdf" });
   const fileUrl = URL.createObjectURL(fileData);
-  FileSaver.saveAs(fileUrl, "SubmissionSheet.pdf");
+  FileSaver.saveAs(fileUrl, "PaymentReceipt.pdf");
 };
