@@ -5,6 +5,7 @@ import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
 import ca.bc.gov.open.efilingdiligenclient.diligen.model.DiligenDocumentDetails;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentEvent;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.DocumentsApiDelegateImpl;
+import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidator;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractMapper;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractMapperImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapper;
@@ -36,7 +37,7 @@ public class DocumentEventTest {
     private ExtractStore extractStoreMock;
 
     @Mock
-    private ClamAvService clamAvServiceMock;
+    private DocumentValidator documentValidatorMock;
 
     @BeforeAll
     public void beforeAll() {
@@ -49,7 +50,7 @@ public class DocumentEventTest {
         Mockito.when(diligenServiceMock.getDocumentDetails(ArgumentMatchers.eq(BigDecimal.ONE))).thenReturn(DiligenDocumentDetails.builder().create());
         Mockito.when(extractStoreMock.get(Mockito.eq(BigDecimal.ONE))).thenReturn(Optional.of(ExtractRequest.builder().create()));
 
-        sut = new DocumentsApiDelegateImpl(diligenServiceMock, extratRequestMapper, extractStoreMock, null, clamAvServiceMock);
+        sut = new DocumentsApiDelegateImpl(diligenServiceMock, extratRequestMapper, extractStoreMock, null, documentValidatorMock);
 
     }
 
