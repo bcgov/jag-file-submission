@@ -5,6 +5,7 @@ import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
 import ca.bc.gov.open.efilingdiligenclient.diligen.model.DiligenDocumentDetails;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentEvent;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.DocumentsApiDelegateImpl;
+import ca.bc.gov.open.jag.efilingreviewerapi.document.models.Document;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidator;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractMapper;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractMapperImpl;
@@ -48,7 +49,11 @@ public class DocumentEventTest {
         ExtractRequestMapper extratRequestMapper = new ExtractRequestMapperImpl(extractMapper);
 
         Mockito.when(diligenServiceMock.getDocumentDetails(ArgumentMatchers.eq(BigDecimal.ONE))).thenReturn(DiligenDocumentDetails.builder().create());
-        Mockito.when(extractStoreMock.get(Mockito.eq(BigDecimal.ONE))).thenReturn(Optional.of(ExtractRequest.builder().create()));
+        Mockito.when(extractStoreMock.get(Mockito.eq(BigDecimal.ONE))).thenReturn(Optional.of(ExtractRequest.builder()
+                .document(Document.builder()
+                        .type("TYPE")
+                        .create())
+                .create()));
 
         sut = new DocumentsApiDelegateImpl(diligenServiceMock, extratRequestMapper, extractStoreMock, null, documentValidatorMock);
 
