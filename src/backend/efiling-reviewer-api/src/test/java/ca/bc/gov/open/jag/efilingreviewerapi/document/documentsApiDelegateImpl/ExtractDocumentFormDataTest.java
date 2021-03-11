@@ -5,6 +5,7 @@ import ca.bc.gov.open.clamav.starter.VirusDetectedException;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentExtractResponse;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.DocumentsApiDelegateImpl;
+import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidator;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerCacheException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerVirusFoundException;
@@ -41,13 +42,15 @@ public class ExtractDocumentFormDataTest {
     private static final String APPLICATION_PDF = "application/pdf";
     private static final String CASE_1 = "test-document.pdf";
     private static final String CASE_2 = "test.txt";
+    public static final String DOCUMENT_TYPE = "RCC";
+    public static final String NOT_RCC = "NOT_RCC";
     private DocumentsApiDelegateImpl sut;
 
     @Mock
     DiligenService diligenService;
 
     @Mock
-    ClamAvService clamAvService;
+    DocumentValidator documentValidatorMock;
 
     @Mock
     private ExtractStore extractStore;
@@ -66,7 +69,7 @@ public class ExtractDocumentFormDataTest {
         Mockito.doNothing().when(stringRedisTemplateMock).convertAndSend(any(), any());
 
         ExtractRequestMapper extractRequestMapper = new ExtractRequestMapperImpl(new ExtractMapperImpl());
-        sut = new DocumentsApiDelegateImpl(diligenService, extractRequestMapper, extractStore, stringRedisTemplateMock, clamAvService);
+        sut = new DocumentsApiDelegateImpl(diligenService, extractRequestMapper, extractStore, stringRedisTemplateMock, documentValidatorMock);
 
     }
     @Test
@@ -82,9 +85,9 @@ public class ExtractDocumentFormDataTest {
         MultipartFile multipartFile = new MockMultipartFile(CASE_1,
                 CASE_1, APPLICATION_PDF, Files.readAllBytes(path));
 
-        Mockito.doNothing().when(clamAvService).scan(any());
+        Mockito.doNothing().when(documentValidatorMock).validateDocument(any(), any());
 
-        ResponseEntity<DocumentExtractResponse> actual = sut.extractDocumentFormData(transactionId, "TYPE", multipartFile);
+        ResponseEntity<DocumentExtractResponse> actual = sut.extractDocumentFormData(transactionId, DOCUMENT_TYPE, multipartFile);
 
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
         Assertions.assertEquals(ExtractRequestMockFactory.EXPECTED_DOCUMENT_CONTENT_TYPE, actual.getBody().getDocument().getContentType());
@@ -101,7 +104,7 @@ public class ExtractDocumentFormDataTest {
     public void withUserHavingValidRequestShouldReturnCredfated() throws IOException {
 
         Mockito.when(diligenService.postDocument(Mockito.any(), Mockito.any())).thenReturn(BigDecimal.TEN);
-
+        Mockito.doNothing().when(documentValidatorMock).validateDocument(any(), any());
         Path path = Paths.get("src/test/resources/" + CASE_1);
 
         UUID transactionId = UUID.randomUUID();
@@ -110,17 +113,17 @@ public class ExtractDocumentFormDataTest {
                 CASE_1, APPLICATION_PDF, Files.readAllBytes(path));
 
         Assertions.assertThrows(AiReviewerCacheException.class,
-                () -> sut.extractDocumentFormData(transactionId, "TYPE", multipartFile)
+                () -> sut.extractDocumentFormData(transactionId, DOCUMENT_TYPE, multipartFile)
         );
 
     }
 
     @Test
     @DisplayName("Error: non pdf throws exception")
-    public void withNonPdfFilesShouldReturnOk() throws IOException, VirusDetectedException {
+    public void withNonPdfFilesShouldReturnOk() throws IOException {
 
         Mockito.when(diligenService.postDocument(Mockito.any(), Mockito.any())).thenReturn(BigDecimal.ONE);
-        Mockito.doNothing().when(clamAvService).scan(any());
+        Mockito.doThrow(AiReviewerDocumentException.class).when(documentValidatorMock).validateDocument(any(), any());
 
         Path path = Paths.get("src/test/resources/" + CASE_2);
 
@@ -129,15 +132,15 @@ public class ExtractDocumentFormDataTest {
         MultipartFile multipartFile = new MockMultipartFile(CASE_1,
                 CASE_1, APPLICATION_PDF, Files.readAllBytes(path));
 
-        Assertions.assertThrows(AiReviewerDocumentException.class,() -> sut.extractDocumentFormData(transactionId, "TYPE", multipartFile));
+        Assertions.assertThrows(AiReviewerDocumentException.class,() -> sut.extractDocumentFormData(transactionId, DOCUMENT_TYPE, multipartFile));
 
     }
 
     @Test
     @DisplayName("Error: IO exception")
-    public void withScanFailureThrowException() throws VirusDetectedException, IOException {
+    public void withScanFailureThrowException() throws IOException {
 
-        Mockito.doNothing().when(clamAvService).scan(any());
+        Mockito.doThrow(AiReviewerDocumentException.class).when(documentValidatorMock).validateDocument(any(), any());
         Path path = Paths.get("src/test/resources/" + CASE_1);
 
         UUID transactionId = UUID.randomUUID();
@@ -145,7 +148,7 @@ public class ExtractDocumentFormDataTest {
         MockMultipartFile mockMultipartFileException = Mockito.mock(MockMultipartFile.class);
         Mockito.when(mockMultipartFileException.getBytes()).thenThrow(IOException.class);
 
-        Assertions.assertThrows(AiReviewerDocumentException.class,() -> sut.extractDocumentFormData(transactionId, "TYPE", mockMultipartFileException));
+        Assertions.assertThrows(AiReviewerDocumentException.class,() -> sut.extractDocumentFormData(transactionId, DOCUMENT_TYPE, mockMultipartFileException));
 
     }
 
@@ -154,7 +157,7 @@ public class ExtractDocumentFormDataTest {
     @DisplayName("Error: fails virus scan")
     public void withScanFailureShouldReturnBadGateway() throws VirusDetectedException, IOException {
 
-        Mockito.doThrow(VirusDetectedException.class).when(clamAvService).scan(any());
+        Mockito.doThrow(AiReviewerVirusFoundException.class).when(documentValidatorMock).validateDocument(any(), any());
         Path path = Paths.get("src/test/resources/" + CASE_1);
 
         UUID transactionId = UUID.randomUUID();
@@ -162,7 +165,23 @@ public class ExtractDocumentFormDataTest {
         MultipartFile multipartFile = new MockMultipartFile(CASE_1,
                 CASE_1, APPLICATION_PDF, Files.readAllBytes(path));
 
-        Assertions.assertThrows(AiReviewerVirusFoundException.class,() -> sut.extractDocumentFormData(transactionId, "TYPE", multipartFile));
+        Assertions.assertThrows(AiReviewerVirusFoundException.class,() -> sut.extractDocumentFormData(transactionId, DOCUMENT_TYPE, multipartFile));
+
+    }
+
+    @Test
+    @DisplayName("Error: fails document type check")
+    public void withDocumentTypeScheckFailure() throws IOException {
+
+        Mockito.doThrow(AiReviewerDocumentException.class).when(documentValidatorMock).validateDocument(any(), any());
+        Path path = Paths.get("src/test/resources/" + CASE_1);
+
+        UUID transactionId = UUID.randomUUID();
+
+        MultipartFile multipartFile = new MockMultipartFile(CASE_1,
+                CASE_1, APPLICATION_PDF, Files.readAllBytes(path));
+
+        Assertions.assertThrows(AiReviewerDocumentException.class,() -> sut.extractDocumentFormData(transactionId, NOT_RCC, multipartFile));
 
     }
 
