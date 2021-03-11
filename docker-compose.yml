@@ -199,7 +199,7 @@ services:
       - "3310:3310"
     networks:
       - fisu-net
-      
+
   #############################################################################################
   ###                             skywalking-oap-server                                     ###
   #############################################################################################
@@ -207,17 +207,11 @@ services:
   skywalking-oap-server:
     image: apache/skywalking-oap-server:8.4.0-es7
     container_name: skywalking-oap-server
-    depends_on:
-      - elasticsearch
-    links:
-      - elasticsearch
     restart: always
     ports:
       - 11800:11800
       - 12800:12800
     environment:
-      SW_STORAGE: elasticsearch7
-      SW_STORAGE_ES_CLUSTER_NODES: elasticsearch:9200
       SW_HEALTH_CHECKER: default
     networks:
       - fisu-net
