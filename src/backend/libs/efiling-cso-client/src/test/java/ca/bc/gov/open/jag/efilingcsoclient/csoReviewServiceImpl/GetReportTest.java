@@ -68,6 +68,19 @@ public class GetReportTest {
 
     }
 
+    @DisplayName("OK: registry notice return")
+    @Test
+    public void testWithRegistryNoticeResult() {
+
+        Mockito.when(reportServiceMock.runReport(any())).thenReturn(SUCCESS);
+
+        Optional<byte[]> result = sut.getReport(ReportRequest.builder().fileName(FILE_NAME).packageId(BigDecimal.ONE).report(ReportsTypes.REGISTRY_NOTICE).create());
+
+        Assertions.assertTrue(result.isPresent());
+        Assertions.assertEquals(SUCCESS, result.get());
+
+    }
+
     @DisplayName("OK: null result ")
     @Test
     public void testWithNullResult() {
