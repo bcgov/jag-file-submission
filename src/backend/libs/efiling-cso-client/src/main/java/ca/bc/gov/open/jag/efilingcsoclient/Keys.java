@@ -30,6 +30,7 @@ public class Keys {
     public static final String PRIVILEGE_CD = "UPDT";
     public static final String SUBMISSION_REPORT_NAME = "submission";
     public static final String RECEIPT_REPORT_NAME = "receipt";
+    public static final String REGISTRY_NOTICE_NAME = "notice";
     public static final String SUBMISSION_REPORT_PARAMETER = "prm_package_id";
     public static final String PARAM_REPORT_PARAMETER = "param1";
     public static final Map<String, BigDecimal> IDENTITY_PROVIDERS = Stream.of(

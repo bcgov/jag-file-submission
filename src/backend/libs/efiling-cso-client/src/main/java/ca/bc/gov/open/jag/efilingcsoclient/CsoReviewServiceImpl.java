@@ -136,6 +136,10 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
                 reportName = Keys.RECEIPT_REPORT_NAME;
                 parameterName = Keys.PARAM_REPORT_PARAMETER;
                 break;
+            case REGISTRY_NOTICE:
+                reportName = Keys.REGISTRY_NOTICE_NAME;
+                parameterName = Keys.PARAM_REPORT_PARAMETER;
+                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + reportRequest.getReport());
         }

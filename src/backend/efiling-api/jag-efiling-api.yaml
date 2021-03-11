@@ -441,6 +441,25 @@ paths:
                 format: binary
         "404":
           description: file not found
+  "/filingpackages/{packageIdentifier}/registryNotice":
+    get:
+      summary: Get submission registry notice
+      operationId: GetRegistryNotice
+      description: get registry notice file from cso
+      tags:
+        - filingPackages
+      parameters:
+        - $ref: "#/components/parameters/packageIdentifier"
+      responses:
+        "200":
+          description: File was returned
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: file not found
   "/filingpackages/{packageIdentifier}/document/{documentIdentifier}":
     get:
       summary: Get submitted document
