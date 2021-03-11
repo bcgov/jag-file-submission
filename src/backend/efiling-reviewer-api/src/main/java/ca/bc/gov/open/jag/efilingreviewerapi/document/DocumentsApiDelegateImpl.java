@@ -7,6 +7,7 @@ import ca.bc.gov.open.jag.efilingreviewerapi.Keys;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.DocumentsApiDelegate;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentEvent;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentExtractResponse;
+import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidator;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerVirusFoundException;
 import ca.bc.gov.open.jag.efilingreviewerapi.utils.TikaAnalysis;
@@ -38,14 +39,18 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
     private final ExtractStore extractStore;
     private final StringRedisTemplate stringRedisTemplate;
 
-    private final ClamAvService clamAvService;
+    private final DocumentValidator documentValidator;
 
-    public DocumentsApiDelegateImpl(DiligenService diligenService, ExtractRequestMapper extractRequestMapper, ExtractStore extractStore, StringRedisTemplate stringRedisTemplate, ClamAvService clamAvService) {
+    public DocumentsApiDelegateImpl(DiligenService diligenService,
+                                    ExtractRequestMapper extractRequestMapper,
+                                    ExtractStore extractStore,
+                                    StringRedisTemplate stringRedisTemplate,
+                                    DocumentValidator documentValidator) {
         this.diligenService = diligenService;
         this.extractRequestMapper = extractRequestMapper;
         this.extractStore = extractStore;
         this.stringRedisTemplate = stringRedisTemplate;
-        this.clamAvService = clamAvService;
+        this.documentValidator = documentValidator;
     }
 
     @Override
@@ -55,14 +60,9 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
 
         logger.info("document extract request received");
 
-        try {
-            clamAvService.scan(new ByteArrayInputStream(file.getBytes()));
-            if (!TikaAnalysis.isPdf(file)) throw new AiReviewerDocumentException("Invalid file type");
-        } catch (VirusDetectedException e) {
-            throw new AiReviewerVirusFoundException("Virus found in document");
-        } catch (IOException e) {
-            throw new AiReviewerDocumentException("File is corrupt");
-        }
+        documentValidator.validateDocument(xDocumentType, file);
+
+        logger.info("document is valid");
 
         ExtractRequest extractRequest = extractRequestMapper.toExtractRequest(xTransactionId, xDocumentType, file, receivedTimeMillis);
 
