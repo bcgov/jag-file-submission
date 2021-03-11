@@ -17,6 +17,7 @@ import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractRequest;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.store.ExtractStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,6 +57,8 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
     @Override
     public ResponseEntity<DocumentExtractResponse> extractDocumentFormData(UUID xTransactionId, String xDocumentType, MultipartFile file) {
 
+        MDC.put(Keys.DOCUMENT_TYPE, xDocumentType);
+
         long receivedTimeMillis = System.currentTimeMillis();
 
         logger.info("document extract request received");
@@ -76,6 +79,8 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
         if(!extractRequestCached.isPresent())
             throw new AiReviewerCacheException("Could not cache extract request");
 
+        MDC.remove(Keys.DOCUMENT_TYPE);
+
         return ResponseEntity.ok(extractRequestMapper.toDocumentExtractResponse(extractRequestCached.get()));
 
     }
@@ -93,6 +98,8 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
             if (extractRequestCached.isPresent()) {
 
                 ExtractRequest extractRequest = extractRequestCached.get();
+                MDC.put(Keys.DOCUMENT_TYPE, extractRequest.getDocument().getType());
+
                 extractRequest.updateProcessedTimeMillis();
                 logger.info("document processing time: [{}]", extractRequest.getProcessedTimeMillis());
                 extractStore.put(documentEvent.getDocumentId(), extractRequest);
@@ -100,7 +107,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
             }
         
         }
-
+        MDC.remove(Keys.DOCUMENT_TYPE);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
