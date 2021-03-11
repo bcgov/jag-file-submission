@@ -9,6 +9,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import org.apache.commons.lang3.StringUtils;
@@ -47,11 +48,20 @@ public class FilingPackageServiceImpl implements FilingPackageService {
     }
 
     @Override
-    public Optional<Resource> getSubmissionSheet(BigDecimal packageNumber) {
+    public Optional<Resource> getReport(ReportRequest reportRequest) {
 
-        Optional<byte[]> result = efilingReviewService.getSubmissionSheet(packageNumber);
+        Optional<byte[]> result = efilingReviewService.getReport(reportRequest);
 
-        return result.map(ByteArrayResource::new);
+        if (!result.isPresent()) return Optional.empty();
+
+        Resource resource = new ByteArrayResource(result.get()) {
+            @Override
+            public String getFilename() {
+                return reportRequest.getFileName();
+            }
+        };
+
+        return Optional.of(resource);
 
     }
 

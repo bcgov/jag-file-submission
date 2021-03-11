@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efiling.services;
 
+import ca.bc.gov.open.jag.efiling.Keys;
 import ca.bc.gov.open.jag.efiling.error.EfilingTestException;
 import ca.bc.gov.open.jag.efiling.helpers.PayloadHelper;
 import ca.bc.gov.open.jag.efiling.helpers.SubmissionHelper;
@@ -29,7 +30,6 @@ public class SubmissionService {
     private static final String X_TRANSACTION_ID = "X-Transaction-Id";
     private static final String X_USER_ID = "X-User-Id";
     private static final String MESSAGE_FORMAT_WITH_SUBID_AND_PATH = "{0}/submission/{1}/{2}";
-    private static final String TEST_DOCUMENT_PDF = "test-document.pdf";
 
     private Logger logger = LoggerFactory.getLogger(SubmissionService.class);
 
@@ -62,7 +62,7 @@ public class SubmissionService {
                 .contentType(ContentType.JSON)
                 .header(X_TRANSACTION_ID, transactionId)
                 .header(X_USER_ID, universalId)
-                .body(PayloadHelper.generateUrlPayload(TEST_DOCUMENT_PDF));
+                .body(PayloadHelper.generateUrlPayload(Keys.TEST_DOCUMENT_PDF));
 
         return request
                 .when()
@@ -150,7 +150,7 @@ public class SubmissionService {
                 .oauth2(accessToken)
                 .contentType(ContentType.JSON)
                 .header(X_TRANSACTION_ID, transactionId)
-                .body(PayloadHelper.updateDocumentProperties(TEST_DOCUMENT_PDF));
+                .body(PayloadHelper.updateDocumentProperties(Keys.TEST_DOCUMENT_PDF));
 
         return request
                 .when()

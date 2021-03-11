@@ -19,13 +19,19 @@ import ca.bc.gov.open.jag.efilingcsoclient.mappers.*;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.client.RestTemplate;
+import preview.ca.bc.gov.open.jag.efilingcsoclient.mappers.ClientProfileMapper;
+import preview.ca.bc.gov.open.jag.efilingcsoclient.mappers.ClientProfileMapperImpl;
 
 
 @Configuration
 @EnableConfigurationProperties({SoapProperties.class, SpringCsoProperties.class})
 public class AutoConfiguration {
 
+    private static final String PREVIEW = "preview";
+    private static final String FINAL = "!preview";
     private final SoapProperties soapProperties;
 
     private final CsoProperties csoProperties;
@@ -41,9 +47,18 @@ public class AutoConfiguration {
     }
 
     @Bean
+    @Primary
+    @Profile(FINAL)
     public AccountFacadeBean accountFacadeBean() {
         EfilingSoapClientProperties efilingSoapClientProperties = soapProperties.findByEnum(Clients.ACCOUNT);
         return SoapUtils.getPort(AccountFacadeBean.class, efilingSoapClientProperties, csoProperties.isDebugEnabled());
+    }
+
+    @Bean
+    @Profile(PREVIEW)
+    public preview.ca.bc.gov.ag.csows.accounts.AccountFacadeBean previewAccountFacadeBear() {
+        EfilingSoapClientProperties efilingSoapClientProperties = soapProperties.findByEnum(Clients.ACCOUNT);
+        return SoapUtils.getPort(preview.ca.bc.gov.ag.csows.accounts.AccountFacadeBean.class, efilingSoapClientProperties, csoProperties.isDebugEnabled());
     }
 
     @Bean
@@ -117,11 +132,28 @@ public class AutoConfiguration {
     public PackageAuthorityMapper packageAuthorityMapper() { return new PackageAuthorityMapperImpl(); }
 
     @Bean
+    @Primary
+    @Profile(FINAL)
     public EfilingAccountService efilingAccountService(AccountFacadeBean accountFacadeBean,
                                                        RoleRegistryPortType roleRegistryPortType,
                                                        AccountDetailsMapper accountDetailsMapper) {
         return new CsoAccountServiceImpl(accountFacadeBean, roleRegistryPortType, accountDetailsMapper);
     }
+
+    @Bean
+    @Profile(PREVIEW)
+    public ClientProfileMapper clientProfileMapper() {
+        return new ClientProfileMapperImpl();
+    }
+
+    @Bean
+    @Profile(PREVIEW)
+    public EfilingAccountService efilingAccountServicePreview(preview.ca.bc.gov.ag.csows.accounts.AccountFacadeBean accountFacadeBeanPreview,
+                                                              RoleRegistryPortType roleRegistryPortType,
+                                                              AccountDetailsMapper accountDetailsMapper, ClientProfileMapper clientProfileMapper) {
+        return new preview.ca.bc.gov.open.jag.efilingcsoclient.CsoAccountServiceImpl(accountFacadeBeanPreview, roleRegistryPortType, accountDetailsMapper, clientProfileMapper);
+    }
+
 
     @Bean
     public EfilingDocumentService efilingDocumentService(FilingStatusFacadeBean filingStatusFacadeBean) {
@@ -140,7 +172,7 @@ public class AutoConfiguration {
 
     @Bean
     public EfilingReviewService efilingReviewService(FilingStatusFacadeBean filingStatusFacadeBean, ReportService reportService, FilingFacadeBean filingFacadeBean, RestTemplate restTemplate) {
-        return new CsoReviewServiceImpl(filingStatusFacadeBean, reportService, filingFacadeBean, new FilePackageMapperImpl(), restTemplate);
+        return new CsoReviewServiceImpl(filingStatusFacadeBean, reportService, filingFacadeBean, new FilePackageMapperImpl(), csoProperties, restTemplate);
     }
 
 

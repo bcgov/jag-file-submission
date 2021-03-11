@@ -208,6 +208,44 @@ describe("Home", () => {
     expect(sessionStorage.getItem("validExit")).toEqual("true");
   });
 
+  test("clicking cancel opens confirmation popup, missing cancelurl, success", async () => {
+    mock.onGet(apiRequest).reply(200, {
+      navigationUrls: {
+        success: "successurl.com",
+        error: "",
+      },
+      clientAppName,
+      csoBaseUrl,
+    });
+    mock.onGet("/csoAccount").reply(200, {
+      clientId: userDetails.clientId,
+      internalClientNumber: userDetails.internalClientNumber,
+    });
+    mock.onGet("/bceidAccount").reply(200, {
+      firstName: "User",
+      lastName: "Name",
+      middleName: null,
+    });
+    mock.onDelete(`/submission/${submissionId}`).reply(200);
+
+    const { getByText } = render(<Home />);
+    await waitFor(() => {});
+    const cancelBtn = getByText("Cancel");
+    expect(cancelBtn).toBeInTheDocument();
+    fireEvent.click(cancelBtn);
+    await waitFor(() => {});
+
+    // there should now be a modal popup
+    render(<Home />);
+    await waitFor(() => {});
+    const confirmBtn = getByText("Yes, cancel E-File Submission");
+    expect(confirmBtn).toBeInTheDocument();
+    fireEvent.click(confirmBtn);
+    await waitFor(() => {});
+
+    expect(sessionStorage.getItem("validExit")).toEqual("true");
+  });
+
   test("clicking cancel opens confirmation popup and clicking confirm takes user back to client app, fail", async () => {
     mock.onGet("/csoAccount").reply(200, {
       clientId: userDetails.clientId,
@@ -285,5 +323,28 @@ describe("Home", () => {
     await waitFor(() => {});
 
     expect(asFragment()).toMatchSnapshot();
+  });
+
+  test("When user has authenticated with a non BCeID nor BCSC account - fail", async () => {
+    sessionStorage.setItem("errorUrl", "error.com");
+
+    // IDP is set to google
+    const tokenAlt = generateJWTToken({
+      preferred_username: "username@google",
+      email: "username@gmail.com",
+      identityProviderAlias: "google",
+    });
+    localStorage.setItem("jwt", tokenAlt);
+
+    // return 404 (no account) when querying CSO
+    mock.onGet("csoAccount").reply(404);
+
+    render(component);
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalledWith(
+      "error.com?status=400&message=There was an error.",
+      "_self"
+    );
   });
 });

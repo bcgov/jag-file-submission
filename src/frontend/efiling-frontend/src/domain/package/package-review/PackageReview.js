@@ -7,7 +7,9 @@ import Tab from "react-bootstrap/Tab"; /* TODO: replace with shared-components *
 import { Alert, Button, Sidecard, Table } from "shared-components";
 import { BsEyeFill } from "react-icons/bs";
 import { MdCancel } from "react-icons/md";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
+import queryString from "query-string";
+import validator from "validator";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import {
@@ -20,10 +22,16 @@ import "./PackageReview.scss";
 import DocumentList from "./DocumentList";
 import PartyList from "./PartyList";
 import PaymentList from "./PaymentList";
+import { isClick, isEnter } from "../../../modules/helpers/eventUtil";
 
 export default function PackageReview() {
   const params = useParams();
   const packageId = Number(params.packageId);
+
+  const location = useLocation();
+  const queryParams = queryString.parse(location.search);
+  const { returnUrl } = queryParams;
+
   const [error, setError] = useState(false);
   const [packageDetails, setPackageDetails] = useState([
     { name: "Submitted By:", value: "", isNameBold: false, isValueBold: true },
@@ -53,7 +61,9 @@ export default function PackageReview() {
   const [reloadTrigger, setReloadTrigger] = useState(false);
   const [documents, setDocuments] = useState([]);
   const [parties, setParties] = useState([]);
+  const [organizationParties, setOrganizationParties] = useState([]);
   const [payments, setPayments] = useState([]);
+  const [submissionHistoryLink, setSubmissionHistoryLink] = useState("");
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
 
@@ -114,7 +124,9 @@ export default function PackageReview() {
           setFilingComments(response.data.filingComments);
           setDocuments(response.data.documents);
           setParties(response.data.parties);
+          setOrganizationParties(response.data.organizationParties);
           setPayments(response.data.payments);
+          setSubmissionHistoryLink(response.data.links.packageHistoryUrl);
         } catch (err) {
           setError(true);
         }
@@ -141,6 +153,12 @@ export default function PackageReview() {
       downloadSubmissionSheet(packageId).catch((err) => {
         errorRedirect(sessionStorage.getItem("errorUrl"), err);
       });
+    }
+  }
+
+  function handleCsoLink(e) {
+    if (submissionHistoryLink && (isClick(e) || isEnter(e))) {
+      window.open(submissionHistoryLink, "_self");
     }
   }
 
@@ -196,11 +214,14 @@ export default function PackageReview() {
             </Tab>
             <Tab eventKey="parties" title="Parties">
               <br />
-              <PartyList parties={parties} />
+              <PartyList
+                parties={parties}
+                organizationParties={organizationParties}
+              />
             </Tab>
             <Tab eventKey="payment" title="Payment Status">
               <br />
-              <PaymentList payments={payments} />
+              <PaymentList payments={payments} packageId={packageId} />
             </Tab>
             <Tab eventKey="comments" title="Filing Comments">
               <br />
@@ -211,13 +232,30 @@ export default function PackageReview() {
             </Tab>
           </Tabs>
           <br />
-          <section className="buttons pt-2">
-            <Button
-              label="Cancel and Return to Parent App"
-              onClick={() => window.open("http://google.com", "_self")}
-              styling="normal-white btn"
-            />
-          </section>
+          <span className="fw-bold">Please Note: </span> Visit your CSO account
+          to{" "}
+          <span
+            role="button"
+            data-testid="cso-link"
+            tabIndex={0}
+            className="file-href"
+            onClick={handleCsoLink}
+            onKeyDown={handleCsoLink}
+          >
+            view all your previously submitted packages.
+          </span>
+          {returnUrl && validator.isURL(returnUrl) && (
+            <>
+              <br />
+              <section className="buttons pt-2">
+                <Button
+                  label="Return to Parent App"
+                  onClick={() => window.open(returnUrl, "_self")}
+                  styling="bcgov-normal-white btn"
+                />
+              </section>
+            </>
+          )}
         </div>
         <div className="sidecard">
           <Sidecard sideCard={csoAccountDetailsSidecard} />

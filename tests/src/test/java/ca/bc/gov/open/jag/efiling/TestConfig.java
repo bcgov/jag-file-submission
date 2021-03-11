@@ -1,12 +1,10 @@
 package ca.bc.gov.open.jag.efiling;
 
 import ca.bc.gov.open.jag.efiling.config.BrowserScopePostProcessor;
-import ca.bc.gov.open.jag.efiling.page.AuthenticationPage;
-import ca.bc.gov.open.jag.efiling.page.DocumentUploadPage;
-import ca.bc.gov.open.jag.efiling.page.PackageConfirmationPage;
-import ca.bc.gov.open.jag.efiling.page.PackageReviewPage;
+import ca.bc.gov.open.jag.efiling.page.*;
 import ca.bc.gov.open.jag.efiling.services.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -18,14 +16,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Configuration
 public class TestConfig {
 
     @Value("${default.timeout:30}")
     private int timeout;
+
+    @Value("${AUTH_PROVIDER:keycloak}")
+    private String provider;
 
     private static final String DOWNLOADED_FILES_PATH = System.getProperty("user.dir") + File.separator + "downloadedFiles";
 
@@ -71,7 +71,7 @@ public class TestConfig {
 
         Map<String, Object> prefs = new HashMap<String, Object>();
         prefs.put("profile.default_content_settings.popups", 0);
-        prefs.put("download.default_directory", DOWNLOADED_FILES_PATH );
+        prefs.put("download.default_directory", DOWNLOADED_FILES_PATH);
 
         ChromeOptions options = new ChromeOptions();
         options.setExperimentalOption("prefs", prefs);
@@ -90,7 +90,25 @@ public class TestConfig {
     @Bean
     @Scope("prototype")
     public AuthenticationPage authenticationPage() {
-        return new AuthenticationPage();
+        List<AuthenticationPage> authenticationPages = new ArrayList<>();
+        authenticationPages.add(bceidAuthenticationPageImpl());
+        authenticationPages.add(bcscAuthenticationPageImpl());
+        authenticationPages.add(keycloakAuthenticationPageImpl());
+
+        return authenticationPages.stream().filter(x -> StringUtils.equals(provider,
+                x.getName())).findFirst().get();
+    }
+
+    public AuthenticationPage bceidAuthenticationPageImpl() {
+        return new BceidAuthenticationPageImpl();
+    }
+
+    public AuthenticationPage bcscAuthenticationPageImpl() {
+        return new BcscAuthenticationPageImpl();
+    }
+
+    public AuthenticationPage keycloakAuthenticationPageImpl() {
+        return new KeycloakAuthenticationPageImpl();
     }
 
     @Bean
@@ -109,6 +127,12 @@ public class TestConfig {
     @Scope("prototype")
     public PackageReviewPage packageReviewPage() {
         return new PackageReviewPage();
+    }
+
+    @Bean
+    @Scope("prototype")
+    public EfilingAdminHomePage efilingAdminHomePage() {
+        return new EfilingAdminHomePage();
     }
 
 }

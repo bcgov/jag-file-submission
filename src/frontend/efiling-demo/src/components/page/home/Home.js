@@ -72,10 +72,8 @@ const generatePackageData = (files, filingPackage) => {
     formData.append("files", files[i]);
 
     documentData.push({
-      documentProperties: {
-        name: files[i].name,
-        type: files[i].data.type,
-      },
+      name: files[i].name,
+      type: files[i].data.type,
       isSupremeCourtScheduling: files[i].data.isSupremeCourtScheduling,
       isAmendment: files[i].data.isAmendment,
       data: {},

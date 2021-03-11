@@ -179,6 +179,25 @@
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-spring-boot-starter</artifactId>
         </dependency>
+
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.skywalking/apm-toolkit-trace -->
+        <dependency>
+            <groupId>org.apache.skywalking</groupId>
+            <artifactId>apm-toolkit-trace</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.skywalking/apm-toolkit-logback-1.x -->
+        <dependency>
+            <groupId>org.apache.skywalking</groupId>
+            <artifactId>apm-toolkit-logback-1.x</artifactId>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>
@@ -221,7 +240,7 @@
                 <dependency>
                     <groupId>ca.bc.gov.open.jag</groupId>
                     <artifactId>efiling-bambora-api-client</artifactId>
-                    <version>0.0.1-SNAPSHOT</version>
+                    <version>0.7.0-SNAPSHOT</version>
                 </dependency>
 
                 <dependency>

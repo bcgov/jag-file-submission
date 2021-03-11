@@ -10,18 +10,17 @@ import { getCourtData } from "../../../../modules/test-data/courtTestData";
 import * as packageReviewTestData from "../../../../modules/test-data/packageReviewTestData";
 import { generateJWTToken } from "../../../../modules/helpers/authentication-helper/authenticationHelper";
 
+const routerDom = require("react-router-dom");
 const mockHelper = require("../../../../modules/helpers/mockHelper");
 
-jest.mock("react-router-dom", () => ({
-  ...jest.requireActual("react-router-dom"),
-  useParams: jest.fn().mockReturnValue({ packageId: 1 }),
-}));
+jest.mock("react-router-dom");
 
 // hack fix to force GitHub to run tests in BC timezone
 moment.tz.setDefault("America/Vancouver");
 
 describe("PackageReview Component", () => {
   const packageId = "1";
+  const links = { packageHistoryUrl: "http://google.com" };
   const courtData = getCourtData();
   const submittedDate = new Date("2021-01-14T18:57:43.602Z").toISOString();
   const submittedBy = { firstName: "Han", lastName: "Solo" };
@@ -35,6 +34,11 @@ describe("PackageReview Component", () => {
 
   let mock;
   beforeEach(() => {
+    routerDom.useParams = jest.fn().mockReturnValue({ packageId: 1 });
+    routerDom.useLocation = jest
+      .fn()
+      .mockReturnValue({ search: "?returnUrl=http://www.google.ca" });
+
     // IDP is set in the session
     const token = generateJWTToken({
       preferred_username: "username@bceid",
@@ -74,12 +78,51 @@ describe("PackageReview Component", () => {
   });
 
   test("Clicking cancel takes user back to parent app", async () => {
+    const url = "http://www.google.ca";
+    routerDom.useLocation = jest
+      .fn()
+      .mockReturnValue({ search: `?returnUrl=${url}` });
+
     const { getByText } = render(<PackageReview />);
     await waitFor(() => {});
 
-    fireEvent.click(getByText("Cancel and Return to Parent App"));
+    fireEvent.click(getByText("Return to Parent App"));
 
-    expect(window.open).toHaveBeenCalledWith("http://google.com", "_self");
+    expect(window.open).toHaveBeenCalledWith("http://www.google.ca", "_self");
+  });
+
+  test("Clicking cancel takes user back to parent app, encoded URL", async () => {
+    const encodedUrlWithParams = encodeURIComponent(
+      "https://www.google.ca/search?q=bob+ross&tbm=isch"
+    );
+    expect(encodedUrlWithParams).toEqual(
+      "https%3A%2F%2Fwww.google.ca%2Fsearch%3Fq%3Dbob%2Bross%26tbm%3Disch"
+    );
+    routerDom.useLocation = jest
+      .fn()
+      .mockReturnValue({ search: `?returnUrl=${encodedUrlWithParams}` });
+
+    const { getByText } = render(<PackageReview />);
+    await waitFor(() => {});
+
+    fireEvent.click(getByText("Return to Parent App"));
+
+    expect(window.open).toHaveBeenCalledWith(
+      decodeURIComponent(encodedUrlWithParams),
+      "_self"
+    );
+  });
+
+  test("Clicking cancel takes user back to parent app, invalid URL", async () => {
+    const invalidUrl = encodeURIComponent("abcdefg");
+    routerDom.useLocation = jest
+      .fn()
+      .mockReturnValue({ search: `?returnUrl=${invalidUrl}` });
+
+    const { queryByText } = render(<PackageReview />);
+    await waitFor(() => {});
+
+    expect(queryByText("Return to Parent App")).toBeNull();
   });
 
   test("Api called successfully when page loads with valid packageId", async () => {
@@ -162,18 +205,26 @@ describe("PackageReview Component", () => {
       court: courtData,
       submittedBy,
       submittedDate,
+      links,
     });
     mock
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
       .reply(200, { blob });
 
-    const { getByText } = render(<PackageReview />);
+    const { getByText, getByTestId } = render(<PackageReview />);
     await waitFor(() => {});
 
     fireEvent.click(getByText("Print Submission Sheet"));
     await waitFor(() => {});
 
     expect(FileSaver.saveAs).toHaveBeenCalled();
+
+    const button = getByTestId("cso-link");
+
+    fireEvent.click(button);
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalled();
   });
 
   test("View Submission Sheet (on keyDown) - successful", async () => {
@@ -247,7 +298,7 @@ describe("PackageReview Component", () => {
     );
   });
 
-  test("Reload Document trigger", async () => {
+  test("Reload", async () => {
     mock.onGet(apiRequest).reply(200, {
       packageNumber: packageId,
       court: courtData,

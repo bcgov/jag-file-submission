@@ -40,6 +40,22 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ApiError"
+  "/documents/event":
+    post:
+      summary: to inform api on a document event
+      operationId: DocumentEvent
+      tags:
+        - document
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DocumentEvent"
+      responses:
+        "204":
+          description: Document Event acknoledged
 components:
   parameters:
     xTransactionId:
@@ -58,17 +74,19 @@ components:
       schema:
         type: string
   schemas:
-    DocumentExtractResponse:
-      type: object
-      description: Review upload response
+    ApiError:
       required:
-        - extract
-        - document
+        - error
+        - message
       properties:
-        extract:
-          $ref: "#/components/schemas/Extract"
-        document:
-          $ref: "#/components/schemas/Document"
+        error:
+          type: string
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: string
     Document:
       type: object
       required:
@@ -86,6 +104,25 @@ components:
           format: integer
         contentType:
           type: string
+    DocumentExtractResponse:
+      type: object
+      description: Review upload response
+      required:
+        - extract
+        - document
+      properties:
+        extract:
+          $ref: "#/components/schemas/Extract"
+        document:
+          $ref: "#/components/schemas/Document"
+    DocumentEvent:
+      type: object
+      properties:
+        status:
+          type: string
+        documentId:
+          type: number
+          format: integer
     Extract:
       type: object
       required:
@@ -98,16 +135,4 @@ components:
         transactionId:
           type: string
           format: uuid
-    ApiError:
-      required:
-        - error
-        - message
-      properties:
-        error:
-          type: string
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            type: string
+    

@@ -2,10 +2,7 @@ package ca.bc.gov.open.jag.efilingapi.submission.service.submissionServiceImpl;
 
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
-import ca.bc.gov.open.jag.efilingapi.api.model.Court;
-import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
-import ca.bc.gov.open.jag.efilingapi.api.model.InitialPackage;
-import ca.bc.gov.open.jag.efilingapi.api.model.Party;
+import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
@@ -130,7 +127,7 @@ public class GenerateFromRequestTest {
         Assertions.assertEquals(TestHelpers.LOCATION, actual.getFilingPackage().getCourt().getLocation());
         Assertions.assertEquals(TestHelpers.PARTICIPATIONCLASS, actual.getFilingPackage().getCourt().getParticipatingClass());
         Assertions.assertEquals(TestHelpers.PROPERTYCLASS, actual.getFilingPackage().getCourt().getCourtClass());
-        Assertions.assertEquals(TestHelpers.TYPE.getValue(), actual.getFilingPackage().getDocuments().get(0).getType());
+        Assertions.assertEquals(TestHelpers.TYPE, actual.getFilingPackage().getDocuments().get(0).getType());
         Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getFilingPackage().getDocuments().get(0).getDescription());
         Assertions.assertEquals(BigDecimal.TEN, actual.getFilingPackage().getCourt().getAgencyId());
         Assertions.assertEquals(TestHelpers.COURT_DESCRIPTION, actual.getFilingPackage().getCourt().getLocationDescription());
@@ -144,14 +141,12 @@ public class GenerateFromRequestTest {
         Assertions.assertEquals(TestHelpers.MIDDLE_NAME, actual.getFilingPackage().getParties().get(0).getMiddleName());
         Assertions.assertEquals(TestHelpers.LAST_NAME, actual.getFilingPackage().getParties().get(0).getLastName());
         Assertions.assertEquals(TestHelpers.NAME_TYPE_CD, actual.getFilingPackage().getParties().get(0).getNameTypeCd());
-        Assertions.assertEquals(TestHelpers.PARTY_TYPE_CD, actual.getFilingPackage().getParties().get(0).getPartyTypeCd());
         Assertions.assertEquals(TestHelpers.ROLE_TYPE_CD, actual.getFilingPackage().getParties().get(0).getRoleTypeCd());
 
         Assertions.assertEquals(TestHelpers.FIRST_NAME, actual.getFilingPackage().getParties().get(1).getFirstName());
         Assertions.assertEquals(TestHelpers.MIDDLE_NAME, actual.getFilingPackage().getParties().get(1).getMiddleName());
         Assertions.assertEquals(TestHelpers.LAST_NAME, actual.getFilingPackage().getParties().get(1).getLastName());
         Assertions.assertEquals(TestHelpers.NAME_TYPE_CD, actual.getFilingPackage().getParties().get(1).getNameTypeCd());
-        Assertions.assertEquals(TestHelpers.PARTY_TYPE_CD, actual.getFilingPackage().getParties().get(1).getPartyTypeCd());
         Assertions.assertEquals(TestHelpers.ROLE_TYPE_CD, actual.getFilingPackage().getParties().get(1).getRoleTypeCd());
 
 
@@ -167,8 +162,8 @@ public class GenerateFromRequestTest {
         request.setFilingPackage(TestHelpers.createInitalPackage(TestHelpers.createApiCourt(), TestHelpers.createInitialDocumentsList()));
         request.getFilingPackage().getCourt().setFileNumber("");
 
-        List<Party> parties = new ArrayList<>();
-        Party party = new Party();
+        List<Individual> parties = new ArrayList<>();
+        Individual party = new Individual();
         party.setRoleType(Party.RoleTypeEnum.ABC);
         parties.add(party);
         request.getFilingPackage().setParties(parties);
@@ -190,7 +185,7 @@ public class GenerateFromRequestTest {
         Assertions.assertEquals(TestHelpers.LOCATION, actual.getFilingPackage().getCourt().getLocation());
         Assertions.assertEquals(TestHelpers.PARTICIPATIONCLASS, actual.getFilingPackage().getCourt().getParticipatingClass());
         Assertions.assertEquals(TestHelpers.PROPERTYCLASS, actual.getFilingPackage().getCourt().getCourtClass());
-        Assertions.assertEquals(TestHelpers.TYPE.getValue(), actual.getFilingPackage().getDocuments().get(0).getType());
+        Assertions.assertEquals(TestHelpers.TYPE, actual.getFilingPackage().getDocuments().get(0).getType());
         Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getFilingPackage().getDocuments().get(0).getDescription());
         Assertions.assertEquals(BigDecimal.TEN, actual.getFilingPackage().getCourt().getAgencyId());
         Assertions.assertEquals(TestHelpers.COURT_DESCRIPTION, actual.getFilingPackage().getCourt().getLocationDescription());
@@ -204,14 +199,12 @@ public class GenerateFromRequestTest {
         Assertions.assertEquals(TestHelpers.MIDDLE_NAME, actual.getFilingPackage().getParties().get(0).getMiddleName());
         Assertions.assertEquals(TestHelpers.LAST_NAME, actual.getFilingPackage().getParties().get(0).getLastName());
         Assertions.assertEquals(TestHelpers.NAME_TYPE_CD, actual.getFilingPackage().getParties().get(0).getNameTypeCd());
-        Assertions.assertEquals(TestHelpers.PARTY_TYPE_CD, actual.getFilingPackage().getParties().get(0).getPartyTypeCd());
         Assertions.assertEquals(TestHelpers.ROLE_TYPE_CD, actual.getFilingPackage().getParties().get(0).getRoleTypeCd());
 
         Assertions.assertEquals(TestHelpers.FIRST_NAME, actual.getFilingPackage().getParties().get(1).getFirstName());
         Assertions.assertEquals(TestHelpers.MIDDLE_NAME, actual.getFilingPackage().getParties().get(1).getMiddleName());
         Assertions.assertEquals(TestHelpers.LAST_NAME, actual.getFilingPackage().getParties().get(1).getLastName());
         Assertions.assertEquals(TestHelpers.NAME_TYPE_CD, actual.getFilingPackage().getParties().get(1).getNameTypeCd());
-        Assertions.assertEquals(TestHelpers.PARTY_TYPE_CD, actual.getFilingPackage().getParties().get(1).getPartyTypeCd());
         Assertions.assertEquals(TestHelpers.ROLE_TYPE_CD, actual.getFilingPackage().getParties().get(1).getRoleTypeCd());
 
     }
@@ -245,7 +238,7 @@ public class GenerateFromRequestTest {
         Assertions.assertEquals(TestHelpers.LOCATION, actual.getFilingPackage().getCourt().getLocation());
         Assertions.assertEquals(TestHelpers.PARTICIPATIONCLASS, actual.getFilingPackage().getCourt().getParticipatingClass());
         Assertions.assertEquals(TestHelpers.PROPERTYCLASS, actual.getFilingPackage().getCourt().getCourtClass());
-        Assertions.assertEquals(TestHelpers.TYPE.getValue(), actual.getFilingPackage().getDocuments().get(0).getType());
+        Assertions.assertEquals(TestHelpers.TYPE, actual.getFilingPackage().getDocuments().get(0).getType());
         Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getFilingPackage().getDocuments().get(0).getDescription());
         Assertions.assertEquals(BigDecimal.TEN, actual.getFilingPackage().getCourt().getAgencyId());
         Assertions.assertEquals(TestHelpers.COURT_DESCRIPTION, actual.getFilingPackage().getCourt().getLocationDescription());
@@ -259,14 +252,12 @@ public class GenerateFromRequestTest {
         Assertions.assertEquals(TestHelpers.MIDDLE_NAME, actual.getFilingPackage().getParties().get(0).getMiddleName());
         Assertions.assertEquals(TestHelpers.LAST_NAME, actual.getFilingPackage().getParties().get(0).getLastName());
         Assertions.assertEquals(TestHelpers.NAME_TYPE_CD, actual.getFilingPackage().getParties().get(0).getNameTypeCd());
-        Assertions.assertEquals(TestHelpers.PARTY_TYPE_CD, actual.getFilingPackage().getParties().get(0).getPartyTypeCd());
         Assertions.assertEquals(TestHelpers.ROLE_TYPE_CD, actual.getFilingPackage().getParties().get(0).getRoleTypeCd());
 
         Assertions.assertEquals(TestHelpers.FIRST_NAME, actual.getFilingPackage().getParties().get(1).getFirstName());
         Assertions.assertEquals(TestHelpers.MIDDLE_NAME, actual.getFilingPackage().getParties().get(1).getMiddleName());
         Assertions.assertEquals(TestHelpers.LAST_NAME, actual.getFilingPackage().getParties().get(1).getLastName());
         Assertions.assertEquals(TestHelpers.NAME_TYPE_CD, actual.getFilingPackage().getParties().get(1).getNameTypeCd());
-        Assertions.assertEquals(TestHelpers.PARTY_TYPE_CD, actual.getFilingPackage().getParties().get(1).getPartyTypeCd());
         Assertions.assertEquals(TestHelpers.ROLE_TYPE_CD, actual.getFilingPackage().getParties().get(1).getRoleTypeCd());
 
     }
@@ -328,7 +319,7 @@ public class GenerateFromRequestTest {
                 .transactionId(TestHelpers.CASE_1)
                 .navigationUrls(TestHelpers.createDefaultNavigation())
                 .expiryDate(10)
-                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList(), TestHelpers.createPartyList()))
+                .filingPackage(TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList(), TestHelpers.createPartyList(), TestHelpers.createOrganizationList()))
                 .create();
 
         Mockito

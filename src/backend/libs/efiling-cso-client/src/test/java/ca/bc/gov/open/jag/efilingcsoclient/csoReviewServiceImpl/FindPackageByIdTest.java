@@ -9,6 +9,7 @@ import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoReviewServiceImpl;
+import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapperImpl;
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
@@ -70,7 +71,10 @@ public class FindPackageByIdTest {
 
         Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(EXCEPTION_PACKAGE), ArgumentMatchers.eq(EXCEPTION_CLIENT), any(), any(), any(), any(), any(), any())).thenThrow(new NestedEjbException_Exception());
 
-        sut = new CsoReviewServiceImpl(filingStatusFacadeBean, null, null, new FilePackageMapperImpl(), restTemplateMock);
+        CsoProperties csoProperties = new CsoProperties();
+        csoProperties.setCsoBasePath("http://locahost:8080");
+
+        sut = new CsoReviewServiceImpl(filingStatusFacadeBean, null, null, new FilePackageMapperImpl(), csoProperties, restTemplateMock);
     }
 
     @DisplayName("OK: package found")

@@ -192,20 +192,26 @@ describe("Upload Component", () => {
     const updatedDocuments = [
       ...documents,
       {
-        name: "ping.json",
         description: "file description ping",
-        type: "file type ping",
         statutoryFeeAmount: 0,
         isAmendment: true,
         isSupremeCourtScheduling: true,
+        mimeType: "application/pdf",
+        documentProperties: {
+          name: "ping.json",
+          type: "file type ping",
+        },
       },
       {
-        name: "ping2.json",
         description: "file description ping2",
-        type: "file type ping2",
         statutoryFeeAmount: 0,
         isAmendment: true,
         isSupremeCourtScheduling: true,
+        mimeType: "application/pdf",
+        documentProperties: {
+          name: "ping2.json",
+          type: "file type ping2",
+        },
       },
     ];
 
