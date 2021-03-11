@@ -86,7 +86,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
     @Override
     public ResponseEntity<Resource> getRegistryNotice(BigDecimal packageIdentifier) {
 
-        logger.info("get payment receipt request received");
+        logger.info("get registry notice request received");
 
         return getReport(ReportRequest.builder()
                 .report(ReportsTypes.REGISTRY_NOTICE)
