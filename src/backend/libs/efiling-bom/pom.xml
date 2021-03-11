@@ -16,8 +16,6 @@
         <com.brsanthu.version>2.2</com.brsanthu.version>
         <com.fasterxml.jackson.core.version>2.12.1</com.fasterxml.jackson.core.version>
         <com.splunk.logging.version>1.8.0</com.splunk.logging.version>
-        <io.github.openfeign.opentracing.version>0.4.1</io.github.openfeign.opentracing.version>
-        <io.opentracing.contrib.version>3.2.2</io.opentracing.contrib.version>
         <io.springfox.version>2.9.2</io.springfox.version>
         <io.swagger.version>1.6.2</io.swagger.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
@@ -119,19 +117,6 @@
                 <groupId>com.splunk.logging</groupId>
                 <artifactId>splunk-library-javalogging</artifactId>
                 <version>${com.splunk.logging.version}</version>
-            </dependency>
-
-
-            <!-- Open Tracing -->
-            <dependency>
-                <groupId>io.opentracing.contrib</groupId>
-                <artifactId>opentracing-spring-jaeger-web-starter</artifactId>
-                <version>${io.opentracing.contrib.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.github.openfeign.opentracing</groupId>
-                <artifactId>feign-opentracing</artifactId>
-                <version>${io.github.openfeign.opentracing.version}</version>
             </dependency>
 
             <!-- jaxws -->

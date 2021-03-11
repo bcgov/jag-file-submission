@@ -201,44 +201,17 @@ services:
       - fisu-net
 
   #############################################################################################
-  ###                             Elastic Search                                            ###
-  #############################################################################################
-
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.1
-    container_name: elasticsearch
-    environment:
-      - discovery.type=single-node
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - data01:/usr/share/elasticsearch/data
-    ports:
-      - 9200:9200
-    networks:
-      - fisu-net
-
-  #############################################################################################
   ###                             skywalking-oap-server                                     ###
   #############################################################################################
 
   skywalking-oap-server:
     image: apache/skywalking-oap-server:8.4.0-es7
     container_name: skywalking-oap-server
-    depends_on:
-      - elasticsearch
-    links:
-      - elasticsearch
     restart: always
     ports:
       - 11800:11800
       - 12800:12800
     environment:
-      SW_STORAGE: elasticsearch7
-      SW_STORAGE_ES_CLUSTER_NODES: elasticsearch:9200
       SW_HEALTH_CHECKER: default
     networks:
       - fisu-net
@@ -260,13 +233,28 @@ services:
     environment:
       SW_OAP_ADDRESS: skywalking-oap-server:12800
     networks:
-      - fisu-net
+      - fisu-net 
+ 
+  #############################################################################################
+  ###                             MONGO DB                                                  ###
+  #############################################################################################
+  mongodb:
+    image: 'mongo:latest'
+    container_name: 'mongodb'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USERNAME:-admin}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD:-admin}
+    volumes:
+      - mongo-volume:/data/db
+    ports:
+      - 27017:27017
 
 volumes:
   data-redis:
     driver: local
   data01:
     driver: local
+  mongo-volume:
 
 networks:
   fisu-net:

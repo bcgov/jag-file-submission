@@ -753,6 +753,7 @@ components:
         - submittedDate
         - links
         - court
+        - hasRegistryNotice
       properties:
         packageNumber:
           type: number
@@ -789,6 +790,9 @@ components:
             packageHistoryUrl:
               type: string
               description: a link to view all submitted package
+        hasRegistryNotice:
+          type: boolean
+          description: this filing package has a registry notice
     SubmissionFilingPackage:
       type: object
       description: Submitted
