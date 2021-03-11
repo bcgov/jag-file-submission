@@ -17,7 +17,6 @@ import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingapi.submission.validator.GenerateUrlRequestValidator;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
-import com.google.gson.JsonObject;
 import org.junit.jupiter.api.*;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
@@ -161,6 +160,6 @@ public class GetPackageInformationTest {
                 .mimeType("application/txt")
                 .isSupremeCourtScheduling(null)
                 .isAmendment(null)
-                .data(new JsonObject()).create());
+                .data(new Object()).create());
     }
 }

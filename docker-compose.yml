@@ -233,13 +233,28 @@ services:
     environment:
       SW_OAP_ADDRESS: skywalking-oap-server:12800
     networks:
-      - fisu-net
+      - fisu-net 
+ 
+  #############################################################################################
+  ###                             MONGO DB                                                  ###
+  #############################################################################################
+  mongodb:
+    image: 'mongo:latest'
+    container_name: 'mongodb'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USERNAME:-admin}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD:-admin}
+    volumes:
+      - mongo-volume:/data/db
+    ports:
+      - 27017:27017
 
 volumes:
   data-redis:
     driver: local
   data01:
     driver: local
+  mongo-volume:
 
 networks:
   fisu-net:

@@ -8,7 +8,6 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingcommons.model.*;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.*;
-import com.google.gson.JsonObject;
 import org.joda.time.DateTime;
 
 import java.math.BigDecimal;
@@ -45,7 +44,6 @@ public class TestHelpers {
     public static final String MIDDLE_NAME = "MIDDLENAME";
     public static final String LAST_NAME = "LASTNAME";
     public static final String NAME_TYPE_CD = "NAMECD";
-    public static final String PARTY_TYPE_CD = "PARTYCD";
     public static final String ROLE_TYPE_CD = "ABC";
 
     public static final String COURT_CLASS = "COURT_CLASS";
@@ -191,7 +189,7 @@ public class TestHelpers {
                 .mimeType("application/txt")
                 .isSupremeCourtScheduling(true)
                 .isAmendment(true)
-                .data(new JsonObject()).create());
+                .data(new Object()).create());
     }
 
     public static List<Individual> createPartyList() {
