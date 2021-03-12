@@ -128,6 +128,7 @@
             </xs:complexType>
             <xs:complexType name="documentType">
                 <xs:sequence>
+                    <xs:element minOccurs="0" name="autoProcessYn" type="xs:boolean"/>
                     <xs:element minOccurs="0" name="defaultStatutoryFee" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="documentTypeCd" type="xs:string"/>
                     <xs:element minOccurs="0" name="documentTypeDesc" type="xs:string"/>
