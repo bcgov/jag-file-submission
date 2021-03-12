@@ -211,20 +211,109 @@ describe("PackageReview Component", () => {
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
       .reply(200, { blob });
 
-    const { getByText, getByTestId } = render(<PackageReview />);
+    const { getByText } = render(<PackageReview />);
     await waitFor(() => {});
 
     fireEvent.click(getByText("Print Submission Sheet"));
     await waitFor(() => {});
 
     expect(FileSaver.saveAs).toHaveBeenCalled();
+  });
 
-    const button = getByTestId("cso-link");
+  test("Redirect to CSO - onClick (successful)", async () => {
+    mock.onGet(apiRequest).reply(200, {
+      links,
+      packageNumber: packageId,
+      court: courtData,
+      submittedBy,
+      submittedDate,
+      documents,
+    });
+
+    const { getByText } = render(<PackageReview />);
+    await waitFor(() => {});
+
+    const button = getByText("view all your previously submitted packages.");
 
     fireEvent.click(button);
     await waitFor(() => {});
 
     expect(window.open).toHaveBeenCalled();
+  });
+
+  test("Redirect to CSO - keydown (successful)", async () => {
+    mock.onGet(apiRequest).reply(200, {
+      links,
+      packageNumber: packageId,
+      court: courtData,
+      submittedBy,
+      submittedDate,
+      documents,
+    });
+
+    const { getByText } = render(<PackageReview />);
+    await waitFor(() => {});
+
+    const button = getByText("view all your previously submitted packages.");
+
+    fireEvent.keyDown(button, {
+      key: "Enter",
+      keyCode: "13",
+    });
+    await waitFor(() => {});
+
+    expect(window.open).toHaveBeenCalled();
+  });
+
+  test("Redirect to CSO - incorrect input (unsuccessful)", async () => {
+    mock.onGet(apiRequest).reply(200, {
+      links,
+      packageNumber: packageId,
+      court: courtData,
+      submittedBy,
+      submittedDate,
+      documents,
+    });
+
+    const { getByText } = render(<PackageReview />);
+    await waitFor(() => {});
+
+    const button = getByText("view all your previously submitted packages.");
+
+    fireEvent.keyDown(button, {
+      key: "Enter",
+      keyCode: "9",
+    });
+    await waitFor(() => {});
+
+    expect(window.open).not.toHaveBeenCalled();
+  });
+
+  test("Redirect to CSO - no link (unsuccesful)", async () => {
+    mock.onGet(apiRequest).reply(200, {
+      links: { packageHistoryUrl: "" },
+      packageNumber: packageId,
+      court: courtData,
+      submittedBy,
+      submittedDate,
+      documents,
+    });
+
+    const { getByText } = render(<PackageReview />);
+    await waitFor(() => {});
+
+    const button = getByText("view all your previously submitted packages.");
+
+    fireEvent.click(button);
+    await waitFor(() => {});
+
+    fireEvent.keyDown(button, {
+      key: "Enter",
+      keyCode: "13",
+    });
+    await waitFor(() => {});
+
+    expect(window.open).not.toHaveBeenCalled();
   });
 
   test("View Submission Sheet (on keyDown) - successful", async () => {
