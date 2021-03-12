@@ -30,6 +30,15 @@ describe("PackageReview Component", () => {
   const { parties } = packageReviewTestData;
   const { payments } = packageReviewTestData;
 
+  const csoRedirectResponse = {
+    links,
+    packageNumber: packageId,
+    court: courtData,
+    submittedBy,
+    submittedDate,
+    documents,
+  };
+
   FileSaver.saveAs = jest.fn();
 
   let mock;
@@ -221,14 +230,7 @@ describe("PackageReview Component", () => {
   });
 
   test("Redirect to CSO - onClick (successful)", async () => {
-    mock.onGet(apiRequest).reply(200, {
-      links,
-      packageNumber: packageId,
-      court: courtData,
-      submittedBy,
-      submittedDate,
-      documents,
-    });
+    mock.onGet(apiRequest).reply(200, csoRedirectResponse);
 
     const { getByText } = render(<PackageReview />);
     await waitFor(() => {});
@@ -242,14 +244,7 @@ describe("PackageReview Component", () => {
   });
 
   test("Redirect to CSO - keydown (successful)", async () => {
-    mock.onGet(apiRequest).reply(200, {
-      links,
-      packageNumber: packageId,
-      court: courtData,
-      submittedBy,
-      submittedDate,
-      documents,
-    });
+    mock.onGet(apiRequest).reply(200, csoRedirectResponse);
 
     const { getByText } = render(<PackageReview />);
     await waitFor(() => {});
@@ -266,14 +261,7 @@ describe("PackageReview Component", () => {
   });
 
   test("Redirect to CSO - incorrect input (unsuccessful)", async () => {
-    mock.onGet(apiRequest).reply(200, {
-      links,
-      packageNumber: packageId,
-      court: courtData,
-      submittedBy,
-      submittedDate,
-      documents,
-    });
+    mock.onGet(apiRequest).reply(200, csoRedirectResponse);
 
     const { getByText } = render(<PackageReview />);
     await waitFor(() => {});
