@@ -1,6 +1,5 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.document.documentsApiDelegateImpl;
 
-import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.clamav.starter.VirusDetectedException;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
 import ca.bc.gov.open.efilingdiligenclient.diligen.processor.FieldProcessor;
@@ -49,10 +48,10 @@ public class ExtractDocumentFormDataTest {
     private DocumentsApiDelegateImpl sut;
 
     @Mock
-    DiligenService diligenServiceMock;
+    private DiligenService diligenServiceMock;
 
     @Mock
-    DocumentValidator documentValidatorMock;
+    private DocumentValidator documentValidatorMock;
 
     @Mock
     private ExtractStore extractStoreMock;
@@ -62,9 +61,6 @@ public class ExtractDocumentFormDataTest {
 
     @Mock
     private FieldProcessor fieldProcessorMock;
-
-    @Mock
-    private ClamAvService clamAvServiceMock;
 
     @BeforeAll
     public void beforeAll() {
@@ -82,7 +78,7 @@ public class ExtractDocumentFormDataTest {
         Mockito.doNothing().when(stringRedisTemplateMock).convertAndSend(any(), any());
 
         ExtractRequestMapper extractRequestMapper = new ExtractRequestMapperImpl(new ExtractMapperImpl());
-        sut = new DocumentsApiDelegateImpl(diligenServiceMock, extractRequestMapper, extractStoreMock, stringRedisTemplateMock, fieldProcessorMock, clamAvServiceMock, documentValidatorMock);
+        sut = new DocumentsApiDelegateImpl(diligenServiceMock, extractRequestMapper, extractStoreMock, stringRedisTemplateMock, fieldProcessorMock, documentValidatorMock);
 
     }
     @Test

@@ -1,6 +1,5 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.document;
 
-import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
 import ca.bc.gov.open.efilingdiligenclient.diligen.processor.FieldProcessor;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.model.ProjectFieldsResponse;
@@ -8,8 +7,8 @@ import ca.bc.gov.open.jag.efilingreviewerapi.Keys;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.DocumentsApiDelegate;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentEvent;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentExtractResponse;
-import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerCacheException;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidator;
+import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerCacheException;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapper;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractRequest;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractResponse;
@@ -44,7 +43,6 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
     private final ExtractStore extractStore;
     private final StringRedisTemplate stringRedisTemplate;
     private final FieldProcessor fieldProcessor;
-    private final ClamAvService clamAvService;
     private final DocumentValidator documentValidator;
 
     public DocumentsApiDelegateImpl(
@@ -53,7 +51,6 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
             ExtractStore extractStore,
             StringRedisTemplate stringRedisTemplate,
             FieldProcessor fieldProcessor,
-            ClamAvService clamAvService,
             DocumentValidator documentValidator) {
 
         this.diligenService = diligenService;
@@ -61,7 +58,6 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
         this.extractStore = extractStore;
         this.stringRedisTemplate = stringRedisTemplate;
         this.fieldProcessor = fieldProcessor;
-        this.clamAvService = clamAvService;
         this.documentValidator = documentValidator;
 
     }

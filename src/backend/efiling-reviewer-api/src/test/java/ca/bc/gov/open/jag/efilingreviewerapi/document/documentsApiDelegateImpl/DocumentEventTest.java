@@ -1,6 +1,5 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.document.documentsApiDelegateImpl;
 
-import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
 import ca.bc.gov.open.efilingdiligenclient.diligen.model.DiligenDocumentDetails;
 import ca.bc.gov.open.efilingdiligenclient.diligen.processor.FieldProcessor;
@@ -55,9 +54,6 @@ public class DocumentEventTest {
     @Mock
     private StringRedisTemplate stringRedisTemplateMock;
 
-    @Mock
-    private ClamAvService clamAvServiceMock;
-
     @BeforeAll
     public void beforeAll() {
 
@@ -93,7 +89,7 @@ public class DocumentEventTest {
                         .create())
                 .create()));
 
-        sut = new DocumentsApiDelegateImpl(diligenServiceMock, extractRequestMapper, extractStoreMock, stringRedisTemplateMock, fieldProcessorMock, clamAvServiceMock, documentValidatorMock);
+        sut = new DocumentsApiDelegateImpl(diligenServiceMock, extractRequestMapper, extractStoreMock, stringRedisTemplateMock, fieldProcessorMock, documentValidatorMock);
 
     }
 
