@@ -10,7 +10,7 @@ import java.util.List;
 public class EfilingLookupServiceDemoImpl implements EfilingLookupService {
 
     @Override
-    public ServiceFees getServiceFee(String serviceId) {
+    public ServiceFees getServiceFee(SubmissionFeeRequest submissionFeeRequest) {
 
         return  new ServiceFees(
                 BigDecimal.valueOf(7),

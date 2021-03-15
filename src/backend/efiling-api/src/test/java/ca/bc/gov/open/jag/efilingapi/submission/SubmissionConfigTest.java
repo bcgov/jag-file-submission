@@ -103,7 +103,7 @@ public class SubmissionConfigTest {
     public static class EfilingLookupServiceTest implements EfilingLookupService {
 
         @Override
-        public ServiceFees getServiceFee(String serviceId) {
+        public ServiceFees getServiceFee(SubmissionFeeRequest submissionFeeRequest) {
             return null;
         }
 

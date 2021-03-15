@@ -7,32 +7,45 @@ import ca.bc.gov.ag.csows.lookups.NestedEjbException_Exception;
 import ca.bc.gov.ag.csows.lookups.ServiceFee;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingLookupServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
+import ca.bc.gov.open.jag.efilingcommons.model.SubmissionFeeRequest;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.xml.datatype.DatatypeConfigurationException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class CsoLookupServiceImpl implements EfilingLookupService {
 
-    private LookupFacadeBean lookupFacadeItf;
+    private LookupFacadeBean lookupFacade;
 
-    public CsoLookupServiceImpl(LookupFacadeBean lookupFacadeItf) {
-        this.lookupFacadeItf = lookupFacadeItf;
+    public CsoLookupServiceImpl(LookupFacadeBean lookupFacade) {
+        this.lookupFacade = lookupFacade;
     }
 
     @Override
-    public ServiceFees getServiceFee(String serviceId)  {
+    public ServiceFees getServiceFee(SubmissionFeeRequest submissionFeeRequest)  {
 
         // NOTE- "DCFL" is the only string that will work here until we get our service types setup
-        if (StringUtils.isEmpty(serviceId)) throw new IllegalArgumentException("service Id is required");
+        if (StringUtils.isEmpty(submissionFeeRequest.getServiceType())) throw new IllegalArgumentException("service type is required");
+        if (StringUtils.isEmpty(submissionFeeRequest.getApplication())) throw new IllegalArgumentException("application code is required");
+        if (StringUtils.isEmpty(submissionFeeRequest.getClassification())) throw new IllegalArgumentException("class code is required");
+        if (StringUtils.isEmpty(submissionFeeRequest.getDivision())) throw new IllegalArgumentException("division code is required");
+        if (StringUtils.isEmpty(submissionFeeRequest.getLevel())) throw new IllegalArgumentException("level code is required");
 
         try {
-            ServiceFee fee = lookupFacadeItf.getServiceFee(serviceId, CsoHelpers.date2XMLGregorian(new Date()));
+            ServiceFee fee = lookupFacade.getServiceFeeByClassification(submissionFeeRequest.getServiceType(),
+                    CsoHelpers.date2XMLGregorian(new Date()),
+                    submissionFeeRequest.getApplication(),
+                    submissionFeeRequest.getDivision(),
+                    submissionFeeRequest.getLevel(),
+                    submissionFeeRequest.getClassification());
             if (fee == null)
-                throw new EfilingLookupServiceException("Fee not found");
+                return new ServiceFees(
+                        BigDecimal.ZERO,
+                        null);
 
             return new ServiceFees(
                     fee.getFeeAmt(),
@@ -48,7 +61,7 @@ public class CsoLookupServiceImpl implements EfilingLookupService {
     @Override
     public List<String> getValidPartyRoles(String courtLevel, String courtClass, String documentTypes) {
         try {
-            List<CodeValue> partyRolesResponse = lookupFacadeItf.getEfilingPartyRoles(courtLevel, courtClass, documentTypes);
+            List<CodeValue> partyRolesResponse = lookupFacade.getEfilingPartyRoles(courtLevel, courtClass, documentTypes);
             List<String> validRoles = new ArrayList<>();
 
             for (CodeValue partyRole : partyRolesResponse) {
