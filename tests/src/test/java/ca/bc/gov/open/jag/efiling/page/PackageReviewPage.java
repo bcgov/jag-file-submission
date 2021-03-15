@@ -61,6 +61,9 @@ public class PackageReviewPage extends BasePage {
     @FindBy(id = "filingComments")
     private WebElement filingCommentsTextBox;
 
+    @FindBy(xpath = "//*[@data-testid='cso-link']")
+    private WebElement linkToCso;
+
     @FindBy(id = "username")
     private WebElement usernameField;
 
@@ -134,6 +137,25 @@ public class PackageReviewPage extends BasePage {
         Thread.sleep(1500L);
     }
 
+    public String getCsoPageUrlAndSwitchToPackageReviewPage() {
+        String packageReviewTab = this.driver.getWindowHandle();
+        linkToCso.click();
+
+        ArrayList<String> getAllTabs = new ArrayList<String>(this.driver.getWindowHandles());
+        getAllTabs.remove(packageReviewTab);
+
+        this.driver.switchTo().window(getAllTabs.get(0));
+        String csoTabTitle = this.driver.getCurrentUrl();
+        this.driver.close();
+
+        this.driver.switchTo().window(packageReviewTab);
+
+        return csoTabTitle;
+    }
+
+    public String getCurrentPageTitle() {
+        return this.driver.getTitle();
+    }
 
     public void signIn() {
         String packageReviewPageUrl = MessageFormat.format("{0}/{1}", packageReviewUrl, packageId);

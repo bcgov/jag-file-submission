@@ -69,16 +69,27 @@ public class ViewSubmittedPackageSD {
         Assert.assertEquals(0, downloadedFile.length());
     }
 
-    @And("comments are available in Filing Comments tab")
+    @Then("comments are available in Filing Comments tab")
     public void verifyFilingComments() {
         packageReviewPage.clickFilingCommentsTab();
         Assert.assertTrue(packageReviewPage.verifyFilingCommentsIsDisplayed());
 
     }
 
-    @And("payment status information is correct")
+    @Then("payment status information is correct")
     public void verifyPaymentStatus() {
         packageReviewPage.clickPaymentStatusTab();
         Assert.assertTrue(packageReviewPage.verifyPaymentStatusIsDisplayed());
     }
+
+    @Then("user can navigate to CSO and return to Efiling hub")
+    public void verifyUserCanNavigateToCsoAndReturnToEfilingHub() {
+        logger.info("Current url is: {}", packageReviewPage.getCsoPageUrlAndSwitchToPackageReviewPage());
+        Assert.assertTrue(packageReviewPage.getCsoPageUrlAndSwitchToPackageReviewPage().contains("wherearemypackage"));
+
+        packageReviewPage.getCurrentPageTitle();
+        logger.info("Current tab title is: {}", packageReviewPage.getCurrentPageTitle());
+        Assert.assertEquals("E-File submission", packageReviewPage.getCurrentPageTitle());
+    }
+
 }

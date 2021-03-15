@@ -13,7 +13,10 @@ Feature: Recently submitted package details can be viewed
     And document can be downloaded
 
   Scenario: Validate Filing Comments are correct in submitted package
-    And comments are available in Filing Comments tab
+    Then comments are available in Filing Comments tab
 
   Scenario: Validate payment status is correct in submitted package
-    And payment status information is correct
+    Then payment status information is correct
+
+  Scenario: Validate user can preview packages in CSO and return to Efiling hub
+    Then user can navigate to CSO and return to Efiling hub
