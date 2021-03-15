@@ -30,7 +30,7 @@ public class CsoLookupServiceImpl implements EfilingLookupService {
         if (StringUtils.isEmpty(serviceId)) throw new IllegalArgumentException("service Id is required");
 
         try {
-            ServiceFee fee = lookupFacadeItf.getServiceFee(serviceId, CsoHelpers.date2XMLGregorian(new Date()));
+            ServiceFee fee = lookupFacadeItf.getServiceFeeByClassification(serviceId, CsoHelpers.date2XMLGregorian(new Date()));
             if (fee == null)
                 throw new EfilingLookupServiceException("Fee not found");
 
