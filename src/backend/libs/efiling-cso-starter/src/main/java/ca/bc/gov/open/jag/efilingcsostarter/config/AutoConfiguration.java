@@ -68,7 +68,16 @@ public class AutoConfiguration {
     }
 
     @Bean
+    @Primary
+    @Profile(FINAL)
     public FilingStatusFacadeBean filingStatusFacadeBean() {
+        EfilingSoapClientProperties efilingSoapClientProperties = soapProperties.findByEnum(Clients.STATUS);
+        return SoapUtils.getPort(FilingStatusFacadeBean.class, efilingSoapClientProperties, csoProperties.isDebugEnabled()); }
+
+
+    @Bean
+    @Profile(PREVIEW)
+    public FilingStatusFacadeBean previewFilingStatusFacadeBean() {
         EfilingSoapClientProperties efilingSoapClientProperties = soapProperties.findByEnum(Clients.STATUS);
         return SoapUtils.getPort(FilingStatusFacadeBean.class, efilingSoapClientProperties, csoProperties.isDebugEnabled()); }
 
