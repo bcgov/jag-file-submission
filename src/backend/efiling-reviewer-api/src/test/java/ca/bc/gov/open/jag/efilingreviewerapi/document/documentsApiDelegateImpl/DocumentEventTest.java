@@ -3,6 +3,10 @@ package ca.bc.gov.open.jag.efilingreviewerapi.document.documentsApiDelegateImpl;
 import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
 import ca.bc.gov.open.efilingdiligenclient.diligen.model.DiligenDocumentDetails;
+import ca.bc.gov.open.efilingdiligenclient.diligen.processor.FieldProcessor;
+import ca.bc.gov.open.jag.efilingdiligenclient.api.model.Field;
+import ca.bc.gov.open.jag.efilingdiligenclient.api.model.ProjectFieldsResponse;
+import ca.bc.gov.open.jag.efilingdiligenclient.api.model.ProjectFieldsResponseData;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentEvent;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.DocumentsApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.models.Document;
@@ -13,15 +17,20 @@ import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMappe
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapperImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractRequest;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.store.ExtractStore;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -40,22 +49,51 @@ public class DocumentEventTest {
     @Mock
     private DocumentValidator documentValidatorMock;
 
+    @Mock
+    private FieldProcessor fieldProcessorMock;
+
+    @Mock
+    private StringRedisTemplate stringRedisTemplateMock;
+
+    @Mock
+    private ClamAvService clamAvServiceMock;
+
     @BeforeAll
     public void beforeAll() {
 
         MockitoAnnotations.openMocks(this);
 
         ExtractMapper extractMapper = new ExtractMapperImpl();
-        ExtractRequestMapper extratRequestMapper = new ExtractRequestMapperImpl(extractMapper);
+        ExtractRequestMapper extractRequestMapper = new ExtractRequestMapperImpl(extractMapper);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        ObjectNode result = objectMapper.createObjectNode();
+        result.put("test", "test");
+
+        Mockito.when(fieldProcessorMock.getJson(Mockito.any(), Mockito.any())).thenReturn(result);
 
         Mockito.when(diligenServiceMock.getDocumentDetails(ArgumentMatchers.eq(BigDecimal.ONE))).thenReturn(DiligenDocumentDetails.builder().create());
+
+        ProjectFieldsResponse projectFieldResponse = new ProjectFieldsResponse();
+        ProjectFieldsResponseData data = new ProjectFieldsResponseData();
+        List<Field> fields = new ArrayList<>();
+        Field field = new Field();
+        List<String> values = new ArrayList<>();
+        values.add("test");
+        field.setValues(values);
+        fields.add(field);
+        data.setFields(fields);
+        projectFieldResponse.setData(data);
+        Mockito.when(diligenServiceMock.getDocumentFieldResponse(Mockito.eq(BigDecimal.ONE))).thenReturn(projectFieldResponse);
+
         Mockito.when(extractStoreMock.get(Mockito.eq(BigDecimal.ONE))).thenReturn(Optional.of(ExtractRequest.builder()
                 .document(Document.builder()
                         .type("TYPE")
                         .create())
                 .create()));
 
-        sut = new DocumentsApiDelegateImpl(diligenServiceMock, extratRequestMapper, extractStoreMock, null, documentValidatorMock);
+        sut = new DocumentsApiDelegateImpl(diligenServiceMock, extractRequestMapper, extractStoreMock, stringRedisTemplateMock, fieldProcessorMock, clamAvServiceMock, documentValidatorMock);
 
     }
 

@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingreviewerapi.document.documentsApiDelegateImpl;
 import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.clamav.starter.VirusDetectedException;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
+import ca.bc.gov.open.efilingdiligenclient.diligen.processor.FieldProcessor;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentExtractResponse;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.DocumentsApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidator;
@@ -13,6 +14,7 @@ import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractMapperImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapper;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapperImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mocks.ExtractRequestMockFactory;
+import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractRequest;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.store.ExtractStore;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
@@ -47,36 +49,47 @@ public class ExtractDocumentFormDataTest {
     private DocumentsApiDelegateImpl sut;
 
     @Mock
-    DiligenService diligenService;
+    DiligenService diligenServiceMock;
 
     @Mock
     DocumentValidator documentValidatorMock;
 
     @Mock
-    private ExtractStore extractStore;
+    private ExtractStore extractStoreMock;
 
     @Mock
     private StringRedisTemplate stringRedisTemplateMock;
+
+    @Mock
+    private FieldProcessor fieldProcessorMock;
+
+    @Mock
+    private ClamAvService clamAvServiceMock;
 
     @BeforeAll
     public void beforeAll() {
 
         MockitoAnnotations.openMocks(this);
 
-        Mockito.when(extractStore.put(Mockito.eq(BigDecimal.ONE), Mockito.any())).thenReturn(Optional.of(ExtractRequestMockFactory.mock()));
-        Mockito.when(extractStore.put(Mockito.eq(BigDecimal.TEN), Mockito.any())).thenReturn(Optional.empty());
+        Mockito
+                .when(extractStoreMock.put(Mockito.eq(BigDecimal.ONE), Mockito.any(ExtractRequest.class)))
+                .thenReturn(Optional.of(ExtractRequestMockFactory.mock()));
+
+        Mockito
+                .when(extractStoreMock.put(Mockito.eq(BigDecimal.TEN), Mockito.any(ExtractRequest.class)))
+                .thenReturn(Optional.empty());
 
         Mockito.doNothing().when(stringRedisTemplateMock).convertAndSend(any(), any());
 
         ExtractRequestMapper extractRequestMapper = new ExtractRequestMapperImpl(new ExtractMapperImpl());
-        sut = new DocumentsApiDelegateImpl(diligenService, extractRequestMapper, extractStore, stringRedisTemplateMock, documentValidatorMock);
+        sut = new DocumentsApiDelegateImpl(diligenServiceMock, extractRequestMapper, extractStoreMock, stringRedisTemplateMock, fieldProcessorMock, clamAvServiceMock, documentValidatorMock);
 
     }
     @Test
     @DisplayName("200: Assert something returned")
     public void withUserHavingValidRequestShouldReturnCreated() throws IOException, VirusDetectedException {
 
-        Mockito.when(diligenService.postDocument(Mockito.any(), Mockito.any())).thenReturn(BigDecimal.ONE);
+        Mockito.when(diligenServiceMock.postDocument(Mockito.any(), Mockito.any())).thenReturn(BigDecimal.ONE);
 
         Path path = Paths.get("src/test/resources/" + CASE_1);
 
@@ -103,7 +116,7 @@ public class ExtractDocumentFormDataTest {
     @DisplayName("200: Assert something returned")
     public void withUserHavingValidRequestShouldReturnCredfated() throws IOException {
 
-        Mockito.when(diligenService.postDocument(Mockito.any(), Mockito.any())).thenReturn(BigDecimal.TEN);
+        Mockito.when(diligenServiceMock.postDocument(Mockito.any(), Mockito.any())).thenReturn(BigDecimal.TEN);
         Mockito.doNothing().when(documentValidatorMock).validateDocument(any(), any());
         Path path = Paths.get("src/test/resources/" + CASE_1);
 
@@ -122,7 +135,7 @@ public class ExtractDocumentFormDataTest {
     @DisplayName("Error: non pdf throws exception")
     public void withNonPdfFilesShouldReturnOk() throws IOException {
 
-        Mockito.when(diligenService.postDocument(Mockito.any(), Mockito.any())).thenReturn(BigDecimal.ONE);
+        Mockito.when(diligenServiceMock.postDocument(Mockito.any(), Mockito.any())).thenReturn(BigDecimal.ONE);
         Mockito.doThrow(AiReviewerDocumentException.class).when(documentValidatorMock).validateDocument(any(), any());
 
         Path path = Paths.get("src/test/resources/" + CASE_2);

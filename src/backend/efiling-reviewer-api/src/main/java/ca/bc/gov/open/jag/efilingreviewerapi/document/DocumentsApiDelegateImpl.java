@@ -1,20 +1,20 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.document;
 
 import ca.bc.gov.open.clamav.starter.ClamAvService;
-import ca.bc.gov.open.clamav.starter.VirusDetectedException;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
+import ca.bc.gov.open.efilingdiligenclient.diligen.processor.FieldProcessor;
+import ca.bc.gov.open.jag.efilingdiligenclient.api.model.ProjectFieldsResponse;
 import ca.bc.gov.open.jag.efilingreviewerapi.Keys;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.DocumentsApiDelegate;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentEvent;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentExtractResponse;
-import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidator;
-import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentException;
-import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerVirusFoundException;
-import ca.bc.gov.open.jag.efilingreviewerapi.utils.TikaAnalysis;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerCacheException;
+import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidator;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapper;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractRequest;
+import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractResponse;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.store.ExtractStore;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -22,16 +22,20 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
+
 
     Logger logger = LoggerFactory.getLogger(DocumentsApiDelegateImpl.class);
 
@@ -39,19 +43,27 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
     private final ExtractRequestMapper extractRequestMapper;
     private final ExtractStore extractStore;
     private final StringRedisTemplate stringRedisTemplate;
-
+    private final FieldProcessor fieldProcessor;
+    private final ClamAvService clamAvService;
     private final DocumentValidator documentValidator;
 
-    public DocumentsApiDelegateImpl(DiligenService diligenService,
-                                    ExtractRequestMapper extractRequestMapper,
-                                    ExtractStore extractStore,
-                                    StringRedisTemplate stringRedisTemplate,
-                                    DocumentValidator documentValidator) {
+    public DocumentsApiDelegateImpl(
+            DiligenService diligenService,
+            ExtractRequestMapper extractRequestMapper,
+            ExtractStore extractStore,
+            StringRedisTemplate stringRedisTemplate,
+            FieldProcessor fieldProcessor,
+            ClamAvService clamAvService,
+            DocumentValidator documentValidator) {
+
         this.diligenService = diligenService;
         this.extractRequestMapper = extractRequestMapper;
         this.extractStore = extractStore;
         this.stringRedisTemplate = stringRedisTemplate;
+        this.fieldProcessor = fieldProcessor;
+        this.clamAvService = clamAvService;
         this.documentValidator = documentValidator;
+
     }
 
     @Override
@@ -91,11 +103,23 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
         logger.info("document {} status has changed to {}", documentEvent.getDocumentId(), documentEvent.getStatus());
         //We won't do anything with this for now
         if (documentEvent.getStatus().equalsIgnoreCase(Keys.PROCESSED_STATUS)) {
+
             diligenService.getDocumentDetails(documentEvent.getDocumentId());
+
+            ProjectFieldsResponse response = diligenService.getDocumentFieldResponse(documentEvent.getDocumentId());
 
             Optional<ExtractRequest> extractRequestCached = extractStore.get(documentEvent.getDocumentId());
 
             if (extractRequestCached.isPresent()) {
+
+                ExtractResponse extractedResponse = ExtractResponse
+                        .builder()
+                        .document(extractRequestCached.get().getDocument())
+                        .formData(buildFormData(response))
+                        .extract(extractRequestCached.get().getExtract())
+                        .create();
+
+                extractStore.put(documentEvent.getDocumentId(), extractedResponse);
 
                 ExtractRequest extractRequest = extractRequestCached.get();
                 MDC.put(Keys.DOCUMENT_TYPE, extractRequest.getDocument().getType());
@@ -105,10 +129,26 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
                 extractStore.put(documentEvent.getDocumentId(), extractRequest);
 
             }
-        
+
         }
+
         MDC.remove(Keys.DOCUMENT_TYPE);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
+    }
+
+    private ObjectNode buildFormData(ProjectFieldsResponse response) {
+
+        try {
+
+            File resource = ResourceUtils.getFile("classpath:courtDetails.schema.json");
+            return fieldProcessor.getJson(new String(Files.readAllBytes(Paths.get(resource.getPath()))),
+                    response.getData().getFields());
+
+        } catch (IOException e) {
+
+            throw new RuntimeException(e);
+
+        }
     }
 }

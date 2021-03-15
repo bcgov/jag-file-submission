@@ -50,7 +50,7 @@ By default a demo mode is enabled.
 
 First create a local `.env` at the root of the repository based off [.env.template](.env.template). Below are the variables that need to be configured to get the application running in demo mode.
 
-Configure Keycloak
+Configure Keycloak6666666
 
 run
 

@@ -1,0 +1,14 @@
+{
+  "court": {
+    "location": "string",
+    "level": "string",
+    "courtClass": "string",
+    "division": "string",
+    "fileNumber": "string",
+    "participatingClass": "string",
+    "agencyId": 0,
+    "locationDescription": "string",
+    "levelDescription": "string",
+    "classDescription": "string"
+  }
+}
