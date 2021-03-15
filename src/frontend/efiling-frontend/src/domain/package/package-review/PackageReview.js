@@ -158,7 +158,7 @@ export default function PackageReview() {
 
   function handleCsoLink(e) {
     if (submissionHistoryLink && (isClick(e) || isEnter(e))) {
-      window.open(submissionHistoryLink, "_self");
+      window.open(submissionHistoryLink, "_blank");
     }
   }
 
