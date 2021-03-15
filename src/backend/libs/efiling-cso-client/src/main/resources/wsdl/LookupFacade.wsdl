@@ -17,6 +17,8 @@
             <xs:element name="getActiveActsResponse" type="tns:getActiveActsResponse"/>
             <xs:element name="getActiveDocumentSchemas" type="tns:getActiveDocumentSchemas"/>
             <xs:element name="getActiveDocumentSchemasResponse" type="tns:getActiveDocumentSchemasResponse"/>
+            <xs:element name="getApplicationRecordTypes" type="tns:getApplicationRecordTypes"/>
+            <xs:element name="getApplicationRecordTypesResponse" type="tns:getApplicationRecordTypesResponse"/>
             <xs:element name="getCities" type="tns:getCities"/>
             <xs:element name="getCitiesResponse" type="tns:getCitiesResponse"/>
             <xs:element name="getCivilDataElements" type="tns:getCivilDataElements"/>
@@ -29,6 +31,8 @@
             <xs:element name="getCountriesResponse" type="tns:getCountriesResponse"/>
             <xs:element name="getCountryCodes" type="tns:getCountryCodes"/>
             <xs:element name="getCountryCodesResponse" type="tns:getCountryCodesResponse"/>
+            <xs:element name="getCriminalDivisionLevelGroupings" type="tns:getCriminalDivisionLevelGroupings"/>
+            <xs:element name="getCriminalDivisionLevelGroupingsResponse" type="tns:getCriminalDivisionLevelGroupingsResponse"/>
             <xs:element name="getDocumentElements" type="tns:getDocumentElements"/>
             <xs:element name="getDocumentElementsResponse" type="tns:getDocumentElementsResponse"/>
             <xs:element name="getDocumentRequestStatuses" type="tns:getDocumentRequestStatuses"/>
@@ -54,6 +58,8 @@
             <xs:element name="getRequestItemStatuses" type="tns:getRequestItemStatuses"/>
             <xs:element name="getRequestItemStatusesResponse" type="tns:getRequestItemStatusesResponse"/>
             <xs:element name="getServiceFee" type="tns:getServiceFee"/>
+            <xs:element name="getServiceFeeByClassification" type="tns:getServiceFeeByClassification"/>
+            <xs:element name="getServiceFeeByClassificationResponse" type="tns:getServiceFeeByClassificationResponse"/>
             <xs:element name="getServiceFeeResponse" type="tns:getServiceFeeResponse"/>
             <xs:element name="getTransactionStates" type="tns:getTransactionStates"/>
             <xs:element name="getTransactionStatesResponse" type="tns:getTransactionStatesResponse"/>
@@ -61,6 +67,22 @@
             <xs:element name="removeApplicationPreferenceResponse" type="tns:removeApplicationPreferenceResponse"/>
             <xs:element name="updateApplicationPreference" type="tns:updateApplicationPreference"/>
             <xs:element name="updateApplicationPreferenceResponse" type="tns:updateApplicationPreferenceResponse"/>
+            <xs:complexType name="getCriminalDivisionLevelGroupings">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getCriminalDivisionLevelGroupingsResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:criminalDivisionLevelCombination"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="criminalDivisionLevelCombination">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="courtDivisionCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtDivisionDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevelCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevelDsc" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
             <xs:complexType name="getAccessStatusTypes">
                 <xs:sequence/>
             </xs:complexType>
@@ -159,6 +181,33 @@
             <xs:complexType name="getEfilingPartyRolesResponse">
                 <xs:sequence>
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeValue"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getServiceFeeByClassification">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg5" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getServiceFeeByClassificationResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:serviceFee"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="serviceFee">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="effectiveDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="entDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="entUserId" type="xs:string"/>
+                    <xs:element minOccurs="0" name="expiryDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="feeAmt" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="serviceTypeCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="updDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="updUserId" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="getCountryCodes">
@@ -319,18 +368,6 @@
                     <xs:element minOccurs="0" name="return" type="tns:serviceFee"/>
                 </xs:sequence>
             </xs:complexType>
-            <xs:complexType name="serviceFee">
-                <xs:sequence>
-                    <xs:element minOccurs="0" name="effectiveDt" type="xs:dateTime"/>
-                    <xs:element minOccurs="0" name="entDtm" type="xs:dateTime"/>
-                    <xs:element minOccurs="0" name="entUserId" type="xs:string"/>
-                    <xs:element minOccurs="0" name="expiryDt" type="xs:dateTime"/>
-                    <xs:element minOccurs="0" name="feeAmt" type="xs:decimal"/>
-                    <xs:element minOccurs="0" name="serviceTypeCd" type="xs:string"/>
-                    <xs:element minOccurs="0" name="updDtm" type="xs:dateTime"/>
-                    <xs:element minOccurs="0" name="updUserId" type="xs:string"/>
-                </xs:sequence>
-            </xs:complexType>
             <xs:complexType name="getRefundStatuses">
                 <xs:sequence/>
             </xs:complexType>
@@ -373,6 +410,14 @@
             <xs:complexType name="findApplicationPreferenceByCriteriaResponse">
                 <xs:sequence>
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:applicationPreference"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getApplicationRecordTypes">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getApplicationRecordTypesResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeValue"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="createApplicationPreference">
@@ -481,6 +526,9 @@
     <wsdl:message name="findApplicationPreferenceByNameResponse">
         <wsdl:part element="tns:findApplicationPreferenceByNameResponse" name="parameters"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="getApplicationRecordTypes">
+        <wsdl:part element="tns:getApplicationRecordTypes" name="parameters"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="getAccessEntitlementsResponse">
         <wsdl:part element="tns:getAccessEntitlementsResponse" name="parameters"></wsdl:part>
     </wsdl:message>
@@ -502,6 +550,9 @@
     <wsdl:message name="getRequestItemStatuses">
         <wsdl:part element="tns:getRequestItemStatuses" name="parameters"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="getCriminalDivisionLevelGroupings">
+        <wsdl:part element="tns:getCriminalDivisionLevelGroupings" name="parameters"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="getAccessEntitlements">
         <wsdl:part element="tns:getAccessEntitlements" name="parameters"></wsdl:part>
     </wsdl:message>
@@ -510,6 +561,9 @@
     </wsdl:message>
     <wsdl:message name="getLegalRepTypes">
         <wsdl:part element="tns:getLegalRepTypes" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getApplicationRecordTypesResponse">
+        <wsdl:part element="tns:getApplicationRecordTypesResponse" name="parameters"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="updateApplicationPreference">
         <wsdl:part element="tns:updateApplicationPreference" name="parameters"></wsdl:part>
@@ -525,6 +579,9 @@
     </wsdl:message>
     <wsdl:message name="getDocumentRequestStatusesResponse">
         <wsdl:part element="tns:getDocumentRequestStatusesResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getServiceFeeByClassification">
+        <wsdl:part element="tns:getServiceFeeByClassification" name="parameters"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="getCountriesResponse">
         <wsdl:part element="tns:getCountriesResponse" name="parameters"></wsdl:part>
@@ -559,8 +616,14 @@
     <wsdl:message name="getTransactionStates">
         <wsdl:part element="tns:getTransactionStates" name="parameters"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="getCriminalDivisionLevelGroupingsResponse">
+        <wsdl:part element="tns:getCriminalDivisionLevelGroupingsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="getTransactionStatesResponse">
         <wsdl:part element="tns:getTransactionStatesResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getServiceFeeByClassificationResponse">
+        <wsdl:part element="tns:getServiceFeeByClassificationResponse" name="parameters"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="getCities">
         <wsdl:part element="tns:getCities" name="parameters"></wsdl:part>
@@ -593,6 +656,11 @@
         <wsdl:part element="tns:getServiceFeeResponse" name="parameters"></wsdl:part>
     </wsdl:message>
     <wsdl:portType name="LookupFacadeBean">
+        <wsdl:operation name="getCriminalDivisionLevelGroupings">
+            <wsdl:input message="tns:getCriminalDivisionLevelGroupings" name="getCriminalDivisionLevelGroupings"></wsdl:input>
+            <wsdl:output message="tns:getCriminalDivisionLevelGroupingsResponse" name="getCriminalDivisionLevelGroupingsResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
         <wsdl:operation name="getAccessStatusTypes">
             <wsdl:input message="tns:getAccessStatusTypes" name="getAccessStatusTypes"></wsdl:input>
             <wsdl:output message="tns:getAccessStatusTypesResponse" name="getAccessStatusTypesResponse"></wsdl:output>
@@ -636,6 +704,11 @@
         <wsdl:operation name="getEfilingPartyRoles">
             <wsdl:input message="tns:getEfilingPartyRoles" name="getEfilingPartyRoles"></wsdl:input>
             <wsdl:output message="tns:getEfilingPartyRolesResponse" name="getEfilingPartyRolesResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getServiceFeeByClassification">
+            <wsdl:input message="tns:getServiceFeeByClassification" name="getServiceFeeByClassification"></wsdl:input>
+            <wsdl:output message="tns:getServiceFeeByClassificationResponse" name="getServiceFeeByClassificationResponse"></wsdl:output>
             <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="getCountryCodes">
@@ -728,6 +801,11 @@
             <wsdl:output message="tns:findApplicationPreferenceByCriteriaResponse" name="findApplicationPreferenceByCriteriaResponse"></wsdl:output>
             <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
         </wsdl:operation>
+        <wsdl:operation name="getApplicationRecordTypes">
+            <wsdl:input message="tns:getApplicationRecordTypes" name="getApplicationRecordTypes"></wsdl:input>
+            <wsdl:output message="tns:getApplicationRecordTypesResponse" name="getApplicationRecordTypesResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
         <wsdl:operation name="createApplicationPreference">
             <wsdl:input message="tns:createApplicationPreference" name="createApplicationPreference"></wsdl:input>
             <wsdl:output message="tns:createApplicationPreferenceResponse" name="createApplicationPreferenceResponse"></wsdl:output>
@@ -752,6 +830,18 @@
                 <soap:body use="literal"/>
             </wsdl:input>
             <wsdl:output name="getAccessStatusTypesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getCriminalDivisionLevelGroupings">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getCriminalDivisionLevelGroupings">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getCriminalDivisionLevelGroupingsResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
             <wsdl:fault name="NestedEjbException">
@@ -848,6 +938,18 @@
                 <soap:body use="literal"/>
             </wsdl:input>
             <wsdl:output name="findApplicationPreferenceByNameResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getServiceFeeByClassification">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getServiceFeeByClassification">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getServiceFeeByClassificationResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
             <wsdl:fault name="NestedEjbException">
@@ -1064,6 +1166,18 @@
                 <soap:body use="literal"/>
             </wsdl:input>
             <wsdl:output name="findApplicationPreferenceByCriteriaResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getApplicationRecordTypes">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getApplicationRecordTypes">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getApplicationRecordTypesResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
             <wsdl:fault name="NestedEjbException">
