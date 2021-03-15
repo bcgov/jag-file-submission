@@ -36,7 +36,7 @@ public class viewAndDownloadReceiptSD {
         File downloadedFile = fileDownloadHelper.downloadFile(DOWNLOADED_FILES_PATH);
 
         logger.info("Downloaded file name is: {}", downloadedFile.getName());
-        Assert.assertEquals("SubmissionSheet.pdf", downloadedFile.getName());
+        Assert.assertEquals("PaymentReceipt.pdf", downloadedFile.getName());
 
         Assert.assertTrue(downloadedFile.length() > 0);
         logger.info("Files successfully downloaded");
