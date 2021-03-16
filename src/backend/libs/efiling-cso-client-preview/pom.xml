@@ -74,12 +74,6 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>5.3.1</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>ca.bc.gov.open.jag</groupId>
             <artifactId>efiling-cso-client</artifactId>
             <version>0.7.0-SNAPSHOT</version>
@@ -133,7 +127,7 @@
                 <version>3.4.1</version>
                 <executions>
                     <execution>
-                        <id>generate-sources</id>
+                        <id>account-wsdl</id>
                         <phase>generate-sources</phase>
                         <configuration>
                             <sourceRoot>${project.build.directory}/generated-sources/cxf</sourceRoot>
@@ -143,6 +137,29 @@
                                     <packagenames>
                                         <!-- Package Mappings -->
                                         <packagename>http://accounts.csows.ag.gov.bc.ca/=preview.ca.bc.gov.ag.csows.accounts</packagename>
+                                    </packagenames>
+                                    <extraargs>
+                                        <extraarg>-client</extraarg>
+                                        <extraarg>-autoNameResolution</extraarg>
+                                    </extraargs>
+                                </wsdlOption>
+                            </wsdlOptions>
+                        </configuration>
+                        <goals>
+                            <goal>wsdl2java</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>filing-status-wsdl</id>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <sourceRoot>${project.build.directory}/generated-sources/cxf</sourceRoot>
+                            <wsdlOptions>
+                                <wsdlOption>
+                                    <wsdl>${project.basedir}/src/main/resources/wsdl/FilingStatusFacade.wsdl</wsdl>
+                                    <packagenames>
+                                        <!-- Package Mappings -->
+                                        <packagename>http://status.filing.csows.ag.gov.bc.ca/=preview.ca.bc.gov.ag.csows.filing.status</packagename>
                                     </packagenames>
                                     <extraargs>
                                         <extraarg>-client</extraarg>
