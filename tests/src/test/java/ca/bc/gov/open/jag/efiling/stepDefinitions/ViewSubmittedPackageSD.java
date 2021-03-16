@@ -82,10 +82,10 @@ public class ViewSubmittedPackageSD {
         Assert.assertTrue(packageReviewPage.verifyPaymentStatusIsDisplayed());
     }
 
-    @Then("user can navigate to CSO and return to Efiling hub")
-    public void verifyUserCanNavigateToCsoAndReturnToEfilingHub() {
+    @Then("user can navigate to {string} page and return to Efiling hub")
+    public void verifyUserCanNavigateToCsoAndReturnToEfilingHub(String csoUrlSlug) {
         logger.info("Current url is: {}", packageReviewPage.getCsoPageUrlAndSwitchToPackageReviewPage());
-        Assert.assertTrue(packageReviewPage.getCsoPageUrlAndSwitchToPackageReviewPage().contains("wherearemypackage"));
+        Assert.assertTrue(packageReviewPage.getCsoPageUrlAndSwitchToPackageReviewPage().contains(csoUrlSlug));
 
         packageReviewPage.getCurrentPageTitle();
         logger.info("Current tab title is: {}", packageReviewPage.getCurrentPageTitle());

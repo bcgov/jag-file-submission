@@ -19,4 +19,4 @@ Feature: Recently submitted package details can be viewed
     Then payment status information is correct
 
   Scenario: Validate user can preview packages in CSO and return to Efiling hub
-    Then user can navigate to CSO and return to Efiling hub
+    Then user can navigate to "wherearemypackage" page and return to Efiling hub
