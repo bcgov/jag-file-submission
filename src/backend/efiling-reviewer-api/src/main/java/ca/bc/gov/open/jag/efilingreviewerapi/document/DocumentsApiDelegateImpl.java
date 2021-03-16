@@ -8,8 +8,11 @@ import ca.bc.gov.open.jag.efilingreviewerapi.Keys;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.DocumentsApiDelegate;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentEvent;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentExtractResponse;
+import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentTypeConfiguration;
+import ca.bc.gov.open.jag.efilingreviewerapi.document.store.DocumentTypeConfigurationRepository;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidator;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerCacheException;
+import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentConfigException;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapper;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractRequest;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractResponse;
@@ -22,14 +25,9 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -44,6 +42,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
     private final StringRedisTemplate stringRedisTemplate;
     private final FieldProcessor fieldProcessor;
     private final DocumentValidator documentValidator;
+    private final DocumentTypeConfigurationRepository documentTypeConfigurationRepository;
 
     public DocumentsApiDelegateImpl(
             DiligenService diligenService,
@@ -51,7 +50,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
             ExtractStore extractStore,
             StringRedisTemplate stringRedisTemplate,
             FieldProcessor fieldProcessor,
-            DocumentValidator documentValidator) {
+            DocumentValidator documentValidator, DocumentTypeConfigurationRepository documentTypeConfigurationRepository) {
 
         this.diligenService = diligenService;
         this.extractRequestMapper = extractRequestMapper;
@@ -59,7 +58,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
         this.stringRedisTemplate = stringRedisTemplate;
         this.fieldProcessor = fieldProcessor;
         this.documentValidator = documentValidator;
-
+        this.documentTypeConfigurationRepository = documentTypeConfigurationRepository;
     }
 
     @Override
@@ -84,7 +83,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
 
         Optional<ExtractRequest> extractRequestCached = extractStore.put(response, extractRequest);
 
-        if(!extractRequestCached.isPresent())
+        if (!extractRequestCached.isPresent())
             throw new AiReviewerCacheException("Could not cache extract request");
 
         MDC.remove(Keys.DOCUMENT_TYPE);
@@ -97,6 +96,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
     public ResponseEntity<Void> documentEvent(UUID xTransactionId, DocumentEvent documentEvent) {
 
         logger.info("document {} status has changed to {}", documentEvent.getDocumentId(), documentEvent.getStatus());
+
         //We won't do anything with this for now
         if (documentEvent.getStatus().equalsIgnoreCase(Keys.PROCESSED_STATUS)) {
 
@@ -106,15 +106,17 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
 
             Optional<ExtractRequest> extractRequestCached = extractStore.get(documentEvent.getDocumentId());
 
-            if (extractRequestCached.isPresent()) {
+            extractRequestCached.ifPresent(extractRequest -> {
 
-                ExtractRequest extractRequest = extractRequestCached.get();
-                documentValidator.validateExtractedDocument(documentEvent.getDocumentId(), extractRequest.getDocument().getType(), response.getAnswers());
+                DocumentTypeConfiguration config = documentTypeConfigurationRepository.findByDocumentType(extractRequest.getDocument().getType());
+
+                if(config == null)
+                    throw new AiReviewerDocumentConfigException("document configuration not found");
 
                 ExtractResponse extractedResponse = ExtractResponse
                         .builder()
                         .document(extractRequestCached.get().getDocument())
-                        .formData(buildFormData(response.getProjectFieldsResponse()))
+                        .formData(buildFormData(response, config))
                         .extract(extractRequestCached.get().getExtract())
                         .create();
 
@@ -126,7 +128,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
                 logger.info("document processing time: [{}]", extractRequest.getProcessedTimeMillis());
                 extractStore.put(documentEvent.getDocumentId(), extractRequest);
 
-            }
+            });
 
         }
 
@@ -135,18 +137,14 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
 
     }
 
-    private ObjectNode buildFormData(ProjectFieldsResponse response) {
+    private ObjectNode buildFormData(ProjectFieldsResponse response, DocumentTypeConfiguration config) {
 
-        try {
+        if (config == null)
+            throw new AiReviewerDocumentConfigException("Document Configuration not found");
 
-            File resource = ResourceUtils.getFile("classpath:courtDetails.schema.json");
-            return fieldProcessor.getJson(new String(Files.readAllBytes(Paths.get(resource.getPath()))),
-                    response.getData().getFields());
+        return fieldProcessor.getJson(config.getJsonSchema(),
+                response.getData().getFields());
 
-        } catch (IOException e) {
-
-            throw new RuntimeException(e);
-
-        }
     }
+
 }
