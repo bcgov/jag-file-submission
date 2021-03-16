@@ -42,7 +42,6 @@ public class FieldProcessorTest {
         ObjectNode actual = sut.getJson(new String(
                 Files.readAllBytes(path)), response);
 
-      //  System.out.println(actual);
 
     }
 
