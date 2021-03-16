@@ -44,15 +44,15 @@ public class CsoLookupServiceImplTest {
         serviceFee.setServiceTypeCd(SERVICE_TYPE_CD);
 
         Mockito
-                .when(lookupFacadeBeanMock.getServiceFeeByClassification(ArgumentMatchers.eq(SERVICE_TYPE), any(), any(), any(), any(), any()))
+                .when(lookupFacadeBeanMock.getServiceFee(ArgumentMatchers.eq(SERVICE_TYPE), any()))
                 .thenReturn(serviceFee);
 
         Mockito
-                .when(lookupFacadeBeanMock.getServiceFeeByClassification(ArgumentMatchers.eq(SERVICE_ID_EXCEPTION), any(), any(), any(), any(), any()))
+                .when(lookupFacadeBeanMock.getServiceFee(ArgumentMatchers.eq(SERVICE_ID_EXCEPTION), any()))
                 .thenThrow(new NestedEjbException_Exception("random"));
 
         Mockito
-                .when(lookupFacadeBeanMock.getServiceFeeByClassification(ArgumentMatchers.eq(SERVICE_ID_NULL), any(), any(), any(), any(), any()))
+                .when(lookupFacadeBeanMock.getServiceFee(ArgumentMatchers.eq(SERVICE_ID_NULL), any()))
                 .thenReturn(null);
 
 
@@ -67,65 +67,11 @@ public class CsoLookupServiceImplTest {
         Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getServiceFee(SubmissionFeeRequest.builder().create()));
     }
 
-    @DisplayName("Exception: with null service id should throw IllegalArgumentException")
-    @Test
-    public void testWithEmptyApplication() {
-
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getServiceFee(SubmissionFeeRequest.builder()
-                .serviceType(TEST)
-                .create()));
-
-    }
-
-    @DisplayName("Exception: with null service id should throw IllegalArgumentException")
-    @Test
-    public void testWithEmptyClassification() {
-
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getServiceFee(SubmissionFeeRequest.builder()
-                .serviceType(TEST)
-                .application(TEST)
-                .create()));
-
-    }
-
-    @DisplayName("Exception: with null service id should throw IllegalArgumentException")
-    @Test
-    public void testWithEmptyDivision() {
-
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getServiceFee(SubmissionFeeRequest.builder()
-                .serviceType(TEST)
-                .application(TEST)
-                .classification(TEST)
-                .create()));
-
-    }
-
-    @DisplayName("Exception: with null service id should throw IllegalArgumentException")
-    @Test
-    public void testWithEmptyLevel() {
-
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getServiceFee(SubmissionFeeRequest.builder()
-                .serviceType(TEST)
-                .application(TEST)
-                .classification(TEST)
-                .division(TEST)
-                .create()));
-
-    }
-
-
-
-
-
     @DisplayName("OK: getServiceFee called with any non-empty serviceId")
     @Test
     public void testWithPopulatedServiceId() {
 
         ServiceFees actual = sut.getServiceFee(SubmissionFeeRequest.builder()
-                .application(TEST)
-                .classification(TEST)
-                .division(TEST)
-                .level(TEST)
                 .serviceType(SERVICE_TYPE).create());
         Assertions.assertEquals(BigDecimal.TEN, actual.getFeeAmount());
         Assertions.assertEquals(SERVICE_TYPE_CD, actual.getServiceTypeCd());
@@ -136,26 +82,14 @@ public class CsoLookupServiceImplTest {
     public void whenNestedEjbException_ExceptionShouldThrowEfilingLookupServiceException() {
 
         Assertions.assertThrows(EfilingLookupServiceException.class, () -> sut.getServiceFee(SubmissionFeeRequest.builder()
-                .application(TEST)
-                .classification(TEST)
-                .division(TEST)
-                .level(TEST)
                 .serviceType(SERVICE_ID_EXCEPTION).create()));
 
     }
-    @DisplayName("OK: with null result should throw EfilingLookupServiceException")
+    @DisplayName("Exception: with null result should throw EfilingLookupServiceException")
     @Test
     public void whenNullResultShouldThrowEfilingLookupServiceException() {
 
-        ServiceFees actual = sut.getServiceFee(SubmissionFeeRequest.builder()
-                .application(TEST)
-                .classification(TEST)
-                .division(TEST)
-                .level(TEST)
-                .serviceType(SERVICE_ID_NULL).create());
-
-        Assertions.assertEquals(BigDecimal.ZERO, actual.getFeeAmount());
-        Assertions.assertNull(actual.getServiceTypeCd());
-
+        Assertions.assertThrows(EfilingLookupServiceException.class, () -> sut.getServiceFee(SubmissionFeeRequest.builder()
+                .serviceType(SERVICE_ID_NULL).create()));
     }
 }
