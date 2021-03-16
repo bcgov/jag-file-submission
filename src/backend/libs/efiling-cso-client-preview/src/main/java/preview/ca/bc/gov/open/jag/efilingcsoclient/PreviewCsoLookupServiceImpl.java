@@ -1,14 +1,15 @@
-package ca.bc.gov.open.jag.efilingcsoclient;
+package preview.ca.bc.gov.open.jag.efilingcsoclient;
 
 
-import ca.bc.gov.ag.csows.lookups.CodeValue;
-import ca.bc.gov.ag.csows.lookups.LookupFacadeBean;
-import ca.bc.gov.ag.csows.lookups.NestedEjbException_Exception;
-import ca.bc.gov.ag.csows.lookups.ServiceFee;
+import preview.ca.bc.gov.ag.csows.lookups.CodeValue;
+import preview.ca.bc.gov.ag.csows.lookups.LookupFacadeBean;
+import preview.ca.bc.gov.ag.csows.lookups.NestedEjbException_Exception;
+import preview.ca.bc.gov.ag.csows.lookups.ServiceFee;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingLookupServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import ca.bc.gov.open.jag.efilingcommons.model.SubmissionFeeRequest;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
+import ca.bc.gov.open.jag.efilingcsoclient.CsoHelpers;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -17,11 +18,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class CsoLookupServiceImpl implements EfilingLookupService {
+public class PreviewCsoLookupServiceImpl implements EfilingLookupService {
 
     private LookupFacadeBean lookupFacade;
 
-    public CsoLookupServiceImpl(LookupFacadeBean lookupFacade) {
+    public PreviewCsoLookupServiceImpl(LookupFacadeBean lookupFacade) {
         this.lookupFacade = lookupFacade;
     }
 
@@ -36,8 +37,12 @@ public class CsoLookupServiceImpl implements EfilingLookupService {
         if (StringUtils.isEmpty(submissionFeeRequest.getLevel())) throw new IllegalArgumentException("level code is required");
 
         try {
-            ServiceFee fee = lookupFacade.getServiceFee(submissionFeeRequest.getServiceType(),
-                    CsoHelpers.date2XMLGregorian(new Date()));
+            ServiceFee fee = lookupFacade.getServiceFeeByClassification(submissionFeeRequest.getServiceType(),
+                    CsoHelpers.date2XMLGregorian(new Date()),
+                    submissionFeeRequest.getApplication(),
+                    submissionFeeRequest.getDivision(),
+                    submissionFeeRequest.getLevel(),
+                    submissionFeeRequest.getClassification());
             if (fee == null)
                 return new ServiceFees(
                         BigDecimal.ZERO,
