@@ -16,6 +16,7 @@ import ca.bc.gov.open.jag.efilingcsoclient.SoapUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.*;
 import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.*;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -69,7 +70,6 @@ public class AutoConfiguration {
     }
 
     @Bean
-    @Primary
     public FilingStatusFacadeBean filingStatusFacadeBean() {
         EfilingSoapClientProperties efilingSoapClientProperties = soapProperties.findByEnum(Clients.STATUS);
         return SoapUtils.getPort(FilingStatusFacadeBean.class, efilingSoapClientProperties, csoProperties.isDebugEnabled()); }
@@ -173,7 +173,7 @@ public class AutoConfiguration {
 
     @Bean
     @Profile(PREVIEW)
-    public EfilingDocumentService efilingDocumentService(preview.ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean previewFilingStatusFacadeBean) {
+    public EfilingDocumentService previewEfilingDocumentService(preview.ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean previewFilingStatusFacadeBean) {
         return new PreviewCsoDocumentServiceImpl(previewFilingStatusFacadeBean);
     }
 
