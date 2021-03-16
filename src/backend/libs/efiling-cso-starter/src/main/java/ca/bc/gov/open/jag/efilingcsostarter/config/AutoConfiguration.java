@@ -31,8 +31,8 @@ import preview.ca.bc.gov.open.jag.efilingcsoclient.mappers.ClientProfileMapperIm
 public class AutoConfiguration {
 
     private static final String PREVIEW = "preview";
-    private static final String STATUS_FACADE = "status";
-    private static final String NOT_STATUS_FACADE = "!status";
+    private static final String STATUS_FACADE_PREVIEW = "status_facade";
+    private static final String NOT_STATUS_FACADE_PREVIEW = "!status_facade";
     private static final String FINAL = "!preview";
     private final SoapProperties soapProperties;
 
@@ -76,7 +76,7 @@ public class AutoConfiguration {
 
 
     @Bean("PreviewFilingStatusFacadeBean")
-    @Profile(STATUS_FACADE)
+    @Profile(STATUS_FACADE_PREVIEW)
     public preview.ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean previewFilingStatusFacadeBean() {
         EfilingSoapClientProperties efilingSoapClientProperties = soapProperties.findByEnum(Clients.STATUS);
         return SoapUtils.getPort(preview.ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean.class, efilingSoapClientProperties, csoProperties.isDebugEnabled()); }
@@ -166,13 +166,13 @@ public class AutoConfiguration {
 
     @Bean
     @Primary
-    @Profile(NOT_STATUS_FACADE)
+    @Profile(NOT_STATUS_FACADE_PREVIEW)
     public EfilingDocumentService efilingDocumentService(FilingStatusFacadeBean filingStatusFacadeBean) {
         return new CsoDocumentServiceImpl(filingStatusFacadeBean);
     }
 
     @Bean
-    @Profile(STATUS_FACADE)
+    @Profile(STATUS_FACADE_PREVIEW)
     public EfilingDocumentService previewEfilingDocumentService(preview.ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean previewFilingStatusFacadeBean) {
         return new PreviewCsoDocumentServiceImpl(previewFilingStatusFacadeBean);
     }

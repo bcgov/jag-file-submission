@@ -1,11 +1,12 @@
 package preview.ca.bc.gov.open.jag.efilingcsoclient;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import preview.ca.bc.gov.ag.csows.filing.status.DocumentType;
 import preview.ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
-import ca.bc.gov.open.jag.efilingcsoclient.CsoDocumentServiceImpl;
 import preview.ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import org.apache.commons.lang3.StringUtils;
 
@@ -15,6 +16,8 @@ import java.util.stream.Collectors;
 
 
 public class PreviewCsoDocumentServiceImpl implements EfilingDocumentService {
+
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final FilingStatusFacadeBean previewFilingStatusFacadeBean;
 
@@ -32,6 +35,8 @@ public class PreviewCsoDocumentServiceImpl implements EfilingDocumentService {
     @Override
     public DocumentDetails getDocumentDetails(String courtLevel, String courtClass, String documentType) {
 
+        logger.warn("THIS IS IN PREVIEW MODE");
+
         if (StringUtils.isBlank(courtLevel)) throw new IllegalArgumentException("courtLevel is required.");
         if (StringUtils.isBlank(courtClass)) throw new IllegalArgumentException("courtClass level is required.");
         if (StringUtils.isBlank(documentType)) throw new IllegalArgumentException("documentType level is required.");
@@ -45,6 +50,9 @@ public class PreviewCsoDocumentServiceImpl implements EfilingDocumentService {
     }
 
     public List<ca.bc.gov.open.jag.efilingcommons.model.DocumentType> getDocumentTypes(String courtLevel, String courtClass) {
+
+        logger.warn("THIS IS IN PREVIEW MODE");
+
         if (StringUtils.isBlank(courtLevel)) throw new IllegalArgumentException("courtLevel is required.");
         if (StringUtils.isBlank(courtClass)) throw new IllegalArgumentException("courtClass level is required.");
 
