@@ -1,11 +1,12 @@
 package preview.ca.bc.gov.open.jag.efilingcsoclient;
 
-import ca.bc.gov.ag.csows.filing.status.DocumentType;
-import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
-import ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
+import preview.ca.bc.gov.ag.csows.filing.status.DocumentType;
+import preview.ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
+import ca.bc.gov.open.jag.efilingcsoclient.CsoDocumentServiceImpl;
+import preview.ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -15,10 +16,10 @@ import java.util.stream.Collectors;
 
 public class PreviewCsoDocumentServiceImpl implements EfilingDocumentService {
 
-    private final FilingStatusFacadeBean filingStatusFacadeBean;
+    private final FilingStatusFacadeBean previewFilingStatusFacadeBean;
 
-    public PreviewCsoDocumentServiceImpl(FilingStatusFacadeBean filingStatusFacadeBean) {
-        this.filingStatusFacadeBean = filingStatusFacadeBean;
+    public PreviewCsoDocumentServiceImpl(FilingStatusFacadeBean previewFilingStatusFacadeBean) {
+        this.previewFilingStatusFacadeBean = previewFilingStatusFacadeBean;
     }
 
     /**
@@ -56,7 +57,7 @@ public class PreviewCsoDocumentServiceImpl implements EfilingDocumentService {
         List<DocumentType> documentTypes = new ArrayList<>();
 
         try {
-            documentTypes.addAll(filingStatusFacadeBean.getDocumentTypes(courtLevel, courtClass));
+            documentTypes.addAll(previewFilingStatusFacadeBean.getDocumentTypes(courtLevel, courtClass));
         } catch (NestedEjbException_Exception e) {
             throw new EfilingDocumentServiceException("Exception while retrieving document details", e.getCause());
         }
