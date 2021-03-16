@@ -166,7 +166,7 @@ public class AutoConfiguration {
 
     @Bean
     @Primary
-    @Profile(NOT_STATUS_FACADE_PREVIEW)
+    @Profile(STATUS_FACADE_FINAL)
     public EfilingDocumentService efilingDocumentService(FilingStatusFacadeBean filingStatusFacadeBean) {
         return new CsoDocumentServiceImpl(filingStatusFacadeBean);
     }
