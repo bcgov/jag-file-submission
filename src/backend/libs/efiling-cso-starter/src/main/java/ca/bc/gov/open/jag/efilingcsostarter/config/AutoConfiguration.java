@@ -32,7 +32,7 @@ public class AutoConfiguration {
 
     private static final String PREVIEW = "preview";
     private static final String STATUS_FACADE_PREVIEW = "status_facade";
-    private static final String NOT_STATUS_FACADE_PREVIEW = "!status_facade";
+    private static final String STATUS_FACADE_FINAL = "!status_facade";
     private static final String FINAL = "!preview";
     private final SoapProperties soapProperties;
 
