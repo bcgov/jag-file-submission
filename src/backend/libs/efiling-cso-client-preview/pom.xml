@@ -143,18 +143,6 @@
                                         <extraarg>-autoNameResolution</extraarg>
                                     </extraargs>
                                 </wsdlOption>
-                            </wsdlOptions>
-                        </configuration>
-                        <goals>
-                            <goal>wsdl2java</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>filing-status-wsdl</id>
-                        <phase>generate-sources</phase>
-                        <configuration>
-                            <sourceRoot>${project.build.directory}/generated-sources/cxf</sourceRoot>
-                            <wsdlOptions>
                                 <wsdlOption>
                                     <wsdl>${project.basedir}/src/main/resources/wsdl/FilingStatusFacade.wsdl</wsdl>
                                     <packagenames>
