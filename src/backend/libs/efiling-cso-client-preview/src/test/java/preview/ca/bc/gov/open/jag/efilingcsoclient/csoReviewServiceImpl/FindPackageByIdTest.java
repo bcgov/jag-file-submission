@@ -8,8 +8,8 @@ import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingStatusServiceExceptio
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
-import preview.ca.bc.gov.open.jag.efilingcsoclient.CsoReviewServiceImpl;
 import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
+import preview.ca.bc.gov.open.jag.efilingcsoclient.PreviewCsoReviewServiceImpl;
 import preview.ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapperImpl;
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
@@ -54,7 +54,7 @@ public class FindPackageByIdTest {
     private final BigDecimal NOTFOUND_CLIENT = BigDecimal.ZERO;
     private final BigDecimal NOTFOUND_PACKAGE = BigDecimal.ZERO;
 
-    private static CsoReviewServiceImpl sut;
+    private static PreviewCsoReviewServiceImpl sut;
 
 
     @BeforeAll
@@ -74,7 +74,7 @@ public class FindPackageByIdTest {
         CsoProperties csoProperties = new CsoProperties();
         csoProperties.setCsoBasePath("http://locahost:8080");
 
-        sut = new CsoReviewServiceImpl(filingStatusFacadeBean, null, null, new FilePackageMapperImpl(), csoProperties, restTemplateMock);
+        sut = new PreviewCsoReviewServiceImpl(null, null, null, null, csoProperties, restTemplateMock, filingStatusFacadeBean, new FilePackageMapperImpl());
     }
 
     @DisplayName("OK: package found")

@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.web.client.RestTemplate;
 import preview.ca.bc.gov.open.jag.efilingcsoclient.mappers.ClientProfileMapper;
 import preview.ca.bc.gov.open.jag.efilingcsoclient.mappers.ClientProfileMapperImpl;
-
+import preview.ca.bc.gov.open.jag.efilingcsoclient.PreviewCsoReviewServiceImpl;
 
 @Configuration
 @EnableConfigurationProperties({SoapProperties.class, SpringCsoProperties.class})
@@ -69,13 +69,12 @@ public class AutoConfiguration {
 
     @Bean
     @Primary
-    @Profile(FINAL)
     public FilingStatusFacadeBean filingStatusFacadeBean() {
         EfilingSoapClientProperties efilingSoapClientProperties = soapProperties.findByEnum(Clients.STATUS);
         return SoapUtils.getPort(FilingStatusFacadeBean.class, efilingSoapClientProperties, csoProperties.isDebugEnabled()); }
 
 
-    @Bean
+    @Bean("PreviewFilingStatusFacadeBean")
     @Profile(PREVIEW)
     public preview.ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean previewFilingStatusFacadeBean() {
         EfilingSoapClientProperties efilingSoapClientProperties = soapProperties.findByEnum(Clients.STATUS);
@@ -188,8 +187,8 @@ public class AutoConfiguration {
 
     @Bean
     @Profile(PREVIEW)
-    public EfilingReviewService previewEfilingReviewService(preview.ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean filingStatusFacadeBean, ReportService reportService, FilingFacadeBean filingFacadeBean, RestTemplate restTemplate) {
-        return new preview.ca.bc.gov.open.jag.efilingcsoclient.CsoReviewServiceImpl(filingStatusFacadeBean, reportService, filingFacadeBean, new preview.ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapperImpl(), csoProperties, restTemplate);
+    public EfilingReviewService previewEfilingReviewService(FilingStatusFacadeBean filingStatusFacadeBean, ReportService reportService, FilingFacadeBean filingFacadeBean, RestTemplate restTemplate, preview.ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean previewFilingStatusFacadeBean) {
+        return new PreviewCsoReviewServiceImpl(filingStatusFacadeBean, reportService, filingFacadeBean, new FilePackageMapperImpl(), csoProperties, restTemplate, previewFilingStatusFacadeBean, new preview.ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapperImpl());
     }
 
     @Bean
