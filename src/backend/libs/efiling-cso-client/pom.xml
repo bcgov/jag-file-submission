@@ -71,13 +71,13 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>5.3.1</version>
+            <version>5.3.5</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>5.3.1</version>
+            <version>5.3.5</version>
             <scope>compile</scope>
         </dependency>
 
