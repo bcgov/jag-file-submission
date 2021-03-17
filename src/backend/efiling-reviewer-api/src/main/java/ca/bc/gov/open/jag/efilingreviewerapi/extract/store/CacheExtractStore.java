@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.extract.store;
 
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractRequest;
+import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractResponse;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 
@@ -20,5 +21,12 @@ public class CacheExtractStore implements ExtractStore {
     public Optional<ExtractRequest> get(BigDecimal id) {
         return Optional.empty();
     }
+
+    @Override
+    @CachePut(cacheNames = "extractResponse", key = "{ #id }", cacheManager = "extractRequestCacheManager")
+    public Optional<ExtractResponse> put(BigDecimal id, ExtractResponse documentExtractResponse) {
+        return Optional.of(documentExtractResponse);
+    }
+
 
 }

@@ -82,11 +82,11 @@ Efiling Api check health at [http://localhost:8080/actuator/health](http://local
 
 A [redis](https://redis.io/) instance exposed on port 6379
 
-#### redis commander:
+#### redis commander
 
 A [redis-commander](http://joeferner.github.io/redis-commander/) instance to query redis accessible at [http://localhost:8082](http://localhost:8082)
 
-#### keycloak:
+#### keycloak
 
 A [keycloak](https://www.keycloak.org/) instance accessible at [http://localhost:8081/auth](http://localhost:8081/auth)
 
