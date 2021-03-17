@@ -59,7 +59,7 @@ public class GetDocumentDetailsTest {
         DocumentTypeDetails result = sut.getDocumentTypeDetails(COURT_LEVEL, COURT_CLASS, DOCUMENT_TYPE_CD);
         Assertions.assertEquals(DESCRIPTION, result.getDescription());
         Assertions.assertEquals(BigDecimal.TEN, result.getStatutoryFeeAmount());
-        Assertions.assertTrue(result.getOrderDocument());
+        Assertions.assertTrue(result.isOrderDocument());
         Assertions.assertTrue(result.isRushRequired());
         Assertions.assertFalse(result.isAutoProcessing());
     }
