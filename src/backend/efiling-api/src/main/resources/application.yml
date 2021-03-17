@@ -112,6 +112,10 @@ info:
     name: "@project.name@"
     description: "@project.description@"
     version: "@project.version@"
+
+mailsend:
+  baseUrl: ${MAIL_SEND_BASE_URL:http://localhost:8090}
+
 opentracing:
   jaeger:
     service-name: efilingApi
