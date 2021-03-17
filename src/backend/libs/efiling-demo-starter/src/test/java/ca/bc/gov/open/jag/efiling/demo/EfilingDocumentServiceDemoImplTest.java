@@ -25,7 +25,7 @@ public class EfilingDocumentServiceDemoImplTest {
 
         Assertions.assertEquals("This is a doc", actual.getDescription());
         Assertions.assertEquals(BigDecimal.valueOf(77), actual.getStatutoryFeeAmount());
-        Assertions.assertTrue(actual.getOrderDocument());
+        Assertions.assertTrue(actual.isOrderDocument());
         Assertions.assertTrue(actual.isRushRequired());
         Assertions.assertFalse(actual.isAutoProcessing());
 
@@ -42,7 +42,7 @@ public class EfilingDocumentServiceDemoImplTest {
         Assertions.assertEquals("Description1", actual.get(0).getDescription());
         Assertions.assertEquals("AFF", actual.get(0).getType());
         Assertions.assertEquals(BigDecimal.valueOf(77), actual.get(0).getStatutoryFeeAmount());
-        Assertions.assertTrue(actual.get(0).getOrderDocument());
+        Assertions.assertTrue(actual.get(0).isOrderDocument());
         Assertions.assertTrue(actual.get(0).isRushRequired());
         Assertions.assertFalse(actual.get(0).isAutoProcessing());
 
