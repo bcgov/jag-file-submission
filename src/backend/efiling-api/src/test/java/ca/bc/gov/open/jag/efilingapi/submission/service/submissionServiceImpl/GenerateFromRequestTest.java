@@ -3,6 +3,8 @@ package ca.bc.gov.open.jag.efilingapi.submission.service.submissionServiceImpl;
 
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
+import ca.bc.gov.open.jag.efilingapi.api.model.Court;
+import ca.bc.gov.open.jag.efilingapi.api.model.Individual;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
