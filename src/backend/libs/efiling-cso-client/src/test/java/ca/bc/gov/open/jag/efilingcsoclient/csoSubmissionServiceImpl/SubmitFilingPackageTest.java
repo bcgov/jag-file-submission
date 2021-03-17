@@ -491,6 +491,7 @@ public class SubmitFilingPackageTest {
                 accountDetails,
                 FilingPackage.builder()
                         .applicationCode(APP_CODE)
+                        .submissionFeeAmount(BigDecimal.TEN)
                         .create(),
                 efilingPaymentServiceMock));
     }
