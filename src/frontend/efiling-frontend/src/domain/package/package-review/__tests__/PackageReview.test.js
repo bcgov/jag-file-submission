@@ -37,6 +37,7 @@ describe("PackageReview Component", () => {
     submittedBy,
     submittedDate,
     documents,
+    hasRegistryNotice: true,
   };
 
   FileSaver.saveAs = jest.fn();
@@ -59,6 +60,10 @@ describe("PackageReview Component", () => {
     mock = new MockAdapter(axios);
     window.open = jest.fn();
   });
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
 
   const apiRequest = `/filingpackages/${packageId}`;
 
@@ -439,5 +444,89 @@ describe("PackageReview Component", () => {
     await waitFor(() => {});
 
     expect(noop).toHaveBeenCalled();
+  });
+
+  test("Download Registry Notice - success (click)", async () => {
+    const blob = new Blob(["foo", "bar"]);
+
+    global.URL.createObjectURL = jest.fn();
+    global.URL.createObjectURL.mockReturnValueOnce("fileurl.com");
+
+    mock.onGet(apiRequest).reply(200, csoRedirectResponse);
+    mock
+      .onGet(`/filingpackages/${packageId}/registryNotice`)
+      .reply(200, { blob });
+
+    const { getByText } = render(<PackageReview />);
+    await waitFor(() => {});
+
+    const button = getByText("View Registry Notice");
+
+    fireEvent.click(button);
+    await waitFor(() => {});
+
+    expect(FileSaver.saveAs).toHaveBeenCalled();
+  });
+
+  test("Download Registry Notice - success (keydown)", async () => {
+    const blob = new Blob(["foo", "bar"]);
+
+    global.URL.createObjectURL = jest.fn();
+    global.URL.createObjectURL.mockReturnValueOnce("fileurl.com");
+
+    mock.onGet(apiRequest).reply(200, csoRedirectResponse);
+    mock
+      .onGet(`/filingpackages/${packageId}/registryNotice`)
+      .reply(200, { blob });
+
+    const { getByText } = render(<PackageReview />);
+    await waitFor(() => {});
+
+    const button = getByText("View Registry Notice");
+
+    fireEvent.keyDown(button, { key: "Enter", keyCode: "13" });
+    await waitFor(() => {});
+
+    expect(FileSaver.saveAs).toHaveBeenCalled();
+  });
+
+  test("Download Registry Notice - unsuccessful (keydown)", async () => {
+    const blob = new Blob(["foo", "bar"]);
+
+    global.URL.createObjectURL = jest.fn();
+    global.URL.createObjectURL.mockReturnValueOnce("fileurl.com");
+
+    mock.onGet(apiRequest).reply(200, csoRedirectResponse);
+    mock
+      .onGet(`/filingpackages/${packageId}/registryNotice`)
+      .reply(200, { blob });
+
+    const { getByText } = render(<PackageReview />);
+    await waitFor(() => {});
+
+    const button = getByText("View Registry Notice");
+
+    fireEvent.keyDown(button, { key: "Enter", keyCode: "9" });
+    await waitFor(() => {});
+
+    expect(FileSaver.saveAs).not.toHaveBeenCalled();
+  });
+  
+  test("Download Registry Notice - unsuccessful (error)", async () => { 
+    mock.onGet(apiRequest).reply(200, csoRedirectResponse);
+    mock
+      .onGet(`/filingpackages/${packageId}/registryNotice`)
+      .reply(400);
+
+    const { getByText } = render(<PackageReview />);
+    await waitFor(() => {});
+
+    const button = getByText("View Registry Notice");
+    
+
+    fireEvent.click(button);
+    await waitFor(() => {});
+
+    expect(FileSaver.saveAs).not.toHaveBeenCalled();
   });
 });

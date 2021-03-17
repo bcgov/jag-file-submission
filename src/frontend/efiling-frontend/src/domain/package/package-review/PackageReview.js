@@ -166,7 +166,7 @@ export default function PackageReview() {
   }
 
   function handleRegistryNotice(e) {
-    if(isClick(e) || isEnter(e)) {
+    if (isClick(e) || isEnter(e)) {
       downloadRegistryNotice(packageId).catch((err) => {
         errorRedirect(sessionStorage.getItem("errorUrl"), err);
       });
