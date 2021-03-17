@@ -99,6 +99,10 @@ public class FilingPackage {
         this.organizations = organizations;
     }
 
+    public void setIsAutoProcessing(boolean isAutoProcessing) {
+        this.isAutoProcessing = isAutoProcessing;
+    }
+
     public void setRushedSubmission(boolean rushedSubmission) {
         this.rushedSubmission = rushedSubmission;
     }
