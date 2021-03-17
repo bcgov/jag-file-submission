@@ -241,7 +241,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                         .mimeType(FileUtils.guessContentTypeFromName(initialDocument.getName()))
                         .isAmendment(initialDocument.getIsAmendment())
                         .isSupremeCourtScheduling(initialDocument.getIsSupremeCourtScheduling())
-                        .subType(details.getOrderDocument() ? SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD : SubmissionConstants.SUBMISSION_ODOC_DOCUMENT_SUB_TYPE_CD)
+                        .subType(details.isOrderDocument() ? SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD : SubmissionConstants.SUBMISSION_ODOC_DOCUMENT_SUB_TYPE_CD)
                         .data(initialDocument.getData())
                         .create();
 
@@ -261,7 +261,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                         .mimeType(FileUtils.guessContentTypeFromName(documentProperties.getName()))
                         .isAmendment(documentProperties.getIsAmendment())
                         .isSupremeCourtScheduling(documentProperties.getIsSupremeCourtScheduling())
-                        .subType(details.getOrderDocument() ? SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD : SubmissionConstants.SUBMISSION_ODOC_DOCUMENT_SUB_TYPE_CD)
+                        .subType(details.isOrderDocument() ? SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD : SubmissionConstants.SUBMISSION_ODOC_DOCUMENT_SUB_TYPE_CD)
                         .create();
 
     }
