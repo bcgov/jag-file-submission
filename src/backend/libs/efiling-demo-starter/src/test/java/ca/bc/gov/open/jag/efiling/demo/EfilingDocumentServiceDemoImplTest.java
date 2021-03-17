@@ -24,7 +24,7 @@ public class EfilingDocumentServiceDemoImplTest {
         DocumentTypeDetails actual = service.getDocumentTypeDetails(serviceId, Mockito.any(), Mockito.any());
 
         Assertions.assertEquals("This is a doc", actual.getDescription());
-        Assertions.assertEquals(BigDecimal.valueOf(77), actual.getStatutoryFeeAmount());
+        Assertions.assertEquals(BigDecimal.valueOf(7), actual.getStatutoryFeeAmount());
         Assertions.assertTrue(actual.isOrderDocument());
         Assertions.assertTrue(actual.isRushRequired());
         Assertions.assertFalse(actual.isAutoProcessing());
@@ -41,7 +41,7 @@ public class EfilingDocumentServiceDemoImplTest {
         Assertions.assertEquals(2, actual.size());
         Assertions.assertEquals("Description1", actual.get(0).getDescription());
         Assertions.assertEquals("AFF", actual.get(0).getType());
-        Assertions.assertEquals(BigDecimal.valueOf(77), actual.get(0).getStatutoryFeeAmount());
+        Assertions.assertEquals(BigDecimal.valueOf(7), actual.get(0).getStatutoryFeeAmount());
         Assertions.assertTrue(actual.get(0).isOrderDocument());
         Assertions.assertTrue(actual.get(0).isRushRequired());
         Assertions.assertFalse(actual.get(0).isAutoProcessing());
