@@ -17,8 +17,8 @@ public class FilingPackage {
     private List<Document> documents = new ArrayList<>();
     private List<Individual> parties = new ArrayList<>();
     private List<Organization> organizations = new ArrayList<>();
-    private Boolean rushedSubmission = false;
-    private Boolean isAutoProcessing = false;
+    private boolean rushedSubmission = false;
+    private boolean isAutoProcessing = false;
     private String applicationCode;
 
     public FilingPackage(
@@ -27,8 +27,8 @@ public class FilingPackage {
             @JsonProperty("documents") List<Document> documents,
             @JsonProperty("parties") List<Individual> parties,
             @JsonProperty("organizations") List<Organization> organizations,
-            @JsonProperty("rushedSubmission") Boolean rushedSubmission,
-            @JsonProperty("isAutoProcessing") Boolean isAutoProcessing,
+            @JsonProperty("rushedSubmission") boolean rushedSubmission,
+            @JsonProperty("isAutoProcessing") boolean isAutoProcessing,
             @JsonProperty("applicationCode") String applicationCode
     ) {
 
@@ -73,9 +73,9 @@ public class FilingPackage {
         return organizations;
     }
 
-    public Boolean isRushedSubmission() { return rushedSubmission; }
+    public boolean isRushedSubmission() { return rushedSubmission; }
 
-    public Boolean getAutoProcessing() { return isAutoProcessing; }
+    public boolean getAutoProcessing() { return isAutoProcessing; }
 
     public String getApplicationCode() { return applicationCode; }
 
@@ -124,15 +124,15 @@ public class FilingPackage {
         private List<Individual> parties = new ArrayList<>();
         private List<Organization> organizations = new ArrayList<>();
         private String applicationCode;
-        private Boolean rushedSubmission;
-        private Boolean isAutoProcessing;
+        private boolean rushedSubmission;
+        private boolean isAutoProcessing;
 
-        public Builder rushedSubmission(Boolean rushedSubmission) {
+        public Builder rushedSubmission(boolean rushedSubmission) {
             this.rushedSubmission = rushedSubmission;
             return this;
         }
 
-        public Builder isAutoProcessing(Boolean isAutoProcessing) {
+        public Builder isAutoProcessing(boolean isAutoProcessing) {
             this.isAutoProcessing = isAutoProcessing;
             return this;
         }

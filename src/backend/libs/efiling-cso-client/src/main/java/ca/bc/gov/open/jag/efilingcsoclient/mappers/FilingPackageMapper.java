@@ -29,6 +29,7 @@ public interface FilingPackageMapper {
     @Mapping(target = "submittedToAgenId", source = "filingPackage.court.agencyId")
     @Mapping(target = "ldcxCourtDivisionCd", source = "filingPackage.court.division")
     @Mapping(target = "applicationCd", source = "filingPackage.applicationCode")
+    @Mapping(target = "automatedProcessYn", source = "filingPackage.autoProcessing")
 
     @Mapping(target = "entUserId", source = "accountDetails.clientId")
     @Mapping(target = "submittedByAccountId", source = "accountDetails.accountId")
@@ -39,7 +40,6 @@ public interface FilingPackageMapper {
     @Mapping(target = "documents", source = "documents")
     @Mapping(target = "parties", source = "csoParties")
     @Mapping(target = "packageControls", source = "packageControls")
-    @Mapping(target = "automatedProcessYn", source = "filingPackage.autoProcessing")
     FilingPackage toFilingPackage(
             ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage filingPackage,
             AccountDetails accountDetails,
