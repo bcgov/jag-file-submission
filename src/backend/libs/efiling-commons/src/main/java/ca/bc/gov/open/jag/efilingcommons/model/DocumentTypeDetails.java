@@ -11,11 +11,11 @@ public class DocumentTypeDetails {
 
     private String type;
 
-    private Boolean isAutoProcessing;
+    private Boolean autoProcessing;
 
     private BigDecimal statutoryFeeAmount;
 
-    private Boolean isOrderDocument;
+    private Boolean orderDocument;
 
     private Boolean rushRequired;
 
@@ -27,9 +27,9 @@ public class DocumentTypeDetails {
 
     public void setStatutoryFeeAmount(BigDecimal statutoryFeeAmount) {  this.statutoryFeeAmount = statutoryFeeAmount;  }
 
-    public Boolean getOrderDocument() { return isOrderDocument; }
+    public Boolean isOrderDocument() { return orderDocument; }
 
-    public void setOrderDocument(Boolean orderDocument) {  isOrderDocument = orderDocument;  }
+    public void setOrderDocument(Boolean orderDocument) {  this.orderDocument = orderDocument;  }
 
     public Boolean isRushRequired() {
         return rushRequired;
@@ -43,23 +43,23 @@ public class DocumentTypeDetails {
 
     public void setType(String type) { this.type = type;  }
 
-    public Boolean isAutoProcessing() { return isAutoProcessing; }
+    public Boolean isAutoProcessing() { return autoProcessing; }
 
-    public void setAutoProcessing(Boolean autoProcessing) {  isAutoProcessing = autoProcessing; }
+    public void setAutoProcessing(Boolean autoProcessing) {  this.autoProcessing = autoProcessing; }
 
     @JsonCreator
     public DocumentTypeDetails(@JsonProperty("description") String description,
                                @JsonProperty("type") String type,
                                @JsonProperty("statutoryFeeAmount") BigDecimal statutoryFeeAmount,
-                               @JsonProperty("isOrderDocument") boolean isOrderDocument,
+                               @JsonProperty("orderDocument") boolean orderDocument,
                                @JsonProperty("rushRequired") boolean rushRequired,
-                               @JsonProperty("isAutoProcessing") boolean isAutoProcessing) {
+                               @JsonProperty("autoProcessing") boolean autoProcessing) {
         this.description = description;
         this.type = type;
         this.statutoryFeeAmount = statutoryFeeAmount;
-        this.isOrderDocument = isOrderDocument;
+        this.orderDocument = orderDocument;
         this.rushRequired = rushRequired;
-        this.isAutoProcessing = isAutoProcessing;
+        this.autoProcessing = autoProcessing;
     }
 
 }
