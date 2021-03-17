@@ -84,6 +84,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
     }
 
     @Override
+    @RolesAllowed("efiling-user")
     public ResponseEntity<Resource> getRegistryNotice(BigDecimal packageIdentifier) {
 
         logger.info("get registry notice request received");
