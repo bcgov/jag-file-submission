@@ -85,7 +85,7 @@ bambora:
   hostedProfileUrl: ${BAMBORA_PROFILE_URL}
   hostedProfileServiceVersion: ${BAMBORA_PROFILE_SERVICE_VERSION}
   hashKey: ${BAMBORA_HASHKEY}
-  minutesToExpiry: ${BAMBORA_URL_EXPIRY}
+  minutesToExpiry: ${BAMBORA_URL_EXPIRY:10}
 bcgov:
   sftp:
     host: ${SFTP_HOST:localhost}
