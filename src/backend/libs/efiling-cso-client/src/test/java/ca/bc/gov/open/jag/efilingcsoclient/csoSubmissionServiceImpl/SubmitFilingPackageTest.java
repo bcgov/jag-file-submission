@@ -75,7 +75,7 @@ public class SubmitFilingPackageTest {
     private CsoProperties csoPropertiesMock;
 
     @BeforeEach
-    public void init() throws NestedEjbException_Exception, ca.bc.gov.ag.csows.filing.NestedEjbException_Exception {
+    public void beforeEach() throws NestedEjbException_Exception, ca.bc.gov.ag.csows.filing.NestedEjbException_Exception {
 
         MockitoAnnotations.openMocks(this);
 
@@ -590,6 +590,7 @@ public class SubmitFilingPackageTest {
                 accountDetails,
                 FilingPackage
                         .builder()
+                        .submissionFeeAmount(BigDecimal.TEN)
                         .applicationCode(APP_CODE)
                         .create(),
                 efilingPaymentServiceMock));
