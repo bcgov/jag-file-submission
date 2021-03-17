@@ -2,6 +2,8 @@ package ca.bc.gov.open.jag.efilingdiligenclientstarter;
 
 import ca.bc.gov.open.efilingdiligenclient.diligen.*;
 import ca.bc.gov.open.efilingdiligenclient.diligen.mapper.DiligenDocumentDetailsMapperImpl;
+import ca.bc.gov.open.efilingdiligenclient.diligen.processor.FieldProcessor;
+import ca.bc.gov.open.efilingdiligenclient.diligen.processor.FieldProcessorImpl;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.AuthenticationApi;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.DocumentsApi;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.HealthCheckApi;
@@ -84,6 +86,11 @@ public class AutoConfiguration {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         return new DiligenServiceImpl(restTemplate, diligenProperties, diligenAuthService, objectMapper, documentsApi, new DiligenDocumentDetailsMapperImpl());
+    }
+
+    @Bean
+    public FieldProcessor fieldProcessor() {
+        return new FieldProcessorImpl();
     }
 
 }

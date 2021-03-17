@@ -1,11 +1,7 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.queue;
 
-import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.DocumentsApiDelegateImpl;
-import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidator;
-import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapper;
-import ca.bc.gov.open.jag.efilingreviewerapi.extract.store.ExtractStore;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,7 +37,7 @@ public class TempConfig {
     }
 
     @Bean
-    public Receiver receiver(DiligenService diligenService, ExtractRequestMapper extractRequestMapper, ExtractStore extractStore, StringRedisTemplate stringRedisTemplate, DocumentValidator documentValidator) {
-        return new Receiver(2, new DocumentsApiDelegateImpl(diligenService, extractRequestMapper, extractStore, stringRedisTemplate, documentValidator), diligenService, stringRedisTemplate);
+    public Receiver receiver(DocumentsApiDelegateImpl documentsApiDelegate, DiligenService diligenService, StringRedisTemplate stringRedisTemplate) {
+        return new Receiver(2, documentsApiDelegate, diligenService, stringRedisTemplate);
     }
 }
