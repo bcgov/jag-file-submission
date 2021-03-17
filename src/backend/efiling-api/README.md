@@ -58,6 +58,7 @@ You should use environment variables to configure the jag efiling api
 | BAMBORA_APIBASEPATH             | String  | API base path                                | not set by default             |
 | BAMBORA_APIPASSCODE             | String  | API passcode for bambora auth                | not set by default             |
 | BAMBORA_MERCHANTID              | String  | merchant id for bambora auth                 | not set by default             |
+| MAIL_SEND_BASE_URL              | String  | API base path                                | not set by default             |
 | SFTP_HOST                       | String  | sftp host                                    | defaulted to `localhost`       |
 | SFTP_PORT                       | Integer | sftp port                                    | defaulted to `22`              |
 | SFTP_USERNAME                   | String  | sftp username                                | Defaulted to `admin`           |

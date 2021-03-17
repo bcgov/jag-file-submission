@@ -5,27 +5,14 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "mailsend")
 public class MailSendProperties {
 
-	private String hostName;
-	private Integer port;
+	private String baseUrl;
 
-	public String getHostName() {
-		return hostName;
+	public String getBaseUrl() {
+		return baseUrl;
 	}
 	
-	public Integer getPort() {
-		return port;
-	}
-	
-	public void setHostName(String hostName) {
-		this.hostName = hostName;
-	}
-	
-	public void setPort(Integer port) {
-		this.port = port;
-	}
-
-	public String getServer() {
-		return getHostName() + ":" + getPort();
+	public void setBaseUrl(String baseUrl) {
+		this.baseUrl = baseUrl;
 	}
 
 }

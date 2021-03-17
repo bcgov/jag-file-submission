@@ -16,9 +16,9 @@ public class AutoConfiguration {
     @ConditionalOnMissingBean(ApiClient.class)
     public ApiClient apiClient(MailSendProperties mailSendProperties)  {
         ApiClient apiClient = new ApiClient();
-        //Setting this to null will make it use the base path instead
+        //Setting this to null will make it use the baseUrl instead
         apiClient.setServerIndex(null);
-        apiClient.setBasePath(mailSendProperties.getServer());
+        apiClient.setBasePath(mailSendProperties.getBaseUrl());
         return apiClient;
     }
     
