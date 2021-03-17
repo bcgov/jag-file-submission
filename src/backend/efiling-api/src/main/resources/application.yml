@@ -114,7 +114,7 @@ info:
     version: "@project.version@"
 
 mailsend:
-  baseUrl: ${MAIL_SEND_BASE_URL:http://localhost:8081}
+  baseUrl: ${MAIL_SEND_BASE_URL:http://localhost:8090}
 
 opentracing:
   jaeger:
