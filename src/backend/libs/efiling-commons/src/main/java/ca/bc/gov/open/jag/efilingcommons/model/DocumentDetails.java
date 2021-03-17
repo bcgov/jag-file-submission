@@ -9,6 +9,8 @@ public class DocumentDetails {
 
     private String description;
 
+    private String type;
+
     private BigDecimal statutoryFeeAmount;
 
     private Boolean isOrderDocument;

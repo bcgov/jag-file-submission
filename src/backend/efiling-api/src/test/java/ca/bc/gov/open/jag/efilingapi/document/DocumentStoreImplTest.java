@@ -33,7 +33,7 @@ public class DocumentStoreImplTest {
         DocumentDetails docummentDetails = new DocumentDetails(DESCRIPTION, BigDecimal.TEN, true, true);
 
         Mockito
-                .when(efilingDocumentServiceMock.getDocumentDetails(Mockito.anyString(), Mockito.anyString(), Mockito.anyString()))
+                .when(efilingDocumentServiceMock.getDocumentTypeDetails(Mockito.anyString(), Mockito.anyString(), Mockito.anyString()))
                 .thenReturn(docummentDetails);
 
 

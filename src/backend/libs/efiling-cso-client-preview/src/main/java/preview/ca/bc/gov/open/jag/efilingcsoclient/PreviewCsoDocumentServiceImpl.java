@@ -33,7 +33,7 @@ public class PreviewCsoDocumentServiceImpl implements EfilingDocumentService {
      * @return
      */
     @Override
-    public DocumentDetails getDocumentDetails(String courtLevel, String courtClass, String documentType) {
+    public ca.bc.gov.open.jag.efilingcommons.model.DocumentType getDocumentTypeDetails(String courtLevel, String courtClass, String documentType) {
 
         logger.warn("THIS IS IN PREVIEW MODE");
 
@@ -44,7 +44,7 @@ public class PreviewCsoDocumentServiceImpl implements EfilingDocumentService {
         return getSoapDocumentTypes(courtLevel, courtClass).stream()
                 .filter(doc -> doc.getDocumentTypeCd().equals(documentType))
                 .findFirst()
-                .map(doc -> new DocumentDetails(doc.getDocumentTypeDesc(), doc.getDefaultStatutoryFee(), doc.isOrderDocumentYn(), doc.isRushRequiredYn()))
+                .map(doc -> new ca.bc.gov.open.jag.efilingcommons.model.DocumentType(doc.getDocumentTypeDesc(), doc.getDocumentTypeCd(), doc.getDefaultStatutoryFee(), doc.isOrderDocumentYn(),doc.isRushRequiredYn(), doc.isAutoProcessYn()))
                 .orElseThrow(() -> new EfilingDocumentServiceException("Document type does not exists"));
 
     }
@@ -57,7 +57,7 @@ public class PreviewCsoDocumentServiceImpl implements EfilingDocumentService {
         if (StringUtils.isBlank(courtClass)) throw new IllegalArgumentException("courtClass level is required.");
 
         return getSoapDocumentTypes(courtLevel, courtClass).stream()
-                .map(doc -> new ca.bc.gov.open.jag.efilingcommons.model.DocumentType(doc.getDocumentTypeDesc(), doc.getDocumentTypeCd(), doc.isRushRequiredYn())).collect(Collectors.toList());
+                .map(doc -> new ca.bc.gov.open.jag.efilingcommons.model.DocumentType(doc.getDocumentTypeDesc(), doc.getDocumentTypeCd(), doc.getDefaultStatutoryFee(), doc.isOrderDocumentYn(),doc.isRushRequiredYn(), doc.isAutoProcessYn())).collect(Collectors.toList());
     }
 
     private List<DocumentType> getSoapDocumentTypes(String courtLevel, String courtClass) {

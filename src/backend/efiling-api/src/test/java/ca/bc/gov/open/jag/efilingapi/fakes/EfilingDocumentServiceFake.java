@@ -8,7 +8,7 @@ import java.util.List;
 
 public class EfilingDocumentServiceFake implements EfilingDocumentService {
     @Override
-    public DocumentDetails getDocumentDetails(String courtLevel, String courtClass, String documentType) {
+    public DocumentDetails getDocumentTypeDetails(String courtLevel, String courtClass, String documentType) {
         return null;
     }
 
