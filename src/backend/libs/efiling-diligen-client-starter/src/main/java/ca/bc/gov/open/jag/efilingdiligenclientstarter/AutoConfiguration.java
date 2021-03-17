@@ -41,6 +41,7 @@ public class AutoConfiguration {
         if(StringUtils.isBlank(diligenProperties.getBasePath()))
             throw new DiligenConfigurationException("Diligen base path is required");
 
+        apiClient.setServerIndex(null);
         apiClient.setBasePath(diligenProperties.getBasePath());
 
         return apiClient;
