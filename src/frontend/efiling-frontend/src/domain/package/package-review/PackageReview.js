@@ -165,17 +165,25 @@ export default function PackageReview() {
     }
   }
 
-  function handleRegistryNotice() {
-    downloadRegistryNotice(packageId).catch((err) => {
-      errorRedirect(sessionStorage.getItem("errorUrl"), err);
-    });
+  function handleRegistryNotice(e) {
+    if(isClick(e) || isEnter(e)) {
+      downloadRegistryNotice(packageId).catch((err) => {
+        errorRedirect(sessionStorage.getItem("errorUrl"), err);
+      });
+    }
   }
 
   const registryElement = (
     <p>
       You have a Registry Notice that requires an action. The item(s)
       highlighted in red below require an action.{" "}
-      <span className="file-href" role="button" onClick={handleRegistryNotice}>
+      <span
+        className="file-href"
+        role="button"
+        onClick={handleRegistryNotice}
+        onKeyDown={handleRegistryNotice}
+        tabIndex={0}
+      >
         View Registry Notice
       </span>{" "}
       view all details.
