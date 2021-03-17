@@ -1,0 +1,172 @@
+{
+  "$id": "http://example.com/example.json",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "default": {},
+  "description": "The root schema comprises the entire JSON document.",
+  "required": [
+    "court"
+  ],
+  "title": "The root schema",
+  "type": "object",
+  "projectId": 2,
+  "properties": {
+    "court": {
+      "$id": "#/properties/court",
+      "type": "object",
+      "title": "The court schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": {},
+      "examples": [
+        {
+          "location": "string",
+          "level": "string",
+          "courtClass": "string",
+          "division": "string",
+          "fileNumber": "string",
+          "participatingClass": "string",
+          "agencyId": 0,
+          "locationDescription": "string",
+          "levelDescription": "string",
+          "classDescription": "string"
+        }
+      ],
+      "required": [
+        "location",
+        "level",
+        "courtClass",
+        "division",
+        "fileNumber",
+        "participatingClass",
+        "agencyId",
+        "locationDescription",
+        "levelDescription",
+        "classDescription"
+      ],
+      "properties": {
+        "location": {
+          "$id": "#/properties/court/properties/location",
+          "type": "string",
+          "title": "The location schema",
+          "description": "An explanation about the purpose of this instance.",
+          "default": "",
+          "examples": [
+            "string"
+          ],
+          "fieldId": 229
+        },
+        "level": {
+          "$id": "#/properties/court/properties/level",
+          "type": "string",
+          "title": "The level schema",
+          "description": "An explanation about the purpose of this instance.",
+          "default": "",
+          "examples": [
+            "string"
+          ],
+          "fieldId": 229
+        },
+        "courtLevel3": {
+          "$id": "#/properties/court/properties/level",
+          "type": "string",
+          "title": "The level schema",
+          "description": "An explanation about the purpose of this instance.",
+          "default": "",
+          "examples": [
+            "string"
+          ],
+          "fieldId": 229
+        },
+        "courtClass": {
+          "$id": "#/properties/court/properties/courtClass",
+          "type": "string",
+          "title": "The courtClass schema",
+          "description": "An explanation about the purpose of this instance.",
+          "default": "",
+          "examples": [
+            "string"
+          ],
+          "fieldId": 234
+        },
+        "division": {
+          "$id": "#/properties/court/properties/division",
+          "type": "string",
+          "title": "The division schema",
+          "description": "An explanation about the purpose of this instance.",
+          "default": "",
+          "examples": [
+            "string"
+          ],
+          "fieldId": 210
+        },
+        "fileNumber": {
+          "$id": "#/properties/court/properties/fileNumber",
+          "type": "string",
+          "title": "The fileNumber schema",
+          "description": "An explanation about the purpose of this instance.",
+          "default": "",
+          "examples": [
+            "string"
+          ],
+          "fieldId": 228
+        },
+        "participatingClass": {
+          "$id": "#/properties/court/properties/participatingClass",
+          "type": "string",
+          "title": "The participatingClass schema",
+          "description": "An explanation about the purpose of this instance.",
+          "default": "",
+          "examples": [
+            "string"
+          ],
+          "fieldId": 210
+        },
+        "agencyId": {
+          "$id": "#/properties/court/properties/agencyId",
+          "type": "integer",
+          "title": "The agencyId schema",
+          "description": "An explanation about the purpose of this instance.",
+          "default": 0,
+          "examples": [
+            0
+          ],
+          "fieldId": 210
+        },
+        "locationDescription": {
+          "$id": "#/properties/court/properties/locationDescription",
+          "type": "string",
+          "title": "The locationDescription schema",
+          "description": "An explanation about the purpose of this instance.",
+          "default": "",
+          "examples": [
+            "string"
+          ],
+          "fieldId": 210
+        },
+        "levelDescription": {
+          "$id": "#/properties/court/properties/levelDescription",
+          "type": "string",
+          "title": "The levelDescription schema",
+          "description": "An explanation about the purpose of this instance.",
+          "default": "",
+          "examples": [
+            "string"
+          ],
+          "fieldId": 210
+        },
+        "classDescription": {
+          "$id": "#/properties/court/properties/classDescription",
+          "type": "string",
+          "title": "The classDescription schema",
+          "description": "An explanation about the purpose of this instance.",
+          "default": "",
+          "examples": [
+            "string"
+          ],
+          "fieldId": 210
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}
