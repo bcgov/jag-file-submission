@@ -1,7 +1,7 @@
 package preview.ca.bc.gov.open.jag.efilingcsoclient.csoDocumentServiceImpl;
 
-import ca.bc.gov.open.jag.efilingcommons.model.DocumentTypeDetails;
 import preview.ca.bc.gov.ag.csows.filing.status.DocumentType;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentTypeDetails;
 import preview.ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import preview.ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
@@ -42,6 +42,8 @@ public class GetDocumentDetailsTest {
         documentType.setDefaultStatutoryFee(BigDecimal.TEN);
         documentType.setOrderDocumentYn(true);
         documentType.setRushRequiredYn(true);
+        documentType.setAutoProcessYn(false);
+
 
         Mockito.when(filingStatusFacadeBean.getDocumentTypes(Mockito.eq(COURT_LEVEL),any())).thenReturn(Arrays.asList(documentType));
         Mockito.when(filingStatusFacadeBean.getDocumentTypes(Mockito.eq(NODOC),any())).thenReturn(new ArrayList<>());

@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,10 +26,10 @@ public class DocumentServiceImplTest {
     @BeforeAll
     public void beforeAll() {
 
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
 
         List<DocumentTypeDetails> documentList = new ArrayList<>();
-        DocumentTypeDetails document = new DocumentTypeDetails("description", "type", false);
+        DocumentTypeDetails document = new DocumentTypeDetails("description", "type", BigDecimal.TEN,false, true, true);
         documentList.add(document);
         Mockito.when(efilingDocumentServiceMock.getDocumentTypes(Mockito.eq(COURT_LEVEL), Mockito.eq(COURT_CLASSIFICATION))).thenReturn(documentList);
 

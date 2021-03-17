@@ -94,7 +94,7 @@ public class GenerateUrlRequestValidatorImplTest {
                 .isValidCourtFileNumber(ArgumentMatchers.argThat(x -> x.getFileNumber().equals(FILE_NUMBER_ERROR)));
 
         List<DocumentTypeDetails> documentTypeDetails = new ArrayList<>();
-        DocumentTypeDetails document = new DocumentTypeDetails("Description", "ACMW", true);
+        DocumentTypeDetails document = new DocumentTypeDetails("Description", "ACMW", BigDecimal.TEN,true, true, true);
         documentTypeDetails.add(document);
 
         Mockito
