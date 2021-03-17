@@ -6,7 +6,7 @@ import ca.bc.gov.open.jag.efilingapi.document.DocumentService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.utils.Notification;
 import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.DocumentType;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentTypeDetails;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
@@ -93,12 +93,12 @@ public class GenerateUrlRequestValidatorImplTest {
                 .when(courtServiceMock)
                 .isValidCourtFileNumber(ArgumentMatchers.argThat(x -> x.getFileNumber().equals(FILE_NUMBER_ERROR)));
 
-        List<DocumentType> documentTypes = new ArrayList<>();
-        DocumentType document = new DocumentType("Description", "ACMW", true);
-        documentTypes.add(document);
+        List<DocumentTypeDetails> documentTypeDetails = new ArrayList<>();
+        DocumentTypeDetails document = new DocumentTypeDetails("Description", "ACMW", true);
+        documentTypeDetails.add(document);
 
         Mockito
-                .doReturn(documentTypes)
+                .doReturn(documentTypeDetails)
                 .when(documentServiceMock)
                 .getValidDocumentTypes(ArgumentMatchers.argThat(x -> x.getCourtLevel().equals(COURT_LEVEL)));
 

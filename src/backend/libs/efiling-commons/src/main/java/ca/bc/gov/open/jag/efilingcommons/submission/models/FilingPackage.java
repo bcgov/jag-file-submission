@@ -17,7 +17,8 @@ public class FilingPackage {
     private List<Document> documents = new ArrayList<>();
     private List<Individual> parties = new ArrayList<>();
     private List<Organization> organizations = new ArrayList<>();
-    private boolean rushedSubmission = false;
+    private Boolean rushedSubmission = false;
+    private Boolean isAutoProcessing = false;
     private String applicationCode;
 
     public FilingPackage(
@@ -26,7 +27,8 @@ public class FilingPackage {
             @JsonProperty("documents") List<Document> documents,
             @JsonProperty("parties") List<Individual> parties,
             @JsonProperty("organizations") List<Organization> organizations,
-            @JsonProperty("rushedSubmission") boolean rushedSubmission,
+            @JsonProperty("rushedSubmission") Boolean rushedSubmission,
+            @JsonProperty("isAutoProcessing") Boolean isAutoProcessing,
             @JsonProperty("applicationCode") String applicationCode
     ) {
 
@@ -37,6 +39,7 @@ public class FilingPackage {
         this.organizations.addAll(organizations);
         this.applicationCode = applicationCode;
         this.rushedSubmission = rushedSubmission;
+        this.isAutoProcessing = isAutoProcessing;
     }
 
     public FilingPackage(Builder builder) {
@@ -47,6 +50,7 @@ public class FilingPackage {
         this.organizations.addAll(builder.organizations);
         this.applicationCode = builder.applicationCode;
         this.rushedSubmission = builder.rushedSubmission;
+        this.isAutoProcessing = builder.isAutoProcessing;
     }
 
     public BigDecimal getSubmissionFeeAmount() {
@@ -69,7 +73,9 @@ public class FilingPackage {
         return organizations;
     }
 
-    public boolean isRushedSubmission() { return rushedSubmission; }
+    public Boolean isRushedSubmission() { return rushedSubmission; }
+
+    public Boolean isAutoProcessing() { return isAutoProcessing; }
 
     public String getApplicationCode() { return applicationCode; }
 
@@ -118,10 +124,16 @@ public class FilingPackage {
         private List<Individual> parties = new ArrayList<>();
         private List<Organization> organizations = new ArrayList<>();
         private String applicationCode;
-        private boolean rushedSubmission;
+        private Boolean rushedSubmission;
+        private Boolean isAutoProcessing;
 
-        public Builder rushedSubmission(boolean rushedSubmission) {
+        public Builder rushedSubmission(Boolean rushedSubmission) {
             this.rushedSubmission = rushedSubmission;
+            return this;
+        }
+
+        public Builder isAutoProcessing(Boolean isAutoProcessing) {
+            this.isAutoProcessing = isAutoProcessing;
             return this;
         }
 

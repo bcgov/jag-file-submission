@@ -4,6 +4,7 @@ import ca.bc.gov.ag.csows.filing.status.DocumentType;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentTypeDetails;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoDocumentServiceImpl;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
@@ -51,7 +52,7 @@ public class GetDocumentTypesTest {
     @DisplayName("OK: test returns document ")
     @Test
     public void testWithFoundResult() {
-        List<ca.bc.gov.open.jag.efilingcommons.model.DocumentType> result = sut.getDocumentTypes(COURT_LEVEL, COURT_CLASS);
+        List<DocumentTypeDetails> result = sut.getDocumentTypes(COURT_LEVEL, COURT_CLASS);
         Assertions.assertEquals(DESCRIPTION, result.get(0).getDescription());
         Assertions.assertEquals(DOCUMENT_TYPE_CD, result.get(0).getType());
     }

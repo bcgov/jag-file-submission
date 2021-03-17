@@ -1,7 +1,6 @@
 package ca.bc.gov.open.jag.efiling.demo;
 
-import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.DocumentType;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentTypeDetails;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +21,7 @@ public class EfilingDocumentServiceDemoImplTest {
         EfilingDocumentServiceDemoImpl service = new EfilingDocumentServiceDemoImpl();
 
         String serviceId = "TestServiceId";
-        DocumentType actual = service.getDocumentTypeDetails(serviceId, Mockito.any(), Mockito.any());
+        DocumentTypeDetails actual = service.getDocumentTypeDetails(serviceId, Mockito.any(), Mockito.any());
 
         Assertions.assertEquals("This is a doc", actual.getDescription());
         Assertions.assertEquals(BigDecimal.valueOf(77), actual.getStatutoryFeeAmount());
@@ -37,7 +36,7 @@ public class EfilingDocumentServiceDemoImplTest {
 
         EfilingDocumentServiceDemoImpl service = new EfilingDocumentServiceDemoImpl();
 
-        List<DocumentType> actual = service.getDocumentTypes(Mockito.any(), Mockito.any());
+        List<DocumentTypeDetails> actual = service.getDocumentTypes(Mockito.any(), Mockito.any());
 
         Assertions.assertEquals(2, actual.size());
         Assertions.assertEquals("Description1", actual.get(0).getDescription());

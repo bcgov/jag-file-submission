@@ -129,7 +129,7 @@ public class SubmissionConfigTest {
         }
 
         @Override
-        public List<DocumentType> getDocumentTypes(String courtLevel, String courtClass) {
+        public List<DocumentTypeDetails> getDocumentTypes(String courtLevel, String courtClass) {
             return null;
         }
     }
@@ -158,7 +158,7 @@ public class SubmissionConfigTest {
         }
 
         @Override
-        public List<DocumentType> getDocumentTypes(String courtLevel, String courtClass) {
+        public List<DocumentTypeDetails> getDocumentTypes(String courtLevel, String courtClass) {
             return null;
         }
     }

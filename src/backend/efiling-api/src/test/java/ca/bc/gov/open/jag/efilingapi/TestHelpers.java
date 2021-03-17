@@ -155,14 +155,14 @@ public class TestHelpers {
         return Arrays.asList(initialDocument);
     }
 
-    public static List<DocumentType> createValidDocumentTypesList() {
-        DocumentType documentType = new DocumentType(DESCRIPTION, TYPE, false);
-        return Arrays.asList(documentType);
+    public static List<DocumentTypeDetails> createValidDocumentTypesList() {
+        DocumentTypeDetails documentTypeDetails = new DocumentTypeDetails(DESCRIPTION, TYPE, BigDecimal.TEN, false, false, false);
+        return Arrays.asList(documentTypeDetails);
     }
 
-    public static List<DocumentType> createInvalidDocumentTypesList() {
-        DocumentType documentType = new DocumentType(DESCRIPTION, "ZZZ", false);
-        return Arrays.asList(documentType);
+    public static List<DocumentTypeDetails> createInvalidDocumentTypesList() {
+        DocumentTypeDetails documentTypeDetails = new DocumentTypeDetails(DESCRIPTION, "ZZZ", BigDecimal.TEN, false, false, false);
+        return Arrays.asList(documentTypeDetails);
     }
 
     public static List<String> createInvalidPartyRoles() {

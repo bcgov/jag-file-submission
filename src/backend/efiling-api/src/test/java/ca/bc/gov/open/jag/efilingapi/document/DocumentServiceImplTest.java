@@ -1,7 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.document;
 
 import ca.bc.gov.open.jag.efilingapi.document.models.GetValidDocumentTypesRequest;
-import ca.bc.gov.open.jag.efilingcommons.model.DocumentType;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentTypeDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
@@ -27,8 +27,8 @@ public class DocumentServiceImplTest {
 
         MockitoAnnotations.initMocks(this);
 
-        List<DocumentType> documentList = new ArrayList<>();
-        DocumentType document = new DocumentType("description", "type", false);
+        List<DocumentTypeDetails> documentList = new ArrayList<>();
+        DocumentTypeDetails document = new DocumentTypeDetails("description", "type", false);
         documentList.add(document);
         Mockito.when(efilingDocumentServiceMock.getDocumentTypes(Mockito.eq(COURT_LEVEL), Mockito.eq(COURT_CLASSIFICATION))).thenReturn(documentList);
 
@@ -41,7 +41,7 @@ public class DocumentServiceImplTest {
     @DisplayName("ok: should return a list of documents")
     public void shouldReturnAListOfDocuments() {
 
-        List<DocumentType> actual = sut.getValidDocumentTypes(GetValidDocumentTypesRequest
+        List<DocumentTypeDetails> actual = sut.getValidDocumentTypes(GetValidDocumentTypesRequest
                 .builder()
                 .courtLevel(COURT_LEVEL)
                 .courtClassification(COURT_CLASSIFICATION)

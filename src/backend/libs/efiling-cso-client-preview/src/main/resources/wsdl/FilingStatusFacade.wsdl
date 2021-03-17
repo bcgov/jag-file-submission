@@ -123,10 +123,10 @@
             </xs:complexType>
             <xs:complexType name="getDocumentTypesResponse">
                 <xs:sequence>
-                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:documentType"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:documentTypeDetails"/>
                 </xs:sequence>
             </xs:complexType>
-            <xs:complexType name="documentType">
+            <xs:complexType name="documentTypeDetails">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="autoProcessYn" type="xs:boolean"/>
                     <xs:element minOccurs="0" name="defaultStatutoryFee" type="xs:decimal"/>
@@ -277,7 +277,7 @@
                     <xs:element minOccurs="0" name="dateFiled" type="xs:dateTime"/>
                     <xs:element minOccurs="0" name="dateWithdrawn" type="xs:dateTime"/>
                     <xs:element minOccurs="0" name="documentId" type="xs:string"/>
-                    <xs:element minOccurs="0" name="documentType" type="xs:string"/>
+                    <xs:element minOccurs="0" name="documentTypeDetails" type="xs:string"/>
                     <xs:element minOccurs="0" name="documentTypeCd" type="xs:string"/>
                     <xs:element minOccurs="0" name="documentUploadStatusCd" type="xs:string"/>
                     <xs:element minOccurs="0" name="fileName" type="xs:string"/>

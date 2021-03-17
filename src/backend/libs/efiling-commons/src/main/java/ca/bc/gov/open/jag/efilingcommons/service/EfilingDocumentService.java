@@ -1,6 +1,6 @@
 package ca.bc.gov.open.jag.efilingcommons.service;
 
-import ca.bc.gov.open.jag.efilingcommons.model.DocumentType;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentTypeDetails;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public interface EfilingDocumentService {
      * @param documentType type code used by cso
      * @return All details related to request document type
      */
-    DocumentType getDocumentTypeDetails(String courtLevel, String courtClass, String documentType);
+    DocumentTypeDetails getDocumentTypeDetails(String courtLevel, String courtClass, String documentType);
 
     /**
      * Search for are document types(with details) by parameters
@@ -21,6 +21,6 @@ public interface EfilingDocumentService {
      * @param courtClass class code used by cso
      * @return list of document types
      */
-    List<DocumentType> getDocumentTypes(String courtLevel, String courtClass);
+    List<DocumentTypeDetails> getDocumentTypes(String courtLevel, String courtClass);
 
 }

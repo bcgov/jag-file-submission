@@ -1,11 +1,11 @@
 package preview.ca.bc.gov.open.jag.efilingcsoclient;
 
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentTypeDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import preview.ca.bc.gov.ag.csows.filing.status.DocumentType;
 import preview.ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
-import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import preview.ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import org.apache.commons.lang3.StringUtils;
@@ -33,7 +33,7 @@ public class PreviewCsoDocumentServiceImpl implements EfilingDocumentService {
      * @return
      */
     @Override
-    public ca.bc.gov.open.jag.efilingcommons.model.DocumentType getDocumentTypeDetails(String courtLevel, String courtClass, String documentType) {
+    public DocumentTypeDetails getDocumentTypeDetails(String courtLevel, String courtClass, String documentType) {
 
         logger.warn("THIS IS IN PREVIEW MODE");
 
@@ -44,12 +44,12 @@ public class PreviewCsoDocumentServiceImpl implements EfilingDocumentService {
         return getSoapDocumentTypes(courtLevel, courtClass).stream()
                 .filter(doc -> doc.getDocumentTypeCd().equals(documentType))
                 .findFirst()
-                .map(doc -> new ca.bc.gov.open.jag.efilingcommons.model.DocumentType(doc.getDocumentTypeDesc(), doc.getDocumentTypeCd(), doc.getDefaultStatutoryFee(), doc.isOrderDocumentYn(),doc.isRushRequiredYn(), doc.isAutoProcessYn()))
+                .map(doc -> new DocumentTypeDetails(doc.getDocumentTypeDesc(), doc.getDocumentTypeCd(), doc.getDefaultStatutoryFee(), doc.isOrderDocumentYn(),doc.isRushRequiredYn(), doc.isAutoProcessYn()))
                 .orElseThrow(() -> new EfilingDocumentServiceException("Document type does not exists"));
 
     }
 
-    public List<ca.bc.gov.open.jag.efilingcommons.model.DocumentType> getDocumentTypes(String courtLevel, String courtClass) {
+    public List<DocumentTypeDetails> getDocumentTypes(String courtLevel, String courtClass) {
 
         logger.warn("THIS IS IN PREVIEW MODE");
 
@@ -57,7 +57,7 @@ public class PreviewCsoDocumentServiceImpl implements EfilingDocumentService {
         if (StringUtils.isBlank(courtClass)) throw new IllegalArgumentException("courtClass level is required.");
 
         return getSoapDocumentTypes(courtLevel, courtClass).stream()
-                .map(doc -> new ca.bc.gov.open.jag.efilingcommons.model.DocumentType(doc.getDocumentTypeDesc(), doc.getDocumentTypeCd(), doc.getDefaultStatutoryFee(), doc.isOrderDocumentYn(),doc.isRushRequiredYn(), doc.isAutoProcessYn())).collect(Collectors.toList());
+                .map(doc -> new DocumentTypeDetails(doc.getDocumentTypeDesc(), doc.getDocumentTypeCd(), doc.getDefaultStatutoryFee(), doc.isOrderDocumentYn(),doc.isRushRequiredYn(), doc.isAutoProcessYn())).collect(Collectors.toList());
     }
 
     private List<DocumentType> getSoapDocumentTypes(String courtLevel, String courtClass) {

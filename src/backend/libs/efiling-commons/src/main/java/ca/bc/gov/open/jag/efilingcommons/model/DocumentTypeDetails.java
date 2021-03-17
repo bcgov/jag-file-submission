@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
 
-public class DocumentType {
+public class DocumentTypeDetails {
 
     private String description;
 
@@ -48,12 +48,12 @@ public class DocumentType {
     public void setAutoProcessing(Boolean autoProcessing) {  isAutoProcessing = autoProcessing; }
 
     @JsonCreator
-    public DocumentType(@JsonProperty("description") String description,
-                           @JsonProperty("type") String type,
-                           @JsonProperty("statutoryFeeAmount") BigDecimal statutoryFeeAmount,
-                           @JsonProperty("isOrderDocument") boolean isOrderDocument,
-                           @JsonProperty("rushRequired") boolean rushRequired,
-                           @JsonProperty("isAutoProcessing") boolean isAutoProcessing) {
+    public DocumentTypeDetails(@JsonProperty("description") String description,
+                               @JsonProperty("type") String type,
+                               @JsonProperty("statutoryFeeAmount") BigDecimal statutoryFeeAmount,
+                               @JsonProperty("isOrderDocument") boolean isOrderDocument,
+                               @JsonProperty("rushRequired") boolean rushRequired,
+                               @JsonProperty("isAutoProcessing") boolean isAutoProcessing) {
         this.description = description;
         this.type = type;
         this.statutoryFeeAmount = statutoryFeeAmount;
