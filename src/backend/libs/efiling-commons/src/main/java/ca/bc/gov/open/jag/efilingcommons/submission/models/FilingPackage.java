@@ -18,7 +18,7 @@ public class FilingPackage {
     private List<Individual> parties = new ArrayList<>();
     private List<Organization> organizations = new ArrayList<>();
     private boolean rushedSubmission = false;
-    private boolean isAutoProcessing = false;
+    private boolean autoProcessing = false;
     private String applicationCode;
 
     public FilingPackage(
@@ -28,7 +28,7 @@ public class FilingPackage {
             @JsonProperty("parties") List<Individual> parties,
             @JsonProperty("organizations") List<Organization> organizations,
             @JsonProperty("rushedSubmission") boolean rushedSubmission,
-            @JsonProperty("isAutoProcessing") boolean isAutoProcessing,
+            @JsonProperty("autoProcessing") boolean autoProcessing,
             @JsonProperty("applicationCode") String applicationCode
     ) {
 
@@ -39,7 +39,7 @@ public class FilingPackage {
         this.organizations.addAll(organizations);
         this.applicationCode = applicationCode;
         this.rushedSubmission = rushedSubmission;
-        this.isAutoProcessing = isAutoProcessing;
+        this.autoProcessing = autoProcessing;
     }
 
     public FilingPackage(Builder builder) {
@@ -50,7 +50,7 @@ public class FilingPackage {
         this.organizations.addAll(builder.organizations);
         this.applicationCode = builder.applicationCode;
         this.rushedSubmission = builder.rushedSubmission;
-        this.isAutoProcessing = builder.isAutoProcessing;
+        this.autoProcessing = builder.autoProcessing;
     }
 
     public BigDecimal getSubmissionFeeAmount() {
@@ -75,7 +75,10 @@ public class FilingPackage {
 
     public boolean isRushedSubmission() { return rushedSubmission; }
 
-    public boolean getAutoProcessing() { return isAutoProcessing; }
+    public boolean isAutoProcessing() { return autoProcessing; }
+
+    //Created to support mapstruct which does not support standard boolean object naming
+    public boolean getAutoProcessing() { return autoProcessing; }
 
     public String getApplicationCode() { return applicationCode; }
 
@@ -100,7 +103,7 @@ public class FilingPackage {
     }
 
     public void setIsAutoProcessing(boolean isAutoProcessing) {
-        this.isAutoProcessing = isAutoProcessing;
+        this.autoProcessing = isAutoProcessing;
     }
 
     public void setRushedSubmission(boolean rushedSubmission) {
@@ -129,15 +132,15 @@ public class FilingPackage {
         private List<Organization> organizations = new ArrayList<>();
         private String applicationCode;
         private boolean rushedSubmission;
-        private boolean isAutoProcessing;
+        private boolean autoProcessing;
 
         public Builder rushedSubmission(boolean rushedSubmission) {
             this.rushedSubmission = rushedSubmission;
             return this;
         }
 
-        public Builder isAutoProcessing(boolean isAutoProcessing) {
-            this.isAutoProcessing = isAutoProcessing;
+        public Builder autoProcessing(boolean autoProcessing) {
+            this.autoProcessing = autoProcessing;
             return this;
         }
 

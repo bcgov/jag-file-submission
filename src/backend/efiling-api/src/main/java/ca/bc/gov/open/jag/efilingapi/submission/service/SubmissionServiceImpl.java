@@ -200,7 +200,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                         .collect(Collectors.toList()))
                 .rushedSubmission(isRushedSubmission(request))
                 .applicationCode(applicationCode)
-                .isAutoProcessing(isAutoProcessing(request))
+                .autoProcessing(isAutoProcessing(request))
                 .create();
 
     }
