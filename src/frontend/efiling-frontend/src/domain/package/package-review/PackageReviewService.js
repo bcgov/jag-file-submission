@@ -52,3 +52,15 @@ export const downloadSubmittedDocument = async (packageId, document) => {
  */
 export const withdrawSubmittedDocument = async (packageId, document) =>
   axios.delete(`/filingpackages/${packageId}/document/${document.identifier}`);
+
+export const downloadRegistryNotice = async (packageId) => {
+  const response = await axios.get(
+    `/filingpackages/${packageId}/registryNotice`,
+    {
+      responseType: "blob",
+    }
+  );
+  const fileData = new Blob([response.data], { type: "application/pdf" });
+  const fileUrl = URL.createObjectURL(fileData);
+  FileSaver.saveAs(fileUrl, "RegistryNotice.pdf");
+};
