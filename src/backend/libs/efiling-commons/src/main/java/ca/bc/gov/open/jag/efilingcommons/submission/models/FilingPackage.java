@@ -75,7 +75,7 @@ public class FilingPackage {
 
     public Boolean isRushedSubmission() { return rushedSubmission; }
 
-    public Boolean isAutoProcessing() { return isAutoProcessing; }
+    public Boolean getAutoProcessing() { return isAutoProcessing; }
 
     public String getApplicationCode() { return applicationCode; }
 
