@@ -20,10 +20,18 @@ import ca.bc.gov.open.jag.efilingapi.utils.Notification;
 import ca.bc.gov.open.jag.efilingapi.core.security.SecurityUtils;
 import ca.bc.gov.open.jag.efilingapi.utils.TikaAnalysis;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.*;
+import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
+import ca.bc.gov.open.jag.jagmailit.api.MailSendApi;
+import ca.bc.gov.open.jag.jagmailit.api.handler.ApiException;
+import ca.bc.gov.open.jag.jagmailit.api.model.EmailObject;
+import ca.bc.gov.open.jag.jagmailit.api.model.EmailRequest;
+import ca.bc.gov.open.jag.jagmailit.api.model.EmailRequestContent;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -36,6 +44,8 @@ import javax.annotation.security.RolesAllowed;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -56,6 +66,9 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     private final ClamAvService clamAvService;
     private final FilingPackageMapper filingPackageMapper;
     private final GenerateUrlRequestValidator generateUrlRequestValidator;
+    
+    @Autowired
+    private MailSendApi mailSendApi;
 
     public SubmissionApiDelegateImpl(
             SubmissionService submissionService,
@@ -402,10 +415,47 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         MDC.put(Keys.MDC_EFILING_SUBMISSION_ID, submissionId.toString());
         try {
 
-            SubmitResponse result = submissionService.createSubmission(fromCacheSubmission.get(), accountService.getCsoAccountDetails(submissionKey.getUniversalId()), SecurityUtils.isEarlyAdopter());
+            AccountDetails csoAccountDetails = accountService.getCsoAccountDetails(submissionKey.getUniversalId());
+			SubmitResponse result = submissionService.createSubmission(fromCacheSubmission.get(), csoAccountDetails, SecurityUtils.isEarlyAdopter());
 
             response = new ResponseEntity(result, HttpStatus.CREATED);
             logger.info("successfully submitted efiling package for transaction [{}], cso id {}", xTransactionId, result.getPackageRef());
+
+			// Email receipt of a successful submission
+            try {
+            	// TODO: wrap try-catch with a SecurityUtils.hasNotificationRole()
+            	
+            	// TODO: extract name & email from accountDetails to use in email 
+            	
+            	// TODO: refactor this to a MailUtil for simple method to send a message.
+            	// TODO: add FreeMarker as a template engine dependency
+            	//    ie. MailUtils.sendMail("from", "subject", "body", template);
+            	            	
+                EmailObject emailFrom = new EmailObject();
+                emailFrom.name("Bob Ross 1");
+                emailFrom.email("from@somewhere.com");
+                EmailObject emailTo = new EmailObject();
+                emailTo.name("Bob Ross 2");
+                emailTo.email("to@somewhere.com");
+                EmailObject emailCc = new EmailObject();
+                emailCc.name("Bob Ross 3");
+                emailCc.email("cc@somewhere.com");
+                String subject = MessageFormat.format("Efiling-Hub: Submission {0}", submissionId.toString());
+                EmailRequestContent content = new EmailRequestContent();
+                content.setValue(MessageFormat.format("Your submission {0} has been successfully sent to CSO.", submissionId.toString()));
+                
+                EmailRequest emailRequest = new EmailRequest();            
+                emailRequest.setFrom(emailFrom);
+    			emailRequest.setTo(Arrays.asList(emailTo));
+                emailRequest.setCc(Arrays.asList(emailCc));
+    			emailRequest.setSubject(subject);
+    			emailRequest.setContent(content);
+    			
+				mailSendApi.mailSend(emailRequest);
+			} catch (ApiException e) {
+	        	logger.error("failed to send email receipt {}", xTransactionId);
+	        	// TODO: retry? ignore?
+			} 
 
         } catch (EfilingSubmissionServiceException e) {
             logger.error("failed package submission {}", xTransactionId);

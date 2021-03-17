@@ -13,8 +13,8 @@ spring:
       max-file-size: ${MAX_FILE_SIZE:10MB}
       max-request-size: ${MAX_REQUEST_SIZE:100MB}
 keycloak:
-  auth-server-url: ${KEYCLOAK_AUTH_SERVER_URL}
-  realm: ${KEYCLOAK_REALM}
+  auth-server-url: ${KEYCLOAK_AUTH_SERVER_URL:http://localhost:8081/auth}
+  realm: ${KEYCLOAK_REALM:Efiling-Hub}
   resource: efiling-api
   credentials:
     secret: ${KEYCLOAK_CREDENTIALS_SECRET}
@@ -80,11 +80,11 @@ cso:
 
 bambora:
   apiBasePath: ${BAMBORA_APIBASEPATH:http://localhost:8080}
-  apiPasscode: ${BAMBORA_APIPASSCODE}
+  apiPasscode: ${BAMBORA_APIPASSCODE:passcode}
   merchantId: ${BAMBORA_MERCHANTID}
-  hostedProfileUrl: ${BAMBORA_PROFILE_URL}
+  hostedProfileUrl: ${BAMBORA_PROFILE_URL:http://localhost:3001/updatecard}
   hostedProfileServiceVersion: ${BAMBORA_PROFILE_SERVICE_VERSION}
-  hashKey: ${BAMBORA_HASHKEY}
+  hashKey: ${BAMBORA_HASHKEY:key}
   minutesToExpiry: ${BAMBORA_URL_EXPIRY:10}
 bcgov:
   sftp:
@@ -114,7 +114,7 @@ info:
     version: "@project.version@"
 
 mailsend:
-  baseUrl: ${MAIL_SEND_BASE_URL:http://localhost:8090}
+  baseUrl: ${MAIL_SEND_BASE_URL:http://localhost:8091}
 
 opentracing:
   jaeger:

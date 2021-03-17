@@ -1,281 +1,294 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.0</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
-    <groupId>ca.bc.gov.open.jag</groupId>
-    <artifactId>efiling-api</artifactId>
-    <version>0.7.0-SNAPSHOT</version>
-    <name>efiling-api</name>
-    <description>Demo project for Spring Boot</description>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.4.0</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>ca.bc.gov.open.jag</groupId>
+	<artifactId>efiling-api</artifactId>
+	<version>0.7.0-SNAPSHOT</version>
+	<name>efiling-api</name>
+	<description>Demo project for Spring Boot</description>
 
-    <properties>
-        <java.version>1.8</java.version>
-        <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
-        <default-package>ca.bc.gov.open.jag.efilingapi</default-package>
-    </properties>
-    <dependencies>
+	<properties>
+		<java.version>1.8</java.version>
+		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
+		<default-package>ca.bc.gov.open.jag.efilingapi</default-package>
+	</properties>
+	<dependencies>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-cache</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-cache</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>ca.bc.gov.open.jag</groupId>
-            <artifactId>efiling-commons</artifactId>
-            <version>0.7.0-SNAPSHOT</version>
-        </dependency>
+		<dependency>
+			<groupId>ca.bc.gov.open.jag</groupId>
+			<artifactId>efiling-commons</artifactId>
+			<version>0.7.0-SNAPSHOT</version>
+		</dependency>
 
-        <dependency>
-            <groupId>ca.bc.gov.open</groupId>
-            <artifactId>spring-sftp-starter</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>ca.bc.gov.open</groupId>
+			<artifactId>spring-sftp-starter</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>ca.bc.gov.open</groupId>
-            <artifactId>spring-bceid-starter</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>ca.bc.gov.open</groupId>
+			<artifactId>spring-bceid-starter</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>ca.bc.gov.open</groupId>
-            <artifactId>spring-clamav-starter</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>ca.bc.gov.open</groupId>
+			<artifactId>spring-clamav-starter</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>ca.bc.gov.open</groupId>
-            <artifactId>bambora-payment-starter</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>ca.bc.gov.open</groupId>
+			<artifactId>bambora-payment-starter</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>org.apache.tika</groupId>
-            <artifactId>tika-core</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.apache.tika</groupId>
+			<artifactId>tika-core</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+		</dependency>
 
-        <!-- Logging -->
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-access</artifactId>
-        </dependency>
+		<!-- Logging -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-access</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>net.rakugakibox.spring.boot</groupId>
-            <artifactId>logback-access-spring-boot-starter</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>net.rakugakibox.spring.boot</groupId>
+			<artifactId>logback-access-spring-boot-starter</artifactId>
+		</dependency>
 
-        <!-- Swagger -->
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-annotations</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-        </dependency>
+		<!-- Swagger -->
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-annotations</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+		</dependency>
 
-        <!-- Redis -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-redis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-        </dependency>
+		<!-- Redis -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>org.openapitools</groupId>
-            <artifactId>jackson-databind-nullable</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.openapitools</groupId>
+			<artifactId>jackson-databind-nullable</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>org.keycloak</groupId>
-            <artifactId>keycloak-spring-boot-starter</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.keycloak</groupId>
+			<artifactId>keycloak-spring-boot-starter</artifactId>
+		</dependency>
 
 
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-collections4</artifactId>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.skywalking/apm-toolkit-trace -->
-        <dependency>
-            <groupId>org.apache.skywalking</groupId>
-            <artifactId>apm-toolkit-trace</artifactId>
-            <scope>provided</scope>
-        </dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.skywalking/apm-toolkit-trace -->
+		<dependency>
+			<groupId>org.apache.skywalking</groupId>
+			<artifactId>apm-toolkit-trace</artifactId>
+			<scope>provided</scope>
+		</dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.apache.skywalking/apm-toolkit-logback-1.x -->
-        <dependency>
-            <groupId>org.apache.skywalking</groupId>
-            <artifactId>apm-toolkit-logback-1.x</artifactId>
-        </dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.skywalking/apm-toolkit-logback-1.x -->
+		<dependency>
+			<groupId>org.apache.skywalking</groupId>
+			<artifactId>apm-toolkit-logback-1.x</artifactId>
+		</dependency>
 
-    </dependencies>
+	</dependencies>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>ca.bc.gov.open.jag</groupId>
-                <artifactId>efiling-bom</artifactId>
-                <version>0.7.0-SNAPSHOT</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.keycloak.bom</groupId>
-                <artifactId>keycloak-adapter-bom</artifactId>
-                <version>11.0.3</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>ca.bc.gov.open.jag</groupId>
+				<artifactId>efiling-bom</artifactId>
+				<version>0.7.0-SNAPSHOT</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.keycloak.bom</groupId>
+				<artifactId>keycloak-adapter-bom</artifactId>
+				<version>11.0.3</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
-    <profiles>
+	<profiles>
 
-        <profile>
-            <id>default</id>
-        </profile>
+		<profile>
+			<id>default</id>
+		</profile>
 
-        <profile>
+		<profile>
 
-            <id>efiling-api</id>
+			<id>efiling-api</id>
 
-            <dependencies>
+			<dependencies>
 
-                <dependency>
-                    <groupId>ca.bc.gov.open.jag</groupId>
-                    <artifactId>efiling-cso-starter</artifactId>
-                    <version>0.7.0-SNAPSHOT</version>
-                </dependency>
+				<dependency>
+					<groupId>ca.bc.gov.open.jag</groupId>
+					<artifactId>efiling-cso-starter</artifactId>
+					<version>0.7.0-SNAPSHOT</version>
+				</dependency>
 
-                <dependency>
-                    <groupId>ca.bc.gov.open.jag</groupId>
-                    <artifactId>efiling-bambora-api-client</artifactId>
-                    <version>0.7.0-SNAPSHOT</version>
-                </dependency>
+				<dependency>
+					<groupId>ca.bc.gov.open.jag</groupId>
+					<artifactId>efiling-bambora-api-client</artifactId>
+					<version>0.7.0-SNAPSHOT</version>
+				</dependency>
 
-                <dependency>
-                    <groupId>ca.bc.gov.open.jag</groupId>
-                    <artifactId>efiling-ceis-api-client</artifactId>
-                    <version>0.7.0-SNAPSHOT</version>
-                </dependency>
+				<dependency>
+					<groupId>ca.bc.gov.open.jag</groupId>
+					<artifactId>efiling-ceis-api-client</artifactId>
+					<version>0.7.0-SNAPSHOT</version>
+				</dependency>
 
-            </dependencies>
+				<dependency>
+					<groupId>ca.bc.gov.open.jag</groupId>
+					<artifactId>efiling-mail-it</artifactId>
+					<version>0.0.1-SNAPSHOT</version>
+				</dependency>
 
-        </profile>
+			</dependencies>
 
-        <profile>
+		</profile>
 
-            <id>splunk</id>
+		<profile>
 
-            <repositories>
-                <repository>
-                    <id>splunk-artifactory</id>
-                    <name>Splunk Releases</name>
-                    <url>https://splunk.jfrog.io/splunk/ext-releases-local</url>
-                </repository>
-            </repositories>
+			<id>splunk</id>
 
-            <dependencies>
-                <dependency>
-                    <groupId>com.splunk.logging</groupId>
-                    <artifactId>splunk-library-javalogging</artifactId>
-                    <version>1.8.0</version>
-                </dependency>
-            </dependencies>
+			<repositories>
+				<repository>
+					<id>splunk-artifactory</id>
+					<name>Splunk Releases</name>
+					<url>https://splunk.jfrog.io/splunk/ext-releases-local</url>
+				</repository>
+			</repositories>
 
-        </profile>
+			<dependencies>
+				<dependency>
+					<groupId>com.splunk.logging</groupId>
+					<artifactId>splunk-library-javalogging</artifactId>
+					<version>1.8.0</version>
+				</dependency>
+			</dependencies>
 
-        <profile>
-            <id>efiling-api-demo</id>
-            <dependencies>
-                <dependency>
-                    <groupId>ca.bc.gov.open.jag</groupId>
-                    <artifactId>efiling-demo-starter</artifactId>
-                    <version>0.7.0-SNAPSHOT</version>
-                </dependency>
-            </dependencies>
-        </profile>
-    </profiles>
+		</profile>
+
+		<profile>
+			<id>efiling-api-demo</id>
+			<dependencies>
+				<dependency>
+					<groupId>ca.bc.gov.open.jag</groupId>
+					<artifactId>efiling-demo-starter</artifactId>
+					<version>0.7.0-SNAPSHOT</version>
+				</dependency>
+
+				<dependency>
+					<groupId>ca.bc.gov.open.jag</groupId>
+					<artifactId>efiling-mail-it</artifactId>
+					<version>0.0.1-SNAPSHOT</version>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
     <build>
         <plugins>
 
@@ -283,20 +296,20 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <mainClass>ca.bc.gov.open.jag.efilingapi.EfilingApiApplication</mainClass>
-                </configuration>
-            </plugin>
+				<configuration>
+					<mainClass>ca.bc.gov.open.jag.efilingapi.EfilingApiApplication</mainClass>
+				</configuration>
+			</plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.2</version>
-            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.22.2</version>
+			</plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
                 <version>2.22.2</version>
             </plugin>
 
@@ -304,26 +317,26 @@
             <plugin>
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
-                <version>4.3.1</version>
-                <executions>
-                    <execution>
-                        <id>spring-boot-api</id>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <inputSpec>${project.basedir}/jag-efiling-api.yaml</inputSpec>
-                            <generatorName>spring</generatorName>
-                            <configOptions>
-                                <dateLibrary>joda</dateLibrary>
-                                <delegatePattern>true</delegatePattern>
-                            </configOptions>
-                            <library>spring-boot</library>
-                            <apiPackage>${default-package}.api</apiPackage>
-                            <modelPackage>${default-package}.api.model</modelPackage>
-                            <invokerPackage>${default-package}.api.handler</invokerPackage>
-                        </configuration>
-                    </execution>
+				<version>4.3.1</version>
+				<executions>
+					<execution>
+						<id>spring-boot-api</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<inputSpec>${project.basedir}/jag-efiling-api.yaml</inputSpec>
+							<generatorName>spring</generatorName>
+							<configOptions>
+								<dateLibrary>joda</dateLibrary>
+								<delegatePattern>true</delegatePattern>
+							</configOptions>
+							<library>spring-boot</library>
+							<apiPackage>${default-package}.api</apiPackage>
+							<modelPackage>${default-package}.api.model</modelPackage>
+							<invokerPackage>${default-package}.api.handler</invokerPackage>
+						</configuration>
+					</execution>
                 </executions>
             </plugin>
 
@@ -331,16 +344,16 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <annotationProcessorPaths>
-                        <path>
-                            <groupId>org.mapstruct</groupId>
-                            <artifactId>mapstruct-processor</artifactId>
-                            <version>${org.mapstruct.version}</version>
-                        </path>
-                    </annotationProcessorPaths>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.mapstruct</groupId>
+							<artifactId>mapstruct-processor</artifactId>
+							<version>${org.mapstruct.version}</version>
+						</path>
+					</annotationProcessorPaths>
                 </configuration>
             </plugin>
 
@@ -348,35 +361,35 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.6</version>
+				<version>0.8.6</version>
 
-                <configuration>
-                    <excludes>
-                        <exclude>**/*/mappers/*Impl.java</exclude>
-                        <exclude>**/*/efilingapi/api/**/*</exclude>
-                        <exclude>org/openapitools/configuration/**/*</exclude>
-                    </excludes>
-                </configuration>
+				<configuration>
+					<excludes>
+						<exclude>**/*/mappers/*Impl.java</exclude>
+						<exclude>**/*/efilingapi/api/**/*</exclude>
+						<exclude>org/openapitools/configuration/**/*</exclude>
+					</excludes>
+				</configuration>
 
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
 
-                    <!-- attached to Maven test phase -->
-                    <execution>
-                        <id>report</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+					<!-- attached to Maven test phase -->
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
-        </plugins>
-    </build>
+		</plugins>
+	</build>
 
 </project>

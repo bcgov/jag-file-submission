@@ -46,7 +46,7 @@ services:
       - BAMBORA_PROFILE_SERVICE_VERSION=${BAMBORA_PROFILE_SERVICE_VERSION}
       - BAMBORA_URL_EXPIRY=10
 
-      - KEYCLOAK_AUTH_SERVER_URL=${KEYCLOAK_AUTH_SERVER_URL:-http://keycloak:8080/auth}
+      - KEYCLOAK_AUTH_SERVER_URL=${KEYCLOAK_AUTH_SERVER_URL:-http://keycloak:8081/auth}
       - KEYCLOAK_REALM=${KEYCLOAK_REALM:-Efiling-Hub}
       - KEYCLOAK_CREDENTIALS_SECRET=${KEYCLOAK_CREDENTIALS_SECRET}
       - KEYCLOAK_SSL_REQUIRED=${KEYCLOAK_SSL_REQUIRED:-none}
@@ -89,6 +89,8 @@ services:
       - REDIS_PORT=6379
       - REDIS_PASSWORD=admin
 
+      - MAIL_SEND_BASE_URL=${MAIL_SEND_BASE_URL:-http://localhost:8091}
+      
       - NAVIGATION_BASE_URL=http://localhost:3000/efilinghub
       - NAVIGATION_EXPIRYTIME=10
 
@@ -253,7 +255,7 @@ services:
     build:
       context: https://github.com/bcgov/jag-mail-it.git#main:src
     ports:
-      - "8090:8080"
+      - "8091:8080"
     environment:
       - JMT_SPRING_REDIS_PORT=6379
       - JMT_SPRING_REDIS_HOST=redis
