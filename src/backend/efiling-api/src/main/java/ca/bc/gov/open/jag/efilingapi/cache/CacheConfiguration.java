@@ -142,7 +142,7 @@ public class CacheConfiguration {
      * @return
      */
     @Bean(name = "documentTypeDetailsCacheManager")
-    public CacheManager documentDetailsCacheManager(
+    public CacheManager documentTypeDetailsCacheManager(
             JedisConnectionFactory jedisConnectionFactory,
             @Qualifier("documentTypeDetailsSerializer") Jackson2JsonRedisSerializer documentTypeDetailsSerializer) {
 

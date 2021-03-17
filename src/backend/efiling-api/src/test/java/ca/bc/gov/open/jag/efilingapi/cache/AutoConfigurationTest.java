@@ -120,7 +120,7 @@ public class AutoConfigurationTest {
     @Test
     public void correctInputShouldReturnDocumentTypeDetailsCacheManager() {
         JedisConnectionFactory jedisConnectionFactory = Mockito.mock(JedisConnectionFactory.class);
-        CacheManager cacheManager = sut.documentDetailsCacheManager(jedisConnectionFactory, new Jackson2JsonRedisSerializer(DocumentTypeDetails.class));
+        CacheManager cacheManager = sut.documentTypeDetailsCacheManager(jedisConnectionFactory, new Jackson2JsonRedisSerializer(DocumentTypeDetails.class));
         Assertions.assertNotNull(cacheManager);
     }
 
