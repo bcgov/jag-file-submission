@@ -3,7 +3,7 @@ package ca.bc.gov.open.jag.efilingapi.cache;
 
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentTypeDetails;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
@@ -144,13 +144,13 @@ public class CacheConfiguration {
     @Bean(name = "documentDetailsCacheManager")
     public CacheManager documentDetailsCacheManager(
             JedisConnectionFactory jedisConnectionFactory,
-            @Qualifier("documentDetailsSerializer") Jackson2JsonRedisSerializer documentDetailsSerializer) {
+            @Qualifier("documentTypeDetailsSerializer") Jackson2JsonRedisSerializer documentTypeDetailsSerializer) {
 
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
                 .disableCachingNullValues()
                 .entryTtl(Duration.ofHours(24))
                 .serializeValuesWith(RedisSerializationContext
-                        .SerializationPair.fromSerializer(documentDetailsSerializer));;
+                        .SerializationPair.fromSerializer(documentTypeDetailsSerializer));;
 
         redisCacheConfiguration.usePrefix();
 
@@ -158,9 +158,9 @@ public class CacheConfiguration {
                 .cacheDefaults(redisCacheConfiguration).build();
     }
 
-    @Bean(name = "documentDetailsSerializer")
-    public Jackson2JsonRedisSerializer documentDetailsSerializer() {
-        return new Jackson2JsonRedisSerializer(DocumentDetails.class);
+    @Bean(name = "documentTypeDetailsSerializer")
+    public Jackson2JsonRedisSerializer documentTypeDetailsSerializer() {
+        return new Jackson2JsonRedisSerializer(DocumentTypeDetails.class);
     }
 
     /**

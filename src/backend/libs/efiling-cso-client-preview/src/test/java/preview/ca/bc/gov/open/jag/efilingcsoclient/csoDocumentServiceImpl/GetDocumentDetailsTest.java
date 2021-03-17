@@ -1,10 +1,10 @@
 package preview.ca.bc.gov.open.jag.efilingcsoclient.csoDocumentServiceImpl;
 
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentTypeDetails;
 import preview.ca.bc.gov.ag.csows.filing.status.DocumentType;
 import preview.ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import preview.ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
-import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -54,11 +54,12 @@ public class GetDocumentDetailsTest {
     @DisplayName("OK: test returns document ")
     @Test
     public void testWithFoundResult() {
-        DocumentDetails result = sut.getDocumentTypeDetails(COURT_LEVEL, COURT_CLASS, DOCUMENT_TYPE_CD);
+        DocumentTypeDetails result = sut.getDocumentTypeDetails(COURT_LEVEL, COURT_CLASS, DOCUMENT_TYPE_CD);
         Assertions.assertEquals(DESCRIPTION, result.getDescription());
         Assertions.assertEquals(BigDecimal.TEN, result.getStatutoryFeeAmount());
         Assertions.assertTrue(result.getOrderDocument());
         Assertions.assertTrue(result.isRushRequired());
+        Assertions.assertFalse(result.isAutoProcessing());
     }
 
     @DisplayName("Exception: when not finding document should throw exception")

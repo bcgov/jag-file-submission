@@ -1,7 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.document;
 
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
-import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentTypeDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import org.junit.jupiter.api.*;
@@ -30,14 +29,14 @@ public class DocumentStoreImplTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        DocumentDetails docummentDetails = new DocumentDetails(DESCRIPTION, BigDecimal.TEN, true, true);
+        DocumentTypeDetails docummentDetails = new DocumentTypeDetails(DESCRIPTION, TYPE, BigDecimal.TEN, true, true, true);
 
         Mockito
                 .when(efilingDocumentServiceMock.getDocumentTypeDetails(Mockito.anyString(), Mockito.anyString(), Mockito.anyString()))
                 .thenReturn(docummentDetails);
 
 
-        List<DocumentTypeDetails> documentTypeDetails = Arrays.asList(new DocumentTypeDetails(DESCRIPTION, TYPE, true));
+        List<DocumentTypeDetails> documentTypeDetails = Arrays.asList(new DocumentTypeDetails(DESCRIPTION, TYPE, BigDecimal.TEN, true, true, true));
 
         Mockito
                 .when(efilingDocumentServiceMock.getDocumentTypes(Mockito.anyString(), Mockito.anyString()))
@@ -72,7 +71,7 @@ public class DocumentStoreImplTest {
     public void withCourtLevelCourtClassDocumentTypeShouldReturnDocumentDetails() {
 
 
-        DocumentDetails actual = sut.getDocumentDetails("courtLevel", "courtClass", "documentType");
+        DocumentTypeDetails actual = sut.getDocumentDetails("courtLevel", "courtClass", "documentType");
 
         Assertions.assertEquals(DESCRIPTION, actual.getDescription());
         Assertions.assertEquals(BigDecimal.TEN, actual.getStatutoryFeeAmount());
