@@ -5,6 +5,8 @@ import ca.bc.gov.open.jag.efilingapi.api.FilingpackagesApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
+import ca.bc.gov.open.jag.efilingapi.filingpackage.exception.MissingUniversalIdException;
+import ca.bc.gov.open.jag.efilingapi.filingpackage.exception.ReportNotFoundException;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.model.SubmittedDocument;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import ca.bc.gov.open.jag.efilingapi.core.security.SecurityUtils;
@@ -62,11 +64,18 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
     public ResponseEntity<Resource> getSubmissionSheet(BigDecimal packageIdentifier) {
 
         logger.info("get submission sheet request received");
-
-        return getReport(ReportRequest.builder()
-                .report(ReportsTypes.SUBMISSION_SHEET)
-                .packageId(packageIdentifier)
-                .fileName(Keys.EFILING_SUBMISSION_SHEET_FILENAME).create());
+        try {
+            return getReport(ReportRequest.builder()
+                    .report(ReportsTypes.SUBMISSION_SHEET)
+                    .packageId(packageIdentifier)
+                    .fileName(Keys.EFILING_SUBMISSION_SHEET_FILENAME).create());
+        } catch (MissingUniversalIdException e) {
+            return new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
+        } catch (ReportNotFoundException e) {
+            return new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.REPORT_NOT_FOUND).create(), HttpStatus.NOT_FOUND);
+        }
 
     }
 
@@ -75,11 +84,18 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
     public ResponseEntity<Resource> getPaymentReceipt(BigDecimal packageIdentifier) {
 
         logger.info("get payment receipt request received");
-
-        return getReport(ReportRequest.builder()
-                        .report(ReportsTypes.PAYMENT_RECEIPT)
-                        .packageId(packageIdentifier)
-                        .fileName(Keys.EFILING_PAYMENT_RECEIPT_FILENAME).create());
+        try {
+            return getReport(ReportRequest.builder()
+                            .report(ReportsTypes.PAYMENT_RECEIPT)
+                            .packageId(packageIdentifier)
+                            .fileName(Keys.EFILING_PAYMENT_RECEIPT_FILENAME).create());
+        } catch (MissingUniversalIdException e) {
+            return new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
+        } catch (ReportNotFoundException e) {
+            return new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.REPORT_NOT_FOUND).create(), HttpStatus.NOT_FOUND);
+        }
 
     }
 
@@ -87,24 +103,29 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
     public ResponseEntity<Resource> getRegistryNotice(BigDecimal packageIdentifier) {
 
         logger.info("get registry notice request received");
-
-        return getReport(ReportRequest.builder()
-                .report(ReportsTypes.REGISTRY_NOTICE)
-                .packageId(packageIdentifier)
-                .fileName(Keys.EFILING_REGISTRY_NOTICE_FILENAME).create());
+        try {
+            return getReport(ReportRequest.builder()
+                    .report(ReportsTypes.REGISTRY_NOTICE)
+                    .packageId(packageIdentifier)
+                    .fileName(Keys.EFILING_REGISTRY_NOTICE_FILENAME).create());
+        } catch (MissingUniversalIdException e) {
+            return new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
+        } catch (ReportNotFoundException e) {
+            return new ResponseEntity(
+                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.REPORT_NOT_FOUND).create(), HttpStatus.NOT_FOUND);
+        }
 
     }
 
     private ResponseEntity<Resource> getReport(ReportRequest reportRequest) {
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
-        if(!universalId.isPresent()) return new ResponseEntity(
-                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
+        if(!universalId.isPresent()) throw new MissingUniversalIdException(ErrorResponse.MISSING_UNIVERSAL_ID.getErrorMessage());
 
         Optional<Resource> result = filingPackageService.getReport(reportRequest);
 
-        if(!result.isPresent()) return new ResponseEntity(
-                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.REPORT_NOT_FOUND).create(), HttpStatus.NOT_FOUND);
+        if(!result.isPresent()) throw new ReportNotFoundException(ErrorResponse.REPORT_NOT_FOUND.getErrorMessage());
 
         HttpHeaders header = new HttpHeaders();
         header.add(HttpHeaders.CONTENT_DISPOSITION, MessageFormat.format("attachment; filename={0}", result.get().getFilename()));
