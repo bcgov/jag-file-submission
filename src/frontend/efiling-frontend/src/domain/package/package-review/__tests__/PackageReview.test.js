@@ -62,8 +62,8 @@ describe("PackageReview Component", () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks()
-  })
+    jest.clearAllMocks();
+  });
 
   const apiRequest = `/filingpackages/${packageId}`;
 
@@ -511,18 +511,15 @@ describe("PackageReview Component", () => {
 
     expect(FileSaver.saveAs).not.toHaveBeenCalled();
   });
-  
-  test("Download Registry Notice - unsuccessful (error)", async () => { 
+
+  test("Download Registry Notice - unsuccessful (error)", async () => {
     mock.onGet(apiRequest).reply(200, csoRedirectResponse);
-    mock
-      .onGet(`/filingpackages/${packageId}/registryNotice`)
-      .reply(400);
+    mock.onGet(`/filingpackages/${packageId}/registryNotice`).reply(400);
 
     const { getByText } = render(<PackageReview />);
     await waitFor(() => {});
 
     const button = getByText("View Registry Notice");
-    
 
     fireEvent.click(button);
     await waitFor(() => {});
