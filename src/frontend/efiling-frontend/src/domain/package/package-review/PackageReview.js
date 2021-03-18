@@ -145,14 +145,8 @@ export default function PackageReview() {
     noop();
   }
 
-  function handleClick() {
-    downloadSubmissionSheet(packageId).catch((err) => {
-      errorRedirect(sessionStorage.getItem("errorUrl"), err);
-    });
-  }
-
-  function handleKeyDown(e) {
-    if (isEnter(e)) {
+  function handleSubmissionSheet(e) {
+    if (isEnter(e) || isClick(e)) {
       downloadSubmissionSheet(packageId).catch((err) => {
         errorRedirect(sessionStorage.getItem("errorUrl"), err);
       });
@@ -213,8 +207,8 @@ export default function PackageReview() {
                 role="button"
                 tabIndex={0}
                 className="file-href"
-                onClick={handleClick}
-                onKeyDown={handleKeyDown}
+                onClick={handleSubmissionSheet}
+                onKeyDown={handleSubmissionSheet}
               >
                 Print Submission Sheet
               </span>
