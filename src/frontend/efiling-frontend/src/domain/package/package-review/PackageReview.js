@@ -152,7 +152,7 @@ export default function PackageReview() {
   }
 
   function handleKeyDown(e) {
-    if (e && e.keyCode === 13) {
+    if (isEnter(e)) {
       downloadSubmissionSheet(packageId).catch((err) => {
         errorRedirect(sessionStorage.getItem("errorUrl"), err);
       });

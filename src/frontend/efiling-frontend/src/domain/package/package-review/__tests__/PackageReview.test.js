@@ -327,7 +327,10 @@ describe("PackageReview Component", () => {
     const { getByText } = render(<PackageReview />);
     await waitFor(() => {});
 
-    fireEvent.keyDown(getByText("Print Submission Sheet"));
+    fireEvent.keyDown(getByText("Print Submission Sheet"), {
+      key: "Enter",
+      keyCode: "13",
+    });
     await waitFor(() => {});
 
     expect(FileSaver.saveAs).toHaveBeenCalled();
@@ -443,7 +446,7 @@ describe("PackageReview Component", () => {
     fireEvent.click(confirmBtn);
     await waitFor(() => {});
 
-    expect(noop).toHaveBeenCalled();
+    expect(noop).not.toHaveBeenCalled();
   });
 
   test("Download Registry Notice - success (click)", async () => {
