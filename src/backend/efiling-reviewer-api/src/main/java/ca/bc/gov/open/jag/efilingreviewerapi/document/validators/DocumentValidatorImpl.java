@@ -28,7 +28,7 @@ public class DocumentValidatorImpl implements DocumentValidator {
     @Override
     public void validateDocument(String documentType, MultipartFile file) {
 
-        if (!Keys.ACCEPTED_DOCUMENT_TYPES.contains(documentType.toUpperCase())) throw new AiReviewerDocumentException("Invalid document type");
+        if (!Keys.ACCEPTED_DOCUMENT_TYPES.containsKey(documentType.toUpperCase())) throw new AiReviewerDocumentException("Invalid document type");
 
         try {
             clamAvService.scan(new ByteArrayInputStream(file.getBytes()));
@@ -46,7 +46,7 @@ public class DocumentValidatorImpl implements DocumentValidator {
 
         Optional<String> returnedDocumentType = findDocumentType(answers);
 
-        if (!returnedDocumentType.isPresent() || !returnedDocumentType.get().equals(documentType)) {
+        if (!returnedDocumentType.isPresent() || !returnedDocumentType.get().equals(Keys.ACCEPTED_DOCUMENT_TYPES.get(documentType))) {
             //Delete document
             //Throw exception
             throw new AiReviewerDocumentTypeMismatchException("Document type mismatch detected");
@@ -55,6 +55,14 @@ public class DocumentValidatorImpl implements DocumentValidator {
     }
 
     private Optional<String> findDocumentType(List<DiligenAnswerField> answers) {
-        return Optional.empty();
+
+        Optional<DiligenAnswerField> documentTypeAnswer = answers.stream()
+                .filter(answer -> answer.getId().equals(Keys.ANSWER_DOCUMENT_TYPE_ID))
+                .findFirst();
+
+        if (!documentTypeAnswer.isPresent()) return Optional.empty();
+
+        return documentTypeAnswer.get().getValues().stream().findFirst();
+
     }
 }
