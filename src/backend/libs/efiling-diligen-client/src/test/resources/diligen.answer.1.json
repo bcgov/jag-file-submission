@@ -1,0 +1,676 @@
+[
+  {
+    "id": 228,
+    "name": "001Answer: File Number",
+    "created_by": 3,
+    "field_type": {
+      "type": "TEXT_FIELD",
+      "multi": false,
+      "options": []
+    },
+    "values": [
+      "2057551"
+    ]
+  },
+  {
+    "id": 229,
+    "name": "002Answer: Court Level",
+    "created_by": 3,
+    "field_type": {
+      "type": "TEXT_FIELD",
+      "multi": false,
+      "options": []
+    },
+    "values": [
+      "Supreme"
+    ]
+  },
+  {
+    "id": 230,
+    "name": "004Answer: Location",
+    "created_by": 3,
+    "field_type": {
+      "type": "TEXT_FIELD",
+      "multi": false,
+      "options": []
+    },
+    "values": [
+      "Prince George"
+    ]
+  },
+  {
+    "id": 231,
+    "name": "007Answer: Filed By  (Defendant or Counsel)",
+    "created_by": 3,
+    "field_type": {
+      "type": "PICK_LIST",
+      "multi": false,
+      "options": [
+        "Defendant",
+        "Counsel"
+      ]
+    },
+    "values": [
+      "Counsel"
+    ]
+  },
+  {
+    "id": 232,
+    "name": "005Answer: Document Type",
+    "created_by": 3,
+    "field_type": {
+      "type": "TEXT_FIELD",
+      "multi": false,
+      "options": []
+    },
+    "values": [
+      "Response to Civil Claim"
+    ]
+  },
+  {
+    "id": 234,
+    "name": "003Answer: Class",
+    "created_by": 3,
+    "field_type": {
+      "type": "TEXT_FIELD",
+      "multi": false,
+      "options": []
+    },
+    "values": []
+  },
+  {
+    "id": 235,
+    "name": "Z. Backend Field - Party (Parties filed by exists)",
+    "created_by": 3,
+    "field_type": {
+      "type": "PICK_LIST",
+      "multi": false,
+      "options": [
+        "Yes",
+        "No"
+      ]
+    },
+    "values": [
+      "Yes"
+    ]
+  },
+  {
+    "id": 236,
+    "name": "Z. Backend Field - Date Filed (Logically cleaned)",
+    "created_by": 3,
+    "field_type": {
+      "type": "TEXT_FIELD",
+      "multi": false,
+      "options": []
+    },
+    "values": [
+      "Date: 02/Apr/2020"
+    ]
+  },
+  {
+    "id": 237,
+    "name": "Z. Backend Field - Party defendant or plaintiff",
+    "created_by": 3,
+    "field_type": {
+      "type": "TEXT_FIELD",
+      "multi": false,
+      "options": []
+    },
+    "values": []
+  },
+  {
+    "id": 238,
+    "name": "000 Pat's QA Notes for Ali",
+    "created_by": 3,
+    "field_type": {
+      "type": "TEXT_FIELD",
+      "multi": false,
+      "options": []
+    },
+    "values": []
+  },
+  {
+    "id": 239,
+    "name": "Z. Backend Field - Ali's Notes",
+    "created_by": 3,
+    "field_type": {
+      "type": "TEXT_FIELD",
+      "multi": false,
+      "options": []
+    },
+    "values": []
+  },
+  {
+    "id": 240,
+    "name": "009Answer: Amended document (Y/N) - Finalised Data",
+    "created_by": 3,
+    "field_type": {
+      "type": "PICK_LIST",
+      "multi": false,
+      "options": [
+        "New",
+        "Amended"
+      ]
+    },
+    "values": [
+      "New"
+    ]
+  },
+  {
+    "id": 241,
+    "name": "010Answer: Original Document Date Filed  (For use with Amended Documents Only)",
+    "created_by": 3,
+    "field_type": {
+      "type": "TEXT_FIELD",
+      "multi": false,
+      "options": []
+    },
+    "values": []
+  },
+  {
+    "id": 243,
+    "name": "Processing Status",
+    "created_by": 3,
+    "field_type": {
+      "type": "PICK_LIST",
+      "multi": true,
+      "options": [
+        "Accept - We can process automatically",
+        "Return - There is an error in the document, please correct",
+        "Manual - Please confirm values"
+      ]
+    },
+    "values": [
+      "Accept - We can process automatically"
+    ]
+  },
+  {
+    "id": 244,
+    "name": "001QA: Is the file number correct?",
+    "created_by": 3,
+    "field_type": {
+      "type": "PICK_LIST",
+      "multi": true,
+      "options": [
+        "Correct",
+        "Incorrect (error on document)",
+        "Incorrect (error in extraction)",
+        "Blank"
+      ]
+    },
+    "values": []
+  },
+  {
+    "id": 245,
+    "name": "004QA: Is the registry location correct?",
+    "created_by": 3,
+    "field_type": {
+      "type": "PICK_LIST",
+      "multi": true,
+      "options": [
+        "Correct",
+        "Incorrect (error in document)",
+        "Incorrect (error in extraction)",
+        "Blank"
+      ]
+    },
+    "values": []
+  },
+  {
+    "id": 246,
+    "name": "007QA: Have we accurately identified whether it is the defendant or the counsel filing the document?",
+    "created_by": 3,
+    "field_type": {
+      "type": "PICK_LIST",
+      "multi": true,
+      "options": [
+        "Correct",
+        "Incorrect (error in document)",
+        "Incorrect (error in extraction)",
+        "Blank"
+      ]
+    },
+    "values": []
+  },
+  {
+    "id": 247,
+    "name": "002QA: Is the court level correct?",
+    "created_by": 3,
+    "field_type": {
+      "type": "PICK_LIST",
+      "multi": true,
+      "options": [
+        "Correct",
+        "Incorrect (error in document)",
+        "Incorrect (error in extraction)",
+        "Blank"
+      ]
+    },
+    "values": []
+  },
+  {
+    "id": 248,
+    "name": "003QA: Is the class of claim correct?",
+    "created_by": 3,
+    "field_type": {
+      "type": "PICK_LIST",
+      "multi": true,
+      "options": [
+        "Correct",
+        "Incorrect (error in document)",
+        "Incorrect (error in extraction)",
+        "Blank"
+      ]
+    },
+    "values": []
+  },
+  {
+    "id": 249,
+    "name": "005QA: Is the document type correct?",
+    "created_by": 3,
+    "field_type": {
+      "type": "PICK_LIST",
+      "multi": true,
+      "options": [
+        "Correct",
+        "Incorrect (error on document)",
+        "Incorrect  (error in extraction)",
+        "Blank"
+      ]
+    },
+    "values": []
+  },
+  {
+    "id": 250,
+    "name": "006QA: Is the date filed correct?",
+    "created_by": 3,
+    "field_type": {
+      "type": "PICK_LIST",
+      "multi": true,
+      "options": [
+        "Correct",
+        "Incorrect (error in document)",
+        "Incorrect (error in extraction)",
+        "Blank"
+      ]
+    },
+    "values": []
+  },
+  {
+    "id": 259,
+    "name": "User comments",
+    "created_by": 3,
+    "field_type": {
+      "type": "TEXT_FIELD",
+      "multi": false,
+      "options": []
+    },
+    "values": [
+      "."
+    ]
+  },
+  {
+    "id": 260,
+    "name": "006Answer: Date Filed",
+    "created_by": 3,
+    "field_type": {
+      "type": "TEXT_FIELD",
+      "multi": false,
+      "options": []
+    },
+    "values": [
+      "02/Apr/2020"
+    ]
+  },
+  {
+    "id": 261,
+    "name": "009QA: Have we correctly identified amendments?",
+    "created_by": 3,
+    "field_type": {
+      "type": "PICK_LIST",
+      "multi": true,
+      "options": [
+        "Correct",
+        "Incorrect (error in document)",
+        "Incorrect (error in extraction)",
+        "Blank"
+      ]
+    },
+    "values": []
+  },
+  {
+    "id": 262,
+    "name": "010QA: Is the date filed for the original document correct?",
+    "created_by": 3,
+    "field_type": {
+      "type": "PICK_LIST",
+      "multi": true,
+      "options": [
+        "Correct",
+        "Incorrect (error in document)",
+        "Incorrect (error in extraction)",
+        "Blank"
+      ]
+    },
+    "values": []
+  },
+  {
+    "id": 263,
+    "name": "008Answer: Parties filing document",
+    "created_by": 3,
+    "field_type": {
+      "type": "TEXT_FIELD",
+      "multi": false,
+      "options": []
+    },
+    "values": [
+      " DELGADO GROUP LTD., 1114021 ALBERTA LTD., 2091401 ALBERTA LTD., ,and (the \"defendant(s)\") ALLWEST HEAVY IRON, SORENSON LESTER"
+    ]
+  },
+  {
+    "id": 264,
+    "name": "z. Backend Field - Amendment rule exists",
+    "created_by": 3,
+    "field_type": {
+      "type": "PICK_LIST",
+      "multi": false,
+      "options": [
+        "Yes",
+        "No"
+      ]
+    },
+    "values": [
+      "No"
+    ]
+  },
+  {
+    "id": 267,
+    "name": "z. Backend Field - Filed by rep",
+    "created_by": 3,
+    "field_type": {
+      "type": "PICK_LIST",
+      "multi": false,
+      "options": [
+        "Yes",
+        "No"
+      ]
+    },
+    "values": [
+      "Yes"
+    ]
+  },
+  {
+    "id": 268,
+    "name": "Z. Backend Field - Date Filed not present",
+    "created_by": 3,
+    "field_type": {
+      "type": "PICK_LIST",
+      "multi": false,
+      "options": [
+        "Yes",
+        "No"
+      ]
+    },
+    "values": [
+      "Yes"
+    ]
+  },
+  {
+    "id": 269,
+    "name": "Z. Backend Field -  Filenumber present",
+    "created_by": 3,
+    "field_type": {
+      "type": "PICK_LIST",
+      "multi": false,
+      "options": [
+        "Yes",
+        "No"
+      ]
+    },
+    "values": [
+      "Yes"
+    ]
+  },
+  {
+    "id": 270,
+    "name": "001QA: Is the status (automatic or manual/return to user) correct?",
+    "created_by": 3,
+    "field_type": {
+      "type": "PICK_LIST",
+      "multi": false,
+      "options": [
+        "Correct - We correctly identified whether it should be automatic or manual",
+        "Incorrect - We classed as manual or return to user and it should be automatic",
+        "Incorrect - We classed as automatic and it should be manual/return to user"
+      ]
+    },
+    "values": []
+  },
+  {
+    "id": 302,
+    "name": "008Answer: Parties filing document (ML)",
+    "created_by": 3,
+    "field_type": {
+      "type": "TEXT_FIELD",
+      "multi": false,
+      "options": []
+    },
+    "values": [
+      "DELGADO GROUP LTD.",
+      "1114021 ALBERTA LTD.",
+      "2091401 ALBERTA LTD."
+    ]
+  },
+  {
+    "id": 303,
+    "name": "008Answer: Parties filing document (ML Org)",
+    "created_by": 3,
+    "field_type": {
+      "type": "TEXT_FIELD",
+      "multi": false,
+      "options": []
+    },
+    "values": [
+      "DELGADO GROUP LTD.",
+      "1114021 ALBERTA LTD.,",
+      "2091401 ALBERTA LTD.",
+      "ALLWEST HEAVY IRON",
+      "SORENSON LESTER"
+    ]
+  },
+  {
+    "id": 306,
+    "name": "008Answer: Parties (Person)",
+    "created_by": 3,
+    "field_type": {
+      "type": "TEXT_FIELD",
+      "multi": false,
+      "options": []
+    },
+    "values": [
+      "Richard Zelent"
+    ]
+  },
+  {
+    "id": 307,
+    "name": "008Answer: Parties (Organisation)",
+    "created_by": 3,
+    "field_type": {
+      "type": "TEXT_FIELD",
+      "multi": false,
+      "options": []
+    },
+    "values": [
+      "Headwaters Contracting Ltd.",
+      "Plaintiff\nDelgado Group Ltd.",
+      "Alberta Ltd.",
+      "Alberta Ltd.",
+      "Allwest Heavy Iron"
+    ]
+  },
+  {
+    "id": 310,
+    "name": "Parties Status",
+    "created_by": 3,
+    "field_type": {
+      "type": "PICK_LIST",
+      "multi": false,
+      "options": [
+        "Complex - Human Review",
+        "Standard  - Automatic Review"
+      ]
+    },
+    "values": [
+      "Complex - Human Review"
+    ]
+  },
+  {
+    "id": 311,
+    "name": "Organisation or Person",
+    "created_by": 3,
+    "field_type": {
+      "type": "PICK_LIST",
+      "multi": false,
+      "options": [
+        "Organisation",
+        "Person",
+        "Other"
+      ]
+    },
+    "values": [
+      "Person"
+    ]
+  },
+  {
+    "id": 312,
+    "name": "Parties QA",
+    "created_by": 3,
+    "field_type": {
+      "type": "PICK_LIST",
+      "multi": true,
+      "options": [
+        "Plaintiff(s) Correct",
+        "Plaintiff(s) Incorrect",
+        "Defendant(s) Correct",
+        "Defendant(s) Incorrect"
+      ]
+    },
+    "values": []
+  },
+  {
+    "id": 313,
+    "name": "Parties QA: Type",
+    "created_by": 3,
+    "field_type": {
+      "type": "PICK_LIST",
+      "multi": false,
+      "options": [
+        "Single defendant",
+        "Multiple defendants"
+      ]
+    },
+    "values": []
+  },
+  {
+    "id": 314,
+    "name": "Parties QA: Notes",
+    "created_by": 3,
+    "field_type": {
+      "type": "TEXT_FIELD",
+      "multi": false,
+      "options": []
+    },
+    "values": []
+  },
+  {
+    "id": 315,
+    "name": "Parties Status QA",
+    "created_by": 3,
+    "field_type": {
+      "type": "PICK_LIST",
+      "multi": false,
+      "options": [
+        "This could be processed automatically",
+        "This would need manual review"
+      ]
+    },
+    "values": []
+  },
+  {
+    "id": 318,
+    "name": "Third Parties Extracted",
+    "created_by": 2,
+    "field_type": {
+      "type": "TEXT_FIELD",
+      "multi": false,
+      "options": []
+    },
+    "values": []
+  },
+  {
+    "id": 319,
+    "name": "Plaintiffs",
+    "created_by": 2,
+    "field_type": {
+      "type": "TEXT_FIELD",
+      "multi": false,
+      "options": []
+    },
+    "values": []
+  },
+  {
+    "id": 320,
+    "name": "Defendants",
+    "created_by": 2,
+    "field_type": {
+      "type": "TEXT_FIELD",
+      "multi": false,
+      "options": []
+    },
+    "values": [
+      "ALLWEST HEAVY IRON"
+    ]
+  },
+  {
+    "id": 321,
+    "name": "Plaintiffs (Labelled data)",
+    "created_by": 3,
+    "field_type": {
+      "type": "TEXT_FIELD",
+      "multi": false,
+      "options": []
+    },
+    "values": []
+  },
+  {
+    "id": 322,
+    "name": "Defendants (Labelled Data)",
+    "created_by": 3,
+    "field_type": {
+      "type": "TEXT_FIELD",
+      "multi": false,
+      "options": []
+    },
+    "values": []
+  },
+  {
+    "id": 323,
+    "name": "Diligen Analysis",
+    "created_by": 3,
+    "field_type": {
+      "type": "PICK_LIST",
+      "multi": true,
+      "options": [
+        "Location",
+        "Level",
+        "Class",
+        "Court File Number",
+        "Doc Type",
+        "Filed By",
+        "Date Filed",
+        "Party Role; Party Name"
+      ]
+    },
+    "values": []
+  }
+]

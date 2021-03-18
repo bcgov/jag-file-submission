@@ -16,6 +16,7 @@
         <com.brsanthu.version>2.2</com.brsanthu.version>
         <com.fasterxml.jackson.core.version>2.12.1</com.fasterxml.jackson.core.version>
         <com.splunk.logging.version>1.8.0</com.splunk.logging.version>
+        <commons-io.version>2.8.0</commons-io.version>
         <io.springfox.version>2.9.2</io.springfox.version>
         <io.swagger.version>1.6.2</io.swagger.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
@@ -54,6 +55,12 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${org.apache.commons.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
             </dependency>
 
             <dependency>

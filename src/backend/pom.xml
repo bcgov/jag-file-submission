@@ -32,7 +32,7 @@
 				<module>libs/efiling-demo-starter</module>
 				<module>libs/efiling-diligen-client</module>
 				<module>libs/efiling-diligen-client-starter</module>
-				<module>libs/jag-mail-it</module>
+				<module>libs/efiling-mail-it</module>
 				<module>efiling-api</module>
 				<module>efiling-reviewer-api</module>
 			</modules>
@@ -49,7 +49,7 @@
 				<module>libs/efiling-bom</module>
 				<module>libs/efiling-diligen-client</module>
 				<module>libs/efiling-diligen-client-starter</module>
-				<module>libs/jag-mail-it</module>
+				<module>libs/efiling-mail-it</module>
 			</modules>
 		</profile>
 		<profile>
