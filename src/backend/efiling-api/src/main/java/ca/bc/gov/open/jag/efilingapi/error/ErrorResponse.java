@@ -21,8 +21,6 @@ public enum ErrorResponse {
     COURT_LOCATION_ERROR("Error while retrieving court locations."),
     MISSING_APPLICATION_CODE("Missing application code claim. Contact administrator"),
     FILING_PACKAGE_NOT_FOUND("Requested filing package was not found."),
-    REPORT_NOT_FOUND("Requested file was not found."),
-    DOCUMENT_NOT_FOUND("Requested document was not found."),
     DELETE_DOCUMENT_ERROR("Document deletion failed");
 
     private final String errorMessage;
