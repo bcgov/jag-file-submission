@@ -1,11 +1,10 @@
 package preview.ca.bc.gov.open.jag.efilingcsoclient.csoDocumentServiceImpl;
 
 import preview.ca.bc.gov.ag.csows.filing.status.DocumentType;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentTypeDetails;
 import preview.ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import preview.ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
-import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
-import ca.bc.gov.open.jag.efilingcsoclient.CsoDocumentServiceImpl;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -43,6 +42,8 @@ public class GetDocumentDetailsTest {
         documentType.setDefaultStatutoryFee(BigDecimal.TEN);
         documentType.setOrderDocumentYn(true);
         documentType.setRushRequiredYn(true);
+        documentType.setAutoProcessYn(false);
+
 
         Mockito.when(filingStatusFacadeBean.getDocumentTypes(Mockito.eq(COURT_LEVEL),any())).thenReturn(Arrays.asList(documentType));
         Mockito.when(filingStatusFacadeBean.getDocumentTypes(Mockito.eq(NODOC),any())).thenReturn(new ArrayList<>());
@@ -55,34 +56,35 @@ public class GetDocumentDetailsTest {
     @DisplayName("OK: test returns document ")
     @Test
     public void testWithFoundResult() {
-        DocumentDetails result = sut.getDocumentDetails(COURT_LEVEL, COURT_CLASS, DOCUMENT_TYPE_CD);
+        DocumentTypeDetails result = sut.getDocumentTypeDetails(COURT_LEVEL, COURT_CLASS, DOCUMENT_TYPE_CD);
         Assertions.assertEquals(DESCRIPTION, result.getDescription());
         Assertions.assertEquals(BigDecimal.TEN, result.getStatutoryFeeAmount());
-        Assertions.assertTrue(result.getOrderDocument());
+        Assertions.assertTrue(result.isOrderDocument());
         Assertions.assertTrue(result.isRushRequired());
+        Assertions.assertFalse(result.isAutoProcessing());
     }
 
     @DisplayName("Exception: when not finding document should throw exception")
     @Test
     public void whenNotFindingDocumentsShouldThrowError() {
 
-        Assertions.assertThrows(EfilingDocumentServiceException.class, () -> sut.getDocumentDetails(NODOC, COURT_CLASS, NODOC));
+        Assertions.assertThrows(EfilingDocumentServiceException.class, () -> sut.getDocumentTypeDetails(NODOC, COURT_CLASS, NODOC));
     }
 
     @DisplayName("Failure: when SOAP service throws NestedEjbException_Exception, service should throw EfilingDocumentServiceException")
     @Test
     public void testThrowException() throws NestedEjbException_Exception {
 
-        Assertions.assertThrows(EfilingDocumentServiceException.class, () -> sut.getDocumentDetails(EXCEPTION, COURT_CLASS,"type"));
+        Assertions.assertThrows(EfilingDocumentServiceException.class, () -> sut.getDocumentTypeDetails(EXCEPTION, COURT_CLASS,"type"));
     }
 
     @DisplayName("Exception: courtLevel is required")
     @Test
     public void whenCourtLevelIsBlankShouldThrowIllegalArgumentException() {
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentDetails(null, "class", "type"));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentDetails("", "class", "type"));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentDetails(" ", "class", "type"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentTypeDetails(null, "class", "type"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentTypeDetails("", "class", "type"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentTypeDetails(" ", "class", "type"));
 
     }
 
@@ -90,9 +92,9 @@ public class GetDocumentDetailsTest {
     @Test
     public void whenCourtClassIsBlankShouldThrowIllegalArgumentException() {
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentDetails("level", null, "type"));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentDetails("level", "", "type"));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentDetails("level", " ", "type"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentTypeDetails("level", null, "type"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentTypeDetails("level", "", "type"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentTypeDetails("level", " ", "type"));
 
     }
 
@@ -101,9 +103,9 @@ public class GetDocumentDetailsTest {
     @Test
     public void whenDocumentTypeIsBlankShouldThrowIllegalArgumentException() {
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentDetails("level", "class", null));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentDetails("level", "class", ""));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentDetails("level", "class", " "));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentTypeDetails("level", "class", null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentTypeDetails("level", "class", ""));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentTypeDetails("level", "class", " "));
 
     }
 

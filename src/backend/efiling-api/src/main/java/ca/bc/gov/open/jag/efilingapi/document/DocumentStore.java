@@ -1,8 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.document;
 
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
-import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.DocumentType;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentTypeDetails;
 
 import java.util.List;
 
@@ -14,7 +13,7 @@ public interface DocumentStore {
 
     void evict(SubmissionKey submissionKey, String fileName);
 
-    DocumentDetails getDocumentDetails(String courtLevel, String courtClass, String documentType);
+    DocumentTypeDetails getDocumentDetails(String courtLevel, String courtClass, String documentType);
 
-    List<DocumentType> getDocumentTypes(String courtLevel, String courtClass);
+    List<DocumentTypeDetails> getDocumentTypes(String courtLevel, String courtClass);
 }
