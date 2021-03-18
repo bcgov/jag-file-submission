@@ -190,6 +190,7 @@ exports[`Storyshots PackageReview Default 1`] = `
         </div>
       </div>
       <br />
+      <br />
       <nav
         class="nav nav-tabs"
         role="tablist"
@@ -825,6 +826,7 @@ exports[`Storyshots PackageReview Mobile 1`] = `
           </div>
         </div>
       </div>
+      <br />
       <br />
       <nav
         class="nav nav-tabs"
