@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.document;
 
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
+import ca.bc.gov.open.efilingdiligenclient.diligen.model.DiligenDocumentDetails;
 import ca.bc.gov.open.efilingdiligenclient.diligen.processor.FieldProcessor;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.model.ProjectFieldsResponse;
 import ca.bc.gov.open.jag.efilingreviewerapi.Keys;
@@ -102,22 +103,24 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
 
             diligenService.getDocumentDetails(documentEvent.getDocumentId());
 
-            ProjectFieldsResponse response = diligenService.getDocumentFieldResponse(documentEvent.getDocumentId());
+            DiligenDocumentDetails response = diligenService.getDocumentDetails(documentEvent.getDocumentId());
 
             Optional<ExtractRequest> extractRequestCached = extractStore.get(documentEvent.getDocumentId());
 
             if (extractRequestCached.isPresent()) {
 
+                ExtractRequest extractRequest = extractRequestCached.get();
+                documentValidator.validateExtractedDocument(extractRequest.getDocument().getType(), response.getAnswers());
+
                 ExtractResponse extractedResponse = ExtractResponse
                         .builder()
                         .document(extractRequestCached.get().getDocument())
-                        .formData(buildFormData(response))
+                        .formData(buildFormData(response.getProjectFieldsResponse()))
                         .extract(extractRequestCached.get().getExtract())
                         .create();
 
                 extractStore.put(documentEvent.getDocumentId(), extractedResponse);
 
-                ExtractRequest extractRequest = extractRequestCached.get();
                 MDC.put(Keys.DOCUMENT_TYPE, extractRequest.getDocument().getType());
 
                 extractRequest.updateProcessedTimeMillis();
