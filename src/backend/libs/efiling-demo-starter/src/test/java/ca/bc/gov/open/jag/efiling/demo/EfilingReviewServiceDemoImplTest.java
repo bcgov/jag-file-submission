@@ -32,7 +32,7 @@ public class EfilingReviewServiceDemoImplTest {
         Assertions.assertEquals("Han", result.get().getFirstName());
         Assertions.assertEquals("Solo", result.get().getLastName());
         Assertions.assertFalse(result.get().getHasChecklist());
-        Assertions.assertFalse(result.get().getHasRegistryNotice());
+        Assertions.assertTrue(result.get().getHasRegistryNotice());
         Assertions.assertEquals("1", result.get().getPackageNo());
         Assertions.assertEquals(DateTime.parse("2020-5-5"), result.get().getSubmittedDate());
         Assertions.assertEquals(COMMENTS, result.get().getFilingCommentsTxt());

@@ -124,12 +124,12 @@ public class SubmissionConfigTest {
     public static class EfilingDocumentServiceTest implements EfilingDocumentService {
 
         @Override
-        public DocumentDetails getDocumentDetails(String courtLevel, String courtClass, String documentType) {
+        public DocumentTypeDetails getDocumentTypeDetails(String courtLevel, String courtClass, String documentType) {
             return null;
         }
 
         @Override
-        public List<DocumentType> getDocumentTypes(String courtLevel, String courtClass) {
+        public List<DocumentTypeDetails> getDocumentTypes(String courtLevel, String courtClass) {
             return null;
         }
     }
@@ -153,12 +153,12 @@ public class SubmissionConfigTest {
         }
 
         @Override
-        public DocumentDetails getDocumentDetails(String courtLevel, String courtClass, String documentType) {
+        public DocumentTypeDetails getDocumentDetails(String courtLevel, String courtClass, String documentType) {
             return null;
         }
 
         @Override
-        public List<DocumentType> getDocumentTypes(String courtLevel, String courtClass) {
+        public List<DocumentTypeDetails> getDocumentTypes(String courtLevel, String courtClass) {
             return null;
         }
     }
