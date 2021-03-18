@@ -200,6 +200,7 @@ exports[`PackageReview Component Matches the snapshot 1`] = `
         </div>
       </div>
       <br />
+      <br />
       <nav
         class="nav nav-tabs"
         role="tablist"
@@ -979,6 +980,7 @@ exports[`PackageReview Component Reload 1`] = `
         </div>
       </div>
       <br />
+      <br />
       <nav
         class="nav nav-tabs"
         role="tablist"
@@ -1655,6 +1657,7 @@ exports[`PackageReview Component Withdraw document network error 1`] = `
           </div>
         </div>
       </div>
+      <br />
       <br />
       <nav
         class="nav nav-tabs"
