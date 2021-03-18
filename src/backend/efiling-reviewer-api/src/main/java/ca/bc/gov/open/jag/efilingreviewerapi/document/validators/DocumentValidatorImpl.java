@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingreviewerapi.document.validators;
 
 import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.clamav.starter.VirusDetectedException;
+import ca.bc.gov.open.efilingdiligenclient.diligen.model.DiligenAnswerField;
 import ca.bc.gov.open.jag.efilingreviewerapi.Keys;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerVirusFoundException;
@@ -11,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class DocumentValidatorImpl implements DocumentValidator {
@@ -34,6 +36,11 @@ public class DocumentValidatorImpl implements DocumentValidator {
         } catch (IOException e) {
             throw new AiReviewerDocumentException("File is corrupt");
         }
+
+    }
+
+    @Override
+    public void validateExtractedDocument(String documentType, List<DiligenAnswerField> answers) {
 
     }
 }

@@ -1,7 +1,6 @@
 package ca.bc.gov.open.efilingdiligenclient.diligen.processor;
 
 import ca.bc.gov.open.jag.efilingdiligenclient.api.model.Field;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.everit.json.schema.ObjectSchema;

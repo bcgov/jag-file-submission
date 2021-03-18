@@ -103,7 +103,7 @@ public class DiligenServiceImpl implements DiligenService {
 
             logger.info("answers retrieved");
 
-            return diligenDocumentDetailsMapper.toDiligenDocumentDetails(result.getData().getFileDetails(), answersResponse.getData().getFields());
+            return diligenDocumentDetailsMapper.toDiligenDocumentDetails(result.getData().getFileDetails(), answersResponse.getData().getFields(), answersResponse);
 
         } catch (ApiException e) {
             throw new DiligenDocumentException("Failed getting the document details");
