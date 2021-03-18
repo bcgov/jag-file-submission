@@ -11,7 +11,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.GetValidPartyRoleRequest;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.utils.Notification;
 import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.DocumentType;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentTypeDetails;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -180,7 +180,7 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
         List<String> validDocumentTypes = this.documentService.getValidDocumentTypes(GetValidDocumentTypesRequest.builder()
                 .courtClassification(initialPackage.getCourt().getCourtClass())
                 .courtLevel(initialPackage.getCourt().getLevel())
-                .create()).stream().map(DocumentType::getType).collect(Collectors.toList());
+                .create()).stream().map(DocumentTypeDetails::getType).collect(Collectors.toList());
 
         return initialPackage.getDocuments()
                 .stream()

@@ -1,7 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.document;
 
 import ca.bc.gov.open.jag.efilingapi.document.models.GetValidDocumentTypesRequest;
-import ca.bc.gov.open.jag.efilingcommons.model.DocumentType;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentTypeDetails;
 
 import java.util.List;
 
@@ -12,6 +12,6 @@ public interface DocumentService {
      * @param getValidDocumentTypesRequest
      * @return
      */
-    List<DocumentType> getValidDocumentTypes(GetValidDocumentTypesRequest getValidDocumentTypesRequest);
+    List<DocumentTypeDetails> getValidDocumentTypes(GetValidDocumentTypesRequest getValidDocumentTypesRequest);
 
 }

@@ -1,14 +1,16 @@
 package preview.ca.bc.gov.open.jag.efilingcsoclient.csoDocumentServiceImpl;
 
-import ca.bc.gov.ag.csows.filing.status.DocumentType;
-import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
-import ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
+import preview.ca.bc.gov.ag.csows.filing.status.DocumentType;
+import preview.ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
+import preview.ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentTypeDetails;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoDocumentServiceImpl;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import preview.ca.bc.gov.open.jag.efilingcsoclient.PreviewCsoDocumentServiceImpl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ public class GetDocumentTypesTest {
     @Mock
     FilingStatusFacadeBean filingStatusFacadeBean;
 
-    private static CsoDocumentServiceImpl sut;
+    private static PreviewCsoDocumentServiceImpl sut;
 
     @BeforeAll
     public void setUp() throws NestedEjbException_Exception {
@@ -39,19 +41,22 @@ public class GetDocumentTypesTest {
         documentType.setDocumentTypeCd(DOCUMENT_TYPE_CD);
         documentType.setDocumentTypeDesc(DESCRIPTION);
         documentType.setDefaultStatutoryFee(BigDecimal.TEN);
+        documentType.setOrderDocumentYn(true);
+        documentType.setRushRequiredYn(true);
+        documentType.setAutoProcessYn(false);
 
         Mockito.when(filingStatusFacadeBean.getDocumentTypes(Mockito.eq(COURT_LEVEL),any())).thenReturn(Arrays.asList(documentType));
         Mockito.when(filingStatusFacadeBean.getDocumentTypes(Mockito.eq(NODOC),any())).thenReturn(new ArrayList<>());
 
         Mockito.when(filingStatusFacadeBean.getDocumentTypes(Mockito.eq(EXCEPTION),any())).thenThrow(NestedEjbException_Exception.class);
 
-        sut = new CsoDocumentServiceImpl(filingStatusFacadeBean);
+        sut = new PreviewCsoDocumentServiceImpl(filingStatusFacadeBean);
     }
 
     @DisplayName("OK: test returns document ")
     @Test
     public void testWithFoundResult() {
-        List<ca.bc.gov.open.jag.efilingcommons.model.DocumentType> result = sut.getDocumentTypes(COURT_LEVEL, COURT_CLASS);
+        List<DocumentTypeDetails> result = sut.getDocumentTypes(COURT_LEVEL, COURT_CLASS);
         Assertions.assertEquals(DESCRIPTION, result.get(0).getDescription());
         Assertions.assertEquals(DOCUMENT_TYPE_CD, result.get(0).getType());
     }

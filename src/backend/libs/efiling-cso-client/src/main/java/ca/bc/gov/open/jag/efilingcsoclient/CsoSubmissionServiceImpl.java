@@ -73,10 +73,16 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
         Service createdService = createEfilingService(efilingPackage, accountDetails, serviceSession);
 
-        updatePaymentForService(
-                createdService,
-                true,
-                createPayment(paymentService, createdService, efilingPackage.getSubmissionFeeAmount(), accountDetails.getInternalClientNumber()));
+        //When there is no fee skip
+        if (efilingPackage.getSubmissionFeeAmount() != null &&
+                efilingPackage.getSubmissionFeeAmount().compareTo(BigDecimal.ZERO) > 0) {
+
+            updatePaymentForService(
+                    createdService,
+                    true,
+                    createPayment(paymentService, createdService, efilingPackage.getSubmissionFeeAmount(), accountDetails.getInternalClientNumber()));
+
+        }
 
         ca.bc.gov.ag.csows.filing.FilingPackage csoFilingPackage = buildFilingPackage(accountDetails, efilingPackage, createdService);
 
