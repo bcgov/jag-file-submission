@@ -17,7 +17,7 @@ public interface FilingPackageMapper {
 
     @Mapping(target = "existingCourtFileYn", expression = "java(org.apache.commons.lang3.StringUtils.isNotBlank(filingPackage.getCourt().getFileNumber()))")
     @Mapping(target = "processingCompleteYn", constant = "false")
-    @Mapping(target = "feeExemptYn", constant = "false")
+    @Mapping(target = "feeExemptYn", expression = "java(!(filingPackage.getSubmissionFeeAmount() != null && filingPackage.getSubmissionFeeAmount().compareTo(BigDecimal.ZERO) > 0))")
     @Mapping(target = "cfcsaYn", constant = "false")
     @Mapping(target = "notificationRequiredYn", constant = "true")
 
