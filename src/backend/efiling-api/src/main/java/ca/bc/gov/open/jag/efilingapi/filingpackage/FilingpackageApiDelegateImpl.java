@@ -122,13 +122,11 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
 
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
-        if(!universalId.isPresent()) return new ResponseEntity(
-                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
+        if(!universalId.isPresent()) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         Optional<SubmittedDocument> result = filingPackageService.getSubmittedDocument(universalId.get(), packageIdentifier, documentIdentifier);
 
-        if(!result.isPresent()) return new ResponseEntity(
-                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_NOT_FOUND).create(), HttpStatus.NOT_FOUND);
+        if(!result.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         HttpHeaders header = new HttpHeaders();
         header.add(HttpHeaders.CONTENT_DISPOSITION, MessageFormat.format("attachment; filename={0}",result.get().getName()));
