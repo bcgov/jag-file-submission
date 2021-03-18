@@ -1,8 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.document;
 
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
-import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.DocumentType;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentTypeDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
@@ -30,18 +29,18 @@ public class DocumentStoreImplTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        DocumentDetails docummentDetails = new DocumentDetails(DESCRIPTION, BigDecimal.TEN, true, true);
+        DocumentTypeDetails docummentDetails = new DocumentTypeDetails(DESCRIPTION, TYPE, BigDecimal.TEN, true, true, true);
 
         Mockito
-                .when(efilingDocumentServiceMock.getDocumentDetails(Mockito.anyString(), Mockito.anyString(), Mockito.anyString()))
+                .when(efilingDocumentServiceMock.getDocumentTypeDetails(Mockito.anyString(), Mockito.anyString(), Mockito.anyString()))
                 .thenReturn(docummentDetails);
 
 
-        List<DocumentType> documentTypes = Arrays.asList(new DocumentType(DESCRIPTION, TYPE, true));
+        List<DocumentTypeDetails> documentTypeDetails = Arrays.asList(new DocumentTypeDetails(DESCRIPTION, TYPE, BigDecimal.TEN, true, true, true));
 
         Mockito
                 .when(efilingDocumentServiceMock.getDocumentTypes(Mockito.anyString(), Mockito.anyString()))
-                .thenReturn(documentTypes);
+                .thenReturn(documentTypeDetails);
 
         sut = new DocumentStoreImpl(efilingDocumentServiceMock);
     }
@@ -72,7 +71,7 @@ public class DocumentStoreImplTest {
     public void withCourtLevelCourtClassDocumentTypeShouldReturnDocumentDetails() {
 
 
-        DocumentDetails actual = sut.getDocumentDetails("courtLevel", "courtClass", "documentType");
+        DocumentTypeDetails actual = sut.getDocumentDetails("courtLevel", "courtClass", "documentType");
 
         Assertions.assertEquals(DESCRIPTION, actual.getDescription());
         Assertions.assertEquals(BigDecimal.TEN, actual.getStatutoryFeeAmount());
@@ -84,7 +83,7 @@ public class DocumentStoreImplTest {
     public void withCourtLevelCourtClassShouldReturnDocumentTypes() {
 
 
-        List<DocumentType> actual = sut.getDocumentTypes("courtLevel", "courtClass");
+        List<DocumentTypeDetails> actual = sut.getDocumentTypes("courtLevel", "courtClass");
 
         Assertions.assertEquals(1, actual.size());
         Assertions.assertEquals(DESCRIPTION, actual.get(0).getDescription());

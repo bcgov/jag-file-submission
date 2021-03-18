@@ -8,7 +8,7 @@ import ca.bc.gov.open.jag.efilingapi.document.DocumentApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
-import ca.bc.gov.open.jag.efilingcommons.model.DocumentType;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentTypeDetails;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,11 +36,11 @@ public class GetDocumentTypesTest {
 
 
     @BeforeAll
-    public void setUp() throws IOException {
-        MockitoAnnotations.initMocks(this);
-        List<DocumentType> documentTypes = Arrays.asList(new DocumentType(TestHelpers.DESCRIPTION, TestHelpers.TYPE, true));
+    public void beforeAll() throws IOException {
+        MockitoAnnotations.openMocks(this);
+        List<DocumentTypeDetails> documentTypeDetails = Arrays.asList(new DocumentTypeDetails(TestHelpers.DESCRIPTION, TestHelpers.TYPE, BigDecimal.TEN, false, false, false));
 
-        Mockito.when(documentStoreMock.getDocumentTypes(LEVEL_STRING, CLASS_STRING)).thenReturn(documentTypes);
+        Mockito.when(documentStoreMock.getDocumentTypes(LEVEL_STRING, CLASS_STRING)).thenReturn(documentTypeDetails);
         Mockito.when(documentStoreMock.getDocumentTypes(LEVEL_STRING, CLASS_STRING_ERROR)).thenThrow(new EfilingDocumentServiceException("NOOOOOOO"));
         sut = new DocumentApiDelegateImpl(documentStoreMock);
     }
@@ -54,6 +55,7 @@ public class GetDocumentTypesTest {
         Assertions.assertEquals(1, actual.getBody().size());
         Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getBody().get(0).getDescription());
         Assertions.assertEquals(TestHelpers.TYPE, actual.getBody().get(0).getType());
+
     }
 
     @Test

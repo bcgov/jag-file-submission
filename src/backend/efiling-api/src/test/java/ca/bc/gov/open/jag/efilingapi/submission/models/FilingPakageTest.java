@@ -54,6 +54,7 @@ public class FilingPakageTest {
                 getParties(),
                 getOrganization(),
                 true,
+                true,
                 "TEST");
 
         Assertions.assertEquals(STATUTORY_FEE_AMOUNT, actual.getSubmissionFeeAmount());

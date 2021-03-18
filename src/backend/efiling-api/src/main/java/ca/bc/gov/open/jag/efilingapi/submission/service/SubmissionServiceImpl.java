@@ -14,8 +14,6 @@ import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtServiceException
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import ca.bc.gov.open.jag.efilingcommons.model.Court;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
-import ca.bc.gov.open.jag.efilingcommons.model.Individual;
-import ca.bc.gov.open.jag.efilingcommons.model.Organization;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.model.*;
 import ca.bc.gov.open.jag.efilingcommons.payment.PaymentAdapter;
@@ -108,10 +106,20 @@ public class SubmissionServiceImpl implements SubmissionService {
     private boolean isRushedSubmission(GenerateUrlRequest generateUrlRequest) {
 
         for (InitialDocument initialDocument : generateUrlRequest.getFilingPackage().getDocuments()) {
-            DocumentDetails documentDetails = documentStore.getDocumentDetails(generateUrlRequest.getFilingPackage().getCourt().getLevel(), generateUrlRequest.getFilingPackage().getCourt().getCourtClass(), initialDocument.getType());
-            if (documentDetails.isRushRequired()) return true;
+            DocumentTypeDetails documentTypeDetails = documentStore.getDocumentDetails(generateUrlRequest.getFilingPackage().getCourt().getLevel(), generateUrlRequest.getFilingPackage().getCourt().getCourtClass(), initialDocument.getType());
+            if (documentTypeDetails.isRushRequired()) return true;
         }
         return false;
+    }
+
+    private boolean isAutoProcessing(GenerateUrlRequest generateUrlRequest) {
+
+        for (InitialDocument initialDocument : generateUrlRequest.getFilingPackage().getDocuments()) {
+            DocumentTypeDetails documentTypeDetails = documentStore.getDocumentDetails(generateUrlRequest.getFilingPackage().getCourt().getLevel(), generateUrlRequest.getFilingPackage().getCourt().getCourtClass(), initialDocument.getType());
+            if (documentTypeDetails.isAutoProcessing()) return true;
+        }
+        return false;
+
     }
 
     @Override
@@ -192,6 +200,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                         .collect(Collectors.toList()))
                 .rushedSubmission(isRushedSubmission(request))
                 .applicationCode(applicationCode)
+                .autoProcessing(isAutoProcessing(request))
                 .create();
 
     }
@@ -220,7 +229,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private Document toDocument(String courtLevel, String courtClass,  InitialDocument initialDocument, SubmissionKey submissionKey) {
 
-        DocumentDetails details = documentStore.getDocumentDetails(courtLevel, courtClass, initialDocument.getType());
+        DocumentTypeDetails details = documentStore.getDocumentDetails(courtLevel, courtClass, initialDocument.getType());
 
         return
                 Document.builder()
@@ -232,7 +241,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                         .mimeType(FileUtils.guessContentTypeFromName(initialDocument.getName()))
                         .isAmendment(initialDocument.getIsAmendment())
                         .isSupremeCourtScheduling(initialDocument.getIsSupremeCourtScheduling())
-                        .subType(details.getOrderDocument() ? SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD : SubmissionConstants.SUBMISSION_ODOC_DOCUMENT_SUB_TYPE_CD)
+                        .subType(details.isOrderDocument() ? SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD : SubmissionConstants.SUBMISSION_ODOC_DOCUMENT_SUB_TYPE_CD)
                         .data(initialDocument.getData())
                         .create();
 
@@ -240,7 +249,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private Document toDocument(String courtLevel, String courtClass, DocumentProperties documentProperties, SubmissionKey submissionKey) {
 
-        DocumentDetails details = documentStore.getDocumentDetails(courtLevel, courtClass, documentProperties.getType());
+        DocumentTypeDetails details = documentStore.getDocumentDetails(courtLevel, courtClass, documentProperties.getType());
 
         return
                 Document.builder()
@@ -252,7 +261,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                         .mimeType(FileUtils.guessContentTypeFromName(documentProperties.getName()))
                         .isAmendment(documentProperties.getIsAmendment())
                         .isSupremeCourtScheduling(documentProperties.getIsSupremeCourtScheduling())
-                        .subType(details.getOrderDocument() ? SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD : SubmissionConstants.SUBMISSION_ODOC_DOCUMENT_SUB_TYPE_CD)
+                        .subType(details.isOrderDocument() ? SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD : SubmissionConstants.SUBMISSION_ODOC_DOCUMENT_SUB_TYPE_CD)
                         .create();
 
     }
