@@ -1,8 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.document;
 
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
-import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.DocumentType;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentTypeDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -37,13 +36,13 @@ public class DocumentStoreImpl implements DocumentStore {
     }
 
     @Override
-    @Cacheable(cacheNames = "documentDetails", cacheManager = "documentDetailsCacheManager", unless = "#result == null")
-    public DocumentDetails getDocumentDetails(String courtLevel, String courtClass, String documentType) {
-        return this.efilingDocumentService.getDocumentDetails(courtLevel, courtClass, documentType);
+    @Cacheable(cacheNames = "documentDetails", cacheManager = "documentTypeDetailsCacheManager", unless = "#result == null")
+    public DocumentTypeDetails getDocumentDetails(String courtLevel, String courtClass, String documentType) {
+        return this.efilingDocumentService.getDocumentTypeDetails(courtLevel, courtClass, documentType);
     }
 
     @Override
-    public List<DocumentType> getDocumentTypes(String courtLevel, String courtClass) {
+    public List<DocumentTypeDetails> getDocumentTypes(String courtLevel, String courtClass) {
         return this.efilingDocumentService.getDocumentTypes(courtLevel, courtClass);
     }
 }

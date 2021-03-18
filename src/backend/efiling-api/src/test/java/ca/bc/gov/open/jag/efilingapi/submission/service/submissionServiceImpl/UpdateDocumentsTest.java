@@ -12,7 +12,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
-import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentTypeDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
@@ -55,7 +55,7 @@ public class UpdateDocumentsTest {
 
         MockitoAnnotations.openMocks(this);
 
-        DocumentDetails documentDetails = new DocumentDetails(TestHelpers.DESCRIPTION, BigDecimal.TEN, false, true);
+        DocumentTypeDetails documentDetails = new DocumentTypeDetails(TestHelpers.DESCRIPTION, "TYPE",BigDecimal.TEN, false, false,true);
 
         Mockito.when(documentStoreMock.getDocumentDetails(any(), any(), any())).thenReturn(documentDetails);
 

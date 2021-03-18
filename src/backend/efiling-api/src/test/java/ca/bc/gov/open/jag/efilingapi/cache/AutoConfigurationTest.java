@@ -1,7 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.cache;
 
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
-import ca.bc.gov.open.jag.efilingcommons.model.DocumentDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentTypeDetails;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -116,19 +116,19 @@ public class AutoConfigurationTest {
         Assertions.assertNotNull(cacheManager);
     }
 
-    @DisplayName("OK: correct input should return documentDetails cacheManager")
+    @DisplayName("OK: correct input should return documentTypeDetails cacheManager")
     @Test
-    public void cdorrectInputShouldReturnDocumentCacheManager() {
+    public void correctInputShouldReturnDocumentTypeDetailsCacheManager() {
         JedisConnectionFactory jedisConnectionFactory = Mockito.mock(JedisConnectionFactory.class);
-        CacheManager cacheManager = sut.documentDetailsCacheManager(jedisConnectionFactory, new Jackson2JsonRedisSerializer(DocumentDetails.class));
+        CacheManager cacheManager = sut.documentTypeDetailsCacheManager(jedisConnectionFactory, new Jackson2JsonRedisSerializer(DocumentTypeDetails.class));
         Assertions.assertNotNull(cacheManager);
     }
 
 
-    @DisplayName("OK: should return DocumentDetails Serializer")
+    @DisplayName("OK: should return DocumentTypeDetails Serializer")
     @Test
     public void correctReturnDocumentDetailsJackson2JsonRedisSerializer() {
-        Jackson2JsonRedisSerializer actual = sut.documentDetailsSerializer();
+        Jackson2JsonRedisSerializer actual = sut.documentTypeDetailsSerializer();
         Assertions.assertNotNull(actual);
     }
 }

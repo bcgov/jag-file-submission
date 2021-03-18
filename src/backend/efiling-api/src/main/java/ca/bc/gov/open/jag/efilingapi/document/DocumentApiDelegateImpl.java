@@ -5,6 +5,7 @@ import ca.bc.gov.open.jag.efilingapi.api.DocumentsApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentTypeDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -42,10 +43,10 @@ public class DocumentApiDelegateImpl implements DocumentsApiDelegate {
         }
     }
 
-    private DocumentType toDocumentType(ca.bc.gov.open.jag.efilingcommons.model.DocumentType documentType) {
+    private DocumentType toDocumentType(DocumentTypeDetails documentTypeDetails) {
         DocumentType outDocumentType = new DocumentType();
-        outDocumentType.setType(documentType.getType());
-        outDocumentType.setDescription(documentType.getDescription());
+        outDocumentType.setType(documentTypeDetails.getType());
+        outDocumentType.setDescription(documentTypeDetails.getDescription());
         return outDocumentType;
     }
 }

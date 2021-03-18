@@ -19,7 +19,6 @@ public interface FilingPackageMapper {
     @Mapping(target = "processingCompleteYn", constant = "false")
     @Mapping(target = "feeExemptYn", expression = "java(!(filingPackage.getSubmissionFeeAmount() != null && filingPackage.getSubmissionFeeAmount().compareTo(BigDecimal.ZERO) > 0))")
     @Mapping(target = "cfcsaYn", constant = "false")
-    @Mapping(target = "automatedProcessYn", constant = "false")
     @Mapping(target = "notificationRequiredYn", constant = "true")
 
     @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
@@ -30,6 +29,7 @@ public interface FilingPackageMapper {
     @Mapping(target = "submittedToAgenId", source = "filingPackage.court.agencyId")
     @Mapping(target = "ldcxCourtDivisionCd", source = "filingPackage.court.division")
     @Mapping(target = "applicationCd", source = "filingPackage.applicationCode")
+    @Mapping(target = "automatedProcessYn", source = "filingPackage.autoProcessing")
 
     @Mapping(target = "entUserId", source = "accountDetails.clientId")
     @Mapping(target = "submittedByAccountId", source = "accountDetails.accountId")
