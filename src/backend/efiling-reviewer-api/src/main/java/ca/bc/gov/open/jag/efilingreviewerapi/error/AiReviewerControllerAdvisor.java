@@ -46,4 +46,13 @@ public class AiReviewerControllerAdvisor {
         return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(AiReviewerDocumentTypeMismatchException.class)
+    public ResponseEntity<Object> handleDocumentMismatchException(AiReviewerDocumentTypeMismatchException ex, WebRequest request) {
+        //TODO: add email to? when this exception is thrown
+        ApiError apiError = new ApiError();
+        apiError.setError(ex.getErrorCode());
+        apiError.setMessage(ex.getMessage());
+        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+    }
+
 }

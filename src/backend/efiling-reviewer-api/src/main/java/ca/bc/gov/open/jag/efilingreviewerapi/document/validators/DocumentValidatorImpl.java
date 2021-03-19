@@ -47,7 +47,7 @@ public class DocumentValidatorImpl implements DocumentValidator {
         Optional<String> returnedDocumentType = findDocumentType(answers);
 
         if (!returnedDocumentType.isPresent() || !returnedDocumentType.get().equals(Keys.ACCEPTED_DOCUMENT_TYPES.get(documentType))) {
-            //Delete document
+            //TODO: delete document
             //Throw exception
             throw new AiReviewerDocumentTypeMismatchException("Document type mismatch detected");
 
