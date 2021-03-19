@@ -1,5 +1,7 @@
 package ca.bc.gov.open.efilingdiligenclient.diligen.model;
 
+import ca.bc.gov.open.jag.efilingdiligenclient.api.model.ProjectFieldsResponse;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -13,6 +15,7 @@ public class DiligenDocumentDetails {
     private Object extractedDocument;
     private BigDecimal outOfScope;
     private List<DiligenAnswerField> answers;
+    private ProjectFieldsResponse projectFieldsResponse;
 
     public String getFileStatus() {  return fileStatus; }
 
@@ -32,6 +35,8 @@ public class DiligenDocumentDetails {
 
     public List<DiligenAnswerField> getAnswers() { return answers;  }
 
+    public ProjectFieldsResponse getProjectFieldsResponse() { return projectFieldsResponse; }
+
     public DiligenDocumentDetails(DiligenDocumentDetails.Builder builder) {
         this.fileStatus = builder.fileStatus;
         this.mlJson = builder.mlJson;
@@ -42,6 +47,7 @@ public class DiligenDocumentDetails {
         this.extractedDocument = builder.extractedDocument;
         this.outOfScope = builder.outOfScope;
         this.answers = builder.answers;
+        this.projectFieldsResponse = builder.projectFieldsResponse;
     }
 
     public static DiligenDocumentDetails.Builder builder() {
@@ -59,6 +65,7 @@ public class DiligenDocumentDetails {
         private Object extractedDocument;
         private BigDecimal outOfScope;
         private List<DiligenAnswerField> answers;
+        private ProjectFieldsResponse projectFieldsResponse;
 
 
         public DiligenDocumentDetails.Builder fileStatus(String fileStatus) {
@@ -103,6 +110,11 @@ public class DiligenDocumentDetails {
 
         public DiligenDocumentDetails.Builder answers(List<DiligenAnswerField> answers) {
             this.answers = answers;
+            return this;
+        }
+
+        public DiligenDocumentDetails.Builder projectFieldsResponse(ProjectFieldsResponse projectFieldsResponse) {
+            this.projectFieldsResponse = projectFieldsResponse;
             return this;
         }
 

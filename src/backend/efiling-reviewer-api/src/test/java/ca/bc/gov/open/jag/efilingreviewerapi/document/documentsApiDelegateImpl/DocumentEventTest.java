@@ -69,8 +69,6 @@ public class DocumentEventTest {
 
         Mockito.when(fieldProcessorMock.getJson(Mockito.any(), Mockito.any())).thenReturn(result);
 
-        Mockito.when(diligenServiceMock.getDocumentDetails(ArgumentMatchers.eq(BigDecimal.ONE))).thenReturn(DiligenDocumentDetails.builder().create());
-
         ProjectFieldsResponse projectFieldResponse = new ProjectFieldsResponse();
         ProjectFieldsResponseData data = new ProjectFieldsResponseData();
         List<Field> fields = new ArrayList<>();
@@ -81,8 +79,8 @@ public class DocumentEventTest {
         fields.add(field);
         data.setFields(fields);
         projectFieldResponse.setData(data);
-        Mockito.when(diligenServiceMock.getDocumentFieldResponse(Mockito.eq(BigDecimal.ONE))).thenReturn(projectFieldResponse);
-
+        Mockito.when(diligenServiceMock.getDocumentDetails(ArgumentMatchers.eq(BigDecimal.ONE))).thenReturn(DiligenDocumentDetails.builder()
+                .projectFieldsResponse(projectFieldResponse).create());
         Mockito.when(extractStoreMock.get(Mockito.eq(BigDecimal.ONE))).thenReturn(Optional.of(ExtractRequest.builder()
                 .document(Document.builder()
                         .type("TYPE")

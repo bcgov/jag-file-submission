@@ -63,7 +63,6 @@ public class AiReviewerControllerAdvisorTest {
     }
 
     @Test
-
     @DisplayName("502: Assert bad gateway returned")
     public void testDocumentExtractVirusFoundException() {
 
@@ -73,7 +72,8 @@ public class AiReviewerControllerAdvisorTest {
         Assertions.assertEquals("VIRUS_FOUND", ((ApiError)result.getBody()).getError());
         Assertions.assertEquals("Virus found", ((ApiError)result.getBody()).getMessage());
     }
-      
+
+    @Test
     @DisplayName("500: Assert cache exception")
     public void testAiReviewerCacheException() {
 
@@ -82,6 +82,18 @@ public class AiReviewerControllerAdvisorTest {
         Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
         Assertions.assertEquals("CACHE_UNAVAILABLE", ((ApiError)result.getBody()).getError());
         Assertions.assertEquals("Cache Error", ((ApiError)result.getBody()).getMessage());
+
+    }
+
+    @Test
+    @DisplayName("500: Assert document mismatch exception")
+    public void testAiReviewerDocumentTypeMismatchException() {
+
+        ResponseEntity<Object> result = sut.handleDocumentMismatchException(new AiReviewerDocumentTypeMismatchException("Document mismatch exception"), webRequestMock);
+
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
+        Assertions.assertEquals("DOCUMENT_TYPE_MISMATCH", ((ApiError)result.getBody()).getError());
+        Assertions.assertEquals("Document mismatch exception", ((ApiError)result.getBody()).getMessage());
 
     }
 
