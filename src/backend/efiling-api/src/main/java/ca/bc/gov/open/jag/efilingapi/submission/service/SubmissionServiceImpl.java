@@ -179,7 +179,12 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         return FilingPackage.builder()
                 .court(populateCourtDetails(request.getFilingPackage().getCourt()))
-                .submissionFeeAmount(getSubmissionFeeAmount())
+                .submissionFeeAmount(getSubmissionFeeAmount(SubmissionFeeRequest.builder()
+                        .serviceType(SubmissionConstants.SUBMISSION_FEE_TYPE)
+                        .division(request.getFilingPackage().getCourt().getDivision())
+                        .classification(request.getFilingPackage().getCourt().getCourtClass())
+                        .level(request.getFilingPackage().getCourt().getLevel())
+                        .application(applicationCode).create()))
                 .documents(request.getFilingPackage()
                         .getDocuments()
                         .stream()
@@ -285,16 +290,15 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     }
 
-    private BigDecimal getSubmissionFeeAmount() {
-        // TODO: fix with the mapper ApplicationCode to ServiceTypeCode
-        ServiceFees fee = efilingLookupService.getServiceFee(SubmissionConstants.SUBMISSION_FEE_TYPE);
+    private BigDecimal getSubmissionFeeAmount(SubmissionFeeRequest submissionFeeRequest ) {
+
+        ServiceFees fee = efilingLookupService.getServiceFee(submissionFeeRequest);
         return fee == null ? BigDecimal.ZERO : fee.getFeeAmount();
+
     }
 
     private long getExpiryDate() {
         return System.currentTimeMillis() + cacheProperties.getRedis().getTimeToLive().toMillis();
     }
-
-
-
+    
 }

@@ -154,6 +154,17 @@
                                         <extraarg>-autoNameResolution</extraarg>
                                     </extraargs>
                                 </wsdlOption>
+                                <wsdlOption>
+                                    <wsdl>${project.basedir}/src/main/resources/wsdl/LookupFacade.wsdl</wsdl>
+                                    <packagenames>
+                                        <!-- Package Mappings -->
+                                        <packagename>http://lookups.csows.ag.gov.bc.ca/=preview.ca.bc.gov.ag.csows.lookups</packagename>
+                                    </packagenames>
+                                    <extraargs>
+                                        <extraarg>-client</extraarg>
+                                        <extraarg>-autoNameResolution</extraarg>
+                                    </extraargs>
+                                </wsdlOption>
                             </wsdlOptions>
                         </configuration>
                         <goals>
