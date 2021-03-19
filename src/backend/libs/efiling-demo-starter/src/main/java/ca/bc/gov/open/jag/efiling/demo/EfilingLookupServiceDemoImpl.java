@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efiling.demo;
 
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
+import ca.bc.gov.open.jag.efilingcommons.model.SubmissionFeeRequest;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 
 import java.math.BigDecimal;
@@ -10,7 +11,7 @@ import java.util.List;
 public class EfilingLookupServiceDemoImpl implements EfilingLookupService {
 
     @Override
-    public ServiceFees getServiceFee(String serviceId) {
+    public ServiceFees getServiceFee(SubmissionFeeRequest submissionFeeRequest) {
 
         return  new ServiceFees(
                 BigDecimal.valueOf(7),

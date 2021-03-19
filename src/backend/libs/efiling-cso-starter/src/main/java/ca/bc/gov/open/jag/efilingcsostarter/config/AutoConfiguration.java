@@ -23,6 +23,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.client.RestTemplate;
 import preview.ca.bc.gov.open.jag.efilingcsoclient.PreviewCsoDocumentServiceImpl;
+import preview.ca.bc.gov.open.jag.efilingcsoclient.PreviewCsoLookupServiceImpl;
 import preview.ca.bc.gov.open.jag.efilingcsoclient.mappers.ClientProfileMapper;
 import preview.ca.bc.gov.open.jag.efilingcsoclient.mappers.ClientProfileMapperImpl;
 
@@ -33,6 +34,8 @@ public class AutoConfiguration {
     private static final String PREVIEW = "preview";
     private static final String STATUS_FACADE_PREVIEW = "status_facade";
     private static final String STATUS_FACADE_FINAL = "!status_facade";
+    private static final String LOOKUP_FACADE_PREVIEW = "lookup_facade_preview";
+    private static final String LOOKUP_FACADE_FINAL = "!lookup_facade_preview";
     private static final String FINAL = "!preview";
     private final SoapProperties soapProperties;
 
@@ -82,9 +85,17 @@ public class AutoConfiguration {
         return SoapUtils.getPort(preview.ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean.class, efilingSoapClientProperties, csoProperties.isDebugEnabled()); }
 
     @Bean
+    @Primary
+    @Profile(LOOKUP_FACADE_FINAL)
     public LookupFacadeBean lookupFacadeBean() {
         EfilingSoapClientProperties efilingSoapClientProperties = soapProperties.findByEnum(Clients.LOOKUP);
         return SoapUtils.getPort(LookupFacadeBean.class, efilingSoapClientProperties, csoProperties.isDebugEnabled()); }
+
+    @Bean("PreviewLookupFacadeBean")
+    @Profile(LOOKUP_FACADE_PREVIEW)
+    public preview.ca.bc.gov.ag.csows.lookups.LookupFacadeBean previewLookupFacadeBean() {
+        EfilingSoapClientProperties efilingSoapClientProperties = soapProperties.findByEnum(Clients.LOOKUP);
+        return SoapUtils.getPort(preview.ca.bc.gov.ag.csows.lookups.LookupFacadeBean.class, efilingSoapClientProperties, csoProperties.isDebugEnabled()); }
 
     @Bean
     public Csows csows() {
@@ -178,8 +189,16 @@ public class AutoConfiguration {
     }
 
     @Bean
+    @Primary
+    @Profile(LOOKUP_FACADE_FINAL)
     public EfilingLookupService efilingLookupService(LookupFacadeBean lookupFacadeBean) {
         return new CsoLookupServiceImpl(lookupFacadeBean);
+    }
+
+    @Bean
+    @Profile(LOOKUP_FACADE_PREVIEW)
+    public EfilingLookupService previewEfilingLookupService(preview.ca.bc.gov.ag.csows.lookups.LookupFacadeBean previewLookupFacadeBean) {
+        return new PreviewCsoLookupServiceImpl(previewLookupFacadeBean);
     }
 
     @Bean
