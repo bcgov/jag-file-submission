@@ -6,7 +6,7 @@ import Tabs from "react-bootstrap/Tabs"; /* TODO: replace with shared-components
 import Tab from "react-bootstrap/Tab"; /* TODO: replace with shared-components */
 import { Alert, Button, Sidecard, Table } from "shared-components";
 import { BsEyeFill } from "react-icons/bs";
-import { MdCancel } from "react-icons/md";
+import { MdCancel, MdError } from "react-icons/md";
 import { useLocation, useParams } from "react-router-dom";
 import queryString from "query-string";
 import validator from "validator";
@@ -15,6 +15,7 @@ import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import {
   getFilingPackage,
   downloadSubmissionSheet,
+  downloadRegistryNotice,
 } from "./PackageReviewService";
 import { noop } from "../../../modules/helpers/mockHelper";
 
@@ -64,6 +65,7 @@ export default function PackageReview() {
   const [organizationParties, setOrganizationParties] = useState([]);
   const [payments, setPayments] = useState([]);
   const [submissionHistoryLink, setSubmissionHistoryLink] = useState("");
+  const [hasRegistryNotice, setHasRegistryNotice] = useState(null);
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
 
@@ -127,6 +129,7 @@ export default function PackageReview() {
           setOrganizationParties(response.data.organizationParties);
           setPayments(response.data.payments);
           setSubmissionHistoryLink(response.data.links.packageHistoryUrl);
+          setHasRegistryNotice(response.data.hasRegistryNotice);
         } catch (err) {
           setError(true);
         }
@@ -142,14 +145,8 @@ export default function PackageReview() {
     noop();
   }
 
-  function handleClick() {
-    downloadSubmissionSheet(packageId).catch((err) => {
-      errorRedirect(sessionStorage.getItem("errorUrl"), err);
-    });
-  }
-
-  function handleKeyDown(e) {
-    if (e && e.keyCode === 13) {
+  function handleSubmissionSheet(e) {
+    if (isEnter(e) || isClick(e)) {
       downloadSubmissionSheet(packageId).catch((err) => {
         errorRedirect(sessionStorage.getItem("errorUrl"), err);
       });
@@ -161,6 +158,31 @@ export default function PackageReview() {
       window.open(submissionHistoryLink, "_blank");
     }
   }
+
+  function handleRegistryNotice(e) {
+    if (isClick(e) || isEnter(e)) {
+      downloadRegistryNotice(packageId).catch((err) => {
+        errorRedirect(sessionStorage.getItem("errorUrl"), err);
+      });
+    }
+  }
+
+  const registryElement = (
+    <p>
+      You have a Registry Notice that requires an action. The item(s)
+      highlighted in red below require an action.{" "}
+      <span
+        className="file-href"
+        role="button"
+        onClick={handleRegistryNotice}
+        onKeyDown={handleRegistryNotice}
+        tabIndex={0}
+      >
+        View Registry Notice
+      </span>{" "}
+      view all details.
+    </p>
+  );
 
   return (
     <>
@@ -185,8 +207,8 @@ export default function PackageReview() {
                 role="button"
                 tabIndex={0}
                 className="file-href"
-                onClick={handleClick}
-                onKeyDown={handleKeyDown}
+                onClick={handleSubmissionSheet}
+                onKeyDown={handleSubmissionSheet}
               >
                 Print Submission Sheet
               </span>
@@ -202,6 +224,15 @@ export default function PackageReview() {
               <Table elements={courtFileDetails} />
             </div>
           </div>
+          <br />
+          {hasRegistryNotice && (
+            <Alert
+              icon={<MdError size={40} className="align-icon registry-align" />}
+              type="error"
+              styling="bcgov-error-background"
+              element={registryElement}
+            />
+          )}
           <br />
           <Tabs defaultActiveKey="documents" id="uncontrolled-tab">
             <Tab eventKey="documents" title="Documents">
