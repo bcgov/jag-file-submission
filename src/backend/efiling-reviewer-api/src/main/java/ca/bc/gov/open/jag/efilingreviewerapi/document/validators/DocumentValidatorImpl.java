@@ -34,7 +34,10 @@ public class DocumentValidatorImpl implements DocumentValidator {
     @Override
     public void validateDocument(String documentType, MultipartFile file) {
 
-        if (!Keys.ACCEPTED_DOCUMENT_TYPES.containsKey(documentType.toUpperCase())) throw new AiReviewerDocumentException("Invalid document type");
+        if (!Keys.ACCEPTED_DOCUMENT_TYPES.containsKey(documentType.toUpperCase())) {
+            logger.error("A document of type {} is not valid", documentType);
+            throw new AiReviewerDocumentException("Invalid document type");
+        }
 
         try {
             clamAvService.scan(new ByteArrayInputStream(file.getBytes()));
