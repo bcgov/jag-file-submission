@@ -4,6 +4,7 @@ import ca.bc.gov.open.efilingdiligenclient.diligen.model.DiligenAnswerField;
 import ca.bc.gov.open.jag.efilingreviewerapi.Keys;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidatorImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentTypeMismatchException;
+import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerRestrictedDocumentException;
 import org.junit.jupiter.api.*;
 import org.mockito.MockitoAnnotations;
 
@@ -19,6 +20,7 @@ public class ValidateExtractedDocumentTest {
     public static final String DOCUMENT_TYPE = "RCC";
     public static final String RESPONSE_TO_CIVIL_CLAIM = "Response to Civil Claim";
     public static final String NOT_RESPONSE_TO_CIVIL_CLAIM = "THIS IS NOT VALID";
+    public static final String RESTRICTED_DOCUMENT = "This is a temporary";
     public static final int NOT_DOCUMENT_TYPE_ID = 123;
     public static final String THE_VALUE = "THIS IS A VALUE";
     DocumentValidatorImpl sut;
@@ -80,4 +82,19 @@ public class ValidateExtractedDocumentTest {
 
     }
 
+    @Test
+    @DisplayName("Error: throws exception when restricted document type found")
+    public void withRestrictedDocumentThrowException() {
+
+        List<DiligenAnswerField> answers= new ArrayList<>();
+        DiligenAnswerField answerField = DiligenAnswerField.builder()
+                .id(Keys.ANSWER_DOCUMENT_TYPE_ID)
+                .values(Collections.singletonList(RESTRICTED_DOCUMENT))
+                .create();
+
+        answers.add(answerField);
+
+        Assertions.assertThrows(AiReviewerRestrictedDocumentException.class, () -> sut.validateExtractedDocument(DOCUMENT_TYPE, answers));
+
+    }
 }

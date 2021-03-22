@@ -4,10 +4,14 @@ import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.clamav.starter.VirusDetectedException;
 import ca.bc.gov.open.efilingdiligenclient.diligen.model.DiligenAnswerField;
 import ca.bc.gov.open.jag.efilingreviewerapi.Keys;
+import ca.bc.gov.open.jag.efilingreviewerapi.document.DocumentsApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentTypeMismatchException;
+import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerRestrictedDocumentException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerVirusFoundException;
 import ca.bc.gov.open.jag.efilingreviewerapi.utils.TikaAnalysis;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,6 +22,8 @@ import java.util.Optional;
 
 @Service
 public class DocumentValidatorImpl implements DocumentValidator {
+
+    Logger logger = LoggerFactory.getLogger(DocumentValidatorImpl.class);
 
     private final ClamAvService clamAvService;
 
@@ -47,7 +53,12 @@ public class DocumentValidatorImpl implements DocumentValidator {
         Optional<String> returnedDocumentType = findDocumentType(answers);
 
         if (!returnedDocumentType.isPresent() || !returnedDocumentType.get().equals(Keys.ACCEPTED_DOCUMENT_TYPES.get(documentType))) {
-            //TODO: delete document
+            if (returnedDocumentType.isPresent() && Keys.RESTRICTED_DOCUMENT_TYPES.containsValue(returnedDocumentType.get())) {
+                logger.error("A document of type {} detected.", returnedDocumentType.get());
+                //TODO: delete document
+                throw new AiReviewerRestrictedDocumentException("Document type mismatch detected");
+            }
+            logger.warn("A document of type {} was expected but {} was returned.", Keys.ACCEPTED_DOCUMENT_TYPES.get(documentType), returnedDocumentType);
             //Throw exception
             throw new AiReviewerDocumentTypeMismatchException("Document type mismatch detected");
 
