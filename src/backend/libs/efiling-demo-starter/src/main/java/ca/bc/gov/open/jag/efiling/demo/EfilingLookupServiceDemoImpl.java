@@ -14,7 +14,7 @@ public class EfilingLookupServiceDemoImpl implements EfilingLookupService {
     public ServiceFees getServiceFee(SubmissionFeeRequest submissionFeeRequest) {
 
         return  new ServiceFees(
-                BigDecimal.valueOf(0),
+                BigDecimal.valueOf(7),
                 "serviceTypeCd");
 
     }
