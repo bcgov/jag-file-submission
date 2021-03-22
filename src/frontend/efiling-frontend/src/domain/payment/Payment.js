@@ -91,6 +91,8 @@ const submitPackage = (submissionId, setSubmitBtnEnabled, setShowLoader) => {
     .catch((err) => errorRedirect(sessionStorage.getItem("errorUrl"), err));
 };
 
+const hasSubmissionFee = (submissionFee) => submissionFee !== 0;
+
 const checkSubmitEnabled = (
   paymentAgreed,
   setSubmitBtnEnabled,
@@ -99,7 +101,7 @@ const checkSubmitEnabled = (
   const isEnabled =
     (paymentAgreed &&
       sessionStorage.getItem("internalClientNumber") !== "null") ||
-    (paymentAgreed && submissionFee === 0);
+    (paymentAgreed && !hasSubmissionFee(submissionFee));
   setSubmitBtnEnabled(isEnabled);
 };
 
@@ -169,7 +171,7 @@ export default function Payment({
     <div className="ct-payment page">
       <div className="content col-md-8">
         <h1>Payment</h1>
-        {submissionFee !== 0 && creditCardAlert}
+        {hasSubmissionFee(submissionFee) && creditCardAlert}
         <br />
         <div className="half-width">
           <Table isFeesData elements={fileSummary.data} />
