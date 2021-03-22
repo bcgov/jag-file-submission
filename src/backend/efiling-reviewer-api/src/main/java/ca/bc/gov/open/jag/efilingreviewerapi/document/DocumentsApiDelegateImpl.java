@@ -109,7 +109,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
             if (extractRequestCached.isPresent()) {
 
                 ExtractRequest extractRequest = extractRequestCached.get();
-                documentValidator.validateExtractedDocument(extractRequest.getDocument().getType(), response.getAnswers());
+                documentValidator.validateExtractedDocument(documentEvent.getDocumentId(), extractRequest.getDocument().getType(), response.getAnswers());
 
                 ExtractResponse extractedResponse = ExtractResponse
                         .builder()

@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 
@@ -41,7 +40,7 @@ public class ValidateDocumentTest {
 
         MockitoAnnotations.openMocks(this);
 
-        sut = new DocumentValidatorImpl(clamAvServiceMock);
+        sut = new DocumentValidatorImpl(clamAvServiceMock, null);
 
     }
 
