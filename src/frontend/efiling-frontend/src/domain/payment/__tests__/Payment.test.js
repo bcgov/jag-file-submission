@@ -34,7 +34,7 @@ describe("Payment Component", () => {
   const noFeePayment = {
     ...payment,
     submissionFee: 0,
-  }
+  };
 
   const token = generateJWTToken({
     preferred_username: "username@bceid",
