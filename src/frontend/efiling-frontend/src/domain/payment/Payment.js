@@ -91,9 +91,9 @@ const submitPackage = (submissionId, setSubmitBtnEnabled, setShowLoader) => {
     .catch((err) => errorRedirect(sessionStorage.getItem("errorUrl"), err));
 };
 
-const checkSubmitEnabled = (paymentAgreed, setSubmitBtnEnabled) => {
+const checkSubmitEnabled = (paymentAgreed, setSubmitBtnEnabled, submissionFee) => {
   const isEnabled =
-    paymentAgreed && sessionStorage.getItem("internalClientNumber") !== "null";
+    ((paymentAgreed && sessionStorage.getItem("internalClientNumber") !== "null") || (paymentAgreed && submissionFee === 0));
   setSubmitBtnEnabled(isEnabled);
 };
 
@@ -133,7 +133,7 @@ export default function Payment({
   }, []);
 
   useEffect(() => {
-    checkSubmitEnabled(paymentAgreed, setSubmitBtnEnabled);
+    checkSubmitEnabled(paymentAgreed, setSubmitBtnEnabled, submissionFee);
   }, [paymentAgreed]);
 
   if (showPackageConfirmation) {
@@ -163,7 +163,7 @@ export default function Payment({
     <div className="ct-payment page">
       <div className="content col-md-8">
         <h1>Payment</h1>
-        {creditCardAlert}
+        {(submissionFee !== 0) && creditCardAlert}
         <br />
         <div className="half-width">
           <Table isFeesData elements={fileSummary.data} />
