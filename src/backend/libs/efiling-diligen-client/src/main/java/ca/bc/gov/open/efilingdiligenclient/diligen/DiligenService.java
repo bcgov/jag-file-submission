@@ -11,6 +11,6 @@ public interface DiligenService {
 
     DiligenDocumentDetails getDocumentDetails(BigDecimal documentId);
 
-    ProjectFieldsResponse getDocumentFieldResponse(BigDecimal documentId);
+    void deleteDocument(BigDecimal documentId);
 
 }

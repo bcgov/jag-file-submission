@@ -840,6 +840,18 @@ paths:
       description: Delete one or more documents
       tags:
         - Documents
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - file_ids
+              properties:
+                file_ids:
+                  type: array
+                  items:
+                    type: number
       summary: /api/documents
       security:
         - ApiKeyAuth: []
