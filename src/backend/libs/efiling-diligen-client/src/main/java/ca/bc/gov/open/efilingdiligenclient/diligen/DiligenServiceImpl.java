@@ -7,7 +7,7 @@ import ca.bc.gov.open.efilingdiligenclient.diligen.model.DiligenResponse;
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.DocumentsApi;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.ApiException;
-import ca.bc.gov.open.jag.efilingdiligenclient.api.model.Field;
+import ca.bc.gov.open.jag.efilingdiligenclient.api.model.InlineObject5;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.model.InlineResponse2003;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.model.ProjectFieldsResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -112,16 +112,19 @@ public class DiligenServiceImpl implements DiligenService {
     }
 
     @Override
-    public ProjectFieldsResponse getDocumentFieldResponse(BigDecimal documentId) {
+    public void deleteDocument(BigDecimal documentId) {
 
         documentsApi.getApiClient().setBearerToken(diligenAuthService.getDiligenJWT(diligenProperties.getUsername(), diligenProperties.getPassword()));
 
         try {
 
-            return documentsApi.apiDocumentsFileIdProjectFieldsGet(documentId.intValue());
+            InlineObject5 inlineObject5 = new InlineObject5();
+            inlineObject5.addFileIdsItem(documentId);
+
+            documentsApi.apiDocumentsDelete(inlineObject5);
 
         } catch (ApiException e) {
-            throw new DiligenDocumentException("Failed getting the document details");
+            throw new DiligenDocumentException("Failed to delete document");
         }
 
     }

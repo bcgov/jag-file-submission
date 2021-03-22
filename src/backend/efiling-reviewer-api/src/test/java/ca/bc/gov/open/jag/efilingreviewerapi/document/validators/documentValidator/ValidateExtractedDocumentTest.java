@@ -1,15 +1,19 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.document.validators.documentValidator;
 
+import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
 import ca.bc.gov.open.efilingdiligenclient.diligen.model.DiligenAnswerField;
 import ca.bc.gov.open.jag.efilingreviewerapi.Keys;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidatorImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentTypeMismatchException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerRestrictedDocumentException;
 import org.junit.jupiter.api.*;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,12 +29,17 @@ public class ValidateExtractedDocumentTest {
     public static final String THE_VALUE = "THIS IS A VALUE";
     DocumentValidatorImpl sut;
 
+    @Mock
+    DiligenService diligenServiceMock;
+
     @BeforeAll
     public void beforeAll() {
 
         MockitoAnnotations.openMocks(this);
 
-        sut = new DocumentValidatorImpl(null);
+        Mockito.doNothing().when(diligenServiceMock).deleteDocument(ArgumentMatchers.eq(BigDecimal.ONE));
+
+        sut = new DocumentValidatorImpl(null, diligenServiceMock);
 
     }
 
@@ -46,7 +55,7 @@ public class ValidateExtractedDocumentTest {
 
         answers.add(answerField);
 
-        Assertions.assertDoesNotThrow(() -> sut.validateExtractedDocument(DOCUMENT_TYPE, answers));
+        Assertions.assertDoesNotThrow(() -> sut.validateExtractedDocument(BigDecimal.ZERO ,DOCUMENT_TYPE, answers));
 
     }
 
@@ -62,7 +71,7 @@ public class ValidateExtractedDocumentTest {
 
         answers.add(answerField);
 
-        Assertions.assertThrows(AiReviewerDocumentTypeMismatchException.class, () -> sut.validateExtractedDocument(DOCUMENT_TYPE, answers));
+        Assertions.assertThrows(AiReviewerDocumentTypeMismatchException.class, () -> sut.validateExtractedDocument(BigDecimal.ZERO ,DOCUMENT_TYPE, answers));
 
     }
 
@@ -78,7 +87,7 @@ public class ValidateExtractedDocumentTest {
 
         answers.add(answerField);
 
-        Assertions.assertThrows(AiReviewerDocumentTypeMismatchException.class, () -> sut.validateExtractedDocument(DOCUMENT_TYPE, answers));
+        Assertions.assertThrows(AiReviewerDocumentTypeMismatchException.class, () -> sut.validateExtractedDocument(BigDecimal.ZERO ,DOCUMENT_TYPE, answers));
 
     }
 
@@ -94,7 +103,7 @@ public class ValidateExtractedDocumentTest {
 
         answers.add(answerField);
 
-        Assertions.assertThrows(AiReviewerRestrictedDocumentException.class, () -> sut.validateExtractedDocument(DOCUMENT_TYPE, answers));
+        Assertions.assertThrows(AiReviewerRestrictedDocumentException.class, () -> sut.validateExtractedDocument(BigDecimal.ONE ,DOCUMENT_TYPE, answers));
 
     }
 }

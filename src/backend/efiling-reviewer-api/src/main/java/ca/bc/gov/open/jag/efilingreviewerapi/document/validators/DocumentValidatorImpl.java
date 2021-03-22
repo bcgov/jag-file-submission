@@ -2,9 +2,9 @@ package ca.bc.gov.open.jag.efilingreviewerapi.document.validators;
 
 import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.clamav.starter.VirusDetectedException;
+import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
 import ca.bc.gov.open.efilingdiligenclient.diligen.model.DiligenAnswerField;
 import ca.bc.gov.open.jag.efilingreviewerapi.Keys;
-import ca.bc.gov.open.jag.efilingreviewerapi.document.DocumentsApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentTypeMismatchException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerRestrictedDocumentException;
@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,8 +28,11 @@ public class DocumentValidatorImpl implements DocumentValidator {
 
     private final ClamAvService clamAvService;
 
-    public DocumentValidatorImpl(ClamAvService clamAvService) {
+    private final DiligenService diligenService;
+
+    public DocumentValidatorImpl(ClamAvService clamAvService, DiligenService diligenService) {
         this.clamAvService = clamAvService;
+        this.diligenService = diligenService;
     }
 
     @Override
@@ -51,17 +55,18 @@ public class DocumentValidatorImpl implements DocumentValidator {
     }
 
     @Override
-    public void validateExtractedDocument(String documentType, List<DiligenAnswerField> answers) {
+    public void validateExtractedDocument(BigDecimal documentId, String documentType, List<DiligenAnswerField> answers) {
 
         Optional<String> returnedDocumentType = findDocumentType(answers);
 
         if (!returnedDocumentType.isPresent() || !returnedDocumentType.get().equals(Keys.ACCEPTED_DOCUMENT_TYPES.get(documentType))) {
             if (returnedDocumentType.isPresent() && Keys.RESTRICTED_DOCUMENT_TYPES.containsValue(returnedDocumentType.get())) {
-                logger.error("A document of type {} detected.", returnedDocumentType.get());
-                //TODO: delete document
+                logger.error("Document {} of type {} detected.", documentId, returnedDocumentType.get());
+                diligenService.deleteDocument(documentId);
+                logger.info("Document {} has been deleted.", documentId);
                 throw new AiReviewerRestrictedDocumentException("Document type mismatch detected");
             }
-            logger.warn("A document of type {} was expected but {} was returned.", Keys.ACCEPTED_DOCUMENT_TYPES.get(documentType), returnedDocumentType);
+            logger.warn("Document {} of type {} was expected but {} was returned.", documentId, Keys.ACCEPTED_DOCUMENT_TYPES.get(documentType), returnedDocumentType);
             //Throw exception
             throw new AiReviewerDocumentTypeMismatchException("Document type mismatch detected");
 
