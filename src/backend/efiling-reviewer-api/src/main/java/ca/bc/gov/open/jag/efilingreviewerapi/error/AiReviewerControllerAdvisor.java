@@ -48,7 +48,16 @@ public class AiReviewerControllerAdvisor {
 
     @ExceptionHandler(AiReviewerDocumentTypeMismatchException.class)
     public ResponseEntity<Object> handleDocumentMismatchException(AiReviewerDocumentTypeMismatchException ex, WebRequest request) {
-        //TODO: add email to? when this exception is thrown
+        //TODO: Does this exception require an email?
+        ApiError apiError = new ApiError();
+        apiError.setError(ex.getErrorCode());
+        apiError.setMessage(ex.getMessage());
+        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AiReviewerRestrictedDocumentException.class)
+    public ResponseEntity<Object> handleRestrictedDocumentException(AiReviewerRestrictedDocumentException ex, WebRequest request) {
+        //TODO: add email when this exception is thrown
         ApiError apiError = new ApiError();
         apiError.setError(ex.getErrorCode());
         apiError.setMessage(ex.getMessage());
