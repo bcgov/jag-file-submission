@@ -31,6 +31,11 @@ describe("Payment Component", () => {
     submissionFee,
   };
 
+  const noFeePayment = {
+    ...payment,
+    submissionFee: 0,
+  }
+
   const token = generateJWTToken({
     preferred_username: "username@bceid",
     realm_access: {
@@ -65,6 +70,17 @@ describe("Payment Component", () => {
     const { asFragment } = render(<Payment payment={payment} />);
 
     expect(asFragment()).toMatchSnapshot();
+  });
+
+  test("Allows submission with no submission fee", () => {
+    sessionStorage.setItem("internalClientNumber", null);
+    const { container } = render(<Payment payment={noFeePayment} />);
+
+    expect(getByText(container, "Submit").disabled).toBeTruthy();
+
+    fireEvent.click(getByRole(container, "checkbox"));
+
+    expect(getByText(container, "Submit").disabled).toBeFalsy();
   });
 
   test("Click on register a credit card when no card exists takes user to bambora", async () => {
