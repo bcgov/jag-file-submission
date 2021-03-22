@@ -36,7 +36,6 @@ import java.util.UUID;
 @Service
 public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
 
-
     Logger logger = LoggerFactory.getLogger(DocumentsApiDelegateImpl.class);
 
     private final DiligenService diligenService;

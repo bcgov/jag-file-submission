@@ -15,6 +15,9 @@ public class Keys {
     public static final Map<String, String> ACCEPTED_DOCUMENT_TYPES = new HashMap<String, String>() {{
         put("RCC", "Response to Civil Claim");
     }};
+    public static final Map<String, String> RESTRICTED_DOCUMENT_TYPES = new HashMap<String, String>() {{
+        put("TEST", "This is a temporary");
+    }};
     public static final Integer ANSWER_DOCUMENT_TYPE_ID = 232;
 
 }

@@ -86,7 +86,7 @@ public class AiReviewerControllerAdvisorTest {
     }
 
     @Test
-    @DisplayName("500: Assert document mismatch exception")
+    @DisplayName("400: Assert document mismatch exception")
     public void testAiReviewerDocumentTypeMismatchException() {
 
         ResponseEntity<Object> result = sut.handleDocumentMismatchException(new AiReviewerDocumentTypeMismatchException("Document mismatch exception"), webRequestMock);
@@ -94,6 +94,18 @@ public class AiReviewerControllerAdvisorTest {
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
         Assertions.assertEquals("DOCUMENT_TYPE_MISMATCH", ((ApiError)result.getBody()).getError());
         Assertions.assertEquals("Document mismatch exception", ((ApiError)result.getBody()).getMessage());
+
+    }
+
+    @Test
+    @DisplayName("400: Assert restricted document exception")
+    public void testAiReviewerRestrictedDocumentException() {
+
+        ResponseEntity<Object> result = sut.handleRestrictedDocumentException(new AiReviewerRestrictedDocumentException("Restricted Document exception"), webRequestMock);
+
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
+        Assertions.assertEquals("RESTRICTED_DOCUMENT", ((ApiError)result.getBody()).getError());
+        Assertions.assertEquals("Restricted Document exception", ((ApiError)result.getBody()).getMessage());
 
     }
 
