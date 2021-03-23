@@ -999,48 +999,6 @@ exports[`Storyshots Payment Without Fees 1`] = `
       <h1>
         Payment
       </h1>
-      <div
-        class="bcgov-display-box bcgov-success-background bcgov-no-padding-bottom"
-      >
-        <div
-          class="bcgov-display-icon"
-        >
-          <div
-            style="color: rgb(46, 133, 64);"
-          >
-            <svg
-              fill="currentColor"
-              height="32"
-              stroke="currentColor"
-              stroke-width="0"
-              viewBox="0 0 24 24"
-              width="32"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"
-              />
-            </svg>
-          </div>
-        </div>
-        <div
-          class="bcgov-display-right-element"
-        >
-          <p>
-            <span>
-              You have a valid Credit Card registered with your CSO account.
-            </span>
-            <br />
-            <span
-              class="file-href"
-              role="button"
-              tabindex="0"
-            >
-              Register a new Credit Card.
-            </span>
-          </p>
-        </div>
-      </div>
       <br />
       <div
         class="half-width"
