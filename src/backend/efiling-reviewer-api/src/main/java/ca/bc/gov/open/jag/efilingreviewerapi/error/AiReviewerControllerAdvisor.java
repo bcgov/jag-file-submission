@@ -3,6 +3,9 @@ package ca.bc.gov.open.jag.efilingreviewerapi.error;
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenAuthenticationException;
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.ApiError;
+import ca.bc.gov.open.jag.jagmailit.api.MailSendApi;
+import ca.bc.gov.open.jag.jagmailit.api.handler.ApiException;
+import ca.bc.gov.open.jag.jagmailit.api.model.EmailRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -11,6 +14,12 @@ import org.springframework.web.context.request.WebRequest;
 
 @ControllerAdvice
 public class AiReviewerControllerAdvisor {
+
+    private final MailSendApi mailSendApi;
+
+    public AiReviewerControllerAdvisor(MailSendApi mailSendApi) {
+        this.mailSendApi = mailSendApi;
+    }
 
     @ExceptionHandler(DiligenDocumentException.class)
     public ResponseEntity<Object> handleDiligenDocumentException(DiligenDocumentException ex, WebRequest request) {
@@ -57,7 +66,13 @@ public class AiReviewerControllerAdvisor {
 
     @ExceptionHandler(AiReviewerRestrictedDocumentException.class)
     public ResponseEntity<Object> handleRestrictedDocumentException(AiReviewerRestrictedDocumentException ex, WebRequest request) {
-        //TODO: add email when this exception is thrown
+        try {
+            EmailRequest emailRequest = new EmailRequest();
+
+            mailSendApi.mailSend(null);
+        } catch (ApiException e) {
+
+        }
         ApiError apiError = new ApiError();
         apiError.setError(ex.getErrorCode());
         apiError.setMessage(ex.getMessage());

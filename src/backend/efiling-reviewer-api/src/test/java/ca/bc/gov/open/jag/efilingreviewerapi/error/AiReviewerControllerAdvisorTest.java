@@ -3,12 +3,17 @@ package ca.bc.gov.open.jag.efilingreviewerapi.error;
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenAuthenticationException;
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.ApiError;
+import ca.bc.gov.open.jag.jagmailit.api.MailSendApi;
+import ca.bc.gov.open.jag.jagmailit.api.handler.ApiException;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.WebRequest;
+
+import static org.mockito.ArgumentMatchers.any;
 
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -20,11 +25,16 @@ public class AiReviewerControllerAdvisorTest {
     @Mock
     private WebRequest webRequestMock;
 
+    @Mock
+    private MailSendApi mailSendApiMock;
+
     @BeforeEach
-    public void beforeEach() {
+    public void beforeEach() throws ApiException {
         MockitoAnnotations.openMocks(this);
 
-        sut = new AiReviewerControllerAdvisor();
+        Mockito.doNothing().when(mailSendApiMock).mailSend(any());
+
+        sut = new AiReviewerControllerAdvisor(mailSendApiMock);
 
     }
 
