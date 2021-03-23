@@ -80,7 +80,7 @@
     "pretty-quick": "^3.1.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
-    "react-test-renderer": "^16.12.0"
+    "react-test-renderer": "^17.0.2"
   },
   "jest": {
     "watchPathIgnorePatterns": [
