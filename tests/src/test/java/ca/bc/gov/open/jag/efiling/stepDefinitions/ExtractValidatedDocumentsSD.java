@@ -71,7 +71,7 @@ public class ExtractValidatedDocumentsSD {
 
         Assert.assertEquals("RCC", actualExtractDocumentsJsonPath.get("document.type"));
         Assert.assertEquals(Keys.TEST_RCC_DOCUMENT_PDF, actualExtractDocumentsJsonPath.get("document.fileName"));
-        Assert.assertEquals(new Integer(689336), actualExtractDocumentsJsonPath.get("document.size"));
+        Assert.assertEquals(Integer.valueOf(689336), actualExtractDocumentsJsonPath.get("document.size"));
         Assert.assertEquals("application/octet-stream", actualExtractDocumentsJsonPath.get("document.contentType"));
 
         logger.info("Response matched requirements");
