@@ -60,6 +60,11 @@ public class TestConfig {
     }
 
     @Bean
+    public ExtractDocumentService extractDocumentService() {
+        return new ExtractDocumentService();
+    }
+
+    @Bean
     public static BeanFactoryPostProcessor beanFactoryPostProcessor() {
         return new BrowserScopePostProcessor();
     }
