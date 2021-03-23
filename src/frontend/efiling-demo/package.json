@@ -14,7 +14,7 @@
     "keycloak-js": "^7.0.1",
     "prop-types": "^15.7.2",
     "query-string": "^6.13.6",
-    "react": "^16.13.1",
+    "react": "^17.0.2",
     "react-app-polyfill": "^2.0.0",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2",
