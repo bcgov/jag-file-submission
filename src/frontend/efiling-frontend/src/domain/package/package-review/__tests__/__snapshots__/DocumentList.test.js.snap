@@ -30,7 +30,9 @@ exports[`DocumentList Component Testsuite Matches the snapshot 1`] = `
       </span>
     </div>
     <ul>
-      <li>
+      <li
+        class="undefined"
+      >
         <span
           class="label col-sm-4 d-lg-none"
         >

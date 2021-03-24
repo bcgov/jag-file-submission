@@ -130,14 +130,14 @@ export default function Payment({
 
   const paymentSectionElement = (
     <>
-    <h1>Payment</h1>
-          {creditCardAlert}
-          <br />
-          <div className="half-width">
-            <Table isFeesData elements={fileSummary.data} />
-          </div>
-          </>
-  )
+      <h1>Payment</h1>
+      {creditCardAlert}
+      <br />
+      <div className="half-width">
+        <Table isFeesData elements={fileSummary.data} />
+      </div>
+    </>
+  );
 
   useEffect(() => {
     if (
