@@ -123,6 +123,7 @@ export default function PackageReview() {
               isValueBold: true,
             },
           ]);
+
           setFilingComments(response.data.filingComments);
           setDocuments(response.data.documents);
           setParties(response.data.parties);

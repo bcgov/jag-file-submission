@@ -128,6 +128,17 @@ export default function Payment({
       ? `${baseCalloutText} I agree that all fees for this filing package may be charged to the credit card registered to my account. Statutory fees will be processed when documents are filed.`
       : baseCalloutText;
 
+  const paymentSectionElement = (
+    <>
+    <h1>Payment</h1>
+          {creditCardAlert}
+          <br />
+          <div className="half-width">
+            <Table isFeesData elements={fileSummary.data} />
+          </div>
+          </>
+  )
+
   useEffect(() => {
     if (
       sessionStorage.getItem("bamboraSuccess") &&
@@ -142,7 +153,7 @@ export default function Payment({
 
   useEffect(() => {
     checkSubmitEnabled(paymentAgreed, setSubmitBtnEnabled, submissionFee);
-  }, [paymentAgreed]);
+  }, [paymentAgreed, submissionFee]);
 
   if (showPackageConfirmation) {
     return (
@@ -170,12 +181,7 @@ export default function Payment({
   return (
     <div className="ct-payment page">
       <div className="content col-md-8">
-        <h1>Payment</h1>
-        {hasSubmissionFee(submissionFee) && creditCardAlert}
-        <br />
-        <div className="half-width">
-          <Table isFeesData elements={fileSummary.data} />
-        </div>
+        {hasSubmissionFee(submissionFee) && paymentSectionElement}
         <br />
         <h1>Package Submission Details</h1>
         <p>Your package will be filed to:</p>
