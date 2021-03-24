@@ -69,6 +69,13 @@ public class ViewSubmittedPackageSD {
         Assert.assertEquals(0, downloadedFile.length());
     }
 
+    @Then("Individual and Organization party type details are correct in parties tab")
+    public void verifyIndividualAndOrganizationPartyType() {
+        packageReviewPage.clickPartiesTab();
+        System.out.println(packageReviewPage.getAllParties());
+
+    }
+
     @Then("comments are available in Filing Comments tab")
     public void verifyFilingComments() {
         packageReviewPage.clickFilingCommentsTab();

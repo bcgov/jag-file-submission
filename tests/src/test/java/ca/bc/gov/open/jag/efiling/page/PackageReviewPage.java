@@ -43,6 +43,9 @@ public class PackageReviewPage extends BasePage {
     @FindBy(xpath = "//*[@data-testid='btn-download-document']")
     private WebElement downloadButton;
 
+    @FindBy(id = "uncontrolled-tab-tab-parties")
+    private WebElement partiesTab;
+
     @FindBy(id = "uncontrolled-tab-tab-comments")
     private WebElement filingCommentsTab;
 
@@ -57,6 +60,9 @@ public class PackageReviewPage extends BasePage {
 
     @FindBy(xpath = "//*[@data-testid='btn-view-receipt']")
     private WebElement viewReceiptButton;
+
+    @FindBy(xpath = "//*[@id='uncontrolled-tab-tabpane-parties']/div/ul/li")
+    private List<WebElement> allPartiesList;
 
     @FindBy(id = "filingComments")
     private WebElement filingCommentsTextBox;
@@ -104,6 +110,14 @@ public class PackageReviewPage extends BasePage {
 
     public void clickDocumentsTab() {
         documentsTab.click();
+    }
+
+    public void clickPartiesTab() {
+        partiesTab.click();
+    }
+
+    public String getAllParties() {
+        return allPartiesList.toString();
     }
 
     public void clickFilingCommentsTab() {
