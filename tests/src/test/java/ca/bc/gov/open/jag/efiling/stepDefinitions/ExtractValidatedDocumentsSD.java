@@ -37,7 +37,7 @@ public class ExtractValidatedDocumentsSD {
 
     }
 
-    @Given("user uploaded a valid {string} document type")
+    @Given("user uploaded a {string} document type")
     public void validDocumentTypeIsUploaded(String docType) throws IOException {
 
         logger.info("Submitting request to upload document");
