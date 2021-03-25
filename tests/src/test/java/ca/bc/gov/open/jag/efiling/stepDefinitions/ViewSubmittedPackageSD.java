@@ -6,6 +6,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.assertj.core.util.Lists;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,8 +73,12 @@ public class ViewSubmittedPackageSD {
     @Then("Individual and Organization party type details are correct in parties tab")
     public void verifyIndividualAndOrganizationPartyType() {
         packageReviewPage.clickPartiesTab();
-        System.out.println(packageReviewPage.getAllParties());
+        List<String> actualParties = packageReviewPage.getAllParties();
 
+        List<String> expectedParties = Lists.newArrayList("Ross, Bob Q", "Applicant", "Individual", "Loooooooooong-Looooooooooonglast, Looooooongname Q", "Applicant", "Individual", "The Organization Org.", "Applicant", "Organization", "This is a very very very very loooooong organization name", "Applicant", "Organization");
+
+        Assert.assertEquals(expectedParties.size(), actualParties.size());
+        Assert.assertEquals(expectedParties,actualParties);
     }
 
     @Then("comments are available in Filing Comments tab")
