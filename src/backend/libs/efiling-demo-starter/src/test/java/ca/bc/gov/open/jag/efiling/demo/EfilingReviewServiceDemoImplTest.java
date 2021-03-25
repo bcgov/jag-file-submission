@@ -24,7 +24,7 @@ public class EfilingReviewServiceDemoImplTest {
 
     @Test
     @DisplayName("OK: with correct id return payload")
-    public void withEmptyCacheShouldReturnPackage() {
+    public void requestPackageOneShouldReturnData() {
         Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(BigDecimal.ONE, BigDecimal.ONE));
 
         Assertions.assertTrue(result.isPresent());
@@ -101,6 +101,163 @@ public class EfilingReviewServiceDemoImplTest {
 
     }
 
+    @Test
+    @DisplayName("OK: with correct id return payload")
+    public void requestPackageTwoShouldReturnData() {
+        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(BigDecimal.ONE, new BigDecimal(2)));
+
+        Assertions.assertTrue(result.isPresent());
+        //Package
+        Assertions.assertEquals("Han", result.get().getFirstName());
+        Assertions.assertEquals("Solo", result.get().getLastName());
+        Assertions.assertFalse(result.get().getHasChecklist());
+        Assertions.assertFalse(result.get().getHasRegistryNotice());
+        Assertions.assertEquals("2", result.get().getPackageNo());
+        Assertions.assertEquals(DateTime.parse("2020-5-5"), result.get().getSubmittedDate());
+        Assertions.assertEquals(COMMENTS, result.get().getFilingCommentsTxt());
+
+        //Court
+        Assertions.assertEquals("F", result.get().getCourt().getCourtClass());
+        Assertions.assertEquals("P", result.get().getCourt().getLevel());
+        Assertions.assertEquals("KEL", result.get().getCourt().getLocationCd());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getCourt().getLocationId());
+        Assertions.assertEquals("Kelowna Law Courts", result.get().getCourt().getLocationName());
+        Assertions.assertEquals("DIVISION", result.get().getCourt().getDivision());
+        Assertions.assertEquals(DESCRIPTION, result.get().getCourt().getLocationDescription());
+        Assertions.assertEquals(DESCRIPTION, result.get().getCourt().getParticipatingClass());
+        Assertions.assertEquals(DESCRIPTION, result.get().getCourt().getLocationDescription());
+        Assertions.assertEquals(DESCRIPTION, result.get().getCourt().getLevelDescription());
+        Assertions.assertEquals(DESCRIPTION, result.get().getCourt().getClassDescription());
+        Assertions.assertEquals("123", result.get().getCourt().getFileNumber());
+        Assertions.assertFalse(result.get().getCourt().getExistingFileYN());
+
+        Assertions.assertEquals(7, result.get().getDocuments().size());
+        Assertions.assertEquals(DateTime.parse("2020-5-5"), result.get().getDocuments().get(0).getDateFiled());
+        Assertions.assertEquals("1", result.get().getDocuments().get(0).getDocumentId());
+        Assertions.assertEquals("Affidavit", result.get().getDocuments().get(0).getDocumentType());
+        Assertions.assertEquals("AFF", result.get().getDocuments().get(0).getDocumentTypeCd());
+        Assertions.assertEquals("CMPL", result.get().getDocuments().get(0).getDocumentUploadStatusCd());
+        Assertions.assertEquals("test-document.pdf", result.get().getDocuments().get(0).getFileName());
+        Assertions.assertFalse(result.get().getDocuments().get(0).getInitiatingDoc());
+        Assertions.assertEquals("N", result.get().getDocuments().get(0).getLargeFileYn());
+        Assertions.assertEquals("1", result.get().getDocuments().get(0).getPackageId());
+        Assertions.assertEquals("1", result.get().getDocuments().get(0).getPackageSeqNo());
+        Assertions.assertFalse(result.get().getDocuments().get(0).getPaymentProcessed());
+        Assertions.assertEquals("Submitted", result.get().getDocuments().get(0).getStatus());
+        Assertions.assertEquals("SUB", result.get().getDocuments().get(0).getStatusCode());
+        Assertions.assertEquals(DateTime.parse("2020-12-17"), result.get().getDocuments().get(0).getStatusDate());
+        Assertions.assertFalse(result.get().getDocuments().get(0).getTrialDivision());
+        Assertions.assertFalse(result.get().getDocuments().get(0).getXmlDoc());
+
+        Assertions.assertEquals(2, result.get().getParties().size());
+        Assertions.assertEquals("Bob", result.get().getParties().get(0).getFirstName());
+        Assertions.assertEquals("Q", result.get().getParties().get(0).getMiddleName());
+        Assertions.assertEquals("Ross", result.get().getParties().get(0).getLastName());
+        Assertions.assertEquals("APP", result.get().getParties().get(0).getRoleTypeCd());
+        Assertions.assertEquals("Applicant", result.get().getParties().get(0).getRoleTypeDesc());
+        Assertions.assertEquals("Individual", result.get().getParties().get(0).getPartyTypeDesc());
+
+        Assertions.assertEquals(2, result.get().getOrganizations().size());
+        Assertions.assertEquals("The Organization Org.", result.get().getOrganizations().get(0).getName());
+        Assertions.assertEquals("APP", result.get().getOrganizations().get(0).getRoleTypeCd());
+        Assertions.assertEquals("Applicant", result.get().getOrganizations().get(0).getRoleTypeDesc());
+        Assertions.assertEquals("Organization", result.get().getOrganizations().get(0).getPartyTypeDesc());
+
+        Assertions.assertEquals(3, result.get().getPayments().size());
+        Assertions.assertFalse(result.get().getPayments().get(0).getFeeExmpt());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(0).getPaymentCategory());
+        Assertions.assertEquals(new BigDecimal(7), result.get().getPayments().get(0).getProcessedAmt());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(0).getServiceId());
+        Assertions.assertEquals(new BigDecimal(7), result.get().getPayments().get(0).getSubmittedAmt());
+        Assertions.assertEquals(DateTime.parse("2020-12-17"), result.get().getPayments().get(0).getTransactionDtm());
+
+        Assertions.assertTrue(result.get().getPayments().get(1).getFeeExmpt());
+        Assertions.assertEquals(new BigDecimal(3), result.get().getPayments().get(1).getPaymentCategory());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(1).getSubmittedAmt());
+        Assertions.assertEquals("Affidavit", result.get().getPayments().get(1).getTransactionDesc());
+
+        Assertions.assertEquals("http://localhost:8080/wherearemypackage", result.get().getPackageLinks().getPackageHistoryUrl());
+
+    }
+
+    @Test
+    @DisplayName("OK: with correct id return payload")
+    public void requestPackageThreeShouldReturnData() {
+        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(BigDecimal.ONE, new BigDecimal(3)));
+
+        Assertions.assertTrue(result.isPresent());
+        //Package
+        Assertions.assertEquals("Han", result.get().getFirstName());
+        Assertions.assertEquals("Solo", result.get().getLastName());
+        Assertions.assertFalse(result.get().getHasChecklist());
+        Assertions.assertFalse(result.get().getHasRegistryNotice());
+        Assertions.assertEquals("3", result.get().getPackageNo());
+        Assertions.assertEquals(DateTime.parse("2020-5-5"), result.get().getSubmittedDate());
+        Assertions.assertEquals(COMMENTS, result.get().getFilingCommentsTxt());
+
+        //Court
+        Assertions.assertEquals("F", result.get().getCourt().getCourtClass());
+        Assertions.assertEquals("P", result.get().getCourt().getLevel());
+        Assertions.assertEquals("KEL", result.get().getCourt().getLocationCd());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getCourt().getLocationId());
+        Assertions.assertEquals("Kelowna Law Courts", result.get().getCourt().getLocationName());
+        Assertions.assertEquals("DIVISION", result.get().getCourt().getDivision());
+        Assertions.assertEquals(DESCRIPTION, result.get().getCourt().getLocationDescription());
+        Assertions.assertEquals(DESCRIPTION, result.get().getCourt().getParticipatingClass());
+        Assertions.assertEquals(DESCRIPTION, result.get().getCourt().getLocationDescription());
+        Assertions.assertEquals(DESCRIPTION, result.get().getCourt().getLevelDescription());
+        Assertions.assertEquals(DESCRIPTION, result.get().getCourt().getClassDescription());
+        Assertions.assertEquals("123", result.get().getCourt().getFileNumber());
+        Assertions.assertFalse(result.get().getCourt().getExistingFileYN());
+
+        Assertions.assertEquals(7, result.get().getDocuments().size());
+        Assertions.assertEquals(DateTime.parse("2020-5-5"), result.get().getDocuments().get(0).getDateFiled());
+        Assertions.assertEquals("1", result.get().getDocuments().get(0).getDocumentId());
+        Assertions.assertEquals("Affidavit", result.get().getDocuments().get(0).getDocumentType());
+        Assertions.assertEquals("AFF", result.get().getDocuments().get(0).getDocumentTypeCd());
+        Assertions.assertEquals("CMPL", result.get().getDocuments().get(0).getDocumentUploadStatusCd());
+        Assertions.assertEquals("test-document.pdf", result.get().getDocuments().get(0).getFileName());
+        Assertions.assertFalse(result.get().getDocuments().get(0).getInitiatingDoc());
+        Assertions.assertEquals("N", result.get().getDocuments().get(0).getLargeFileYn());
+        Assertions.assertEquals("1", result.get().getDocuments().get(0).getPackageId());
+        Assertions.assertEquals("1", result.get().getDocuments().get(0).getPackageSeqNo());
+        Assertions.assertFalse(result.get().getDocuments().get(0).getPaymentProcessed());
+        Assertions.assertEquals("Submitted", result.get().getDocuments().get(0).getStatus());
+        Assertions.assertEquals("SUB", result.get().getDocuments().get(0).getStatusCode());
+        Assertions.assertEquals(DateTime.parse("2020-12-17"), result.get().getDocuments().get(0).getStatusDate());
+        Assertions.assertFalse(result.get().getDocuments().get(0).getTrialDivision());
+        Assertions.assertFalse(result.get().getDocuments().get(0).getXmlDoc());
+
+        Assertions.assertEquals(2, result.get().getParties().size());
+        Assertions.assertEquals("Bob", result.get().getParties().get(0).getFirstName());
+        Assertions.assertEquals("Q", result.get().getParties().get(0).getMiddleName());
+        Assertions.assertEquals("Ross", result.get().getParties().get(0).getLastName());
+        Assertions.assertEquals("APP", result.get().getParties().get(0).getRoleTypeCd());
+        Assertions.assertEquals("Applicant", result.get().getParties().get(0).getRoleTypeDesc());
+        Assertions.assertEquals("Individual", result.get().getParties().get(0).getPartyTypeDesc());
+
+        Assertions.assertEquals(2, result.get().getOrganizations().size());
+        Assertions.assertEquals("The Organization Org.", result.get().getOrganizations().get(0).getName());
+        Assertions.assertEquals("APP", result.get().getOrganizations().get(0).getRoleTypeCd());
+        Assertions.assertEquals("Applicant", result.get().getOrganizations().get(0).getRoleTypeDesc());
+        Assertions.assertEquals("Organization", result.get().getOrganizations().get(0).getPartyTypeDesc());
+
+        Assertions.assertEquals(3, result.get().getPayments().size());
+        Assertions.assertFalse(result.get().getPayments().get(0).getFeeExmpt());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(0).getPaymentCategory());
+        Assertions.assertEquals(new BigDecimal(7), result.get().getPayments().get(0).getProcessedAmt());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(0).getServiceId());
+        Assertions.assertEquals(new BigDecimal(7), result.get().getPayments().get(0).getSubmittedAmt());
+        Assertions.assertEquals(DateTime.parse("2020-12-17"), result.get().getPayments().get(0).getTransactionDtm());
+
+        Assertions.assertTrue(result.get().getPayments().get(1).getFeeExmpt());
+        Assertions.assertEquals(new BigDecimal(3), result.get().getPayments().get(1).getPaymentCategory());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(1).getSubmittedAmt());
+        Assertions.assertEquals("Affidavit", result.get().getPayments().get(1).getTransactionDesc());
+
+        Assertions.assertEquals("http://localhost:8080/wherearemypackage", result.get().getPackageLinks().getPackageHistoryUrl());
+
+    }
 
     @Test
     @DisplayName("No result: with not 1 return empty")
@@ -114,7 +271,7 @@ public class EfilingReviewServiceDemoImplTest {
     @DisplayName("OK: demo returns a one element array")
     public void withRequestReturnOneElementArray() {
 
-        Assertions.assertEquals(1, sut.findStatusByClient(new FilingPackageRequest(BigDecimal.ONE, BigDecimal.ONE)).size());
+        Assertions.assertEquals(3, sut.findStatusByClient(new FilingPackageRequest(BigDecimal.ONE, BigDecimal.ONE)).size());
 
     }
 
