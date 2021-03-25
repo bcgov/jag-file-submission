@@ -8,5 +8,6 @@ public enum Clients {
     CSOWS,
     FILING,
     SERVICE,
+    SEARCH,
     REPORT;
 }
