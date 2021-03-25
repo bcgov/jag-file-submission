@@ -112,11 +112,9 @@ public class PackageReviewPage extends BasePage {
         documentsTab.click();
     }
 
-    public void clickPartiesTab() {
-        partiesTab.click();
-    }
-
     public List<String> getAllParties() {
+
+        partiesTab.click();
 
         List<WebElement> tableRows = partiesTable.findElements(By.tagName("li"));
         logger.info("Total no of rows: {}", tableRows.size());
