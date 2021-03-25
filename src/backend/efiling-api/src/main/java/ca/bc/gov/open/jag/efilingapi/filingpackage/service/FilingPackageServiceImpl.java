@@ -17,7 +17,9 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class FilingPackageServiceImpl implements FilingPackageService {
 
@@ -37,13 +39,34 @@ public class FilingPackageServiceImpl implements FilingPackageService {
     @Override
     public Optional<FilingPackage> getCSOFilingPackage(String universalId, BigDecimal packageNumber) {
 
-        Optional<ReviewFilingPackage> filingPackage = getFilingPackage(universalId, packageNumber);
+        Optional<FilingPackageRequest> request = buildFilingPackageRequest(universalId, packageNumber);
+
+        if (!request.isPresent()) return Optional.empty();
+
+        Optional<ReviewFilingPackage> filingPackage = efilingReviewService.findStatusByPackage(request.get());
 
         if (!filingPackage.isPresent()) return Optional.empty();
 
         filingPackage.get().getDocuments().removeIf(document -> StringUtils.equals(document.getStatusCode(), ca.bc.gov.open.jag.efilingcommons.Keys.WITHDRAWN_STATUS_CD));
 
         return filingPackage.map(filingPackageMapper::toResponseFilingPackage);
+
+    }
+
+    @Override
+    public Optional<List<FilingPackage>> getFilingPackages(String universalId, String parentApplication) {
+
+        Optional<FilingPackageRequest> request = buildFilingPackageRequest(universalId, null);
+
+        if (!request.isPresent()) return Optional.empty();
+
+        List<ReviewFilingPackage> result = efilingReviewService.findStatusByClient(request.get());
+
+        if (result == null || result.isEmpty()) return Optional.empty();
+
+        return Optional.of(result.stream()
+                .map(filingPackageMapper::toResponseFilingPackage)
+                .collect(Collectors.toList()));
 
     }
 
@@ -68,7 +91,11 @@ public class FilingPackageServiceImpl implements FilingPackageService {
     @Override
     public Optional<SubmittedDocument> getSubmittedDocument(String universalId, BigDecimal packageNumber, BigDecimal documentIdentifier) {
 
-        Optional<ReviewFilingPackage> filingPackage = getFilingPackage(universalId, packageNumber);
+        Optional<FilingPackageRequest> request = buildFilingPackageRequest(universalId, packageNumber);
+
+        if (!request.isPresent()) return Optional.empty();
+
+        Optional<ReviewFilingPackage> filingPackage = efilingReviewService.findStatusByPackage(request.get());
 
         if (!filingPackage.isPresent()) return Optional.empty();
 
@@ -96,15 +123,14 @@ public class FilingPackageServiceImpl implements FilingPackageService {
 
     }
 
-    private Optional<ReviewFilingPackage> getFilingPackage(String universalId, BigDecimal packageNumber) {
+    private Optional<FilingPackageRequest> buildFilingPackageRequest(String universalId, BigDecimal packageNumber) {
+
         AccountDetails accountDetails = accountService.getCsoAccountDetails(universalId);
 
         if (accountDetails.getClientId() == null) return Optional.empty();
 
-        FilingPackageRequest request = new FilingPackageRequest(accountDetails.getClientId(), packageNumber);
+        return Optional.of(new FilingPackageRequest(accountDetails.getClientId(), packageNumber));
 
-        return efilingReviewService.findStatusByPackage(request);
-        
     }
 
 }

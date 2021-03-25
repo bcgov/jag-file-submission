@@ -61,8 +61,8 @@ public class PackageReviewPage extends BasePage {
     @FindBy(xpath = "//*[@data-testid='btn-view-receipt']")
     private WebElement viewReceiptButton;
 
-    @FindBy(xpath = "//*[@id='uncontrolled-tab-tabpane-parties']/div/ul/li")
-    private List<WebElement> allPartiesList;
+    @FindBy(id = "uncontrolled-tab-tabpane-parties")
+    private WebElement partiesTable;
 
     @FindBy(id = "filingComments")
     private WebElement filingCommentsTextBox;
@@ -112,12 +112,33 @@ public class PackageReviewPage extends BasePage {
         documentsTab.click();
     }
 
-    public void clickPartiesTab() {
+    public List<String> getAllParties() {
+
         partiesTab.click();
+
+        List<WebElement> tableRows = partiesTable.findElements(By.tagName("li"));
+        logger.info("Total no of rows: {}", tableRows.size());
+
+        List<String> columnValues = new ArrayList<>();
+
+        for (WebElement row : tableRows) {
+            List<WebElement> tableColumns = row.findElements(By.tagName("span"));
+
+            columnValues.addAll(getColumnValues(tableColumns));
+        }
+        return columnValues;
     }
 
-    public String getAllParties() {
-        return allPartiesList.toString();
+    private List<String> getColumnValues(List<WebElement> tableColumns) {
+        List<String> columnValues = new ArrayList<>();
+
+        for (WebElement column : tableColumns) {
+            if (!(column.getText() == null) && !(column.getText().isEmpty())) {
+                columnValues.add(column.getText());
+                logger.info(column.getText() + " ");
+            }
+        }
+        return columnValues;
     }
 
     public void clickFilingCommentsTab() {
