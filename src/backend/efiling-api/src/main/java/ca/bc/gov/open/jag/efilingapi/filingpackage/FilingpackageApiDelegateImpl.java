@@ -25,6 +25,7 @@ import javax.annotation.security.RolesAllowed;
 
 import java.math.BigDecimal;
 import java.text.MessageFormat;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -55,6 +56,25 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
 
         return result.map(ResponseEntity::ok).orElseGet(() -> new ResponseEntity(
                 EfilingErrorBuilder.builder().errorResponse(ErrorResponse.FILING_PACKAGE_NOT_FOUND).create(), HttpStatus.NOT_FOUND));
+    }
+
+    @Override
+    @RolesAllowed("efiling-user")
+    public ResponseEntity<List<FilingPackage>> getFilingPackages(String parentApplication) {
+
+        logger.info("get filing packages request received");
+
+        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
+
+        if(!universalId.isPresent()) return new ResponseEntity(
+                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
+
+
+        Optional<List<FilingPackage>> result = filingPackageService.getFilingPackages(universalId.get(), parentApplication);
+
+        return result.map(ResponseEntity::ok).orElseGet(() -> new ResponseEntity(
+                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.FILING_PACKAGE_NOT_FOUND).create(), HttpStatus.NOT_FOUND));
+
     }
 
     @Override
