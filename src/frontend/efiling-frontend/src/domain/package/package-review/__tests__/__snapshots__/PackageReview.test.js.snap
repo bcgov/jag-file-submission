@@ -289,7 +289,9 @@ exports[`PackageReview Component Matches the snapshot 1`] = `
               </span>
             </div>
             <ul>
-              <li>
+              <li
+                class="undefined"
+              >
                 <span
                   class="label col-sm-4 d-lg-none"
                 >
@@ -1069,7 +1071,9 @@ exports[`PackageReview Component Reload 1`] = `
               </span>
             </div>
             <ul>
-              <li>
+              <li
+                class="undefined"
+              >
                 <span
                   class="label col-sm-4 d-lg-none"
                 >
@@ -1747,7 +1751,9 @@ exports[`PackageReview Component Withdraw document network error 1`] = `
               </span>
             </div>
             <ul>
-              <li>
+              <li
+                class="undefined"
+              >
                 <span
                   class="label col-sm-4 d-lg-none"
                 >

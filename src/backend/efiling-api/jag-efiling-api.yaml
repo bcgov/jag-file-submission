@@ -387,6 +387,29 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GenerateCardUrlResponse"
+  "/filingpackages":
+    get:
+      summary: Get filing packages
+      operationId: GetFilingPackages
+      description: get filing packages from cso
+      tags:
+        - filingPackages
+      parameters:
+        - name: parentApplication
+          in: query
+          description: parent application
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: All filing package details
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FilingPackage"
   "/filingpackages/{packageIdentifier}":
     get:
       summary: Get filing package
