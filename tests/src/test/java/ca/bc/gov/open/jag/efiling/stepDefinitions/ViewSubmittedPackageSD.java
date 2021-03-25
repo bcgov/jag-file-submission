@@ -19,7 +19,8 @@ public class ViewSubmittedPackageSD {
     private final PackageReviewPage packageReviewPage;
 
     private static final String DOWNLOADED_FILES_PATH = System.getProperty("user.dir") + File.separator + "downloadedFiles";
-    private static final String APPLICANT ="Applicant";
+    private static final String APPLICANT = "Applicant";
+
 
     private Logger logger = LoggerFactory.getLogger(ViewSubmittedPackageSD.class);
 
