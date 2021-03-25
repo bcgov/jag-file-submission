@@ -105,7 +105,7 @@ jobs:
       # Optional only for branch on repo
       - name: tag & push efiling-reviewer-api to git container registry
         if: github.event.pull_request.head.repo.full_name == github.repository
-        run: docker tag efiling-reviewer-api:demo docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:demo && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo
+        run: docker tag efiling-reviewer-api:demo docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:demo && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:demo
 
   efiling-frontend-gcr:
     name: Efiling Frontend GCR
