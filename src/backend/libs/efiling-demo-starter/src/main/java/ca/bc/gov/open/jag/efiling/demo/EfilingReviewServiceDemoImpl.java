@@ -21,7 +21,11 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
     @Override
     public Optional<ReviewFilingPackage> findStatusByPackage(FilingPackageRequest filingPackageRequest) {
         if (filingPackageRequest.getPackageNo().equals(BigDecimal.ONE)) {
-            return Optional.of(createReviewPackage());
+            return Optional.of(createReviewPackage("1", true));
+        } else if (filingPackageRequest.getPackageNo().equals(new BigDecimal(2))) {
+            return Optional.of(createReviewPackage("2", false));
+        } else if (filingPackageRequest.getPackageNo().equals(new BigDecimal(3))) {
+            return Optional.of(createReviewPackage("3", false));
         } else {
             return Optional.empty();
         }
@@ -29,7 +33,7 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
 
     @Override
     public List<ReviewFilingPackage> findStatusByClient(FilingPackageRequest filingPackageRequest) {
-        return Collections.singletonList(createReviewPackage());
+        return Arrays.asList(createReviewPackage("1", true), createReviewPackage("2", false),  createReviewPackage("3", true));
     }
 
     @Override
@@ -62,14 +66,14 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
         }
     }
 
-    private ReviewFilingPackage createReviewPackage() {
+    private ReviewFilingPackage createReviewPackage(String packageNo, Boolean hasRegistry) {
         ReviewFilingPackage reviewFilingPackage = new ReviewFilingPackage();
         reviewFilingPackage.setFirstName("Han");
         reviewFilingPackage.setLastName("Solo");
         reviewFilingPackage.setFilingCommentsTxt(MessageFormat.format("Lorem ipsum dolor sit amet, consectetur adipiscing elit, {1} sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.{0}{0}Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", System.lineSeparator(), "<script>alert(\"Hello\");</script>"));
         reviewFilingPackage.setHasChecklist(false);
-        reviewFilingPackage.setHasRegistryNotice(false);
-        reviewFilingPackage.setPackageNo("1");
+        reviewFilingPackage.setHasRegistryNotice(hasRegistry);
+        reviewFilingPackage.setPackageNo(packageNo);
         reviewFilingPackage.setSubmittedDate(DateTime.parse("2020-5-5"));
         reviewFilingPackage.setCourt(createCourt());
         reviewFilingPackage.setParties(createParty());
@@ -77,7 +81,6 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
         reviewFilingPackage.setPayments(createPayment());
         reviewFilingPackage.setPackageLinks(PackageLinks.builder().packageHistoryUrl("http://localhost:8080/wherearemypackage").create());
         reviewFilingPackage.setOrganizations(createOrganizations());
-        reviewFilingPackage.setHasRegistryNotice(true);
         return reviewFilingPackage;
     }
 
