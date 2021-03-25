@@ -87,7 +87,7 @@ jobs:
 
       - name: tag & push efiling-reviewer-api to git container registry
         if: github.event.pull_request.head.repo.full_name == github.repository
-        run: docker tag efiling-reviewer-api:builder docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviwer-api:builder
+        run: docker tag efiling-reviewer-api:builder docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder
 
       - name: Pull efiling-reviewer-api-demo
         run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:demo || true
