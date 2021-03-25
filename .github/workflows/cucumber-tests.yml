@@ -102,6 +102,9 @@ jobs:
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:demo
 
+      - name: Check running containers
+        run: docker ps -a
+
       # Optional only for branch on repo
       - name: tag & push efiling-reviewer-api to git container registry
         if: github.event.pull_request.head.repo.full_name == github.repository
