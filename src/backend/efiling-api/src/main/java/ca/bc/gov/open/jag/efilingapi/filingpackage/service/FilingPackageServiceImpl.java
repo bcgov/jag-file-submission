@@ -62,6 +62,8 @@ public class FilingPackageServiceImpl implements FilingPackageService {
 
         List<ReviewFilingPackage> result = efilingReviewService.findStatusByClient(request.get());
 
+        if (result == null || result.isEmpty()) return Optional.empty();
+
         return Optional.of(result.stream()
                 .map(filingPackageMapper::toResponseFilingPackage)
                 .collect(Collectors.toList()));
