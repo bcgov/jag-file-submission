@@ -24,7 +24,7 @@ public class EfilingReviewServiceDemoImplTest {
 
     @Test
     @DisplayName("OK: with correct id return payload")
-    public void withEmptyCacheShouldReturnPackageOne() {
+    public void requestPackageOneShouldReturnData() {
         Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(BigDecimal.ONE, BigDecimal.ONE));
 
         Assertions.assertTrue(result.isPresent());
@@ -103,7 +103,7 @@ public class EfilingReviewServiceDemoImplTest {
 
     @Test
     @DisplayName("OK: with correct id return payload")
-    public void withEmptyCacheShouldReturnPackageTwoe() {
+    public void requestPackageTwoShouldReturnData() {
         Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(BigDecimal.ONE, new BigDecimal(2)));
 
         Assertions.assertTrue(result.isPresent());
@@ -182,7 +182,7 @@ public class EfilingReviewServiceDemoImplTest {
 
     @Test
     @DisplayName("OK: with correct id return payload")
-    public void withEmptyCacheShouldReturnPackageThree() {
+    public void requestPackageThreeShouldReturnData() {
         Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(BigDecimal.ONE, new BigDecimal(3)));
 
         Assertions.assertTrue(result.isPresent());
