@@ -1,8 +1,6 @@
 package ca.bc.gov.open.jag.efiling.services;
 
 import io.restassured.RestAssured;
-import io.restassured.filter.log.RequestLoggingFilter;
-import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.response.Response;
 import io.restassured.specification.MultiPartSpecification;
 import io.restassured.specification.RequestSpecification;
@@ -20,8 +18,6 @@ public class ExtractDocumentService {
     private static final String X_DOCUMENT_TYPE = "X-Document-Type";
 
     public Response extractDocumentsResponse(UUID transactionId, String documentType, MultiPartSpecification fileSpec) {
-
-        RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
 
         RequestSpecification request = RestAssured
                 .given()
