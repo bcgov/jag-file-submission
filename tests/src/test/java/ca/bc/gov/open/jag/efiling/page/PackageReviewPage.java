@@ -43,6 +43,9 @@ public class PackageReviewPage extends BasePage {
     @FindBy(xpath = "//*[@data-testid='btn-download-document']")
     private WebElement downloadButton;
 
+    @FindBy(id = "uncontrolled-tab-tab-parties")
+    private WebElement partiesTab;
+
     @FindBy(id = "uncontrolled-tab-tab-comments")
     private WebElement filingCommentsTab;
 
@@ -57,6 +60,9 @@ public class PackageReviewPage extends BasePage {
 
     @FindBy(xpath = "//*[@data-testid='btn-view-receipt']")
     private WebElement viewReceiptButton;
+
+    @FindBy(id = "uncontrolled-tab-tabpane-parties")
+    private WebElement partiesTable;
 
     @FindBy(id = "filingComments")
     private WebElement filingCommentsTextBox;
@@ -104,6 +110,35 @@ public class PackageReviewPage extends BasePage {
 
     public void clickDocumentsTab() {
         documentsTab.click();
+    }
+
+    public List<String> getAllParties() {
+
+        partiesTab.click();
+
+        List<WebElement> tableRows = partiesTable.findElements(By.tagName("li"));
+        logger.info("Total no of rows: {}", tableRows.size());
+
+        List<String> columnValues = new ArrayList<>();
+
+        for (WebElement row : tableRows) {
+            List<WebElement> tableColumns = row.findElements(By.tagName("span"));
+
+            columnValues.addAll(getColumnValues(tableColumns));
+        }
+        return columnValues;
+    }
+
+    private List<String> getColumnValues(List<WebElement> tableColumns) {
+        List<String> columnValues = new ArrayList<>();
+
+        for (WebElement column : tableColumns) {
+            if (!(column.getText() == null) && !(column.getText().isEmpty())) {
+                columnValues.add(column.getText());
+                logger.info(column.getText() + " ");
+            }
+        }
+        return columnValues;
     }
 
     public void clickFilingCommentsTab() {

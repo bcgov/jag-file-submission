@@ -82,8 +82,8 @@ public class TestConfig {
         options.setExperimentalOption("prefs", prefs);
         options.setHeadless(true);
         options.addArguments("--window-size=1920,1080");
-        return new ChromeDriver(options);
 
+        return new ChromeDriver(options);
     }
 
     @Bean

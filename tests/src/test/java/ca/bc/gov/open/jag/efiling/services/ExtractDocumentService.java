@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public class ExtractDocumentService {
 
-    @Value("${EFILING_REVIEWER_HOST}")
+    @Value("${EFILING_REVIEWER_HOST:http://localhost:8090}")
     private String eFilingReviewerHost;
 
     private static final String X_TRANSACTION_ID = "X-Transaction-Id";

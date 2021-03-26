@@ -12,6 +12,9 @@ Feature: Recently submitted package details can be viewed
     Then documents details are available in Documents tab
     And document can be downloaded
 
+  Scenario: Validate organization and Individual party type are supported
+    Then Individual and Organization party type details are correct in parties tab
+
   Scenario: Validate Filing Comments are correct in submitted package
     Then comments are available in Filing Comments tab
 
