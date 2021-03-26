@@ -19,4 +19,14 @@ public class SubmissionHelper {
 
     }
 
+    // Different controlName and without mimeType
+    public static MultiPartSpecification fileSpecBuilder(File file, String fileName) {
+
+        return new MultiPartSpecBuilder(file).
+                fileName(fileName).
+                controlName("file").
+                build();
+
+    }
+
 }

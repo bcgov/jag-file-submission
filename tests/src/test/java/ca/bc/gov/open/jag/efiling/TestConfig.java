@@ -60,6 +60,11 @@ public class TestConfig {
     }
 
     @Bean
+    public ExtractDocumentService extractDocumentService() {
+        return new ExtractDocumentService();
+    }
+
+    @Bean
     public static BeanFactoryPostProcessor beanFactoryPostProcessor() {
         return new BrowserScopePostProcessor();
     }
@@ -78,7 +83,6 @@ public class TestConfig {
         options.setHeadless(true);
         options.addArguments("--window-size=1920,1080");
         return new ChromeDriver(options);
-
     }
 
     @Bean

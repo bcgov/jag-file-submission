@@ -66,7 +66,7 @@ export default function DocumentList({
       <ul>
         {documents &&
           documents.map((document) => (
-            <li key={document.identifier}>
+            <li key={document.identifier} className={`${document.status.code}`}>
               <span className="label col-sm-4 d-lg-none">File Name:</span>
               <span className="col-sm-8 col-lg-4 file-cell">
                 <MdDescription size={30} color="#FCBA19" />
