@@ -11,6 +11,7 @@ import { Header, Footer } from "shared-components";
 import AuthenticationGuard from "./domain/authentication/AuthenticationGuard";
 import Home from "./components/page/home/Home";
 import PackageReview from "./domain/package/package-review/PackageReview";
+import SubmissionHistory from "./domain/submission/submission-history/SubmissionHistory";
 
 export default function App() {
   const location = useLocation();
@@ -53,6 +54,9 @@ export default function App() {
           </Route>
           <Route path="/efilinghub/packagereview/:packageId">
             <PackageReview />
+          </Route>
+          <Route path="/efilinghub/submissionhistory">
+            <SubmissionHistory />
           </Route>
         </Switch>
       </AuthenticationGuard>

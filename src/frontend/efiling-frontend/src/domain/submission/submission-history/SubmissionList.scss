@@ -1,0 +1,37 @@
+.ct-submission-list{
+  * {
+    outline: none;
+  }
+  .table {
+    border-collapse: separate;
+    border-spacing:0 10px;
+  }
+  table * {
+    border: none !important;
+  }
+  .table-row {
+    outline: 1px solid lightgray;
+  }
+  .border-left {
+    border-left: 1px solid lightgray !important;
+  }
+  .border-right {
+    border-right: 1px solid lightgray !important;
+  }
+  td {
+    padding: 25px;
+  }
+  th {
+    padding-bottom: 0 !important;
+  }
+  //NOTE: remove these after proper routing complete
+  .file-href {
+    cursor: pointer;
+    color: #1a5a96;
+    text-decoration: underline;
+  }
+  
+  .file-href:focus {
+    outline: 1px dashed grey;
+  }
+}
