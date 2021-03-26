@@ -66,6 +66,10 @@ jag:
           userName: ${CSO_REPORTSERVICE_USERNAME}
           password: ${CSO_REPORTSERVICE_PASSWORD}
           uri: ${CSO_REPORTSERVICE_URI:http://localhost:8091}
+        - client: SEARCH
+          userName: ${CSO_SEARCH_USERNAME}
+          password: ${CSO_SEARCH_PASSWORD}
+          uri: ${CSO_SEARCH_URI:http://localhost:8091}
 
 ceis:
   ceisBasePath: ${CEIS_BASE_PATH}
