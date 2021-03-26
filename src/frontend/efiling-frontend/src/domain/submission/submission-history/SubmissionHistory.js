@@ -32,7 +32,7 @@ export default function SubmissionHistory() {
     } else {
       setVisibleSubmissions(submissions);
     }
-  };
+  }
 
   const searchPackagesElement = (
     <>

@@ -11,6 +11,7 @@ export default function Success({ page: { header, packageRef } }) {
     const url = `${buff.toString("ascii")}?returnUrl=${returnUrl}`;
     window.open(url);
   };
+  
 
   return (
     <main>

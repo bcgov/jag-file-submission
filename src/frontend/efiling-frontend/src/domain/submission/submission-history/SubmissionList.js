@@ -4,6 +4,10 @@ import moment from "moment";
 import "./SubmissionList.scss";
 
 export default function SubmissionList({ submissions }) {
+  function handlePackageSelection(packageNumber) {
+    window.open(`/efilinghub/packagereview/${packageNumber}`, "_blank");
+  }
+
   return (
     <div className="ct-submission-list">
       <div className="table-responsive">
@@ -13,8 +17,6 @@ export default function SubmissionList({ submissions }) {
               <th scope="col">Package #</th>
               <th scope="col">Date Submitted</th>
               <th scope="col">Application</th>
-              <th scope="col">Doc. Type</th>
-              <th scope="col">Status</th>
               <th scope="col">Court Location</th>
             </tr>
           </thead>
@@ -24,13 +26,23 @@ export default function SubmissionList({ submissions }) {
               submissions.map((submission) => (
                 <tr className="table-row">
                   <td className="border-left">
-                    <span className="file-href" role="button" tabIndex={0}>
+                    <span
+                      className="file-href"
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={() => {
+                        handlePackageSelection(submission.packageNumber);
+                      }}
+                      onClick={() => {
+                        handlePackageSelection(submission.packageNumber);
+                      }}
+                    >
                       {submission.packageNumber}
                     </span>
                   </td>
-                  <td>{moment(submission.submittedDate).format("DD-MMM-YYYY")}</td>
-                  <td>xxxxx</td>
-                  <td>xxxxx</td>
+                  <td>
+                    {moment(submission.submittedDate).format("DD-MMM-YYYY")}
+                  </td>
                   <td>xxxxx</td>
                   <td className="border-right">{submission.court.location}</td>
                 </tr>

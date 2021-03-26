@@ -25,14 +25,4 @@
   th {
     padding-bottom: 0 !important;
   }
-  //NOTE: remove these after proper routing complete
-  .file-href {
-    cursor: pointer;
-    color: #1a5a96;
-    text-decoration: underline;
-  }
-  
-  .file-href:focus {
-    outline: 1px dashed grey;
-  }
 }
