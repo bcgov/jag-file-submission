@@ -35,8 +35,6 @@ import java.util.stream.Collectors;
 
 public class CsoReviewServiceImpl implements EfilingReviewService {
 
-
-
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final FilingStatusFacadeBean filingStatusFacadeBean;
