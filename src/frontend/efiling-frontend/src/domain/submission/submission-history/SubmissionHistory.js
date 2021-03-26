@@ -9,7 +9,7 @@ import "./SubmissionHistory.scss";
 export default function SubmissionHistory() {
   const [submissions, setSubmissions] = useState([]);
   const [visibleSubmissions, setVisibleSubmissions] = useState([]);
-  const [search, setSearch] = useState(null);
+  const [search, setSearch] = useState("");
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
 

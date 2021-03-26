@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import moment from "moment";
 import "./SubmissionList.scss";
 
 export default function SubmissionList({ submissions }) {
@@ -27,10 +28,10 @@ export default function SubmissionList({ submissions }) {
                       {submission.packageNumber}
                     </span>
                   </td>
-                  <td>{submission.submittedDate}</td>
+                  <td>{moment(submission.submittedDate).format("DD-MMM-YYYY")}</td>
                   <td>xxxxx</td>
                   <td>xxxxx</td>
-                  <td>{submission.status.description}</td>
+                  <td>xxxxx</td>
                   <td className="border-right">{submission.court.location}</td>
                 </tr>
               ))}
