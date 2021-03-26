@@ -30,4 +30,7 @@ bcgov:
 mailsend:
   baseUrl: ${MAIL_SEND_BASE_URL:http://localhost:8090}
 
-errorEmail:
+erroremail:
+  toEmail: ${ERROR_TO_ADDRESS:test@somewhere.co}
+  fromEmail: ${ERROR_FROM_ADDRESS:test@somewhere.co}
+

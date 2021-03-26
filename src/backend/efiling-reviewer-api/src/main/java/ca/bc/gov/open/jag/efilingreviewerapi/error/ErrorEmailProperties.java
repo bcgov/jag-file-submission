@@ -2,7 +2,7 @@ package ca.bc.gov.open.jag.efilingreviewerapi.error;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(prefix = "errorEmail")
+@ConfigurationProperties(prefix = "erroremail")
 public class ErrorEmailProperties {
 
     private String toEmail;
