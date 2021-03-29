@@ -41,6 +41,7 @@ export default function SubmissionHistory() {
       <span>Package Number</span>
       <br />
       <input
+        data-testid="package-search"
         type="number"
         name="search"
         className="package-search"

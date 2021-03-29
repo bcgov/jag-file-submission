@@ -2,10 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
 import "./SubmissionList.scss";
+import { isClick, isEnter } from "../../../modules/helpers/eventUtil";
 
 export default function SubmissionList({ submissions }) {
-  function handlePackageSelection(packageNumber) {
-    window.open(`/efilinghub/packagereview/${packageNumber}`, "_blank");
+  function handlePackageSelection(packageNumber, e) {
+    if (isClick(e) || isEnter(e)) {
+      window.open(`/efilinghub/packagereview/${packageNumber}`, "_blank");
+    }
   }
 
   return (
@@ -24,17 +27,17 @@ export default function SubmissionList({ submissions }) {
           <tbody>
             {submissions &&
               submissions.map((submission) => (
-                <tr className="table-row">
+                <tr className="table-row" key={submission.packageNumber}>
                   <td className="border-left">
                     <span
                       className="file-href"
                       role="button"
                       tabIndex={0}
-                      onKeyDown={() => {
-                        handlePackageSelection(submission.packageNumber);
+                      onKeyDown={(e) => {
+                        handlePackageSelection(submission.packageNumber, e);
                       }}
-                      onClick={() => {
-                        handlePackageSelection(submission.packageNumber);
+                      onClick={(e) => {
+                        handlePackageSelection(submission.packageNumber, e);
                       }}
                     >
                       {submission.packageNumber}
