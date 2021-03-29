@@ -175,6 +175,7 @@ export default function PackageReview() {
       <span
         className="file-href"
         role="button"
+        data-testid="btn-registry-notice"
         onClick={handleRegistryNotice}
         onKeyDown={handleRegistryNotice}
         tabIndex={0}
