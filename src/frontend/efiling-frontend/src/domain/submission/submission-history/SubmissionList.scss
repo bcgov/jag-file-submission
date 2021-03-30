@@ -1,0 +1,28 @@
+.ct-submission-list{
+  * {
+    outline: none;
+  }
+  .table {
+    border-collapse: separate;
+    border-spacing:0 10px;
+  }
+  table * {
+    border: none !important;
+  }
+  .table-row {
+    outline: 1px solid lightgray;
+  }
+  .border-left {
+    border-left: 1px solid lightgray !important;
+  }
+  .border-right {
+    border-right: 1px solid lightgray !important;
+  }
+  td {
+    padding-top: 25px;
+    padding-bottom: 25px;
+  }
+  th {
+    padding-bottom: 0 !important;
+  }
+}
