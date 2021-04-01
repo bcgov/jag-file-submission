@@ -122,7 +122,7 @@ public class CreateSubmissionTest {
                         .clientId(BigDecimal.TEN)
                         .internalClientNumber(INTERNAL_CLIENT_NUMBER)
                         .create(), true);
-        assertEquals("bnVsbC9wYWNrYWdlcmV2aWV3LzExMDAw", actual.getPackageRef());
+        assertEquals("bnVsbC9wYWNrYWdlcmV2aWV3LzExMDAwP3BhY2thZ2VObz0xMTAwMA==", actual.getPackageRef());
     }
 
 }
