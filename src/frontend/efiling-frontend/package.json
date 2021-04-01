@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "/efilinghub",
   "dependencies": {
-    "@babel/preset-react": "^7.12.1",
+    "@babel/preset-react": "^7.13.13",
     "@bcgov/bootstrap-theme": "github:bcgov/bootstrap-theme",
     "axios": "^0.21.1",
     "axios-auth-refresh": "^2.2.8",
