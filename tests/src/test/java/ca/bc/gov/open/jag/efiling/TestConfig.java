@@ -80,8 +80,9 @@ public class TestConfig {
 
         ChromeOptions options = new ChromeOptions();
         options.setExperimentalOption("prefs", prefs);
-        options.setHeadless(true);
-        options.addArguments("--window-size=1920,1080");
+        options.setHeadless(false);
+        options.addArguments("--start-maximized");
+        // options.addArguments("--window-size=1920,1080");
 
         return new ChromeDriver(options);
     }
@@ -138,6 +139,12 @@ public class TestConfig {
     @Scope("prototype")
     public EfilingAdminHomePage efilingAdminHomePage() {
         return new EfilingAdminHomePage();
+    }
+
+    @Bean
+    @Scope("prototype")
+    public SubmissionHistoryPage submissionHistoryPage() {
+        return new SubmissionHistoryPage();
     }
 
 }
