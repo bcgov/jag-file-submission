@@ -6,13 +6,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ResourceUtils;
 
-import java.io.File;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.stream.Collectors;
 
 @Component
 public class SeedDocumentTypeConfiguration {
@@ -38,22 +39,31 @@ public class SeedDocumentTypeConfiguration {
 
         logger.info("attempting to load document type configuration into store.");
 
-        File resource = ResourceUtils.getFile("classpath:courtDetails.schema.json");
+        InputStream resource = new ClassPathResource(
+                "courtDetails.schema.json").getInputStream();
 
-        if(documentTypeConfigurationRepository.findByDocumentType("RCC") == null) {
+        try ( BufferedReader reader = new BufferedReader(
+                new InputStreamReader(resource)) ) {
 
-            DocumentTypeConfiguration documentTypeConfiguration = DocumentTypeConfiguration
-                    .builder()
-                    .documentType("RCC")
-                    .jsonSchema(new String(Files.readAllBytes(Paths.get(resource.getPath()))))
-                    .create();
+            String jsonSchemaStr = reader.lines()
+                    .collect(Collectors.joining("\n"));
 
-            documentTypeConfigurationRepository.save(documentTypeConfiguration);
 
-            logger.info("successfully loaded document type configuration into store.");
+            if(documentTypeConfigurationRepository.findByDocumentType("RCC") == null) {
 
-        } else {
-            logger.info("configuration is up to date.");
+                DocumentTypeConfiguration documentTypeConfiguration = DocumentTypeConfiguration
+                        .builder()
+                        .documentType("RCC")
+                        .jsonSchema(jsonSchemaStr)
+                        .create();
+
+                documentTypeConfigurationRepository.save(documentTypeConfiguration);
+
+                logger.info("successfully loaded document type configuration into store.");
+
+            } else {
+                logger.info("configuration is up to date.");
+            }
         }
     }
 
