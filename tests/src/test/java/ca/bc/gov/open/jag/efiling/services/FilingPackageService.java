@@ -12,6 +12,22 @@ public class FilingPackageService {
     @Value("${EFILING_HOST:http://localhost:8080}")
     private String eFilingHost;
 
+    public Response getFilingPackages(String accessToken, String parentApp) {
+
+        RequestSpecification request = RestAssured
+                .given()
+                .auth()
+                .preemptive()
+                .oauth2(accessToken);
+
+        return request.queryParam("parentApplication", parentApp)
+                .when()
+                .get(MessageFormat.format("{0}/filingpackages", eFilingHost))
+                .then()
+                .extract()
+                .response();
+    }
+
     public Response getByPackageId(String accessToken, int packageId) {
 
         RequestSpecification request = RestAssured
