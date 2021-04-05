@@ -39,7 +39,7 @@ public class SubmissionHistoryPage extends BasePage {
     @FindBy(xpath = "//input[@data-testid='package-search']")
     private WebElement packageSearchTextField;
 
-    @FindBy(xpath = "//*[@id='root']/main/div/div[1]/button")
+    @FindBy(xpath = "//*[@data-testid='btn-package-search']")
     private WebElement searchButton;
 
     public void signIn() {
