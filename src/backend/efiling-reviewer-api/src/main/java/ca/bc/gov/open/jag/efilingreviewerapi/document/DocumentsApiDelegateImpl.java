@@ -116,7 +116,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
                 ExtractResponse extractedResponse = ExtractResponse
                         .builder()
                         .document(extractRequestCached.get().getDocument())
-                        .formData(buildFormData(response, config))
+                        .formData(buildFormData(response.getProjectFieldsResponse(), config))
                         .extract(extractRequestCached.get().getExtract())
                         .create();
 
