@@ -70,6 +70,12 @@ public class PackageReviewPage extends BasePage {
     @FindBy(xpath = "//*[@data-testid='cso-link']")
     private WebElement linkToCso;
 
+    @FindBy(className = "bcgov-error-background")
+    private WebElement alertComponent;
+
+    @FindBy(xpath = "//*[@data-testid='btn-registry-notice']")
+    private WebElement registryNoticeBtn;
+
     @FindBy(id = "username")
     private WebElement usernameField;
 
@@ -191,6 +197,16 @@ public class PackageReviewPage extends BasePage {
     public String getCurrentPageTitle() {
         return this.driver.getTitle();
     }
+
+    public void clickToDownloadRegistryNotice() throws InterruptedException {
+        wait.until(ExpectedConditions.visibilityOf(alertComponent));
+
+        logger.info("Registry notice alert is visible: {}", alertComponent.isDisplayed());
+        logger.info("Downloaded file name is: {}", registryNoticeBtn.getText());
+        registryNoticeBtn.click();
+        Thread.sleep(1500L);
+    }
+
 
     public void signIn() {
         String packageReviewPageUrl = MessageFormat.format("{0}/{1}", packageReviewUrl, packageId);
