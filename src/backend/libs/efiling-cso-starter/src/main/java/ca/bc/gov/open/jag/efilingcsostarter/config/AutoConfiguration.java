@@ -218,6 +218,12 @@ public class AutoConfiguration {
     }
 
     @Bean
+    public EfilingSearchService efilingSearchService(CSOSearchSoap csoSearchSoap) {
+        return new CsoSearchServiceImpl(csoSearchSoap);
+    }
+
+
+    @Bean
     public EfilingSubmissionService efilingSubmissionService(FilingFacadeBean filingFacadeBean,
                                                              ServiceFacadeBean serviceFacadeBean,
                                                              ServiceMapper serviceMapper,
