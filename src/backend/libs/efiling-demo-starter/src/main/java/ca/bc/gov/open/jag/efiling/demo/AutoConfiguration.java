@@ -69,6 +69,9 @@ public class AutoConfiguration {
     @Bean
     public AccountDetailsCache accountDetailsCache() { return new AccountDetailsCacheImpl(); }
 
+    @Bean
+    public EfilingSearchService efilingSearchService() { return new EfilingSearchServiceDemoImpl(); }
+
     /**
      * Configures the cache manager for demo accounts
      * @param jedisConnectionFactory A jedisConnectionFactory

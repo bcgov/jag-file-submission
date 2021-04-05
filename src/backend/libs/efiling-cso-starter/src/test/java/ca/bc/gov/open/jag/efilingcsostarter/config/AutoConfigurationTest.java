@@ -57,7 +57,11 @@ public class AutoConfigurationTest {
                         "jag.efiling.soap.clients[7].client=REPORT",
                         "jag.efiling.soap.clients[7].userName=username",
                         "jag.efiling.soap.clients[7].password=password",
-                        "jag.efiling.soap.clients[7].uri=http://locahost")
+                        "jag.efiling.soap.clients[7].uri=http://locahost",
+                        "jag.efiling.soap.clients[8].client=SEARCH",
+                        "jag.efiling.soap.clients[8].userName=username",
+                        "jag.efiling.soap.clients[8].password=password",
+                        "jag.efiling.soap.clients[8].uri=http://locahost")
                 .withUserConfiguration(CsoProperties.class);
     }
 
@@ -72,6 +76,7 @@ public class AutoConfigurationTest {
             assertThat(it).hasSingleBean(EfilingCourtService.class);
             assertThat(it).hasSingleBean(EfilingSubmissionService.class);
             assertThat(it).hasSingleBean(EfilingReviewService.class);
+            assertThat(it).hasSingleBean(EfilingSearchService.class);
             assertThat(it).hasSingleBean(AccountDetailsMapper.class);
         });
 

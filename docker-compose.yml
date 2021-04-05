@@ -279,6 +279,17 @@ services:
     networks:
       - fisu-net
 
+  mongo-express:
+    image: 'mongo-express'
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=${MONGO_ROOT_USERNAME:-admin}
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=${MONGO_ROOT_PASSWORD:-admin}
+    ports:
+      - 8001:8081
+    networks:
+      - fisu-net
+
 volumes:
   data-redis:
     driver: local
