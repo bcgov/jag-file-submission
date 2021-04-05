@@ -53,6 +53,7 @@
           ],
           "fieldId": 230
         },
+
         "level": {
           "$id": "#/properties/court/properties/level",
           "type": "string",
