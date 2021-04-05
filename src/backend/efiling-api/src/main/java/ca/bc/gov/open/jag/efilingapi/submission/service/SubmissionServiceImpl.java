@@ -136,9 +136,10 @@ public class SubmissionServiceImpl implements SubmissionService {
                         paymentAdapter::makePayment);
 
         if(isEarlyAdopter) {
+            // TODO: remove ?packageNo= from the url, this is a temp fix to accomodate client that are currently parsing the url to get the id back
             result.setPackageRef(
                     Base64.getEncoder().encodeToString(
-                            MessageFormat.format("{0}/packagereview/{1}",
+                            MessageFormat.format("{0}/packagereview/{1}?packageNo={1}",
                                     navigationProperties.getBaseUrl(),
                                     submitPackageResponse.getTransactionId().toPlainString()).getBytes()));
         } else {
