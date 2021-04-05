@@ -140,4 +140,10 @@ public class TestConfig {
         return new EfilingAdminHomePage();
     }
 
+    @Bean
+    @Scope("prototype")
+    public SubmissionHistoryPage submissionHistoryPage() {
+        return new SubmissionHistoryPage();
+    }
+
 }
