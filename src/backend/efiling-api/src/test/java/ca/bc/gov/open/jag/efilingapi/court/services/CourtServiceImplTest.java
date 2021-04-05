@@ -5,6 +5,7 @@ import ca.bc.gov.open.jag.efilingapi.court.models.IsValidCourtFileNumberRequest;
 import ca.bc.gov.open.jag.efilingapi.court.models.IsValidCourtRequest;
 import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingSearchService;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -18,6 +19,7 @@ public class CourtServiceImplTest {
 
     private static final String COURT_CLASSIFICATION = "classification";
     private static final String COURT_LEVEL = "level";
+    private static final String COURT_OF_APPEAL_LEVEL = "a";
     private static final String COURT_LOCATION = "location";
     public static final String CLASS_DESCRIPTION = "classDescription";
     public static final String COURT_DESCRIPTION = "courtDescription";
@@ -31,11 +33,13 @@ public class CourtServiceImplTest {
 
     @Mock
     private EfilingCourtService efilingCourtServiceMock;
+    @Mock
+    private EfilingSearchService efilingSearchServiceMock;
 
     @BeforeAll
     public void beforeAll() {
 
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
 
         CourtDetails courtDetails = new CourtDetails(COURT_ID, COURT_DESCRIPTION, CLASS_DESCRIPTION, LEVEL_DESCRIPTION);
         Mockito.when(efilingCourtServiceMock.getCourtDescription(
@@ -77,7 +81,8 @@ public class CourtServiceImplTest {
                 Mockito.eq(CASE_2)
         )).thenReturn(false);
 
-        sut = new CourtServiceImpl(efilingCourtServiceMock);
+        Mockito.when(efilingSearchServiceMock.caseNumberExists(Mockito.eq(FILE_NUMBER))).thenReturn(true);
+        sut = new CourtServiceImpl(efilingCourtServiceMock, efilingSearchServiceMock);
 
     }
 
@@ -139,6 +144,21 @@ public class CourtServiceImplTest {
                 .applicationCode(CASE_1)
                 .courtId(COURT_ID)
                 .courtLevel(COURT_LEVEL)
+                .courtClassification(COURT_CLASSIFICATION)
+                .fileNumber(FILE_NUMBER).create());
+
+        Assertions.assertTrue(actual);
+
+    }
+
+    @Test
+    @DisplayName("ok: with Court of Appeal should validate a court file number and return true")
+    public void withCourtOfAppealShouldValidateACourtFileNumberAndReturnTrue() {
+
+        boolean actual = sut.isValidCourtFileNumber(IsValidCourtFileNumberRequest.builder()
+                .applicationCode(CASE_1)
+                .courtId(COURT_ID)
+                .courtLevel(COURT_OF_APPEAL_LEVEL)
                 .courtClassification(COURT_CLASSIFICATION)
                 .fileNumber(FILE_NUMBER).create());
 
