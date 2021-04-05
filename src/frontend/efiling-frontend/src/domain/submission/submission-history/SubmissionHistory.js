@@ -48,6 +48,7 @@ export default function SubmissionHistory() {
         onChange={(e) => setSearch(e.target.value)}
       />
       <Button
+        data-testid="btn-package-search"
         label="Search"
         styling="bcgov-normal-blue btn search-btn"
         onClick={handlePackageSearch}
