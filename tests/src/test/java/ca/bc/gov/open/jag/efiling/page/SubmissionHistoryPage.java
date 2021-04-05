@@ -29,6 +29,13 @@ public class SubmissionHistoryPage extends BasePage {
     @FindBy(id = "kc-login")
     private WebElement signIn;
 
+    @FindBy(className = "submission-list-container")
+    private WebElement submissionList;
+
+    public boolean submissionListIsDisplayed() {
+        return submissionList.isDisplayed();
+    }
+
     public void signIn() {
 
         this.driver.get(submissionHistoryUrl);
