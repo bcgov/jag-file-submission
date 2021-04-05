@@ -80,9 +80,8 @@ public class TestConfig {
 
         ChromeOptions options = new ChromeOptions();
         options.setExperimentalOption("prefs", prefs);
-        options.setHeadless(false);
-        options.addArguments("--start-maximized");
-        // options.addArguments("--window-size=1920,1080");
+        options.setHeadless(true);
+        options.addArguments("--window-size=1920,1080");
 
         return new ChromeDriver(options);
     }
