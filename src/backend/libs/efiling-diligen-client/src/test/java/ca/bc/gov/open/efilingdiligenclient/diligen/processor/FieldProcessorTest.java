@@ -28,7 +28,7 @@ public class FieldProcessorTest {
     @Test
     public void testProduct() throws IOException {
 
-        Path path = Paths.get("src/test/resources/product.json");
+        Path path = Paths.get("src/test/resources/formData.json");
 
         Path path2 = Paths.get("src/test/resources/diligen.answer.1.json");
 
