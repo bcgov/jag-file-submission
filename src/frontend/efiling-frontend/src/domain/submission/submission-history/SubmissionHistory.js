@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Sidecard, Button } from "shared-components";
-import { useLocation, useParams } from "react-router-dom";
-import queryString from "query-string";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import SubmissionList from "./SubmissionList";
 import { getSubmissionHistory } from "./SubmissionHistoryService";
@@ -15,12 +13,8 @@ export default function SubmissionHistory() {
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
 
-  const location = useLocation();
-  const queryParams = queryString.parse(location.search);
-  const { applicationCode } = queryParams;
-
   useEffect(() => {
-    getSubmissionHistory(applicationCode)
+    getSubmissionHistory()
       .then((response) => {
         setSubmissions(response.data);
         setVisibleSubmissions(response.data);
