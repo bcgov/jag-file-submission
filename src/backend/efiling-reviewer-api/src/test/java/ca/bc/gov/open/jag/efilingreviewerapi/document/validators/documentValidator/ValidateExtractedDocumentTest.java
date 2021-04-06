@@ -16,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,6 +30,8 @@ public class ValidateExtractedDocumentTest {
     public static final String RESTRICTED_DOCUMENT = "This is a temporary";
     public static final int NOT_DOCUMENT_TYPE_ID = 123;
     public static final String THE_VALUE = "THIS IS A VALUE";
+    public static final String PLAINTIFF = "PLAINTIFF";
+    public static final String DEFENDANT = "DEFENDANT";
     DocumentValidatorImpl sut;
 
     @Mock
@@ -50,12 +53,26 @@ public class ValidateExtractedDocumentTest {
     public void withValidDocumentExecuteWithoutThrowing() {
 
         List<DiligenAnswerField> answers= new ArrayList<>();
-        DiligenAnswerField answerField = DiligenAnswerField.builder()
+        DiligenAnswerField documentAnswerField = DiligenAnswerField.builder()
                 .id(Keys.ANSWER_DOCUMENT_TYPE_ID)
                 .values(Collections.singletonList(RESPONSE_TO_CIVIL_CLAIM))
                 .create();
 
-        answers.add(answerField);
+        answers.add(documentAnswerField);
+
+        DiligenAnswerField plaintiffAnswerField = DiligenAnswerField.builder()
+                .id(Keys.ANSWER_PLAINTIFF_ID)
+                .values(Collections.singletonList(PLAINTIFF))
+                .create();
+
+        answers.add(plaintiffAnswerField);
+
+        DiligenAnswerField defendantAnswerField = DiligenAnswerField.builder()
+                .id(Keys.ANSWER_DEFENDANT_ID)
+                .values(Collections.singletonList(DEFENDANT))
+                .create();
+
+        answers.add(defendantAnswerField);
 
         DocumentValidationResult actual = sut.validateExtractedDocument(BigDecimal.ZERO ,DOCUMENT_TYPE, answers);
 
@@ -64,7 +81,7 @@ public class ValidateExtractedDocumentTest {
     }
 
     @Test
-    @DisplayName("Error: throws exception when no document type found")
+    @DisplayName("Error: no document type found ")
     public void withInValidDocumentTypeThrowException() {
 
         List<DiligenAnswerField> answers= new ArrayList<>();
@@ -84,7 +101,7 @@ public class ValidateExtractedDocumentTest {
     }
 
     @Test
-    @DisplayName("Error: throws exception when mismatched document type found")
+    @DisplayName("Error: invalid document type found")
     public void withInValidDocumentThrowException() {
 
         List<DiligenAnswerField> answers= new ArrayList<>();
@@ -118,4 +135,59 @@ public class ValidateExtractedDocumentTest {
         Assertions.assertThrows(AiReviewerRestrictedDocumentException.class, () -> sut.validateExtractedDocument(BigDecimal.ONE ,DOCUMENT_TYPE, answers));
 
     }
+
+    @Test
+    @DisplayName("Error: too many plaintiffs found")
+    public void withInvalidPartiesPlaintiffs() {
+
+        List<DiligenAnswerField> answers= new ArrayList<>();
+        DiligenAnswerField documentAnswerField = DiligenAnswerField.builder()
+                .id(Keys.ANSWER_DOCUMENT_TYPE_ID)
+                .values(Collections.singletonList(RESPONSE_TO_CIVIL_CLAIM))
+                .create();
+
+        answers.add(documentAnswerField);
+
+        DiligenAnswerField plaintiffAnswerField = DiligenAnswerField.builder()
+                .id(Keys.ANSWER_PLAINTIFF_ID)
+                .values(Arrays.asList(PLAINTIFF, PLAINTIFF))
+                .create();
+
+        answers.add(plaintiffAnswerField);
+
+        DocumentValidationResult actual = sut.validateExtractedDocument(BigDecimal.ZERO ,DOCUMENT_TYPE, answers);
+
+        Assertions.assertEquals(ValidationTypes.PARTIES_PLAINTIFF, actual.getValidationResults().get(0).getType());
+        Assertions.assertEquals("2", actual.getValidationResults().get(0).getActual());
+        Assertions.assertEquals("1", actual.getValidationResults().get(0).getExpected());
+
+    }
+
+    @Test
+    @DisplayName("Error: too many defendants found")
+    public void withInvalidPartiesDefendants() {
+
+        List<DiligenAnswerField> answers= new ArrayList<>();
+        DiligenAnswerField documentAnswerField = DiligenAnswerField.builder()
+                .id(Keys.ANSWER_DOCUMENT_TYPE_ID)
+                .values(Collections.singletonList(RESPONSE_TO_CIVIL_CLAIM))
+                .create();
+
+        answers.add(documentAnswerField);
+
+        DiligenAnswerField defendantAnswerField = DiligenAnswerField.builder()
+                .id(Keys.ANSWER_DEFENDANT_ID)
+                .values(Arrays.asList(DEFENDANT, DEFENDANT))
+                .create();
+
+        answers.add(defendantAnswerField);
+
+        DocumentValidationResult actual = sut.validateExtractedDocument(BigDecimal.ZERO, DOCUMENT_TYPE, answers);
+
+        Assertions.assertEquals(ValidationTypes.PARTIES_DEFENDANT, actual.getValidationResults().get(0).getType());
+        Assertions.assertEquals("2", actual.getValidationResults().get(0).getActual());
+        Assertions.assertEquals("1", actual.getValidationResults().get(0).getExpected());
+
+    }
+    
 }
