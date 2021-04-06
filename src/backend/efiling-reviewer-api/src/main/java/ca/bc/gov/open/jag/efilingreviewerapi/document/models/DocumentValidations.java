@@ -5,16 +5,16 @@ public class DocumentValidations {
     private String expected;
     private String actual;
 
-    public void setType(ValidationTypes type) {
-        this.type = type;
+    public ValidationTypes getType() {
+        return type;
     }
 
-    public void setExpected(String expected) {
-        this.expected = expected;
+    public String getExpected() {
+        return expected;
     }
 
-    public void setActual(String actual) {
-        this.actual = actual;
+    public String getActual() {
+        return actual;
     }
 
     public DocumentValidations(DocumentValidations.Builder builder) {

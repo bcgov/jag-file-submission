@@ -59,13 +59,17 @@ public class DocumentValidatorImpl implements DocumentValidator {
     }
 
     @Override
-    public void validateExtractedDocument(BigDecimal documentId, String documentType, List<DiligenAnswerField> answers) {
+    public DocumentValidationResult validateExtractedDocument(BigDecimal documentId, String documentType, List<DiligenAnswerField> answers) {
 
         List<DocumentValidations> validationResults = new ArrayList<>();
 
-        validationResults.add(validateDocumentType(documentId, documentType, answers).get());
+        Optional<DocumentValidations> documentTypeResult = validateDocumentType(documentId, documentType, answers);
+
+        documentTypeResult.ifPresent(validationResults::add);
 
         validationResults.addAll(validateParties(answers));
+
+        return new DocumentValidationResult(validationResults);
 
     }
 

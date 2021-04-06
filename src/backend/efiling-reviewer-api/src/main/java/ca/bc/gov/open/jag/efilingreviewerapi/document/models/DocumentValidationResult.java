@@ -6,6 +6,10 @@ public class DocumentValidationResult {
 
     List<DocumentValidations> validationResults;
 
+    public DocumentValidationResult(List<DocumentValidations> validationResults) {
+        this.validationResults = validationResults;
+    }
+
     public List<DocumentValidations> getValidationResults() {
         return validationResults;
     }
