@@ -1,7 +1,9 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.document;
 
+import ca.bc.gov.open.efilingdiligenclient.diligen.model.FormData;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentTypeConfiguration;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.store.DocumentTypeConfigurationRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -48,13 +50,16 @@ public class SeedDocumentTypeConfiguration {
             String jsonSchemaStr = reader.lines()
                     .collect(Collectors.joining("\n"));
 
+            ObjectMapper mapper = new ObjectMapper();
+
+            FormData formData = mapper.readValue(jsonSchemaStr, FormData.class);
 
             if(documentTypeConfigurationRepository.findByDocumentType("RCC") == null) {
 
                 DocumentTypeConfiguration documentTypeConfiguration = DocumentTypeConfiguration
                         .builder()
                         .documentType("RCC")
-                        .jsonSchema(jsonSchemaStr)
+                        .formData(formData)
                         .create();
 
                 documentTypeConfigurationRepository.save(documentTypeConfiguration);
