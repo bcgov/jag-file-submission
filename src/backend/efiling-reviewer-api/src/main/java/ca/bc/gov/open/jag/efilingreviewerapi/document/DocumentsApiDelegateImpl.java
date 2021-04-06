@@ -142,7 +142,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
         if (config == null)
             throw new AiReviewerDocumentConfigException("Document Configuration not found");
 
-        return fieldProcessor.getJson(config.getJsonSchema(),
+        return fieldProcessor.getJson(config.getFormData(),
                 response.getData().getFields());
 
     }
