@@ -1,0 +1,17 @@
+{
+  "properties": {
+    "test": {
+      "type": "string",
+      "fieldId": 229
+    },
+    "test2": {
+      "type": "object",
+      "properties": {
+        "test": {
+          "type": "string",
+          "fieldId": 229
+        }
+      }
+    }
+  }
+}

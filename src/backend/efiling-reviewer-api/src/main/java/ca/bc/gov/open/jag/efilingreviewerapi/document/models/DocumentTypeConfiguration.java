@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.document.models;
 
+import ca.bc.gov.open.efilingdiligenclient.diligen.model.FormData;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 
@@ -12,7 +13,7 @@ public class DocumentTypeConfiguration {
 
     private String documentType;
 
-    private String jsonSchema;
+    private FormData formData;
 
     public DocumentTypeConfiguration() {
         id = UUID.randomUUID();
@@ -21,10 +22,10 @@ public class DocumentTypeConfiguration {
     public DocumentTypeConfiguration(
             @JsonProperty("id") UUID id,
             @JsonProperty("documentType") String documentType,
-            @JsonProperty("jsonSchema") String jsonSchema) {
+            @JsonProperty("formData") FormData formData) {
         this.id = id;
         this.documentType = documentType;
-        this.jsonSchema = jsonSchema;
+        this.formData = formData;
     }
 
     public void setId(UUID id) {
@@ -39,14 +40,14 @@ public class DocumentTypeConfiguration {
         return documentType;
     }
 
-    public String getJsonSchema() {
-        return jsonSchema;
+    public FormData getFormData() {
+        return formData;
     }
 
     public DocumentTypeConfiguration(Builder builder) {
         this();
         this.documentType = builder.documentType;
-        this.jsonSchema = builder.jsonSchema;
+        this.formData = builder.formData;
     }
 
     public static Builder builder() {
@@ -56,15 +57,15 @@ public class DocumentTypeConfiguration {
     public static class Builder {
 
         private String documentType;
-        private String jsonSchema;
+        private FormData formData;
 
         public Builder documentType(String documentType) {
             this.documentType = documentType;
             return this;
         }
 
-        public Builder jsonSchema(String jsonSchema) {
-            this.jsonSchema = jsonSchema;
+        public Builder formData(FormData formData) {
+            this.formData = formData;
             return this;
         }
 
