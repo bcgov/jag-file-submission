@@ -3,10 +3,9 @@ package ca.bc.gov.open.jag.efilingreviewerapi.document.validators.documentValida
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
 import ca.bc.gov.open.efilingdiligenclient.diligen.model.DiligenAnswerField;
 import ca.bc.gov.open.jag.efilingreviewerapi.Keys;
-import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentValidationResult;
+import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentValidation;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.models.ValidationTypes;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidatorImpl;
-import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentTypeMismatchException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerRestrictedDocumentException;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
@@ -74,7 +73,7 @@ public class ValidateExtractedDocumentTest {
 
         answers.add(defendantAnswerField);
 
-        DocumentValidationResult actual = sut.validateExtractedDocument(BigDecimal.ZERO ,DOCUMENT_TYPE, answers);
+        DocumentValidation actual = sut.validateExtractedDocument(BigDecimal.ZERO ,DOCUMENT_TYPE, answers);
 
         Assertions.assertEquals(0, actual.getValidationResults().size());
 
@@ -92,7 +91,7 @@ public class ValidateExtractedDocumentTest {
 
         answers.add(answerField);
 
-        DocumentValidationResult actual = sut.validateExtractedDocument(BigDecimal.ZERO, DOCUMENT_TYPE, answers);
+        DocumentValidation actual = sut.validateExtractedDocument(BigDecimal.ZERO, DOCUMENT_TYPE, answers);
 
         Assertions.assertEquals(ValidationTypes.DOCUMENT_TYPE, actual.getValidationResults().get(0).getType());
         Assertions.assertEquals("No Document Found", actual.getValidationResults().get(0).getActual());
@@ -112,7 +111,7 @@ public class ValidateExtractedDocumentTest {
 
         answers.add(answerField);
 
-        DocumentValidationResult actual = sut.validateExtractedDocument(BigDecimal.ZERO, DOCUMENT_TYPE, answers);
+        DocumentValidation actual = sut.validateExtractedDocument(BigDecimal.ZERO, DOCUMENT_TYPE, answers);
 
         Assertions.assertEquals(ValidationTypes.DOCUMENT_TYPE, actual.getValidationResults().get(0).getType());
         Assertions.assertEquals(NOT_RESPONSE_TO_CIVIL_CLAIM, actual.getValidationResults().get(0).getActual());
@@ -155,7 +154,7 @@ public class ValidateExtractedDocumentTest {
 
         answers.add(plaintiffAnswerField);
 
-        DocumentValidationResult actual = sut.validateExtractedDocument(BigDecimal.ZERO ,DOCUMENT_TYPE, answers);
+        DocumentValidation actual = sut.validateExtractedDocument(BigDecimal.ZERO ,DOCUMENT_TYPE, answers);
 
         Assertions.assertEquals(ValidationTypes.PARTIES_PLAINTIFF, actual.getValidationResults().get(0).getType());
         Assertions.assertEquals("2", actual.getValidationResults().get(0).getActual());
@@ -182,12 +181,12 @@ public class ValidateExtractedDocumentTest {
 
         answers.add(defendantAnswerField);
 
-        DocumentValidationResult actual = sut.validateExtractedDocument(BigDecimal.ZERO, DOCUMENT_TYPE, answers);
+        DocumentValidation actual = sut.validateExtractedDocument(BigDecimal.ZERO, DOCUMENT_TYPE, answers);
 
         Assertions.assertEquals(ValidationTypes.PARTIES_DEFENDANT, actual.getValidationResults().get(0).getType());
         Assertions.assertEquals("2", actual.getValidationResults().get(0).getActual());
         Assertions.assertEquals("1", actual.getValidationResults().get(0).getExpected());
 
     }
-    
+
 }

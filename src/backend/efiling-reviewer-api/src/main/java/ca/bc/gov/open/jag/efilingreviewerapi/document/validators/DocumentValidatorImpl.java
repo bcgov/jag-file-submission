@@ -5,8 +5,8 @@ import ca.bc.gov.open.clamav.starter.VirusDetectedException;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
 import ca.bc.gov.open.efilingdiligenclient.diligen.model.DiligenAnswerField;
 import ca.bc.gov.open.jag.efilingreviewerapi.Keys;
+import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentValidation;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentValidationResult;
-import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentValidations;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.models.ValidationTypes;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerRestrictedDocumentException;
@@ -59,21 +59,21 @@ public class DocumentValidatorImpl implements DocumentValidator {
     }
 
     @Override
-    public DocumentValidationResult validateExtractedDocument(BigDecimal documentId, String documentType, List<DiligenAnswerField> answers) {
+    public DocumentValidation validateExtractedDocument(BigDecimal documentId, String documentType, List<DiligenAnswerField> answers) {
 
-        List<DocumentValidations> validationResults = new ArrayList<>();
+        List<DocumentValidationResult> validationResults = new ArrayList<>();
 
-        Optional<DocumentValidations> documentTypeResult = validateDocumentType(documentId, documentType, answers);
+        Optional<DocumentValidationResult> documentTypeResult = validateDocumentType(documentId, documentType, answers);
 
         documentTypeResult.ifPresent(validationResults::add);
 
         validationResults.addAll(validateParties(answers));
 
-        return new DocumentValidationResult(validationResults);
+        return new DocumentValidation(validationResults);
 
     }
 
-    private Optional<DocumentValidations> validateDocumentType(BigDecimal documentId, String documentType, List<DiligenAnswerField> answers) {
+    private Optional<DocumentValidationResult> validateDocumentType(BigDecimal documentId, String documentType, List<DiligenAnswerField> answers) {
 
         Optional<String> returnedDocumentType = findDocumentType(answers);
 
@@ -86,7 +86,7 @@ public class DocumentValidatorImpl implements DocumentValidator {
             }
             logger.warn("Document {} of type {} was expected but {} was returned.", documentId, Keys.ACCEPTED_DOCUMENT_TYPES.get(documentType), returnedDocumentType);
 
-            return Optional.of(DocumentValidations.builder()
+            return Optional.of(DocumentValidationResult.builder()
                     .actual((returnedDocumentType.orElse("No Document Found")))
                     .expected(Keys.ACCEPTED_DOCUMENT_TYPES.get(documentType))
                     .type(ValidationTypes.DOCUMENT_TYPE)
@@ -95,12 +95,12 @@ public class DocumentValidatorImpl implements DocumentValidator {
         return Optional.empty();
     }
 
-    private List<DocumentValidations> validateParties(List<DiligenAnswerField> answers) {
+    private List<DocumentValidationResult> validateParties(List<DiligenAnswerField> answers) {
 
-        List<DocumentValidations> validationResults = new ArrayList<>();
+        List<DocumentValidationResult> validationResults = new ArrayList<>();
 
         if (findPartiesByType(answers, Keys.ANSWER_PLAINTIFF_ID).size() > 1) {
-            validationResults.add(DocumentValidations.builder()
+            validationResults.add(DocumentValidationResult.builder()
                     .actual(String.valueOf(findPartiesByType(answers, Keys.ANSWER_PLAINTIFF_ID).size()))
                     .expected("1")
                     .type(ValidationTypes.PARTIES_PLAINTIFF)
@@ -108,7 +108,7 @@ public class DocumentValidatorImpl implements DocumentValidator {
         }
 
         if (findPartiesByType(answers, Keys.ANSWER_DEFENDANT_ID).size() > 1) {
-            validationResults.add(DocumentValidations.builder()
+            validationResults.add(DocumentValidationResult.builder()
                     .actual(String.valueOf(findPartiesByType(answers, Keys.ANSWER_DEFENDANT_ID).size()))
                     .expected("1")
                     .type(ValidationTypes.PARTIES_DEFENDANT)

@@ -1,20 +1,55 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.document.models;
 
-import java.util.List;
-
 public class DocumentValidationResult {
+    private ValidationTypes type;
+    private String expected;
+    private String actual;
 
-    List<DocumentValidations> validationResults;
-
-    public DocumentValidationResult(List<DocumentValidations> validationResults) {
-        this.validationResults = validationResults;
+    public ValidationTypes getType() {
+        return type;
     }
 
-    public List<DocumentValidations> getValidationResults() {
-        return validationResults;
+    public String getExpected() {
+        return expected;
     }
 
-    public void setValidationResults(List<DocumentValidations> validationResults) {
-        this.validationResults = validationResults;
+    public String getActual() {
+        return actual;
+    }
+
+    public DocumentValidationResult(DocumentValidationResult.Builder builder) {
+        this.type = builder.type;
+        this.expected = builder.expected;
+        this.actual = builder.actual;
+    }
+
+    public static DocumentValidationResult.Builder builder() {
+        return new DocumentValidationResult.Builder();
+    }
+
+    public static class Builder {
+        private ValidationTypes type;
+        private String expected;
+        private String actual;
+
+        public DocumentValidationResult.Builder type(ValidationTypes type) {
+            this.type = type;
+            return this;
+        }
+
+        public DocumentValidationResult.Builder expected(String expected) {
+            this.expected = expected;
+            return this;
+        }
+
+        public DocumentValidationResult.Builder actual(String actual) {
+            this.actual = actual;
+            return this;
+        }
+
+        public DocumentValidationResult create() {
+            return new DocumentValidationResult(this);
+        }
+
     }
 }
