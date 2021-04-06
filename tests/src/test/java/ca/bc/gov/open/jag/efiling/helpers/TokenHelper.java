@@ -18,8 +18,6 @@ public class TokenHelper {
 
     public static final String CLIENT_ID = "client_id";
     public static final String GRANT_TYPE = "grant_type";
-    public static final String USERNAME = "username";
-    public static final String PASSWORD = "password";
 
     public static Response getUserAccessToken(String keycloakHost, String keycloakRealm, String username, String password, String clientId) {
 
@@ -31,8 +29,8 @@ public class TokenHelper {
             RequestSpecification request = RestAssured.given()
                     .formParam(CLIENT_ID, clientId)
                     .formParam(GRANT_TYPE, "password")
-                    .formParam(USERNAME, username)
-                    .formParam(PASSWORD, password);
+                    .formParam("username", username)
+                    .formParam("password", password);
 
             return request.when().post(uriBuilder.build().toURL().toString()).then()
                     .extract().response();
