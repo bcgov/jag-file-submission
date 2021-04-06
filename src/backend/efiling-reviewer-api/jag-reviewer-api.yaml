@@ -8,6 +8,8 @@ servers:
 tags:
   - name: document
     description: Endpoints exposed to review document
+  - name: admin
+    description: Endpoints to admin efiling reviewer api
 paths:
   "/documents/extract":
     post:
@@ -56,6 +58,19 @@ paths:
       responses:
         "204":
           description: Document Event acknoledged
+  "/documentTypeConfigurations":
+    get:
+      summary: list all the document configuration
+      operationId: GetDocumentConfigurations
+      tags:
+        - admin
+      responses:
+        "200":
+          description: a list of document configuration
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DocumentTypeConfigurationList"
 components:
   parameters:
     xTransactionId:
@@ -123,6 +138,20 @@ components:
         documentId:
           type: number
           format: integer
+    DocumentTypeConfiguration:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        documentType:
+          type: string
+        formData:
+          type: object
+    DocumentTypeConfigurationList:
+      type: array
+      items:
+        $ref: "#/components/schemas/DocumentTypeConfiguration"
     Extract:
       type: object
       required:
@@ -135,4 +164,3 @@ components:
         transactionId:
           type: string
           format: uuid
-    
