@@ -9,7 +9,10 @@ import ca.bc.gov.open.jag.efilingdiligenclient.api.model.ProjectFieldsResponseDa
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentEvent;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.DocumentsApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.models.Document;
+import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentTypeConfiguration;
+import ca.bc.gov.open.jag.efilingreviewerapi.document.store.DocumentTypeConfigurationRepository;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidator;
+import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentConfigException;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractMapper;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractMapperImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapper;
@@ -54,6 +57,9 @@ public class DocumentEventTest {
     @Mock
     private StringRedisTemplate stringRedisTemplateMock;
 
+    @Mock
+    private DocumentTypeConfigurationRepository documentTypeConfigurationRepositoryMock;
+
     @BeforeAll
     public void beforeAll() {
 
@@ -68,6 +74,13 @@ public class DocumentEventTest {
         result.put("test", "test");
 
         Mockito.when(fieldProcessorMock.getJson(Mockito.any(), Mockito.any())).thenReturn(result);
+
+        Mockito.when(diligenServiceMock.getDocumentDetails(ArgumentMatchers.eq(BigDecimal.ONE))).thenReturn(DiligenDocumentDetails.builder().create());
+        Mockito.when(diligenServiceMock.getDocumentDetails(ArgumentMatchers.eq(BigDecimal.TEN))).thenReturn(DiligenDocumentDetails.builder().create());
+
+
+        DocumentTypeConfiguration configuration = DocumentTypeConfiguration.builder().create();
+        Mockito.when(documentTypeConfigurationRepositoryMock.findByDocumentType(Mockito.eq("TYPE"))).thenReturn(configuration);
 
         ProjectFieldsResponse projectFieldResponse = new ProjectFieldsResponse();
         ProjectFieldsResponseData data = new ProjectFieldsResponseData();
@@ -87,7 +100,13 @@ public class DocumentEventTest {
                         .create())
                 .create()));
 
-        sut = new DocumentsApiDelegateImpl(diligenServiceMock, extractRequestMapper, extractStoreMock, stringRedisTemplateMock, fieldProcessorMock, documentValidatorMock);
+        Mockito.when(extractStoreMock.get(Mockito.eq(BigDecimal.TEN))).thenReturn(Optional.of(ExtractRequest.builder()
+                .document(Document.builder()
+                        .type("NO-CONFIG")
+                        .create())
+                .create()));
+
+        sut = new DocumentsApiDelegateImpl(diligenServiceMock, extractRequestMapper, extractStoreMock, stringRedisTemplateMock, fieldProcessorMock, documentValidatorMock, documentTypeConfigurationRepositoryMock);
 
     }
 
@@ -99,8 +118,18 @@ public class DocumentEventTest {
         documentEvent.setDocumentId(BigDecimal.ONE);
         documentEvent.setStatus("Processed");
         ResponseEntity<Void> actual = sut.documentEvent(UUID.randomUUID(), documentEvent);
-
         Assertions.assertEquals(HttpStatus.NO_CONTENT, actual.getStatusCode());
+
+    }
+
+    @Test
+    @DisplayName("400: error when event is not present")
+    public void testErrorEvent() {
+
+        DocumentEvent documentEvent = new DocumentEvent();
+        documentEvent.setDocumentId(BigDecimal.TEN);
+        documentEvent.setStatus("Processed");
+        Assertions.assertThrows(AiReviewerDocumentConfigException.class, () -> sut.documentEvent(UUID.randomUUID(), documentEvent));
 
     }
 
