@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
+import ca.bc.gov.open.jag.efiling.Keys;
 import ca.bc.gov.open.jag.efiling.models.UserIdentity;
 import ca.bc.gov.open.jag.efiling.services.FilingPackageService;
 import ca.bc.gov.open.jag.efiling.services.OauthService;
@@ -9,22 +10,20 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.http.HttpStatus;
 import org.junit.Assert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GetFilingPackageByIdSD {
 
     private final OauthService oauthService;
     private UserIdentity actualUserIdentity;
     private FilingPackageService filingPackageService;
-
-    private static final String DESCRIPTION = "DESCRIPTION";
-
     private Response actualFilingPackageResponse;
     private JsonPath actualFilingPackageResponseJsonPath;
 
-    public Logger logger = LogManager.getLogger(GetFilingPackageByIdSD.class);
+    private final Logger logger = LoggerFactory.getLogger(GetFilingPackageByIdSD.class);
 
     public GetFilingPackageByIdSD(OauthService oauthService, FilingPackageService filingPackageService) {
         this.oauthService = oauthService;
@@ -54,7 +53,7 @@ public class GetFilingPackageByIdSD {
 
         actualFilingPackageResponseJsonPath = new JsonPath(actualFilingPackageResponse.asString());
 
-        Assert.assertEquals(200, actualFilingPackageResponse.getStatusCode());
+        Assert.assertEquals(HttpStatus.SC_OK, actualFilingPackageResponse.getStatusCode());
         Assert.assertEquals("application/json", actualFilingPackageResponse.getContentType());
 
         //Package details
@@ -77,11 +76,11 @@ public class GetFilingPackageByIdSD {
         Assert.assertEquals("F", actualFilingPackageResponseJsonPath.get("court.courtClass"));
         Assert.assertEquals("DIVISION", actualFilingPackageResponseJsonPath.get("court.division"));
         Assert.assertEquals("123", actualFilingPackageResponseJsonPath.get("court.fileNumber"));
-        Assert.assertEquals(DESCRIPTION, actualFilingPackageResponseJsonPath.get("court.participatingClass"));
+        Assert.assertEquals(Keys.DESCRIPTION, actualFilingPackageResponseJsonPath.get("court.participatingClass"));
         Assert.assertEquals(Integer.valueOf(1), actualFilingPackageResponseJsonPath.get("court.agencyId"));
-        Assert.assertEquals(DESCRIPTION, actualFilingPackageResponseJsonPath.get("court.locationDescription"));
-        Assert.assertEquals(DESCRIPTION, actualFilingPackageResponseJsonPath.get("court.levelDescription"));
-        Assert.assertEquals(DESCRIPTION, actualFilingPackageResponseJsonPath.get("court.classDescription"));
+        Assert.assertEquals(Keys.DESCRIPTION, actualFilingPackageResponseJsonPath.get("court.locationDescription"));
+        Assert.assertEquals(Keys.DESCRIPTION, actualFilingPackageResponseJsonPath.get("court.levelDescription"));
+        Assert.assertEquals(Keys.DESCRIPTION, actualFilingPackageResponseJsonPath.get("court.classDescription"));
 
         //Documents
         Assert.assertEquals("1", actualFilingPackageResponseJsonPath.get("documents.identifier[0]"));

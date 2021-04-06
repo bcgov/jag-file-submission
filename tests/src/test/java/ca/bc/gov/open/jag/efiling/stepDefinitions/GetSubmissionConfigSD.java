@@ -11,9 +11,9 @@ import io.cucumber.java.en.When;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.MultiPartSpecification;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
@@ -26,14 +26,10 @@ public class GetSubmissionConfigSD {
     private final OauthService oauthService;
     private final SubmissionService submissionService;
     private final UUID actualTransactionId;
-
-    private static final String RESPONSE_NAVIGATION_URL = "http//somewhere.com";
-    private static String CONFIG_PATH = "config";
-
     private UserIdentity actualUserIdentity;
     private Response actualSubmissionDetailsResponse;
 
-    public Logger logger = LogManager.getLogger(GetSubmissionConfigSD.class);
+    private final Logger logger = LoggerFactory.getLogger(GetSubmissionConfigSD.class);
 
     public GetSubmissionConfigSD(OauthService oauthService, SubmissionService submissionService) {
         this.oauthService = oauthService;
@@ -67,7 +63,7 @@ public class GetSubmissionConfigSD {
 
 
         actualSubmissionDetailsResponse = submissionService.getSubmissionDetailsResponse(actualUserIdentity.getAccessToken(),actualTransactionId,
-                actualSubmissionId, CONFIG_PATH);
+                actualSubmissionId, Keys.CONFIG_PATH);
 
         logger.info("Api response: {}", actualSubmissionDetailsResponse.asString());
 
@@ -84,9 +80,9 @@ public class GetSubmissionConfigSD {
         Assert.assertEquals("http://localhost/cso", actualSubmissionDetailsJsonPath.get("csoBaseUrl"));
 
 
-        Assert.assertEquals(RESPONSE_NAVIGATION_URL, actualSubmissionDetailsJsonPath.get("navigationUrls.success"));
-        Assert.assertEquals(RESPONSE_NAVIGATION_URL, actualSubmissionDetailsJsonPath.get("navigationUrls.error"));
-        Assert.assertEquals(RESPONSE_NAVIGATION_URL, actualSubmissionDetailsJsonPath.get("navigationUrls.cancel"));
+        Assert.assertEquals(Keys.RESPONSE_NAVIGATION_URL, actualSubmissionDetailsJsonPath.get("navigationUrls.success"));
+        Assert.assertEquals(Keys.RESPONSE_NAVIGATION_URL, actualSubmissionDetailsJsonPath.get("navigationUrls.error"));
+        Assert.assertEquals(Keys.RESPONSE_NAVIGATION_URL, actualSubmissionDetailsJsonPath.get("navigationUrls.cancel"));
 
         logger.info("Response matched requirements");
 

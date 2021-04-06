@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efiling.services;
 
+import ca.bc.gov.open.jag.efiling.Keys;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -22,7 +23,7 @@ public class FilingPackageService {
 
         return request.queryParam("parentApplication", parentApp)
                 .when()
-                .get(MessageFormat.format("{0}/filingpackages", eFilingHost))
+                .get(MessageFormat.format("{0}/{1}", eFilingHost, Keys.FILING_PACKAGES_PATH))
                 .then()
                 .extract()
                 .response();

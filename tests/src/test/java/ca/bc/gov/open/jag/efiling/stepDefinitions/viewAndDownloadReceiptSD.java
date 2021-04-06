@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
+import ca.bc.gov.open.jag.efiling.Keys;
 import ca.bc.gov.open.jag.efiling.helpers.FileDownloadHelper;
 import ca.bc.gov.open.jag.efiling.page.PackageReviewPage;
 import io.cucumber.java.en.And;
@@ -14,9 +15,7 @@ public class viewAndDownloadReceiptSD {
 
     private final PackageReviewPage packageReviewPage;
 
-    private Logger logger = LoggerFactory.getLogger(viewAndDownloadReceiptSD.class);
-    private static final String DOWNLOADED_FILES_PATH = System.getProperty("user.dir") + File.separator + "downloadedFiles";
-
+    private final Logger logger = LoggerFactory.getLogger(viewAndDownloadReceiptSD.class);
 
     public viewAndDownloadReceiptSD(PackageReviewPage packageReviewPage) {
         this.packageReviewPage = packageReviewPage;
@@ -33,7 +32,7 @@ public class viewAndDownloadReceiptSD {
         packageReviewPage.clickToDownloadReceipt();
 
         FileDownloadHelper fileDownloadHelper = new FileDownloadHelper();
-        File downloadedFile = fileDownloadHelper.downloadFile(DOWNLOADED_FILES_PATH);
+        File downloadedFile = fileDownloadHelper.downloadFile(Keys.BASE_PATH + Keys.DOWNLOADED_FILES_PATH);
 
         logger.info("Downloaded file name is: {}", downloadedFile.getName());
         Assert.assertEquals("PaymentReceipt.pdf", downloadedFile.getName());

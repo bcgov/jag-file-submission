@@ -25,13 +25,12 @@ public class CreatePaymentServiceSD {
 
     private final OauthService oauthService;
     private final SubmissionService submissionService;
-    private static final String SUBMIT_PATH = "submit";
     private final UUID actualTransactionId;
 
     private UserIdentity actualUserIdentity;
     private Response actualSubmitResponse;
 
-    public Logger logger = LoggerFactory.getLogger(CreatePaymentServiceSD.class);
+    private final Logger logger = LoggerFactory.getLogger(CreatePaymentServiceSD.class);
 
     public CreatePaymentServiceSD(OauthService oauthService, SubmissionService submissionService) {
         this.oauthService = oauthService;
@@ -64,8 +63,8 @@ public class CreatePaymentServiceSD {
                 actualUserIdentity.getAccessToken(), actualSubmissionId);
 
 
-        actualSubmitResponse = submissionService.createPaymentServiceResponse(actualUserIdentity.getAccessToken(),actualTransactionId,
-                actualSubmissionId, SUBMIT_PATH);
+        actualSubmitResponse = submissionService.createPaymentServiceResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
+                actualSubmissionId, Keys.SUBMIT_PATH);
 
         logger.info("Api response status code: {}", actualSubmitResponse.getStatusCode());
         logger.info("Api response: {}", actualSubmitResponse.asString());

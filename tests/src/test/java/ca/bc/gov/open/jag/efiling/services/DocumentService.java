@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efiling.services;
 
+import ca.bc.gov.open.jag.efiling.Keys;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -23,7 +24,7 @@ public class DocumentService {
         return request.queryParam("courtLevel", courtLevel)
                 .queryParam("courtClassification", courtClassification)
                 .when()
-                .get(MessageFormat.format("{0}/documents/types", eFilingHost))
+                .get(MessageFormat.format("{0}/{1}", eFilingHost, Keys.DOCUMENTS_TYPES_PATH))
                 .then()
                 .extract()
                 .response();
