@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
+import ca.bc.gov.open.jag.efiling.Keys;
 import com.google.common.collect.ImmutableList;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -14,10 +15,6 @@ public class UploadDocumentUsingUploadLinkSD {
 
     private ca.bc.gov.open.jag.efiling.page.PackageConfirmationPage packageConfirmationPage;
     private ca.bc.gov.open.jag.efiling.page.DocumentUploadPage documentUploadPage;
-
-    private static final String BASE_PATH = "user.dir";
-    private static final String SECOND_PDF_PATH = "/src/test/resources/data/test-document-additional.pdf";
-
     private final List<String> expectedUploadedFilesList = ImmutableList.of("test-document.pdf", "test-document-additional.pdf");
 
     Logger log = LogManager.getLogger(UploadDocumentUsingUploadLinkSD.class);
@@ -33,7 +30,7 @@ public class UploadDocumentUsingUploadLinkSD {
         this.packageConfirmationPage.verifyContinuePaymentBtnIsEnabled();
         this.packageConfirmationPage.clickUploadLink();
 
-        String filePath = System.getProperty(BASE_PATH) + SECOND_PDF_PATH;
+        String filePath = Keys.BASE_PATH + Keys.SECOND_PDF_PATH;
         this.documentUploadPage.selectFileToUpload(filePath);
 
         this.documentUploadPage.clickIsAmendmentRadioBtn();

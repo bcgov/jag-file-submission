@@ -27,11 +27,7 @@ public class SubmissionService {
     @Value("classpath:data/test-document-additional.pdf")
     File additionalPdfDocument;
 
-    private static final String X_TRANSACTION_ID = "X-Transaction-Id";
-    private static final String X_USER_ID = "X-User-Id";
-    private static final String MESSAGE_FORMAT_WITH_SUBID_AND_PATH = "{0}/submission/{1}/{2}";
-
-    private Logger logger = LoggerFactory.getLogger(SubmissionService.class);
+    private final Logger logger = LoggerFactory.getLogger(SubmissionService.class);
 
     public Response documentUploadResponse(String accessToken, UUID transactionId, String universalId, MultiPartSpecification fileSpec) {
 
@@ -39,8 +35,8 @@ public class SubmissionService {
 
         RequestSpecification request = RestAssured.given().auth().preemptive()
                 .oauth2(accessToken)
-                .header(X_TRANSACTION_ID, transactionId)
-                .header(X_USER_ID, universalId)
+                .header(Keys.X_TRANSACTION_ID, transactionId)
+                .header(Keys.X_USER_ID, universalId)
                 .multiPart(fileSpec);
 
         return request.when().post(MessageFormat.format("{0}/submission/documents", eFilingHost))
@@ -60,8 +56,8 @@ public class SubmissionService {
                 .preemptive()
                 .oauth2(accessToken)
                 .contentType(ContentType.JSON)
-                .header(X_TRANSACTION_ID, transactionId)
-                .header(X_USER_ID, universalId)
+                .header(Keys.X_TRANSACTION_ID, transactionId)
+                .header(Keys.X_USER_ID, universalId)
                 .body(PayloadHelper.generateUrlPayload(Keys.TEST_DOCUMENT_PDF));
 
         return request
@@ -82,11 +78,11 @@ public class SubmissionService {
                 .auth()
                 .preemptive()
                 .oauth2(accessToken)
-                .header(X_TRANSACTION_ID, transactionId);
+                .header(Keys.X_TRANSACTION_ID, transactionId);
 
         return request
                 .when()
-                .get(MessageFormat.format(MESSAGE_FORMAT_WITH_SUBID_AND_PATH, eFilingHost,submissionId, path))
+                .get(MessageFormat.format(Keys.MESSAGE_FORMAT_WITH_SUB_ID_AND_PATH, eFilingHost,submissionId, path))
                 .then()
                 .extract()
                 .response();
@@ -103,12 +99,12 @@ public class SubmissionService {
                 .preemptive()
                 .oauth2(accessToken)
                 .contentType(ContentType.JSON)
-                .header(X_TRANSACTION_ID, transactionId)
+                .header(Keys.X_TRANSACTION_ID, transactionId)
                 .body(new ObjectMapper().createObjectNode());
 
         return request
                 .when()
-                .post(MessageFormat.format(MESSAGE_FORMAT_WITH_SUBID_AND_PATH, eFilingHost,submissionId, path))
+                .post(MessageFormat.format(Keys.MESSAGE_FORMAT_WITH_SUB_ID_AND_PATH, eFilingHost,submissionId, path))
                 .then()
                 .extract()
                 .response();
@@ -126,12 +122,12 @@ public class SubmissionService {
                 .auth()
                 .preemptive()
                 .oauth2(accessToken)
-                .header(X_TRANSACTION_ID, transactionId)
+                .header(Keys.X_TRANSACTION_ID, transactionId)
                 .multiPart(fileSpec);
 
         return request
                 .when()
-                .post(MessageFormat.format(MESSAGE_FORMAT_WITH_SUBID_AND_PATH, eFilingHost,submissionId, path))
+                .post(MessageFormat.format(Keys.MESSAGE_FORMAT_WITH_SUB_ID_AND_PATH, eFilingHost,submissionId, path))
                 .then()
                 .extract()
                 .response();
@@ -149,12 +145,12 @@ public class SubmissionService {
                 .preemptive()
                 .oauth2(accessToken)
                 .contentType(ContentType.JSON)
-                .header(X_TRANSACTION_ID, transactionId)
+                .header(Keys.X_TRANSACTION_ID, transactionId)
                 .body(PayloadHelper.updateDocumentProperties(Keys.TEST_DOCUMENT_PDF));
 
         return request
                 .when()
-                .post(MessageFormat.format(MESSAGE_FORMAT_WITH_SUBID_AND_PATH, eFilingHost,submissionId, path))
+                .post(MessageFormat.format(Keys.MESSAGE_FORMAT_WITH_SUB_ID_AND_PATH, eFilingHost,submissionId, path))
                 .then()
                 .extract()
                 .response();

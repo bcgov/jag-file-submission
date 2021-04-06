@@ -15,8 +15,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
-import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Configuration
 public class TestConfig {
@@ -26,8 +28,6 @@ public class TestConfig {
 
     @Value("${AUTH_PROVIDER:keycloak}")
     private String provider;
-
-    private static final String DOWNLOADED_FILES_PATH = System.getProperty("user.dir") + File.separator + "downloadedFiles";
 
     @Bean
     public OauthService oauthService() {
@@ -76,7 +76,7 @@ public class TestConfig {
 
         Map<String, Object> prefs = new HashMap<String, Object>();
         prefs.put("profile.default_content_settings.popups", 0);
-        prefs.put("download.default_directory", DOWNLOADED_FILES_PATH);
+        prefs.put("download.default_directory", Keys.BASE_PATH + Keys.DOWNLOADED_FILES_PATH);
 
         ChromeOptions options = new ChromeOptions();
         options.setExperimentalOption("prefs", prefs);
