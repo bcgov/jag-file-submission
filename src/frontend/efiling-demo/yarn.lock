@@ -1668,7 +1668,7 @@
   dependencies:
     type-detect "4.0.8"
 
-"@storybook/addon-actions@^6.1.15":
+"@storybook/addon-actions@^6.2.3":
   version "6.2.3"
   resolved "https://registry.yarnpkg.com/@storybook/addon-actions/-/addon-actions-6.2.3.tgz#9d31843c4eb0f24c8d1dc891f5bebe577d117296"
   integrity sha512-RXjTNH+YUYxnOzvfJ0NllJ3+jvb9R8kNq74bS9gDRvg5WY0SFIeN+Eh11wW3PJvmx15xO1+ALJjpCGRjcKzWiQ==
