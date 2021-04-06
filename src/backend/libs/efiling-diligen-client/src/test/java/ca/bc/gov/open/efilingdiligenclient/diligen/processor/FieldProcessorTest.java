@@ -1,10 +1,10 @@
 package ca.bc.gov.open.efilingdiligenclient.diligen.processor;
 
+import ca.bc.gov.open.efilingdiligenclient.diligen.model.FormData;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.model.Field;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.json.JSONException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -26,24 +26,23 @@ public class FieldProcessorTest {
     }
 
     @Test
-    public void test() throws IOException, JSONException {
+    public void testProduct() throws IOException {
 
-
-        Path path = Paths.get("src/test/resources/courtDetails.schema.json");
+        Path path = Paths.get("src/test/resources/product.json");
 
         Path path2 = Paths.get("src/test/resources/diligen.answer.1.json");
 
-
         ObjectMapper mapper = new ObjectMapper();
+
+        FormData formData = mapper.readValue(new String(Files.readAllBytes(path)), FormData.class);
 
         List<Field> response = mapper.readValue(new String(
                 Files.readAllBytes(path2)), new TypeReference<List<Field>>(){});
 
-        ObjectNode actual = sut.getJson(new String(
-                Files.readAllBytes(path)), response);
+        ObjectNode actual = sut.getJson(formData, response);
 
+        String test = "1";
 
     }
-
 
 }
