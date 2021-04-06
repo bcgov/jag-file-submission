@@ -27,6 +27,8 @@ public class SubmissionService {
     @Value("classpath:data/test-document-additional.pdf")
     File additionalPdfDocument;
 
+    private static final String MESSAGE_FORMAT_PARAMS = "{0}/{1}/{2}/{3}";
+
     private final Logger logger = LoggerFactory.getLogger(SubmissionService.class);
 
     public Response documentUploadResponse(String accessToken, UUID transactionId, String universalId, MultiPartSpecification fileSpec) {
@@ -62,7 +64,7 @@ public class SubmissionService {
 
         return request
                 .when()
-                .post(MessageFormat.format("{0}/{1}/{2}/{3}", eFilingHost, Keys.SUBMISSION_PATH, submissionId, Keys.GENERATE_URL_PATH))
+                .post(MessageFormat.format(MESSAGE_FORMAT_PARAMS, eFilingHost, Keys.SUBMISSION_PATH, submissionId, Keys.GENERATE_URL_PATH))
                 .then()
                 .extract()
                 .response();
@@ -82,7 +84,7 @@ public class SubmissionService {
 
         return request
                 .when()
-                .get(MessageFormat.format("{0}/{1}/{2}/{3}", eFilingHost, Keys.SUBMISSION_PATH, submissionId, path))
+                .get(MessageFormat.format(MESSAGE_FORMAT_PARAMS, eFilingHost, Keys.SUBMISSION_PATH, submissionId, path))
                 .then()
                 .extract()
                 .response();
@@ -104,7 +106,7 @@ public class SubmissionService {
 
         return request
                 .when()
-                .post(MessageFormat.format("{0}/{1}/{2}/{3}", eFilingHost, Keys.SUBMISSION_PATH, submissionId, path))
+                .post(MessageFormat.format(MESSAGE_FORMAT_PARAMS, eFilingHost, Keys.SUBMISSION_PATH, submissionId, path))
                 .then()
                 .extract()
                 .response();
@@ -127,7 +129,7 @@ public class SubmissionService {
 
         return request
                 .when()
-                .post(MessageFormat.format("{0}/{1}/{2}/{3}", eFilingHost, Keys.SUBMISSION_PATH, submissionId, path))
+                .post(MessageFormat.format(MESSAGE_FORMAT_PARAMS, eFilingHost, Keys.SUBMISSION_PATH, submissionId, path))
                 .then()
                 .extract()
                 .response();
@@ -150,7 +152,7 @@ public class SubmissionService {
 
         return request
                 .when()
-                .post(MessageFormat.format("{0}/{1}/{2}/{3}", eFilingHost, Keys.SUBMISSION_PATH, submissionId, path))
+                .post(MessageFormat.format(MESSAGE_FORMAT_PARAMS, eFilingHost, Keys.SUBMISSION_PATH, submissionId, path))
                 .then()
                 .extract()
                 .response();

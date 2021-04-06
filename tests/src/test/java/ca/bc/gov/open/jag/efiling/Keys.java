@@ -6,12 +6,6 @@ public class Keys {
     protected Keys() {
     }
 
-    // Token Helper
-    public static final String CLIENT_ID = "client_id";
-    public static final String GRANT_TYPE = "grant_type";
-    public static final String USERNAME = "username";
-    public static final String PASSWORD = "password";
-
     // Document Service
     public static final String X_TRANSACTION_ID = "X-Transaction-Id";
     public static final String X_DOCUMENT_TYPE = "X-Document-Type";

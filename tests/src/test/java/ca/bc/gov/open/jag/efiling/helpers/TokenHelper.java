@@ -1,6 +1,5 @@
 package ca.bc.gov.open.jag.efiling.helpers;
 
-import ca.bc.gov.open.jag.efiling.Keys;
 import ca.bc.gov.open.jag.efiling.error.EfilingTestException;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
@@ -17,6 +16,11 @@ public class TokenHelper {
     private TokenHelper() {
     }
 
+    public static final String CLIENT_ID = "client_id";
+    public static final String GRANT_TYPE = "grant_type";
+    public static final String USERNAME = "username";
+    public static final String PASSWORD = "password";
+
     public static Response getUserAccessToken(String keycloakHost, String keycloakRealm, String username, String password, String clientId) {
 
         try {
@@ -25,10 +29,10 @@ public class TokenHelper {
             uriBuilder.setPath(MessageFormat.format("/auth/realms/{0}/protocol/openid-connect/token", keycloakRealm));
 
             RequestSpecification request = RestAssured.given()
-                    .formParam(Keys.CLIENT_ID, clientId)
-                    .formParam(Keys.GRANT_TYPE, "password")
-                    .formParam(Keys.USERNAME, username)
-                    .formParam(Keys.PASSWORD, password);
+                    .formParam(CLIENT_ID, clientId)
+                    .formParam(GRANT_TYPE, "password")
+                    .formParam(USERNAME, username)
+                    .formParam(PASSWORD, password);
 
             return request.when().post(uriBuilder.build().toURL().toString()).then()
                     .extract().response();
