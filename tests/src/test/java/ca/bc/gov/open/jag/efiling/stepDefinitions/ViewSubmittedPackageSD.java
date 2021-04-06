@@ -60,7 +60,7 @@ public class ViewSubmittedPackageSD {
         File downloadedFile = fileDownloadHelper.downloadFile(Keys.BASE_PATH + Keys.DOWNLOADED_FILES_PATH);
 
         logger.info("Downloaded file name is: {}", downloadedFile.getName());
-        Assert.assertEquals("test-document.pdf", downloadedFile.getName());
+        Assert.assertEquals(Keys.TEST_DOCUMENT_PDF, downloadedFile.getName());
 
         Assert.assertTrue(downloadedFile.length() > 0);
         logger.info("Files successfully downloaded");

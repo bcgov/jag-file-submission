@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efiling.services;
 
+import ca.bc.gov.open.jag.efiling.Keys;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -21,7 +22,7 @@ public class CourtService {
                 .oauth2(accessToken);
 
         return request.queryParam(courtLevel).when()
-                .get(MessageFormat.format("{0}/courts", eFilingHost))
+                .get(MessageFormat.format("{0}/{1}", eFilingHost, Keys.COURTS_PATH))
                 .then()
                 .extract()
                 .response();

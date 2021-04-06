@@ -27,7 +27,7 @@ public class ExtractDocumentService {
 
         return request
                 .when()
-                .post(MessageFormat.format("{0}/documents/extract", eFilingReviewerHost))
+                .post(MessageFormat.format("{0}/{1}", eFilingReviewerHost, Keys.EXTRACT_DOCUMENTS_PATH))
                 .then()
                 .extract()
                 .response();

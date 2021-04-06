@@ -39,7 +39,7 @@ public class SubmissionService {
                 .header(Keys.X_USER_ID, universalId)
                 .multiPart(fileSpec);
 
-        return request.when().post(MessageFormat.format("{0}/submission/documents", eFilingHost))
+        return request.when().post(MessageFormat.format("{0}/{1}", eFilingHost, Keys.SUBMISSION_DOCUMENTS_PATH))
                 .then()
                 .extract().response();
 
@@ -62,7 +62,7 @@ public class SubmissionService {
 
         return request
                 .when()
-                .post(MessageFormat.format("{0}/submission/{1}/generateUrl", eFilingHost,  submissionId))
+                .post(MessageFormat.format("{0}/{1}/{2}/{3}", eFilingHost, Keys.SUBMISSION_PATH, submissionId, Keys.GENERATE_URL_PATH))
                 .then()
                 .extract()
                 .response();
@@ -82,7 +82,7 @@ public class SubmissionService {
 
         return request
                 .when()
-                .get(MessageFormat.format(Keys.MESSAGE_FORMAT_WITH_SUB_ID_AND_PATH, eFilingHost,submissionId, path))
+                .get(MessageFormat.format("{0}/{1}/{2}/{3}", eFilingHost, Keys.SUBMISSION_PATH, submissionId, path))
                 .then()
                 .extract()
                 .response();
@@ -104,7 +104,7 @@ public class SubmissionService {
 
         return request
                 .when()
-                .post(MessageFormat.format(Keys.MESSAGE_FORMAT_WITH_SUB_ID_AND_PATH, eFilingHost,submissionId, path))
+                .post(MessageFormat.format("{0}/{1}/{2}/{3}", eFilingHost, Keys.SUBMISSION_PATH, submissionId, path))
                 .then()
                 .extract()
                 .response();
@@ -127,7 +127,7 @@ public class SubmissionService {
 
         return request
                 .when()
-                .post(MessageFormat.format(Keys.MESSAGE_FORMAT_WITH_SUB_ID_AND_PATH, eFilingHost,submissionId, path))
+                .post(MessageFormat.format("{0}/{1}/{2}/{3}", eFilingHost, Keys.SUBMISSION_PATH, submissionId, path))
                 .then()
                 .extract()
                 .response();
@@ -150,7 +150,7 @@ public class SubmissionService {
 
         return request
                 .when()
-                .post(MessageFormat.format(Keys.MESSAGE_FORMAT_WITH_SUB_ID_AND_PATH, eFilingHost,submissionId, path))
+                .post(MessageFormat.format("{0}/{1}/{2}/{3}", eFilingHost, Keys.SUBMISSION_PATH, submissionId, path))
                 .then()
                 .extract()
                 .response();
