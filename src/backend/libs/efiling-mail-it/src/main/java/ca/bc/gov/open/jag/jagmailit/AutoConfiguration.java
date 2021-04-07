@@ -12,7 +12,7 @@ import ca.bc.gov.open.jag.jagmailit.api.handler.ApiClient;
 @EnableConfigurationProperties(MailSendProperties.class)
 public class AutoConfiguration {
 
-    @Bean
+    @Bean({"mailItApiClient"})
     @ConditionalOnMissingBean(ApiClient.class)
     public ApiClient apiClient(MailSendProperties mailSendProperties)  {
         ApiClient apiClient = new ApiClient();

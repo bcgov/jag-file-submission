@@ -34,3 +34,11 @@ bcgov:
     host: ${CLAMAV_HOST:localhost}
     port: ${CLAMAV_PORT:3310}
     timeout: ${CLAMAV_TIMEOUT:50000}
+
+mailsend:
+  baseUrl: ${MAIL_SEND_BASE_URL:http://localhost:8090}
+
+erroremail:
+  toEmail: ${ERROR_TO_ADDRESS:test@somewhere.co}
+  fromEmail: ${ERROR_FROM_ADDRESS:test@somewhere.co}
+

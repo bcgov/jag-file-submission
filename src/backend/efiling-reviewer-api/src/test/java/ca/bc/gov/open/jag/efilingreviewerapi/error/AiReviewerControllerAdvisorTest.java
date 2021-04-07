@@ -3,28 +3,43 @@ package ca.bc.gov.open.jag.efilingreviewerapi.error;
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenAuthenticationException;
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenDocumentException;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.ApiError;
+import ca.bc.gov.open.jag.jagmailit.api.MailSendApi;
+import ca.bc.gov.open.jag.jagmailit.api.handler.ApiException;
+import ca.bc.gov.open.jag.jagmailit.api.model.EmailResponse;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.WebRequest;
+
+import static org.mockito.ArgumentMatchers.any;
 
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("DiligenControllerAdvisor test suite")
 public class AiReviewerControllerAdvisorTest {
 
+    public static final String HELLO_EMAIL_COM = "hello@email.com";
     public AiReviewerControllerAdvisor sut;
 
     @Mock
     private WebRequest webRequestMock;
 
+    @Mock
+    private MailSendApi mailSendApiMock;
+
     @BeforeEach
-    public void beforeEach() {
+    public void beforeEach() throws ApiException {
         MockitoAnnotations.openMocks(this);
 
-        sut = new AiReviewerControllerAdvisor();
+        ErrorEmailProperties errorEmailProperties = new ErrorEmailProperties();
+
+        errorEmailProperties.setFromEmail(HELLO_EMAIL_COM);
+        errorEmailProperties.setToEmail(HELLO_EMAIL_COM);
+
+        sut = new AiReviewerControllerAdvisor(mailSendApiMock, errorEmailProperties);
 
     }
 
@@ -99,7 +114,23 @@ public class AiReviewerControllerAdvisorTest {
 
     @Test
     @DisplayName("400: Assert restricted document exception")
-    public void testAiReviewerRestrictedDocumentException() {
+    public void testAiReviewerRestrictedDocumentException() throws ApiException {
+
+        Mockito.when(mailSendApiMock.mailSend(any())).thenReturn(new EmailResponse());
+
+        ResponseEntity<Object> result = sut.handleRestrictedDocumentException(new AiReviewerRestrictedDocumentException("Restricted Document exception"), webRequestMock);
+
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
+        Assertions.assertEquals("RESTRICTED_DOCUMENT", ((ApiError)result.getBody()).getError());
+        Assertions.assertEquals("Restricted Document exception", ((ApiError)result.getBody()).getMessage());
+
+    }
+
+    @Test
+    @DisplayName("400: Assert restricted document exception api throws error")
+    public void testAiReviewerRestrictedDocumentExceptionAPIError() throws ApiException {
+
+        Mockito.doThrow(ApiException.class).when(mailSendApiMock).mailSend(any());
 
         ResponseEntity<Object> result = sut.handleRestrictedDocumentException(new AiReviewerRestrictedDocumentException("Restricted Document exception"), webRequestMock);
 
