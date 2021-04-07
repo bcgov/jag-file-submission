@@ -31,7 +31,8 @@ export default function PackageReview() {
 
   const location = useLocation();
   const queryParams = queryString.parse(location.search);
-  const { returnUrl } = queryParams;
+  const { returnUrl, returnAppName } = queryParams;
+  const returnButtonName = `Return to ${returnAppName ? returnAppName : "Parent App"}`
 
   const [error, setError] = useState(false);
   const [packageDetails, setPackageDetails] = useState([
@@ -282,7 +283,7 @@ export default function PackageReview() {
               <br />
               <section className="buttons pt-2">
                 <Button
-                  label="Return to Parent App"
+                  label={returnButtonName}
                   onClick={() => window.open(returnUrl, "_self")}
                   styling="bcgov-normal-white btn"
                 />
