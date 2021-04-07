@@ -1,6 +1,6 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.document;
 
-import ca.bc.gov.open.efilingdiligenclient.diligen.model.FormData;
+import ca.bc.gov.open.efilingdiligenclient.diligen.model.DocumentConfig;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentTypeConfiguration;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.store.DocumentTypeConfigurationRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -52,14 +52,14 @@ public class SeedDocumentTypeConfiguration {
 
             ObjectMapper mapper = new ObjectMapper();
 
-            FormData formData = mapper.readValue(jsonSchemaStr, FormData.class);
+            DocumentConfig formData = mapper.readValue(jsonSchemaStr, DocumentConfig.class);
 
             if(documentTypeConfigurationRepository.findByDocumentType("RCC") == null) {
 
                 DocumentTypeConfiguration documentTypeConfiguration = DocumentTypeConfiguration
                         .builder()
                         .documentType("RCC")
-                        .formData(formData)
+                        .documentConfig(formData)
                         .create();
 
                 documentTypeConfigurationRepository.save(documentTypeConfiguration);

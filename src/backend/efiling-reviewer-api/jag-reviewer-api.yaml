@@ -146,7 +146,7 @@ components:
           format: uuid
         documentType:
           type: string
-        formData:
+        documentConfig:
           type: object
     DocumentTypeConfigurationList:
       type: array

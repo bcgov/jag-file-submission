@@ -1,6 +1,6 @@
 package ca.bc.gov.open.efilingdiligenclient.diligen.processor;
 
-import ca.bc.gov.open.efilingdiligenclient.diligen.model.FormData;
+import ca.bc.gov.open.efilingdiligenclient.diligen.model.DocumentConfig;
 import ca.bc.gov.open.jag.efilingdiligenclient.api.model.Field;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,7 +34,7 @@ public class FieldProcessorTest {
 
         ObjectMapper mapper = new ObjectMapper();
 
-        FormData formData = mapper.readValue(new String(Files.readAllBytes(path)), FormData.class);
+        DocumentConfig formData = mapper.readValue(new String(Files.readAllBytes(path)), DocumentConfig.class);
 
         List<Field> response = mapper.readValue(new String(
                 Files.readAllBytes(path2)), new TypeReference<List<Field>>(){});
