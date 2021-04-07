@@ -8,7 +8,10 @@ export default function Success({ page: { header, packageRef } }) {
     const buff = Buffer.from(packageRef, "base64");
     const returnUrl =
       "https%3A%2F%2Fwww.google.ca%2Fsearch%3Fq%3Dbob%2Bross%26tbm%3Disch";
-    const url = `${buff.toString("ascii")}?returnUrl=${returnUrl}`;
+    let url = `${buff.toString("ascii")}`;
+    url += url.indexOf("?") < 0 ? "?" : "&";
+    url += `returnUrl=${returnUrl}`;
+    url += `&returnAppName=Parent%20App`;
     window.open(url);
   };
 
