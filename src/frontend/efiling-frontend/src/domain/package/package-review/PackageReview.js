@@ -32,7 +32,7 @@ export default function PackageReview() {
   const location = useLocation();
   const queryParams = queryString.parse(location.search);
   const { returnUrl, returnAppName } = queryParams;
-  const returnButtonName = `Return to ${returnAppName ? returnAppName : "Parent App"}`
+  const returnButtonName = `Return to ${returnAppName || "Parent App"}`;
 
   const [error, setError] = useState(false);
   const [packageDetails, setPackageDetails] = useState([
