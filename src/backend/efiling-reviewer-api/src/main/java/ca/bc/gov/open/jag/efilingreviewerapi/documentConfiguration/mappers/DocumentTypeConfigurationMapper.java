@@ -10,4 +10,5 @@ public interface DocumentTypeConfigurationMapper {
 
     DocumentTypeConfiguration toDocumentTypeConfiguration(ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentTypeConfiguration documentTypeConfiguration);
 
+
 }

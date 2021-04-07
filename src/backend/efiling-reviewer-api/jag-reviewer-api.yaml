@@ -71,6 +71,23 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DocumentTypeConfigurationList"
+    post:
+      summary: create a new document configuration
+      operationId: createDocumentTypeConfiguration
+      tags:
+        - admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DocumentTypeConfigurationRequest"
+      responses:
+        "201":
+          description: document type configuration created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DocumentTypeConfiguration"
 components:
   parameters:
     xTransactionId:
@@ -138,6 +155,13 @@ components:
         documentId:
           type: number
           format: integer
+    DocumentTypeConfigurationRequest:
+      type: object
+      properties:
+        documentType:
+          type: string
+        documentConfig:
+          type: object
     DocumentTypeConfiguration:
       type: object
       properties:
