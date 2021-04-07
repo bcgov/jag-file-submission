@@ -24,7 +24,7 @@ public class OauthService {
     @Value("${PASSWORD_KEYCLOAK:changeme}")
     private String password;
 
-    private Logger logger = LoggerFactory.getLogger(OauthService.class);
+    private final Logger logger = LoggerFactory.getLogger(OauthService.class);
 
     public UserIdentity getUserIdentity() {
 

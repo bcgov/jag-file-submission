@@ -14,6 +14,7 @@ import io.cucumber.spring.CucumberContextConfiguration;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.MultiPartSpecification;
+import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +39,7 @@ public class GenerateUrlSD {
     private String actualSubmissionId;
     private UserIdentity actualUserIdentity;
 
-    public Logger logger = LoggerFactory.getLogger(GenerateUrlSD.class);
+    private final Logger logger = LoggerFactory.getLogger(GenerateUrlSD.class);
 
     public GenerateUrlSD(OauthService oauthService, SubmissionService submissionService) {
         this.oauthService = oauthService;
@@ -106,7 +107,7 @@ public class GenerateUrlSD {
 
         JsonPath actualJson = new JsonPath(actualGenerateUrlResponse.asString());
 
-        Assert.assertEquals(200, actualGenerateUrlResponse.getStatusCode());
+        Assert.assertEquals(HttpStatus.SC_OK, actualGenerateUrlResponse.getStatusCode());
         Assert.assertEquals(expectedEfilingHubUrl, actualJson.getString("efilingUrl"));
         Assert.assertNotNull(actualJson.get("expiryDate"));
 

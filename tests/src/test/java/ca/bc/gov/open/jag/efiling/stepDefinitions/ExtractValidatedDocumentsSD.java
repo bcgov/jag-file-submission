@@ -29,7 +29,7 @@ public class ExtractValidatedDocumentsSD {
     private Response actualExtractDocumentServiceResponse;
     private UUID actualTransactionId;
 
-    private static Logger logger = LoggerFactory.getLogger(ExtractValidatedDocumentsSD.class);
+    private final Logger logger = LoggerFactory.getLogger(ExtractValidatedDocumentsSD.class);
 
     public ExtractValidatedDocumentsSD(ExtractDocumentService extractDocumentService) {
         this.extractDocumentService = extractDocumentService;

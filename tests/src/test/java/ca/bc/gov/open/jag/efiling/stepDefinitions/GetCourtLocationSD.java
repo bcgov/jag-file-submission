@@ -8,9 +8,10 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.http.HttpStatus;
 import org.junit.Assert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GetCourtLocationSD {
 
@@ -19,7 +20,7 @@ public class GetCourtLocationSD {
     private UserIdentity actualUserIdentity;
     private Response actualCourtLocationResponse;
 
-    public Logger logger = LogManager.getLogger(GetCourtLocationSD.class);
+    private final Logger logger = LoggerFactory.getLogger(GetCourtLocationSD.class);
 
     public GetCourtLocationSD(OauthService oauthService, CourtService courtService) {
         this.oauthService = oauthService;
@@ -49,7 +50,7 @@ public class GetCourtLocationSD {
 
         JsonPath jsonPath = new JsonPath(actualCourtLocationResponse.asString());
 
-        Assert.assertEquals(200, actualCourtLocationResponse.getStatusCode());
+        Assert.assertEquals(HttpStatus.SC_OK, actualCourtLocationResponse.getStatusCode());
         Assert.assertEquals("application/json", actualCourtLocationResponse.getContentType());
 
         Assert.assertEquals(Integer.valueOf(10264), jsonPath.get("courts.id[0]"));

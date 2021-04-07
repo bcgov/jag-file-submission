@@ -11,13 +11,13 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
-public class viewAndDownloadReceiptSD {
+public class ViewAndDownloadReceiptSD {
 
     private final PackageReviewPage packageReviewPage;
 
-    private final Logger logger = LoggerFactory.getLogger(viewAndDownloadReceiptSD.class);
+    private final Logger logger = LoggerFactory.getLogger(ViewAndDownloadReceiptSD.class);
 
-    public viewAndDownloadReceiptSD(PackageReviewPage packageReviewPage) {
+    public ViewAndDownloadReceiptSD(PackageReviewPage packageReviewPage) {
         this.packageReviewPage = packageReviewPage;
     }
 
