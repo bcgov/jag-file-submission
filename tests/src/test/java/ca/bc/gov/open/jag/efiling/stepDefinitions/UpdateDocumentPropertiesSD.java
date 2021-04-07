@@ -30,7 +30,7 @@ public class UpdateDocumentPropertiesSD {
     private UserIdentity actualUserIdentity;
     private Response actualUpdatedDocumentPropertiesResponse;
 
-    public Logger logger = LoggerFactory.getLogger(UpdateDocumentPropertiesSD.class);
+    private final Logger logger = LoggerFactory.getLogger(UpdateDocumentPropertiesSD.class);
 
     public UpdateDocumentPropertiesSD(OauthService oauthService, SubmissionService submissionService) {
         this.oauthService = oauthService;
