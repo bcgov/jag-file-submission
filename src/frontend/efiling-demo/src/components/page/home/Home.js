@@ -230,7 +230,7 @@ export default function Home({ page: { header } }) {
         name: "",
         value: (
           <button
-            data-testId="close-button"
+            data-testid="close-button"
             type="submit"
             onClick={() => {
               setFiles(files.filter((item) => item.name !== file.name));
