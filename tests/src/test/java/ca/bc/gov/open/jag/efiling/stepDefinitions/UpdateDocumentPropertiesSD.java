@@ -11,6 +11,7 @@ import io.cucumber.java.en.When;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.MultiPartSpecification;
+import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,9 +27,6 @@ public class UpdateDocumentPropertiesSD {
     private final OauthService oauthService;
     private final SubmissionService submissionService;
     private final UUID actualTransactionId;
-
-    private static String UPDATE_DOCUMENTS_PATH = "update-documents";
-
     private UserIdentity actualUserIdentity;
     private Response actualUpdatedDocumentPropertiesResponse;
 
@@ -67,7 +65,7 @@ public class UpdateDocumentPropertiesSD {
                 actualUserIdentity.getAccessToken(), actualSubmissionId);
 
         actualUpdatedDocumentPropertiesResponse = submissionService.updateDocumentPropertiesResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
-                actualSubmissionId, UPDATE_DOCUMENTS_PATH);
+                actualSubmissionId, Keys.UPDATE_DOCUMENTS_PATH);
 
         logger.info("Api response status code: {}", actualUpdatedDocumentPropertiesResponse.getStatusCode());
         logger.info("Api response: {}", actualUpdatedDocumentPropertiesResponse.asString());
@@ -82,7 +80,7 @@ public class UpdateDocumentPropertiesSD {
 
         JsonPath additionalDocumentUploadJsonPath = new JsonPath(actualUpdatedDocumentPropertiesResponse.asString());
 
-        Assert.assertEquals(200, actualUpdatedDocumentPropertiesResponse.getStatusCode());
+        Assert.assertEquals(HttpStatus.SC_OK, actualUpdatedDocumentPropertiesResponse.getStatusCode());
         Assert.assertEquals("application/json", actualUpdatedDocumentPropertiesResponse.getContentType());
 
         Assert.assertEquals("AAB", additionalDocumentUploadJsonPath.get("documents.type[1]"));

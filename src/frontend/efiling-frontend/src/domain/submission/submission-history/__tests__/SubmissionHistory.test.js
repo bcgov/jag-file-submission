@@ -7,9 +7,17 @@ import SubmissionHistory from "../SubmissionHistory";
 import { submissions } from "../../../../modules/test-data/submissionHistoryTestData";
 import { generateJWTToken } from "../../../../modules/helpers/authentication-helper/authenticationHelper";
 
+const routerDom = require("react-router-dom");
+
+jest.mock("react-router-dom");
+
 describe("Submission History Component", () => {
   let mock;
   beforeEach(() => {
+    routerDom.useLocation = jest
+      .fn()
+      .mockReturnValue({ search: "?applicationCode=FLA" });
+
     const token = generateJWTToken({
       preferred_username: "username@bceid",
       email: "username@example.com",

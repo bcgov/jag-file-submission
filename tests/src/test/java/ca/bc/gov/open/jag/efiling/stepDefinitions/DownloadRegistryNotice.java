@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
+import ca.bc.gov.open.jag.efiling.Keys;
 import ca.bc.gov.open.jag.efiling.helpers.FileDownloadHelper;
 import ca.bc.gov.open.jag.efiling.page.PackageReviewPage;
 import io.cucumber.java.en.Then;
@@ -13,9 +14,7 @@ public class DownloadRegistryNotice {
 
     private final PackageReviewPage packageReviewPage;
 
-    private Logger logger = LoggerFactory.getLogger(DownloadRegistryNotice.class);
-    private static final String DOWNLOADED_FILES_PATH = System.getProperty("user.dir") + File.separator + "downloadedFiles";
-
+    private final Logger logger = LoggerFactory.getLogger(DownloadRegistryNotice.class);
 
     public DownloadRegistryNotice(PackageReviewPage packageReviewPage) {
         this.packageReviewPage = packageReviewPage;
@@ -26,7 +25,7 @@ public class DownloadRegistryNotice {
         packageReviewPage.clickToDownloadRegistryNotice();
 
         FileDownloadHelper fileDownloadHelper = new FileDownloadHelper();
-        File downloadedFile = fileDownloadHelper.downloadFile(DOWNLOADED_FILES_PATH);
+        File downloadedFile = fileDownloadHelper.downloadFile(Keys.BASE_PATH + Keys.DOWNLOADED_FILES_PATH);
 
         logger.info("Downloaded file name is: {}", downloadedFile.getName());
         Assert.assertEquals("RegistryNotice.pdf", downloadedFile.getName());
