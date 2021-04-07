@@ -1,6 +1,6 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.document.models;
 
-import ca.bc.gov.open.efilingdiligenclient.diligen.model.FormData;
+import ca.bc.gov.open.efilingdiligenclient.diligen.model.DocumentConfig;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 
@@ -13,7 +13,7 @@ public class DocumentTypeConfiguration {
 
     private String documentType;
 
-    private FormData formData;
+    private DocumentConfig documentConfig;
 
     public DocumentTypeConfiguration() {
         id = UUID.randomUUID();
@@ -22,10 +22,10 @@ public class DocumentTypeConfiguration {
     public DocumentTypeConfiguration(
             @JsonProperty("id") UUID id,
             @JsonProperty("documentType") String documentType,
-            @JsonProperty("formData") FormData formData) {
+            @JsonProperty("formData") DocumentConfig formData) {
         this.id = id;
         this.documentType = documentType;
-        this.formData = formData;
+        this.documentConfig = formData;
     }
 
     public void setId(UUID id) {
@@ -40,14 +40,14 @@ public class DocumentTypeConfiguration {
         return documentType;
     }
 
-    public FormData getFormData() {
-        return formData;
+    public DocumentConfig getDocumentConfig() {
+        return documentConfig;
     }
 
     public DocumentTypeConfiguration(Builder builder) {
         this();
         this.documentType = builder.documentType;
-        this.formData = builder.formData;
+        this.documentConfig = builder.documentConfig;
     }
 
     public static Builder builder() {
@@ -57,15 +57,15 @@ public class DocumentTypeConfiguration {
     public static class Builder {
 
         private String documentType;
-        private FormData formData;
+        private DocumentConfig documentConfig;
 
         public Builder documentType(String documentType) {
             this.documentType = documentType;
             return this;
         }
 
-        public Builder formData(FormData formData) {
-            this.formData = formData;
+        public Builder documentConfig(DocumentConfig documentConfig) {
+            this.documentConfig = documentConfig;
             return this;
         }
 
