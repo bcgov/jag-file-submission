@@ -2,21 +2,21 @@ package ca.bc.gov.open.jag.efiling.page;
 
 
 import ca.bc.gov.open.jag.efiling.error.EfilingTestException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PackageConfirmationPage extends BasePage {
 
-    private Logger logger = LogManager.getLogger(PackageConfirmationPage.class);
+    private final Logger logger = LoggerFactory.getLogger(PackageConfirmationPage.class);
 
     //Page Objects:
     @FindBy(xpath = "//button[@data-test-id='continue-btn']")

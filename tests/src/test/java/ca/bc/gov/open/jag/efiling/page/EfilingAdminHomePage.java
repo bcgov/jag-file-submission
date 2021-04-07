@@ -18,7 +18,7 @@ public class EfilingAdminHomePage extends BasePage {
     @Value("classpath:data/test-document.pdf")
     private File pdfDocumentToUpload;
 
-    private Logger logger = LoggerFactory.getLogger(EfilingAdminHomePage.class);
+    private final Logger logger = LoggerFactory.getLogger(EfilingAdminHomePage.class);
 
 
     //Page Objects:

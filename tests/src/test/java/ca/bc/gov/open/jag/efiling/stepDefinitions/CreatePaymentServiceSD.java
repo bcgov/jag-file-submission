@@ -11,6 +11,7 @@ import io.cucumber.java.en.When;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.MultiPartSpecification;
+import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,7 +78,7 @@ public class CreatePaymentServiceSD {
 
         JsonPath submitResponseJsonPath = new JsonPath(actualSubmitResponse.asString());
 
-        Assert.assertEquals(201, actualSubmitResponse.getStatusCode());
+        Assert.assertEquals(HttpStatus.SC_CREATED, actualSubmitResponse.getStatusCode());
         Assert.assertEquals("application/json", actualSubmitResponse.getContentType());
 
         Assert.assertEquals("aHR0cDovL2xvY2FsaG9zdDozMDAwL2VmaWxpbmdodWIvcGFja2FnZXJldmlldy8xP3BhY2thZ2VObz0x", submitResponseJsonPath.get("packageRef"));

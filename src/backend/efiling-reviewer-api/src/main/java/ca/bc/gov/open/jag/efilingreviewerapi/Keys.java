@@ -19,5 +19,7 @@ public class Keys {
         put("TEST", "This is a temporary");
     }};
     public static final Integer ANSWER_DOCUMENT_TYPE_ID = 232;
+    public static final Integer ANSWER_PLAINTIFF_ID = 319;
+    public static final Integer ANSWER_DEFENDANT_ID = 320;
 
 }
