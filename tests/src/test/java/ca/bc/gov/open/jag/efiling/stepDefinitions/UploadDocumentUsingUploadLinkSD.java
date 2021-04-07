@@ -4,8 +4,8 @@ import ca.bc.gov.open.jag.efiling.Keys;
 import com.google.common.collect.ImmutableList;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class UploadDocumentUsingUploadLinkSD {
     private ca.bc.gov.open.jag.efiling.page.DocumentUploadPage documentUploadPage;
     private final List<String> expectedUploadedFilesList = ImmutableList.of("test-document.pdf", "test-document-additional.pdf");
 
-    Logger log = LogManager.getLogger(UploadDocumentUsingUploadLinkSD.class);
+    private final Logger logger = LoggerFactory.getLogger(UploadDocumentUsingUploadLinkSD.class);
 
     public UploadDocumentUsingUploadLinkSD(ca.bc.gov.open.jag.efiling.page.PackageConfirmationPage packageConfirmationPage, ca.bc.gov.open.jag.efiling.page.DocumentUploadPage documentUploadPage) {
         this.packageConfirmationPage = packageConfirmationPage;
@@ -35,7 +35,7 @@ public class UploadDocumentUsingUploadLinkSD {
 
         this.documentUploadPage.clickIsAmendmentRadioBtn();
         this.documentUploadPage.clickIsSupremeCourtBtn();
-        log.info("Submitting the additional document upload");
+        logger.info("Submitting the additional document upload");
 
         this.documentUploadPage.clickContinueBtn();
 
@@ -47,6 +47,6 @@ public class UploadDocumentUsingUploadLinkSD {
         List<String> uploadedFiles = this.packageConfirmationPage.getUploadedFilesList();
         assertEquals(expectedUploadedFilesList, uploadedFiles);
 
-        log.info("Additional document added to the package.");
+        logger.info("Additional document added to the package.");
     }
 }

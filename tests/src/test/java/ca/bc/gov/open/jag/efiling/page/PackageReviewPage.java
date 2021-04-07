@@ -26,7 +26,7 @@ public class PackageReviewPage extends BasePage {
     @Value("${PACKAGE_ID:1}")
     private String packageId;
 
-    private Logger logger = LoggerFactory.getLogger(PackageReviewPage.class);
+    private final Logger logger = LoggerFactory.getLogger(PackageReviewPage.class);
 
     @FindBy(className = "bcgov-row")
     private List<WebElement> packageDetailsRow;
