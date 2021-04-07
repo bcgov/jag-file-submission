@@ -8,6 +8,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,7 @@ public class GetDocumentTypesSD {
     private UserIdentity actualUserIdentity;
     private Response actualDocumentTypesResponse;
 
-    public Logger logger = LoggerFactory.getLogger(ca.bc.gov.open.jag.efiling.stepDefinitions.GetDocumentTypesSD.class);
+    private final Logger logger = LoggerFactory.getLogger(ca.bc.gov.open.jag.efiling.stepDefinitions.GetDocumentTypesSD.class);
 
     public GetDocumentTypesSD(OauthService oauthService, DocumentService documentService) {
         this.oauthService = oauthService;
@@ -49,7 +50,7 @@ public class GetDocumentTypesSD {
 
         JsonPath actualDocumentTypeResponseJsonPath = new JsonPath(actualDocumentTypesResponse.asString());
 
-        Assert.assertEquals(200, actualDocumentTypesResponse.getStatusCode());
+        Assert.assertEquals(HttpStatus.SC_OK, actualDocumentTypesResponse.getStatusCode());
         Assert.assertEquals("application/json", actualDocumentTypesResponse.getContentType());
 
         Assert.assertEquals("AFF", actualDocumentTypeResponseJsonPath.get("type[0]"));

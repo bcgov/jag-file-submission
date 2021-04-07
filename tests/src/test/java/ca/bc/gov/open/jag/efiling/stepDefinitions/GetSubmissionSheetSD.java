@@ -8,13 +8,14 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.charset.StandardCharsets;
 
-public class getSubmissionSheetSD {
+public class GetSubmissionSheetSD {
 
     private OauthService oauthService;
     private UserIdentity actualUserIdentity;
@@ -22,9 +23,9 @@ public class getSubmissionSheetSD {
 
     private Response actualSubmissionSheetResponse;
 
-    private Logger logger = LoggerFactory.getLogger(getSubmissionSheetSD.class);
+    private final Logger logger = LoggerFactory.getLogger(GetSubmissionSheetSD.class);
 
-    public getSubmissionSheetSD(OauthService oauthService, FilingPackageService filingPackageService) {
+    public GetSubmissionSheetSD(OauthService oauthService, FilingPackageService filingPackageService) {
         this.oauthService = oauthService;
         this.filingPackageService = filingPackageService;
     }
@@ -53,7 +54,7 @@ public class getSubmissionSheetSD {
 
         JsonPath actualSubmissionSheetResponseJsonPath = new JsonPath(actualSubmissionSheetResponse.asString());
 
-        Assert.assertEquals(200, actualSubmissionSheetResponse.getStatusCode());
+        Assert.assertEquals(HttpStatus.SC_OK, actualSubmissionSheetResponse.getStatusCode());
         Assert.assertEquals("application/pdf", actualSubmissionSheetResponse.getContentType());
         Assert.assertNotNull(actualSubmissionSheetResponseJsonPath);
 

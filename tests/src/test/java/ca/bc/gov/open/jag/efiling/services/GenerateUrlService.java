@@ -9,7 +9,6 @@ import io.restassured.response.Response;
 import io.restassured.specification.MultiPartSpecification;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Assert;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
@@ -69,8 +68,6 @@ public class GenerateUrlService {
 
         JsonPath actualJson = new JsonPath(actualGenerateUrlResponse.asString());
 
-        //  TODO: asserts should only be in TEST
-        Assert.assertEquals(200, actualGenerateUrlResponse.getStatusCode());
 
         return actualJson.getString("efilingUrl");
 

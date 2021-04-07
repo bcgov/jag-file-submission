@@ -5,8 +5,10 @@ import ca.bc.gov.open.clamav.starter.VirusDetectedException;
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
 import ca.bc.gov.open.efilingdiligenclient.diligen.model.DiligenAnswerField;
 import ca.bc.gov.open.jag.efilingreviewerapi.Keys;
+import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentValidation;
+import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentValidationResult;
+import ca.bc.gov.open.jag.efilingreviewerapi.document.models.ValidationTypes;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentException;
-import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentTypeMismatchException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerRestrictedDocumentException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerVirusFoundException;
 import ca.bc.gov.open.jag.efilingreviewerapi.utils.TikaAnalysis;
@@ -18,8 +20,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class DocumentValidatorImpl implements DocumentValidator {
@@ -55,7 +59,21 @@ public class DocumentValidatorImpl implements DocumentValidator {
     }
 
     @Override
-    public void validateExtractedDocument(BigDecimal documentId, String documentType, List<DiligenAnswerField> answers) {
+    public DocumentValidation validateExtractedDocument(BigDecimal documentId, String documentType, List<DiligenAnswerField> answers) {
+
+        List<DocumentValidationResult> validationResults = new ArrayList<>();
+
+        Optional<DocumentValidationResult> documentTypeResult = validateDocumentType(documentId, documentType, answers);
+
+        documentTypeResult.ifPresent(validationResults::add);
+
+        validationResults.addAll(validateParties(answers));
+
+        return new DocumentValidation(validationResults);
+
+    }
+
+    private Optional<DocumentValidationResult> validateDocumentType(BigDecimal documentId, String documentType, List<DiligenAnswerField> answers) {
 
         Optional<String> returnedDocumentType = findDocumentType(answers);
 
@@ -67,10 +85,38 @@ public class DocumentValidatorImpl implements DocumentValidator {
                 throw new AiReviewerRestrictedDocumentException("Document type mismatch detected");
             }
             logger.warn("Document {} of type {} was expected but {} was returned.", documentId, Keys.ACCEPTED_DOCUMENT_TYPES.get(documentType), returnedDocumentType);
-            //Throw exception
-            throw new AiReviewerDocumentTypeMismatchException("Document type mismatch detected");
 
+            return Optional.of(DocumentValidationResult.builder()
+                    .actual((returnedDocumentType.orElse("No Document Found")))
+                    .expected(Keys.ACCEPTED_DOCUMENT_TYPES.get(documentType))
+                    .type(ValidationTypes.DOCUMENT_TYPE)
+                    .create());
         }
+        return Optional.empty();
+    }
+
+    private List<DocumentValidationResult> validateParties(List<DiligenAnswerField> answers) {
+
+        List<DocumentValidationResult> validationResults = new ArrayList<>();
+
+        if (findPartiesByType(answers, Keys.ANSWER_PLAINTIFF_ID).size() > 1) {
+            validationResults.add(DocumentValidationResult.builder()
+                    .actual(String.valueOf(findPartiesByType(answers, Keys.ANSWER_PLAINTIFF_ID).size()))
+                    .expected("1")
+                    .type(ValidationTypes.PARTIES_PLAINTIFF)
+                    .create());
+        }
+
+        if (findPartiesByType(answers, Keys.ANSWER_DEFENDANT_ID).size() > 1) {
+            validationResults.add(DocumentValidationResult.builder()
+                    .actual(String.valueOf(findPartiesByType(answers, Keys.ANSWER_DEFENDANT_ID).size()))
+                    .expected("1")
+                    .type(ValidationTypes.PARTIES_DEFENDANT)
+                    .create());
+        }
+
+        return validationResults;
+
     }
 
     private Optional<String> findDocumentType(List<DiligenAnswerField> answers) {
@@ -82,6 +128,18 @@ public class DocumentValidatorImpl implements DocumentValidator {
         if (!documentTypeAnswer.isPresent()) return Optional.empty();
 
         return documentTypeAnswer.get().getValues().stream().findFirst();
+
+    }
+
+    private List<String> findPartiesByType(List<DiligenAnswerField> answers, Integer id) {
+
+        Optional<DiligenAnswerField> documentTypeAnswer = answers.stream()
+                .filter(answer -> answer.getId().equals(id))
+                .findFirst();
+
+        if (!documentTypeAnswer.isPresent()) return new ArrayList<>();
+
+        return documentTypeAnswer.get().getValues().stream().collect(Collectors.toList());
 
     }
 }
