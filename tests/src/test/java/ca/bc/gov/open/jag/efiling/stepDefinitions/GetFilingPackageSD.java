@@ -26,13 +26,10 @@ public class GetFilingPackageSD {
     private final OauthService oauthService;
     private final SubmissionService submissionService;
     private final UUID actualTransactionId;
-
-    private static String FILING_PACKAGE_PATH = "filing-package";
-
     private UserIdentity actualUserIdentity;
     private Response actualFilingPackageResponse;
 
-    public Logger logger = LoggerFactory.getLogger(GetFilingPackageSD.class);
+    private final Logger logger = LoggerFactory.getLogger(GetFilingPackageSD.class);
 
     public GetFilingPackageSD(OauthService oauthService, SubmissionService submissionService) {
         this.oauthService = oauthService;
@@ -67,7 +64,7 @@ public class GetFilingPackageSD {
 
 
         actualFilingPackageResponse = submissionService.getSubmissionDetailsResponse(actualUserIdentity.getAccessToken(),actualTransactionId,
-                actualSubmissionId, FILING_PACKAGE_PATH);
+                actualSubmissionId, Keys.FILING_PACKAGE_PATH);
 
         logger.info("Api response status code: {}", actualFilingPackageResponse.getStatusCode());
         logger.info("Api response: {}", actualFilingPackageResponse.asString());

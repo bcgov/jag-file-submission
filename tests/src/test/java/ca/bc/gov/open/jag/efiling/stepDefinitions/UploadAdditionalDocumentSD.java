@@ -11,6 +11,7 @@ import io.cucumber.java.en.When;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.MultiPartSpecification;
+import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,14 +27,11 @@ public class UploadAdditionalDocumentSD {
     private final OauthService oauthService;
     private final SubmissionService submissionService;
     private final UUID actualTransactionId;
-
-    private static String DOCUMENTS_PATH = "documents";
-
     private String actualSubmissionId;
     private UserIdentity actualUserIdentity;
     private Response actualAdditionalDocumentResponse;
 
-    public Logger logger = LoggerFactory.getLogger(UploadAdditionalDocumentSD.class);
+    private final Logger logger = LoggerFactory.getLogger(UploadAdditionalDocumentSD.class);
 
     public UploadAdditionalDocumentSD(OauthService oauthService, SubmissionService submissionService) {
         this.oauthService = oauthService;
@@ -66,7 +64,7 @@ public class UploadAdditionalDocumentSD {
                 actualUserIdentity.getAccessToken(), actualSubmissionId);
 
         actualAdditionalDocumentResponse = submissionService.additionalDocumentUploadResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
-                actualSubmissionId, DOCUMENTS_PATH);
+                actualSubmissionId, Keys.DOCUMENTS_PATH);
 
         logger.info("Api response status code: {}", actualAdditionalDocumentResponse.getStatusCode());
         logger.info("Api response: {}", actualAdditionalDocumentResponse.asString());
@@ -79,7 +77,7 @@ public class UploadAdditionalDocumentSD {
 
         JsonPath additionalDocumentUploadJsonPath = new JsonPath(actualAdditionalDocumentResponse.asString());
 
-        Assert.assertEquals(200, actualAdditionalDocumentResponse.getStatusCode());
+        Assert.assertEquals(HttpStatus.SC_OK, actualAdditionalDocumentResponse.getStatusCode());
         Assert.assertEquals("application/json", actualAdditionalDocumentResponse.getContentType());
 
         Assert.assertEquals(Integer.valueOf(1), additionalDocumentUploadJsonPath.get("received"));

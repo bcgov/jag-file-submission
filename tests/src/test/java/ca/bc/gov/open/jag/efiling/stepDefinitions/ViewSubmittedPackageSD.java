@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
+import ca.bc.gov.open.jag.efiling.Keys;
 import ca.bc.gov.open.jag.efiling.helpers.FileDownloadHelper;
 import ca.bc.gov.open.jag.efiling.page.PackageReviewPage;
 import io.cucumber.java.en.And;
@@ -18,11 +19,7 @@ public class ViewSubmittedPackageSD {
 
     private final PackageReviewPage packageReviewPage;
 
-    private static final String DOWNLOADED_FILES_PATH = System.getProperty("user.dir") + File.separator + "downloadedFiles";
-    private static final String APPLICANT = "Applicant";
-
-
-    private Logger logger = LoggerFactory.getLogger(ViewSubmittedPackageSD.class);
+    private final Logger logger = LoggerFactory.getLogger(ViewSubmittedPackageSD.class);
 
     public ViewSubmittedPackageSD(PackageReviewPage packageReviewPage) {
         this.packageReviewPage = packageReviewPage;
@@ -60,10 +57,10 @@ public class ViewSubmittedPackageSD {
         packageReviewPage.clickToDownloadDocument();
 
         FileDownloadHelper fileDownloadHelper = new FileDownloadHelper();
-        File downloadedFile = fileDownloadHelper.downloadFile(DOWNLOADED_FILES_PATH);
+        File downloadedFile = fileDownloadHelper.downloadFile(Keys.BASE_PATH + Keys.DOWNLOADED_FILES_PATH);
 
         logger.info("Downloaded file name is: {}", downloadedFile.getName());
-        Assert.assertEquals("test-document.pdf", downloadedFile.getName());
+        Assert.assertEquals(Keys.TEST_DOCUMENT_PDF, downloadedFile.getName());
 
         Assert.assertTrue(downloadedFile.length() > 0);
         logger.info("Files successfully downloaded");
@@ -76,7 +73,7 @@ public class ViewSubmittedPackageSD {
     public void verifyIndividualAndOrganizationPartyType() {
         List<String> actualParties = packageReviewPage.getAllParties();
 
-        List<String> expectedParties = Lists.newArrayList("Ross, Bob Q", APPLICANT, "Individual", "Loooooooooong-Looooooooooonglast, Looooooongname Q", APPLICANT, "Individual", "The Organization Org.", APPLICANT, "Organization", "This is a very very very very loooooong organization name", APPLICANT, "Organization");
+        List<String> expectedParties = Lists.newArrayList("Ross, Bob Q", Keys.APPLICANT, "Individual", "Loooooooooong-Looooooooooonglast, Looooooongname Q", Keys.APPLICANT, "Individual", "The Organization Org.", Keys.APPLICANT, "Organization", "This is a very very very very loooooong organization name", Keys.APPLICANT, "Organization");
 
         Assert.assertEquals(expectedParties.size(), actualParties.size());
         Assert.assertEquals(expectedParties,actualParties);
