@@ -25,9 +25,7 @@ public class AuthenticateAndRedirectToEfilingHubSD {
     private final EfilingAdminHomePage efilingAdminHomePage;
     private final GenerateUrlService generateUrlService;
 
-    private static final String EFILE_SUBMISSION_PAGE_TITLE = "E-File submission";
-
-    Logger logger = LoggerFactory.getLogger(AuthenticateAndRedirectToEfilingHubSD.class);
+    private final Logger logger = LoggerFactory.getLogger(AuthenticateAndRedirectToEfilingHubSD.class);
 
     public AuthenticateAndRedirectToEfilingHubSD(AuthenticationPage authenticationPages, PackageConfirmationPage packageConfirmationPage,
                                                  EfilingAdminHomePage efilingAdminHomePage, GenerateUrlService generateUrlService) {
@@ -60,7 +58,7 @@ public class AuthenticateAndRedirectToEfilingHubSD {
 
     @Then("Package information is displayed")
     public void verifyPackageInformation() {
-        Assert.assertEquals(EFILE_SUBMISSION_PAGE_TITLE, this.packageConfirmationPage.verifyPageTitle());
+        Assert.assertEquals(Keys.EFILE_SUBMISSION_PAGE_TITLE, this.packageConfirmationPage.verifyPageTitle());
         logger.info("Efiling submission page title is verified");
 
         Assert.assertEquals(Keys.TEST_DOCUMENT_PDF, this.packageConfirmationPage.getInitialDocumentName());

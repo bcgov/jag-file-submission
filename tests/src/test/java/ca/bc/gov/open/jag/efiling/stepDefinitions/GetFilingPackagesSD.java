@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
+import ca.bc.gov.open.jag.efiling.Keys;
 import ca.bc.gov.open.jag.efiling.models.UserIdentity;
 import ca.bc.gov.open.jag.efiling.services.FilingPackageService;
 import ca.bc.gov.open.jag.efiling.services.OauthService;
@@ -9,6 +10,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,14 +20,10 @@ public class GetFilingPackagesSD {
     private final OauthService oauthService;
     private UserIdentity actualUserIdentity;
     private final FilingPackageService filingPackageService;
-
-    private static final String PARENT_APPLICATION = "efiling-admin";
-    private static final String DESCRIPTION = "DESCRIPTION";
-
     private Response actualFilingPackagesResponse;
     private JsonPath actualFilingPackagesResponseJsonPath;
 
-    public Logger logger = LoggerFactory.getLogger(GetFilingPackagesSD.class);
+    private final Logger logger = LoggerFactory.getLogger(GetFilingPackagesSD.class);
 
     public GetFilingPackagesSD(OauthService oauthService, FilingPackageService filingPackageService) {
         this.oauthService = oauthService;
@@ -41,7 +39,7 @@ public class GetFilingPackagesSD {
     @When("user submits request to get filing packages history")
     public void getFilingPackages() {
 
-        actualFilingPackagesResponse = filingPackageService.getFilingPackages(actualUserIdentity.getAccessToken(), PARENT_APPLICATION);
+        actualFilingPackagesResponse = filingPackageService.getFilingPackages(actualUserIdentity.getAccessToken(), Keys.PARENT_APPLICATION);
 
         logger.info("Api response status code: {}", actualFilingPackagesResponse.getStatusCode());
         logger.info("Api response: {}", actualFilingPackagesResponse.asString());
@@ -55,7 +53,7 @@ public class GetFilingPackagesSD {
 
         actualFilingPackagesResponseJsonPath = new JsonPath(actualFilingPackagesResponse.asString());
 
-        Assert.assertEquals(200, actualFilingPackagesResponse.getStatusCode());
+        Assert.assertEquals(HttpStatus.SC_OK, actualFilingPackagesResponse.getStatusCode());
         Assert.assertEquals("application/json", actualFilingPackagesResponse.getContentType());
 
         //Package details
@@ -78,11 +76,11 @@ public class GetFilingPackagesSD {
         Assert.assertEquals("F", actualFilingPackagesResponseJsonPath.get("court.courtClass[0]"));
         Assert.assertEquals("DIVISION", actualFilingPackagesResponseJsonPath.get("court.division[0]"));
         Assert.assertEquals("123", actualFilingPackagesResponseJsonPath.get("court.fileNumber[0]"));
-        Assert.assertEquals(DESCRIPTION, actualFilingPackagesResponseJsonPath.get("court.participatingClass[0]"));
+        Assert.assertEquals(Keys.DESCRIPTION, actualFilingPackagesResponseJsonPath.get("court.participatingClass[0]"));
         Assert.assertEquals(Integer.valueOf(1), actualFilingPackagesResponseJsonPath.get("court.agencyId[0]"));
-        Assert.assertEquals(DESCRIPTION, actualFilingPackagesResponseJsonPath.get("court.locationDescription[0]"));
-        Assert.assertEquals(DESCRIPTION, actualFilingPackagesResponseJsonPath.get("court.levelDescription[0]"));
-        Assert.assertEquals(DESCRIPTION, actualFilingPackagesResponseJsonPath.get("court.classDescription[0]"));
+        Assert.assertEquals(Keys.DESCRIPTION, actualFilingPackagesResponseJsonPath.get("court.locationDescription[0]"));
+        Assert.assertEquals(Keys.DESCRIPTION, actualFilingPackagesResponseJsonPath.get("court.levelDescription[0]"));
+        Assert.assertEquals(Keys.DESCRIPTION, actualFilingPackagesResponseJsonPath.get("court.classDescription[0]"));
 
         //Documents
         Assert.assertEquals("1", actualFilingPackagesResponseJsonPath.get("documents[0].identifier[0]"));
