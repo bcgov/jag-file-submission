@@ -10,6 +10,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import io.restassured.specification.MultiPartSpecification;
+import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,14 +26,10 @@ public class GetFileNameSD {
     private final OauthService oauthService;
     private final SubmissionService submissionService;
     private final UUID actualTransactionId;
-
-    private static String FILE_NAME_PATH = "document/test-document.pdf";
-
-
     private UserIdentity actualUserIdentity;
     private Response actualFileNameResponse;
 
-    public Logger logger = LoggerFactory.getLogger(GetFileNameSD.class);
+    private final Logger logger = LoggerFactory.getLogger(GetFileNameSD.class);
 
     public GetFileNameSD(OauthService oauthService, SubmissionService submissionService) {
         this.oauthService = oauthService;
@@ -67,7 +64,7 @@ public class GetFileNameSD {
 
 
         actualFileNameResponse = submissionService.getSubmissionDetailsResponse(actualUserIdentity.getAccessToken(),actualTransactionId,
-                actualSubmissionId, FILE_NAME_PATH);
+                actualSubmissionId, Keys.FILE_NAME_PATH);
 
         logger.info("Api response status code: {}", actualFileNameResponse.getStatusCode());
 
@@ -78,7 +75,7 @@ public class GetFileNameSD {
 
         logger.info("Asserting get filing name response");
 
-        Assert.assertEquals(200, actualFileNameResponse.getStatusCode());
+        Assert.assertEquals(HttpStatus.SC_OK, actualFileNameResponse.getStatusCode());
         Assert.assertEquals("application/octet-stream", actualFileNameResponse.getContentType());
 
         logger.info("Response matches the requirements");

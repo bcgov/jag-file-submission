@@ -22,7 +22,7 @@ public class SubmissionHistoryPage extends BasePage {
     @Value("${PASSWORD_KEYCLOAK:changeme}")
     private String password;
 
-    private Logger logger = LoggerFactory.getLogger(SubmissionHistoryPage.class);
+    private final Logger logger = LoggerFactory.getLogger(SubmissionHistoryPage.class);
 
     @FindBy(id = "username")
     private WebElement usernameField;
@@ -39,7 +39,7 @@ public class SubmissionHistoryPage extends BasePage {
     @FindBy(xpath = "//input[@data-testid='package-search']")
     private WebElement packageSearchTextField;
 
-    @FindBy(xpath = "//*[@id='root']/main/div/div[1]/button")
+    @FindBy(className = "search-btn")
     private WebElement searchButton;
 
     public void signIn() {
