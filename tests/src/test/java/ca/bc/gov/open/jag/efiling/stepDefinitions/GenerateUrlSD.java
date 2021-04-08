@@ -115,5 +115,31 @@ public class GenerateUrlSD {
 
     }
 
+    @And("user request a submission url with invalid FileNumber")
+    public void userRequestASubmissionUrlWithInvalidFileNo() {
 
+        actualGenerateUrlResponse = submissionService.generateUrlResponseForInvalidFileNo(actualTransactionId, actualUserIdentity.getUniversalId(),
+                actualUserIdentity.getAccessToken(), actualSubmissionId);
+
+        logger.info("Api response status code: {}", actualGenerateUrlResponse.getStatusCode());
+
+        logger.info("Api response: {}", actualGenerateUrlResponse.asString());
+
+    }
+
+    @Then("a valid error message should be returned")
+    public void validErrorMessageShouldBeReturned() {
+
+        logger.info("Asserting generateUrl response");
+
+        JsonPath actualJson = new JsonPath(actualGenerateUrlResponse.asString());
+
+        Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, actualGenerateUrlResponse.getStatusCode());
+        Assert.assertEquals("INVALID_INITIAL_SUBMISSION_PAYLOAD", actualJson.getString("error"));
+        Assert.assertEquals("Initial Submission payload invalid, find more in the details array.", actualJson.getString("message"));
+        Assert.assertEquals("FileNumber [3] does not exists.", actualJson.getString("details[0]"));
+
+        logger.info("Response match requirements");
+
+    }
 }
