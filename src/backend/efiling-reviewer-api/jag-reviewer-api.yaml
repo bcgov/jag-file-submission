@@ -160,6 +160,10 @@ components:
       properties:
         documentType:
           type: string
+        documentTypeDescription:
+          type: string
+        projectId:
+          type: integer
         documentConfig:
           type: object
     DocumentTypeConfiguration:
@@ -170,6 +174,10 @@ components:
           format: uuid
         documentType:
           type: string
+        documentTypeDescription:
+          type: string
+        projectId:
+          type: integer
         documentConfig:
           type: object
     DocumentTypeConfigurationList:
@@ -177,7 +185,6 @@ components:
       items:
         $ref: "#/components/schemas/DocumentTypeConfiguration"
     Extract:
-      type: object
       required:
         - id
         - transactionId
