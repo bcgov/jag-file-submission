@@ -8,13 +8,16 @@ const header = {
   history: createMemoryHistory(),
 };
 
-const packageRef = "aHR0cHM6L2thZ2VObz0xMTQzMA==";
-const buff = Buffer.from(packageRef, "base64");
+let packageRef = "aHR0cHM6L2thZ2VObz0xMTQzMA==";
+let buff = Buffer.from(packageRef, "base64");
 const returnUrl =
   "https%3A%2F%2Fwww.google.ca%2Fsearch%3Fq%3Dbob%2Bross%26tbm%3Disch";
-const url = `${buff.toString("ascii")}?returnUrl=${returnUrl}`;
+const returnAppName = "Parent%20App";
+let url = `${buff.toString("ascii")}`;
+url += `?returnUrl=${returnUrl}`;
+url += `&returnAppName=${returnAppName}`;
 
-const page = { header, packageRef };
+let page = { header, packageRef };
 
 window.open = jest.fn();
 
@@ -45,6 +48,21 @@ describe("Success", () => {
     const { container } = render(<Success page={page} />);
 
     fireEvent.keyDown(getByText(container, "View my submitted package."));
+
+    expect(window.open).toHaveBeenCalledWith(url);
+  });
+
+  test("Clicking on link where packageRef contains packageNo", () => {
+    packageRef =
+      "aHR0cDovL2xvY2FsaG9zdDozMDAwL2VmaWxpbmdodWIvcGFja2FnZXJldmlldy8xP3BhY2thZ2VObz0x";
+    buff = Buffer.from(packageRef, "base64");
+    url = `${buff.toString("ascii")}`;
+    url += `&returnUrl=${returnUrl}`;
+    url += `&returnAppName=${returnAppName}`;
+    page = { header, packageRef };
+    const { container } = render(<Success page={page} />);
+
+    fireEvent.click(getByText(container, "View my submitted package."));
 
     expect(window.open).toHaveBeenCalledWith(url);
   });

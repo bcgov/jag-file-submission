@@ -3,11 +3,11 @@ package ca.bc.gov.open.efilingdiligenclient.diligen.model;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FormDataProperty {
+public class PropertyConfig {
 
     private String type;
     private Integer fieldId;
-    Map<String, FormDataProperty> properties = new LinkedHashMap<>();
+    Map<String, PropertyConfig> properties = new LinkedHashMap<>();
 
     public String getType() {
         return type;
@@ -25,11 +25,11 @@ public class FormDataProperty {
         this.fieldId = fieldId;
     }
 
-    public Map<String, FormDataProperty> getProperties() {
+    public Map<String, PropertyConfig> getProperties() {
         return properties;
     }
 
-    public void setProperties(Map<String, FormDataProperty> properties) {
+    public void setProperties(Map<String, PropertyConfig> properties) {
         this.properties = properties;
     }
 }
