@@ -17,6 +17,10 @@ public class DocumentTypeConfiguration {
 
     private String documentType;
 
+    private String documentTypeDescription;
+
+    private Integer projectId;
+
     private DocumentConfig documentConfig;
 
     public DocumentTypeConfiguration() {
@@ -26,9 +30,13 @@ public class DocumentTypeConfiguration {
     public DocumentTypeConfiguration(
             @JsonProperty("id") UUID id,
             @JsonProperty("documentType") String documentType,
+            @JsonProperty("documentTypeDescription") String documentTypeDescription,
+            @JsonProperty("projectId") Integer projectId,
             @JsonProperty("formData") DocumentConfig formData) {
         this.id = id;
         this.documentType = documentType;
+        this.documentTypeDescription = documentTypeDescription;
+        this.projectId = projectId;
         this.documentConfig = formData;
     }
 
@@ -43,6 +51,10 @@ public class DocumentTypeConfiguration {
     public String getDocumentType() {
         return documentType;
     }
+
+    public String getDocumentTypeDescription() { return documentTypeDescription;  }
+
+    public Integer getProjectId() { return projectId; }
 
     public DocumentConfig getDocumentConfig() {
         return documentConfig;
