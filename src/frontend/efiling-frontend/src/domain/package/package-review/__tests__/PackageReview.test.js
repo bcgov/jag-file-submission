@@ -346,16 +346,22 @@ describe("PackageReview Component", () => {
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
       .reply(400, { message: "There was an error." });
 
-    const { getByText } = render(<PackageReview />);
+    const { getByText, queryByText, getByTestId } = render(<PackageReview />);
     await waitFor(() => {});
 
     fireEvent.click(getByText("Print Submission Sheet"));
     await waitFor(() => {});
 
-    expect(window.open).toHaveBeenCalledWith(
-      "error.com?status=400&message=There was an error.",
-      "_self"
-    );
+    expect(
+      queryByText("Something went wrong while trying to download your document")
+    ).toBeInTheDocument();
+
+    fireEvent.click(getByTestId("toast-close"));
+    await waitFor(() => {});
+
+    expect(
+      queryByText("Something went wrong while trying to download your document")
+    ).not.toBeInTheDocument();
   });
 
   test("View Submission Sheet (on keyDown) - unsuccessful", async () => {
@@ -368,7 +374,7 @@ describe("PackageReview Component", () => {
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
       .reply(400, { message: "There was an error." });
 
-    const { getByText } = render(<PackageReview />);
+    const { getByText, queryByText } = render(<PackageReview />);
     await waitFor(() => {});
 
     fireEvent.keyDown(getByText("Print Submission Sheet"), {
@@ -377,10 +383,9 @@ describe("PackageReview Component", () => {
     });
     await waitFor(() => {});
 
-    expect(window.open).toHaveBeenCalledWith(
-      "error.com?status=400&message=There was an error.",
-      "_self"
-    );
+    expect(
+      queryByText("Something went wrong while trying to download your document")
+    ).toBeInTheDocument();
   });
 
   test("Reload", async () => {

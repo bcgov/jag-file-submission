@@ -20,4 +20,12 @@
   .fw-bold {
     font-weight: bold;
   }
+
+  @media (max-width: 768px) {
+    .download-alert {
+      position: fixed !important;
+      width: 85%;
+      top: 100px;
+    }
+  }
 }
