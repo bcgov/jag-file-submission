@@ -124,6 +124,7 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - REDIS_PASSWORD=admin
+      - AIR_SPRING_DATA_MONGODB_HOST=mongodb
       - CLAMAV_HOST=clamav
       - CLAMAV_PORT=3310
       - CLAMAV_TIMEOUT=50000
