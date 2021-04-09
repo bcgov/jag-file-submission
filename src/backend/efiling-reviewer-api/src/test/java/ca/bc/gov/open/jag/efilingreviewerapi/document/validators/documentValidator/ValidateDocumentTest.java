@@ -2,11 +2,14 @@ package ca.bc.gov.open.jag.efilingreviewerapi.document.validators.documentValida
 
 import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.clamav.starter.VirusDetectedException;
+import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentTypeConfiguration;
+import ca.bc.gov.open.jag.efilingreviewerapi.document.store.DocumentTypeConfigurationRepository;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidator;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidatorImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerVirusFoundException;
 import org.junit.jupiter.api.*;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -35,12 +38,19 @@ public class ValidateDocumentTest {
     @Mock
     ClamAvService clamAvServiceMock;
 
+    @Mock
+    DocumentTypeConfigurationRepository documentTypeConfigurationRepositoryMock;
+
     @BeforeAll
     public void beforeAll() {
 
         MockitoAnnotations.openMocks(this);
 
-        sut = new DocumentValidatorImpl(clamAvServiceMock, null);
+        Mockito.when(documentTypeConfigurationRepositoryMock.findByDocumentType(ArgumentMatchers.eq(DOCUMENT_TYPE))).thenReturn(new DocumentTypeConfiguration());
+
+        Mockito.when(documentTypeConfigurationRepositoryMock.findByDocumentType(ArgumentMatchers.eq(NOT_RCC))).thenReturn(null);
+
+        sut = new DocumentValidatorImpl(clamAvServiceMock, null, documentTypeConfigurationRepositoryMock);
 
     }
 
