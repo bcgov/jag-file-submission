@@ -47,9 +47,7 @@ public class DocumentValidatorImpl implements DocumentValidator {
     @Override
     public void validateDocument(String documentType, MultipartFile file) {
 
-        DocumentTypeConfiguration documentTypeConfiguration = documentTypeConfigurationRepository.findByDocumentType(documentType);
-
-        if (documentTypeConfiguration == null) {
+        if (documentTypeConfigurationRepository.existsByDocumentType(documentType)) {
             logger.error("A document of type {} is not valid", documentType);
             throw new AiReviewerDocumentException("Invalid document type");
         }

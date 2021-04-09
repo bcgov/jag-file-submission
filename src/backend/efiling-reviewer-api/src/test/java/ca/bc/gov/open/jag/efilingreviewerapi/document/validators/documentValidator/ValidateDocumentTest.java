@@ -46,9 +46,9 @@ public class ValidateDocumentTest {
 
         MockitoAnnotations.openMocks(this);
 
-        Mockito.when(documentTypeConfigurationRepositoryMock.findByDocumentType(ArgumentMatchers.eq(DOCUMENT_TYPE))).thenReturn(new DocumentTypeConfiguration());
+        Mockito.when(documentTypeConfigurationRepositoryMock.existsByDocumentType(ArgumentMatchers.eq(DOCUMENT_TYPE))).thenReturn(true);
 
-        Mockito.when(documentTypeConfigurationRepositoryMock.findByDocumentType(ArgumentMatchers.eq(NOT_RCC))).thenReturn(null);
+        Mockito.when(documentTypeConfigurationRepositoryMock.existsByDocumentType(ArgumentMatchers.eq(NOT_RCC))).thenReturn(false);
 
         sut = new DocumentValidatorImpl(clamAvServiceMock, null, documentTypeConfigurationRepositoryMock);
 
