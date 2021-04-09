@@ -346,19 +346,49 @@ describe("PackageReview Component", () => {
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
       .reply(400, { message: "There was an error." });
 
-    const { getByText } = render(<PackageReview />);
+    const { getByText, queryByText, getByTestId } = render(<PackageReview />);
     await waitFor(() => {});
 
     fireEvent.click(getByText("Print Submission Sheet"));
     await waitFor(() => {});
 
-    expect(window.open).toHaveBeenCalledWith(
-      "error.com?status=400&message=There was an error.",
-      "_self"
-    );
+    expect(
+      queryByText("Something went wrong while trying to download your document")
+    ).toBeInTheDocument();
+
+    fireEvent.click(getByTestId("toast-close"));
+    await waitFor(() => {});
+
+    expect(
+      queryByText("Something went wrong while trying to download your document")
+    ).not.toBeInTheDocument();
   });
 
   test("View Submission Sheet (on keyDown) - unsuccessful", async () => {
+    sessionStorage.setItem("errorUrl", "error.com");
+
+    mock
+      .onGet(apiRequest)
+      .reply(200, { court: courtData, submittedBy, submittedDate });
+    mock
+      .onGet(`/filingpackages/${packageId}/submissionSheet`)
+      .reply(400, { message: "There was an error." });
+
+    const { getByText, queryByText } = render(<PackageReview />);
+    await waitFor(() => {});
+
+    fireEvent.keyDown(getByText("Print Submission Sheet"), {
+      key: "Enter",
+      keyCode: "13",
+    });
+    await waitFor(() => {});
+
+    expect(
+      queryByText("Something went wrong while trying to download your document")
+    ).toBeInTheDocument();
+  });
+
+  test("View Submission Sheet (on keyDown) - tab", async () => {
     sessionStorage.setItem("errorUrl", "error.com");
 
     mock
@@ -372,15 +402,12 @@ describe("PackageReview Component", () => {
     await waitFor(() => {});
 
     fireEvent.keyDown(getByText("Print Submission Sheet"), {
-      key: "Enter",
-      keyCode: "13",
+      key: "Tab",
+      keyCode: "9",
     });
     await waitFor(() => {});
 
-    expect(window.open).toHaveBeenCalledWith(
-      "error.com?status=400&message=There was an error.",
-      "_self"
-    );
+    expect(window.open).not.toHaveBeenCalled();
   });
 
   test("Reload", async () => {

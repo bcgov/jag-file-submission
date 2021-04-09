@@ -8,6 +8,7 @@ import ConfirmationPopup, {
   Table,
   Callout,
 } from "shared-components";
+import { Toast } from "../../components/toast/Toast";
 import Rush from "../../components/page/rush/Rush";
 import { getSidecardData } from "../../modules/helpers/sidecardData";
 import { getCreditCardAlerts } from "../../modules/helpers/creditCardAlerts";
@@ -116,6 +117,7 @@ export default function Payment({
   const [showPackageConfirmation, setShowPackageConfirmation] = useState(false);
   const [showRush, setShowRush] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
+  const [show, setShow] = useState(false);
 
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
@@ -194,6 +196,12 @@ export default function Payment({
           agreeCallout={() => setPaymentAgreed(!paymentAgreed)}
         />
         <br />
+        {show && (
+          <Toast
+            content="Something went wrong while trying to submit your package"
+            setShow={setShow}
+          />
+        )}
         <section className="pt-2 buttons">
           <Button
             label="< Back"
@@ -203,6 +211,7 @@ export default function Payment({
             }}
             styling="bcgov-normal-white btn"
           />
+
           <div className="button-container">
             <ConfirmationPopup
               modal={confirmationPopup.modal}
@@ -210,6 +219,7 @@ export default function Payment({
               confirmButton={confirmationPopup.confirmButton}
               cancelButton={confirmationPopup.cancelButton}
             />
+
             <Button
               label="Submit"
               onClick={() => {

@@ -6,7 +6,7 @@ import moment from "moment";
 
 import Modal from "react-bootstrap/Modal";
 import { Button } from "shared-components";
-import { errorRedirect } from "../../../modules/helpers/errorRedirect";
+import { Toast } from "../../../components/toast/Toast";
 import { withdrawTooltipData } from "../../../modules/test-data/withdrawTooltipData";
 import { isClick, isEnter } from "../../../modules/helpers/eventUtil";
 import {
@@ -21,6 +21,8 @@ export default function DocumentList({
   documents,
   reloadDocumentList,
 }) {
+  const [showDownloadAlert, setShowDownloadAlert] = useState(false);
+  const [showWithdrawAlert, setShowWithdrawAlert] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState({
     description: "",
@@ -34,16 +36,15 @@ export default function DocumentList({
   const handleModalClose = () => setShowModal(false);
   const handleModalConfirm = () => {
     setShowModal(false);
-
     withdrawSubmittedDocument(packageId, modalData)
       .then(() => reloadDocumentList())
-      .catch((err) => errorRedirect(sessionStorage.getItem("errorUrl"), err));
+      .catch(() => setShowWithdrawAlert(true));
   };
 
   function handleDownloadFileEvent(e, document) {
     if (isClick(e) || isEnter(e)) {
-      downloadSubmittedDocument(packageId, document).catch((err) =>
-        errorRedirect(sessionStorage.getItem("errorUrl"), err)
+      downloadSubmittedDocument(packageId, document).catch(() =>
+        setShowDownloadAlert(true)
       );
     }
   }
@@ -57,6 +58,18 @@ export default function DocumentList({
 
   return (
     <div className="ct-document-list">
+      {showDownloadAlert && (
+        <Toast
+          content="Something went wrong while trying to download your document"
+          setShow={setShowDownloadAlert}
+        />
+      )}
+      {showWithdrawAlert && (
+        <Toast
+          content="Something went wrong while trying to withdraw your document"
+          setShow={setShowWithdrawAlert}
+        />
+      )}
       <div className="header">
         <span className="d-none d-lg-inline col-lg-4">File Name</span>
         <span className="d-none d-lg-inline col-lg-3">Document Type</span>
