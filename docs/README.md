@@ -176,7 +176,7 @@ The `organizationParties` array represents a list of organization parties for th
 
 The efiling Package Review screen shows the details of a submitted package.
 
-https://dev.justice.gov.bc.ca/efilinghub/packagereview/:packageId?returnUrl=&returnAppName=
+https://dev.justice.gov.bc.ca/efilinghub/packagereview/:packageId?returnUrl=&returnAppName=&defaultTab=
 
 The returnUrl parameter is optional, but if an encoded URL is supplied, the
 page will render with a button that will return the user to the given URL
@@ -184,6 +184,9 @@ page will render with a button that will return the user to the given URL
 
 The returnAppName parameter is optional, but if an encoded name of the Parent Application
 is specified, the "Return to Parent App" button will be named accordingly.
+
+The defaultTab parameter is optional, but if an encoded defaultTab
+is specified, the Package Review will display that tab by default.
 
 ### Api Documentation
 
