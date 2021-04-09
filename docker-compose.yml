@@ -33,11 +33,10 @@ services:
   #############################################################################################
   ###                                 AI REVIEWER ADMIN (DEMO)                              ###
   #############################################################################################
-  efiling-demo:
+  ai-reviewer-admin:
     container_name: ai-reviewer-admin
     build:
       context: ./src/frontend/ai-reviewer-admin
-    environment:
     ports:
       - 3002:8080
 
