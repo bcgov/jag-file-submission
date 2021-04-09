@@ -353,14 +353,18 @@ describe("PackageReview Component", () => {
     await waitFor(() => {});
 
     expect(
-      queryByText("Something went wrong while trying to download your document")
+      queryByText(
+        "Something went wrong while trying to download your document."
+      )
     ).toBeInTheDocument();
 
     fireEvent.click(getByTestId("toast-close"));
     await waitFor(() => {});
 
     expect(
-      queryByText("Something went wrong while trying to download your document")
+      queryByText(
+        "Something went wrong while trying to download your document."
+      )
     ).not.toBeInTheDocument();
   });
 
@@ -384,7 +388,7 @@ describe("PackageReview Component", () => {
     await waitFor(() => {});
 
     expect(
-      queryByText("Something went wrong while trying to download your document")
+      queryByText("Something went wrong while trying to download your document.")
     ).toBeInTheDocument();
   });
 

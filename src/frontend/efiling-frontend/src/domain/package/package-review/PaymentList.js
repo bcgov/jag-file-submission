@@ -5,9 +5,9 @@ import Dinero from "dinero.js";
 import { MdPrint } from "react-icons/md";
 import "./PaymentList.scss";
 import { downloadPaymentReceipt } from "./PaymentListService";
-import { errorRedirect } from "../../../modules/helpers/errorRedirect";
-import { isEnter } from "../../../modules/helpers/eventUtil";
+import { isClick, isEnter } from "../../../modules/helpers/eventUtil";
 import { formatCurrency } from "../../../modules/helpers/CurrencyUtil";
+import { Toast } from "../../../components/toast/Toast";
 
 const hash = require("object-hash");
 
@@ -20,6 +20,7 @@ export default function PaymentList({ payments, packageId }) {
   const [subtotal, setSubtotal] = useState(dineroInit);
   const [csoTotal, setCsoTotal] = useState(dineroInit);
   const [total, setTotal] = useState(dineroInit);
+  const [show, setShow] = useState(false);
   const format = "$0,0.00";
 
   useEffect(() => {
@@ -52,16 +53,10 @@ export default function PaymentList({ payments, packageId }) {
     setTotal({ stat: subStat.add(csoStat), toDate: subToDate.add(csoToDate) });
   }, [payments]);
 
-  const handleClick = () => {
-    downloadPaymentReceipt(packageId).catch((err) => {
-      errorRedirect(sessionStorage.getItem("errorUrl"), err);
-    });
-  };
-
-  const handleKeyDown = (e) => {
-    if (isEnter(e)) {
-      downloadPaymentReceipt(packageId).catch((err) => {
-        errorRedirect(sessionStorage.getItem("errorUrl"), err);
+  const handleViewReceiptEvent = (e) => {
+    if (isEnter(e) || isClick(e)) {
+      downloadPaymentReceipt(packageId).catch(() => {
+        setShow(true);
       });
     }
   };
@@ -135,14 +130,20 @@ export default function PaymentList({ payments, packageId }) {
           )}
         </tbody>
       </table>
+      {show && (
+        <Toast
+          content="Something went wrong while trying to download your document."
+          setShow={setShow}
+        />
+      )}
       <div className="d-flex justify-content-end">
         <span
           className="file-href"
           role="button"
           data-testid="btn-view-receipt"
           tabIndex={0}
-          onClick={handleClick}
-          onKeyDown={handleKeyDown}
+          onClick={handleViewReceiptEvent}
+          onKeyDown={handleViewReceiptEvent}
         >
           View Receipt
         </span>

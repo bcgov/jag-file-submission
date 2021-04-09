@@ -195,7 +195,7 @@ export default function PackageReview() {
           <h1>View Recently Submitted Package # {packageId}</h1>
           {show && (
             <Toast
-              content="Something went wrong while trying to download your document"
+              content="Something went wrong while trying to download your document."
               setShow={setShow}
             />
           )}

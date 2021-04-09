@@ -198,7 +198,7 @@ export default function Payment({
         <br />
         {show && (
           <Toast
-            content="Something went wrong while trying to submit your package"
+            content="Something went wrong while trying to submit your package."
             setShow={setShow}
           />
         )}
