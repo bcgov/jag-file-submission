@@ -71,6 +71,30 @@ public class SubmissionService {
 
     }
 
+    public Response generateUrlResponseForInvalidFileNo(UUID transactionId, String universalId, String accessToken,
+                                                        String submissionId) {
+
+        logger.info("Requesting to generate Url");
+
+        RequestSpecification request = RestAssured
+                .given()
+                .auth()
+                .preemptive()
+                .oauth2(accessToken)
+                .contentType(ContentType.JSON)
+                .header(Keys.X_TRANSACTION_ID, transactionId)
+                .header(Keys.X_USER_ID, universalId)
+                .body(PayloadHelper.generateUrlPayloadWithInvalidFileNo(Keys.TEST_DOCUMENT_PDF));
+
+        return request
+                .when()
+                .post(MessageFormat.format(MESSAGE_FORMAT_PARAMS, eFilingHost, Keys.SUBMISSION_PATH, submissionId, Keys.GENERATE_URL_PATH))
+                .then()
+                .extract()
+                .response();
+
+    }
+
     public Response getSubmissionDetailsResponse(String accessToken, UUID transactionId, String submissionId, String path) {
 
         logger.info("Requesting submission information");
