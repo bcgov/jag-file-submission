@@ -63,6 +63,8 @@ public class DocumentTypeConfiguration {
     public DocumentTypeConfiguration(Builder builder) {
         this();
         this.documentType = builder.documentType;
+        this.documentTypeDescription = builder.documentTypeDescription;
+        this.projectId = builder.projectId;
         this.documentConfig = builder.documentConfig;
     }
 
@@ -73,10 +75,22 @@ public class DocumentTypeConfiguration {
     public static class Builder {
 
         private String documentType;
+        private String documentTypeDescription;
+        private Integer projectId;
         private DocumentConfig documentConfig;
 
         public Builder documentType(String documentType) {
             this.documentType = documentType;
+            return this;
+        }
+
+        public Builder documentTypeDescription(String documentTypeDescription) {
+            this.documentTypeDescription = documentTypeDescription;
+            return this;
+        }
+
+        public Builder projectId(Integer projectId) {
+            this.projectId = projectId;
             return this;
         }
 
