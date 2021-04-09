@@ -1,9 +1,9 @@
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { Header, Footer } from "shared-components";
-import './App.css';
+import "./App.css";
 
 function App() {
-  
   const header = {
     name: "AI Reviewer Admin Client",
     history: useHistory(),
