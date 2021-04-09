@@ -383,6 +383,28 @@ describe("PackageReview Component", () => {
     );
   });
 
+  test("View Submission Sheet (on keyDown) - tab", async () => {
+    sessionStorage.setItem("errorUrl", "error.com");
+
+    mock
+      .onGet(apiRequest)
+      .reply(200, { court: courtData, submittedBy, submittedDate });
+    mock
+      .onGet(`/filingpackages/${packageId}/submissionSheet`)
+      .reply(400, { message: "There was an error." });
+
+    const { getByText } = render(<PackageReview />);
+    await waitFor(() => {});
+
+    fireEvent.keyDown(getByText("Print Submission Sheet"), {
+      key: "Tab",
+      keyCode: "9",
+    });
+    await waitFor(() => {});
+
+    expect(window.open).not.toHaveBeenCalled();
+  });
+
   test("Reload", async () => {
     mock.onGet(apiRequest).reply(200, {
       packageNumber: packageId,
