@@ -2,8 +2,14 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import App from "./App";
 
-test("renders learn react link", () => {
+jest.mock("react-router-dom", () => ({
+  useHistory: () => ({
+    push: jest.fn(),
+  }),
+}));
+
+test("renders App", () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const titleInHeader = screen.getByText(/AI Reviewer Admin Client/i);
+  expect(titleInHeader).toBeInTheDocument();
 });
