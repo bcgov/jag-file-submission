@@ -9,11 +9,14 @@ import ca.bc.gov.open.jag.efilingreviewerapi.restricteddocument.mappers.Restrict
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
+@Service
 public class RestrictedDocumentApiDelegateImpl implements RestrictedDocumentTypesApiDelegate {
 
     private final RestrictedDocumentRepository restrictedDocumentRepository;
@@ -72,7 +75,11 @@ public class RestrictedDocumentApiDelegateImpl implements RestrictedDocumentType
     @Override
     public ResponseEntity<List<RestrictedDocumentType>> getRestrictedDocumentTypes() {
 
-        return null;
+        List<ca.bc.gov.open.jag.efilingreviewerapi.document.models.RestrictedDocumentType> documentTypes = restrictedDocumentRepository.findAll();
+
+        return ResponseEntity.ok(documentTypes.stream()
+                .map(x -> restrictedDocumentTypeMapper.toDocumentType(x))
+                .collect(Collectors.toList()));
 
     }
 
