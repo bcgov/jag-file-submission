@@ -9,4 +9,6 @@ public interface RestrictedDocumentRepository extends MongoRepository<Restricted
 
     boolean existsByDocumentTypeDescription(String documentTypeDescription);
 
+    boolean existsByDocumentType(String documentType);
+
 }
