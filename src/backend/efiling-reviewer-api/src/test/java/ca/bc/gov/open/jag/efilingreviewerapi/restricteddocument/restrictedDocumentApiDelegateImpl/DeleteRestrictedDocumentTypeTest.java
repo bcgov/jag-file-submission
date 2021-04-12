@@ -33,9 +33,9 @@ public class DeleteRestrictedDocumentTypeTest {
 
         MockitoAnnotations.openMocks(this);
 
-        Mockito.when(restrictedDocumentRepositoryMock.existsById(ArgumentMatchers.eq(EXISTING_DOCUMENT_ID))).thenReturn(true);
+        Mockito.when(restrictedDocumentRepositoryMock.existsById(ArgumentMatchers.eq(EXISTING_DOCUMENT_ID))).thenReturn(false);
 
-        Mockito.when(restrictedDocumentRepositoryMock.existsById(ArgumentMatchers.eq(DOCUMENT_ID))).thenReturn(false);
+        Mockito.when(restrictedDocumentRepositoryMock.existsById(ArgumentMatchers.eq(DOCUMENT_ID))).thenReturn(true);
 
         Mockito.doNothing().when(restrictedDocumentRepositoryMock).deleteById(any());
 

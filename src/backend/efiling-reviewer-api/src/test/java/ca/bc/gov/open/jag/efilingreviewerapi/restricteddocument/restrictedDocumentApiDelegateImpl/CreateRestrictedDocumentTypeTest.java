@@ -6,6 +6,7 @@ import ca.bc.gov.open.jag.efilingreviewerapi.document.store.RestrictedDocumentRe
 import ca.bc.gov.open.jag.efilingreviewerapi.restricteddocument.RestrictedDocumentApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.restricteddocument.mappers.RestrictedDocumentTypeMapperImpl;
 import org.junit.jupiter.api.*;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -39,6 +40,10 @@ public class CreateRestrictedDocumentTypeTest {
 
         RestrictedDocumentType restrictedDocumentType = createRestrictedDocumentType();
         restrictedDocumentType.setId(TEST_UUID);
+
+        Mockito.when(restrictedDocumentRepositoryMock.existsByDocumentType(ArgumentMatchers.eq(EXISTING_DOCUMENT_TYPE))).thenReturn(true);
+
+        Mockito.when(restrictedDocumentRepositoryMock.existsByDocumentType(ArgumentMatchers.eq(DOCUMENT_TYPE))).thenReturn(false);
 
         Mockito.when(restrictedDocumentRepositoryMock.save(any())).thenReturn(restrictedDocumentType);
 
