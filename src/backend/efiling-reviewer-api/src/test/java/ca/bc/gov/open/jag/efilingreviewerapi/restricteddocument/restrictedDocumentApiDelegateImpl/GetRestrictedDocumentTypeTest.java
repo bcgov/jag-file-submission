@@ -5,6 +5,7 @@ import ca.bc.gov.open.jag.efilingreviewerapi.document.store.RestrictedDocumentRe
 import ca.bc.gov.open.jag.efilingreviewerapi.restricteddocument.RestrictedDocumentApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.restricteddocument.mappers.RestrictedDocumentTypeMapperImpl;
 import org.junit.jupiter.api.*;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -21,7 +23,9 @@ public class GetRestrictedDocumentTypeTest {
 
     private static final String DOCUMENT_TYPE = "TEST_TYPE";
     private static final String DOCUMENT_TYPE_DESCRIPTION = "TEST_TYPE";
-    private static final UUID TEST_UUID = UUID.randomUUID();
+    private static final UUID DOCUMENT_ID = UUID.randomUUID();
+    private static final UUID EXISTING_DOCUMENT_ID = UUID.randomUUID();
+
 
     private RestrictedDocumentApiDelegateImpl sut;
 
@@ -39,23 +43,36 @@ public class GetRestrictedDocumentTypeTest {
                 .documentTypeDescription(DOCUMENT_TYPE_DESCRIPTION)
                 .create();
 
-        restrictedDocumentType.setId(TEST_UUID);
+        restrictedDocumentType.setId(EXISTING_DOCUMENT_ID);
 
-        Mockito.when(restrictedDocumentRepositoryMock.findAll()).thenReturn(Collections.singletonList(restrictedDocumentType));
+        Mockito.when(restrictedDocumentRepositoryMock.findById(ArgumentMatchers.eq(EXISTING_DOCUMENT_ID))).thenReturn(Optional.of(restrictedDocumentType));
+
+        Mockito.when(restrictedDocumentRepositoryMock.findById(ArgumentMatchers.eq(DOCUMENT_ID))).thenReturn(Optional.empty());
 
         sut = new RestrictedDocumentApiDelegateImpl(restrictedDocumentRepositoryMock, new RestrictedDocumentTypeMapperImpl());
 
     }
 
     @Test
-    @DisplayName("200: get list of documentTypes ")
+    @DisplayName("200: get documentType ")
     public void withValidRequest() {
 
-        ResponseEntity<List<ca.bc.gov.open.jag.efilingreviewerapi.api.model.RestrictedDocumentType>> actual = sut.getRestrictedDocumentTypes();
+        ResponseEntity<ca.bc.gov.open.jag.efilingreviewerapi.api.model.RestrictedDocumentType> actual = sut.getRestrictedDocumentType(EXISTING_DOCUMENT_ID);
 
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
-        Assertions.assertEquals(1, actual.getBody().size());
+        Assertions.assertEquals(EXISTING_DOCUMENT_ID, actual.getBody().getId());
+        Assertions.assertEquals(DOCUMENT_TYPE, actual.getBody().getDocumentType().getType());
+        Assertions.assertEquals(DOCUMENT_TYPE_DESCRIPTION, actual.getBody().getDocumentType().getDescription());
 
+    }
+
+    @Test
+    @DisplayName("404: get list of documentTypes ")
+    public void withMissingDocumentType() {
+
+        ResponseEntity<ca.bc.gov.open.jag.efilingreviewerapi.api.model.RestrictedDocumentType> actual = sut.getRestrictedDocumentType(DOCUMENT_ID);
+
+        Assertions.assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
 
     }
 

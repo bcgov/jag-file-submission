@@ -54,12 +54,8 @@ public class RestrictedDocumentApiDelegateImpl implements RestrictedDocumentType
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        try {
-            restrictedDocumentRepository.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        restrictedDocumentRepository.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
 

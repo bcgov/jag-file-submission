@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.restricteddocument.restrictedDocumentApiDelegateImpl;
 
-import ca.bc.gov.open.jag.efilingreviewerapi.document.models.RestrictedDocumentType;
+import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentType;
+import ca.bc.gov.open.jag.efilingreviewerapi.api.model.RestrictedDocumentType;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.store.RestrictedDocumentRepository;
 import ca.bc.gov.open.jag.efilingreviewerapi.restricteddocument.RestrictedDocumentApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.restricteddocument.mappers.RestrictedDocumentTypeMapperImpl;
@@ -11,16 +12,15 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.UUID;
+
+import static org.mockito.ArgumentMatchers.any;
 
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UpdateRestrictedDocumentTypeTest {
 
     private static final String DOCUMENT_TYPE = "TEST_TYPE";
-    private static final String EXISTING_TYPE = "EXISTING_TYPE";
     private static final String DOCUMENT_TYPE_DESCRIPTION = "TEST_TYPE";
     private static final UUID TEST_UUID = UUID.randomUUID();
 
@@ -35,14 +35,14 @@ public class UpdateRestrictedDocumentTypeTest {
 
         MockitoAnnotations.openMocks(this);
 
-        RestrictedDocumentType restrictedDocumentType = RestrictedDocumentType.builder()
+        ca.bc.gov.open.jag.efilingreviewerapi.document.models.RestrictedDocumentType restrictedDocumentType = ca.bc.gov.open.jag.efilingreviewerapi.document.models.RestrictedDocumentType.builder()
                 .documentType(DOCUMENT_TYPE)
                 .documentTypeDescription(DOCUMENT_TYPE_DESCRIPTION)
                 .create();
 
         restrictedDocumentType.setId(TEST_UUID);
 
-        Mockito.when(restrictedDocumentRepositoryMock.findAll()).thenReturn(Collections.singletonList(restrictedDocumentType));
+        Mockito.when(restrictedDocumentRepositoryMock.save(any())).thenReturn(restrictedDocumentType);
 
         sut = new RestrictedDocumentApiDelegateImpl(restrictedDocumentRepositoryMock, new RestrictedDocumentTypeMapperImpl());
 
@@ -52,11 +52,16 @@ public class UpdateRestrictedDocumentTypeTest {
     @DisplayName("200: get list of documentTypes ")
     public void withValidRequest() {
 
-        ResponseEntity<List<ca.bc.gov.open.jag.efilingreviewerapi.api.model.RestrictedDocumentType>> actual = sut.getRestrictedDocumentTypes();
+        RestrictedDocumentType restrictedDocumentType = new RestrictedDocumentType();
+        DocumentType documentType = new DocumentType();
+        documentType.setType(DOCUMENT_TYPE);
+        documentType.setDescription(DOCUMENT_TYPE_DESCRIPTION);
+        restrictedDocumentType.setId(TEST_UUID);
+        restrictedDocumentType.setDocumentType(documentType);
 
-        Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
-        Assertions.assertEquals(1, actual.getBody().size());
+        ResponseEntity actual = sut.updateRestrictedDocumentType(restrictedDocumentType);
 
+        Assertions.assertEquals(HttpStatus.NO_CONTENT, actual.getStatusCode());
 
     }
 

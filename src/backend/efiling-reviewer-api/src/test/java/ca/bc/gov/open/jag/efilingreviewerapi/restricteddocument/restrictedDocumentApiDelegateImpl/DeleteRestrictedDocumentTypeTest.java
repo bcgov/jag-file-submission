@@ -1,27 +1,26 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.restricteddocument.restrictedDocumentApiDelegateImpl;
 
-import ca.bc.gov.open.jag.efilingreviewerapi.document.models.RestrictedDocumentType;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.store.RestrictedDocumentRepository;
 import ca.bc.gov.open.jag.efilingreviewerapi.restricteddocument.RestrictedDocumentApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.restricteddocument.mappers.RestrictedDocumentTypeMapperImpl;
 import org.junit.jupiter.api.*;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.UUID;
+
+import static org.mockito.ArgumentMatchers.any;
 
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class DeleteRestrictedDocumentTypeTest {
 
-    private static final String DOCUMENT_TYPE = "TEST_TYPE";
-    private static final String DOCUMENT_TYPE_DESCRIPTION = "TEST_TYPE";
-    private static final UUID TEST_UUID = UUID.randomUUID();
+    private static final UUID DOCUMENT_ID = UUID.randomUUID();
+    private static final UUID EXISTING_DOCUMENT_ID = UUID.randomUUID();
 
     private RestrictedDocumentApiDelegateImpl sut;
 
@@ -34,29 +33,36 @@ public class DeleteRestrictedDocumentTypeTest {
 
         MockitoAnnotations.openMocks(this);
 
-        RestrictedDocumentType restrictedDocumentType = RestrictedDocumentType.builder()
-                .documentType(DOCUMENT_TYPE)
-                .documentTypeDescription(DOCUMENT_TYPE_DESCRIPTION)
-                .create();
+        Mockito.when(restrictedDocumentRepositoryMock.existsById(ArgumentMatchers.eq(EXISTING_DOCUMENT_ID))).thenReturn(true);
 
-        restrictedDocumentType.setId(TEST_UUID);
+        Mockito.when(restrictedDocumentRepositoryMock.existsById(ArgumentMatchers.eq(DOCUMENT_ID))).thenReturn(false);
 
-        Mockito.when(restrictedDocumentRepositoryMock.findAll()).thenReturn(Collections.singletonList(restrictedDocumentType));
+        Mockito.doNothing().when(restrictedDocumentRepositoryMock).deleteById(any());
+
 
         sut = new RestrictedDocumentApiDelegateImpl(restrictedDocumentRepositoryMock, new RestrictedDocumentTypeMapperImpl());
 
     }
 
     @Test
-    @DisplayName("200: get list of documentTypes ")
+    @DisplayName("204: document deleted ")
     public void withValidRequest() {
 
-        ResponseEntity<List<ca.bc.gov.open.jag.efilingreviewerapi.api.model.RestrictedDocumentType>> actual = sut.getRestrictedDocumentTypes();
+        ResponseEntity actual = sut.deleteRestrictedDocumentType(EXISTING_DOCUMENT_ID);
 
-        Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
-        Assertions.assertEquals(1, actual.getBody().size());
-
+        Assertions.assertEquals(HttpStatus.NO_CONTENT, actual.getStatusCode());
 
     }
+
+    @Test
+    @DisplayName("404: document not found ")
+    public void withNoDocumentExceptionThrown() {
+
+        ResponseEntity actual = sut.deleteRestrictedDocumentType(DOCUMENT_ID);
+
+        Assertions.assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
+
+    }
+
 
 }

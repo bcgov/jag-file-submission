@@ -12,8 +12,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -23,6 +21,7 @@ import static org.mockito.ArgumentMatchers.any;
 public class CreateRestrictedDocumentTypeTest {
 
     private static final String DOCUMENT_TYPE = "TEST_TYPE";
+    private static final String EXISTING_DOCUMENT_TYPE = "EXISTING_TEST_TYPE";
     private static final String DOCUMENT_TYPE_DESCRIPTION = "TEST_TYPE";
     private static final UUID TEST_UUID = UUID.randomUUID();
 
@@ -70,7 +69,7 @@ public class CreateRestrictedDocumentTypeTest {
     public void withInValidRequest() {
 
         DocumentType documentType = new DocumentType();
-        documentType.setType("");
+        documentType.setType(EXISTING_DOCUMENT_TYPE);
 
         ResponseEntity actual = sut.createRestrictedDocumentType(documentType);
 
