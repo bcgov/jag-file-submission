@@ -32,7 +32,7 @@ RUN git checkout $STARTERS_V  && \
 # install skywalking agent
 WORKDIR /skywalking
 
-RUN wget https://mirror.its.dal.ca/apache/skywalking/$SW_V/apache-skywalking-apm-$SW_V.tar.gz && \
+RUN wget https://mirror.csclub.uwaterloo.ca/apache/skywalking/$SW_V/apache-skywalking-apm-$SW_V.tar.gz && \
     tar -xzvf apache-skywalking-apm-$SW_V.tar.gz && \
     rm apache-skywalking-apm-$SW_V.tar.gz
 
