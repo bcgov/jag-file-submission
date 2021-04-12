@@ -120,7 +120,7 @@ public class AutoConfiguration {
 
     @Bean
     public CSOSearchSoap csoSearch() {
-        EfilingSoapClientProperties efilingSoapClientProperties = soapProperties.findByEnum(Clients.REPORT);
+        EfilingSoapClientProperties efilingSoapClientProperties = soapProperties.findByEnum(Clients.SEARCH);
         return SoapUtils.getPort(CSOSearchSoap.class, efilingSoapClientProperties, csoProperties.isDebugEnabled()); }
 
 
