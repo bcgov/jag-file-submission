@@ -64,6 +64,12 @@ paths:
       operationId: GetDocumentConfigurations
       tags:
         - admin
+      parameters:
+        - in: query
+          name: documentType
+          schema:
+            type: string
+          description: the document type code
       responses:
         "200":
           description: a list of document configuration
@@ -160,6 +166,10 @@ components:
       properties:
         documentType:
           type: string
+        documentTypeDescription:
+          type: string
+        projectId:
+          type: integer
         documentConfig:
           type: object
     DocumentTypeConfiguration:
@@ -170,6 +180,10 @@ components:
           format: uuid
         documentType:
           type: string
+        documentTypeDescription:
+          type: string
+        projectId:
+          type: integer
         documentConfig:
           type: object
     DocumentTypeConfigurationList:

@@ -8,5 +8,7 @@ import java.util.UUID;
 public interface DocumentTypeConfigurationRepository extends MongoRepository<DocumentTypeConfiguration, UUID> {
 
     DocumentTypeConfiguration findByDocumentType(String documentType);
+    
+    boolean existsByDocumentType(String documentType);
 
 }

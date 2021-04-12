@@ -28,7 +28,17 @@ services:
       - REACT_APP_API_BASE_URL=http://localhost:8080
       - REACT_APP_BAMBORA_REDIRECT_URL=http://localhost:3000/efilinghub
     ports:
-      - 3001:8080
+      - 3001:8080      
+
+  #############################################################################################
+  ###                                 AI REVIEWER ADMIN (DEMO)                              ###
+  #############################################################################################
+  ai-reviewer-admin:
+    container_name: ai-reviewer-admin
+    build:
+      context: ./src/frontend/ai-reviewer-admin
+    ports:
+      - 3002:8080
 
   #############################################################################################
   ###                           Efiling api backend app                                     ###
@@ -124,6 +134,7 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - REDIS_PASSWORD=admin
+      - AIR_SPRING_DATA_MONGODB_HOST=mongodb
       - CLAMAV_HOST=clamav
       - CLAMAV_PORT=3310
       - CLAMAV_TIMEOUT=50000

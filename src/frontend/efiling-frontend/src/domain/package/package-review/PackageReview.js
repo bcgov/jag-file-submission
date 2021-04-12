@@ -10,7 +10,6 @@ import { MdCancel, MdError } from "react-icons/md";
 import { useLocation, useParams } from "react-router-dom";
 import queryString from "query-string";
 import validator from "validator";
-import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import {
   getFilingPackage,
@@ -24,6 +23,7 @@ import DocumentList from "./DocumentList";
 import PartyList from "./PartyList";
 import PaymentList from "./PaymentList";
 import { isClick, isEnter } from "../../../modules/helpers/eventUtil";
+import { Toast } from "../../../components/toast/Toast";
 
 export default function PackageReview() {
   const params = useParams();
@@ -31,10 +31,12 @@ export default function PackageReview() {
 
   const location = useLocation();
   const queryParams = queryString.parse(location.search);
-  const { returnUrl, returnAppName } = queryParams;
+  const { returnUrl, returnAppName, defaultTab } = queryParams;
   const returnButtonName = `Return to ${returnAppName || "Parent App"}`;
+  const defaultTabKey = defaultTab || "documents";
 
   const [error, setError] = useState(false);
+  const [show, setShow] = useState(false);
   const [packageDetails, setPackageDetails] = useState([
     { name: "Submitted By:", value: "", isNameBold: false, isValueBold: true },
     {
@@ -149,8 +151,8 @@ export default function PackageReview() {
 
   function handleSubmissionSheet(e) {
     if (isEnter(e) || isClick(e)) {
-      downloadSubmissionSheet(packageId).catch((err) => {
-        errorRedirect(sessionStorage.getItem("errorUrl"), err);
+      downloadSubmissionSheet(packageId).catch(() => {
+        setShow(true);
       });
     }
   }
@@ -163,8 +165,8 @@ export default function PackageReview() {
 
   function handleRegistryNotice(e) {
     if (isClick(e) || isEnter(e)) {
-      downloadRegistryNotice(packageId).catch((err) => {
-        errorRedirect(sessionStorage.getItem("errorUrl"), err);
+      downloadRegistryNotice(packageId).catch(() => {
+        setShow(true);
       });
     }
   }
@@ -192,6 +194,12 @@ export default function PackageReview() {
       <div className="ct-package-review page">
         <div className="content col-md-8">
           <h1>View Recently Submitted Package # {packageId}</h1>
+          {show && (
+            <Toast
+              content="Something went wrong while trying to download your document"
+              setShow={setShow}
+            />
+          )}
           {error && (
             <div className="col-md-8">
               <Alert
@@ -237,7 +245,7 @@ export default function PackageReview() {
             />
           )}
           <br />
-          <Tabs defaultActiveKey="documents" id="uncontrolled-tab">
+          <Tabs defaultActiveKey={defaultTabKey} id="uncontrolled-tab">
             <Tab eventKey="documents" title="Documents">
               <br />
               <DocumentList

@@ -80,6 +80,10 @@ const checkCSOAccountStatus = (
   setClientApplicationName,
   setError
 ) => {
+  if (!submissionId) {
+    setShowLoader(false);
+    return;
+  }
   axios
     .get(`/submission/${submissionId}/config`)
     .then(({ data: { navigationUrls, clientAppName, csoBaseUrl } }) => {
@@ -217,6 +221,18 @@ export default function Home() {
   return (
     <>
       {showLoader && <Loader page />}
+      {!submissionId && (
+        <div className="page">
+          <div className="content col-md-8">
+            <Alert
+              icon={<MdCancel size={32} />}
+              type="error"
+              styling="bcgov-error-background"
+              element="No submission ID in session."
+            />
+          </div>
+        </div>
+      )}
       {!showLoader && error && (
         <div className="page">
           <div className="content col-md-8">

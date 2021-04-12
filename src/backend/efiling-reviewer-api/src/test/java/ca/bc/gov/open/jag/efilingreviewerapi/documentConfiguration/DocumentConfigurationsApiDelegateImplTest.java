@@ -64,20 +64,30 @@ public class DocumentConfigurationsApiDelegateImplTest {
     @DisplayName("ok: GET /documentTypeConfigurations Should Return a list of document")
     public void shouldReturnAListOfDocumentConfiguration() {
 
-        ResponseEntity<List<ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentTypeConfiguration>> response = sut.getDocumentConfigurations();
+        ResponseEntity<List<ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentTypeConfiguration>> response = sut.getDocumentConfigurations("");
 
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
         Assertions.assertEquals(1, response.getBody().stream().count());
         Assertions.assertEquals(CASE_1, response.getBody().get(0).getDocumentType());
 
-
     }
 
 
     @Test
+    @DisplayName("ok: GET /documentTypeConfigurations Should Return a single  document")
+    public void shouldReturnASingleOfDocumentConfiguration() {
+
+        ResponseEntity<List<ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentTypeConfiguration>> response = sut.getDocumentConfigurations(CASE_1);
+
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+        Assertions.assertEquals(1, response.getBody().stream().count());
+        Assertions.assertEquals(CASE_1, response.getBody().get(0).getDocumentType());
+
+    }
+
+    @Test
     @DisplayName("ok: POST /documentTypeConfigurations should create a new document type configuration")
     public void withValidDocumentShouldCreateNewConfiguration() {
-
 
         DocumentTypeConfigurationRequest documentTypeConfigurationRequest = new DocumentTypeConfigurationRequest();
         documentTypeConfigurationRequest.setDocumentType(CASE_2);
@@ -114,7 +124,6 @@ public class DocumentConfigurationsApiDelegateImplTest {
     @DisplayName("BADREQUEST: POST /documentTypeConfigurations should return bad request if the document type already exists")
     public void withExistingDocumentShouldReturnBadRequest() {
 
-
         DocumentTypeConfigurationRequest documentTypeConfigurationRequest = new DocumentTypeConfigurationRequest();
         documentTypeConfigurationRequest.setDocumentType(CASE_1);
 
@@ -142,8 +151,5 @@ public class DocumentConfigurationsApiDelegateImplTest {
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 
-
     }
-
-
 }
