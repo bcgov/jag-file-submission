@@ -69,7 +69,7 @@ public class DocumentConfigurationsApiDelegateImplTest {
 
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
         Assertions.assertEquals(1, response.getBody().stream().count());
-        Assertions.assertEquals(CASE_1, response.getBody().get(0).getDocumentType());
+        Assertions.assertEquals(CASE_1, response.getBody().get(0).getDocumentType().getType());
 
     }
 
@@ -82,7 +82,7 @@ public class DocumentConfigurationsApiDelegateImplTest {
 
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
         Assertions.assertEquals(1, response.getBody().stream().count());
-        Assertions.assertEquals(CASE_1, response.getBody().get(0).getDocumentType());
+        Assertions.assertEquals(CASE_1, response.getBody().get(0).getDocumentType().getType());
 
     }
 
@@ -119,7 +119,7 @@ public class DocumentConfigurationsApiDelegateImplTest {
 
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
 
-        Assertions.assertEquals("CASE2", response.getBody().getDocumentType());
+        Assertions.assertEquals("CASE2", response.getBody().getDocumentType().getType());
 
     }
 
