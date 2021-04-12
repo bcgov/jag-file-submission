@@ -72,9 +72,8 @@ public class RestrictedDocumentApiDelegateImpl implements RestrictedDocumentType
     @Override
     public ResponseEntity<List<RestrictedDocumentType>> getRestrictedDocumentTypes() {
 
-
-
         return null;
+
     }
 
     @Override
@@ -92,7 +91,7 @@ public class RestrictedDocumentApiDelegateImpl implements RestrictedDocumentType
         restrictedDocumentRepository.save(updateDocument);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        
+
     }
 
 }

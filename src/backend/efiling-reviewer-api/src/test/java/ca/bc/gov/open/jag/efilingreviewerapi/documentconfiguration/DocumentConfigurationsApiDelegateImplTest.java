@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.documentconfiguration;
 
 import ca.bc.gov.open.efilingdiligenclient.diligen.model.DocumentConfig;
+import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentType;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentTypeConfigurationRequest;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentTypeConfiguration;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.store.DocumentTypeConfigurationRepository;
@@ -90,7 +91,9 @@ public class DocumentConfigurationsApiDelegateImplTest {
     public void withValidDocumentShouldCreateNewConfiguration() {
 
         DocumentTypeConfigurationRequest documentTypeConfigurationRequest = new DocumentTypeConfigurationRequest();
-        documentTypeConfigurationRequest.setDocumentType(CASE_2);
+        DocumentType documentType = new DocumentType();
+        documentType.setType(CASE_2);
+        documentTypeConfigurationRequest.setDocumentType(documentType);
 
         LinkedHashMap<String, Object> testProperty = new LinkedHashMap<>();
 
@@ -125,7 +128,9 @@ public class DocumentConfigurationsApiDelegateImplTest {
     public void withExistingDocumentShouldReturnBadRequest() {
 
         DocumentTypeConfigurationRequest documentTypeConfigurationRequest = new DocumentTypeConfigurationRequest();
-        documentTypeConfigurationRequest.setDocumentType(CASE_1);
+        DocumentType documentType = new DocumentType();
+        documentType.setType(CASE_1);
+        documentTypeConfigurationRequest.setDocumentType(documentType);
 
         LinkedHashMap<String, Object> testProperty = new LinkedHashMap<>();
 
