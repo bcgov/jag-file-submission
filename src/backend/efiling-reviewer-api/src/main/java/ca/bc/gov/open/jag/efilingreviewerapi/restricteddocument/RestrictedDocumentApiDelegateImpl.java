@@ -83,7 +83,7 @@ public class RestrictedDocumentApiDelegateImpl implements RestrictedDocumentType
     public ResponseEntity<DocumentTypeConfiguration> updateRestrictedDocumentType(RestrictedDocumentType restrictedDocumentType) {
 
         if (StringUtils.isBlank(restrictedDocumentType.getId().toString())) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        if (restrictedDocumentRepository.existsById(restrictedDocumentType.getId())) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (!restrictedDocumentRepository.existsById(restrictedDocumentType.getId())) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         ca.bc.gov.open.jag.efilingreviewerapi.document.models.RestrictedDocumentType updateDocument = ca.bc.gov.open.jag.efilingreviewerapi.document.models.RestrictedDocumentType.builder()
                 .documentType(restrictedDocumentType.getDocumentType().getType())
