@@ -82,12 +82,12 @@ describe("PackageConfirmation Component", () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  test("When call to retrieve filing package fails, redirects to error page of client app", async () => {
+  test("When call to retrieve filing package fails, generate toast error", async () => {
     sessionStorage.setItem("errorUrl", "error.com");
 
     mock.onGet(apiRequest).reply(400, { message: "There was an error." });
 
-    render(
+    const {queryByText} = render(
       <PackageConfirmation
         packageConfirmation={packageConfirmation}
         csoAccountStatus={csoAccountStatus}
@@ -96,10 +96,7 @@ describe("PackageConfirmation Component", () => {
 
     await waitFor(() => {});
 
-    expect(window.open).toHaveBeenCalledWith(
-      "error.com?status=400&message=There was an error.",
-      "_self"
-    );
+    expect(queryByText("Something went wrong while trying to retrieve your filing package.")).toBeInTheDocument()
   });
 
   test("On click of continue to payment button, it redirects to the payment page", async () => {
@@ -203,7 +200,7 @@ describe("PackageConfirmation Component", () => {
       )
       .reply(400, { message: "There was an error." });
 
-    const { container } = render(
+    const { container, queryByText } = render(
       <PackageConfirmation
         packageConfirmation={packageConfirmation}
         csoAccountStatus={csoAccountStatus}
@@ -217,10 +214,7 @@ describe("PackageConfirmation Component", () => {
 
     await waitFor(() => {});
 
-    expect(window.open).toHaveBeenCalledWith(
-      "error.com?status=400&message=There was an error.",
-      "_self"
-    );
+    expect(queryByText("Something went wrong while trying to download your file.")).toBeInTheDocument();
   });
 
   test("popstate event should take us back to package confirmation page", async () => {

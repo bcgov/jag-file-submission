@@ -388,7 +388,9 @@ describe("PackageReview Component", () => {
     await waitFor(() => {});
 
     expect(
-      queryByText("Something went wrong while trying to download your document.")
+      queryByText(
+        "Something went wrong while trying to download your document."
+      )
     ).toBeInTheDocument();
   });
 

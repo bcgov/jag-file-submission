@@ -75,7 +75,7 @@ const generateCourtDataTable = ({
   },
 ];
 
-const submitPackage = (submissionId, setSubmitBtnEnabled, setShowLoader) => {
+const submitPackage = (submissionId, setSubmitBtnEnabled, setShowLoader, setShow) => {
   setShowLoader(true);
   setSubmitBtnEnabled(false);
 
@@ -89,7 +89,7 @@ const submitPackage = (submissionId, setSubmitBtnEnabled, setShowLoader) => {
       sessionStorage.setItem("validExit", true);
       window.open(redirectUrl, "_self");
     })
-    .catch((err) => errorRedirect(sessionStorage.getItem("errorUrl"), err));
+    .catch(() => setShow(true));
 };
 
 const hasSubmissionFee = (submissionFee) => submissionFee !== 0;
@@ -223,7 +223,7 @@ export default function Payment({
             <Button
               label="Submit"
               onClick={() => {
-                submitPackage(submissionId, setSubmitBtnEnabled, setShowLoader);
+                submitPackage(submissionId, setSubmitBtnEnabled, setShowLoader, setShow);
               }}
               styling="bcgov-normal-blue normal-blue-ml btn"
               disabled={!submitBtnEnabled}

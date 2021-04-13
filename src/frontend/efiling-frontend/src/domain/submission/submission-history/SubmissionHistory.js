@@ -5,10 +5,11 @@ import queryString from "query-string";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import SubmissionList from "./SubmissionList";
 import { getSubmissionHistory } from "./SubmissionHistoryService";
-import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import "./SubmissionHistory.scss";
+import { Toast } from "../../../components/toast/Toast";
 
 export default function SubmissionHistory() {
+  const [show, setShow] = useState(false)
   const [submissions, setSubmissions] = useState([]);
   const [visibleSubmissions, setVisibleSubmissions] = useState([]);
   const [search, setSearch] = useState("");
@@ -25,7 +26,7 @@ export default function SubmissionHistory() {
         setSubmissions(response.data);
         setVisibleSubmissions(response.data);
       })
-      .catch((err) => errorRedirect(sessionStorage.getItem("errorUrl"), err));
+      .catch(() => setShow(true));
   }, [applicationCode]);
 
   function handlePackageSearch() {
@@ -79,6 +80,9 @@ export default function SubmissionHistory() {
         <h1>Submission History</h1>
         <br />
         {searchPackagesElement}
+        {show && (
+          <Toast content="Something went wrong while trying to retrieve your submissions." setShow={setShow} />
+        )}
         {submittedPackagesElement}
       </div>
 

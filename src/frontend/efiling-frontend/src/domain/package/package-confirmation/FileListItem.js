@@ -1,22 +1,27 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import { MdDescription } from "react-icons/md";
 import { downloadFileByName } from "../../documents/DocumentService";
 import { isClick, isEnter } from "../../../modules/helpers/eventUtil";
 import { formatCurrency } from "../../../modules/helpers/CurrencyUtil";
-import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { propTypes } from "../../../types/propTypes";
+import { Toast } from "../../../components/toast/Toast";
 
 export default function FileListItem({ submissionId, file }) {
+  const [show, setShow] = useState(false)
   const handleDownloadFile = (e) => {
     if (isClick(e) || isEnter(e)) {
       downloadFileByName(submissionId, file).catch((error) => {
-        errorRedirect(sessionStorage.getItem("errorUrl"), error);
+        setShow(true)
       });
     }
   };
 
   return (
+    <>
+    {show && (
+      <Toast content="Something went wrong while trying to download your file." setShow={setShow} />
+    )}
     <li>
       <span
         className="file-href col-md-12 col-lg-6"
@@ -36,6 +41,7 @@ export default function FileListItem({ submissionId, file }) {
       <span className="col-md-5 d-lg-none">Document Type:</span>
       <span className="col-md-5 col-lg-3">{file.description}</span>
     </li>
+    </>
   );
 }
 

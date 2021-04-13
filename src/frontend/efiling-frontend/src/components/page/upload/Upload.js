@@ -12,7 +12,6 @@ import {
   Dropdown,
   Radio,
 } from "shared-components";
-import {Toast} from "../../toast/Toast";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { propTypes } from "../../../types/propTypes";
@@ -239,17 +238,16 @@ const generateFormData = (acceptedFiles) => {
   return formData;
 };
 
-const handleError = (setShowUploadError, setShowLoader, setContinueBtnEnabled) => {
+const handleError = (error, setShowLoader, setContinueBtnEnabled) => {
   setShowLoader(false);
   setContinueBtnEnabled(true);
-  setShowUploadError(true);
+  errorRedirect(sessionStorage.getItem("errorUrl"), error);
 };
 
 export const uploadDocuments = (
   submissionId,
   acceptedFiles,
   setShowPackageConfirmation,
-  setShowUploadError,
   setShowLoader,
   setContinueBtnEnabled
 ) => {
@@ -265,11 +263,11 @@ export const uploadDocuments = (
       axios
         .post(`/submission/${submissionId}/update-documents`, filesToUpload)
         .then(() => setShowPackageConfirmation(true))
-        .catch(() =>
-          handleError(setShowUploadError, setShowLoader, setContinueBtnEnabled)
+        .catch((error) =>
+          handleError(error, setShowLoader, setContinueBtnEnabled)
         );
     })
-    .catch(() => handleError(setShowUploadError, setShowLoader, setContinueBtnEnabled));
+    .catch((err) => handleError(err, setShowLoader, setContinueBtnEnabled));
 };
 
 const checkForDuplicateFiles = (droppedFiles, acceptedFiles) => {
@@ -289,7 +287,6 @@ export default function Upload({
   const amendmentsSidecard = getSidecardData().amendments;
   const supremeCourtSchedulingSidecard = getSidecardData()
     .supremeCourtScheduling;
-  const [showUploadError, setShowUploadError] = useState(false);
   const [showPackageConfirmation, setShowPackageConfirmation] = useState(false);
   const [acceptedFiles, setAcceptedFiles] = useState([]);
   const [items, setItems] = useState([]);
@@ -380,12 +377,6 @@ export default function Upload({
           </>
         )}
         {errorMessage && <p className="error">{errorMessage}</p>}
-        {showUploadError && (
-            <Toast
-              content="Something went wrong while trying to submit your document(s)."
-              setShow={setShowUploadError}
-            />
-          )}
         <section className="buttons pt-2">
           <Button
             label="Cancel Upload"
@@ -403,7 +394,6 @@ export default function Upload({
                 submissionId,
                 acceptedFiles,
                 setShowPackageConfirmation,
-                setShowUploadError,
                 setShowLoader,
                 setContinueBtnEnabled
               );

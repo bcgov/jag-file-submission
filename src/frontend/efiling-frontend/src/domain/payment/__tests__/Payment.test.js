@@ -287,24 +287,21 @@ describe("Payment Component", () => {
     );
   });
 
-  test("Submit on error redirects to error page", async () => {
+  test("Submit on error generates toast message", async () => {
     sessionStorage.setItem("errorUrl", "error.com");
 
     mock
       .onPost(`/submission/${submissionId}/submit`)
       .reply(400, { message: "There was an error." });
 
-    const { container } = render(<Payment payment={payment} />);
+    const { container, queryByText } = render(<Payment payment={payment} />);
 
     fireEvent.click(getByRole(container, "checkbox"));
     fireEvent.click(getByText(container, "Submit"));
 
     await waitFor(() => {});
 
-    expect(window.open).toHaveBeenCalledWith(
-      "error.com?status=400&message=There was an error.",
-      "_self"
-    );
+    expect(queryByText("Something went wrong while trying to submit your package.")).toBeInTheDocument()
   });
 
   test("Click on request rush submission opens rush submission page", async () => {

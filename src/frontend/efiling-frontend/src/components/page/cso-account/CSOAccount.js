@@ -11,10 +11,10 @@ import ConfirmationPopup, {
   Sidecard,
 } from "shared-components";
 import validator from "validator";
+import { Toast } from "../../toast/Toast";
 import { getContent } from "../../../modules/helpers/csoAccountAgreementContent";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import { translateApplicantInfo } from "../../../modules/helpers/translateApplicantInfo";
-import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { propTypes } from "../../../types/propTypes";
 import "./CSOAccount.scss";
 
@@ -26,6 +26,7 @@ export default function CSOAccount({
   setCsoAccountStatus,
 }) {
   const sideCard = getSidecardData().aboutCso;
+  const [show, setShow] = useState(false);
   const [termsAccepted, acceptTerms] = useState(false);
   const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
@@ -98,8 +99,8 @@ export default function CSOAccount({
         sessionStorage.setItem("csoAccountId", clientId);
         setCsoAccountStatus({ exists: true, isNew: true });
       })
-      .catch((error) => {
-        errorRedirect(sessionStorage.getItem("errorUrl"), error);
+      .catch(() => {
+        setShow(true);
       });
   };
 
@@ -179,6 +180,13 @@ export default function CSOAccount({
           heading="Electronic Service Agreement"
           confirmText="I accept the Service Agreement"
         />
+
+        {show && (
+          <Toast
+            content="Something went wrong while trying to create your CSO Account."
+            setShow={setShow}
+          />
+        )}
 
         <section className="non-printable buttons pt-4">
           <ConfirmationPopup

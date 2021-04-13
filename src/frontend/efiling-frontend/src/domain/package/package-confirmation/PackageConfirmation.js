@@ -10,7 +10,6 @@ import ConfirmationPopup, {
 import axios from "axios";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import { propTypes } from "../../../types/propTypes";
-import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { onBackButtonEvent } from "../../../modules/helpers/handleBackEvent";
 import { generateFileSummaryData } from "../../../modules/helpers/generateFileSummaryData";
 import { isClick, isEnter } from "../../../modules/helpers/eventUtil";
@@ -19,6 +18,7 @@ import "./PackageConfirmation.scss";
 import Payment from "../../payment/Payment";
 import Upload from "../../../components/page/upload/Upload";
 import FileList from "./FileList";
+import { Toast } from "../../../components/toast/Toast";
 
 const getFilingPackageData = (
   submissionId,
@@ -26,7 +26,8 @@ const getFilingPackageData = (
   files,
   setCourtData,
   setSubmissionFee,
-  setShowPayment
+  setShowPayment,
+  setShow
 ) => {
   if (files.length > 0) return;
 
@@ -39,7 +40,7 @@ const getFilingPackageData = (
       if (sessionStorage.getItem("isBamboraRedirect") === "true")
         setShowPayment(true);
     })
-    .catch((error) => errorRedirect(sessionStorage.getItem("errorUrl"), error));
+    .catch(() => setShow(true));
 };
 
 export default function PackageConfirmation({
@@ -51,6 +52,7 @@ export default function PackageConfirmation({
   const [submissionFee, setSubmissionFee] = useState(null);
   const [showPayment, setShowPayment] = useState(false);
   const [showUpload, setShowUpload] = useState(false);
+  const [show, setShow] = useState(false)
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
 
@@ -76,7 +78,8 @@ export default function PackageConfirmation({
       files,
       setCourtData,
       setSubmissionFee,
-      setShowPayment
+      setShowPayment,
+      setShow
     );
   }, [files, submissionId]);
 
@@ -118,6 +121,9 @@ export default function PackageConfirmation({
           </>
         )}
         <h1>Package Confirmation</h1>
+        {show && (
+          <Toast content="Something went wrong while trying to retrieve your filing package." setShow={setShow} />
+        )}
         <span>
           Review your package for accuracy and upload any additional or
           supporting documents.
