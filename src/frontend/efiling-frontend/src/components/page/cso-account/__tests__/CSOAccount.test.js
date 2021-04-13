@@ -245,7 +245,11 @@ describe("CSOAccount Component", () => {
     fireEvent.click(getByText(container, "Create CSO Account"));
     await waitFor(() => {});
 
-    expect(queryByText("Something went wrong while trying to create your CSO Account.")).toBeInTheDocument()
+    expect(
+      queryByText(
+        "Something went wrong while trying to create your CSO Account."
+      )
+    ).toBeInTheDocument();
   });
 
   test("email fields should appear if email is blank", async () => {

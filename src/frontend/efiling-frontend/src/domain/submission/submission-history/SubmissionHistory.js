@@ -9,7 +9,7 @@ import "./SubmissionHistory.scss";
 import { Toast } from "../../../components/toast/Toast";
 
 export default function SubmissionHistory() {
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
   const [submissions, setSubmissions] = useState([]);
   const [visibleSubmissions, setVisibleSubmissions] = useState([]);
   const [search, setSearch] = useState("");
@@ -81,7 +81,10 @@ export default function SubmissionHistory() {
         <br />
         {searchPackagesElement}
         {show && (
-          <Toast content="Something went wrong while trying to retrieve your submissions." setShow={setShow} />
+          <Toast
+            content="Something went wrong while trying to retrieve your submissions."
+            setShow={setShow}
+          />
         )}
         {submittedPackagesElement}
       </div>

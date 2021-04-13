@@ -9,7 +9,8 @@ const error = require("../../../../modules/helpers/errorRedirect");
 describe("FileListItem Testsuite", () => {
   const submissionId = "0345a4e0-3095-4ce4-9e47-b7eb9c991448";
   const files = getDocumentsData();
-  const toastMessage = "Something went wrong while trying to download your file."
+  const toastMessage =
+    "Something went wrong while trying to download your file.";
 
   beforeEach(() => {
     error.errorRedirect = jest.fn();

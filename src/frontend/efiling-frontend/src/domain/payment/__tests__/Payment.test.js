@@ -301,7 +301,9 @@ describe("Payment Component", () => {
 
     await waitFor(() => {});
 
-    expect(queryByText("Something went wrong while trying to submit your package.")).toBeInTheDocument()
+    expect(
+      queryByText("Something went wrong while trying to submit your package.")
+    ).toBeInTheDocument();
   });
 
   test("Click on request rush submission opens rush submission page", async () => {

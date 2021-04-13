@@ -87,7 +87,7 @@ describe("PackageConfirmation Component", () => {
 
     mock.onGet(apiRequest).reply(400, { message: "There was an error." });
 
-    const {queryByText} = render(
+    const { queryByText } = render(
       <PackageConfirmation
         packageConfirmation={packageConfirmation}
         csoAccountStatus={csoAccountStatus}
@@ -96,7 +96,11 @@ describe("PackageConfirmation Component", () => {
 
     await waitFor(() => {});
 
-    expect(queryByText("Something went wrong while trying to retrieve your filing package.")).toBeInTheDocument()
+    expect(
+      queryByText(
+        "Something went wrong while trying to retrieve your filing package."
+      )
+    ).toBeInTheDocument();
   });
 
   test("On click of continue to payment button, it redirects to the payment page", async () => {
@@ -214,7 +218,9 @@ describe("PackageConfirmation Component", () => {
 
     await waitFor(() => {});
 
-    expect(queryByText("Something went wrong while trying to download your file.")).toBeInTheDocument();
+    expect(
+      queryByText("Something went wrong while trying to download your file.")
+    ).toBeInTheDocument();
   });
 
   test("popstate event should take us back to package confirmation page", async () => {

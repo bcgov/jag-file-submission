@@ -52,7 +52,7 @@ export default function PackageConfirmation({
   const [submissionFee, setSubmissionFee] = useState(null);
   const [showPayment, setShowPayment] = useState(false);
   const [showUpload, setShowUpload] = useState(false);
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
 
@@ -122,7 +122,10 @@ export default function PackageConfirmation({
         )}
         <h1>Package Confirmation</h1>
         {show && (
-          <Toast content="Something went wrong while trying to retrieve your filing package." setShow={setShow} />
+          <Toast
+            content="Something went wrong while trying to retrieve your filing package."
+            setShow={setShow}
+          />
         )}
         <span>
           Review your package for accuracy and upload any additional or

@@ -75,7 +75,12 @@ const generateCourtDataTable = ({
   },
 ];
 
-const submitPackage = (submissionId, setSubmitBtnEnabled, setShowLoader, setShow) => {
+const submitPackage = (
+  submissionId,
+  setSubmitBtnEnabled,
+  setShowLoader,
+  setShow
+) => {
   setShowLoader(true);
   setSubmitBtnEnabled(false);
 
@@ -223,7 +228,12 @@ export default function Payment({
             <Button
               label="Submit"
               onClick={() => {
-                submitPackage(submissionId, setSubmitBtnEnabled, setShowLoader, setShow);
+                submitPackage(
+                  submissionId,
+                  setSubmitBtnEnabled,
+                  setShowLoader,
+                  setShow
+                );
               }}
               styling="bcgov-normal-blue normal-blue-ml btn"
               disabled={!submitBtnEnabled}
