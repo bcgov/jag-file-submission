@@ -7,7 +7,7 @@ ARG SERVICE_NAME=efiling-reviewer-api
 ARG SKIP_TESTS=false
 ARG MVN_PROFILE=default
 ARG STARTERS_V
-ARG SW_V=8.4.0
+ARG SW_V=8.5.0
 
 
 ENV SERVICE_NAME=${SERVICE_NAME}
@@ -31,7 +31,7 @@ RUN wget https://mirror.csclub.uwaterloo.ca/apache/skywalking/$SW_V/apache-skywa
     rm apache-skywalking-apm-$SW_V.tar.gz
 
 # add spring boot plugin
-RUN mv apache-skywalking-apm-bin/agent/optional-plugins/apm-spring-annotation-plugin-8.4.0.jar apache-skywalking-apm-bin/agent/plugins/apm-spring-annotation-plugin-8.4.0.jar
+RUN mv apache-skywalking-apm-bin/agent/optional-plugins/apm-spring-annotation-plugin-8.5.0.jar apache-skywalking-apm-bin/agent/plugins/apm-spring-annotation-plugin-8.5.0.jar
 
 WORKDIR /
 
