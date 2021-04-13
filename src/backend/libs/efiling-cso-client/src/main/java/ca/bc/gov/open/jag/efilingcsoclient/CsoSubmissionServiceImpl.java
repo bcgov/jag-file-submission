@@ -160,6 +160,8 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
                     documentMapper.toComputedSubmittedDate(accountDetails, submittedDate));
             List<DocumentStatuses> statuses = Collections.singletonList(documentMapper.toEfilingDocumentStatus(efilingPackage.getDocuments().get(i), accountDetails));
 
+            efilingPackage.getDocuments().get(i).getData();
+
             documents.add(documentMapper.toEfilingDocument(
                     i + 1,
                     efilingPackage.getDocuments().get(i),
