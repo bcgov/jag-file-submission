@@ -60,13 +60,13 @@ export default function DocumentList({
     <div className="ct-document-list">
       {showDownloadAlert && (
         <Toast
-          content="Something went wrong while trying to download your document"
+          content="Something went wrong while trying to download your document."
           setShow={setShowDownloadAlert}
         />
       )}
       {showWithdrawAlert && (
         <Toast
-          content="Something went wrong while trying to withdraw your document"
+          content="Something went wrong while trying to withdraw your document."
           setShow={setShowWithdrawAlert}
         />
       )}
