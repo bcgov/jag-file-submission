@@ -120,6 +120,8 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
                         .extract(extractRequestCached.get().getExtract())
                         .create();
 
+                documentValidator.validateExtractedDocument(documentEvent.getDocumentId(), config, response.getAnswers());
+
                 extractStore.put(documentEvent.getDocumentId(), extractedResponse);
 
                 MDC.put(Keys.DOCUMENT_TYPE, extractRequest.getDocument().getType());

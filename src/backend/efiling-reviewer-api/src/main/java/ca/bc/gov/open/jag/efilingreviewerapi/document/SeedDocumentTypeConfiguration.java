@@ -59,6 +59,8 @@ public class SeedDocumentTypeConfiguration {
                 DocumentTypeConfiguration documentTypeConfiguration = DocumentTypeConfiguration
                         .builder()
                         .documentType("RCC")
+                        .documentTypeDescription("Response to Civil Claim")
+                        .projectId(2)
                         .documentConfig(formData)
                         .create();
 
