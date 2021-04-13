@@ -36,7 +36,7 @@ export default function PackageReview() {
   const defaultTabKey = defaultTab || "documents";
 
   const [error, setError] = useState(false);
-  const [show, setShow] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const [packageDetails, setPackageDetails] = useState([
     { name: "Submitted By:", value: "", isNameBold: false, isValueBold: true },
     {
@@ -152,7 +152,7 @@ export default function PackageReview() {
   function handleSubmissionSheet(e) {
     if (isEnter(e) || isClick(e)) {
       downloadSubmissionSheet(packageId).catch(() => {
-        setShow(true);
+        setShowToast(true);
       });
     }
   }
@@ -166,7 +166,7 @@ export default function PackageReview() {
   function handleRegistryNotice(e) {
     if (isClick(e) || isEnter(e)) {
       downloadRegistryNotice(packageId).catch(() => {
-        setShow(true);
+        setShowToast(true);
       });
     }
   }
@@ -194,10 +194,10 @@ export default function PackageReview() {
       <div className="ct-package-review page">
         <div className="content col-md-8">
           <h1>View Recently Submitted Package # {packageId}</h1>
-          {show && (
+          {showToast && (
             <Toast
               content="Something went wrong while trying to download your document."
-              setShow={setShow}
+              setShow={setShowToast}
             />
           )}
           {error && (

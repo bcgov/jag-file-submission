@@ -26,7 +26,7 @@ export default function CSOAccount({
   setCsoAccountStatus,
 }) {
   const sideCard = getSidecardData().aboutCso;
-  const [show, setShow] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const [termsAccepted, acceptTerms] = useState(false);
   const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
@@ -100,7 +100,7 @@ export default function CSOAccount({
         setCsoAccountStatus({ exists: true, isNew: true });
       })
       .catch(() => {
-        setShow(true);
+        setShowToast(true);
       });
   };
 
@@ -181,10 +181,10 @@ export default function CSOAccount({
           confirmText="I accept the Service Agreement"
         />
 
-        {show && (
+        {showToast && (
           <Toast
             content="Something went wrong while trying to create your CSO Account."
-            setShow={setShow}
+            setShow={setShowToast}
           />
         )}
 

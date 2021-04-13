@@ -79,7 +79,7 @@ const submitPackage = (
   submissionId,
   setSubmitBtnEnabled,
   setShowLoader,
-  setShow
+  setShowToast
 ) => {
   setShowLoader(true);
   setSubmitBtnEnabled(false);
@@ -94,7 +94,7 @@ const submitPackage = (
       sessionStorage.setItem("validExit", true);
       window.open(redirectUrl, "_self");
     })
-    .catch(() => setShow(true));
+    .catch(() => setShowToast(true));
 };
 
 const hasSubmissionFee = (submissionFee) => submissionFee !== 0;
@@ -122,7 +122,7 @@ export default function Payment({
   const [showPackageConfirmation, setShowPackageConfirmation] = useState(false);
   const [showRush, setShowRush] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
-  const [show, setShow] = useState(false);
+  const [showToast, setShowToast] = useState(false);
 
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
@@ -201,10 +201,10 @@ export default function Payment({
           agreeCallout={() => setPaymentAgreed(!paymentAgreed)}
         />
         <br />
-        {show && (
+        {showToast && (
           <Toast
             content="Something went wrong while trying to submit your package."
-            setShow={setShow}
+            setShow={setShowToast}
           />
         )}
         <section className="pt-2 buttons">
@@ -232,7 +232,7 @@ export default function Payment({
                   submissionId,
                   setSubmitBtnEnabled,
                   setShowLoader,
-                  setShow
+                  setShowToast
                 );
               }}
               styling="bcgov-normal-blue normal-blue-ml btn"

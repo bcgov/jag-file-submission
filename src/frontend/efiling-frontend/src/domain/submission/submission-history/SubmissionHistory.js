@@ -9,7 +9,7 @@ import "./SubmissionHistory.scss";
 import { Toast } from "../../../components/toast/Toast";
 
 export default function SubmissionHistory() {
-  const [show, setShow] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const [submissions, setSubmissions] = useState([]);
   const [visibleSubmissions, setVisibleSubmissions] = useState([]);
   const [search, setSearch] = useState("");
@@ -26,7 +26,7 @@ export default function SubmissionHistory() {
         setSubmissions(response.data);
         setVisibleSubmissions(response.data);
       })
-      .catch(() => setShow(true));
+      .catch(() => setShowToast(true));
   }, [applicationCode]);
 
   function handlePackageSearch() {
@@ -80,10 +80,10 @@ export default function SubmissionHistory() {
         <h1>Submission History</h1>
         <br />
         {searchPackagesElement}
-        {show && (
+        {showToast && (
           <Toast
             content="Something went wrong while trying to retrieve your submissions."
-            setShow={setShow}
+            setShow={setShowToast}
           />
         )}
         {submittedPackagesElement}

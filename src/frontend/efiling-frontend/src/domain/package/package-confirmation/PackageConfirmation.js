@@ -27,7 +27,7 @@ const getFilingPackageData = (
   setCourtData,
   setSubmissionFee,
   setShowPayment,
-  setShow
+  setShowToast
 ) => {
   if (files.length > 0) return;
 
@@ -40,7 +40,7 @@ const getFilingPackageData = (
       if (sessionStorage.getItem("isBamboraRedirect") === "true")
         setShowPayment(true);
     })
-    .catch(() => setShow(true));
+    .catch(() => setShowToast(true));
 };
 
 export default function PackageConfirmation({
@@ -52,7 +52,7 @@ export default function PackageConfirmation({
   const [submissionFee, setSubmissionFee] = useState(null);
   const [showPayment, setShowPayment] = useState(false);
   const [showUpload, setShowUpload] = useState(false);
-  const [show, setShow] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
 
@@ -79,7 +79,7 @@ export default function PackageConfirmation({
       setCourtData,
       setSubmissionFee,
       setShowPayment,
-      setShow
+      setShowToast
     );
   }, [files, submissionId]);
 
@@ -121,10 +121,10 @@ export default function PackageConfirmation({
           </>
         )}
         <h1>Package Confirmation</h1>
-        {show && (
+        {showToast && (
           <Toast
             content="Something went wrong while trying to retrieve your filing package."
-            setShow={setShow}
+            setShow={setShowToast}
           />
         )}
         <span>

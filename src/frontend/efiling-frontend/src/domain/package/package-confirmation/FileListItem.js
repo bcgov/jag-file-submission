@@ -8,21 +8,21 @@ import { propTypes } from "../../../types/propTypes";
 import { Toast } from "../../../components/toast/Toast";
 
 export default function FileListItem({ submissionId, file }) {
-  const [show, setShow] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const handleDownloadFile = (e) => {
     if (isClick(e) || isEnter(e)) {
       downloadFileByName(submissionId, file).catch(() => {
-        setShow(true);
+        setShowToast(true);
       });
     }
   };
 
   return (
     <>
-      {show && (
+      {showToast && (
         <Toast
           content="Something went wrong while trying to download your file."
-          setShow={setShow}
+          setShow={setShowToast}
         />
       )}
       <li>

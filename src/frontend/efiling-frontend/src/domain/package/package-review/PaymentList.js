@@ -20,7 +20,7 @@ export default function PaymentList({ payments, packageId }) {
   const [subtotal, setSubtotal] = useState(dineroInit);
   const [csoTotal, setCsoTotal] = useState(dineroInit);
   const [total, setTotal] = useState(dineroInit);
-  const [show, setShow] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const format = "$0,0.00";
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export default function PaymentList({ payments, packageId }) {
   const handleViewReceiptEvent = (e) => {
     if (isEnter(e) || isClick(e)) {
       downloadPaymentReceipt(packageId).catch(() => {
-        setShow(true);
+        setShowToast(true);
       });
     }
   };
@@ -130,10 +130,10 @@ export default function PaymentList({ payments, packageId }) {
           )}
         </tbody>
       </table>
-      {show && (
+      {showToast && (
         <Toast
           content="Something went wrong while trying to download your document."
-          setShow={setShow}
+          setShow={setShowToast}
         />
       )}
       <div className="d-flex justify-content-end">
