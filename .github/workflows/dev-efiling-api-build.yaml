@@ -4,7 +4,7 @@ on:
   push:
     branches: [master]
   workflow_dispatch:
-    branches: [master, akroon3r-patch-1]
+    branches: [master]
 
 jobs:
   build:
@@ -40,6 +40,5 @@ jobs:
           
           docker-compose build efiling-api
           
-          docker tag jag-file-submission_efiling-api -t ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_TOOLS_NAMESPACE }}/efiling-api:latest -t ${{ secrets.OPENSHIFT4_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT4_TOOLS_NAMESPACE }}/efiling-api:latest
+          docker tag jag-file-submission_efiling-api ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_TOOLS_NAMESPACE }}/efiling-api:latest
           docker push ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_TOOLS_NAMESPACE }}/efiling-api:latest
-          docker push ${{ secrets.OPENSHIFT4_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT4_TOOLS_NAMESPACE }}/efiling-api:latest
