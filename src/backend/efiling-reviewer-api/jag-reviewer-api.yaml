@@ -94,6 +94,84 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DocumentTypeConfiguration"
+  "/restrictedDocumentTypes":
+    get:
+      summary: list all the non accepted document types
+      operationId: GetRestrictedDocumentTypes
+      tags:
+        - adminUnaccepted
+      responses:
+        "200":
+          description: a list of the non accepted document types
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RestrictedDocumentTypeList"
+    post:
+      summary: create a unaccepted document types
+      operationId: createRestrictedDocumentType
+      tags:
+        - adminUnaccepted
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DocumentType"
+      responses:
+        "201":
+          description: document type created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RestrictedDocumentType"
+    put:
+      summary: update a unaccepted document type
+      operationId: updateRestrictedDocumentType
+      tags:
+        - adminUnaccepted
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RestrictedDocumentType"
+      responses:
+        "200":
+          description: document type updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DocumentTypeConfiguration"
+  "/restrictedDocumentTypes/{id}":
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      summary: get a single unaccepted document type
+      operationId: GetRestrictedDocumentType
+      tags:
+        - adminUnaccepted
+      responses:
+        "200":
+          description: unaccepted document found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestrictedDocumentType'
+    delete:
+      summary: list all the non accepted document types
+      operationId: DeleteRestrictedDocumentType
+      tags:
+        - adminUnaccepted
+      responses:
+        "204":
+          description: unaccepted document removed
+        "404":
+          description: unaccepted document not found
+
 components:
   parameters:
     xTransactionId:
@@ -165,9 +243,7 @@ components:
       type: object
       properties:
         documentType:
-          type: string
-        documentTypeDescription:
-          type: string
+          $ref: "#/components/schemas/DocumentType"
         projectId:
           type: integer
         documentConfig:
@@ -179,9 +255,7 @@ components:
           type: string
           format: uuid
         documentType:
-          type: string
-        documentTypeDescription:
-          type: string
+          $ref: "#/components/schemas/DocumentType"
         projectId:
           type: integer
         documentConfig:
@@ -202,3 +276,22 @@ components:
         transactionId:
           type: string
           format: uuid
+    DocumentType:
+      type: object
+      properties:
+        type:
+          type: string
+        description:
+          type: string
+    RestrictedDocumentType:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        documentType:
+          $ref: "#/components/schemas/DocumentType"
+    RestrictedDocumentTypeList:
+      type: array
+      items:
+        $ref: "#/components/schemas/RestrictedDocumentType"
