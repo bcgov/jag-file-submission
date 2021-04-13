@@ -219,7 +219,7 @@ describe("CSOAccount Component", () => {
     expect(sessionStorage.getItem("internalClientNumber")).toEqual("ABC123");
   });
 
-  test("Failed Account Creation: should redirect to parent application", async () => {
+  test("Failed Account Creation: should create toast alert", async () => {
     const mockApplicantInfo = {
       firstName: "Bob",
       lastName: "Ross",
@@ -229,7 +229,7 @@ describe("CSOAccount Component", () => {
     mock.onPost(API_REQUEST).reply(400, { message: "There was a problem." });
     sessionStorage.setItem("errorUrl", "error.com");
 
-    const { container } = render(
+    const { container, queryByText } = render(
       <CSOAccount
         confirmationPopup={confirmationPopup}
         applicantInfo={mockApplicantInfo}
@@ -245,10 +245,11 @@ describe("CSOAccount Component", () => {
     fireEvent.click(getByText(container, "Create CSO Account"));
     await waitFor(() => {});
 
-    expect(window.open).toHaveBeenCalledWith(
-      "error.com?status=400&message=There was a problem.",
-      "_self"
-    );
+    expect(
+      queryByText(
+        "Something went wrong while trying to create your CSO Account."
+      )
+    ).toBeInTheDocument();
   });
 
   test("email fields should appear if email is blank", async () => {

@@ -75,7 +75,12 @@ const generateCourtDataTable = ({
   },
 ];
 
-const submitPackage = (submissionId, setSubmitBtnEnabled, setShowLoader) => {
+const submitPackage = (
+  submissionId,
+  setSubmitBtnEnabled,
+  setShowLoader,
+  setShowToast
+) => {
   setShowLoader(true);
   setSubmitBtnEnabled(false);
 
@@ -89,7 +94,7 @@ const submitPackage = (submissionId, setSubmitBtnEnabled, setShowLoader) => {
       sessionStorage.setItem("validExit", true);
       window.open(redirectUrl, "_self");
     })
-    .catch((err) => errorRedirect(sessionStorage.getItem("errorUrl"), err));
+    .catch(() => setShowToast(true));
 };
 
 const hasSubmissionFee = (submissionFee) => submissionFee !== 0;
@@ -117,7 +122,7 @@ export default function Payment({
   const [showPackageConfirmation, setShowPackageConfirmation] = useState(false);
   const [showRush, setShowRush] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
-  const [show, setShow] = useState(false);
+  const [showToast, setShowToast] = useState(false);
 
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
@@ -196,10 +201,10 @@ export default function Payment({
           agreeCallout={() => setPaymentAgreed(!paymentAgreed)}
         />
         <br />
-        {show && (
+        {showToast && (
           <Toast
-            content="Something went wrong while trying to submit your package"
-            setShow={setShow}
+            content="Something went wrong while trying to submit your package."
+            setShow={setShowToast}
           />
         )}
         <section className="pt-2 buttons">
@@ -223,7 +228,12 @@ export default function Payment({
             <Button
               label="Submit"
               onClick={() => {
-                submitPackage(submissionId, setSubmitBtnEnabled, setShowLoader);
+                submitPackage(
+                  submissionId,
+                  setSubmitBtnEnabled,
+                  setShowLoader,
+                  setShowToast
+                );
               }}
               styling="bcgov-normal-blue normal-blue-ml btn"
               disabled={!submitBtnEnabled}
