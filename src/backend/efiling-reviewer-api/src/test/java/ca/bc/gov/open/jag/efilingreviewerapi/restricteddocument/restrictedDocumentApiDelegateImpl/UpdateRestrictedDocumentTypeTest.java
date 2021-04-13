@@ -6,6 +6,7 @@ import ca.bc.gov.open.jag.efilingreviewerapi.document.store.RestrictedDocumentRe
 import ca.bc.gov.open.jag.efilingreviewerapi.restricteddocument.RestrictedDocumentApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.restricteddocument.mappers.RestrictedDocumentTypeMapperImpl;
 import org.junit.jupiter.api.*;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -22,7 +23,8 @@ public class UpdateRestrictedDocumentTypeTest {
 
     private static final String DOCUMENT_TYPE = "TEST_TYPE";
     private static final String DOCUMENT_TYPE_DESCRIPTION = "TEST_TYPE";
-    private static final UUID TEST_UUID = UUID.randomUUID();
+    private static final UUID EXISTING_ID = UUID.randomUUID();
+    private static final UUID NEW_ID = UUID.randomUUID();
 
     private RestrictedDocumentApiDelegateImpl sut;
 
@@ -40,9 +42,13 @@ public class UpdateRestrictedDocumentTypeTest {
                 .documentTypeDescription(DOCUMENT_TYPE_DESCRIPTION)
                 .create();
 
-        restrictedDocumentType.setId(TEST_UUID);
+        restrictedDocumentType.setId(EXISTING_ID);
 
         Mockito.when(restrictedDocumentRepositoryMock.save(any())).thenReturn(restrictedDocumentType);
+
+        Mockito.when(restrictedDocumentRepositoryMock.existsById(ArgumentMatchers.eq(EXISTING_ID))).thenReturn(true);
+
+        Mockito.when(restrictedDocumentRepositoryMock.existsById(ArgumentMatchers.eq(NEW_ID))).thenReturn(false);
 
         sut = new RestrictedDocumentApiDelegateImpl(restrictedDocumentRepositoryMock, new RestrictedDocumentTypeMapperImpl());
 
@@ -56,7 +62,7 @@ public class UpdateRestrictedDocumentTypeTest {
         DocumentType documentType = new DocumentType();
         documentType.setType(DOCUMENT_TYPE);
         documentType.setDescription(DOCUMENT_TYPE_DESCRIPTION);
-        restrictedDocumentType.setId(TEST_UUID);
+        restrictedDocumentType.setId(EXISTING_ID);
         restrictedDocumentType.setDocumentType(documentType);
 
         ResponseEntity actual = sut.updateRestrictedDocumentType(restrictedDocumentType);
@@ -64,5 +70,40 @@ public class UpdateRestrictedDocumentTypeTest {
         Assertions.assertEquals(HttpStatus.NO_CONTENT, actual.getStatusCode());
 
     }
+
+    @Test
+    @DisplayName("400: get list of documentTypes ")
+    public void withInValidRequest() {
+
+        RestrictedDocumentType restrictedDocumentType = new RestrictedDocumentType();
+        DocumentType documentType = new DocumentType();
+        documentType.setType(DOCUMENT_TYPE);
+        documentType.setDescription(DOCUMENT_TYPE_DESCRIPTION);
+        restrictedDocumentType.setId(null);
+        restrictedDocumentType.setDocumentType(documentType);
+
+        ResponseEntity actual = sut.updateRestrictedDocumentType(restrictedDocumentType);
+
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
+
+    }
+
+    @Test
+    @DisplayName("404: get list of documentTypes ")
+    public void withNoExistingValue() {
+
+        RestrictedDocumentType restrictedDocumentType = new RestrictedDocumentType();
+        DocumentType documentType = new DocumentType();
+        documentType.setType(DOCUMENT_TYPE);
+        documentType.setDescription(DOCUMENT_TYPE_DESCRIPTION);
+        restrictedDocumentType.setId(NEW_ID);
+        restrictedDocumentType.setDocumentType(documentType);
+
+        ResponseEntity actual = sut.updateRestrictedDocumentType(restrictedDocumentType);
+
+        Assertions.assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
+
+    }
+
 
 }
