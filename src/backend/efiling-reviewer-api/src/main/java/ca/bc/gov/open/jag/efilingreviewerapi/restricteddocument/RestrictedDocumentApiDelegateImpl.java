@@ -50,11 +50,12 @@ public class RestrictedDocumentApiDelegateImpl implements RestrictedDocumentType
     @Override
     public ResponseEntity<Void> deleteRestrictedDocumentType(UUID id) {
 
-        if(restrictedDocumentRepository.existsById(id)) {
+        if(!restrictedDocumentRepository.existsById(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         restrictedDocumentRepository.deleteById(id);
+
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
