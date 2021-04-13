@@ -1,11 +1,12 @@
-package ca.bc.gov.open.jag.efilingreviewerapi.documentConfiguration;
+package ca.bc.gov.open.jag.efilingreviewerapi.documentconfiguration;
 
 import ca.bc.gov.open.efilingdiligenclient.diligen.model.DocumentConfig;
+import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentType;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentTypeConfigurationRequest;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentTypeConfiguration;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.store.DocumentTypeConfigurationRepository;
-import ca.bc.gov.open.jag.efilingreviewerapi.documentConfiguration.mappers.DocumentTypeConfigurationMapper;
-import ca.bc.gov.open.jag.efilingreviewerapi.documentConfiguration.mappers.DocumentTypeConfigurationMapperImpl;
+import ca.bc.gov.open.jag.efilingreviewerapi.documentconfiguration.mappers.DocumentTypeConfigurationMapper;
+import ca.bc.gov.open.jag.efilingreviewerapi.documentconfiguration.mappers.DocumentTypeConfigurationMapperImpl;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
@@ -64,23 +65,35 @@ public class DocumentConfigurationsApiDelegateImplTest {
     @DisplayName("ok: GET /documentTypeConfigurations Should Return a list of document")
     public void shouldReturnAListOfDocumentConfiguration() {
 
-        ResponseEntity<List<ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentTypeConfiguration>> response = sut.getDocumentConfigurations();
+        ResponseEntity<List<ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentTypeConfiguration>> response = sut.getDocumentConfigurations("");
 
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
         Assertions.assertEquals(1, response.getBody().stream().count());
-        Assertions.assertEquals(CASE_1, response.getBody().get(0).getDocumentType());
-
+        Assertions.assertEquals(CASE_1, response.getBody().get(0).getDocumentType().getType());
 
     }
 
 
     @Test
+    @DisplayName("ok: GET /documentTypeConfigurations Should Return a single  document")
+    public void shouldReturnASingleOfDocumentConfiguration() {
+
+        ResponseEntity<List<ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentTypeConfiguration>> response = sut.getDocumentConfigurations(CASE_1);
+
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+        Assertions.assertEquals(1, response.getBody().stream().count());
+        Assertions.assertEquals(CASE_1, response.getBody().get(0).getDocumentType().getType());
+
+    }
+
+    @Test
     @DisplayName("ok: POST /documentTypeConfigurations should create a new document type configuration")
     public void withValidDocumentShouldCreateNewConfiguration() {
 
-
         DocumentTypeConfigurationRequest documentTypeConfigurationRequest = new DocumentTypeConfigurationRequest();
-        documentTypeConfigurationRequest.setDocumentType(CASE_2);
+        DocumentType documentType = new DocumentType();
+        documentType.setType(CASE_2);
+        documentTypeConfigurationRequest.setDocumentType(documentType);
 
         LinkedHashMap<String, Object> testProperty = new LinkedHashMap<>();
 
@@ -106,7 +119,7 @@ public class DocumentConfigurationsApiDelegateImplTest {
 
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
 
-        Assertions.assertEquals("CASE2", response.getBody().getDocumentType());
+        Assertions.assertEquals("CASE2", response.getBody().getDocumentType().getType());
 
     }
 
@@ -114,9 +127,10 @@ public class DocumentConfigurationsApiDelegateImplTest {
     @DisplayName("BADREQUEST: POST /documentTypeConfigurations should return bad request if the document type already exists")
     public void withExistingDocumentShouldReturnBadRequest() {
 
-
         DocumentTypeConfigurationRequest documentTypeConfigurationRequest = new DocumentTypeConfigurationRequest();
-        documentTypeConfigurationRequest.setDocumentType(CASE_1);
+        DocumentType documentType = new DocumentType();
+        documentType.setType(CASE_1);
+        documentTypeConfigurationRequest.setDocumentType(documentType);
 
         LinkedHashMap<String, Object> testProperty = new LinkedHashMap<>();
 
@@ -142,8 +156,5 @@ public class DocumentConfigurationsApiDelegateImplTest {
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 
-
     }
-
-
 }

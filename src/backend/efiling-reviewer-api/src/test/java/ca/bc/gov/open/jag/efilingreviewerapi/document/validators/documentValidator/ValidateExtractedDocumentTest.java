@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingreviewerapi.document.validators.documentValida
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
 import ca.bc.gov.open.efilingdiligenclient.diligen.model.DiligenAnswerField;
 import ca.bc.gov.open.jag.efilingreviewerapi.Keys;
+import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentTypeConfiguration;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentValidation;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.models.ValidationTypes;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidatorImpl;
@@ -23,14 +24,22 @@ import java.util.List;
 @DisplayName("DocumentsValidatorImpl test suite")
 public class ValidateExtractedDocumentTest {
 
-    public static final String DOCUMENT_TYPE = "RCC";
-    public static final String RESPONSE_TO_CIVIL_CLAIM = "Response to Civil Claim";
-    public static final String NOT_RESPONSE_TO_CIVIL_CLAIM = "THIS IS NOT VALID";
-    public static final String RESTRICTED_DOCUMENT = "This is a temporary";
-    public static final int NOT_DOCUMENT_TYPE_ID = 123;
-    public static final String THE_VALUE = "THIS IS A VALUE";
-    public static final String PLAINTIFF = "PLAINTIFF";
-    public static final String DEFENDANT = "DEFENDANT";
+    private static final String DOCUMENT_TYPE = "RCC";
+    private static final String RESPONSE_TO_CIVIL_CLAIM = "Response to Civil Claim";
+    private static final String NOT_RESPONSE_TO_CIVIL_CLAIM = "THIS IS NOT VALID";
+    private static final String RESTRICTED_DOCUMENT = "This is a temporary";
+    private static final int NOT_DOCUMENT_TYPE_ID = 123;
+    private static final String THE_VALUE = "THIS IS A VALUE";
+    private static final String PLAINTIFF = "PLAINTIFF";
+    private static final String DEFENDANT = "DEFENDANT";
+    private static final DocumentTypeConfiguration DOCUMENT_TYPE_CONFIGURATION = DocumentTypeConfiguration
+            .builder()
+            .documentType("RCC")
+            .documentTypeDescription("Response to Civil Claim")
+            .projectId(2)
+            .create();
+
+
     DocumentValidatorImpl sut;
 
     @Mock
@@ -43,7 +52,7 @@ public class ValidateExtractedDocumentTest {
 
         Mockito.doNothing().when(diligenServiceMock).deleteDocument(ArgumentMatchers.eq(BigDecimal.ONE));
 
-        sut = new DocumentValidatorImpl(null, diligenServiceMock);
+        sut = new DocumentValidatorImpl(null, diligenServiceMock, null);
 
     }
 
@@ -73,7 +82,7 @@ public class ValidateExtractedDocumentTest {
 
         answers.add(defendantAnswerField);
 
-        DocumentValidation actual = sut.validateExtractedDocument(BigDecimal.ZERO ,DOCUMENT_TYPE, answers);
+        DocumentValidation actual = sut.validateExtractedDocument(BigDecimal.ZERO, DOCUMENT_TYPE_CONFIGURATION, answers);
 
         Assertions.assertEquals(0, actual.getValidationResults().size());
 
@@ -91,7 +100,7 @@ public class ValidateExtractedDocumentTest {
 
         answers.add(answerField);
 
-        DocumentValidation actual = sut.validateExtractedDocument(BigDecimal.ZERO, DOCUMENT_TYPE, answers);
+        DocumentValidation actual = sut.validateExtractedDocument(BigDecimal.ZERO, DOCUMENT_TYPE_CONFIGURATION, answers);
 
         Assertions.assertEquals(ValidationTypes.DOCUMENT_TYPE, actual.getValidationResults().get(0).getType());
         Assertions.assertEquals("No Document Found", actual.getValidationResults().get(0).getActual());
@@ -111,7 +120,7 @@ public class ValidateExtractedDocumentTest {
 
         answers.add(answerField);
 
-        DocumentValidation actual = sut.validateExtractedDocument(BigDecimal.ZERO, DOCUMENT_TYPE, answers);
+        DocumentValidation actual = sut.validateExtractedDocument(BigDecimal.ZERO, DOCUMENT_TYPE_CONFIGURATION, answers);
 
         Assertions.assertEquals(ValidationTypes.DOCUMENT_TYPE, actual.getValidationResults().get(0).getType());
         Assertions.assertEquals(NOT_RESPONSE_TO_CIVIL_CLAIM, actual.getValidationResults().get(0).getActual());
@@ -131,7 +140,7 @@ public class ValidateExtractedDocumentTest {
 
         answers.add(answerField);
 
-        Assertions.assertThrows(AiReviewerRestrictedDocumentException.class, () -> sut.validateExtractedDocument(BigDecimal.ONE ,DOCUMENT_TYPE, answers));
+        Assertions.assertThrows(AiReviewerRestrictedDocumentException.class, () -> sut.validateExtractedDocument(BigDecimal.ONE, DOCUMENT_TYPE_CONFIGURATION, answers));
 
     }
 
@@ -154,7 +163,7 @@ public class ValidateExtractedDocumentTest {
 
         answers.add(plaintiffAnswerField);
 
-        DocumentValidation actual = sut.validateExtractedDocument(BigDecimal.ZERO ,DOCUMENT_TYPE, answers);
+        DocumentValidation actual = sut.validateExtractedDocument(BigDecimal.ZERO, DOCUMENT_TYPE_CONFIGURATION, answers);
 
         Assertions.assertEquals(ValidationTypes.PARTIES_PLAINTIFF, actual.getValidationResults().get(0).getType());
         Assertions.assertEquals("2", actual.getValidationResults().get(0).getActual());
@@ -181,7 +190,7 @@ public class ValidateExtractedDocumentTest {
 
         answers.add(defendantAnswerField);
 
-        DocumentValidation actual = sut.validateExtractedDocument(BigDecimal.ZERO, DOCUMENT_TYPE, answers);
+        DocumentValidation actual = sut.validateExtractedDocument(BigDecimal.ZERO, DOCUMENT_TYPE_CONFIGURATION, answers);
 
         Assertions.assertEquals(ValidationTypes.PARTIES_DEFENDANT, actual.getValidationResults().get(0).getType());
         Assertions.assertEquals("2", actual.getValidationResults().get(0).getActual());

@@ -17,6 +17,10 @@ public class DocumentTypeConfiguration {
 
     private String documentType;
 
+    private String documentTypeDescription;
+
+    private Integer projectId;
+
     private DocumentConfig documentConfig;
 
     public DocumentTypeConfiguration() {
@@ -26,9 +30,13 @@ public class DocumentTypeConfiguration {
     public DocumentTypeConfiguration(
             @JsonProperty("id") UUID id,
             @JsonProperty("documentType") String documentType,
+            @JsonProperty("documentTypeDescription") String documentTypeDescription,
+            @JsonProperty("projectId") Integer projectId,
             @JsonProperty("formData") DocumentConfig formData) {
         this.id = id;
         this.documentType = documentType;
+        this.documentTypeDescription = documentTypeDescription;
+        this.projectId = projectId;
         this.documentConfig = formData;
     }
 
@@ -44,6 +52,10 @@ public class DocumentTypeConfiguration {
         return documentType;
     }
 
+    public String getDocumentTypeDescription() { return documentTypeDescription;  }
+
+    public Integer getProjectId() { return projectId; }
+
     public DocumentConfig getDocumentConfig() {
         return documentConfig;
     }
@@ -51,6 +63,8 @@ public class DocumentTypeConfiguration {
     public DocumentTypeConfiguration(Builder builder) {
         this();
         this.documentType = builder.documentType;
+        this.documentTypeDescription = builder.documentTypeDescription;
+        this.projectId = builder.projectId;
         this.documentConfig = builder.documentConfig;
     }
 
@@ -61,10 +75,22 @@ public class DocumentTypeConfiguration {
     public static class Builder {
 
         private String documentType;
+        private String documentTypeDescription;
+        private Integer projectId;
         private DocumentConfig documentConfig;
 
         public Builder documentType(String documentType) {
             this.documentType = documentType;
+            return this;
+        }
+
+        public Builder documentTypeDescription(String documentTypeDescription) {
+            this.documentTypeDescription = documentTypeDescription;
+            return this;
+        }
+
+        public Builder projectId(Integer projectId) {
+            this.projectId = projectId;
             return this;
         }
 

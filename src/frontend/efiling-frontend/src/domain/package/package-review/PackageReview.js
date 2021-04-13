@@ -31,8 +31,9 @@ export default function PackageReview() {
 
   const location = useLocation();
   const queryParams = queryString.parse(location.search);
-  const { returnUrl, returnAppName } = queryParams;
+  const { returnUrl, returnAppName, defaultTab } = queryParams;
   const returnButtonName = `Return to ${returnAppName || "Parent App"}`;
+  const defaultTabKey = defaultTab || "documents";
 
   const [error, setError] = useState(false);
   const [show, setShow] = useState(false);
@@ -244,7 +245,7 @@ export default function PackageReview() {
             />
           )}
           <br />
-          <Tabs defaultActiveKey="documents" id="uncontrolled-tab">
+          <Tabs defaultActiveKey={defaultTabKey} id="uncontrolled-tab">
             <Tab eventKey="documents" title="Documents">
               <br />
               <DocumentList

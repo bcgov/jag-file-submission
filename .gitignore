@@ -12,4 +12,4 @@ src/frontend/.vscode/
 src/frontend/efiling-frontend/.vscode/
 src/frontend/efiling-frontend/node_modules
 *.lock
-yarn.lock
+node_modules
