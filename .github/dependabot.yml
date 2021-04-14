@@ -5,19 +5,19 @@ updates:
     directory: "/src/backend"
     schedule:
       interval: "weekly"
-      day: "tuesday"
-      time: "18:00"
+      day: "monday"
+      time: "05:00"
   # npm dependencies - frontend
   - package-ecosystem: "npm"
     directory: "/src/frontend/efiling-frontend"
     schedule:
       interval: "weekly"
-      day: "tuesday"
-      time: "18:00"
+      day: "monday"
+      time: "05:00"
   # npm dependencies - demo
   - package-ecosystem: "npm"
     directory: "/src/frontend/efiling-demo"
     schedule:
       interval: "weekly"
-      day: "tuesday"
-      time: "18:00"
+      day: "monday"
+      time: "05:00"
