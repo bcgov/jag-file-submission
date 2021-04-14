@@ -41,7 +41,6 @@ public class DeleteDocumentTest {
 
         DiligenProperties diligenProperties = new DiligenProperties();
         diligenProperties.setBasePath("http:/test");
-        diligenProperties.setProjectIdentifier(1);
         diligenProperties.setUsername(USERNAME);
         diligenProperties.setPassword(PASSWORD);
 
