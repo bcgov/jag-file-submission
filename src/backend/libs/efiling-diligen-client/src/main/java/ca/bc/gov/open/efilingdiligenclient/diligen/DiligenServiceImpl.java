@@ -53,7 +53,7 @@ public class DiligenServiceImpl implements DiligenService {
         this.diligenDocumentDetailsMapper = diligenDocumentDetailsMapper;
     }
     @Override
-    public BigDecimal postDocument(String documentType, MultipartFile file) {
+    public BigDecimal postDocument(String documentType, MultipartFile file, Integer projectIdentifier) {
 
         logger.debug("posting document to diligen");
 
@@ -71,13 +71,13 @@ public class DiligenServiceImpl implements DiligenService {
         HttpEntity<MultiValueMap<String, Object>> requestEntity
                 = new HttpEntity<>(body, headers);
 
-        ResponseEntity<String> response = restTemplate.postForEntity(constructUrl(MessageFormat.format(Keys.POST_DOCUMENT_PATH,diligenProperties.getProjectIdentifier())), requestEntity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(constructUrl(MessageFormat.format(Keys.POST_DOCUMENT_PATH, projectIdentifier)), requestEntity, String.class);
 
         if (!response.getStatusCode().is2xxSuccessful()) throw new DiligenDocumentException(response.getStatusCode().toString());
 
         logger.info("document posted to diligen");
 
-        Optional<BigDecimal> fileId = tryGetFileId(headers, file.getOriginalFilename(), 5);
+        Optional<BigDecimal> fileId = tryGetFileId(headers, file.getOriginalFilename(), 5, projectIdentifier);
 
         if(!fileId.isPresent()) {
             throw new DiligenDocumentException("Failed getting the document id after 5 attempts");
@@ -129,7 +129,7 @@ public class DiligenServiceImpl implements DiligenService {
 
     }
 
-    private Optional<BigDecimal> tryGetFileId(HttpHeaders headers, String fileName, int maxAttempt) {
+    private Optional<BigDecimal> tryGetFileId(HttpHeaders headers, String fileName, int maxAttempt, Integer projectIdentifier) {
         
         int attempt = 0;
 
@@ -137,7 +137,7 @@ public class DiligenServiceImpl implements DiligenService {
 
         while(attempt < maxAttempt) {
 
-            Optional<BigDecimal> result = getFileId(headers, fileName);
+            Optional<BigDecimal> result = getFileId(headers, fileName, projectIdentifier);
             if(result.isPresent()) return result;
             attempt++;
 
@@ -147,12 +147,12 @@ public class DiligenServiceImpl implements DiligenService {
         
     }
 
-    private Optional<BigDecimal> getFileId(HttpHeaders headers, String fileName) {
+    private Optional<BigDecimal> getFileId(HttpHeaders headers, String fileName, Integer projectIdentifier) {
 
         try {
             HttpEntity<String> entity = new HttpEntity<>(null, headers);
 
-            ResponseEntity<String> searchResponse = restTemplate.exchange(constructUrl(MessageFormat.format(Keys.GET_DOCUMENT_PATH, diligenProperties.getProjectIdentifier(), fileName)), HttpMethod.GET, entity, String.class);
+            ResponseEntity<String> searchResponse = restTemplate.exchange(constructUrl(MessageFormat.format(Keys.GET_DOCUMENT_PATH, projectIdentifier, fileName)), HttpMethod.GET, entity, String.class);
 
             if (!searchResponse.getStatusCode().is2xxSuccessful())
                 throw new DiligenDocumentException(searchResponse.getStatusCode().toString());

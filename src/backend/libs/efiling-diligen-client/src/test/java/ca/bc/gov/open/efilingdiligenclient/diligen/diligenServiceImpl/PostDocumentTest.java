@@ -115,7 +115,6 @@ public class PostDocumentTest {
 
         DiligenProperties diligenProperties = new DiligenProperties();
         diligenProperties.setBasePath("http:/test");
-        diligenProperties.setProjectIdentifier(1);
         diligenProperties.setUsername(USERNAME);
         diligenProperties.setPassword(PASSWORD);
 
@@ -138,7 +137,7 @@ public class PostDocumentTest {
 
         Mockito.when(restTemplateMock.exchange(any(String.class), any(HttpMethod.class), any(HttpEntity.class), any(Class.class))).thenReturn(ResponseEntity.ok(DILIGEN_RESPONSE));
 
-        BigDecimal result = sut.postDocument(DOCUMENT_TYPE, mockMultipartFile);
+        BigDecimal result = sut.postDocument(DOCUMENT_TYPE, mockMultipartFile, 1);
 
         assertEquals(new BigDecimal(810), result);
 
@@ -152,7 +151,7 @@ public class PostDocumentTest {
 
         Mockito.when(mockMultipartFileException.getBytes()).thenThrow(IOException.class);
 
-        Assertions.assertThrows(DiligenDocumentException.class, () -> sut.postDocument(DOCUMENT_TYPE, mockMultipartFileException));
+        Assertions.assertThrows(DiligenDocumentException.class, () -> sut.postDocument(DOCUMENT_TYPE, mockMultipartFileException, 1));
 
     }
 
@@ -164,7 +163,7 @@ public class PostDocumentTest {
 
         Mockito.when(restTemplateMock.postForEntity(any(String.class), any(HttpEntity.class), any(Class.class))).thenReturn(ResponseEntity.badRequest().build());
 
-        Assertions.assertThrows(DiligenDocumentException.class, () -> sut.postDocument(DOCUMENT_TYPE, mockMultipartFile));
+        Assertions.assertThrows(DiligenDocumentException.class, () -> sut.postDocument(DOCUMENT_TYPE, mockMultipartFile, 1));
 
     }
 
@@ -178,7 +177,7 @@ public class PostDocumentTest {
 
         Mockito.when(restTemplateMock.exchange(any(String.class), any(HttpMethod.class), any(HttpEntity.class), any(Class.class))).thenReturn(ResponseEntity.ok("GARBAGE"));
 
-        Assertions.assertThrows(DiligenDocumentException.class, () -> sut.postDocument(DOCUMENT_TYPE, mockMultipartFile));
+        Assertions.assertThrows(DiligenDocumentException.class, () -> sut.postDocument(DOCUMENT_TYPE, mockMultipartFile, 1));
 
     }
 
@@ -192,7 +191,7 @@ public class PostDocumentTest {
 
         Mockito.when(restTemplateMock.exchange(any(String.class), any(HttpMethod.class), any(HttpEntity.class), any(Class.class))).thenReturn(ResponseEntity.badRequest().build());
 
-        Assertions.assertThrows(DiligenDocumentException.class, () -> sut.postDocument(DOCUMENT_TYPE, mockMultipartFile));
+        Assertions.assertThrows(DiligenDocumentException.class, () -> sut.postDocument(DOCUMENT_TYPE, mockMultipartFile, 1));
 
     }
 
@@ -209,7 +208,7 @@ public class PostDocumentTest {
                 "        \"documents\": []" +
                 "}}"));
 
-        Assertions.assertThrows(DiligenDocumentException.class, () -> sut.postDocument(DOCUMENT_TYPE, mockMultipartFile));
+        Assertions.assertThrows(DiligenDocumentException.class, () -> sut.postDocument(DOCUMENT_TYPE, mockMultipartFile, 1));
 
     }
 
