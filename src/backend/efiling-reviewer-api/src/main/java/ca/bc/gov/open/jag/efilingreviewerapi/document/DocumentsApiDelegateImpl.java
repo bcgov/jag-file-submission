@@ -29,6 +29,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -143,7 +144,19 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
     @Override
     public ResponseEntity<ProcessedDocument> documentProcessed(UUID xTransactionId, BigDecimal documentId) {
 
-        return null;
+        logger.info("document {} requested ", documentId);
+
+        Optional<ExtractResponse> extractResponseCached = extractStore.getResponse(documentId);
+
+        if (!extractResponseCached.isPresent()) throw new AiReviewerCacheException("Document not found in cache");
+
+        ProcessedDocument processedDocument = new ProcessedDocument();
+        processedDocument.setResult(extractResponseCached.get().getFormData());
+        processedDocument.setValidation(new ArrayList<>());
+        processedDocument.getValidation().addAll(extractResponseCached.get().getDocumentValidation().getValidationResults());
+
+
+        return ResponseEntity.ok(processedDocument);
     }
 
     private ObjectNode buildFormData(ProjectFieldsResponse response, DocumentTypeConfiguration config) {

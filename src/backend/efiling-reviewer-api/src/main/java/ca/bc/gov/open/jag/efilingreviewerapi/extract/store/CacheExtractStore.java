@@ -28,5 +28,11 @@ public class CacheExtractStore implements ExtractStore {
         return Optional.of(documentExtractResponse);
     }
 
+    @Override
+    @Cacheable(cacheNames = "extractResponse", key = "{ #id }", cacheManager = "extractRequestCacheManager")
+    public Optional<ExtractResponse> getResponse(BigDecimal id) {
+        return Optional.empty();
+    }
+
 
 }
