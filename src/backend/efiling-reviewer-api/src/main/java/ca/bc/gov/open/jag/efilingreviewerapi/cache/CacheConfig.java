@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.cache;
 
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractRequest;
+import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.cache.CacheManager;
@@ -15,6 +16,7 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,12 +83,12 @@ public class CacheConfig {
     @Primary
     public CacheManager extractRequestCacheManager(
             JedisConnectionFactory jedisConnectionFactory,
-            @Qualifier("extractRequestSerializer") Jackson2JsonRedisSerializer jackson2JsonRedisSerializer) {
+            @Qualifier("extractRequestSerializer") Jackson2JsonRedisSerializer extractRequestSerializer) {
 
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
                 .disableCachingNullValues()
                 .serializeValuesWith(RedisSerializationContext
-                        .SerializationPair.fromSerializer(jackson2JsonRedisSerializer));
+                        .SerializationPair.fromSerializer(extractRequestSerializer));
 
         redisCacheConfiguration.usePrefix();
 
@@ -98,6 +100,28 @@ public class CacheConfig {
     @Primary
     public Jackson2JsonRedisSerializer extractRequestSerializer() {
         return new Jackson2JsonRedisSerializer(ExtractRequest.class);
+    }
+
+    @Bean(name = "extractResponseCacheManager")
+    public CacheManager extractResponseCacheManager(
+            JedisConnectionFactory jedisConnectionFactory,
+            @Qualifier("extractResponseSerializer") Jackson2JsonRedisSerializer extractResponseSerializer) {
+
+        RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
+                .disableCachingNullValues()
+                .entryTtl(Duration.ofHours(24))
+                .serializeValuesWith(RedisSerializationContext
+                        .SerializationPair.fromSerializer(extractResponseSerializer));
+
+        redisCacheConfiguration.usePrefix();
+
+        return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(jedisConnectionFactory)
+                .cacheDefaults(redisCacheConfiguration).build();
+    }
+
+    @Bean(name = "extractResponseSerializer")
+    public Jackson2JsonRedisSerializer extractResponseSerializer() {
+        return new Jackson2JsonRedisSerializer(ExtractResponse.class);
     }
 
 }

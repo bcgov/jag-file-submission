@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingreviewerapi.extract.models;
 
 import ca.bc.gov.open.jag.efilingreviewerapi.document.models.Document;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentValidation;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class ExtractResponse {
@@ -11,7 +12,10 @@ public class ExtractResponse {
     private DocumentValidation documentValidation;
     private ObjectNode formData;
 
-    public ExtractResponse(Extract extract, Document document, DocumentValidation documentValidation, ObjectNode formData) {
+    public ExtractResponse(@JsonProperty("extract") Extract extract,
+                           @JsonProperty("document") Document document,
+                           @JsonProperty("documentValidation") DocumentValidation documentValidation,
+                           @JsonProperty("formData")ObjectNode formData) {
         this.extract = extract;
         this.document = document;
         this.documentValidation = documentValidation;

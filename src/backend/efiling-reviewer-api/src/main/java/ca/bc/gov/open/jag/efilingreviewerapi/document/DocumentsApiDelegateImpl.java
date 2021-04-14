@@ -15,6 +15,7 @@ import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidat
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerCacheException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentConfigException;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapper;
+import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ProcessedDocumentMapper;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractRequest;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractResponse;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.store.ExtractStore;
@@ -29,7 +30,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -45,6 +45,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
     private final FieldProcessor fieldProcessor;
     private final DocumentValidator documentValidator;
     private final DocumentTypeConfigurationRepository documentTypeConfigurationRepository;
+    private final ProcessedDocumentMapper processedDocumentMapper;
 
     public DocumentsApiDelegateImpl(
             DiligenService diligenService,
@@ -52,7 +53,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
             ExtractStore extractStore,
             StringRedisTemplate stringRedisTemplate,
             FieldProcessor fieldProcessor,
-            DocumentValidator documentValidator, DocumentTypeConfigurationRepository documentTypeConfigurationRepository) {
+            DocumentValidator documentValidator, DocumentTypeConfigurationRepository documentTypeConfigurationRepository, ProcessedDocumentMapper processedDocumentMapper) {
 
         this.diligenService = diligenService;
         this.extractRequestMapper = extractRequestMapper;
@@ -61,6 +62,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
         this.fieldProcessor = fieldProcessor;
         this.documentValidator = documentValidator;
         this.documentTypeConfigurationRepository = documentTypeConfigurationRepository;
+        this.processedDocumentMapper = processedDocumentMapper;
     }
 
     @Override
@@ -120,9 +122,8 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
                         .document(extractRequestCached.get().getDocument())
                         .formData(buildFormData(response.getProjectFieldsResponse(), config))
                         .extract(extractRequestCached.get().getExtract())
+                        .documentValidation(documentValidator.validateExtractedDocument(documentEvent.getDocumentId(), config, response.getAnswers()))
                         .create();
-
-                documentValidator.validateExtractedDocument(documentEvent.getDocumentId(), config, response.getAnswers());
 
                 extractStore.put(documentEvent.getDocumentId(), extractedResponse);
 
@@ -150,13 +151,8 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
 
         if (!extractResponseCached.isPresent()) throw new AiReviewerCacheException("Document not found in cache");
 
-        ProcessedDocument processedDocument = new ProcessedDocument();
-        processedDocument.setResult(extractResponseCached.get().getFormData());
-        processedDocument.setValidation(new ArrayList<>());
-        processedDocument.getValidation().addAll(extractResponseCached.get().getDocumentValidation().getValidationResults());
+        return ResponseEntity.ok(processedDocumentMapper.toProcessedDocument(extractResponseCached.get(), extractResponseCached.get().getDocumentValidation().getValidationResults()));
 
-
-        return ResponseEntity.ok(processedDocument);
     }
 
     private ObjectNode buildFormData(ProjectFieldsResponse response, DocumentTypeConfiguration config) {

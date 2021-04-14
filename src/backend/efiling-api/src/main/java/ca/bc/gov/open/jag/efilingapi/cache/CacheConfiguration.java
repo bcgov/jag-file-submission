@@ -150,7 +150,7 @@ public class CacheConfiguration {
                 .disableCachingNullValues()
                 .entryTtl(Duration.ofHours(24))
                 .serializeValuesWith(RedisSerializationContext
-                        .SerializationPair.fromSerializer(documentTypeDetailsSerializer));;
+                        .SerializationPair.fromSerializer(documentTypeDetailsSerializer));
 
         redisCacheConfiguration.usePrefix();
 

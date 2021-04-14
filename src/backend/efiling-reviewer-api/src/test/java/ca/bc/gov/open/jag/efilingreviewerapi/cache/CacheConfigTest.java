@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.cache;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -28,8 +29,14 @@ public class CacheConfigTest {
         context.run(it -> {
             assertThat(it).hasBean("extractRequestCacheManager");
             assertThat(it).hasBean("extractRequestSerializer");
-            RedisCacheManager actualCacheManager = ((RedisCacheManager)it.getBean("extractRequestCacheManager"));
-            actualCacheManager.getCache("redis");
+            assertThat(it).hasBean("extractResponseCacheManager");
+            assertThat(it).hasBean("extractResponseSerializer");
+            RedisCacheManager actualRequestCacheManager = ((RedisCacheManager)it.getBean("extractRequestCacheManager"));
+            actualRequestCacheManager.getCache("redis");
+
+            RedisCacheManager actualResponseCacheManager = ((RedisCacheManager)it.getBean("extractResponseCacheManager"));
+            actualResponseCacheManager.getCache("redis");
+
         });
     }
 

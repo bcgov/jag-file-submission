@@ -23,13 +23,13 @@ public class CacheExtractStore implements ExtractStore {
     }
 
     @Override
-    @CachePut(cacheNames = "extractResponse", key = "{ #id }", cacheManager = "extractRequestCacheManager")
+    @CachePut(cacheNames = "extractResponse", key = "{ #id }", cacheManager = "extractResponseCacheManager")
     public Optional<ExtractResponse> put(BigDecimal id, ExtractResponse documentExtractResponse) {
         return Optional.of(documentExtractResponse);
     }
 
     @Override
-    @Cacheable(cacheNames = "extractResponse", key = "{ #id }", cacheManager = "extractRequestCacheManager")
+    @Cacheable(cacheNames = "extractResponse", key = "{ #id }", cacheManager = "extractResponseCacheManager")
     public Optional<ExtractResponse> getResponse(BigDecimal id) {
         return Optional.empty();
     }
