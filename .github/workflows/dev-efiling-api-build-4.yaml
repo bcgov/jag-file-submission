@@ -4,7 +4,7 @@ on:
   push:
     branches: [master]
   workflow_dispatch:
-    branches: [master]
+    branches: [master, akroon3r-patch-3]
 
 jobs:
   build:
