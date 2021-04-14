@@ -8,6 +8,7 @@ import ca.bc.gov.open.jag.efilingreviewerapi.Keys;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.DocumentsApiDelegate;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentEvent;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentExtractResponse;
+import ca.bc.gov.open.jag.efilingreviewerapi.api.model.ProcessedDocument;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentTypeConfiguration;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.store.DocumentTypeConfigurationRepository;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidator;
@@ -137,6 +138,12 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
         MDC.remove(Keys.DOCUMENT_TYPE);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
+    }
+
+    @Override
+    public ResponseEntity<ProcessedDocument> documentProcessed(UUID xTransactionId, BigDecimal documentId) {
+
+        return null;
     }
 
     private ObjectNode buildFormData(ProjectFieldsResponse response, DocumentTypeConfiguration config) {

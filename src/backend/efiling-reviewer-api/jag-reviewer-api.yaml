@@ -58,7 +58,7 @@ paths:
       responses:
         "204":
           description: Document Event acknoledged
-  "/documents/processed/{extractId}":
+  "/documents/processed/{documentId}":
     get:
       summary: to inform api on a document event
       operationId: DocumentProcessed
@@ -67,11 +67,10 @@ paths:
       parameters:
         - $ref: "#/components/parameters/xTransactionId"
         - in: path
-          name: extractId
+          name: documentId
           required: true
           schema:
-            type: string
-            format: uuid
+            type: number
       responses:
         "200":
           description: Processed Document Returned
@@ -330,3 +329,4 @@ components:
             type: object
         result:
           type: object
+
