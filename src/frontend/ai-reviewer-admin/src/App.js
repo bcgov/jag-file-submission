@@ -12,11 +12,13 @@ function App() {
   };
 
   return (
-    <main>
+    <>
       <Header header={header} />
-      <DocumentTypeEditor />
+      <div className="content">
+        <DocumentTypeEditor />
+      </div>
       <Footer />
-    </main>
+    </>
   );
 }
 

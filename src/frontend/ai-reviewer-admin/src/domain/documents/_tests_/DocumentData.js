@@ -65,4 +65,25 @@ export const configurations = [
       },
     },
   },
+  {
+    id: "6550866d-754c-9d41-52a5-c229bc849ee3",
+    documentType: "SG1",
+    documentTypeDescription: "Stargate One Report",
+    projectId: 2,
+    documentConfig: {
+      properties: {
+        court: {
+          type: "object",
+          fieldId: null,
+          properties: {
+            location: {
+              type: "string",
+              fieldId: 230,
+              properties: {},
+            },
+          },
+        },
+      },
+    },
+  },
 ];

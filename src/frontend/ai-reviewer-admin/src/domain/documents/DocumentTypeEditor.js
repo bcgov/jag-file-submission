@@ -2,15 +2,23 @@ import React, { useState, useEffect } from "react";
 import { getDocumentTypeConfigurations } from "domain/documents/DocumentService";
 
 import "./DocumentTypeEditor.scss";
+import DocumentList from "./DocumentList";
 
 export default function DocumentTypeEditor() {
-  const [configurations, setConfigurations] = useState("");
+  const [configurations, setConfigurations] = useState([]);
 
   useEffect(() => {
-    getDocumentTypeConfigurations("RCC")
-      .then((data) => setConfigurations(JSON.stringify(data, null, "\t")))
+    getDocumentTypeConfigurations()
+      .then((data) => {
+        setConfigurations(data);
+      })
       .catch(/* (error) => console.log(`error:${error}`) */);
   }, []);
 
-  return <div className="list">{configurations}</div>;
+  return (
+    <div className="document-type-editor">
+      <h1>Document Type Configurations</h1>
+      <DocumentList configurations={configurations} />
+    </div>
+    );
 }

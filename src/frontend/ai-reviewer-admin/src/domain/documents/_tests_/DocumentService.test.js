@@ -15,6 +15,13 @@ describe("Document Service test suite", () => {
     const response = await getDocumentTypeConfigurations();
     expect(response).toMatchObject(configurations);
   });
+  
+  test("getDocumentTypeConfigurations 200 params", async () => {
+    mock.onGet("/documentTypeConfigurations", { params: { "documentType": "SG1" }}).reply(200, configurations[1]);
+
+    const response = await getDocumentTypeConfigurations("SG1");
+    expect(response).toMatchObject(configurations[1]);
+  });
 
   test("getDocumentTypeConfigurations 401", async () => {
     mock.onGet("/documentTypeConfigurations").reply(401, configurations);
