@@ -127,8 +127,8 @@ public class ExtractDocumentFormDataTest {
 
 
     @Test
-    @DisplayName("200: Assert something returned")
-    public void withUserHavingValidRequestShouldReturnCredfated() throws IOException {
+    @DisplayName("Error: Assert something returned")
+    public void withUserHavingValidRequestButCacheIssue() throws IOException {
 
         Mockito.when(diligenServiceMock.postDocument(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(BigDecimal.TEN);
         Mockito.doNothing().when(documentValidatorMock).validateDocument(any(), any());
@@ -147,7 +147,7 @@ public class ExtractDocumentFormDataTest {
 
     @Test
     @DisplayName("400: document configuration not present")
-    public void withDocumentTypeNotinMongoReturnBadRequest() throws IOException {
+    public void withDocumentTypeNotInMongoReturnBadRequest() throws IOException {
 
         Mockito.when(diligenServiceMock.postDocument(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(BigDecimal.TEN);
 
