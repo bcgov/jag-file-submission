@@ -309,9 +309,9 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         }
 
     }
-
+    //This function will be used when cso has the valid flag available
     private Boolean validateJson(Object json) {
-        //When civil document gets a flag this will set it
+
         if (json == null) return false;
         logger.info("Validate form data");
         try {
