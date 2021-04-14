@@ -232,6 +232,9 @@ components:
         - size
         - contentType
       properties:
+        documentId:
+          type: number
+          format: integer
         type:
           type: string
         fileName:

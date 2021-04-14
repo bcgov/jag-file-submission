@@ -89,7 +89,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
 
         MDC.remove(Keys.DOCUMENT_TYPE);
 
-        return ResponseEntity.ok(extractRequestMapper.toDocumentExtractResponse(extractRequestCached.get()));
+        return ResponseEntity.ok(extractRequestMapper.toDocumentExtractResponse(extractRequestCached.get(), response));
 
     }
 

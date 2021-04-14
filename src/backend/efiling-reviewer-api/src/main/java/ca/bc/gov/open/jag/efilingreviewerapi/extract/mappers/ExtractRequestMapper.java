@@ -8,6 +8,7 @@ import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Mapper(injectionStrategy = InjectionStrategy.CONSTRUCTOR, uses = {ExtractMapper.class}, componentModel = "spring")
@@ -24,6 +25,13 @@ public interface ExtractRequestMapper {
         return documentMapper.toDocument(documentType, multipartFile);
     }
 
-    DocumentExtractResponse toDocumentExtractResponse(ExtractRequest extractRequest);
+    @Mapping(target = "document.documentId", source = "documentId")
+    @Mapping(target = "document.type", source = "extractRequest.document.type")
+    @Mapping(target = "document.fileName", source = "extractRequest.document.fileName")
+    @Mapping(target = "document.size", source = "extractRequest.document.size")
+    @Mapping(target = "document.contentType", source = "extractRequest.document.contentType")
+    @Mapping(target = "extract.id", source = "extractRequest.extract.id")
+    @Mapping(target = "extract.transactionId", source = "extractRequest.extract.transactionId")
+    DocumentExtractResponse toDocumentExtractResponse(ExtractRequest extractRequest, BigDecimal documentId);
 
 }
