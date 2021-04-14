@@ -364,7 +364,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{baseUrl}}"
+						"url": "{{baseUrl}}/restrictedDocumentTypes"
 					},
 					"response": []
 				},
@@ -373,7 +373,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": null
+						"url": "{{baseUrl}}/restrictedDocumentTypes/810edbd7-6fc1-483e-a2ff-c86ed677c6f2"
 					},
 					"response": []
 				},
@@ -382,7 +382,16 @@
 					"request": {
 						"method": "POST",
 						"header": [],
-						"url": null
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"type\": \"TESTT\",\r\n  \"description\": \"Test the test teststtstest\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/restrictedDocumentTypes"
 					},
 					"response": []
 				},
@@ -391,7 +400,16 @@
 					"request": {
 						"method": "PUT",
 						"header": [],
-						"url": null
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"810edbd7-6fc1-483e-a2ff-c86ed677c6f2\",\r\n  \"documentType\": {\r\n    \"type\": \"TESTT\",\r\n    \"description\": \"Test update\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/restrictedDocumentTypes"
 					},
 					"response": []
 				},
