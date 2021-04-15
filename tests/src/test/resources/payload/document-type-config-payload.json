@@ -1,0 +1,77 @@
+{
+  "documentType": {
+    "type": "TEST",
+    "description": "Response to Civil Claim"
+  },
+  "projectId": 2,
+  "documentConfig": {
+    "properties": {
+      "court": {
+        "type": "object",
+        "fieldId": null,
+        "properties": {
+          "nested": {
+            "type": "object",
+            "properties": {
+              "myLocation": {
+                "type": "string",
+                "fieldId": 230,
+                "properties": {}
+              }
+            }
+          },
+          "courtLocation": {
+            "type": "string",
+            "fieldId": 230,
+            "properties": {}
+          },
+          "courtLevel": {
+            "type": "string",
+            "fieldId": 229,
+            "properties": {}
+          },
+          "courtClass": {
+            "type": "string",
+            "fieldId": 230,
+            "properties": {}
+          },
+          "division": {
+            "type": "string",
+            "fieldId": 210,
+            "properties": {}
+          },
+          "fileNumber": {
+            "type": "string",
+            "fieldId": 228,
+            "properties": {}
+          },
+          "participatingClass": {
+            "type": "string",
+            "fieldId": 210,
+            "properties": {}
+          },
+          "agencyId": {
+            "type": "string",
+            "fieldId": 210,
+            "properties": {}
+          },
+          "locationDescription": {
+            "type": "string",
+            "fieldId": 210,
+            "properties": {}
+          },
+          "levelDescription": {
+            "type": "string",
+            "fieldId": 210,
+            "properties": {}
+          },
+          "classDescription": {
+            "type": "string",
+            "fieldId": 210,
+            "properties": {}
+          }
+        }
+      }
+    }
+  }
+}
