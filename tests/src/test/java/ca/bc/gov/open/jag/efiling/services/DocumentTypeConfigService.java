@@ -22,6 +22,8 @@ public class DocumentTypeConfigService {
     @Value("${EFILING_REVIEWER_HOST:http://localhost:8090}")
     private String eFilingReviewerHost;
 
+    private final String COMMON_MESSAGE_FORMAT = "{0}/{1}";
+
     public Response createDocumentTypeConfigResponse(String payloadPath, String pathParam) throws IOException {
 
         File resource = new ClassPathResource(
@@ -33,7 +35,7 @@ public class DocumentTypeConfigService {
                 .body(resource);
         return request
                 .when()
-                .post(MessageFormat.format("{0}/{1}", eFilingReviewerHost, pathParam))
+                .post(MessageFormat.format(COMMON_MESSAGE_FORMAT, eFilingReviewerHost, pathParam))
                 .then()
                 .extract()
                 .response();
@@ -58,7 +60,7 @@ public class DocumentTypeConfigService {
                 .body(updatedJsonWithId);
         return request
                 .when()
-                .put(MessageFormat.format("{0}/{1}", eFilingReviewerHost, pathParam))
+                .put(MessageFormat.format(COMMON_MESSAGE_FORMAT, eFilingReviewerHost, pathParam))
                 .then()
                 .extract()
                 .response();
@@ -68,7 +70,7 @@ public class DocumentTypeConfigService {
     public Response getCreatedDocumentTypeConfiguration() {
 
         return RestAssured.when()
-                .get(MessageFormat.format("{0}/{1}", eFilingReviewerHost, Keys.DOCUMENT_TYPE_CONFIGURATION_PATH))
+                .get(MessageFormat.format(COMMON_MESSAGE_FORMAT, eFilingReviewerHost, Keys.DOCUMENT_TYPE_CONFIGURATION_PATH))
                 .then()
                 .extract()
                 .response();
@@ -87,7 +89,7 @@ public class DocumentTypeConfigService {
     public Response getAllRestrictedDocumentTypeResponse() {
 
         return RestAssured.when()
-                .get(MessageFormat.format("{0}/{1}", eFilingReviewerHost,
+                .get(MessageFormat.format(COMMON_MESSAGE_FORMAT, eFilingReviewerHost,
                         Keys.RESTRICTED_DOCUMENT_TYPE_CONFIGURATION_PATH))
                 .then()
                 .extract()
