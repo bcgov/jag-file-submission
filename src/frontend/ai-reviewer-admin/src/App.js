@@ -1,7 +1,9 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { Header, Footer } from "shared-components";
-import "./App.css";
+import DocumentTypeEditor from "domain/documents/DocumentTypeEditor";
+import "./App.scss";
 
 function App() {
   const header = {
@@ -10,11 +12,13 @@ function App() {
   };
 
   return (
-    <main>
+    <>
       <Header header={header} />
-      Hello World!
+      <div className="content">
+        <DocumentTypeEditor />
+      </div>
       <Footer />
-    </main>
+    </>
   );
 }
 
