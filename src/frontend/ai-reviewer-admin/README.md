@@ -2,6 +2,12 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Launching the app
+
+For local development, create a `.env.development` file using `.env.template` as a template.
+For Openshift, create environment variables for every variable in `.env.template`
+For Docker, simply launch `docker-compose up --build ai-reviewer-admin` from the project root.
+
 ## Available Scripts
 
 In the project directory, you can run:
