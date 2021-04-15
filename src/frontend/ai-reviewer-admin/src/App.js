@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Switch, Route, Redirect } from "react-router-dom";
 import { Header, Footer } from "shared-components";
 import DocumentTypeEditor from "domain/documents/DocumentTypeEditor";
 import "./App.scss";

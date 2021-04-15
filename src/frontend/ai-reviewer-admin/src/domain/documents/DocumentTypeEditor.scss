@@ -1,3 +1,12 @@
 .document-type-editor {
   margin: 20px;
+
+  .MuiTextField-root {
+    width: 35%;
+    min-width: 350px;
+  }
+
+  .new-config-submit {
+    margin-top: 20px;
+  }
 }
