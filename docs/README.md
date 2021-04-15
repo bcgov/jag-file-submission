@@ -198,7 +198,7 @@ eFiling API is documented using [openapi](http://editor.swagger.io/?url=https://
 
 The default values to be used for `roleType` is CLA and for `partyType` it is IND. Can refer to the roles in the code tables for more details.
 
-#### Are the various types of documents the ones present in the list in  https://bcgov.github.io/jag-file-submission/#/data?
+#### Are the various types of documents the ones present in this list? -  https://bcgov.github.io/jag-file-submission/#/data?
 
 Yes. This is our list of various document types that can be submitted.
 For FLA, the document types are as follows: Application to Obtain an Order (APO) , Notice of Motion (NM), Affidavit (AFF), and Electronic Filing Statement (EFS- Provincial).
