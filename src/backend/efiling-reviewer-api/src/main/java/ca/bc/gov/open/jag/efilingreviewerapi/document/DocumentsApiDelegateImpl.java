@@ -8,12 +8,14 @@ import ca.bc.gov.open.jag.efilingreviewerapi.Keys;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.DocumentsApiDelegate;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentEvent;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentExtractResponse;
+import ca.bc.gov.open.jag.efilingreviewerapi.api.model.ProcessedDocument;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentTypeConfiguration;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.store.DocumentTypeConfigurationRepository;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidator;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerCacheException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentConfigException;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapper;
+import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ProcessedDocumentMapper;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractRequest;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractResponse;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.store.ExtractStore;
@@ -43,6 +45,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
     private final FieldProcessor fieldProcessor;
     private final DocumentValidator documentValidator;
     private final DocumentTypeConfigurationRepository documentTypeConfigurationRepository;
+    private final ProcessedDocumentMapper processedDocumentMapper;
 
     public DocumentsApiDelegateImpl(
             DiligenService diligenService,
@@ -50,7 +53,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
             ExtractStore extractStore,
             StringRedisTemplate stringRedisTemplate,
             FieldProcessor fieldProcessor,
-            DocumentValidator documentValidator, DocumentTypeConfigurationRepository documentTypeConfigurationRepository) {
+            DocumentValidator documentValidator, DocumentTypeConfigurationRepository documentTypeConfigurationRepository, ProcessedDocumentMapper processedDocumentMapper) {
 
         this.diligenService = diligenService;
         this.extractRequestMapper = extractRequestMapper;
@@ -59,6 +62,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
         this.fieldProcessor = fieldProcessor;
         this.documentValidator = documentValidator;
         this.documentTypeConfigurationRepository = documentTypeConfigurationRepository;
+        this.processedDocumentMapper = processedDocumentMapper;
     }
 
     @Override
@@ -94,7 +98,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
 
         MDC.remove(Keys.DOCUMENT_TYPE);
 
-        return ResponseEntity.ok(extractRequestMapper.toDocumentExtractResponse(extractRequestCached.get()));
+        return ResponseEntity.ok(extractRequestMapper.toDocumentExtractResponse(extractRequestCached.get(), response));
 
     }
 
@@ -124,9 +128,8 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
                         .document(extractRequestCached.get().getDocument())
                         .formData(buildFormData(response.getProjectFieldsResponse(), config))
                         .extract(extractRequestCached.get().getExtract())
+                        .documentValidation(documentValidator.validateExtractedDocument(documentEvent.getDocumentId(), config, response.getAnswers()))
                         .create();
-
-                documentValidator.validateExtractedDocument(documentEvent.getDocumentId(), config, response.getAnswers());
 
                 extractStore.put(documentEvent.getDocumentId(), extractedResponse);
 
@@ -142,6 +145,19 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
 
         MDC.remove(Keys.DOCUMENT_TYPE);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+    }
+
+    @Override
+    public ResponseEntity<ProcessedDocument> documentProcessed(UUID xTransactionId, BigDecimal documentId) {
+
+        logger.info("document {} requested ", documentId);
+
+        Optional<ExtractResponse> extractResponseCached = extractStore.getResponse(documentId);
+
+        if (!extractResponseCached.isPresent()) throw new AiReviewerCacheException("Document not found in cache");
+
+        return ResponseEntity.ok(processedDocumentMapper.toProcessedDocument(extractResponseCached.get(), extractResponseCached.get().getDocumentValidation().getValidationResults()));
 
     }
 
