@@ -1,12 +1,16 @@
 {
-  "documentType": "RCC",
+  "documentType": {
+    "type": "TEST",
+    "description": "Response to Civil Claim"
+  },
+  "projectId": 2,
   "documentConfig": {
     "properties": {
       "court": {
         "type": "object",
         "fieldId": null,
         "properties": {
-          "notNested": {
+          "nested": {
             "type": "object",
             "properties": {
               "myLocation": {

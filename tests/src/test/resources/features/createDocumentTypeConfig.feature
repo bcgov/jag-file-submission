@@ -7,4 +7,3 @@ Feature: Create document type and properties configuration for AI reviewer
   Scenario: Validate document type can be configured
     Given user configures a document type
     When document type config is created
-#    Then document form data is extracted

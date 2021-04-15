@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
+import ca.bc.gov.open.jag.efiling.Keys;
 import ca.bc.gov.open.jag.efiling.services.DocumentTypeConfigService;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
@@ -11,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.UUID;
 
 public class CreateDocumentTypeConfigSD {
 
@@ -25,7 +27,7 @@ public class CreateDocumentTypeConfigSD {
     @Given("user configures a document type")
     public void configureADocumentType() throws IOException {
         logger.info("Creating a new document type configuration");
-        Response actualCreateDocumentTypeConfigResponse = documentTypeConfigService.createDocumentTypeConfigResponse();
+        Response actualCreateDocumentTypeConfigResponse = documentTypeConfigService.createDocumentTypeConfigResponse(Keys.DOCUMENT_TYPE_PAYLOAD, Keys.DOCUMENT_TYPE_CONFIGURATION_PATH);
 
         logger.info("Api response status code: {}", actualCreateDocumentTypeConfigResponse.getStatusCode());
     }
@@ -40,8 +42,6 @@ public class CreateDocumentTypeConfigSD {
         Assert.assertEquals(HttpStatus.SC_OK, actualCreatedConfigResponse.getStatusCode());
         Assert.assertEquals("application/json", actualCreatedConfigResponse.getContentType());
 
-        Assert.assertNotNull(actualCreatedConfigResponseJsonPath.get("id"));
-        Assert.assertEquals(38, actualCreatedConfigResponseJsonPath.get("id").toString().length());
-
+        Assert.assertNotNull(UUID.fromString(actualCreatedConfigResponseJsonPath.get("id[0]")));
     }
 }
