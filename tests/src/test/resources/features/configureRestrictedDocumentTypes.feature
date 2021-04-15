@@ -1,6 +1,6 @@
 # new feature
 # Tags: optional
-
+@ignore
 Feature: Configure and Manage restricted document types in AI reviewer
 
   @ignore
