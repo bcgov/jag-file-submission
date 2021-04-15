@@ -5,6 +5,7 @@ import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
 import ca.bc.gov.open.efilingdiligenclient.diligen.processor.FieldProcessor;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentExtractResponse;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.DocumentsApiDelegateImpl;
+import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentTypeConfiguration;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.store.DocumentTypeConfigurationRepository;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidator;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerCacheException;
@@ -17,6 +18,7 @@ import ca.bc.gov.open.jag.efilingreviewerapi.extract.mocks.ExtractRequestMockFac
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractRequest;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.store.ExtractStore;
 import org.junit.jupiter.api.*;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -45,7 +47,8 @@ public class ExtractDocumentFormDataTest {
     private static final String CASE_1 = "test-document.pdf";
     private static final String CASE_2 = "test.txt";
     public static final String DOCUMENT_TYPE = "RCC";
-    public static final String NOT_RCC = "NOT_RCC";
+    public static final String NOT_FOUND_DOCUMENT_TYPE = "NOT_RCC";
+    public static final String INVALID_DOCUMENT_TYPE = "INVALID_RCC";
     private DocumentsApiDelegateImpl sut;
 
     @Mock
@@ -79,6 +82,17 @@ public class ExtractDocumentFormDataTest {
                 .when(extractStoreMock.put(Mockito.eq(BigDecimal.TEN), Mockito.any(ExtractRequest.class)))
                 .thenReturn(Optional.empty());
 
+        Mockito.when(documentTypeConfigurationRepositoryMock.findByDocumentType(ArgumentMatchers.eq(NOT_FOUND_DOCUMENT_TYPE))).thenReturn(null);
+
+        DocumentTypeConfiguration documentTypeConfiguration = DocumentTypeConfiguration.builder()
+                .documentType(DOCUMENT_TYPE)
+                .projectId(1)
+                .create();
+
+        Mockito.when(documentTypeConfigurationRepositoryMock.findByDocumentType(ArgumentMatchers.eq(DOCUMENT_TYPE))).thenReturn(documentTypeConfiguration);
+
+        Mockito.when(documentTypeConfigurationRepositoryMock.findByDocumentType(ArgumentMatchers.eq(INVALID_DOCUMENT_TYPE))).thenReturn(documentTypeConfiguration);
+        
         Mockito.doNothing().when(stringRedisTemplateMock).convertAndSend(any(), any());
 
         ExtractRequestMapper extractRequestMapper = new ExtractRequestMapperImpl(new ExtractMapperImpl());
@@ -89,7 +103,7 @@ public class ExtractDocumentFormDataTest {
     @DisplayName("200: Assert something returned")
     public void withUserHavingValidRequestShouldReturnCreated() throws IOException, VirusDetectedException {
 
-        Mockito.when(diligenServiceMock.postDocument(Mockito.any(), Mockito.any())).thenReturn(BigDecimal.ONE);
+        Mockito.when(diligenServiceMock.postDocument(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(BigDecimal.ONE);
 
         Path path = Paths.get("src/test/resources/" + CASE_1);
 
@@ -113,10 +127,10 @@ public class ExtractDocumentFormDataTest {
 
 
     @Test
-    @DisplayName("200: Assert something returned")
-    public void withUserHavingValidRequestShouldReturnCredfated() throws IOException {
+    @DisplayName("Error: Assert something returned")
+    public void withUserHavingValidRequestButCacheIssue() throws IOException {
 
-        Mockito.when(diligenServiceMock.postDocument(Mockito.any(), Mockito.any())).thenReturn(BigDecimal.TEN);
+        Mockito.when(diligenServiceMock.postDocument(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(BigDecimal.TEN);
         Mockito.doNothing().when(documentValidatorMock).validateDocument(any(), any());
         Path path = Paths.get("src/test/resources/" + CASE_1);
 
@@ -132,10 +146,30 @@ public class ExtractDocumentFormDataTest {
     }
 
     @Test
+    @DisplayName("400: document configuration not present")
+    public void withDocumentTypeNotInMongoReturnBadRequest() throws IOException {
+
+        Mockito.when(diligenServiceMock.postDocument(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(BigDecimal.TEN);
+
+        Mockito.doNothing().when(documentValidatorMock).validateDocument(any(), any());
+        Path path = Paths.get("src/test/resources/" + CASE_1);
+
+        UUID transactionId = UUID.randomUUID();
+
+        MultipartFile multipartFile = new MockMultipartFile(CASE_1,
+                CASE_1, APPLICATION_PDF, Files.readAllBytes(path));
+
+        ResponseEntity<DocumentExtractResponse> actual = sut.extractDocumentFormData(transactionId, NOT_FOUND_DOCUMENT_TYPE, multipartFile);
+
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
+
+    }
+
+    @Test
     @DisplayName("Error: non pdf throws exception")
     public void withNonPdfFilesShouldReturnOk() throws IOException {
 
-        Mockito.when(diligenServiceMock.postDocument(Mockito.any(), Mockito.any())).thenReturn(BigDecimal.ONE);
+        Mockito.when(diligenServiceMock.postDocument(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(BigDecimal.ONE);
         Mockito.doThrow(AiReviewerDocumentException.class).when(documentValidatorMock).validateDocument(any(), any());
 
         Path path = Paths.get("src/test/resources/" + CASE_2);
@@ -186,7 +220,7 @@ public class ExtractDocumentFormDataTest {
     @DisplayName("Error: fails document type check")
     public void withDocumentTypeScheckFailure() throws IOException {
 
-        Mockito.doThrow(AiReviewerDocumentException.class).when(documentValidatorMock).validateDocument(any(), any());
+        Mockito.doThrow(AiReviewerDocumentException.class).when(documentValidatorMock).validateDocument(ArgumentMatchers.eq(INVALID_DOCUMENT_TYPE), any());
         Path path = Paths.get("src/test/resources/" + CASE_1);
 
         UUID transactionId = UUID.randomUUID();
@@ -194,7 +228,7 @@ public class ExtractDocumentFormDataTest {
         MultipartFile multipartFile = new MockMultipartFile(CASE_1,
                 CASE_1, APPLICATION_PDF, Files.readAllBytes(path));
 
-        Assertions.assertThrows(AiReviewerDocumentException.class,() -> sut.extractDocumentFormData(transactionId, NOT_RCC, multipartFile));
+        Assertions.assertThrows(AiReviewerDocumentException.class,() -> sut.extractDocumentFormData(transactionId, INVALID_DOCUMENT_TYPE, multipartFile));
 
     }
 
