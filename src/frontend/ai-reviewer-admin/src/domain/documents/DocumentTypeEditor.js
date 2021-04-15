@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { getDocumentTypeConfigurations } from "domain/documents/DocumentService";
+import DocumentList from "./DocumentList";
 
 import "./DocumentTypeEditor.scss";
-import DocumentList from "./DocumentList";
 
 export default function DocumentTypeEditor() {
   const [configurations, setConfigurations] = useState([]);
