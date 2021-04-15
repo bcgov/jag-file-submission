@@ -14,4 +14,6 @@ public interface ExtractStore {
 
     Optional<ExtractResponse> put(BigDecimal id, ExtractResponse documentExtractResponse);
 
+    Optional<ExtractResponse> getResponse(BigDecimal id);
+
 }

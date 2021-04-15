@@ -1,9 +1,20 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.document.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class DocumentValidationResult {
     private ValidationTypes type;
     private String expected;
     private String actual;
+
+    public DocumentValidationResult(@JsonProperty("type") ValidationTypes type,
+                                    @JsonProperty("expected") String expected,
+                                    @JsonProperty("actual") String actual) {
+        this.type = type;
+        this.expected = expected;
+        this.actual = actual;
+
+    }
 
     public ValidationTypes getType() {
         return type;

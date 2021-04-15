@@ -58,6 +58,27 @@ paths:
       responses:
         "204":
           description: Document Event acknoledged
+  "/documents/processed/{documentId}":
+    get:
+      summary: to inform api on a document event
+      operationId: DocumentProcessed
+      tags:
+        - document
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+        - in: path
+          name: documentId
+          required: true
+          schema:
+            type: number
+      responses:
+        "200":
+          description: Processed Document Returned
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProcessedDocument"
+
   "/documentTypeConfigurations":
     get:
       summary: list all the document configuration
@@ -211,6 +232,9 @@ components:
         - size
         - contentType
       properties:
+        documentId:
+          type: number
+          format: integer
         type:
           type: string
         fileName:
@@ -295,3 +319,17 @@ components:
       type: array
       items:
         $ref: "#/components/schemas/RestrictedDocumentType"
+    ProcessedDocument:
+      type: object
+      properties:
+        extract:
+          $ref: "#/components/schemas/Extract"
+        document:
+          $ref: "#/components/schemas/Document"
+        validation:
+          type: array
+          items:
+            type: object
+        result:
+          type: object
+
