@@ -70,6 +70,12 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
 
         MDC.put(Keys.DOCUMENT_TYPE, xDocumentType);
 
+        DocumentTypeConfiguration documentTypeConfiguration = documentTypeConfigurationRepository.findByDocumentType(xDocumentType);
+
+        if (documentTypeConfiguration == null) {
+            return new ResponseEntity("Document type not found", HttpStatus.BAD_REQUEST);
+        }
+
         long receivedTimeMillis = System.currentTimeMillis();
 
         logger.info("document extract request received");
@@ -80,7 +86,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
 
         ExtractRequest extractRequest = extractRequestMapper.toExtractRequest(xTransactionId, xDocumentType, file, receivedTimeMillis);
 
-        BigDecimal response = diligenService.postDocument(xDocumentType, file);
+        BigDecimal response = diligenService.postDocument(xDocumentType, file, documentTypeConfiguration.getProjectId());
 
         //Temporary
         stringRedisTemplate.convertAndSend("documentWait", response.toPlainString());
