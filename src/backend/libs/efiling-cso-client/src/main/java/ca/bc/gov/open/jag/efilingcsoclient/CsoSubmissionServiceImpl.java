@@ -12,6 +12,10 @@ import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.*;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -160,7 +164,6 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
                     documentMapper.toComputedSubmittedDate(accountDetails, submittedDate));
             List<DocumentStatuses> statuses = Collections.singletonList(documentMapper.toEfilingDocumentStatus(efilingPackage.getDocuments().get(i), accountDetails));
 
-            efilingPackage.getDocuments().get(i).getData();
 
             documents.add(documentMapper.toEfilingDocument(
                     i + 1,
@@ -302,6 +305,25 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
             return filingFacadeBean.calculateSubmittedDate(DateUtils.getCurrentXmlDate(), location);
         } catch (NestedEjbException_Exception e) {
             throw new EfilingSubmissionServiceException("Exception while retrieving submitted date", e.getCause());
+        }
+
+    }
+    //This function will be used when cso has the valid flag available
+    private Boolean validateJson(Object json) {
+
+        if (json == null) return false;
+        logger.info("Validate form data");
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.enable(DeserializationFeature.FAIL_ON_READING_DUP_TREE_KEY);
+            JsonFactory factory = mapper.getFactory();
+            JsonParser parser = factory.createParser(json.toString());
+            mapper.readTree(parser);
+            logger.info("Form data is valid");
+            return true;
+        } catch (Exception ex) {
+            logger.info("Form data is invalid");
+            return false;
         }
 
     }
