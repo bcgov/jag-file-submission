@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { VscJson } from "react-icons/vsc";
 import { MdEdit, MdLibraryAdd } from "react-icons/md";
+import Toast from "components/Toast";
 
 import "./DocumentList.scss";
 
 export default function DocumentList({ configurations }) {
+  const [showToast, setShowToast] = useState(true);
+  
   return (
     <div className="document-type-list">
       <div className="table-header">
@@ -28,6 +31,12 @@ export default function DocumentList({ configurations }) {
             <span className="col-12 col-sm-3 pull-right"><MdEdit size="24" color="#FCBA19" /></span>
           </li>
         ))}
+        {(!configurations || !configurations.map) && (showToast && 
+          <Toast 
+            content="Error: Could not load configurations."
+            setShow={setShowToast} 
+          />
+        )}
         <li><span className="col"><MdLibraryAdd size="24" color="#FCBA19" /></span></li>
       </ul>
     </div>
@@ -35,5 +44,9 @@ export default function DocumentList({ configurations }) {
 }
 
 DocumentList.propTypes = {
-  configurations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  configurations: PropTypes.arrayOf(PropTypes.object),
+};
+
+DocumentList.defaultProps = {
+  configurations: [],
 };
