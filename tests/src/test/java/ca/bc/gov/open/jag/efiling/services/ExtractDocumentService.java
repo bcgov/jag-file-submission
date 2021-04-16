@@ -2,6 +2,8 @@ package ca.bc.gov.open.jag.efiling.services;
 
 import ca.bc.gov.open.jag.efiling.Keys;
 import io.restassured.RestAssured;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.response.Response;
 import io.restassured.specification.MultiPartSpecification;
 import io.restassured.specification.RequestSpecification;
@@ -28,6 +30,23 @@ public class ExtractDocumentService {
         return request
                 .when()
                 .post(MessageFormat.format("{0}/{1}", eFilingReviewerHost, Keys.EXTRACT_DOCUMENTS_PATH))
+                .then()
+                .extract()
+                .response();
+
+    }
+
+    public Response getProcessedDocumentDataById(UUID transactionId, Integer documentId) {
+
+        RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
+
+        RequestSpecification request = RestAssured
+                .given()
+                .header(Keys.X_TRANSACTION_ID, transactionId);
+
+        return request
+                .when()
+                .get(MessageFormat.format("{0}/{1}/{2}", eFilingReviewerHost, Keys.DOCUMENTS_PROCESSED_PATH, String.valueOf(documentId)))
                 .then()
                 .extract()
                 .response();
