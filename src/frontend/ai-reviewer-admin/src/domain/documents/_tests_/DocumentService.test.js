@@ -1,4 +1,4 @@
-import api from "axiosConfig";
+import api from "AxiosConfig";
 import MockAdapter from "axios-mock-adapter";
 import { getDocumentTypeConfigurations } from "domain/documents/DocumentService";
 import { configurations } from "domain/documents/_tests_/DocumentData";

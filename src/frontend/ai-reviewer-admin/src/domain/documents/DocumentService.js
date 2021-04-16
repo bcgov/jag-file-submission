@@ -1,4 +1,4 @@
-import api from "axiosConfig";
+import api from "AxiosConfig";
 
 /** Returns a Promise of a list of document configurations from Diligen. */
 export const getDocumentTypeConfigurations = async (documentType) => {
