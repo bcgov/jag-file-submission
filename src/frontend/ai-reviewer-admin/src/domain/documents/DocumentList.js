@@ -2,13 +2,10 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { VscJson } from "react-icons/vsc";
 import { MdEdit, MdLibraryAdd } from "react-icons/md";
-import Toast from "components/Toast";
 
 import "./DocumentList.scss";
 
-export default function DocumentList({ configurations }) {
-  const [showToast, setShowToast] = useState(true);
-  
+export default function DocumentList({ configurations }) {  
   return (
     <div className="document-type-list">
       <div className="table-header">
@@ -18,7 +15,7 @@ export default function DocumentList({ configurations }) {
         <span className="d-none d-sm-inline col-sm-3">Action</span>
       </div>
       <ul>
-        {configurations && configurations.map && configurations.map((configuration) => (
+        {configurations.map((configuration) => (
           <li key={configuration.id}>
             <span className="col-12 d-inline d-sm-none label"><VscJson size="24" color="#FCBA19" strokeWidth="1" />{configuration.id}</span>
 
@@ -31,12 +28,6 @@ export default function DocumentList({ configurations }) {
             <span className="col-12 col-sm-3 pull-right"><MdEdit size="24" color="#FCBA19" /></span>
           </li>
         ))}
-        {(!configurations || !configurations.map) && (showToast && 
-          <Toast 
-            content="Error: Could not load configurations."
-            setShow={setShowToast} 
-          />
-        )}
         <li><span className="col"><MdLibraryAdd size="24" color="#FCBA19" /></span></li>
       </ul>
     </div>
