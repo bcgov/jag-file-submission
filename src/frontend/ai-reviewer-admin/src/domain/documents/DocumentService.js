@@ -6,3 +6,8 @@ export const getDocumentTypeConfigurations = async (documentType) => {
   const response = await api.get("/documentTypeConfigurations", { params });
   return response.data;
 };
+
+export const submitDocumentTypeConfigurations = async (configJson) => {
+  const response = await api.post("/documentTypeConfigurations", JSON.parse(configJson));
+  return response.data;
+}

@@ -2,11 +2,14 @@
   margin: 20px;
 
   .MuiTextField-root {
-    width: 35%;
-    min-width: 350px;
+    max-width: 1000px;
   }
 
   .new-config-submit {
     margin-top: 20px;
+  }
+
+  .error {
+    color: red;
   }
 }
