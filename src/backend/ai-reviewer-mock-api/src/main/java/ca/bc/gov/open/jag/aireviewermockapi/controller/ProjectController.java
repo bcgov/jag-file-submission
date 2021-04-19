@@ -24,7 +24,7 @@ public class ProjectController {
                                     @RequestParam Map<String, String> filter) {
         String fileName = filter.get("filter[fileName]");
 
-        if (fileName.equals("test-document.pdf")) {
+        if (fileName.equals("test-valid-document.pdf")) {
             return ResponseEntity.ok()
                     .contentType(MediaType.APPLICATION_JSON)
                     .body("{\n" +
@@ -38,6 +38,22 @@ public class ProjectController {
                             "  }\n" +
                             "}");
         }
+
+        if (fileName.equals("test-invalid-document.pdf")) {
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body("{\n" +
+                            "  \"data\": {\n" +
+                            "    \"documents\": [\n" +
+                            "      {\n" +
+                            "        \"file_id\": 9999,\n" +
+                            "        \"file_status\": \"PROCESSED\"\n" +
+                            "      }\n" +
+                            "    ]\n" +
+                            "  }\n" +
+                            "}");
+        }
+
 
         return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
