@@ -6,7 +6,7 @@ import {
   submitDocumentTypeConfigurations,
 } from "domain/documents/DocumentService";
 import { isValidJSON } from "utils/JsonUtils";
-import Toast from "components/Toast";
+import Toast from "components/toast/Toast";
 import DocumentList from "./DocumentList";
 
 import "./DocumentTypeEditor.scss";
