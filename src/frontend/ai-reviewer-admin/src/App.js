@@ -15,7 +15,7 @@ function App() {
   return (
     <>
       <Header header={header} />
-      <Container>
+      <Container className="content" >
         <DocumentTypeEditor />
       </Container>
       <Footer />
