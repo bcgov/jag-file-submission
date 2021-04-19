@@ -6,12 +6,14 @@ import {
   submitDocumentTypeConfigurations,
 } from "domain/documents/DocumentService";
 import { isValidJSON } from "utils/JsonUtils";
+import Toast from "components/Toast";
 import DocumentList from "./DocumentList";
 
 import "./DocumentTypeEditor.scss";
 
 export default function DocumentTypeEditor() {
   const [configurations, setConfigurations] = useState([]);
+  const [showToast, setShowToast] = useState(false);
   const [newConfigInput, setNewConfigInput] = useState("");
   const [invalidJsonError, setInvalidJsonError] = useState(false);
   const [submissionError, setSubmissionError] = useState("");
@@ -22,7 +24,7 @@ export default function DocumentTypeEditor() {
       .then((data) => {
         setConfigurations(data);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => setShowToast(true));
   }, [reloadConfigs]);
 
   const submitNewConfig = () => {
@@ -41,6 +43,12 @@ export default function DocumentTypeEditor() {
   return (
     <div className="document-type-editor">
       <h1>Document Type Configurations</h1>
+      {showToast && (
+        <Toast
+          content="Error: Could not load configurations."
+          setShow={setShowToast}
+        />
+      )}
       <DocumentList configurations={configurations} />
       <br />
 

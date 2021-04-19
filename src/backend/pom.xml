@@ -84,6 +84,12 @@
 				<module>efiling-reviewer-api</module>
 			</modules>
 		</profile>
+		<profile>
+			<id>ai-reviewer-mock</id>
+			<modules>
+				<module>ai-reviewer-mock-api</module>
+			</modules>
+		</profile>
 	</profiles>
 
 	<build>

@@ -150,6 +150,7 @@ public class DiligenServiceImpl implements DiligenService {
     private Optional<BigDecimal> getFileId(HttpHeaders headers, String fileName, Integer projectIdentifier) {
 
         try {
+            headers.setContentType(null);
             HttpEntity<String> entity = new HttpEntity<>(null, headers);
 
             ResponseEntity<String> searchResponse = restTemplate.exchange(constructUrl(MessageFormat.format(Keys.GET_DOCUMENT_PATH, projectIdentifier, fileName)), HttpMethod.GET, entity, String.class);
