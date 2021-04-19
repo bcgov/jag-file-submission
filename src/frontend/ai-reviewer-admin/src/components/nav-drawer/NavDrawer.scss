@@ -1,0 +1,17 @@
+.drawer {
+  width: 200px;
+  flex-shrink: 0;
+  z-index: 0 !important;
+
+  .drawer-paper {
+    width: 200px;
+  }
+
+  .drawer-container {
+    overflow: auto;
+  }
+
+  .MuiIconButton-root {
+    margin-top: 100px !important;
+  }
+}

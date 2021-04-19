@@ -9,4 +9,16 @@ body,
 }
 .content {
   flex: 1 0 auto;
+  flex-grow: 1;
+  margin-top: 100px;
+}
+
+.header-div {
+  z-index: 1500 !important;
+}
+
+@media (max-width: 1610px) and (min-width: 960px) {
+  .content {
+    padding-left: 210px !important;
+  }
 }
