@@ -1,5 +1,5 @@
-import axios from "axios";
 import FileSaver from "file-saver";
+import api from "../../../AxiosConfig";
 
 /**
  * Retrieves the Filing Package json object from the backend API for the given packageId.
@@ -7,7 +7,7 @@ import FileSaver from "file-saver";
  * @param packageId id associated with the filing package
  */
 export const getFilingPackage = (packageId) =>
-  axios.get(`/filingpackages/${packageId}`);
+  api.get(`/filingpackages/${packageId}`);
 
 /**
  * Retrieves the Submission Sheet from the backend API for the given packageId.
@@ -15,7 +15,7 @@ export const getFilingPackage = (packageId) =>
  * @param packageId id associated with the filing package
  */
 export const downloadSubmissionSheet = async (packageId) => {
-  const response = await axios.get(
+  const response = await api.get(
     `/filingpackages/${packageId}/submissionSheet`,
     {
       responseType: "blob",
@@ -33,7 +33,7 @@ export const downloadSubmissionSheet = async (packageId) => {
  * @param document the document to retrieve. Shape must be {identifier: string, name: string}
  */
 export const downloadSubmittedDocument = async (packageId, document) => {
-  const response = await axios.get(
+  const response = await api.get(
     `/filingpackages/${packageId}/document/${document.identifier}`,
     {
       responseType: "blob",
@@ -51,10 +51,10 @@ export const downloadSubmittedDocument = async (packageId, document) => {
  * @param document the document to retrieve. Shape must be {identifier: string}
  */
 export const withdrawSubmittedDocument = async (packageId, document) =>
-  axios.delete(`/filingpackages/${packageId}/document/${document.identifier}`);
+  api.delete(`/filingpackages/${packageId}/document/${document.identifier}`);
 
 export const downloadRegistryNotice = async (packageId) => {
-  const response = await axios.get(
+  const response = await api.get(
     `/filingpackages/${packageId}/registryNotice`,
     {
       responseType: "blob",

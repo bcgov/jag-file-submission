@@ -1,5 +1,6 @@
-import axios from "axios";
+import MockAdapter from "axios-mock-adapter";
 import FileSaver from "file-saver";
+import api from "../../../../AxiosConfig";
 import {
   getFilingPackage,
   downloadSubmissionSheet,
@@ -8,7 +9,6 @@ import {
 } from "../PackageReviewService";
 import { getCourtData } from "../../../../modules/test-data/courtTestData";
 
-jest.mock("axios");
 FileSaver.saveAs = jest.fn();
 
 describe("PackageReviewService TestSuite", () => {
@@ -41,79 +41,53 @@ describe("PackageReviewService TestSuite", () => {
   global.URL.createObjectURL = jest.fn();
   global.URL.createObjectURL.mockReturnValueOnce("SubmissionSheet.pdf");
 
+  let mockApi;
   beforeEach(() => {
-    axios.get.mockReset();
-    axios.delete.mockReset();
+    mockApi = new MockAdapter(api);
     FileSaver.saveAs.mockReset();
   });
 
   test("getFilingPackage success", async () => {
-    axios.get.mockImplementationOnce(() => Promise.resolve(data));
-    await expect(getFilingPackage(packageId)).resolves.toEqual(data);
-    expect(axios.get).toHaveBeenCalledWith(filingPackagesURL);
+    mockApi.onGet(filingPackagesURL).reply(200, data);
+    const response = await getFilingPackage(packageId);
+    expect(response.data).toMatchObject(data);
   });
 
   test("getFilingPackage fail", async () => {
-    const errorMessage = "Network Error";
-    axios.get.mockImplementationOnce(() =>
-      Promise.reject(new Error(errorMessage))
-    );
-    await expect(getFilingPackage(packageId)).rejects.toThrow(errorMessage);
+    mockApi.onGet(filingPackagesURL).reply(404);
+    expect(getFilingPackage(packageId)).rejects.toThrowError();
   });
 
   test("downloadSubmissionSheet success", async () => {
-    axios.get.mockImplementationOnce(() =>
-      Promise.resolve({ status: 200, data: "blob_data" })
-    );
-
-    await expect(downloadSubmissionSheet(packageId)).resolves;
-    expect(axios.get).toHaveBeenCalledWith(submissionSheetURL, {
-      responseType: "blob",
-    });
+    mockApi.onGet(submissionSheetURL).reply(200, "blob_data");
+    await downloadSubmissionSheet(packageId);
     expect(FileSaver.saveAs).toHaveBeenCalled();
   });
 
   test("downloadSubmissionSheet fail", async () => {
-    const errorMessage = "Network Error";
-    axios.get.mockImplementationOnce(() =>
-      Promise.reject(new Error(errorMessage))
-    );
-    await expect(downloadSubmissionSheet(packageId)).rejects.toThrow(
-      errorMessage
-    );
+    mockApi.onGet(submissionSheetURL).reply(404);
+    expect(downloadSubmissionSheet(packageId)).rejects.toThrowError();
     expect(FileSaver.saveAs).not.toHaveBeenCalled();
   });
 
   test("downloadSubmittedDocument success", async () => {
-    axios.get.mockImplementationOnce(() =>
-      Promise.resolve({ status: 200, data: "blob_data" })
-    );
+    mockApi.onGet(submittedDocumentURL).reply(200, "blob_data");
 
-    await expect(downloadSubmittedDocument(packageId, document)).resolves;
-    expect(axios.get).toHaveBeenCalledWith(submittedDocumentURL, {
-      responseType: "blob",
-    });
+    await downloadSubmittedDocument(packageId, document);
     expect(FileSaver.saveAs).toHaveBeenCalled();
   });
 
   test("withdrawSubmittedDocument success", async () => {
-    axios.delete.mockImplementationOnce(() => Promise.resolve({ status: 200 }));
-
-    await expect(
-      withdrawSubmittedDocument(packageId, document)
-    ).resolves.not.toThrow();
-    expect(axios.delete).toHaveBeenCalledWith(submittedDocumentURL);
+    mockApi.onDelete(submittedDocumentURL).reply(200);
+    const response = await withdrawSubmittedDocument(packageId, document);
+    expect(response.status).toEqual(200);
   });
 
   test("withdrawSubmittedDocument fail", async () => {
-    const errorMessage = "Network Error";
-    axios.delete.mockImplementationOnce(() =>
-      Promise.reject(new Error(errorMessage))
-    );
+    mockApi.onDelete(submittedDocumentURL).reply(404);
 
-    await expect(
+    expect(
       withdrawSubmittedDocument(packageId, document)
-    ).rejects.toThrow(errorMessage);
-    expect(axios.delete).toHaveBeenCalledWith(submittedDocumentURL);
+    ).rejects.toThrowError();
   });
 });

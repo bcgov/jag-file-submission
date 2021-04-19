@@ -1,4 +1,4 @@
-import { IDP_BCEID, IDP_BCSC } from "../../Config";
+import { IDP_BCEID, IDP_BCSC } from "../../EnvConfig";
 import { getIdentityProviderAlias } from "./authentication-helper/authenticationHelper";
 
 export function translateApplicantInfo({
