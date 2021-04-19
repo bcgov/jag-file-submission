@@ -122,7 +122,7 @@ services:
       dockerfile: Dockerfile.efiling-reviewer-api
       args:
         - SKIP_TESTS=true
-        - MVN_PROFILE=${MVN_PROFILE:-efiling-reviewer}
+        - MVN_PROFILE=efiling-reviewer
         - STARTERS_V=v0.1.8
     ports:
       - "8090:8080"
@@ -140,6 +140,24 @@ services:
       - CLAMAV_TIMEOUT=50000
       - SW_AGENT_NAME=ai-reviewer-api
       - SW_AGENT_COLLECTOR_BACKEND_SERVICES=skywalking-oap-server:11800
+    networks:
+      - fisu-net
+
+  #############################################################################################
+  ###                           AI Reviewer Mock Service                                    ###
+  #############################################################################################
+  ai-reviewer-mock-api:
+    container_name: ai-reviewer-mock-api
+    hostname: ai-reviewer-mock-api
+    build:
+      context: ./src/backend
+      dockerfile: Dockerfile.ai-reviewer-mock-api
+      args:
+        - SKIP_TESTS=true
+        - MVN_PROFILE=${MVN_PROFILE:-ai-reviewer-mock}
+        - STARTERS_V=v0.1.8
+    ports:
+      - "1337:1337"
     networks:
       - fisu-net
 
