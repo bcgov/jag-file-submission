@@ -53,6 +53,8 @@ public class DocumentConfigurationsApiDelegateImpl implements DocumentTypeConfig
         DocumentTypeConfiguration documentTypeConfiguration = DocumentTypeConfiguration
                 .builder()
                 .documentType(documentTypeConfigurationRequest.getDocumentType().getType())
+                .documentTypeDescription(documentTypeConfigurationRequest.getDocumentType().getDescription())
+                .projectId(documentTypeConfigurationRequest.getProjectId())
                 .documentConfig((LinkedHashMap<String, Object>) documentTypeConfigurationRequest.getDocumentConfig())
                 .create();
 

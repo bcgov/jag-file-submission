@@ -1,3 +1,12 @@
 .document-type-editor {
   margin: 20px;
+  max-width: 1000px;
+
+  .new-config-submit {
+    margin-top: 20px;
+  }
+
+  .error {
+    color: red;
+  }
 }

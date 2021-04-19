@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { VscJson } from "react-icons/vsc";
 import { MdEdit, MdLibraryAdd } from "react-icons/md";
 
 import "./DocumentList.scss";
 
-export default function DocumentList({ configurations }) {
+export default function DocumentList({ configurations }) {  
   return (
     <div className="document-type-list">
       <div className="table-header">
@@ -35,5 +35,9 @@ export default function DocumentList({ configurations }) {
 }
 
 DocumentList.propTypes = {
-  configurations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  configurations: PropTypes.arrayOf(PropTypes.object),
+};
+
+DocumentList.defaultProps = {
+  configurations: [],
 };
