@@ -65,12 +65,12 @@ public class GetExtractedDocumentEventByIdSD {
 
         Integer documentIdForValidDocument = actualValidExtractDocumentsJsonPath.get("document.documentId");
 
-        System.out.println("valid doc id: " + documentIdForValidDocument);
-
         actualValidExtractDocumentServiceResponse = extractDocumentService.getProcessedDocumentDataById(actualTransactionId, documentIdForValidDocument);
 
         logger.info("Api response status code: {}", actualValidExtractDocumentServiceResponse.getStatusCode());
         logger.info("Api response: {}", actualValidExtractDocumentServiceResponse.asString());
+
+        Assert.assertEquals(HttpStatus.SC_OK, actualValidExtractDocumentServiceResponse.getStatusCode());
 
     }
 
@@ -79,8 +79,8 @@ public class GetExtractedDocumentEventByIdSD {
 
         actualValidExtractDocumentsJsonPath = new JsonPath(actualValidExtractDocumentServiceResponse.asString());
 
-        Assert.assertNotNull(actualValidExtractDocumentsJsonPath.get("validation"));
-        Assert.assertEquals("New Westminster", actualValidExtractDocumentsJsonPath.get("result.court.location"));
+        Assert.assertTrue(actualValidExtractDocumentsJsonPath.get("validation"));
+        Assert.assertEquals("New Westminstr", actualValidExtractDocumentsJsonPath.get("result.court.location"));
 
     }
 
