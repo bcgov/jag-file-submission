@@ -22,7 +22,7 @@ public class ProjectController {
     @GetMapping("/api/projects/{projectId}/documents")
     public ResponseEntity getFileId(@PathVariable String projectId,
                                     @RequestParam Map<String, String> filter) {
-        String fileName = filter.get("filter[filename]");
+        String fileName = filter.get("filter[fileName]");
 
         if (fileName.equals("test-document.pdf")) {
             return ResponseEntity.ok()
@@ -31,7 +31,8 @@ public class ProjectController {
                             "  \"data\": {\n" +
                             "    \"documents\": [\n" +
                             "      {\n" +
-                            "        \"file_id\": 1234\n" +
+                            "        \"file_id\": 1234,\n" +
+                            "        \"file_status\": \"PROCESSED\"\n" +
                             "      }\n" +
                             "    ]\n" +
                             "  }\n" +

@@ -29,7 +29,11 @@ public class DocumentController {
         //Currently we do nothing with this data
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(null);
+                .body("{\n" +
+                        "  \"data\": {\n" +
+                        "    \"file_details\": {\n" +
+                        "      \"file_status\": \"PROCESSED\"" +
+                        "}}}");
     }
 
     @GetMapping("/api/documents/{document_id}/projectFields")
