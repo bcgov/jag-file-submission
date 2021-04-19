@@ -31,6 +31,10 @@ public class Keys {
     // File path
     public static final String BASE_PATH = System.getProperty("user.dir");
     public static final String SECOND_PDF_PATH = "/src/test/resources/data/test-document-additional.pdf";
+    public static final String DOCUMENT_TYPE_PAYLOAD = "document-type-config-payload.json";
+    public static final String RESTRICTED_DOCUMENT_TYPE_PAYLOAD = "restricted-document-type-payload.json";
+    public static final String ADDITIONAL_RESTRICTED_DOCUMENT_TYPE_PAYLOAD = "additional-restricted-document-type-payload.json";
+    public static final String RESTRICTED_DOCUMENT_TYPE_UPDATE_PAYLOAD = "restricted-document-type-update-payload.json";
 
     // Api endpoint Paths
     public static final String SUBMIT_PATH = "submit";
@@ -46,5 +50,6 @@ public class Keys {
     public static final String SUBMISSION_DOCUMENTS_PATH = "submission/documents";
     public static final String GENERATE_URL_PATH = "generateUrl";
     public static final String SUBMISSION_PATH = "submission";
-
+    public static final String DOCUMENT_TYPE_CONFIGURATION_PATH = "documentTypeConfigurations";
+    public static final String RESTRICTED_DOCUMENT_TYPE_CONFIGURATION_PATH = "restrictedDocumentTypes";
 }
