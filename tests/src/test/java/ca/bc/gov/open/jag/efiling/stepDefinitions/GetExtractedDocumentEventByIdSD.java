@@ -79,9 +79,41 @@ public class GetExtractedDocumentEventByIdSD {
 
         actualValidExtractDocumentsJsonPath = new JsonPath(actualValidExtractDocumentServiceResponse.asString());
 
-        Assert.assertTrue(actualValidExtractDocumentsJsonPath.get("validation"));
-        Assert.assertEquals("New Westminstr", actualValidExtractDocumentsJsonPath.get("result.court.location"));
+        Assert.assertEquals(Keys.TEST_RCC_DOCUMENT_PDF, actualValidExtractDocumentsJsonPath.get("document.fileName"));
+        Assert.assertNotNull(actualValidExtractDocumentsJsonPath.get("validation"));
+        Assert.assertEquals("209753", actualValidExtractDocumentsJsonPath.get("result.court.fileNumber"));
 
     }
 
+    @Given("user uploaded a invalid RCC document with {string} document type")
+    public void invalidRCCDocumentIsUploaded(String docType) throws IOException {
+
+        logger.info("Submitting request to upload document");
+
+        File resource = new ClassPathResource(
+                MessageFormat.format("data/{0}", Keys.TEST_DOCUMENT_PDF)).getFile();
+
+        MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource, Keys.TEST_DOCUMENT_PDF);
+
+        actualValidExtractDocumentServiceResponse = extractDocumentService.extractDocumentsResponse(actualTransactionId, docType, fileSpec);
+
+        logger.info("Api response status code: {}", actualValidExtractDocumentServiceResponse.getStatusCode());
+        logger.info("Api response: {}", actualValidExtractDocumentServiceResponse.asString());
+
+        assertEquals(HttpStatus.SC_OK, actualValidExtractDocumentServiceResponse.getStatusCode());
+        assertEquals("application/json", actualValidExtractDocumentServiceResponse.getContentType());
+
+    }
+
+    @Then("document type validation flag is not set and provides error details")
+    public void verifyDocumentTypeValidationIsNotSet() {
+
+        actualValidExtractDocumentsJsonPath = new JsonPath(actualValidExtractDocumentServiceResponse.asString());
+
+        Assert.assertEquals(Keys.TEST_DOCUMENT_PDF, actualValidExtractDocumentsJsonPath.get("document.fileName"));
+        Assert.assertEquals("DOCUMENT_TYPE", actualValidExtractDocumentsJsonPath.get("validation[0].type"));
+        Assert.assertEquals("Response to Civil Claim", actualValidExtractDocumentsJsonPath.get("validation[0].expected"));
+        Assert.assertEquals("No Document Found", actualValidExtractDocumentsJsonPath.get("validation[0].actual"));
+
+    }
 }
