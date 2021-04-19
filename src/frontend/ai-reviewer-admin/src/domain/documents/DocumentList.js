@@ -15,7 +15,7 @@ export default function DocumentList({ configurations }) {
         <span className="d-none d-sm-inline col-sm-3">Action</span>
       </div>
       <ul>
-        {configurations.map((configuration) => (
+        {configurations && configurations.map && configurations.map((configuration) => (
           <li key={configuration.id}>
             <span className="col-12 d-inline d-sm-none label"><VscJson size="24" color="#FCBA19" strokeWidth="1" />{configuration.id}</span>
 
