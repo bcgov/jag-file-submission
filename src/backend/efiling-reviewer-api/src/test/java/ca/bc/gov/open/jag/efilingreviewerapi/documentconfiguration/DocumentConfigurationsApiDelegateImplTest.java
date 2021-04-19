@@ -24,6 +24,7 @@ public class DocumentConfigurationsApiDelegateImplTest {
 
     private static final String CASE_1 = "CASE1";
     private static final String CASE_2 = "CASE2";
+    public static final String DESCRIPTION = "DESCRIPTION";
     private DocumentConfigurationsApiDelegateImpl sut;
     @Mock
     private DocumentTypeConfigurationRepository documentTypeConfigurationRepositoryMock;
@@ -93,7 +94,9 @@ public class DocumentConfigurationsApiDelegateImplTest {
         DocumentTypeConfigurationRequest documentTypeConfigurationRequest = new DocumentTypeConfigurationRequest();
         DocumentType documentType = new DocumentType();
         documentType.setType(CASE_2);
+        documentType.setDescription(DESCRIPTION);
         documentTypeConfigurationRequest.setDocumentType(documentType);
+        documentTypeConfigurationRequest.setProjectId(1);
 
         LinkedHashMap<String, Object> testProperty = new LinkedHashMap<>();
 
