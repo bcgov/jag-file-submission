@@ -13,7 +13,7 @@ import PackageConfirmation from "../../../domain/package/package-confirmation/Pa
 import CSOAccount from "../cso-account/CSOAccount";
 
 import "../page.css";
-import { IDP_BCEID, IDP_BCSC } from "../../../Config";
+import { IDP_BCEID, IDP_BCSC } from "../../../EnvConfig";
 
 const mainButton = {
   label: "Cancel",
