@@ -3,7 +3,7 @@
 
 Feature: Configured document types can be processed by AI reviewer
   @ignore
-  Scenario: Validate valid document type can be processed
+  Scenario: Validate form data can be extracted from valid document type
     Given user uploaded a "RCC" document type
     When document is processed
     Then document form data is extracted

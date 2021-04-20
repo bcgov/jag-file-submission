@@ -69,6 +69,8 @@ public class ExtractValidatedDocumentsSD {
         assertNotNull(actualExtractDocumentsJsonPath.get("extract.id"));
         Assert.assertEquals(actualTransactionId, UUID.fromString(actualExtractDocumentsJsonPath.get("extract.transactionId")));
 
+        Assert.assertNotNull(actualExtractDocumentsJsonPath.get("document.documentId"));
+        Assert.assertTrue(actualExtractDocumentsJsonPath.get("document.documentId") instanceof Integer);
         Assert.assertEquals("RCC", actualExtractDocumentsJsonPath.get("document.type"));
         Assert.assertEquals(Keys.TEST_RCC_DOCUMENT_PDF, actualExtractDocumentsJsonPath.get("document.fileName"));
         Assert.assertEquals(Integer.valueOf(689336), actualExtractDocumentsJsonPath.get("document.size"));
@@ -83,13 +85,8 @@ public class ExtractValidatedDocumentsSD {
         logger.info("Asserting invalid document response");
 
         assertEquals(HttpStatus.SC_BAD_REQUEST, actualExtractDocumentServiceResponse.getStatusCode());
-
-        JsonPath actualExtractDocumentsJsonPath = new JsonPath(actualExtractDocumentServiceResponse.asString());
-
-        Assert.assertEquals("DOCUMENT_VALIDATION", actualExtractDocumentsJsonPath.get("error"));
-        Assert.assertEquals("Invalid document type", actualExtractDocumentsJsonPath.get("message"));
+        Assert.assertEquals("Document type not found", actualExtractDocumentServiceResponse.getBody().asString());
 
         logger.info("Response matched requirements");
     }
-
 }
