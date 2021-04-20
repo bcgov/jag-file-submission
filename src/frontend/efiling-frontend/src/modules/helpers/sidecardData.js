@@ -7,9 +7,9 @@ const aboutCso = () => ({
   heading: "About E-File Submission",
   content: [
     <p key="aboutCso">
-      E-File submission is a service to help you securely and electronically
-      file documents with the Government of British Columbia Court Services
-      Online (CSO).&nbsp;
+      E-File Submission is a service to help you securely and electronically
+      file documents with the Courts of British Columbia via Court Services
+      Online.&nbsp;
       <a
         href={`${sessionStorage.getItem("csoBaseUrl")}/about/index.do`}
         target="_blank"
