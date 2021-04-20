@@ -16,7 +16,7 @@ export default function DocumentTypeEditor() {
   const [showToast, setShowToast] = useState(false);
   const [newConfigInput, setNewConfigInput] = useState("");
   const [invalidJsonError, setInvalidJsonError] = useState(false);
-  const [submissionError, setSubmissionError] = useState("");
+  const [submissionError, setSubmissionError] = useState(null);
   const [reloadConfigs, setReloadConfigs] = useState(false);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function DocumentTypeEditor() {
       submitDocumentTypeConfigurations(newConfigInput)
         .then(() => {
           setReloadConfigs(!reloadConfigs);
-          setSubmissionError("");
+          setSubmissionError(null);
         })
         .catch((error) => setSubmissionError(error.message));
     } else {
