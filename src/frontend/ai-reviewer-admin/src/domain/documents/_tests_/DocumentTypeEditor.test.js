@@ -1,13 +1,18 @@
 import React from "react";
+import api from "AxiosConfig";
+import MockAdapter from "axios-mock-adapter";
 import { render, waitFor, fireEvent } from "@testing-library/react";
 import DocumentTypeEditor from "domain/documents/DocumentTypeEditor";
 import { configurations } from "domain/documents/_tests_/test-data";
+import userEvent from "@testing-library/user-event";
 
 const service = require("domain/documents/DocumentService");
 
 describe("DocumentTypeEditor test suite", () => {
+  let mockApi;
   beforeEach(() => {
     console.error = jest.fn();
+    mockApi = new MockAdapter(api);
   });
 
   test("API returns 200", async () => {
@@ -32,5 +37,85 @@ describe("DocumentTypeEditor test suite", () => {
     expect(toast).toBeInTheDocument();
     // close the error Toast message
     fireEvent.click(getByTestId("toast-close"));
+  });
+
+  test("Submit new config - Invalid JSON", async () => {
+    service.submitDocumentTypeConfigurations = jest.fn(() => Promise.resolve());
+    service.getDocumentTypeConfigurations = jest.fn(() =>
+      Promise.resolve(configurations)
+    );
+
+    const { getByPlaceholderText, getByText, queryByText } = render(
+      <DocumentTypeEditor />
+    );
+    await waitFor(() => {});
+
+    const textArea = getByPlaceholderText("Input a new configuration JSON");
+    const button = getByText("Submit");
+
+    userEvent.type(textArea, "{");
+    await waitFor(() => {});
+
+    fireEvent.click(button);
+    await waitFor(() => {});
+
+    expect(queryByText("Sorry this JSON is invalid!")).toBeInTheDocument();
+  });
+
+  test("Submit new config - Valid JSON", async () => {
+    service.submitDocumentTypeConfigurations = jest.fn(() => Promise.resolve());
+    service.getDocumentTypeConfigurations = jest.fn(() =>
+      Promise.resolve(configurations)
+    );
+
+    const { getByPlaceholderText, getByText, queryByText } = render(
+      <DocumentTypeEditor />
+    );
+    await waitFor(() => {});
+
+    const textArea = getByPlaceholderText("Input a new configuration JSON");
+    const button = getByText("Submit");
+
+    userEvent.type(
+      textArea,
+      JSON.stringify({
+        ...configurations[1],
+        documentType: { type: "ABC", description: "Description" },
+      })
+    );
+    await waitFor(() => {});
+
+    fireEvent.click(button);
+    await waitFor(() => {});
+
+    expect(queryByText("Sorry this JSON is invalid!")).not.toBeInTheDocument();
+    expect(service.getDocumentTypeConfigurations).toHaveBeenCalledTimes(2);
+  });
+
+  test("Submit new config - API Error", async () => {
+    service.getDocumentTypeConfigurations = jest.fn(() => Promise.reject());
+    service.submitDocumentTypeConfigurations = jest.fn(() =>
+      Promise.reject({error: {message: "Error"}})
+    );
+
+    const { getByPlaceholderText, getByText } = render(<DocumentTypeEditor />);
+    await waitFor(() => {});
+
+    const textArea = getByPlaceholderText("Input a new configuration JSON");
+    const button = getByText("Submit");
+
+    userEvent.type(
+      textArea,
+      JSON.stringify({
+        ...configurations[1],
+        documentType: { type: "ABC", description: "Description" },
+      })
+    );
+    await waitFor(() => {});
+
+    fireEvent.click(button);
+    await waitFor(() => {});
+
+    expect(service.getDocumentTypeConfigurations).toHaveBeenCalledTimes(1);
   });
 });

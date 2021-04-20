@@ -75,7 +75,7 @@ export default function DocumentTypeEditor() {
       )}
       {submissionError && (
         <>
-          <span className="error">{submissionError}</span>
+          <span className="error" data-testid="submission-error">{submissionError}</span>
           <br />
         </>
       )}
