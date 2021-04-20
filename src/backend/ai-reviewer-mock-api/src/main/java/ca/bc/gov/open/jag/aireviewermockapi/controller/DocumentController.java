@@ -18,15 +18,8 @@ import java.util.stream.Collectors;
 @Controller
 public class DocumentController {
 
-    @Value("classpath:data/valid.json")
-    Resource valid;
-
-    @Value("classpath:data/invalidDocumentType.json")
-    Resource invalid;
-
     @GetMapping("/api/documents/{document_id}/details")
     public ResponseEntity getDetails(@PathVariable Integer document_id) {
-        //Currently we do nothing with this data
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body("{\n" +
@@ -41,21 +34,21 @@ public class DocumentController {
         if (document_id.equals(1234)) {
             return ResponseEntity.ok()
                     .contentType(MediaType.APPLICATION_JSON)
-                    .body(getResourceFileAsString(valid));
+                    .body(getResourceFileAsString("data/valid.json"));
         }
 
         if (document_id.equals(9999)) {
             return ResponseEntity.ok()
                     .contentType(MediaType.APPLICATION_JSON)
-                    .body(getResourceFileAsString(invalid));
+                    .body(getResourceFileAsString("data/invalidDocumentType.json"));
         }
 
         return new ResponseEntity(HttpStatus.NOT_FOUND);
 
     }
 
-    private String getResourceFileAsString(Resource file) throws IOException {
-        try (InputStream is = file.getInputStream()) {
+    private String getResourceFileAsString(String file) throws IOException {
+        try (InputStream is = this.getClass().getClassLoader().getResourceAsStream(file)) {
             if (is == null) return null;
             try (InputStreamReader isr = new InputStreamReader(is);
                  BufferedReader reader = new BufferedReader(isr)) {

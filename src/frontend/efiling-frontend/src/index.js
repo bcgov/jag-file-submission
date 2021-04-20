@@ -8,7 +8,7 @@ import "./index.css";
 import "@bcgov/bootstrap-theme/dist/css/bootstrap-theme.min.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import { BAMBORA_REDIRECT_URL } from "./Config";
+import { BAMBORA_REDIRECT_URL } from "./EnvConfig";
 
 axios.defaults.baseURL = window.env
   ? window.env.REACT_APP_API_BASE_URL

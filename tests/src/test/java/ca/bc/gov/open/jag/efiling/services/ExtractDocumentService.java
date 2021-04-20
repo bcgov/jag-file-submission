@@ -33,4 +33,19 @@ public class ExtractDocumentService {
                 .response();
 
     }
+
+    public Response getProcessedDocumentDataById(UUID transactionId, Integer documentId) {
+
+        RequestSpecification request = RestAssured
+                .given()
+                .header(Keys.X_TRANSACTION_ID, transactionId);
+
+        return request
+                .when()
+                .get(MessageFormat.format("{0}/{1}/{2}", eFilingReviewerHost, Keys.DOCUMENTS_PROCESSED_PATH, String.valueOf(documentId)))
+                .then()
+                .extract()
+                .response();
+
+    }
 }

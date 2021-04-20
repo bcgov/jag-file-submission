@@ -1,10 +1,10 @@
 import React from "react";
-import axios from "axios";
 import FileSaver from "file-saver";
 import { render, waitFor, fireEvent } from "@testing-library/react";
 
 import MockAdapter from "axios-mock-adapter";
 import moment from "moment-timezone";
+import api from "../../../../AxiosConfig";
 import PackageReview from "../PackageReview";
 import { getCourtData } from "../../../../modules/test-data/courtTestData";
 import * as packageReviewTestData from "../../../../modules/test-data/packageReviewTestData";
@@ -57,7 +57,7 @@ describe("PackageReview Component", () => {
     });
     localStorage.setItem("jwt", token);
 
-    mock = new MockAdapter(axios);
+    mock = new MockAdapter(api);
     window.open = jest.fn();
   });
 
@@ -146,7 +146,7 @@ describe("PackageReview Component", () => {
       submittedDate,
     });
 
-    const spy = jest.spyOn(axios, "get");
+    const spy = jest.spyOn(api, "get");
 
     render(<PackageReview />);
     await waitFor(() => {});
@@ -161,7 +161,7 @@ describe("PackageReview Component", () => {
       submittedDate: "",
     });
 
-    const spy = jest.spyOn(axios, "get");
+    const spy = jest.spyOn(api, "get");
 
     render(<PackageReview />);
     await waitFor(() => {});
@@ -176,7 +176,7 @@ describe("PackageReview Component", () => {
       submittedDate,
     });
 
-    const spy = jest.spyOn(axios, "get");
+    const spy = jest.spyOn(api, "get");
 
     render(<PackageReview />);
     await waitFor(() => {});
@@ -190,7 +190,7 @@ describe("PackageReview Component", () => {
       submittedDate: "123",
     });
 
-    const spy = jest.spyOn(axios, "get");
+    const spy = jest.spyOn(api, "get");
 
     render(<PackageReview />);
     await waitFor(() => {});
@@ -201,7 +201,7 @@ describe("PackageReview Component", () => {
   test("Api called, missing response data", async () => {
     mock.onGet(apiRequest).reply(200);
 
-    const spy = jest.spyOn(axios, "get");
+    const spy = jest.spyOn(api, "get");
 
     render(<PackageReview />);
     await waitFor(() => {});
