@@ -52,4 +52,5 @@ public class Keys {
     public static final String SUBMISSION_PATH = "submission";
     public static final String DOCUMENT_TYPE_CONFIGURATION_PATH = "documentTypeConfigurations";
     public static final String RESTRICTED_DOCUMENT_TYPE_CONFIGURATION_PATH = "restrictedDocumentTypes";
+    public static final String DOCUMENTS_PROCESSED_PATH = "documents/processed";
 }
