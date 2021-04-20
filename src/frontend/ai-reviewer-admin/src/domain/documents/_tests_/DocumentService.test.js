@@ -6,6 +6,7 @@ import { configurations } from "domain/documents/_tests_/test-data";
 describe("Document Service test suite", () => {
   let mockApi;
   beforeEach(() => {
+    jest.clearAllMocks()
     mockApi = new MockAdapter(api);
   });
 
@@ -59,7 +60,7 @@ describe("Document Service test suite", () => {
 
   test("submitDocumentTypeConfigurations 400", async () => {
     const config = {...configurations[0], documentType: "TEST3", documentTypeDescription: "Description"}
-    mockApi.onPost("/documentTypeConfigurations", config).reply(400);
+    mockApi.onPost("/documentTypeConfigurations").reply(400);
 
     try {
       await submitDocumentTypeConfigurations(JSON.stringify(config));
