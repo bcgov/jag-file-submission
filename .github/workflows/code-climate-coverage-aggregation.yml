@@ -100,6 +100,18 @@ jobs:
       # Yarn Coverage - eFiling Demo
       - name: Run Yarn Coverage - eFiling Demo
         run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/efiling-demo coverage
+        
+      # Run Yarn Install - AI Reviewer Admin Client
+      - name: Run Yarn Install - AI Reviewer Admin
+        run: yarn --cwd src/frontend/ai-reviewer-admin install
+
+      # Run lint - AI Reviewer Admin Client
+      - name: Run lint - AI Reviewer Admin
+        run: yarn --cwd src/frontend/ai-reviewer-admin run lint
+
+      # Yarn Coverage - AI Reviewer Admin Client
+      - name: Run Yarn Coverage - AI Reviewer Admin
+        run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/ai-reviewer-admin coverage
 
       # Formatting the FRONTEND coverage report
       - name: Format the FRONTEND coverage report
@@ -111,6 +123,11 @@ jobs:
         run: |
           ./cc-test-reporter format-coverage -t lcov -o coverage/frontend-demo-codeclimate.json ${{github.workspace}}/src/frontend/efiling-demo/coverage/lcov.info
 
+      # Formatting the AI REVIEWER ADMIN coverage report
+      - name: Format the AI REVIEWER ADMIN coverage report
+        run: |
+          ./cc-test-reporter format-coverage -t lcov -o coverage/ai-reviewer-codeclimate.json ${{github.workspace}}/src/frontend/ai-reviewer-admin/coverage/lcov.info
+          
       # List all formatted files in coverage directory
       - name: WHERE AM I - FORMATTED?
         run: |
