@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {Link} from "react-router-dom";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -9,8 +10,10 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import "components/nav-drawer/NavDrawer.scss";
 
-export default function NavDrawer({ variant }) {
+export default function NavDrawer(props) {
+  const {variant} = props;
   const [mobileOpen, setMobileOpen] = useState(false);
+  const BaseLink = (props) => <Link to="/" {...props} />;
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -21,11 +24,13 @@ export default function NavDrawer({ variant }) {
       <Toolbar />
       <div className="drawer-container">
         <List>
-          {["Nav1", "Nav2", "Nav3", "Nav4", "Nav"].map((text) => (
-            <ListItem button key={text}>
-              <ListItemText primary={text} />
+            <ListItem button component={BaseLink} data-testid="nav-item">
+              <ListItemText primary="Document Type Configuration" />
             </ListItem>
-          ))}
+
+            <ListItem button >
+              <ListItemText primary="Logs" />
+            </ListItem>
         </List>
       </div>
     </>
@@ -48,6 +53,7 @@ export default function NavDrawer({ variant }) {
       <>
         <Hidden mdUp>
           <IconButton
+            data-testid="menu-btn"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
@@ -55,11 +61,10 @@ export default function NavDrawer({ variant }) {
           >
             <MenuIcon />
           </IconButton>
-        </Hidden>
 
-        <Hidden mdUp>
           <nav className="drawer">
             <Drawer
+              data-testid="modal-drawer"
               variant={variant}
               anchor="left"
               classes={{ paper: "drawer-paper" }}

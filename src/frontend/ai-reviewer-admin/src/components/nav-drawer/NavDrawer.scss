@@ -16,6 +16,13 @@
   }
 
   span {
-    font-weight: bold !important;
+    font-weight: bold;
+    color: black !important;
+  }
+}
+
+@media (max-width: 960px) {
+  .MuiToolbar-root {
+    height: 100px !important;
   }
 }
