@@ -19,6 +19,14 @@ This profile self isolate the application from any third individual dependencies
 mvn install -P demo
 ```
 
+### Dev
+
+This profile is required to pull the soap services
+
+```bash
+mvn install -P efiling-api
+```
+
 ## Configuration
 
 You should use environment variables to configure the jag efiling api
