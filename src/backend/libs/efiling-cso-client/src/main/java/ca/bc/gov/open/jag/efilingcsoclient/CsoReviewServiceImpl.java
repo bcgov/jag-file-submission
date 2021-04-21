@@ -68,8 +68,7 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
         try {
 
             logger.info("Calling soap findStatusBySearchCriteria by client id and package service ");
-
-
+            
             DateTime endDate = DateTime.now();
             DateTime startDate = endDate.minusYears(1);
 
