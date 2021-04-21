@@ -27,6 +27,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -73,7 +74,7 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
             DateTime startDate = endDate.minusYears(1);
 
             FilingStatus filingStatus = filingStatusFacadeBean
-                    .findStatusBySearchCriteria(null, null, null, null, null, null, filingPackageRequest.getPackageNo(), filingPackageRequest.getClientId(), null, null, null, null, BigDecimal.ONE, null);
+                    .findStatusBySearchCriteria(null, null, null, DateUtils.getXmlDate(startDate), DateUtils.getXmlDate(endDate), null, filingPackageRequest.getPackageNo(), filingPackageRequest.getClientId(), null, null, null, null, BigDecimal.ONE, null);
 
             if (filingStatus.getFilePackages() == null || filingStatus.getFilePackages().isEmpty()) return Optional.empty();
 
@@ -89,7 +90,7 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
                             .map(filePackageMapper::toOrganization)
                             .collect(Collectors.toList())));
 
-        } catch (NestedEjbException_Exception e) {
+        } catch (NestedEjbException_Exception | DatatypeConfigurationException e) {
 
             throw new EfilingStatusServiceException("Exception while finding status", e.getCause());
 
