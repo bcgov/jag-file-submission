@@ -9,10 +9,12 @@ import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import "components/nav-drawer/NavDrawer.scss";
+import { Divider } from "@material-ui/core";
 
 export default function NavDrawer(props) {
   const {variant} = props;
   const [mobileOpen, setMobileOpen] = useState(false);
+
   const BaseLink = (props) => <Link to="/" {...props} />;
 
   const handleDrawerToggle = () => {
@@ -24,13 +26,15 @@ export default function NavDrawer(props) {
       <Toolbar />
       <div className="drawer-container">
         <List>
-            <ListItem button component={BaseLink} data-testid="nav-item">
+            <ListItem button component={BaseLink} >
               <ListItemText primary="Document Type Configuration" />
             </ListItem>
+            <Divider/>
 
-            <ListItem button >
+            <ListItem button component={BaseLink}>
               <ListItemText primary="Logs" />
             </ListItem>
+            <Divider/>
         </List>
       </div>
     </>
@@ -53,7 +57,6 @@ export default function NavDrawer(props) {
       <>
         <Hidden mdUp>
           <IconButton
-            data-testid="menu-btn"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}

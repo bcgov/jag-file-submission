@@ -15,10 +15,22 @@
     margin-top: 100px !important;
   }
 
-  span {
-    font-weight: bold;
-    color: black !important;
+  a {
+    color: inherit;
   }
+
+  a:hover {
+    color: blue;
+  }
+
+  a, a:hover {
+    text-decoration: underline;
+  }
+ 
+  .active {
+    background-color: #7590b9;
+  }
+
 }
 
 @media (max-width: 960px) {
