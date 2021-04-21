@@ -369,7 +369,7 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
                 class="bcgov-content-style"
               >
                 <p>
-                  E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
+                  E-File Submission is a service to help you securely and electronically file documents with the Courts of British Columbia via Court Services Online. 
                   <a
                     href="https://dev.justice.gov.bc.ca/cso/about/index.do"
                     rel="noopener noreferrer"
@@ -789,7 +789,7 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
                 class="bcgov-content-style"
               >
                 <p>
-                  E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
+                  E-File Submission is a service to help you securely and electronically file documents with the Courts of British Columbia via Court Services Online. 
                   <a
                     href="https://dev.justice.gov.bc.ca/cso/about/index.do"
                     rel="noopener noreferrer"
@@ -1485,7 +1485,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
                 class="bcgov-content-style"
               >
                 <p>
-                  E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
+                  E-File Submission is a service to help you securely and electronically file documents with the Courts of British Columbia via Court Services Online. 
                   <a
                     href="https://dev.justice.gov.bc.ca/cso/about/index.do"
                     rel="noopener noreferrer"
@@ -1874,7 +1874,7 @@ exports[`PackageConfirmation Component On keydown of Upload them now text, it re
                 class="bcgov-content-style"
               >
                 <p>
-                  E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
+                  E-File Submission is a service to help you securely and electronically file documents with the Courts of British Columbia via Court Services Online. 
                   <a
                     href="https://dev.justice.gov.bc.ca/cso/about/index.do"
                     rel="noopener noreferrer"
@@ -2368,7 +2368,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
                 class="bcgov-content-style"
               >
                 <p>
-                  E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
+                  E-File Submission is a service to help you securely and electronically file documents with the Courts of British Columbia via Court Services Online. 
                   <a
                     href="https://dev.justice.gov.bc.ca/cso/about/index.do"
                     rel="noopener noreferrer"
