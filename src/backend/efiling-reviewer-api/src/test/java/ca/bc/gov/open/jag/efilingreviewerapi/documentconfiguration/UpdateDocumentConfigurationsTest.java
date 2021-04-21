@@ -101,7 +101,7 @@ public class UpdateDocumentConfigurationsTest {
     }
 
     @Test
-    @DisplayName("BADREQUEST: POST /documentTypeConfigurations should return bad request if the document type already exists")
+    @DisplayName("Error: POST /documentTypeConfigurations should return bad request if the document type already exists")
     public void withExistingDocumentShouldReturnBadRequest() {
 
         DocumentTypeConfigurationRequest documentTypeConfigurationRequest = new DocumentTypeConfigurationRequest();
