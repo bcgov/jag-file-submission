@@ -151,7 +151,7 @@ jobs:
           pushd .
           cd ${{github.workspace}}/src/frontend/ai-reviewer-admin/
           pwd
-          ./cc-test-reporter format-coverage -t lcov -o coverage/ai-reviewer-codeclimate.json coverage/lcov.info
+          /home/runner/work/jag-file-submission/jag-file-submission/cc-test-reporter format-coverage -t lcov -o coverage/ai-reviewer-codeclimate.json coverage/lcov.info
           popd
           pwd
          
