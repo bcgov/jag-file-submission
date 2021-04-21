@@ -81,7 +81,7 @@ public class RestrictedDocumentApiDelegateImpl implements RestrictedDocumentType
     }
 
     @Override
-    public ResponseEntity<DocumentTypeConfiguration> updateRestrictedDocumentType(RestrictedDocumentType restrictedDocumentType) {
+    public ResponseEntity<RestrictedDocumentType> updateRestrictedDocumentType(RestrictedDocumentType restrictedDocumentType) {
 
         if (restrictedDocumentType.getId() == null || StringUtils.isBlank(restrictedDocumentType.getId().toString())) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         if (!restrictedDocumentRepository.existsById(restrictedDocumentType.getId())) return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -1,8 +1,6 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.documentconfiguration;
 
 import ca.bc.gov.open.efilingdiligenclient.diligen.model.DocumentConfig;
-import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentType;
-import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentTypeConfigurationRequest;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentTypeConfiguration;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.store.DocumentTypeConfigurationRepository;
 import ca.bc.gov.open.jag.efilingreviewerapi.documentconfiguration.mappers.DocumentTypeConfigurationMapper;
@@ -16,12 +14,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class DocumentConfigurationsApiDelegateImplTest {
-
+public class GetDocumentConfigurationsTest {
     private static final String CASE_1 = "CASE1";
     private static final String CASE_2 = "CASE2";
     public static final String DESCRIPTION = "DESCRIPTION";
@@ -87,77 +83,4 @@ public class DocumentConfigurationsApiDelegateImplTest {
 
     }
 
-    @Test
-    @DisplayName("ok: POST /documentTypeConfigurations should create a new document type configuration")
-    public void withValidDocumentShouldCreateNewConfiguration() {
-
-        DocumentTypeConfigurationRequest documentTypeConfigurationRequest = new DocumentTypeConfigurationRequest();
-        DocumentType documentType = new DocumentType();
-        documentType.setType(CASE_2);
-        documentType.setDescription(DESCRIPTION);
-        documentTypeConfigurationRequest.setDocumentType(documentType);
-        documentTypeConfigurationRequest.setProjectId(1);
-
-        LinkedHashMap<String, Object> testProperty = new LinkedHashMap<>();
-
-        testProperty.put("type", "string");
-        testProperty.put("fieldId", "230");
-
-        LinkedHashMap<String, Object> courtProperties = new LinkedHashMap<>();
-        courtProperties.put("test", testProperty);
-
-        LinkedHashMap<String, Object> courtProperty = new LinkedHashMap<>();
-        courtProperty.put("type", "object");
-        courtProperty.put("properties", courtProperties);
-
-        LinkedHashMap<String, Object> documentProperties = new LinkedHashMap<>();
-        documentProperties.put("court", courtProperty);
-
-        LinkedHashMap<String, Object> documentConfig = new LinkedHashMap<>();
-        documentConfig.put("properties", documentProperties);
-
-        documentTypeConfigurationRequest.setDocumentConfig(documentConfig);
-
-        ResponseEntity<ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentTypeConfiguration> response = sut.createDocumentTypeConfiguration(documentTypeConfigurationRequest);
-
-        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
-
-        Assertions.assertEquals("CASE2", response.getBody().getDocumentType().getType());
-
-    }
-
-    @Test
-    @DisplayName("BADREQUEST: POST /documentTypeConfigurations should return bad request if the document type already exists")
-    public void withExistingDocumentShouldReturnBadRequest() {
-
-        DocumentTypeConfigurationRequest documentTypeConfigurationRequest = new DocumentTypeConfigurationRequest();
-        DocumentType documentType = new DocumentType();
-        documentType.setType(CASE_1);
-        documentTypeConfigurationRequest.setDocumentType(documentType);
-
-        LinkedHashMap<String, Object> testProperty = new LinkedHashMap<>();
-
-        testProperty.put("type", "string");
-        testProperty.put("fieldId", "230");
-
-        LinkedHashMap<String, Object> courtProperties = new LinkedHashMap<>();
-        courtProperties.put("test", testProperty);
-
-        LinkedHashMap<String, Object> courtProperty = new LinkedHashMap<>();
-        courtProperty.put("type", "object");
-        courtProperty.put("properties", courtProperties);
-
-        LinkedHashMap<String, Object> documentProperties = new LinkedHashMap<>();
-        documentProperties.put("court", courtProperty);
-
-        LinkedHashMap<String, Object> documentConfig = new LinkedHashMap<>();
-        documentConfig.put("properties", documentProperties);
-
-        documentTypeConfigurationRequest.setDocumentConfig(documentConfig);
-
-        ResponseEntity<ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentTypeConfiguration> response = sut.createDocumentTypeConfiguration(documentTypeConfigurationRequest);
-
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-
-    }
 }
