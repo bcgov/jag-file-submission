@@ -68,12 +68,9 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
         try {
 
             logger.info("Calling soap findStatusBySearchCriteria by client id and package service ");
-            
-            DateTime endDate = DateTime.now();
-            DateTime startDate = endDate.minusYears(1);
 
             FilingStatus filingStatus = filingStatusFacadeBean
-                    .findStatusBySearchCriteria(null, null, null, DateUtils.getXmlDate(startDate), DateUtils.getXmlDate(endDate), null, filingPackageRequest.getPackageNo(), filingPackageRequest.getClientId(), null, null, null, null, BigDecimal.ONE, null);
+                    .findStatusBySearchCriteria(null, null, null, null, null, null, filingPackageRequest.getPackageNo(), filingPackageRequest.getClientId(), null, null, null, null, BigDecimal.ONE, null);
 
             if (filingStatus.getFilePackages() == null || filingStatus.getFilePackages().isEmpty()) return Optional.empty();
 
@@ -89,7 +86,7 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
                             .map(filePackageMapper::toOrganization)
                             .collect(Collectors.toList())));
 
-        } catch (NestedEjbException_Exception | DatatypeConfigurationException e) {
+        } catch (NestedEjbException_Exception e) {
 
             throw new EfilingStatusServiceException("Exception while finding status", e.getCause());
 
@@ -103,8 +100,11 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
 
             logger.info("Calling soap findStatusBySearchCriteria by client id service ");
 
+            DateTime endDate = DateTime.now();
+            DateTime startDate = endDate.minusYears(1);
+
             FilingStatus filingStatus = filingStatusFacadeBean
-                    .findStatusBySearchCriteria(null, null, null, null, null, null, null, filingPackageRequest.getClientId(), null, null, null, null, BigDecimal.valueOf(100), null);
+                    .findStatusBySearchCriteria(null, null, null, DateUtils.getXmlDate(startDate), DateUtils.getXmlDate(endDate), null , null, filingPackageRequest.getClientId(), null, null, null, null, BigDecimal.valueOf(100), null);
 
             if (filingStatus.getFilePackages().isEmpty()) return new ArrayList<>();
 
@@ -120,7 +120,7 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
                             .collect(Collectors.toList())
                     )).collect(Collectors.toList());
 
-        } catch (NestedEjbException_Exception e) {
+        } catch (NestedEjbException_Exception | DatatypeConfigurationException e) {
 
             throw new EfilingStatusServiceException("Exception while finding status list", e.getCause());
 
