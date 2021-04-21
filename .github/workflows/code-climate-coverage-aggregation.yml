@@ -142,12 +142,17 @@ jobs:
       - name: cc-test-reporter format-coverage help???
         run: |
           ./cc-test-reporter format-coverage --help
-
+          
       # Formatting the AI REVIEWER ADMIN coverage report
       - name: Format the AI REVIEWER ADMIN coverage report
-        run: |
-          ./cc-test-reporter format-coverage -t lcov -o coverage/ai-reviewer-codeclimate.json --add-prefix ${{github.workspace}}/src/frontend/ai-reviewer-admin/ ${{github.workspace}}/src/frontend/ai-reviewer-admin/coverage/lcov.info
-
+        run: |          
+          pushd .
+          cd ${{github.workspace}}/src/frontend/ai-reviewer-admin/
+          pwd
+          ./cc-test-reporter format-coverage -t lcov -o coverage/ai-reviewer-codeclimate.json coverage/lcov.info
+          popd
+          pwd
+         
       # List all formatted files in coverage directory
       - name: WHERE AM I - FORMATTED?
         run: |
