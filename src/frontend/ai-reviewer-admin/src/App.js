@@ -16,9 +16,7 @@ function App() {
   return (
     <>
         <Router>
-        <div className="fixed-top header-div">
-          <Header header={header}/>
-        </div>
+          <Header header={header} />
 
         <Container className="content">
           <NavDrawer variant="permanent" />
@@ -31,9 +29,7 @@ function App() {
           </Switch>
         </Container>
 
-        <div className="header-div">
           <Footer />
-        </div>
       </Router>
     </>
   );

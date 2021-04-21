@@ -31,7 +31,7 @@ export default function NavDrawer(props) {
             </ListItem>
             <Divider/>
 
-            <ListItem button component={BaseLink}>
+            <ListItem button component={BaseLink} >
               <ListItemText primary="Logs" />
             </ListItem>
             <Divider/>
@@ -57,6 +57,7 @@ export default function NavDrawer(props) {
       <>
         <Hidden mdUp>
           <IconButton
+            data-testid="nav-btn"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
