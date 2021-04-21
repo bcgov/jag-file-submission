@@ -20,7 +20,9 @@ jobs:
 
       # Get Code Climate binary
       - name: Download Code Climate Binary
-        run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+        run: |
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          pwd
 
       # Permissions applied to the Code Climate Executable
       - name: Apply executable perms to Code Climate Binary
