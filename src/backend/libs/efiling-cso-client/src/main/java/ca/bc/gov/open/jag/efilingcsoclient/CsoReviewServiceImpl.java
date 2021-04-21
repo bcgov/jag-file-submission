@@ -17,6 +17,8 @@ import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPa
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapper;
+import org.joda.time.DateTime;
+import org.joda.time.ReadablePeriod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
@@ -65,6 +67,10 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
         try {
 
             logger.info("Calling soap findStatusBySearchCriteria by client id and package service ");
+
+
+            DateTime endDate = DateTime.now();
+            DateTime startDate = endDate.minusYears(1);
 
             FilingStatus filingStatus = filingStatusFacadeBean
                     .findStatusBySearchCriteria(null, null, null, null, null, null, filingPackageRequest.getPackageNo(), filingPackageRequest.getClientId(), null, null, null, null, BigDecimal.ONE, null);
