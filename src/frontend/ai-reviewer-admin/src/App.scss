@@ -17,6 +17,11 @@ body,
   z-index: 1500 !important;
 }
 
+.bcgov-header {
+ position: fixed !important;
+ width: 100%;
+}
+
 @media (max-width: 1610px) and (min-width: 960px) {
   .content {
     padding-left: 210px !important;

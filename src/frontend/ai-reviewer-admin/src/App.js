@@ -15,22 +15,22 @@ function App() {
 
   return (
     <>
+      <Header header={header} />
         <Router>
-          <Header header={header} />
 
-        <Container className="content">
-          <NavDrawer variant="permanent" />
-          <NavDrawer variant="temporary" />
+          <Container className="content">
+            <NavDrawer variant="permanent" />
+            <NavDrawer variant="temporary" />
 
-          <Switch>
-            <Route exact path="/">
-            <DocumentTypeEditor />
-            </Route>
-          </Switch>
-        </Container>
+            <Switch>
+              <Route exact path="/">
+              <DocumentTypeEditor />
+              </Route>
+            </Switch>
+          </Container>
 
-          <Footer />
-      </Router>
+        </Router>
+      <Footer />
     </>
   );
 }
