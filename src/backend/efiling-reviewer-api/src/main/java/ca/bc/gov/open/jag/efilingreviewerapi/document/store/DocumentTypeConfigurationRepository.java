@@ -11,4 +11,6 @@ public interface DocumentTypeConfigurationRepository extends MongoRepository<Doc
     
     boolean existsByDocumentType(String documentType);
 
+    boolean existsByDocumentTypeAndId(String documentType, UUID id);
+
 }

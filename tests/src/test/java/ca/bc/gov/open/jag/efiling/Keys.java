@@ -18,6 +18,8 @@ public class Keys {
     // Commons
     public static final String TEST_DOCUMENT_PDF = "test-document.pdf";
     public static final String TEST_RCC_DOCUMENT_PDF = "test-rcc-document.pdf";
+    public static final String TEST_VALID_DOCUMENT_PDF = "test-valid-document.pdf";
+    public static final String TEST_INVALID_DOCUMENT_PDF = "test-invalid-document.pdf";
 
     // Assertions
     public static final String DESCRIPTION = "DESCRIPTION";
