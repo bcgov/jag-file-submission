@@ -28,14 +28,14 @@ export default function DocumentTypeEditor() {
       .then((data) => {
         setConfigurations(data);
       })
-      .catch((error) => setShowToast(true));
+      .catch(() => setShowToast(true));
   }, [reloadConfigs]);
 
   const successfullySubmitted = () => {
     setReloadConfigs(!reloadConfigs);
     setSubmissionError(null);
     setNewConfigInput("");
-  }
+  };
 
   const submitConfig = () => {
     if (isValidJSON(newConfigInput) && isNew) {
@@ -64,7 +64,10 @@ export default function DocumentTypeEditor() {
           setShow={setShowToast}
         />
       )}
-      <DocumentList configurations={configurations} setters={{setNewConfigInput, setShowAdd, setIsNew, setIsUpdate}} />
+      <DocumentList
+        configurations={configurations}
+        setters={{ setNewConfigInput, setShowAdd, setIsNew, setIsUpdate }}
+      />
       <br />
 
       {showAdd && (
@@ -73,6 +76,7 @@ export default function DocumentTypeEditor() {
             id="new-config-textfield"
             fullWidth
             multiline
+            spellCheck={false}
             rows={25}
             rowsMax={200}
             placeholder="Input a new configuration JSON"

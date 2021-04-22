@@ -11,11 +11,17 @@ export const getDocumentTypeConfigurations = async (documentType) => {
 };
 
 export const submitNewDocumentTypeConfigurations = async (configJson) => {
-  const response = await api.post("/documentTypeConfigurations", JSON.parse(configJson));
+  const response = await api.post(
+    "/documentTypeConfigurations",
+    JSON.parse(configJson)
+  );
   return response.data;
-}
+};
 
 export const submitUpdatedDocumentTypeConfigurations = async (configJson) => {
-  const response = await api.put("/documentTypeConfigurations", JSON.parse(configJson));
+  const response = await api.put(
+    "/documentTypeConfigurations",
+    JSON.parse(configJson)
+  );
   return response.data;
-}
+};

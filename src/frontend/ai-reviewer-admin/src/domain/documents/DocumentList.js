@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { VscJson } from "react-icons/vsc";
-import { MdEdit} from "react-icons/md";
+import { MdEdit } from "react-icons/md";
 import AddBoxIcon from "@material-ui/icons/AddBox";
-import CloseIcon from "@material-ui/icons/Close"
+import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 
@@ -11,7 +11,7 @@ import "./DocumentList.scss";
 import { getDocumentTypeConfigurations } from "./DocumentService";
 
 export default function DocumentList({ configurations, setters }) {
-  const {setShowAdd, setNewConfigInput, setIsNew, setIsUpdate} = setters;
+  const { setShowAdd, setNewConfigInput, setIsNew, setIsUpdate } = setters;
   const [showExit, setShowExit] = useState(false);
 
   const handleShowAdd = () => {
@@ -19,26 +19,25 @@ export default function DocumentList({ configurations, setters }) {
     setShowExit(true);
     setIsNew(true);
     setIsUpdate(false);
-    setNewConfigInput("")
-  }
+    setNewConfigInput("");
+  };
 
   const handleHideAdd = () => {
     setShowAdd(false);
     setShowExit(false);
     setIsNew(false);
     setIsUpdate(false);
-  }
+  };
 
   const handleUpdate = (docType) => {
     setShowAdd(true);
     setShowExit(true);
     setIsUpdate(true);
     setIsNew(false);
-    getDocumentTypeConfigurations(docType)
-      .then(config => {
-        setNewConfigInput(JSON.stringify(config[0], null, 1));
-      })
-  }
+    getDocumentTypeConfigurations(docType).then((config) => {
+      setNewConfigInput(JSON.stringify(config[0], null, 1));
+    });
+  };
 
   return (
     <div className="document-type-list">
@@ -73,7 +72,11 @@ export default function DocumentList({ configurations, setters }) {
               {configuration.projectId}
             </span>
             <span className="col-12 col-sm-3 pull-right">
-              <IconButton size="small" className="ai-reviewer-icon-button" onClick={()=> handleUpdate(configuration.documentType.type)}>
+              <IconButton
+                size="small"
+                className="ai-reviewer-icon-button"
+                onClick={() => handleUpdate(configuration.documentType.type)}
+              >
                 <MdEdit size="24" color="#FCBA19" />
               </IconButton>
             </span>
@@ -82,13 +85,21 @@ export default function DocumentList({ configurations, setters }) {
         <li>
           <span className="col">
             <Tooltip title="add a new document type configuration">
-              <IconButton size="small" className="ai-reviewer-icon-button" onClick={handleShowAdd}>
-                <AddBoxIcon className="ai-reviewer-icon"/>
+              <IconButton
+                size="small"
+                className="ai-reviewer-icon-button"
+                onClick={handleShowAdd}
+              >
+                <AddBoxIcon className="ai-reviewer-icon" />
               </IconButton>
             </Tooltip>
 
             {showExit && (
-              <IconButton size="small" className="ai-reviewer-icon-button" onClick={handleHideAdd} >
+              <IconButton
+                size="small"
+                className="ai-reviewer-icon-button"
+                onClick={handleHideAdd}
+              >
                 <CloseIcon />
               </IconButton>
             )}
@@ -101,7 +112,7 @@ export default function DocumentList({ configurations, setters }) {
 
 DocumentList.propTypes = {
   configurations: PropTypes.arrayOf(PropTypes.object),
-  setters: PropTypes.object
+  setters: PropTypes.object,
 };
 
 DocumentList.defaultProps = {
@@ -110,6 +121,6 @@ DocumentList.defaultProps = {
     setNewConfigInput: () => {},
     setShowAdd: () => {},
     setIsNew: () => {},
-    setIsUpdate: () => {}
-  }
+    setIsUpdate: () => {},
+  },
 };
