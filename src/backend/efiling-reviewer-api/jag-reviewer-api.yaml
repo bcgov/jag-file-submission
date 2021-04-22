@@ -117,7 +117,7 @@ paths:
                 $ref: "#/components/schemas/DocumentTypeConfiguration"
     put:
       summary: update a document type
-      operationId: updateDocumentType
+      operationId: updateDocumentTypeConfiguration
       tags:
         - admin
       requestBody:
@@ -132,6 +132,24 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DocumentTypeConfiguration"
+  "/documentTypeConfigurations/{id}":
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+    delete:
+      summary: delete a document type
+      operationId: DeleteDocumentTypeConfiguration
+      tags:
+        - admin
+      responses:
+        "204":
+          description: document type removed
+        "404":
+          description: document type not found
   "/restrictedDocumentTypes":
     get:
       summary: list all the non accepted document types
@@ -200,7 +218,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/RestrictedDocumentType'
     delete:
-      summary: list all the non accepted document types
+      summary: delete a unaccepted document type
       operationId: DeleteRestrictedDocumentType
       tags:
         - adminUnaccepted

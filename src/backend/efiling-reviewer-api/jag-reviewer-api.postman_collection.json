@@ -265,6 +265,21 @@
 						"url": "{{baseUrl}}/documentTypeConfigurations"
 					},
 					"response": []
+				},
+				{
+					"name": "Delete DocumentTypeConfiguration",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": "{{baseUrl}}/documentTypeConfigurations/{{id}}"
+					},
+					"response": []
 				}
 			]
 		},
@@ -479,7 +494,7 @@
 	],
 	"variable": [
 		{
-			"id": "1de69a8a-91cc-4b2e-8cf4-e1377b4ce1e9",
+			"id": "42189589-4c99-4d9a-8870-aec8ce810e78",
 			"key": "baseUrl",
 			"value": "http://localhost:8080",
 			"type": "string"
