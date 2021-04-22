@@ -181,6 +181,7 @@ public class UpdateDocumentConfigurationsTest {
 
         documentTypeConfigurationRequest.setDocumentConfig(documentConfig);
 
+
         Assertions.assertThrows(AiReviewerDocumentTypeConfigurationException.class, () -> sut.updateDocumentTypeConfiguration(documentTypeConfigurationRequest));
 
     }
