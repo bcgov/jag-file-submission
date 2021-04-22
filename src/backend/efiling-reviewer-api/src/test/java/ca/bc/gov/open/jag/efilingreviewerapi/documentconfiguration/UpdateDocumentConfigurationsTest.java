@@ -2,7 +2,6 @@ package ca.bc.gov.open.jag.efilingreviewerapi.documentconfiguration;
 
 import ca.bc.gov.open.efilingdiligenclient.diligen.model.DocumentConfig;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentType;
-import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentTypeConfigurationRequest;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentTypeConfiguration;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.store.DocumentTypeConfigurationRepository;
 import ca.bc.gov.open.jag.efilingreviewerapi.documentconfiguration.mappers.DocumentTypeConfigurationMapper;
@@ -106,7 +105,7 @@ public class UpdateDocumentConfigurationsTest {
 
         documentTypeConfigurationRequest.setDocumentConfig(documentConfig);
 
-        ResponseEntity<ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentTypeConfiguration> response = sut.updateDocumentType(documentTypeConfigurationRequest);
+        ResponseEntity<ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentTypeConfiguration> response = sut.updateDocumentTypeConfiguration(documentTypeConfigurationRequest);
 
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
 
@@ -146,7 +145,7 @@ public class UpdateDocumentConfigurationsTest {
 
         documentTypeConfigurationRequest.setDocumentConfig(documentConfig);
 
-        Assertions.assertThrows(AiReviewerDocumentTypeConfigurationException.class, () -> sut.updateDocumentType(documentTypeConfigurationRequest));
+        Assertions.assertThrows(AiReviewerDocumentTypeConfigurationException.class, () -> sut.updateDocumentTypeConfiguration(documentTypeConfigurationRequest));
 
     }
 
@@ -182,7 +181,7 @@ public class UpdateDocumentConfigurationsTest {
 
         documentTypeConfigurationRequest.setDocumentConfig(documentConfig);
 
-        Assertions.assertThrows(AiReviewerDocumentTypeConfigurationException.class, () -> sut.updateDocumentType(documentTypeConfigurationRequest));
+        Assertions.assertThrows(AiReviewerDocumentTypeConfigurationException.class, () -> sut.updateDocumentTypeConfiguration(documentTypeConfigurationRequest));
 
     }
 

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -66,7 +67,7 @@ public class DocumentConfigurationsApiDelegateImpl implements DocumentTypeConfig
     }
 
     @Override
-    public ResponseEntity<ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentTypeConfiguration> updateDocumentType(ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentTypeConfiguration documentTypeConfiguration) {
+    public ResponseEntity<ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentTypeConfiguration> updateDocumentTypeConfiguration(ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentTypeConfiguration documentTypeConfiguration) {
 
         if (!documentTypeConfigurationRepository.existsByDocumentTypeAndId(documentTypeConfiguration.getDocumentType().getType(), documentTypeConfiguration.getId())) throw new AiReviewerDocumentTypeConfigurationException("No matches found for that type and id");
         if (!documentTypeConfiguration.getDocumentType().getType().equals(documentTypeConfigurationRepository.findById(documentTypeConfiguration.getId()).get().getDocumentType())) throw new AiReviewerDocumentTypeConfigurationException("Document type cannot be updated");
@@ -87,6 +88,15 @@ public class DocumentConfigurationsApiDelegateImpl implements DocumentTypeConfig
 
     }
 
+    @Override
+    public ResponseEntity<Void> deleteDocumentTypeConfiguration(UUID id) {
 
+        if (!documentTypeConfigurationRepository.existsById(id)) return ResponseEntity.notFound().build();
+
+        documentTypeConfigurationRepository.deleteById(id);
+
+        return ResponseEntity.noContent().build();
+
+    }
 
 }
