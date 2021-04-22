@@ -1,0 +1,40 @@
+.drawer {
+  width: 200px;
+  flex-shrink: 0;
+  z-index: 0 !important;
+
+  .drawer-paper {
+    width: 200px;
+  }
+
+  .drawer-container {
+    overflow: auto;
+  }
+
+  .MuiIconButton-root {
+    margin-top: 100px !important;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  a:hover {
+    color: blue;
+  }
+
+  a, a:hover {
+    text-decoration: underline;
+  }
+ 
+  .active {
+    background-color: #7590b9;
+  }
+
+}
+
+@media (max-width: 960px) {
+  .MuiToolbar-root {
+    height: 100px !important;
+  }
+}

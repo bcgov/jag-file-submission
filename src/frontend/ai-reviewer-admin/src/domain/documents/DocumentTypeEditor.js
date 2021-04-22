@@ -6,7 +6,7 @@ import {
   submitDocumentTypeConfigurations,
 } from "domain/documents/DocumentService";
 import { isValidJSON } from "utils/JsonUtils";
-import Toast from "components/Toast";
+import Toast from "components/toast/Toast";
 import DocumentList from "./DocumentList";
 
 import "./DocumentTypeEditor.scss";
@@ -16,7 +16,7 @@ export default function DocumentTypeEditor() {
   const [showToast, setShowToast] = useState(false);
   const [newConfigInput, setNewConfigInput] = useState("");
   const [invalidJsonError, setInvalidJsonError] = useState(false);
-  const [submissionError, setSubmissionError] = useState("");
+  const [submissionError, setSubmissionError] = useState(null);
   const [reloadConfigs, setReloadConfigs] = useState(false);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function DocumentTypeEditor() {
       submitDocumentTypeConfigurations(newConfigInput)
         .then(() => {
           setReloadConfigs(!reloadConfigs);
-          setSubmissionError("");
+          setSubmissionError(null);
         })
         .catch((error) => setSubmissionError(error.message));
     } else {
@@ -75,7 +75,9 @@ export default function DocumentTypeEditor() {
       )}
       {submissionError && (
         <>
-          <span className="error" data-testid="submission-error">{submissionError}</span>
+          <span className="error" data-testid="submission-error">
+            {submissionError}
+          </span>
           <br />
         </>
       )}

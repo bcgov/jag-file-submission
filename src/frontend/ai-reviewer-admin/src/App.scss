@@ -9,4 +9,21 @@ body,
 }
 .content {
   flex: 1 0 auto;
+  flex-grow: 1;
+  margin-top: 100px;
+}
+
+.bcgov-header, .bcgov-footer {
+  z-index: 1500 !important;
+}
+
+.bcgov-header {
+ position: fixed !important;
+ width: 100%;
+}
+
+@media (max-width: 1610px) and (min-width: 960px) {
+  .content {
+    padding-left: 210px !important;
+  }
 }
