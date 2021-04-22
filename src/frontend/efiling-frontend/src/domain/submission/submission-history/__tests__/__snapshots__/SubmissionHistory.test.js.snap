@@ -134,6 +134,10 @@ exports[`Submission History Component Matches the snapshot 1`] = `
           </div>
         </div>
       </div>
+      <br />
+      <p>
+        The View Filing Packages screen lets you view any packages you filed, and any packages that you have been given access to by other people in your organization. Packages will be available in this list for 1 year after the registry processes them.
+      </p>
     </div>
     <div
       class="sidecard"
