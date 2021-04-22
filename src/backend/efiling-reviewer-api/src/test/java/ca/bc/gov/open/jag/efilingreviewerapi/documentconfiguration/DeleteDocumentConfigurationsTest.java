@@ -14,8 +14,8 @@ import java.util.UUID;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class DeleteDocumentConfigurationsTest {
 
-    private static UUID DELETE_ID = UUID.randomUUID();
-    private static UUID NOT_FOUND_ID = UUID.randomUUID();
+    private static final UUID DELETE_ID = UUID.randomUUID();
+    private static final UUID NOT_FOUND_ID = UUID.randomUUID();
 
     private DocumentConfigurationsApiDelegateImpl sut;
     @Mock
