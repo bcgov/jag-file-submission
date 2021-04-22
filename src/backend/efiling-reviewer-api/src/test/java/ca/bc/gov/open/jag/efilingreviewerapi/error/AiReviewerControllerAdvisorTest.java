@@ -140,4 +140,18 @@ public class AiReviewerControllerAdvisorTest {
 
     }
 
+    @Test
+    @DisplayName("400: Assert document update exception api throws error")
+    public void testAiReviewerDocumentTypeConfigurationExceptionAPIError() throws ApiException {
+
+        Mockito.doThrow(ApiException.class).when(mailSendApiMock).mailSend(any());
+
+        ResponseEntity<Object> result = sut.handleDocumentTypeConfigurationException(new AiReviewerDocumentTypeConfigurationException("Document Config exception"), webRequestMock);
+
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
+        Assertions.assertEquals("DOCUMENT_CONFIGURATION_MANAGEMENT", ((ApiError)result.getBody()).getError());
+        Assertions.assertEquals("Document Config exception", ((ApiError)result.getBody()).getMessage());
+
+    }
+
 }

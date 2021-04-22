@@ -993,7 +993,7 @@ exports[`Home Component matches the snapshot when user cso account does not exis
                 class="bcgov-content-style"
               >
                 <p>
-                  E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
+                  E-File Submission is a service to help you securely and electronically file documents with the Courts of British Columbia via Court Services Online. 
                   <a
                     href="https://dev.justice.gov.bc.ca/cso/about/index.do"
                     rel="noopener noreferrer"
@@ -1382,7 +1382,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                 class="bcgov-content-style"
               >
                 <p>
-                  E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
+                  E-File Submission is a service to help you securely and electronically file documents with the Courts of British Columbia via Court Services Online. 
                   <a
                     href="https://dev.justice.gov.bc.ca/cso/about/index.do"
                     rel="noopener noreferrer"
@@ -2309,7 +2309,7 @@ exports[`Home When user has authenticated with BCSC with no CSO account, retriev
                 class="bcgov-content-style"
               >
                 <p>
-                  E-File submission is a service to help you securely and electronically file documents with the Government of British Columbia Court Services Online (CSO). 
+                  E-File Submission is a service to help you securely and electronically file documents with the Courts of British Columbia via Court Services Online. 
                   <a
                     href="https://dev.justice.gov.bc.ca/cso/about/index.do"
                     rel="noopener noreferrer"
