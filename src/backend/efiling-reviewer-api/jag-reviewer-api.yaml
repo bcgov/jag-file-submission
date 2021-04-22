@@ -115,6 +115,23 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DocumentTypeConfiguration"
+    put:
+      summary: update a document type
+      operationId: updateDocumentType
+      tags:
+        - admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DocumentTypeConfiguration"
+      responses:
+        "200":
+          description: document type updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DocumentTypeConfiguration"
   "/restrictedDocumentTypes":
     get:
       summary: list all the non accepted document types
@@ -157,11 +174,11 @@ paths:
               $ref: "#/components/schemas/RestrictedDocumentType"
       responses:
         "200":
-          description: document type updated
+          description: unaccepted document type updated
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DocumentTypeConfiguration"
+                $ref: "#/components/schemas/RestrictedDocumentType"
   "/restrictedDocumentTypes/{id}":
     parameters:
       - in: path

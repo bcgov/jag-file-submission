@@ -105,4 +105,13 @@ public class AiReviewerControllerAdvisor {
 
     }
 
+    @ExceptionHandler(AiReviewerDocumentTypeConfigurationException.class)
+    public ResponseEntity<Object> handleDocumentTypeConfigurationException(AiReviewerDocumentTypeConfigurationException ex, WebRequest request) {
+        ApiError apiError = new ApiError();
+        apiError.setError(ex.getErrorCode());
+        apiError.setMessage(ex.getMessage());
+        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+    }
+
+
 }
