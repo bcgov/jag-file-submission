@@ -3,7 +3,7 @@
 		"_postman_id": "83cd3971-ad87-480d-9996-5098ea33e01d",
 		"name": "jag-reviewer-api Copy",
 		"description": "Efiling AI Reviewer api",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -41,7 +41,15 @@
 								}
 							}
 						},
-						"url": "{{baseUrl}}/documentTypeConfigurations"
+						"url": {
+							"raw": "{{baseUrl}}/documentTypeConfigurations",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"documentTypeConfigurations"
+							]
+						}
 					},
 					"response": [
 						{
@@ -70,7 +78,16 @@
 										}
 									]
 								},
-								"url": "{{baseUrl}}/documents/extract"
+								"url": {
+									"raw": "{{baseUrl}}/documents/extract",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"documents",
+										"extract"
+									]
+								}
 							},
 							"status": "OK",
 							"code": 200,
@@ -110,7 +127,16 @@
 										}
 									]
 								},
-								"url": "{{baseUrl}}/documents/extract"
+								"url": {
+									"raw": "{{baseUrl}}/documents/extract",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"documents",
+										"extract"
+									]
+								}
 							},
 							"status": "Bad Request",
 							"code": 400,
@@ -149,7 +175,21 @@
 								"disabled": true
 							}
 						],
-						"url": "{{baseUrl}}/documentTypeConfigurations"
+						"url": {
+							"raw": "{{baseUrl}}/documentTypeConfigurations?documentType=RCC",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"documentTypeConfigurations"
+							],
+							"query": [
+								{
+									"key": "documentType",
+									"value": "RCC"
+								}
+							]
+						}
 					},
 					"response": [
 						{
@@ -178,7 +218,16 @@
 										}
 									]
 								},
-								"url": "{{baseUrl}}/documents/extract"
+								"url": {
+									"raw": "{{baseUrl}}/documents/extract",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"documents",
+										"extract"
+									]
+								}
 							},
 							"status": "OK",
 							"code": 200,
@@ -218,7 +267,16 @@
 										}
 									]
 								},
-								"url": "{{baseUrl}}/documents/extract"
+								"url": {
+									"raw": "{{baseUrl}}/documents/extract",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"documents",
+										"extract"
+									]
+								}
 							},
 							"status": "Bad Request",
 							"code": 400,
@@ -233,6 +291,32 @@
 							"body": "{\n \"error\": \"nostrud do\",\n \"message\": \"cillum in enim dolore deserunt\",\n \"details\": [\n  \"fugiat nisi\",\n  \"ad dolore incididunt velit\"\n ]\n}"
 						}
 					]
+				},
+				{
+					"name": "Update DocumentTypeConfiguration",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n    \"id\": \"enter an ID\",\r\n    \"documentType\": {\r\n        \"type\": \"TEST\",\r\n        \"description\": \"TEST\"\r\n    },\r\n    \"projectId\": 2,\r\n    \"documentConfig\": {\r\n        \"properties\": {\r\n            \"document\": {\r\n                \"type\": \"object\",\r\n                \"fieldId\": null,\r\n                \"properties\": {\r\n                    \"documentType\": {\r\n                        \"type\": \"string\",\r\n                        \"fieldId\": 232,\r\n                        \"properties\": {}\r\n                    }\r\n                }\r\n            },\r\n            \"court\": {\r\n                \"type\": \"object\",\r\n                \"fieldId\": null,\r\n                \"properties\": {\r\n                    \"location\": {\r\n                        \"type\": \"string\",\r\n                        \"fieldId\": 230,\r\n                        \"properties\": {}\r\n                    },\r\n                    \"level\": {\r\n                        \"type\": \"string\",\r\n                        \"fieldId\": 229,\r\n                        \"properties\": {}\r\n                    },\r\n                    \"class\": {\r\n                        \"type\": \"string\",\r\n                        \"fieldId\": 210,\r\n                        \"properties\": {}\r\n                    },\r\n                    \"division\": {\r\n                        \"type\": \"string\",\r\n                        \"fieldId\": 210,\r\n                        \"properties\": {}\r\n                    },\r\n                    \"fileNumber\": {\r\n                        \"type\": \"string\",\r\n                        \"fieldId\": 228,\r\n                        \"properties\": {}\r\n                    },\r\n                    \"participatingClass\": {\r\n                        \"type\": \"string\",\r\n                        \"fieldId\": 210,\r\n                        \"properties\": {}\r\n                    },\r\n                    \"agencyId\": {\r\n                        \"type\": \"string\",\r\n                        \"fieldId\": 210,\r\n                        \"properties\": {}\r\n                    },\r\n                    \"locationDescription\": {\r\n                        \"type\": \"string\",\r\n                        \"fieldId\": 210,\r\n                        \"properties\": {}\r\n                    },\r\n                    \"levelDescription\": {\r\n                        \"type\": \"string\",\r\n                        \"fieldId\": 210,\r\n                        \"properties\": {}\r\n                    },\r\n                    \"classDescription\": {\r\n                        \"type\": \"string\",\r\n                        \"fieldId\": 210,\r\n                        \"properties\": {}\r\n                    }\r\n                }\r\n            },\r\n            \"parties\": {\r\n                \"type\": \"object\",\r\n                \"fieldId\": null,\r\n                \"properties\": {\r\n                    \"defedants\": {\r\n                        \"type\": \"string\",\r\n                        \"fieldId\": 319,\r\n                        \"properties\": {}\r\n                    },\r\n                    \"plaintiffs\": {\r\n                        \"type\": \"string\",\r\n                        \"fieldId\": 320,\r\n                        \"properties\": {}\r\n                    }\r\n                }\r\n            }\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/documentTypeConfigurations",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"documentTypeConfigurations"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -269,7 +353,16 @@
 								}
 							]
 						},
-						"url": "{{baseUrl}}/documents/extract"
+						"url": {
+							"raw": "{{baseUrl}}/documents/extract",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"documents",
+								"extract"
+							]
+						}
 					},
 					"response": [
 						{
@@ -298,7 +391,16 @@
 										}
 									]
 								},
-								"url": "{{baseUrl}}/documents/extract"
+								"url": {
+									"raw": "{{baseUrl}}/documents/extract",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"documents",
+										"extract"
+									]
+								}
 							},
 							"status": "Bad Request",
 							"code": 400,
@@ -338,7 +440,16 @@
 										}
 									]
 								},
-								"url": "{{baseUrl}}/documents/extract"
+								"url": {
+									"raw": "{{baseUrl}}/documents/extract",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"documents",
+										"extract"
+									]
+								}
 							},
 							"status": "OK",
 							"code": 200,
@@ -364,7 +475,15 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{baseUrl}}/restrictedDocumentTypes"
+						"url": {
+							"raw": "{{baseUrl}}/restrictedDocumentTypes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restrictedDocumentTypes"
+							]
+						}
 					},
 					"response": []
 				},
@@ -373,7 +492,16 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{baseUrl}}/restrictedDocumentTypes/810edbd7-6fc1-483e-a2ff-c86ed677c6f2"
+						"url": {
+							"raw": "{{baseUrl}}/restrictedDocumentTypes/810edbd7-6fc1-483e-a2ff-c86ed677c6f2",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restrictedDocumentTypes",
+								"810edbd7-6fc1-483e-a2ff-c86ed677c6f2"
+							]
+						}
 					},
 					"response": []
 				},
@@ -391,7 +519,15 @@
 								}
 							}
 						},
-						"url": "{{baseUrl}}/restrictedDocumentTypes"
+						"url": {
+							"raw": "{{baseUrl}}/restrictedDocumentTypes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restrictedDocumentTypes"
+							]
+						}
 					},
 					"response": []
 				},
@@ -409,7 +545,15 @@
 								}
 							}
 						},
-						"url": "{{baseUrl}}/restrictedDocumentTypes"
+						"url": {
+							"raw": "{{baseUrl}}/restrictedDocumentTypes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restrictedDocumentTypes"
+							]
+						}
 					},
 					"response": []
 				},
@@ -418,7 +562,46 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": "{{baseUrl}}/restrictedDocumentTypes/{{id}}"
+						"url": {
+							"raw": "{{baseUrl}}/restrictedDocumentTypes/{{id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restrictedDocumentTypes",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Processed Document",
+			"item": [
+				{
+					"name": "Get Processed Document",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Transaction-Id",
+								"value": "1d4e38ba-0c88-4c92-8367-c8eada8cca19",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/documents/processed/1234",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"documents",
+								"processed",
+								"1234"
+							]
+						}
 					},
 					"response": []
 				}
@@ -427,8 +610,9 @@
 	],
 	"variable": [
 		{
+			"id": "62681855-7ad6-4d50-9a65-5e649e2f9ad7",
 			"key": "baseUrl",
-			"value": "http://localhost:8090",
+			"value": "http://localhost:8080",
 			"type": "string"
 		}
 	]
