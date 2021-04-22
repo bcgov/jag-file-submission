@@ -18,6 +18,7 @@ export default function DocumentTypeEditor() {
   const [invalidJsonError, setInvalidJsonError] = useState(false);
   const [submissionError, setSubmissionError] = useState(null);
   const [reloadConfigs, setReloadConfigs] = useState(false);
+  const [showAdd, setShowAdd] = useState(false);
 
   useEffect(() => {
     getDocumentTypeConfigurations()
@@ -33,6 +34,7 @@ export default function DocumentTypeEditor() {
         .then(() => {
           setReloadConfigs(!reloadConfigs);
           setSubmissionError(null);
+          setNewConfigInput("");
         })
         .catch((error) => setSubmissionError(error.message));
     } else {
@@ -49,43 +51,48 @@ export default function DocumentTypeEditor() {
           setShow={setShowToast}
         />
       )}
-      <DocumentList configurations={configurations} />
+      <DocumentList configurations={configurations} setShowAdd={setShowAdd} />
       <br />
 
-      <TextField
-        id="new-config-textfield"
-        fullWidth
-        multiline
-        rows={25}
-        rowsMax={200}
-        placeholder="Input a new configuration JSON"
-        variant="outlined"
-        onChange={(e) => {
-          setNewConfigInput(e.target.value);
-          setInvalidJsonError(false);
-        }}
-      />
-      <br />
+      {showAdd && (
+        <>
+          <TextField
+            id="new-config-textfield"
+            fullWidth
+            multiline
+            rows={25}
+            rowsMax={200}
+            placeholder="Input a new configuration JSON"
+            variant="outlined"
+            value={newConfigInput}
+            onChange={(e) => {
+              setNewConfigInput(e.target.value);
+              setInvalidJsonError(false);
+            }}
+          />
+          <br />
 
-      {invalidJsonError && (
-        <>
-          <span className="error">Sorry this JSON is invalid!</span>
-          <br />
+          {invalidJsonError && (
+            <>
+              <span className="error">Sorry this JSON is invalid!</span>
+              <br />
+            </>
+          )}
+          {submissionError && (
+            <>
+              <span className="error" data-testid="submission-error">
+                {submissionError}
+              </span>
+              <br />
+            </>
+          )}
+          <Button
+            label="Submit"
+            styling="bcgov-normal-blue btn new-config-submit"
+            onClick={submitNewConfig}
+          />
         </>
       )}
-      {submissionError && (
-        <>
-          <span className="error" data-testid="submission-error">
-            {submissionError}
-          </span>
-          <br />
-        </>
-      )}
-      <Button
-        label="Submit"
-        styling="bcgov-normal-blue btn new-config-submit"
-        onClick={submitNewConfig}
-      />
     </div>
   );
 }
