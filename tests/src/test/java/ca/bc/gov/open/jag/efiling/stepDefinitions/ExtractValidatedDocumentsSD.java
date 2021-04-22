@@ -43,9 +43,9 @@ public class ExtractValidatedDocumentsSD {
         logger.info("Submitting request to upload document");
 
         File resource = new ClassPathResource(
-                MessageFormat.format("data/{0}", Keys.TEST_RCC_DOCUMENT_PDF)).getFile();
+                MessageFormat.format("data/{0}", Keys.TEST_VALID_DOCUMENT_PDF)).getFile();
 
-        MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource, Keys.TEST_RCC_DOCUMENT_PDF);
+        MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource, Keys.TEST_VALID_DOCUMENT_PDF);
 
         actualExtractDocumentServiceResponse = extractDocumentService.extractDocumentsResponse(actualTransactionId, docType, fileSpec);
 
@@ -72,7 +72,7 @@ public class ExtractValidatedDocumentsSD {
         Assert.assertNotNull(actualExtractDocumentsJsonPath.get("document.documentId"));
         Assert.assertTrue(actualExtractDocumentsJsonPath.get("document.documentId") instanceof Integer);
         Assert.assertEquals("RCC", actualExtractDocumentsJsonPath.get("document.type"));
-        Assert.assertEquals(Keys.TEST_RCC_DOCUMENT_PDF, actualExtractDocumentsJsonPath.get("document.fileName"));
+        Assert.assertEquals(Keys.TEST_VALID_DOCUMENT_PDF, actualExtractDocumentsJsonPath.get("document.fileName"));
         Assert.assertEquals(Integer.valueOf(689336), actualExtractDocumentsJsonPath.get("document.size"));
         Assert.assertEquals("application/octet-stream", actualExtractDocumentsJsonPath.get("document.contentType"));
 
