@@ -3,7 +3,7 @@
 		"_postman_id": "83cd3971-ad87-480d-9996-5098ea33e01d",
 		"name": "jag-reviewer-api Copy",
 		"description": "Efiling AI Reviewer api",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
@@ -41,15 +41,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{baseUrl}}/documentTypeConfigurations",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"documentTypeConfigurations"
-							]
-						}
+						"url": "{{baseUrl}}/documentTypeConfigurations"
 					},
 					"response": [
 						{
@@ -78,16 +70,7 @@
 										}
 									]
 								},
-								"url": {
-									"raw": "{{baseUrl}}/documents/extract",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"documents",
-										"extract"
-									]
-								}
+								"url": "{{baseUrl}}/documents/extract"
 							},
 							"status": "OK",
 							"code": 200,
@@ -127,16 +110,7 @@
 										}
 									]
 								},
-								"url": {
-									"raw": "{{baseUrl}}/documents/extract",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"documents",
-										"extract"
-									]
-								}
+								"url": "{{baseUrl}}/documents/extract"
 							},
 							"status": "Bad Request",
 							"code": 400,
@@ -218,16 +192,7 @@
 										}
 									]
 								},
-								"url": {
-									"raw": "{{baseUrl}}/documents/extract",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"documents",
-										"extract"
-									]
-								}
+								"url": "{{baseUrl}}/documents/extract"
 							},
 							"status": "OK",
 							"code": 200,
@@ -267,16 +232,7 @@
 										}
 									]
 								},
-								"url": {
-									"raw": "{{baseUrl}}/documents/extract",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"documents",
-										"extract"
-									]
-								}
+								"url": "{{baseUrl}}/documents/extract"
 							},
 							"status": "Bad Request",
 							"code": 400,
@@ -306,15 +262,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{baseUrl}}/documentTypeConfigurations",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"documentTypeConfigurations"
-							]
-						}
+						"url": "{{baseUrl}}/documentTypeConfigurations"
 					},
 					"response": []
 				}
@@ -353,16 +301,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "{{baseUrl}}/documents/extract",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"documents",
-								"extract"
-							]
-						}
+						"url": "{{baseUrl}}/documents/extract"
 					},
 					"response": [
 						{
@@ -391,16 +330,7 @@
 										}
 									]
 								},
-								"url": {
-									"raw": "{{baseUrl}}/documents/extract",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"documents",
-										"extract"
-									]
-								}
+								"url": "{{baseUrl}}/documents/extract"
 							},
 							"status": "Bad Request",
 							"code": 400,
@@ -440,16 +370,7 @@
 										}
 									]
 								},
-								"url": {
-									"raw": "{{baseUrl}}/documents/extract",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"documents",
-										"extract"
-									]
-								}
+								"url": "{{baseUrl}}/documents/extract"
 							},
 							"status": "OK",
 							"code": 200,
@@ -475,15 +396,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/restrictedDocumentTypes",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"restrictedDocumentTypes"
-							]
-						}
+						"url": "{{baseUrl}}/restrictedDocumentTypes"
 					},
 					"response": []
 				},
@@ -492,16 +405,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/restrictedDocumentTypes/810edbd7-6fc1-483e-a2ff-c86ed677c6f2",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"restrictedDocumentTypes",
-								"810edbd7-6fc1-483e-a2ff-c86ed677c6f2"
-							]
-						}
+						"url": "{{baseUrl}}/restrictedDocumentTypes/810edbd7-6fc1-483e-a2ff-c86ed677c6f2"
 					},
 					"response": []
 				},
@@ -519,15 +423,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{baseUrl}}/restrictedDocumentTypes",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"restrictedDocumentTypes"
-							]
-						}
+						"url": "{{baseUrl}}/restrictedDocumentTypes"
 					},
 					"response": []
 				},
@@ -545,15 +441,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{baseUrl}}/restrictedDocumentTypes",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"restrictedDocumentTypes"
-							]
-						}
+						"url": "{{baseUrl}}/restrictedDocumentTypes"
 					},
 					"response": []
 				},
@@ -562,16 +450,7 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/restrictedDocumentTypes/{{id}}",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"restrictedDocumentTypes",
-								"{{id}}"
-							]
-						}
+						"url": "{{baseUrl}}/restrictedDocumentTypes/{{id}}"
 					},
 					"response": []
 				}
@@ -591,17 +470,7 @@
 								"type": "text"
 							}
 						],
-						"url": {
-							"raw": "{{baseUrl}}/documents/processed/1234",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"documents",
-								"processed",
-								"1234"
-							]
-						}
+						"url": "{{baseUrl}}/documents/processed/1234"
 					},
 					"response": []
 				}
@@ -610,7 +479,7 @@
 	],
 	"variable": [
 		{
-			"id": "62681855-7ad6-4d50-9a65-5e649e2f9ad7",
+			"id": "1de69a8a-91cc-4b2e-8cf4-e1377b4ce1e9",
 			"key": "baseUrl",
 			"value": "http://localhost:8080",
 			"type": "string"
