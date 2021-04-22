@@ -19,7 +19,7 @@ public class PackageConfirmationPage extends BasePage {
     private final Logger logger = LoggerFactory.getLogger(PackageConfirmationPage.class);
 
     //Page Objects:
-    @FindBy(xpath = "//button[@data-test-id='continue-btn']")
+    @FindBy(xpath = "//button[@data-testid='continue-btn']")
     private WebElement continuePaymentBtn;
 
     @FindBy(xpath = "//*[@data-test-id='upload-link']")
@@ -33,7 +33,7 @@ public class PackageConfirmationPage extends BasePage {
 
     //Actions:
     public boolean verifyContinuePaymentBtnIsEnabled() {
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@data-test-id='continue-btn']")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@data-testid='continue-btn']")));
 
         if (!continuePaymentBtn.isDisplayed())
             throw new EfilingTestException("User may not have a CSO account created");
@@ -41,7 +41,7 @@ public class PackageConfirmationPage extends BasePage {
     }
 
     public void clickContinuePaymentBtn() {
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@data-test-id='continue-btn']")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@data-testid='continue-btn']")));
         continuePaymentBtn.click();
     }
 
