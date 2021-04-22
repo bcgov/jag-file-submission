@@ -19,7 +19,7 @@ import java.util.List;
 public class CreateDocumentConfigurationsTest {
     private static final String CASE_1 = "CASE1";
     private static final String CASE_2 = "CASE2";
-    public static final String DESCRIPTION = "DESCRIPTION";
+    private static final String DESCRIPTION = "DESCRIPTION";
     private DocumentConfigurationsApiDelegateImpl sut;
     @Mock
     private DocumentTypeConfigurationRepository documentTypeConfigurationRepositoryMock;
