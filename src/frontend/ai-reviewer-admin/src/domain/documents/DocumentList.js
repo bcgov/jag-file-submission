@@ -1,25 +1,43 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { VscJson } from "react-icons/vsc";
-import { MdEdit, MdLibraryAdd } from "react-icons/md";
+import { MdEdit} from "react-icons/md";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import CloseIcon from "@material-ui/icons/Close"
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 
 import "./DocumentList.scss";
+import { getDocumentTypeConfigurations } from "./DocumentService";
 
-export default function DocumentList({ configurations, setShowAdd }) {
+export default function DocumentList({ configurations, setters }) {
+  const {setShowAdd, setNewConfigInput, setIsNew, setIsUpdate} = setters;
   const [showExit, setShowExit] = useState(false);
 
   const handleShowAdd = () => {
     setShowAdd(true);
     setShowExit(true);
+    setIsNew(true);
+    setIsUpdate(false);
+    setNewConfigInput("")
   }
 
   const handleHideAdd = () => {
     setShowAdd(false);
     setShowExit(false);
+    setIsNew(false);
+    setIsUpdate(false);
+  }
+
+  const handleUpdate = (docType) => {
+    setShowAdd(true);
+    setShowExit(true);
+    setIsUpdate(true);
+    setIsNew(false);
+    getDocumentTypeConfigurations(docType)
+      .then(config => {
+        setNewConfigInput(JSON.stringify(config[0], null, 1));
+      })
   }
 
   return (
@@ -55,7 +73,9 @@ export default function DocumentList({ configurations, setShowAdd }) {
               {configuration.projectId}
             </span>
             <span className="col-12 col-sm-3 pull-right">
-              <MdEdit size="24" color="#FCBA19" />
+              <IconButton size="small" className="ai-reviewer-icon-button" onClick={()=> handleUpdate(configuration.documentType.type)}>
+                <MdEdit size="24" color="#FCBA19" />
+              </IconButton>
             </span>
           </li>
         ))}
@@ -66,7 +86,7 @@ export default function DocumentList({ configurations, setShowAdd }) {
                 <AddBoxIcon className="ai-reviewer-icon"/>
               </IconButton>
             </Tooltip>
-            
+
             {showExit && (
               <IconButton size="small" className="ai-reviewer-icon-button" onClick={handleHideAdd} >
                 <CloseIcon />
@@ -81,10 +101,15 @@ export default function DocumentList({ configurations, setShowAdd }) {
 
 DocumentList.propTypes = {
   configurations: PropTypes.arrayOf(PropTypes.object),
-  setShowAdd: PropTypes.func,
+  setters: PropTypes.object
 };
 
 DocumentList.defaultProps = {
   configurations: [],
-  setShowAdd: () => {}
+  setters: {
+    setNewConfigInput: () => {},
+    setShowAdd: () => {},
+    setIsNew: () => {},
+    setIsUpdate: () => {}
+  }
 };

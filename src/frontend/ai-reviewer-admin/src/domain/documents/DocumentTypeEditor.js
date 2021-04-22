@@ -4,6 +4,7 @@ import { Button } from "shared-components";
 import {
   getDocumentTypeConfigurations,
   submitDocumentTypeConfigurations,
+  submitUpdatedDocumentTypeConfigurations,
 } from "domain/documents/DocumentService";
 import { isValidJSON } from "utils/JsonUtils";
 import Toast from "components/toast/Toast";
@@ -19,6 +20,8 @@ export default function DocumentTypeEditor() {
   const [submissionError, setSubmissionError] = useState(null);
   const [reloadConfigs, setReloadConfigs] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(false);
+  const [isNew, setIsNew] = useState(false);
 
   useEffect(() => {
     getDocumentTypeConfigurations()
@@ -28,13 +31,23 @@ export default function DocumentTypeEditor() {
       .catch((error) => setShowToast(true));
   }, [reloadConfigs]);
 
-  const submitNewConfig = () => {
-    if (isValidJSON(newConfigInput)) {
-      submitDocumentTypeConfigurations(newConfigInput)
+  const successfullySubmitted = () => {
+    setReloadConfigs(!reloadConfigs);
+    setSubmissionError(null);
+    setNewConfigInput("");
+  }
+
+  const submitConfig = () => {
+    if (isValidJSON(newConfigInput) && isNew) {
+      submitNewDocumentTypeConfigurations(newConfigInput)
         .then(() => {
-          setReloadConfigs(!reloadConfigs);
-          setSubmissionError(null);
-          setNewConfigInput("");
+          successfullySubmitted();
+        })
+        .catch((error) => setSubmissionError(error.message));
+    } else if (isValidJSON(newConfigInput) && isUpdate) {
+      submitUpdatedDocumentTypeConfigurations(newConfigInput)
+        .then(() => {
+          successfullySubmitted();
         })
         .catch((error) => setSubmissionError(error.message));
     } else {
@@ -51,7 +64,7 @@ export default function DocumentTypeEditor() {
           setShow={setShowToast}
         />
       )}
-      <DocumentList configurations={configurations} setShowAdd={setShowAdd} />
+      <DocumentList configurations={configurations} setters={{setNewConfigInput, setShowAdd, setIsNew, setIsUpdate}} />
       <br />
 
       {showAdd && (
@@ -89,7 +102,7 @@ export default function DocumentTypeEditor() {
           <Button
             label="Submit"
             styling="bcgov-normal-blue btn new-config-submit"
-            onClick={submitNewConfig}
+            onClick={submitConfig}
           />
         </>
       )}
