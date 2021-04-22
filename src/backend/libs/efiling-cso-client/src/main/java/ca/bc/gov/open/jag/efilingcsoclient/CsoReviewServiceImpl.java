@@ -17,6 +17,7 @@ import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPa
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapper;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
@@ -25,6 +26,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -97,8 +99,11 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
 
             logger.info("Calling soap findStatusBySearchCriteria by client id service ");
 
+            DateTime endDate = DateTime.now();
+            DateTime startDate = endDate.minusYears(1);
+
             FilingStatus filingStatus = filingStatusFacadeBean
-                    .findStatusBySearchCriteria(null, null, null, null, null, null, null, filingPackageRequest.getClientId(), null, null, null, null, BigDecimal.valueOf(100), null);
+                    .findStatusBySearchCriteria(null, null, null, DateUtils.getXmlDate(startDate), DateUtils.getXmlDate(endDate), null , null, filingPackageRequest.getClientId(), null, null, null, null, BigDecimal.valueOf(100), null);
 
             if (filingStatus.getFilePackages().isEmpty()) return new ArrayList<>();
 
@@ -114,7 +119,7 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
                             .collect(Collectors.toList())
                     )).collect(Collectors.toList());
 
-        } catch (NestedEjbException_Exception e) {
+        } catch (NestedEjbException_Exception | DatatypeConfigurationException e) {
 
             throw new EfilingStatusServiceException("Exception while finding status list", e.getCause());
 
