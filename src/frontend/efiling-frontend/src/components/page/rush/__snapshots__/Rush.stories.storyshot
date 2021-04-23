@@ -364,14 +364,14 @@ you feel are necessary.
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-test-id=""
+          data-testid=""
           type="button"
         >
           Cancel Request
         </button>
         <button
           class="bcgov-button bcgov-normal-blue btn"
-          data-test-id=""
+          data-testid=""
           type="button"
         >
           Submit Request
@@ -898,14 +898,14 @@ you feel are necessary.
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-test-id=""
+          data-testid=""
           type="button"
         >
           Cancel Request
         </button>
         <button
           class="bcgov-button bcgov-normal-blue btn"
-          data-test-id=""
+          data-testid=""
           type="button"
         >
           Submit Request

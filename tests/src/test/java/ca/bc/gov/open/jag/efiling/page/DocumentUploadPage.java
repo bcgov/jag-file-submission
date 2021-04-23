@@ -17,10 +17,10 @@ public class DocumentUploadPage extends BasePage {
     @FindBy(xpath = "//label[@for='no-isSupremeCourtScheduling-test-document-additional.pdf']")
     private WebElement isSupremeCourtRadioBtn;
 
-    @FindBy(xpath = "//button[@data-test-id='continue-upload-btn']")
+    @FindBy(xpath = "//button[@data-testid='continue-upload-btn']")
     private WebElement continueBtn;
 
-    @FindBy(xpath = "//button[@data-test-id='cancel-upload-btn']")
+    @FindBy(xpath = "//button[@data-testid='cancel-upload-btn']")
     private WebElement cancelUpload;
 
     @FindBy(xpath = "//button[@data-testid='remove-icon']")
