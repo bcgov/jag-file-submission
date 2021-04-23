@@ -10653,9 +10653,9 @@ sha.js@^2.4.0, sha.js@^2.4.8:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
-"shared-components@https://github.com/bcgov/react-shared-components/releases/download/v1.2.2/shared-components-1.2.2.tgz":
-  version "1.2.2"
-  resolved "https://github.com/bcgov/react-shared-components/releases/download/v1.2.2/shared-components-1.2.2.tgz#eb7e1935938e5f9931624d9e12844559cbed3752"
+"shared-components@https://github.com/bcgov/react-shared-components/releases/download/v1.2.3/shared-components-1.2.3.tgz":
+  version "1.2.3"
+  resolved "https://github.com/bcgov/react-shared-components/releases/download/v1.2.3/shared-components-1.2.3.tgz#e0610d38645139c770c8c69b9e3048c3be64fa3e"
   dependencies:
     "@bcgov/bootstrap-theme" "github:bcgov/bootstrap-theme"
     bootstrap "^4.6.0"
