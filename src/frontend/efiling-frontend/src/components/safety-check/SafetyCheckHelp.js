@@ -4,9 +4,10 @@ import PropTypes from "prop-types";
 import Modal from "react-bootstrap/Modal";
 import { Button } from "shared-components";
 
-import "./SafetyCheckModal.scss";
+import "./SafetyCheckHelp.scss";
 
-export default function SafetyCheckModal({ showModal, onHide }) {
+/** Opens up a modal popup with help content */
+export default function SafetyCheckHelp({ showModal, onHide }) {
   return (
     <Modal
       show={showModal}
@@ -202,7 +203,7 @@ export default function SafetyCheckModal({ showModal, onHide }) {
   );
 }
 
-SafetyCheckModal.propTypes = {
+SafetyCheckHelp.propTypes = {
   showModal: PropTypes.bool.isRequired,
   onHide: PropTypes.func.isRequired,
 };

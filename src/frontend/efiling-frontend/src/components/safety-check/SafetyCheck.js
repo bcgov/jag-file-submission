@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState } from "react";
 import { MdHelp } from "react-icons/md";
-import SafetyCheckModal from "./SafetyCheckModal";
+import SafetyCheckHelp from "./SafetyCheckHelp";
 
 import "./SafetyCheck.scss";
 
@@ -42,7 +42,7 @@ export default function SafetyCheck() {
         example a computer, table or device of a trusted friend, at work, a
         library, school or an internet café.
       </p>
-      <SafetyCheckModal showModal={showModal} onHide={handleOnHide} />
+      <SafetyCheckHelp showModal={showModal} onHide={handleOnHide} />
     </div>
   );
 }
