@@ -55,14 +55,14 @@ exports[`Upload Component Matches the snapshot 1`] = `
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-test-id="cancel-upload-btn"
+          data-testid="cancel-upload-btn"
           type="button"
         >
           Cancel Upload
         </button>
         <button
           class="bcgov-button bcgov-normal-blue btn"
-          data-test-id="continue-upload-btn"
+          data-testid="continue-upload-btn"
           disabled=""
           type="button"
         >
@@ -421,14 +421,14 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-test-id="main-cancel-btn"
+          data-testid="main-cancel-btn"
           type="button"
         >
           Cancel
         </button>
         <button
           class="bcgov-button bcgov-normal-blue btn"
-          data-test-id="continue-btn"
+          data-testid="continue-btn"
           type="button"
         >
           Continue to Payment
@@ -885,14 +885,14 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-test-id="cancel-upload-btn"
+          data-testid="cancel-upload-btn"
           type="button"
         >
           Cancel Upload
         </button>
         <button
           class="bcgov-button bcgov-normal-blue btn"
-          data-test-id="continue-upload-btn"
+          data-testid="continue-upload-btn"
           disabled=""
           type="button"
         >
@@ -1341,14 +1341,14 @@ exports[`Upload Component successful document upload works as expected 1`] = `
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-test-id="main-cancel-btn"
+          data-testid="main-cancel-btn"
           type="button"
         >
           Cancel
         </button>
         <button
           class="bcgov-button bcgov-normal-blue btn"
-          data-test-id="continue-btn"
+          data-testid="continue-btn"
           type="button"
         >
           Continue to Payment

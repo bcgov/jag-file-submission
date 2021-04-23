@@ -29,7 +29,7 @@
     "react-scripts": "3.4.3",
     "reactstrap": "^8.9.0",
     "regenerator-runtime": "^0.13.7",
-    "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/v1.2.2/shared-components-1.2.2.tgz",
+    "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/v1.2.3/shared-components-1.2.3.tgz",
     "validator": "^13.5.2"
   },
   "scripts": {

@@ -364,14 +364,14 @@ you feel are necessary.
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-test-id=""
+          data-testid=""
           type="button"
         >
           Cancel Request
         </button>
         <button
           class="bcgov-button bcgov-normal-blue btn"
-          data-test-id=""
+          data-testid=""
           type="button"
         >
           Submit Request
@@ -774,7 +774,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-test-id=""
+          data-testid=""
           type="button"
         >
           &lt; Back
@@ -784,14 +784,14 @@ package and am prepared to submit them for filing. I agree that all fees for thi
         >
           <button
             class="bcgov-button bcgov-normal-white btn"
-            data-test-id="main-cancel-btn"
+            data-testid="main-cancel-btn"
             type="button"
           >
             Cancel
           </button>
           <button
             class="bcgov-button bcgov-normal-blue normal-blue-ml btn"
-            data-test-id=""
+            data-testid=""
             disabled=""
             type="button"
           >
@@ -1267,7 +1267,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-test-id=""
+          data-testid=""
           type="button"
         >
           &lt; Back
@@ -1277,14 +1277,14 @@ package and am prepared to submit them for filing. I agree that all fees for thi
         >
           <button
             class="bcgov-button bcgov-normal-white btn"
-            data-test-id="main-cancel-btn"
+            data-testid="main-cancel-btn"
             type="button"
           >
             Cancel
           </button>
           <button
             class="bcgov-button bcgov-normal-blue normal-blue-ml btn"
-            data-test-id=""
+            data-testid=""
             disabled=""
             type="button"
           >
@@ -1736,14 +1736,14 @@ exports[`Payment Component On back click, it redirects back to the package confi
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-test-id="main-cancel-btn"
+          data-testid="main-cancel-btn"
           type="button"
         >
           Cancel
         </button>
         <button
           class="bcgov-button bcgov-normal-blue btn"
-          data-test-id="continue-btn"
+          data-testid="continue-btn"
           type="button"
         >
           Continue to Payment

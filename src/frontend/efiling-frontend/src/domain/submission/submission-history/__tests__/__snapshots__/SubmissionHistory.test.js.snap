@@ -28,7 +28,7 @@ exports[`Submission History Component Matches the snapshot 1`] = `
       />
       <button
         class="bcgov-button bcgov-normal-blue btn search-btn"
-        data-test-id=""
+        data-testid=""
         type="button"
       >
         Search
