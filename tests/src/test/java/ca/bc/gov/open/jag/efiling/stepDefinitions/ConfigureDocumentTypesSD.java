@@ -67,7 +67,7 @@ public class ConfigureDocumentTypesSD {
         logger.info("Updating a document type configuration");
 
         actualUpdatedConfigResponse = documentTypeConfigService
-                .updateDocumentTypeConfigResponse(getDocumentId().toString(),
+                .updateDocumentTypeConfigResponse(getActualDocumentId().toString(),
                         Keys.DOCUMENT_TYPE_CONFIG_UPDATE_PAYLOAD,
                         Keys.DOCUMENT_TYPE_CONFIGURATION_PATH);
 
@@ -91,7 +91,7 @@ public class ConfigureDocumentTypesSD {
 
         Assert.assertEquals(HttpStatus.SC_OK, actualGetAllDocumentTypesResponse.getStatusCode());
         Assert.assertEquals("application/json", actualGetAllDocumentTypesResponse.getContentType());
-        Assert.assertEquals(getDocumentId(), UUID.fromString(actualUpdatedConfigResponseJsonPath.get(Keys.ID_INDEX_FROM_RESPONSE)));
+        Assert.assertEquals(getActualDocumentId(), UUID.fromString(actualUpdatedConfigResponseJsonPath.get(Keys.ID_INDEX_FROM_RESPONSE)));
         Assert.assertEquals("TEST", actualUpdatedConfigResponseJsonPath.get("documentType[0].type"));
         Assert.assertEquals("Updated Response to Civil Claim", actualUpdatedConfigResponseJsonPath.get("documentType[0].description"));
         Assert.assertEquals("Updated Court", actualUpdatedConfigResponseJsonPath.get("documentConfig[0].properties.court.type"));
@@ -102,7 +102,7 @@ public class ConfigureDocumentTypesSD {
     public void userDeletesAnExistingConfiguredDocumentTypeUsingId() {
         logger.info("Requesting to delete the document type by id");
 
-        actualDeleteDocumentTypeByIdResponse = documentTypeConfigService.deleteDocumentTypeByIdResponse(getDocumentId(),
+        actualDeleteDocumentTypeByIdResponse = documentTypeConfigService.deleteDocumentTypeByIdResponse(getActualDocumentId(),
                 Keys.DOCUMENT_TYPE_CONFIGURATION_PATH);
     }
 
@@ -112,7 +112,7 @@ public class ConfigureDocumentTypesSD {
         Assert.assertEquals(HttpStatus.SC_NO_CONTENT, actualDeleteDocumentTypeByIdResponse.getStatusCode());
     }
 
-    private UUID getDocumentId() {
+    private UUID getActualDocumentId() {
         logger.info("Requesting to get all document types");
 
         actualConfigResponseJsonPath = new JsonPath(documentTypeConfigService.getDocumentTypeConfiguration(Keys.DOCUMENT_TYPE_CONFIGURATION_PATH).asString());
