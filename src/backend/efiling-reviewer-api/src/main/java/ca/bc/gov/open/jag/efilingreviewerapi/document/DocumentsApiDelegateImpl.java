@@ -10,6 +10,7 @@ import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentEvent;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentExtractResponse;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.ProcessedDocument;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentTypeConfiguration;
+import ca.bc.gov.open.jag.efilingreviewerapi.document.service.WebHookService;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.store.DocumentTypeConfigurationRepository;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidator;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerCacheException;
@@ -46,6 +47,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
     private final DocumentValidator documentValidator;
     private final DocumentTypeConfigurationRepository documentTypeConfigurationRepository;
     private final ProcessedDocumentMapper processedDocumentMapper;
+    private final WebHookService webHookService;
 
     public DocumentsApiDelegateImpl(
             DiligenService diligenService,
@@ -53,7 +55,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
             ExtractStore extractStore,
             StringRedisTemplate stringRedisTemplate,
             FieldProcessor fieldProcessor,
-            DocumentValidator documentValidator, DocumentTypeConfigurationRepository documentTypeConfigurationRepository, ProcessedDocumentMapper processedDocumentMapper) {
+            DocumentValidator documentValidator, DocumentTypeConfigurationRepository documentTypeConfigurationRepository, ProcessedDocumentMapper processedDocumentMapper, WebHookService webHookService) {
 
         this.diligenService = diligenService;
         this.extractRequestMapper = extractRequestMapper;
@@ -63,6 +65,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
         this.documentValidator = documentValidator;
         this.documentTypeConfigurationRepository = documentTypeConfigurationRepository;
         this.processedDocumentMapper = processedDocumentMapper;
+        this.webHookService = webHookService;
     }
 
     @Override
@@ -138,6 +141,8 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
                 extractRequest.updateProcessedTimeMillis();
                 logger.info("document processing time: [{}]", extractRequest.getProcessedTimeMillis());
                 extractStore.put(documentEvent.getDocumentId(), extractRequest);
+
+
 
             });
 
