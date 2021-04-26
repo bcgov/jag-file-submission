@@ -36,7 +36,7 @@ public class ParentController {
         ResponseEntity<String> result = restTemplate.exchange(documentReady.getReturnUri(), HttpMethod.GET, entity, String.class);
 
         if (result.getStatusCode().is2xxSuccessful()) {
-            logger.info("Processing results: /n {}", result.getBody());
+            logger.info("Processing results: {}", result.getBody());
             return ResponseEntity.ok("Thanks");
         }
         return ResponseEntity.badRequest().body("Something Happened");
