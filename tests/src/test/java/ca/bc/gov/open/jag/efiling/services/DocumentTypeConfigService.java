@@ -67,10 +67,10 @@ public class DocumentTypeConfigService {
 
     }
 
-    public Response getCreatedDocumentTypeConfiguration() {
+    public Response getDocumentTypeConfiguration(String pathParam) {
 
         return RestAssured.when()
-                .get(MessageFormat.format(COMMON_MESSAGE_FORMAT, eFilingReviewerHost, Keys.DOCUMENT_TYPE_CONFIGURATION_PATH))
+                .get(MessageFormat.format(COMMON_MESSAGE_FORMAT, eFilingReviewerHost, pathParam))
                 .then()
                 .extract()
                 .response();
@@ -86,24 +86,13 @@ public class DocumentTypeConfigService {
                 .response();
     }
 
-    public Response getAllRestrictedDocumentTypeResponse() {
-
-        return RestAssured.when()
-                .get(MessageFormat.format(COMMON_MESSAGE_FORMAT, eFilingReviewerHost,
-                        Keys.RESTRICTED_DOCUMENT_TYPE_CONFIGURATION_PATH))
-                .then()
-                .extract()
-                .response();
-    }
-
-    public Response deleteRestrictedDocumentTypeByIdResponse(UUID id) {
+    public Response deleteDocumentTypeByIdResponse(UUID id, String pathParam) {
 
         return RestAssured.when()
                 .delete(MessageFormat.format("{0}/{1}/{2}", eFilingReviewerHost,
-                        Keys.RESTRICTED_DOCUMENT_TYPE_CONFIGURATION_PATH, id))
+                        pathParam, id))
                 .then()
                 .extract()
                 .response();
     }
-
 }
