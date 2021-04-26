@@ -28,7 +28,6 @@ public class ConfigureRestrictedDocumentedTypesSD {
 
     private JsonPath actualGetAllDocTypeJsonPath;
 
-    private final String ID_INDEX_FROM_RESPONSE = "id[0]";
     private final Logger logger = LoggerFactory.getLogger(ConfigureRestrictedDocumentedTypesSD.class);
 
     public ConfigureRestrictedDocumentedTypesSD(DocumentTypeConfigService documentTypeConfigService) {
@@ -38,8 +37,8 @@ public class ConfigureRestrictedDocumentedTypesSD {
 
     @Given("user adds a new restricted document type")
     public void useAddsANewRestrictedDocumentType() throws IOException {
-
         logger.info("Creating a new restricted document type configuration");
+
         actualCreateRestrictedDocumentConfigResponse = documentTypeConfigService.createDocumentTypeConfigResponse(Keys.RESTRICTED_DOCUMENT_TYPE_PAYLOAD, Keys.RESTRICTED_DOCUMENT_TYPE_CONFIGURATION_PATH);
 
         logger.info("Api response status code: {}", actualCreateRestrictedDocumentConfigResponse.getStatusCode());
@@ -105,21 +104,20 @@ public class ConfigureRestrictedDocumentedTypesSD {
     public void userDeletesAnExistingRestrictedDocumentTypeUsingId() {
         logger.info("Requesting to delete the document type by id");
 
-        actualDeleteRestrictedDocumentTypeByIdResponse = documentTypeConfigService.deleteRestrictedDocumentTypeByIdResponse(getDocumentId());
-
+        actualDeleteRestrictedDocumentTypeByIdResponse = documentTypeConfigService.deleteDocumentTypeByIdResponse(getDocumentId(),
+                                                            Keys.RESTRICTED_DOCUMENT_TYPE_CONFIGURATION_PATH);
     }
 
     @Then("requested document is deleted")
     public void requestedDocumentIsDeleted() {
 
         Assert.assertEquals(HttpStatus.SC_NO_CONTENT, actualDeleteRestrictedDocumentTypeByIdResponse.getStatusCode());
-
     }
 
     @Given("user requests to get all existing restricted document types")
     public void userRequestsToGetAllExistingRestrictedDocumentTypes() throws IOException {
-
         logger.info("Creating a first restricted document type configuration");
+
         actualCreateRestrictedDocumentConfigResponse = documentTypeConfigService.createDocumentTypeConfigResponse(Keys.RESTRICTED_DOCUMENT_TYPE_PAYLOAD, Keys.RESTRICTED_DOCUMENT_TYPE_CONFIGURATION_PATH);
 
         Assert.assertEquals(HttpStatus.SC_OK, actualCreateRestrictedDocumentConfigResponse.getStatusCode());
@@ -128,19 +126,17 @@ public class ConfigureRestrictedDocumentedTypesSD {
         Response actualCreateSecondRestrictedDocumentConfigResponse = documentTypeConfigService.createDocumentTypeConfigResponse(Keys.ADDITIONAL_RESTRICTED_DOCUMENT_TYPE_PAYLOAD, Keys.RESTRICTED_DOCUMENT_TYPE_CONFIGURATION_PATH);
 
         Assert.assertEquals(HttpStatus.SC_OK, actualCreateSecondRestrictedDocumentConfigResponse.getStatusCode());
-
     }
 
     @Then("all restricted document types details can be retrieved")
     public void allRestrictedDocumentTypesDetailsCanBeRetrieved() {
-
         logger.info("Requesting to get all document types");
 
-        actualGetAllRestrictedDocumentTypeResponse = documentTypeConfigService.getAllRestrictedDocumentTypeResponse();
+        actualGetAllRestrictedDocumentTypeResponse = documentTypeConfigService.getDocumentTypeConfiguration(Keys.RESTRICTED_DOCUMENT_TYPE_CONFIGURATION_PATH);
         Assert.assertEquals(HttpStatus.SC_OK, actualGetAllRestrictedDocumentTypeResponse.getStatusCode());
 
         actualGetAllDocTypeJsonPath = new JsonPath(actualGetAllRestrictedDocumentTypeResponse.asString());
-        Assert.assertNotNull(actualGetAllDocTypeJsonPath.get(ID_INDEX_FROM_RESPONSE));
+        Assert.assertNotNull(actualGetAllDocTypeJsonPath.get(Keys.ID_INDEX_FROM_RESPONSE));
         Assert.assertEquals("UNACCEPTED", actualGetAllDocTypeJsonPath.get("documentType.type[0]"));
         Assert.assertEquals("Unaccepted document type", actualGetAllDocTypeJsonPath.get("documentType.description[0]"));
 
@@ -155,30 +151,30 @@ public class ConfigureRestrictedDocumentedTypesSD {
         logger.info("Requesting to delete the first document type by id");
 
         actualDeleteRestrictedDocumentTypeByIdResponse = documentTypeConfigService
-                .deleteRestrictedDocumentTypeByIdResponse(UUID.fromString(actualGetAllDocTypeJsonPath.get("id[0]")));
+                .deleteDocumentTypeByIdResponse(UUID.fromString(actualGetAllDocTypeJsonPath.get("id[0]")), Keys.RESTRICTED_DOCUMENT_TYPE_CONFIGURATION_PATH);
 
-        actualGetAllRestrictedDocumentTypeResponse = documentTypeConfigService.getAllRestrictedDocumentTypeResponse();
+        actualGetAllRestrictedDocumentTypeResponse = documentTypeConfigService.getDocumentTypeConfiguration(Keys.RESTRICTED_DOCUMENT_TYPE_CONFIGURATION_PATH);
         Assert.assertEquals(HttpStatus.SC_OK, actualGetAllRestrictedDocumentTypeResponse.getStatusCode());
 
         actualGetAllDocTypeJsonPath = new JsonPath(actualGetAllRestrictedDocumentTypeResponse.asString());
-        Assert.assertNotNull(UUID.fromString(actualGetAllDocTypeJsonPath.get(ID_INDEX_FROM_RESPONSE)));
+        Assert.assertNotNull(UUID.fromString(actualGetAllDocTypeJsonPath.get(Keys.ID_INDEX_FROM_RESPONSE)));
         Assert.assertEquals("UNACCEPTED2", actualGetAllDocTypeJsonPath.get("documentType.type[0]"));
         Assert.assertEquals("Unaccepted document type2", actualGetAllDocTypeJsonPath.get("documentType.description[0]"));
 
         logger.info("Requesting to delete the second document type by id");
 
         actualDeleteRestrictedDocumentTypeByIdResponse = documentTypeConfigService
-                .deleteRestrictedDocumentTypeByIdResponse(UUID.fromString(actualGetAllDocTypeJsonPath.get(ID_INDEX_FROM_RESPONSE)));
+                .deleteDocumentTypeByIdResponse(UUID.fromString(actualGetAllDocTypeJsonPath.get(Keys.ID_INDEX_FROM_RESPONSE)), Keys.RESTRICTED_DOCUMENT_TYPE_CONFIGURATION_PATH);
         Assert.assertEquals(HttpStatus.SC_NO_CONTENT, actualDeleteRestrictedDocumentTypeByIdResponse.getStatusCode());
 
-        actualGetAllRestrictedDocumentTypeResponse = documentTypeConfigService.getAllRestrictedDocumentTypeResponse();
+        actualGetAllRestrictedDocumentTypeResponse = documentTypeConfigService.getDocumentTypeConfiguration(Keys.RESTRICTED_DOCUMENT_TYPE_CONFIGURATION_PATH);
         Assert.assertEquals(HttpStatus.SC_OK, actualGetAllRestrictedDocumentTypeResponse.getStatusCode());
     }
 
     private UUID getDocumentId() {
         logger.info("Requesting to get all document types");
 
-        actualGetAllDocTypeJsonPath = new JsonPath(documentTypeConfigService.getAllRestrictedDocumentTypeResponse().asString());
-        return UUID.fromString(actualGetAllDocTypeJsonPath.get(ID_INDEX_FROM_RESPONSE));
+        actualGetAllDocTypeJsonPath = new JsonPath(documentTypeConfigService.getDocumentTypeConfiguration(Keys.RESTRICTED_DOCUMENT_TYPE_CONFIGURATION_PATH).asString());
+        return UUID.fromString(actualGetAllDocTypeJsonPath.get(Keys.ID_INDEX_FROM_RESPONSE));
     }
 }
