@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import queryString from "query-string";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import SubmissionList from "./SubmissionList";
+import SafefyCheck from "../../../components/safety-check/SafetyCheck";
 import { getSubmissionHistory } from "./SubmissionHistoryService";
 import "./SubmissionHistory.scss";
 import { Toast } from "../../../components/toast/Toast";
@@ -94,6 +95,7 @@ export default function SubmissionHistory() {
           your organization. Packages will be available in this list for 1 year
           after the registry processes them.
         </p>
+        <SafefyCheck />
       </div>
 
       <div className="sidecard">

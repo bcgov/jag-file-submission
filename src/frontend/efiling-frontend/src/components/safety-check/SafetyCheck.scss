@@ -1,0 +1,13 @@
+.safety-check {
+  border-radius: 10px;
+
+  // colour copied from https://family-law-act-dev.apps.silver.devops.gov.bc.ca/apply-for-family-order/
+  // overriding bcgov standard bootstrap theme (https://bcgov.github.io/bootstrap-theme/docs/reference/simple/)
+  background: rgb(246, 228, 230);
+  border-color: rgb(230, 208, 201);
+
+  .title {
+    font-size: 20px;
+    border-radius: 10px;
+  }
+}
