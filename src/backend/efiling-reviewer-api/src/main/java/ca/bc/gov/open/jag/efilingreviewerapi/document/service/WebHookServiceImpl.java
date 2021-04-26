@@ -40,7 +40,7 @@ public class WebHookServiceImpl implements WebHookService{
                     DocumentReady.builder()
                     .documentId(documentId)
                     .documentType(documentType)
-                    .returnUri(webHookProperties.getReturnPath()),
+                    .returnUri(MessageFormat.format(Keys.WEBHOOK_RETURN_PATH, webHookProperties.getReturnPath(), documentId.toPlainString())),
                     String.class);
 
             if (result.getStatusCode().is2xxSuccessful()) {

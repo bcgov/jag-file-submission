@@ -19,5 +19,6 @@ public class Keys {
     public static final Integer ANSWER_PLAINTIFF_ID = 319;
     public static final Integer ANSWER_DEFENDANT_ID = 320;
     public static final String WEBHOOK_PATH = "{0}/parent/documentReady";
+    public static final String WEBHOOK_RETURN_PATH = "{0}/documents/processed/{1}";
 
 }

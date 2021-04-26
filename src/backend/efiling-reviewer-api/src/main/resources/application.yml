@@ -23,8 +23,8 @@ jag:
   efiling:
     cso:
       webhook:
-        basePath: ${CSO_WEBHOOK_ENDPOINT:http://localhost:1337}
-        returnPath: ${CSO_WEBHOOK_RETURN_ENDPOINT}
+        basePath: ${CSO_WEBHOOK_ENDPOINT:http://ai-reviewer-mock-api:1337}
+        returnPath: ${CSO_WEBHOOK_RETURN_ENDPOINT:http://efiling-reviewer-api:8090}
     diligen:
       health:
         enabled: ${DILIGEN_HEALTH_ENABLED:true}
