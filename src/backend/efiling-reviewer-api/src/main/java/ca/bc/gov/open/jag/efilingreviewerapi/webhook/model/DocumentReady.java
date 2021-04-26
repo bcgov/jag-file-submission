@@ -1,11 +1,16 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.webhook.model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 
 public class DocumentReady {
+    @JsonProperty
     private BigDecimal documentId;
+    @JsonProperty
     private String documentType;
+    @JsonProperty
     private String returnUri;
 
     public DocumentReady() {
