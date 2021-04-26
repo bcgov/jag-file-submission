@@ -26,7 +26,6 @@ describe("SafefyCheck Component Testsuite", () => {
     const modalClose = screen.getByTestId("close-btn");
     expect(modalClose).toBeInTheDocument();
     fireEvent.click(modalClose);
-    
     await waitFor(() => {});
 
     // assert the popup is closed
